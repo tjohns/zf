@@ -1,0 +1,86 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+ZWebServiceAmazon
+
+
+Proposers
+-----------------------------------------------
+Davey Shafik
+
+
+Revision
+-----------------------------------------------
+$Id: ZWebServiceAmazon-proposal.txt,v 1.1 2006/01/19 01:01:09 mike Exp $
+
+
+Overview
+-----------------------------------------------
+ZWebServiceAmazon is a concrete implementation of the Amazon REST web
+service
+
+References
+-----------------------------------------------
+ZWebServiceAmazon and initial subclasses is based on the Ning XNC_Services
+component XNC_Services_Amazon
+(http://developerdocumentation.ning.com/post.php?Post:slug=XNC-XNC_Services_Amazon)
+
+
+Requirements
+-----------------------------------------------
+DOM
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+ZWebServiceRest
+ZValidator for option validation
+
+Theory of Operation
+-----------------------------------------------
+ZWebServiceAmazon provides two easy to use APIs
+for searching Amazon using the REST web services.
+
+Class Index
+-----------------------------------------------
+ZWebServiceAmazon - Main class
+ZWebServiceAmazonQuery - Alternate "fluent interface" API
+- Various sub-classes for different portions of the result set
+ZWebServiceAmazonAccessories
+ZWebServiceAmazonCustomReview
+ZWebServiceAmazonEditorialReview
+ZWebServiceAmazonImage
+ZWebServiceAmazonItem
+ZWebServiceAmazonListmaniaListPtr
+ZWebServiceAmazonOffer
+ZWebServiceAmazonOfferSet
+ZWebServiceAmazonResultSet
+ZWebServiceAmazonSimilarProduct
+
+
+Use Cases
+-----------------------------------------------
+/* Standard Interface */
+
+$amazon = new ZWebServiceAmazon("API_KEY");
+
+// Find top 10 Amazon results for books on PHP
+$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+foreach($response as $r) {
+	echo $r->Title;
+}
+
+/* Fluent Interface */
+
+// Same query for top 10 PHP books
+$query = new ZWebServiceAmazonQuery("API_KEY");
+$return = $query->category('Books')->Keywords('PHP');
+foreach($response as $r) {
+	echo $r->Title;
+}
+
+Class Skeletons
+-----------------------------------------------
+See lib/ZWebService/ZWebServiceAmazon* in CVS

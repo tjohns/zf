@@ -1,0 +1,166 @@
+Proposed Component Name
+-----------------------------------------------
+ZRequest
+
+
+Proposers
+-----------------------------------------------
+Mike Naberezny
+
+
+Revision
+-----------------------------------------------
+$Id: ZRequest-proposal.txt,v 1.1 2005/10/31 21:18:36 mike Exp $
+
+
+Overview
+-----------------------------------------------
+This class provides encapsulation for the superglobal arrays ($_GET, $_POST, 
+$_COOKIE, etc), sanitization capabilities, and convenience functions related 
+to HTTP requests.
+
+References
+-----------------------------------------------
+This type of object exists, in some form or another, in every other major web 
+application platform.  Some examples:
+
+Microsoft .NET:
+http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfsystemwebhttprequestclasstopic.asp
+
+IBM WBI (Java):
+http://www.almaden.ibm.com/cs/wbi/doc/api/com/ibm/wbi/protocol/http/HttpRequestHeader.html
+
+Django (Python, simpler implementation than above & closer to our goals):
+http://www.djangoproject.com/documentation/request_response/#httprequest-objects
+
+
+Dependencies on other Framework Components
+-----------------------------------------------
+ZInputFilter
+ZUri
+
+
+Theory of Operation
+-----------------------------------------------
+This proposal is for an HttpRequest object only.  An HttpResponse object, which
+is almost always paired with HttpRequest on other platforms, is not being proposed.
+This is a static class that provides encapsulation of the superglobal arrays ($_GET, 
+$_POST, $_COOKIE, some values from $_SERVER, etc) related to HTTP requests.  
+It's primary function is to force default security filters on all of the values, 
+while still providing access to the raw values.
+
+
+Requirements
+-----------------------------------------------
+1. Make it simpler for newer users to find the data they need without trying to 
+find the right superglobal.  This class will allow facilitate autocompletion in IDEs.
+
+2. Improve security.  ZRequest will provide default filtering for all values that 
+it contains, while still allowing access to the raw values.  Users unfamiliar with 
+security practices will gain at least some default security by using HttpRequest.
+
+3. Improve code reviews.  Auditors can grep the sources for the superglobals ($_GET, 
+$_POST, etc) and know the input filtering mechanism is being bypassed.
+
+
+Class Index
+-----------------------------------------------
+ZRequest
+
+
+Use Cases
+-----------------------------------------------
+// do once at startup, will be done by framework include file
+// for extra security, an _optional_ $strict argument will also set
+// the superglobals $_GET, $_POST, etc. to array() afterward
+// internal values are passed through default filters (strip tags, etc)
+ZRequest::init();
+
+// End user's access to GET
+ZRequest::get('name')          // filtered version of $_GET['name']
+ZRequest::get('name', ZRequest::RAW) // equivalent of $_GET['name']
+
+// End user's access to POST
+ZRequest::post('name')          // filtered version of $_POST['name']
+ZRequest::post('name', ZRequest::RAW) // equivalent of $_POST['name']
+
+::cookies, ::files, etc
+
+// optional: allow global options for all $_GET[] variables
+// some sensible filters like ZInputFilterStripTags will always
+// be on by default, unless explicity turned off
+// second argument is optional, if not supplied then all get/post/etc
+// will be affected
+ZRequest::setWhitelist(array('name', 'id'), 'get');
+
+// URI: read-only ZUri object for this page's URI
+ZRequest::uri
+
+// Session: ZSession singleton object handle
+ZRequest::session
+
+
+Class Skeletons
+-----------------------------------------------
+
+class ZRequest {
+	const RAW = 255; 
+
+	/**
+	 * Bootstrap, initializes static variables from
+	 * $_GET, $_POST, etc. sources, passing through
+	 * some default filtering.
+	 * 
+	 * If $strict is TRUE, the normal superglobals ($_GET, etc)
+	 * will be overwritten with array() afterward to ensure no
+	 * data is taken from them.
+	 *
+	 * @param boolean $strict
+	 */
+	static public function init($strict=false) {}
+
+	/**
+	 * Sets a whitelist for one type of array ('get', 'post', 'cookie')
+	 * or none if no $type is specified.  The whitelist will delete all
+	 * keys in the specified array(s) except the ones in $keys.
+	 *
+	 * @param $keys array
+	 * @param $type string
+	 */
+	static public function setWhitelist($keys, $type) {}
+	
+	/**
+	 * Returns a value from $_GET which has been passed
+	 * through default filters, or the raw $_GET if
+	 * $rawValue is set to self::RAW.
+	 *
+	 * @param string $key
+	 * @param integer $rawValue
+	 */
+	static public function get($key, $rawValue = null) {}
+	
+	/**
+	 * Returns a value from $_POST which has been passed
+	 * through default filters, or the raw $_POST if
+	 * $rawValue is set to self::RAW
+	 *
+	 * @param string $key
+	 * @param integer $rawValue
+	 */
+	static public function post($key, $rawValue = null) {}
+
+	/**
+	 * Returns a value from $_COOKIE which has been passed
+	 * through default filters, or the raw $_COOKIE if
+	 * $rawValue is set to self::RAW
+	 *
+	 * @param string $key
+	 * @param integer $rawValue
+	 */
+	static public function cookie($key, $rawValue = null) {}
+	
+	/**
+	 * Returns a ZUri for this request's URI.
+	 */
+	static public function uri() {}	
+}

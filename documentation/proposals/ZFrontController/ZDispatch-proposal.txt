@@ -1,0 +1,59 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+ZDispatch
+
+
+Proposers
+-----------------------------------------------
+Mike Naberezny
+
+
+Revision
+-----------------------------------------------
+$Id: ZDispatch-proposal.txt,v 1.1 2005/11/08 18:42:41 mike Exp $
+
+
+Overview
+-----------------------------------------------
+ZDispatch is a simple object that is used by ZFrontController to
+pass information between a router and a dispatcher.
+
+
+References
+-----------------------------------------------
+None.
+
+
+Requirements
+-----------------------------------------------
+Provide a standard object for passing the description of a controller name,
+its action name, and any parameters (array of key/value pairs).
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+ZFrontController
+
+
+Class Index
+-----------------------------------------------
+ZDispatch
+
+
+Use Cases
+-----------------------------------------------
+Normally, this object will never be used by a user.  It is an intermediary
+to that ZFrontController uses to pass information between a class implementing
+ZRouteSetInterface and a class implementing ZDispatcherInterface.
+
+
+Class Skeletons
+-----------------------------------------------
+class ZDispatch {
+	public $controller;
+	public $action;
+	public $params;
+}

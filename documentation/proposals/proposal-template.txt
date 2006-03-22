@@ -1,0 +1,56 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+((ZSomething))
+
+
+Proposers
+-----------------------------------------------
+((Names of all proposers))
+
+
+Revision
+-----------------------------------------------
+$Id$
+
+
+Overview
+-----------------------------------------------
+((Describe the component in 3-4 sentences.))
+
+
+References
+-----------------------------------------------
+((Links to inspirations, similar efforts, etc.))
+
+
+Requirements
+-----------------------------------------------
+((List specific requirements that the implementation must meet.))
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+((List other ZClasses that are required from different components.))
+
+
+Theory of Operation
+-----------------------------------------------
+((Describe the operation of the component in detail.))
+
+
+Class Index
+-----------------------------------------------
+((List ZClasses that will be provided by this component.))
+
+
+Use Cases
+-----------------------------------------------
+((Show how it will be used through examples.))
+
+
+Class Skeletons
+-----------------------------------------------
+((Provide class skeletons with only the most significant methods.))

@@ -1,0 +1,152 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+ZFrontControllerPluginInterface
+
+
+Proposers
+-----------------------------------------------
+Mike Naberezny
+
+
+Revision
+-----------------------------------------------
+$Id: ZFrontControllerPluginInterface-proposal.txt,v 1.2 2005/11/08 18:42:41 mike Exp $
+
+
+Overview
+-----------------------------------------------
+Provides a mechanism for implementing both proxies and observers
+during the lifecycle of ZFrontController.
+
+
+References
+-----------------------------------------------
+None.
+
+
+Requirements
+-----------------------------------------------
+Allow attachment of userland code into ZFrontController to
+allow for a plugin to have as much visibility into ZFrontController
+as possible.  The plugin interface is intended to provide a mechanism
+for attaching plugins such as site statistics collection.
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+ZFrontController
+
+
+Theory of Operation
+-----------------------------------------------
+frontControllerStartup() and frontControllerShutdown() are called when
+ZFrontController is first run and just before it exists, respectively.
+routeStartup() and routeShutdown() are called before and after the iteration of
+ZRouteSet.  preRoute() and postRoute() are called before and after each iteration
+of ZRouteSet.  dispatchLoopStartup() and dispatchLoopShutdown() are when the
+dispatch loop is entered and when it has exited.  preDispatch() and postDispatch()
+are called before and after each dispatch to a controller.  Any of the
+callbacks can shutdown the ZFrontController, either on exception or on normal
+termination.
+
+
+Class Index
+-----------------------------------------------
+ZFrontControllerPluginInterface
+
+
+Use Cases
+-----------------------------------------------
+class MyPlugin implements ZFrontControllerPluginInterface {
+   /**
+    * Plugin-specific code
+    */
+}
+
+ZFrontController::getInstance()->registerPlugin(new MyPlugin());
+
+
+Class Skeletons
+-----------------------------------------------
+
+interface ZFrontControllerPlugin {
+	/**
+	 * Called immediately after ZFrontController is run.
+	 *
+	 * @return boolean
+	 */
+	public function frontControllerStartup();
+
+	/**
+	 * Called before ZFrontController finishes up.
+	 *
+	 * @return boolean
+	 */
+	public function frontControllerShutdown();
+
+	/**
+	 * Called before ZFrontController begins evaluating the
+	 * request against its routes.
+	 *
+	 * @return boolean
+	 */
+	public function routeStartup();
+
+	/**
+	 * Called before ZRouteSet iteration, which evaluates this request
+	 * against one of its routing rules.
+	 *
+	 * @return boolean
+	 */
+	public function preRoute();
+
+	/**
+	 * Called after ZRouteSet interation, which should have returned
+	 * a ZDispatch object.
+	 *
+	 * @return boolean
+	 */
+	public function postRoute();
+
+	/**
+	 * Called before ZFrontController exists its iterations over
+	 * ZRouteSet.
+	 *
+	 * @return boolean
+	 */
+	public function routeShutdown();
+
+	/**
+	 * Called before ZFrontController enters its dispatch loop.
+	 * During the dispatch loop, ZFrontController keeps a stack of
+	 * ZDispatch objects, and uses ZDispatcher to dispatch the
+	 * ZDispatch objects to controllers/actions.
+	 *
+	 * @return boolean
+	 */
+	public function dispatchLoopStartup();
+
+	/**
+	 * Called before an action is dispatched by ZDispatcher.
+	 *
+	 * @return boolean
+	 */
+	public function preDispatch();
+
+	/**
+	 * Called after an action is dispatched by ZDispatcher.
+	 *
+	 * @return boolean
+	 */
+	public function postDispatch();
+
+	/**
+	 * Called before ZFrontController exists its dispatch loop.
+	 *
+	 * @return boolean
+	 */
+	public function dispatchLoopShutdown();
+}

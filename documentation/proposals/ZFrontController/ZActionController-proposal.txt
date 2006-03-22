@@ -1,0 +1,137 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+ZActionController
+
+
+Proposers
+-----------------------------------------------
+Mike Naberezny
+
+
+Revision
+-----------------------------------------------
+$Id: ZActionController-proposal.txt,v 1.2 2005/11/08 18:42:41 mike Exp $
+
+
+Overview
+-----------------------------------------------
+The base class of the controller system.  The ZDispatcher dispatches requests
+from the ZFrontController to lower-level ZActionControllers.
+
+
+References
+-----------------------------------------------
+None.
+
+
+Requirements
+-----------------------------------------------
+1. Simple, declarative markup.
+
+2. Use as little magic as possible.
+
+3. Don't imitate Java frameworks, keep inter-controller messaging and
+other advanced uses out unless really necessary.
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+ZFrontController
+ZDispatcher
+
+
+Theory of Operation
+-----------------------------------------------
+After matching a route, ZFrontController will call ZDispatcher to instantiate
+a ZActionController, and then it will call a method of that controller.
+
+
+Class Index
+-----------------------------------------------
+ZActionController
+
+
+Use Cases
+-----------------------------------------------
+
+In the simplest example, where no parameters are required,
+the user only needs to extend the ZActionController class and
+provide a method for each action to be called:
+
+class ProductsController extends ZActionController {
+	public function display() {}
+}
+
+
+If the user needs to pull variables from $_GET also, then the
+singleton ZRequest can be used:
+
+class ProductsController extends ZActionController {
+	public function display() {
+		$productId = ZRequest::get('id');
+	}
+}
+
+
+Alternatively, the routing can map parameters from the URI which will
+become available to the controller in the $params instance variable (an array).
+
+class ProductsController extends ZActionController {
+	public function display() {
+		$productId = $this->params['id'];
+	}
+}
+
+
+Finally, in the most advanced use, the controller can redirect to other controllers,
+either in the same request or by forcing a page reload.  This is done by calling
+the methods redirect() and redirectNextRequest().
+
+class ProductsController extends ZActionController {
+	public function someActionRequiringRedirect() {
+		// redirect to CatalogController::contents() without
+		// refreshing the browser.
+		$this->_redirect('Catalog', 'contents');
+		return;
+
+		// redirect to CatalogController::contents() by
+		// using a browser refresh.
+		$this->_redirectNextRequest('Catalog', 'contents');
+		return;
+	}
+}
+
+
+
+Class Skeletons
+-----------------------------------------------
+
+<?php
+Class ZActionController {
+	protected $_dispatcher; // Object handle back to parent ZDispatcher
+	protected $_dispatch;   // Object handle to ZDispatch for this action
+	protected $_params;	    // Any parameters (key/value pairs) passed in
+
+	/**
+	 * Performs an inter-request redirect, where the dispatcher will
+	 * redirect to the specified controller and action without refreshing
+	 * the page.
+	 *
+	 * @param string $controller
+	 * @param string $action
+	 */
+	protected function _redirect($controller, $action);
+
+	/**
+	 * Causes a page refresh and redirects to the specified controller
+	 * and action similar to header('Location: ...');
+	 *
+	 * @param string $controller
+	 * @param string $action
+	 */
+	protected function _redirectNextRequest($controller, $action);
+}
+?>
