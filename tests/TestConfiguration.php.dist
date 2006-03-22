@@ -1,0 +1,47 @@
+<?php
+/**
+ * @package UnitTests
+ *
+ * This file defines configuration for running the unit tests for the Zend Framework.
+ * Some tests have dependencies to PHP extensions or databases which may not necessary
+ * installed on the target system.  For these cases, the ability to disable or configure
+ * testing is provided below.  Tests for components which should run universally, such
+ * as "Zend" or "Zend_InputFilter", are always run by the master suite and cannot be disabled.
+ */
+
+
+/**
+ * Zend_Db_Adapter_Pdo_MySQL
+ */
+define('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_HOSTNAME', '127.0.0.1');
+define('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_USERNAME', null);
+define('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_PASSWORD', null);
+define('TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_DATABASE', 'test');
+
+
+/**
+ * Zend_Db_Adapter_Pdo_Sqlite
+ */
+define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED',  false);
+define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_USERNAME', null);
+define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_PASSWORD', null);
+define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE', ':memory:');
+
+
+/**
+ * @todo Pgsql, Mssql, etc.
+ */
+
+
+/**
+ * Zend_HttpClient
+ *
+ * IMPORTANT: If this option is enabled, the Zend_HttpClient test suite
+ * will attempt to retrieve a remote URI.  Do this only on development
+ * servers or sites where you have approval to do so.
+ */
+define('TESTS_ZEND_HTTPCLIENT_REMOTE_ENABLED', true);
+define('TESTS_ZEND_HTTPCLIENT_REMOTE_URI',     'http://zend.com');
+
+?>

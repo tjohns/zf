@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+   <path stored="true">Document3</path>
+   <shortname type="keyword">file3</shortname>
+   <title>This is the title field of the document3.</title>
+   <body stored="true">This is the body field. Body body body body body body body body body body body.
+
+PEAR Error Handling
+
+PEAR's base class also provides a way of passing around more complex errors than a true/false value or a numeric code. A PEAR error is an object that is either an instance of the class PEAR_Error, or some class inheriting PEAR_Error.
+
+One of the design criteria of PEAR's errors is that it should not force a particular type of output on the user, it should be possible to handle errors without any output at all if that is desirable. This makes it possible to handle errors gracefully, also when your output format is different from HTML (for example WML or some other XML format).
+
+The error object can be configured to do a number of things when it is created, such as printing an error message, printing the message and exiting, raising an error with PHP's trigger_error() function, invoke a callback, or none of the above. This is typically specified in PEAR_Error's constructor, but all of the parameters are optional, and you can set up defaults for errors generated from each object based on the PEAR class. See the PEAR error examples for how to use it and the PEAR_Error reference for the full details.
+Examples
+
+The example below shows how to use the PEAR's "poor man's kinda emulated destructors" to implement a simple class that holds the contents of a file, lets you append data to the object and flushes the data back to the file at the end of the request:
+
+Example 25-1. PEAR: emulated destructors
+
+   </body>
+</xml>

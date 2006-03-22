@@ -1,0 +1,285 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+ZUser
+
+
+Proposers
+-----------------------------------------------
+Richard Allinson
+
+
+Revision
+-----------------------------------------------
+$Id: ZUser-proposal.txt,v 1.0 2007/01/19 00:09:39 richard Exp $
+
+
+Overview
+-----------------------------------------------
+ZUser provides a simple and extendable base object for handling Authentication and Access Control requests relating to a user account. ZUser extends ZActiveRecord to provide easy database integration.
+
+To simplify the operation of ZUser authentication, group and permission controls are handled by ZAuth and ZACL making ZUser a proxy for these control mechanisms.
+
+
+References
+-----------------------------------------------
+patUser: http://www.php-tools.net/site.php?&file=/patUser/overview.xml
+django: http://www.djangoproject.com/documentation/authentication/
+
+
+Requirements
+-----------------------------------------------
+1. To set no limitations on the data that a user object holds
+
+2. Provide simple centralized authentication and access control for user objects
+
+3. Provide a simple, intuitive and logical interface
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+ZActiveRecord
+ZUserException 
+ZAuth (optional)
+ZACL (optional)
+
+
+Theory of Operation
+-----------------------------------------------
+ZUser is a base class for creating user objects. As such it does not contain any helper methods such as ‘email a user’ or ‘lost password’. These are the responsibility of a child class such as ZUserAccount. ZUser extends ZActiveRecord making storage and database interactions a simple and familiar process.
+
+The creation of a user object from ZUser follows the same principles as ZActiveRecord. ZUsers are object representations of table rows in a database. To begin working with a table as a ZUser, a class that extends ZUser needs to be created for it.
+
+ZUser will fail any authentication or permission requests if there are no authorities set in its instance.
+
+
+Class Index
+-----------------------------------------------
+ZUser 
+
+
+Use Cases
+-----------------------------------------------
+Retrieve a user account:
+<?php
+
+class User extends ZUser{}
+
+$users = new User();
+
+$user = $users->findFirst(array('userName'=>'tom'));
+
+?>
+
+-----------------------------------------------
+Retrieve a user account and set an Authenticating Authority:
+
+<?php
+
+class User extends ZUser{}
+$users = new User();
+
+$zAuth = new ZAuth();
+$zAuth->registerPlugin(new ZAuthActiveRecord($users, 'id', 'password'));
+
+$user = $users->findFirst(array('userName'=>'tom'));
+$user->setAuth($zAuth);
+
+$user->authenticate(‘mypassword’);
+$user->isAuthenticated();
+
+?>
+
+-----------------------------------------------
+Retrieve a user account and set an Access Control System:
+
+<?php
+
+class User extends ZUser{}
+$users = new User();
+
+$zAcl = new ZACLActiveRecord ();
+
+$user = $users->findFirst(array('userName'=>'tom'));
+$user->setAcl($zAcl);
+
+$user->getPermission($object);
+$user->getPermission(‘top_secret_area’);
+
+?>
+
+Class Skeletons
+-----------------------------------------------
+
+class ZUser extends ZActiveRecord 
+{
+	/**
+	 * ZACL instance
+	 * @var ZACL
+	 */
+	private $_acl = null;
+	
+	/**
+	 * ZAuth instance
+	 * @var ZAuth
+	 */
+	private $_auth = null;
+	
+	/**
+	 * Authenticates the object against the instance of ZAuth.
+	 * If an ID is provided the authentication is performed by
+	 * the identified ZAuthPlugin.
+	 *
+	 * @param Object $key
+	 * @param String $id
+	 * @return boolean
+	 */
+	public function authenticate($key, $id=null)
+	{
+		if($this->getAuth() == null) return false;
+		
+		if($id == null)
+		{
+			$this->getAuth()->authenticate($this->getUid(), $key);
+		}
+		else 
+		{
+			$this->getAuth()->authenticatePlugin($this->getUid(), $key, $id);
+		}
+		
+		return $this->isAuthenticated($id);
+	}
+	
+	/**
+	 * Enter description here...
+	 *
+	 * @param array|object $request
+	 * @return boolean
+	 */
+	public function getPermission($request)
+	{
+		if($this->getACL() == null) return false;
+		
+		if(!is_array($request))
+		{
+			$request = array($request);
+		}
+		
+		foreach ($request as $object)
+		{
+			if(!$this->getACL()->getPermission($this->getUid(), $object))
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Enter description here...
+	 *
+	 * @param String $id
+	 * @return boolean
+	 */
+	public function isAuthenticated($id=null)
+	{
+		if($this->getAuth() == null) return true;
+		
+		if($id == null)
+		{
+			return $this->getAuth()->isAuthenticated();
+		}
+		else 
+		{
+			return $this->getAuth()->isPluginAuthenticated($id);
+		}
+	}
+	
+	/**
+	 * Retrives the current UID
+	 *
+	 * @return Object
+	 */
+	public function getUid()
+	{
+		return $this->getPrimaryKeyValue();
+	}
+	
+	/**
+	 * Retrives the current ZAuth
+	 *
+	 * @return ZAuth
+	 */
+	public function getAuth()
+	{
+		return $this->_auth;
+	}
+	
+	/**
+	 * Retrives the current ZACL
+	 *
+	 * @return ZACL
+	 */
+	public function getACL()
+	{
+		return $this->_acl;
+	}
+	
+	/**
+	 * Retrives a Ticket object from ZAuth
+	 *
+	 * @param String $id
+	 * @return Object|array|null
+	 */
+	public function getTicket($id=null)
+	{
+		if($this->getAuth() == null) return null;
+		
+		if($id == null)
+		{
+			return $this->getAuth()->getTickets();
+		}
+		else 
+		{
+			return $this->getAuth()->getTicket($id);
+		}
+	}
+	
+	/**
+	 * Set the instance of ZACL
+	 *
+	 * @param ZACL $zAcl
+	 * @return boolean
+	 */
+	public function setAcl($zAcl)
+	{
+		if($zAcl instanceof ZACL)
+		{
+			$this->_acl = $zAcl;
+			return true;
+		}
+		
+		throw new ZUserException('Must be of type ZACL');
+	}
+	
+	/**
+	 * Set the instance of ZAuth
+	 *
+	 * @param ZAuth $zAuth
+	 * @return boolean
+	 */
+	public function setAuth($zAuth)
+	{
+		if($zAuth instanceof ZAuth)
+		{
+			$this->_auth = $zAuth;
+			return true;
+		}
+		
+		throw new ZUserException('Must be of type ZAuth');
+	}
+}
+

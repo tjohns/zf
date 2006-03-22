@@ -1,0 +1,247 @@
+<sect1 id="zend.db.dataobject">
+
+    <!-- @todo update docs when ZActiveRecord is ported to Zend_Db_DataObject -->
+    <title>Zend_Db_DataObject</title>
+
+    <sect2 id="zend.db.dataobject.introduction">
+        <title>Introduction</title>
+        <para>
+            <code>Zend_Db_DataObject</code> is an implementation of Object Relation Mapping (ORM) for PHP.
+            In an ORM system, the tables and rows of the database are abstracted into
+            native PHP objects.  This allows the programmer to focus more on manipulating
+            the data and less on writing SQL queries.
+        </para>
+
+        <para>
+            <code>Zend_Db_DataObject</code> is designed upon the principles of the "ActiveRecord" design pattern,
+            which was first described by Martin Fowler.  The ActiveRecord pattern has been implemented in many
+            forms across the spectrum of programming languages. <code>Zend_Db_DataObject</code> is a PHP5
+            implementation that attempts to represent the database as closely to native PHP objects as possible.
+        </para>
+
+        <para>
+          <code>Zend_Db_DataObject</code> maps a database table to a PHP class, and each instance of
+          that class represents a table row.  Relations between tables can also
+          be defined, allowing the <code>Zend_Db_DataObject</code> objects to be nested.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.db.dataobject.setting-adapter">
+        <title>Setting the Database Adapter</title>
+        <para>
+        The first step to using <code>Zend_Db_DataObject</code> is to set the adapter that all
+        <code>Zend_Db_DataObject</code> objects will use to connect to the database.  All
+        <code>Zend_Db_DataObject</code> objects share a single database adapter, which is set by calling a static method of <code>Zend_Db_DataObject</code>.
+        </para>
+
+        <para>
+        A database adapter that extends the <code>Zend_Db_Adapter</code> class must be
+        used.  Instantiate a new adapter and pass the object handle to
+        <code>Zend_Db_DataObject::setDatabaseAdapter()</code>.  In the example below, a MySQL
+        adapter is supplied to <code>Zend_Db_DataObject</code>:
+        </para>
+
+        <!-- @todo update this example -->
+        <programlisting role="php"><![CDATA[require_once('ZActiveRecord/ZActiveRecord.php');
+
+// Create a ZDBAdapter for ZActiveRecordBase.
+$db = new ZDBAdapterMySQL(array('host'     => 'localhost',
+                                'username' => 'user',
+                                'password' => 'password',
+                                'database' => 'test'));
+
+ZActiveRecord::setDatabaseAdapter($db);]]>
+        </programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.dataobject.table-rows-as-objects">
+        <title>Table Rows as Objects</title>
+        <para>
+            First, let's create a temporary table in our MySQL database that we can use
+            for demonstrative purposes throughout the rest of this tutorial.  We can do
+            this by sending a CREATE query to <code>Zend_Db_Adapter_Mysqli</code>:
+        </para>
+
+        <!-- @todo update this example -->
+        <programlisting role="php"><![CDATA[/**
+ * Notice that there is no error checking after this query.  Unlike older PHP4
+ * database adapters, ZDBAdapter makes full use of PHP5 exceptions.  If an error
+ * occurs during the query, an exception will be thrown.
+ */
+$db->query("CREATE TEMPORARY TABLE `persons` (
+                `id` int(10) unsigned NOT NULL auto_increment,
+                `name_first` varchar(100) NOT NULL default '',
+                `name_last` varchar(100) NOT NULL default '',
+                `favorite_color` varchar(100) NOT NULL default '',
+                PRIMARY KEY  (`id`)
+            ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+           ");]]>
+        </programlisting>
+
+        <para>
+            <code>Zend_Db_DataObject</code>s are object representations of table rows.  Each table
+            in the database is represented by a class in PHP.   To begin working
+            with a table as a <code>Zend_Db_DataObject</code>, a class that extends
+            <code>Zend_Db_DataObject</code> needs to be created for it.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+class Person extends Zend_Db_DataObject {}
+$person = new Person();]]>
+        </programlisting>
+
+        <para>
+            In the above example, a new <code>Zend_Db_DataObject</code> object <code>$person</code> was created
+            to access the "persons" table.  <code>Zend_Db_DataObject</code> takes the name of the class,
+            pluralizes it (according to American English rules), and assumes that
+            this is the name of the table in the database.
+        </para>
+
+        <para>
+            This kind of behavior is typical of <code>Zend_Db_DataObject</code>.  It will assume as
+            much as possible by convention rather than explicit configuration.  In
+            situations where it isn't possible to use the conventions that <code>Zend_Db_DataObject</code>
+            expects, options can be overridden as we'll see later.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.db.dataobject.table-rows-as-object-properties">
+        <title>Table Columns as Object Properties</title>
+
+        <para>
+            When the <code>$person</code> object was instantiated, <code>Zend_Db_DataObject</code>
+            read the table metadata from the database itself, and then exposed the table's columns
+            (fields) as object properties.
+        </para>
+
+        <para>
+            Our "persons" table has three fields: "name_first", "name_last", and "favorite_color".
+            Each of these fields is now a property of the <code>$person</code> object.  To see all these
+            properties, use the <code>Zend_Db_DataObject::getAttributeNames()</code> method:
+        </para>
+
+    <programlisting role="php"><![CDATA[
+var_dump($person->getAttributeNames());
+
+/**
+ * Outputs the following:
+ * array(4) {
+ *    [0]=>
+ *    string(2) "id"
+ *    [1]=>
+ *    string(9) "nameFirst"
+ *    [2]=>
+ *    string(8) "nameLast"
+ *    [3]=>
+ *    string(13) "favoriteColor"
+ *  }
+ */]]>
+        </programlisting>
+
+        <para>
+            Notice above that the underscore_separated names that the database uses have been
+            automatically converted to camelCaps style, which is the convention of the Zend
+            Framework.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.db.dataobject.inserting-and-updating">
+        <title>Inserting and Updating a Record</title>
+
+        <para>
+        A <code>Zend_Db_DataObject</code> object is a representation of a single table row.  However,
+        when our <code>$person</code> object is instantiated, it does not reference any particular
+        row.  It is a blank record that does not yet exist in the database.  A <code>Zend_Db_DataObject</code>
+        object is considered blank when its primary key is <code>NULL</code>.  The primary key in our
+        persons table is "id".
+        </para>
+
+        <para>
+        To insert a new record into the database, change the object's properties and
+        then call the <code>Zend_Db_DataObject::save()</code> method:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$person = new Person();
+$person->nameFirst = 'Andi';
+$person->nameLast  = 'Gutmans';
+$person->save();]]>
+        </programlisting>
+
+        <para>
+        Oh, no!  The above code snippet does not insert a new record into the database.  Instead,
+        it throws an exception:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+<b>Fatal error</b>:  Uncaught exception 'Zend_Db_Adapter_Exception' with message
+'MySQLi: Column 'favorite_color' cannot be null' in /path/to/framework/lib/ZDBAdapter/ZDBAdapterMySQL.php:192]]>
+      </programlisting>
+
+      <para>
+      This exception was thrown because MySQL rejected the INSERT query that was generated
+      by <code>Zend_Db_DataObject</code>.  In the definition of our table, we specified all of the fields
+      as NOT NULL; i.e., they must contain a value.
+      </para>
+
+      <para>
+      <code>Zend_Db_DataObject</code>s are bound by the same contraints as the database tables they represent.
+      If the field in the database cannot be <code>NULL</code>, the corresponding property in the
+      <code>Zend_Db_DataObject</code> also cannot be NULL.  In the example above, we failed to set the property
+      <code>$person->favoriteColor</code>, which caused the INSERT to be rejected by MySQL.
+      </para>
+
+      <para>
+      To insert a new <code>Zend_Db_DataObject</code> in the database, populate all of
+      <code>Zend_Db_DataObject</code>'s properties
+      so that they satisfy the constraints of the database table, and then call the <code>save()</code> method:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+/**
+ * Calling the save() method will successfully INSERT
+ * this $person into the database table.
+ */
+$person = new Person();
+$person->nameFirst     = 'Andi';
+$person->nameLast      = 'Gutmans';
+$person->favoriteColor = 'blue';
+$person->save();
+]]>
+      </programlisting>
+
+      <para>
+      Once this $person has been INSERTed into the database by calling <code>save()</code>, the
+      primary key can now be read as a property.  Since this is the first row inserted
+      into our temporary table, its "id" will be 1:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+var_dump($person->id);
+
+/**
+ * Outputs the following:
+ * string(1)
+ */]]>
+        </programlisting>
+
+        <para>
+        From this point on, updating it is simply a matter of
+        changing the object's properties and calling the <code>save()</code> method again:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$person->favoriteColor = 'red';
+$person->save();]]>
+        </programlisting>
+
+        <para>
+        The code snippet above will change the favorite color to red, and then UPDATE
+        the record in the database.
+        </para>
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,497 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+ZPdf
+
+
+Proposers
+-----------------------------------------------
+Alexander Veremyev
+
+
+Revision
+-----------------------------------------------
+$Id: ZPdf-proposal.txt,v 1.1 2005/12/05 21:40:47 alexander Exp $
+
+
+Overview
+-----------------------------------------------
+ZPdf will offer an interface for creating, loading and modifying PDF documents.
+
+
+Theory of Operation
+-----------------------------------------------
+Individual PDF document is represented by ZPdfDoc object.
+ZPdfDoc constructor creates new document or loads it from a string.
+Each document contains a set of pages represented by ZPdfPage objects.
+Draw operations are performed with a ZPdfPage objects.
+
+
+
+Use Cases
+-----------------------------------------------
+Creating a PDF document and adding some content (see more detailed examples in
+a descriptions of ZPdfDoc and ZPdfPage classes in a Class Skeletons section):
+
+// Create a new PDF
+$pdfDoc = new ZPdfDoc();
+$pages = $pdfDoc->getPagess();
+
+// Create a new page
+$page = new ZPdfPage(ZPdfConst::PAGESIZE_A4);
+$pages[] = $page;
+
+// Create a new "style" to write in - Black 24pt Times Roman.
+$mystyle = new ZPdfStyle();
+$mystyle->setFont(ZPdfStandardFont(ZPdfStandardFont::FONT_TIMES), 24);
+$mystyle->setFillColor(0x000000);  // BLACK
+
+// Put something on the page
+$page->setStyle($mystyle);
+$page->drawText('Hello, PDF-viewing World!', 100, 100);
+
+// Add some document info
+$docProperties = $pdfDoc->properties();
+$docProperties['Author'] = 'Joe Bloggs';
+$docProperties['Title']  = 'My Document';
+
+// Write the document to a file
+$f = fopen('test.pdf', 'w');
+fwrite($f, $pdfDoc->render());
+fclose($f);
+
+
+
+
+Class Skeletons
+-----------------------------------------------
+/**
+ * ZPdf module exception
+ *
+ * Implements an exceptions, thown by the module
+ */
+class ZPdfException extends ZException {
+}
+
+/**
+ * General entity which describes PDF document.
+ * It implements document abstraction with a document level operations.
+ *
+ * Class is used to create new PDF document or load existing document.
+ * See details in a class constructor description
+ *
+ * Class agregates document level properties and entities (pages, bookmarks,
+ * document level actions, attachments, form object, etc)
+ */
+class ZPdfDoc {
+    /**
+     * Creates or loads PDF document.
+     * If $source is null, then it creates a new document.
+     * Otherwise it loads document from a binary string.
+     *
+     * @param string $source
+     */
+    public function __construct($source = null);
+
+    /**
+     * Return return the an associative array with PDF meta information, values may
+     * be string, boolean or float.
+     * Returned array could be used directly to access, add, modify or remove
+     * document properties.
+     *
+     * Standard document properties: Title (must be set for PDF/X documents), Author,
+     * Subject, Keywords (comma separated list), Creator (the name of the application,
+     * that created document, if it was converted from other format), Trapped (must be
+     * true, false or null, can not be null for PDF/X documents)
+     *
+     * @return array
+     */
+    public function properties();
+
+    /**
+     * Return the document-level JavaScript
+     * or null if there is no JavaScript for this document
+     *
+     * @return string
+     */
+    public function getJavaScript();
+
+
+    /**
+     * Return an associative array containing all the named actions in the PDF.
+     * Named actions (it's always "GoTo" actions) can be used to reference from outside
+     * the PDF, ex: 'http://www.something.com/mydocument.pdf#MyAction'
+     *
+     * @return array
+     */
+    public function getNamedActions();
+
+    /**
+     * Returns an array of the documents pages.
+     * Array also can be used to add, remove or reoder pages
+
+     * For example, to reverse the pages in the document:
+     * -----------
+     * $pages = $pdf->getPages();
+     * for ($count = 0; $count < count($pages)/2; $count++) {
+     *     $tmpVar = $pages[$count];
+     *     $pages[$count] = $pages[ count($pages) - $count - 1 ];
+     *     $pages[ count($pages) - $count - 1 ] = $tmpVar;
+     * }
+     */
+    public function getPages();
+
+    /**
+     * This method renders the completed PDF to a string.
+     *
+     * @return string
+     */
+    public function render();
+
+    /**
+     * Set the document-level JavaScript
+     *
+     * @param string $javascript
+     */
+    public function setJavaScript($javascript);
+}
+
+
+
+/**
+ * Represents a PDF Page
+ *
+ * 1. Geometry
+ * PDF uses the same geometry as PostScript. It starts from bottom-left corner of page
+ * and by default is measured in points (1/72 of an inch)
+ *
+ * 2. Shape Drawing
+ * Page entity is used for draw operations.
+ * They are splited into drawing shapes (lines, circles, rectangles, poligons, ...) and path
+ * drawig methods (more primitive but gives more control).
+ *
+ * 3. Drawing Text
+ *  * A single lines of text can be drawn at a specified location by using
+ *    the drawText(string, float, float) method.
+ *    ----------
+ *    $page = new ZPdfPage(ZPdfConst::PAGESIZE_A4);  // 595 x 842 points
+ *    $textstyle = new ZPdfStyle();
+ *    $textstyle->setFillColor(0x000000);  // BLACK
+ *    $textstyle->setFont(new ZPdfFont(ZPdfConst::COURIER), 12);
+ *
+ *  * More powerful way to draw text is to use a ZPdfLayoutBox class and
+ *    the drawLayoutBox() method.
+ *    An example of this approach:
+ *    ----------
+ *    $page = new ZPdfPage(ZPdfConst::PAGESIZE_A4);  // 595 x 842 points
+ *
+ *    // Create first style - 12pt black Helvetica
+ *    $style1 = new ZPdfStyle();
+ *    $style1->setFillColor(0x000000); // BLACK
+ *    $style1->setFont(new ZPdfFont(ZPdfConst::HELVETICA), 12);
+ *
+ *    // Create second style - 12pt black Verdana (TrueType font)
+ *    $style2 = $style1.clone();
+ *    $verdina = new ZPdfOpenTypeFont('verdana.ttf'), 1);
+ *    $style2->setFont($verdina, 12);
+ *
+ *    $box = new ZPdfLayoutBox($page->getWidth()-200);
+ *    $box->addText('This text is in ', style1, null);
+ *    $box->addText('Verdana.', style2, null);
+ *    $box->addLineBreak(style2);
+ *    $box->addText('And this is Helvetica again.', style1, null);
+ *
+ *    $page->drawLayoutBox($box, 100, $page->getHeight()-100);
+ *
+ * 4. Drawing Images and Content Streams
+ * ----------
+ * $f = fopen('mypicture.jpg','r');
+ * $imageData = fread($f, filesize('mypicture.jpg');
+ * fclose($f);
+ * $page->drawImage($imageData, 100, 100, 200, 200);
+ *
+ * A ZPdfContentStream can be drawn using the drawContentStream() method.
+ * Content Streams are typicaly used for patterns and copying one page to another.
+ *
+ * 5. Rotate and Save/Restore
+ * To rotate drawing objects rotate() method must be used
+ * Assigned rotation affects any further graphics operations to the page.
+ * An example of drawing text at a 45° angle:
+ * ----------
+ * $page->rotate($x, $y, 45);
+ * $page->drawText('Rotated', $x, $y);
+ *
+ * To avoid inaccuracy of floating point arythmetic save()/restore() methods should be used.
+ * They operate with a stack of the states.
+ * This stack of states will be used for other linear transformations also.
+
+ * 7. Clipping
+ * Similar to the drawRectangle, drawCircle etc. methods above, the clipRectangle(),
+ * clipRoundedRectangle(), clipCircle(), clipEllipse() and clipPolygon() methods can be used
+ * to set the current clipping area on the page.
+ */
+class ZPdfPage {
+    /**
+     * Create a new page.
+     *
+     * 1. If $var1 is string, then it's treated as pagesize.
+     * $var2 is omitted.
+     * Create a new page of the specified page size.
+     *
+     * 2. If $var1 is ZPdfPage, then it's treated as $page.
+     * $var2 is omitted.
+     * Create a new ZPdfPage object that's a clone of the specified page.
+     *
+     * 3. If $var1 is integer then it's treated as the width of the page, in points
+     * $var2 is the height of the page, in points
+     * Create a new page of the specified page size.
+     *
+     * @param mixed $var1
+     * @param float $var2
+     */
+    public function __construct($var1, $var2 = 0);
+
+    /**
+     * Set the clipping area to a circle.
+     *
+     * @param float $x
+     * @param float $y
+     * @param float $radius
+     */
+    public function clipCircle($x, $y, $radius);
+
+    /**
+     * Set the clipping area to a polygon.
+     *
+     * @param array $x  - array of floats (the X co-ordinates of the vertices)
+     * @param array $y  - array of floats (the Y co-ordinates of the vertices)
+     */
+    public function clipPolygon($x, $y);
+
+    /**
+     * Set the clipping area to the rectangle.
+     *
+     * @param float $x1
+     * @param float $y1
+     * @param float $x2
+     * @param float $y2
+     */
+    public function clipRectangle($x1, $y1, $x2, $y2);
+
+    /**
+     * Draw a ZPdfContentStream at the specified position on the page
+     *
+     * @param ZPdfContentStream $cs
+     * @param float $x1
+     * @param float $y1
+     * @param float $x2
+     * @param float $y2
+     */
+    public function drawContentStream($cs, $x1, $y1, $x2, $y2);
+
+    /**
+     * Draw a circle centered on x, y with a radius of radius.
+     *
+     * @param float $x
+     * @param float $y
+     * @param float $radius
+     */
+    public function  drawCircle($x, $y, $radius);
+
+    /**
+     * Draw an arc of the circle.
+     * $start and $end define arc start and end in degrees clockwise from 12 o'clock
+     *
+     * @param float $x
+     * @param float $y
+     * @param float $radius
+     * @param float $start
+     * @param float $end
+     */
+    public function drawCircleArc($x, $y, $radius, $start, $end);
+
+    /**
+     * Draw an ellipse inside the specified rectangle.
+     *
+     * @param float $x1
+     * @param float $y1
+     * @param float $x2
+     * @param float $y2
+     */
+    public function drawEllipse($x1, $y1, $x2, $y2);
+
+    /**
+     * Draw an ellipse arc inside the specified rectangle.
+     * $start and $end define arc start and end in degrees clockwise from 12 o'clock
+     *
+     * @param float $x1
+     * @param float $y1
+     * @param float $x2
+     * @param float $y2
+     * @param float $start
+     * @param float $end
+     */
+    public function drawEllipseArc($x1, $y1, $x2, $y2, $start, $end);
+
+    /**
+     * Draw an image at the specified position on the page.
+     *
+     * @param string $image
+     * @param float $x1
+     * @param float $y1
+     * @param float $x2
+     * @param float $y2
+     */
+    public function drawImage($image, $x1, $y1, $x2, $y2);
+
+    /**
+     * Draw a LayoutBox at the specified position on the page.
+     *
+     * @param ZPdfLayoutBox $box
+     * @param float $x
+     * @param float $y
+     */
+    public function drawLayoutBox($box, $x, $y);
+
+    /**
+     * Draw a line from x1,y1 to x2,y2.
+     *
+     * @param float $x1
+     * @param float $y1
+     * @param float $x2
+     * @param float $y2
+     */
+    public function drawLine($x1, $y1, $x2, $y2);
+
+    /**
+     * Draw a polygon.
+     *
+     * @param array $x  - array of float (the X co-ordinates of the vertices)
+     * @param array $y  - array of float (the Y co-ordinates of the vertices)
+     */
+    public function drawPolygon($x, $y);
+
+    /**
+     * Draw a rectangle.
+     *
+     * @param float $x1
+     * @param float $y1
+     * @param float $x2
+     * @param float $y2
+     */
+    public function drawRectangle($x1, $y1, $x2, $y2);
+
+
+
+    /**
+     * Draw a line of text at the specified position.
+     *
+     * @param string $text
+     * @param float $x
+     * @param float $y
+     */
+    public function drawText($text, $x, $y );
+
+    /**
+     * Return the height of this page in points.
+     *
+     * @return float
+     */
+    public function getHeight();
+
+    /**
+     * Return the style used on the page.
+     *
+     * @return ZPdfStyle
+     */
+    public function getStyle();
+
+    /**
+     * Return the width of this page in points.
+     *
+     * @return float
+     */
+    public function getWidth();
+
+     /**
+     * Close the path by drawing a straight line back to it's beginning.
+     *
+     * @throws ZPdfException    - if a path hasn't been started with pathMove()
+     */
+    public function pathClose();
+
+    /**
+     * Continue the open path in a straight line to the specified position.
+     *
+     * @param float $x  - the X co-ordinate to move to
+     * @param float $y  - the Y co-ordinate to move to
+     */
+    public function pathLine($x, $y);
+
+    /**
+     * Start a new path at the specified position. If a path has already been started,
+     * move the cursor without drawing a line.
+     *
+     * @param float $x  - the X co-ordinate to move to
+     * @param float $y  - the Y co-ordinate to move to
+     */
+    public function pathMove($x, $y);
+
+    /**
+     * Write raw PDF commands to the page.
+     *
+     * @param string $data
+     */
+    public function rawWrite($data);
+
+    /**
+     * Restore the state that was saved with the last call to save().
+     *
+     * @throws ZPdfException   - if there is no previously saved state
+     */
+    public function restore();
+
+    /**
+     * Rotate the page.
+     *
+     * @param float $x
+     * @param float $y
+     * @param float $angle
+     */
+    public function rotate($x, $y, $angle);
+
+    /**
+     * Save the state of this page. This takes a snapshot of the currently applied style,
+     * position, clipping area and any rotation/translation/scaling that has been applied.
+     *
+     * @throws ZPdfException    - if a save is performed with an open path
+     */
+    public function save();
+
+    /**
+     * Set the style to use for future drawing operations on this page
+     *
+     * @param ZPdfStyle $style
+     */
+    public function setStyle($style);
+}
+
+
+class ZPdfAbstractFont {
+}
+
+/**
+ * Standard fonts
+ *
+ */
+class ZPdfFont extends ZPdfAbstractFont {
+}
+
+class OpenTypeFont extends ZPdfAbstractFont {
+
+}
+
+class ZPdfStyle {
+}

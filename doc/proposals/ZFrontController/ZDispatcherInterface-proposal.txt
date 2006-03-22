@@ -1,0 +1,86 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+ZDispatcherInterface
+
+
+Proposers
+-----------------------------------------------
+Mike Naberezny
+
+
+Revision
+-----------------------------------------------
+$Id$
+
+
+Overview
+-----------------------------------------------
+The dispatching component of ZFrontController is responsible taking the name of a
+controller and the name of an action and actually running the corresponding
+controller code.
+
+ZDispatcherInterface is an interface class that allows users to provide their
+own dispatcher to ZFrontController.  By default, most users will use ZDispatcher,
+which implements this interface.
+
+
+References
+-----------------------------------------------
+None.
+
+
+Requirements
+-----------------------------------------------
+Receive a ZDispatch object, and do one of two things:
+    1. Return whether or not the ZDispatch can be dispatched
+    2. Dispatch the ZDispatch to a controller and action
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+ZFrontController
+
+
+Theory of Operation
+-----------------------------------------------
+The normal way of dispatching will be to use ZDispatcher, which implements this
+interface (ZDispatcherInterface).  However, for specialized needs, the ZFrontController's
+dispatcher can be replaced with a custom dispatcher that implements this
+interface.
+
+When ZDispatcherInterface::isDispatchable() is called, the dispatcher must take
+a ZDispatch object and determine if the controller file exists and if it contains
+the expected controller class.  It must also determine if that class has the action
+named by the ZDispatch object.  It must fully qualify the ZDispatch object and return
+TRUE if it can be dispatched to controller code, or FALSE otherwise.
+
+When ZDispatcherInterface::dispatch() is called, the dispatcher must take a
+ZDispatch object, locate its controller, instantiate it, and call the action
+specified.
+
+
+Class Index
+-----------------------------------------------
+ZDispatcherInterface
+
+
+Use Cases
+-----------------------------------------------
+class MyDispatcher implements ZDispatcherInterface {
+    /**
+     * Dispatcher-specific code
+     */
+}
+
+ZFrontController::getInstance()->setDispatcher(new MyDispatcher());
+
+
+Class Skeletons
+-----------------------------------------------
+interface ZDispatcherInterface {
+	public function isDispatchable(ZDispatch $route);
+	public function dispatch(ZDispatch $route);
+}

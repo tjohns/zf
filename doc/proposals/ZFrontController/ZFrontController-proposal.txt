@@ -1,0 +1,225 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+ZFrontController
+
+
+Proposers
+-----------------------------------------------
+Mike Naberezny
+
+
+Revision
+-----------------------------------------------
+$Id: ZFrontController-proposal.txt,v 1.4 2005/11/08 18:42:41 mike Exp $
+
+
+Overview
+-----------------------------------------------
+The Zend Framework will include a very simple MVC pattern.  This is implemented
+by pairing several loosely coupled components: ZFrontController, ZRouteSetInterface,
+ZDispatcherInterface, ZActionController, and optionally ZFrontControllerPluginInterface.
+
+This component is a single entry point to a website built on the Zend Framework.
+The webserver must be configured to deliver all requests to the ZFrontController,
+regardless of URI, with the exception of static files such as CSS, images, or
+JavaScript.  In Apache, this is done using only one line in .htaccess, using mod_rewrite.
+
+When the request is received, ZFrontController iterates over an object that
+implements the interface ZRouteSetInterface to translate the HTTP request into
+a ZDispatch object, which describe a controller, an action within that controller,
+and optional parameters.  On each iteration of the ZRouteSetInterface object,
+ZRouteSetInterface is used to map the HTTP request to a controller and action
+within that controller.  This mapping is returned as a ZDispatch object, which may
+or may not be a dispatchable route (valid or invalid).  ZFrontController then
+uses an object that implements the interface ZDispatcherInterface to determine
+if it is dispatchable.  If it is not, ZFrontController moves to the next iteration
+of ZRouteSetInterface.  As soon as a ZDispatcherInterface reports that a ZDispatch
+is dispatchable, ZFrontController pushes that ZDispatch onto its stack.  It then
+enters the dispatch loop.  In the dispatch loop, ZFrontController calls the
+ZDispatcherInterface object to dispatch the action, and at completion
+ZFrontController either dispatches the next ZDispatch object on the stack if one
+is found, or terminates.
+
+
+Requirements
+-----------------------------------------------
+
+1. Be as simple and bare-bones as possible without being crippling.  It should
+be simple enough so inexperienced users can get to speed quickly but flexible
+enough so that experienced developers can still use it.
+
+2. If "clean URIs" are to be used, move responsibility of rewriting URIs out of
+Apache mod_rewrite.  The webserver is still responsible for redirecting all
+requests to the front controller, however all real processing the URIs is done
+by the front controller.  This is easier to learn than mod_rewrite and also
+implies some webserver independence.
+
+3. Don't force using "clean URIs".  Specifying the controller and action in the
+GET request is not going away anytime soon, or users may prefer using mod_rewrite
+if integrating with existing systems.  ?controller=x&action=y must be supported
+if the user can't or doesn't want to use clean URIs.
+
+4. Have a very declarative markup in the PHP controller code itself and stay
+away from anything that is external or not PHP code, such as XML files or larger
+array-based configuration maps in PHP.
+
+5. Be completely independent of a templating system because no-one can agree on
+a standard.  Users can take care of templating by coding inside the actions,
+using any system they like.
+
+6. Security and input filtering are stressed.  Access to the superglobal arrays
+($_GET, $_POST, etc) should be forced through default security everwhere possible.
+This will implemented by accessing all HTTP request variables through ZRequest.
+
+7. Plugins must be supported.  In the context of the front controller, "plugins"
+will be cacaded proxy objects.  A class will implement the plugin interface, and
+then that object can be registered with the front controller.  When a request is
+received, it will be passed through the each plugin in the order they were
+registered before being sent to the lower-level ZActionController.  Uses for plugins
+would include caching and site statistics.
+
+
+Dependencies on other Framework Components
+-----------------------------------------------
+ZRequest
+ZDispatch
+ZRouteSetInterface / ZRouteSet
+ZDispatcherInterface / ZDispatcher
+ZActionController
+ZFrontControllerPluginInterface (optional)
+
+
+Use Cases
+-----------------------------------------------
+The end-user is completely hidden from the internals of ZFrontController and its
+plugin architecture.  By default, ZFrontController will contain a ZRouteSet
+and ZDispatcher, which are the implementations supplied with the Framework.  The
+user will not need to select these and knowledge of them will only be required
+to override them.
+
+ZRouteSet will parse routing rules that are similar to Ruby-on-Rails and other
+frameworks, where routing rules replace code that used to go in .htaccess.
+
+<?php
+require_once('ZFrontController/ZFrontController.php');
+$fc = ZFrontController::getInstance();
+
+// First, add your routes.
+//
+// Below adds a route for a Products controller, where the second part of the URI
+// is an action.  When are URI is received like /products/*, it will be
+// dispatched to the * action in the Products controller
+//
+// Add as many routes as needed.
+$fc->routes->add('/products/:action');
+
+// Next, dispatch.  Dispatching takes the request URI, and dispatches it to lower
+// level controllers that extend ZActionController.
+$fc->dispatch();
+?>
+
+This is all that is required to use ZFrontController.  To make a controller,
+place a file in the controllers/ directory with the same name as the controller.  All
+controllers extend ZActionController.  In the example route above ("/products/:action"),
+a controller class named ProductsController would be placed in a file called
+ProductsController.php.
+
+<?php
+class ProductsController extends ZActionController {
+	public function display() {
+	}
+}
+?>
+
+When a URI of "/products/display" is received, it will be automatically routed to
+ProductsController::display.  The user can then put any code in the controller.  Parameters
+can be named and passed in to ZActionControllers and accessed as $this->params->..., or
+for the simplest use, the user can access ZRequest::get('name') directly from
+within the controller code.
+
+This is the most basic usage and is all of the code required to use the ZFrontController.
+Almost all of the behavior of ZFrontController can be augmented, replaced, or
+observed/proxied for more advanced uses, however the lowest common denominator
+user will not need to know much more than the above code snippets.
+
+
+Theory of Operation
+-----------------------------------------------
+ZRequest - A class containing only static methods that serves as a wrapper and
+satitization for HTTP request superglobals.
+
+ZDispatch - A very simple object with string properties describing a controller name,
+an action name within that controller, and parameters to pass to that action
+(key name=>value pairs).
+
+ZRouteSetInterface - Interface class for routing.  Routing is the process of
+translating an HTTP request to a ZDispatch object.  A class that implements
+ZRouteSetInterface is a collection that implements SPL iterator.  A parent
+object (usually ZFrontController) will iterate over an object that implements
+ZRouteSetInterface, and either a failure (false) or a ZDispatch object will be
+returned on each iteration.
+
+ZRouteSet - The default implementation of ZRouteSetInterface that is shipped
+with the framework.  It contains a parser that takes a string with a simple
+syntax for a rule that translates URI or a GET query to a ZDispatch object.  An
+array of these string rules is given to ZRouteSet, and the parent object
+(usually ZFrontController) can iterate over them as described above in ZRouteSetInterface.
+
+ZDispatcherInterface - Interface class for dispatching.  Dispatching is the
+process of taking a ZDispatch object, determining if it contains a valid mapping,
+and either returning with failure (false) or actually instantiating a controller,
+passing parameters (if any), and calling its action.
+
+ZDispatcher - Default implementation of ZDispatcherInterface.  When it receives
+a ZDispatch object, it looks in a controllers/ directory to see if a controller
+name ____Controller.php exists in that directory, where ____ is the controller
+named in the ZDispatch object.  If this file exists and a class of the same name
+exists in it that extends ZActionController, then ZDispatcher will use ReflectionClass
+to see if the action named in the ZDispatch object exists.  Finally, it ZDispatcher
+will see if the parameters (optionally) named in ZDispatch exist as public properties
+of that ZActionController.  If all of these conditions are met, ZDispatcher will report
+back that the ZObject can be dispatched.  Another method will actually do the
+dispatch; instantiating the controller, passing the parameters, and calling the action.
+
+ZActionController - Simple class that contains some method for calling other controllers.
+To dispatch to another controller from within an action, the static ::_route()
+method of ZActionController is used.  This method creates a ZDispatch object from the
+controller name, action name, and parameters passed to it.  ::_route() then
+pushes the ZDispatch object onto the stack in ZFrontController and returns.  It
+then returns and the action returns, allowing the PHP call stack to collapse.
+On return, ZFrontController attempts to dispatch the ZDispatch object.
+
+ZFrontController - Requires two components to be registered: a routing object
+(ZRouteSetInterface) and a dispatching object (ZDispatcherInterface).  By default,
+it will use ZRouteSet and ZDispatcher, respectively.  It may optionally contain
+many plugins (ZFrontControllerPluginInterface).
+
+It first iterates through its ZRouteSet, and receives either a failure (false)
+or a ZDispatch object on each iteration.  It then uses ZDispatch to see if the
+ZDispatch object is dispatchable.  If it is not, ZRouteSet is iterated to the
+next ZDispatch object and the process repeats.
+
+If the end of the ZRouteSet collection is reached without a dispatchable
+route being found, ZFrontController will throw exception on failure.  Normally,
+the last ZDispatch in the ZRouteSet will contain a default route or error page.
+
+As soon as the first ZDispatch is found in ZRouteSet that is dispatchable,
+ZFrontController stops iterating through ZRouteSet.  It then pushes the
+ZDispatch object onto a stack and enters the dispatch loop.  The dispatch loop
+calls ZDispatcher to actually instantiate the controller and call the action
+method.  When it is done, it returns to the dispatch loop.  At this time,
+another ZDispatch object may have been pushed onto the stack.  If it has, the
+dispatch loop checks that it is dispatchable and then dispatches it.  If it is
+not dispatchable, an exception occurs, since all ZDispatch objects pushed onto the
+stack during the dispatch loop should be dispatchable.  When the stack is empty,
+normal termination occurs and ZFrontController returns.
+
+ZFrontControllerPluginInterface - ZFrontController may contain any number of
+objects that implement ZFrontControllerPluginInterface.  The objects are called
+in the order that they are registered.  This interface class contains callbacks
+for both observing and proxying the behaviors of ZFrontController.  Please
+see the proposal ZFrontControllerPluginInterface-proposal.txt
+
