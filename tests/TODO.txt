@@ -1,0 +1,11 @@
+- Unit tests for Zend_Controller
+- Unit tests for Zend_Filter & Zend_InputFilter
+- Unit tests for Zend_Json
+- Unit tests for Zend_Log
+- Unit tests for Zend_Mail
+- Unit tests for Zend_Service web services
+- Unit tests for Zend_XmlRpc
+- Include code coverage reports in distribution and on website
+- Fix test configuration file
+- Provide instructions for running tests
+- Add testing requirements and methodology to best practices section of the manual

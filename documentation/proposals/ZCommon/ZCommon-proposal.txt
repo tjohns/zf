@@ -1,0 +1,138 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+Zend
+
+
+Proposers
+-----------------------------------------------
+Paul M. Jones
+Mike Naberezny
+
+
+Revision
+-----------------------------------------------
+$Id: ZCommon-proposal.txt,v 1.6 2005/11/15 18:31:47 mike Exp $
+
+
+Overview
+-----------------------------------------------
+A brief review of the current framework codebase reveals that similar functions 
+are required by different classes, such as automated loading of a related 
+support class.  Such functions can be refactored into a single common-functions 
+class to avoid repetition and inconsistent implementations.
+
+
+References
+-----------------------------------------------
+Solar (http://solarphp.com)
+
+
+
+Requirements
+-----------------------------------------------
+ - Provide a static method for loading classes and throw exception on failure
+ - Provide a centralized location for storing future shared functions
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+None
+
+
+Theory of Operation
+-----------------------------------------------
+The Zend class itself is to be a holding space for functionality commonly 
+required by other classes in the framework.  One example is automated loading 
+of support classes.  
+
+
+Class Index
+-----------------------------------------------
+Zend
+
+
+
+Use Cases
+-----------------------------------------------
+
+// replacement for ZInputFilter code.
+$base = dirname(__FILE__);
+$dirs = array("$base/filter", "$base/validator");
+try {
+    Zend::loadClass($filter, $dirs);
+} catch (ZException $e) {
+    throw new ZUriException("$filter class could not be loaded as a filter or validator.")
+}
+return new $filter($options);
+
+
+
+Class Skeletons
+-----------------------------------------------
+
+<?php
+abstract class Zend {
+    /**
+     * Loads a class from a PHP file.  The filename must be formatted
+     * as "$className.php".
+     * 
+     * If $dirs is a string or an array, it will search the directories
+     * in the order supplied, and attempt to load the first matching file.
+     * 
+     * If the file was not found in the $dirs, or if no $dirs were specified,
+     * it will attempt to load it from PHP's include_path.
+     * 
+     * @param  string $className
+     * @param  string $dirs
+     * @throws ZException
+     * @return void
+     */
+    static public function loadClass($className, $dirs=null) {}
+
+
+    /**
+     * Loads a PHP file.  This is a wrapper for PHP's include() function.
+     * 
+     * $filename must be the complete filename, including any
+     * extension such as ".php".
+     * 
+     * If $dirs is a string or an array, it will search the directories
+     * in the order supplied, and attempt to load the first matching file.
+     * 
+     * If the file was not found in the $dirs, or if no $dirs were specified,
+     * it will attempt to load it from PHP's include_path.
+     *
+     * If $once is TRUE, it will use include_once() instead of include().
+     * 
+     * @param  string        $filename
+     * @param  string|null   $directory
+     * @param  boolean       $once
+     * @throws ZException
+     * @return void
+     */
+    static public function loadFile($filename, $dirs=null, $once=false) {}    
+    
+    
+    /**
+     * The equivalent of is_readable(), but uses the include_path.
+     *
+     * @param string $file The file to look for.
+     * @return bool True if the file was found and readable, false if not.
+     */
+    static public function isReadable($file) {}
+    
+    
+    /**
+     * Debug helper function.  This is a wrapper for var_dump() that adds 
+     * the <pre> tags, cleans up newlines and indents, and runs 
+     * htmlentities() before output.
+     *
+     * @param  mixed  $var   The variable to dump.
+     * @param  string $label An optional label to prepend to the output.
+     * @return void
+     */
+    static public function dump($var, $label = null) {}    
+?>

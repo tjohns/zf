@@ -1,0 +1,25 @@
+General Tasks
+=============
+* go over error messages (we throw in exceptions)
+* which excpetion we declare we throw ? always declate ZXmlRpcClentException ? what to do when we catch other ZExceptions ?
+* better/full error handling of invalid xml structure. i.e.:
+    - XML we parse into a value looks like this: <value><array><data>amitg</data></array></value>
+    - or like this: <params><param><value><struct /></v></p...
+
+Zend_XmlRpc_Client Tasks
+===================
+
+Zend_XmlRpc_Value Tasks
+===================
+* add in the auto detect from php variable to native type, a way to auto detect dateTime natve types, use somekind of a preg to identify the iso8601 format...
+* do we want to give the user the option to create a specific i4 native values (or integer is good enough)
+* check the optimizer bug we have in the bool convertions in php 5.0.x (test2.php)
+* maybe to get the exact simplexml error, we should use the php_errormsg global:
+    @ini_set('track_errors', 1);
+    // do our simple xml action
+    @ini_restore('track_errors');
+    // get the global $php_errormsg
+* make sure the float values are always number without scientific format (to send 0.000006 and not 6.0E-5), we currenlty using sprintf for that
+* when parsing XML to struct value, if XML is not valid, throw exception or continue to next member ?
+* imporve _xml_entities method for string ?
+* add tab indentation to getAsXml() ?

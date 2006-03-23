@@ -1,0 +1,3 @@
+- Test cases
+- Documentation in docbook
+- Bug in _loadClass() only searches on directory, need to moved to Zend::loadClass()

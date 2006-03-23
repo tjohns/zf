@@ -1,0 +1,126 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+ZUserFrontControllerPlugin
+
+
+Proposers
+-----------------------------------------------
+Richard Allinson
+
+
+Revision
+-----------------------------------------------
+$Id: ZUserFrontControllerPlugin-proposal.txt,v 1.2 2005/11/08 18:42:41 richard Exp $
+
+
+Overview
+-----------------------------------------------
+Provides a mechanism for controlling access prior to code execution.
+
+
+References
+-----------------------------------------------
+None.
+
+
+Requirements
+-----------------------------------------------
+Allow access levels to be assessed before executing inaccessible code.
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+ZFrontController
+ZUser
+ZUserException
+
+
+Theory of Operation
+-----------------------------------------------
+ZUserFrontControllerPlugin is a front controller plug-in which provides a bridge to ZACL via ZUser. This controls the flow of ZActions in a ZFrontController based on user account permissions as defined in a ZACL instance.
+
+ZUserFrontControllerPlugin is called at the dispatchLoopStartup phase of a FrontController. The raw names of the controller and action stored in a ZAction object are passed in an array to the instance of ZUser. If access is granted the ZAction object is returned. If access is denied either false or a substitute action is returned.
+
+
+Class Index
+-----------------------------------------------
+ZUserFrontControllerPlugin
+
+
+Use Cases
+-----------------------------------------------
+$user = new ZUser();
+$zUserPlugin = new ZUserFrontControllerPlugin($user);
+
+ZFrontController::getInstance()->registerPlugin($zUserPlugin);
+
+
+Class Skeletons
+-----------------------------------------------
+
+class ZUserFrontControllerPlugin extends ZFrontControllerPlugin
+{
+	/**
+	 * Instance of ZUser
+	 * @var ZUser
+	 */
+	private $_user = null;
+	
+	/**
+	 * Instance of ZAction or boolean
+	 * @var ZAction|boolean
+	 */
+	private $_failureAction = false;
+	
+	/**
+	 * Instantiate the plugin.
+	 * 
+	 * @param  ZUser $acl
+	 */
+	public function __construct($zUser)
+	{
+		if($zUser instanceof ZUser)
+		{
+			$this->_user = $zUser;
+			return $this;
+		}
+		
+		throw new ZUserException(‘Must be of type ZUser’);
+	}
+	
+	/**
+	 * Sets the default ZAction to use on Authentication Failure.
+	 *
+	 * @param  ZAction|boolean $action
+	 */
+	public function setFailureAction($action)
+	{
+		if($action instanceof ZAction)
+		{
+			$this->_failureAction = $action;
+		}
+		
+		throw new ZUserException(‘Must be of type ZAction’);
+	}
+	
+	/**
+	 * Called before ZFrontController enters its dispatch loop.
+	 * During the dispatch loop.
+	 *
+	 * @param  ZAction|boolean $action
+	 * @return ZAction|boolean
+	 */
+	public function dispatchLoopStartup($action)
+	{
+		if($this->_user->getPermission(array($action->getControllerName(), $action->getActionName())))
+		{
+			return $action;
+		}
+		
+		return $this->_failureAction;
+	}
+}
+

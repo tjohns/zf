@@ -1,0 +1,33 @@
+Zend Framework                                                             NEWS
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=RELEASE 0.1.3 / ?-Mar-2006=
+- Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
+- Zend_InputFilter has test* methods for retrieving valid data. (Chris)
+- Fixed bug in Zend_View_Abstract::__isset(). Reported by James Simmons. (Mike)
+- Zend_Db_Adapter_Pdo_Mysql::limit() now compatible with MySQL versions prior
+  to 4.0. Reported by Greg Neustaetter (Mike)
+- Fixed bug in Zend_Controller_Dispatcher_Token::setParams(). Reported by Rob
+  Allen. (Chris)
+- Fixed bug in Zend_Log::log(). Reported by Mislav. (Mike)
+- Updated Zend_Filter::isFloat() and Zend_Filter::isInt() to respect locale.
+  (Chris)
+- Improved Zend_Db_Adapter_Pdo_Mssql contributed by Rob Allen. (Mike)
+
+=RELEASE 0.1.2 / 8-Mar-2006=
+- Unit test suite is now included. (Mike)
+- Docs for Zend_Controller are now included. (Mike)
+- Coding standards were out of date. Reported by Steph Fox. (Mike)
+- Fixed default charset in Zend_Mail constructor. Reported by Jakob Buchgraber. (Mike)
+- Fixed several Zend_Filter methods. (Chris)
+- Fixed JSON datum encoding.  Reported by Edwin Vlieg. (Mike)
+- Fixed FormRadio Helper.  Reported by AJ Tarachanowicz. (Chris)
+- Fixed Zend_Uri_Http to work with new Zend_Filter. (Chris, Mike)
+- Docs for the Zend_Db::factory() method were incorrect.  Reported by Dinh. (Chris)
+- Zend::loadClass() now works inside __autoload().  Reported by Rob Allen. (Mike)
+- Fixed notices from Zend_Pdf_Element_Dictionary.  Reported by Ralf Eggert. (Alex)
+- Fixed notices from Zend_Search_Lucene_Index_SegmentWriter.  Reported by Jared Williams. (Alex)
+- Removed defunct Zend_Db_DataObject docs. (Mike)
+- Added NEWS.txt file. (Andi)
+
+=RELEASE 0.1.1 / 3-Mar-2006=
+- Initial public code drop
