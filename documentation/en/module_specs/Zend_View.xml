@@ -513,7 +513,7 @@ if ($this->books) {
             
             <listitem><para>
                 formRadio($name, $value, $attribs, $options): Creates a
-                series of &lt;input type="button" /&gt; elements, one for
+                series of &lt;input type="radio" /&gt; elements, one for
                 each of the $options elements.  In the $options array, the
                 element key is the radio value, and the element value is the
                 radio label.  The $value radio will be preselected for you.
