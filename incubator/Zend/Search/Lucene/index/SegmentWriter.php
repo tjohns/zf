@@ -54,9 +54,12 @@ class Zend_Search_Lucene_Index_SegmentWriter
      * less acceleration and more
      * accelerable cases. More detailed experiments would be useful here.
      *
+     * 0x0x8FFFFFFF indicates that we don't use skip data
+     * Default value is 16
+     * 
      * @var integer
      */
-    static public $skipInterval = 16;
+    static public $skipInterval = 0x8FFFFFFF;
 
     /**
      * Number of docs in a segment
