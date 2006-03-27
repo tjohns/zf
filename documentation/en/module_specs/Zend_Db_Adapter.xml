@@ -250,7 +250,7 @@ $row = array (
 $table = 'round_table';
 
 // insert the row and get the row ID
-$rows_affected = $db->insert($table, $data);
+$rows_affected = $db->insert($table, $row);
 $last_insert_id = $db->lastInsertId();
 
 ?>]]></programlisting>
