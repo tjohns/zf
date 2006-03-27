@@ -683,6 +683,26 @@ class Zend_Pdf_Parser
         return $this->_pdfString;
     }
 
+
+    /**
+     * Parse integer value from a binary stream
+     *
+     * @param string $stream
+     * @param integer $offset
+     * @param integer $size
+     * @return integer
+     */
+    protected static function parseIntFromStream(&$stream, $offset, $size)
+    {
+        $value = 0;
+        for ($count = 0; $count < $size; $count++) {
+            $value *= 256;
+            $value += ord($stream{$offset + $count});
+        }
+
+        return $value;
+    }
+
     /**
      * Load XReference table and referenced objects
      *
@@ -804,12 +824,100 @@ class Zend_Pdf_Parser
             if ($trailerDict->Type->value != 'XRef') {
                 throw new Zend_Pdf_Exception(sprintf('PDF file syntax error. Offset - 0x%X.  Cross-reference stream object must have /Type property assigned to /XRef.', $offset));
             }
+            if ($trailerDict->W === null  || $trailerDict->W->getType() != Zend_Pdf_Element::TYPE_ARRAY) {
+                throw new Zend_Pdf_Exception(sprintf('PDF file syntax error. Offset - 0x%X. Cross reference stream dictionary doesn\'t have W entry or it\'s not an array.', $offset));
+            }
 
-            echo "Stream value:\n----------------------------------\n"
-                 . $xrefStream->value;
+            $entryField1Size = $trailerDict->W->items[0]->value;
+            $entryField2Size = $trailerDict->W->items[1]->value;
+            $entryField3Size = $trailerDict->W->items[2]->value;
+
+            if ($entryField2Size == 0 || $entryField3Size == 0) {
+                throw new Zend_Pdf_Exception(sprintf('PDF file syntax error. Offset - 0x%X. Wrong W dictionary entry. Only type field of stream entries has default value and could be zero length.', $offset));
+            }
+
+            $xrefStreamData = &$xrefStream->value;
+
+            if ($trailerDict->Index !== null) {
+                if ($trailerDict->Index->getType() != Zend_Pdf_Element::TYPE_ARRAY) {
+                    throw new Zend_Pdf_Exception(sprintf('PDF file syntax error. Offset - 0x%X. Cross reference stream dictionary Index entry must be an array.', $offset));
+                }
+                $sections = count($trailerDict->Index->items)/2;
+            } else {
+                $sections = 1;
+            }
+
+            $streamOffset = 0;
+
+            $size    = $entryField1Size + $entryField2Size + $entryField3Size;
+            $entries = strlen($xrefStreamData)/$size;
+            echo strlen($xrefStreamData) . "\n";
+  //            echo bin2hex($xrefStreamData) . "\n";exit;
+            for ($count = 0; $count < $entries; $count++) {
+                for ($count2 = 0; $count2 < $size; $count2++) {
+                    echo bin2hex($xrefStreamData{$count*$size + $count2}) . ' ';
+                }
+                echo "\n";
+            }
             exit;
 
-            throw new Zend_Exception(sprintf('Pdf file syntax error. Offset - 0x%X. \'xref\' lexeme expected.', $this->_current-strlen($nextLexeme)));
+            for ($count = 0; $count < $sections; $count++) {
+                if ($trailerDict->Index !== null) {
+                    $objNum  = $trailerDict->Index->items[$count*2    ]->value;
+                    $entries = $trailerDict->Index->items[$count*2 + 1]->value;
+                } else {
+                    $objNum  = 0;
+                    $entries = $trailerDict->Size->value;
+                }
+
+                for ($count2 = 0; $count2 < $entries; $count2++) {
+                    if ($entryField1Size == 0) {
+                        $type = 1;
+                    } else if ($entryField1Size == 1) { // Optimyze one-byte field case
+                        $type = ord($xrefStreamData{$streamOffset++});
+                    } else {
+                        $type = self::parseIntFromStream($xrefStreamData, $streamOffset, $entryField1Size);
+                        $streamOffset += $entryField1Size;
+                    }
+
+                    if ($entryField2Size == 1) { // Optimyze one-byte field case
+                        $field2 = ord($xrefStreamData{$streamOffset++});
+                    } else {
+                        $field2 = self::parseIntFromStream($xrefStreamData, $streamOffset, $entryField2Size);
+                        $streamOffset += $entryField2Size;
+                    }
+
+                    if ($entryField3Size == 1) { // Optimyze one-byte field case
+                        $field3 = ord($xrefStreamData{$streamOffset++});
+                    } else {
+                        $field3 = self::parseIntFromStream($xrefStreamData, $streamOffset, $entryField3Size);
+                        $streamOffset += $entryField3Size;
+                    }
+
+                    switch ($type) {
+                        case 0:
+                            // Free object
+                            echo "Free object - $objNum $field3 R, next free - $field2\n";
+                            break;
+
+                        case 1:
+                            // In use object
+                            echo "In-use object - $objNum $field3 R, offset - $field2\n";
+                            break;
+
+                        case 2:
+                            // Object in an object stream
+                            echo "Compressed object - $objNum 0 R, object stream - $field2 0 R, offset - $field3\n";
+                            break;
+                    }
+
+                    $objNum++;
+                }
+            }
+
+            echo $streamOffset . ' ' . strlen($xrefStreamData) . "\n";
+            echo "$entries\n";
+            exit;
         }
 
 

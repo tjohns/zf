@@ -34,7 +34,7 @@ require_once 'Zend/Pdf/Element/Reference/Context.php';
  */
 abstract class Zend_Pdf_Trailer
 {
-    static private $_allowedKeys = array('Size', 'Prev', 'Root', 'Encrypt', 'Info', 'ID');
+    static private $_allowedKeys = array('Size', 'Prev', 'Root', 'Encrypt', 'Info', 'ID', 'Index', 'W');
 
     /**
      * Trailer dictionary.
