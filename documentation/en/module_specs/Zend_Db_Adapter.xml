@@ -29,7 +29,7 @@ $params = array ('host'     => '127.0.0.1',
                  'password' => '******',
                  'dbname'   => 'camelot');
 
-$db = Zend_Db::factory('pdo_mysql', $params);
+$db = Zend_Db::factory('pdoMysql', $params);
 
 ?>]]></programlisting>
 
