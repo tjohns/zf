@@ -245,7 +245,9 @@ final class Zend
         // neaten the newlines and indents
         $output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
         if (PHP_SAPI == 'cli') {
-            $output = "\n$label\n$output\n";
+            $output = PHP_EOL . $label
+                    . PHP_EOL . $output 
+                    . PHP_EOL;
         } else {
             $output = '<pre>'
                     . $label
