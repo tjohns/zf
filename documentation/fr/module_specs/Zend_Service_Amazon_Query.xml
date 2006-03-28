@@ -1,0 +1,43 @@
+<sect2 id="zend.service.amazon.query">
+    <title>Using the Alternative Query API</title>
+    <sect3 id="zend.service.amazon.query.introduction">
+        <title>Introduction</title>
+        <para>
+            <code>Zend_Service_Amazon_Query</code> provides an alternative API for using the Amazon Web Service.
+            The alternative API uses the Fluent Interface pattern. That is, all calls can be made using chained method
+            calls. (e.g., <code>$obj->method()->method2($arg)</code>)
+        </para>
+        <para>
+            The <code>Zend_Service_Amazon_Query</code> API uses overloading to easily set up an item search and then
+            allows you to search based upon the criteria specified. Each of the options is provided as a method call,
+            and each method's argument corresponds to the named option's value:
+        </para>
+        <example>
+            <title>Search Amazon Using the Alternative Query API</title>
+            <para>
+                In this example, the alternative query API is used as a fluent interface to specify options and their
+                respective values:
+            </para>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Amazon/Query.php';
+$query = new Zend_Service_Amazon_Query('MY_API_KEY');
+$query->Category('Books')->Keywords('PHP');
+$results = $query->search();
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}
+?>]]>       </programlisting>
+            <para>
+                This sets the option <code>Category</code> to "Books" and <code>Keywords</code> to "PHP".
+            </para>
+            <para>
+                For more information on the available options, please refer to the
+                <ulink
+                    url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>.
+            </para>
+        </example>
+    </sect3>
+</sect2>
+<!--
+vim:se ts=4 sw=4 et:
+-->
