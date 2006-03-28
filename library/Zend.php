@@ -244,10 +244,14 @@ final class Zend
 
         // neaten the newlines and indents
         $output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
-        $output = '<pre>'
-                . $label
-                . htmlentities($output, ENT_QUOTES)
-                . '</pre>';
+        if (PHP_SAPI == 'cli') {
+            $output = "\n$label\n$output\n";
+        } else {
+            $output = '<pre>'
+                    . $label
+                    . htmlentities($output, ENT_QUOTES)
+                    . '</pre>';
+        }
 
         if ($echo) {
             echo($output);
