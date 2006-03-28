@@ -852,7 +852,6 @@ class Zend_Pdf_Parser
             $size    = $entryField1Size + $entryField2Size + $entryField3Size;
             $entries = strlen($xrefStreamData)/$size;
             echo strlen($xrefStreamData) . "\n";
-  //            echo bin2hex($xrefStreamData) . "\n";exit;
             for ($count = 0; $count < $entries; $count++) {
                 for ($count2 = 0; $count2 < $size; $count2++) {
                     echo bin2hex($xrefStreamData{$count*$size + $count2}) . ' ';

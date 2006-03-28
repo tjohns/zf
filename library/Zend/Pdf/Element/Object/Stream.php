@@ -281,6 +281,22 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
 
 
     /**
+     * Convert stream data according to the filter param set.
+     *
+     * @param array $params
+     * @param boolean $decode
+     */
+    private function _applyParams($params, $decode) {
+        if ($decode) {
+            if (isset($params['Predictor'])) {
+                if ($params['Predictor'] == 2) {
+                    ;
+                }
+            }
+        }
+    }
+
+    /**
      * Decode data encoded by FlateDecode filter
      *
      * @param string $input
@@ -340,6 +356,9 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
 
                 case 'FlateDecode':
                     $this->_value->value = self::_FlateDecode($this->_value->value);
+                    if (count($this->_originalDictionary['DecodeParms'][$id]) != 0) {
+                        $this->_applyParams($this->_originalDictionary['DecodeParms'][$id], true);
+                    }
                     break;
 
                 default:
@@ -379,6 +398,9 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
                     break;
 
                 case 'FlateDecode':
+                    if (count($this->_originalDictionary['DecodeParms'][$id]) != 0) {
+                        $this->_applyParams($this->_originalDictionary['DecodeParms'][$id], false);
+                    }
                     $this->_value->value = self::_FlateEncode($this->_value->value);
                     break;
 
@@ -442,6 +464,15 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
 
 
     /**
+     * Treat stream data as already encoded
+     */
+    public function skipFilters()
+    {
+        $this->_streamDecoded = false;
+    }
+
+
+    /**
      * Call handler
      *
      * @param string $method
@@ -494,7 +525,7 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
         }
 
         // Update stream length
-        $this->dictionary->Length->value = $this->length();
+        $this->dictionary->Length->value = $this->_value->length();
 
         return  $this->_objNum + $shift . " " . $this->_genNum . " obj \n"
              .  $this->dictionary->toString($factory) . "\n"

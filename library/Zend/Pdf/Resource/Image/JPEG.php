@@ -69,7 +69,11 @@ class Zend_Pdf_Image_JPEG extends Zend_Pdf_Image
         $imageDictionary->Height           = new Zend_Pdf_Element_Numeric($imageInfo[1]);
         $imageDictionary->ColorSpace       = new Zend_Pdf_Element_Name($colorSpace);
         $imageDictionary->BitsPerComponent = new Zend_Pdf_Element_Numeric($imageInfo['bits']);
-        $imageDictionary->Filter           = new Zend_Pdf_Element_Name('DCTDecode');
+        if ($imageInfo[2] == IMAGETYPE_JPEG) {
+            $imageDictionary->Filter       = new Zend_Pdf_Element_Name('DCTDecode');
+        } else if ($imageInfo[2] == IMAGETYPE_JPEG2000){
+            $imageDictionary->Filter       = new Zend_Pdf_Element_Name('JPXDecode');
+        }
 
         if (($imageFile = @fopen($imageFileName, 'rb')) === false ) {
             throw new Zend_Pdf_Exception( "Can not open '$imageFileName' file for reading." );
@@ -81,9 +85,7 @@ class Zend_Pdf_Image_JPEG extends Zend_Pdf_Image
             $byteCount -= strlen($nextBlock);
         }
         fclose($imageFile);
-
-        $imageDictionary->Length->value = strlen($this->_resource->value);
-
+        $this->_resource->skipFilters();
     }
 }
 
