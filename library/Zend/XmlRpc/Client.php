@@ -29,6 +29,11 @@ require_once 'Zend/HttpClient.php';
 require_once 'Zend/XmlRpc/Client/Exception.php';
 
 /**
+ * Enables object chaining for calling namespaced XML-RPC methods.
+ */
+require_once 'Zend/XmlRpc/Client/NamespaceDecorator.php';
+
+/**
  * Represent a native XML-RPC value, used both in sending parameters
  * to methods and as the parameters retrieve from method calls
  */
@@ -66,12 +71,9 @@ class Zend_XmlRpc_Client
     protected $_response = null;
 
     /**
-     * The default namespace to prepend to method names.  The namespace is only prepended
-     * if the name of the method calls does not contain the namespace separator (a period).
-     *
-     * @var string|null
+     * @var Zend_XmlRpc_Client_NamespaceDecorator|null
      */
-    protected $_namespace = null;
+    protected $_namespaceDecorator = null;
 
 
     /**
@@ -93,21 +95,34 @@ class Zend_XmlRpc_Client
      * @param string $server      Full address of the XML-RPC service
      *                            (e.g. http://time.xmlrpc.com/RPC2)
      *
-     * @param string $namespace   The default namespace to be prepended to method
-     *                            calls that do not specify a namespace, or null.
-     *
      * @param string $methodsXml  Method signatures in XML format, used for type
      *                            hinting during the PHP->XMLRPC type conversions.
      *                            {@see __getMethodsXml() for more information}
      */
-    public function __construct($server, $namespace = null, $methodsXml = null)
+    public function __construct($server, $methodsXml = null)
     {
         $this->_serverAddress = $server;
-        $this->__setNamespace($namespace);
         $this->__setMethodsXml($methodsXml);
     }
 
 
+    /**
+     * Undefined properties are assumed to be XML-RPC namespaces
+     * and return a decorator to enable object chains.
+     *
+     * @param  string $methodName
+     * @return Zend_XmlRpc_Client_NamespaceDecorator
+     */
+    public function __get($methodName)
+    {
+        if (!isset($this->_namespaceDecorator)) {
+            $this->_namespaceDecorator = new Zend_XmlRpc_Client_NamespaceDecorator($methodName, $this);
+        }
+        
+        return $this->_namespaceDecorator;
+    }
+    
+    
     /**
      * Using the magic __call function to call methods directly by method name
      *
@@ -116,11 +131,6 @@ class Zend_XmlRpc_Client
      */
     public function __call($methodName, $params)
     {
-        // Add the pre-defined namespace to the method name (if exists)
-        if (isset($this->_namespace) && (strpos($methodName, '.') === false)) {
-            $methodName = "{$this->_namespace}.$methodName";
-        }
-        
         // Convert the parameters to Zend_XmlRpc_Value objects
         $this->_convertParams($params, $methodName);
         
@@ -138,36 +148,14 @@ class Zend_XmlRpc_Client
      */
     public function __xmlrpcCall($methodName)
     {
-        return $this->__call($methodName,
-                              func_num_args() > 1 ? array_shift(func_get_args()) : null);
-    }
-
-
-    /**
-     * Sets the default namespace for XML-RPC calls.  When a method call is
-     * made and the name of the method does not contain a period, the default
-     * namespace will be prepended to the method name if one was set.
-     *
-     * @param  string|null $namespace If null, it will overwrite existing namespace
-     */
-    public function __setNamespace($namespace = null) {
-        if ($namespace === null) {
-            $this->_namespace = null;
-        } elseif (is_string($namespace)) {
-            $this->_namespace = rtrim($namespace, '.');
-        } else {    // Invalid namespace parameter
-            throw new Zend_XmlRpc_Client_Exception('Default namespace must be a string or null for none');
-        }
-    }
-
-
-    /**
-     * Returns the default namespace or null if there is not one.
-     *
-     * @return string|null
-     */
-    public function __getNamespace() {
-        return $this->_namespace;
+        $params = func_num_args() > 1 ? array_shift(func_get_args()) 
+                                                       : null;
+        
+        // Convert the parameters to Zend_XmlRpc_Value objects.
+        $this->_convertParams($params, $methodName);
+        
+        // Call the remote method.
+        return $this->_sendRequest($methodName, $params);
     }
 
 
