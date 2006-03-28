@@ -16,6 +16,7 @@ Zend Framework                                                             NEWS
   (Chris)
 - Zend::dump() now works from CLI (Rob Allen)
 - Improved support for XML-RPC namespaces (Mike, Chuck)  
+- Registry can now be tested with Zend::isRegistered (Shekar C. Reddy, Mike)
 
 =RELEASE 0.1.2 / 8-Mar-2006=
 - Unit test suite is now included. (Mike)

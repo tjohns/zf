@@ -169,9 +169,12 @@ class ZendTest extends PHPUnit2_Framework_TestCase
      *   2. attempting to register the same object throws an exception.
      *   3. the object is returned by registry('objectName').
      *   4. the object is listed in the array returned by registry().
+     *   5. isRegistered() returns correct states.
      */
     public function testRegistry()
     {
+        $this->assertFalse(Zend::isRegistered('objectName'));
+        
         /**
          * Register an object
          */
@@ -179,6 +182,8 @@ class ZendTest extends PHPUnit2_Framework_TestCase
         // throws exception on failure
         Zend::register('objectName', $obj);
 
+        $this->assertTrue(Zend::isRegistered('objectName'));
+        
         /**
          * Attempt to register the same object again
          */

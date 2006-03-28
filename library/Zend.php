@@ -343,6 +343,16 @@ final class Zend
         return self::$_registry[$name];
     }
 
+    
+    /**
+     * Returns TRUE if the $name is a named object in the
+     * registry, or FALSE if $name was not found in the registry.
+     *
+     * @param  string $name
+     * @return boolean
+     */
+    static public function isRegistered($name)
+    {
+        return isset(self::$_registry[$name]);
+    }
 }
-
-

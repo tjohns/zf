@@ -200,6 +200,10 @@ registry($name=null)
     an object does not exist in the registry with that <code>$name</code>, a
     <code>Zend_Exception</code> will be thrown.
     </para>
+
+    <para>
+    To quickly determine if an object is present in the registry, use Zend::isRegistered().
+    </para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
