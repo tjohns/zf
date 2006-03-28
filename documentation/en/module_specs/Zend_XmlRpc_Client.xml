@@ -11,35 +11,24 @@
             <title>A basic XML-RPC request</title>
             <programlisting role="php"><![CDATA[<?php
 /**
- * Connect to time.xmlrpc.com server and return the current date-time, expressed in seconds since January 1, 1900
+ * Connect to framework.zend.com server and an array describing
+ * the methods available.
  */
 require_once 'Zend/XmlRpc/Client.php';
 
-$timeServer = new Zend_XmlRpc_Client('http://time.xmlrpc.com/RPC2');
+$server = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
-$timestamp = $timeServer->{'currentTime.getCurrentTime'}()
+print_r( $server->system->listMethods() );
 
-printf('Current time is %s', date('H:i:s, d-M-Y',$timestamp));
 ?>]]>
             </programlisting>
         </example>
         <para>
             <note>
-                If a service procedure contains a namespace and a period (i.e. currentTime.getCurrentTime), it must be wrapped with quotes and curley brackets (i.e. <code>$timeServer->{'currentTime.getCurrentTime'}()</code>).
-            </note>
-        </para>
-        <para>
-            When you want to call several procedures with the same namespace, you can specify the namespace of the procedures in the <code>Zend_XmlRpc_Client</code> constructor and use only the procedures name when calling the methods.
-        </para>
-        <programlisting role="php"><![CDATA[...
-$timeServer = new Zend_XmlRpc_Client('http://time.xmlrpc.com/RPC2', 'currentTime');
-
-$timestamp = $timeServer->getCurrentTime()
-...]]>
-        </programlisting>
-        <para>
-            <note>
-                You can use the <code>Zend_XmlRpc_Client::__setNamespace()</code> function to set a different namespace to your service or to remove the curret used namespace.
+                <code>Zend_XmlRpc_Client</code> attempts to make remote methods look as much like
+                native methods as possible.  If a remote method contains namespaces, such as 
+                <code>system.listMethods()</code> above, the call is made using object
+                chaining in PHP: <code>$server->system->listMethods()</code>.
             </note>
         </para>
     </sect2>
