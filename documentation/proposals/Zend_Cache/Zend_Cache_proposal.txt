@@ -1,0 +1,206 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+Zend_Cache
+
+
+Proposers
+-----------------------------------------------
+Fabien MARTY <fab@php.net>
+Mislav MAROHNIC <mislav.marohnic@gmail.com>
+
+
+Revision
+-----------------------------------------------
+1.0.0
+
+
+Overview
+-----------------------------------------------
+Zend_Cache is a generic caching module designed for high performances and for
+a really safe use (file locking, anti-corruption tests...) even on really high
+load. The core of Zend_Cache is really flexible and can be used to cache any
+types of datas. Some frontends are available for specific caching needs (output
+buffering, "method calls" caching...). Cached datas are stored by the choosen
+backend (in files, in a SQLITE database...). 
+ 
+
+References
+-----------------------------------------------
+PEAR/Cache_Lite
+
+
+Requirements
+-----------------------------------------------
+PHP5
+Zend_Framework
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+Zend_Log (optional)
+Zend_Exception
+
+
+Theory of Operation
+-----------------------------------------------
+First, the user use a static Zend_Cache::factory() call with backend, frontend 
+names and options as arguments. The factory builds the corresponding
+Zend_Cache_Frontend_* object (which extends Zend_Cache_Core), sets the
+corresponding backend object inside it, set corresponding options (for backend
+and frontend) and returns the "ready to use" frontend.
+
+Note : for perfs reasons, if you don't want any specific frontend, the 
+factory() method will return directly a Zend_Cache_Core object.
+
+Then, the user will use this "ready to use" object. Available methods
+depend on frontend type but for a classical use, there are 5 main methods :
+- get()
+- test()
+- save()
+- remove()
+- clean()
+
+The main part of the "real work" of these methods will be delegated to the 
+corresponding backend object by the core.
+
+
+Class Index
+-----------------------------------------------
+Zend_Cache (public)
+Zend_Cache_Core
+Zend_Cache_Exception
+Zend_Cache_Backend_Interface
+Zend_Cache_Backend_File
+Zend_Cache_Backend_Sqlite
+Zend_Cache_Frontend_Class
+Zend_Cache_Frontend_File
+Zend_Cache_Frontend_Function
+Zend_Cache_Frontend_Output
+
+
+Use Cases
+-----------------------------------------------
+<?php
+
+# Use of the Core
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+    'automaticSerialization' => true
+);
+
+$backendOptions = array(
+    'lifetime' => 3600,
+    'cacheDir' => '/tmp/',
+    'hashedDirectoryLevel' => 2
+);
+
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+$id = '123456' ; // Cache id
+
+if ($cache->test($id)) {
+    // cache is not hit !
+    // we have to build data
+    
+    $data = array();
+    for ($i=0 ; $i<100 ; $i++) {
+        $data[$i] = $i * $i;
+    }
+    $cache->save($data);
+
+} else {
+   // cache is hit
+
+   $data = $cache->get($id);
+
+}
+print_r($data);
+
+?>
+
+<?php
+
+# Use of the Output buffering frontend
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array();
+
+$backendOptions = array(
+    'lifetime' => 3600,
+    'cacheDir' => '/tmp/'
+);
+
+$cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
+
+$id = '123' ; // Cache id
+
+if ($cache->start($id)) {
+    // cache is not hit !
+    // we have to build the page
+
+    for ($i=0 ; $i<100 ; $i++) {
+        echo($i . '<br/>');
+    }
+    $cache->end();
+}
+
+?>
+
+
+Class Skeletons
+-----------------------------------------------
+
+*** Only the most significant methods ***
+
+static class Zend_Cache {
+    static public function factory($frontend, $backend, $frontendOptions = array(), $backendOptions = array())
+} 
+
+class Zend_Cache_Core {
+    public function __construct($options = array())
+    public function setBackend($backendObject) # Called only by Zend_Cache factory method
+    public function setOption($name, $value)
+    public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
+    public function test($id) 
+    public function save($data, $id = null, $tags = array())
+    public function remove($id)
+    public function clean($mode = 'all', $tags = array())  
+}
+
+class Zend_Cache_Frontend_Output extends Zend_Cache_Core {
+    # To cache the output of a script
+    public function __construct($options = array())
+    public function start($id, $tags = array(), $doNotTestCacheValidity = false)
+    public function end()
+}
+
+class Zend_Cache_Frontend_Function extends Zend_Cache_Core {
+    # To cache a function call
+    public function __construct($options = array())
+    public function call($name, $parameters)
+}
+
+class Zend_Cache_Frontend_Class extends Zend_Cache_Core {
+    # To cache method calls (in a transparent way)
+    public function __construct($options = array())
+    public function __call($name, $parameters)
+}
+
+class Zend_Cache_Frontend_File extends Zend_Cache_Core {
+    # To get a cache which the validity depends on a master file
+    # (really usefull for a config file for example, the cache
+    #  is valid until the config file is touched)
+    public function __construct($options = array())
+    public function get($id, $doNotTestCacheValidity = false)
+    public function test($id) 
+}
+
+
+
+
