@@ -24,6 +24,17 @@ require_once 'Zend/Pdf/Element/Object.php';
 /** Zend_Pdf_Element_Stream */
 require_once 'Zend/Pdf/Element/Stream.php';
 
+/** Zend_Pdf_Filter_ASCII85 */
+require_once 'Zend/Pdf/Filter/ASCII85.php';
+
+/** Zend_Pdf_Filter_ASCIIHEX */
+require_once 'Zend/Pdf/Filter/ASCIIHEX.php';
+
+/** Zend_Pdf_Filter_Compression_Flate */
+require_once 'Zend/Pdf/Filter/Compression/Flate.php';
+
+/** Zend_Pdf_Filter_Compression_LZW */
+require_once 'Zend/Pdf/Filter/Compression/LZW.php';
 
 /**
  * PDF file 'stream object' element implementation
@@ -159,171 +170,6 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
         }
     }
 
-
-    /**
-     * Decode data encoded by ASCIIHexDecode filter
-     *
-     * @param string $input
-     * @return string
-     * @throws Zend_Pdf_Exception
-     */
-    private static function _ASCIIHexDecode(&$input)
-    {
-        $output  = '';
-        $oddCode = true;
-        $commentMode = false;
-
-        for ($count = 0; $count < strlen($input)  &&  $input{$count} != '>'; $count++) {
-            $charCode = ord($input{$count});
-
-            if ($commentMode) {
-                if ($charCode == 0x0A  || $charCode == 0x0D ) {
-                    $commentMode = false;
-                }
-
-                continue;
-            }
-
-            switch ($charCode) {
-                //Skip white space
-                case 0x00: // null character
-                    // fall through to next case
-                case 0x09: // Tab
-                    // fall through to next case
-                case 0x0A: // Line feed
-                    // fall through to next case
-                case 0x0C: // Form Feed
-                    // fall through to next case
-                case 0x0D: // Carriage return
-                    // fall through to next case
-                case 0x20: // Space
-                    // Do nothing
-                    break;
-
-                case 0x25: // '%'
-                    // Switch to comment mode
-                    $commentMode = true;
-                    break;
-
-                default:
-                    if ($charCode >= 0x30 /*'0'*/ && $charCode <= 0x39 /*'9'*/) {
-                        $code = $charCode - 0x30;
-                    } else if ($charCode >= 0x41 /*'A'*/ && $charCode <= 0x46 /*'F'*/) {
-                        $code = $charCode - 0x37/*0x41 - 0x0A*/;
-                    } else if ($charCode >= 0x61 /*'a'*/ && $charCode <= 0x66 /*'f'*/) {
-                        $code = $charCode - 0x57/*0x61 - 0x0A*/;
-                    } else {
-                        throw new Zend_Pdf_Exception('Wrong character in a encoded stream');
-                    }
-
-                    if ($oddCode) {
-                        $hexCodeHigh = $code;
-                    } else {
-                        $output .= chr($hexCodeHigh*16 + $code);
-                    }
-
-                    $oddCode = !$oddCode;
-
-                    break;
-            }
-        }
-
-        /* Check that stream is terminated by End Of Data marker */
-        if ($input{$count} != '>') {
-            throw new Zend_Pdf_Exception('Wrong character in a encoded stream');
-        }
-
-        /* Last '0' character is omitted */
-        if (!$oddCode) {
-            $output .= chr($hexCodeHigh*16);
-        }
-
-        return $output;
-    }
-
-    /**
-     * Encode data by ASCIIHexDecode filter
-     *
-     * @param string $input
-     * @return string
-     * @throws Zend_Pdf_Exception
-     */
-    private static function _ASCIIHexEncode(&$input)
-    {
-        return bin2hex($input) . '>';
-    }
-
-
-
-    /**
-     * Decode data encoded by ASCII85Decode filter
-     *
-     * @param string $input
-     * @return string
-     * @throws Zend_Pdf_Exception
-     */
-    private static function _ASCII85Decode(&$input)
-    {
-        throw new Zend_Pdf_Exception('Not implemented yet');
-    }
-
-    /**
-     * Encode data by ASCII85Decode filter
-     *
-     * @param string $input
-     * @return string
-     * @throws Zend_Pdf_Exception
-     */
-    private static function _ASCII85Encode(&$input)
-    {
-        throw new Zend_Pdf_Exception('Not implemented yet');
-    }
-
-
-    /**
-     * Convert stream data according to the filter param set.
-     *
-     * @param array $params
-     * @param boolean $decode
-     */
-    private function _applyParams($params, $decode) {
-        if ($decode) {
-            if (isset($params['Predictor'])) {
-                if ($params['Predictor'] == 2) {
-                    ;
-                }
-            }
-        }
-    }
-
-    /**
-     * Decode data encoded by FlateDecode filter
-     *
-     * @param string $input
-     * @return string
-     * @throws Zend_Pdf_Exception
-     */
-    private static function _FlateDecode(&$input)
-    {
-        if (extension_loaded('zlib')) {
-            return gzuncompress($input);
-        } else {
-            throw new Zend_Pdf_Exception('Not implemented yet');
-        }
-    }
-
-    /**
-     * Encode data by FlateDecode filter
-     *
-     * @param string $input
-     * @return string
-     * @throws Zend_Pdf_Exception
-     */
-    private static function _FlateEncode(&$input)
-    {
-        throw new Zend_Pdf_Exception('Not implemented yet');
-    }
-
     /**
      * Decode stream
      *
@@ -347,18 +193,21 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
         foreach ($this->_originalDictionary['Filter'] as $id => $filterName ) {
             switch ($filterName) {
                 case 'ASCIIHexDecode':
-                    $this->_value->value = self::_ASCIIHexDecode($this->_value->value);
+                    $this->_value->value = Zend_Pdf_Filter_ASCIIHEX::decode($this->_value->value);
                     break;
 
                 case 'ASCII85Decode':
-                    $this->_value->value = self::_ASCII85Decode($this->_value->value);
+                    $this->_value->value = Zend_Pdf_Filter_ASCII85::decode($this->_value->value);
                     break;
 
                 case 'FlateDecode':
-                    $this->_value->value = self::_FlateDecode($this->_value->value);
-                    if (count($this->_originalDictionary['DecodeParms'][$id]) != 0) {
-                        $this->_applyParams($this->_originalDictionary['DecodeParms'][$id], true);
-                    }
+                    $this->_value->value = Zend_Pdf_Filter_Compression_Flate::decode($this->_value->value,
+                                                                                     $this->_originalDictionary['DecodeParms'][$id]);
+                    break;
+
+                case 'LZWDecode':
+                    $this->_value->value = Zend_Pdf_Filter_Compression_LZW::decode($this->_value->value,
+                                                                                   $this->_originalDictionary['DecodeParms'][$id]);
                     break;
 
                 default:
@@ -390,18 +239,21 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
         foreach ($filters as $id => $filterName ) {
             switch ($filterName) {
                 case 'ASCIIHexDecode':
-                    $this->_value->value = self::_ASCIIHexEncode($this->_value->value);
+                    $this->_value->value = Zend_Pdf_Filter_ASCIIHEX::encode($this->_value->value);
                     break;
 
                 case 'ASCII85Decode':
-                    $this->_value->value = self::_ASCII85Encode($this->_value->value);
+                    $this->_value->value = Zend_Pdf_Filter_ASCII85::encode($this->_value->value);
                     break;
 
                 case 'FlateDecode':
-                    if (count($this->_originalDictionary['DecodeParms'][$id]) != 0) {
-                        $this->_applyParams($this->_originalDictionary['DecodeParms'][$id], false);
-                    }
-                    $this->_value->value = self::_FlateEncode($this->_value->value);
+                    $this->_value->value = Zend_Pdf_Filter_Compression_Flate::encode($this->_value->value,
+                                                                                     $this->_originalDictionary['DecodeParms'][$id]);
+                    break;
+
+                case 'LZWDecode':
+                    $this->_value->value = Zend_Pdf_Filter_Compression_LZW::encode($this->_value->value,
+                                                                                   $this->_originalDictionary['DecodeParms'][$id]);
                     break;
 
                 default:

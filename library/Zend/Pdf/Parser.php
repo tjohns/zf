@@ -851,14 +851,6 @@ class Zend_Pdf_Parser
 
             $size    = $entryField1Size + $entryField2Size + $entryField3Size;
             $entries = strlen($xrefStreamData)/$size;
-            echo strlen($xrefStreamData) . "\n";
-            for ($count = 0; $count < $entries; $count++) {
-                for ($count2 = 0; $count2 < $size; $count2++) {
-                    echo bin2hex($xrefStreamData{$count*$size + $count2}) . ' ';
-                }
-                echo "\n";
-            }
-            exit;
 
             for ($count = 0; $count < $sections; $count++) {
                 if ($trailerDict->Index !== null) {
@@ -896,11 +888,13 @@ class Zend_Pdf_Parser
                     switch ($type) {
                         case 0:
                             // Free object
+                            $refTable->addReference($objNum . ' ' . $field3 . ' R', $field2, false);
                             echo "Free object - $objNum $field3 R, next free - $field2\n";
                             break;
 
                         case 1:
                             // In use object
+                            $refTable->addReference($objNum . ' ' . $field3 . ' R', $field2, true);
                             echo "In-use object - $objNum $field3 R, offset - $field2\n";
                             break;
 
