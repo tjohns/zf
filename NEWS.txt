@@ -14,7 +14,8 @@ Zend Framework                                                             NEWS
 - Improved Zend_Db_Adapter_Pdo_Mssql contributed by Rob Allen. (Mike)
 - Fixed bug in Zend_Controller_Dispatcher::_formatName. Reported by Arpad Ray.
   (Chris)
-
+- Zend::dump() now works from CLI (Rob Allen)
+  
 =RELEASE 0.1.2 / 8-Mar-2006=
 - Unit test suite is now included. (Mike)
 - Docs for Zend_Controller are now included. (Mike)
