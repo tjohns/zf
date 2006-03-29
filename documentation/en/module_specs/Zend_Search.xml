@@ -2,10 +2,10 @@
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Introduction</title>
     <para>
-  ZSearch is a general purpose text search engine written entirely in PHP 5.
+  Zend_Search_Lucene is a general purpose text search engine written entirely in PHP 5.
   Since it stores its index on the filesystem and does not require a database
   server, it can add search capabilities to almost any PHP-driven website.
-  ZSearch supports the following features:
+  Zend_Search_Lucene supports the following features:
     <itemizedlist>
         <listitem>
             <para>Ranked searching - best results returned first</para>
@@ -25,7 +25,7 @@
             <para>Search by specific field (e.g., title, author, contents)</para>
         </listitem>
     </itemizedlist>
-  ZSearch was derived from the Apache Lucene project.  For more information on Lucene, visit
+  Zend_Search_Lucene was derived from the Apache Lucene project.  For more information on Lucene, visit
   <ulink url="http://lucene.apache.org/java/docs/"/>.
     </para>
 </sect1>
@@ -33,7 +33,7 @@
 <sect1 id="zend.search.file-formats">
     <title>File Formats</title>
     <para>
-      ZSearch index file formats are binary compatible with a Lucene
+      Zend_Search_Lucene index file formats are binary compatible with a Lucene
       version 1.4 and above.
     </para>
 
@@ -46,7 +46,7 @@
 <sect1 id="zend.search.document-object">
     <title>Document Object</title>
     <para>
-    ZSearch operates with documents as atomic subjects for indexing.  A document is
+    Zend_Search_Lucene operates with documents as atomic subjects for indexing.  A document is
     divided into named fields, and fields have content that can be searched.
     </para>
 
@@ -90,17 +90,17 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', 'My cool document 
 <sect1 id="zend.search.index-creation">
     <title>Creating and Updating the Index</title>
     <para>
-    Index creation and updating capabilities are implemented within ZSearch module and Java Lucene.
+    Index creation and updating capabilities are implemented within Zend_Search_Lucene module and Java Lucene.
     You can use both of these capabilities.
     </para>
 
     <para>
     The PHP code listing below provides an example of how to index a file
-    using ZSearch indexing API:
+    using Zend_Search_Lucene indexing API:
     </para>
 
     <programlisting role="php"><![CDATA[
-$index = new ZSearch('/data/my-index', true /* true to create new index */);
+$index = new Zend_Search_Lucene('/data/my-index', true /* true to create new index */);
 
 $doc = new Zend_Search_Lucene_Document();
 // Store document URL to identify it in search result.
@@ -113,24 +113,24 @@ $index->addDocument($doc);]]>
     </programlisting>
 
     <para>
-    <code>ZSearchAnalyzer</code> class is used by indexer to tokenize document
+    <code>Zend_Search_Lucene_Analysis_Analyzer</code> class is used by indexer to tokenize document
     text fields.
     </para>
     <para>
-    <code>ZSearchAnalyzer::getDefault()</code> and <code>ZSearchAnalyzer::setDefault()</code> methods are used
+    <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> and <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code> methods are used
     to get and set default analyser.
     </para>
     <para>
     Thus you can assign your own text analayser or choose it from the set of predefined analysers:
-    <code>ZSearchTextAnalyser</code> and <code>ZSearchTextCIAnalyser</code> (default).
-    Both of them interpret token as a sequense of letters. <code>ZSearchTextCIAnalyser</code> converts tokens
+    <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</code> and <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> (default).
+    Both of them interpret token as a sequense of letters. <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> converts tokens
     to lower case.
     </para>
     <para>
     To switch between analysers use code:
     </para>
     <programlisting role="php"><![CDATA[
-ZSearchAnalyzer::setDefault(new ZSearchTextAnalyzer());
+Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
 $index->addDocument($doc);
 ]]>
@@ -142,7 +142,7 @@ $index->addDocument($doc);
     operation.
     </para>
     <para>
-    <code>ZSearch::commit()</code> is automatically called at the end of script execution and
+    <code>Zend_Search_Lucene::commit()</code> is automatically called at the end of script execution and
     before any search request.
     </para>
     <para>
@@ -150,7 +150,7 @@ $index->addDocument($doc);
     From the other side commiting large amount of documents in one step needs more memory.
     </para>
     <para>
-    Automatic segment management optimization is a subject of future ZSearch enhancements.
+    Automatic segment management optimization is a subject of future Zend_Search_Lucene enhancements.
     </para>
 
     <para>
@@ -199,7 +199,7 @@ indexWriter.addDocument(doc);]]>
 
     <para>
     It is the responsibility of your application to control the Lucene indexer
-    and ZSearch.  This means that data can be indexed from any source
+    and Zend_Search_Lucene.  This means that data can be indexed from any source
     that is accessible by your application.  For example, this could be the
     filesystem, a database, an HTML form, etc.
     </para>
@@ -209,7 +209,7 @@ indexWriter.addDocument(doc);]]>
     <title>Creating an Index with LuceneIndexCreation.jar</title>
 
     <para>
-    To get started with ZSearch quickly, a JAR file (Java) has been created to
+    To get started with Zend_Search_Lucene quickly, a JAR file (Java) has been created to
     generate an index from the command line.  For more information on JAR files,
     please visit: <ulink url="http://java.sun.com/docs/books/tutorial/jar/basics/index.html"/>.
     </para>
@@ -285,7 +285,7 @@ java -jar LuceneIndexCreation.jar [-c] [-s] <document_directory> <index_director
     <para>
 There are two ways to search the index. The first method uses
 Query Parser to construct query from a string. The second provides
-the ability to create your own queries through the ZSearch API.
+the ability to create your own queries through the Zend_Search_Lucene API.
     </para>
 
     <para>
@@ -322,15 +322,15 @@ which is subsequently parsed, but rather added as a TermQuery clause.
     Both ways use the same API method to search through the index:
 
     <programlisting role="php"><![CDATA[
-require_once('ZSearch/ZSearch.php');
+require_once('Zend/Search/Lucene.php');
 
-$index = new ZSearch('/data/my_index');
+$index = new Zend_Search_Lucene('/data/my_index');
 
 $index->find($query);]]>
     </programlisting>
 
-    The <code>ZSearch::find()</code> method determines input type automatically and
-    uses query parser to construct appropriate ZSearchQuery object
+    The <code>Zend_Search_Lucene::find()</code> method determines input type automatically and
+    uses query parser to construct appropriate Zend_Search_Lucene_Search_Query object
     from a string.
     </para>
 
@@ -345,21 +345,21 @@ $index->find($query);]]>
     </para>
 
     <para>
-    The search result is an array of ZSearchQueryHit objects.  Each of these has
+    The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
     two properties: <code>$hit->document</code> is a document number within
     the index and <code>$hit->score</code> is a score of the hit in
     a search result. Result is ordered by score (top scores come first).
     </para>
 
     <para>
-    The ZSearchQueryHit object also exposes each field of the ZSearchDocument found by
+    The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found by
     the hit as a property of the hit.  In this example, a hit is returned and
     the corresponding document has two fields: title and author.
 
     <programlisting role="php"><![CDATA[
-require_once('ZSearch/ZSearch.php');
+require_once('Zend/Search/Lucene.php');
 
-$index = new ZSearch('/data/my_index');
+$index = new Zend_Search_Lucene('/data/my_index');
 
 $hits = $index->find($query);
 
@@ -374,26 +374,26 @@ foreach ($hits as $hit) {
     </para>
 
     <para>
-    Optionally, the original ZSearchDocument object can be returned from the
-    ZSearchQueryHit.
+    Optionally, the original Zend_Search_Lucene_Document object can be returned from the
+    Zend_Search_Lucene_Search_QueryHit.
 
     You can retrieve indexed parts of the document by using the <code>getDocument()</code>
     method of the index object and then get them by
     <code>getFieldValue()</code> method:
     <programlisting role="php"><![CDATA[
-require_once('ZSearch/ZSearch.php');
+require_once('Zend/Search/Lucene.php');
 
-$index = new ZSearch('/data/my_index');
+$index = new Zend_Search_Lucene('/data/my_index');
 
 $hits = $index->find($query);
 foreach ($hits as $hit) {
-    // return ZSearchDocument object for this hit
+    // return Zend_Search_Lucene_Document object for this hit
     echo $document = $hit->getDocument();
 
-    // return a ZSearchField object from the ZSearchDocument
+    // return a Zend_Search_Lucene_Field object from the Zend_Search_Lucene_Document
     echo $document->getField('title');
 
-    // return the string value of the ZSearchField object
+    // return the string value of the Zend_Search_Lucene_Field object
     echo $document->getFieldValue('title');
 
     // same as getFieldValue()
@@ -401,7 +401,7 @@ foreach ($hits as $hit) {
 }]]>
     </programlisting>
 
-    The fields available from the ZSearchDocument object are determined at
+    The fields available from the Zend_Search_Lucene_Document object are determined at
     the time of indexing.  The document fields are either indexed, or
     index and stored, in the document by the indexing application
     (e.g. LuceneIndexCreation.jar).
@@ -437,8 +437,8 @@ $hits = $index->find('word1');]]>
     <para>
     Query construction by API:
     <programlisting role="php"><![CDATA[
-$term  = new ZSearchTerm('word1');
-$query = new ZSearchTermQuery($term);
+$term  = new Zend_Search_Lucene_Index_Term('word1');
+$query = new Zend_Search_Lucene_Search_Query_Term($term);
 $hits  = $index->find($query);]]>
     </programlisting>
     </para>
@@ -510,11 +510,11 @@ $hits = $index->find('+word1 author:word2 -word3');]]>
     <para>
     Query construction by API:
     <programlisting role="php"><![CDATA[
-$query = new ZSearchMultiTermQuery();
+$query = new Zend_Search_Lucene_Search_Query_MultiTerm();
 
-$query->addTerm(new ZSearchTerm('word1'), true);
-$query->addTerm(new ZSearchTerm('word2'), null);
-$query->addTerm(new ZSearchTerm('word3'), false);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word1'), true);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word2'), null);
+$query->addTerm(new Zend_Search_Lucene_Index_Term('word3'), false);
 
 $hits  = $index->find($query);]]>
     </programlisting>
@@ -550,24 +550,24 @@ $hits  = $index->find($query);]]>
     </para>
 
     <programlisting role="php"><![CDATA[
-$query1 = new ZSearchPhraseQuery();
+$query1 = new Zend_Search_Lucene_Search_Query_Phrase();
 
-$query1->addTerm(new ZSearchTerm('word1'));     // Add 'word1' at 0 relative position.
-$query1->addTerm(new ZSearchTerm('word2'));     // Add 'word2' at 1 relative position.
-$query1->addTerm(new ZSearchTerm('word3'), 3);  // Add 'word3' at 3 relative position.
+$query1->addTerm(new Zend_Search_Lucene_Index_Term('word1'));     // Add 'word1' at 0 relative position.
+$query1->addTerm(new Zend_Search_Lucene_Index_Term('word2'));     // Add 'word2' at 1 relative position.
+$query1->addTerm(new Zend_Search_Lucene_Index_Term('word3'), 3);  // Add 'word3' at 3 relative position.
 
 ...
 
-$query2 = new ZSearchPhraseQuery(array('word1', 'word2', 'word3'), array(0,1,3));
+$query2 = new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2', 'word3'), array(0,1,3));
 
 ...
 
 // Query without a gap.
-$query3 = new ZSearchPhraseQuery(array('word1', 'word2', 'word3'));
+$query3 = new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2', 'word3'));
 
 ...
 
-$query4 = new ZSearchPhraseQuery(array('word1', 'word2'), array(0,1), 'annotation');]]>
+$query4 = new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2'), array(0,1), 'annotation');]]>
     </programlisting>
 
     <para>
@@ -588,7 +588,7 @@ $query4 = new ZSearchPhraseQuery(array('word1', 'word2'), array(0,1), 'annotatio
     </para>
     <programlisting role="php"><![CDATA[
 // Query without a gap.
-$query = new ZSearchPhraseQuery(array('word1', 'word2'));
+$query = new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2'));
 
 // Search for 'word1 word2', 'word1 ... word2'
 $query->setSlop(1);
@@ -615,11 +615,11 @@ $hits2 = $index->find($query);]]>
     </para>
 
     <para>
-    tf(t in d) - <code>ZSearchSimilarity::tf($freq)</code> - a score factor based on a term or phrase's frequency in a document.
+    tf(t in d) - <code>Zend_Search_Lucene_Search_Similarity::tf($freq)</code> - a score factor based on a term or phrase's frequency in a document.
     </para>
 
     <para>
-    idf(t) - <code>ZSearchSimilarity::tf($term, $reader)</code> - a score factor for a simple term for the specified index.
+    idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code> - a score factor for a simple term for the specified index.
     </para>
 
     <para>
@@ -638,7 +638,7 @@ $hits2 = $index->find($query);]]>
     </para>
 
     <para>
-    coord(q,d) - <code>ZSearchSimilarity::coord($overlap, $maxOverlap)</code> - a score
+    coord(q,d) - <code>Zend_Search_Lucene_Search_Similarity::coord($overlap, $maxOverlap)</code> - a score
     factor based on the fraction of all query terms that a document contains.
     </para>
 
@@ -662,12 +662,12 @@ $hits2 = $index->find($query);]]>
 
     <para>
     Scoring algorithm can be customized by defining your own Similatity class. To do this
-    extend ZSearchSimilarity class as defined below, then use
-    <code>ZSearchSimilarity::setDefault($similarity);</code> method to set it as default.
+    extend Zend_Search_Lucene_Search_Similarity class as defined below, then use
+    <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code> method to set it as default.
     </para>
 
     <programlisting role="php"><![CDATA[
-class MySimilarity extends ZSearchSimilarity {
+class MySimilarity extends Zend_Search_Lucene_Search_Similarity {
     public function lengthNorm($fieldName, $numTerms) {
         return 1.0/sqrt($numTerms);
     }
@@ -698,7 +698,7 @@ class MySimilarity extends ZSearchSimilarity {
 }
 
 $mySimilarity = new MySimilarity();
-ZSearchSimilarity::setDefault($mySimilarity);
+Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
 ]]>
     </programlisting>
 
@@ -708,33 +708,33 @@ ZSearchSimilarity::setDefault($mySimilarity);
     <title>Storage API</title>
 
     <para>
-    An abstract class ZSearchDirectory defines directory functionality.
+    An abstract class Zend_Search_Lucene_Storage_Directory defines directory functionality.
     </para>
 
     <para>
-    The ZSearch constructor uses either a string or ZSearchDirectory object
+    The Zend_Search_Lucene constructor uses either a string or Zend_Search_Lucene_Storage_Directory object
     as an input.
     </para>
 
     <para>
-    ZSearchDirectoryFilesystem class implements directory functionality for file system.
+    Zend_Search_Lucene_Storage_Directory_Filesystem class implements directory functionality for file system.
     </para>
 
     <para>
-    If string is used as an input for the ZSearch constructor, then the index reader
-    (ZSearch object) treats it as a file system path and instantiates
-    ZSearchDirectoryFilesystem object by themselves.
+    If string is used as an input for the Zend_Search_Lucene constructor, then the index reader
+    (Zend_Search_Lucene object) treats it as a file system path and instantiates
+    Zend_Search_Lucene_Storage_Directory_Filesystem object by themselves.
     </para>
 
     <para>
-    You can define your own directory implementation by extending ZSearchDirectory class.
+    You can define your own directory implementation by extending Zend_Search_Lucene_Storage_Directory class.
     </para>
 
     <para>
-    ZSearchDirectory methods:
+    Zend_Search_Lucene_Storage_Directory methods:
 
     <programlisting><![CDATA[
-abstract class ZSearchDirectory {
+abstract class Zend_Search_Lucene_Storage_Directory {
     /**
      * Closes the store.
      *
@@ -808,10 +808,10 @@ abstract class ZSearchDirectory {
 
 
     /**
-     * Returns a ZSearchFile object for a given $filename in the directory.
+     * Returns a Zend_Search_Lucene_Storage_File object for a given $filename in the directory.
      *
      * @param string $filename
-     * @return ZSearchFile
+     * @return Zend_Search_Lucene_Storage_File
      */
     abstract function getFileObject($filename);
 
@@ -820,21 +820,21 @@ abstract class ZSearchDirectory {
     </para>
 
     <para>
-    <code>getFileObject($filename)</code> method of ZSearchDirectory class returns
-    ZSearchFile object.
+    <code>getFileObject($filename)</code> method of Zend_Search_Lucene_Storage_Directory class returns
+    Zend_Search_Lucene_Storage_File object.
     </para>
     <para>
-    ZSearchFile abstract class implements file abstraction and index file reading
+    Zend_Search_Lucene_Storage_File abstract class implements file abstraction and index file reading
     primitives.
     </para>
     <para>
-    You must also extend ZSearchFile class for your Directory implementation.
+    You must also extend Zend_Search_Lucene_Storage_File class for your Directory implementation.
     </para>
     <para>
-    Only two methods of ZSearchFile class must be overloaded in your implementation:
+    Only two methods of Zend_Search_Lucene_Storage_File class must be overloaded in your implementation:
 
     <programlisting><![CDATA[
-class MyZSearchFile extends ZSearchFile {
+class MyFile extends Zend_Search_Lucene_Storage_File {
     /**
      * Sets the file position indicator and advances the file pointer.
      * The new position, measured in bytes from the beginning of the file,
