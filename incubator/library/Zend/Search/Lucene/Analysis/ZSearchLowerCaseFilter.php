@@ -13,21 +13,21 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
 /** ZSearchTokenFilter */
-require_once 'Zend/Search/Lucene/analysis/ZSearchTokenFilter.php';
+require_once 'Zend/Search/Lucene/Analysis/ZSearchTokenFilter.php';
 
 
 /**
  * Lower case Token filter.
  *
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */

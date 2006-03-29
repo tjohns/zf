@@ -13,25 +13,25 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
 /** ZSearchAnalyzer */
-require_once 'Zend/Search/Lucene/analysis/ZSearchAnalyzer.php';
+require_once 'Zend/Search/Lucene/Analysis/ZSearchAnalyzer.php';
 
 
 /**
  * Common implementation of the ZSearchAnalyzer interface.
- * There are several standard standard subclasses provided by Zend_Search_Lucene/analysis
+ * There are several standard standard subclasses provided by Zend_Search_Lucene/Analysis
  * subpackage: ZSearchTextAnalyzer, ZSearchHTMLAnalyzer, ZSearchXMLAnalyzer.
  *
  * @todo ZSearchHTMLAnalyzer and ZSearchXMLAnalyzer implementation
  *
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */

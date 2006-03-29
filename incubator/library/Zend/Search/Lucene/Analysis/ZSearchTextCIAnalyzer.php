@@ -13,22 +13,22 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
 /** ZSearchTextAnalyzer */
-require_once 'Zend/Search/Lucene/analysis/ZSearchTextAnalyzer.php';
+require_once 'Zend/Search/Lucene/Analysis/ZSearchTextAnalyzer.php';
 
 /** ZSearchLowerCaseFilter */
-require_once 'Zend/Search/Lucene/analysis/ZSearchLowerCaseFilter.php';
+require_once 'Zend/Search/Lucene/Analysis/ZSearchLowerCaseFilter.php';
 
 
 /**
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */

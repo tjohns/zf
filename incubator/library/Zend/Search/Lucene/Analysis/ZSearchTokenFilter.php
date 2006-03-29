@@ -13,21 +13,21 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
 /** ZSearchToken */
-require_once 'Zend/Search/Lucene/analysis/ZSearchToken.php';
+require_once 'Zend/Search/Lucene/Analysis/ZSearchToken.php';
 
 
 /**
  * Token filter converts (normalizes) Token ore removes it from a token stream.
  *
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */

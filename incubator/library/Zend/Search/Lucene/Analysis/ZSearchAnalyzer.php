@@ -13,20 +13,20 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
 /** ZSearchToken */
-require_once 'Zend/Search/Lucene/analysis/ZSearchToken.php';
+require_once 'Zend/Search/Lucene/Analysis/ZSearchToken.php';
 
 /** ZSearchTextAnalyzer */
-require_once 'Zend/Search/Lucene/analysis/ZSearchTextAnalyzer.php';
+require_once 'Zend/Search/Lucene/Analysis/ZSearchTextAnalyzer.php';
 
 /** ZSearchTextCIAnalyzer */
-require_once 'Zend/Search/Lucene/analysis/ZSearchTextCIAnalyzer.php';
+require_once 'Zend/Search/Lucene/Analysis/ZSearchTextCIAnalyzer.php';
 
 
 
@@ -41,7 +41,7 @@ require_once 'Zend/Search/Lucene/analysis/ZSearchTextCIAnalyzer.php';
  * Thus Zend_Search_Lucene analysis API works with data strings and sets (arrays).
  *
  * @package    Zend_Search_Lucene
- * @subpackage analysis
+ * @subpackage Analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
