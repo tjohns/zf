@@ -38,7 +38,7 @@ abstract class Zend_Search_Lucene_Search_Query
     /**
      * Query weight
      *
-     * @var ZSearchWeight
+     * @var Zend_Search_Lucene_Search_Weight
      */
     protected $_weight;
 
@@ -78,7 +78,7 @@ abstract class Zend_Search_Lucene_Search_Query
      * Constructs an appropriate Weight implementation for this query.
      *
      * @param Zend_Search_Lucene $reader
-     * @return ZSearchWeight
+     * @return Zend_Search_Lucene_Search_Weight
      */
     abstract protected function _createWeight($reader);
 

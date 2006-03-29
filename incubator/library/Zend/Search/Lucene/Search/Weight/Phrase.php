@@ -19,9 +19,10 @@
  */
 
 
-/** ZSearchWeight */
+/**
+ * Zend_Search_Lucene_Search_Weight
+ */
 require_once 'Zend/Search/Lucene/Search/Weight.php';
-
 
 /**
  * @package    Zend_Search_Lucene
@@ -29,7 +30,7 @@ require_once 'Zend/Search/Lucene/Search/Weight.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchMultiTermWeight extends ZSearchWeight
+class Zend_Search_Lucene_Search_Weight_Phrase extends Zend_Search_Lucene_Search_Weight
 {
     /**
      * IndexReader.
@@ -41,41 +42,50 @@ class ZSearchMultiTermWeight extends ZSearchWeight
     /**
      * The query that this concerns.
      *
-     * @var Zend_Search_Lucene_Search_Query_MultiTerm
+     * @var Zend_Search_Lucene_Search_Query_Phrase
      */
     private $_query;
 
     /**
-     * Query terms weights
-     * Array of ZSearchTermWeight
+     * Weight value
      *
-     * @var array
+     * @var float
      */
-    private $_weights;
+    private $_value;
+
+    /**
+     * Score factor
+     *
+     * @var float
+     */
+    private $_idf;
+
+    /**
+     * Normalization factor
+     *
+     * @var float
+     */
+    private $_queryNorm;
 
 
     /**
-     * ZSearchMultiTermWeight constructor
-     * query - the query that this concerns.
-     * reader - index reader
+     * Query weight
      *
-     * @param Zend_Search_Lucene_Search_Query_MultiTerm $query
+     * @var float
+     */
+    private $_queryWeight;
+
+
+    /**
+     * Zend_Search_Lucene_Search_Weight_Phrase constructor
+     *
+     * @param Zend_Search_Lucene_Search_Query_Phrase $query
      * @param Zend_Search_Lucene $reader
      */
-    public function __construct($query, $reader)
+    public function __construct(Zend_Search_Lucene_Search_Query_Phrase $query, Zend_Search_Lucene $reader)
     {
-        $this->_query   = $query;
-        $this->_reader  = $reader;
-        $this->_weights = array();
-
-        $signs = $query->getSigns();
-
-        foreach ($query->getTerms() as $num => $term) {
-            if ($signs === null || $signs[$num] === null || $signs[$num]) {
-                $this->_weights[$num] = new ZSearchTermWeight($term, $query, $reader);
-                $query->setWeight($num, $this->_weights[$num]);
-            }
-        }
+        $this->_query  = $query;
+        $this->_reader = $reader;
     }
 
 
@@ -86,7 +96,7 @@ class ZSearchMultiTermWeight extends ZSearchWeight
      */
     public function getValue()
     {
-        return $this->_query->getBoost();
+        return $this->_value;
     }
 
 
@@ -97,20 +107,14 @@ class ZSearchMultiTermWeight extends ZSearchWeight
      */
     public function sumOfSquaredWeights()
     {
-        $sum = 0;
-        foreach ($this->_weights as $weight) {
-            // sum sub weights
-            $sum += $weight->sumOfSquaredWeights();
-        }
+        // compute idf
+        $this->_idf = $this->_reader->getSimilarity()->idf($this->_query->getTerms(), $this->_reader);
 
-        // boost each sub-weight
-        $sum *= $this->_query->getBoost() * $this->_query->getBoost();
+        // compute query weight
+        $this->_queryWeight = $this->_idf * $this->_query->getBoost();
 
-        // check for empty query (like '-something -another')
-        if ($sum == 0) {
-            $sum = 1.0;
-        }
-        return $sum;
+        // square it
+        return $this->_queryWeight * $this->_queryWeight;
     }
 
 
@@ -121,12 +125,13 @@ class ZSearchMultiTermWeight extends ZSearchWeight
      */
     public function normalize($queryNorm)
     {
-        // incorporate boost
-        $queryNorm *= $this->_query->getBoost();
+        $this->_queryNorm = $queryNorm;
 
-        foreach ($this->_weights as $weight) {
-            $weight->normalize($queryNorm);
-        }
+        // normalize query weight
+        $this->_queryWeight *= $queryNorm;
+
+        // idf for documents
+        $this->_value = $this->_queryWeight * $this->_idf;
     }
 }
 

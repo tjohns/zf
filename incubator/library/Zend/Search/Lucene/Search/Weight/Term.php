@@ -19,7 +19,7 @@
  */
 
 
-/** ZSearchWeight */
+/** Zend_Search_Lucene_Search_Weight */
 require_once 'Zend/Search/Lucene/Search/Weight.php';
 
 
@@ -29,7 +29,7 @@ require_once 'Zend/Search/Lucene/Search/Weight.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchTermWeight extends ZSearchWeight
+class Zend_Search_Lucene_Search_Weight_Term extends Zend_Search_Lucene_Search_Weight
 {
     /**
      * IndexReader.
@@ -83,7 +83,7 @@ class ZSearchTermWeight extends ZSearchWeight
 
 
     /**
-     * ZSearchTermWeight constructor
+     * Zend_Search_Lucene_Search_Weight_Term constructor
      * reader - index reader
      *
      * @param Zend_Search_Lucene $reader

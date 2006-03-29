@@ -22,8 +22,8 @@
 /** Zend_Search_Lucene_Search_Query */
 require_once 'Zend/Search/Lucene/Search/Query.php';
 
-/** ZSearchTermWeight */
-require_once 'Zend/Search/Lucene/Search/ZSearchTermWeight.php';
+/** Zend_Search_Lucene_Search_Weight_Term */
+require_once 'Zend/Search/Lucene/Search/Weight/Term.php';
 
 
 /**
@@ -85,11 +85,11 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
      * Constructs an appropriate Weight implementation for this query.
      *
      * @param Zend_Search_Lucene $reader
-     * @return ZSearchWeight
+     * @return Zend_Search_Lucene_Search_Weight
      */
     protected function _createWeight($reader)
     {
-        return new ZSearchTermWeight($this->_term, $this, $reader);
+        return new Zend_Search_Lucene_Search_Weight_Term($this->_term, $this, $reader);
     }
 
     /**

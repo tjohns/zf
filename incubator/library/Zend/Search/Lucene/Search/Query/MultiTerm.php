@@ -22,8 +22,8 @@
 /** Zend_Search_Lucene_Search_Query */
 require_once 'Zend/Search/Lucene/Search/Query.php';
 
-/** ZSearchMultiTermWeight */
-require_once 'Zend/Search/Lucene/Search/ZSearchMultiTermWeight.php';
+/** Zend_Search_Lucene_Search_Weight_MultiTerm */
+require_once 'Zend/Search/Lucene/Search/Weight/MultiTerm.php';
 
 
 /**
@@ -89,7 +89,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
 
     /**
      * Terms weights
-     * array of ZSearchWeight
+     * array of Zend_Search_Lucene_Search_Weight
      *
      * @var array
      */
@@ -185,7 +185,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * Set weight for specified term
      *
      * @param integer $num
-     * @param ZSearchTermWeight $weight
+     * @param Zend_Search_Lucene_Search_Weight_Term $weight
      */
     public function setWeight($num, $weight)
     {
@@ -197,11 +197,11 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * Constructs an appropriate Weight implementation for this query.
      *
      * @param Zend_Search_Lucene $reader
-     * @return ZSearchWeight
+     * @return Zend_Search_Lucene_Search_Weight
      */
     protected function _createWeight($reader)
     {
-        return new ZSearchMultiTermWeight($this, $reader);
+        return new Zend_Search_Lucene_Search_Weight_MultiTerm($this, $reader);
     }
 
 

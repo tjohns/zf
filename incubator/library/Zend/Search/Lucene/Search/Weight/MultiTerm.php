@@ -19,10 +19,9 @@
  */
 
 
-/**
- * ZSearchWeight
- */
+/** Zend_Search_Lucene_Search_Weight */
 require_once 'Zend/Search/Lucene/Search/Weight.php';
+
 
 /**
  * @package    Zend_Search_Lucene
@@ -30,7 +29,7 @@ require_once 'Zend/Search/Lucene/Search/Weight.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchPhraseWeight extends ZSearchWeight
+class Zend_Search_Lucene_Search_Weight_MultiTerm extends Zend_Search_Lucene_Search_Weight
 {
     /**
      * IndexReader.
@@ -42,50 +41,41 @@ class ZSearchPhraseWeight extends ZSearchWeight
     /**
      * The query that this concerns.
      *
-     * @var Zend_Search_Lucene_Search_Query_Phrase
+     * @var Zend_Search_Lucene_Search_Query_MultiTerm
      */
     private $_query;
 
     /**
-     * Weight value
+     * Query terms weights
+     * Array of Zend_Search_Lucene_Search_Weight_Term
      *
-     * @var float
+     * @var array
      */
-    private $_value;
-
-    /**
-     * Score factor
-     *
-     * @var float
-     */
-    private $_idf;
-
-    /**
-     * Normalization factor
-     *
-     * @var float
-     */
-    private $_queryNorm;
+    private $_weights;
 
 
     /**
-     * Query weight
+     * Zend_Search_Lucene_Search_Weight_MultiTerm constructor
+     * query - the query that this concerns.
+     * reader - index reader
      *
-     * @var float
-     */
-    private $_queryWeight;
-
-
-    /**
-     * ZSearchPhraseWeight constructor
-     *
-     * @param Zend_Search_Lucene_Search_Query_Phrase $query
+     * @param Zend_Search_Lucene_Search_Query_MultiTerm $query
      * @param Zend_Search_Lucene $reader
      */
-    public function __construct(Zend_Search_Lucene_Search_Query_Phrase $query, Zend_Search_Lucene $reader)
+    public function __construct($query, $reader)
     {
-        $this->_query  = $query;
-        $this->_reader = $reader;
+        $this->_query   = $query;
+        $this->_reader  = $reader;
+        $this->_weights = array();
+
+        $signs = $query->getSigns();
+
+        foreach ($query->getTerms() as $num => $term) {
+            if ($signs === null || $signs[$num] === null || $signs[$num]) {
+                $this->_weights[$num] = new Zend_Search_Lucene_Search_Weight_Term($term, $query, $reader);
+                $query->setWeight($num, $this->_weights[$num]);
+            }
+        }
     }
 
 
@@ -96,7 +86,7 @@ class ZSearchPhraseWeight extends ZSearchWeight
      */
     public function getValue()
     {
-        return $this->_value;
+        return $this->_query->getBoost();
     }
 
 
@@ -107,14 +97,20 @@ class ZSearchPhraseWeight extends ZSearchWeight
      */
     public function sumOfSquaredWeights()
     {
-        // compute idf
-        $this->_idf = $this->_reader->getSimilarity()->idf($this->_query->getTerms(), $this->_reader);
+        $sum = 0;
+        foreach ($this->_weights as $weight) {
+            // sum sub weights
+            $sum += $weight->sumOfSquaredWeights();
+        }
 
-        // compute query weight
-        $this->_queryWeight = $this->_idf * $this->_query->getBoost();
+        // boost each sub-weight
+        $sum *= $this->_query->getBoost() * $this->_query->getBoost();
 
-        // square it
-        return $this->_queryWeight * $this->_queryWeight;
+        // check for empty query (like '-something -another')
+        if ($sum == 0) {
+            $sum = 1.0;
+        }
+        return $sum;
     }
 
 
@@ -125,13 +121,12 @@ class ZSearchPhraseWeight extends ZSearchWeight
      */
     public function normalize($queryNorm)
     {
-        $this->_queryNorm = $queryNorm;
+        // incorporate boost
+        $queryNorm *= $this->_query->getBoost();
 
-        // normalize query weight
-        $this->_queryWeight *= $queryNorm;
-
-        // idf for documents
-        $this->_value = $this->_queryWeight * $this->_idf;
+        foreach ($this->_weights as $weight) {
+            $weight->normalize($queryNorm);
+        }
     }
 }
 
