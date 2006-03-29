@@ -1,7 +1,7 @@
 <?php
 require_once 'Zend/Search/Lucene.php';
 
-$index = new ZSearch('/tmp/feeds_index');
+$index = new Zend_Search_Lucene('/tmp/feeds_index');
 echo "Index contains {$index->count()} documents.\n";
 
 $search = 'php';

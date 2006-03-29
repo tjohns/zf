@@ -3,7 +3,7 @@ require_once 'Zend/Feed.php';
 require_once 'Zend/Search/Lucene.php';
 
 //create the index
-$index = new ZSearch('/tmp/feeds_index', true);
+$index = new Zend_Search_Lucene('/tmp/feeds_index', true);
 
 // index each item
 $rss = Zend_Feed::import('http://feeds.feedburner.com/ZendDeveloperZone');
