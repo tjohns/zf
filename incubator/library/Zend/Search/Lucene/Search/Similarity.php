@@ -13,28 +13,28 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Search_Lucene
- * @subpackage search
+ * @subpackage Search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
-/** ZSearchDefaultSimilarity */
-require_once 'Zend/Search/Lucene/Search/ZSearchDefaultSimilarity.php';
+/** Zend_Search_Lucene_Search_Similarity_Default */
+require_once 'Zend/Search/Lucene/Search/Similarity/Default.php';
 
 
 /**
  * @package    Zend_Search_Lucene
- * @subpackage search
+ * @subpackage Search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-abstract class ZSearchSimilarity
+abstract class Zend_Search_Lucene_Search_Similarity
 {
     /**
      * The Similarity implementation used by default.
      *
-     * @var ZSearchSimilarity
+     * @var Zend_Search_Lucene_Search_Similarity
      */
     static private $_defaultImpl;
 
@@ -306,9 +306,9 @@ abstract class ZSearchSimilarity
      * Set the default Similarity implementation used by indexing and search
      * code.
      *
-     * @param ZSearchSimilarity $similarity
+     * @param Zend_Search_Lucene_Search_Similarity $similarity
      */
-    static public function setDefault(ZSearchSimilarity $similarity)
+    static public function setDefault(Zend_Search_Lucene_Search_Similarity $similarity)
     {
         self::$_defaultImpl = $similarity;
     }
@@ -318,12 +318,12 @@ abstract class ZSearchSimilarity
      * Return the default Similarity implementation used by indexing and search
      * code.
      *
-     * @return ZSearchSimilarity
+     * @return Zend_Search_Lucene_Search_Similarity
      */
     static public function getDefault()
     {
-        if (!self::$_defaultImpl instanceof ZSearchSimilarity) {
-            self::$_defaultImpl = new ZSearchDefaultSimilarity();
+        if (!self::$_defaultImpl instanceof Zend_Search_Lucene_Search_Similarity) {
+            self::$_defaultImpl = new Zend_Search_Lucene_Search_Similarity_Default();
         }
 
         return self::$_defaultImpl;

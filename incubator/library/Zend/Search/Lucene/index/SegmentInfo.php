@@ -99,7 +99,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      * normVector is a binary string.
      * Each byte corresponds to an indexed document in a segment and
      * encodes normalization factor (float value, encoded by
-     * ZSearchSimilarity::encodeNorm())
+     * Zend_Search_Lucene_Search_Similarity::encodeNorm())
      *
      * @var array
      */
@@ -144,7 +144,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
                                                                             $fieldBits & 2 );
             if ($fieldBits & 0x10) {
                 // norms are omitted for the indexed field
-                $this->_norms[$count] = str_repeat(chr(ZSearchSimilarity::encodeNorm(1.0)), $docCount);
+                $this->_norms[$count] = str_repeat(chr(Zend_Search_Lucene_Search_Similarity::encodeNorm(1.0)), $docCount);
             }
 
             $fieldNums[$count]  = $count;
@@ -406,7 +406,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $this->_norms[$fieldNum] = $fFile->readBytes($this->_docCount);
         }
 
-        return ZSearchSimilarity::decodeNorm( ord($this->_norms[$fieldNum]{$id}) );
+        return Zend_Search_Lucene_Search_Similarity::decodeNorm( ord($this->_norms[$fieldNum]{$id}) );
     }
 }
 

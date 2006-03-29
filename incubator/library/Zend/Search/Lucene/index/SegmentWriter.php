@@ -119,7 +119,7 @@ class Zend_Search_Lucene_Index_SegmentWriter
      * normVector is a binary string.
      * Each byte corresponds to an indexed document in a segment and
      * encodes normalization factor (float value, encoded by
-     * ZSearchSimilarity::encodeNorm())
+     * Zend_Search_Lucene_Search_Similarity::encodeNorm())
      *
      * @var array
      */
