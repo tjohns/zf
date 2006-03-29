@@ -13,14 +13,14 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Search_Lucene
- * @subpackage storage
+ * @subpackage Storage
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
 /** ZSearchFile */
-require_once 'Zend/Search/Lucene/storage/ZSearchFile.php';
+require_once 'Zend/Search/Lucene/Storage/ZSearchFile.php';
 
 /** Zend_Search_Lucene_Exception */
 require_once 'Zend/Search/Lucene/Exception.php';
@@ -28,7 +28,7 @@ require_once 'Zend/Search/Lucene/Exception.php';
 
 /**
  * @package    Zend_Search_Lucene
- * @subpackage storage
+ * @subpackage Storage
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  *

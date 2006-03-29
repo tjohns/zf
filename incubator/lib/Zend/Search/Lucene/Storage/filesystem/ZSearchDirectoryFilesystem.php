@@ -13,24 +13,24 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Search_Lucene
- * @subpackage storage
+ * @subpackage Storage
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
 /** ZSearchDirectory */
-require_once 'Zend/Search/Lucene/storage/ZSearchDirectory.php';
+require_once 'Zend/Search/Lucene/Storage/ZSearchDirectory.php';
 
 /** ZSearchFileFilesystem */
-require_once 'Zend/Search/Lucene/storage/filesystem/ZSearchFileFilesystem.php';
+require_once 'Zend/Search/Lucene/Storage/filesystem/ZSearchFileFilesystem.php';
 
 
 /**
  * FileSystem implementation of Directory abstraction.
  *
  * @package    Zend_Search_Lucene
- * @subpackage storage
+ * @subpackage Storage
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
