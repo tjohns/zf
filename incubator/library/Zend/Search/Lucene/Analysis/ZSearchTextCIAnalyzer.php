@@ -19,8 +19,8 @@
  */
 
 
-/** ZSearchTextAnalyzer */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchTextAnalyzer.php';
+/** Zend_Search_Lucene_Analysis_Analyzer_Common_Text */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text.php';
 
 /** ZSearchLowerCaseFilter */
 require_once 'Zend/Search/Lucene/Analysis/ZSearchLowerCaseFilter.php';
@@ -33,7 +33,7 @@ require_once 'Zend/Search/Lucene/Analysis/ZSearchLowerCaseFilter.php';
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-class ZSearchTextCIAnalyzer extends ZSearchTextAnalyzer
+class ZSearchTextCIAnalyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common_Text
 {
     public function __construct()
     {

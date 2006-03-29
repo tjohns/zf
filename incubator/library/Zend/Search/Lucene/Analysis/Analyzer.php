@@ -22,8 +22,8 @@
 /** ZSearchToken */
 require_once 'Zend/Search/Lucene/Analysis/ZSearchToken.php';
 
-/** ZSearchTextAnalyzer */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchTextAnalyzer.php';
+/** Zend_Search_Lucene_Analysis_Analyzer_Common_Text */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text.php';
 
 /** ZSearchTextCIAnalyzer */
 require_once 'Zend/Search/Lucene/Analysis/ZSearchTextCIAnalyzer.php';

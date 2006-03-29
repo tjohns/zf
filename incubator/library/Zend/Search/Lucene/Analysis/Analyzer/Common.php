@@ -26,7 +26,7 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
 /**
  * Common implementation of the Zend_Search_Lucene_Analysis_Analyzer interface.
  * There are several standard standard subclasses provided by Zend_Search_Lucene/Analysis
- * subpackage: ZSearchTextAnalyzer, ZSearchHTMLAnalyzer, ZSearchXMLAnalyzer.
+ * subpackage: Zend_Search_Lucene_Analysis_Analyzer_Common_Text, ZSearchHTMLAnalyzer, ZSearchXMLAnalyzer.
  *
  * @todo ZSearchHTMLAnalyzer and ZSearchXMLAnalyzer implementation
  *
