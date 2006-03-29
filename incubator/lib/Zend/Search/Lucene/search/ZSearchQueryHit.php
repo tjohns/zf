@@ -12,7 +12,7 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -20,7 +20,7 @@
 
 
 /**
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -29,7 +29,7 @@ class ZSearchQueryHit
 {
     /**
      * Object handle of the index
-     * @var ZSearch
+     * @var Zend_Search_Lucene
      */
     protected $_index = null;
 
@@ -53,13 +53,13 @@ class ZSearchQueryHit
 
 
     /**
-     * Constructor - pass object handle of ZSearch index that produced
+     * Constructor - pass object handle of Zend_Search_Lucene index that produced
      * the hit so the document can be retrieved easily from the hit.
      *
-     * @param ZSearch $index
+     * @param Zend_Search_Lucene $index
      */
 
-    public function __construct(ZSearch $index)
+    public function __construct(Zend_Search_Lucene $index)
     {
         $this->_index = $index;
     }
@@ -96,7 +96,7 @@ class ZSearchQueryHit
     /**
      * Return the index object for this hit
      *
-     * @return ZSearch
+     * @return Zend_Search_Lucene
      */
     public function getIndex()
     {

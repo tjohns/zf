@@ -4,7 +4,7 @@
  * @subpackage demo
  */
 
-/** ZSearch */
+/** Zend_Search_Lucene */
 require_once 'Zend/Search/Lucene.php';
 
 
@@ -46,7 +46,7 @@ class FileDocument extends Zend_Search_Lucene_Document
 
 
 // Create index
-$index = new ZSearch('index', true);
+$index = new Zend_Search_Lucene('index', true);
 // Uncomment next line if you want to have case sensitive index
 // ZSearchAnalyzer::setDefault(new ZSearchTextAnalyzer());
 

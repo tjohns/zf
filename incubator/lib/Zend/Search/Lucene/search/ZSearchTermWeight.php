@@ -12,7 +12,7 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -24,7 +24,7 @@ require_once 'Zend/Search/Lucene/search/ZSearchWeight.php';
 
 
 /**
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -34,7 +34,7 @@ class ZSearchTermWeight extends ZSearchWeight
     /**
      * IndexReader.
      *
-     * @var ZSearch
+     * @var Zend_Search_Lucene
      */
     private $_reader;
 
@@ -86,7 +86,7 @@ class ZSearchTermWeight extends ZSearchWeight
      * ZSearchTermWeight constructor
      * reader - index reader
      *
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      */
     public function __construct($term, $query, $reader)
     {

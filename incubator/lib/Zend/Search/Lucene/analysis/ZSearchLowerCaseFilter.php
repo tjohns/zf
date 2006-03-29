@@ -12,7 +12,7 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -26,7 +26,7 @@ require_once 'Zend/Search/Lucene/analysis/ZSearchTokenFilter.php';
 /**
  * Lower case Token filter.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0

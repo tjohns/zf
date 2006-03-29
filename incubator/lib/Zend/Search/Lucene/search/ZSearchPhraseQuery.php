@@ -12,7 +12,7 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -33,7 +33,7 @@ require_once 'Zend/Search/Lucene/search/ZSearchPhraseWeight.php';
 /**
  * A Query that matches documents containing a particular sequence of terms.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -207,7 +207,7 @@ class ZSearchPhraseQuery extends ZSearchQuery
     /**
      * Constructs an appropriate Weight implementation for this query.
      *
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return ZSearchWeight
      */
     protected function _createWeight($reader)
@@ -219,7 +219,7 @@ class ZSearchPhraseQuery extends ZSearchQuery
     /**
      * Calculate result vector
      *
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      */
     private function _calculateResult($reader)
     {
@@ -303,10 +303,10 @@ class ZSearchPhraseQuery extends ZSearchQuery
      * Score calculator for sloppy phrase queries (terms sequence is fixed)
      *
      * @param integer $docId
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return float
      */
-    public function _sloppyPhraseFreq($docId, ZSearch $reader)
+    public function _sloppyPhraseFreq($docId, Zend_Search_Lucene $reader)
     {
         $freq = 0;
 
@@ -380,7 +380,7 @@ class ZSearchPhraseQuery extends ZSearchQuery
      * Score specified document
      *
      * @param integer $docId
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return float
      */
     public function score($docId, $reader)

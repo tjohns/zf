@@ -12,7 +12,7 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -20,7 +20,7 @@
 
 
 /**
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -69,7 +69,7 @@ abstract class ZSearchQuery
      * Score specified document
      *
      * @param integer $docId
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return float
      */
     abstract public function score($docId, $reader);
@@ -77,7 +77,7 @@ abstract class ZSearchQuery
     /**
      * Constructs an appropriate Weight implementation for this query.
      *
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return ZSearchWeight
      */
     abstract protected function _createWeight($reader);
@@ -85,7 +85,7 @@ abstract class ZSearchQuery
     /**
      * Constructs an initializes a Weight for a query.
      *
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      */
     protected function _initWeight($reader)
     {

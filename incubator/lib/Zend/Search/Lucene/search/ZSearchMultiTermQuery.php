@@ -12,7 +12,7 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -27,7 +27,7 @@ require_once 'Zend/Search/Lucene/search/ZSearchMultiTermWeight.php';
 
 
 /**
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -196,7 +196,7 @@ class ZSearchMultiTermQuery extends ZSearchQuery
     /**
      * Constructs an appropriate Weight implementation for this query.
      *
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return ZSearchWeight
      */
     protected function _createWeight($reader)
@@ -209,7 +209,7 @@ class ZSearchMultiTermQuery extends ZSearchQuery
      * Calculate result vector for Conjunction query
      * (like '+something +another')
      *
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      */
     private function _calculateConjunctionResult($reader)
     {
@@ -248,7 +248,7 @@ class ZSearchMultiTermQuery extends ZSearchQuery
      * Calculate result vector for non Conjunction query
      * (like '+something -another')
      *
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      */
     private function _calculateNonConjunctionResult($reader)
     {
@@ -338,7 +338,7 @@ class ZSearchMultiTermQuery extends ZSearchQuery
      * Score calculator for conjunction queries (all terms are required)
      *
      * @param integer $docId
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return float
      */
     public function _conjunctionScore($docId, $reader)
@@ -364,7 +364,7 @@ class ZSearchMultiTermQuery extends ZSearchQuery
      * Score calculator for non conjunction queries (not all terms are required)
      *
      * @param integer $docId
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return float
      */
     public function _nonConjunctionScore($docId, $reader)
@@ -406,7 +406,7 @@ class ZSearchMultiTermQuery extends ZSearchQuery
      * Score specified document
      *
      * @param integer $docId
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return float
      */
     public function score($docId, $reader)

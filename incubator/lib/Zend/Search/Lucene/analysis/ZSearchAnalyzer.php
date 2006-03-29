@@ -12,7 +12,7 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -38,9 +38,9 @@ require_once 'Zend/Search/Lucene/analysis/ZSearchTextCIAnalyzer.php';
  * Lucene Java implementation is oriented to streams. It provides effective work
  * with a huge documents (more then 20Mb).
  * But engine itself is not oriented such documents.
- * Thus ZSearch analysis API works with data strings and sets (arrays).
+ * Thus Zend_Search_Lucene analysis API works with data strings and sets (arrays).
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage analysis
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0

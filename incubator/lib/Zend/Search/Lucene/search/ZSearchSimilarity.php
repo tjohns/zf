@@ -12,7 +12,7 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -24,7 +24,7 @@ require_once 'Zend/Search/Lucene/search/ZSearchDefaultSimilarity.php';
 
 
 /**
- * @package    ZSearch
+ * @package    Zend_Search_Lucene
  * @subpackage search
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -493,7 +493,7 @@ abstract class ZSearchSimilarity
      * Returns a score factor for the term
      *
      * @param mixed $input
-     * @param ZSearch $reader
+     * @param Zend_Search_Lucene $reader
      * @return a score factor for the term
      */
     public function idf($input, $reader)
