@@ -33,7 +33,7 @@ require_once 'Zend/Search/Lucene/Exception.php';
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  *
  */
-class Zend_Search_Lucene_Storage_FileFilesystem extends Zend_Search_Lucene_Storage_File
+class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Storage_File
 {
     /**
      * Resource of the open file

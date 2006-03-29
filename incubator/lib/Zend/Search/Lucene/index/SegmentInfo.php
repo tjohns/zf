@@ -89,7 +89,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
     /**
      * File system adapter.
      *
-     * @var ZSearchFSDirectory
+     * @var Zend_Search_Lucene_Storage_Directory_Filesystem
      */
     private $_directory;
 

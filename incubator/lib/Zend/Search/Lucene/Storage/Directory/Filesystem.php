@@ -22,8 +22,8 @@
 /** Zend_Search_Lucene_Storage_Directory */
 require_once 'Zend/Search/Lucene/Storage/Directory.php';
 
-/** Zend_Search_Lucene_Storage_FileFilesystem */
-require_once 'Zend/Search/Lucene/Storage/filesystem/ZSearchFileFilesystem.php';
+/** Zend_Search_Lucene_Storage_File_Filesystem */
+require_once 'Zend/Search/Lucene/Storage/File/Filesystem.php';
 
 
 /**
@@ -34,7 +34,7 @@ require_once 'Zend/Search/Lucene/Storage/filesystem/ZSearchFileFilesystem.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchFSDirectory extends Zend_Search_Lucene_Storage_Directory
+class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene_Storage_Directory
 {
     /**
      * Filesystem path to the directory
@@ -44,7 +44,7 @@ class ZSearchFSDirectory extends Zend_Search_Lucene_Storage_Directory
     private $_dirPath = null;
 
     /**
-     * Cache for Zend_Search_Lucene_Storage_FileFilesystem objects
+     * Cache for Zend_Search_Lucene_Storage_File_Filesystem objects
      * Array: filename => Zend_Search_Lucene_Storage_File object
      *
      * @var array
@@ -150,7 +150,7 @@ class ZSearchFSDirectory extends Zend_Search_Lucene_Storage_Directory
             $this->_fileHandlers[$filename]->close();
         }
         unset($this->_fileHandlers[$filename]);
-        $this->_fileHandlers[$filename] = new Zend_Search_Lucene_Storage_FileFilesystem($this->_dirPath . '/' . $filename, 'w+b');
+        $this->_fileHandlers[$filename] = new Zend_Search_Lucene_Storage_File_Filesystem($this->_dirPath . '/' . $filename, 'w+b');
         return $this->_fileHandlers[$filename];
     }
 
@@ -262,7 +262,7 @@ class ZSearchFSDirectory extends Zend_Search_Lucene_Storage_Directory
             return $this->_fileHandlers[$filename];
         }
 
-        $this->_fileHandlers[$filename] = new Zend_Search_Lucene_Storage_FileFilesystem($this->_dirPath . '/' . $filename, 'rb');
+        $this->_fileHandlers[$filename] = new Zend_Search_Lucene_Storage_File_Filesystem($this->_dirPath . '/' . $filename, 'rb');
         return $this->_fileHandlers[$filename];
     }
 }

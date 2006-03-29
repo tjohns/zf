@@ -25,7 +25,7 @@ require_once 'Zend/Search/Lucene/Exception.php';
 require_once 'Zend/Search/Lucene/Document.php';
 
 /** Zend_Search_Lucene_Storage_Directory */
-require_once 'Zend/Search/Lucene/Storage/filesystem/ZSearchDirectoryFilesystem.php';
+require_once 'Zend/Search/Lucene/Storage/Directory/Filesystem.php';
 
 /** Zend_Search_Lucene_Index_Term */
 require_once 'Zend/Search/Lucene/index/Term.php';
@@ -110,11 +110,11 @@ class Zend_Search_Lucene
             throw new Zend_Search_Exception('No index directory specified');
         }
 
-        if ($directory instanceof ZSearchFSDirectory) {
+        if ($directory instanceof Zend_Search_Lucene_Storage_Directory_Filesystem) {
             $this->_directory      = $directory;
             $this->_closeDirOnExit = false;
         } else {
-            $this->_directory      = new ZSearchFSDirectory($directory);
+            $this->_directory      = new Zend_Search_Lucene_Storage_Directory_Filesystem($directory);
             $this->_closeDirOnExit = true;
         }
 
