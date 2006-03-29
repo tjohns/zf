@@ -19,12 +19,12 @@
  */
 
 
-/** ZSearchAnalyzer */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchAnalyzer.php';
+/** Zend_Search_Lucene_Analysis_Analyzer */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
 
 
 /**
- * Common implementation of the ZSearchAnalyzer interface.
+ * Common implementation of the Zend_Search_Lucene_Analysis_Analyzer interface.
  * There are several standard standard subclasses provided by Zend_Search_Lucene/Analysis
  * subpackage: ZSearchTextAnalyzer, ZSearchHTMLAnalyzer, ZSearchXMLAnalyzer.
  *
@@ -35,7 +35,7 @@ require_once 'Zend/Search/Lucene/Analysis/ZSearchAnalyzer.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-abstract class ZSearchCommonAnalyzer extends ZSearchAnalyzer
+abstract class ZSearchCommonAnalyzer extends Zend_Search_Lucene_Analysis_Analyzer
 {
     /**
      * The set of Token filters applied to the Token stream.

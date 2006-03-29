@@ -22,8 +22,8 @@
 /** Zend_Search_Lucene_Exception */
 require_once 'Zend/Search/Lucene/Exception.php';
 
-/** ZSearchAnalyzer */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchAnalyzer.php';
+/** Zend_Search_Lucene_Analysis_Analyzer */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
 
 /** Zend_Search_Lucene_Index_SegmentInfo */
 require_once 'Zend/Search/Lucene/Index/SegmentInfo.php';
@@ -206,7 +206,7 @@ class Zend_Search_Lucene_Index_SegmentWriter
 
             if ($field->isIndexed) {
                 if ($field->isTokenized) {
-                    $tokenList = ZSearchAnalyzer::getDefault()->tokenize($field->stringValue);
+                    $tokenList = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($field->stringValue);
                 } else {
                     $tokenList = array();
                     $tokenList[] = new ZSearchToken($field->stringValue, 0, strlen($field->stringValue));

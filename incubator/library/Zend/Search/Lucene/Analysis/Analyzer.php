@@ -46,12 +46,12 @@ require_once 'Zend/Search/Lucene/Analysis/ZSearchTextCIAnalyzer.php';
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-abstract class ZSearchAnalyzer
+abstract class Zend_Search_Lucene_Analysis_Analyzer
 {
     /**
      * The Analyzer implementation used by default.
      *
-     * @var ZSearchAnalyzer
+     * @var Zend_Search_Lucene_Analysis_Analyzer
      */
     static private $_defaultImpl;
 
@@ -68,9 +68,9 @@ abstract class ZSearchAnalyzer
     /**
      * Set the default Analyzer implementation used by indexing code.
      *
-     * @param ZSearchAnalyzer $similarity
+     * @param Zend_Search_Lucene_Analysis_Analyzer $similarity
      */
-    static public function setDefault(ZSearchAnalyzer $analyzer)
+    static public function setDefault(Zend_Search_Lucene_Analysis_Analyzer $analyzer)
     {
         self::$_defaultImpl = $analyzer;
     }
@@ -79,11 +79,11 @@ abstract class ZSearchAnalyzer
     /**
      * Return the default Analyzer implementation used by indexing code.
      *
-     * @return ZSearchAnalyzer
+     * @return Zend_Search_Lucene_Analysis_Analyzer
      */
     static public function getDefault()
     {
-        if (!self::$_defaultImpl instanceof ZSearchAnalyzer) {
+        if (!self::$_defaultImpl instanceof Zend_Search_Lucene_Analysis_Analyzer) {
             self::$_defaultImpl = new ZSearchTextCIAnalyzer();
         }
 
