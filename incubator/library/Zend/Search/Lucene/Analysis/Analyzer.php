@@ -19,14 +19,14 @@
  */
 
 
-/** ZSearchToken */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchToken.php';
+/** Zend_Search_Lucene_Analysis_Token */
+require_once 'Zend/Search/Lucene/Analysis/Token.php';
 
 /** Zend_Search_Lucene_Analysis_Analyzer_Common_Text */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text.php';
 
-/** ZSearchTextCIAnalyzer */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchTextCIAnalyzer.php';
+/** Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text/CaseInsensitive.php';
 
 
 
@@ -57,7 +57,7 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
 
     /**
      * Tokenize text to a terms
-     * Returns array of ZSearchToken objects
+     * Returns array of Zend_Search_Lucene_Analysis_Token objects
      *
      * @param string $data
      * @return array
@@ -84,7 +84,7 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
     static public function getDefault()
     {
         if (!self::$_defaultImpl instanceof Zend_Search_Lucene_Analysis_Analyzer) {
-            self::$_defaultImpl = new ZSearchTextCIAnalyzer();
+            self::$_defaultImpl = new Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive();
         }
 
         return self::$_defaultImpl;

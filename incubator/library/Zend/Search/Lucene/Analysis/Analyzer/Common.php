@@ -39,7 +39,7 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_L
 {
     /**
      * The set of Token filters applied to the Token stream.
-     * Array of ZSearchTokenFilter objects.
+     * Array of Zend_Search_Lucene_Analysis_TokenFilter objects.
      *
      * @var array
      */
@@ -48,9 +48,9 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_L
     /**
      * Add Token filter to the Analyzer
      *
-     * @param ZSearchTokenFilter $filter
+     * @param Zend_Search_Lucene_Analysis_TokenFilter $filter
      */
-    public function addFilter(ZSearchTokenFilter $filter)
+    public function addFilter(Zend_Search_Lucene_Analysis_TokenFilter $filter)
     {
         $this->_filters[] = $filter;
     }
@@ -58,10 +58,10 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_L
     /**
      * Apply filters to the token.
      *
-     * @param ZSearchToken $token
-     * @return ZSearchToken
+     * @param Zend_Search_Lucene_Analysis_Token $token
+     * @return Zend_Search_Lucene_Analysis_Token
      */
-    public function normalize(ZSearchToken $token)
+    public function normalize(Zend_Search_Lucene_Analysis_Token $token)
     {
         foreach ($this->_filters as $filter) {
             $token = $filter->normalize($token);

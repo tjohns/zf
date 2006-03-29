@@ -34,7 +34,7 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Text extends Zend_Search_Lucen
 {
     /**
      * Tokenize text to a terms
-     * Returns array of ZSearchToken objects
+     * Returns array of Zend_Search_Lucene_Analysis_Token objects
      *
      * @param string $data
      * @return array
@@ -62,7 +62,7 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Text extends Zend_Search_Lucen
                 break;
             }
 
-            $token = new ZSearchToken(substr($data,
+            $token = new Zend_Search_Lucene_Analysis_Token(substr($data,
                                              $termStartPosition,
                                              $position-$termStartPosition),
                                       $termStartPosition,

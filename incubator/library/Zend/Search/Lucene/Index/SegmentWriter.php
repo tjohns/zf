@@ -209,7 +209,7 @@ class Zend_Search_Lucene_Index_SegmentWriter
                     $tokenList = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($field->stringValue);
                 } else {
                     $tokenList = array();
-                    $tokenList[] = new ZSearchToken($field->stringValue, 0, strlen($field->stringValue));
+                    $tokenList[] = new Zend_Search_Lucene_Analysis_Token($field->stringValue, 0, strlen($field->stringValue));
                 }
 
                 $position = 0;

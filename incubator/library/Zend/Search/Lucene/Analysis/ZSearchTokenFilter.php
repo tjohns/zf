@@ -19,8 +19,8 @@
  */
 
 
-/** ZSearchToken */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchToken.php';
+/** Zend_Search_Lucene_Analysis_Token */
+require_once 'Zend/Search/Lucene/Analysis/Token.php';
 
 
 /**
@@ -32,14 +32,14 @@ require_once 'Zend/Search/Lucene/Analysis/ZSearchToken.php';
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-abstract class ZSearchTokenFilter
+abstract class Zend_Search_Lucene_Analysis_TokenFilter
 {
     /**
      * Normalize Token or remove it (if null is returned)
      *
-     * @param ZSearchToken $srcToken
-     * @return ZSearchToken
+     * @param Zend_Search_Lucene_Analysis_Token $srcToken
+     * @return Zend_Search_Lucene_Analysis_Token
      */
-    abstract public function normalize(ZSearchToken $srcToken);
+    abstract public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken);
 }
 

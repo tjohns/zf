@@ -26,7 +26,7 @@
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchToken
+class Zend_Search_Lucene_Analysis_Token
 {
     /**
      * The text of the term.
@@ -136,7 +136,7 @@ class ZSearchToken
      *
      * Note:
      * The difference between getEndOffset() and getStartOffset() may not be equal
-     * to strlen(ZSearchToken::getTermText()), as the term text may have been altered
+     * to strlen(Zend_Search_Lucene_Analysis_Token::getTermText()), as the term text may have been altered
      * by a stemmer or some other filter.
      *
      * @return integer

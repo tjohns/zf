@@ -19,7 +19,7 @@
  */
 
 
-/** ZSearchTokenFilter */
+/** Zend_Search_Lucene_Analysis_TokenFilter */
 require_once 'Zend/Search/Lucene/Analysis/ZSearchTokenFilter.php';
 
 
@@ -32,17 +32,17 @@ require_once 'Zend/Search/Lucene/Analysis/ZSearchTokenFilter.php';
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-class ZSearchLowerCaseFilter extends ZSearchTokenFilter
+class ZSearchLowerCaseFilter extends Zend_Search_Lucene_Analysis_TokenFilter
 {
     /**
      * Normalize Token or remove it (if null is returned)
      *
-     * @param ZSearchToken $srcToken
-     * @return ZSearchToken
+     * @param Zend_Search_Lucene_Analysis_Token $srcToken
+     * @return Zend_Search_Lucene_Analysis_Token
      */
-    public function normalize(ZSearchToken $srcToken)
+    public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken)
     {
-        $newToken = new ZSearchToken(strtolower( $srcToken->getTermText() ),
+        $newToken = new Zend_Search_Lucene_Analysis_Token(strtolower( $srcToken->getTermText() ),
                                      $srcToken->getStartOffset(),
                                      $srcToken->getEndOffset(),
                                      $srcToken->getType());
