@@ -42,7 +42,7 @@ class ZSearchPhraseWeight extends ZSearchWeight
     /**
      * The query that this concerns.
      *
-     * @var ZSearchPhraseQuery
+     * @var Zend_Search_Lucene_Search_Query_Phrase
      */
     private $_query;
 
@@ -79,10 +79,10 @@ class ZSearchPhraseWeight extends ZSearchWeight
     /**
      * ZSearchPhraseWeight constructor
      *
-     * @param ZSearchPhraseQuery $query
+     * @param Zend_Search_Lucene_Search_Query_Phrase $query
      * @param Zend_Search_Lucene $reader
      */
-    public function __construct(ZSearchPhraseQuery $query, Zend_Search_Lucene $reader)
+    public function __construct(Zend_Search_Lucene_Search_Query_Phrase $query, Zend_Search_Lucene $reader)
     {
         $this->_query  = $query;
         $this->_reader = $reader;
