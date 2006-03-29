@@ -22,8 +22,8 @@
 /** Zend_Search_Lucene_Analysis_Analyzer_Common_Text */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text.php';
 
-/** ZSearchLowerCaseFilter */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchLowerCaseFilter.php';
+/** Zend_Search_Lucene_Analysis_TokenFilter_LowerCase */
+require_once 'Zend/Search/Lucene/Analysis/TokenFilter/LowerCase.php';
 
 
 /**
@@ -37,7 +37,7 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive extends Z
 {
     public function __construct()
     {
-        $this->addFilter(new ZSearchLowerCaseFilter());
+        $this->addFilter(new Zend_Search_Lucene_Analysis_TokenFilter_LowerCase());
     }
 }
 

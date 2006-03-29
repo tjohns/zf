@@ -32,7 +32,7 @@ require_once 'Zend/Search/Lucene/Analysis/TokenFilter.php';
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-class ZSearchLowerCaseFilter extends Zend_Search_Lucene_Analysis_TokenFilter
+class Zend_Search_Lucene_Analysis_TokenFilter_LowerCase extends Zend_Search_Lucene_Analysis_TokenFilter
 {
     /**
      * Normalize Token or remove it (if null is returned)
