@@ -20,9 +20,9 @@
 
 
 /**
- * ZSearchQuery
+ * Zend_Search_Lucene_Search_Query
  */
-require_once 'Zend/Search/Lucene/Search/ZSearchQuery.php';
+require_once 'Zend/Search/Lucene/Search/Query.php';
 
 /**
  * ZSearchMultiTermWeight
@@ -38,7 +38,7 @@ require_once 'Zend/Search/Lucene/Search/ZSearchPhraseWeight.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchPhraseQuery extends ZSearchQuery
+class ZSearchPhraseQuery extends Zend_Search_Lucene_Search_Query
 {
     /**
      * Terms to find.

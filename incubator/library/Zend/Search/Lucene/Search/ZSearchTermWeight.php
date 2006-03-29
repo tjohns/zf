@@ -48,7 +48,7 @@ class ZSearchTermWeight extends ZSearchWeight
     /**
      * The query that this concerns.
      *
-     * @var ZSearchQuery
+     * @var Zend_Search_Lucene_Search_Query
      */
     private $_query;
 

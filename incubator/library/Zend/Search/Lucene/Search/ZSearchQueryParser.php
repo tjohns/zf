@@ -19,7 +19,7 @@
  */
 
 
-/** ZSearchQueryTokenizer */
+/** Zend_Search_Lucene_Search_QueryTokenizer */
 require_once 'Zend/Search/Lucene/Search/ZSearchQueryTokenizer.php';
 
 /** Zend_Search_Lucene_Index_Term */
@@ -41,18 +41,18 @@ require_once 'Zend/Search/Lucene/Exception.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchQueryParser
+class Zend_Search_Lucene_Search_QueryParser
 {
 
     /**
-     * Parses a query string, returning a ZSearchQuery
+     * Parses a query string, returning a Zend_Search_Lucene_Search_Query
      *
      * @param string $strQuery
-     * @return ZSearchQuery
+     * @return Zend_Search_Lucene_Search_Query
      */
     static public function parse($strQuery)
     {
-        $tokens = new ZSearchQueryTokenizer($strQuery);
+        $tokens = new Zend_Search_Lucene_Search_QueryTokenizer($strQuery);
 
         // Empty query
         if (!$tokens->count()) {
@@ -61,7 +61,7 @@ class ZSearchQueryParser
 
         // Term query
         if ($tokens->count() == 1) {
-            if ($tokens->current()->type == ZSearchQueryToken::TOKTYPE_WORD) {
+            if ($tokens->current()->type == Zend_Search_Lucene_Search_QueryToken::TOKTYPE_WORD) {
                 return new ZSearchTermQuery(new Zend_Search_Lucene_Index_Term($tokens->current()->text, 'contents'));
             } else {
                 throw new Zend_Search_Lucene_Exception('Syntax error: query string must contain at least one word.');
@@ -81,11 +81,11 @@ class ZSearchQueryParser
         $field = 'contents';
         foreach ($tokens as $token) {
             switch ($token->type) {
-                case ZSearchQueryToken::TOKTYPE_WORD:
+                case Zend_Search_Lucene_Search_QueryToken::TOKTYPE_WORD:
                     $terms[] = new Zend_Search_Lucene_Index_Term($token->text, $field);
                     $field = 'contents';
                     if ($prevToken !== null &&
-                        $prevToken->type == ZSearchQueryToken::TOKTYPE_SIGN) {
+                        $prevToken->type == Zend_Search_Lucene_Search_QueryToken::TOKTYPE_SIGN) {
                             if ($prevToken->text == "+") {
                                 $signs[] = true;
                             } else {
@@ -95,25 +95,25 @@ class ZSearchQueryParser
                         $signs[] = null;
                     }
                     break;
-                case ZSearchQueryToken::TOKTYPE_SIGN:
+                case Zend_Search_Lucene_Search_QueryToken::TOKTYPE_SIGN:
                     if ($prevToken !== null &&
-                        $prevToken->type == ZSearchQueryToken::TOKTYPE_SIGN) {
+                        $prevToken->type == Zend_Search_Lucene_Search_QueryToken::TOKTYPE_SIGN) {
                             throw new Zend_Search_Lucene_Exception('Syntax error: sign operator must be followed by a word.');
                     }
                     break;
-                case ZSearchQueryToken::TOKTYPE_FIELD:
+                case Zend_Search_Lucene_Search_QueryToken::TOKTYPE_FIELD:
                     $field = $token->text;
                     // let previous token to be signed as next $prevToken
                     $token = $prevToken;
                     break;
-                case ZSearchQueryToken::TOKTYPE_BRACKET:
+                case Zend_Search_Lucene_Search_QueryToken::TOKTYPE_BRACKET:
                     $token->text=='(' ? $openBrackets++ : $openBrackets--;
             }
             $prevToken = $token;
         }
 
         // Finish up parsing: check the last token in the query for an opening sign or parenthesis.
-        if ($prevToken->type == ZSearchQueryToken::TOKTYPE_SIGN) {
+        if ($prevToken->type == Zend_Search_Lucene_Search_QueryToken::TOKTYPE_SIGN) {
             throw new Zend_Search_Lucene_Exception('Syntax Error: sign operator must be followed by a word.');
         }
 

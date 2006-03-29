@@ -19,7 +19,7 @@
  */
 
 
-/** ZSearchQueryToken */
+/** Zend_Search_Lucene_Search_QueryToken */
 require_once 'Zend/Search/Lucene/Search/ZSearchQueryToken.php';
 
 /** Zend_Search_Lucene_Exception */
@@ -32,7 +32,7 @@ require_once 'Zend/Search/Lucene/Exception.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchQueryTokenizer implements Iterator
+class Zend_Search_Lucene_Search_QueryTokenizer implements Iterator
 {
     /**
      * inputString tokens.
@@ -67,27 +67,27 @@ class ZSearchQueryTokenizer implements Iterator
             } else {
                 // Previous token is finished
                 if (strlen($currentToken)) {
-                    $this->_tokens[] = new ZSearchQueryToken(ZSearchQueryToken::TOKTYPE_WORD,
+                    $this->_tokens[] = new Zend_Search_Lucene_Search_QueryToken(Zend_Search_Lucene_Search_QueryToken::TOKTYPE_WORD,
                                                                 $currentToken);
                     $currentToken = '';
                 }
 
                 if ($inputString{$count} == '+' || $inputString{$count} == '-') {
-                    $this->_tokens[] = new ZSearchQueryToken(ZSearchQueryToken::TOKTYPE_SIGN,
+                    $this->_tokens[] = new Zend_Search_Lucene_Search_QueryToken(Zend_Search_Lucene_Search_QueryToken::TOKTYPE_SIGN,
                                                                 $inputString{$count});
                 } elseif ($inputString{$count} == '(' || $inputString{$count} == ')') {
-                    $this->_tokens[] = new ZSearchQueryToken(ZSearchQueryToken::TOKTYPE_BRACKET,
+                    $this->_tokens[] = new Zend_Search_Lucene_Search_QueryToken(Zend_Search_Lucene_Search_QueryToken::TOKTYPE_BRACKET,
                                                                 $inputString{$count});
                 } elseif ($inputString{$count} == ':' && $this->count()) {
-                    if ($this->_tokens[count($this->_tokens)-1]->type == ZSearchQueryToken::TOKTYPE_WORD) {
-                        $this->_tokens[count($this->_tokens)-1]->type = ZSearchQueryToken::TOKTYPE_FIELD;
+                    if ($this->_tokens[count($this->_tokens)-1]->type == Zend_Search_Lucene_Search_QueryToken::TOKTYPE_WORD) {
+                        $this->_tokens[count($this->_tokens)-1]->type = Zend_Search_Lucene_Search_QueryToken::TOKTYPE_FIELD;
                     }
                 }
             }
         }
 
         if (strlen($currentToken)) {
-            $this->_tokens[] = new ZSearchQueryToken(ZSearchQueryToken::TOKTYPE_WORD, $currentToken);
+            $this->_tokens[] = new Zend_Search_Lucene_Search_QueryToken(Zend_Search_Lucene_Search_QueryToken::TOKTYPE_WORD, $currentToken);
         }
     }
 
@@ -140,7 +140,7 @@ class ZSearchQueryTokenizer implements Iterator
     /**
      * Returns next token
      *
-     * @return ZSearchQueryToken
+     * @return Zend_Search_Lucene_Search_QueryToken
      */
     public function next()
     {

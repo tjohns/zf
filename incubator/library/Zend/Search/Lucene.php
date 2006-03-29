@@ -42,10 +42,10 @@ require_once 'Zend/Search/Lucene/index/FieldInfo.php';
 /** Zend_Search_Lucene_Index_Writer */
 require_once 'Zend/Search/Lucene/index/Writer.php';
 
-/** ZSearchQueryParser */
+/** Zend_Search_Lucene_Search_QueryParser */
 require_once 'Zend/Search/Lucene/Search/ZSearchQueryParser.php';
 
-/** ZSearchQueryHit */
+/** Zend_Search_Lucene_Search_QueryHit */
 require_once 'Zend/Search/Lucene/Search/ZSearchQueryHit.php';
 
 /** Zend_Search_Lucene_Search_Similarity */
@@ -209,8 +209,8 @@ class Zend_Search_Lucene
 
     /**
      * Performs a query against the index and returns an array
-     * of ZSearchQueryHit objects.
-     * Input is a string or ZSearchQuery.
+     * of Zend_Search_Lucene_Search_QueryHit objects.
+     * Input is a string or Zend_Search_Lucene_Search_Query.
      *
      * @param mixed $query
      * @return array ZSearchHit
@@ -218,11 +218,11 @@ class Zend_Search_Lucene
     public function find($query)
     {
         if (is_string($query)) {
-            $query = ZSearchQueryParser::parse($query);
+            $query = Zend_Search_Lucene_Search_QueryParser::parse($query);
         }
 
-        if (!$query instanceof ZSearchQuery) {
-            throw new Zend_Search_Lucene_Exception('Query must be a string or ZSearchQuery object');
+        if (!$query instanceof Zend_Search_Lucene_Search_Query) {
+            throw new Zend_Search_Lucene_Exception('Query must be a string or Zend_Search_Lucene_Search_Query object');
         }
 
         $this->commit();
@@ -234,7 +234,7 @@ class Zend_Search_Lucene
         for( $count=0; $count < $docNum; $count++ ) {
             $docScore = $query->score( $count, $this);
             if( $docScore != 0 ) {
-                $hit = new ZSearchQueryHit($this);
+                $hit = new Zend_Search_Lucene_Search_QueryHit($this);
                 $hit->id = $count;
                 $hit->score = $docScore;
 
@@ -268,13 +268,13 @@ class Zend_Search_Lucene
      * Returns a Zend_Search_Lucene_Document object for the document
      * number $id in this index.
      *
-     * @param integer|ZSearchQueryHit $id
+     * @param integer|Zend_Search_Lucene_Search_QueryHit $id
      * @return Zend_Search_Lucene_Document
      */
     public function getDocument($id)
     {
-        if ($id instanceof ZSearchQueryHit) {
-            /* @var $id ZSearchQueryHit */
+        if ($id instanceof Zend_Search_Lucene_Search_QueryHit) {
+            /* @var $id Zend_Search_Lucene_Search_QueryHit */
             $id = $id->id;
         }
 
