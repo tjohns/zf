@@ -20,7 +20,7 @@
 
 
 /** ZSearchWeight */
-require_once 'Zend/Search/Lucene/Search/ZSearchWeight.php';
+require_once 'Zend/Search/Lucene/Search/Weight.php';
 
 
 /**
@@ -41,7 +41,7 @@ class ZSearchMultiTermWeight extends ZSearchWeight
     /**
      * The query that this concerns.
      *
-     * @var ZSearchMultiTermQuery
+     * @var Zend_Search_Lucene_Search_Query_MultiTerm
      */
     private $_query;
 
@@ -59,7 +59,7 @@ class ZSearchMultiTermWeight extends ZSearchWeight
      * query - the query that this concerns.
      * reader - index reader
      *
-     * @param ZSearchMultiTermQuery $query
+     * @param Zend_Search_Lucene_Search_Query_MultiTerm $query
      * @param Zend_Search_Lucene $reader
      */
     public function __construct($query, $reader)

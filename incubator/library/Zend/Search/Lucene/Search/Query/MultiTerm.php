@@ -32,7 +32,7 @@ require_once 'Zend/Search/Lucene/Search/ZSearchMultiTermWeight.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchMultiTermQuery extends Zend_Search_Lucene_Search_Query
+class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Search_Query
 {
 
     /**

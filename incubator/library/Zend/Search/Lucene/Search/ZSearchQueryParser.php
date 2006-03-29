@@ -25,11 +25,11 @@ require_once 'Zend/Search/Lucene/Search/ZSearchQueryTokenizer.php';
 /** Zend_Search_Lucene_Index_Term */
 require_once 'Zend/Search/Lucene/index/Term.php';
 
-/** ZSearchTermQuery */
-require_once 'Zend/Search/Lucene/Search/ZSearchTermQuery.php';
+/** Zend_Search_Lucene_Search_Query_Term */
+require_once 'Zend/Search/Lucene/Search/Query/Term.php';
 
-/** ZSearchMultiTermQuery */
-require_once 'Zend/Search/Lucene/Search/ZSearchMultiTermQuery.php';
+/** Zend_Search_Lucene_Search_Query_MultiTerm */
+require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
 
 /** Zend_Search_Lucene_Search_Query_Phrase */
 require_once 'Zend/Search/Lucene/Search/Query/Phrase.php';
@@ -66,7 +66,7 @@ class Zend_Search_Lucene_Search_QueryParser
         // Term query
         if ($tokens->count() == 1) {
             if ($tokens->current()->type == Zend_Search_Lucene_Search_QueryToken::TOKTYPE_WORD) {
-                return new ZSearchTermQuery(new Zend_Search_Lucene_Index_Term($tokens->current()->text, 'contents'));
+                return new Zend_Search_Lucene_Search_Query_Term(new Zend_Search_Lucene_Index_Term($tokens->current()->text, 'contents'));
             } else {
                 throw new Zend_Search_Lucene_Exception('Syntax error: query string must contain at least one word.');
             }
@@ -130,9 +130,9 @@ class Zend_Search_Lucene_Search_QueryParser
             case 0:
                 throw new Zend_Search_Lucene_Exception('Syntax error: bad term count.');
             case 1:
-                return new ZSearchTermQuery($terms[0],$signs[0] !== false);
+                return new Zend_Search_Lucene_Search_Query_Term($terms[0],$signs[0] !== false);
             default:
-                return new ZSearchMultiTermQuery($terms,$signs);
+                return new Zend_Search_Lucene_Search_Query_MultiTerm($terms,$signs);
         }
     }
 
