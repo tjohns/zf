@@ -19,8 +19,8 @@
  */
 
 
-/** ZSearchCommonAnalyzer */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchCommonAnalyzer.php';
+/** Zend_Search_Lucene_Analysis_Analyzer_Common */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
 
 
 /**
@@ -30,7 +30,7 @@ require_once 'Zend/Search/Lucene/Analysis/ZSearchCommonAnalyzer.php';
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-class ZSearchTextAnalyzer extends ZSearchCommonAnalyzer
+class ZSearchTextAnalyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
     /**
      * Tokenize text to a terms

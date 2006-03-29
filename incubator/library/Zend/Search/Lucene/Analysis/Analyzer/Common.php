@@ -35,7 +35,7 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-abstract class ZSearchCommonAnalyzer extends Zend_Search_Lucene_Analysis_Analyzer
+abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_Lucene_Analysis_Analyzer
 {
     /**
      * The set of Token filters applied to the Token stream.
