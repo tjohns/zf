@@ -20,7 +20,7 @@
 
 
 /** Zend_Search_Lucene_Search_QueryTokenizer */
-require_once 'Zend/Search/Lucene/Search/ZSearchQueryTokenizer.php';
+require_once 'Zend/Search/Lucene/Search/QueryTokenizer.php';
 
 /** Zend_Search_Lucene_Index_Term */
 require_once 'Zend/Search/Lucene/index/Term.php';
