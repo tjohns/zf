@@ -20,7 +20,7 @@
 
 
 /** ZSearchWeight */
-require_once 'Zend/Search/Lucene/search/ZSearchWeight.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchWeight.php';
 
 
 /**

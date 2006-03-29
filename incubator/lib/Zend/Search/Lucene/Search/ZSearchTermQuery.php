@@ -20,10 +20,10 @@
 
 
 /** ZSearchQuery */
-require_once 'Zend/Search/Lucene/search/ZSearchQuery.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchQuery.php';
 
 /** ZSearchTermWeight */
-require_once 'Zend/Search/Lucene/search/ZSearchTermWeight.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchTermWeight.php';
 
 
 /**

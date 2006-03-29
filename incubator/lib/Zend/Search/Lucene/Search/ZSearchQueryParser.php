@@ -20,16 +20,16 @@
 
 
 /** ZSearchQueryTokenizer */
-require_once 'Zend/Search/Lucene/search/ZSearchQueryTokenizer.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchQueryTokenizer.php';
 
 /** Zend_Search_Lucene_Index_Term */
 require_once 'Zend/Search/Lucene/index/Term.php';
 
 /** ZSearchTermQuery */
-require_once 'Zend/Search/Lucene/search/ZSearchTermQuery.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchTermQuery.php';
 
 /** ZSearchMultiTermQuery */
-require_once 'Zend/Search/Lucene/search/ZSearchMultiTermQuery.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchMultiTermQuery.php';
 
 /** Zend_Search_Lucene_Exception */
 require_once 'Zend/Search/Lucene/Exception.php';

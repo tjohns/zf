@@ -43,13 +43,13 @@ require_once 'Zend/Search/Lucene/index/FieldInfo.php';
 require_once 'Zend/Search/Lucene/index/Writer.php';
 
 /** ZSearchQueryParser */
-require_once 'Zend/Search/Lucene/search/ZSearchQueryParser.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchQueryParser.php';
 
 /** ZSearchQueryHit */
-require_once 'Zend/Search/Lucene/search/ZSearchQueryHit.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchQueryHit.php';
 
 /** ZSearchSimilarity */
-require_once 'Zend/Search/Lucene/search/ZSearchSimilarity.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchSimilarity.php';
 
 
 /**

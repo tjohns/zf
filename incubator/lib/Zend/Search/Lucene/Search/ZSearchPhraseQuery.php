@@ -22,12 +22,12 @@
 /**
  * ZSearchQuery
  */
-require_once 'Zend/Search/Lucene/search/ZSearchQuery.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchQuery.php';
 
 /**
  * ZSearchMultiTermWeight
  */
-require_once 'Zend/Search/Lucene/search/ZSearchPhraseWeight.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchPhraseWeight.php';
 
 
 /**

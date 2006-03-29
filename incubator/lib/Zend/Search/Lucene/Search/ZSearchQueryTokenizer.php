@@ -20,7 +20,7 @@
 
 
 /** ZSearchQueryToken */
-require_once 'Zend/Search/Lucene/search/ZSearchQueryToken.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchQueryToken.php';
 
 /** Zend_Search_Lucene_Exception */
 require_once 'Zend/Search/Lucene/Exception.php';

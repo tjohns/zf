@@ -20,7 +20,7 @@
 
 
 /** ZSearchDefaultSimilarity */
-require_once 'Zend/Search/Lucene/search/ZSearchDefaultSimilarity.php';
+require_once 'Zend/Search/Lucene/Search/ZSearchDefaultSimilarity.php';
 
 
 /**
