@@ -25,7 +25,7 @@
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-abstract class ZSearchDirectory
+abstract class Zend_Search_Lucene_Storage_Directory
 {
 
     /**
@@ -46,7 +46,7 @@ abstract class ZSearchDirectory
      * Creates a new, empty file in the directory with the given $filename.
      *
      * @param string $filename
-     * @return ZSearchFile
+     * @return Zend_Search_Lucene_Storage_File
      */
     abstract public function createFile($filename);
 
@@ -107,10 +107,10 @@ abstract class ZSearchDirectory
 
 
     /**
-     * Returns a ZSearchFile object for a given $filename in the directory.
+     * Returns a Zend_Search_Lucene_Storage_File object for a given $filename in the directory.
      *
      * @param string $filename
-     * @return ZSearchFile
+     * @return Zend_Search_Lucene_Storage_File
      */
     abstract public function getFileObject($filename);
 

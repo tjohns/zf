@@ -38,7 +38,7 @@ class Zend_Search_Lucene_Index_Writer
      * @todo Implement segment merger
      * @todo Implement mergeFactor, minMergeDocs, maxMergeDocs usage.
      * @todo Implement Analyzer substitution
-     * @todo Implement ZSearchDirectoryRAM and ZSearchFileRAM to use it for
+     * @todo Implement Zend_Search_Lucene_Storage_DirectoryRAM and Zend_Search_Lucene_Storage_FileRAM to use it for
      *       temporary index files
      * @todo Directory lock processing
      */
@@ -46,7 +46,7 @@ class Zend_Search_Lucene_Index_Writer
     /**
      * File system adapter.
      *
-     * @var ZSearchDirectory
+     * @var Zend_Search_Lucene_Storage_Directory
      */
     private $_directory = null;
 
@@ -121,10 +121,10 @@ class Zend_Search_Lucene_Index_Writer
      * Second constructor parameter create is optional - true to create the
      * index or overwrite the existing one.
      *
-     * @param ZSearchDirectory $directory
+     * @param Zend_Search_Lucene_Storage_Directory $directory
      * @param boolean $create
      */
-    public function __construct(ZSearchDirectory $directory, $create = false)
+    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, $create = false)
     {
         $this->_directory = $directory;
 

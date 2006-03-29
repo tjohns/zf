@@ -111,7 +111,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      *
      * @param string $name
      * @param integer $docCount
-     * @param ZSearchDirectory $directory
+     * @param Zend_Search_Lucene_Storage_Directory $directory
      */
     public function __construct($name, $docCount, $directory)
     {
@@ -159,7 +159,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      *
      * @param string $extension
      * @throws Zend_Search_Lucene_Exception
-     * @return ZSearchFile
+     * @return Zend_Search_Lucene_Storage_File
      */
     public function openCompoundFile($extension)
     {

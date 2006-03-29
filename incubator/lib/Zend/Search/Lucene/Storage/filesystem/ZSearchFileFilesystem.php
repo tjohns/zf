@@ -19,8 +19,8 @@
  */
 
 
-/** ZSearchFile */
-require_once 'Zend/Search/Lucene/Storage/ZSearchFile.php';
+/** Zend_Search_Lucene_Storage_File */
+require_once 'Zend/Search/Lucene/Storage/File.php';
 
 /** Zend_Search_Lucene_Exception */
 require_once 'Zend/Search/Lucene/Exception.php';
@@ -33,7 +33,7 @@ require_once 'Zend/Search/Lucene/Exception.php';
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  *
  */
-class ZSearchFileFilesystem extends ZSearchFile
+class Zend_Search_Lucene_Storage_FileFilesystem extends Zend_Search_Lucene_Storage_File
 {
     /**
      * Resource of the open file

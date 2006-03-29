@@ -19,10 +19,10 @@
  */
 
 
-/** ZSearchDirectory */
-require_once 'Zend/Search/Lucene/Storage/ZSearchDirectory.php';
+/** Zend_Search_Lucene_Storage_Directory */
+require_once 'Zend/Search/Lucene/Storage/Directory.php';
 
-/** ZSearchFileFilesystem */
+/** Zend_Search_Lucene_Storage_FileFilesystem */
 require_once 'Zend/Search/Lucene/Storage/filesystem/ZSearchFileFilesystem.php';
 
 
@@ -34,7 +34,7 @@ require_once 'Zend/Search/Lucene/Storage/filesystem/ZSearchFileFilesystem.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class ZSearchFSDirectory extends ZSearchDirectory
+class ZSearchFSDirectory extends Zend_Search_Lucene_Storage_Directory
 {
     /**
      * Filesystem path to the directory
@@ -44,8 +44,8 @@ class ZSearchFSDirectory extends ZSearchDirectory
     private $_dirPath = null;
 
     /**
-     * Cache for ZSearchFileFilesystem objects
-     * Array: filename => ZSearchFile object
+     * Cache for Zend_Search_Lucene_Storage_FileFilesystem objects
+     * Array: filename => Zend_Search_Lucene_Storage_File object
      *
      * @var array
      * @throws Zend_Search_Lucene_Exception
@@ -142,7 +142,7 @@ class ZSearchFSDirectory extends ZSearchDirectory
      * Creates a new, empty file in the directory with the given $filename.
      *
      * @param string $filename
-     * @return ZSearchFile
+     * @return Zend_Search_Lucene_Storage_File
      */
     public function createFile($filename)
     {
@@ -150,7 +150,7 @@ class ZSearchFSDirectory extends ZSearchDirectory
             $this->_fileHandlers[$filename]->close();
         }
         unset($this->_fileHandlers[$filename]);
-        $this->_fileHandlers[$filename] = new ZSearchFileFilesystem($this->_dirPath . '/' . $filename, 'w+b');
+        $this->_fileHandlers[$filename] = new Zend_Search_Lucene_Storage_FileFilesystem($this->_dirPath . '/' . $filename, 'w+b');
         return $this->_fileHandlers[$filename];
     }
 
@@ -250,10 +250,10 @@ class ZSearchFSDirectory extends ZSearchDirectory
 
 
     /**
-     * Returns a ZSearchFile object for a given $filename in the directory.
+     * Returns a Zend_Search_Lucene_Storage_File object for a given $filename in the directory.
      *
      * @param string $filename
-     * @return ZSearchFile
+     * @return Zend_Search_Lucene_Storage_File
      */
     public function getFileObject($filename)
     {
@@ -262,7 +262,7 @@ class ZSearchFSDirectory extends ZSearchDirectory
             return $this->_fileHandlers[$filename];
         }
 
-        $this->_fileHandlers[$filename] = new ZSearchFileFilesystem($this->_dirPath . '/' . $filename, 'rb');
+        $this->_fileHandlers[$filename] = new Zend_Search_Lucene_Storage_FileFilesystem($this->_dirPath . '/' . $filename, 'rb');
         return $this->_fileHandlers[$filename];
     }
 }

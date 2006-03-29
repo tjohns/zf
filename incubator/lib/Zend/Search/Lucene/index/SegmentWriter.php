@@ -78,7 +78,7 @@ class Zend_Search_Lucene_Index_SegmentWriter
     /**
      * File system adapter.
      *
-     * @var ZSearchDirectory
+     * @var Zend_Search_Lucene_Storage_Directory
      */
     private $_directory;
 
@@ -129,14 +129,14 @@ class Zend_Search_Lucene_Index_SegmentWriter
     /**
      * '.fdx'  file - Stored Fields, the field index.
      *
-     * @var ZSearchFile
+     * @var Zend_Search_Lucene_Storage_File
      */
     private $_fdxFile;
 
     /**
      * '.fdx'  file - Stored Fields, the field data.
      *
-     * @var ZSearchFile
+     * @var Zend_Search_Lucene_Storage_File
      */
     private $_fdtFile;
 
@@ -144,7 +144,7 @@ class Zend_Search_Lucene_Index_SegmentWriter
     /**
      * Object constructor.
      *
-     * @param ZSearchDirectory $directory
+     * @param Zend_Search_Lucene_Storage_Directory $directory
      * @param string $name
      */
     public function __construct($directory, $name)
@@ -292,13 +292,13 @@ class Zend_Search_Lucene_Index_SegmentWriter
      * Dump Term Dictionary segment file entry.
      * Used to write entry to .tis or .tii files
      *
-     * @param ZSearchFile $dicFile
+     * @param Zend_Search_Lucene_Storage_File $dicFile
      * @param Zend_Search_Lucene_Index_Term $prevTerm
      * @param Zend_Search_Lucene_Index_Term $term
      * @param Zend_Search_Lucene_Index_TermInfo $prevTermInfo
      * @param Zend_Search_Lucene_Index_TermInfo $termInfo
      */
-    private function _dumpTermDictEntry(ZSearchFile $dicFile,
+    private function _dumpTermDictEntry(Zend_Search_Lucene_Storage_File $dicFile,
                                         &$prevTerm,     Zend_Search_Lucene_Index_Term     $term,
                                         &$prevTermInfo, Zend_Search_Lucene_Index_TermInfo $termInfo)
     {

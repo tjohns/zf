@@ -24,7 +24,7 @@ require_once 'Zend/Search/Lucene/Exception.php';
 /** Zend_Search_Lucene_Document */
 require_once 'Zend/Search/Lucene/Document.php';
 
-/** ZSearchDirectory */
+/** Zend_Search_Lucene_Storage_Directory */
 require_once 'Zend/Search/Lucene/Storage/filesystem/ZSearchDirectoryFilesystem.php';
 
 /** Zend_Search_Lucene_Index_Term */
@@ -62,7 +62,7 @@ class Zend_Search_Lucene
     /**
      * File system adapter.
      *
-     * @var ZSearchDirectory
+     * @var Zend_Search_Lucene_Storage_Directory
      */
     private $_directory = null;
 
@@ -186,9 +186,9 @@ class Zend_Search_Lucene
 
 
     /**
-     * Returns the ZSearchDirectory instance for this index.
+     * Returns the Zend_Search_Lucene_Storage_Directory instance for this index.
      *
-     * @return ZSearchDirectory
+     * @return Zend_Search_Lucene_Storage_Directory
      */
     public function getDirectory()
     {
