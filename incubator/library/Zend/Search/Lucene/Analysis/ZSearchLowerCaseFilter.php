@@ -20,7 +20,7 @@
 
 
 /** Zend_Search_Lucene_Analysis_TokenFilter */
-require_once 'Zend/Search/Lucene/Analysis/ZSearchTokenFilter.php';
+require_once 'Zend/Search/Lucene/Analysis/TokenFilter.php';
 
 
 /**
