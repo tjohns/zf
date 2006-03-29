@@ -26,7 +26,7 @@ require_once 'Zend/Search/Lucene/Exception.php';
 require_once 'Zend/Search/Lucene/analysis/ZSearchAnalyzer.php';
 
 /** Zend_Search_Lucene_Index_SegmentInfo */
-require_once 'Zend/Search/Lucene/index/SegmentInfo.php';
+require_once 'Zend/Search/Lucene/Index/SegmentInfo.php';
 
 
 /**

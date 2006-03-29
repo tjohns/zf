@@ -28,19 +28,19 @@ require_once 'Zend/Search/Lucene/Document.php';
 require_once 'Zend/Search/Lucene/Storage/Directory/Filesystem.php';
 
 /** Zend_Search_Lucene_Index_Term */
-require_once 'Zend/Search/Lucene/index/Term.php';
+require_once 'Zend/Search/Lucene/Index/Term.php';
 
 /** Zend_Search_Lucene_Index_TermInfo */
-require_once 'Zend/Search/Lucene/index/TermInfo.php';
+require_once 'Zend/Search/Lucene/Index/TermInfo.php';
 
 /** Zend_Search_Lucene_Index_SegmentInfo */
-require_once 'Zend/Search/Lucene/index/SegmentInfo.php';
+require_once 'Zend/Search/Lucene/Index/SegmentInfo.php';
 
 /** Zend_Search_Lucene_Index_FieldInfo */
-require_once 'Zend/Search/Lucene/index/FieldInfo.php';
+require_once 'Zend/Search/Lucene/Index/FieldInfo.php';
 
 /** Zend_Search_Lucene_Index_Writer */
-require_once 'Zend/Search/Lucene/index/Writer.php';
+require_once 'Zend/Search/Lucene/Index/Writer.php';
 
 /** Zend_Search_Lucene_Search_QueryParser */
 require_once 'Zend/Search/Lucene/Search/QueryParser.php';
