@@ -15,12 +15,15 @@
         </para>
     
         <programlisting role="php"><![CDATA[<?php
-        
-$index = new Zend_Search_Lucene('/data/my-index', true /* true to create new index */);
+
+// Setting the second argument to TRUE creates a new index
+$index = new Zend_Search_Lucene('/data/my-index', true);
 
 $doc = new Zend_Search_Lucene_Document();
+
 // Store document URL to identify it in search result.
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
+
 // Index document content
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 

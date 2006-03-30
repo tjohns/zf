@@ -120,7 +120,8 @@ foreach ($hits as $hit) {
     // return Zend_Search_Lucene_Document object for this hit
     echo $document = $hit->getDocument();
 
-    // return a Zend_Search_Lucene_Field object from the Zend_Search_Lucene_Document
+    // return a Zend_Search_Lucene_Field object 
+    // from the Zend_Search_Lucene_Document
     echo $document->getField('title');
 
     // return the string value of the Zend_Search_Lucene_Field object

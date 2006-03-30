@@ -60,7 +60,8 @@ import java.io.*
 
 ...
 
-IndexWriter indexWriter = new IndexWriter("/data/my_index", new SimpleAnalyzer(), true);
+IndexWriter indexWriter = new IndexWriter("/data/my_index", 
+                                          new SimpleAnalyzer(), true);
 
 ...
 
@@ -91,13 +92,13 @@ indexWriter.addDocument(doc);]]>
         <para>
             LuceneIndexCreation.jar consumes text files and builds an index from them.  Usage:
         <programlisting role="java"><![CDATA[
-    java -jar LuceneIndexCreation.jar [-c] [-s] <document_directory> <index_directory>
+    java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
     -c   - force index to be case sensitive
     -s   - store content in the index
     ]]></programlisting>
-            This command consumes the directory <code>&lt;document_directory&gt;</code>, including all of its subdirectories,
+            This command consumes the directory <code>&lt;document_dir&gt;</code>, including all of its subdirectories,
             and produces a Lucene index.  The index is a set of files that will be stored in a separate
-            directory that is specified by <code>&lt;index_directory&gt;</code>.
+            directory that is specified by <code>&lt;index_dir&gt;</code>.
         </para>
     
         <para>

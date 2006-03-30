@@ -26,7 +26,8 @@
             
             <programlisting role="php"><![CDATA[<?php
         
-Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
+Zend_Search_Lucene_Analysis_Analyzer::setDefault(
+    new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
 $index->addDocument($doc);
 
@@ -265,38 +266,41 @@ abstract function getFileObject($filename);
         <para>
         Only two methods of Zend_Search_Lucene_Storage_File class must be overloaded in your implementation:
     
-        <programlisting><![CDATA[
-    class MyFile extends Zend_Search_Lucene_Storage_File {
-        /**
-         * Sets the file position indicator and advances the file pointer.
-         * The new position, measured in bytes from the beginning of the file,
-         * is obtained by adding offset to the position specified by whence,
-         * whose values are defined as follows:
-         * SEEK_SET - Set position equal to offset bytes.
-         * SEEK_CUR - Set position to current location plus offset.
-         * SEEK_END - Set position to end-of-file plus offset. (To move to
-         * a position before the end-of-file, you need to pass a negative value
-         * in offset.)
-         * Upon success, returns 0; otherwise, returns -1
-         *
-         * @param integer $offset
-         * @param integer $whence
-         * @return integer
-         */
-        public function seek($offset, $whence=SEEK_SET) {
-            ...
-        }
-    
-        /**
-         * Read a $length bytes from the file and advance the file pointer.
-         *
-         * @param integer $length
-         * @return string
-         */
-        protected function _fread($length=1) {
-            ...
-        }]]>
-        </programlisting>
+        <programlisting><![CDATA[<?php
+        
+class MyFile extends Zend_Search_Lucene_Storage_File {
+    /**
+     * Sets the file position indicator and advances the file pointer.
+     * The new position, measured in bytes from the beginning of the file,
+     * is obtained by adding offset to the position specified by whence,
+     * whose values are defined as follows:
+     * SEEK_SET - Set position equal to offset bytes.
+     * SEEK_CUR - Set position to current location plus offset.
+     * SEEK_END - Set position to end-of-file plus offset. (To move to
+     * a position before the end-of-file, you need to pass a negative value
+     * in offset.)
+     * Upon success, returns 0; otherwise, returns -1
+     *
+     * @param integer $offset
+     * @param integer $whence
+     * @return integer
+     */
+    public function seek($offset, $whence=SEEK_SET) {
+        ...
+    }
+
+    /**
+     * Read a $length bytes from the file and advance the file pointer.
+     *
+     * @param integer $length
+     * @return string
+     */
+    protected function _fread($length=1) {
+        ...
+    }
+}
+
+?>]]></programlisting>
         </para>
 
 	</sect2>
