@@ -1,0 +1,55 @@
+<sect1 id="zend.search.index-creation">
+	<title>Building Indexes</title>
+
+	<sect2 id="zend.search.index-creation.creating">
+        <title>Creating a New Index</title>
+        
+        <para>
+            Index creation and updating capabilities are implemented within Zend_Search_Lucene module and Java Lucene.
+            You can use both of these capabilities.
+        </para>
+    
+        <para>
+            The PHP code listing below provides an example of how to index a file
+            using Zend_Search_Lucene indexing API:
+        </para>
+    
+        <programlisting role="php"><![CDATA[<?php
+        
+$index = new Zend_Search_Lucene('/data/my-index', true /* true to create new index */);
+
+$doc = new Zend_Search_Lucene_Document();
+// Store document URL to identify it in search result.
+$doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
+// Index document content
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+
+// Add document to the index.
+$index->addDocument($doc);
+
+// Write changes to the index.
+$index->commit();
+?>]]></programlisting>
+    
+        <para>
+            Newly added documents could be retrived from the index after commit
+            operation.
+        </para>
+        <para>
+            <code>Zend_Search_Lucene::commit()</code> is automatically called at the end of script execution and
+            before any search request.
+        </para>
+        <para>
+            Each commit() call generates new index segment. So it must be requested as rarely as possible.
+            From the other side commiting large amount of documents in one step needs more memory.
+        </para>
+        <para>
+            Automatic segment management optimization is a subject of future Zend_Search_Lucene enhancements.
+        </para>
+    
+    </sect2>	
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->
