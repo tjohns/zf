@@ -1,0 +1,64 @@
+<sect1 id="zend.search.charset">
+	<title>Character set.</title>
+
+	<sect2 id="zend.search.charset.description">
+        <title>UTF-8 and single-byte character sets support.</title>
+
+        <para>
+            Zend_Search_Lucene is designed to work with UTF-8 charset. Index files store
+            unicode data in Java's "modified UTF-8 encoding". Zend_Search_Lucene core
+            completely supports it with one exception.
+            <footnote>
+               <para>
+                   Zend_Search_Lucene supports only Basic Multilingual Plane
+                   (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
+                   "supplementary characters" (characters whose code points are
+                   greater than 0xFFFF)
+               </para>
+               <para>
+                   Java 2 represents these characters as a pair of char (16-bit)
+                   values, the first from the high-surrogates range (0xD800-0xDBFF),
+                   the second from the low-surrogates range (0xDC00-0xDFFF). Then
+                   they are encoded as usual UTF-8 characters in six bytes.
+                   Standard UTF-8 representation uses four bytes for supplementary
+                   characters.
+               </para>
+            </footnote>
+
+        </para>
+
+        <para>
+            However, text analyzers and query parser text analyzer and query parser use
+            ctype_alpha() for tokenizing text and queries. ctype_alpha() doesn't support
+            UTF-8 and needs to be replaced by something else in nearest future.
+        </para>
+
+        <para>
+            Before that we are strongly recomend to convert your data into ASCII
+            representation
+            <footnote>
+               <para>
+                   If data could contain non-ascii character or come in UTF-8.
+               </para>
+            </footnote>
+            (both for storing source documents, and for querying):
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$doc = new Zend_Search_Lucene_Document();
+...
+$docText = iconv('ISO-8859-1', 'ASCII//TRANSLIT', $docText);
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docText));
+
+...
+
+$query = iconv('ISO-8859-1', 'ASCII//TRANSLIT', $query);
+$hits = $index->find($query);
+?>]]></programlisting>
+
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->
