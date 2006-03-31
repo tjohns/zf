@@ -52,7 +52,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docText));
 
 ...
 
-$query = iconv('ISO-8859-1', 'ASCII//TRANSLIT', $query);
+$query = iconv('', 'ASCII//TRANSLIT', $query);
 $hits = $index->find($query);
 ?>]]></programlisting>
 
