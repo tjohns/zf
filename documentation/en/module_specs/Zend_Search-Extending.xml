@@ -3,36 +3,110 @@
 
 	<sect2 id="zend.search.extending.analysis">
         <title>Text Analysis</title>
-            <para>
-                <code>Zend_Search_Lucene_Analysis_Analyzer</code> class is used by indexer to tokenize document
-                text fields.
-            </para>
-            
-            <para>
-                <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> and <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code> methods are used
-                to get and set default analyser.
-            </para>
-            
-            <para>
-                Thus you can assign your own text analayser or choose it from the set of predefined analysers:
-                <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</code> and <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> (default).
-                Both of them interpret token as a sequense of letters. <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> converts tokens
-                to lower case.
-            </para>
-            
-            <para>
-                To switch between analysers use code:
-            </para>
-            
-            <programlisting role="php"><![CDATA[<?php
-        
+        <para>
+            <code>Zend_Search_Lucene_Analysis_Analyzer</code> class is used by indexer to tokenize document
+            text fields.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> and <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code> methods are used
+            to get and set default analyser.
+        </para>
+
+        <para>
+            Thus you can assign your own text analayser or choose it from the set of predefined analysers:
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</code> and <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> (default).
+            Both of them interpret token as a sequense of letters. <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> converts tokens
+            to lower case.
+        </para>
+
+        <para>
+            To switch between analysers use code:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
 Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     new Zend_Search_Lucene_Analysis_Analyzer_Common_Text());
 ...
 $index->addDocument($doc);
 
 ?>]]></programlisting>
-    </sect2>
+
+        <para>
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> is designed to be a parent for all user
+            defined analyzers. User should only define <code>tokenize()</code> method, which takes an input data as a string
+            and return array of tokens.
+        </para>
+
+        <para>
+            <code>tokenize()</code> method should apply <code>normalize()</code> method to all tokens. It will allow
+            to use token filters with your analyser.
+        </para>
+
+        <para>
+            Here is an example of custom Analyzer, which takes words with digits as a terms:
+
+            <example>
+                <title>Custom text Analyser.</title>
+                <programlisting role="php"><![CDATA[<?php
+/** Here is a custome text analyser, which treats words with digits as one term */
+
+
+/** Zend_Search_Lucene_Analysis_Analyzer_Common */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
+
+class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
+{
+    /**
+     * Tokenize text to a terms
+     * Returns array of Zend_Search_Lucene_Analysis_Token objects
+     *
+     * @param string $data
+     * @return array
+     */
+    public function tokenize($data)
+    {
+        $tokenStream = array();
+
+        $position = 0;
+        while ($position < strlen($data)) {
+            // skip white space
+            while ($position < strlen($data) && !ctype_alpha($data{$position}) && !ctype_digit($data{$position})) {
+                $position++;
+            }
+
+            $termStartPosition = $position;
+
+            // read token
+            while ($position < strlen($data) && (ctype_alpha($data{$position}) || ctype_digit($data{$position}))) {
+                $position++;
+            }
+
+            // Empty token, end of stream.
+            if ($position == $termStartPosition) {
+                break;
+            }
+
+            $token = new Zend_Search_Lucene_Analysis_Token(substr($data,
+                                             $termStartPosition,
+                                             $position-$termStartPosition),
+                                      $termStartPosition,
+                                      $position);
+            $tokenStream[] = $this->normalize($token);
+        }
+
+        return $tokenStream;
+    }
+}
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault(
+    new My_Analyzer());
+
+?>]]></programlisting>
+            </example>
+        </para>
+        </sect2>
 
     <sect2 id="zend.search.extending.scoring">
 		<title>Scoring Algorithms</title>
@@ -40,24 +114,24 @@ $index->addDocument($doc);
             The score of query <literal>q</literal> for document <literal>d</literal>
             is defined as follows:
         </para>
-    
+
         <para>
             <code>score(q,d) = sum( tf(t in d) * idf(t) * getBoost(t.field in d) * lengthNorm(t.field in d)  ) *
             coord(q,d) * queryNorm(q)</code>
         </para>
-    
+
         <para>
             tf(t in d) - <code>Zend_Search_Lucene_Search_Similarity::tf($freq)</code> - a score factor based on a term or phrase's frequency in a document.
         </para>
-    
+
         <para>
             idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code> - a score factor for a simple term for the specified index.
         </para>
-    
+
         <para>
             getBoost(t.field in d) - boost factor for the term field.
         </para>
-    
+
         <para>
             lengthNorm($term) - the normalization value for a field given the total
             number of terms contained in a field. This value is stored within the index.
@@ -68,38 +142,38 @@ $index->addDocument($doc);
             Matches in longer fields are less precise, so implementations of this method
             usually return smaller values when numTokens is large, and larger values when numTokens is small.
         </para>
-    
+
         <para>
             coord(q,d) - <code>Zend_Search_Lucene_Search_Similarity::coord($overlap, $maxOverlap)</code> - a score
             factor based on the fraction of all query terms that a document contains.
         </para>
-    
+
         <para>
             The presence of a large portion of the query terms indicates a better match
             with the query, so implementations of this method usually return larger values
             when the ratio between these parameters is large and smaller values when
             the ratio between them is small.
         </para>
-    
+
         <para>
             queryNorm(q) -  the normalization value for a query given the sum of the squared weights
             of each of the query terms. This value is then multiplied into the weight of each query
             term.
         </para>
-    
+
         <para>
             This does not affect ranking, but rather just attempts to make scores from different
             queries comparable.
         </para>
-    
+
         <para>
             Scoring algorithm can be customized by defining your own Similatity class. To do this
             extend Zend_Search_Lucene_Search_Similarity class as defined below, then use
             <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code> method to set it as default.
         </para>
-    
+
         <programlisting role="php"><![CDATA[<?php
-        
+
 class MySimilarity extends Zend_Search_Lucene_Search_Similarity {
     public function lengthNorm($fieldName, $numTerms) {
         return 1.0/sqrt($numTerms);
@@ -135,37 +209,37 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
 
 ?>]]></programlisting>
 	</sect2>
-	
+
 	<sect2 id="zend.search.extending.storage">
 		<title>Storage Containers</title>
         <para>
         An abstract class Zend_Search_Lucene_Storage_Directory defines directory functionality.
         </para>
-    
+
         <para>
         The Zend_Search_Lucene constructor uses either a string or Zend_Search_Lucene_Storage_Directory object
         as an input.
         </para>
-    
+
         <para>
         Zend_Search_Lucene_Storage_Directory_Filesystem class implements directory functionality for file system.
         </para>
-    
+
         <para>
         If string is used as an input for the Zend_Search_Lucene constructor, then the index reader
         (Zend_Search_Lucene object) treats it as a file system path and instantiates
         Zend_Search_Lucene_Storage_Directory_Filesystem object by themselves.
         </para>
-    
+
         <para>
         You can define your own directory implementation by extending Zend_Search_Lucene_Storage_Directory class.
         </para>
-    
+
         <para>
         Zend_Search_Lucene_Storage_Directory methods:
-    
+
         <programlisting><![CDATA[<?php
-        
+
 abstract class Zend_Search_Lucene_Storage_Directory {
 /**
  * Closes the store.
@@ -246,12 +320,12 @@ abstract function touchFile($filename);
  * @return Zend_Search_Lucene_Storage_File
  */
 abstract function getFileObject($filename);
-    
+
 }
 
 ?>]]></programlisting>
         </para>
-    
+
         <para>
         <code>getFileObject($filename)</code> method of Zend_Search_Lucene_Storage_Directory class returns
         Zend_Search_Lucene_Storage_File object.
@@ -265,9 +339,9 @@ abstract function getFileObject($filename);
         </para>
         <para>
         Only two methods of Zend_Search_Lucene_Storage_File class must be overloaded in your implementation:
-    
+
         <programlisting><![CDATA[<?php
-        
+
 class MyFile extends Zend_Search_Lucene_Storage_File {
     /**
      * Sets the file position indicator and advances the file pointer.
