@@ -1,0 +1,22 @@
+How to build the docs:
+
+- Install libxml2-devel package so that you have the "xsltproc" tool.
+
+On windows; install cygwin and the autoconf, make, libxml2-devel packages.
+
+- run autoconf in this dir
+- run ./configure in this dir
+- run make
+
+the docs will appear in the html dir.
+
+When developing content, you can run "make check" to verify that your docbook is valid.
+
+DocBook resources:
+
+http://www.ibiblio.org/godoy/sgml/docbook/howto/index.html
+http://opensource.bureau-cornavin.com/crash-course/index.html
+http://ds9a.nl/docbook/
+http://www.sagehill.net/docbookxsl/index.html
+http://docbook.org/tdg/en/html/part2.html DocBook tag reference
+
