@@ -27,11 +27,17 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
 {
        
     /**
-     * Available options
+     * This frontend specific options
      * 
-     * @var array available options
+     * TODO : docs
+     * 
+     * @var array options
      */
-    static public $availableOptions = array('cacheByDefault', 'cachedMethods', 'nonCachedMethods'); 
+    private $_specificOptions = array(
+    	'cacheByDefault' => true, 
+    	'cachedFunctions' => array(),
+        'nonCachedFunctions' => array()
+    ); 
            
     /**
      * Constructor
@@ -43,14 +49,7 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);
         }
-        $coreOptions = $options;
-        while (list(, $option) = each(Zend_Cache_Frontend_Function::$availableOptions)) {           
-            // we remove frontend specific option
-            // TODO : better way with a array_* function ?
-            unset($coreOptions[$option]);
-        }
-        $coreOptions['automaticSerialization'] = true;
-        parent::__construct($coreOptions);
+        $this->setOption('automaticSerialization', true);
     }    
     
     /**
@@ -61,17 +60,34 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
      */
     public function setOption($name, $value)
     {
-        if ((!is_string($name)) or (!in_array($name, array_merge(Zend_Cache_Frontend_Function::$availableOptions, Zend_Cache_Core::$availableOptions)))) {
-            Zend_Cache::throwException("Incorrect option name : $name");
-        }
-        $property = '_'.$name;
-        $this->$property = $value;
+        if (is_string($name)) {
+            if (array_key_exists($name, $this->_options)) {
+            	// This is a Core option
+                parent::setOptions($name, $value);
+                return;
+            }
+            if (array_key_exists($name, $this->_specificOptions)) { 
+        		// This a specic option of this frontend
+                $this->_specificOptions[$name] = $value;
+                return;
+            }
+        } 
+        Zend_Cache::throwException("Incorrect option name : $name");
     }
     
     public function call($name, $parameters) 
     {
-        // TODO : add some internal tags (to be able to clean a particulier method call or name)
-        // TODO : deal with cachedMethods and/or cacheBYDefault...
+        // TODO : add some internal tags (to be able to clean a particulier function call or name)
+        
+        $cacheBool1 = $this->_specificOptions['cacheByDefault'];
+        $cacheBool2 = in_array($name, $this->_specificOptions['cachedFunctions']);
+        $cacheBool3 = in_array($name, $this->_specificOptions['nonCachedFunctions']);
+        $cache = (($cacheBool1 || $cacheBool2) && (!$cacheBool3));
+        if (!$cache) {
+            // We do not have not cache
+            return call_user_func_array($name, $parameters);
+        }
+        
         $id = $this->_makeId($name, $parameters);
         if ($this->test($id)) {
             // A cache is available
@@ -79,7 +95,7 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
             $output = $result[0];
             $return = $result[1];
         } else {
-            // A cache is not available
+            // A cache is not available 
             ob_start();
             ob_implicit_flush(false);
             $return = call_user_func_array($name, $parameters);

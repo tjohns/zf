@@ -21,6 +21,15 @@
 Interface Zend_Cache_Backend_Interface
 {
     
+    // TODO : constructor ???
+    
+    /**
+     * Set the frontend directives
+     * 
+     * @param array $directives assoc of directives
+     */
+    public function setDirectives($directives);
+       
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
      * 

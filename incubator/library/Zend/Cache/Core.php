@@ -35,65 +35,52 @@ class Zend_Cache_Core
     /**
      * Available options
      * 
-     * @var array available options
-     */
-    static public $availableOptions = array('writeControl', 'caching', 'automaticSerialization', 'automaticCleaningFactor'); 
-    
-    /**
-     * Available cleaning modes
-     * 
-     * @var array available cleaning modes
-     */
-    static public $availableCleaningModes = array('old', 'all', 'matchingTag', 'notMatchingTag');
-    
-    /**
-     * Enable / disable caching
-     *
-     * (can be very usefull for the debug of cached scripts)
-     *
-     * @var boolean $_caching
-     */
-    private $_caching = true;
-    
-    /**
-     * Enable / disable automatic serialization
-     *
-     * it can be used to save directly datas which aren't strings
-     * (but it's slower)    
-     *
-     * @var boolean $_serialize
-     */
-    private $_automaticSerialization = false;
-    
-    /**
-     * Disable / Tune the automatic cleaning process
-     *
-     * The automatic cleaning process destroy too old (for the given life time)
-     * cache files when a new cache file is written.
-     * 0               => no automatic cache cleaning
-     * 1               => systematic cache cleaning
-     * x (integer) > 1 => automatic cleaning randomly 1 times on x cache write
-     *
-     * @var int $_automaticCleaning
-     */
-    private $_automaticCleaningFactor = 0;
-        
-    /**
-     * Enable / disable write control (the cache is read just after writing to detect corrupt entries)
-     *
-     * Enable write control will lightly slow the cache writing but not the cache reading
+     * ====> (boolean) writeControl :  
+     * - Enable / disable write control (the cache is read just after writing to detect corrupt entries)
+     * - Enable write control will lightly slow the cache writing but not the cache reading
      * Write control can detect some corrupt cache files but maybe it's not a perfect control
      *
-     * @var boolean $_writeControl
+     * ====> (boolean) caching :
+     * - Enable / disable caching
+     * (can be very usefull for the debug of cached scripts)
+     * 
+     * ====> (boolean) automaticSerialization :
+     * - Enable / disable automatic serialization
+     * - It can be used to save directly datas which aren't strings (but it's slower)
+     * 
+     * ====> (int) automaticCleaningFactor :
+     * - Disable / Tune the automatic cleaning process
+     * - The automatic cleaning process destroy too old (for the given life time)
+     *   cache files when a new cache file is written :
+     *     0               => no automatic cache cleaning
+     *     1               => systematic cache cleaning
+     *     x (integer) > 1 => automatic cleaning randomly 1 times on x cache write    
+     *
+     * ====> (int) lifeTime :
+     * - Cache lifetime (in seconds)
+     * - If null, the cache is valid forever.
+     * 
+     * ====> (boolean) logging :
+     * - If set to true, logging is activated
+     * 
+     * @var array available options
      */
-    private $_writeControl = true;
-    
+    protected $_options = array(
+        'writeControl' => true, 
+        'caching' => true, 
+        'automaticSerialization' => false,
+        'automaticCleaningFactor' => 0,
+        'lifeTime' => 3600,
+        'logging' => false
+    ); 
+              
     /**
      * Last used cache id
      * 
      * @var string $_lastId
      */
-    protected $_lastId = null;
+    private $_lastId = null;
+
     
     // ----------------------
     // --- Public methods ---
@@ -125,6 +112,11 @@ class Zend_Cache_Core
             Zend_Cache::throwException('Incorrect backend object !');
         }
         $this->_backend= $backendObject;
+        $directives = array(
+            'lifeTime' => $this->_options['lifeTime'],
+            'logging' => $this->_options['logging']
+        );
+        $this->_backend->setDirectives($directives);
     }
     
     /**
@@ -135,11 +127,10 @@ class Zend_Cache_Core
      */
     public function setOption($name, $value)
     {
-        if ((!is_string($name)) or (!in_array($name, self::$availableOptions))) {
+        if (!is_string($name) || !array_key_exists($name, $this->_options)) {
             Zend_Cache::throwException("Incorrect option name : $name");
         }
-        $property = '_'.$name;
-        $this->$property = $value;
+        $this->_options[$name] = $value;
     }
     
     /**
@@ -152,7 +143,7 @@ class Zend_Cache_Core
      */
     public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
     {
-        if (!$this->_caching) {
+        if (!$this->_options['caching']) {
             return false;
         }
         self::_validateIdOrTag($id);
@@ -162,7 +153,7 @@ class Zend_Cache_Core
             return false;
         }
         $this->_lastId = $id;
-        if ((!$doNotUnserialize) && ($this->_automaticSerialization)) {
+        if ((!$doNotUnserialize) && $this->_options['automaticSerialization']) {
             // we need to unserialize before sending the result
             return unserialize($data);
         }
@@ -177,7 +168,7 @@ class Zend_Cache_Core
      */
     public function test($id) 
     {
-        if (!$this->_caching) {
+        if (!$this->_options['caching']) {
             return false;
         }
         self::_validateIdOrTag($id);
@@ -195,7 +186,7 @@ class Zend_Cache_Core
      */
     public function save($data, $id = null, $tags = array()) 
     {
-        if (!$this->_caching) {
+        if (!$this->_options['caching']) {
             return true;
         }
         if (is_null($id)) {
@@ -203,7 +194,7 @@ class Zend_Cache_Core
         }
         self::_validateIdOrTag($id);  
         self::_validateTagsArray($tags);   
-        if ($this->_automaticSerialization) {
+        if ($this->_options['automaticSerialization']) {
             // we need to serialize datas before storing them
             $data = serialize($data);
         } else {
@@ -212,8 +203,8 @@ class Zend_Cache_Core
             }
         }
         // automatic cleaning 
-        if ($this->_automaticCleaningFactor>0) {
-            $rand = rand(1, $this->_automaticCleaningFactor);
+        if ($this->_options['automaticCleaningFactor'] > 0) {
+            $rand = rand(1, $this->_options['automaticCleaningFactor']);
             if ($rand==1) {
                 $this->clean('old');
             }
@@ -224,7 +215,7 @@ class Zend_Cache_Core
             $this->remove($id);
             return false;
         }
-        if ($this->_writeControl) {
+        if ($this->_options['writeControl']) {
             $data2 = $this->get($id, true, true);
             if ($data!=$data2) {
                 Zend_Log::log('writeControl: written and read data do not match', Zend_Log::LEVEL_WARNING, 'ZF');
@@ -242,7 +233,7 @@ class Zend_Cache_Core
      */
     public function remove($id)
     {
-        if (!$this->_caching) {
+        if (!$this->_options['caching']) {
             return true;
         }
         self::_validateIdOrTag($id);
@@ -266,10 +257,10 @@ class Zend_Cache_Core
      */
     public function clean($mode = 'all', $tags = array())
     {
-        if (!$this->_caching) {
+        if (!$this->_options['caching']) {
             return true;
         }
-        if (!in_array($mode, self::$availableCleaningModes)) {
+        if (!in_array($mode, array('old', 'all', 'matchingTag', 'notMatchingTag'))) {
             Zend_Cache::throwException('Invalid cleaning mode');
         }
         self::_validateTagsArray($tags);

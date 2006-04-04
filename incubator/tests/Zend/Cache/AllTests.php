@@ -8,8 +8,9 @@ require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
 require_once 'FactoryTest.php';
-require_once 'FactoryException.php';
 require_once 'CoreTest.php';
+require_once 'FileBackendTest.php';
+require_once 'SqliteBackendTest.php';
 
 class Zend_Cache_AllTests
 {
@@ -22,8 +23,9 @@ class Zend_Cache_AllTests
     {
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend_Cache');
 		$suite->addTestSuite('Zend_Cache_FactoryTest');
-		$suite->addTestSuite('Zend_Cache_FactoryException');
 		$suite->addTestSuite('Zend_Cache_CoreTest');
+        $suite->addTestSuite('Zend_Cache_FileBackendTest');
+        $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
         return $suite;
     }
 }

@@ -25,19 +25,7 @@ require_once 'Zend/Cache/Core.php';
 
 class Zend_Cache_Frontend_Output extends Zend_Cache_Core
 {
-       
-    /**
-     * Available options
-     * 
-     * @var array available options
-     */
-    static public $availableOptions = array(); 
-    
-    /**
-     * TODO : docs
-     */
-    private $_lastTags = array();
-       
+                 
     /**
      * Constructor
      * 
@@ -45,8 +33,7 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
      */
     public function __construct($options = array())
     {
-        $coreOptions = $options;
-        parent::__construct($coreOptions);
+        parent::__construct($options);
     }
         
     /**
@@ -57,9 +44,8 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
      * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
      * @return boolean true if the cache is hit (false else)
      */
-    public function start($id, $tags = array(), $doNotTestCacheValidity = false)
+    public function start($id, $doNotTestCacheValidity = false)
     {
-        $this->_lastTags = $tags;
         $data = $this->get($id, $doNotTestCacheValidity);
         if ($data !== false) {
             echo($data);
@@ -73,11 +59,11 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
     /**
      * Stop the cache
      */
-    public function end()
+    public function end($tags = array())
     {
         $data = ob_get_contents();
         ob_end_clean();
-        $this->save($data, $this->_lastId, $this->_lastTags);
+        $this->save($data, null, $tags);
         echo($data);
     }
              

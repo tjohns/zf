@@ -29,9 +29,17 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
     /**
      * Available options
      * 
+     * TODO docs
+     * 
      * @var array available options
      */
-    static public $availableOptions = array('cachedClass', 'cachedObject', 'cacheByDefault', 'cachedMethods', 'nonCachedMethods'); 
+   private $_specificOptions = array(
+    	'cachedClass' => null,
+    	'cachedObject' => null,
+    	'cacheByDefault' => true,
+    	'cachedMethods' => array(),
+        'nonCachedMethods' => array()
+    );
     
     private $_mode = null;
     private $_class = null;
@@ -66,14 +74,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);
         }
-        $coreOptions = $options;
-        while (list(, $option) = each(Zend_Cache_Frontend_Class::$availableOptions)) {           
-            // we remove frontend specific option
-            // TODO : better way with a array_* function ?
-            unset($coreOptions[$option]);
-        }
-        $coreOptions['automaticSerialization'] = true;
-        parent::__construct($coreOptions);
+        $this->setOption('automaticSerialization', true);
     }    
     
     /**
@@ -84,17 +85,38 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
      */
     public function setOption($name, $value)
     {
-        if ((!is_string($name)) or (!in_array($name, array_merge(Zend_Cache_Frontend_Class::$availableOptions, Zend_Cache_Core::$availableOptions)))) {
-            Zend_Cache::throwException("Incorrect option name : $name");
-        }
-        $property = '_'.$name;
-        $this->$property = $value;
+        if (is_string($name)) {
+            if (array_key_exists($name, $this->_options)) {
+            	// This is a Core option
+                parent::setOptions($name, $value);
+                return;
+            }
+            if (array_key_exists($name, $this->_specificOptions)) { 
+        		// This a specic option of this frontend
+                $this->_specificOptions[$name] = $value;
+                return;
+            }
+        } 
+        Zend_Cache::throwException("Incorrect option name : $name");
     }
     
     public function __call($name, $parameters) 
     {
         // TODO : add some internal tags (to be able to clean a particulier method call or name)
-        // TODO : deal with cachedMethods and/or cacheBYDefault...
+        
+        $cacheBool1 = $this->_specificOptions['cacheByDefault'];
+        $cacheBool2 = in_array($name, $this->_specificOptions['cachedMethods']);
+        $cacheBool3 = in_array($name, $this->_specificOptions['nonCachedMethods']);
+        $cache = (($cacheBool1 || $cacheBool2) && (!$cacheBool3));
+        if (!$cache) {
+            // We do not have not cache
+            if ($mode == 'object') {
+                return call_user_func_array(array($this->_object, $name), $parameters);
+            } else {
+                return call_user_func_array(array($this->_class, $name), $parameters);
+            }
+        }
+        
         $id = $this->_makeId($name, $parameters);
         if ($this->test($id)) {
             // A cache is available

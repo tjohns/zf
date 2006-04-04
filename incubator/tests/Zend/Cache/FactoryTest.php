@@ -2,13 +2,10 @@
 /**
  * @package    Zend_Cache
  * @subpackage UnitTests
- * 
  */
 
-//ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.'../..');
-
 /**
- * Zend_HttpClient
+ * Zend_Cache
  */
 require_once 'Zend/Cache.php';
 
@@ -17,9 +14,8 @@ require_once 'Zend/Cache.php';
  */
 require_once 'PHPUnit2/Framework/TestCase.php';
 
-
 /**
- * @package    Zend_HttpClient
+ * @package    Zend_Cache
  * @subpackage UnitTests
  */
 class Zend_Cache_FactoryTest extends PHPUnit2_Framework_TestCase
@@ -47,9 +43,26 @@ class Zend_Cache_FactoryTest extends PHPUnit2_Framework_TestCase
     {
         $generated_frontend = Zend_Cache::factory('Core', 'File');
         $this->assertEquals('Zend_Cache_Core', get_class($generated_frontend));
-        
-        $generated_backend = $this->getNonPublicProperty($generated_frontend, '_backend');
-        $this->assertEquals('Zend_Cache_Backend_File', get_class($generated_backend));
+    }
+    
+    public function testBadFrontend()
+    {
+        try {
+            Zend_Cache::factory('badFrontend', 'File');
+        } catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown');
+    }
+    
+    public function testBadBackend()
+    {
+        try {
+            Zend_Cache::factory('Output', 'badBackend');
+        } catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown');    
     }
 
 }

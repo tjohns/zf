@@ -40,18 +40,33 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
     /**
      * Available options
      * 
-     * @var array available options
-     */
-    static public $availableOptions = array('lifetime', 'cacheDBCompletePath'); 
-  
-    /**
+     * =====> (string) cacheDBCompletePath :
      * Directory where to put the cache files
      * (make sure to add a trailing slash)
-     *
-     * @var string $_cacheDir
+     * 
+     * @var array available options
      */
-    private $_cacheDBCompletePath = '/tmp/zend_cache.db';
-    
+    private $_options = array(
+    	'cacheDBCompletePath' => null
+    ); 
+  
+    /**
+     * Frontend or Core directives
+     * 
+     * =====> (int) lifeTime :
+     * - Cache lifetime (in seconds)
+     * - If null, the cache is valid forever
+     * 
+     * =====> (int) logging :
+     * - if set to true, a logging is activated throw Zend_Log
+     * 
+     * @var array directives
+     */
+    private $_directives = array(
+        'lifeTime' => 3600,
+        'logging' => false
+    );  
+       
     /**
      * DB ressource 
      * 
@@ -59,14 +74,6 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      */
     private $_db = null;
     
-    /**
-     * Cache lifetime (in seconds)
-     *
-     * If null, the cache is valid forever.
-     *
-     * @var int $_lifeTime
-     */
-    private $_lifeTime = 3600;
     
     // ----------------------
     // --- Public methods ---
@@ -80,35 +87,44 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      */
     public function __construct($options = array())
     {      
+        if (!is_array($options)) Zend_Cache::throwException('Options parameter must be an array');
         while (list($name, $value) = each($options)) {
-            $this->setOption($name, $value);
+            if (!is_string($name) || !array_key_exists($name, $this->_options)) {
+                Zend_Cache::throwException("Incorrect option name : $name");
+            }
+            $this->_options[$name] = $value;
         }
-        $this->_db = sqlite_open($this->_cacheDBCompletePath);
+        if (!isset($options['cacheDBCompletePath'])) Zend_Cache::throwException('cacheDbCompletePath option has to set');
+        $this->_db = @sqlite_open($options['cacheDBCompletePath']);
         if (!($this->_db)) {
-            Zend_Cache::throwException("Impossible to open " . $this->_cacheDBCompletePath . " cache DB file");
+            Zend_Cache::throwException("Impossible to open " . $options['cacheDBCompletePath'] . " cache DB file");
         }
+        // TODO : maybe move this into save() method ?
         if (!$this->_checkStructureVersion()) {
             $this->_buildStructure();
             if (!$this->_checkStructureVersion()) {
-                Zend_Cache::throwException("Impossible to build cache structure in " . $this->_cacheDBCompletePath);
+                Zend_Cache::throwException("Impossible to build cache structure in " . $options['cacheDBCompletePath']);
             }
         }    
-    }    
-    
+    }
+        
     /**
-     * Set an option
+     * Set the frontend directives
      * 
-     * @param string $name name of the option
-     * @param mixed $value value of the option
+     * @param array $directives assoc of directives
      */
-    public function setOption($name, $value)
+    public function setDirectives($directives)
     {
-        if ((!is_string($name)) or (!in_array($name, Zend_Cache_Backend_Sqlite::$availableOptions))) {
-            Zend_Cache::throwException("Incorrect option name : $name");
+        if (!is_array($directives)) Zend_Cache::throwException('Directives parameter must be an array');
+        while (list($name, $value) = each($directives)) {
+            if (!is_string($name)) {
+                Zend_Cache::throwException("Incorrect option name : $name");
+            }
+            if (array_key_exists($name, $this->_directives)) {
+                $this->_directives[$name] = $value;
+            }
         }
-        $property = '_'.$name;
-        $this->$property = $value;
-    }  
+    } 
     
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
@@ -136,10 +152,10 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      */
     public function test($id)
     {
-        $sql = "SELECT lastModified AS nbr FROM cache WHERE id='$id' AND (expire=0 OR expire>" . mktime() . ')';
-        $result = sqlite_query($this->_db, $sql);
-        $row = sqlite_fetch_array($result);
-        if (isset($row['lastModified'])) {
+        $sql = "SELECT lastModified FROM cache WHERE id='$id' AND (expire=0 OR expire>" . mktime() . ')';
+        $result = @sqlite_query($this->_db, $sql);
+        $row = @sqlite_fetch_array($result);
+        if ($row) {
             return ((int) $row['lastModified']);
         }
         return false;
@@ -158,17 +174,18 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      */
     public function save($data, $id, $tags = array())
     {
-        $data = sqlite_espace_string($data);
+        $data = sqlite_escape_string($data);
         $mktime = mktime();
-        if (is_null($this->_lifetime)) {
+        if (is_null($this->_directives['lifeTime'])) {
             $expire = 0;
         } else {
-            $expire = $mktime + $this->_lifetime();
+            $expire = $mktime + $this->_directives['lifeTime'];
         }
+        @sqlite_query($this->_db, "DELETE FROM cache WHERE id='$id'");
         $sql = "INSERT INTO cache (id, content, lastModified, expire) VALUES ('$id', '$data', $mktime, $expire)";
-        @sqlite_query($sql);       
+        @sqlite_query($this->_db, $sql);       
         while (list(, $tag) = each($tags)) {
-            $this->_registerTag($this->_id, $tag);
+            $this->_registerTag($id, $tag);
         }
         // TODO : return false if a problem is detected when the insert is done
         return true;
@@ -182,10 +199,19 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      */
     public function remove($id) 
     {
+        $result = false;
+        $res = @sqlite_query($this->_db, "SELECT COUNT(*) AS nbr FROM cache WHERE id='$id'");
+        if ($res) {
+            $row = @sqlite_fetch_array($res);  
+            if (((int) $row['nbr']) > 0) {
+                $result = true; 
+            }
+        }
         $sql1 = "DELETE FROM cache WHERE id='$id'";
         $sql2 = "DELETE FROM tags WHERE id='$id'";
-        @sql_query($sql1);
-        @sql_query($sql2);        
+        @sqlite_query($this->_db, $sql1);
+        @sqlite_query($this->_db, $sql2); 
+        return $result;       
     }
     
     /**
@@ -207,13 +233,13 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
     {
         // Use case structure
         if ($mode=='all') {
-            @sqlite_query('DELETE FROM cache');
-            @sqlite_query('DELETE FROM tag');
+            @sqlite_query($this->_db, 'DELETE FROM cache');
+            @sqlite_query($this->_db, 'DELETE FROM tag');
         }
         if ($mode=='old') {
             $mktime = mktime();
-            @sqlite_query("DELETE FROM tag WHERE id IN (SELECT id FROM cache WHERE expire>0 AND expire<=$mktime)");
-            @sqlite_query("DELETE FROM cache WHERE expire>0 AND expire<=$mktime");
+            @sqlite_query($this->_db, "DELETE FROM tag WHERE id IN (SELECT id FROM cache WHERE expire>0 AND expire<=$mktime)");
+            @sqlite_query($this->_db, "DELETE FROM cache WHERE expire>0 AND expire<=$mktime");
         }
         if ($mode=='matchingTag') {
             // TODO
@@ -235,28 +261,38 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      * @return boolean true if no problem
      */
     private function _registerTag($id, $tag) {
-        Zend_Log::log("registering tag '$tag' for ID '$id'", Zend_Log::LEVEL_DEBUG, 'ZF');
-        @sqlite_query("INSERT INTO tag (name, id) VALUES ('$tag', '$id')");
+        if ($this->_directives['logging']) {
+            Zend_Log::log("registering tag '$tag' for ID '$id'", Zend_Log::LEVEL_DEBUG, 'ZF');
+        }
+        @sqlite_query($this->_db, "INSERT INTO tag (name, id) VALUES ('$tag', '$id')");
     }
     
+    /**
+     * Build the database structure
+     */
     private function _buildStructure()
     {
-        @sqlite_query('DROP TABLE version');
-        @sqlite_query('DROP TABLE cache');
-        @sqlite_query('DROP TABLE tag');
-        @sqlite_query('CREATE TABLE version (num INTEGER PRIMARY KEY)');
-        @sqlite_query('CREATE TABLE cache (id TEXT PRIMARY KEY, content BLOB, lastModified INTEGER, expire INTEGER)');
-        @sqlite_query('CREATE TABLE tag (name TEXT PRIMARY KEY, id TEXT)');  
+        @sqlite_query($this->_db, 'DROP TABLE version');
+        @sqlite_query($this->_db, 'DROP TABLE cache');
+        @sqlite_query($this->_db, 'DROP TABLE tag');
+        @sqlite_query($this->_db, 'CREATE TABLE version (num INTEGER PRIMARY KEY)');
+        @sqlite_query($this->_db, 'INSERT INTO version (num) VALUES (1)');
+        @sqlite_query($this->_db, 'CREATE TABLE cache (id TEXT PRIMARY KEY, content BLOB, lastModified INTEGER, expire INTEGER)');
+        @sqlite_query($this->_db, 'CREATE TABLE tag (name TEXT PRIMARY KEY, id TEXT)');  
         //TODO : index on id     
     }
     
+    /**
+     * Check if the database structure is ok (with the good version)
+     * 
+     * @return boolean true if ok
+     */
     private function _checkStructureVersion()
     {
-        $result = sqlite_query($this->_db, "SELECT num FROM version");
-        $row = sqlite_fetch_array($result);
-        if (!$row) {
-            return false;
-        }
+        $result = @sqlite_query($this->_db, "SELECT num FROM version");
+        if (!$result) return false;
+        $row = @sqlite_fetch_array($result);
+        if (!$row) return false;
         if (((int) $row['num']) != 1) {
             // old cache structure
             return false;

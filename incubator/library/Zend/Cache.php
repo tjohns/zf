@@ -18,13 +18,6 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
  
-/**
- * Zend_Cache_Exception
- * 
- * TODO : for perfs, avoid systematic inclusion to get better perfs (with __autoload() ?)
- */
-require_once 'Zend/Cache/Exception.php';
-
 abstract class Zend_Cache 
 {
 
