@@ -5,11 +5,11 @@
     <!ENTITY % magic.fixup SYSTEM "./entities.ent">
     %magic.fixup;
 ]>
-<book id="manual" lang="en">
+<book id="manual" lang="de">
     <bookinfo>
-        <title>Programmer's Reference Guide</title>
+        <title>Programmierer Referenzhandbuch</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <edition>Programmierer Referenzhandbuch für das Zend Framework</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
