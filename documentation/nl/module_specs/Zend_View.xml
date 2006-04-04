@@ -1,31 +1,31 @@
 <sect1 id="zend.view.introduction">
 
-    <title>Introduction</title>
+    <title>Inleiding</title>
     
     <para>
-        Zend_View is a class for working with the "view" portion of
-        the model-view-controller pattern.  That is, it exists to
-        help keep the view script separate from the model and
-        controller scripts.  It provides a system of helpers, output
-        filters, and variable escaping.
+        Zend_View is een klasse bestemd om met het "view" deel van
+		het model-view-controller ontwerppatroon te werken. Meer bepaald
+		bestaat het om het view script gescheiden te houden van het model
+		en controller scripts. Het verstrekt een systeem van helpers,
+		output filters en variabel escaping.
     </para>
     
     <para>
-        Zend_View is template system agnostic; you may use PHP as
-        your template language, or create instances of other
-        template systems and manipulate them within your view
-        script.
+        Zend_View is template systeem agnostisch; je mag PHP als
+		je template taal gebruiken of instanties van andere template
+		systemen maken en ze binnenin je view script manipuleren.
     </para>
 
     <para>
-        Essentially, using Zend_View happens in two major steps:
+		
+        Zend_View gebruiken gebeurt hoofdzakelijk in twee hoofdstappen:
         
-        1.  Your controller script creates an instance of
-        Zend_View and assigns variables to that instance.
+        1.  Jouw controller script maakt een instantie van
+        Zend_View en kent er variabelen aan toe.
         
-        2. The controller tells the Zend_View to render a particular
-        view, thereby handing control over the view script, which 
-        generates the view output.
+        2. De controller vertelt Zend_View om een bepaald view weer te geven,
+		hierdoor de controle aan het viewscript doorgevend, welke de view
+		output genereert.
     </para>
     
     <sect2 id="zend.view.introduction.controller">
@@ -33,13 +33,13 @@
         <title>Controller Script</title>
         
         <para>
-            As a simple example, let us say your controller has a list
-            of book data that it wants to have rendered by a view.  The
-            controller script might look something like this:
+			Als een eenvoudig voorbeeld, laat ons zeggen dat je controller een
+			lijst van boekdata heeft dat het door een view wil hebben weergegeven.
+			Het controller script zou als volgt kunnen zijn:
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-// use a model to get the data for book authors and titles.
+// gebruik een model om data voor auteurs en titels van boeken te verkrijgen
 $data = array(
     array(
         'author' => 'Hernando de Soto',
@@ -55,13 +55,13 @@ $data = array(
     )
 );
 
-// now assign the book data to a Zend_View instance
+// ken nu de boekdata aan een instantie van een Zend_View toe
 Zend::loadClass('Zend_View');
 $view = new Zend_View();
 $view->books = $data;
 
-// and render a view script called "booklist.php"
-echo $view->render('booklist.php');
+// en geef het view script genaamd "boeklijst.php" weer
+echo $view->render('boeklijst.php');
 ?>]]>
         </programlisting>
         
@@ -72,23 +72,23 @@ echo $view->render('booklist.php');
         <title>View Script</title>
         
         <para>
-            Now we need the associated view script, "booklist.php". 
-            This is a PHP script like any other, with one exception:  it
-            executes inside the scope of the Zend_View instance, which
-            means that references to $this point to the Zend_View
-            instance properties and methods.  (Variables assigned to the
-            instance by the controller are public properties of the
-            Zend_View instance.)  Thus, a very basic view script could
-            look like this:
+			Nu hebben we het geassocieerde view script, "boeklijst.php" nodig.
+			dit is een PHP script zoals alle andere, met één uitzondering: het
+			voert zich uit binnenin de Zend_View instantie, wat betekent dat
+			referenties naar $this naar de eigenschappen en methodes van de
+			Zend_View instantie verwijzen. (Variabelen die aan de instantie
+			werden toegwezen door de controller zijn publieke eigenschappen
+			van de Zend_View instantie.) Zodoende zou een zeer eenvoudig
+			script er als volgt kunnen uitzien:
         </para>
         
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
     
-    <!-- A table of some books. -->
+    <!-- Een tabel van enige boeken. -->
     <table>
         <tr>
-            <th>Author</th>
-            <th>Title</th>
+            <th>Auteur</th>
+            <th>Titel</th>
         </tr>
         
         <?php foreach ($this->books as $key => $val): ?>
@@ -102,14 +102,14 @@ echo $view->render('booklist.php');
     
 <?php else: ?>
     
-    <p>There are no books to display.</p>
+    <p>Er zijn geen boeken af te beelden.</p>
     
 <?php endif; ?>]]>
         </programlisting>
         
         <para>
-            Note how we use the "escape()" method to apply output
-            escaping to variables.
+			Merk op hoe we de "escape()" methode gebruiken om output
+			escaping op de variabelen toe te passen.
         </para>
         
     </sect2>
@@ -120,75 +120,74 @@ echo $view->render('booklist.php');
     <title>Controller Scripts</title>
     
     <para>
-        The controller is where you instantiate and configure Zend_View.
-        You then assign variables to the view, and tell the view to 
-        render output using a particular script.
+		De controller is waar je Zend_View instantieert en configureert.
+		Je wijst dan variabelen aan de view toe en vertelt het view de
+		output weer te geven door middel van een bepaald script.
     </para>
     
     <sect2 id="zend.view.controllers.assign">
     
-        <title>Assigning Variables</title>
+        <title>Variabelen toewijzen</title>
         
         <para>
-            Your controller script should assign necessary variables to the view
-            before it hands over control to the view script.  Normally, you
-            can do assignments one at a time by assigning to property names
-            of the view instance:
+			Je controller script zou de nodige variabelen aan het view moeten
+			toewijzen voordat het de controle aan het view script overhandigd.
+			Normaal gesproken kan je toewijzingen één per één doen door
+			waarden aan de eigenschappen van de view instantie toe te wijzen:
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->a = "Hay";
-$view->b = "Bee";
-$view->c = "Sea";
+$view->a = "Hooi";
+$view->b = "Bij";
+$view->c = "Zee";
 ?>]]>
         </programlisting>
         
         <para>
-            However, this can be tedious when you have already collected the
-            values to be assigned into an array or object.
+			Dit kan wel vervelend zijn als je reeds alle waarden die
+			toegewezen moeten worden in een array of objekt voorhanden hebt.
         </para>
         
         <para>
-            The assign() method lets you assign from an array or object "in
-            bulk."  The following examples have the same effect as the above
-            one-by-one property assignments.
+			de assign() methode laat je "bulk" toewijzingen doen vanaf een array
+			of objekt. De volgende voorbeelden hebben hetzelfde effekt als de
+			hierboven beschreven één per één eigenschapstoewijzingen:
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 
-// assign an array of key-value pairs, where the
-// key is the variable name, and the value is
-// the assigned value.
+// wij een array van key/waarde-paren toe, waar de key
+// de variabelnaam is, en de waarde de toegewezen waarde.
 $array = array(
-    'a' => "Hay",
-    'b' => "Bee",
-    'c' => "Sea",
+    'a' => "Hooi",
+    'b' => "Bij",
+    'c' => "Zee",
 );
 $view->assign($array);
 
-// do the same with an object's public properties;
-// note how we cast it to an array when assigning.
+// doe hetzelfde met de publieke eigenschappen van een
+// objekt. Merk op hoe we naar een array casten bij de toewijzing.
 $obj = new StdClass;
-$obj->a = "Hay";
-$obj->b = "Bee";
-$obj->c = "Sea";
+$obj->a = "Hooi";
+$obj->b = "Bij";
+$obj->c = "Zee";
 $view->assign((array) $obj);
 ?>]]>
         </programlisting>
         
         <para>
-            Alternatively, you can use the assign method to assign
-            one-by-one by passing a string variable name, and then the
-            variable value.
+			Anderzijds kan je de toewijzingsmethode gebruiken om
+			één per één toewijzingen te doen door een string
+			variabelnaam door te geven, en dan de variabelwaarde.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->assign('a', "Hay");
-$view->assign('b', "Bee");
-$view->assign('c', "Sea");
+$view->assign('a', "Hooi");
+$view->assign('b', "Bij");
+$view->assign('c', "Zee");
 ?>]]>
         </programlisting>
         
@@ -196,22 +195,22 @@ $view->assign('c', "Sea");
 
     <sect2 id="zend.view.controllers.render">
         
-        <title>Rendering a View Script</title>
+        <title>Een View Script weergeven</title>
         
         <para>
-            Once you have assigned all needed variables, the controller
-            should tell Zend_View to render a particular view script.
-            Do so by calling the render() method.  Note that the method will
-            return the rendered view, not print it, so you need to print or
-            echo it yourself at the appropriate time.
+			Eenmaal je al de nodige variabelen hebt toegewezen zou de controller
+			Zend_View moeten vertellen dat het een bepaald view script moet weergeven.
+			Dat doe je door de render() methode op te roepen. Merk op dat de methide
+			het weergegeven view zal terugsturen en niet afprinten. Je moet het dus zelf
+			afprinten of echo-en wanneer dat jou past.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->a = "Hay";
-$view->b = "Bee";
-$view->c = "Sea";
-echo $view->render('someView.php');
+$view->a = "Hooi";
+$view->b = "Bij";
+$view->c = "Zee";
+echo $view->render('eenView.php');
 ?>]]>
         </programlisting>
     
@@ -219,51 +218,52 @@ echo $view->render('someView.php');
     
     <sect2 id="zend.view.controllers.script-paths">
         
-        <title>View Script Paths</title>
+        <title>View Script Paden</title>
         
         <para>
-            By default, Zend_View expects your view scripts to be in the
-            same directory as the controller script.  For example, if
-            your controller script is at "/path/to/app/controllers" and
-            it calls $view->render('someView.php'), Zend_View will look
-            for "/path/to/app/controllers/someVire.php".
+			Standaard verwacht Zend_View dat je view scripts in dezelfde map
+			zijn als het controller script. Bijvoorbeeld, als je controller
+			script in "/map/naar/toepassing/controllers" en het roept
+			$view->render('eenView.php') op zal Zend_View naar
+			"/map/naar/toepassing/controllers/eenView.php" zoeken.
         </para>
         
         <para>
-            Obviously, your view scripts are probably located elsewhere.  To
-            tell Zend_View where it should look for view scripts, use the
-            setScriptPath() method.
+			waarschijnlijk zijn je scripts ergens anders ondergebracht. Om
+			Zend_View daarvan op de hoogte te brengen gebruik je de
+			setScriptPath() methode.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->setScriptPath('/path/to/app/views');
+$view->setScriptPath('/map/naar/toepassing/views');
 ?>]]>
         </programlisting>
         
         <para>
-            Now when you call $view->render('someView.php'), it will look
-            for "/path/to/app/views/someView.php".
+			Als je nu $view->render('eenView.php') oproept zal het naar
+			"/pad/naar/toepassing/views/eenView.php' kijken.
         </para>
         
         <para>
-            In fact, you can "stack" paths using the addScriptPath()
-            method. As you add paths to the stack, Zend_View will look
-            at the most-recently-added path for the requested view
-            script.  This allows you override default views with custom
-            views so that you may create custom "themes" or "skins" for
-            some views, while leaving others alone.
+			In feite kan je paden "opstapelen" door de addScriptPath()
+            methode te gebruiken. Terwijl je paden aan de stapel toevoegt
+			zal Zend_View in het meest recente pad kijken voor het
+			gevraagde view script. Dit laat je toe de standaard te overschrijven
+			met verpersoonlijkte views zodat je persoonlijke "thema's" of "skins"
+			voor sommige views kan maken terwijl die niet op andere views van
+			toepassing zijn.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->addScriptPath('/path/to/app/views');
-$view->addScriptPath('/path/to/custom/');
+$view->addScriptPath('/pad/naar/toepassing/views');
+$view->addScriptPath('/pad/naar/persoonlijk/');
 
-// now when you call $view->render('booklist.php'), Zend_View will 
-// look first for "/path/to/custom/booklist.php", then for
-// "/path/to/app/views/booklist.php", and finally in the current
-// directory for "booklist.php".
+// wanneer je nu $view->render('boeklijst.php') oproept zal Zend_View
+// eerst kijken naar "pad/naar/persoonlijk/boeklijst.php", dan naar
+// "/pad/naar/toepassing/views/boeklijst.php", en uiteindelijk in
+// de huidige map naar "boeklijst.php".
 ?>]]>
         </programlisting>
         
@@ -276,34 +276,34 @@ $view->addScriptPath('/path/to/custom/');
     <title>View Scripts</title>
         
     <para>
-        Once your controller has assigned variables and called render(),
-        Zend_View then includes the requested view script and executes
-        it "inside" the scope of the Zend_View instance.  Therefore,
-        in your view scripts, references to $this actually point to the
-        Zend_View instance itself.
+		Eenmaal je controller de variabelen heeft toegewezen en render()
+		heeft opgeroepen zal Zend_View het gevraagde view script oproepen
+		en het binnenin de Zend_View instantie uitvoeren. Daarom wijzen
+		referenties naar $this in je view scripts eigenlijk naar de
+		Zend_View instantie zelf.
     </para>
     
     <para>
-        Variables assigned to the view from the controller are referred
-        to as instance properties.  For example, if the controller were
-        to assign a variable 'something', you would refer to it as
-        $this->something in the view script.  (This allows you to keep
-        track of which values were assigned to the script, and which are
-        internal to the script itself.)
+		Variabelen die aan het view script werden toegewezen door de 
+		controller worden beschouwd als instantie-eigenschappen. Bijvoorbeeld,
+		indien de controller een variabele 'iets' zou toewijzen, zou je
+		ernaar verwijzen in je view script als $this->iets. (Dit laat je toe
+		de variabelen die werden toegewezen te scheiden van de variabelen die
+		intern zijn aan het script zelf.)
     </para>
     
     <para>
-        By way of reminder, here is the example view script from the
-        Zend_View introduction.
+		Bij wijze van geheugenverfrisser vindt je hieronder het view script van
+		de Zend_View inleiding:
     </para>
     
     <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
     
-    <!-- A table of some books. -->
+    <!-- Een tabel van enige boeken. -->
     <table>
         <tr>
-            <th>Author</th>
-            <th>Title</th>
+            <th>Auteur</th>
+            <th>Titel</th>
         </tr>
         
         <?php foreach ($this->books as $key => $val): ?>
@@ -317,7 +317,7 @@ $view->addScriptPath('/path/to/custom/');
     
 <?php else: ?>
     
-    <p>There are no books to display.</p>
+    <p>Er zijn geen boeken af te beelden.</p>
     
 <?php endif; ?>]]>
     </programlisting>
@@ -327,74 +327,76 @@ $view->addScriptPath('/path/to/custom/');
         <title>Escaping Output</title>
         
         <para>
-            One of the most important tasks to perform in a view script
-            is to make sure that output is escaped properly; among other
-            things, this helps to avoid cross-site scripting attacks. 
-            Unless you are using a function, method, or helper that does
-            escaping on its own, you should always escape variables when
-            you output them.
+			Eén van de meest belangrijke taken die in een view script
+			moeten worden uitgevoerd is die welke verzekert dat output
+			op een korrekte wijze wordt ge-escaped; dit helpt, onder andere,
+			cross-site scripting aanvallen te voorkomen. Behalve als je een
+			functie, methode of helper gebruilt die zelf het escapen voor
+			rekening neemt, zou je altijd variabelen moeten escapen als je
+			ze output.
         </para>
         
         <para>
-            Zend_View comes with a method called escape() that does such
-            escaping for you.
+			Zend_View komt met een methode escape() die veel van het escape
+			werk voor je uitvoert.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-// bad view-script practice:
+// slecht gebruik van het view-script:
 echo $this->variable;
 
-// good view-script practice:
+// goed gebruik van het view-script:
 echo $this->escape($this->variable);
 ?>]]>
         </programlisting>
         
         <para>
-            By default, the escape() method uses the PHP htmlspecialchars()
-            function for escaping.  However, depending on your environment,
-            you may wish for escaping to occur in a different way.  Use the
-            setEscape() method at the controller level to tell Zend_View
-            what escaping callback to use.
+			Standaard gebruikt de escape() methode de PHP functie htmlspecialchars()
+			om data te escapen. Afhangende van jouw environment zou het kunnen dat je
+			zou willen dat het escapen op een andere manier wordt uitgevoerd. Gebruik
+			de setEscape() methode op controller niveau om Zend_View te laten weten
+			welke escape callback te gebruiken.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-// create a Zend_View instance
+// Maak een Zend_View instantie
 $view = new Zend_View();
 
-// tell it to use htmlentities as the escaping callback
+// vertel het htmlentities te gebruiken als escape callback
 $view->setEscape('htmlentities');
 
-// or tell it to use a static class method as the callback
-$view->setEscape(array('SomeClass', 'methodName'));
+// of vertel het een statische klassemethode te gebruiken als callback
+$view->setEscape(array('EenClass', 'methodeNaam'));
 
-// or even an instance method
-$obj = new SomeClass();
-$view->setEscape(array($obj, 'methodName'));
+// of zelfs een instantiemethode
+$obj = new EenClass();
+$view->setEscape(array($obj, 'methodeNaam'));
 
-// and then render your view
+// en geef dan je view weer
 echo $view->render(...);
 ?>]]>
         </programlisting>
         
         <para>
-            The callback function or method should take the value to be
-            escaped as its first parameter, and all other parameters should
-            be optional.
+			De callback functie of methode zou de waarde die ge-escaped moet
+			worden als eerste parameter moeten nemen en alle andere parameters
+			moeten optioneel zijn.
         </para>
         
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
     
-        <title>Template Systems</title>
+        <title>Template Systemen</title>
         
         <para>
-            Although PHP is itself a powerful template system, many
-            developers feel it is too powerful or complex for their
-            template designers.  As such, the view script may be used to
-            instantiate and manipulate a separate template object, such
-            as a PHPLIB-style template.  The view script for that kind
-            of activity might look something like this:
+			Alhoewel PHP zelf een machtig template systeem is vinden
+			vele developpeurs dat het een tè machtig of complex systeem 
+			is voor template designers. Daarom kan het view script
+			gebruikt worden om een ander template objekt te instantiëren 
+			en te manipuleren, zoals een PHPLIB-stijl template. Het
+			view script voor dit soort aktiviteir zou er als volgt
+			kunnen uitzien:
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -403,46 +405,46 @@ $tpl = new Template();
 
 if ($this->books) {
     $tpl->setFile(array(
-        "booklist" => "booklist.tpl",
-        "eachbook" => "eachbook.tpl",
+        "boeklijst" => "boeklijst.tpl",
+        "elkboek" => "elkboek.tpl",
     ));
     
-    foreach ($this->books as $key => $val) {
-        $tpl->set_var('author', $this->escape($val['author']);
-        $tpl->set_var('title', $this->escape($val['title']);
-        $tpl->parse("books", "eachbook", true);
+    foreach ($this->boeken as $key => $val) {
+        $tpl->set_var('auteur', $this->escape($val['author']);
+        $tpl->set_var('titel', $this->escape($val['title']);
+        $tpl->parse("boeken", "elkboek", true);
     }
     
-    $tpl->pparse("output", "booklist");
+    $tpl->pparse("output", "boeklijst");
 } else {
-    $tpl->setFile("nobooks", "nobooks.tpl")
-    $tpl->pparse("output", "nobooks");
+    $tpl->setFile("geenboeken", "geenboeken.tpl")
+    $tpl->pparse("output", "geenboeken");
 }
 ?>]]>
         </programlisting>
         
         <para>
-            These would be the related template files:
+			Dit zouden de template bestanden zijn:
         </para>
         
         <programlisting role="html"><![CDATA[
-<!-- booklist.tpl -->
+<!-- boeklijst.tpl -->
 <table>
     <tr>
-        <th>Author</th>
-        <th>Title</th>
+        <th>Auteur</th>
+        <th>Titel</th>
     </tr>
-    {books}
+    {boeken}
 </table>
 
-<!-- eachbook.tpl -->
+<!-- elkboek.tpl -->
     <tr>
-        <td>{author}</td>
-        <td>{title}</td>
+        <td>{auteur}</td>
+        <td>{titel}</td>
     </tr>
 
-<!-- nobooks.tpl -->
-<p>There are no books to display.</p>
+<!-- geenboeken.tpl -->
+<p>Er zijn geen boeken af te beelden.</p>
 ]]>
         </programlisting>
         
@@ -455,145 +457,150 @@ if ($this->books) {
     <title>View Helpers</title>
     
     <para>
-        In your view scripts, often it is necessary to perform certain
-        complex functions over and over; e.g., formatting a date,
-        generating form elements, or displaying action links.  You can
-        use helper classes to perform these behaviors for you.
+		In je view scripts is het dikwijls nodig een aantal complexe
+		functies steeds weer uit te voeren, bv: een datum formateren,
+		formulierelementen genereren of aktielinks afbeelden. Je kan
+		helper klassen gebruiken om deze gedragingen voor jou uit te
+		voeren.
     </para>
     
     <para>
-        To use a helper in your view script, call it using
-        $this->helperName(). Behind the scenes, Zend_View will load the
+		Om een helper in jouw script te gebruiken moet je het oproepen
+		door $this->helperName() te gebruiken. Achter de scène zal
+		Zend_View de Zend_View_Helper klasse laden, een instantie van het
+		objekt maken en zijn helperName() methode oproepen. De 
+		instantie van het objekt is Behind the scenes, Zend_View will load the
         Zend_View_Helper_HelperName class, create an object instance of
         it, and call its helperName() method.  The object instance is
-        persistent within the Zend_View instance, and is reused for all
-        future calls to $this->helperName().
+        blijvend in de Zend_View instantie, en is hergebruikt voor alle
+		verdere oproepen aan $this->helperName().
     </para>
     
     <sect2 id="zend.view.helpers.initial">
     
-        <title>Initial Helpers</title>
+        <title>Initiële Helpers</title>
         
         <para>
-            Zend_View comes with an initial set of helper classes, all of
-            which relate to form element generation.  They each perform the
-            appopriate output escaping automatically.  They are:
+			Zend_View komt met een set van initiële helper klassen die
+			allemaal relatief zijn aan formulierelementen generatie. Ze
+			doen elk automatisch de juiste output escaping. Ze zijn:
         </para>
         
         <itemizedlist>
             
             <listitem><para>
-                formButton($name, $value, $attribs): Creates an &lt;input
+                formButton($name, $value, $attribs): Maakt een &lt;input
                 type="button" /&gt; element.
             </para></listitem>
             
             <listitem><para>
-                formCheckbox($name, $value, $attribs, $options): Creates
-                an &lt;input type="checkbox" /&gt; element.  The
-                $options param is an array where the first value is the
-                "checked" value, and the second is the "unchecked" value
-                (the defaults are '1' and '0').  If $value matches the
-                "checked" value, the box will be checked for you.
+                formCheckbox($name, $value, $attribs, $options): maakt
+                een &lt;input type="checkbox" /&gt; element.  De
+                $options parameter is een array waar de eerste waarde de
+                "checked" waarde is, en de tweede waarde de "unchecked" waarde
+                (standaard waarden '1' en '0').  Als $value overeenkomt met de 
+                "checked" waarde, zal de checkbox aangezet worden.
             </para></listitem>
             
             <listitem><para>
-                formFile($name, $value, $attribs): Creates an &lt;input
+                formFile($name, $value, $attribs): Maakt een &lt;input
                 type="file" /&gt; element.
             </para></listitem>
             
             <listitem><para>
-                formHidden($name, $value, $attribs): Creates an &lt;input
+                formHidden($name, $value, $attribs): Maakt een &lt;input
                 type="hidden" /&gt; element.
             </para></listitem>
             
             <listitem><para>
-                formPassword($name, $value, $attribs): Creates an &lt;input
+                formPassword($name, $value, $attribs): Maakt een &lt;input
                 type="password" /&gt; element.
             </para></listitem>
             
             <listitem><para>
-                formRadio($name, $value, $attribs, $options): Creates a
-                series of &lt;input type="radio" /&gt; elements, one for
-                each of the $options elements.  In the $options array, the
-                element key is the radio value, and the element value is the
-                radio label.  The $value radio will be preselected for you.
+                formRadio($name, $value, $attribs, $options): Maakt een serie
+                &lt;input type="radio" /&gt; elementen, één voor elk van de
+                $options elementen. In de $options array is de element
+                key de radio waarde en de elementwaarde is de radiolabel.  
+				De $value radio zal worden voorgeselecteerd.
             </para></listitem>
             
             <listitem><para>
-                formReset($name, $value, $attribs): Creates an &lt;input
+                formReset($name, $value, $attribs): Maakt een &lt;input
                 type="reset" /&gt; element.
             </para></listitem>
             
             <listitem><para>
-                formSelect($name, $value, $attribs, $options): Creates a
-                &lt;select&gt;...&lt;/select&gt; block, with one
-                &lt;option&gt;one for each of the $options elements.  In
-                the $options array, the element key is the option value,
-                and the element value is the option label.  The $value
-                option(s) will be preselected for you.
+                formSelect($name, $value, $attribs, $options): Maakt een
+                &lt;select&gt;...&lt;/select&gt; blok met één 
+                &lt;option&gt; voor elk van de $options elementen.  In
+                de $options array is de element key de optiewaarde en de
+				elementwaarde is de optielabel. De $value optie(s) 
+				zal/zullen worden voorgeselecteerd.
             </para></listitem>
             
             <listitem><para>
-                formSubmit($name, $value, $attribs): Creates an &lt;input
+                formSubmit($name, $value, $attribs): Maakt een &lt;input
                 type="submit" /&gt; element.
             </para></listitem>
             
             <listitem><para>
-                formText($name, $value, $attribs): Creates an &lt;input
+                formText($name, $value, $attribs): Maakt een &lt;input
                 type="text" /&gt; element.
             </para></listitem>
             
             <listitem><para>
-                formTextarea($name, $value, $attribs): Creates a
-                &lt;textarea&gt;...&lt;/textarea&gt; block.
+                formTextarea($name, $value, $attribs): Maakt een
+                &lt;textarea&gt;...&lt;/textarea&gt; blok.
             </para></listitem>
             
         </itemizedlist>
         
         <para>
-            Using these in your view scripts is very easy, here is an example.
-            Note that you all you need to to is call them; they will load
-            and instantiate themselves as they are needed.
+            Deze gebruiken in je scripts is heel eenvoudig. Hier is een voorbeeld.
+			Merk op dat het enige je hoeft te doen is ze op te roepen, ze laden en 
+			instantiëren zichzelf wanneer dat nodig is.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-// inside your view script, $this refers to the Zend_View instance.
+// binnenin je view script verwijst $this naar de Zend_View instantie.
 // 
-// say that you have already assigned a series of select options under
-// the name $countries as array('us' => 'United States', 'il' =>
-// 'Israel', 'de' => 'Germany').
+// veronderstel dat je reeds een serie select opties hebt toegewezen onder de naam
+// $landen als Array('us' => 'Verenigde Staten', 'il' =>
+// 'Israël', 'be' => 'België', 'nl' => 'Nederland').
 ?>
-<form action="action.php" method="post">
-    <p><label>Your Email:
+<form action="aktie.php" method="post">
+    <p><label>Jouw Email:
         <?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
     </label></p>
-    <p><label>Your Country:
-        <?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
+    <p><label>Je land:
+        <?php echo $this->formSelect('country', 'be', null, $this->landen) ?>
     </label></p>
-    <p><label>Would you like to opt in?
-        <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no') ?>
+    <p><label>Zou je je graag inschrijven ?
+        <?php echo $this->formCheckbox('opt_in', 'ja', null, array('ja', 'nee') ?>
     </label></p>
 </form>]]>
         </programlisting>
         
         <para>
-            The resulting output from the view script will look something like this:
+			Het resultaat van het view script zal op het volgende lijken:
         </para>
         
-        <programlisting role="php"><![CDATA[<form action="action.php" method="post">
-    <p><label>Your Email:
+        <programlisting role="php"><![CDATA[<form action="aktie.php" method="post">
+    <p><label>Jouw Email:
         <input type="text" name="email" value="you@example.com" size="32" />
     </label></p>
-    <p><label>Your Country:
+    <p><label>Je land:
         <select name="country">
-            <option value="us" selected="selected">United States</option>
-            <option value="il">Israel</option>
-            <option value="de">Germany</option>
+            <option value="us">Verenigde Staten</option>
+            <option value="il">Israël</option>
+            <option value="be" selected="selected">België</option>
+            <option value="nl">Nederland</option>
         </select>
     </label></p>
-    <p><label>Would you like to opt in?
-        <input type="hidden" name="opt_in" value="no" />
-        <input type="checkbox" name="opt_in" value="yes" checked="checked" />
+    <p><label>Zou je je graag inschrijven ?
+        <input type="hidden" name="opt_in" value="nee" />
+        <input type="checkbox" name="opt_in" value="ja" checked="checked" />
     </label></p>
 </form>]]>
         </programlisting>
@@ -602,39 +609,39 @@ if ($this->books) {
     
     <sect2 id="zend.view.helpers.paths">
         
-        <title>Helper Paths</title>
+        <title>Helper Paden</title>
         
         <para>
-            As with view scripts, your controller can specify a stack of
-            paths for Zend_View to search for helper classes. By
-            default, Zend_View looks in "Zend/View/Helper/*" for helper
-            classes. You can tell Zend_View to look in other locations
-            using the setHelperPath() and addHelperPath() methods.
+			Zoals met view scripts kan de controller een stapel van paden
+			specifiëren waar Zend_View naar helper klassen moet zoeken.
+			Standaard kijkt Zend_View in "Zend/View/Helper/*" voor helper
+			klassen. Je kan Zend_View vertellen in andere plaatsen te kijken
+			door de setHelperPath() en addHelperPath() methodes te gebruiken.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->setHelperPath('/path/to/more/helpers');
+$view->setHelperPath('/pad/naar/meer/helpers');
 ?>]]>
         </programlisting>
         
         <para>
-            In fact, you can "stack" paths using the addHelperPath()
-            method. As you add paths to the stack, Zend_View will look
-            at the most-recently-added path for the requested helper
-            class.  This allows you to add to (or even override) the
-            initial distribution of helpers with your own custom
-            helpers.
+			In feite kan je paden "opstapelen" door de addHelperPath()
+            methode te gebruiken. Terwijl je paden aan de stapel toevoegt
+			zal Zned_Viewer steeds in het meest-recent-toegevoegde pad
+			naar de gevraagde helper klasse zoeken. Dit laat je toe de
+			initiële distributie van helpers uit te breiden (of zelfs te
+			vervangen) door je eigen persoonlijke helpers.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->addHelperPath('/path/to/some/helpers');
-$view->addHelperPath('/other/path/to/helpers');
+$view->addHelperPath('/pad/naar/enige/helpers');
+$view->addHelperPath('/ander/pad/naar/helpers');
 
-// now when you call $this->helperName(), Zend_View will look first for
-// "/other/path/to/helpers/HelperName.php", then for
-// "/path/to/some/helpers/HelperName", and finally for
+// wanneer je nu $this->helperName() oproept zal Zend_View eerst kijken naar
+// "/other/path/to/helpers/HelperName.php", dan naar
+// "/path/to/some/helpers/HelperName", en uiteindelijk naar
 // "Zend/View/Helpers/HelperName.php".
 ?>]]>
         </programlisting>
@@ -643,61 +650,61 @@ $view->addHelperPath('/other/path/to/helpers');
     
     <sect2 id="zend.view.helpers.custom">
         
-        <title>Writing Custom Helpers</title>
+        <title>Je eigen Helpers schrijven</title>
         
         <para>
-            Writing custom helpers is easy; just follow these rules:
+			Je eigen helpers schrijven is gemakkelijk. Volg gewoon deze regels:
         </para>
         
         <itemizedlist>
             
             <listitem><para>
-                The class name must be Zend_View_Helper_*, where * is
-                the helper name itself.  E.g., if you were writing a
-                helper called "specialPurpose", the class name would be
-                "Zend_View_Helper_SpecialPurpose" (note the
-                capitalization).
+				De klassenaam moet Zend_View_Helper_* zijn, waar * de naam
+				van de helper zelf is. Bijvoorbeeld, als je een helper
+				genaamd "speciaalDoel" schrijft zou de klassenaam
+				"Zend_View_Helper_SpeciaalDoel" zijn (let op de hoofdletters).
             </para></listitem>
             
             <listitem><para>
-                The class must have a public method that matches the
-                helper name; this is the method that will be called when
-                your template calls "$this->specialPurpose()".  In our
-                "specialPurpose" helper example, the required method
-                declaration would be "public function specialPurpose()". 
+				De klasse moet een publieke methode hebben die overeenkomt
+				met de helpernaam; dit is de methode die zal worden
+				opgeroepen wanneer je template "$this->speciaalDoel()" 
+				oproept. In ons "speciaalDoel" helpervoorbeeld zou de
+				verplichte methodeverklaring "public function speciaalDoel()"
+				zijn. 
             </para></listitem>
             
             <listitem><para>
-                In general, the class should not echo or print or otherwise
-                generate output.  Instead, it should return values to be
-                printed or echoed.  The returned values should be escaped
-                appropriately.
+				In het algemeen zou de klasse niets moeten printen, echo-en of
+				op eender welke andere wijze output genereren. In plaats daarvan
+				zou het waarden moeten terugsturen die kunnen worden geprint of
+				ge-echod. De teruggestuurde waarden moeten korrekt worden 
+				ge-escaped.
             </para></listitem>
             
             <listitem><para>
-                The class must be in file named after the helper method.
-                Again using our "specialPurpose" helper example, the file
-                has to be named "SpecialPurpose.php".
+				De klasse moet in een bastand worden opgeslaan dat genoemd is
+				naar de helper methode. Voortbouwend op ons "speciaalDoel" helper
+				voorbeeld, moet het bestand "SpeciaalDoel.php" noemen.
             </para></listitem>
         </itemizedlist>
         
         <para>
-            Place the helper class file somewhere in your helper path stack,
-            and Zend_View will automatically load, instantiate, persist,
-            and execute it for you.
+			Plaats het helper klasse bestand ergens in je helper pad stapel en
+			Zend_View zal het automatisch laden, instantiëren en uitvoeren.
         </para>
         
         <para>
-            Here is an example of our SpecialPurpose helper code:
+			Hier is een voorbeeld van onze SpeciaalDoel helpercode:
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-class Zend_View_Helper_SpecialPurpose {
+class Zend_View_Helper_SpeciaalDoel {
     protected $_count = 0;
-    public function specialPurpose()
+    public function speciaalDoel()
     {
         $this->_count++;
-        $output = "I have seen 'The Jerk' {$this->_count} time(s).";
+        $output = "Ik heb 'The Jerk' {$this->_count} keer gezien.";
         return htmlspecialchars($output);
     }
 }
@@ -705,25 +712,26 @@ class Zend_View_Helper_SpecialPurpose {
         </programlisting>
         
         <para>
-            Then in a view script, you can call the SpecialPurpose helper
-            as many times as you like; it will be instantiated once, and
-            then it persists for the life of that Zend_View instance.
+			Je kan de SpeciaalDoel helper zoveel keer oproepen als je
+			wil een een view script; het zal éénmaal geïnstantieerd worden,
+			en is dan blijvend aanwezig voor de gehele leefduur van de
+			Zend_View instantie.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-// remember, in a view script, $this refers to the Zend_View instance.
-echo $this->specialPurpose();
-echo $this->specialPurpose();
-echo $this->specialPurpose();
+// denk eraan: in een view script verwijst $this naar de Zend_View instantie.
+echo $this->speciaalDoel();
+echo $this->speciaalDoel();
+echo $this->speciaalDoel();
 ?>]]>
         </programlisting>
         
         <para>
-            The output would look something like this:
+            De output zou hierop moeten lijken:
         </para>
-        <programlisting role="php"><![CDATA[I have seen 'The Jerk' 1 time(s).
-I have seen 'The Jerk' 2 time(s).
-I have seen 'The Jerk' 3 time(s).]]>
+        <programlisting role="php"><![CDATA[Ik heb 'The Jerk' 1 keer gezien.
+Ik heb 'The Jerk' 2 keer gezien.
+Ik heb 'The Jerk' 3 keer gezien.]]>
         </programlisting>
         
     </sect2>

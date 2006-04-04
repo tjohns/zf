@@ -4,29 +4,29 @@
 
     <sect2 id="zend.db.table.row.introduction">
 
-        <title>Introduction</title>
+        <title>Inleiding</title>
 
         <para>
-            Zend_Db_Table_Row is a row data gateway for the Zend Framework.  In
-            general, you do not instantiate Zend_Db_Table_Row by itself; instead,
-            you get a Zend_Db_Table_Row back as a return result from Zend_Db_Table::find()
-            or Zend_Db_Table::fetchRow().  Once you have a Zend_Db_Table_Row, you can
-            edit the record values (represented as class properties) and then
-            save() the changes back to the originating table.
+			Zend_Db_Table_Row is een datarij gateway voor de Zend Framework. In het
+			algemeen instantieer je Zend_Db_Table_Row niet alleen maar krij je een
+			Zend_Db_Table_Row terug als een resultaat van Zend_Db_Table::find() of
+			Zend_Db_Table::fetchRow(). Eenmaal je een Zend_Db_Table_Row hebt kan je
+			de recorwaarden wijzigen (voorgesteld als klasse-eigenschappen) en dan de
+			wijzigingen terg naar de oorspronkelijke tabel sturen via save().
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.row.fetch">
 
-        <title>Fetching a Row</title>
+        <title>Een rij ophalen</title>
 
         <para>
-            The first thing to do is instantiate a Zend_Db_Table class.
+			Het eerste wat je moet doen is een Zend_Db_Table klasse instantiëren.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// een adapter opzetten
 require_once 'Zend/Db.php';
 $params = array (
     'host'     => '127.0.0.1',
@@ -37,33 +37,33 @@ $params = array (
 
 $db = Zend_Db::factory('pdoMysql', $params);
 
-// set the default adapter for all Zend_Db_Table objects
+// zet de standaard adapter voor alle Zend_Db_Table objekten
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
-// connect to a table in the database
+// verbinden met een tabel in de database
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 ?>]]>
         </programlisting>
 
         <para>
-            Next, retrieve one record from the database using
-            Zend_Db_Table::find() with a single key, or by using
-            Zend_Db_Table::fetchRow().  The returned result will be a
-            Zend_Db_Table_Row object where each property in the object is a
-            "camelCaps" name mapped to an "underscore_words" column name
-            from the table.  E.g., "first_name" in the table will become
-            "firstName" in the object properties.
+			Verkrijg één record van de database door Zend_Db_Table::find()
+			met één enkele key te gebruiken of door Zend_Db_Table::fetchRow()
+			te gebruiken. Het verkregen resultaat zal een Zend_Db_Table_Row
+			zijn waarvan elke eigenschap een "camelCaps" benaming van een 
+			"underscore_naam" kolom van de tabel is.
+			Bijvoorbeeld, "first_name" in de tabel zal "firstName" worden in
+			de objekteigenschappen.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// fetch a record from the table as a Zend_Db_Table_Row object
+// verkrijg een record van de tabel als een Zend_Db_Table_Row objekt
 $row = $table->fetchRow('first_name = "Robin"');
 
 //
-// $row is now a Zend_Db_Table_Row object with public properties
-// that map to table columns:
+// $row is nu een Zend_Db_Tabke_Row objekt met publieke eigenschappen
+// die naar tabelkolommen mappen:
 //
 // $row->id = '3'
 // $row->nobleTitle = 'Sir'
@@ -78,54 +78,54 @@ $row = $table->fetchRow('first_name = "Robin"');
 
     <sect2 id="zend.db.table.row.modify">
 
-        <title>Modifying Values</title>
+        <title>Waarden wijzigen</title>
 
         <para>
-            Modifying row values is very easy: just work with the object properties
-            the way you would with any other object.  Then you can save() the row back
-            to the table when you are done.
+			Het wijzigen van rijwaarden is heel eenvoudig: werk gewoon met de objekt
+			eigenschappen zoals je dat met eender welk ander objekt zou doen. Als je
+			klaar bent kan je de rij terugschrijven naar de oorspronkelijke tabel met save().
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
+// verbinden met een tabel in de database
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// fetch a record from the table as a Zend_Db_Table_Row object
+// verkrijg een record van de tabel als een Zend_Db_Table_Row objekt
 $row = $table->fetchRow('first_name = "Robin"');
 
 //
-// $row is now a Zend_Db_Table_Row object() with public properties
-// that map to table columns:
+// $row is nu een Zend_Db_Tabke_Row objekt met publieke eigenschappen
+// die naar tabelkolommen mappen:
 //
 // $row->id = '3'
 // $row->nobleTitle = 'Sir'
 // $row->firstName = 'Robin'
 // $row->favoriteColor = 'yellow'
 //
-// change the favorite color and save back to the table.
+// wijzig de leivelingskleur en schrijf de rij terug naar de tabel.
 $row->favoriteColor = 'blue';'
 $row->save();
 ?>]]>
         </programlisting>
 
         <para>
-            However, you are not allowed to change primary key values; if you
-            do so, Zend_Db_Table_Row will throw an exception.
+			Het is evenwel verboden de waarden van primaire keys te wijzigen; indien
+			je dat toch doet zal Zend_Db_Table_Row een fout opwerpen.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
+// verbinden met een tabel in de database
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// fetch a record from the table as a Zend_Db_Table_Row object
+// verkrijg een record van de tabel als een Zend_Db_Table_Row objekt
 $row = $table->fetchRow('first_name = "Robin"');
 
-// can we change the primary key "id"?
+// kunnen we de primaire key "id" wijzigen?
 try {
     $row->id = 5;
-    echo "We should not see this message, as an exception was thrown.";
+    echo "We zouden dit bericht niet moeten zien omdat er een fout werd opgeworpen.";
 } catch (Zend_Db_Table_RowException $e) {
     echo $e->getMessage();
 }

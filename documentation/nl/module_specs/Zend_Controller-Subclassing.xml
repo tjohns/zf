@@ -1,83 +1,88 @@
 <sect1 id="zend.controller.subclassing">
-	<title>Subclassing</title>
+	<title>Onderklassen</title>
 	
 	<sect2 id="zend.controller.subclassing.introduction">
-		<title>Introduction</title>
+		<title>Inleiding</title>
 		<para>
-			The <code>Zend_Controller</code> system was built with extensibility in mind, either
-			by subclassing the existing classes or writing new classes that implement 
-			the interfaces <code>Zend_Controller_Router_Interface</code> and <code>Zend_Controller_Dispatcher_Interface</code>.
+			Het <code>Zend_Controller</code> systeem werd gebouwd met uitbreiding
+			in het hoofd, ofwel door het onderklassen van de bestaande
+			klassen of door het schrijven van nieuwe klassen die de interfaces
+			van <code>Zend_Controller_Router_Interface</code> en <code>Zend_Controller_Dispatcher_Interface</code>
+			implementeren.
 		</para>
 		
 		<para>
-			Possible reasons for implementing a new router or dispatcher might be:
+			Mogelijke redenen om een nieuwe router of dispatcher te implementeren kunnen zijn:
 			
 			<itemizedlist>
 				<listitem>
 					<para>
-						The existing URI routing system is not suitable in some way, such as integrating
-						into an existing website that uses its own conventions for routing that do not
-						mesh with the routing mechanism provided with the Zend Framework.
+						Het bestaande URI routing systeem is niet toepasbaar om één of andere reden, zoals
+						de integratie in een bestaande website die zijn eigen konventies voor routing
+						heeft en die niet overeenkomen met het routing systeem van het Zend Framework.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						You need to implement routing for something completely different.  The <code>Zend_Controller_Router</code>
-						class only deals with URIs.  It's possible and likely that you might want to use the MVC
-						pattern for developing another type of program, such as a console application.  In the case of
-						a console application, a custom router could process command line arguments to determine
-						the route.
+						Je moet een routing systeem implementeren voor iets volledig anders. De <code>Zend_Controller_Router</code>
+						klasse kan alleen URIs afhandelen. Het is mogelijk en waarschijnlijk dat je het MVC patroon
+						wil gebruiken om een ander type programma te ontwikkelen, zoals een konsole toepassing. In het
+						geval van een konsole toepassing zou een aangepaste router argumenten van de command line moeten kunnen 
+						verwerken om de route te determineren.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						The mechanism provided by <code>Zend_Controller_Dispatcher</code> is not suitable.  The default configuration
-						assumes a convention that controllers are classes and actions are methods of those classes.
-						However, there are many other strategies for doing this.  One example would be where controllers
-						are directories and actions are files within those directories.
+						Het mechanisme dat door <code>Zend_Controller_Dispatcher</code> wordt verstrekt is niet toepasbaar. De
+						standaard configuratie neemt een overeenkomst aan die zegt dat controller klassen zijn en akties
+						methodes van die klassen. Er zijn evenwel vele andere strategiën om dit te doen. Eén voorbeeld zou
+						zijn waar de controllers mappen zijn en de akties bestanden in die mappen.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						You wish to provide additional capabilities that will be inherited by all of your controllers.
-						For example, <code>Zend_Controller_Action</code> does not integrate with <code>Zend_View</code> by default.  
-						However, you could extend your own controller to do this, and using it would not require modifying the
-						supplied <code>Zend_Controller_Router</code> or <code>Zend_Controller_Dispatcher</code>.
+						Je wil bijkomende mogelijkheden verstrekken die door al je controllers worden geërfd. Bijvoorbeeld,
+						<code>Zend_Controller_Action</code> kan niet standaard geïntegreerd worden met <code>Zend_View</code>.
+						Wat je evenwel wèl kan doen is je eigen controller aanpassen zodat die kan integreren met
+						<code>Zend_View</code> en die gebruiken vermijdt het wijzigen van de verstrekte 
+						<code>Zend_Controller_Router</code> of <code>Zend_Controller_Dispatcher</code>.
 					</para>
 				</listitem>
 			</itemizedlist>
-				
-			Please be careful when overriding significant parts of the system, particularly the dispatcher.  One of
-			the advantages of <code>Zend_Controller</code> is that it establishes common conventions for building applications.  If
-			too much of this default behavior is changed, some of these advantages are lost.  However, there are many
-			different needs and one solution can't fit them all, so the freedom is provided if needed.
+
+			Wees voorzichtig met het wijzigen van belangrijke delen van het systeem, en in het bijzonder de dispatcher. Een van
+			de voordelen van <code>Zend_Controller</code> is dat het algemene overeenkomsten vestigt voor het bouwen van 
+			toepassingen. Indien teveel van dit standaard gedrag wordt gewijzigd, zal een deel van deze voordelen verloren
+			zijn. Er zijn evenwel vele verschillende benodigdheden en één enkele oplossing is niet ideaal voor allen. De
+			vrijheid om te wijzigen is dus verstrekt indien nodig.
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.subclassing.conventions">
-		<title>Conventions</title>
+		<title>Overeenkomsten</title>
 		
 		<para>
-			When subclassing any of the Zend_Controller classes, you are strongly encouraged to follow these
-			conventions for naming or storing files.  Doing so will ensure that another programmer who is familiar
-			with the Zend Framework will be able to understand your project easily.
+			Bij het onderklassen van een Zend_Controller klasse is het sterk aangeraden de volgende overeenkomsten
+			te respekteren bij de benaming en het opslaan van bestanden. Door dit te doen verzeker je ervan dat
+			een andere programmeur die het Zend Framework kent gemakkelijk je projekt kan verstaan.
 		</para>
 		
 		<sect3 id="zend.controller.subclassing.prefix">
 			<title>Prefix</title>
 				
 			<para>
-				Classes included with the Zend Framework follow a convention where every class is prefixed by
-				"Zend_".  This is the prefix.  We recommend that you name all of your classes in the same way,
-				e.g. if your company name is Widget, Inc., the prefix might be "Widget_".  
+				Klassen die inbegrepen zijn in het Zend Framework volgen een overeenkomst waarbij elke klasse
+				geprefixed wordt door "Zend_". Dat is de prefix. We raden sterk aan dat jij al jouw klassen
+				op een gelijkaardige wijze benoemd, bv: als je bedrijf Widget NV noemt, zou de prefix "Widget_" 
+				kunnen zijn.
 			</para>
 		</sect3>
 		
 		<sect3 id="zend.controller.directory.layout">
-			<title>Directory Layout</title>
+			<title>Mappen Lay-out</title>
 			
 			<para>
-				The <code>Zend_Controller</code> classes are stored in the library directory as follows:
+				<code>Zend_Controller</code> klassen worden als volgt in de bibliotheekmap opgeslaan:
 
     <programlisting role="php"><![CDATA[
 /library
@@ -88,13 +93,15 @@
       Router.php
 ]]></programlisting>			
 
-				When subclassing <code>Zend_Controller</code> classes, it is recommended that the new classes
-				be stored in an identical structure under your prefix.  This will make them easy to find for
-				someone during that learning process of reviewing the code for your project.  
+				Bij het onderklassen van <code>Zend_Controller</code> klassen is het aangeraden dat de nieuwe 
+				klassen opgeslaan worden in een gelijkaardige struktuur onder jouw prefix. Dat maakt het
+				gemakkelijk om ze te vinden voor iemand gedurende dat leerprocess dat het nakijken van de
+				code van jouw projekt is.
 			</para>
 			
 			<para>
-				For example, a project from Widget, Inc. which implements only a custom router might look like this:
+				Bijvoorbeeld, een projekt Widget NV dat alleen een aangepaste router implementeerd zou op
+				het volgende kunnen lijken:
 				
 <programlisting role="php"><![CDATA[
 /library
@@ -105,17 +112,18 @@
       README.txt
 ]]></programlisting>			
 
-				Notice in this example that the <code>Widget/Controller/</code> directory mirrors the <code>Zend/Controller/</code>
-				directory wherever possible.  In this case, it provides the class <code>Widget_Controller_Router</code>,
-				which would be either a subclass or replacement for <code>Zend_Controller_Router</code> implementing
-				<code>Zend_Controller_Router_Interface</code>.
+				Merk in dit voobeeld op dat de <code>Widget/Controller/</code> map de <code>Zend/Controller/</code> weerspiegelt
+				waar dat ook maar enigzins mogelijk is. In dit geval verstrekt het een <code>Widget_Controller_Router</code>
+				klasse die een onderklasse of een vervanging is voor <code>Zend_Controller_Router</code> en die de
+				<code>Widget_Controller_Router_Interface</code> implementeert.
 			</para>
 			
 			<para>
-				Also, notice in the example above that a <code>README.txt</code> file has been placed in <code>Widget/Controller/</code>.
-				Zend strongly encourages you to document your projects through supplying separate tests and
-				documentation for customers.  However, we encourage you to also place a simple <code>README.txt</code> file
-				right in the directory to briefly explain your changes and how they work.
+				Merk ook op in het voorbeeld hierboven dat een <code>README.txt</code> bestand is opgeslaan in
+				<code>Widget/Controller</code>. Zend moedigt je sterk aan je projekten te dokumenteren door
+				afzonderlijke tests en dokumentatie te verstrekken voor je klanten. We moedigen je ook sterk aan
+				een eenvoudig <code>README.txt</code> bestandje te plaatsen in de map om kort je veranderingen
+				uit te leggen en hoe ze werken.
 			</para>
 		</sect3>
 	</sect2>
@@ -124,7 +132,7 @@
 		<title>Router Interface</title>
 		
 		<para>
-			The interface <code>Zend_Controller_Router_Interface</code> provides a definition for only one method:
+			De interface <code>Zend_Controller_Router_Interface</code> verstrekt een definitie voor één enkele methode:
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -136,18 +144,19 @@
   public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
 
 ?>]]></programlisting>
-			
-			Routing only occurs once: when the request is first received into the system.  The purpose of the
-			router is to generate a <code>Zend_Controller_Dispatch_Token</code> that specifies a controller and action of
-			that controller.  This is then passed to the dispatcher.  If it is not possible to map a route to 
-			a dispatch token (nonsenical route) then a boolean, <code>FALSE</code>, should be returned.
+
+			Routing gebeurt slecht één enkele keer: wanneer het verzoek voor het eerst door het systeem wordt ontvangen.
+			Het doel van de router is een <code>Zend_Controller_Dispatch_Token</code> aan te maken dat een controller
+			en een aktie van die controller definieert. Dit wordt dan doorgegeven aan de dispatcher. Indien het niet
+			mogelijk is een route naar een dispatch token te mappen (nonsenical route) dan moet er een boolean,
+			<code>FALSE</code> worden teruggestuurd.
 		</para>
 		
 		<para>
-			Some routers may process dynamic elements and need a way to determine if the dispatch token generated
-			is actually dispatchable before returning it.  For this reason, the router receives the object handle 
-			of the dispatcher as the sole argument to its <code>route()</code> method.  The dispatcher provides a method,
-			<code>isDispatchable()</code>, for this testing.
+			Sommige routers kunnen dynamische elementen verwerken en hebben een manier nodig om de determineren of het
+			aldus gegenereerde token inderdaad dispatchbaar is voordat het wordt teruggestuurd. Om deze reden ontvangt
+			de router de objekt handle van de dispatcher als enig argument voor zijn <code>route()</code> methode.
+			De dispatcher verstrekt een methode, <code>isDispatchable()</code> om dit te testen.
 		</para>
 	</sect2>
 	
@@ -155,19 +164,19 @@
 		<title>Dispatcher Interface</title>
 		
 		<para>
-			<code>Zend_Controller_Front</code> will first call the router to receive the first dispatch token, which it will
-			pass to the dispatcher.  The dispatcher will dispatch the action (instantiate the controller, call
-			its action) and then return with either a boolean, FALSE, or another dispatch token.  
+			<code>Zend_Controller_Front</code> zal eerst de router solliciteren om een eerste disptach token te ontvangen en
+			zal dit doorgeven aan de dispatcher. De dispatcher zal de aktie (de controller instantiëren, zijn aktie 
+			oproepen) dispatchen en dan ofwel een boolean, FALSE, terugkeren, of een ander dispatch token.
 		</para>
 		
 		<para>
-			<code>Zend_Controller_Front</code> repeatedly calls the dispatcher until a dispatch token is not returned from
-			it.  This is known as the dispatch loop.  It allows for actions to be processed sequentially
-			until all work has been done.
+			<code>Zend_Controller_Front</code> roept herhaaldelijk de dispatcher op tot deze geen dispatch token meer terug
+			stuurt. Dit staat bekend als de dispatch loop. Het laat toe akties opeenvolgend te verwerken tot al het werk 
+			gedaan is.
 		</para>
 		
 		<para>
-			The interface <code>Zend_Controller_Dispatcher_Interface</code> provides definitions for two methods:
+			De <code>Zend_Controller_Dispatcher_Interface</code> interface verstrekt definities voor twee methodes:
 			
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -179,10 +188,10 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 
-		<code>isDispatchable()</code> checks if a dispatch token is dispatchable.  If it is, it returns <code>TRUE</code>.  
-		Otherwise, it returns <code>FALSE</code>.  The definition of what is dispatchable is left to the class 
-		implementing the interface.  In the case of the default implementation, <code>Zend_Controller_Dispatcher</code>, it means
-		that the controller file exists, the class exists within the file, and the action method exists within the class.
+		<code>isDispatchable()</code> gaat na of een dispatch token kan gedispatched worden. Indien dat zo is geeft het
+		<code>TRUE</code> terug. Anders geeft het <code>FALSE</code> terug. In het geval van de standaard implementatie,
+		<code>Zend_Controller_Dispatcher</code>, betekent dit dat het controller bestand bestaat, dat de klasse in het 
+		bestand betaat en dat de aktiemethode in de klasse bestaat.
 		
 		<programlisting role="php"><![CDATA[<?php
 			
@@ -194,8 +203,9 @@ public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 		
-		<code>dispatch()</code> is where the work gets done.  This method must execute the action of the controller.
-		It must return either a dispatch token or a boolean, FALSE, to indicate that there is no more work to do.
+		<code>dispatch()</code> is waar het echte werk wordt gedaan. Deze methode moet de aktie van de controller 
+		uitvoeren. Het moet ofwel een dispatch token terugkeren of een boolean, FALSE, om aan te geven dat er geen
+		werk meer te doen is.
 		
 		</para>
 	</sect2>

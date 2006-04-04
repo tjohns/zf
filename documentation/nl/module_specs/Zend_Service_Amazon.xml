@@ -1,46 +1,46 @@
 <sect1 id="zend.service.amazon">
     <title>Zend_Service_Amazon</title>
     <sect2 id="zend.service.amazon.introduction">
-        <title>Introduction</title>
+        <title>Inleiding</title>
         <para>
-            <code>Zend_Service_Amazon</code> is a simple API for using Amazon web services.
-            <code>Zend_Service_Amazon</code> has two APIs: a more traditional one that follows Amazon's own API, and a
-            simpler "Query API" for constructing even complex search queries easily.
+            <code>Zend_Service_Amazon</code> is een eenvoudige API om Amazon webservices te gebruiken.
+            <code>Zend_Service_Amazon</code> heeft twee APIs: een meer traditionele die Amazons eigen API volgt,
+			en een eenvoudigere "Query API" om nog meer complexe zoekqueries gemakkelijk op te bouwen.
         </para>
         <para>
-            <code>Zend_Service_Amazon</code> enables developers to retrieve information appearing throughout Amazon.com
-            web sites directly through the Amazon Web Services API. Examples include:
+            <code>Zend_Service_Amazon</code> laat developpeurs toe om informatie die door Amazon.com web sites worden verstrekt
+			direkt te bekomen via de Amazon Web Services API. Voorbeelden:
             <itemizedlist>
                 <listitem>
-                    Store item information, such as images, descriptions, pricing, and more
+					Item informatie opslaan, zoals beelden, beschrijvingen, prijzen, en meer
                 </listitem>
                 <listitem>
-                    Customer and editorial reviews
+					Klant- en uitgeversrecensies
                 </listitem>
                 <listitem>
-                    Similar products and accessories
+					Gelijkaardige produkten en accessoires
                 </listitem>
                 <listitem>
-                    Amazon.com offers
+					Amazon.com aanbiedingen
                 </listitem>
                 <listitem>
-                    ListMania lists
+					ListMania lijsten
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-            In order to use <code>Zend_Service_Amazon</code>, you should already have an Amazon developer API key. To
-            get a key and for more information, please visit the
-            <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> web site.
+			Om <code>Zend_Service_Amazon</code> te gebruiken zou je reeds een Amazon developer API key moeten hebben. Om die
+			te bekomen, en voor meer informatie, kan je terecht op de
+            <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> webstek.
         </para>
         <note>
-            Your Amazon developer API key is linked to your Amazon identity, so take appropriate measures to keep your
-            API key private.
+			Je Amazon developer API key is aan je Amazom identiteit verbonden, neem dus de nodige maatregelen om je key
+			te beveiligen en privé te houden.
         </note>
         <example>
-            <title>Search Amazon Using the Traditional API</title>
+            <title>Amazon doozoeken met de traditionele API</title>
             <para>
-                In this example, we search for PHP books at Amazon and loop through the results, printing them.
+				In dit voorbeeld zoeken we naar PHP boeken op Amazon en doorlopen we de resultaten door ze uit te printen.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
@@ -52,10 +52,10 @@ foreach ($response as $r) {
 ?>]]>       </programlisting>
         </example>
         <example>
-            <title>Search Amazon Using the Query API</title>
+            <title>Amazon doozoeken met de Query API</title>
             <para>
-                Here, we also search for PHP books at Amazon, but we instead use the Query API, which
-                resembles the Fluent Interface design pattern.
+				Hier zoeken we ook naar PHP boeken op Amazon, maar we gebruiken de Query API, die lijkt
+				op het Fluent Interface ontwerp patroon.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
@@ -69,33 +69,33 @@ foreach ($results as $result) {
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.countrycodes">
-        <title>Country Codes</title>
+        <title>Landcodes</title>
         <para>
-            By default, <code>Zend_Service_Amazon</code> connects to the United States ("<code>US</code>") Amazon
-            web service. To connect from a different country, simply specify the appropriate country code string
-            as the second parameter to the constructor:
+			Standaard verbindt <code>Zend_Service_Amazon</code> met de Amazon web service in de Verenigde Staten ("<code>US</code>"). 
+			Om verbindeing te maken met een ander land geef je eenvoudigweg de gepaste landcode op als de tweede parameter van de
+			konstruktor:
         </para>
         <example>
-            <title>Choosing an Amazon Web Service Country</title>
+            <title>Een Amazon Web Service land kiezen</title>
             <programlisting><![CDATA[<?php
-// Connect to Amazon in Japan
+// Verbind met Amazon in Frankrijk
 require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'FR');
 ?>]]>       </programlisting>
             <note>
-                Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                <code>UK</code>, and <code>US</code>.
+                Geldige landcodes zijn: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                <code>UK</code>, en <code>US</code>.
             </note>
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.itemlookup">
-        <title>Looking up a Specific Amazon Item by ASIN</title>
+        <title>Een specifiek item opzoeken met ASIN code</title>
         <para>
-            The <code>itemLookup()</code> method provides the ability to fetch a particular Amazon item when
-            the ASIN is known.
+            De <code>itemLookup()</code> methode biedt de mogelijkheid om een specifiek Amazon item op te halen als
+			de ASIN gekend is.
         </para>
         <example>
-            <title>Looking up a Specific Amazon Item by ASIN</title>
+            <title>Een specifiek Amazon item ophalen per ASIN</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
@@ -103,17 +103,17 @@ $item = $amazon->itemLookup('B0000A432X');
 ?>]]>       </programlisting>
         </example>
         <para>
-            The <code>itemLookup()</code> method also accepts an optional second parameter for handling search
-            options. For full details, including a list of available options, please see the
+			De <code>itemLookup()</code> methode aanvaardt ook een optionele tweede parameter om zoekopties af te handelen.
+			Voor alle details, met inbegrip van een lijst van voorhandige opties, zie de
             <ulink
-                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevant Amazon documentation</ulink>.
+                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevante Amazon dokumentatie</ulink>.
         </para>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
-        <title>Performing Amazon Item Searches</title>
+        <title>Amazon Item zoekopdrachten uitvoeren</title>
         <para>
-            Searching for items based on any of various available criteria are made simple using the
-            <code>itemSearch()</code> method, as in the following example:
+			Het zoeken naar items gebaseerd op een van de verschillende voorhande criteria wordt eenvoudig
+			gemaakt door de <code>itemSearch()</code> methode, zoals in het volgende voorbeeld:
         </para>
         <example>
             <title>Performing Amazon Item Searches</title>
@@ -127,14 +127,14 @@ foreach($response as $r) {
 ?>]]>       </programlisting>
         </example>
         <para>
-            The <code>itemSearch()</code> method accepts a single array parameter for handling search
-            options. For full details, including a list of available options, please see the
+            De <code>itemSearch()</code> methode aanvaardt een enkele array array parameter om zoekopties af te handelen.
+			Voor alle details, met inbegrip van een lijst van voorhandige opties, zie de
             <ulink
-                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>
+                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevante Amazon dokumentatie</ulink>
         </para>
         <tip>
-            The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> class
-            is an easy to use wrapper around this method.
+            De <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> klasse
+            is een gemakkelijk te gebruiken omwikkeling van deze methode.
         </tip>
     </sect2>
     &module_specs.Zend_Service_Amazon_Query;

@@ -1,99 +1,106 @@
 <sect1 id="zend.controller.getting-started">
-	<title>Getting Started</title>
+	<title>Om te beginnen</title>
 	
 	<sect2 id="zend.controller.getting-started.introduction">
-		<title>Introduction</title>
+		<title>Inleiding</title>
 		<para>
-			The <code>Zend_Controller</code> system was built with extensibility in mind, either
-			by subclassing the existing classes or writing new classes that implement 
-			the interfaces <code>Zend_Controller_Router_Interface</code> and <code>Zend_Controller_Dispatcher_Interface</code>.
+			Het <code>Zend_Controller</code> systeem werd gebouwd met uitbreiding
+			in het hoofd, ofwel door het onderklassen (subclassing) van de bestaande
+			klassen of door het schrijven van nieuwe klassen die de interfaces
+			van <code>Zend_Controller_Router_Interface</code> en <code>Zend_Controller_Dispatcher_Interface</code>
+			implementeren.
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.server-configuration">
-		<title>Server Configuration</title>
+		<title>Server Configuratie</title>
 		<para>
-			Zend_Controller is built to support modern websites with clean URIs (few or no query parameters).  As such,
-			the suggested configuration requires support from the webserver in the form of URI rewriting to redirect 
-			all requests to a single file, here called "index.php", which will simply bootstrap <code>Zend_Controller_Front</code>.  
-			On Apache webservers, this is handled by an optional module called mod_rewrite.
+			Zend_Controller is gebouwd om moderne webstekken met "propere" URIs (weinig of geen query parameters)
+			te ondersteunen.
+			Als zodanig heeft de voorgestelde configuratie de hulp nodig van de webserver in de vorm van het
+			herschrijven van de URI zodat alle aanvragen naar een enkel bestand kunnen worden doorgestuurd.
+			Dit bestand noemt "index.php" en is gewoon een bootstrap voor <code>Zend_Controller_Front</code>.
+			Op Apache webservers word dit afgehandeld door de optionele module "mod_rewrite".
 		</para>
 
 		<para>
-			The first step in configuring the server is to sucessfully install and enable mod_rewrite.  The next step
-			is to put two files in the document root: .htaccess and index.php.  The .htaccess file is used by Apache
-			and must contain a mod_rewrite rule to redirect all requests to index.php.  For development purposes, it
-			is often simplest to write a mod_rewrite rule that will redirect all requests to index.php except for certain
-			file extensions.  Here is an example of such a file:
+			De eerste stap om de server te configureren is het succesvol installeren en activeren van "mod_rewrite".
+			De volgende stap is het schrijven van twee bestanden in de document root: .htaccess en index.php.
+			Het .htaccess bestand wordt door Apache gebruikt en moet een mod_rewrite regel bevatten die alle
+			aanvragen naar index.php doorstuurt. Voor ontwikkelingsdoelen is het vaak eenvoudiger om een
+			mod_rewrite regel te schrijven die alle aanvragen doorstuurt naar index.php, behalve een paar
+			bestandsextensies. Hier is een voorbeeld van zulk een bestand:
 
 			<programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
-
-			In the example above, all requests not containing one of the above file extensions will be passed to index.php.
-			This is useful for development, however in production the rewrite rules should be
-			written to exclude directories instead.
+			In het voorbeeld hierboven worden alle aanvragen voor bestanden waarvan de extensie niet in de lijst zijn naar
+			index.php doorgestuurd. Dit is handig voor het ontwikkelen, maar in produktie zouden de regels mappen
+			moeten uitsluiten, geen bestandsextensies.
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.bootstrap">
-		<title>Bootstrap File</title>
+		<title>Bootstrap Bestand</title>
 		
 		<para>
-			After setting up the .htaccess file, create a new file called <code>index.php</code>.  This is a bootstrap file.  
-			The purpose of the index.php file is only to bootstrap Zend_Controller_Front, which should ideally be
-			located outside of the document root.
+			Na het opzetten van het .htaccess bestand, moet je een nieuw bestand <code>index.php</code> aanmaken.
+			Dit is een bootstrap bestand. Het doel van index.php is enkel het bootstrappen van 
+			Zend_Controller_Front, welke zich ideaal gesproken buiten de documentroot zou moeten bevinden.
 		</para>
 
 		<note>	
-			The bootstrap file should be the only PHP file stored in the document root.			
+			Het bootstrap bestand zou het enige PHP bestand moeten zijn dat in de documentroot is opgeslagen.
 		</note>
 
 		<para>
-			For security purposes, Zend very strong recommends not storing any PHP files in directories that are 
-			accessible by the webserver (those that are beneath the document root).  While this is not possible in 
-			every scenario, such as shared hosting, this should be considered a best practice and observed whenever possible.  
+			Om veiligheidsredenen raadt Zend héél sterk aan geen PHP bestanden op te slaan in mappen die door
+			de webserver toegankelijk zijn (submappen van de document root). Hoewel dit niet altijd
+			mogelijk is, zoals bij gemutualiseerde webhosting, zou dit toch moeten worden beschouwd als een
+			ideaal en toegepast waar mogelijk.
 		</para>
 
 		<para>
-			Create the bootstrap file, <code>index.php</code>, in the document root to bootstrap Zend_Controller_Front:
+			Maak het bootstrap bestand, <code>index.php</code>, in de document root om Zend_Controller_Front te
+			bootstrappen:
 
 			<programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Front.php';
 
-Zend_Controller_Front::run('/path/to/your/controllers')
+Zend_Controller_Front::run('/pad/naar/jouw/controllers')
 
 ?>]]></programlisting>
 
-			See the next section regarding the <code>/path/to/your/controllers</code>.
+			Zie de volgende sektie wat betreft <code>/pad/naar/jouw/controllers</code>.
 
-			As instructed in <code>README.txt</code>, the directory of the Zend Framework library must be in the
-			<code>include_path</code>.  If this is not set in <code>php.ini</code>, <code>set_include_path()</code> 
-			can be called in this file before the <code>require_once()</code>.
+			Zoals aangegeven in <code>README.txt</code> moet het Zend Framework pad in <code>include_path</code>
+			zijn. Indien dit niet in <code>php.ini</code> aangeduid is, kan je <code>set_include_path()</code> 
+			gebruiken in dit bestand vòòr <code>require_once</code>.
 		</para>
 
 		<note>
-			At this time, we are presently investigating solutions will not require mod_rewrite installation.  We
-			intend to suggest a configuration for systems both with and without mod_rewrite capabilities.  Also,
-			please note this system is not bound to Apache or mod_rewrite specifically, any webserver with similar
-			redirection capabilities should be sufficient.
+			Momenteel proberen we oplossingen te vinden die zonder de installatie van mod_rewrite kunnen werken. We
+			denken aan een configuratieregel voor systemen met en zonder mod_rewrite mogelijkheden. Gelieve er
+			nota van te nemen dat dit systeem niet specifiek aan Apache of mod_rewrite gebonden is, elke
+			webserver met gelijkaardige doorstuurmogelijkheden (redirect capabilities) zou moeten volstaan.
 		</note>
 	</sect2>	
 		
 	<sect2 id="zend.controller.getting-started.directory-structure">
-		<title>Directory Structure</title>
+		<title>Mappenstruktuur</title>
 		
 		<para>
-			It is recommended that websites built with the Zend Framework share a common directory structure.  While
-			this is not possible in every case, it is for many or perhaps most.  Choosing to conform to this structure
-			will make your code more easily understandable by someone familiar with the conventions of the Zend Framework.
+			Het is aanbevolen dat websites gebouwd met de Zend Framework een gemeenschappelijke mappenstruktuur
+			hebben. Hoewel dit niet in alle gevallen mogelijk is, is het dat toch voor velen en waarschijnlijk
+			de meeste. De keuze om deze regel is gemotiveerd omdat die jouw code gemakkelijker begrijpbaar zal maken voor
+			iemand die de Zend Framework overeenkomsten kent.
 		</para>
 		
 		<para>	
-			The suggested directory structure consists of both library directories (from Zend and elsewhere) 
-			and application directories.
+			De voorgestelde mappenstruktuur bestaat uit zowel bibliotheekmappen (van Zend en elders) en
+			toepassingsmappen.
 
 			<programlisting role="php"><![CDATA[
 /application
@@ -111,7 +118,7 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 		</para>
 		
 		<note>
-			This section is not yet complete.  It is under heavy construction and is subject to change.
+			Deze sektie is nog niet kompleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
 		</note>
 	</sect2>	
 		
@@ -119,8 +126,9 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 		<title>IndexController</title>
 
 		<para>
-			Every site must define a controller named <code>IndexController</code>.  This is the controller
-			that is reached when no controller is specified in the URI, such as in this URI:
+			Elke site moet een controller genaamd <code>IndexController</code> definiëren. Dit is de
+			controller die wordt bereikt indien geen enkele controller werd gespecifieerd in de URI,
+			zoals in volgende URI:
 
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/
@@ -128,9 +136,10 @@ http://framework.zend.com/
 		</para>
 
 		<para>
-			The <code>IndexController</code> class must be stored in a file named <code>IndexController.php</code>, and
-			this must be stored in the controllers directory.  The <code>IndexController</code> must subclass
-			<code>Zend_Controller_Action</code>.  Here is a sample <code>IndexController</code>:
+			De <code>IndexController</code> klasse moet ondergebracht worden in een bestand genaamd
+			<code>IndexController.php</code>, en dat bestand moet in de map "controllers" worden opgeslaan.
+			De <code>IndexController</code> moet <code>Zend_Controller_Action</code> onderklassen.
+			Hier is een voorbeeld van een <code>IndexController</code>:
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -140,7 +149,7 @@ class IndexController extends Zend_Controller_Action
 {
 	public function indexAction()
 	{
-		echo 'Hello from IndexController';
+		echo 'Hallo vanwege de IndexController';
 	}
 
 	public function noRouteAction()
@@ -152,7 +161,7 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
 			<note>
-				This section is not yet complete.  It is under heavy construction and is subject to change.
+			Deze sektie is nog niet kompleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
 			</note>			
 		</para>
 	</sect2>			

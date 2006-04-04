@@ -1,22 +1,24 @@
 <sect2 id="zend.service.amazon.query">
-    <title>Using the Alternative Query API</title>
+    <title>De Alternative Query API gebruiken</title>
     <sect3 id="zend.service.amazon.query.introduction">
-        <title>Introduction</title>
+        <title>Inleiding</title>
         <para>
-            <code>Zend_Service_Amazon_Query</code> provides an alternative API for using the Amazon Web Service.
-            The alternative API uses the Fluent Interface pattern. That is, all calls can be made using chained method
-            calls. (e.g., <code>$obj->method()->method2($arg)</code>)
+            <code>Zend_Service_Amazon_Query</code> biedt een alternatieve API om de Amazon Web Service te gebruiken.
+			De alternatieve API gebruikt het Fluent Interface ontwerppatroon. Dus, alle oproepen kunnen 
+            The alternative API uses the Fluent Interface pattern. Dus, alle aanvragen kunnnen gemaakt worden
+			door aaneengeregen methode-oproepen te maken.
+			(bv: <code>$obj->method()->method2($arg)</code>)
         </para>
         <para>
-            The <code>Zend_Service_Amazon_Query</code> API uses overloading to easily set up an item search and then
-            allows you to search based upon the criteria specified. Each of the options is provided as a method call,
-            and each method's argument corresponds to the named option's value:
+			De <code>Zend_Service_Amazon_Query</code> API gebruikt overloading om gemakkelijk een item opzoek op te zetten
+			en laat je dan toe te zoeken op de gespecifieerde criteria. Elk van de opties is als een methode-oproep
+			aangeboden, en elk argument van een methode komt overeen met de benoemde waarde van de optie:
         </para>
         <example>
             <title>Search Amazon Using the Alternative Query API</title>
             <para>
-                In this example, the alternative query API is used as a fluent interface to specify options and their
-                respective values:
+				In dit voorbeel wordt de alternative query API gebruikt als een Fluent Interface om opties en hun
+				respectievelijke waarden te specifiëren:
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
@@ -28,12 +30,12 @@ foreach ($results as $result) {
 }
 ?>]]>       </programlisting>
             <para>
-                This sets the option <code>Category</code> to "Books" and <code>Keywords</code> to "PHP".
+				Dit zet de optie <code>Category</code> tot "Books" en <code>Keywords</code> tot "PHP".
             </para>
             <para>
-                For more information on the available options, please refer to the
+				Voor meer informatie over de beschikbare opties verwijzen we je graag door naar de
                 <ulink
-                    url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>.
+                    url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevante Amazon dokumentatie</ulink>.
             </para>
         </example>
     </sect3>

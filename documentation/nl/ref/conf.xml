@@ -1,9 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <chapter id="conf">
-    <title>Configuration</title>
-    <para>
-        This section describes configuration for the framework.
-        Ideally, none will be required :)
-    </para>
+  <title>Configuratie</title>
+
+  <para>Deze sectie beschijft de configuratie opstellingen voor de Zend
+  Framework. Ideaal gesproken zullen er geen nodig zijn :)</para>
 </chapter>
 <!--
 vim:se ts=4 sw=4 et:

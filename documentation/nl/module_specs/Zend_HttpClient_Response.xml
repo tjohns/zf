@@ -1,34 +1,34 @@
 <sect1 id="zend.httpclient.response">
     <title>Zend_HttpClient_Response</title>
     <sect2 id="zend.httpclient.response.introduction">
-        <title>Introduction</title>
+        <title>Inleiding</title>
         <para>
-            <code>Zend_HttpClient_Response</code> provides easy access to the responses returned by
-            <xref linkend="zend.httpclient" />. It provides an intuitive set of methods for working
-            with the HTTP response data received from a request:
+            <code>Zend_HttpClient_Response</code> verstrekt eenvoudige toegang tot de antwoorden die 
+			door <xref linkend="zend.httpclient" /> worden teruggestuurd. Het verstrekt een intuïtieve set
+			van methodes om met de HTTP antwoorddata die van een verzoek wordt ontvangen te werken:
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Returns TRUE if an HTTP error code was received; FALSE otherwise.
+                    <code>isError()</code>: TRUE indien een HTTP foutcode werd ontvangen; anders FALSE.
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Returns TRUE if an HTTP success code was received; FALSE otherwise.
+                    <code>isSuccessful()</code>: TRUE indien een HTTP succescode werd ontvangen; anders FALSE.
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Returns TRUE if an HTTP redirect code was received; FALSE otherwise.
+                    <code>isRedirect()</code>: TRUE indien een HTTP verwijzingscode werd ontvangen; anders FALSE.
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Returns the HTTP status code.
+                    <code>getStatus()</code>: Geeft de HTTP statuscode terug.
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Returns an array of HTTP response header strings.
+                    <code>getHeaders()</code>: Geeft een array van strings van HTTP antwoordheaders terug.
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Returns the HTTP response body as a string.
+                    <code>getBody()</code>: Geeft de HTTP antwoordinhoud als een string terug.
                 </listitem>
             </itemizedlist>
         </para>
         <example>
-            <title>Working with HTTP Response Data</title>
+            <title>Met HTTP antwoorddata werken</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 try {
@@ -37,7 +37,7 @@ try {
     if ($response->isSuccessful()) {
         echo $response->getBody();
     } else {
-        echo "<p>An error occurred</p>\n";
+        echo "<p>Er trad een fout op</p>\n";
         echo "HTTP Status: " . $response->getStatus() . "\n";
         echo "HTTP Headers:\n";
         $responseHeaders = $response->getHeaders();
@@ -46,7 +46,7 @@ try {
         }
     }
 } catch (Zend_HttpClient_Exception $e) {
-    echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
+    echo '<p>Er trad een fout op (' .$e->getMessage(). ')</p>';
 }
 ?>]]></programlisting>
         </example>

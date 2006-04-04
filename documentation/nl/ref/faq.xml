@@ -1,21 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <appendix id="faq">
-    <title>Frequently Asked Questions</title>
+  <title>FAQ (Veel gestelde vragen)</title>
 
-    <qandaset>
-        <qandaentry>
-            <question>
-                <para>
-                    How do I do X?
-                </para>
-            </question>
-            <answer>
-                <para>
-                    The answer is...
-                </para>
-            </answer>
-        </qandaentry>
-    </qandaset>
+  <qandaset>
+    <qandaentry>
+      <question>
+        <para>Hoe doe ik X ?</para>
+      </question>
 
+      <answer>
+        <para>Het antwoord is...</para>
+      </answer>
+    </qandaentry>
+  </qandaset>
 </appendix>
 <!--
 vim:se ts=4 sw=4 et:

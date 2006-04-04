@@ -1,17 +1,17 @@
 <sect1 id="zend.service.rest">
     <title>Zend_Service_Rest</title>
     <sect2 id="zend.service.rest.introduction">
-        <title>Introduction</title>
+        <title>Inleiding</title>
         <para>
-            <code>Zend_Service_Rest</code> is a basic REST client for performing queries against any REST based web
-            service.
+            <code>Zend_Service_Rest</code> is een basis REST klant om zoekopdrachten te maken een eender 
+			welke REST-gebaseerde web service.
         </para>
         <example>
-            <title>A basic REST Request</title>
+            <title>Een basis REST verzoek</title>
             <para>
-                In the following code, the <code>setUri()</code> method sets the <emphasis>base</emphasis> URI for the
-                REST web service. Then, the <code>restGet()</code> method is called to perform a GET request on a given
-                path with an optional query string.
+				In de volgende code zet de <code>setUri()</code> methode de <emphasis>base</emphasis> URI voor de 
+                REST web service. Dan wordt de <code>restGet()</code> methode opgeroepen om een GET verzoek te maken op
+				een gegeven pad met een optionele query string.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Rest.php;
@@ -21,30 +21,31 @@ try {
 
     $rest->setURI('http://example.org');
 
-    // Returns a Zend_HttpClient_Response Object
+    // Geeft een Zend_HttpClient_Response Objekt terug
     $response = $rest->restGet('/services/rest', 'foo=bar&baz=bat');
 
     if ($response->isSuccessful()) {
         echo $response->getBody();
     } else {
-        echo '<p>An error occurred</p>';
+        echo '<p>Er trad een fout op</p>';
     }
 } catch (Zend_Exception $e) {
-        echo '<p>An error occurred (' .$e->getMessage(). ')<p>';
+        echo '<p>Er trad een fout op (' .$e->getMessage(). ')<p>';
 }
 ?>]]>       </programlisting>
             <note>
-                You can pass a properly formatted query string (without the leading question mark "<code>?</code>") to
-                <code>restGet()</code>, or you can pass an associative array of name-value pairs. Regardless of which
-                method you choose, the names and values must be URL-encoded (e.g., with
+				Je kan een korrekt geformateerde query string (zonder de voorafgaande vraagtekens "<code>?</code>") aan
+                <code>restGet()</code> doorgeven, of je kan een associatieve array van naam/waarde-paren doorgeven. 
+				In ieder geval moeten de namen en waarden URL-encoded zijn (bv. met
                 <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>).
             </note>
             <para>
-                Using <code>restPost()</code> and <code>restPut()</code> is the same as using <code>restGet()</code>, but the data are sent via HTTP POST or PUT, respectively, instead of GET.
+                Het gebruik van <code>restPost()</code> en <code>restPut()</code> is hetzelfde als het gebruik van de 
+				<code>restGet()</code>, maar de data wordt respectievelijk via HTTP POST of PUT gezonden in plaats van via GET.
             </para>
             <para>
-                The <code>restDelete()</code> method operates on a path, but does not have a second parameter into
-                which data may be passed.
+				De <code>restDelete()</code> methode werkt met op een pad maar heeft geen tweede parameter in dewelke data
+				kan worden doorgegeven.
             </para>
         </example>
     </sect2>
