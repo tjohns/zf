@@ -55,10 +55,6 @@ class Zend_Json_Encoder
      */
     public static function encode($value)
     {
-    	if (empty($value)) {
-    	    return('null');
-    	}
-
         $encoder = new Zend_Json_Encoder();
 
         return $encoder->_encodeValue($value);
@@ -157,7 +153,7 @@ class Zend_Json_Encoder
 
         // Check for associative array
         foreach (array_keys($array) as $key) {
-            if (!ctype_digit($key)) {
+            if (!is_int($key)) {
                 $assoc = true;
                 break;
             }

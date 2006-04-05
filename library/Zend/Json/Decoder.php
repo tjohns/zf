@@ -154,6 +154,8 @@ class Zend_Json_Decoder
     {
         if (null === $source) {
             throw new Zend_Json_Exception('Must specify JSON encoded source for decoding');
+        } elseif (!is_string($source)) {
+            throw new Zend_Json_Exception('Can only decode JSON encoded strings');
         }
 
         $decoder = new self($source, $objectDecodeType);
