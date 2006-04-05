@@ -8,6 +8,7 @@ General Tasks
 
 Zend_XmlRpc_Client Tasks
 ===================
+* do we want to support multi-signatures ? if we support it in the __getMethodsXML, which signature we will use in the auto detection ?
 
 Zend_XmlRpc_Value Tasks
 ===================
