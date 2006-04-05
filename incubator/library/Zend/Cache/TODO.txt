@@ -1,0 +1,25 @@
+Priority 1 :
+
+- end of unit tests :
+	=> Core and Frontends are missing
+	=> A "tests oriented" backend will be necessary
+	(because we can't use phpunit3 mock objects)
+	
+- bug fixes :)
+
+- end of Sqlite backend
+
+- "Page" frontend (sort of "jpcache")
+	=> to cache a whole page
+	=> automatic cache id
+	=> "HTTP not modified" header
+	[...] (Mislav is working on this)
+
+- work on the logging feature (which is not terminated)
+
+- EXAMPLES.txt file
+
+
+Priority 2 :
+
+- complete documentation (zend format)
