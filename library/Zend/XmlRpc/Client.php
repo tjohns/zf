@@ -71,9 +71,11 @@ class Zend_XmlRpc_Client
     protected $_response = null;
 
     /**
-     * @var Zend_XmlRpc_Client_NamespaceDecorator|null
+     * Array of cached namespace decorators, array of Zend_XmlRpc_Client_NamespaceDecorator objects
+     * 
+     * @var array
      */
-    protected $_namespaceDecorator = null;
+    protected $_namespaceDecorators = array();
 
 
     /**
@@ -110,16 +112,16 @@ class Zend_XmlRpc_Client
      * Undefined properties are assumed to be XML-RPC namespaces
      * and return a decorator to enable object chains.
      *
-     * @param  string $methodName
+     * @param  string $namespace
      * @return Zend_XmlRpc_Client_NamespaceDecorator
      */
-    public function __get($methodName)
+    public function __get($namespace)
     {
-        if (!isset($this->_namespaceDecorator)) {
-            $this->_namespaceDecorator = new Zend_XmlRpc_Client_NamespaceDecorator($methodName, $this);
+        if (!isset($this->_namespaceDecorators[$namespace])) {
+            $this->_namespaceDecorators[$namespace] = new Zend_XmlRpc_Client_NamespaceDecorator($namespace, $this);
         }
         
-        return $this->_namespaceDecorator;
+        return $this->_namespaceDecorators[$namespace];
     }
     
     
