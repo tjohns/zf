@@ -153,7 +153,7 @@ class Zend_XmlRpc_Client
         $params = func_num_args() > 1 ? array_shift(func_get_args())
                                                        : null;
 
-        $this->__call($methodName, $params);
+        return $this->__call($methodName, $params);
     }
 
 
