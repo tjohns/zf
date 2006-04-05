@@ -3,50 +3,49 @@
     <sect2 id="zend.httpclient.response.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_HttpClient_Response</code> provides easy access to the responses returned by
-            <xref linkend="zend.httpclient" />. It provides an intuitive set of methods for working
-            with the HTTP response data received from a request:
+            La classe <code>Zend_HttpClient_Response</code> permet d'accéder facilement aux réponses renvoyées par <xref linkend="zend.httpclient" />. 
+            Elle offre un ensemble de méthodes intuitives permettant de manipuler les données d'une réponse HTTP reçue en réponse à une requête :
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Returns TRUE if an HTTP error code was received; FALSE otherwise.
+                    <code>isError()</code>: Renvoie TRUE si un code HTTP d'erreur a été reçu; FALSE sinon
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Returns TRUE if an HTTP success code was received; FALSE otherwise.
+                    <code>isSuccessful()</code>: Renvoie TRUE si un code HTTP de succès a été reçu; FALSE sinon
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Returns TRUE if an HTTP redirect code was received; FALSE otherwise.
+                    <code>isRedirect()</code>: Renvoie TRUE si un code HTTP de redirection a été reçu; FALSE sinon
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Returns the HTTP status code.
+                    <code>getStatus()</code>: Renvoie le code d'état HTTP
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Returns an array of HTTP response header strings.
+                    <code>getHeaders()</code>: Renvoie un tableau des en-têtes HTTP de la réponse, sous forme de chaîne
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Returns the HTTP response body as a string.
+                    <code>getBody()</code>: Renvoie le corps de la réponse HTTP sous forme de chaîne
                 </listitem>
             </itemizedlist>
         </para>
         <example>
-            <title>Working with HTTP Response Data</title>
+            <title>Manipuler les données d'une réponse HTTP</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 try {
-    $http = new Zend_HttpClient('http://example.org');
-    $response = $http->get();
-    if ($response->isSuccessful()) {
-        echo $response->getBody();
+    $http = new Zend_HttpClient('http://exemple.org');
+    $reponse = $http->get();
+    if ($reponse->isSuccessful()) {
+        echo $reponse->getBody();
     } else {
-        echo "<p>An error occurred</p>\n";
-        echo "HTTP Status: " . $response->getStatus() . "\n";
-        echo "HTTP Headers:\n";
-        $responseHeaders = $response->getHeaders();
-        foreach ($responseHeaders as $responseHeaderName => $responseHeaderValue) {
-            echo "$responseHeaderName: $responseHeaderValue\n";
+        echo "<p>Une erreur a eu lieu</p>\n";
+        echo "Code d'état HTTP : " . $reponse->getStatus() . "\n";
+        echo "En-têtes HTTP :\n";
+        $enTetesDeReponse = $reponse->getHeaders();
+        foreach ($enTetesDeReponse as $nomEnTete => $valeurEnTete) {
+            echo "$nomEnTete: $valeurEnTete\n";
         }
     }
 } catch (Zend_HttpClient_Exception $e) {
-    echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
+    echo '<p>Une erreur a eu lieu (' .$e->getMessage(). ')</p>';
 }
 ?>]]></programlisting>
         </example>

@@ -1,19 +1,20 @@
 <sect1 id="zend.service.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_Service</code> is an abstract class which serves as a foundation for web service
-        implementations (e.g. XML-RPC).
+        <code>Zend_Service</code> est une classe abstraite qui sert de fondation à  l'implémentation des services
+        web (i.e XML-RPC).
     </para>
     <para>
-        <code>Zend_Service</code> offers support for any REST-based web service through
+        <code>Zend_Service</code> offre un support pour tout service web basé sur REST à  travers
         <link linkend="zend.service.rest"><code>Zend_Service_Rest</code></link>.
     </para>
     <para>
-        In addition to being able to extend the <code>Zend_Service</code> and use <code>Zend_Service_Rest</code> for
-        REST-based web services, Zend also provides support for popular web services such as
+        En plus d'être capable d'étendre <code>Zend_Service</code> et d'utiliser <code>Zend_Service_Rest</code>
+        pour des services web basé sur REST, Zend fournit un support pour les services web populaires tels que
         <link linkend="zend.service.amazon">Amazon</link>,
-        <link linkend="zend.service.flickr">Flickr</link>, and
-        <link linkend="zend.service.yahoo">Yahoo!</link>. More may be added in the near future.
+        <link linkend="zend.service.flickr">Flickr</link>, et
+        <link linkend="zend.service.yahoo">Yahoo!</link>. 
+        D'autres devraient être ajoutés dans un futur proche.
     </para>
 </sect1>
 &module_specs.Zend_Service_Rest;

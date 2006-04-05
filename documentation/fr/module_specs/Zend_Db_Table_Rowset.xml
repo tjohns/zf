@@ -7,60 +7,58 @@
         <title>Introduction</title>
 
         <para>
-            Zend_Db_Table_Rowset is an iterator for Zend_Db_Table_Row object collections.
-            In general, you do not instantiate Zend_Db_Table_Rowset by itself; instead,
-            you retrieve a Zend_Db_Table_Rowset as the return result from a call to
-            Zend_Db_Table::find() or fetchAll().  You can then iterate through the
-            collected Zend_Db_Table_Row objects and modify them as you wish.
+            <code>Zend_Db_Table_Rowset</code> constitue un itérateur sur une série d'objets <code>Zend_Db_Table_Row</code>. 
+            En général, vous n'instanciez pas directement <code>Zend_Db_Table_Rowset</code>; vous obtenez plutôt un objet 
+            <code>Zend_Db_Table_Rowset</code> comme valeur de renvoi des méthodes <code>Zend_Db_Table::find()</code> ou 
+            <code>fetchAll()</code>. Vous pouvez ensuite itérer sur les objets <code>Zend_Db_Table_Row</code> ainsi rassemblés et les modifier comme vous voulez.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.rowset.fetch">
 
-        <title>Fetching a Rowset</title>
+        <title>Aller chercher un ensemble de lignes</title>
 
         <para>
-            The first thing to do is instantiate a Zend_Db_Table class.
+             La première chose à faire consiste à instancier la classe <code>Zend_Db_Table</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// définition d'un adaptateur
 require_once 'Zend/Db.php';
-$params = array (
+$parametres = array (
+    'adapter'  => 'pdoMysql',
     'host'     => '127.0.0.1',
-    'username' => 'malory',
+    'username' => 'arthur',
     'password' => '******',
     'dbname'   => 'camelot'
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory($parametres);
 
-// set the default adapter for all Zend_Db_Table objects
+// définition de l'adaptateur par défaut de tous les objets Zend_Db_Table
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
-// connect to a table in the database
-class RoundTable extends Zend_Db_Table {}
-$table = new RoundTable();
+// connexion à une table de la base de données
+class TableRonde extends Zend_Db_Table {}
+$table = new TableRonde();
 ?>]]>
         </programlisting>
 
         <para>
-            Next, retrieve many records from the database using
-            Zend_Db_Table::find() with multiple keys, or by using
-            Zend_Db_Table::fetchAll(); the returned result will be a
-            Zend_Db_Table_Rowset object that will let you iterate through
-            the individual Zend_Db_Table_Row objects in the record set.
+             Puis, on obtient plusieurs enregistrements de la base de données en passant plusieurs clés à la méthode <code>Zend_Db_Table::find()</code> 
+             ou en utilisant la méthode <code>Zend_Db_Table::fetchAll()</code>; le résultat renvoyé sera un objet <code>Zend_Db_Table_Rowset</code> qui vous permettra 
+             d'itérer sur les objets <code>Zend_Db_Table_Row</code> associés aux enregistrements de l'ensemble.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// fetch many records from the table
-$rowset = $table->fetchAll();
+// on va chercher plusieurs enregistrements de la table
+$lignes = $table->fetchAll();
 
 //
-// $rowset is now a Zend_Db_Table_Rowset object composed of
-// one Zend_Db_Table_Row object per record in the results
+// $lignes constitue maintenant un objet Zend_Db_Table_Rowset composé d'un
+// objet Zend_Db_Table_Row par enregistrement du résultat
 //
 ?>]]>
         </programlisting>
@@ -69,39 +67,38 @@ $rowset = $table->fetchAll();
 
     <sect2 id="zend.db.table.rowset.iterate">
 
-        <title>Iterating Through the Rowset</title>
+        <title>Itérer sur l'ensemble de lignes</title>
 
         <para>
-            Zend_Db_Table_Rowset implements the SPL Iterator interface,
-            which means you can loop through Zend_Db_Table_Rowset objects like arrays
-            using foreach().  Each value you retrieve this way will be a Zend_Db_Table_Row
-            that corresponds to one record from the table; you can then view, modify, and
-            save the properties for that record.
+            <code>Zend_Db_Table_Rowset</code> implémente l'interface SPL, ce qui signifie que vous pouvez itérer sur les objets <code>Zend_Db_Table_Rowset</code> à l'aide de foreach(), 
+            tout comme pour les tableaux. La valeur obtenue à chaque itération sera un objet <code>Zend_Db_Table_Row</code> qui correspond à un enregistrement de la table; 
+            vous pouvez ensuite voir, modifier et enregistrer les propriétés de cet enregistrement.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
-class RoundTable extends Zend_Db_Table {}
-$table = new RoundTable();
+// connexion à une table de la base de données
+class TableRonde extends Zend_Db_Table {}
+$table = new TableRonde();
 
-// fetch many records from the table
-$rowset = $table->fetchAll();
+// récupération de plusieurs enregistrements de la table
+$lignes = $table->fetchAll();
 
-// display them all
-foreach ($rowset as $row) {
-    // $row is a Zend_Db_Table_Row object
-    echo "<p>" . htmlspecialchars($row->nobleTitle) . " "
-       . htmlspecialchars($row->firstName) . "'s "
-       . "favorite color is " . htmlspecialchars($row->favoriteColor)
+// affichage
+foreach($lignes as $ligne) {
+    // $ligne est un objet Zend_Db_Table_Row
+    echo "<p>La couleur préférée de " . htmlspecialchars($ligne->titre) . " "
+       . htmlspecialchars($ligne->prenom) . " est " . 
+htmlspecialchars($ligne->couleurPreferee)
        . ".</p>\n";
 
-    // update the number of times we have displayed this row,
-    // (which maps to a column in the table "times_displayed")
-    $row->timesDisplayed ++;
+    // mise à jour du nombre de fois où cette ligne a été affichée
+    // (propriété associée à la colonne "nombre_de_fois_affichee" de la table)
+    $ligne->nombreDeFoisAffichee ++;
 
-    // save the record with the new information
-    $row->save();
+    // enregistrement avec ses nouvelles informations
+    $ligne->save();
 }
+?>
 ?>]]>
         </programlisting>
 

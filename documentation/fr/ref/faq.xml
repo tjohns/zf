@@ -1,16 +1,16 @@
 <appendix id="faq">
-    <title>Frequently Asked Questions</title>
+    <title>Foire Au Questions</title>
 
     <qandaset>
         <qandaentry>
             <question>
                 <para>
-                    How do I do X?
+                    Comment faire ceci ?
                 </para>
             </question>
             <answer>
                 <para>
-                    The answer is...
+                    La réponse est....
                 </para>
             </answer>
         </qandaentry>

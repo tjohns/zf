@@ -1,51 +1,55 @@
 <sect1 id="zend.filter.introduction">
     <title>Introduction</title>
-    <para><literal>Zend_Filter</literal> provides a library of static methods
-    for filtering data. For input filtering, you should use <xref
-    linkend="zend.inputfilter" /> instead, because it provides a framework for
-    filtering input using the methods provided by this class. However, because
-    <literal>Zend_InputFilter</literal> is designed primarily for arrays,
-    <literal>Zend_Filter</literal> can be useful for filtering scalars, because
-    it behaves like PHP's string functions:</para>
+    <para>
+     <literal>Zend_Filter</literal> fournit une bibliothèque de méthodes statiques permettant de filtrer des données. 
+     Pour le filtrage des données passées en entrée, voyez plutôt le Chapitre 7, consacré 
+     à <xref linkend="zend.inputfilter" /> car ce composant constitue une plate-forme dédiée au filtrage des données passées en 
+     entrée, et il utilise les méthodes fournies par cette classe. 
+     Toutefois, comme <literal>Zend_InputFilter</literal> est conçu en priorité pour fonctionner avec des tableaux, 
+     <literal>Zend_Filter</literal> reste utile pour le filtrage de variables scalaires, 
+     du fait du comportement de ses méthodes qui agissent de la même manière que les fonctions PHP dédiées aux chaînes :
+    </para>
     <programlisting>
 <![CDATA[<?php
 
-$alphaUsername = Zend_Filter::getAlpha('John123Doe');
+$nomUtilisateurAlpha = Zend_Filter::getAlpha('Jean123Dupond');
 
-/* $alphaUsername = 'JohnDoe'; */
+/* $nomUtilisateurAlpha = 'JeanDupond'; */
 
 ?>]]>
     </programlisting>
 </sect1>
 <sect1 id="zend.filter.usecases">
-    <title>Use Cases</title>
-    <para>In each of these use cases, <literal>$value</literal> represents an
-    arbitrary scalar value.</para>
-    <para>Whitelist Filtering:</para>
+    <title>Exemples d'utilisation</title>
+    <para>
+      Dans chacun de ces exemples d'utilisation, <literal>$valeur</literal> représente une valeur scalaire arbitraire.
+    </para>
+    
+    <para>Filtrage par liste blanche :</para>
     <programlisting>
 <![CDATA[<?php
 
-if ($email = Zend_Filter::isEmail($value)) {
-    /* $email is a valid email format. */
+if ($email = Zend_Filter::isEmail($valeur)) {
+    /* $email constitue une adresse e-mail valide */
 } else {
-    /* $email is not a valid email format. */
+    /* $email ne constitue pas une adresse e-mail valide */
 }
 
 ?>]]>
     </programlisting>
-    <para>Blind Filtering:</para>
+    <para>Filtrage à l'aveugle :</para>
     <programlisting>
 <![CDATA[<?php
 
-$alphaName = Zend_Filter::getAlpha($value);
+$nomAlpha = Zend_Filter::getAlpha($valeur);
 
 ?>]]>
     </programlisting>
-    <para>Blacklist Filtering:</para>
+    <para>Filtrage par liste noire :</para>
     <programlisting>
 <![CDATA[<?php
 
-$taglessComment = Zend_Filter::noTags($value);
+$commentaireSansBalises = Zend_Filter::noTags($valeur);
 
 ?>]]>
     </programlisting>

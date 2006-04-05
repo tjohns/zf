@@ -3,27 +3,27 @@
     <sect2 id="zend.service.yahoo.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Service_Yahoo</code> is a simple API for using many of the Yahoo! REST APIs.
-            <code>Zend_Service_Yahoo</code> allows you to search Yahoo! Web search, Yahoo! News, Yahoo! Local, Yahoo!
-            Images. In order to use the Yahoo! REST API, you must have a Yahoo! Application ID. To obtain an Application ID, please complete and submit the
-            <ulink url="http://api.search.yahoo.com/webservices/register_application">Application ID Request Form</ulink>.
+            <code>Zend_Service_Yahoo</code> est une API simple pour utiliser les APIs REST de Yahoo!
+            <code>Zend_Service_Yahoo</code> vous permet de rechercher dans Yahoo! Web search, Yahoo! News,
+            Yahoo! Local et Yahoo! Images. Pour pouvoir utiliser l'API REST de Yahoo!, vous devez avoir un identifiant Yahoo Application.
+            Pour obtenir un identifiant Yahoo Application, veuillez compléter et soumettre le 
+            <ulink url="http://api.search.yahoo.com/webservices/register_application">formulaire de demande d'identifiant Yahoo! Application</ulink>.
         </para>
     </sect2>
     <sect2 id="zend.service.yahoo.websearch">
-        <title>Searching the Web with Yahoo!</title>
+        <title>Rechercher sur le Web avec Yahoo!</title>
         <para>
-            <code>Zend_Service_Yahoo</code> enables you to search the Web with Yahoo! using the
-            <code>webSearch()</code> method, which accepts a string query parameter and an optional second parameter
-            as an array of search options. For full details and an option list, please visit the
-            <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search
-            Documentation</ulink>. The <code>webSearch()</code> method returns a
-            <code>Zend_Service_Yahoo_WebResultSet</code> object.
+            <code>Zend_Service_Yahoo</code> vous permet d'effectuer des recherches sur le net avec Yahoo! en utilisant la méthode
+            <code>webSearch()</code>, qui accepte une chaîne de requête en paramètre, et un tableau d'options de recherches comme
+            second paramètre. Pour la liste détaillée des options, veuillez vous référer à la documentation
+            <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search</ulink>.            
+            La méthode <code>webSearch()</code> retourne un objet <code>Zend_Service_Yahoo_WebResultSet</code>.
         </para>
         <example>
             <title>Searching the Web with Yahoo!</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
-$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
 $results = $yahoo->webSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
@@ -32,20 +32,17 @@ foreach ($results as $result) {
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.imagesearch">
-        <title>Finding Images with Yahoo!</title>
+        <title>Trouver des images avec Yahoo!</title>
         <para>
-            You can search for Images with Yahoo using <code>Zend_Service_Yahoo</code>'s <code>imageSearch()</code>
-            method. This method accepts a string query parameter and an optional array of search options, as for the
-            <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> method</link>. For full details
-            and an option list, please visit the
-            <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search
-            Documentation</ulink>.
+            Vous pouvez rechercher des Images avec Yahoo! en utilisant la méthode <code>imageSearch()</code> de <code>Zend_Service_Yahoo</code>.
+            Cette méthode accepte une chaîne de requête en paramètres, et un tableau d'options en second paramètre optionnel. Pour la liste
+            complète des options, veuillez vous référer à la documentation <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search</ulink>.
         </para>
         <example>
             <title>Finding Images with Yahoo!</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
-$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
 $results = $yahoo->imageSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';
@@ -54,19 +51,17 @@ foreach ($results as $result) {
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.localsearch">
-        <title>Finding Local Businesses and Services with Yahoo!</title>
+        <title>Trouver des entreprises et des services locaux avec Yahoo!</title>
         <para>
-            You can search for local businesses and services with Yahoo! by using the <code>localSearch()</code> method.
-            For full details, please see the
-            <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Local Search
-            Documentation</ulink>.
+            Vous pouvez rechercher des entreprises et des services locaux avec Yahoo!, en utilisant la méthode <code>localSearch()</code>.
+            Pour plus de détails, veuillez vous référer à la documentation <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Local Search</ulink>.
         </para>
         <example>
             <title>Finding Local Businesses and Services with Yahoo!</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
-$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
-$results = $yahoo->localSearch('Apple Computers', array('zip' => '95014'));
+$yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
+$results = $yahoo->localSearch('Ordinateurs Apple', array('zip' => '95014'));
 foreach ($results as $result) {
     echo $result->Title .'<br />';
 }
@@ -74,18 +69,17 @@ foreach ($results as $result) {
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.newssearch">
-        <title>Searching Yahoo! News</title>
+        <title>Rechercher dans Yahoo! News</title>
         <para>
-            Searching Yahoo! News is simple; just use the <code>newsSearch()</code> method, as in the following
-            example. For full details, please see the
-            <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search
-            Documentation</ulink>.
+            Rechercher dans Yahoo! News est simple, il vous suffit simplement d'utiliser la méthode <code>newsSearch()</code>, comme
+            le montre l'exemple suivant. Pour plus de détails, veuillez vous référer à la documentation 
+            <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search</ulink>.
         </para>
         <example>
             <title>Searching Yahoo! News</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
-$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
 $results = $yahoo->newsSearch('PHP');
 foreach ($results as $result) {
     echo $result->Title .'<br />';

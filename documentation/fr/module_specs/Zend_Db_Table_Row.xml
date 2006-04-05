@@ -7,68 +7,66 @@
         <title>Introduction</title>
 
         <para>
-            Zend_Db_Table_Row is a row data gateway for the Zend Framework.  In
-            general, you do not instantiate Zend_Db_Table_Row by itself; instead,
-            you get a Zend_Db_Table_Row back as a return result from Zend_Db_Table::find()
-            or Zend_Db_Table::fetchRow().  Once you have a Zend_Db_Table_Row, you can
-            edit the record values (represented as class properties) and then
-            save() the changes back to the originating table.
+            <code>Zend_Db_Table_Row</code> constitue la passerelle du Framework Zend avec les données des lignes de votre base de données. 
+            En général, vous n'instanciez pas directement <code>Zend_Db_Table_Row</code>; vous obtenez plutôt un objet Zend_Db_Table_Row comme 
+            valeur de renvoi des méthodes <code>Zend_Db_Table::find()</code> et <code>Zend_Db_Table::fetchRow()</code>. Une fois que vous disposez d'un objet 
+            <code>Zend_Db_Table_Row</code>, vous pouvez modifier les valeurs de l'enregistrement associé (représentées sous forme de propriétés de la classe) 
+            et ensuite enregistrer les changements dans la table avec la méthode <code>save()</code>.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.row.fetch">
 
-        <title>Fetching a Row</title>
+        <title>Aller chercher une ligne</title>
 
         <para>
-            The first thing to do is instantiate a Zend_Db_Table class.
+             La première chose à faire consiste à instancier la classe <code>Zend_Db_Table</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// définition d'un adaptateur
 require_once 'Zend/Db.php';
-$params = array (
+$parametres = array (
+    'adapter'  => 'pdoMysql',
     'host'     => '127.0.0.1',
-    'username' => 'malory',
+    'username' => 'arthur',
     'password' => '******',
     'dbname'   => 'camelot'
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory($parametres);
 
-// set the default adapter for all Zend_Db_Table objects
+// on définit l'adaptateur par défaut de tous les objets Zend_Db_Table
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
-// connect to a table in the database
-class RoundTable extends Zend_Db_Table {}
-$table = new RoundTable();
+// on se relie à une table de la base de données
+class TableRonde extends Zend_Db_Table {}
+$table = new TableRonde();
 ?>]]>
         </programlisting>
 
         <para>
-            Next, retrieve one record from the database using
-            Zend_Db_Table::find() with a single key, or by using
-            Zend_Db_Table::fetchRow().  The returned result will be a
-            Zend_Db_Table_Row object where each property in the object is a
-            "camelCaps" name mapped to an "underscore_words" column name
-            from the table.  E.g., "first_name" in the table will become
-            "firstName" in the object properties.
+             Puis, on obtient un enregistrement particulier de la base de données en passant une clé à la méthode <code>Zend_Db_Table::find()</code>
+             ou en utilisant la méthode <code>Zend_Db_Table::fetchRow()</code>. Le résultat renvoyé sera un objet <code>Zend_Db_Table_Row</code> dont chaque propriété 
+             est un nom au format "notationCamel" correspondant au nom d'une colonne de la table au format "mots_separes_par_tirets_bas". 
+             À titre d'exemple, la colonne dont le nom sera "nom_de_famille" correspondra à la propriété "nomDeFamille" au sein de l'objet.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// fetch a record from the table as a Zend_Db_Table_Row object
-$row = $table->fetchRow('first_name = "Robin"');
+// on va chercher un enregistrement particulier de la table sous forme d'objet
+// Zend_Db_Table_Row
+$ligne = $table->fetchRow('prenom = "Robin"');
 
 //
-// $row is now a Zend_Db_Table_Row object with public properties
-// that map to table columns:
+// $ligne constitue maintenant un objet Zend_Db_Table_Row dont les propriétés
+// publiques sont associées aux colonnes de la table :
 //
-// $row->id = '3'
-// $row->nobleTitle = 'Sir'
-// $row->firstName = 'Robin'
-// $row->favoriteColor = 'yellow'
+// $ligne->id = '3'
+// $ligne->titre = 'Sire'
+// $ligne->prenom = 'Robin'
+// $ligne->couleurPreferee = 'jaune'
 //
 
 ?>]]>
@@ -78,54 +76,56 @@ $row = $table->fetchRow('first_name = "Robin"');
 
     <sect2 id="zend.db.table.row.modify">
 
-        <title>Modifying Values</title>
+        <title>Modifier les valeurs</title>
 
         <para>
-            Modifying row values is very easy: just work with the object properties
-            the way you would with any other object.  Then you can save() the row back
-            to the table when you are done.
+             Modifier les valeurs de la ligne est très simple : travaillez simplement en manipulant les propriétés de l'objet 
+             comme vous le feriez avec n'importe quel objet. Lorsque vous avez terminé, vous pouvez ensuite enregistrer de nouveau 
+             la ligne dans la table avec la méthode <code>save()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
-class RoundTable extends Zend_Db_Table {}
-$table = new RoundTable();
+// connexion à une table de la base de données
+class TableRonde extends Zend_Db_Table {}
+$table = new TableRonde();
 
-// fetch a record from the table as a Zend_Db_Table_Row object
-$row = $table->fetchRow('first_name = "Robin"');
+// on va chercher un enregistrement particulier de la table sous forme d'objet
+// Zend_Db_Table_Row
+$ligne = $table->fetchRow('prenom = "Robin"');
 
 //
-// $row is now a Zend_Db_Table_Row object() with public properties
-// that map to table columns:
+// $ligne constitue maintenant un objet Zend_Db_Table_Row dont les propriétés
+// publiques sont associées aux colonnes de la table :
 //
-// $row->id = '3'
-// $row->nobleTitle = 'Sir'
-// $row->firstName = 'Robin'
-// $row->favoriteColor = 'yellow'
+// $ligne->id = '3'
+// $ligne->titre = 'Sire'
+// $ligne->prenom = 'Robin'
+// $ligne->couleurPreferee = 'jaune'
 //
-// change the favorite color and save back to the table.
-$row->favoriteColor = 'blue';'
-$row->save();
+// on change la couleur préférée et on enregistre le changement dans la table
+$ligne->couleurPreferee = 'bleu';'
+$ligne->save();
 ?>]]>
         </programlisting>
 
         <para>
-            However, you are not allowed to change primary key values; if you
-            do so, Zend_Db_Table_Row will throw an exception.
+             Toutefois, il n'est pas permis de changer la valeur d'une clé primaire; si vous faites cela, <code>Zend_Db_Table_Row</code> lancera une exception.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
-class RoundTable extends Zend_Db_Table {}
-$table = new RoundTable();
+// connexion à une table de la base de données
+class TableRonde extends Zend_Db_Table {}
+$table = new TableRonde();
 
-// fetch a record from the table as a Zend_Db_Table_Row object
-$row = $table->fetchRow('first_name = "Robin"');
+// on va chercher un enregistrement particulier de la table sous forme d'objet
+// Zend_Db_Table_Row
+$ligne = $table->fetchRow('prenom = "Robin"');
 
-// can we change the primary key "id"?
+// peut-on changer la clé primaire "id"?
 try {
-    $row->id = 5;
-    echo "We should not see this message, as an exception was thrown.";
+    $ligne->id = 5;
+    echo "Vous ne devriez pas voir ce message, car une exception devrait se 
+déclencher.";
 } catch (Zend_Db_Table_RowException $e) {
     echo $e->getMessage();
 }

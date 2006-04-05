@@ -7,18 +7,17 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Db_Adapter</code> is the database API abstraction layer for the Zend Framework.
-            Based on PDO, you can use <code>Zend_Db_Adapter</code> to connect to and work with any
-            of the supported SQL database systems using the same API.  These
-            include Microsoft SQL Server, MySQL, PostgreSQL, SQLite, and others.
+            <code>Zend_Db_Adapter</code> est l'API d'abstraction pour le Framework Zend. 
+            Basé sur PDO, vous pouvez utiliser <code>Zend_Db_Adapter</code> pour vous connecter sur tout les SGBD supportés, 
+            en utilisant la même API. Les SGB supportés sont entre autres : Microsoft SQL Server, MySQL, PostgreSQL, SQLite.
         </para>
 
-        <para>To create an instance of <code>Zend_Db_Adapter</code> for your
-        particular database backend, you need to call
-        <code>Zend_Db::factory()</code> with the name of the adapter and an
-        array of parameters describing the connection. For example, to connect
-        to a MySQL database called "camelot" on the local host as a user named
-        "malory":</para>
+        <para>
+        Pour créer une instance de <code>Zend_Db_Adapter</code> pour vous connecter à votre base de données, 
+        vous devez appeler <code>Zend_Db::factory()</code> avec le nom de l'adapteur et un tableau de paramètres 
+        décrivant la connexion. Par exemple, pour vous connecter à une base de données MySQL appelée "camelot" 
+        sur votre machine locale et avec le nom d'utilisateur "malory" :
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -34,7 +33,7 @@ $db = Zend_Db::factory('pdoMysql', $params);
 ?>]]></programlisting>
 
         <para>
-            Similarly, to connect to an SQLite database called "camelot":
+             De la même manière, pour vous connecter à une base de données SQLite appelée "camelot" :
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -48,132 +47,118 @@ $db = Zend_Db::factory('pdoSqlite', $params);
 ?>]]></programlisting>
 
         <para>
-            Either way, you will be able to use the exact same API to
-            query the database.
+             Quelque soit le SGBD, vous aurez la possibilité d'utiliser exactement la même API pour interroger la base de données.
         </para>
     </sect2>
 
     <sect2 id="zend.db.adapter.quoting">
 
-        <title>Quoting Against SQL Injection</title>
+        <title>Se protéger des injections SQL</title>
 
         <para>
-            You should always quote values that are to be used in an
-            SQL statement; this is to help prevent SQL injection attacks.
-            <code>Zend_Db_Adapter</code> provides two methods (via the underlying PDO object)
-            to help you manually quote values.
+             Vous devriez toujours échapper les valeurs destinées à être utilisées dans une requête SQL; cela permet de se prémunir des injections SQL. 
+             <code>Zend_Db_Adapter</code> fournies deux méthodes (via l'objet PDO) pour vous aider à échapper les valeurs.
         </para>
 
         <para>
-            The first of these is the <code>quote()</code> method.  It will quote a
-            scalar value appropriately for your database adapter; if you
-            attempt to quote an array, it will return a comma-separated
-            string of the array values, each properly quoted (this is
-            useful for functions that take a list parameter).
+            La première est la méthode <code>quote()</code>. Elle va échapper une valeur scalaire conformément aux spécificités de la base de données.
+            Si vous essayer d'échapper un tableau, la méthode va retourner une chaîne contenant chaque valeur du tableau, séparée par des virgules, 
+            chacune correctement protégée (c'est pratique dans le cas de fonctions qui prennent un paramètre de type liste).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
-// create a $db object, assuming Mysql as the adapter.
+// créé un objet $db, on suppose l'utilisation de MySQL
 
-// quote a scalar
+// échappement d'un scalaire
 $value = $db->quote('St John"s Wort');
 // $value is now '"St John\"s Wort"' (note the surrounding quotes)
 
-// quote an array
+// échappement d'un tableau
 $value = $db->quote(array('a', 'b', 'c');
-// $value is now '"a", "b", "c"' (a comma-separated string)
+// $value vaut maintenant '"a", "b", "c"' (une chaîne séparée par des virgules)
 
 ?>]]></programlisting>
 
         <para>
-            The second is the <code>quoteInto()</code> method.  You provide a base
-            string with a question-mark placeholder, and then one scalar
-            or array to quote into it.  This is useful for constructing
-            queries and clauses as-you-go.  Scalars and arrays work just
-            as in the <code>quote()</code> method.
+            La seconde est la méthode <code>quoteInto()</code>. Vous fournissez une requête de base, avec des points d'interrogations comme caractère à 
+            remplacer, et un scalaire ou un tableau à protéger. C'est pratique pour construire rapidemant des requête et des clauses.
+            Les scalaires et les tableaux sont traitées de la même façon que dans la méthode <code>quote()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, assuming Mysql as the adapter.
+// créé un objet $db, on suppose l'utilisation de MySQL
 
-// quote a scalar into a WHERE clause
+// protection d'un scalaire dans une clause WHERE
 $where = $db->quoteInto('id = ?', 1);
-// $where is now 'id = "1"' (note the surrounding quotes)
+// $where vaut maintenant 'id = "1"' (notez bien les guillemets supplémentaires)
 
-// quote an array into a WHERE clause
+// protection d'un tableau dans la clause WHERE
 $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
-// $where is now 'id IN("1", "2", "3")' (a comma-separated string)
+// $where vaut maintenant 'id IN("1", "2", "3")' (une chaîne séparée par des virgules)
 
 ?>]]></programlisting>
     </sect2>
 
     <sect2 id="zend.db.adapter.queries">
 
-        <title>Direct Queries</title>
+        <title>Requêtes Directes</title>
 
         <para>
-            Once you have a <code>Zend_Db_Adapter</code> instance, you can execute queries
-            directly in SQL.  <code>Zend_Db_Adapter</code> passes these queries to the
-            underlying PDO object, which prepares and executes them, and
-            then passes back a PDOStatement object for you to manipulate
-            the results (if any).
+            Une fois que vous avez une instance de <code>Zend_Db_Adapter</code>, vous pouvez exécuter directement des requêtes SQL. 
+            <code>Zend_Db_Adapter</code> passe cette requête dans l'objet PDO sous-jacent, qui les prépare et les exécute, et vous retourne 
+            ensuite une objet <code>PDOStatement</code> pour que vous puissez manipuler les résultats, s'il y en a.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
-// create a $db object, and then query the database
-// with a properly-quoted SQL statement.
+        
+// créé un objet $db et exécute ensuite la requête
+// avec une requête SQL correctement protégée
 $sql = $db->quoteInto(
     'SELECT * FROM example WHERE date > ?',
     '2006-01-01'
 );
 $result = $db->query($sql);
 
-// use the PDOStatement $result to fetch all rows as an array
+// utilisez l'objet de type PDOStatement $result pour récupérer toutes les lignes de résultat dans un tableau
 $rows = $result->fetchAll();
-
 ?>]]></programlisting>
 
         <para>
-            You may bind data into your query automatically.  This means
-            you can set multiple named placeholders in the query, and
-            then pass an array of data that is substituted for those
-            placeholders.  The substituted values are automatically
-            quoted for you, providing greater security against SQL
-            injection attacks.
+            Vous pouvez associer automatiquement vos données à la requête. Cela signifie que vous pouvez définir de multiples marqueurs 
+            de remplacement réservés et nommés dans la requête, et ensuite passer un tableau de données qui vont se substituer à ces marqueurs. 
+            Les valeurs de remplacement sont automatiquement protégées, pour prévenir les attaques par injection SQL.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then query the database.
-// this time, use placeholder binding.
+// créé un objet $db, et interroge la base de données.
+// cette fois, utilisez un marqueur de remplacement.
 $result = $db->query(
     'SELECT * FROM example WHERE date > :placeholder',
     array('placeholder' => '2006-01-01')
 );
 
-// use the PDOStatement $result to fetch all rows as an array
+// utiliser le PDOStatement $result pour récupérer toutes les lignes de résultat dans un tableau
 $rows = $result->fetchAll();
 
 ?>]]></programlisting>
 
         <para>
-            Optionally, you may wish to prepare and bind data to SQL statements
-            manually.  To do so, use the <code>prepare()</code> method to get a prepared
-            <code>PDOStatement</code> that you can manipulate directly.
+            Optionellement, vous pouvez préparer et lier manuellement une instruction SQL. Pour ce faire, utilisez la méthode <code>prepare()</code> pour 
+            obtenir un objet de type <code>PDOStatement</code>, que vous pouvez manipuler directement.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then query the database.
-// this time, prepare a PDOStatement for manual binding.
+// créé un objet $db, et interroge la base de données.
+// cette fois-ci, utilisez un objet PDOStatement pour une liaison manuelle.
 $stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
 $stmt->bindValue('placeholder', '2006-01-01');
 $stmt->execute();
 
-// use the PDOStatement to fetch all rows as an array
+// utiliser le PDOStatement $result pour récupérer toutes les lignes de résultat dans un tableau
 $rows = $stmt->fetchAll();
 
 ?>]]></programlisting>
@@ -184,22 +169,20 @@ $rows = $stmt->fetchAll();
         <title>Transactions</title>
 
         <para>
-            By default, PDO (and thus <code>Zend_Db_Adapter</code>) are in "auto-commit" mode.
-            This means that all queries are committed as they are executed.
-            If you wish to execute within a transaction, simply call the
-            <code>beginTransaction()</code> method, then either <code>commit()</code> or <code>rollBack()</code>
-            your changes.  <code>Zend_Db_Adapter</code> returns to auto-commit mode until
-            you call <code>beginTransaction()</code> again.
+            Par défaut, PDO (and ainsi <code>Zend_Db_Adapter</code>) sont en mode "auto-commit". Cela signifie que chaque requête est validée à 
+            chaque exécution. Si vous souhaitez les exécuter à l'intérieur d'une transaction, appelez simplement la méthode <code>beginTransaction()</code> 
+            vous pourrez alors valider (<code>commit()</code>) ou annuler (<code>rollBack()</code>) vos changements. 
+            <code>Zend_Db_Adapter</code> retourne en mode "auto-commit" jusqu'à ce que vous appeliez de nouveau <code>beginTransaction()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then start a transaction.
+// créé une objet $db, puis débute une transaction.
 $db->beginTransaction();
 
-// attempt a query.
-// if it succeeds, commit the changes;
-// if it fails, roll back.
+// tente une requête
+// si elle réussie, validez les changements avec commit()
+// si elle échoue, annuler les changements avec rollback()
 try {
     $db->query(...);
     $db->commit();
@@ -213,21 +196,17 @@ try {
 
     <sect2 id="zend.db.adapter.insert">
 
-        <title>Inserting Rows</title>
+        <title>Insertion de Lignes</title>
 
         <para>
-            As a convenience, you may use the <code>insert()</code> method to create
-            an INSERT statement for you and bind data to be inserted into it.
-            (The bound data is quoted for you automatically to help prevent
-            SQL injection attacks.)
+            Vous avez la possibilité d'utiliser la méthode <code>insert()</code> pour créer une instruction INSERT, et lui lier les données pour l'insertion. 
+            (Les données liées sont automatiquement protégées pour prévenir tout risque d'injection SQL).
         </para>
 
         <para>
-            The return value is <emphasis>not</emphasis> the last inserted ID, as the table
-            may not have an auto-incremented column; instead, the return value
-            is the number of rows affected (usually 1).  If you want the
-            ID of the last inserted record, call the <code>lastInsertId()</code> method after the
-            insert.
+            La valeur retournée n'est <emphasis>pas</emphasis> le dernier identifiant d'insertion, la table ne contenant peut-être pas de colonne auto-incrémentée; 
+            à la place, la valeur retournée est le nombre de lignes affectées (habituellement 1). Si vous souhaitez l'ID du dernier identifiant généré, 
+            appelez la méthode <code>lastInsertId()</code> après l'insertion.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -238,18 +217,18 @@ try {
 //     VALUES ("King", "Arthur", "blue");
 //
 
-// create a $db object, and then...
-// the row data to be inserted in column => value format
+// créé un objet $db et ensuite...
+// les données des colonnes à insérer en utilisant la syntaxe nom_colonne => valeur_colonne
 $row = array (
     'noble_title'    => 'King',
     'first_name'     => 'Arthur',
     'favorite_color' => 'blue',
 );
 
-// the table into which the row should be inserted
+// la table dans laquelle la ligne doit être insérée
 $table = 'round_table';
 
-// insert the row and get the row ID
+// insérez la ligne, et récupérez son identifiant
 $rows_affected = $db->insert($table, $row);
 $last_insert_id = $db->lastInsertId();
 
@@ -258,19 +237,16 @@ $last_insert_id = $db->lastInsertId();
 
     <sect2 id="zend.db.adapter.update">
 
-        <title>Updating Rows</title>
+        <title>Mise à jour de lignes</title>
 
         <para>
-            As a convenience, you may use the <code>update()</code> method to create
-            an UPDATE statement for you and bind data to be updated into it.
-            (The bound data is quoted for you automatically to help prevent
-            SQL injection attacks.)
+            Vous avez la possibilité d'utiliser la méthode <code>update()</code> pour créer une instruction UPDATE et lier vos données pour la mise à jour. 
+            (Les données liées sont automatiquement protégées pour prévenir tout risque d'injection SQL).
         </para>
 
         <para>
-            You may provide an optional WHERE clause
-            to tell which rows to update.  (Note that the WHERE clause is not
-            a bound parameter, so you need to quote values in it yourself.)
+            Vous pouvez fournir une clause WHERE facultative pour spécifier quelle ligne mettre à jour. 
+            (Notez que la clause WHERE n'est pas un paramètre échappé, vous devez donc protéger vous-même sa valeur).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -281,19 +257,19 @@ $last_insert_id = $db->lastInsertId();
 //     WHERE first_name = "Robin";
 //
 
-// create a $db object, and then...
-// the new values to set in the update, in column => value format.
+// crée un objet $db, en ensuite...
+// les nouvelles valeurs à mettre à jour, en utilisant la syntaxe nom_colonne => valeur_colonne
 $set = array (
     'favorite_color' => 'yellow',
 );
 
-// the table to update
+// la table à mettre à jour
 $table = 'round_table';
 
-// the WHERE clause
+// la clause WHERE
 $where = $db->quoteInto('first_name = ?', 'Robin');
 
-// update the table and get the number of rows affected
+// mise à jour de la table, et récupération du nombre de lignes affectées
 $rows_affected = $db->update($table, $set, $where);
 
 ?>]]></programlisting>
@@ -301,13 +277,12 @@ $rows_affected = $db->update($table, $set, $where);
 
     <sect2 id="zend.db.adapter.delete">
 
-        <title>Deleting Rows</title>
+        <title>Suppression de Lignes</title>
 
         <para>
-            As a convenience, you may use the <code>delete()</code> method to create
-            a DELETE statement for you; you may provide an optional WHERE clause
-            to tell which rows to delete.  (Note that the WHERE clause is not
-            a bound parameter, so you need to quote values in it yourself.)
+            Vous avez la possibilité d'utiliser la méthode <code>delete()</code> pour créer une instruction DELETE. 
+            Vous pouvez fournir optionellement une clause WHERE. 
+            (Notez que la clause WHERE n'est pas un paramètre échappé, vous devez donc protéger vous-même sa valeur).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -317,14 +292,14 @@ $rows_affected = $db->update($table, $set, $where);
 //     WHERE first_name = "Patsy";
 //
 
-// create a $db object, and then...
-// the table to delete from
+// crée un objet $db, en ensuite...
+// la table dont on veut supprimer des données
 $table = 'round_table';
 
-// the WHERE clause
+// la clause WHERE
 $where = $db->quoteInto('first_name = ?', 'Patsy');
 
-// update the table and get the number of rows affected
+// mise à jour de la table, et récupération du nombre de lignes affectées
 $rows_affected = $db->delete($table, $where);
 
 ?>]]></programlisting>
@@ -332,16 +307,14 @@ $rows_affected = $db->delete($table, $where);
 
     <sect2 id="zend.db.adapter.fetch">
 
-        <title>Fetching Rows</title>
+        <title>Récupération de lignes</title>
 
         <para>
-            Although you may query the database directly with the <code>query()</code>
-            method, frequently all you need to do is select rows and get
-            the results.  The <code>fetch*()</code> series of methods does this for you.
-            For each of the <code>fetch*()</code> methods, you pass an SQL SELECT
-            statement; if you use named placeholders in the statement, you
-            may also pass an array of bind values to be quoted and replaced
-            into the statement for you.  The <code>fetch*()</code> methods are:
+            Bien que vous puissiez interroger la base de données directement avec la méthode <code>query()</code> tout ce que vous avez besoin 
+            de faire et des sélectionner des lignes et obtenir le résultat. La série de méthodes <code>fetch*()</code> vous permet de le faire. 
+            Pour chaque méthode <code>fetch*()</code>, vous passez une instruction SQL; si vous utilisez des marqueurs de remplacement dans cette 
+            instruction, vous devrez aussi passer un tableau contenant la valeur à échapper, pour qu'elle soient protégées et remplacées dans la requête. 
+            Les méthodes <code>fetch*()</code> sont :    
         </para>
 
         <itemizedlist>
@@ -355,41 +328,41 @@ $rows_affected = $db->delete($table, $where);
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then...
+// crée un objet $db, en ensuite...
 
-// fetch all columns of all rows as a sequential array
+// ?? retrouve les colonnes de chaque ligne comme un tableau séquentiel ??
 $result = $db->fetchAll(
     "SELECT * FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch all columns of all rows as an associative array;
-// the first column is used as the array key.
+// ?? retrouve les colonnes de chaque ligne comme un tableau associatif ?? 
+// la première colonne est utilisée comme la clé du tableau
 $result = $db->fetchAssoc(
     "SELECT * FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch the first column of all rows returned
+// retrouve la première colonne de résultat
 $result = $db->fetchCol(
     "SELECT first_name FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch only the first value
+// retrouve uniquement la première valeur
 $result = $db->fetchOne(
     "SELECT COUNT(*) FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch a series of key-value pairs; the first column is
-// the array key, the second column is the array value
+// retrouve la série de paries clé/valeurs; la première colonne et le tableau de clé
+// la seconde le tableau de valeurs 
 $result = $db->fetchPairs(
     "SELECT first_name, favorite_color FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch only the first row returned
+// retrouve uniquement la première ligne retournée
 $result = $db->fetchRow(
     "SELECT * FROM round_table WHERE first_name = :name",
     array('name' => 'Lancelot')

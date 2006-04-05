@@ -1,31 +1,31 @@
 <sect1 id="zend.mime.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_Mime</code> is a support class for handling multipart MIME messages. It is used by <link
-        linkend="zend.mail"><code>Zend_Mail</code></link>, and may be used by applications requiring
-        MIME support.
+        <code>Zend_Mime</code> est une classe de support pour gérer les messages MIME en plusieures parties.
+        Elle est utilisé par <link linkend="zend.mail"><code>Zend_Mail</code></link>, est peut-être utilisée
+        dans l'application qui nécessite un support MIME.
     </para>
     <para>
-        <code>Zend_Mime</code> provides a simple set of methods to work with MIME:
+        <code>Zend_Mime</code> fournit un simple jeu de méthodes pour fonctionner avec MIME : 
         <itemizedlist>
             <listitem>
-                <code>boundary()</code>: Returns the MIME boundary string.
+                <code>boundary()</code>: Retourne la chaîne de limite MIME.
             </listitem>
             <listitem>
-                <code>boundaryLine()</code>: Returns the complete MIME boundary line.
+                <code>boundaryLine()</code>: Retourn la chaîne complète de la ligne MIME.
             </listitem>
             <listitem>
-                <code>encodeBase64()</code>: Encodes a string into base64 encoding.
+                <code>encodeBase64()</code>: Encoe une chaîne en utilisant base64.
             </listitem>
             <listitem>
-                <code>encodeQuotedPrintable()</code>: Encodes a string with the quoted-printable mechanism.
+                <code>encodeQuotedPrintable()</code>: Encode une chaîne avec le mécanisme ??? quoted-printable ???.
             </listitem>
             <listitem>
-                <code>isPrintable()</code>: Returns TRUE if the given string contains no unprintable characters,
-                FALSE otherwise.
+                <code>isPrintable()</code>: Retourne TRUE si la chaîne donnée ne contient pas de caractères non imprimables, FALSE dans les
+                autres cas.
             </listitem>
             <listitem>
-                <code>mimeEnd()</code>: Returns the complete MIME end boundary line.
+                <code>mimeEnd()</code>: Retourne la complète ligne de fin MIME.
             </listitem>
         </itemizedlist>
     </para>
