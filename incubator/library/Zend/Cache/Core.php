@@ -218,7 +218,10 @@ class Zend_Cache_Core
         if ($this->_options['writeControl']) {
             $data2 = $this->get($id, true, true);
             if ($data!=$data2) {
-                Zend_Log::log('writeControl: written and read data do not match', Zend_Log::LEVEL_WARNING, 'ZF');
+                if ($this->_options['logging']) {
+                    Zend_Log::log('writeControl: written and read data do not match', Zend_Log::LEVEL_WARNING, 'ZF');
+                }
+                $this->remove($id);
                 return false;
             }
         }
