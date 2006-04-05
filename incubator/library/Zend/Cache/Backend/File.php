@@ -100,7 +100,6 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
     /**
      * Constructor
      * 
-     * @param string $backend backend name
      * @param array $options associative array of options
      */
     public function __construct($options = array())
