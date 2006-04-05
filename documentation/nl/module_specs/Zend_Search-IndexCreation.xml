@@ -1,92 +1,97 @@
 <sect1 id="zend.search.index-creation">
-	<title>Building Indexes</title>
+	<title>Indexen Bouwen</title>
 
 	<sect2 id="zend.search.index-creation.creating">
-        <title>Creating a New Index</title>
+        <title>Een Nieuwe Index Maken</title>
 
         <para>
-            Index creation and updating capabilities are implemented within Zend_Search_Lucene module and Java Lucene.
-            You can use both of these capabilities.
+		    De mogelijkheid om nieuwe indexen te maken en ze up te daten is geïmplementeerd in de Zend_Search_Lucene 
+			module en Java Lucene.
+            Je kan beide mogelijkheden gebruiken.
         </para>
 
         <para>
-            The PHP code listing below provides an example of how to index a file
-            using Zend_Search_Lucene indexing API:
+			De volgende PHP code listing geeft een voorbeeld van hoe een bestand
+			kan worden geïndexeerd door de Zend_Search_Lucene indexing API te gebruiken:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
-// Setting the second argument to TRUE creates a new index
-$index = new Zend_Search_Lucene('/data/my-index', true);
+// Het tweede argument naar TRUE zetten maakt een nieuwe index
+$index = new Zend_Search_Lucene('/data/mijn-index', true);
 
 $doc = new Zend_Search_Lucene_Document();
 
-// Store document URL to identify it in search result.
+// Het dokument URL opslaan om het in het zoekresultaat te identifiëren.
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 
-// Index document content
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+// Dokumentinhoud indexeren
+$doc->addField(Zend_Search_Lucene_Field::UnStored('inhoud', $docContent));
 
-// Add document to the index.
+// Een dokument aan de index toevoegen.
 $index->addDocument($doc);
 
-// Write changes to the index.
+// De veranderingen naar de index schrijven.
 $index->commit();
 ?>]]></programlisting>
 
         <para>
-            Newly added documents could be retrived from the index after commit
-            operation.
+		    Nieuw toegevoegde dokumenten kunnen na de commit operatie van de index worden
+			bekomen.
         </para>
         <para>
-            <code>Zend_Search_Lucene::commit()</code> is automatically called at the and of script execution and
-            before any search request.
+            <code>Zend_Search_Lucene::commit()</code> wordt automatisch opgeroepen een het einde
+			van de script uitvoering en vòòr elke zoekopdracht.
         </para>
         <para>
-            Each commit() call generates new index segment. So it must be requested as rarely as possible.
-            From the other side commiting large amount of documents in one step needs more memory.
+			Elke oproep van commit() genereert een nieuw index segment. Het moet dus zo weinig als
+			mogelijk worden opgeroepen. Aan de andere kant is het commiten van grote hoeveelheden
+			dokumenten een enkele stap heel geheugengulzig.
         </para>
         <para>
-            Automatic segment management optimization is a subject of future Zend_Search_Lucene enhancements.
+		    Automatisch segment management optimizatie is onderdeel van de toekomstige Zend_Search_Lucene 
+			verbeteringen.
         </para>
     </sect2>
 
     <sect2 id="zend.search.index-creation.updating">
-        <title>Updating Index</title>
+        <title>Index Updaten</title>
 
         <para>
-            The same procedure is used to update existing index. The only difference is that index should be opened without
-            second parameter:
+			Dezelfde procedure wordt gebruikt om een bestaande index up te daten. Het enige verschil is dat de index
+			zou moeten worden geopend zonder tweede parameter:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
-// Open existing index
-$index = new Zend_Search_Lucene('/data/my-index');
+// Een bestaande index openen
+$index = new Zend_Search_Lucene('/data/mijn-index');
 
 $doc = new Zend_Search_Lucene_Document();
-// Store document URL to identify it in search result.
-$doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
-// Index document content
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
-// Add document to the index.
+// Het dokument URL opslaan om het in het zoekresultaat te identifiëren.
+$doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
+
+// Dokumentinhoud indexeren
+$doc->addField(Zend_Search_Lucene_Field::UnStored('inhoud', $docContent));
+
+// Een dokument aan de index toevoegen.
 $index->addDocument($doc);
 
-// Write changes to the index.
+// De veranderingen naar de index schrijven.
 $index->commit();
 ?>]]></programlisting>
 
         <para>
-            Each commit() call (explicit or implicit) generates new index segment.
+			Elke oproep (impliciet of expliciet) aan commit() genereert een nieuw index segment.
         </para>
         <para>
-            Zend_Search_Lucene doesn't manage segments automatically. Thus you should care about segment size.
-            From the one side large segment is more optimal, but from another large segment needs more memory during creation.
+			Zend_Search_Lucene managed segmenten niet automatisch. Je moet dus rekening houden met segmentgroottes.
+			Een grrot segment is meer optimaal, maar heeft meer gehuegen nodig tijdens zijn kreatie.
         </para>
         <para>
-            Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-            can be used to optimize index with this version of Zend_Search_Lucene.
+			Lucene Java en Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+			kunnen worden geruikt om indexes te optimizeren met deze versie van Zend_Search_Lucene.
         </para>
     </sect2>
 </sect1>
