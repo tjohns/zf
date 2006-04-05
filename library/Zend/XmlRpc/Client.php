@@ -72,7 +72,7 @@ class Zend_XmlRpc_Client
 
     /**
      * Array of cached namespace decorators, array of Zend_XmlRpc_Client_NamespaceDecorator objects
-     * 
+     *
      * @var array
      */
     protected $_namespaceDecorators = array();
@@ -83,7 +83,7 @@ class Zend_XmlRpc_Client
      * The signature is an array of 2 keys:
      *      'return_value' - string, hold the return value of the method
      *      'params'       - array of strings, hold the parameters for the method (can be an empty array)
-     * 
+     *
      * This array is created automatically when calling the __getMethodsXml() or __setMethodsXml() methods
      *
      * @var array
@@ -120,11 +120,11 @@ class Zend_XmlRpc_Client
         if (!isset($this->_namespaceDecorators[$namespace])) {
             $this->_namespaceDecorators[$namespace] = new Zend_XmlRpc_Client_NamespaceDecorator($namespace, $this);
         }
-        
+
         return $this->_namespaceDecorators[$namespace];
     }
-    
-    
+
+
     /**
      * Using the magic __call function to call methods directly by method name
      *
@@ -135,7 +135,7 @@ class Zend_XmlRpc_Client
     {
         // Convert the parameters to Zend_XmlRpc_Value objects
         $this->_convertParams($params, $methodName);
-        
+
         return $this->_sendRequest($methodName, $params);
     }
 
@@ -150,14 +150,10 @@ class Zend_XmlRpc_Client
      */
     public function __xmlrpcCall($methodName)
     {
-        $params = func_num_args() > 1 ? array_shift(func_get_args()) 
+        $params = func_num_args() > 1 ? array_shift(func_get_args())
                                                        : null;
-        
-        // Convert the parameters to Zend_XmlRpc_Value objects.
-        $this->_convertParams($params, $methodName);
-        
-        // Call the remote method.
-        return $this->_sendRequest($methodName, $params);
+
+        $this->__call($methodName, $params);
     }
 
 
@@ -179,12 +175,12 @@ class Zend_XmlRpc_Client
             // the system.listMethods method is not supported, we throw an exception
             throw new Zend_XmlRpc_Client_Exception('Cannot get the server methods: '. $e->getMessage());
         }
-        
+
         // The system.methodSignature() method doesn't exists on on the server
         if (array_search('system.methodSignature', $methodNames) === false) {
             throw new Zend_XmlRpc_Client_Exception('Cannot get the server methods signature since the server does not support the \'system.methodSignature\' method');
         }
-        
+
         // Get the signatures of all the methods on the server
         if (array_search('system.multicall', $methodNames) !== false) {
             // The system.multicall method exists in the server, we use it to get all the signatures in one request
@@ -194,7 +190,7 @@ class Zend_XmlRpc_Client
             // we get the signature of each method one by one
             $signatures = $this->_getSignatures($methodNames);
         }
-        
+
         return $this->_buildMethodsXML($signatures);
     }
 
@@ -212,7 +208,7 @@ class Zend_XmlRpc_Client
             $this->_methodSignatures = array();
             return;
         }
-        
+
         // Using simple XML to parse the "WSDL" file of signatures
         try {
             $simple_xml = @new SimpleXMLElement($methodsXml);
@@ -220,15 +216,15 @@ class Zend_XmlRpc_Client
             // The methods XML is not a valid XML string
             throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures: '. $e->getMessage(),$e->getCode());
         }
-        
+
         // Parse xml method signatures into associative array for type hinting
         $this->_methodSignatures = array();
-        
+
         if (empty($simple_xml->method)) {
             // The XML must contain method tags
             throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, cannot find METHOD tags');
         }
-        
+
         foreach ($simple_xml->method as $methodXml) {
             if (empty($methodXml->name)) {
                 // The method tag must contain a name tag
@@ -246,13 +242,13 @@ class Zend_XmlRpc_Client
                 // The method tag must contain a params tag
                 throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, SIGNATURE tag must contain a PARAMS tag');
             }
-            
+
             // Parse the method parameters
             $methodParams = array();
             foreach ($methodXml->signature->params->param as $param) {
                 $methodParams[] = (string)$param;
             }
-        	
+
         	$this->_methodSignatures[(string)$methodXml->name] = array(
         	   'return_value' => (string)$methodXml->signature->returnValue,
         	   'params'       => $methodParams
@@ -276,7 +272,7 @@ class Zend_XmlRpc_Client
         if (!$this->_response instanceof Zend_XmlRpc_Value) {
             throw new Zend_XmlRpc_Client_Exception('Response was not received yet');
         }
-        
+
         switch ($type) {
             case self::RESPONSE_PHP_NATIVE:
                 return $this->_response->getValue();
@@ -311,8 +307,8 @@ class Zend_XmlRpc_Client
 
         return $this->_parseResponse($response->getBody());
     }
-    
-    
+
+
     /**
      * Build the XML body of an XML-RPC request
      *
@@ -373,12 +369,12 @@ class Zend_XmlRpc_Client
                 // Invalid fault response, fault tag must contain a value tag
                 throw new Zend_XmlRpc_Client_Exception('Invalid fault response, FAULT tag must contain a VALUE tag');
             }
-            
+
             // Parse the fault response into a Zend_XmlRpc_Value object
             try {
                 $this->_response = Zend_XmlRpc_Value::getXmlRpcValue($simple_xml->fault->value, Zend_XmlRpc_Value::XML_STRING);
             } catch (Zend_XmlRpc_Value_Exception $e) {
-                // Failed to create a Zend_XmlRpc_Value object from the fault 
+                // Failed to create a Zend_XmlRpc_Value object from the fault
                 throw new Zend_XmlRpc_Client_Exception('Invalid fault response, '. $e->getMessage());
             }
             $fault = $this->_response->getValue();
@@ -399,11 +395,11 @@ class Zend_XmlRpc_Client
 
         return $this->__getResponse(self::RESPONSE_PHP_NATIVE);
     }
-    
-    
+
+
     /**
      * Use system.methodSignature() to get all the given methods signatures using the system.multicall() method
-     * 
+     *
      * Attempt to get the method signatures in one request via system.multicall().
      * This is a boxcar feature of XML-RPC and is found on fewer servers, however
      * can significantly improve performance if present.  For more information on
@@ -419,14 +415,14 @@ class Zend_XmlRpc_Client
             $multicallParams[] = array('methodName' => 'system.methodSignature',
                                        'params'     => array($method));
         }
-        
+
         $tmpSignatures = $this->{'system.multicall'}($multicallParams);
-        
+
         if (count($tmpSignatures) != count($methodNames)) {
             // For some reason, the number of signatures doesn't match the number of methods, arrays cannot be combined
             throw new Zend_XmlRpc_Client_Exception('Remote server does not appear to support the necessary introspection capabilities');
         }
-        
+
         // Create a new signatures array with the methods name as keys and the signature as value
         $signatures = array();
         foreach ($tmpSignatures as $i => $signature) {
@@ -435,11 +431,11 @@ class Zend_XmlRpc_Client
             }
             $signatures[$methodNames[$i]] = $signature[0];
         }
-        
+
         return $signatures;
     }
-    
-    
+
+
     /**
      * Call system.methodSignature() for all the given methods
      *
@@ -449,15 +445,15 @@ class Zend_XmlRpc_Client
     private function _getSignatures($methodNames)
     {
         $signatures = array();
-        
+
         foreach ($methodNames as $method) {
             $signatures[$method] = $this->{'system.methodSignature'}($method);
         }
-        
+
         return $signatures;
     }
-    
-    
+
+
     /**
      * Generates an XML string analogous to SOAP's WSDL representing all the methods signatures
      * Signature is the method return value and method parameters
@@ -470,42 +466,42 @@ class Zend_XmlRpc_Client
     {
         // Reset the method signatures array
         $this->_methodSignatures = array();
-        
+
         $xml = "<?xml version='1.0' standalone='yes'?>\n"
              . "<methods>\n";
-        
+
         foreach ($signatures as $methodName => $signature) {
             if (!is_array($signature[0])) {
                 // The signature of this method is invalid (should be an array), we ignore this method
                 continue;
             }
-            
+
             $xml .= "\t<method>\n"
                   . "\t\t<name>$methodName</name>\n"
                   . "\t\t<signature>\n";
-            
+
             // After popping the return value, the $signature[0] array is holding the method parameters
             $returnValue = array_shift($signature[0]);
-            
+
             $xml .= "\t\t\t<returnValue>$returnValue</returnValue>\n"
                   . "\t\t\t<params>\n";
-            
+
             foreach ($signature[0] as $param) {
                 $xml .= "\t\t\t\t<param>$param</param>\n";
             }
-            
+
             $xml .= "\t\t\t</params>\n"
                   . "\t\t</signature>\n"
                   . "\t</method>\n";
-            
+
             $this->_methodSignatures[$methodName] = array('return_value' => $returnValue,
                                                           'params'       => $signature[0]);
         }
-        
+
         return $xml . "</methods>";
     }
-    
-    
+
+
     /**
      * Convert an array of PHP variables into XML-RPC native types represented by Zend_XmlRpc_Value objects
      * If method name is given, try to use the _methodSignatures data member for type hinting,
@@ -522,14 +518,14 @@ class Zend_XmlRpc_Client
             $params = null;
             return;
         }
-        
+
         $paramsTypeHinting = $this->_getMethodParams($methodName);
         /** @todo what we do if count($paramsTypeHinting) differ than count($params) ? maybe nothing */
-        
+
         foreach ($params as $i => &$param) {
             if (!$param instanceof Zend_XmlRpc_Value) {
                 // Need to convert the parameter to Zend_XmlRpc_Value object
-                // If there is type hinting for this method, we use it, otherwise 
+                // If there is type hinting for this method, we use it, otherwise
                 // the convertion is done according to the PHP type
                 if (isset($paramsTypeHinting[$i])) {
                     $param = Zend_XmlRpc_Value::getXmlRpcValue($param, $paramsTypeHinting[$i]);
@@ -539,8 +535,8 @@ class Zend_XmlRpc_Client
             }
         }
     }
-    
-    
+
+
     /**
      * Return the XML-RPC types of the necessary parameters for a method in the service
      * Get the types from the _methodSignatures data member
@@ -556,7 +552,7 @@ class Zend_XmlRpc_Client
         }
         return array();
     }
-    
-    
+
+
 }
 
