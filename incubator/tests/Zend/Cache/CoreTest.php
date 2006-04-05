@@ -9,7 +9,8 @@
  */
 require_once 'Zend/Cache.php';
 require_once 'Zend/Cache/Core.php';
-require_once 'Zend/Cache/Backend/File.php';
+require_once 'Zend/Cache/Backend/File.php'; // TODO : use only Test backend ?
+require_once 'Zend/Cache/Backend/Test.php';
 
 /**
  * PHPUnit2 test case
@@ -26,7 +27,11 @@ class Zend_Cache_CoreTest extends PHPUnit2_Framework_TestCase {
     
     public function setUp()
     {
-        if (!$this->_instance) $this->_instance = new Zend_Cache_Core(array());
+        if (!$this->_instance) {
+            $this->_instance = new Zend_Cache_Core(array());
+            $this->_backend = new Zend_Cache_Backend_Test();
+            $this->_instance->setBackend($this->_backend);
+        }
     }
     
     public function tearDown()
@@ -59,10 +64,19 @@ class Zend_Cache_CoreTest extends PHPUnit2_Framework_TestCase {
         $this->fail('Zend_Cache_Exception was expected but not thrown'); 
     }
     
-    public function testSetBackendCorrectCall()
+    public function testSetBackendCorrectCall1()
     {
         $backend = new Zend_Cache_Backend_File(array());
         $this->_instance->setBackend($backend);
+    }
+    
+    public function testSetBackendCorrectCall2()
+    {
+        $backend = new Zend_Cache_Backend_Test(array());
+        $this->_instance->setBackend($backend);
+        $log = $backend->getLastLog();
+        $this->assertEquals('setDirectives', $log['methodName']);
+        $this->assertType('array', $log['args'][0]);
     }
     
     public function testSetBackendBadCall()
@@ -100,8 +114,142 @@ class Zend_Cache_CoreTest extends PHPUnit2_Framework_TestCase {
         $this->fail('Zend_Cache_Exception was expected but not thrown'); 
     }
     
+    public function testSaveCorrectBadCall1()
+    {
+        try {
+            $this->_instance->save('data', 'foo bar');
+        }  catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown');     
+    }
+    
+    public function testSaveCorrectBadCall2()
+    {
+        try {
+            $this->_instance->save('data', 'foobar', array('tag1', 'foo bar'));
+        }  catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown');     
+    }
+    
+    public function testSaveCorrectBadCall3()
+    {
+        try {
+            $this->_instance->save(array('data'), 'foobar');
+        }  catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown');     
+    }
+    
+    public function testSaveCorrectCallNoCaching()
+    {
+        $i1 = $this->_backend->getLogIndex();
+        $this->_instance->setOption('caching', false);
+        $res = $this->_instance->save('data', 'foo');
+        $i2 = $this->_backend->getLogIndex();
+        $this->assertTrue($res);
+        $this->assertEquals($i1, $i2);
+    }
+    
+    public function testSaveCorrectCallNoWriteControl()
+    {
+        $this->_instance->setOption('writeControl', false);
+        $res = $this->_instance->save('data', 'foo', array('tag1', 'tag2'));
+        $log = $this->_backend->getLastLog();
+        $expected = array(
+            'methodName' => 'save',
+            'args' => array(
+                0 => 'data',
+                1 => 'foo',
+                2 => array(
+                    0 => 'tag1',
+                    1 => 'tag2'
+                )
+            )           
+        );
+        $this->assertEquals($expected, $log);
+    }
+    
+    public function testSaveCorrectCall()
+    {
+        $res = $this->_instance->save('data', 'foo', array('tag1', 'tag2'));
+        $logs = $this->_backend->getAllLogs();
+        $expected1 = array(
+            'methodName' => 'save',
+            'args' => array(
+                0 => 'data',
+                1 => 'foo',
+                2 => array(
+                    0 => 'tag1',
+                    1 => 'tag2'
+                )
+            )           
+        );
+        $expected2 = array(
+            'methodName' => 'get',
+            'args' => array(
+                0 => 'foo',
+                1 => true
+            )           
+        );
+        $expected3 = array(
+            'methodName' => 'remove',
+            'args' => array(
+                0 => 'foo'
+            )
+        );
+        $this->assertFalse($res);
+        $this->assertEquals($expected1, $logs[count($logs) - 3]);
+        $this->assertEquals($expected2, $logs[count($logs) - 2]);
+        $this->assertEquals($expected3, $logs[count($logs) - 1]);
+    }
+    
+    public function testSaveCorrectCallButFileCorruption()
+    {
+        $res = $this->_instance->save('data', 'false', array('tag1', 'tag2'));
+        $logs = $this->_backend->getAllLogs();
+        $expected1 = array(
+            'methodName' => 'save',
+            'args' => array(
+                0 => 'data',
+                1 => 'false',
+                2 => array(
+                    0 => 'tag1',
+                    1 => 'tag2'
+                )
+            )           
+        );
+        $expected2 = array(
+            'methodName' => 'remove',
+            'args' => array(
+                0 => 'false'
+            )
+        );
+        $this->assertFalse($res);
+        $this->assertEquals($expected1, $logs[count($logs) - 2]);
+        $this->assertEquals($expected2, $logs[count($logs) - 1]);
+    }
+    
+    public function testSaveCorrectCallWithAutomaticCleaning()
+    {
+        $this->_instance->setOption('automaticCleaningFactor', 1);
+        $res = $this->_instance->save('data', 'false', array('tag1', 'tag2'));
+        $logs = $this->_backend->getAllLogs();
+        $expected = array(
+            'methodName' => 'clean',
+            'args' => array(
+                0 => 'old',
+                1 => array()
+            )
+        );
+        $this->assertFalse($res);
+        $this->assertEquals($expected, $logs[count($logs) - 3]);
+    }   
+    
     // TODO :
-    // save()
     // clean()
     // get()
     // test()
