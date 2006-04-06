@@ -83,6 +83,7 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * Test if a cache is available for the given id and (if yes) return it (false else)
      * 
      * For this test backend only, if $id == 'false', then the method will return false
+     * if $id == 'serialized', the method will return a serialized array
      * ('foo' else)
      * 
      * @param string $id cache id
@@ -95,6 +96,9 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
         if ($id=='false') {
             return false;
         }
+        if ($id=='serialized') {
+            return serialize(array('foo'));
+        }
         return 'foo';
     }
     
@@ -102,7 +106,7 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * Test if a cache is available or not (for the given id)
      * 
      * For this test backend only, if $id == 'false', then the method will return false
-     * (true else)
+     * (123456 else)
      * 
      * @param string $id cache id
      * @return mixed false (a cache is not available) or "last modified" timestamp (int) of the available cache record
@@ -113,7 +117,7 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
         if ($id=='false') {
             return false;
         }
-        return true;
+        return 123456;
     }
     
     /**

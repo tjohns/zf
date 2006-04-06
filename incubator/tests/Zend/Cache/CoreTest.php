@@ -249,10 +249,87 @@ class Zend_Cache_CoreTest extends PHPUnit2_Framework_TestCase {
         $this->assertEquals($expected, $logs[count($logs) - 3]);
     }   
     
+    public function testTestCorrectCallNoCaching()
+    {
+        $i1 = $this->_backend->getLogIndex();
+        $this->_instance->setOption('caching', false);
+        $res = $this->_instance->test('foo');
+        $i2 = $this->_backend->getLogIndex();
+        $this->assertFalse($res);
+        $this->assertEquals($i1, $i2);
+    }
+    
+    public function testTestBadCall()
+    {
+        try {
+            $this->_instance->test('foo bar');
+        }  catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown');  
+    }
+    
+    public function testTestCorrectCall1()
+    {
+         $res = $this->_instance->test('foo');
+         $log = $this->_backend->getLastLog();
+         $expected = array(
+            'methodName' => 'test',
+            'args' => array(
+                0 => 'foo'
+            )
+         );
+         $this->assertEquals(123456, $res);
+         $this->assertEquals($expected, $log);
+    }
+    
+    public function testTestCorrectCall2()
+    {
+         $res = $this->_instance->test('false');
+         $this->assertFalse($res);
+    }
+    
+    public function testGetCorrectCallNoCaching()
+    {
+        $i1 = $this->_backend->getLogIndex();
+        $this->_instance->setOption('caching', false);
+        $res = $this->_instance->get('foo');
+        $i2 = $this->_backend->getLogIndex();
+        $this->assertFalse($res);
+        $this->assertEquals($i1, $i2);
+    }
+    
+    public function testGetBadCall()
+    {
+        try {
+            $res = $this->_instance->get('foo bar');
+        }  catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown'); 
+    }
+    
+    public function testGetCorrectCall1()
+    {
+        $res = $this->_instance->get('false');
+        $this->assertFalse($res);
+    }
+    
+    public function testGetCorrectCall2()
+    {
+        $res = $this->_instance->get('bar');
+        $this->assertEquals('foo', 'foo');
+    }
+    
+    public function testGetCorrectCallWithAutomaticSerialization()
+    {
+        $this->_instance->setOption('automaticSerialization', true);
+        $res = $this->_instance->get('serialized');
+        $this->assertEquals(array('foo'), $res);
+    }
+    
     // TODO :
     // clean()
-    // get()
-    // test()
     // remove()
     
 }
