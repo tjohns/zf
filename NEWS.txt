@@ -19,6 +19,9 @@ Zend Framework                                                             NEWS
 - Registry can now be tested with Zend::isRegistered (Shekar C. Reddy, Mike)
 - Zend_Search_Lucene promoted from incubator (Alex)
 - Zend_Cache has been accepted to the incubator (Fabien, Mislav)
+- Zend_Json testing expanded; covers all major cases (Matthew)
+- Fixed Zend_Json encoding of empty values (Matthew, Davey)
+- Fixed Zend_Json encoding of associative arrays (Matthew, Davey)
 
 =RELEASE 0.1.2 / 8-Mar-2006=
 - Unit test suite is now included. (Mike)
