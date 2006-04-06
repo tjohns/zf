@@ -1,0 +1,79 @@
+// =================================================
+// === Classical use of the "Core" of Zend_Cache ===
+// =================================================
+
+<?php
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+	'lifeTime' => 7200 // cache lifetime of 2 hours
+);
+
+$backendOptions = array(
+    'cacheDir' => '/tmp/' // Directory where to put the cache files (make sure to add a trailing slash)
+);
+
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+$id = 'foo'; // cache id of "what we want to cache"
+
+if (!($cache->test($id))) {
+	// cache missed
+	
+	require_once ... // for perfs reasons, all "require_once" have to be loaded ONLY if the cache is missed
+	require_once ...
+	
+	// we build "what we want to cache"
+	// for example
+	$data = '';
+	for ($i=0;$i<10000;$i++) {
+		$data = $data . $i;
+	} 
+	
+	// We save the result into the cache
+    $cache->save($data);
+
+} else {
+	// cache hit
+	
+	$data = $cache->get($id);
+
+}
+
+// do something with $data :)
+// [...]
+
+?>
+
+
+// =================================================
+// === "Compact" use of the "Core" of Zend_Cache ===
+// =================================================
+
+// This is ok only if you store strings into the cache
+// (because with "automaticSerialization" option, it's possible to store
+//  some booleans into cache)
+
+<?php
+
+// [...] // require and configuration
+
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+$id = 'foo'; // cache id of "what we want to cache"
+
+if (!($data = $cache->get($id))) {
+	// cache missed
+	
+	$data = '';
+	for ($i=0;$i<10000;$i++) {
+		$data = $data . $i;
+	}
+	
+    $cache->save($data);
+    
+} 
+
+echo($data);
+
+?>
