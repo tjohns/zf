@@ -328,9 +328,87 @@ class Zend_Cache_CoreTest extends PHPUnit2_Framework_TestCase {
         $this->assertEquals(array('foo'), $res);
     }
     
-    // TODO :
-    // clean()
-    // remove()
+    public function testRemoveBadCall()
+    {
+        try {
+            $res = $this->_instance->remove('foo bar');
+        }  catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown'); 
+    }
+    
+    public function testRemoveCorrectCallNoCaching()
+    {
+        $i1 = $this->_backend->getLogIndex();
+        $this->_instance->setOption('caching', false);
+        $res = $this->_instance->remove('foo');
+        $i2 = $this->_backend->getLogIndex();
+        $this->assertTrue($res);
+        $this->assertEquals($i1, $i2);
+    }
+    
+    public function testRemoveCorrectCall()
+    {
+        $res = $this->_instance->remove('foo');
+        $log = $this->_backend->getLastLog();
+        $expected = array(
+            'methodName' => 'remove',
+            'args' => array(
+                0 => 'foo'
+            )
+        );
+        $this->assertTrue($res);
+        $this->assertEquals($expected, $log);
+    }
+    
+    public function testCleanBadCall1()
+    {
+        try {
+            $res = $this->_instance->clean('matchingTag', array('foo bar', 'foo'));
+        }  catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown'); 
+    }
+    
+    public function testCleanBadCall2()
+    {
+        try {
+            $res = $this->_instance->clean('foo');
+        }  catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown'); 
+    }
+    
+    public function testCleanCorrectCallNoCaching()
+    {
+        $i1 = $this->_backend->getLogIndex();
+        $this->_instance->setOption('caching', false);
+        $res = $this->_instance->clean('all');
+        $i2 = $this->_backend->getLogIndex();
+        $this->assertTrue($res);
+        $this->assertEquals($i1, $i2);
+    }
+    
+    public function testCleanCorrectCall()
+    {
+        $res = $this->_instance->clean('matchingTag', array('tag1', 'tag2'));
+        $log = $this->_backend->getLastLog();
+        $expected = array(
+            'methodName' => 'clean',
+            'args' => array(
+                0 => 'matchingTag',
+                1 => array(
+                    0 => 'tag1',
+                    1 => 'tag2'
+                ) 
+            )
+        );
+        $this->assertTrue($res);
+        $this->assertEquals($expected, $log);
+    }
     
 }
 

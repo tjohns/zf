@@ -1,9 +1,7 @@
 Priority 1 :
 
 - end of unit tests :
-	=> Core and Frontends are missing
-	=> A "tests oriented" backend will be necessary
-	(because we can't use phpunit3 mock objects)
+	=> Frontends are missing
 	
 - bug fixes :)
 
