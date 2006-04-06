@@ -1,0 +1,148 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+Zend_SimpleAjax
+
+Proposers
+-----------------------------------------------
+Jim Weir
+
+Revision
+-----------------------------------------------
+1.0
+
+Overview
+-----------------------------------------------
+This component adds an easy means of making AJAX requests and 
+handling their results.  It is very small and leverages a lot of 
+the framework's core functionality.
+
+References
+-----------------------------------------------
+This initiative was inspired by the ZAjax proposal.
+
+Requirements
+-----------------------------------------------
+1. Simplify the AJAX process.
+2. Use existing framework functionality wherever possible.
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+Zend_Controller
+Zend_View
+
+Theory of Operation
+-----------------------------------------------
+This module performs an AJAX cycle something like so:
+1. Call a framework-style URL with an XMLHttpRequest.
+2. Route this request to a RemoteAction.
+3. Methods in a RemoteAction may return a value.  Objects which are returned will be JSON encoded.  
+    Primitives returned will be wrapped in a JSON object that has a single property named "value".
+4. The returned JSON object is evaluated by JS, then passed to a handler function which you have specified.
+
+Class Index
+-----------------------------------------------
+ZendAjax.js
+    This is the heart of the system.  It handles XMLHttpRequest details and abtracts the request process.
+    
+Zend_Ajax
+    This loads up and manages the JS engine.  
+
+Zend_Controller_RemoteAction
+    This works very similarly to Zend_Controller_Action.  It takes care of hiding protocol details and lets
+    the developer focus on application code.
+
+Zend_Controller_RemoteDispatcher
+    This custom dispatcher is needed only to allow RemoteActions.  It may go away later depending on what 
+    happens with the ZF's routing/dispatching system.
+
+Zend_View_Helper_AjaxLoad
+    Call this in your view to generate the JS necessary to instantiate the ZendAjax core.
+
+Zend_View_Helper_AjaxCall
+	Call this to hook the ZendAjax core and issue your AJAX request.  This gets passed the URL to call, and the name of a JS handler
+	function to be invoked with the response from the RemoteAction.
+
+Use Cases
+-----------------------------------------------
+Following are relevant segments from my current test application:
+
+(index.php)
+	// register a singleton instance of Zend_Ajax
+	// it requires the path to the JS engine
+	$ajax = Zend_Ajax::get('../extensions/scripts/ZendAjax.js');
+	Zend::register('ajax', $ajax);
+	
+	// as of now I need to use the RemoteDispatcher
+	// I hope to remove this crutch in the future
+	$controller = Zend_Controller_Front::getInstance();
+	$controller->setDispatcher(new Zend_Controller_RemoteDispatcher());
+	$controller->setControllerDirectory('../application/controllers');
+	$controller->dispatch();
+
+(code in a controller)
+	// any view you use needs access to the Ajax engine
+    $view = Zend::registry('view');
+    ...
+	$view->ajax = Zend::registry('ajax');
+	...
+
+(code in a view)
+	// call the helper to instantiate the ajax engine
+	echo $this->ajaxLoad($this->ajax);		
+	... 
+	// make an ajax call (passing it a URL of a RemoteAction, and the name of a JS function that expects the response)
+	<DEFANGED_form action="" method="post" DEFANGED_Onsubmit="<?php echo $this->ajaxCall($this->ajax, '/test/remote/msg/howdy', 'callback'); ?>">
+	
+(example remote action)
+    // looks suspiciously like a regular action :-)
+    class TestController extends Zend_Controller_RemoteAction
+    {
+	
+        public function remoteAction()
+        {
+            return $this->_getParam('msg');
+        }
+	
+        public function indexAction()
+	    {
+		    $this->_redirect('/');
+	    }
+		
+    }
+	
+(example JS callback)
+	// this handles a returned primitive value (a string in this case)
+	function callback(response) {
+		alert(response.value);			
+	}
+
+
+Class Skeletons
+-----------------------------------------------
+ZendAjax.js
+	call(url, handler)
+	    
+Zend_Ajax
+	init(/path/to/jsEngine)
+	getEngine()
+	getEngineName()
+	
+Zend_Controller_RemoteAction
+	- a copy of Zend_Controller_Action with a modified run() method
+	
+Zend_Controller_RemoteDispatcher
+	- a copy of Zend_Controller_Dispatcher that also allows RemoteActions
+	- TODO: make this class go away :-)
+	
+Zend_View_Helper_AjaxLoad
+	ajaxLoad(engine)
+
+Zend_View_Helper_AjaxCall
+	ajaxCall(engine, url, handler)
+	
+	
+
+
