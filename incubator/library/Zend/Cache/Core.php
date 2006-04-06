@@ -143,6 +143,7 @@ class Zend_Cache_Core
      */
     public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
     {
+        $this->_lastId = $id;
         if (!$this->_options['caching']) {
             return false;
         }
@@ -152,7 +153,6 @@ class Zend_Cache_Core
             // no cache available
             return false;
         }
-        $this->_lastId = $id;
         if ((!$doNotUnserialize) && $this->_options['automaticSerialization']) {
             // we need to unserialize before sending the result
             return unserialize($data);
