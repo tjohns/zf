@@ -51,15 +51,15 @@ Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
     // l'importation du flux a échoué
     echo "Une exception a été interceptée lors de l'importation du flux : 
-{$e-&gt;getMessage()}\n";
+{$e->getMessage()}\n";
     exit;
 }
 
 // on initialise un tableau contenant les données du canal RSS
 $canal = array(
-    'titre'       =>; $rssSlashdot-&gt;title(),
-    'lien'        => $rssSlashdot-&gt;link(),
-    'description' => $rssSlashdot-&gt;description(),
+    'titre'       =>; $rssSlashdot->title(),
+    'lien'        => $rssSlashdot->link(),
+    'description' => $rssSlashdot->description(),
     'elements'    => array()
     );
 
@@ -67,9 +67,9 @@ $canal = array(
 intéressent
 foreach ($rssSlashdot as $elem) {
     $canal['elements'][] = array(
-        'titre'       => $elem-&gt;title(),
-        'lien'        => $elem-&gt;link(),
-        'description' => $elem-&gt;description()
+        'titre'       => $elem->title(),
+        'lien'        => $elem->link(),
+        'description' => $elem->description()
         );
 }
 
@@ -169,8 +169,8 @@ echo $canal->title();
 Notez la syntaxe utilisée : un appel de fonction. <code>Zend_Feed</code> 
 utilise une convention selon laquelle les propriétés sont traitées comme 
 des objets XML si elles sont demandées au moyen de la syntaxe 
-<code>$obj-&gt;propriété</code> et comme des chaînes si elles sont 
-demandées au moyen de la syntaxe <code>$obj-&gt;propriété()</code>. Ceci 
+<code>$obj->propriété</code> et comme des chaînes si elles sont 
+demandées au moyen de la syntaxe <code>$obj->propriété()</code>. Ceci 
 permet d'accéder à la totalité du contenu textuel d'un nœud particulier 
 tout comme à l'ensemble des enfants de ce nœud.
     </para>
@@ -185,7 +185,7 @@ echo $canal->category['domain'];
 
 ?>]]></programlisting>
         Comme les attributs XML ne peuvent avoir des enfants, la syntaxe 
-<code>$obj-&gt;propriété['attribut']()</code> n'est pas nécessaire pour 
+<code>$obj->propriété['attribut']()</code> n'est pas nécessaire pour 
 accéder aux valeurs des attributs.
     </para>
 
@@ -291,7 +291,7 @@ if ($elemt->nomPropriete()) {
 
     <para>
         Si vous utilisez à la place de la condition 
-<code>$elem-&gt;nomPropriete</code>, vous obtiendrez toujours un objet qui, 
+<code>$elem->nomPropriete</code>, vous obtiendrez toujours un objet qui, 
 même vide, sera évalué comme <code>TRUE</code>, donc le test échouera.
     </para>
 
@@ -473,8 +473,8 @@ le renvoyer au serveur.
 $flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/1');
 $entree = $flux->current();
 
-$entree-&gt;title = 'Ceci est un nouveau titre';
-$entree-&gt;author->email = 'mon_email@exemple.com';
+$entree->title = 'Ceci est un nouveau titre';
+$entree->author->email = 'mon_email@exemple.com';
 
 echo $entree->saveXML();
 
@@ -488,7 +488,7 @@ espaces de nom XML nécessaires.
 Notez que le code ci-dessus fonctionnera même si l'entrée existante 
 ne possédait pas de balise <code>author</code>. Vous pouvez utiliser 
 autant de fois que vous le souhaitez l'opérateur d'accès 
-<code>-&gt;</code> dans une instruction d'affectation; si nécessaire, 
+<code>-></code> dans une instruction d'affectation; si nécessaire, 
 les niveaux intermédiaires seront créés pour vous automatiquement.
         </para>
     </example>
@@ -522,7 +522,7 @@ $entree->{'monen:monelement_un'} = 'ma première valeur personnalisée';
 $entree->{'monen:conteneur_elt'}->partie1 = 'première partie imbriquée personnalisée';
 $entree->{'monen:conteneur_elt'}->partie2 = 'deuxième partie imbriquée personnalisée';
 
-echo $entree-&gt;saveXML();
+echo $entree->saveXML();
 
 ?>]]>   </programlisting>
     </example>
@@ -600,7 +600,7 @@ class MonEntree extends Zend_Feed_EntryAtom
 <?php
 
 $entree = new MonEntree();
-$entree-&gt;monPrenom = 'Martin';
+$entree->monPrenom = 'Martin';
 
 ?>]]>       </programlisting>
         </para>
