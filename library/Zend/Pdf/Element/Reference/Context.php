@@ -40,7 +40,7 @@ class Zend_Pdf_Element_Reference_Context
      *
      * @var Zend_Pdf_Parser
      */
-    private $_parser;
+    private $_stringParser;
 
     /**
      * Reference table
@@ -52,14 +52,14 @@ class Zend_Pdf_Element_Reference_Context
     /**
      * Object constructor
      *
-     * @param Zend_Pdf_Parser $parser
+     * @param Zend_Pdf_StringParser $parser
      * @param Zend_Pdf_Element_Reference_Table $refTable
      */
-    public function __construct(Zend_Pdf_Parser $parser,
+    public function __construct(Zend_Pdf_StringParser $parser,
                                 Zend_Pdf_Element_Reference_Table $refTable)
     {
-        $this->_parser     = $parser;
-        $this->_refTable   = $refTable;
+        $this->_stringParser = $parser;
+        $this->_refTable     = $refTable;
     }
 
 
@@ -70,7 +70,7 @@ class Zend_Pdf_Element_Reference_Context
      */
     public function getParser()
     {
-        return $this->_parser;
+        return $this->_stringParser;
     }
 
 

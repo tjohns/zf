@@ -138,13 +138,17 @@ class Zend_Pdf_Element_Dictionary extends Zend_Pdf_Element
         $lastNL = 0;
 
         foreach ($this->_items as $name => $element) {
+            if (!is_object($element)) {
+                throw new Zend_Pdf_Exception('Wrong data');
+            }
+
             if (strlen($outStr) - $lastNL > 128)  {
                 $outStr .= "\n";
                 $lastNL = strlen($outStr);
             }
 
             $nameObj = new Zend_Pdf_Element_Name($name);
-            $outStr .= $nameObj->toString($factory) . ' ' .  $element->toString($factory) . ' ';
+            $outStr .= $nameObj->toString($factory) . ' ' . $element->toString($factory) . ' ';
         }
         $outStr .= '>>';
 

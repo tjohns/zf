@@ -70,7 +70,7 @@ class Zend_Pdf_Element_Array extends Zend_Pdf_Element
 
 
     /**
-     * Provides read-only access to $this->_items
+     * Provides access to $this->_items
      *
      * @param string $property
      * @return Zend_Pdf_PHPArray

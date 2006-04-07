@@ -93,7 +93,7 @@ class Zend_Pdf_Trailer_Keeper extends Zend_Pdf_Trailer
      */
     public function getPDFLength()
     {
-        return $this->_context->getParser()->getPDFLength();
+        return $this->_context->getParser()->getLength();
     }
 
     /**
@@ -103,7 +103,7 @@ class Zend_Pdf_Trailer_Keeper extends Zend_Pdf_Trailer
      */
     public function getPDFString()
     {
-        return $this->_context->getParser()->getPDFString();
+        return $this->_context->getParser()->getString();
     }
 
     /**
