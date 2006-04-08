@@ -1,47 +1,51 @@
 <sect1 id="zend.feed.introduction">
-    <title>Introduction</title>
+    <title>Einführung</title>
     <para>
-        <code>Zend_Feed</code> provides functionality for consuming RSS and Atom feeds. It provides a
-        natural syntax for accessing elements of feeds, feed attributes, and entry attributes.
-        <code>Zend_Feed</code> also has extensive support for modifying feed and entry structure with the
-        same natural syntax, and turning the result back into XML. In the future, this modification support
-        could provide support for the Atom Publishing Protocol.
+        <code>Zend_Feed</code> stellt Funktionalitäten für das Konsumieren von RSS und Atom Feeds.
+        Es stellt eine natürliche Syntax bereit, um auf Elemente und Attribute des Feeds sowie auf 
+        die Attribute der Einträge zugreifen zu können. Mit derselben natürlichen Syntax bietet 
+        <code>Zend_Feed</code> auch eine umfassende Unterstützung für das Ändern von Feed und 
+        Eintragsstruktur sowie die Rückgabe der Ergebniss nach XML. In Zukunft könnte diese
+        Modifizierungsunterstützung auch das Atom Publishing Protocol unterstützen.
     </para>
 
     <para>
-        Programmatically, <code>Zend_Feed</code> consists of a base <code>Zend_Feed</code> class, abstract
-        <code>Zend_Feed_Abstract</code> and <code>Zend_Feed_EntryAbstract</code> base classes for
-        representing Feeds and Entries, specific implementations of feeds and entries for RSS and Atom, and
-        a behind-the-scenes helper for making the natural syntax magic work.
+        <code>Zend_Feed</code> besteht aus der Basisklasse <code>Zend_Feed</code>, sowie den beiden 
+        abstrakten Basisklassen <code>Zend_Feed_Abstract</code> und 
+        <code>Zend_Feed_EntryAbstract</code> für die Darstellung von Feeds und Einträgen, aus 
+        speziellen Implementationen von Feeds und Einträgen für RSS und Atom sowie einem Helfer,
+        der hinter den Kulissen die natürliche Syntax ermöglicht.
     </para>
 
     <para>
-        In the example below, we demonstrate a simple use case of retrieving an RSS feed and saving relevant
-        portions of the feed data to a simple PHP array, which could then be used for printing the data, storing
-        to a database, etc.
+        Im Beispiel unten demonstrieren wir einen einfachen Anwendungsfall für die Abfrage eines
+        RSS Feeds und die Speicherung relevanter Teile der Feed Daten in einem einfachen PHP Array,
+        welches dann für die Ausgabe der Daten, das Speichern in eine Datenbank, usw. genutzt 
+        werden kann.
     </para>
 
     <note>
-        Many RSS feeds have different channel and item properties available. The RSS specification provides for
-        many optional properties, so be aware of this when writing code to work with RSS data.
+        Viele RSS Feeds bieten verschiedene Eigenschaften für Kanäle und Einträge. Die RSS
+        Spezifikation bietet viele optionale Eigenschaften, also sei dir dessen beim Schreiben von 
+        Code für die Verarbeitung von RSS Daten bewußt.
     </note>
 
     <example>
-        <title>Putting Zend_Feed to Work on RSS Feed Data</title>
+        <title>Zend_Feed für die Verarbeitung von RSS Feed Daten verwenden</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Feed.php';
 
-// Fetch the latest Slashdot headlines
+// hole die neuesten Slashdot Schlagzeilen
 try {
     $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
-    // feed import failed
+    // Import des Feeds ist fehlgeschlagen
     echo "Exception caught importing feed: {$e->getMessage()}\n";
     exit;
 }
 
-// Initialize the channel data array
+// Initialisiere das Array mit den Channel Daten
 $channel = array(
     'title'       => $slashdotRss->title(),
     'link'        => $slashdotRss->link(),
@@ -49,7 +53,7 @@ $channel = array(
     'items'       => array()
     );
 
-// Loop over each channel item and store relevant data
+// Durchlauf jeden Eintrag und speichere die relevanten Daten
 foreach ($slashdotRss as $item) {
     $channel['items'][] = array(
         'title'       => $item->title(),
@@ -63,10 +67,10 @@ foreach ($slashdotRss as $item) {
 </sect1>
 
 <sect1 id="zend.feed.importing">
-    <title>Importing Feeds with Zend_Feed</title>
+    <title>Feeds mit Zend_Feed importieren</title>
     <para>
-        <code>Zend_Feed</code> enables developers to retrieve feeds very easily. If you know the URI of a
-        feed, simply use the <code>Zend_Feed::import()</code> method:
+        <code>Zend_Feed</code> ermöglicht es Entwicklern, Feeds sehr einfach abzurufen. Wenn Du die
+        URI eines Feeds kennst, verwende einfach die <code>Zend_Feed::import()</code> Methode:
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -75,94 +79,100 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');
 ?>]]>   </programlisting>
     </para>
     <para>
-        You can also use <code>Zend_Feed</code> to fetch the contents of a feed from a file or the contents
-        of a PHP string variable:
+        Du kannst <code>Zend_Feed</code> außerdem verwenden, um Inhalte eines Feeds aus einer Datei
+        oder die Inhalte aus einem PHP String Variable zu abzurufen.
         <programlisting role="php"><![CDATA[
 <?php
 
-// importing a feed from a text file
+// Importiere einen Feed aus einer Textdatei
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
-// importing a feed from a PHP string variable
+// Importiere einen Feed aus einer PHP String Variable
 $feedFromPHP = Zend_Feed::importString($feedString);
 
 ?>]]></programlisting>
     </para>
     <para>
-        In each of the examples above, an object of a class that extends <code>Zend_Feed_Abstract</code> is
-        returned upon success, depending on the type of the feed. If an RSS feed were retrieved via one of
-        the import methods above, then a <code>Zend_Feed_Rss</code> object would be returned. On the other
-        hand, if an Atom feed were imported, then a <code>Zend_Feed_Atom</code> object is returned. The
-        import methods will also throw a <code>Zend_Feed_Exception</code> object upon failure, such as an
-        unreadable or malformed feed.
+        In jedem der obigen Beispiele wird bei Erfolg abhängig vom Typ des Feeds ein Objekt einer 
+        Klasse zurück gegeben, welche <code>Zend_Feed_Abstract</code> erweitert. Wird ein RSS Feed
+        durch eine der obigen Importiermethoden abgerufen, wird eine <code>Zend_Feed_Rss</code>
+        Objekt zurückgegeben. Auf der anderen Seite wird beim Importieren eines Atom Feeds ein 
+        <code>Zend_Feed_Atom</code> Objekt zurückgegeben. Bei Fehlern, wie z.B. ein unlesbarer oder
+        nicht wohlgeformter Feed, werfen die Importiermethoden auch ein 
+        <code>Zend_Feed_Exception</code> Objekt. 
     </para>
 </sect1>
 
 <sect1 id="zend.feed.findFeeds">
-    <title>Retrieving Feeds from Web Pages</title>
+    <title>Feeds von Websites abrufen</title>
     <para>
-        Web pages often contain <code>&lt;link&gt;</code> tags that refer to feeds with content relevant to
-        the particular page. <code>Zend_Feed</code> enables you to retrieve all feeds referenced by a web
-        page with one simple method call:
+        Websites beinhalten oft <code>&lt;link&gt;</code> Tags, die auf Feeds mit für diese Seite 
+        relevanten Informationen verweisen. <code>Zend_Feed</code> ermöglicht Dir, mit einem 
+        einfachen Methodenaufruf alle von einer Webseite referenzierten Feeds abzurufen. 
         <programlisting role="php"><![CDATA[
 <?php
 
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
 
 ?>]]></programlisting>
-        Here the <code>findFeeds()</code> method returns an array of <code>Zend_Feed_Abstract</code>
-        objects that are referenced by <code>&lt;link&gt;</code> tags on the news.html web page. Depending on
-        the type of each feed, each respective entry in the <code>$feedArray</code> array may be a
-        <code>Zend_Feed_Rss</code> or <code>Zend_Feed_Atom</code> instance. <code>Zend_Feed</code> will throw a
-        <code>Zend_Feed_Exception</code> upon failure, such as an HTTP 404 response code or a malformed feed.
+        Hier gibt die <code>findFeeds()</code> Methode ein Array mit <code>Zend_Feed_Abstract</code>
+        Objekten zurück, die durch die <code>&lt;link&gt;</code> Tags der news.html Webseite 
+        referenziert worden sind. Abhängig vom Typ jedes Feeds kann jeder einzelne Eintrag in 
+        <code>$feedArray</code> eine <code>Zend_Feed_Rss</code> oder <code>Zend_Feed_Atom</code>
+        Instanz enthalten. Bei Fehlern, wie z.B. ein HTTP 404 Response Code oder ein nicht 
+        wohlgeformter Feed, wirft <code>Zend_Feed</code> eine <code>Zend_Feed_Exception</code>.
     </para>
 </sect1>
 
 <sect1 id="zend.feed.consuming-rss">
-    <title>Consuming an RSS Feed</title>
+    <title>Einen RSS Feed konsumieren</title>
     <para>
-        Reading an RSS feed is as simple as instantiating a <code>Zend_Feed_Rss</code> object with the URL
-        of the feed:
+        Einen RSS Feed zu lesen, ist so einfach wie das Instanziieren eines <code>Zend_Feed_Rss</code>
+        Objekts mit der URL eines Feeds:
         <programlisting role="php"><![CDATA[
 <?php
 
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 
 ?>]]></programlisting>
-        If any errors occur fetching the feed, a <code>Zend_Feed_Exception</code> will be thrown.
+        Wenn beim Abrufen des Feeds Fehler auftreten, wird eine <code>Zend_Feed_Exception</code>
+        geworfen. 
     </para>
 
     <para>
-        Once you have a feed object, you can access any of the standard RSS "channel" properties directly
-        on the object:
+        Sobald du ein Feed Objekt hast, kannst du auf jeden Channel-Eigenschaften eines Standard
+        RSS Feeds direkt über das Objekt zugreifen:
         <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->title();
 
 ?>]]></programlisting>
-        Note the function syntax. <code>Zend_Feed</code> uses a convention of treating properties as XML
-        object if they are requested with variable "getter" syntax (<code>$obj->property</code>) and as
-        strings if they are access with method syntax (<code>$obj->property()</code>). This enables access
-        to the full text of any individual node while still allowing full access to all children.
+        Beachte die Syntax der Funktion. <code>Zend_Feed</code> verwendet die Konvention, die 
+        Eigenschaften als XML Objekt zu behandeln, wenn sie durch die "Getter" Syntax für Variablen 
+        (<code>$obj->property</code>) angefordert werden, und als String zu behandeln, wenn sie 
+        durch die Methodensyntax (<code>$obj->property()</code>) angefordert werden. Dies ermöglicht
+        den Zugriff auf den kompletten Text jedes individuellen Knotens, während weiterhin der 
+        komplette Zugriff auf alle Kindelemente erlaubt ist. 
     </para>
 
     <para>
-        If channel properties have attributes, they are accessible using PHP's array syntax:
+        Wenn Channel-Eigenschaften Attribute beinhalten, sind diese durch die PHP Array Syntax 
+        ansprechbar:
         <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->category['domain'];
 
 ?>]]></programlisting>
-        Since XML attributes cannot have children, method syntax is not necessary for accessing attribute
-        values.
+        Da XML Attribute keine Kindelemente haben können, ist die Methodensyntax für den Zugriff auf
+        Attributwerte nicht notwendig.
     </para>
 
     <para>
-        Most commonly you'll want to loop through the feed and do something with its entries.
-        <code>Zend_Feed_Abstract</code> implements PHP's <code>Iterator</code> interface, so printing all
-        titles of articles in a channel is just a matter of:
+        Meistens möchtest Du einen Feed durchlaufen und etwas mit seinen Einträgen machen. 
+        <code>Zend_Feed_Abstract</code> implementiert das <code>Iterator</code> Interface von PHP,
+        so dass die Ausgabe aller Artikelüberschriften eines Channels nur dies erfordert:
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -171,228 +181,244 @@ foreach ($channel as $item) {
 }
 
 ?>]]></programlisting>
-        If you are not familiar with RSS, here are the standard elements you can expect to be available in
-        an RSS channel and in individual RSS items (entries).
+        Wenn du mit RSS nicht vertraut bist, kommt hier eine Übersicht über die Standardelemente, 
+        die du in einem RSS Channel und in einzelnen RSS Elementen (Einträgen) als verfügbar 
+        erwarten kannst.
     </para>
 
     <para>
-        Required channel elements:
-    </para>
-
-    <para>
-        <itemizedlist>
-            <listitem>
-                <para><code>title</code> - The name of the channel</para>
-            </listitem>
-            <listitem>
-                <para><code>link</code> - The URL of the web site corresponding to the channel</para>
-            </listitem>
-            <listitem>
-                <para><code>description</code> - A sentence or several describing the channel</para>
-            </listitem>
-        </itemizedlist>
-    </para>
-
-    <para>
-        Common optional channel elements:
+        Erforderliche Elemente eines Channels:
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>pubDate</code> - The publication date of this set of content, in RFC 822 date
-                format</para>
+                <para><code>title</code> - Der Name des Channels</para>
             </listitem>
             <listitem>
-                <para><code>language</code> - The language the channel is written in</para>
+                <para><code>link</code> - Die URL einer Website, die dem Channel entspricht</para>
             </listitem>
             <listitem>
-                <para><code>category</code> - One or more (specified by multiple tags) categories the
-                channel belongs to</para>
+                <para><code>description</code> - Ein oder mehr Sätze, die den Channel beschreiben</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        RSS <code>&lt;item&gt;</code> elements do not have any strictly required elements. However, either
-        <code>title</code> or <code>description</code> must be present.
-    </para>
-
-    <para>
-        Common item elements:
+        Allgemeine optionale Elemente eines Channels:
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>title</code> - The title of the item</para>
+                <para><code>pubDate</code> - Das Erscheinungsdatum dieses Informationssatzes, im 
+                RFC 822 Datumsformat</para>
             </listitem>
             <listitem>
-                <para><code>link</code> - The URL of the item</para>
+                <para><code>language</code> - Die Sprache, in der dieser Channel verfasst ist</para>
             </listitem>
             <listitem>
-                <para><code>description</code> - A synopsis of the item</para>
-            </listitem>
-            <listitem>
-                <para><code>author</code> - The author's email address</para>
-            </listitem>
-            <listitem>
-                <para><code>category</code> - One more more categories that the item belongs to</para>
-            </listitem>
-            <listitem>
-                <para><code>comments</code> - URL of comments relating to this item</para>
-            </listitem>
-            <listitem>
-                <para><code>pubDate</code> - The date the item was published, in RFC 822 date format</para>
+                <para><code>category</code> - Eine oder mehrere Kategorien (durch mehrfache Tags 
+                spezifiziert), zu denen der Channel gehört</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        In your code you can always test to see if an element is non-empty with:
+        RSS <code>&lt;item&gt;</code> Elemente haben keine strikt erforderlichen Elemente. Dennoch
+        müssen entweder <code>title</code> oder <code>description</code> vorhanden sein.
+    </para>
+
+    <para>
+        Allgemeine Elements eines Eintrags:
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para><code>title</code> - Die Überschrift des Eintrags</para>
+            </listitem>
+            <listitem>
+                <para><code>link</code> - Die URL des Eintrags</para>
+            </listitem>
+            <listitem>
+                <para><code>description</code> - Eine Zusammenfassung des Eintrags</para>
+            </listitem>
+            <listitem>
+                <para><code>author</code> - Die E-Mail Adresse des Autoren</para>
+            </listitem>
+            <listitem>
+                <para><code>category</code> - Eine oder mehrere Kategorien, zu denen der Eintrag 
+                gehört</para>
+            </listitem>
+            <listitem>
+                <para><code>comments</code> - URL der Kommentare zu diesem Eintrag</para>
+            </listitem>
+            <listitem>
+                <para><code>pubDate</code> - Das Datum, an dem der Eintrag veröffentlicht wurde, 
+                im RFC 822 Datumsformat</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        In deinem Code kannst du hiermit immer überprüfen, ob ein Element nicht leer ist:
         <programlisting role="php"><![CDATA[
 <?php
 
 if ($item->propname()) {
-    // ... proceed.
+    // ... fahre fort.
 }
 
 ?>]]></programlisting>
     </para>
 
     <para>
-        If you use <code>$item->propname</code> instead, you will always get an empty object which will
-        evaluate to <code>TRUE</code>, so your check will fail.
+        Wenn du stattdessen <code>$item->propname</code> verwendest, wirst du immer ein leeres 
+        Objekt erhalten, das mit <code>TRUE</code> evaluiert, so dass deine Prüfung fehlschlagen 
+        würde.
     </para>
 
     <para>
-        For further information, the official RSS 2.0 specification is available at:
+        Für weitere Informationen ist die offizielle RSS 2.0 Specification hier verfügbar:
         <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
     </para>
 </sect1>
 
 <sect1 id="zend.feed.consuming-atom">
-<title>Consuming an Atom Feed</title>
+<title>Einen Atom Feed konsumieren</title>
 
     <para>
-        <code>Zend_Feed_Atom</code> is used in much the same way as <code>Zend_Feed_Rss</code>. It provides
-        the same access to feed-level properties and iteration over entries in the feed. The main
-        difference is in the structure of the Atom protocol itself. Atom is a successor to RSS; it is more
-        generalized protocol and it is designed to deal more easily with feeds that provide their full
-        content inside the feed, splitting RSS' <code>description</code> tag into two elements,
-        <code>summary</code> and <code>content</code>, for that purpose.
+        <code>Zend_Feed_Atom</code> wird auf die ziemlich genau selbe Weise verwendet wie
+        <code>Zend_Feed_Rss</code>. Es stellt die gleichen Zugriffsmöglichkeiten auf Eigenschaften
+        auf Feed Ebene und bei der Iteration über Einträge des Feeds bereit. Der Hauptunterschied
+        ist die Struktur des Atom Protokolls selber. Atom ist ein Nachfolger von RSS; es ist ein
+        mehr verallgemeinertes Protokoll und es wurde gestaltet, um einfacher mit Feeds umzugehen,
+        die ihren kompletten Inhalt innerhalb des Feeds bereit stellen, indem für diesen Zweck der 
+        <code>description</code> Tag von RSS in die zwei Elemente <code>summary</code> und 
+        <code>content</code> aufgeteilt wird.
     </para>
 
     <example>
-        <title>Basic Use of an Atom Feed</title>
+        <title>Grundlegende Verwendung eines Atom Feeds</title>
         <para>
-            Read an Atom feed and print the <code>title</code> and <code>summary</code> of each entry:
+            Lese einen Atom Feed und gebe <code>title</code> und <code>summary</code> jedes 
+            Eintrages aus:
         </para>
         <programlisting role="php"><![CDATA[
 <?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/');
-echo 'The feed contains ' . $feed->count() . ' entries.' . "\n\n";
+echo 'Der Feed enthält ' . $feed->count() . ' Einträge.' . "\n\n";
 foreach ($feed as $entry) {
-    echo 'Title: ' . $entry->title() . "\n";
-    echo 'Summary: ' . $entry->summary() . "\n\n";
+    echo 'Überschrift: ' . $entry->title() . "\n";
+    echo 'Zusammenfassung: ' . $entry->summary() . "\n\n";
 }
 
 ?>]]>   </programlisting>
     </example>
 
     <para>
-        In an Atom feed you can expect to find the following feed properties:
+        In einem Atom Feed kannst du die folgenden Feed-Eigenschaften erwarten:
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>title</code> - The feed's title, same as RSS's channel title</para>
+                <para><code>title</code> - Die Überschrift des Feeds, gleichbedeutend mit der 
+                Überschrift eines RSS Channels</para>
             </listitem>
             <listitem>
-                <para><code>id</code> - Every feed and entry in Atom has a unique identifier</para>
+                <para><code>id</code> - Jeder Feed und Eintrag hat in Atom einen einzigartige 
+                Bezeichner</para>
             </listitem>
             <listitem>
-                <para><code>link</code> - Feeds can have multiple links, which are distinguished by a
-                <code>type</code> attribute</para>
+                <para><code>link</code> - Feeds können mehrere Links enthalten, welche durch ein
+                <code>type</code> Attribut ausgezeichnet werden</para>
                 <para>
-                    The equivalent to RSS's channel link would be <code>type="text/html"</code>. If the link
-                    is to an alternate version of the same content that's in the feed, it would have a
-                    <code>rel="alternate"</code> attribute.
+                    In einem RSS Channel wäre dies gleichbedeutend mit <code>type="text/html"</code>.
+                    Wenn der Link auf eine alternative Version des selben Inhalts verweist, der 
+                    nicht im Feed enthalten ist, würde es ein <code>rel="alternate"</code> Attribut
+                    enthalten.
                 </para>
             </listitem>
             <listitem>
-                <para><code>subtitle</code> - The feed's description, equivalent to RSS' channel description
-                </para>
-                <para><code>author->name()</code> - The feed author's name</para>
-                <para><code>author->email()</code> - The feed author's email address</para>
+                <para><code>subtitle</code> - Die Beschreibung des Feeds, gleichbedeutend mit der 
+                Beschreibung eines RSS Channels</para>
+                <para><code>author->name()</code> - Der Name des Autoren des Feeds</para>
+                <para><code>author->email()</code> - Die E-Mail Adresse des Autoren des Feeds</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        Atom entries commonly have the following properties:
+        Atom Einträge haben normalerweise folgende Eigenschaften:
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>id</code> - The entry's unique identifier</para>
+                <para><code>id</code> - Der einzigartige Bezeichner des Eintrags</para>
             </listitem>
             <listitem>
-                <para><code>title</code> - The entry's title, same as RSS item titles</para>
+                <para><code>title</code> - Die Überschrift des Eintrags, gleichbedeutend mit der 
+                Überschrift eines RSS Eintrags</para>
             </listitem>
             <listitem>
-                <para><code>link</code> - A link to another format an an alternate view of this entry</para>
+                <para><code>link</code> - Ein Link zu einem anderen Format oder eine alternativen
+                Ansicht diesen Eintrags</para>
             </listitem>
             <listitem>
-                <para><code>summary</code> - A summary of this entry's content</para>
+                <para><code>summary</code> - Eine Zusammenfassung des Inhalts dieses Eintrags</para>
             </listitem>
             <listitem>
-                <para><code>content</code> - The full content of the entry; can be skipped if the feed just
-                contains summaries</para>
+                <para><code>content</code> - Der komplette Inhalt des Eintrags; kann übersprungen 
+                werden, wenn der Feed nur Zusammenfassungen enthält</para>
             </listitem>
             <listitem>
-                <para><code>author</code> - with <code>name</code> and <code>email</code> sub-tags like
-                feeds have</para>
+                <para><code>author</code> - Mit <code>name</code> und <code>email</code> Unter-Tags 
+                wie den Feeds</para>
             </listitem>
             <listitem>
-                <para><code>published</code> - the date the entry was published, in RFC 3339 format</para>
+                <para><code>published</code> - Das Datum, an dem der Eintrag veröffentlicht wurde, 
+                im RFC 3339 Format</para>
             </listitem>
             <listitem>
-                <para><code>updated</code> - the date the entry was last updated, in RFC 3339 format</para>
+                <para><code>updated</code> - Das Datum, an dem der Eintrag das letzte Mal geändert 
+                wurde, im RFC 3339 Format</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        For more information on Atom and plenty of resources, see
+        Für weitere Informationen über Atom und unzähligen anderen Quellen, besuche
         <ulink url="http://www.atomenabled.org/">http://www.atomenabled.org/</ulink>.
     </para>
 </sect1>
 
 <sect1 id="zend.feed.consuming-atom-single-entry">
-    <title>Consuming a Single Atom Entry</title>
+    <title>Einen einzelnen Atom Eintrag konsumieren</title>
 
     <para>
-        Single Atom <code>&lt;entry&gt;</code> elements are also valid by themselves. Usually the URL for an
-        entry is the feed's URL followed by <code>/&lt;entryId&gt;</code>, such as
-        <code>http://atom.example.com/feed/1</code>, using the example URL we used above.
+        Einzelne Atom <code>&lt;entry&gt;</code> Elemente sind auch für sich selber gültig. 
+        Normalerweise ist die URL für einen Eintrag die URL des Feeds gefolgt von 
+        <code>/&lt;entryId&gt;</code>, wie bei <code>http://atom.example.com/feed/1</code>, um
+        das obige Beispiel zu verwenden.
     </para>
 
     <para>
-        If you read a single entry, you will still have a <code>Zend_Feed_Atom</code> object, but it will
-        automatically create an "anonymous" feed to contain the entry.
+        Wenn Du einen einzelnen Eintrag liest, wirst du dennoch ein <code>Zend_Feed_Atom</code> 
+        Objekt erhalten, aber es wird automatisch ein "anonymer" Feed erstellt, welcher den Eintrag
+        enthält.
     </para>
 
     <example>
-        <title>Reading a Single-Entry Atom Feed</title>
+        <title>Lesen eines Atom Feeds mit einem Eintrag</title>
         <programlisting role="php"><![CDATA[
 <?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
-echo 'The feed has: ' . $feed->count() . ' entry.';
+echo 'Der Feed hat: ' . $feed->count() . ' Eintrag.';
 
 $entry = $feed->current();
 
@@ -400,12 +426,12 @@ $entry = $feed->current();
     </example>
 
     <para>
-        Alternatively, you could instantiate the entry object directly if you know you are accessing an
-        <code>&lt;entry&gt;</code>-only document:
+        Alternativ kannst du das Objekt für den Eintrag auch direkt instanziieren, wenn du weist, 
+        dass du ein Dokument mit nur einem Eintrag abrufst:
     </para>
 
     <example>
-        <title>Using the Entry Object Directly for a Single-Entry Atom Feed</title>
+        <title>Direkte Verwendung des Eintragsobjekts für einen Atom Feed mit nur einem Eintrag</title>
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -417,64 +443,67 @@ echo $entry->title();
 </sect1>
 
 <sect1 id="zend.feed.modifying-feed">
-    <title>Modifying Feed and Entry structures</title>
+    <title>Verändern der Feed- und Eintragsstruktur</title>
 
     <para>
-        <code>Zend_Feed</code>'s natural syntax extends to constructing and modifying feeds and entries as well
-        as reading them. You can easily turn your new or modified objects back into well-formed XML for saving
-        to a file or sending to a server.
+        Die natürliche Syntax von <code>Zend_Feed</code> wurde für das Erstellen und Verändern von 
+        Feeds und Einträgen sowie das Lesen dieser erweitert. Du kannst die neuen oder veränderten
+        Objekte einfach in wohlgeformtes XML umsetzen, um es als Datei zu speichern oder an einen
+        Server zu senden.
     </para>
 
     <example>
-        <title>Modifying an Existing Feed Entry</title>
+        <title>Verändern eines bestehenden Feed Eintrags</title>
         <programlisting role="php"><![CDATA[
 <?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
 
-$entry->title = 'This is a new title';
+$entry->title = 'Dies ist ein neuer Titel';
 $entry->author->email = 'my_email@example.com';
 
 echo $entry->saveXML();
 
 ?>]]>   </programlisting>
         <para>
-            This will output a full (includes <code>&lt;?xml ... &gt;</code> prologue) XML representation of the
-            new entry, including any necessary XML namespaces.
+            Dies gibt eine vollständige (enthält den <code>&lt;?xml ... &gt;</code> Prolog) XML 
+            Darstellung des neuen Eintrags aus, inklusive jedes notwendige XML Namensraumes.
         </para>
         <para>
-            Note that the above will work even if the existing entry does not already have an author tag. You can
-            use as many levels of <code>-&gt;</code> access as you like before getting to an assignment; all of the
-            intervening levels will be created for you automatically if necessary.
+            Beachte, dass das Obige auch funktioniert, wenn der existierende Eintrag noch keinen
+            Autoren Tag beinhaltet. Du kannst soviele Ebenen von <code>-&gt;</code> Verweisen 
+            verwenden, wie Du möchtest, um auf eine Zuordnung zugreifen zu können; alle dieser
+            zwischengeschalteten Stufen werden automatisch für dich erstellt wenn notwendig.
         </para>
     </example>
 
     <para>
-        If you want to use a namespace other than <code>atom:</code>, <code>rss:</code>, or <code>osrss:</code>
-        in your entry, you need to register the namespace with <code>Zend_Feed</code> using <code>
-        Zend_Feed::registerNamespace()</code>. When you are modifying an existing element, it will always
-        maintain its original namespace. When adding a new element, it will go into the default namespace if
-        you do not explicitly specify another namespace.
+        Wenn du einen anderen Namensraum als <code>atom:</code>, <code>rss:</code>, oder 
+        <code>osrss:</code> in deinem Eintrag verwenden möchtest, musst du den Namensraum mit 
+        <code>Zend_Feed</code> durch die Verwendung von <code>Zend_Feed::registerNamespace()</code> 
+        registrieren. Wenn du ein bestehendes Element veränderst, wird es immer den ursprünglichen
+        Namensraum beibehalten. Wenn du ein neues Element hinzufügst, wird es den standardmäßigen 
+        Namensraum verwenden, wenn du nicht explizit einen anderen Namensraum festgelegt hast.
     </para>
 
     <example>
-        <title>Creating an Atom Entry with Elements of Custom Namespaces</title>
+        <title>Erstellen eines Atom Eintrags mit Elementen eines eigenen Namensraumes</title>
         <programlisting role="php"><![CDATA[
 <?php
 
 $entry = new Zend_Feed_EntryAtom();
-// id is always assigned by the server in Atom
-$entry->title = 'my custom entry';
-$entry->author->name = 'Example Author';
+// Die ID wird immer vom Server in Atom zugewiesen
+$entry->title = 'mein eigener Eintrag';
+$entry->author->name = 'Beispiel Autor';
 $entry->author->email = 'me@example.com';
 
-// Now do the custom part.
+// Nun erledige den eigenen Teil
 Zend_Feed::registerNamespace('myns', 'http://www.example.com/myns/1.0');
 
-$entry->{'myns:myelement_one'} = 'my first custom value';
-$entry->{'myns:container_elt'}->part1 = 'first nested custom part';
-$entry->{'myns:container_elt'}->part2 = 'second nested custom part';
+$entry->{'myns:myelement_one'} = 'mein erster eigener Wert ';
+$entry->{'myns:container_elt'}->part1 = 'Erster verschachtelter Teil';
+$entry->{'myns:container_elt'}->part2 = 'Zweiter verschachtelter Teil';
 
 echo $entry->saveXML();
 
@@ -483,27 +512,29 @@ echo $entry->saveXML();
 </sect1>
 
 <sect1 id="zend.feed.custom-feed">
-    <title>Custom Feed and Entry Classes</title>
+    <title>Eigene Klassen für Feeds und Einträge</title>
 
     <para>
-        Finally, you can extend the <code>Zend_Feed</code> classes if you'd like to provide your own format or
-        niceties like automatic handling of elements that should go into a custom namespace.
+        Schließlich kannst du die <code>Zend_Feed</code> Klasse erweitern, wenn du dein eigenes
+        Format oder Feinheiten wie die automatische Verarbeitung von Elementen, die in deinen 
+        eigenen Namensraum enthalten sein sollen, bereit stellen möchtest
     </para>
 
     <para>
-        Here is an example of a custom Atom entry class that handles its own <code>myns:</code> namespace
-        entries. Note that it also makes the <code>registerNamespace()</code> call for you, so the end user
-        doesn't need to worry about namespaces at all.
+        Hier ist ein Beispiel einer eigenen Klasse für Atom Einträge, die ihre eigenen Elemente für
+        den <code>myns:</code> Namensraum verwendet. Beachte, dass sie auch den 
+        <code>registerNamespace()</code> Aufruf für dich durchführt, so dass sich der Endbenutzer 
+        nicht um Namensräume kümmern muss.
     </para>
 
     <example>
-        <title>Extending the Atom Entry Class with Custom Namespaces</title>
+        <title>Die Klasse für Atom Einträge mit einem eigenen Namensraum erweitern</title>
         <programlisting role="php"><![CDATA[
 <?php
 
 /**
- * The custom entry class automatically knows the feed URI (optional) and
- * can automatically add extra namespaces.
+ * Die eigene Klasse für Einträge kennt automatisch die Feed URI (optional)
+ * und kann automatisch weitere Namensräume hinzufügen
  */
 class MyEntry extends Zend_Feed_EntryAtom
 {
@@ -520,7 +551,7 @@ class MyEntry extends Zend_Feed_EntryAtom
     {
         switch ($var) {
             case 'myUpdated':
-                // Translate myUpdated to myns:updated.
+                // Übersetze myUpdated nach myns:updated.
                 return parent::__get('myns:updated');
 
             default:
@@ -532,7 +563,7 @@ class MyEntry extends Zend_Feed_EntryAtom
     {
         switch ($var) {
             case 'myUpdated':
-                // Translate myUpdated to myns:updated.
+                // Übersetze myUpdated nach myns:updated.
                 parent::__set('myns:updated', $value);
                 break;
 
@@ -545,8 +576,8 @@ class MyEntry extends Zend_Feed_EntryAtom
 
 ?>]]>   </programlisting>
         <para>
-            Then to use this class, you'd just instantiate it directly and set the <code>myUpdated</code>
-            property:
+            Um diese Klasse zu verwenden, musst du sie nur direkt instanziieren und die 
+            <code>myUpdated</code> Eigenschaft setzen.
             <programlisting role="php"><![CDATA[
 <?php
 
