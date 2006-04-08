@@ -1,12 +1,12 @@
 <sect1 id="zend.filter.introduction">
-    <title>Introduction</title>
-    <para><literal>Zend_Filter</literal> provides a library of static methods
-    for filtering data. For input filtering, you should use <xref
-    linkend="zend.inputfilter" /> instead, because it provides a framework for
-    filtering input using the methods provided by this class. However, because
-    <literal>Zend_InputFilter</literal> is designed primarily for arrays,
-    <literal>Zend_Filter</literal> can be useful for filtering scalars, because
-    it behaves like PHP's string functions:</para>
+    <title>Einführung</title>
+    <para><literal>Zend_Filter</literal> stellt eine Bilbliothek von statischen Methoden für das  
+    Filtern von Daten bereit. Für das Filtern von Eingabedaten, solltest Du stattdessen 
+    <xref linkend="zend.inputfilter" /> verwenden, weil es einen Rahmen für das Filtern von
+    Eingabedaten bereitstellt, welches die Methoden dieser Klasse verwendet. Weil 
+    <literal>Zend_InputFilter</literal> hauptsächlich für Arrays entwickelt wurde, kann 
+    <literal>Zend_Filter</literal> dennoch für das Filtern von Skalaren verwendet werden, da die 
+    Methoden sich wie die String Funktionen von PHP verhalten:</para>
     <programlisting>
 <![CDATA[<?php
 
@@ -18,22 +18,22 @@ $alphaUsername = Zend_Filter::getAlpha('John123Doe');
     </programlisting>
 </sect1>
 <sect1 id="zend.filter.usecases">
-    <title>Use Cases</title>
-    <para>In each of these use cases, <literal>$value</literal> represents an
-    arbitrary scalar value.</para>
-    <para>Whitelist Filtering:</para>
+    <title>Anwendungsfälle</title>
+    <para>In jedem dieser Anwendungsfälle stellt <literal>$value</literal> einen beliebigen 
+    skalaren Wert dar.</para>
+    <para>Whitelist Filtern:</para>
     <programlisting>
 <![CDATA[<?php
 
 if ($email = Zend_Filter::isEmail($value)) {
-    /* $email is a valid email format. */
+    /* $email ist in einem gültigen E-Mail Format  */
 } else {
-    /* $email is not a valid email format. */
+    /* $email ist nicht in einem gültigen E-Mail Format. */
 }
 
 ?>]]>
     </programlisting>
-    <para>Blind Filtering:</para>
+    <para>Blindes Filtern:</para>
     <programlisting>
 <![CDATA[<?php
 
@@ -41,7 +41,7 @@ $alphaName = Zend_Filter::getAlpha($value);
 
 ?>]]>
     </programlisting>
-    <para>Blacklist Filtering:</para>
+    <para>Blacklist Filtern:</para>
     <programlisting>
 <![CDATA[<?php
 

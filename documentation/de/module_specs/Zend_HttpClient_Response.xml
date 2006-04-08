@@ -1,34 +1,39 @@
 <sect1 id="zend.httpclient.response">
     <title>Zend_HttpClient_Response</title>
     <sect2 id="zend.httpclient.response.introduction">
-        <title>Introduction</title>
+        <title>Einführung</title>
         <para>
-            <code>Zend_HttpClient_Response</code> provides easy access to the responses returned by
-            <xref linkend="zend.httpclient" />. It provides an intuitive set of methods for working
-            with the HTTP response data received from a request:
+            <code>Zend_HttpClient_Response</code> stellt einen einfachen Zugriff auf die Antworten
+            von <xref linkend="zend.httpclient" /> bereit. Es stellt eine intuitive Gruppe von 
+            Methoden für das Arbeiten mit HTTP Response Daten bereit, die auf eine Anfrage zurück
+            gegeben werden.
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Returns TRUE if an HTTP error code was received; FALSE otherwise.
+                    <code>isError()</code>: Gibt TRUE zurück, wenn ein HTTP Fehlercode empfangen 
+                    wurde; andernfalls wird FALSE zurückgegeben.
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Returns TRUE if an HTTP success code was received; FALSE otherwise.
+                    <code>isSuccessful()</code>: Gibt TRUE zurück, when ein HTTP Erfolgscode 
+                    empfangen wurde; andernfalls wird FALSE zurückgegeben.
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Returns TRUE if an HTTP redirect code was received; FALSE otherwise.
+                    <code>isRedirect()</code>: Gibt TRUE zurück, wenn ein HTTP Weiterleitungscode
+                    empfangen wurde; andernfalls wird FALSE zurückgegeben.
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Returns the HTTP status code.
+                    <code>getStatus()</code>: Gibt den HTTP Statuscode zurück.
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Returns an array of HTTP response header strings.
+                    <code>getHeaders()</code>: Gibt ein Array mit Strings von HTTP Response Header 
+                    zurück.
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Returns the HTTP response body as a string.
+                    <code>getBody()</code>: Gibt den HTTP Response Rumpf als String zurück.
                 </listitem>
             </itemizedlist>
         </para>
         <example>
-            <title>Working with HTTP Response Data</title>
+            <title>Arbeiten mit HTTP Response Daten</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 try {
@@ -37,16 +42,16 @@ try {
     if ($response->isSuccessful()) {
         echo $response->getBody();
     } else {
-        echo "<p>An error occurred</p>\n";
+        echo "<p>Ein Fehler ist aufgetreten</p>\n";
         echo "HTTP Status: " . $response->getStatus() . "\n";
-        echo "HTTP Headers:\n";
+        echo "HTTP Header:\n";
         $responseHeaders = $response->getHeaders();
         foreach ($responseHeaders as $responseHeaderName => $responseHeaderValue) {
             echo "$responseHeaderName: $responseHeaderValue\n";
         }
     }
 } catch (Zend_HttpClient_Exception $e) {
-    echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
+    echo '<p>Ein Fehler ist aufgetreten (' .$e->getMessage(). ')</p>';
 }
 ?>]]></programlisting>
         </example>
