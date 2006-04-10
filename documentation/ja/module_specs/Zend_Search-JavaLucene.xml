@@ -1,0 +1,153 @@
+<sect1 id="zend.search.java-lucene">
+    <title>Java Lucene との相互運用</title>
+
+	<sect2 id="zend.search.index-creation.file-formats">
+		<title>ファイルフォーマット</title>
+        <para>
+          Zend_Search_Lucene のインデックスファイルのフォーマットは、
+          Lucene バージョン 1.4 以降とバイナリ互換性があります。
+        </para>
+    
+        <para>
+          このファイルフォーマットについての詳細な説明は
+          <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>
+          にあります。
+        </para>
+	</sect2>	
+    
+    <sect2 id="zend.search.index-creation.index-directory">
+        <title>インデックスディレクトリ</title>
+    
+        <para>
+        インデックスを作成すると、
+        インデックスディレクトリにはいくつかのファイルが出来上がります。
+        </para>
+    
+        <itemizedlist>
+            <listitem>
+                <para>
+                <filename>segments</filename> ファイルはインデックスセグメントの一覧です。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                <filename>*.cfs</filename> ファイルにはインデックスセグメントが含まれます。
+                注意! 最適化されたインデックスは常にひとつのセグメントだけになります。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                <filename>deletable</filename> ファイルは、
+                もはやインデックスからは使用されていないけれども削除できないファイルの一覧です。
+                </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>	
+	
+	<sect2 id="zend.search.java-lucene.source-code">
+		<title>Java のソースコード</title>
+        <para>
+            以下の Java プログラムリストは、Java Lucene
+            を使用してファイルのインデックスを作成する方法を示す例です。
+        </para>
+    
+        <programlisting role="java"><![CDATA[
+/**
+* インデックスの作成
+*/
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.document.*;
+
+import java.io.*
+
+...
+
+IndexWriter indexWriter = new IndexWriter("/data/my_index", 
+                                          new SimpleAnalyzer(), true);
+
+...
+
+String filename = "/path/to/file-to-index.txt"
+File f = new File(filename);
+
+Document doc = new Document();
+doc.add(Field.Text("path", filename));
+doc.add(Field.Keyword("modified",DateField.timeToString(f.lastModified())));
+doc.add(Field.Text("author", "unknown"));
+FileInputStream is = new FileInputStream(f);
+Reader reader = new BufferedReader(new InputStreamReader(is));
+doc.add(Field.Text("contents", reader));
+
+indexWriter.addDocument(doc);]]>
+        </programlisting>
+    </sect2>
+        
+	<sect2 id="zend.search.java-lucene.jar">  
+        <title>LuceneIndexCreation.jar の使用法</title>
+	
+        <para>
+            Zend_Search_Lucene を手っ取り早く使用できるように、
+            JAR ファイル (Java) が作成されました。
+            これを使用すると、コマンドラインからインデックスを作成することができます。
+            JAR ファイルについての詳細な情報は、
+            <ulink url="http://java.sun.com/docs/books/tutorial/jar/basics/index.html"/>
+            を参照ください。
+        </para>
+    
+        <para>
+            LuceneIndexCreation.jar は、
+            テキストファイルを読み込んでインデックスを作成します。
+            使用法は以下のとおりです。
+        <programlisting role="java"><![CDATA[
+    java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
+    -c   - インデックスの大文字小文字を区別します
+    -s   - コンテンツをインデックスに保存します
+    ]]></programlisting>
+            このコマンドは、ディレクトリ <code>&lt;document_dir&gt;</code>
+            およびそのサブディレクトリの内容を読み込んで、Lucene
+            インデックスを作成します。
+            インデックスはいくつかのファイルで構成されており、
+            <code>&lt;index_dir&gt;</code> で指定したディレクトリに作成されます。
+        </para>
+    
+        <para>
+            各ドキュメントについて、LuceneIndexCreation
+            は以下の 3 つのフィールドからなるドキュメントオブジェクトを作成します。
+            <emphasis>contents</emphasis> にはドキュメントの内容が含まれ、
+            <emphasis>modified</emphasis> にはファイルの更新日時が含まれます。
+            またドキュメントのフルパスおよびファイル名が
+            <emphasis>path</emphasis> に含まれます。
+        </para>
+    
+        <para>
+            <option>-c</option> を指定すると、
+            インデックスの大文字小文字を区別するようにします。
+            指定しない場合は、インデックスに追加する前にすべての単語が小文字に変換されます。
+        </para>
+    
+        <para>
+            <option>-s</option> を指定すると、ドキュメントのコンテンツも
+            インデックスに保存されます。保存された内容は、
+            <code>path</code> フィールドおよび <code>modified</code>
+            フィールドとともに取得できるようになります。
+        </para>
+        
+        <para>
+            指定しない場合は、<code>path</code> フィールドおよび
+            <code>modified</code> フィールドのみが保存されます。
+            <code>contents</code> フィールドはインデックス化のみが行われます。
+            この場合、ドキュメントのコンテンツを取得するには、
+            path の内容から元のドキュメントを参照しなければなりません。
+        </para>
+        
+        <para>
+            <option>-s</option> オプションを使用すると、
+            インデックスの大きさが約 5 倍になることに注意しましょう。
+        </para>
+	</sect2>
+
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

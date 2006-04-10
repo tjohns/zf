@@ -1,0 +1,112 @@
+<sect1 id="zend.log.introduction">
+    <title>導入</title>
+    <para>
+        <code>Zend_Log</code> は、一般的なログ取得用クラスです。
+        <code>Zend_Log</code> は静的なクラスで、直接インスタンスを作成することはできません。
+        このクラスは <code>Zend_Log</code> のインスタンスの配列を保持します。
+        それぞれのインスタンスがアプリケーションから使用されます。
+        各インスタンスは、<code>Zend_Log_Adapter_Interface</code>
+        を実装したアダプタを使用します。
+    </para>
+
+    <para>
+        <code>Zend_Log</code> を使用するには、
+        <code>Zend_Log</code> クラスおよび使用するアダプタクラスを
+        <ulink url="http://php.net/include">include()</ulink> します。
+        例えば、アプリケーションのログをコンソール (PHP の出力バッファ)
+        およびテキストファイルの両方に出力するには、以下のファイルを
+        include します。
+
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                  // Zend_Log 基底クラス
+require_once 'Zend/Log/Adapter/Console.php';  // コンソール用ログアダプタ
+require_once 'Zend/Log/Adapter/File.php';     // ファイル用ログアダプタ
+]]></programlisting>
+
+        <code>Zend_Log</code> では単一のログを簡単な方法で使用することもできますし、
+        複数のログを使用するよう設定することもできます。また、Zend Framework
+        のクラスの内部動作を記録するために使用することも可能です。
+    </para>
+</sect1>
+
+<sect1 id="zend.log.simple-logging">
+    <title>単一のログへの記録</title>
+    <para>
+        ロガーを作成するには、<code>Zend_Log_Adapter_Interface</code> のインスタンスを引数として
+        <code>Zend_Log::registerLogger()</code> メソッドをコールします。
+
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                // Zend_Log 基底クラス
+require_once 'Zend/Log/Adapter/File.php';   // ファイル用ログアダプタ
+
+// ファイルロガーを登録します
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
+]]></programlisting>
+    </para>
+
+    <para>
+        メッセージをログに記録するには <code>Zend_Log::log()</code> を使用します。
+
+        <programlisting role="php"><![CDATA[
+/**
+ * メッセージをログに記録します。オプションの 2 番目の引数で
+ * ログのレベルを指定します。指定されなかった場合は LEVEL_DEBUG を使用します。
+ */
+Zend_Log::log('はじめてのログメッセージ。');
+
+/**
+ * 深刻なメッセージを記録します
+ */
+Zend_Log::log('深刻なエラーが発生しました。', Zend_Log::LEVEL_SEVERE);
+]]></programlisting>
+    </para>
+</sect1>
+
+<sect1 id="zend.log.log-levels">
+   <title>ログのレベル</title>
+   <para>
+       オプションの 2 番目の引数で別のレベルを指定しない限り、
+       <code>Zend_Log::log()</code> はすべてのメッセージを <code>LEVEL_DEBUG</code>
+       として記録します。
+       <code>Zend_Log</code> クラスが使用できるログレベル定数を以下に示します。
+
+       <programlisting role="php"><![CDATA[
+LEVEL_DEBUG     = 1
+LEVEL_WARNING   = 4
+LEVEL_ERROR     = 8
+LEVEL_SEVERE    = 16
+]]></programlisting>
+   </para>
+</sect1>
+
+<sect1 id="zend.log.advanced-logging">
+   <title>より高度なログの記録: 複数のロガーの使用</title>
+   <para>
+        <code>Zend_Log</code> は、複数のログアダプタを使用したログの記録をサポートしています。
+        メッセージを全てのログに送信するか、あるいは特定のログにのみ送信するかを指定できます。
+   </para>
+
+   <para>
+        複数のロガーを作成する際には、それぞれのロガーに個別の名前をつける必要があります。
+        ロガーの登録には <code>registerLogger()</code> メソッドを使用し、
+        オプションの 2 番目の引数で名前を指定します。
+   </para>
+
+   <para>
+        以下の例では、2 つのロガーが作成されます。ひとつはコンソール用、
+        もうひとつはファイル用で、それぞれの名前は
+        <code>Console</code> および <code>File</code> となります。
+
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                 // Zend_Log 基底クラス
+require_once 'Zend/Log/Adapter/File.php';    // ファイル用ログアダプタ
+require_once 'Zend/Log/Adapter/Console.php'; // コンソール用ログアダプタ
+
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'File');
+Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Console');
+]]></programlisting>
+   </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

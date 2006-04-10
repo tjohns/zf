@@ -1,0 +1,208 @@
+<sect1 id="zend.controller.overview">
+	<title>概要</title>
+
+	<sect2 id="zend.controller.overview.introduction">
+		<title>導入</title>
+		<para>
+			<code>Zend_Controller</code> は、モデル - ビュー - コントローラ
+			(MVC) パターンに基づいたウェブサイトを構築するための基本機能を提供します。
+		</para>
+
+		<para>
+			<code>Zend_Controller</code> は軽量で部品化されており、拡張しやすいように設計されています。
+			この設計は、柔軟性および利用者に対する自由度を確保するための最低限のものであり、
+			<code>Zend_Controller</code> を使用して構築したシステムは、
+			ほぼ同じようなコード配置・規約を共有することができます。
+		</para>
+
+		<para>
+			<code>Zend_Controller</code> の処理の流れは、
+			いくつかの部品にわかれて実装されています。
+			これらの部品のすべてを完璧に理解する必要はありませんが、
+			処理の概要を知っておくことは有用です。
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						<code>Zend_Controller_Front</code> は、
+						<code>Zend_Controller</code> の処理全体を取りまとめます。
+						FrontController パターンであるといえます。
+						サーバから受け取ったすべてのリクエストを <code>Zend_Controller_Front</code>
+						が処理し、最終的にリクエストを ActionController
+						(<code>Zend_Controller_Action</code>) に委譲します。
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<code>Zend_Controller_Router</code> はルータです。URI を受け取り、
+						どのコントローラのどのアクションがリクエストを処理すべきなのかを決定します。
+						コントローラ、アクションおよびオプションのパラメータは
+						<code>Zend_Controller_Dispatcher_Token</code>
+						というオブジェクトにまとめられます。これが、
+						<code>Zend_Controller_Dispatcher</code> によって処理されます。
+						ルーティングが発生するのは一度だけ、
+						つまり最初にリクエストを受け取って最初のコントローラに渡される際のみです。
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<code>Zend_Controller_Dispatcher</code> はディスパッチャです。
+						<code>Zend_Controller_Dispatcher_Token</code>
+						を受け取って適切なコントローラファイルを探し、
+						そのファイル内のコントローラクラス
+						(<code>Zend_Controller_Action</code> を実装していなければなりません)
+						のインスタンスを作成し、
+						最後にコントローラオブジェクトのアクションメソッドを実行します。
+						ルーティングが一度だけ発生するのとは異なり、
+						ディスパッチ処理は繰り返し発生します。
+						すべてのアクションが順にディスパッチされるまで、
+						<code>Zend_Controller_Dispatcher</code> は
+						<code>Zend_Controller_Front</code> から繰り返しコールされます。
+					</para>
+				</listitem>
+
+				<listitem>
+					<para>
+						<code>Zend_Controller_Action</code> はコントローラの基底コンポーネントです。
+						各コントローラは <code>Zend_Controller_Action</code>
+						クラスを継承した単一のクラスで、アクションメソッドを持っています。
+					</para>
+				</listitem>
+			</itemizedlist>
+
+			<code>Zend_Controller</code> の処理の流れは比較的シンプルです。
+			<code>Zend_Controller_Front</code> がリクエストを受け取り、
+			<code>Zend_Controller_Router</code> をコールして、
+			配送先となるコントローラ (そしてコントローラ内のアクション)
+			を決定します。<code>Zend_Controller_Router</code> は URI
+			を分解して <code>Zend_Controller_Dispatcher_Token</code>
+			オブジェクトに保存します。ここに配送先の情報が含まれます。
+			その後、<code>Zend_Controller_Front</code> はディスパッチループに突入します。
+			まず <code>Zend_Controller_Dispatcher</code> をコールしてトークンを渡し、
+			実際のコントローラ・アクションに処理を渡します。
+			コントローラが終了すると、処理は <code>Zend_Controller_Front</code>
+			に戻ります。コントローラが新しいトークンを返した
+			(別のコントローラを処理するように指示された) 場合は、
+			ループが続けられて次の配送処理が行われます。
+			それ以外の場合は、処理がそこで終了します。
+		</para>
+	</sect2>
+
+	<sect2 id="zend.controller.overview.routing-process">
+		<title>ルーティング処理</title>
+
+		<para>
+			はじめてのコントローラを作り始める前に、ルーティング処理が
+			<code>Zend_Controller_Router</code> でどのように実装されているのかを知る必要があるでしょう。
+			処理手順として、一度だけ発生するルーティングと繰り返し発生するディスパッチがあることを覚えておきましょう。
+		</para>
+
+		<para>
+			<code>Zend_Controller_Front</code> は <code>Zend_Controller_Router</code>
+			をコールし、URI をコントローラとアクションに対応させます。
+			<code>Zend_Controller_Router</code> は URI を受け取ってそれを分解し、
+			バリューオブジェクト <code>Zend_Controller_Dispatcher_Token</code> に保存します。
+			そしてそれがディスパッチャ (<code>Zend_Controller_Dispatcher</code>)
+			に渡されます。
+		</para>
+
+		<para>
+			ルータがコントローラ名とアクション名を決定する方法は、単純なものです。
+
+			<programlisting role="php"><![CDATA[
+http://framework.zend.com/controller/action/]]>
+			</programlisting>
+
+			上の例で、最初の部分が常にコントローラの名前となり、
+			2 番目の部分が常にアクションの名前となります。
+		</para>
+
+		<para>
+			オプションで、コントローラに渡すパラメータを URI に含めることができます。
+			これは キー/値 の組み合わせの形式になります。
+
+			<programlisting role="php"><![CDATA[
+http://framework.zend.com/controller/action/key1/value1/]]>
+			</programlisting>
+		</para>
+
+		<para>
+			URI の <code>/controller/</code> の部分に何も存在しない場合は、
+			"<code>index</code>" と解釈されます。また URI の <code>/action/</code>
+			の部分に何も存在しない場合は、"<code>index</code>" と解釈されます。
+			以下の例を参照ください。
+
+				<programlisting role="php"><![CDATA[
+http://framework.zend.com/roadmap/future/
+コントローラ: roadmap
+アクション  : future
+
+http://framework.zend.com/roadmap/
+コントローラ: roadmap
+アクション  : index
+
+http://framework.zend.com/
+コントローラ: index
+アクション  : index]]>
+				</programlisting>
+			</para>
+
+			<note>
+				現在、新しいルータを開発中です。このルータには URI の置換エンジンが含まれており、
+				現在のルータよりはるかに柔軟に使うことができます。
+				これは、ごく近い将来に予定されているプレビュー版に含まれる予定です。
+			</note>
+
+			<para>
+				コントローラの名前、コントローラ内のアクションの名前、
+				そしてオプションのパラメータの内容が、ひとつのトークン
+				<code>Zend_Controller_Dispatcher_Token</code> にまとめられます。
+				このトークンは <code>Zend_Controller_Front</code> に返され、
+				ディスパッチループに突入します。ディスパッチループに入ると、このトークンが
+				<code>Zend_Controller_Dispatcher</code> に渡されます。
+			</para>
+	</sect2>
+
+	<sect2 id="zend.controller.overview.dispatch-token">
+		<title>ディスパッチトークン</title>
+
+		<para>
+			ディスパッチトークンは単純なバリューオブジェクトで、
+			ルータやディスパッチャのインターフェイスを実装したクラスと
+			<code>Zend_Controller_Front</code> との間のデータのやり取りに使用されます。
+			これはコントローラ、アクションそしてアクションに渡すパラメータの内容をまとめたものです。
+		</para>
+
+		<itemizedlist>
+			<listitem><para>
+				コントローラ名へのアクセスは <code>getControllerName()</code>
+				および <code>setControllerName()</code> によって行います。
+			</para></listitem>
+			<listitem><para>
+				コントローラ内からコールされるアクションの名前へのアクセスは
+				<code>getActionName()</code> および <code>setActionName()</code>
+				によって行います。
+			</para></listitem>
+			<listitem><para>
+				アクションに渡されるパラメータは キー/値 の組み合わせからなる連想配列で、
+				<code>getParams()</code> および <code>setParams()</code> によってアクセスします。
+			</para></listitem>
+		</itemizedlist>
+	</sect2>
+
+	<sect2 id="zend.controller.overview.dispatching">
+		<title>ディスパッチ処理</title>
+
+		<para>
+			ディスパッチ処理は、トークン <code>Zend_Controller_Dispatcher_Token</code>
+			を受け取り、含まれる情報 (コントローラ名、アクション名およびオプションのパラメータ)
+			を展開し、コントローラのインスタンスを作成してそのコントローラのアクションをコールします。
+		</para>
+	</sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

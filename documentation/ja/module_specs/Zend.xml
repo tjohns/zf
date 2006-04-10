@@ -1,0 +1,236 @@
+<sect1 id="zend.introduction">
+    <title>導入</title>
+    <para>
+    Zend クラスは、Zend Framework の基礎となるクラスです。
+    このフレームワークの原則である DRY (Don't Repeat Yourself : 同じことを繰り返すな)
+    に従うために作成されました。
+    このクラスに含まれているのは静的なメソッドのみで、
+    Zend Framework の多くのコンポーネントが必要とする機能を含んでいます。
+    </para>
+</sect1>
+
+<sect1 id="zend.loadfile">
+    <title>Zend::loadFile()</title>
+
+    <para>
+    <code>Zend::loadFile()</code> は、任意の PHP コードを含む PHP
+    ファイルを読み込みます。PHP 関数
+    <ulink url="http://php.net/include"><code>include()</code></ulink>
+    のラッパーで、失敗した場合には <code>Zend_Exception</code> をスローします。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+loadFile($filename, $dirs=null, $once=false)
+
+?>]]></programlisting>
+
+    <para>
+    引数 <code>$filename</code> には読み込むファイル名を指定します。
+    ここにはパス情報を含めてはいけません。<code>$filename</code>
+    に対してはセキュリティチェックが行われます。
+    <code>$filename</code> に含めることができるのは英数字、ダッシュ ("-")、
+    アンダースコア ("_") あるいはピリオド (".") だけです。
+    引数 <code>$dirs</code> にはそのような制限はありません。
+    </para>
+
+    <para>
+    引数 <code>$dirs</code> にはファイルを探すディレクトリを指定します。
+    <code>NULL</code> の場合は <code>include_path</code> の中のみを対象とします。
+    文字列あるいは配列を指定すると、指定されたディレクトリをまず探した後で、それから
+    <code>include_path</code> を探します。
+    </para>
+
+    <para>
+    引数 <code>$once</code> には、ファイルを読み込む際に使用する PHP 関数を
+    <ulink url="http://php.net/include"><code>include()</code></ulink> あるいは
+    <ulink url="http://php.net/include_once"><code>include_once()</code></ulink>
+    のどちらにするのかを論理値で指定します。
+    </para>
+</sect1>
+
+<sect1 id="zend.loadclass">
+    <title>Zend::loadClass()</title>
+    <para>
+    <code>Zend::loadClass()</code> は、"<code>$className.php</code>"
+    のようなファイル名の PHP ファイルを読み込み、クラス
+    <code>$className</code> が存在するかを確かめます。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+loadClass($class, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+    ファイルが見つからなかったり、読み込んだファイルにクラスが存在しなかった場合は
+    <code>Zend_Exception</code> がスローされます。ファイルの読み込みには
+    <code>Zend::loadFile()</code> が使用されます。その際に引数 <code>$dirs</code>
+    の内容が渡されます。
+    </para>
+
+    <para>
+    アンダースコアを含めたクラス名を指定して <code>$dirs</code>
+    を null (デフォルト) にすると、<code>Zend::loadClass()</code>
+    はクラス名のアンダースコアをディレクトリ区切り文字に変換して
+    <code>$dirs</code> を自動的に設定します。例えば、
+    <code>$class</code> が <code>Zend_Example_Class</code>
+    の場合は <code>Zend/Example/Class.php</code> と読みかえられます。
+    </para>
+</sect1>
+
+<sect1 id="zend.loadinterface">
+    <title>Zend::loadInterface()</title>
+    <para>
+    <code>Zend::loadInterface()</code> は <code>Zend::loadClass()</code>
+    と同じように動作します。ただ、こちらはクラスではなくインターフェイスを読み込みます。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+loadInterface($interface, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+    <code>Zend::loadClass()</code> メソッドはインターフェイスの読み込みには使用できません。
+    なぜなら、PHP の関数 <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink>
+    がインターフェイスをチェックすることができないからです (PHP 5.0.2 まで)。
+    代わりに <code>Zend::loadInterface()</code> を使用します。
+    </para>
+
+    <para>
+    アンダースコアを含めたインターフェイス名を指定して <code>$dirs</code>
+    を null (デフォルト) にすると、<code>Zend::loadInterface()</code>
+    はインターフェイス名のアンダースコアをディレクトリ区切り文字に変換して
+    <code>$dirs</code> を自動的に設定します。例えば、
+    <code>$interface</code> が <code>Zend_Example_Interface</code>
+    の場合は <code>Zend/Example/Interface.php</code> と読みかえられます。
+    </para>
+</sect1>
+
+<sect1 id="zend.isreadable">
+    <title>Zend::isReadable()</title>
+
+    <para>ファイルが読み込み可能な場合に <code>TRUE</code>、それ以外の場合に FALSE を返します。</para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+isReadable($filename)
+
+?>]]></programlisting>
+
+    <para>
+    引数 <code>$filename</code> には調べたいファイル名を指定します。
+    ここにはパス情報を含めることができます。このメソッドは、PHP の関数
+    <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>
+    のラッパーです。PHP の関数では <code>include_path</code> は検索しませんが、
+    <code>Zend::isReadable()</code> は <code>include_path</code> も対象とします。
+    </para>
+</sect1>
+
+<sect1 id="zend.dump">
+    <title>Zend::dump()</title>
+
+    <para>
+    <code>Zend::dump()</code> は、式の内容を表示したり返したりします。
+    このメソッドは、PHP の関数 <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>
+    のラッパーです。出力は (X)HTML の <code>&lt;pre&gt;</code> タグで囲まれ、
+    オプションでラベルを指定できます。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+dump($var, $label=null, $echo=true)
+
+?>]]></programlisting>
+
+    <para>
+    引数 <code>$var</code> には、情報を取得したい式や変数を指定します。
+    </para>
+
+    <para>
+    <code>$label</code> は、<code>Zend::dump()</code>
+    の出力の前に追加される任意のテキストを指定します。
+    さまざまな変数の内容を一画面に表示する場合に有用です。
+    </para>
+
+    <para>
+    論理型の <code>$echo</code> で、<code>Zend::dump()</code> の結果を
+    echo するかどうかを指定します。<code>TRUE</code> の場合は出力が
+    echo されます。<code>$echo</code> の設定にかかわらず、
+    出力結果は常にメソッドの返り値となります。
+    </para>
+</sect1>
+
+
+<sect1 id="zend.register">
+    <title>Zend::register()</title>
+
+    <para>
+    オブジェクトをレジストリに登録します。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+register($name, $object)
+
+?>]]></programlisting>
+
+    <para>
+    レジストリとは、
+    オブジェクトのシングルトンインスタンスをアプリケーション空間に提供する仕組みのことです。
+    オブジェクトをレジストリに保存すると、
+    必要なときにいつでもそれを取り出して使用できます。
+    その際、常に同一のインスタンスが返されます。
+    </para>
+
+    <para>
+    <code>$name</code> には、保存するオブジェクトの名前を任意の文字列で指定します。
+    <code>Zend::registry()</code> でオブジェクトを取得する際に、この名前を使用します。
+    </para>
+
+    <para>
+    引数 <code>$name</code> は文字列でなければなりません。
+    レジストリに保存できるのはオブジェクトだけです。
+    オブジェクトをレジストリから削除することはできません。
+    また、同一インスタンスを複数回レジストリに保存することはできません。
+    これらの規則に違反すると <code>Zend_Exception</code> がスローされます。
+    </para>
+</sect1>
+
+<sect1 id="zend.registry">
+    <title>Zend::registry()</title>
+
+    <para>
+    レジストリ内のオブジェクトを返すか、レジストリ内のオブジェクトの一覧を返します。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+registry($name=null)
+
+?>]]></programlisting>
+
+    <para>
+    引数 <code>$name</code> が <code>NULL</code> の場合は配列が返されます。
+    レジストリ内のオブジェクトの名前が配列のキー、
+    対応するオブジェクトのクラス名が配列の値となります。
+    </para>
+
+    <para>
+    <code>$name</code> が文字列の場合は、
+    その名前に関連付けられたオブジェクトハンドルが返されます。
+    <code>$name</code> という名前に対応するオブジェクトがレジストリに存在しない場合は
+    <code>Zend_Exception</code> がスローされます。
+    </para>
+
+    <para>
+    オブジェクトがレジストリに登録されているかどうかを手っ取り早く調べるには、
+    Zend::isRegistered() を使用します。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

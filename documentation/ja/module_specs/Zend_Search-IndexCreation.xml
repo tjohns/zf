@@ -1,0 +1,105 @@
+<sect1 id="zend.search.index-creation">
+	<title>インデックスの構築</title>
+
+	<sect2 id="zend.search.index-creation.creating">
+        <title>新しいインデックスの作成</title>
+
+        <para>
+            インデックスの作成機能および更新機能は、
+            Zend_Search_Lucene モジュールと Java Lucene で実装されています。
+            これらの両方の機能を使用することができます。
+        </para>
+
+        <para>
+            以下の PHP コードでは、Zend_Search_Lucene のインデックス作成
+            API を用いてファイルをインデックス化する例を示します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+// 2 番目の引数を TRUE にすると、新しいインデックスを作成します。
+$index = new Zend_Search_Lucene('/data/my-index', true);
+
+$doc = new Zend_Search_Lucene_Document();
+
+// ドキュメントの URL を、検索結果の ID として保存します。
+$doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
+
+// ドキュメントの内容をインデックス化します。
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+
+// ドキュメントをインデックスに追加します。
+$index->addDocument($doc);
+
+// 変更内容をインデックスに書き込みます。
+$index->commit();
+?>]]></programlisting>
+
+        <para>
+            新しく追加されたドキュメントをコミットすると、
+            インデックスから取得できるようになります。
+        </para>
+        <para>
+            <code>Zend_Search_Lucene::commit()</code> は、
+            スクリプトの実行終了時およびすべての検索リクエストの前に
+            自動的にコールされます。
+        </para>
+        <para>
+            commit() をコールするたびに、新しいインデックスセグメントが作成されます。
+            そのため、コール回数は必要最小限にしなければなりません。
+            ただ、大量のドキュメントを一度にコミットすると、
+            メモリの消費量が多くなるという一面もあります。
+        </para>
+        <para>
+            Zend_Search_Lucene の機能を拡張して、
+            将来はセグメント管理の自動最適化を行えるようにする予定です。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.search.index-creation.updating">
+        <title>インデックスの更新</title>
+
+        <para>
+            既存のインデックスを更新する際にも同じ手順を使用します。ただひとつの違いは、
+            2 番目のパラメータを指定せずにインデックスをオープンしなければならないということです。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+// 既存のインデックスをオープンします。
+$index = new Zend_Search_Lucene('/data/my-index');
+
+$doc = new Zend_Search_Lucene_Document();
+// ドキュメントの URL を、検索結果の ID として保存します。
+$doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
+// ドキュメントの内容をインデックス化します。
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
+
+// ドキュメントをインデックスに追加します。
+$index->addDocument($doc);
+
+// 変更内容をインデックスに書き込みます。
+$index->commit();
+?>]]></programlisting>
+
+        <para>
+            commit() を (明示的あるいは暗黙的に) コールするたびに、
+            新しいインデックスセグメントが作成されます。
+        </para>
+        <para>
+            Zend_Search_Lucene は、自動的にはセグメント管理を行いません。そのため、
+            セグメントの大きさには十分注意する必要があります。
+            セグメントを大きくするとよい結果が得られるでしょうが、
+            その反面大きなセグメントの作成時には大量のメモリを必要とします。
+        </para>
+        <para>
+            このバージョンの Zend_Search_Lucene で作成したインデックスを最適化するには、
+            Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+            が使用可能です。
+        </para>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

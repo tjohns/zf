@@ -1,0 +1,109 @@
+<sect1 id="zend.service.yahoo">
+    <title>Zend_Service_Yahoo</title>
+    <sect2 id="zend.service.yahoo.introduction">
+        <title>導入</title>
+        <para>
+            <code>Zend_Service_Yahoo</code> は、さまざまな Yahoo! REST API
+            群を使用するための単純な API です。
+            <code>Zend_Service_Yahoo</code> を使用すると、
+            Yahoo! Web search、Yahoo! News、Yahoo! Local、Yahoo! Images
+            を検索できるようになります。 Yahoo! REST API を使用するには、
+            Yahoo! Application ID が必要です。Application ID を取得するには、
+            <ulink url="http://api.search.yahoo.com/webservices/register_application">Application ID リクエストフォーム</ulink>
+            を使用してください。
+        </para>
+    </sect2>
+    <sect2 id="zend.service.yahoo.websearch">
+        <title>Yahoo! を使用したウェブの検索</title>
+        <para>
+            <code>Zend_Service_Yahoo</code> の <code>webSearch()</code>
+            メソッドを使用すると、Yahoo! でウェブを検索できます。
+            最初の引数に検索パラメータ、
+            オプションで 2 番目の引数に検索オプションの配列を指定します。
+            指定できるオプションの詳細については
+            <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search
+            ドキュメント</ulink> を参照ください。<code>webSearch()</code> メソッドは
+            <code>Zend_Service_Yahoo_WebResultSet</code> オブジェクトを返します。
+        </para>
+        <example>
+            <title>Yahoo! を使用したウェブの検索</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Yahoo.php';
+$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$results = $yahoo->webSearch('PHP');
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}
+?>]]>       </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.service.yahoo.imagesearch">
+        <title>Yahoo! を使用した画像の検索</title>
+        <para>
+            <code>Zend_Service_Yahoo</code> の <code>imageSearch()</code>
+            メソッドを使用すると、画像の検索ができます。
+            <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> メソッド</link>
+            と同様、最初の引数に検索パラメータ、
+            オプションで 2 番目の引数に検索オプションの配列を指定します。
+            指定できるオプションの詳細については
+            <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search
+            ドキュメント</ulink> を参照ください。
+        </para>
+        <example>
+            <title>Yahoo! を使用した画像の検索</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Yahoo.php';
+$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$results = $yahoo->imageSearch('PHP');
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}
+?>]]>       </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.service.yahoo.localsearch">
+        <title>Yahoo! を使用した Local Businesses and Services の検索</title>
+        <para>
+            <code>localSearch()</code> メソッドを使用すると、
+            Yahoo! で local businesses and services を検索できます。
+            詳細は
+            <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Local Search
+            ドキュメント</ulink> を参照ください。
+        </para>
+        <example>
+            <title>Yahoo! を使用した Local Businesses and Services の検索</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Yahoo.php';
+$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$results = $yahoo->localSearch('Apple Computers', array('zip' => '95014'));
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}
+?>]]>       </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.service.yahoo.newssearch">
+        <title>Yahoo! News の検索</title>
+        <para>
+            Yahoo! News を検索するのは簡単です。単に <code>newsSearch()</code> 
+            メソッドを下の例のように使用すればよいのです。詳細は
+            <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search
+            ドキュメント</ulink> を参照ください。
+        </para>
+        <example>
+            <title>Yahoo! News の検索</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Yahoo.php';
+$yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
+$results = $yahoo->newsSearch('PHP');
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}
+?>]]>       </programlisting>
+        </example>
+    </sect2>
+    &module_specs.Zend_Service_Yahoo_Classes;
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

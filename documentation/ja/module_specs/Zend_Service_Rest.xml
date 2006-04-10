@@ -1,0 +1,64 @@
+<sect1 id="zend.service.rest">
+    <title>Zend_Service_Rest</title>
+    <sect2 id="zend.service.rest.introduction">
+        <title>導入</title>
+        <para>
+            <code>Zend_Service_Rest</code> は、
+            REST ベースのウェブサービスで使用するための基本的な
+            REST クライアントです。
+        </para>
+        <example>
+            <title>基本的な REST リクエスト</title>
+            <para>
+                以下のコードでは、まず <code>setUri()</code> メソッドで
+                REST ウェブサービスの<emphasis>ベース</emphasis> URI
+                を設定します。それから、
+                メソッドにパスとクエリ文字列を指定して <code>restGet()</code>
+                をコールし、GET リクエストを実行します。
+            </para>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Rest.php;
+
+try {
+    $rest = new Zend_Service_Rest();
+
+    $rest->setURI('http://example.org');
+
+    // Zend_HttpClient_Response オブジェクトを返します
+    $response = $rest->restGet('/services/rest', 'foo=bar&baz=bat');
+
+    if ($response->isSuccessful()) {
+        echo $response->getBody();
+    } else {
+        echo '<p>エラーが発生しました</p>';
+    }
+} catch (Zend_Exception $e) {
+        echo '<p>エラーが発生しました (' .$e->getMessage(). ')<p>';
+}
+?>]]>       </programlisting>
+            <note>
+                <code>restGet()</code> にクエリ文字列を渡すには、
+                適切にフォーマットした文字列
+                (先頭の疑問符 "<code>?</code>" は含めません)
+                を渡す方法か、あるいはパラメータ名と値を連想配列形式で渡す方法があります。
+                どちらを使用するにしても、パラメータ名および値は URL
+                エンコードしなければなりません (例えば
+                <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>
+                を使用します)。
+            </note>
+            <para>
+                <code>restPost()</code> および <code>restPut()</code> の使用法は
+                <code>restGet()</code> と同じです。違うのは、GET
+                の代わりにそれぞれ HTTP POST あるいは PUT を使用することです。
+            </para>
+            <para>
+                <code>restDelete()</code> メソッドは、
+                最初のパラメータで指定したパスを操作します。
+                2 番目のパラメータを渡して対象を指定することはできません。
+            </para>
+        </example>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

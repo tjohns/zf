@@ -1,0 +1,112 @@
+<sect1 id="zend.db.tablerowset">
+
+    <title>Zend_Db_Table_Rowset</title>
+
+    <sect2 id="zend.db.table.rowset.introduction">
+
+        <title>導入</title>
+
+        <para>
+            Zend_Db_Table_Rowset は、Zend_Db_Table_Row オブジェクトの集合に対するイテレータです。
+            一般に Zend_Db_Table_Rowset のインスタンスを直接生成することはありません。
+            その代わりに、Zend_Db_Table::find() や fetchAll() の返す結果として
+            Zend_Db_Table_Rowset を取得します。Zend_Db_Table_Row
+            の集合を順にたどり、必要ならば変更していくことが可能です。
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.rowset.fetch">
+
+        <title>行セットの取得</title>
+
+        <para>
+            最初に Zend_Db_Table クラスのインスタンスを作成します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// アダプタを設定します
+require_once 'Zend/Db.php';
+$params = array (
+    'host'     => '127.0.0.1',
+    'username' => 'malory',
+    'password' => '******',
+    'dbname'   => 'camelot'
+);
+
+$db = Zend_Db::factory('pdoMysql', $params);
+
+// すべての Zend_Db_Table オブジェクトに対するデフォルトアダプタを設定します
+require_once 'Zend/Db/Table.php';
+Zend_Db_Table::setDefaultAdapter($db);
+
+// データベースのテーブルに接続します
+class RoundTable extends Zend_Db_Table {}
+$table = new RoundTable();
+?>]]>
+        </programlisting>
+
+        <para>
+            次に、Zend_Db_Table::find() に複数のキーを指定するか
+            Zend_Db_Table::fetchAll() を使用して、データベースから複数のレコードを取得します。
+            返される結果は Zend_Db_Table_Rowset オブジェクトであり、
+            レコードセット内の個々の Zend_Db_Table_Row オブジェクトにアクセスすることが可能です。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// テーブルから複数のレコードを取得します
+$rowset = $table->fetchAll();
+
+//
+// $rowset は Zend_Db_Table_Rowset オブジェクトで、結果の各レコードを
+// Zend_Db_Table_Row オブジェクトで表したものの集合です
+//
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.rowset.iterate">
+
+        <title>行セットの順次処理</title>
+
+        <para>
+            Zend_Db_Table_Rowset は SPL Iterator インターフェイスを実装しています。
+            つまり、配列と同様に Zend_Db_Table_Rowset を foreach() で処理できるということです。
+            foreach() で取得できる値は Zend_Db_Table_Row で、
+            これがテーブルのひとつのレコードに対応します。
+            このレコードについて閲覧や変更、そしてプロパティの保存ができます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// データベースのテーブルに接続します
+class RoundTable extends Zend_Db_Table {}
+$table = new RoundTable();
+
+// テーブルから複数のレコードを取得します
+$rowset = $table->fetchAll();
+
+// すべて表示します
+foreach ($rowset as $row) {
+    // $row は Zend_Db_Table_Row オブジェクトです
+    echo "<p>" . htmlspecialchars($row->nobleTitle) . " "
+       . htmlspecialchars($row->firstName) . "'s "
+       . "favorite color is " . htmlspecialchars($row->favoriteColor)
+       . ".</p>\n";
+
+    // この行の表示回数を更新します
+    // (これは、テーブルのカラム "times_displayed" に対応します)
+    $row->timesDisplayed ++;
+
+    // 新しい情報でレコードを更新します
+    $row->save();
+}
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,401 @@
+<sect1 id="zend.db.table">
+
+    <title>Zend_Db_Table</title>
+
+    <sect2 id="zend.db.table.introduction">
+
+        <title>導入</title>
+
+        <para>
+            Zend_Db_Table は、Zend Framework のテーブルモジュールです。
+            Zend_Db_Adapter を使用してデータベースに接続し、
+            テーブルのスキーマを調べ、テーブルを操作したりデータを取得したりするのを助けます。
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.getting-started">
+
+        <title>さあ、はじめましょう</title>
+
+        <para>
+            まず最初に、デフォルトのデータベースアダプタを抽象クラス
+            Zend_Db_Table に指定します。ほかのものを指定しない限り、
+            すべての Zend_Db_Table インスタンスはこのデフォルトアダプタを使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// アダプタを設定します
+require_once 'Zend/Db.php';
+$params = array (
+    'host'     => '127.0.0.1',
+    'username' => 'malory',
+    'password' => '******',
+    'dbname'   => 'camelot'
+);
+
+$db = Zend_Db::factory('pdoMysql', $params);
+
+// すべての Zend_Db_Table オブジェクトに対するデフォルトアダプタを設定します
+require_once 'Zend/Db/Table.php';
+Zend_Db_Table::setDefaultAdapter($db);
+?>]]>
+        </programlisting>
+
+        <para>
+            次に、データベース内に "round_table" というテーブルがあると仮定しましょう。
+            このテーブルに対して Zend_Db_Table を使用するには、
+            Zend_Db_Table を継承したクラス RoundTable を新しく作成します
+            (テーブル名 round_table を "camelize" したことに注意しましょう)。
+            それから、このクラスを使用して、データベース内の "round_table"
+            テーブルを調べたり行を操作したり結果を取得したりします。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class RoundTable extends Zend_Db_Table {}
+$table = new RoundTable();
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.name-and-key">
+
+        <title>テーブル名および主キー</title>
+
+        <para>
+            デフォルトでは、Zend_Db_Table は、
+            データベース内のテーブル名と自分自身のクラス名
+            (を CamelCaps 形式から underscore_words 形式に変換したもの)
+            が等しいと想定しています。すなわち、SomeTableName
+            という名前の Zend_Db_Table クラスは、'some_table_name'
+            という名前の SQL テーブルに対応するわけです。
+            クラス名をアンダースコア形式に変換したものではなく、
+            別のテーブルに関連付けたい場合には、クラス定義の際に
+            $_name プロパティをオーバーライドします。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class ClassName extends Zend_Db_Table
+{
+    // デフォルトのテーブル名は 'class_name' ですが、
+    // ここではそれを別のものに変更します。
+    protected $_name = 'another_table_name';
+}
+?>]]>
+        </programlisting>
+
+        <para>
+            デフォルトでは、Zend_Db_Table は、
+            'id' という名前の主キーが存在することを想定しています
+            (このカラムは自動インクリメントであることが望ましいのですが、
+            それは必須ではありません)。もし主キーの名前が 'id'
+            以外の場合は、クラス定義の際に $_primary
+            プロパティをオーバーライドします。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class ClassName extends Zend_Db_Table
+{
+    // デフォルトの主キーは 'id' ですが、
+    // ここではそれを別のものに変更します。
+    protected $_primary = 'another_column_name';
+}
+?>]]>
+        </programlisting>
+
+        <para>
+            別の方法として、クラスの _setup() メソッドでこれらを設定することもできます。
+            この場合は、すべての処理が終わった後に the parent::_setup()
+            をコールすることを忘れないようにしましょう。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class ClassName extends Zend_Db_Table
+{
+    protected function _setup()
+    {
+        $this->_name = 'another_table_name';
+        $this->_primary = 'another_column_name';
+        parent::_setup();
+    }
+}
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.insert">
+
+        <title>行の挿入</title>
+
+        <para>
+            テーブルに行を挿入するには、カラム名:値 形式の連想配列を用意して
+            insert() をコールします。データは自動的にクォートされ、
+            挿入された行の ID が返されます (Zend_Db_Adapter::insert()
+            が変更された行の数を返すのとは異なることに注意しましょう)。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+//
+// INSERT INTO round_table
+//     (noble_title, first_name, favorite_color)
+//     VALUES ("King", "Arthur", "blue")
+//
+
+class RoundTable extends Zend_Db_Table {}
+
+$table = new RoundTable();
+
+$data = array(
+    'noble_title' => 'King',
+    'first_name'  => 'Arthur',
+    'favorite_color' => 'blue',
+)
+
+$id = $table->insert($data);
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.udpate">
+
+        <title>行の更新</title>
+
+        <para>
+            テーブルの行を更新するには update() をコールします。
+            設定する内容は カラム名:値 形式の連想配列で指定し、
+            更新する行を指定するために WHERE 句を設定します。
+            このメソッドは、テーブルを更新して更新された行の数を返します。
+        </para>
+
+        <para>
+            更新するデータは自動的にクォートされますが、WHERE 句はクォートされません。
+            そのため、テーブルの Zend_Db_Adapter
+            オブジェクトを用いて手動で設定しなければなりません。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+//
+// UPDATE round_table
+//     SET favorite_color = "yellow"
+//     WHERE first_name = "Robin"
+//
+
+class RoundTable extends Zend_Db_Table {}
+
+$table = new RoundTable();
+$db = $table->getAdapter();
+
+$set = array(
+    'favorite_color' => 'yellow',
+)
+
+$where = $db->quoteInto('first_name = ?', 'Robin');
+
+$rows_affected = $table->update($set, $where);
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.delete">
+
+        <title>行の削除</title>
+
+        <para>
+            テーブルの行を削除するには、削除する行を指定した
+            WHERE 句を指定して delete() をコールします。
+            削除された行の数が返されます。
+        </para>
+
+        <para>
+            WHERE 句のクォート処理は行われませんので、テーブルの
+            Zend_Db_Adapter オブジェクトを使用して手動でクォートする必要があります。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+//
+// DELETE FROM round_table
+//     WHERE first_name = "Patsy"
+//
+
+class RoundTable extends Zend_Db_Table {}
+
+$table = new RoundTable();
+$db = $table->getAdapter();
+
+$where = $db->quoteInto('first_name = ?', 'Patsy');
+
+$rows_affected = $table->delete($where);
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.findbykey">
+
+        <title>主キーによる行の検索</title>
+
+        <para>
+            テーブルから主キーの値に対応する行を取得するには、
+            find() メソッドを使用します。このメソッドは、find()
+            に単一のキーを指定した場合には Zend_Db_Table_Row オブジェクト、
+            複数のキーを指定した場合には Zend_Db_Table_Rowset オブジェクトを返します。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+class RoundTable extends Zend_Db_Table {}
+
+$table = new RoundTable();
+
+// SELECT * FROM round_table WHERE id = "1"
+$row = $table->find(1);
+
+// SELECT * FROM round_table WHERE id IN("1", "2", 3")
+$rowset = $table->find(array(1, 2, 3));
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.fetchonerow">
+
+        <title>単一の行の取得</title>
+
+        <para>
+            主キーによる検索の場合は find() を使用するのが簡単ですが、
+            さまざまな条件を指定して行を取得したい場合もあるでしょう。
+            Zend_Db_Table では、そのような場合のために fetchRow() を用意しています。
+            fetchRow() に WHERE 句 (およびオプションで ORDER 句) を指定してコールすると、
+            Zend_Db_Table は条件に一致した最初のレコードを
+            Zend_Db_Table_Row で返します。
+        </para>
+
+        <para>
+            WHERE 句のクォート処理は行われませんので、テーブルの
+            Zend_Db_Adapter オブジェクトを使用して手動でクォートする必要があります。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+//
+// SELECT * FROM round_table
+//     WHERE noble_title = "Sir"
+//     AND first_name = "Robin"
+//     ORDER BY favorite_color
+//
+
+class RoundTable extends Zend_Db_Table {}
+
+$table = new RoundTable();
+$db = $table->getAdapter();
+
+$where = $db->quoteInto('noble_title = ?', 'Sir')
+       . $db->quoteInto('AND first_name = ?', 'Robin');
+
+$order = 'favorite_color';
+
+$row = $table->fetchRow($where, $order);
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.fetchmultiple">
+
+        <title>複数の行の取得</title>
+
+        <para>
+            複数の行を一度に取得するには fetchAll() メソッドを使用します。
+            fetchRow() と同様に WHERE 句および ORDER 句を指定できるほか、
+            件数とオフセットを指定して結果の行数を制限することができます。
+            このメソッドは、選択されたレコードを Zend_Db_Table_Rowset で返します。
+        </para>
+
+        <para>
+            WHERE 句のクォート処理は行われませんので、テーブルの
+            Zend_Db_Adapter オブジェクトを使用して手動でクォートする必要があります。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class RoundTable extends Zend_Db_Table {}
+
+$table = new RoundTable();
+$db = $table->getAdapter();
+
+// SELECT * FROM round_table
+//     WHERE noble_title = "Sir"
+//     ORDER BY first_name
+//     LIMIT 10 OFFSET 20
+
+$where = $db->quoteInto('noble_title = ?', 'Sir');
+$order = 'first_name';
+$count = 10;
+$offset = 20;
+
+$rowset = $table->fetchRow($where, $order, $count, $offset);
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.domain-logic">
+
+        <title>ドメインロジックの追加</title>
+
+        <para>
+            テーブルモジュールとして、Zend_Db_Table
+            には特定のドメインロジックを含めることもできます。例えば、
+            insert() メソッドや update() メソッドをオーバーライドし、
+            実際のデータベース操作の前にデータの操作や検証を行うことができます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class RoundTable extends Zend_Db_Table
+{
+    public function insert($data)
+    {
+        // タイムスタンプを追加します
+        if (empty($data['created_on'])) {
+            $data['created_on'] = time();
+        }
+        return parent::insert($data);
+    }
+
+    public function update($data)
+    {
+        // タイムスタンプを追加します
+        if (empty($data['updated_on'])) {
+            $data['updated_on'] = time();
+        }
+        return parent::update($data);
+    }
+}
+?>]]>
+        </programlisting>
+
+        <para>
+            同様に、独自の find() メソッドを作成し、
+            主キー以外による検索を行うこともできます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+class RoundTable extends Zend_Db_Table
+{
+    public function findAllWithName($name)
+    {
+        $db = $this->getAdapter();
+        $where = $db->quoteInto("name = ?", $name);
+        $order = "first_name";
+        return $this->fetchAll($where, $order);
+    }
+}
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,411 @@
+<sect1 id="zend.db.adapter">
+
+    <title>Zend_Db_Adapter</title>
+
+    <sect2 id="zend.db.adapter.introduction">
+
+        <title>導入</title>
+
+        <para>
+            <code>Zend_Db_Adapter</code> は、Zend Framework
+            におけるデータベース API の抽象化レイヤーです。PDO に基づいており、
+            <code>Zend_Db_Adapter</code> を使用すると、サポートしている
+            SQL データベースへの接続やデータベースに対する操作を同じ API で行えます。
+            Microsoft SQL Server、MySQL、PostgreSQL、SQLite などをサポートしています。
+        </para>
+
+        <para>
+        バックエンドのデータベースに対応した <code>Zend_Db_Adapter</code>
+        のインスタンスを作成するには、接続パラメータの配列とアダプタの名前を渡して
+        <code>Zend_Db::factory()</code> をコールする必要があります。
+        例えば、ローカルホスト上の MySQL データベース "camelot"
+        に対して "malory" というユーザで接続するには、以下のようにします。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+require_once 'Zend/Db.php';
+
+$params = array ('host'     => '127.0.0.1',
+                 'username' => 'malory',
+                 'password' => '******',
+                 'dbname'   => 'camelot');
+
+$db = Zend_Db::factory('pdoMysql', $params);
+
+?>]]></programlisting>
+
+        <para>
+            同様に、SQLite データベース "camelot" に接続するには、以下のようにします。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+require_once 'Zend/Db.php';
+
+$params = array ('dbname' => 'camelot');
+
+$db = Zend_Db::factory('pdoSqlite', $params);
+
+?>]]></programlisting>
+
+        <para>
+            どちらの場合でも、まったく同じ API
+            でデータベースに対する問い合わせを行うことができます。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.quoting">
+
+        <title>SQL インジェクション対策のクォート処理</title>
+
+        <para>
+            SQL 文で使用する値は、常にクォートしなければなりません。
+            これにより、SQL インジェクション攻撃を防ぎます。
+            <code>Zend_Db_Adapter</code> では、値のクォート処理を補助するためのメソッドを 2 つ
+            (元となる PDO オブジェクト経由で) 提供しています。
+        </para>
+
+        <para>
+            ひとつめは <code>quote()</code> メソッドです。
+            これは、データベースアダプタにあわせた適切な形式に、
+            スカラー値をクォートします。配列をクォートしようとすると、
+            配列の値をカンマ区切りの文字列に展開して返します。
+            その際に個々の値は適切にクォートされます
+            (リストパラメータをとる関数などで有用です)。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+// $db オブジェクトを作成します。ここでは Mysql アダプタを使用しているとします。
+
+// スカラーをクォートします
+$value = $db->quote('St John"s Wort');
+// $value は '"St John\"s Wort"' となります (クォートで囲まれていることに注意しましょう)
+
+// 配列をクォートします
+$value = $db->quote(array('a', 'b', 'c');
+// $value は '"a", "b", "c"' (カンマ区切りの文字列) となります
+
+?>]]></programlisting>
+
+        <para>
+            ふたつめが <code>quoteInto()</code> メソッドです。
+            疑問符のプレースホルダを使用した文字列を用意し、
+            スカラーあるいは配列をクォートしたものをそこに代入します。
+            これは、クエリや条件を動的に作成する場合に有用です。
+            スカラーおよび配列の動作は <code>quote()</code>
+            メソッドとまったく同じです。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+    
+// $db オブジェクトを作成します。ここでは Mysql アダプタを使用しているとします。
+
+// スカラーをクォートして WHERE 句に使用します
+$where = $db->quoteInto('id = ?', 1);
+// $where は 'id = "1"' となります (クォートで囲まれていることに注意しましょう)
+
+// 配列をクォートして WHERE 句に使用します
+$where = $db->quoteInto('id IN(?)', array(1, 2, 3));
+// $where は 'id IN("1", "2", "3")' (カンマ区切りの文字列) となります
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.queries">
+
+        <title>クエリを直接実行する</title>
+
+        <para>
+            <code>Zend_Db_Adapter</code> のインスタンスを作成すると、
+            SQL を直接使用したクエリを実行することができます。
+            <code>Zend_Db_Adapter</code> が、元になっている PDO
+            オブジェクトにクエリを渡し、準備と実行を行い、その結果を
+            PDOStatement オブジェクトとして返します。もし結果が存在すれば、
+            それを操作することが可能です。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+    
+// $db オブジェクトを作成し、適切にクォートした SQL 文で
+// データベースに問い合わせます
+$sql = $db->quoteInto(
+    'SELECT * FROM example WHERE date > ?',
+    '2006-01-01'
+);
+$result = $db->query($sql);
+
+// PDOStatement の $result から、すべての行を配列形式で取得します
+$rows = $result->fetchAll();
+
+?>]]></programlisting>
+
+        <para>
+            クエリに対して、データを自動的にバインドすることもできます。
+            つまり、名前つきのプレースホルダをクエリに設定したうえで、
+            そのプレースホルダを置き換えるデータを配列として渡すということです。
+            置き換える際にデータが適切にクォートされるので、
+            SQL インジェクション攻撃に対してより安全になります。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+    
+// $db オブジェクトを作成し、データベースに問い合わせます。
+// 今回はプレースホルダのバインドを使用します。
+$result = $db->query(
+    'SELECT * FROM example WHERE date > :placeholder',
+    array('placeholder' => '2006-01-01')
+);
+
+// PDOStatement の $result から、すべての行を配列形式で取得します
+$rows = $result->fetchAll();
+
+?>]]></programlisting>
+
+        <para>
+            状況によっては、準備したデータを SQL に手動でバインドしたいこともあるでしょう。
+            そのためには、<code>prepare()</code> メソッドを使用して
+            <code>PDOStatement</code> を準備し、それを直接手動で操作します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+    
+// $db オブジェクトを作成し、データベースに問い合わせます。
+// 今回は PDOStatement を用意して手動でバインドします。
+$stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
+$stmt->bindValue('placeholder', '2006-01-01');
+$stmt->execute();
+
+// PDOStatement の $result から、すべての行を配列形式で取得します
+$rows = $stmt->fetchAll();
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.transactions">
+
+        <title>トランザクション</title>
+
+        <para>
+            デフォルトでは、PDO は (つまり <code>Zend_Db_Adapter</code> も)
+            「自動コミット」モードで動作します。
+            これは、すべてのクエリは実行した時点でコミットされるということを意味します。
+            トランザクションを使用したい場合には、単純に
+            <code>beginTransaction()</code> メソッドをコールします。
+            その後に変更内容を <code>commit()</code> あるいは <code>rollBack()</code>
+            します。<code>beginTransaction()</code> が再びコールされるまで、
+            <code>Zend_Db_Adapter</code> は自動コミットモードに戻ります。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+    
+// $db オブジェクトを作成し、トランザクションを開始します。
+$db->beginTransaction();
+
+// クエリを実行します。
+// 成功した場合には変更内容をコミットし、
+// 失敗した場合にはロールバックします。
+try {
+    $db->query(...);
+    $db->commit();
+} catch (Exception $e) {
+    $db->rollBack();
+    echo $e->getMessage();
+}
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.insert">
+
+        <title>行の挿入</title>
+
+        <para>
+            <code>insert()</code> メソッドを使用すると、
+            INSERT 文の作成および挿入するデータのバインドを行ってくれます
+            (バインドされるデータは自動的にクォートされるので、
+            SQL インジェクション攻撃への対策として有用です)。
+        </para>
+
+        <para>
+            返される値は、追加した行の ID では<emphasis>ありません</emphasis>。
+            テーブルには自動インクリメントのカラムがないからです。そのかわりに、
+            変更された行の数 (通常は 1) が返されます。追加された行の ID
+            を知りたい場合は、<code>lastInsertId()</code> メソッドをコールします。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+    
+//
+// INSERT INTO round_table
+//     (noble_title, first_name, favorite_color)
+//     VALUES ("King", "Arthur", "blue");
+//
+
+// $db オブジェクトを作成し、そして
+// 挿入する行のデータを カラム名 => 値 形式にします
+$row = array (
+    'noble_title'    => 'King',
+    'first_name'     => 'Arthur',
+    'favorite_color' => 'blue',
+);
+
+// 行を挿入するテーブル
+$table = 'round_table';
+
+// 行を挿入し、その行の ID を取得します
+$rows_affected = $db->insert($table, $row);
+$last_insert_id = $db->lastInsertId();
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.update">
+
+        <title>行の更新</title>
+
+        <para>
+            <code>update()</code> メソッドを使用すると、
+            UPDATE 文の作成および更新するデータのバインドを行ってくれます
+            (バインドされるデータは自動的にクォートされるので、
+            SQL インジェクション攻撃への対策として有用です)。
+        </para>
+
+        <para>
+            オプションで WHERE 句を指定することで、どの行を更新するのかを指定できます
+            (WHERE 句はバインドパラメータではないことに注意しましょう。
+            値のクォートは自分で行う必要があります)。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+    
+//
+// UPDATE round_table
+//     SET favorite_color = "yellow"
+//     WHERE first_name = "Robin";
+//
+
+// $db オブジェクトを作成し、そして
+// 更新する新しいデータを カラム名 => 値 形式にします
+$set = array (
+    'favorite_color' => 'yellow',
+);
+
+// 更新するテーブル
+$table = 'round_table';
+
+// WHERE 句
+$where = $db->quoteInto('first_name = ?', 'Robin');
+
+// テーブルを更新し、更新された行数を取得します
+$rows_affected = $db->update($table, $set, $where);
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.delete">
+
+        <title>行の削除</title>
+
+        <para>
+            <code>delete()</code> メソッドを使用すると、
+            DELETE 文の作成を行ってくれます。オプションで WHERE
+            句を指定することで、どの行を削除するのかを指定できます
+            (WHERE 句はバインドパラメータではないことに注意しましょう。
+            値のクォートは自分で行う必要があります)。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+    
+//
+// DELETE FROM round_table
+//     WHERE first_name = "Patsy";
+//
+
+// $db オブジェクトを作成し、そして
+// データを削除するテーブルを指定します
+$table = 'round_table';
+
+// WHERE 句
+$where = $db->quoteInto('first_name = ?', 'Patsy');
+
+// テーブルを更新し、更新された行数を取得します
+$rows_affected = $db->delete($table, $where);
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.fetch">
+
+        <title>行の取得</title>
+
+        <para>
+            <code>query()</code> メソッドを使用してデータベースに直接問い合わせることもできますが、
+            普通は単に行を選択して結果を取得できれば十分でしょう。
+            それを行うのが <code>fetch*()</code> 系のメソッドです。
+            <code>fetch*()</code> 系のメソッドに対しては、SQL の SELECT 文を渡します。
+            もし文の中で名前つきプレースホルダを使用した場合は、
+            そこにバインドする値も配列として渡します。
+            この値は、クォート処理を行ったあとで文中のプレースホルダと置き換えられます。
+            <code>fetch*()</code> 系のメソッドには以下のようなものがあります。
+        </para>
+
+        <itemizedlist>
+            <listitem><para><code>fetchAll()</code></para></listitem>
+            <listitem><para><code>fetchAssoc()</code></para></listitem>
+            <listitem><para><code>fetchCol()</code></para></listitem>
+            <listitem><para><code>fetchOne()</code></para></listitem>
+            <listitem><para><code>fetchPairs()</code></para></listitem>
+            <listitem><para><code>fetchRow()</code></para></listitem>
+        </itemizedlist>
+
+        <programlisting role="php"><![CDATA[<?php
+    
+// $db オブジェクトを作成し、そして
+
+// すべての行のすべてのカラムを配列として取得します
+$result = $db->fetchAll(
+    "SELECT * FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// すべての行のすべてのカラムを連想配列として取得します
+// 最初のカラムが配列のキーとして使用されます
+$result = $db->fetchAssoc(
+    "SELECT * FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// すべての行の最初のカラムを取得します
+$result = $db->fetchCol(
+    "SELECT first_name FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// 最初の値のみを取得します
+$result = $db->fetchOne(
+    "SELECT COUNT(*) FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// キーと値の組み合わせを順に取得します。最初のカラムが
+// 配列のキー、2 番目のカラムが配列の値となります
+$result = $db->fetchPairs(
+    "SELECT first_name, favorite_color FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// 返される最初の行のみを取得します
+$result = $db->fetchRow(
+    "SELECT * FROM round_table WHERE first_name = :name",
+    array('name' => 'Lancelot')
+);
+
+?>]]></programlisting>
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

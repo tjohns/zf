@@ -1,0 +1,28 @@
+<sect1 id="zend.service.introduction">
+    <title>導入</title>
+    <para>
+        <code>Zend_Service</code> は、(XML-RPC などの)
+        ウェブサービスの実装の基盤となる抽象クラスです。
+    </para>
+    <para>
+        <code>Zend_Service</code> では、
+        <link linkend="zend.service.rest"><code>Zend_Service_Rest</code></link>
+        を使用した REST ベースのウェブサービスをサポートすることができます。
+    </para>
+    <para>
+        <code>Zend_Service</code> を継承したクラスや <code>Zend_Service_Rest</code>
+        を使用して REST ベースのウェブサービスにアクセスすることに加え、
+        Zend では有名なウェブサービスもサポートしています。たとえば
+        <link linkend="zend.service.amazon">Amazon</link>、
+        <link linkend="zend.service.flickr">Flickr</link> および
+        <link linkend="zend.service.yahoo">Yahoo!</link> などです。
+        将来はさらにいろいろ追加されるでしょう。
+    </para>
+</sect1>
+&module_specs.Zend_Service_Rest;
+&module_specs.Zend_Service_Amazon;
+&module_specs.Zend_Service_Flickr;
+&module_specs.Zend_Service_Yahoo;
+<!--
+vim:se ts=4 sw=4 et:
+-->

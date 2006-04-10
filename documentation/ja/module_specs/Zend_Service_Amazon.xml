@@ -1,0 +1,155 @@
+<sect1 id="zend.service.amazon">
+    <title>Zend_Service_Amazon</title>
+    <sect2 id="zend.service.amazon.introduction">
+        <title>導入</title>
+        <para>
+            <code>Zend_Service_Amazon</code> は Amazon ウェブサービスを使用するためのシンプルな
+            API です。
+            <code>Zend_Service_Amazon</code> は 2 つの API を実装しています。
+            Amazon 自身の API に従った伝統的な API と、
+            複雑な検索クエリを簡単に作成するためのシンプルな「クエリ API」です。
+        </para>
+        <para>
+            <code>Zend_Service_Amazon</code> を使用すると、開発者が
+            Amazon Web Services API を直接使用して、Amazon.com
+            の情報を取得できるようになります。
+            取得できる情報には以下のようなものがあります。
+            <itemizedlist>
+                <listitem>
+                    商品の情報、例えば画像や説明や価格など
+                </listitem>
+                <listitem>
+                    カスタマーレビュー
+                </listitem>
+                <listitem>
+                    似た製品やアクセサリの情報
+                </listitem>
+                <listitem>
+                    Amazon.com のおすすめ
+                </listitem>
+                <listitem>
+                    リストマニアのリスト
+                </listitem>
+            </itemizedlist>
+        </para>
+        <para>
+            <code>Zend_Service_Amazon</code> を使用するには、
+            Amazon デベロッパ API キーが必要です。このキーを取得するには、
+            <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink>
+            のウェブサイトを参照ください。
+        </para>
+        <note>
+            Amazon デベロッパ API キーは Amazon のアカウントと関連付けられます。
+            取得した API キーは自分自身でのみ使用するようにしましょう。
+        </note>
+        <example>
+            <title>伝統的な API を使用した Amazon 検索</title>
+            <para>
+                この例では、Amazon で PHP に関する書籍を検索し、
+                結果の一覧を表示します。
+            </para>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Amazon.php';
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY&');
+$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+foreach ($response as $r) {
+    echo $r->Title .'<br />';
+}
+?>]]>       </programlisting>
+        </example>
+        <example>
+            <title>クエリ API を使用した Amazon 検索</title>
+            <para>
+                ここでも Amazon で PHP に関する書籍を検索します。
+                しかし、ここではクエリ API を使用します。この API
+                は、Fluent Interface パターンと似た形式です。
+            </para>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Amazon/Query.php';
+$query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
+$query->category('Books')->Keywords('PHP');
+$results = $query->search();
+foreach ($results as $result) {
+    echo $result->Title .'<br />';
+}
+?>]]>       </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.service.amazon.countrycodes">
+        <title>国コード</title>
+        <para>
+            デフォルトでは、<code>Zend_Service_Amazon</code> は米国 ("<code>US</code>")
+            の Amazon Web Service に接続します。他の国のサービスに接続するには、
+            コンストラクタの 2 番目のパラメータとして、適切な国コード文字列を指定するだけです。
+        </para>
+        <example>
+            <title>Amazon Web Service の国の選択</title>
+            <programlisting><![CDATA[<?php
+// 日本の Amazon に接続します
+require_once 'Zend/Service/Amazon.php';
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
+?>]]>       </programlisting>
+            <note>
+                使用できる国コードは <code>CA</code>、<code>DE</code>、<code>FR</code>、<code>JP</code>、
+                <code>UK</code> および <code>US</code> です。
+            </note>
+        </example>
+    </sect2>
+    <sect2 id="zend.service.amazon.itemlookup">
+        <title>ASIN を使用した商品の検索</title>
+        <para>
+            ASIN がわかっている場合は、<code>itemLookup()</code>
+            メソッドを使用すると Amazon の商品を検索できます。
+        </para>
+        <example>
+            <title>ASIN を使用した Amazon の商品検索</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Amazon.php';
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+$item = $amazon->itemLookup('B0000A432X');
+?>]]>       </programlisting>
+        </example>
+        <para>
+            <code>itemLookup()</code> メソッドにオプションの第 2 パラメータを渡すことで、
+            検索オプションを指定できます。使用可能なオプションを含む詳細は、
+            <ulink
+                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">関連する Amazon の文書</ulink>
+            を参照ください。
+        </para>
+    </sect2>
+    <sect2 id="zend.service.amazon.itemsearch">
+        <title>Amazon の商品検索の実行</title>
+        <para>
+            さまざまな条件指定による商品検索を行うには
+            <code>itemSearch()</code> メソッドを使用します。
+            以下に例を示します。
+        </para>
+        <example>
+            <title>Amazon の商品検索の実行</title>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Amazon.php';
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
+$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+foreach($response as $r) {
+    echo $r->Title .'<br />';
+}
+?>]]>       </programlisting>
+        </example>
+        <para>
+            <code>itemSearch()</code> は配列のパラメータをひとつ受け取り、
+            このパラメータで検索オプションを指定します。使用可能なオプションを含む詳細は、
+            <ulink
+                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">関連する Amazon の文書</ulink>
+            を参照ください。
+        </para>
+        <tip>
+            <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link>
+            クラスを使用すると、これらのメソッドをより簡単に使用できるようになります。
+        </tip>
+    </sect2>
+    &module_specs.Zend_Service_Amazon_Query;
+    &module_specs.Zend_Service_Amazon_Classes;
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

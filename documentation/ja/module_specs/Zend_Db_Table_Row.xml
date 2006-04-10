@@ -1,0 +1,139 @@
+<sect1 id="zend.db.tablerow">
+
+    <title>Zend_Db_Table_Row</title>
+
+    <sect2 id="zend.db.table.row.introduction">
+
+        <title>導入</title>
+
+        <para>
+            Zend_Db_Table_Row は、Zend Framework の行データゲートウェイです。
+            一般に、Zend_Db_Table_Row のインスタンスを直接生成することはありません。
+            その代わりに、Zend_Db_Table::find() や Zend_Db_Table::fetchRow()
+            の返す結果として Zend_Db_Table_Row を取得します。
+            取得した Zend_Db_Table_Row を用いてレコードの値を編集し
+            (クラスのプロパティとして表されます)、
+            save() を使用して変更内容をもとのテーブルに反映させます。
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.row.fetch">
+
+        <title>行の取得</title>
+
+        <para>
+            最初に Zend_Db_Table クラスのインスタンスを作成します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// アダプタを設定します
+require_once 'Zend/Db.php';
+$params = array (
+    'host'     => '127.0.0.1',
+    'username' => 'malory',
+    'password' => '******',
+    'dbname'   => 'camelot'
+);
+
+$db = Zend_Db::factory('pdoMysql', $params);
+
+// すべての Zend_Db_Table オブジェクトに対するデフォルトアダプタを設定します
+require_once 'Zend/Db/Table.php';
+Zend_Db_Table::setDefaultAdapter($db);
+
+// データベースのテーブルに接続します
+class RoundTable extends Zend_Db_Table {}
+$table = new RoundTable();
+?>]]>
+        </programlisting>
+
+        <para>
+            次に、Zend_Db_Table::find() に単一のキーを指定するか
+            Zend_Db_Table::fetchRow() を使用して、データベースから 1 行のレコードを取得します。
+            返される結果は Zend_Db_Table_Row オブジェクトであり、
+            "underscore_words" 形式のカラム名を "camelCaps"
+            形式に変換したものが、そのオブジェクトのプロパティとなります。
+            例えば、テーブルのカラム "first_name" の内容が、
+            オブジェクトのプロパティ "firstName" に対応します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// テーブルから、レコードを Zend_Db_Table_Row オブジェクトとして取得します
+$row = $table->fetchRow('first_name = "Robin"');
+
+//
+// $row は Zend_Db_Table_Row オブジェクトで、
+// テーブルのカラムに対応する public プロパティを持っています
+//
+// $row->id = '3'
+// $row->nobleTitle = 'Sir'
+// $row->firstName = 'Robin'
+// $row->favoriteColor = 'yellow'
+//
+
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.table.row.modify">
+
+        <title>値の変更</title>
+
+        <para>
+            行の値を変更するのは簡単です。単にオブジェクトのプロパティを変更すればよいのです。
+            変更した後に、save() を使用してその内容をテーブルに書き戻します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// データベースのテーブルに接続します
+class RoundTable extends Zend_Db_Table {}
+$table = new RoundTable();
+
+// テーブルから、レコードを Zend_Db_Table_Row オブジェクトとして取得します
+$row = $table->fetchRow('first_name = "Robin"');
+
+//
+// $row は Zend_Db_Table_Row オブジェクトで、
+// テーブルのカラムに対応する public プロパティを持っています
+//
+// $row->id = '3'
+// $row->nobleTitle = 'Sir'
+// $row->firstName = 'Robin'
+// $row->favoriteColor = 'yellow'
+//
+// 「好きな色」を変更してテーブルに書き戻します
+$row->favoriteColor = 'blue';'
+$row->save();
+?>]]>
+        </programlisting>
+
+        <para>
+            しかし、主キーの値を変更することはできません。変更しようとすると
+            Zend_Db_Table_Row は例外をスローします。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// データベースのテーブルに接続します
+class RoundTable extends Zend_Db_Table {}
+$table = new RoundTable();
+
+// テーブルから、レコードを Zend_Db_Table_Row オブジェクトとして取得します
+$row = $table->fetchRow('first_name = "Robin"');
+
+// 主キーである "id" を変更できますか?
+try {
+    $row->id = 5;
+    echo "We should not see this message, as an exception was thrown.";
+} catch (Zend_Db_Table_RowException $e) {
+    echo $e->getMessage();
+}
+?>]]>
+        </programlisting>
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

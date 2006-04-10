@@ -1,0 +1,368 @@
+<sect1 id="zend.xmlrpc.client">
+    <title>Zend_XmlRpc_Client</title>
+    <sect2 id="zend.xmlrpc.client.introduction">
+        <title>導入</title>
+        <para>
+            <code>Zend_XmlRpc_Client</code> の使用法は、
+            <code>SoapClient</code> オブジェクト
+            (<ulink url="http://www.php.net/soap">SOAP 拡張モジュール</ulink>)
+            の使用法と非常によく似ています。XML-RPC サービスのプロシージャを、単純に
+            <code>Zend_XmlRpc_Client</code> のメソッドとしてコールすることができます。
+            サービスの完全なアドレスを <code>Zend_XmlRpc_Client</code>
+            のコンストラクタで指定します。
+        </para>
+        <example>
+            <title>基本的な XML-RPC リクエスト</title>
+            <programlisting role="php"><![CDATA[<?php
+/**
+ * framework.zend.com のサーバに接続し、使用可能なメソッドを表す
+ * 配列を取得します。
+ */
+require_once 'Zend/XmlRpc/Client.php';
+
+$server = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
+
+print_r( $server->system->listMethods() );
+
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+            <note>
+                <code>Zend_XmlRpc_Client</code> は、
+                リモートメソッドを可能な限りネイティブメソッドと同様に扱おうとします。
+                上の <code>system.listMethods()</code> のように
+                リモートメソッドが名前空間を含んでいる場合は、
+                PHP 風にオブジェクトを連結して
+                <code>$server->system->listMethods()</code> のようにコールします。
+            </note>
+        </para>
+    </sect2>
+    <sect2 id="zend.xmlrpc.client.parameters">
+        <title>パラメータの使用</title>
+        <para>
+            XML-RPC サービスのプロシージャの中にはパラメータが必要なものがあります。
+            必要なパラメータは、<code>Zend_XmlRpc_Client</code>
+            メソッドのパラメータとして渡すことになります。
+            XML-RPC プロシージャのパラメータは、指定された XML-RPC 型でなければなりません。
+            パラメータを渡す方法は 2 通りあります。PHP のネイティブ型で渡すか、
+            あるいは XML-RPC 型を表す <code>Zend_XmlRpc_Value</code>
+            オブジェクトで渡すかのいずれかです。
+        </para>
+        <sect3 id='zend.xmlrpc.client.parameters.php_native'>
+            <title>PHP ネイティブ変数をパラメータとして渡す</title>
+            <para>
+                パラメータは、ネイティブの PHP 型、つまり
+                string, integer, float, boolean, array あるいは object として渡します。
+                このとき、PHP のネイティブ型は自動的に検出され、
+                以下の表にしたがって XML-RPC 型に変換されます。
+            </para>
+            <table>
+                <title>PHP ネイティブ値から XML-RPC 型への変換</title>
+                <tgroup cols="2">
+                    <thead>
+                        <row>
+                            <entry>PHP ネイティブ型</entry>
+                            <entry>XML-RPC 型</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>integer</entry>
+                            <entry>int</entry>
+                        </row>
+                        <row>
+                            <entry>double</entry>
+                            <entry>double</entry>
+                        </row>
+                        <row>
+                            <entry>boolean</entry>
+                            <entry>boolean</entry>
+                        </row>
+                        <row>
+                            <entry>string</entry>
+                            <entry>string</entry>
+                        </row>
+                        <row>
+                            <entry>配列</entry>
+                            <entry>array</entry>
+                        </row>
+                        <row>
+                            <entry>連想配列</entry>
+                            <entry>struct</entry>
+                        </row>
+                        <row>
+                            <entry>object</entry>
+                            <entry>array</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+            <programlisting role="php"><![CDATA[...
+/** このプロシージャには 2 つのパラメータが渡されます。
+ *  最初のパラメータは文字列で、XML-RPC の string 型に自動的に変換されます。
+ *  2 番目のパラメータは連想配列で、これは XML-RPC の構造体に変換されます。
+ */
+
+$p1 = 'parameter 1';
+$p2 = array('name' => 'Joe', 'age' => 30);
+
+$service->serviceProcedure($p1, $p2);
+...]]>
+            </programlisting>
+        </sect3>
+        <sect3 id='zend.xmlrpc.client.parameters.xmlrpc_value'>
+            <title><code>Zend_XmlRpc_Value</code> オブジェクトをパラメータとして渡す</title>
+            <para>
+                パラメータを <code>Zend_XmlRpc_Value</code> オブジェクトで渡します。
+                パラメータに対応する XML-RPC 型を表す
+                <code>Zend_XmlRpc_Value</code> のインスタンスを作成することができます。
+                XML-RPC 型を明示的に指定する主な理由としては、以下が考えられるでしょう。
+                <itemizedlist>
+                    <listitem>
+                        プロシージャに正しい型で渡されることを確実にしたいことがある
+                        (例えば、integer を要求しているプロシージャに対して
+                        $_GET 配列の中の文字列を渡したい場合など)。
+                    </listitem>
+                    <listitem>
+                        プロシージャが base64 型や dateTime.iso8601 型を要求していることがある
+                        (これらは PHP のネイティブ型には存在しません)。
+                    </listitem>
+                    <listitem>
+                        自動変換が失敗することがある (例えば、空の XML-RPC 
+                        構造体をパラメータとして渡すことを考えましょう。
+                        これは、PHP では空の配列に対応します。しかし、
+                        空の配列をパラメータとして渡すと、それが自動変換されたときに
+                        XML-RPC の array になってしまいます。なぜなら、
+                        からの配列は連想配列ではないからです)。
+                    </listitem>
+                </itemizedlist>
+            </para>
+            <para>
+                <code>Zend_XmlRpc_Value</code> オブジェクトを作成する方法は
+                2 通りあります。明示的に作成する (オブジェクトのコンストラクタをコールする)
+                か、静的関数 <code>Zend_XmlRpc_Value::getXmlRpcValue()</code> 
+                を使用して XML-RPC 型の定数を指定します。
+            </para>
+            <table>
+                <title><code>Zend_XmlRpc_Value</code> オブジェクトと対応する XML-RPC 型</title>
+                <tgroup cols="3">
+                    <thead>
+                        <row>
+                            <entry>XML-RPC 型</entry>
+                            <entry>対応する <code>Zend_XmlRpc_Value</code> 定数</entry>
+                            <entry><code>Zend_XmlRpc_Value</code> オブジェクト</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>int</entry>
+                            <entry><code>Zend_XmlRpc_Value::XMLRPC_TYPE_INTEGER</code></entry>
+                            <entry><code>Zend_XmlRpc_Value_Integer</code></entry>
+                        </row>
+                        <row>
+                            <entry>double</entry>
+                            <entry><code>Zend_XmlRpc_Value::XMLRPC_TYPE_DOUBLE</code></entry>
+                            <entry><code>Zend_XmlRpc_Value_Double</code></entry>
+                        </row>
+                        <row>
+                            <entry>boolean</entry>
+                            <entry><code>Zend_XmlRpc_Value::XMLRPC_TYPE_BOOLEAN</code></entry>
+                            <entry><code>Zend_XmlRpc_Value_Boolean</code></entry>
+                        </row>
+                        <row>
+                            <entry>string</entry>
+                            <entry><code>Zend_XmlRpc_Value::XMLRPC_TYPE_STRING</code></entry>
+                            <entry><code>Zend_XmlRpc_Value_String</code></entry>
+                        </row>
+                        <row>
+                            <entry>base64</entry>
+                            <entry><code>Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64</code></entry>
+                            <entry><code>Zend_XmlRpc_Value_Base64</code></entry>
+                        </row>
+                        <row>
+                            <entry>dateTime.iso8601</entry>
+                            <entry><code>Zend_XmlRpc_Value::XMLRPC_TYPE_DATETIME</code></entry>
+                            <entry><code>Zend_XmlRpc_Value_DateTime</code></entry>
+                        </row>
+                        <row>
+                            <entry>array</entry>
+                            <entry><code>Zend_XmlRpc_Value::XMLRPC_TYPE_ARRAY</code></entry>
+                            <entry><code>Zend_XmlRpc_Value_Array</code></entry>
+                        </row>
+                        <row>
+                            <entry>struct</entry>
+                            <entry><code>Zend_XmlRpc_Value::XMLRPC_TYPE_STRUCT</code></entry>
+                            <entry><code>Zend_XmlRpc_Value_Struct</code></entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+            <programlisting role="php"><![CDATA[...
+/** このプロシージャには 2 つのパラメータが渡されます。
+ *  最初のパラメータは XML-RPC の base64 型で、静的関数
+ *  Zend_XmlRpc_Value::getXmlRpcValue() を使用して作成します。
+ *  2 番目のパラメータは XML-RPC の構造体で、これは 明示的に作成します。
+ */
+
+$p1 = ZXmlRpcValue::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
+$p2 = new Zend_XmlRpc_Value_Struct(array('name' => 'Joe', 'age' => 30));
+
+$service->serviceProcedure($p1, $p2);
+...]]>
+            </programlisting>
+            <para>
+                <note>
+                    この場合もパラメータの値は PHP の変数で渡していますが、
+                    指定した型に PHP の変換機能によって変換されます
+                    (もし <code>Zend_XmlRpc_Value_Integer</code>
+                    オブジェクトの値として文字列が渡されたら、
+                    <code>(int)$value</code> を使用して変換されます)。
+                </note>
+            </para>
+        </sect3>
+        <sect3 id='zend.xmlrpc.client.parameters.as_xml'>
+            <title>XML 文字列を XML-RPC パラメータとしてパースする</title>
+            <para>
+                この方式によるパラメータ渡しは <code>Zend_XmlRpc</code>
+                パッケージで内部的に使用されているもので、推奨されません。
+            </para>
+            <para>
+                それでもこの方式を使用したいというのなら、静的関数
+                <code>Zend_XmlRpc_Value::getXmlRpcValue()</code> を使用して XML
+                文字列をパースし、対応する XML-RPC 型を表す
+                <code>Zend_XmlRpc_Value</code> オブジェクトに格納してください。
+                <code>Zend_XmlRpc_Value::getXmlRpcValue()</code> 関数は 2
+                つのパラメータ、XML 文字列と
+                <code>Zend_XmlRpc_Value::XML_STRING</code> 定数を受け取ります。
+            </para>
+        </sect3>
+    </sect2>
+    <sect2 id="zend.xmlrpc.client.wsdl">
+        <title>パラメータの型指定</title>
+        <para>
+            XML-RPC と SOAP ウェブサービスの主な違いは WSDL ファイルの存在です。
+            SOAP プロトコルは通常 WSDL ファイルを使用しており、
+            ここにウェブサービスのインターフェイスが記述されています。
+            このインターフェイスにより、SOAP クライアントがサーバに送信するパラメータの型、
+            サーバから返される型を知ることができるのです。
+            WSDL ファイルがなければ、それらの型を知るのは難しくなるでしょう。
+        </para>
+        <para>
+            XML-RPC プロトコルでは、<code>system.methodSignature</code>
+            という名前の特別なプロシージャを使用することでこの問題を解決します。
+            このプロシージャは、プロシージャ名をパラメータとして受け取り、
+            そのプロシージャのシグネチャを返します。シグネチャには、
+            必須パラメータの型および返り値の型が含まれます。
+        </para>
+        <note>
+            すべての XML-RPC サーバが <code>system.methodSignature</code>
+            プロシージャをサポートしているわけではありません。
+            サポートしていないサーバの場合は、型指定を使用することはできません。
+        </note>
+        <para>
+            <code>Zend_XmlRpc_Client</code> では、<code>system.methodSignature</code>
+            プロシージャを使用することで、ある種の 'WSDL' ファイルを XML-RPC
+            サーバ用に実装しています。
+            要求を受けると、<code>Zend_XmlRpc_Client</code> は
+            XML-RPC サーバ上の全プロシージャの一覧を調べ、
+            それらのシグネチャを調べたうえでそれを XML ファイル
+            (SOAP の WSDL ファイルに似た形式です) に保存します。
+            同じ XML-RPC サーバを再度使用する際には、その XML
+            ファイルを指定すると、<code>Zend_XmlRpc_Client</code>
+            がプロシージャのパラメータの型を判定します。
+        </para>
+        <para>
+            プロシージャのシグネチャの XML ファイルを作成するには
+            <code>Zend_XmlRpc_Client::__getMethodsXml()</code> 関数をコールします
+            (この関数は、シグネチャのデータを含む XML 文字列を返します)。
+            既存のシグネチャ XML ファイルを使用するには、
+            <code>Zend_XmlRpc_Client</code> コンストラクタのパラメータとして
+            XML データを渡すか、あるいは
+            <code>Zend_XmlRpc_Client::__setMethodsXml()</code> 関数をコールします。
+        </para>
+        <example>
+            <title>型指定を使用した XML-RPC サービスのコール</title>
+            <programlisting role="php"><![CDATA[<?php
+/**
+ * XML-RPC サーバに接続し、シグネチャファイルを保存します
+ * (SOAP の WSDL ファイルと同等の XML-RPC 版になります)
+ */
+require_once 'Zend/XmlRpc/Client.php';
+
+$service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc');
+
+file_put_contents('/tmp/xmlrpc-signatures/example.xml', $service->__getMethodsXml());
+
+/* $service オブジェクトは、XML-RPC サーバのすべてのシグネチャを含むようになります。
+   serviceProcedure がコールされると、そのパラメータ ($param) は
+   プロシージャのシグネチャに応じて適切に型変換されます。
+ */
+$service->serviceProcedure($param);
+?>]]>
+            </programlisting>
+            <programlisting role="php"><![CDATA[<?php
+/**
+ * 既存のシグネチャファイルを使用して XML-RPC サーバに接続します。これにより、
+ * プロシージャに渡すパラメータの型が適切に変換されるようになります。
+ */
+require_once 'Zend/XmlRpc/Client.php';
+
+$signature_file_xml = file_get_contents('/tmp/xmlrpc-signatures/example.xml');
+$service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc', 'namespace', $signature_file_xml);
+
+/* $service オブジェクトは、XML-RPC サーバのすべてのシグネチャを含むようになります。
+   serviceProcedure がコールされると、そのパラメータ ($param) は
+   プロシージャのシグネチャに応じて適切に型変換されます。
+ */
+$service->serviceProcedure($param);
+?>]]>
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.xmlrpc.client.response">
+        <title>応答の取得</title>
+        <para>
+            XML-RPC プロシージャは、 XML-RPC 型の値を返します。
+            XML-RPC プロシージャをコールする <code>Zend_XmlRpc_Client</code> メソッドは、
+            返される XML-RPC 型を PHP のネイティブ型に変換したものを返します。
+        </para>
+        <para>
+            要求したプロシージャの返り値を取得するには、
+            <code>Zend_XmlRpc_Client::__getResponse()</code> 関数を使用します。
+            <code>__getResponse()</code> 関数は、返り値の型を示すパラメータを受け取ります。
+            応答内容として指定できるオプションは以下のとおりです。
+            <itemizedlist>
+                <listitem>
+                    <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - 
+                    プロシージャの返り値を、PHP のネイティブ型として返します
+                    (XML-RPC 型を PHP 型に変換します)。
+                </listitem>
+                <listitem>
+                    <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - 
+                    XML-RPC の応答を、XML 文字列形式で返します。
+                </listitem>
+                <listitem>
+                    <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - 
+                    XML-RPC 型を表す <code>Zend_XmlRpc_Value</code> オブジェクトを返します。
+                </listitem>
+            </itemizedlist>
+        </para>
+        <programlisting role="php"><![CDATA[...
+$service->serviceProcedure();
+
+$response = $service->__getResponse();
+// $response は、XML-RPC 型の返り値を PHP 変数に変換したものです
+  
+$response = $service->__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
+// $response は、プロシージャの返り値を表す XML を含む文字列です
+
+$response = $service->__getResponse(ZXmlRpcClient::RESPONSE_ZXMLRPC_OBJECT);
+// $response は、XML-RPC 型の返り値を表す Zend_XmlRpc_Value インスタンスです
+...]]>
+        </programlisting>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

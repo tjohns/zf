@@ -1,0 +1,73 @@
+<sect1 id="zend.json.introduction">
+    <title>導入</title>
+    <para>
+        <code>Zend_Json</code> は、PHP のネイティブデータを JSON
+        形式にシリアライズしたり、JSON のデータを PHP
+        のネイティブデータに戻したりする便利なメソッドを提供します。
+        JSON についてのより詳細な情報は、<ulink url="http://www.json.org/">
+        JSON プロジェクトのサイト</ulink> を参照ください。
+    </para>
+    <para>
+        JSON (JavaScript Object Notation : JavaScript によるオブジェクト記法)
+        は、javascript とその他の言語との間のデータ交換を行う軽量な手法です。
+        JSON は直接 Javascript としてされるので、Web 2.0
+        のインターフェイスとして使用するのに最適です。AJAX
+        インターフェイスにおける XML の代わりとして、よりシンプルに使用することができます。
+    </para>
+</sect1>
+
+<sect1 id="zend.json.basics">
+    <title>基本的な使用法</title>
+    <para>
+        <code>Zend_Json</code> を使用するために、静的な public
+        メソッドが 2 つ公開されています。名前は
+        <code>Zend_Json::encode()</code> および
+        <code>Zend_Json::decode()</code> となります。
+        <programlisting role="php"><![CDATA[<?php
+// 値を取得します
+$phpNative = Zend_Json::decode($encodedValue);
+
+// クライアントに返すために、それをエンコードします
+$json = Zend_Json::encode($phpNative);
+?>]]></programlisting>
+    </para>
+</sect1>
+
+<sect1 id="zend.json.objects">
+    <title>JSON オブジェクト</title>
+    <para>
+        PHP オブジェクトを JSON にエンコードすると、
+        オブジェクトの public プロパティがすべて JSON
+        オブジェクトにエンコードされます。
+    </para>
+    <para>
+        JSON オブジェクトのデコードは、ちょっと大変です。Javascript
+        のオブジェクトを PHP に対応させるなら、連想配列にするのが一番近いでしょう。
+        しかし、中には「クラスの ID を渡してそのインスタンスを作成し、
+        JSON オブジェクトの キー/値 をそのインスタンスに代入すべきだという人もいます。
+        また、そんなことをするとセキュリティ上問題があるという人もいるでしょう。
+    </para>
+    <para>
+        デフォルトでは、<code>Zend_Json</code> は JSON
+        オブジェクトを連想配列にデコードします。しかし、
+        もしオブジェクトとして受け取りたいのなら、そのように指定することもできます。
+        <programlisting role="php"><![CDATA[<?php
+// オブジェクトをオブジェクトにデコードします
+$phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
+?>]]></programlisting>
+        このようにしてデコードされたオブジェクトは <code>StdClass</code>
+        オブジェクトとなり、JSON の キー/値
+        のペアに対応するプロパティを保持します。
+    </para>
+    <para>
+        Zend Framework の推奨する方法は、各開発者が JSON
+        オブジェクトのデコード方法を決めるべきだというものです。
+        もし特定の型のオブジェクトを返してほしいのなら、
+        お望みの型のオブジェクトを開発者自身が作成したうえで、
+        <code>Zend_Json</code> がデコードした値をそこに代入していけばいいのです。
+    </para>
+</sect1>
+        
+<!--
+vim:se ts=4 sw=4 et:
+-->

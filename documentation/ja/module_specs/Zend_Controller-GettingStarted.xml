@@ -1,0 +1,181 @@
+<sect1 id="zend.controller.getting-started">
+	<title>さあ、はじめましょう</title>
+	
+	<sect2 id="zend.controller.getting-started.introduction">
+		<title>導入</title>
+		<para>
+			<code>Zend_Controller</code> システムは、拡張性を考慮して作成されています。
+			拡張方法としては、既存のクラスを継承する以外にも
+			<code>Zend_Controller_Router_Interface</code> および
+			<code>Zend_Controller_Dispatcher_Interface</code>
+			を実装した新しいクラスを作成する方法があります。
+		</para>
+	</sect2>
+	
+	<sect2 id="zend.controller.getting-started.server-configuration">
+		<title>サーバの設定</title>
+		<para>
+			Zend_Controller は、クリーンな (クエリ文字列をほとんど使用しない) URI
+			をサポートするように作成されています。この推奨設定を使用するためには、ウェブサーバが
+			URI の書き換えをサポートしており、全てのリクエストを単一のファイル
+			(ここでは "index.php" とします。これは単に
+			<code>Zend_Controller_Front</code> を呼び出すだけです)
+			にリダイレクトできなければなりません。
+			Apache では、この機能はオプションのモジュール mod_rewrite でサポートされています。
+		</para>
+
+		<para>
+			サーバを設定するための第一歩は、まずきちんとインストールして
+			mod_rewrite を有効にすることです。次に、.htaccess と index.php
+			の 2 つのファイルをドキュメントルートに配置します。
+			.htaccess は Apache が使用するファイルで、
+			すべてのリクエストを index.php にリダイレクトさせるための
+			mod_rewrite のルールをここに記述します。開発中なら、
+			特定の拡張子のファイル以外をすべて index.php
+			にリダイレクトさせるような単純なルールを設定しておけばよいでしょう。
+			例えばこのようになります。
+
+			<programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
+]]></programlisting>
+
+			上の例では、指定した拡張子以外のすべてのファイルに対するリクエストが
+			index.php に渡されます。開発中にはこれで十分ですが、
+			実運用環境では、リダイレクトしないディレクトリを指定するなどの記述が必要でしょう。
+		</para>
+	</sect2>
+	
+	<sect2 id="zend.controller.getting-started.bootstrap">
+		<title>起動用ファイル</title>
+		
+		<para>
+			.htaccess ファイルの設定が終われば、次に <code>index.php</code>
+			という新しいファイルを作成します。これが起動用ファイルとなります。
+			index.php は、単に Zend_Controller_Front を起動するためだけに使用します。
+			Zend_Controller_Front はドキュメントルートの外に配置します。
+		</para>
+
+		<note>	
+			ドキュメントルートに配置する PHP ファイルは、
+			この起動用ファイルだけにしておくべきです。
+		</note>
+
+		<para>
+			セキュリティ上、他の PHP ファイルはウェブサーバからアクセスできない場所
+			(ドキュメントルートの配下ではない場所) に置くことを Zend として強く推奨します。
+			共有ホスティング環境など思い通りにいかない環境もあることは理解しますが、
+			可能な限り推奨設定に従うようにしてください。
+		</para>
+
+		<para>
+			Zend_Controller_Front を起動するための起動用ファイル
+			<code>index.php</code> をドキュメントルートに作成します。
+
+			<programlisting role="php"><![CDATA[<?php
+				
+require_once 'Zend/Controller/Front.php';
+
+Zend_Controller_Front::run('/path/to/your/controllers')
+
+?>]]></programlisting>
+
+			<code>/path/to/your/controllers</code> の部分に関しては、次の節を参照ください。
+
+			<code>README.txt</code> に記述されているように、
+			Zend Framework ライブラリのディレクトリは <code>include_path</code>
+			に置かなければなりません。<code>include_path</code> が <code>php.ini</code>
+			で設定されていない場合は、このファイルで <code>require_once()</code>
+			する前に <code>set_include_path()</code> をコールして設定することができます。
+		</para>
+
+		<note>
+			mod_rewrite を必要としない手法については現在調査中です。
+			mod_rewrite の機能を使用する方法と使用しない方法の両方を提示できるようにするつもりです。
+			また、この仕組みは決して Apache や mod_rewrite
+			特有の機能にとらわれたものではないことにも注意しましょう。
+			同じようなリダイレクトの仕組みを持っているウェブサーバでも使用可能です。
+		</note>
+	</sect2>	
+		
+	<sect2 id="zend.controller.getting-started.directory-structure">
+		<title>ディレクトリ構造</title>
+		
+		<para>
+			Zend Framework で構築したウェブサイトは、
+			共通のディレクトリ構造を共有することを推奨します。
+			すべてとは言いませんが、できるだけこの構造にあわせるようにしましょう。
+			そうすることで、Zend Framework の規約に慣れている人々にとって、
+			あなたのコードがより理解しやすいものとなります。
+		</para>
+		
+		<para>	
+			推奨する構造は、(Zend およびその他の) ライブラリ用のディレクトリと
+			アプリケーションのディレクトリを別に分けるものです。
+
+			<programlisting role="php"><![CDATA[
+/application
+  /models
+  /views
+  /controllers
+/document_root
+  /images
+  /styles
+  .htaccess
+  index.php
+/library
+  /Zend
+]]></programlisting>
+		</para>
+		
+		<note>
+			この節は未完成です。現在作成中であり、今後変わる可能性があります。
+		</note>
+	</sect2>	
+		
+	<sect2 id="zend.controller.overview.indexcontroller">
+		<title>IndexController</title>
+
+		<para>
+			<code>IndexController</code> という名前のコントローラを、
+			すべてのサイトで定義しなければなりません。
+			URI にコントローラが指定されなかった場合、例えば次のような
+			URI が指定された場合に、このコントローラが使用されます。
+
+			<programlisting role="php"><![CDATA[
+http://framework.zend.com/
+]]></programlisting>
+		</para>
+
+		<para>
+			<code>IndexController</code> クラスは、コントローラのディレクトリにある
+			<code>IndexController.php</code> という名前のファイルで定義されていなければなりません。
+			<code>IndexController</code> は、<code>Zend_Controller_Action</code>
+			を継承しなければなりません。<code>IndexController</code>
+			の例は、このようになります。
+
+			<programlisting role="php"><![CDATA[<?php
+				
+require_once 'Zend/Controller/Action.php';
+
+class IndexController extends Zend_Controller_Action 
+{
+	public function indexAction()
+	{
+		echo 'IndexController からこんにちは';
+	}
+
+	public function noRouteAction()
+	{
+		$this->_redirect('/');
+	}
+}
+
+?>]]></programlisting>
+			
+			<note>
+				この節は未完成です。現在作成中であり、今後変わる可能性があります。
+			</note>			
+		</para>
+	</sect2>			
+</sect1>

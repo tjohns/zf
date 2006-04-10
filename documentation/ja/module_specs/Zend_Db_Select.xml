@@ -1,0 +1,421 @@
+<sect1 id="zend.db.select">
+
+    <title>Zend_Db_Select</title>
+
+    <sect2 id="zend.db.select.introduction">
+
+        <title>導入</title>
+
+        <para>
+            Zend_Db_Select は、データベースに依存しない方法で
+            SQL の SELECT 文を作成するのを助けるためのツールです。
+            もちろん完璧なものだとはいえませんが、
+            クエリの移植性を高めることを助けるのに貢献するでしょう。
+            さらに、クエリを SQL インジェクション攻撃から守ることも助けます。
+        </para>
+
+        <para>
+            Zend_Db_Select のインスタンスを生成する一番簡単な方法は、
+            Zend_Db_Adapter::select() メソッドを使用することです。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+require_once 'Zend/Db.php';
+
+$params = array (
+    'host'     => '127.0.0.1',
+    'username' => 'malory',
+    'password' => '******',
+    'dbname'   => 'camelot'
+);
+
+$db = Zend_Db::factory('pdoMysql', $params);
+
+$select = $db->select();
+// $select は Zend_Db_Select_PdoMysql オブジェクトになります
+
+?>]]></programlisting>
+
+        <para>
+            それから、このオブジェクトとメソッドを使用して
+            SELECT クエリを作成し、Zend_Db_Adapter
+            がクエリやデータ取得に使用するための文字列を作成します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+//
+// SELECT *
+//     FROM round_table
+//     WHERE noble_title = "Sir"
+//     ORDER BY first_name
+//     LIMIT 10 OFFSET 20
+//
+
+// 順に指定していくこともできますし、
+$select->from('round_table', '*');
+$select->where('noble_title = ?', 'Sir');
+$select->order('first_name');
+$select->limit(10,20);
+
+// 一連の流れで指定することもできます
+$select->from('round_table', '*')
+       ->where('noble_title = ?', 'Sir')
+       ->order('first_name')
+       ->limit(10,20);
+
+// 結果を取得します
+$sql = $select->__toString();
+$result = $db->fetchAll($sql);
+
+// 別のやり方として、$select オブジェクト自身を渡すこともできます。
+// Zend_Db_Adapter は、Zend_Db_Select オブジェクトの __toString()
+// をコールして、クエリ文字列を取得します。
+$result = $db->fetchAll($select);
+
+?>]]></programlisting>
+
+        <para>
+            その都度クォートする代わりに、
+            クエリの中でバインドパラメータを使用することもできます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+//
+// SELECT *
+//     FROM round_table
+//     WHERE noble_title = "Sir"
+//     ORDER BY first_name
+//     LIMIT 10 OFFSET 20
+//
+
+$select->from('round_table', '*')
+       ->where('noble_title = :title')
+       ->order('first_name')
+       ->limit(10,20);
+
+// バインドパラメータを使用して結果を取得します
+$params = array('title' => 'Sir');
+$result = $db->fetchAll($select, $params);
+
+?>]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.select.fromcols">
+
+        <title>テーブルからのカラムの取得</title>
+
+        <para>
+            指定したテーブルからカラムを SELECT するには、
+            from() メソッドを使用してテーブル名とカラムを指定します。
+            テーブル名およびカラムのどちらについてもエイリアスを使用することが可能で、
+            何度でも必要なだけ from() を使用することができます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// $db オブジェクトを作成します。ここでは Mysql アダプタを使用しているとします。
+$select = $db->select();
+
+// SELECT a, b, c FROM some_table
+$select->from('some_table', 'a, b, c');
+// 上と等価です
+$select->from('some_table', array('a', 'b', 'c');
+
+// SELECT bar.col FROM foo AS bar
+$select->from('foo AS bar', 'bar.col');
+
+// SELECT foo.col AS col1, bar.col AS col2 FROM foo, bar
+$select->from('foo', 'foo.col AS col1');
+$select->from('bar', 'bar.col AS col2');
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.select.joincols">
+
+        <title>JOIN されたテーブルからのカラムの取得</title>
+
+        <para>
+            連結したテーブルからカラムを取得するには join() メソッドを使用します。
+            まず連結するテーブル名、次に連結の条件、
+            そして最後に連結したテーブルから取得したいカラムを指定します。
+            何度でも必要なだけ join() を使用することができます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// $db オブジェクトを作成します。ここでは Mysql アダプタを使用しているとします。
+$select = $db->select();
+
+//
+// SELECT foo.*, bar.*
+//     FROM foo
+//     JOIN bar ON foo.id = bar.id
+//
+$select->from('foo', '*');
+$select->join('bar', 'foo.id = bar.id', '*');
+
+?>]]></programlisting>
+
+        <para>
+            現在は、LEFT JOIN や RIGHT JOIN などの JOIN 構文のみをサポートしています。
+            将来のリリースでは、データベースに依存しない形式をサポートする予定です。
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.db.select.where">
+
+        <title>WHERE 条件</title>
+
+        <para>
+            WHERE 条件を追加するには、where() メソッドを使用します。通常の文字列、
+            あるいは疑問符のプレースホルダを使用した文字列と代入する値
+            (値は Zend_Db_Adapter::quoteInto を使用してクォートされます)
+            のいずれかを渡すことができます。
+        </para>
+
+        <para>
+            where() を複数回使用すると、それらの条件が AND で連結されます。
+            OR 条件を指定するには orWhere() を使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// $db オブジェクトを作成し、SELECT ツールを取得します
+$select = $db->select();
+
+//
+// SELECT *
+//     FROM round_table
+//     WHERE noble_title = "Sir"
+//     AND favorite_color = "yellow"
+//
+$select->from('round_table', '*');
+$select->where('noble_title = "Sir"'); // 値を埋め込む形式
+$select->where('favorite_color = ?', 'yellow'); // 値をクォートする形式
+
+//
+// SELECT *
+//     FROM foo
+//     WHERE bar = "baz"
+//     OR id IN("1", "2", "3")
+//
+$select->from('foo', '*');
+$select->where('bar = ?', 'baz');
+$select->orWhere('id IN(?)', array(1, 2, 3);
+
+?>]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.select.group">
+
+        <title>GROUP BY 句</title>
+
+        <para>
+            行をグループ化するには、必要なだけ group() メソッドを使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// $db オブジェクトを作成し、SELECT ツールを取得します
+$select = $db->select();
+
+//
+// SELECT COUNT(id)
+//     FROM foo
+//     GROUP BY bar, baz
+//
+$select->from('foo', 'COUNT(id)');
+$select->group('bar');
+$select->group('baz');
+
+// 上と等価な group() のコール方法
+$select->group('bar, baz');
+
+// もうひとつ、上と等価な group() のコール方法
+$select->group(array('bar', 'baz'));
+
+?>]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.select.having">
+
+        <title>HAVING 条件</title>
+
+        <para>
+            選択した結果に HAVING 条件を追加するには、having() メソッドを使用します。
+            このメソッドは where() メソッドと同じです。
+        </para>
+
+        <para>
+            having() を複数回使用すると、それらの条件が AND で連結されます。
+            OR 条件を指定するには orHaving() を使用します。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+	
+// $db オブジェクトを作成し、SELECT ツールを取得します
+$select = $db->select();
+
+//
+// SELECT COUNT(id) AS count_id
+//     FROM foo
+//     GROUP BY bar, baz
+//     HAVING count_id > "1"
+//
+$select->from('foo', 'COUNT(id) AS count_id');
+$select->group('bar, baz');
+$select->having('count_id > ?', 1);
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.select.order">
+
+        <title>ORDER BY 句</title>
+
+        <para>
+            カラムを並べ替えるには、必要なだけ order() メソッドを使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// $db オブジェクトを作成し、SELECT ツールを取得します
+$select = $db->select();
+
+//
+// SELECT * FROM round_table
+//     ORDER BY noble_title DESC, first_name ASC
+//
+$select->from('round_table', '*');
+$select->order('noble_title DESC');
+$select->order('first_name');
+
+// 上と等価な order() のコール方法
+$select->order('noble_title DESC, first_name');
+
+// もうひとつ、上と等価な order() のコール方法
+$select->order(array('noble_title DESC', 'first_name'));
+
+?>]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.select.limit">
+
+        <title>件数やオフセットによる制限</title>
+
+        <para>
+            Zend_Db_Select は、LIMIT 句のサポートを抽象化した機能を提供しています。
+            MySQL や PostgreSQL などの多くのデータベースでは、これは比較的簡単なことです。
+            というのも "LIMIT :count [OFFSET :offset]" という構文がサポートされているからです。
+        </para>
+
+        <para>
+            その他のデータベース、例えば Microsoft SQL や Oracle
+            では、ちょっと面倒です。というのもこれらは LIMIT
+            句をサポートしていないのです。MS-SQL は TOP 句しかサポートしていませんし、
+            Oracle の場合は特別な形式のクエリを書かないと LIMIT
+            と同等の機能を実現できません。Zend_Db_Select の内部動作によって、
+            前述のオープンソースデータベースの LIMIT
+            機能と同等の動作をするように SELECT 文をその場で書き換えることができます。
+        </para>
+
+        <para>
+            返される結果を件数とオフセットで絞り込むためには、
+            件数と (オプションで) オフセットを指定して limit() を使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// まずは単純な "LIMIT :count"
+$select = $db->select();
+$select->from('foo', '*');
+$select->order('id');
+$select->limit(10);
+
+//
+// MySQL/PostgreSQL/SQLite では、以下のように変換されます
+//
+// SELECT * FROM foo
+//     ORDER BY id ASC
+//     LIMIT 10
+//
+// しかし Microsoft SQL では、このようになります
+//
+// SELECT TOP 10 * FROM FOO
+//     ORDER BY id ASC
+//
+//
+
+// 今度は、ちょっと複雑な "LIMIT :count OFFSET :offset"
+$select = $db->select();
+$select->from('foo', '*');
+$select->order('id');
+$select->limit(10, 20);
+
+//
+// MySQL/PostgreSQL/SQLite では、以下のように変換されます
+//
+// SELECT * FROM foo
+//     ORDER BY id ASC
+//     LIMIT 10 OFFSET 20
+//
+// しかし Microsoft SQL では、オフセットはサポートされていないので
+// このようになります
+//
+// SELECT * FROM (
+//     SELECT TOP 10 * FROM (
+//         SELECT TOP 30 * FROM foo ORDER BY id DESC
+//     ) ORDER BY id ASC
+// )
+//
+// Zend_Db_Adapter は、クエリの変換を自動的に行います。
+//
+
+?>]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.select.paging">
+
+        <title>ページ数や件数による制限</title>
+
+        <para>
+            Zend_Db_Select は、ページを基準とした制限にも対応しています。
+            結果から特定の「ページ」を取得したい場合には、limitPage()
+            メソッドを使用します。取得したいページ番号を最初に、
+            そしてその次に 1 ページあたりの件数を指定します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// 基本的な select を作成します
+$select = $db->select();
+$select->from('foo', '*');
+$select->order('id');
+
+// そして、1 ページあたり 10 件とした場合の 3 ページ目のみを取得します
+$select->limitPage(3, 10);
+
+//
+// MySQL/PostgreSQL/SQLite では、以下のように変換されます
+//
+// SELECT * FROM foo
+//     ORDER BY id ASC
+//     LIMIT 10 OFFSET 20
+//
+
+?>]]></programlisting>
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

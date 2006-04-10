@@ -1,0 +1,21 @@
+<sect1 id="zend.xmlrpc.introduction">
+    <title>導入</title>
+    <para>
+        XML-RPC とは、"XML エンコードしたデータを HTTP でやり取りすることによる、
+        リモートプロシージャの呼び出しです。
+        XML-RPC は可能な限りシンプルであるように設計されています。
+        にもかかわらず、複雑なデータ構造を送信し、処理し、その結果を受け取ることができます。"
+        (<ulink url="http://www.xmlrpc.com/">XML-RPC ホームページ</ulink> より)。
+    </para>
+    <para>
+      Zend Framework では XML-RPC クライアントを実装しています
+      (そして、今後 XML-RPC サーバも実装する予定です)。PHP 5 の
+      <ulink url="http://www.php.net/soap">SOAP ウェブサービス拡張モジュール</ulink>
+      と同じくらいにシンプルに XML-RPC を扱えるようにしています。
+    </para>
+</sect1>
+&module_specs.Zend_XmlRpc_Client;
+<!--&module_specs.Zend_XmlRpc_Server;-->
+<!--
+vim:se ts=4 sw=4 et:
+-->

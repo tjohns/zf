@@ -1,0 +1,1128 @@
+<sect1 id="zend.pdf.introduction">
+    <!-- @todo review and revise upon completion of refactoring -->
+    <title>導入</title>
+    <para>
+    Zend_Pdf モジュールは、PHP 5 用に書かれた PDF (Portable Document Format)
+    操作エンジンです。既存のドキュメントの読み込みや新しいドキュメントの作成、
+    ドキュメントの変更および変更内容の保存が可能です。PHP アプリケーションから
+    既存のテンプレートを使用した PDF を作成したり、新しい
+    PDF ドキュメントを作成したりする際の助けになるでしょう。
+
+    Zend_Pdf モジュールは、以下の機能をサポートしています。
+    <itemizedlist>
+        <listitem>
+            <para>
+            新しいドキュメントの作成や既存のドキュメントの読み込み
+            <footnote>
+                <para>
+                PDF V1.4 (Acrobat 5) 形式のドキュメントの読み込みをサポートしています。
+                </para>
+            </footnote>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+            指定した版のドキュメントの取得
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+            ドキュメント内のページの操作。ページの並び順の変更や新しいページの追加、
+            ドキュメントからのページの削除など
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+            さまざまな図形の描画 (直線、矩形、多角形、円、楕円、扇形)
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+            14 種類の標準フォントのうちのいずれかを使用したテキストの描画
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+            回転
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+            画像の描画
+            <footnote>
+                <para>
+                現在は JPG 画像のみをサポートしています。
+                </para>
+            </footnote>
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+            PDF ファイルのインクリメンタルな更新
+            </para>
+        </listitem>
+    </itemizedlist>
+    </para>
+</sect1>
+
+<sect1 id="zend.pdf.create">
+    <title>PDF ドキュメントの作成および読み込み</title>
+    <para>
+    <code>Zend_Pdf</code> クラスは PDF ドキュメントを表すもので、
+    ドキュメントレベルの機能を提供します。
+    </para>
+
+    <para>
+    新しいドキュメントを作成するには、新しい <code>Zend_Pdf</code>
+    オブジェクトを作成しなければなりません。
+    </para>
+
+    <para>
+    <code>Zend_Pdf</code> クラスでは、既存の PDF を読み込むための
+    2 つの静的メソッドも提供しています。
+    <code>Zend_Pdf::load()</code> および <code>Zend_Pdf::parse()</code> です。
+    これらは両方とも Zend_Pdf オブジェクトを返します。
+    エラーが発生した場合には例外がスローされます。
+    </para>
+
+    <example>
+        <title>新しい PDF ドキュメントの作成あるいは既存の PDF ドキュメントの読み込み</title>
+        <programlisting role="php"><![CDATA[<?php
+...
+// 新しい PDF ドキュメントを作成します。
+$pdf1 = new Zend_Pdf();
+
+// ファイルから PDF ドキュメントを読み込みます。
+$pdf2 = Zend_Pdf::load($fileName);
+
+// 文字列から PDF ドキュメントを読み込みます。
+$pdf3 = Zend_Pdf::parse($pdfString);
+...
+?>]]></programlisting>
+    </example>
+
+    <para>
+    PDF ファイルでは、ドキュメントのインクリメンタルな更新がサポートされています。
+    つまり、ドキュメントを更新するたびに、そのドキュメントの新しい版が作成されます。
+    Zend_Pdf モジュールには、指定した版を取得する機能も含まれています。
+    </para>
+    <para>
+    版を指定するには <code>Zend_Pdf::load()</code> および
+    <code>Zend_Pdf::parse()</code> メソッドの第 2 引数を使用するか、
+    <code>Zend_Pdf::rollback()</code> を使用します。
+        <footnote>
+            <para>
+            <code>Zend_Pdf::rollback()</code> メソッドは、
+            変更がドキュメントに適用される前に起動しなければなりません。
+            それ以外の場合の挙動は未定義です。
+            </para>
+        </footnote>
+    call.
+    </para>
+
+    <example>
+        <title>指定した版の PDF ドキュメントの取得</title>
+        <programlisting role="php"><![CDATA[<?php
+...
+// 前の版の PDF ドキュメントを読み込みます。
+$pdf1 = Zend_Pdf::load($fileName, 1);
+
+// 前の版の PDF ドキュメントを読み込みます。
+$pdf2 = Zend_Pdf::parse($pdfString, 1);
+
+// ドキュメントの最初の版を読み込みます。
+$pdf3 = Zend_Pdf::load($fileName);
+$revisions = $pdf3->revisions();
+$pdf3->rollback($revisions - 1);
+...
+?>]]></programlisting>
+    </example>
+
+
+</sect1>
+
+
+<sect1 id="zend.pdf.save">
+    <title>PDF ドキュメントへの変更内容の保存</title>
+    <para>
+    PDF ドキュメントの変更内容を保存するには 2 種類の方法があります。
+    <code>Zend_Pdf::save()</code> および <code>Zend_Pdf::render()</code>
+    メソッドです。
+    </para>
+
+    <para>
+    <code>Zend_Pdf::save($filename, $updateOnly = false)</code> メソッドは、
+    ドキュメントをファイルに保存します。$updateOnly が true の場合は、
+    新しい PDF ファイルセグメントがファイルに追記されます。
+    それ以外の場合はファイルが上書きされます。
+    </para>
+
+    <para>
+    <code>Zend_Pdf::render($filename, $updateOnly = false)</code> は、
+    PDF ドキュメントを文字列として返します。$updateOnly が true の場合は、
+    新しい PDF ファイルセグメントのみが返されます。
+    </para>
+
+    <example>
+        <title>PDF ドキュメントの保存</title>
+        <programlisting role="php"><![CDATA[<?php
+...
+// PDF ドキュメントを読み込みます。
+$pdf = Zend_Pdf::load($fileName);
+...
+// ドキュメントを更新します。
+$pdf->save($fileName, true);
+// ドキュメントを新しいファイルに保存します。
+$pdf->save($newFileName, true);
+
+// PDF ドキュメントを文字列で返します。
+$pdfString = $pdf->render();
+
+...
+?>]]></programlisting>
+    </example>
+
+</sect1>
+
+<sect1 id="zend.pdf.pages">
+    <title>ドキュメントのページ</title>
+    <para>
+    PDF ドキュメントのページの抽象化を行うのが
+    <code>Zend_Pdf_Page</code> クラスです。
+    </para>
+
+    <para>
+    PDF ページは既存の PDF から読み込むこともできますし、
+    新しく作成することもできます。
+    </para>
+
+    <para>
+    新しいページを取得するには、直接 <code>Zend_Pdf_Page</code>
+    オブジェクトを作成するか、<code>Zend_Pdf::newPage()</code>
+    メソッドをコールします。このメソッドは <code>Zend_Pdf_Page</code>
+    オブジェクトを返します。<code>Zend_Pdf::newPage()</code>
+    の場合は、すでにドキュメントにアタッチされているページを作成するという点が異なります。
+    こうするとそのページを複数の PDF ドキュメントで使いまわすことができませんが、
+    多少高速になります
+    <footnote>
+        <para>
+        これは Zend_Pdf モジュールのバージョン 1.0 の制限事項であり、
+        将来のバージョンではなくなる予定です。しかし、ドキュメント間で
+        ページを共有するには、アタッチされていないページのほうが
+        常によい結果となるでしょう。
+        </para>
+    </footnote>。どちらの手法を使用するかはあなたしだいです。
+    </para>
+
+    <para>
+    <code>Zend_Pdf::newPage()</code> メソッドおよび <code>Zend_Pdf_Page</code>
+    のコンストラクタは、どちらも同じ形式のパラメータを受け取ります。
+    ページサイズを ($x, $y) 形式のポイント数 (1/72 インチ)
+    で表したものか、定義済みの定数のうちのいずれかになります。
+    以下の定数が定義されています。
+        <itemizedlist>
+            <listitem>
+                <para>Zend_Pdf_Const::PAGESIZE_A4</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::PAGESIZE_A4_LANDSCAPE</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::PAGESIZE_LETTER</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+    ドキュメントのページは、<code>Zend_Pdf</code> クラスの public メンバである
+    <code>$pages</code> に保存されます。これは <code>Zend_Pdf_Page</code>
+    オブジェクトの配列です。これによってページの並び順も定義され、
+    一般的な配列と同じように操作することができます。
+    </para>
+
+    <example>
+        <title>PDF ドキュメントのページの操作</title>
+        <programlisting role="php"><![CDATA[<?php
+...
+// ページの並び順を反転します。
+$pdf->pages = array_reverse($pdf->pages);
+...
+// 新しいページを追加します。
+$pdf->pages[] = new Zend_Pad_Page(Zend_Pdf_Const::PAGESIZE_A4);
+// 新しいページを追加します。
+$pdf->pages[] = $pdf->newPage(Zend_Pdf_Const::PAGESIZE_A4);
+
+// 指定したページを削除します。
+unset($pdf->pages[$id]);
+
+...
+?>]]></programlisting>
+    </example>
+
+</sect1>
+
+<sect1 id="zend.pdf.drawing">
+    <title>描画</title>
+
+    <sect2 id="zend.pdf.drawing.geometry">
+        <title>ジオメトリ</title>
+        <para>
+        PDF は PostScript と同じジオメトリを使用します。ページの左下隅を基準とし、
+        デフォルトではポイント数 (1 インチの 1/72) で場所を指定します。
+        </para>
+        <para>
+        ページの大きさはページオブジェクトから取得できます。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+$width  = $pdfPage->getWidth();
+$height = $pdfPage->getHeight();]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.color">
+        <title>色</title>
+        <para>
+        PDF には、色を表現するためのさまざまな方法があります。Zend_Pdf では、
+        グレイスケール、RGB および CMYK 色空間をサポートしています。
+        <code>Zend_Pdf_Color</code> オブジェクトが要求される箇所では、
+        これらのどれでも使用することができます。それぞれの色空間に対応する機能を提供するのが
+        <code>Zend_Pdf_Color_GrayScale</code>、<code>Zend_Pdf_Color_RGB</code> および
+        <code>Zend_Pdf_Color_CMYK</code> クラスです。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+// $grayLevel (float 型の数値)。0.0 (黒) - 1.0 (白)
+$color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
+
+// $r, $g, $b (float 型の数値)。0.0 (最低の強度) - 1.0 (最大の強度)
+$color2 = new Zend_Pdf_Color_RGB($r, $g, $b);
+
+// $c, $m, $y, $k (float 型の数値)。0.0 (最小の強度) - 1.0 (最大の強度)
+$color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+
+    <sect2 id="zend.pdf.drawing.shape-drawing">
+        <title>図形の描画</title>
+        <para>
+        描画操作は、PDF のページに対して行われます。
+        </para>
+        <para>
+        基本図形のセットが <code>Zend_Pdf_Page</code> クラスで提供されています。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * x1,y1 から x2,y2 まで直線を描画します。
+ *
+ * @param float $x1
+ * @param float $y1
+ * @param float $x2
+ * @param float $y2
+ */
+public function drawLine($x1, $y1, $x2, $y2);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 矩形を描画します。
+ *
+ * 描画方法
+ * Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - 輪郭を描画して塗りつぶします (デフォルト)
+ * Zend_Pdf_Const::SHAPEDRAW_STROKE      - 輪郭を描画します
+ * Zend_Pdf_Const::SHAPEDRAW_FILL        - 矩形を塗りつぶします
+ *
+ * @param float $x1
+ * @param float $y1
+ * @param float $x2
+ * @param float $y2
+ * @param integer $fillType
+ */
+public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 多角形を描画します。
+ *
+ * $fillType が Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE あるいは Zend_Pdf_Const::SHAPEDRAW_FILL
+ * の場合、多角形は自動的に閉じられます。このメソッドについての詳細は、
+ * PDF のドキュメント (section 4.4.2 Path painting Operators, Filling)
+ * を参照ください。
+ *
+ * @param array $x  - float の配列 (頂点の X 座標)
+ * @param array $y  - float の配列 (頂点の Y 座標)
+ * @param integer $fillType
+ * @param integer $fillMethod
+ */
+public function drawPolygon($x, $y,
+                            $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
+                            $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 中心が x, y で半径が radius の円を描画します。
+ *
+ * 角度はラジアンで指定します。
+ *
+ * Method signatures:
+ * drawCircle($x, $y, $radius);
+ * drawCircle($x, $y, $radius, $fillType);
+ * drawCircle($x, $y, $radius, $startAngle, $endAngle);
+ * drawCircle($x, $y, $radius, $startAngle, $endAngle, $fillType);
+ *
+ *
+ * これは本当の円ではありません。PDF は 3 次ベジエ曲線しかサポートしていないからです。
+ * とはいえ、本当の円にかなり近くなります。
+ * 本当の円との誤差は、最大でも半径の 0.00026 倍にしかなりません
+ * (角度が PI/8, 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 そして 15*PI/8 の場合)。
+ * 0, PI/4, PI/2, 3*PI/4, PI, 5*PI/4, 3*PI/2 そして 7*PI/4 の場合は、円の正確な接線となります。
+ *
+ * @param float $x
+ * @param float $y
+ * @param float $radius
+ * @param mixed $param4
+ * @param mixed $param5
+ * @param mixed $param6
+ */
+public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 指定した矩形に内接する楕円を描画します。
+ *
+ * Method signatures:
+ * drawEllipse($x1, $y1, $x2, $y2);
+ * drawEllipse($x1, $y1, $x2, $y2, $fillType);
+ * drawEllipse($x1, $y1, $x2, $y2, $startAngle, $endAngle);
+ * drawEllipse($x1, $y1, $x2, $y2, $startAngle, $endAngle, $fillType);
+ *
+ * 角度はラジアンで指定します。
+ *
+ * @param float $x1
+ * @param float $y1
+ * @param float $x2
+ * @param float $y2
+ * @param mixed $param5
+ * @param mixed $param6
+ * @param mixed $param7
+ */
+public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.text-drawing">
+        <title>テキストの描画</title>
+        <para>
+        テキストに対する描画操作も、PDF のページに対して行われます。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 指定した位置にテキストを描画します。
+ *
+ * @param string $text
+ * @param float $x
+ * @param float $y
+ * @throws Zend_Pdf_Exception
+ */
+public function drawText($text, $x, $y );]]>
+            </programlisting>
+        </para>
+        <para>
+        現在設定されているフォントおよびサイズを使用して描画されます。
+        以下の詳細な説明を参照ください。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.using-fonts">
+        <title>フォントの使用</title>
+        <para>
+        <code>Zend_Pdf_Page::drawText()</code> メソッドは、
+        現在設定されているフォントを使用します。
+        これは <code>Zend_Pdf_Page::setFont()</code> メソッドで設定できます。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 現在のフォントを設定します。
+ *
+ * @param Zend_Pdf_Font $font
+ * @param float $fontSize
+ */
+public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
+            </programlisting>
+        </para>
+        <para>
+        PDF は Type1、TrueType、Type3 および複合フォントをサポートしています。
+        PDF には標準で 14 種類の Type1 フォントが提供されています。
+        現在は、Zend_Pdf モジュールではこれらの標準フォントしかサポートしていません。
+        <code>Zend_Pdf_Font_Standard</code> クラスを使用してこれらのフォントを取得します。
+        コンストラクタの引数で、実際のフォントを指定します。
+        </para>
+        <example>
+            <title>標準フォントの作成</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// 新しいフォントを作成します。
+$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
+
+// フォントを適用します。
+$pdfPage->setFont($font, 36);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+        14 種類の標準フォントは、<code>Zend_Pdf_Const</code> クラスで定義されています。
+        <itemizedlist>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_TIMES_ROMAN</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_TIMES_BOLD</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_TIMES_ITALIC</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_TIMES_BOLDITALIC</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_HELVETICA</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_HELVETICA_BOLD</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_HELVETICA_ITALIC</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_HELVETICA_BOLDITALIC</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_COURIER</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_COURIER_BOLD</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_COURIER_ITALIC</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_COURIER_BOLDITALIC</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_SYMBOL</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FONT_ZAPFDINGBATS</para>
+            </listitem>
+        </itemizedlist>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.image-drawing">
+        <title>画像の描画</title>
+        <para>
+        <code>Zend_Pdf_Page</code> クラスの drawImage() メソッドで、
+        画像の描画を行います。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * ページ内の指定した位置に画像を描画します。
+ *
+ * @param Zend_Pdf_Image $image
+ * @param float $x1
+ * @param float $y1
+ * @param float $x2
+ * @param float $y2
+ */
+public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
+            </programlisting>
+        </para>
+        <para>
+        画像オブジェクトは <code>Zend_Pdf_Image</code>
+        クラスを継承したクラスで表されます。
+        </para>
+        <para>
+        現在は JPG 画像のみがサポートされています。
+        </para>
+        <example>
+            <title>画像の描画</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$image = new Zend_Pdf_Image_JPEG('my_image.jpg');
+$pdfPage->drawImage($image, 100, 100, 400, 300);;
+...
+?>]]>
+            </programlisting>
+        </example>
+
+        <para>
+            <emphasis>重要! Zend_Pdf_Image_JPEG クラスは PHP の GD 拡張モジュールを必要とします。</emphasis>
+        </para>
+        <para>
+            詳細な情報は、PHP のドキュメント
+            (<ulink url="http://www.php.net/manual/ja/ref.image.php">http://www.php.net/manual/ja/ref.image.php</ulink>)
+            を参照ください。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.line-drawing-style">
+        <title>直線の描画スタイル</title>
+        <para>
+        直線の描画スタイルは、線幅と線の色、そして破線のパターンで定義されます。
+        これらはすべて、<code>Zend_Pdf_Page</code> クラスのメソッドで設定します。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/** 線の色を設定します。*/
+public function setLineColor(Zend_Pdf_Color $color);
+
+/** 線の幅を設定します。*/
+public function setLineWidth(float $width);
+
+/**
+ * 破線のパターンを設定します。
+ *
+ * pattern は float の配列です: array(on_length, off_length, on_length, off_length, ...)
+ * phase は線の開始位置から移動する距離です。
+ *
+ * @param array $pattern
+ * @param array $phase
+ */
+public function setLineDashingPattern($pattern, $phase = 0);]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.fill-style">
+        <title>塗りつぶしのスタイル</title>
+        <para>
+        <code>Zend_Pdf_Page::drawRectangle()</code>、<code>Zend_Pdf_Page::drawPoligon()</code>、
+        <code>Zend_Pdf_Page::drawCircle()</code> および <code>Zend_Pdf_Page::drawEllipse()</code>
+        メソッドは、オプションのパラメータとして <code>$fillType</code>
+        を受け取ります。これは以下のいずれかの値となります。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>Zend_Pdf_Const::SHAPEDRAW_STROKE - 図形の輪郭を描画します</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::SHAPEDRAW_FILL - 図形を塗りつぶすだけです</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - 輪郭を描画し、塗りつぶします (デフォルトの挙動です)</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+        <code>Zend_Pdf_Page::drawPoligon()</code> メソッドには、さらにパラメータ
+        <code>$fillMethod</code> を指定することができます。
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING (デフォルトの挙動)</para>
+                <para>
+                <citetitle>PDF リファレンス</citetitle> によると、これは以下のように定義されています。
+                <blockquote>
+nonzero winding number ルールは、ある点がパスの内側にあるかどうかを
+判断するため、その点からあらゆる方向に放射線を引いて
+その線がパスを構成する線と交わる場所を調べます。
+0 からカウントをはじめ、放射線の左から右にパスの線が横切った場合に
++1、放射線の右から左に横切った場合に -1 します。
+すべての交点について調べた後、もし結果が 0 ならその点はパスの外側です。
+0 でなければ内側です。
+
+注意: この方式では、放射線とパスの線が同一になった場合や
+放射線がパスの線の接線となった場合のことを指定していません。
+放射線は任意の方向に伸ばせるので、このような状況にならないような放射線が選ばれます。
+単純な凸状のパスの場合、この方式で判断した内側・外側は、
+直感的に予想できるのと同じ結果になります。
+ただ、パスを構成する線自身が交わっているなどの複雑なパスの場合は、
+興味深い結果となります。この例を、(PDF リファレンスの) 図 4.10 に示します。
+
+5 本の直線を互いに交差させて作成した星型の場合、このルールでは
+星型で囲まれるすべての部分をパスの内側として扱います。真ん中の
+五角形も内側となります。2 つの同心円からなるパスの場合、
+2 つの円が同じ方向に描画された際には両方の円に囲まれている部分が
+内側となります。2 つの円が反対方向に描画された際には、2 つの円からなる
+「ドーナツ型」の部分が内側となります。このルールの場合は、
+「ドーナツの穴」の部分は外側という扱いになります。
+            </blockquote>
+            </para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Const::FILLMETHOD_EVENODD</para>
+                <para>
+                <citetitle>PDF リファレンス</citetitle> によると、これは以下のように定義されています。
+                <blockquote>
+nonzero winding number ルールに対するもうひとつのルールが even-odd ルールです。
+このルールでは、ある点が「内側である」かどうかを判断する材料として、
+その点からあらゆる方向に放射線を引いてその線がパスを構成する線と何回交わるか
+ということを用います。交わる回数が奇数だった場合、その点は内側です。
+交わる回数が偶数だった場合、その点は外側です。単純なパスの場合は、
+これは nonzero winding number ルールと同じ結果になります。
+しかし、複雑な図形の場合は異なる結果となります。
+
+複雑なパスに対して even-odd ルールを適用した場合の例を (PDF リファレンスの)
+図 4.11 に示します。このルールの場合、5 本の交差する直線からなる星型では、
+三角形の部分のみが内側として扱われます。真ん中の五角形は、内側とはみなされません。
+2 つの同心円の場合、2 つの円からなる「ドーナツ型」の部分のみが内側として扱われます。
+これは、円の描画された方向に依存しません。
+                </blockquote>
+            </para>
+            </listitem>
+        </itemizedlist>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.rotations">
+        <title>回転</title>
+        <para>
+        描画操作を適用する前に、PDF のページを回転させることができます。
+        それには <code>Zend_Pdf_Page::rotate()</code> メソッドを使用します。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * ($x, $y) を中心にし、指定した角度 (ラジアン) だけ回転します。
+ *
+ * @param float $angle
+ */
+public function rotate($x, $y, $angle);]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.save-restore">
+        <title>グラフィックの状態の保存/復元</title>
+        <para>
+        好きな時点でのグラフィックの状態
+        (現在のフォント、フォントサイズ、線の色、塗りつぶしの色、線の形式、
+        ページの回転、クリップ領域) を保存/復元することができます。
+        保存操作はグラフィックの状態をスタックに保存し、復元の際にはそこから取り出されます。
+        </para>
+        <para>
+        <code>Zend_Pdf_Page</code>
+        クラスには、これらの操作を行うための 2 つのメソッドがあります。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * このページのグラフィックの状態を保存します。
+ * 現在適用されているスタイル・位置・クリップ領域および
+ * 回転/移動/拡大縮小などを情報を保存します。
+ */
+public function saveGS();
+
+/**
+ * 直近の saveGS() で保存されたグラフィックの状態を復元します。
+ */
+public function restoreGS();]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.clipping">
+        <title>描画領域のクリッピング</title>
+        <para>
+        PDF および Zend_Pdf モジュールは、描画領域のクリッピングに対応しています。
+        描画演算子が影響を及ぼす範囲を、このクリップ領域内に制限します。
+        クリップ領域の初期値は、ページ全体です。
+        </para>
+        <para>
+        <code>Zend_Pdf_Page</code> クラスでは、
+        クリッピングに関連するいくつかのメソッドを提供しています。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 矩形のクリップ領域を設定します。
+ *
+ * @param float $x1
+ * @param float $y1
+ * @param float $x2
+ * @param float $y2
+ */
+public function clipRectangle($x1, $y1, $x2, $y2);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 多角形のクリップ領域を設定します。
+ *
+ * @param array $x  - float の配列 (頂点の X 座標)
+ * @param array $y  - float の配列 (頂点の Y 座標)
+ * @param integer $fillMethod
+ */
+public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 円形のクリップ領域を設定します。
+ *
+ * @param float $x
+ * @param float $y
+ * @param float $radius
+ * @param float $startAngle
+ * @param float $endAngle
+ */
+public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 楕円のクリップ領域を設定します。
+ *
+ * メソッドの書式
+ * drawEllipse($x1, $y1, $x2, $y2);
+ * drawEllipse($x1, $y1, $x2, $y2, $startAngle, $endAngle);
+ *
+ * @todo $x2-$x1 == 0 や $y2-$y1 == 0 のような特別な場合への対応
+ *
+ * @param float $x1
+ * @param float $y1
+ * @param float $x2
+ * @param float $y2
+ * @param float $startAngle
+ * @param float $endAngle
+ */
+public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = null);]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+    <sect2 id="zend.pdf.drawing.styles">
+        <title>スタイル</title>
+        <para>
+        <code>Zend_Pdf_Style</code> クラスがスタイルに関する機能を提供します。
+        </para>
+        <para>
+        スタイルは、グラフィックの状態に関する複数の設定を保存し、
+        PDF のページに 1 回の操作でそれを適用するために使用されます。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * このページの描画操作で使用する予定のスタイルを設定します。
+ *
+ * @param Zend_Pdf_Style $style
+ */
+public function setStyle(Zend_Pdf_Style $style);
+
+/**
+ * スタイルを返し、それをページに適用します。
+ *
+ * @return Zend_Pdf_Style|null
+ */
+public function getStyle();]]>
+            </programlisting>
+        </para>
+
+        <para>
+        <code>Zend_Pdf_Style</code> クラスでは、
+        さまざまなグラフィックの状態を設定あるいは取得するためのメソッドが提供されています。
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 線の色を設定します。
+ *
+ * @param Zend_Pdf_Color $color
+ */
+public function setLineColor(Zend_Pdf_Color $color);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 線の色を取得します。
+ *
+ * @return Zend_Pdf_Color|null
+ */
+public function getLineColor();]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 線の幅を設定します。
+ *
+ * @param float $width
+ */
+public function setLineWidth($width);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 線の幅を取得します。
+ *
+ * @return float
+ */
+public function getLineWidth();]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 破線のパターンを設定します。
+ *
+ * @param array $pattern
+ * @param float $phase
+ */
+public function setLineDashingPattern($pattern, $phase = 0);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 破線のパターンを取得します。
+ *
+ * @return array
+ */
+public function getLineDashingPattern();]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 破線の位相を取得します。
+ *
+ * @return float
+ */
+public function getLineDashingPhase();]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 塗りつぶし色を設定します。
+ *
+ * @param Zend_Pdf_Color $color
+ */
+public function setFillColor(Zend_Pdf_Color $color);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 塗りつぶし色を取得します。
+ *
+ * @return Zend_Pdf_Color|null
+ */
+public function getFillColor();]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 現在のフォントを設定します。
+ *
+ * @param Zend_Pdf_Font $font
+ * @param float $fontSize
+ */
+public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 現在のフォントサイズを変更します。
+ *
+ * @param float $fontSize
+ */
+public function setFontSize($fontSize);]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 現在のフォントを取得します。
+ *
+ * @return Zend_Pdf_Font $font
+ */
+public function getFont();]]>
+            </programlisting>
+        </para>
+        <para>
+            <programlisting role="php"><![CDATA[
+/**
+ * 現在のフォントサイズを取得します。
+ *
+ * @return float $fontSize
+ */
+public function getFontSize();]]>
+            </programlisting>
+        </para>
+    </sect2>
+
+</sect1>
+
+<sect1 id="zend.pdf.usage">
+    <title>Zend_Pdf モジュールの使用例</title>
+    <para>
+    この節では、モジュールの使用例を示します。
+    </para>
+
+    <para>
+    この例は、<filename>demos/Zend/Pdf/demo.php</filename> にあります。
+    </para>
+    <para>
+    また <filename>test.pdf</filename> というファイルも含まれており、
+    このデモのテスト用に使用します。
+    </para>
+
+    <example>
+        <title>Zend_Pdf モジュールの使用例</title>
+        <programlisting role="php"><![CDATA[<?php
+/**
+ * @package Zend_Pdf
+ * @subpackage demo
+ */
+
+/** Zend_Pdf */
+require_once 'Zend/Pdf.php';
+
+if (!isset($argv[1])) {
+    echo "USAGE: php demo.php <pdf_file> [<output_pdf_file>]\n";
+    exit;
+}
+
+if (file_exists($argv[1])) {
+    $pdf = Zend_Pdf::load($argv[1]);
+} else {
+    $pdf = new Zend_Pdf();
+}
+
+//------------------------------------------------------------------------------------
+// ページの並び順を反転します。
+$pdf->pages = array_reverse($pdf->pages);
+
+// 新しいスタイルを作成します。
+$style = new Zend_Pdf_Style();
+$style->setFillColor(new Zend_Pdf_Color_RGB(0, 0, 0.9));
+$style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
+$style->setLineWidth(3);
+$style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
+$style->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA_BOLD), 32);
+
+// 新しいg増オブジェクトを作成します。
+$stampImage = new Zend_Pdf_Image_JPEG(dirname(__FILE__) . '/stamp.jpg');
+
+// ページに修正マークをつけます。
+foreach ($pdf->pages as $page){
+    $page->saveGS();
+    $page->setStyle($style);
+    $page->rotate(0, 0, M_PI_2/3);
+
+    $page->saveGS();
+    $page->clipCircle(550, -10, 50);
+    $page->drawImage($stampImage, 500, -60, 600, 40);
+    $page->restoreGS();
+
+    $page->drawText('Modified by Zend Framework!', 150, 0);
+    $page->restoreGS();
+}
+
+// Zend_Pdf オブジェクトが作成した新しいページを追加します。
+// (ページは、指定したドキュメントにアタッチされます)
+$pdf->pages[] = ($page1 = $pdf->newPage('A4'));
+
+// Zend_Pdf_Page オブジェクトが作成した新しいページを追加します。
+// (ページは、ドキュメントにアタッチされません)
+$pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE));
+
+// 新しいフォントを作成します。
+$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
+
+// フォントを適用してテキストを描画します。
+$page1->setFont($font, 36);
+$page1->drawText('Helvetica 36 text string', 60, 500);
+
+// 別のページでフォントオブジェクトを使用します。
+$page2->setFont($font, 24);
+$page2->drawText('Helvetica 24 text string', 60, 500);
+
+// 別のフォントを使用します。
+$page2->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_TIMES_ROMAN), 32);
+$page2->drawText('Times-Roman 32 text string', 60, 450);
+
+// 矩形を描画します。
+$page2->setFillColor(new Zend_Pdf_Color_GrayScale(0.8));
+$page2->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
+$page2->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
+$page2->drawRectangle(60, 400, 400, 350);
+
+// 円を描画します。
+$page2->setLineDashingPattern(Zend_Pdf_Const::LINEDASHING_SOLID);
+$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 0));
+$page2->drawCircle(85, 375, 25);
+
+// 扇形を描画します。
+$page2->drawCircle(200, 375, 25, 2*M_PI/3, -M_PI/6);
+$page2->setFillColor(new Zend_Pdf_Color_CMYK(1, 0, 0, 0));
+$page2->drawCircle(200, 375, 25, M_PI/6, 2*M_PI/3);
+$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 1, 0));
+$page2->drawCircle(200, 375, 25, -M_PI/6, M_PI/6);
+
+// 楕円を描画します。
+$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 0));
+$page2->drawEllipse(250, 400, 400, 350);
+$page2->setFillColor(new Zend_Pdf_Color_CMYK(1, 0, 0, 0));
+$page2->drawEllipse(250, 400, 400, 350, M_PI/6, 2*M_PI/3);
+$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 1, 0));
+$page2->drawEllipse(250, 400, 400, 350, -M_PI/6, M_PI/6);
+
+// 多角形を描画して塗りつぶします。
+$page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 1));
+$x = array();
+$y = array();
+for ($count = 0; $count < 8; $count++) {
+    $x[] = 140 + 25*cos(3*M_PI_4*$count);
+    $y[] = 375 + 25*sin(3*M_PI_4*$count);
+}
+$page2->drawPolygon($x, $y,
+                    Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
+                    Zend_Pdf_Const::FILLMETHOD_EVENODD);
+
+// 直線を描画します。
+$page2->setLineWidth(0.5);
+$page2->drawLine(60, 375, 400, 375);
+//------------------------------------------------------------------------------------
+
+if (isset($argv[2])) {
+    $pdf->save($argv[2]);
+} else {
+    $pdf->save($argv[1], true /* 更新 */);
+}
+]]></programlisting>
+    </example>
+
+</sect1>
+
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

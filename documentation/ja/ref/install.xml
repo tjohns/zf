@@ -1,0 +1,15 @@
+<chapter id="install">
+    <title>インストール</title>
+    <para>
+        この章では、フレームワークをインストールする方法を説明します。
+    </para>
+    <sect1 id="install.download">
+        <title>ダウンロード</title>
+        <para>
+            この節では、フレームワークをダウンロードする方法を説明します。
+        </para>
+    </sect1>
+</chapter>
+<!--
+vim:se ts=4 sw=4 et:
+-->
