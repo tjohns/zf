@@ -1,5 +1,5 @@
 <sect1 id="zend.feed.introduction">
-    <title>¼ò½é</title>
+    <title>Introduction</title>
     <para>
         <code>Zend_Feed</code> provides functionality for consuming RSS and Atom feeds. It provides a
         natural syntax for accessing elements of feeds, feed attributes, and entry attributes.

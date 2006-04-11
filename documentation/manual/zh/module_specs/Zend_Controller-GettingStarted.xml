@@ -2,7 +2,7 @@
 	<title>Getting Started</title>
 	
 	<sect2 id="zend.controller.getting-started.introduction">
-		<title>¼ò½é</title>
+		<title>Introduction</title>
 		<para>
 			The <code>Zend_Controller</code> system was built with extensibility in mind, either
 			by subclassing the existing classes or writing new classes that implement 

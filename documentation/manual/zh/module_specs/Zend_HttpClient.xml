@@ -1,5 +1,5 @@
 <sect1 id="zend.httpclient.introduction">
-    <title>¼ò½é</title>
+    <title>Introduction</title>
     <para>
         <code>Zend_HttpClient</code> provides an easy interface with which to perform HTTP requests.
         <code>Zend_HttpClient</code> is able to perform GET, POST, PUT and DELETE requests.

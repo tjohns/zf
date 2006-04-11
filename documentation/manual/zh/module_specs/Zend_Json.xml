@@ -1,5 +1,5 @@
 <sect1 id="zend.json.introduction">
-    <title>¼ò½é</title>
+    <title>Introduction</title>
     <para>
         <code>Zend_Json</code> provides convenience methods for serializing
         native PHP to JSON and decoding JSON to native PHP. For more information

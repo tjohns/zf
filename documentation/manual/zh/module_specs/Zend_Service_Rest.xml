@@ -1,7 +1,7 @@
 <sect1 id="zend.service.rest">
     <title>Zend_Service_Rest</title>
     <sect2 id="zend.service.rest.introduction">
-        <title>¼ò½é</title>
+        <title>Introduction</title>
         <para>
             <code>Zend_Service_Rest</code> is a basic REST client for performing queries against any REST based web
             service.

@@ -1,7 +1,7 @@
 <sect1 id="zend.service.yahoo">
     <title>Zend_Service_Yahoo</title>
     <sect2 id="zend.service.yahoo.introduction">
-        <title>¼ò½é</title>
+        <title>Introduction</title>
         <para>
             <code>Zend_Service_Yahoo</code> is a simple API for using many of the Yahoo! REST APIs.
             <code>Zend_Service_Yahoo</code> allows you to search Yahoo! Web search, Yahoo! News, Yahoo! Local, Yahoo!

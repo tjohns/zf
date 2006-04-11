@@ -2,7 +2,7 @@
     <title>Overview</title>
 
     <sect2 id="zend.search.introduction">
-        <title>¼ò½é</title>
+        <title>Introduction</title>
         <para>
             Zend_Search_Lucene is a general purpose text search engine written entirely in PHP 5.
             Since it stores its index on the filesystem and does not require a database

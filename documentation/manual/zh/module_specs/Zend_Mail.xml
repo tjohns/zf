@@ -1,5 +1,5 @@
 <sect1 id="zend.mail.introduction">
-    <title>¼ò½é</title>
+    <title>Introduction</title>
     <para>
         <code>Zend_Mail</code> provides generalized functionality to compose and send both text and MIME-compliant
         multipart e-mail messages. Mail can be sent with <code>Zend_Mail</code> via the php built-in

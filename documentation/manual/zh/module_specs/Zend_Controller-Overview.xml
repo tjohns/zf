@@ -2,7 +2,7 @@
 	<title>Overview</title>
 
 	<sect2 id="zend.controller.overview.introduction">
-		<title>¼ò½é</title>
+		<title>Introduction</title>
 		<para>
 			<code>Zend_Controller</code> provides the foundation for building a website based
 			on the Model-View-Controller (MVC) pattern.

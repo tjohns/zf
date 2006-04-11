@@ -1,5 +1,5 @@
 <sect1 id="zend.inputfilter.introduction">
-    <title>¼ò½é</title>
+    <title>Introduction</title>
     <para><literal>Zend_InputFilter</literal> provides simple facilities that
     promote a structured and rigid approach to input filtering. Its purpose is
     multifaceted, because it caters to the needs of three different groups of

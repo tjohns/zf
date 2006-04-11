@@ -4,7 +4,7 @@
 
     <sect2 id="zend.db.adapter.introduction">
 
-        <title>¼ò½é</title>
+        <title>Introduction</title>
 
         <para>
             <code>Zend_Db_Adapter</code> is the database API abstraction layer for the Zend Framework.
