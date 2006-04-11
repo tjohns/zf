@@ -7,9 +7,9 @@
 ]>
 <book id="manual" lang="zh">
     <bookinfo>
-        <title>Zend FrameworkÊÖ²á ÖÐÎÄ°æ</title>
+        <title>Zend Frameworkæ‰‹å†Œ ä¸­æ–‡ç‰ˆ</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Zend FrameworkÊÖ²á ÖÐÎÄ°æ</edition>
+        <edition>Zend Frameworkæ‰‹å†Œ ä¸­æ–‡ç‰ˆ</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
