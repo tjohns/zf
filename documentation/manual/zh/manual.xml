@@ -7,9 +7,9 @@
 ]>
 <book id="manual" lang="en">
     <bookinfo>
-        <title>Programmer's Reference Guide</title>
+        <title>Zend Framework手册 中文版</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <edition>Zend Framework手册 中文版</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
