@@ -23,6 +23,7 @@ Zend Framework                                                             NEWS
 - Fixed Zend_Json encoding of empty values (Matthew, Davey)
 - Fixed Zend_Json encoding of associative arrays (Matthew, Davey)
 - Fixed Zend_Json encoding of numeric indices in associative arrays (Matthew)
+- Removed formatting (newlines, tabs) from Zend_Json encoding methods (Matthew)
 
 =RELEASE 0.1.2 / 8-Mar-2006=
 - Unit test suite is now included. (Mike)
