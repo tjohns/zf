@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//NL"
     "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
 [
     <!ENTITY % magic.fixup SYSTEM "./entities.ent">
     %magic.fixup;
 ]>
-<book id="manual" lang="en">
+<book id="manual" lang="nl">
     <bookinfo>
-        <title>Programmer's Reference Guide</title>
+        <title>Referentiegids voor de programmeur</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <edition>De Zend Framework Referentiegids voor programmeurs</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
@@ -85,16 +85,10 @@
         <title>Zend_Pdf</title>
         &module_specs.Zend_Pdf;
     </chapter>
-	<chapter id="zend.search">
+    <chapter id="zend.search">
         <title>Zend_Search</title>
-        &module_specs.Zend_Search-Overview;
-        &module_specs.Zend_Search-IndexCreation;
-        &module_specs.Zend_Search-Searching;
-        &module_specs.Zend_Search-Queries;
-        &module_specs.Zend_Search-Charset;
-        &module_specs.Zend_Search-Extending;
-        &module_specs.Zend_Search-JavaLucene;
-	</chapter>
+        &module_specs.Zend_Search;
+    </chapter>
     <chapter id="zend.service">
         <title>Zend_Service</title>
         &module_specs.Zend_Service;
@@ -105,7 +99,7 @@
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
-        &module_specs.Zend_XmlRpc;
+        &module_specs.Zend_XmlRpc_Client;
     </chapter>
     <!-- &ref.faq; -->
     &ref.coding_standard;
