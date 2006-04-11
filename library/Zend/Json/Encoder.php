@@ -162,7 +162,8 @@ class Zend_Json_Encoder
         if ($assoc) {
             $result = '{';
             foreach ($array as $key => $value) {
-        		$tmpArray[] = $this->_encodeValue($key)
+                $key = (string) $key;
+        		$tmpArray[] = $this->_encodeString($key)
         		            . ' : '
                             . $this->_encodeValue($value);
             }

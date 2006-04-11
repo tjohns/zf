@@ -71,7 +71,11 @@ class Zend_JsonTest extends PHPUnit2_Framework_TestCase
     {
         $this->_testEncodeDecode(array(array('one' => 1, 'two' => 2)));
     }
-	
+
+    public function testAssocArray2() 
+    {
+        $this->_testEncodeDecode(array(array('one' => 1, 2 => 2)));
+    }
 	
 	public function testObject()
 	{
