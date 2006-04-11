@@ -4,7 +4,7 @@
 
     <sect2 id="zend.db.select.introduction">
 
-        <title>Introduction</title>
+        <title>¼ò½é</title>
 
         <para>
             Zend_Db_Select is a tool to help you build SQL SELECT statements in

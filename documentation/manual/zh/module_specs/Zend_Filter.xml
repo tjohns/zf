@@ -1,5 +1,5 @@
 <sect1 id="zend.filter.introduction">
-    <title>Introduction</title>
+    <title>¼ò½é</title>
     <para><literal>Zend_Filter</literal> provides a library of static methods
     for filtering data. For input filtering, you should use <xref
     linkend="zend.inputfilter" /> instead, because it provides a framework for

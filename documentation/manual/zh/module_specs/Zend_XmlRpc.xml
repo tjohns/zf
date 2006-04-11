@@ -1,5 +1,5 @@
 <sect1 id="zend.xmlrpc.introduction">
-    <title>Introduction</title>
+    <title>¼ò½é</title>
     <para>
         XML-RPC is a "...remote procedure calling using HTTP as the transport and XML as the encoding. XML-RPC is designed to be as simple as possible, while allowing complex data structures to be transmitted, processed and returned." (<ulink url="http://www.xmlrpc.com/">XML-RPC Home Page</ulink>).
     </para>

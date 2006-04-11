@@ -1,7 +1,7 @@
 <sect1 id="zend.xmlrpc.client">
     <title>Zend_XmlRpc_Client</title>
     <sect2 id="zend.xmlrpc.client.introduction">
-        <title>Introduction</title>
+        <title>¼ò½é</title>
         <para>
             Using the <code>Zend_XmlRpc_Client</code> is very similar to using <code>SoapClient</code> objects (<ulink url="http://www.php.net/soap">SOAP web service extension</ulink>).
             You can simply call the XML-RPC service procedures as <code>Zend_XmlRpc_Client</code> methods.

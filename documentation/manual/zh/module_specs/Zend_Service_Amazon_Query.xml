@@ -1,7 +1,7 @@
 <sect2 id="zend.service.amazon.query">
     <title>Using the Alternative Query API</title>
     <sect3 id="zend.service.amazon.query.introduction">
-        <title>Introduction</title>
+        <title>¼ò½é</title>
         <para>
             <code>Zend_Service_Amazon_Query</code> provides an alternative API for using the Amazon Web Service.
             The alternative API uses the Fluent Interface pattern. That is, all calls can be made using chained method

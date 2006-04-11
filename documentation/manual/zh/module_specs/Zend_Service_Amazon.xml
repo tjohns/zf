@@ -1,7 +1,7 @@
 <sect1 id="zend.service.amazon">
     <title>Zend_Service_Amazon</title>
     <sect2 id="zend.service.amazon.introduction">
-        <title>Introduction</title>
+        <title>¼ò½é</title>
         <para>
             <code>Zend_Service_Amazon</code> is a simple API for using Amazon web services.
             <code>Zend_Service_Amazon</code> has two APIs: a more traditional one that follows Amazon's own API, and a

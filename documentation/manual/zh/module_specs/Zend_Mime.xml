@@ -1,5 +1,5 @@
 <sect1 id="zend.mime.introduction">
-    <title>Introduction</title>
+    <title>¼ò½é</title>
     <para>
         <code>Zend_Mime</code> is a support class for handling multipart MIME messages. It is used by <link
         linkend="zend.mail"><code>Zend_Mail</code></link>, and may be used by applications requiring

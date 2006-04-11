@@ -1,7 +1,7 @@
 <sect1 id="zend.httpclient.response">
     <title>Zend_HttpClient_Response</title>
     <sect2 id="zend.httpclient.response.introduction">
-        <title>Introduction</title>
+        <title>¼ò½é</title>
         <para>
             <code>Zend_HttpClient_Response</code> provides easy access to the responses returned by
             <xref linkend="zend.httpclient" />. It provides an intuitive set of methods for working
