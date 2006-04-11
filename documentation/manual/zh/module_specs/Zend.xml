@@ -1,10 +1,10 @@
 <sect1 id="zend.introduction">
     <title>简介</title>
     <para>
-    The Zend class is the foundation class of the Zend Framework.  This
-    class evolved out of the framework's adherence to the DRY principle (Don't Repeat
-    Yourself).  It contains only static methods, and these methods
-    contain functionality that is required by many components in the Zend Framework.
+     Zend类是整个Zend Framework的基类，之所以有这个类是为了使Zend Framework遵循DRY原则（Don't Repeat Yourself）。这个类只包含静态方法，这些类方法具有Zend Framework中的很多组件都需要的功能。
+	</para>
+
+	<para>	(Zend类是个功能性的类，它只包含静态方法，也就是说，不需要实例化就可以直接调用Zend的各种功能方法/函数。通俗地说，Zend类相当于我们熟悉的functions.inc.php，而且是corefunctions.inc.php，提供了最核心的函数。 --Haohappy注)
     </para>
 </sect1>
 
@@ -12,42 +12,35 @@
     <title>Zend::loadFile()</title>
 
     <para>
-    <code>Zend::loadFile()</code> loads a PHP file, which may contain any PHP code. It is a wrapper for the
-    PHP function <ulink url="http://php.net/include"><code>include()</code></ulink> that throws
-    <code>Zend_Exception</code> on failure.
+    <code>Zend::loadFile()</code> 用来包含PHP文件。它其实是将PHP的include()函数封装而成的一个静态方法。当包含文件失败时，会抛出异常<code>Zend_Exception</code> 。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-	
-loadFile($filename, $dirs=null, $once=false)
+    <programlisting role="php">
+	<![CDATA[<?php	
+	loadFile($filename, $dirs=null, $once=false)
+	?>]]>
+	</programlisting>
 
-?>]]></programlisting>
-
-    <para>The <code>$filename</code> argument specifies the filename to load, which must not contain
-    any path information.  A security check is performed on <code>$filename</code>.  The
-    <code>$filename</code> may only contain alphanumeric characters, dashes ("-"), underscores ("_"), or
-    periods (".").  No such restriction is placed on the <code>$dirs</code> argument.
+    <para>$filename参数指定需要加载的文件，注意$filename不需要指定任何路径，只需要文件名即可。ZF会对文件作安全性检查。$filename只能由字母，数字，连接符-,下划线_及英文句号.组成(半角)。$dir则不限，可以使用中文等。
     </para>
 
-    <para>The <code>$dirs</code> argument specifies directories to search for the file.  If
-    <code>NULL</code>, only the <code>include_path</code> will be searched.  If a string
-    or an array, the directory or directories specified will be searched, and then the
-    <code>include_path</code>.
+
+    <para>$dirs参数用来指定文件所在目录，如果为空，则程序将会到系统的include_path下寻找文件是否存在（include_path可在php.ini中设置--Haohappy注）
     </para>
 
     <para>
-    The <code>$once</code> argument is a boolean that specifies whether to use the PHP
-    functions <ulink url="http://php.net/include"><code>include()</code></ulink> or <ulink
-    url="http://php.net/include_once"><code>include_once()</code></ulink> for loading the file.
+    $once参数为布尔类型，只能是true或false，两者区别就和include()和include_once()的区别一样。
     </para>
 </sect1>
 
 <sect1 id="zend.loadclass">
     <title>Zend::loadClass()</title>
-    <para>
-    <code>Zend::loadClass()</code> loads a PHP file whose filename is formatted like
-    "<code>$className.php</code>", and then checks for the existance of the class <code>$className</code>.
+    <para>   Zend::loadClass()用来加载一个PHP类文件，这个文件的文件名必须和文件中的类同名。loadClass()会检查文件中的类是否存在。如果文件中的类不存在，那么就会抛出一个Zend_Exception异常。
     </para>
+
+	<para>
+	(例：TestClass.php中有个类TestClass，使用Zend::loadClass("TestClass")就可加载这个类，这种作法类似于Java-- Haohappy注)
+	</para>
 
     <programlisting role="php"><![CDATA[<?php
 	
@@ -55,25 +48,17 @@ loadClass($class, $dirs)
 
 ?>]]></programlisting>
 
-    <para>
-    If the file is not found or the class does not exist after the load, a <code>Zend_Exception</code> is
-    thrown. <code>Zend::loadFile()</code> is used for loading, and the <code>$dirs</code> argument is
-    passed directly to it..
+      <para>    如果没有指定$dirs参数，而文件名中存在下划线，那么loadClass()会自动把下划线当成目录分隔符，去相应的目录中去查找文件。
     </para>
 
-    <para>
-    If you ask for a class with underscores in the name, and <code>$dirs</code> is null (the default),
-    <code>Zend::loadClass()</code> will auto-discover the <code>$dirs</code> from the class name
-    by converting underscores to directory separators.  For example, if <code>$class</code> is
-    <code>Zend_Example_Class</code>, that will map to a path of <code>Zend/Example/Class.php</code>.
-    </para>
+	<para>
+	例如：loadClass("Zend_Example_Class") 没指定$dirs参数 ，则loadClass()会自动到Zend/Example/目录下去查找Class.php文件
+	</para>
 </sect1>
 
 <sect1 id="zend.loadinterface">
     <title>Zend::loadInterface()</title>
-    <para>
-    <code>Zend::loadInterface()</code> works exactly the same as <code>Zend::loadClass()</code>, only it
-    loads an interface instead.
+    <para>    Zend::loadInterface()和Zend::loadClass()的用法是一样的，区别在于loadInterface()是用来加载接口。Zend::loadClass() 不能用来加载接口，因为PHP函数class_exists()不能检查Interface是否存在（PHP 5.0.2之前版本），所以需要用Zend::loadInterface()来代替。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -88,18 +73,14 @@ loadInterface($interface, $dirs)
     for interfaces (since PHP 5.0.2).  Use <code>Zend::loadInterface()</code> instead.
     </para>
 
-    <para>
-    If you ask for an interface with underscores in the name, and <code>$dirs</code> is null (the default),
-    <code>Zend::loadInterface()</code> will auto-discover the <code>$dirs</code> from the interface name
-    by converting underscores to directory separators.  For example, if <code>$interface</code> is
-    <code>Zend_Example_Interface</code>, that will map to a path of <code>Zend/Example/Interface.php</code>.
+    <para>    同样，如果你没有指定目录，但是文件中含有下划线_，Zend::loadInterface()也会自动到相应目录去寻找文件，这和Zend::loadClass()是一样的。
     </para>
 </sect1>
 
 <sect1 id="zend.isreadable">
     <title>Zend::isReadable()</title>
 
-    <para>Returns <code>TRUE</code> if a file is readable, FALSE otherwise.</para>
+    <para>判定某个文件是否可读，可读则返回true，否则返回false。</para>
 
     <programlisting role="php"><![CDATA[<?php
 	
@@ -107,20 +88,13 @@ isReadable($filename)
 
 ?>]]></programlisting>
 
-    <para>The <code>$filename</code> argument specifies the filename to check, which may
-    contain path information.  This method is a wrapper for the PHP function
-    <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.  The PHP function
-    does not search the <code>include_path</code>, while <code>Zend::isReadable()</code> does.
+    <para>这个方法是将PHP函数is_readable()封装而成的，is_readable()不会自动查找include_path下的文件，而Zend::isReadable()可以。
     </para>
 </sect1>
 
 <sect1 id="zend.dump">
     <title>Zend::dump()</title>
-
-    <para>
-    <code>Zend::dump()</code> prints and/or returns information about an expression.  It is a wrapper
-    for the PHP function <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>.  It
-    wraps the output with (X)HTML <code>&lt;pre&gt;</code> tags and optionally prepends a label.
+    <para>Zend::dump()打印和返回某个表达式或变量的信息。它是将var_dump()封装而成的。它默认带上了(X)HTML的pre标签，使输出更美观。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -130,19 +104,18 @@ dump($var, $label=null, $echo=true)
 ?>]]></programlisting>
 
     <para>
-    The <code>$var</code> argument specifies the expression or variable for which the information
-    will be obtained.
+    <code>$var</code> 参数指定要输出信息的变量或表达式。
     </para>
 
     <para>
-    The <code>$label</code> is any arbitrary text to be prepended to the output of
-    <code>Zend::dump()</code>.  This is useful when dumping many variables on a single screen.
+    $label标签参数是用来加在输出信息之前的一段文本。
     </para>
 
-    <para>The boolean <code>$echo</code> controls whether the output of <code>Zend::dump()</code> is echoed
-    or not.  If <code>TRUE</code>, the output will be echoed.  Regardless of the state of
-    <code>$echo</code>, the output is always be returned.
+    <para>dump()总会返回信息，但不一定会输出，这取决于$echo参数，指定是否要将信息输出到屏幕。
     </para>
+
+	<para>	(这非常有用，例如你一次要查看多个变量的信息，你可以为不同变量设置不同label，如“user”，“password”等等，这样不会弄乱--Haohappy注)
+	</para>
 </sect1>
 
 
@@ -150,7 +123,7 @@ dump($var, $label=null, $echo=true)
     <title>Zend::register()</title>
 
     <para>
-    Registers an object in the object store.
+    注册一个对象到对象仓库。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -160,20 +133,15 @@ register($name, $object)
 ?>]]></programlisting>
 
     <para>
-    The registry is a mechanism for providing singleton instances of objects to the application space.  By
-    storing the object in the registry once, and then retrieving the object from the registry whenever it
-    is needed, the same instance is always returned.
+    ZendFramework的"注册表"是一个提供单件对象(singleton instances)给应用程序的机制.
+	通过注册一个对象,你可以在你需要时再取得这个对象.
     </para>
 
     <para>
-    The <code>$name</code> is an arbitrary string to name the object in the store.  This name will be
-    supplied to <code>Zend::registry()</code> to retrieve the object again.
+    <code>$name</code> 是对象名称,指定后你可以通过$name来访问这个对象.
     </para>
 
-    <para>
-    The <code>$name</code> argument must be a string, only objects may be stored in the registry, an object
-    can never be removed from the registry, and an instance can only be stored once in the registry.
-    Failure to obey these rules will result in <code>Zend_Exception</code> being thrown.
+    <para>    <code>$name</code>参数必须是一个字符串。在注册库中只能存储对象，对象将不会被删除，而一个对象只能有一个实例。　如果不符合这几个条件，就会抛出一个Zend_Exception异常。
     </para>
 </sect1>
 
@@ -181,7 +149,7 @@ register($name, $object)
     <title>Zend::registry()</title>
 
     <para>
-    Returns an object in the registry or lists all objects in the registry.
+    在“对象注册表”中返回一个对象，或者列出所有已经注册的对象。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -191,18 +159,15 @@ registry($name=null)
 ?>]]></programlisting>
 
     <para>
-    If the <code>$name</code> argument is <code>NULL</code>, an array will be returned where the keys to the array
-    are the names of the objects in the registry and the values are the class names of those objects.
+   如果$name参数为空，会返回一个数组，key为对象名称，value为对象的类名称。
     </para>
 
     <para>
-    If <code>$name</code> is a string, the object handle assigned to that name will be returned.  If
-    an object does not exist in the registry with that <code>$name</code>, a
-    <code>Zend_Exception</code> will be thrown.
+    如果$name参数为字符串，将返回相应的对象。如果对象不存在，抛出Zend_Exception异常。
     </para>
 
-    <para>
-    To quickly determine if an object is present in the registry, use Zend::isRegistered().
+    <para>    
+	想快速确定一个对象是否已经注册，可以使用Zend::isRegistered()。
     </para>
 </sect1>
 <!--
