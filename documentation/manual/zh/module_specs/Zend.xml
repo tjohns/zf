@@ -1,5 +1,5 @@
 <sect1 id="zend.introduction">
-    <title>Introduction</title>
+    <title>简介</title>
     <para>
     The Zend class is the foundation class of the Zend Framework.  This
     class evolved out of the framework's adherence to the DRY principle (Don't Repeat
