@@ -1,62 +1,63 @@
 <sect1 id="zend.search.overview">
-    <title>Overview</title>
+    <title>Overzicht</title>
 
     <sect2 id="zend.search.introduction">
-        <title>Introduction</title>
+        <title>Inleiding</title>
         <para>
-            Zend_Search_Lucene is a general purpose text search engine written entirely in PHP 5.
-            Since it stores its index on the filesystem and does not require a database
-            server, it can add search capabilities to almost any PHP-driven website.
-            Zend_Search_Lucene supports the following features:
+			Zend Search_Lucene is een algemene tekst search engine die volledig in PHP 5 is geschreven.
+			Vermist het zijn indexbestanden op het bestandssysteem schrijft en geen database server nodig
+			heeft, kan het zoekmogelijkheden aanbieden aan vrijwel elke door PHP gestuurde webstek.
+			Zend_Search_Lucene biedt de volgende mogelijkheden:
             
             <itemizedlist>
                 <listitem>
-                    <para>Ranked searching - best results returned first</para>
+                    <para>Geordend zoeken - betere resultaten eerst</para>
                 </listitem>
                 <listitem>
                     <para>
-                       Many powerful query types: phrase queries, wildcard queries,
-                       proximity queries, range queries and more
+					   Veel krachtige querytypes: ##VERT. phrase queries, wildcard queries,
+					   proximity queries, range queries## en meer
                         <footnote>
                            <para>
-                             Only term and multi term queries are supported at this time.
+						     Alleen ##VERT. term and multi term queries are supported at this time.##
                            </para>
                         </footnote>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Search by specific field (e.g., title, author, contents)</para>
+                    <para>Zoeken op een bepaald veld (bv: titel, auteur, inhoud)</para>
                 </listitem>
             </itemizedlist>
         
-            Zend_Search_Lucene was derived from the Apache Lucene project.  For more information on Lucene, visit
+			Zend_Search_Lucene werd afgeleid van het Apache Lucene projekt. Voor meer informatie over Lucene kan
+			je terecht op:
             <ulink url="http://lucene.apache.org/java/docs/"/>.
         </para>
     </sect2>
     
 	<sect2 id="zend.search.index-creation.documents-and-fields">
-		<title>Document and Field Objects</title>
+		<title>Dokument en Veld Objekten</title>
             <para>
-                Zend_Search_Lucene operates with documents as atomic subjects for indexing.  A document is
-                divided into named fields, and fields have content that can be searched.
+				Zend_Search_Lucene beschouwt dokumenten als eenheden voor de indexering. Een dokument wordt dan
+				opgedeeld in benoemde velden en velden hebben inhoud waarop kan gezocht worden.
             </para>
         
             <para>
-                A documented is represented by the Zend_Search_Lucene_Document object, and this object contains
-                Zend_Search_Lucene_Field objects that represent the fields.
+				Een dokument wordt voorgesteld als een Zend_Search_Lucene_Document objekt, en dit objekt bevat
+				Zend_Search_Lucene_Field objekten die de velden voorstellen.
             </para>
         
             <para>
-                It is important to note that any kind of information can be added to the index.
-                Application-specific information or metadata can be stored in the document
-                fields, and later retrieved with the document during search.
+				Belangrijk: eender welke informatie kan aan de index worden toegevoegd. 
+                ##VERT. Application-specific information or metadata## kan worden opgeslaan in
+				de dokumentvelden en later worden opgevraagd met het dokument ##VERT. during search.##
             </para>
         
             <para>
-                It is the responsibility of your application to control the indexer.  
+                ##VERT. It is the responsibility of your application to control the indexer.
                 This means that data can be indexed from any source
                 that is accessible by your application.  For example, this could be the
-                filesystem, a database, an HTML form, etc.
+                filesystem, a database, an HTML form, etc.##
             </para>            
             
             <para>
