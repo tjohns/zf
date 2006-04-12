@@ -217,8 +217,10 @@ class Zend_Json_Encoder
     protected function _encodeString(&$string)
     {
         // Escape these characters with a backslash:
-        // " \ / \n \r \t
-        $string = preg_replace('/(["\\/\n\r\t])/', '\\\\$1', $string);
+        // " \ / \n \r \t \b \f
+        $search  = array('\\', "\n", "\t", "\r", "\b", "\f");
+        $replace = array('\\\\', '\\n', '\\t', '\\r', '\\b', '\\f');
+        $string  = str_replace($search, $replace, $string);
 
         // Escape certain ASCII characters:
         // 0x08 => \b
