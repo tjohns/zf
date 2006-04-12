@@ -1,0 +1,250 @@
+Proposed Component Name
+-----------------------------------------------
+Zend_Session
+
+
+Proposers
+-----------------------------------------------
+Ralph Schindler <ralph.schindler@gmail.com>
+
+
+Revision
+-----------------------------------------------
+$Id: Zend_Session-proposal.txt,v 1.0 2006/04/02 17:00:00 ralph Exp $
+
+
+Overview
+-----------------------------------------------
+Zend_Session provides a standardized interface to common functionality
+found in or indigenous to site session implementations.  The core of
+Zend_Session implements functionality for persistent variables,
+transitory variables, session messaging, client preference variables,
+and user storage.  Having standardized interface also allows inherent
+functionality for securing sites against session fixation and like
+attacks.
+
+
+References
+-----------------------------------------------
+http://www.php.net/session
+
+
+Requirements
+-----------------------------------------------
+PHP5
+Zend Framework
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+Zend_Log (optional)
+Zend_Exception
+
+
+
+Theory of Operation
+-----------------------------------------------
+First, Zend_Session should be initialized with init().  Without any
+arguments Zend_Session will utilize the common internal interface,
+which will be a wrapper around functions such as session_start,
+session_id, session_regenerate_id, etc, and use the $_SESSION
+superglobal for variable getting/setting.
+
+Common functionality components include the following which also
+have usage examples in the next session:
+ - Variables: having an initialized session, the ability to get
+        and set persistent variables.
+ - Transitory Data: the ability to store non-persistent data that
+        will exists only though out the next call of
+        Zend_Session::init()
+ - Messaging Data: the ability to store non-persistent data that
+        is available only throughout the next call of
+        Zend_Session::init()
+ - User Persistence: the ability to store a serialized object or string
+        representation of a user that will persist until unsetting
+        or session destruction.
+ - Simple Preference Storage (client only): the ability to store simple
+        strings that will be saved in a user cookie.  (for usage of
+        preferential site styles to use, etc.)
+ - Security Enhancements: ability to lock users to an IP address or a
+        User Agent
+ - Session Enhancements: ability to persist sessions through browser
+        closing.. (Sessions with an expiration date in the future..
+        Remember Me feature)
+
+The backend allows for multiple storage engines, whether it be the
+php.ini default sess_ in /tmp files or customized database integration.
+By default, a user using Zend_Session::init() without any argument shall
+use the most secure and suggested settings for sessions: things like
+using only cookies, lifetime of cookies, etc.  Feedback for these settings from the security conscious in the community.
+
+
+Class Index
+-----------------------------------------------
+Zend_Session (public)
+Zend_Session_Storage_Adapter
+Zend_Session_Storage_Interface
+Zend_Session_Storage_Internal
+
+
+
+Use Cases
+-----------------------------------------------
+
+index.php -- Demonstration of initialization
+
+<?
+
+Zend_Session::init();  // no options - will use session_ & $_SESSION
+
+?>
+
+user_login.php - Demonstration of user storage
+
+<?
+
+    ...
+    $user_auth = new UserAuth();
+    $user_auth->setUsername($_REQUEST['username']);
+    $user_auth->setPassword($_REQUEST['password']);
+    $user_object = $user_auth->get();
+
+    if ($_REQUEST['remember_me'])
+        Zend_Session::rememberMe();
+    Zend_Session::setUser($user_object);
+    ...
+
+?>
+
+user_form.php - Demonstration of form processing that utilizes
+                transitory and message functionality
+
+<?
+    // Zend_Session::init() already called in index
+    ...
+    foreach (array("address", "city", "state", "zip") as $field)
+    {
+        if ($_POST['form_data'][$field] == "")
+            $required_fields_missing = true;
+    }
+
+    if ($required_fields_missing)
+    {
+        Zend_Session::setTransitory($_POST['form_data']);
+        Zend_Session::setMessage("Required Fields Not Set");
+        header("Location: ./form.php");
+    }
+    ...
+
+?>
+
+form.php - Demonstration of usage of message and transitory from
+           user_form.php
+
+<?
+    // Zend_Session::init() already called in index
+    ...
+    if (Zend_Session::hasMessage())
+        $ui_message = Zend_Session::getMessage();
+
+    if (Zend_Session::hasTransitory())
+        $form_data = Zend_Session::getTransitory();
+    ...
+    // go on to do template or ui stuff
+    // output $ui_message to user
+    // fill in form for completion with transitory data $form_data
+
+?>
+
+settings.php - demonstration of setting a simple variable in prefs
+<?
+    // Zend_Session::init() already called in index
+    ...
+    if ($_GET['site_css_scheme'] == "blue")
+    {
+        Zend_Session::setPreferenceVariable("css_scheme", "blue");
+        Zend_Session::commitPreferences();
+    }
+    ...
+
+?>
+
+
+Class Skeletons
+-----------------------------------------------
+
+static class Zend_Session
+{
+    static public function init($storage_type = "Internal",
+                $options = array());
+
+    /** Variables persist until they are unset or the
+        session is destroyed **/
+    static public funciton setVariable($variable_name, $variable_value);
+    static public function getVariable($variable_name);
+    static public function unsetVariable($variable_name);
+    static public function hasVariable($variable_name);
+
+    /** Transitory data persists for the next usage of
+        Zend_Session only **/
+    static public function setTransitory($variable_value);
+    static public function unsetTransitory();
+    static public function getTransitory();
+    static public function hasTransitory();
+
+    /** Transitory data persists for the next usage of
+        Zend_Session only **/
+    static public function setMessage($variable_value);
+    static public function unsetMessage($variable_name);
+    static public function getMessage();
+    static public function hasMessage();
+
+    /** User data persists throughout session lifetime or until
+        unsetUser is called.  Can be in any useable form: object,
+        string, in for user_id, etc. **/
+    static public function setUser($user);
+    static public function unsetUser();
+    static public function getUser();
+
+    /** Preference Data is stored in a cookie in the clients machine. It
+     *  will persist for a "long time", and should be used for simple
+     *  string data that does not need to be secured.
+     *  eg: site css scheme, ui options, etc.
+     **/
+    static public function setPreferenceVariable($variable_name,
+                                                 $variable_data);
+    static public function unsetPreferenceVariable($variable_name);
+    static public function getPreferenceVariable($variable_name);
+    static public function commitPreferences();
+    static public function removePreferences();
+
+    /** Security and Session related functionality **/
+    static public function rememberMe();
+    static public function lockToIp();
+    static public function lockToUserAgent();
+
+    /** Internal Functions **/
+    static private function serializePreferences();
+    static private function unserializePreferences();
+    static private function initStorageAdapter();
+}
+
+class Zend_Session_Storage_Adapter
+{
+    public function getStorageEngine();
+}
+
+class Zend_Session_Storage_Interface,
+class Zend_Session_Storage_Internal
+{
+    public function start($options = array());
+    public function set($variable_name, $variable_value);
+    public function get($variable_name);
+    public function has($variable_name);
+    public function id($id = null);
+    public function regenerate_id();
+    public function set_cookie_params($options = array());
+    public function destroy();
+}
+
+
