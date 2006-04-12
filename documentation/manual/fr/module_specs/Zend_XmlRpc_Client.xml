@@ -8,7 +8,7 @@
             Spécifiez l'adresse complète du service dans le constructeur de <code>Zend_XmlRpc_Client</code>.
         </para>
         <example>
-            <title>A basic XML-RPC request</title>
+            <title>Une requête XML-RPC de base</title>
             <programlisting role="php"><![CDATA[<?php
 /**
  * Connexion au serveur framework.zend.com, et affichage d'un tableau
@@ -243,7 +243,7 @@ $service->serviceProcedure($p1, $p2);
             ou en appelant la fonction <code>Zend_XmlRpc_Client::__setMethodsXml()</code>.
         </para>
         <example>
-            <title>Calling an XML-RPC service with type hinting</title>
+            <title>Appeler un service XML-RPC avec le typage objet implicite (Type hinting)</title>
             <programlisting role="php"><![CDATA[<?php
 /**
  * Connexion à un serveur XML-RPC, et enregistrement du fichier de ses signatures (l'équivalent du fichier WSDL de SOAP)

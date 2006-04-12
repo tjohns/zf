@@ -32,7 +32,7 @@
 					    <code>Zend_Controller_Router</code> est le routeur. 
 					    Le routage est le processus qui consiste à prendre une URI et àla décomposer pour déterminer quel 
 					    contrôleur et action de ce contrôleur doit recevoir la requête. 
-					    Cette définition du contrôleur, de l'action et des paramètres optionnels est empaquetée dans un obet de valeur 
+					    Cette définition du contrôleur, de l'action et des paramètres optionnels est empaquetée dans un objet de valeur 
 					    appelé <code>Zend_Controller_Dispatcher_Token</code>. 
 					    Elle est ensuite traitée par le <code>Zend_Controller_Dispatcher</code>. 
 					    Le routage a lieu une seule fois: lorsque la requête est initialement reçue et avant que le premier contrôleur soit aiguillé.
@@ -53,7 +53,7 @@
 				<listitem>
 					<para>
 					    <code>Zend_Controller_Action</code> est le composant contrôleur de base. 
-					    Chaque contrôleur est une seule classe qui étend le <code>Zend_Controller_Action class</code> class, 
+					    Chaque contrôleur est une seule classe qui étend la classe <code>Zend_Controller_Action </code>, 
 					    et cette classe à des méthodes d'action.
 					</para>
 				</listitem>
@@ -165,7 +165,7 @@ Action    : index]]>
 		<title>Processus d'Aiguillage</title>
 
 		<para>
-		    L'aiguillage est l'action de prendre un jeton, <code>Zend_Controller_Dispatcher_Token</code>, d'en extraire les 
+		    L'aiguillage est l'action de prendre un jeton <code>Zend_Controller_Dispatcher_Token</code>, d'en extraire les 
 		    informations contenues : un nom de contrôleur, un nom d'action, et des paramètres, d'instancier un 
 		    contrôleur et appeler une action de ce contrôleur.
 		</para>

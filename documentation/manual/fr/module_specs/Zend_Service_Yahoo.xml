@@ -20,7 +20,7 @@
             La méthode <code>webSearch()</code> retourne un objet <code>Zend_Service_Yahoo_WebResultSet</code>.
         </para>
         <example>
-            <title>Searching the Web with Yahoo!</title>
+            <title>Rechercher sur le Web avec Yahoo!</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
@@ -39,7 +39,7 @@ foreach ($results as $result) {
             complète des options, veuillez vous référer à la documentation <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search</ulink>.
         </para>
         <example>
-            <title>Finding Images with Yahoo!</title>
+            <title>Trouver des images avec Yahoo!</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
@@ -57,7 +57,7 @@ foreach ($results as $result) {
             Pour plus de détails, veuillez vous référer à la documentation <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Local Search</ulink>.
         </para>
         <example>
-            <title>Finding Local Businesses and Services with Yahoo!</title>
+            <title>Trouver des entreprises locales et des services avec Yahoo!</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");
@@ -76,7 +76,7 @@ foreach ($results as $result) {
             <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search</ulink>.
         </para>
         <example>
-            <title>Searching Yahoo! News</title>
+            <title>Rechercher dans Yahoo! News</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("ID_APPLICATION_YAHOO");

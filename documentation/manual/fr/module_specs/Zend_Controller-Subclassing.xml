@@ -148,7 +148,7 @@
 		
 		<para>
 		    <code>Zend_Controller_Front</code> appelera premièrement le routeur pour recevoir le premier jeton d'aiguillage, qu'il passera à l'aiguilleur. 
-		    L'aiguilleur aiguillera l'action (instancier le contrôleur, appeler son action) and retournera ensuite soit un bouléen, FALSE, soit un 
+		    L'aiguilleur aiguillera l'action (instancier le contrôleur, appeler son action) et retournera ensuite soit un bouléen, FALSE, soit un 
 		    autre jeton d'aiguillage. 
 		</para>
 		
@@ -169,7 +169,7 @@
 public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
-        <code>isDispatchable()</code>() vérifie si le jeton d'aiguillage est aiguillable. Si c'est le cas, elle retourne <code>TRUE</code>. 
+        <code>isDispatchable()</code> vérifie si le jeton d'aiguillage est aiguillable. Si c'est le cas, elle retourne <code>TRUE</code>. 
         Dans les autres cas, elle retourne <code>FALSE</code>. La définition de ce qui est aiguillable est laissée à la classe qui 
         implémente l'interface. Dans le cas de l'implémentation par défaut <code>Zend_Controller_Dispatcher</code>, cela veut dire que 
         le fichier contrôleur existe, la classe existe dans ce fichier, et que la méthode d'action existe dans cette classe.

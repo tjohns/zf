@@ -14,7 +14,7 @@
 		<title>Configuration Serveur</title>
 		<para>
 		    Le Zend_Controller est construit pour supporter les sites web modernes, avec des URI propres (peu voire pas de paramètres de requêtes). 
-		    En tant que telle, la configuration nécessite le support du serveur Web dans la formulation de l'URI pour rediriger toutes les requêtes sur 
+		    En tant que telle, la configuration du serveur web doit permettre la reformulation des URI afin de rediriger toutes les requêtes sur un m�me 
 		    un même fichier, appelé ici "<code>index.php</code>", qui va simplement amorcer <code>Zend_Controller_Front</code>. 
 		    Sur les serveurs Web Apache, cela est pris en charge par le module <code>mod_rewrite</code>.
 		</para>
@@ -31,8 +31,7 @@
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
-
-            Dans l'exemple ci-dessous, toutes les requêtes ne contenant pas une des extensions de fichiers définies ci-dessus seront redirigées vers index.php.
+            Dans l'exemple ci-dessus, toutes les requêtes ne contenant pas les extensions mentionnées seront redirigées vers index.php
             C'est utile pendant les phases de développement, cependant une fois en production, les règles de ré-écriture devront être écrite pour exclure 
             aussi les dossiers.
 		</para>
@@ -43,7 +42,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		
 		<para>
 		    Après avoir mis en place le fichier <code>.htaccess</code>, créez un nouveau fichier appelé <code>index.php</code>. 
-		    C'est une fichier d'amorçage. Le but du fichier <code>index.php</code> est seulement d'amorcer <code>Zend_Controller_Front</code>, 
+		    C'est un fichier d'amorçage. Le but du fichier <code>index.php</code> est seulement d'amorcer <code>Zend_Controller_Front</code>, 
 		    qui dans l'idéal, devrait être placé à l'extérieur du répertoire racine.
 		</para>
 
@@ -64,11 +63,11 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 				
 require_once 'Zend/Controller/Front.php';
 
-Zend_Controller_Front::run('/path/to/your/controllers')
+Zend_Controller_Front::run('/chemin/de/vos/controlleurs')
 
 ?>]]></programlisting>
             
-            Reportez vous à la prochaine partie pour ce qui concerne <code>/path/to/your/controllers</code>. 
+            Reportez vous à la prochaine partie pour ce qui concerne <code>/chemin/de/vos/controlleurs</code>. 
             Comme définit dans le fichier <code>README.txt</code>, le répertoire du Framework Zend doit être dans l'<code>include_path</code>. 
             Si ce n'est pas défini dans le <code>php.ini</code>, <code>set_include_path()</code>  peut-être appelée dans ce fichier avant <code>require_once()</code>.
 		</para>
@@ -85,8 +84,8 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 		<title>Arborescence des Répertoires</title>
 		
 		<para>
-		    Il est recommandé que les site Web utilisant le Framework Zend partage une même arborescence. 
-		    Bien que cela ne soit pas possible dans tous les cas, il l'est pour beaucoup et peut-être plus. 
+		    Il est recommandé que les site Web utilisant le Framework Zend partagent une même arborescence. 
+		    Bien que cela ne soit pas possible dans tous les cas, il l'est pour beaucoup. 
 		    Choisir de se conformer à cette structure va rendre votre code plus facilement compréhensible pour quelqu'un 
 		    de familier avec les conventions du Framework Zend.
 		</para>
