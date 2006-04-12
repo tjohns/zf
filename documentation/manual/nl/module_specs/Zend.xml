@@ -1,10 +1,11 @@
 <sect1 id="zend.introduction">
     <title>Inleiding</title>
     <para>
-	De Zend klasse is de basisklasse van de Zend Framework. Deze klasse kwam tot
-	stand wegens het feit dat de framework het DRY (Don't Repeat Yourself) princiepe 
-	aanhangt. Ze bevat alleen statische methodes, en deze methodes bevatten
-	functionaliteit die voor vele componenten van de Zend Framework nodig zijn.
+    De Zend klasse is de fundering (basis) van het Zend Framework. Deze klasse 
+    is tot stand gekomen doordat het framework het DRY (Don't Repeat Yourself) 
+    principe - dat aan de basis van het Zend Framework ligt - hanteert. Deze 
+    klasse bevat enkel statische methodes waarvan de functionaliteit nodig is 
+    in vele componenten van het Zend Framework.
     </para>
 </sect1>
 
