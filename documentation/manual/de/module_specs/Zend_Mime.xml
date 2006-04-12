@@ -1,31 +1,31 @@
 <sect1 id="zend.mime.introduction">
-    <title>Introduction</title>
+    <title>Einführung</title>
     <para>
-        <code>Zend_Mime</code> is a support class for handling multipart MIME messages. It is used by <link
-        linkend="zend.mail"><code>Zend_Mail</code></link>, and may be used by applications requiring
-        MIME support.
+        <code>Zend_Mime</code> ist eine Hilfsklasse für die Verarbeitung von mehrteiligen MIME 
+        Nachrichten. Es wird von <link linkend="zend.mail"><code>Zend_Mail</code></link> verwendet
+        und kann von anderen Anwendungen verwendet werden, die MIME Unterstützung benötigen.
     </para>
     <para>
-        <code>Zend_Mime</code> provides a simple set of methods to work with MIME:
+        <code>Zend_Mime</code> stellt einige einfache Methoden für die MIME Verarbeitung bereit:
         <itemizedlist>
             <listitem>
-                <code>boundary()</code>: Returns the MIME boundary string.
+                <code>boundary()</code>: Gibt den String mit der MIME Abgrenzung zurück.
             </listitem>
             <listitem>
-                <code>boundaryLine()</code>: Returns the complete MIME boundary line.
+                <code>boundaryLine()</code>: Gibt die komplette Zeile der MIME Abgrenzung zurück.
             </listitem>
             <listitem>
-                <code>encodeBase64()</code>: Encodes a string into base64 encoding.
+                <code>encodeBase64()</code>: Kodiert einen String in die base64 Kodierung.
             </listitem>
             <listitem>
-                <code>encodeQuotedPrintable()</code>: Encodes a string with the quoted-printable mechanism.
+                <code>encodeQuotedPrintable()</code>: Kodiert einen String mit dem "quoted-printable" Mechanismus.
             </listitem>
             <listitem>
-                <code>isPrintable()</code>: Returns TRUE if the given string contains no unprintable characters,
-                FALSE otherwise.
+                <code>isPrintable()</code>: Gibt TRUE zurück, wenn der String keine nicht durchbaren
+                Zeichen enthält, ansonsten wird FALSE zurückgegeben.
             </listitem>
             <listitem>
-                <code>mimeEnd()</code>: Returns the complete MIME end boundary line.
+                <code>mimeEnd()</code>: Gibt die komplette Endzeile der MIME Abgrenzung zurück.
             </listitem>
         </itemizedlist>
     </para>
