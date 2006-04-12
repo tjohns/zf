@@ -112,7 +112,11 @@ class Zend_Pdf_Element_Dictionary extends Zend_Pdf_Element
      */
     public function __set($item, $value)
     {
-        $this->_items[$item] = $value;
+        if ($value === null) {
+            unset($this->_items[$item]);
+        } else {
+            $this->_items[$item] = $value;
+        }
     }
 
     /**

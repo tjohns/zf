@@ -297,17 +297,45 @@ class Zend_Pdf
      * Load pages recursively
      *
      * @param Zend_Pdf_Element_Reference $pages
+     * @param array|null $attributes
      */
-    private function _loadPages(Zend_Pdf_Element_Reference $pages)
+    private function _loadPages(Zend_Pdf_Element_Reference $pages, $attributes = null)
     {
+        static $inheritable = array('Resources', 'MediaBox', 'CropBox', 'Rotate');
+
         if ($pages->getType() != Zend_Pdf_Element::TYPE_DICTIONARY) {
             throw new Zend_Pdf_Exception('Wrong argument');
         }
 
+        if ($attributes === null) {
+            $attributes = array();
+        }
+        foreach ($pages->getKeys() as $property) {
+            if (in_array($property, $inheritable)) {
+                $attributes[$property] = $pages->$property;
+                $pages->$property = null;
+            }
+        }
+
+
         foreach ($pages->Kids->items as $child) {
             if ($child->Type->value == 'Pages') {
-                $this->_loadPages($child);
+                $this->_loadPages($child, $attributes);
             } else if ($child->Type->value == 'Page') {
+                foreach ($inheritable as $property) {
+                    if ($child->$property === null && array_key_exists($property, $attributes)) {
+                        /**
+                         * Important note.
+                         * If any attribute or dependant object is an indirect object, then it's still
+                         * shared between pages.
+                         */
+                        if ($attributes[$property] instanceof Zend_Pdf_Element_Object) {
+                            $child->$property = $attributes[$property];
+                        } else {
+                            $child->$property = $this->_objFactory->newObject($attributes[$property]);
+                        }
+                    }
+                }
                 $this->pages[] = new Zend_Pdf_Page($child, $this->_objFactory);
             }
         }
