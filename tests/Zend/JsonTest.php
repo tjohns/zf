@@ -135,6 +135,21 @@ class Zend_JsonTest extends PHPUnit2_Framework_TestCase
     }
 
     /**
+     * Test double-quote escaping of string
+     * 
+     * @access public
+     * @return void
+     */
+	public function testString5()
+    {
+        $expected = '"INFO: Path \"Some more\""';
+        $string   = 'INFO: Path "Some more"';
+        $encoded  = Zend_Json::encode($string);
+		$this->assertEquals($expected, $encoded, 'Quote encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
+        $this->assertEquals($string, Zend_Json::decode($encoded));
+    }
+
+    /**
      * test indexed array encoding/decoding
      * 
      * @access public
