@@ -501,21 +501,26 @@ class SampleClass
                     開始波括弧は常に関数名の下に書かなければなりません
                     ("one true brace" 形式)。
 
-                    関数名と引数指定の括弧の間には、空白を入れません。
-                    閉じ括弧と波括弧の間には空白をひとつ入れます。
+                    関数名と引数指定の開始括弧の間には、空白を入れません。
                 </para><para>
                     グローバルスコープの関数は、できるだけ使用しないでください。
                 </para><para>
-                    これらの条件を満たすクラスの関数の定義です。
+                    これらの条件を満たす、クラス内での関数定義の例です。
 
                     <programlisting role="php"><![CDATA[
-/*
+/**
  * これがドキュメントブロックです
  */
-function sampleMethod($a)
+class Foo
 {
-    // 関数のすべての内容は、
-    // 空白 4 文字の字下げを使用します。
+    /**
+     * Documentation Block Here
+     */
+    public function bar()
+    {
+        // 関数のすべての内容は、
+        // 空白 4 文字の字下げを使用します。
+    }
 }]]></programlisting>
                 </para>
 
@@ -523,7 +528,16 @@ function sampleMethod($a)
                     <emphasis>注意:</emphasis> 値の参照渡しは、関数宣言においてのみ可能です。
 
                     <programlisting role="php"><![CDATA[
-function sampleMethod(&$a)
+/**
+ * これがドキュメントブロックです
+ */
+class Foo
+{
+    /**
+     * これがドキュメントブロックです
+     */
+    public function bar(&$baz)
+    {}
 {}]]></programlisting>
                 </para>
 
@@ -537,13 +551,26 @@ function sampleMethod(&$a)
                     将来そのメソッドが参照を返すようになった場合にコードが壊れてしまいます。
 
                     <programlisting role="php"><![CDATA[
-function foo()
+/**
+ * これがドキュメントブロックです
+ */
+class Foo
 {
-    // 間違いです
-    return($this->bar);
+    /**
+     * 間違いです
+     */
+    public function bar()
+    {
+        return($this->bar);
+    }
 
-    // 正しい形式です
-    return $this->bar;
+    /**
+     * 正しい形式です
+     */
+    public function bar()
+    {
+        return $this->bar;
+    }
 }]]></programlisting>
                 </para>
 
