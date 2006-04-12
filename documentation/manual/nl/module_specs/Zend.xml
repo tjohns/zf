@@ -13,10 +13,10 @@
     <title>Zend::loadFile()</title>
 
     <para>
-    <code>Zend::loadFile()</code> laadt een PHP bestand dat PHP kan bevatten. 
-	Het is een omwikkeling voor de PHP functie 
-	<ulink url="http://php.net/include"><code>include()</code></ulink> welke een
-    <code>Zend_Exception</code> opwerpt in geval van mislukking.
+    <code>Zend::loadFile()</code> laadt een PHP bestand dat PHP code kan bevatten. 
+	Het is een "wrapper" voor de PHP functie 
+	<ulink url="http://php.net/include"><code>include()</code></ulink> die een
+    <code>Zend_Exception</code> zal doorgeven in geval van mislukking.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -26,25 +26,24 @@ loadFile($filename, $dirs=null, $once=false)
 ?>]]></programlisting>
 
     <para>Het <code>$filename</code> argument specifieert het bestand 
-	dat moet worden geladen, en mag geen padinformatie bevatten. Er wordt een 
-	veiligheidscheck gedaan op <code>$filename</code>. De <code>$filename</code>
-	mag alleen alfanumerieke tekens, min-tekens ("-"), underscores ("_") of 
-	punten (".") bevatten. Geen enkele van deze beperkingen zijn van 
+	dat moet worden geladen. Let op: $filename mag geen padinformatie bevatten. 
+	Er wordt een veiligheidscheck gedaan op <code>$filename</code>. 
+	<code>$filename</code> kan enkel alfanumerieke tekens, min-tekens ("-"), 
+	underscores ("_") of punten (".") bevatten. Deze beperkingen zijn niet van van 
 	toepassing op het argument <code>$dirs</code>.
     </para>
 
-    <para>Het argument <code>$dirs</code> specifieert paden waarin voor het 
-	bestand moet worden gezocht. Indien <code>NULL</code>, wordt er alleen in
-	het <code>include_path</code> gezocht. Indien het een string of een array
-	is, zullen de gespecifeerde pad(en) worden doorzocht, plus het
-	<code>include_path</code>.
+    <para>Het argument <code>$dirs</code> specifieert de paden of het pad waarin het 
+	bestand moet worden gezocht. Indien <code>NULL</code>, zal er enkel in het 
+	<code>include_path</code> worden gezocht. Indien het een string of een array is, 
+	zal er in de gespecifeerde paden en het <code>include_path</code> worden gezocht.
     </para>
 
     <para>
-	Het argument <code>$once</code> is een boolean welke aanduid of de PHP 
-	functies <ulink url="http://php.net/include"><code>include()</code></ulink>
+	Het argument <code>$once</code> is een boolean die aanduidt of de PHP 
+	functie <ulink url="http://php.net/include"><code>include()</code></ulink>
 	of <ulink url="http://php.net/include_once"><code>include_once()</code></ulink> 
-	moeten worden gebruikt om het bestand te laden.
+	moet worden gebruikt om het bestand te laden.
     </para>
 </sect1>
 
@@ -52,8 +51,8 @@ loadFile($filename, $dirs=null, $once=false)
     <title>Zend::loadClass()</title>
     <para>
     <code>Zend::loadClass()</code> laadt een PHP bestand waarvan de bestandsnaam 
-	opgebouwd is zoals "<code>$className.php</code>", en gaat dan het 
-	bestaan van de klasse <code>$className</code> na.
+	opgebouwd is in het volgende formaat: "<code>$className.php</code>". Het bestaan 
+	van de klasse <code>$className</code> zal worden nagegaan.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -63,9 +62,9 @@ loadClass($class, $dirs)
 ?>]]></programlisting>
 
     <para>
-	Indien het bestand niet werd gevonden of indien de klasse niet bestaat na 
-	het laden word er een <code>Zend_Exception</code> opgeworpen.
-	<code>Zend::loadFile()</code> wordt gebruikt voor het laden van het bestand,
+	Indien er na het laden wordt vastgesteld dat het bestand niet werd gevonden 
+	of de klasse niet bestaat zal er een <code>Zend_Exception</code> worden doorgegeven.
+	<code>Zend::loadFile()</code> wordt gebruikt voor het laden van het bestand
 	en het <code>$dirs</code> argument wordt er onmiddellijk aan doorgegeven...
     </para>
 
