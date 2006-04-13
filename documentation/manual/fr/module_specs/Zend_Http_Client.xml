@@ -1,11 +1,11 @@
 <sect1 id="zend.httpclient.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_HttpClient</code> fournit une interface simple avec laquelle vous pourrez effectuer des requêtes HTTP. 
-        <code>Zend_HttpClient</code> est capable d'effectuer des requêtes GET, POST, PUT et DELETE.
+        <code>Zend_Http_Client</code> fournit une interface simple avec laquelle vous pourrez effectuer des requêtes HTTP. 
+        <code>Zend_Http_Client</code> est capable d'effectuer des requêtes GET, POST, PUT et DELETE.
     </para>
     <note>
-        <code>Zend_HttpClient</code> suit par défaut jusqu'à 5 redirections HTTP. Pour changer ce comportement, passez 
+        <code>Zend_Http_Client</code> suit par défaut jusqu'à 5 redirections HTTP. Pour changer ce comportement, passez 
         le nombre maximum de redirections autorisées à la méthode <code>get()</code>.
     </note>
     <para>
@@ -14,14 +14,14 @@
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 try {
-    $http = new Zend_HttpClient('http://exemple.org');
+    $http = new Zend_Http_Client('http://exemple.org');
     $reponse = $http->get();
     if ($reponse->isSuccessful()) {
         echo $reponse->getBody();
     } else {
         echo '<p>Une erreur a eu lieu</p>';
     }
-} catch (Zend_HttpClient_Exception $e) {
+} catch (Zend_Http_Client_Exception $e) {
     echo '<p>Un erreur a eu lieu (' .$e->getMessage(). ')</p>';
 }
 ?>]]></programlisting>
@@ -31,19 +31,19 @@ try {
 <sect1 id="zend.httpclient.basic-get-requests">
     <title>Requêtes GET de base avec en-têtes HTTP</title>
     <para>
-        Le constructeur de <code>Zend_HttpClient</code> crée une instance de <code>Zend_HttpClient</code> capable d'envoyer des requêtes HTTP.
+        Le constructeur de <code>Zend_Http_Client</code> crée une instance de <code>Zend_Http_Client</code> capable d'envoyer des requêtes HTTP.
     </para>
     <para>
-        Lorsque vous souhaitez utiliser <code>Zend_HttpClient</code> sur une seule URL, la plupart des cas vous pouvez 
+        Lorsque vous souhaitez utiliser <code>Zend_Http_Client</code> sur une seule URL, la plupart des cas vous pouvez 
         passer l'URL et les en-têtes voulus au <emphasis>constructeur</emphasis>, comme dans les exemples suivants :
     </para>
     <example>
-        <title>Créer un objet Zend_HttpClient de base</title>
+        <title>Créer un objet Zend_Http_Client de base</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 
 // Définition de l'URL et de l'en-tête
-$http = new Zend_HttpClient('http://exemple.org', 'Accept: text/html');
+$http = new Zend_Http_Client('http://exemple.org', 'Accept: text/html');
 ?>]]>       </programlisting>
     </example>
     <para />
@@ -53,20 +53,20 @@ $http = new Zend_HttpClient('http://exemple.org', 'Accept: text/html');
 require_once 'Zend/HttpClient.php';
 
 // Définition de l'URL et de plusieurs en-têtes
-$http = new Zend_HttpClient('http://exemple.org',
+$http = new Zend_Http_Client('http://exemple.org',
                         array('Accept: text/html', 'Accept-Language: 
 fr-fr,fr;q=0.5'));
 ?>]]>       </programlisting>
     </example>
     <para>
-         Si vous souhaitez utiliser <code>Zend_HttpClient</code> pour envoyer des requêtes à <emphasis>plusieurs</emphasis> URL, voyez <xref linkend="zend.httpclient.requesting-multiple-domains" />
+         Si vous souhaitez utiliser <code>Zend_Http_Client</code> pour envoyer des requêtes à <emphasis>plusieurs</emphasis> URL, voyez <xref linkend="zend.httpclient.requesting-multiple-domains" />
     </para>
 </sect1>
 <sect1 id="zend.httpclient.requesting-multiple-domains">
     <title>Envoyer une requête à plusieurs domaines</title>
     <para>
-        <code>Zend_HttpClient</code> prend en charge l'envoi d'une requête à plusieurs domaines; pour cela, définissez l'URL où 
-        envoyer la requête grâce à la méthode <code>Zend_HttpClient::setUri()</code>.
+        <code>Zend_Http_Client</code> prend en charge l'envoi d'une requête à plusieurs domaines; pour cela, définissez l'URL où 
+        envoyer la requête grâce à la méthode <code>Zend_Http_Client::setUri()</code>.
         using .
     </para>
     <note>
@@ -78,7 +78,7 @@ fr-fr,fr;q=0.5'));
 require_once 'Zend/HttpClient.php';
 
 // Instantiation de l'objet client
-$http = new Zend_HttpClient();
+$http = new Zend_Http_Client();
 
 // Définition de l'URI comme étant celle du flux principal de Slashdot
 $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
@@ -98,7 +98,7 @@ $bbc = $http->get();
 <sect1 id="zend.httpclient.settimeout">
     <title>Modifier le délai d'attente HTTP</title>
     <para>
-         La méthode <code>Zend_HttpClient::setTimeout()</code> vous permet de définir le délai d'attente en secondes pour une connexion HTTP.
+         La méthode <code>Zend_Http_Client::setTimeout()</code> vous permet de définir le délai d'attente en secondes pour une connexion HTTP.
     </para>
     <note>
         <para>Le délai d'attente par défaut est de 10 secondes.</para>
@@ -107,7 +107,7 @@ $bbc = $http->get();
 <sect1 id="zend.httpclient.setheaders">
     <title>Définir dynamiquement les en-têtes HTTP</title>
     <para>
-        Pour définir dynamiquement les en-têtes HTTP, utilisez la méthode <code>Zend_HttpClient::setHeaders()</code> en lui passant un tableau d'en-têtes.
+        Pour définir dynamiquement les en-têtes HTTP, utilisez la méthode <code>Zend_Http_Client::setHeaders()</code> en lui passant un tableau d'en-têtes.
     </para>
     <important>
         <para>
@@ -118,19 +118,19 @@ $bbc = $http->get();
 <sect1 id="zend.httpclient.making-other-requests">
     <title>Effectuer des requêtes HTTP POST, PUT et DELETE</title>
     <para>
-        L'envoi de requêtes HTTP POST, PUT et DELETE est facilité par <code>Zend_HttpClient</code> au moyen de trois méthodes : 
+        L'envoi de requêtes HTTP POST, PUT et DELETE est facilité par <code>Zend_Http_Client</code> au moyen de trois méthodes : 
         <code>post()</code>, <code>put()</code>) et <code>delete()</code>, respectivement. Les méthodes <code>post()</code> et <code>put()</code> 
         acceptent chacune un seul paramètre, <code>$donnees</code>; 
         ce paramètre doit contenir les données POST correctement encodées et au format suivant : <emphasis><code>nom=valeur&amp;toto=barre</code></emphasis>. 
         La méthode <code>delete()</code> n'accepte aucun paramètre.
     </para>
     <example>
-        <title>Envoyer des données POST au moyen de Zend_HttpClient</title>
+        <title>Envoyer des données POST au moyen de Zend_Http_Client</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 
 // Instanciation de l'objet client
-$http = new Zend_HttpClient();
+$http = new Zend_Http_Client();
 
 // Définition de l'URI comme étant celle d'une application traitant des données 
 POST
@@ -148,7 +148,7 @@ $reponseHTTP = $http->post($donneesPOST);
         </para>
     </example>
 </sect1>
-&module_specs.Zend_HttpClient_Response;
+&module_specs.Zend_Http_Client_Response;
 <!--
 vim:se ts=4 sw=4 et:
 -->

@@ -1,9 +1,9 @@
 <sect1 id="zend.httpclient.response">
-    <title>Zend_HttpClient_Response</title>
+    <title>Zend_Http_Client_Response</title>
     <sect2 id="zend.httpclient.response.introduction">
         <title>Introduction</title>
         <para>
-            La classe <code>Zend_HttpClient_Response</code> permet d'accéder facilement aux réponses renvoyées par <xref linkend="zend.httpclient" />. 
+            La classe <code>Zend_Http_Client_Response</code> permet d'accéder facilement aux réponses renvoyées par <xref linkend="zend.httpclient" />. 
             Elle offre un ensemble de méthodes intuitives permettant de manipuler les données d'une réponse HTTP reçue en réponse à une requête :
             <itemizedlist>
                 <listitem>
@@ -31,7 +31,7 @@
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 try {
-    $http = new Zend_HttpClient('http://exemple.org');
+    $http = new Zend_Http_Client('http://exemple.org');
     $reponse = $http->get();
     if ($reponse->isSuccessful()) {
         echo $reponse->getBody();
@@ -44,7 +44,7 @@ try {
             echo "$nomEnTete: $valeurEnTete\n";
         }
     }
-} catch (Zend_HttpClient_Exception $e) {
+} catch (Zend_Http_Client_Exception $e) {
     echo '<p>Une erreur a eu lieu (' .$e->getMessage(). ')</p>';
 }
 ?>]]></programlisting>
