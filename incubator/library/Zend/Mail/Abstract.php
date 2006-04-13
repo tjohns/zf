@@ -30,8 +30,6 @@ abstract class Zend_Mail_Abstract
                             'delete'   => false,
                             'create'   => false,
                             'top'      => false);
-    protected $_iterationPos = 0;
-    protected $_iterationMax = 0;
     
     /**
      * 

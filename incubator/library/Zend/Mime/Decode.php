@@ -177,33 +177,25 @@ class Zend_Mime_Decode
     }
     
     /**
-     * decodes a mime encoded String or a valid mail and returns a 
-     * struct of parts with header and body or a single part 
-     * with header and body
+     * decodes a mime encoded String and returns a 
+     * struct of parts with header and body
      *
      * @param string $message
-     * @param string|null $boundary if null only one part is returned (for simple mails)
      * @return array
      */
-    public static function splitMessageStruct($message, $boundary = null)
+    public static function splitMessageStruct($message, $boundary)
     {
-        if (is_null($boundary)) {
-            self::splitMessage($message, $headers, $body);
-            return array('header' => $headers,
-                         'body'   => $body    );
-        } else {
-            $parts = self::splitMime($message, $boundary);
-            if (count($parts) <= 0) {
-                return null;
-            }
-            $result = array();
-            foreach($parts as $part) {
-                self::splitMessage($part, $headers, $body);
-                $result[] = array('header' => $headers,
-                                  'body'   => $body    );    
-            }
-            return $result;
+        $parts = self::splitMime($message, $boundary);
+        if (count($parts) <= 0) {
+            return null;
         }
+        $result = array();
+        foreach($parts as $part) {
+            self::splitMessage($part, $headers, $body);
+            $result[] = array('header' => $headers,
+                              'body'   => $body    );    
+        }
+        return $result;
     }
     
     /**
