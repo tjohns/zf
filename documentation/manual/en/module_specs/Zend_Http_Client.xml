@@ -1,27 +1,27 @@
 <sect1 id="zend.httpclient.introduction">
     <title>Introduction</title>
     <para>
-        <code>Zend_HttpClient</code> provides an easy interface with which to perform HTTP requests.
-        <code>Zend_HttpClient</code> is able to perform GET, POST, PUT and DELETE requests.
+        <code>Zend_Http_Client</code> provides an easy interface with which to perform HTTP requests.
+        <code>Zend_Http_Client</code> is able to perform GET, POST, PUT and DELETE requests.
     </para>
     <note>
-        <code>Zend_HttpClient</code> follows up to 5 HTTP redirections by default. To change this behavior, pass the
+        <code>Zend_Http_Client</code> follows up to 5 HTTP redirections by default. To change this behavior, pass the
         maximum number of allowed redirections to the <code>get()</code> method.
     </note>
     <para>
         <example>
             <title>Performing a Basic GET Request</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 try {
-    $http = new Zend_HttpClient('http://example.org');
+    $http = new Zend_Http_Client('http://example.org');
     $response = $http->get();
     if ($response->isSuccessful()) {
         echo $response->getBody();
     } else {
         echo '<p>An error occurred</p>';
     }
-} catch (Zend_HttpClient_Exception $e) {
+} catch (Zend_Http_Client_Exception $e) {
     echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
 }
 ?>]]></programlisting>
@@ -31,43 +31,43 @@ try {
 <sect1 id="zend.httpclient.basic-get-requests">
     <title>Basic GET Requests with Specified HTTP Headers</title>
     <para>
-        The <code>Zend_HttpClient</code> constructor creates a <code>Zend_HttpClient</code> instance for sending
+        The <code>Zend_Http_Client</code> constructor creates a <code>Zend_Http_Client</code> instance for sending
         HTTP requests.
     </para>
     <para>
-        When using <code>Zend_HttpClient</code> on a single URL, in most cases you can supply the URL and
+        When using <code>Zend_Http_Client</code> on a single URL, in most cases you can supply the URL and
         relevant headers to the <emphasis>constructor</emphasis>, as in the following examples:
     </para>
     <example>
-        <title>Creating a Basic Zend_HttpClient</title>
+        <title>Creating a Basic Zend_Http_Client</title>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 // Specify the URL and a single header
-$http = new Zend_HttpClient('http://example.org', 'Accept: text/html');
+$http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
 ?>]]>       </programlisting>
     </example>
     <para />
     <example>
         <title>Sending Multiple Headers</title>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 // Specify the URL and multiple headers
-$http = new Zend_HttpClient('http://example.org',
+$http = new Zend_Http_Client('http://example.org',
                         array('Accept: text/html', 'Accept-Language: en-us,en;q=0.5'));
 ?>]]>       </programlisting>
     </example>
     <para>
-        If you wish to use <code>Zend_HttpClient</code> to send requests to <emphasis>multiple</emphasis> URLs,
+        If you wish to use <code>Zend_Http_Client</code> to send requests to <emphasis>multiple</emphasis> URLs,
         see <xref linkend="zend.httpclient.requesting-multiple-domains" />
     </para>
 </sect1>
 <sect1 id="zend.httpclient.requesting-multiple-domains">
     <title>Requesting Multiple Domains</title>
     <para>
-        <code>Zend_HttpClient</code> supports sending requests to multiple domains by setting the URL to query
-        using <code>Zend_HttpClient::setUri()</code>.
+        <code>Zend_Http_Client</code> supports sending requests to multiple domains by setting the URL to query
+        using <code>Zend_Http_Client::setUri()</code>.
     </para>
     <note>
         <para>A great use for this is when querying multiple RSS feeds.</para>
@@ -75,10 +75,10 @@ $http = new Zend_HttpClient('http://example.org',
     <example>
         <title>Requesting Multiple Domains</title>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 // Instantiate our client object
-$http = new Zend_HttpClient();
+$http = new Zend_Http_Client();
 
 // Set the URI to Slashdot's main feed
 $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
@@ -97,7 +97,7 @@ $bbc = $http->get();
 <sect1 id="zend.httpclient.settimeout">
     <title>Changing the HTTP Timeout</title>
     <para>
-        <code>Zend_HttpClient::setTimeout()</code> allows you to set the timeout for the HTTP connection in
+        <code>Zend_Http_Client::setTimeout()</code> allows you to set the timeout for the HTTP connection in
         seconds.
     </para>
     <note>
@@ -107,7 +107,7 @@ $bbc = $http->get();
 <sect1 id="zend.httpclient.setheaders">
     <title>Setting HTTP Headers Dynamically</title>
     <para>
-        Using <code>Zend_HttpClient::setHeaders()</code> you supply an <emphasis>array</emphasis> of
+        Using <code>Zend_Http_Client::setHeaders()</code> you supply an <emphasis>array</emphasis> of
         headers.
     </para>
     <important>
@@ -120,7 +120,7 @@ $bbc = $http->get();
 <sect1 id="zend.httpclient.making-other-requests">
     <title>Making HTTP POST, PUT, and DELETE Requests</title>
     <para>
-        Performing HTTP POST, PUT, and DELETE requests are facilitated in <code>Zend_HttpClient</code> by three
+        Performing HTTP POST, PUT, and DELETE requests are facilitated in <code>Zend_Http_Client</code> by three
         methods: <code>post()</code>, <code>put()</code>, and <code>delete()</code>, respectively. The
         <code>post()</code> and <code>put()</code> methods each take a single string parameter, <code>$data</code>,
         into which should be placed a string with the data properly encoded, as in the following:
@@ -128,12 +128,12 @@ $bbc = $http->get();
         parameters.
     </para>
     <example>
-        <title>Sending POST data with Zend_HttpClient</title>
+        <title>Sending POST data with Zend_Http_Client</title>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 // Instantiate our client object
-$http = new Zend_HttpClient();
+$http = new Zend_Http_Client();
 
 // Set the URI to a POST data processor
 $http->setUri('http://example.org/post/processor');
@@ -150,7 +150,7 @@ $httpResponse = $http->post($postData);
         </para>
     </example>
 </sect1>
-&module_specs.Zend_HttpClient_Response;
+&module_specs.Zend_Http_Client_Response;
 <!--
 vim:se ts=4 sw=4 et:
 -->
