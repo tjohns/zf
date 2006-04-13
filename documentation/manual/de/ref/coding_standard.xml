@@ -49,7 +49,7 @@
             <title>General</title>
 
             <para>
-                For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is 
+                For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is
 				not required by PHP.  Not including it prevents trailing whitespace from being accidentally
 				injected into the output.
             </para>
@@ -481,21 +481,26 @@ class SampleClass
                     function name ("one true brace" form).
 
                     There is no space between the
-                    function name and the parentheses for the arguments. There is one space
-                    between the closing parenthesis and the brace.
+                    function name and the opening parenthesis for the arguments.
                 </para><para>
                     Functions in the global scope are strongly discouraged.
                 </para><para>
-                    This is an example of an acceptable function class declaration:
+                    This is an example of an acceptable function declaration in a class:
 
                     <programlisting role="php"><![CDATA[
-/*
+/**
  * Documentation Block Here
  */
-function sampleMethod($a)
+class Foo
 {
-    // entire content of function
-    // must be indented four spaces
+    /**
+     * Documentation Block Here
+     */
+    public function bar()
+    {
+        // entire content of function
+        // must be indented four spaces
+    }
 }]]></programlisting>
                 </para>
 
@@ -503,8 +508,17 @@ function sampleMethod($a)
                     <emphasis>NOTE:</emphasis> Passing by-reference is permitted in the function declaration only:
 
                     <programlisting role="php"><![CDATA[
-function sampleMethod(&$a)
-{}]]></programlisting>
+/**
+ * Documentation Block Here
+ */
+class Foo
+{
+    /**
+     * Documentation Block Here
+     */
+    public function bar(&$baz)
+    {}
+}]]></programlisting>
                 </para>
 
                 <para>
@@ -517,13 +531,26 @@ function sampleMethod(&$a)
                     and can also break code if a method is later changed to return by reference.
 
                     <programlisting role="php"><![CDATA[
-function foo()
+/**
+ * Documentation Block Here
+ */
+class Foo
 {
-    // WRONG
-    return($this->bar);
+    /**
+     * WRONG
+     */
+    public function bar()
+    {
+        return($this->bar);
+    }
 
-    // RIGHT
-    return $this->bar;
+    /**
+     * RIGHT
+     */
+    public function bar()
+    {
+        return $this->bar;
+    }
 }]]></programlisting>
                 </para>
 
