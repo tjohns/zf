@@ -24,9 +24,9 @@
 require_once 'Zend/Service/Exception.php';
 
 /**
- * Zend_HttpClient
+ * Zend_Http_Client
  */
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 
 /**
@@ -39,18 +39,18 @@ abstract class Zend_Service_Abstract
     /**
      * HTTP Client used to query all web services
      *
-     * @var Zend_HttpClient_Abstract
+     * @var Zend_Http_Client_Abstract
      */
     static protected $_httpClient = null;
 
 
     /**
      * Sets the HTTP client object to use for retrieving the feeds.  If none
-     * is set, the default Zend_HttpClient will be used.
+     * is set, the default Zend_Http_Client will be used.
      *
-     * @param Zend_HttpClient_Abstract $httpClient
+     * @param Zend_Http_Client_Abstract $httpClient
      */
-	final static public function setHttpClient(Zend_HttpClient_Abstract $httpClient)
+	final static public function setHttpClient(Zend_Http_Client_Abstract $httpClient)
 	{
 		self::$_httpClient = $httpClient;
 	}
@@ -59,12 +59,12 @@ abstract class Zend_Service_Abstract
 	/**
 	 * Gets the HTTP client object.
 	 *
-	 * @return Zend_HttpClient_Abstract
+	 * @return Zend_Http_Client_Abstract
 	 */
 	final static public function getHttpClient()
 	{
-		if (!self::$_httpClient instanceof Zend_HttpClient_Abstract) {
-			self::$_httpClient = new Zend_HttpClient();
+		if (!self::$_httpClient instanceof Zend_Http_Client_Abstract) {
+			self::$_httpClient = new Zend_Http_Client();
 		}
 
 		return self::$_httpClient;

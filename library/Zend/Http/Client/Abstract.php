@@ -12,34 +12,30 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    Zend_Http_Client
+ * @package    Zend_Http
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
-/**
- * Zend_HttpClient_Exception
- */
-require_once 'Zend/HttpClient/Exception.php';
+/** Zend_Http_Client_Exception */
+require_once 'Zend/Http/Client/Exception.php';
 
-/**
- * Zend_HttpClient_Response
- */
-require_once 'Zend/HttpClient/Response.php';
+/** Zend_Http_Client_Response */
+require_once 'Zend/Http/Client/Response.php';
 
-/**
- * Zend_Uri
- */
+/** Zend_Uri */
 require_once 'Zend/Uri.php';
 
 
 /**
- * @package    Zend_Http_Client
+ * @package    Zend_Http
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-abstract class Zend_HttpClient_Abstract
+abstract class Zend_Http_Client_Abstract
 {
     /**
      * Socket Connection Timeout
@@ -69,22 +65,22 @@ abstract class Zend_HttpClient_Abstract
      * An empty $headers array is valid and will not throw an exception.
      *
      * @param array $headers
-     * @throws Zend_HttpClient_Exception
+     * @throws Zend_Http_Client_Exception
      * @return void
      */
     final static public function validateHeaders($headers = array()) {
         // Validate headers
         if (!is_array($headers)) {
-            throw new Zend_HttpClient_Exception('Headers must be supplied as an array');
+            throw new Zend_Http_Client_Exception('Headers must be supplied as an array');
         } else {
             foreach ($headers as $header) {
                 if (!is_string($header)) {
-                    throw new Zend_HttpClient_Exception('Illegal header supplied; header must be a string');
+                    throw new Zend_Http_Client_Exception('Illegal header supplied; header must be a string');
                 } else if (!strpos($header, ': ')) {
                 	/**
                 	 * @todo should protect against injections by making sure one and only one header is here
                 	 */
-                    throw new Zend_HttpClient_Exception('Bad header.  Headers must be formatted as "Field: value"');
+                    throw new Zend_Http_Client_Exception('Bad header.  Headers must be formatted as "Field: value"');
                 }
             }
         }
@@ -129,12 +125,12 @@ abstract class Zend_HttpClient_Abstract
     /**
      * Get the Zend_Uri for this URI.
      *
-     * @throws Zend_HttpClient_Exception
+     * @throws Zend_Http_Client_Exception
      * @return Zend_Uri
      */
     final public function getUri() {
         if (!$this->_uri instanceof Zend_Uri) {
-            throw new Zend_HttpClient_Exception('URI was never set with setUri()');
+            throw new Zend_Http_Client_Exception('URI was never set with setUri()');
         }
         return $this->_uri;
     }
@@ -164,7 +160,7 @@ abstract class Zend_HttpClient_Abstract
         if (ctype_digit((string) $seconds)) {
             $this->_timeout = $seconds;
         } else {
-            throw new Zend_HttpClient_Exception("Invalid Timeout. The timeout should be a numerical value in seconds");
+            throw new Zend_Http_Client_Exception("Invalid Timeout. The timeout should be a numerical value in seconds");
         }
     }
 
@@ -172,7 +168,7 @@ abstract class Zend_HttpClient_Abstract
     /**
      * Send a GET HTTP Request
      *
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     abstract public function get();
 
@@ -181,7 +177,7 @@ abstract class Zend_HttpClient_Abstract
      * Send a POST HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     abstract public function post($data);
 
@@ -190,7 +186,7 @@ abstract class Zend_HttpClient_Abstract
      * Send a PUT HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     abstract public function put($data);
 
@@ -198,7 +194,7 @@ abstract class Zend_HttpClient_Abstract
     /**
      * Send a DELETE HTTP Request
      *
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     abstract public function delete();
 }

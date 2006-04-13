@@ -12,24 +12,24 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    Zend_HttpClient
+ * @package    Zend_Http_Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
 /**
- * Zend_HttpClient_Abstract
+ * Zend_Http_Client_Abstract
  */
-require_once 'Zend/HttpClient/Abstract.php';
+require_once 'Zend/Http/Client/Abstract.php';
 
 
 /**
- * @package    Zend_HttpClient
+ * @package    Zend_Http_Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_HttpClient extends Zend_HttpClient_Abstract
+class Zend_Http_Client extends Zend_Http_Client_Abstract
 {
     /**
      * Class Constructor, create and validate Zend_Uri object
@@ -54,7 +54,7 @@ class Zend_HttpClient extends Zend_HttpClient_Abstract
      * Send a GET HTTP Request
      *
      * @param  int $redirectMax Maximum number of HTTP redirections followed
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     public function get($redirectMax = 5)
     {
@@ -111,7 +111,7 @@ class Zend_HttpClient extends Zend_HttpClient_Abstract
      * Send a POST HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     public function post($data)
     {
@@ -133,7 +133,7 @@ class Zend_HttpClient extends Zend_HttpClient_Abstract
      * Send a PUT HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     public function put($data)
     {
@@ -154,7 +154,7 @@ class Zend_HttpClient extends Zend_HttpClient_Abstract
     /**
      * Send a DELETE HTTP Request
      *
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     public function delete()
     {
@@ -174,13 +174,13 @@ class Zend_HttpClient extends Zend_HttpClient_Abstract
     /**
      * Open a TCP connection for our HTTP/SSL request.
      *
-     * @throws Zend_HttpClient_Exception
+     * @throws Zend_Http_Client_Exception
      * @return resource Socket Resource
      */
     protected function _openConnection()
     {
     	if (!$this->_uri instanceof Zend_Uri) {
-    		throw new Zend_HttpClient_Exception('URI must be set before performing remote operations');
+    		throw new Zend_Http_Client_Exception('URI must be set before performing remote operations');
     	}
 
         // If the URI should be accessed via SSL, prepend the Hostname with ssl://
@@ -188,7 +188,7 @@ class Zend_HttpClient extends Zend_HttpClient_Abstract
         $socket = @fsockopen($host, $this->_uri->getPort(), $errno, $errstr, $this->_timeout);
         if (!$socket) {
             // Added more to the exception message, $errstr is not always populated and the message means nothing then.
-            throw new Zend_HttpClient_Exception('Unable to Connect to ' . $this->_uri->getHost() . ': ' . $errstr .
+            throw new Zend_Http_Client_Exception('Unable to Connect to ' . $this->_uri->getHost() . ': ' . $errstr .
                                                 ' (Error Number: ' . $errno . ')');
         }
         return $socket;
@@ -198,8 +198,8 @@ class Zend_HttpClient extends Zend_HttpClient_Abstract
     /**
      * Read Data from the Socket
      *
-     * @param Resource $socket Socket returned by {@see Zend_HttpClient::_openConnection()}
-     * @return Zend_HttpClient_Response
+     * @param Resource $socket Socket returned by {@see Zend_Http_Client::_openConnection()}
+     * @return Zend_Http_Client_Response
      */
     protected function _read($socket)
     {
@@ -227,7 +227,7 @@ class Zend_HttpClient extends Zend_HttpClient_Abstract
 
         fclose($socket);
 
-        return new Zend_HttpClient_Response($responseCode, $responseHeaders, $responseBody);
+        return new Zend_Http_Client_Response($responseCode, $responseHeaders, $responseBody);
     }
 }
 

@@ -21,7 +21,7 @@
 /**
  * For handling the HTTP connection to the XML-RPC service
  */
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 /**
  * Exception this class throws
@@ -294,16 +294,16 @@ class Zend_XmlRpc_Client
      *
      * @param string $method Name of the method we want to call
      * @param array $params Array of Zend_XmlRpc_Value objects, parameters for the method
-     * @throws Zend_HttpClient_Exception
+     * @throws Zend_Http_Client_Exception
      */
     protected function _sendRequest($method, $params=null)
     {
         $request_data = $this->_buildRequest($method, $params);
 
         // @todo pluggable client?
-        $http = new Zend_HttpClient($this->_serverAddress, array('Content-Type: text/xml'));
+        $http = new Zend_Http_Client($this->_serverAddress, array('Content-Type: text/xml'));
 
-        $response = $http->post($request_data); /* @var $response ZHttpClientResponse */
+        $response = $http->post($request_data); /* @var $response Zend_Http_Client_Response */
 
         return $this->_parseResponse($response->getBody());
     }

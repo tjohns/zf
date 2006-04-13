@@ -12,34 +12,34 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    Zend_HttpClient
+ * @package    Zend_Http
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
-/**
- * Zend_HttpClient_Abstract
- */
-require_once 'Zend/HttpClient/Abstract.php';
+/** Zend_Http_Client_Abstract */
+require_once 'Zend/Http/Client/Abstract.php';
 
 
 /**
  * HTTP client implementation that reads from files and fakes HTTP responses.
  * This may be useful for testing.
  *
- * @package    Zend_HttpClient
+ * @package    Zend_Http
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_HttpClient_File extends Zend_HttpClient_Abstract
+class Zend_Http_Client_File extends Zend_Http_Client_Abstract
 {
     protected $_filename = '';
 
     /**
      * Class Constructor
      *
-     * ZHttpClientFile file ignores URIs.  The setUri() method is simply ignored.
+     * ZHttp_ClientFile file ignores URIs.  The setUri() method is simply ignored.
      * The filename to read may be set by setFilename().
      *
      * @param  null|string|Zend_Uri $filename
@@ -67,7 +67,7 @@ class Zend_HttpClient_File extends Zend_HttpClient_Abstract
     public function setFilename($filename)
     {
         if (!is_string($filename)) {
-            throw new Zend_HttpClient_Exception('Filename must be a string');
+            throw new Zend_Http_Client_Exception('Filename must be a string');
         }
 
         $this->_filename = $filename;
@@ -77,21 +77,21 @@ class Zend_HttpClient_File extends Zend_HttpClient_Abstract
    /**
      * Send a GET HTTP Request
      *
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     public function get()
     {
         // if the filename was never set or set to '', fake a code 400
         if (empty($this->_filename)) {
-            return new Zend_HttpClient_Response(400, array(), '');
+            return new Zend_Http_Client_Response(400, array(), '');
         }
 
         $file = @file_get_contents($this->_filename);
         if ($file === false) {
-            throw new Zend_HttpClient_Exception("Failed reading file \"{$this->_filename}\"");
+            throw new Zend_Http_Client_Exception("Failed reading file \"{$this->_filename}\"");
         }
 
-        return new Zend_HttpClient_Response(200, array(), $file);
+        return new Zend_Http_Client_Response(200, array(), $file);
     }
 
 
@@ -99,7 +99,7 @@ class Zend_HttpClient_File extends Zend_HttpClient_Abstract
      * Send a POST HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     public function post($data)
     {
@@ -113,7 +113,7 @@ class Zend_HttpClient_File extends Zend_HttpClient_Abstract
               . implode("\n", $request) . "\n\n"
               . $data . "\n" );
 
-        return new Zend_HttpClient_Response(201, array(), '');
+        return new Zend_Http_Client_Response(201, array(), '');
     }
 
 
@@ -121,7 +121,7 @@ class Zend_HttpClient_File extends Zend_HttpClient_Abstract
      * Send a PUT HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     public function put($data)
     {
@@ -135,14 +135,14 @@ class Zend_HttpClient_File extends Zend_HttpClient_Abstract
               . implode("\n", $request) . "\n\n"
               . $data . "\n" );
 
-        return new Zend_HttpClient_Response(200, array(), '');
+        return new Zend_Http_Client_Response(200, array(), '');
     }
 
 
     /**
      * Send a DELETE HTTP Request
      *
-     * @return Zend_HttpClient_Response
+     * @return Zend_Http_Client_Response
      */
     public function delete()
     {
@@ -154,7 +154,7 @@ class Zend_HttpClient_File extends Zend_HttpClient_Abstract
               . implode("\n", $request) . "\n\n"
               . $data . "\n" );
 
-        return new Zend_HttpClient_Response(204, array(), '');
+        return new Zend_Http_Client_Response(204, array(), '');
     }
 
 }

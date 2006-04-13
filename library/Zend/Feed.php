@@ -34,13 +34,13 @@ require_once 'Zend/Feed/Atom.php';
 require_once 'Zend/Feed/Rss.php';
 
 /**
- * Zend_HttpClient
+ * Zend_Http_Client
  */
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 
 /**
- * Base Zend_Feed class, containing constants and the Zend_HttpClient instance
+ * Base Zend_Feed class, containing constants and the Zend_Http_Client instance
  * accessor.
  *
  * @package    Zend_Feed
@@ -53,7 +53,7 @@ class Zend_Feed
     /**
      * HTTP client object to use for retrieving feeds
      *
-     * @var Zend_HttpClient_Abstract
+     * @var Zend_Http_Client_Abstract
      */
     protected static $_httpClient = null;
 
@@ -69,11 +69,11 @@ class Zend_Feed
 
     /**
      * Sets the HTTP client object to use for retrieving the feeds.  If none
-     * is set, the default Zend_HttpClient will be used.
+     * is set, the default Zend_Http_Client will be used.
      *
-     * @param Zend_HttpClient_Abstract $httpClient
+     * @param Zend_Http_Client_Abstract $httpClient
      */
-	public static function setHttpClient(Zend_HttpClient_Abstract $httpClient)
+	public static function setHttpClient(Zend_Http_Client_Abstract $httpClient)
 	{
 		self::$_httpClient = $httpClient;
 	}
@@ -82,12 +82,12 @@ class Zend_Feed
 	/**
 	 * Gets the HTTP client object.
 	 *
-	 * @return Zend_HttpClient_Abstract
+	 * @return Zend_Http_Client_Abstract
 	 */
 	public static function getHttpClient() {
-		if (!self::$_httpClient instanceof Zend_HttpClient_Abstract)
+		if (!self::$_httpClient instanceof Zend_Http_Client_Abstract)
 		{
-			self::$_httpClient = new Zend_HttpClient();
+			self::$_httpClient = new Zend_Http_Client();
 		}
 
 		return self::$_httpClient;

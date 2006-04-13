@@ -12,23 +12,23 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    Zend_HttpClient
+ * @package    Zend_Http
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
-/**
- * Framework base exception
- */
-require_once 'Zend/Exception.php';
+/** Zend_Http_Exception */
+require_once 'Zend/Http/Exception.php';
 
 
 /**
- * @package    Zend_HttpClient
+ * @package    Zend_Http
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_HttpClient_Exception extends Zend_Exception
+class Zend_Http_Client_Exception extends Zend_Http_Exception
 {}
 
