@@ -1,9 +1,10 @@
-<sect1 id="zend.httpclient.response">
-    <title>Zend_Http_Client_Response</title>
-    <sect2 id="zend.httpclient.response.introduction">
+<sect1 id="zend.http.response">
+    <title>Zend_Http_Response</title>
+
+    <sect2 id="zend.http.response.introduction">
         <title>導入</title>
         <para>
-            <code>Zend_Http_Client_Response</code> は、<xref linkend="zend.httpclient" />
+            <code>Zend_Http_Response</code> は、<xref linkend="zend.http.client" />
             が返すレスポンスに簡単にアクセスできるようにします。
             リクエストの結果として受け取った内容を操作するための直感的なメソッド群を提供します。
             <itemizedlist>
