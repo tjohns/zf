@@ -1,12 +1,12 @@
 <sect1 id="zend.httpclient.introduction">
     <title>導入</title>
     <para>
-        <code>Zend_HttpClient</code> は、HTTP リクエストを扱うための易しいインターフェイスを提供します。
-        <code>Zend_HttpClient</code> が扱うことのできるリクエストメソッドは
+        <code>Zend_Http_Client</code> は、HTTP リクエストを扱うための易しいインターフェイスを提供します。
+        <code>Zend_Http_Client</code> が扱うことのできるリクエストメソッドは
         GET、POST、PUT および DELETE です。
     </para>
     <note>
-        <code>Zend_HttpClient</code> は、デフォルトでは 5 段階までの
+        <code>Zend_Http_Client</code> は、デフォルトでは 5 段階までの
         HTTP リダイレクトを追いかけます。この振る舞いを変更するには、
         最大値として指定したい数値を <code>get()</code> メソッドに渡します。
     </note>
@@ -14,16 +14,16 @@
         <example>
             <title>基本的な GET リクエストの実行</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 try {
-    $http = new Zend_HttpClient('http://example.org');
+    $http = new Zend_Http_Client('http://example.org');
     $response = $http->get();
     if ($response->isSuccessful()) {
         echo $response->getBody();
     } else {
         echo '<p>エラーが発生しました</p>';
     }
-} catch (Zend_HttpClient_Exception $e) {
+} catch (Zend_Http_Client_Exception $e) {
     echo '<p>エラーが発生しました (' .$e->getMessage(). ')</p>';
 }
 ?>]]></programlisting>
@@ -33,37 +33,37 @@ try {
 <sect1 id="zend.httpclient.basic-get-requests">
     <title>HTTP ヘッダを指定した、基本的な GET リクエスト</title>
     <para>
-        <code>Zend_HttpClient</code> のコンストラクタで、HTTP
-        リクエストを送信するための <code>Zend_HttpClient</code>
+        <code>Zend_Http_Client</code> のコンストラクタで、HTTP
+        リクエストを送信するための <code>Zend_Http_Client</code>
         のインスタンスを作成します。
     </para>
     <para>
-        単一の URL に対して <code>Zend_HttpClient</code> を使用する場合は、
+        単一の URL に対して <code>Zend_Http_Client</code> を使用する場合は、
         たいていの場合は以下の例のように <emphasis>コンストラクタ</emphasis>
         で URL および関連するヘッダを指定します。
     </para>
     <example>
-        <title>基本的な Zend_HttpClient の作成</title>
+        <title>基本的な Zend_Http_Client の作成</title>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 // URL とヘッダを指定します
-$http = new Zend_HttpClient('http://example.org', 'Accept: text/html');
+$http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
 ?>]]>       </programlisting>
     </example>
     <para />
     <example>
         <title>複数のヘッダの送信</title>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 // URL と複数のヘッダを指定します
-$http = new Zend_HttpClient('http://example.org',
+$http = new Zend_Http_Client('http://example.org',
                         array('Accept: text/html', 'Accept-Language: en-us,en;q=0.5'));
 ?>]]>       </programlisting>
     </example>
     <para>
-        <code>Zend_HttpClient</code> で<emphasis>複数の</emphasis> URL
+        <code>Zend_Http_Client</code> で<emphasis>複数の</emphasis> URL
         に対してリクエストを送信したい場合は、
         <xref linkend="zend.httpclient.requesting-multiple-domains" /> を参照ください。
     </para>
@@ -71,8 +71,8 @@ $http = new Zend_HttpClient('http://example.org',
 <sect1 id="zend.httpclient.requesting-multiple-domains">
     <title>複数のドメインに対するリクエスト</title>
     <para>
-        <code>Zend_HttpClient</code> で複数のドメインに対してリクエストを送信するには、
-        <code>Zend_HttpClient::setUri()</code> を使用して URL を指定します。
+        <code>Zend_Http_Client</code> で複数のドメインに対してリクエストを送信するには、
+        <code>Zend_Http_Client::setUri()</code> を使用して URL を指定します。
     </para>
     <note>
         <para>これは、例えば複数の RSS フィードを取得する場合などに有用です。</para>
@@ -80,10 +80,10 @@ $http = new Zend_HttpClient('http://example.org',
     <example>
         <title>複数のドメインに対するリクエスト</title>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 // クライアントオブジェクトのインスタンスを作成します
-$http = new Zend_HttpClient();
+$http = new Zend_Http_Client();
 
 // Slashdot のメインフィードの URI を指定します
 $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
@@ -102,7 +102,7 @@ $bbc = $http->get();
 <sect1 id="zend.httpclient.settimeout">
     <title>HTTP タイムアウトの変更</title>
     <para>
-        <code>Zend_HttpClient::setTimeout()</code> により、
+        <code>Zend_Http_Client::setTimeout()</code> により、
         HTTP 接続のタイムアウト秒数を設定することができます。
         seconds.
     </para>
@@ -113,7 +113,7 @@ $bbc = $http->get();
 <sect1 id="zend.httpclient.setheaders">
     <title>HTTP ヘッダの動的な設定</title>
     <para>
-        <code>Zend_HttpClient::setHeaders()</code> を使用して、
+        <code>Zend_Http_Client::setHeaders()</code> を使用して、
         ヘッダの <emphasis>配列</emphasis> を渡すことができます。
     </para>
     <important>
@@ -127,7 +127,7 @@ $bbc = $http->get();
 <sect1 id="zend.httpclient.making-other-requests">
     <title>HTTP POST、PUT および DELETE リクエストの作成</title>
     <para>
-        <code>Zend_HttpClient</code> で HTTP POST、PUT および DELETE
+        <code>Zend_Http_Client</code> で HTTP POST、PUT および DELETE
         リクエストを実行するためのメソッドは、それぞれ
         <code>post()</code>、<code>put()</code> および <code>delete()</code>
         となります。<code>post()</code> および <code>put()</code>
@@ -137,12 +137,12 @@ $bbc = $http->get();
         <code>delete()</code> メソッドはパラメータをとりません。
     </para>
     <example>
-        <title>Zend_HttpClient による POST データの送信</title>
+        <title>Zend_Http_Client による POST データの送信</title>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 // クライアントオブジェクトのインスタンスを作成します
-$http = new Zend_HttpClient();
+$http = new Zend_Http_Client();
 
 // POST データを処理する URI を設定します
 $http->setUri('http://example.org/post/processor');
@@ -161,7 +161,7 @@ $httpResponse = $http->post($postData);
         </para>
     </example>
 </sect1>
-&module_specs.Zend_HttpClient_Response;
+&module_specs.Zend_Http_Client_Response;
 <!--
 vim:se ts=4 sw=4 et:
 -->
