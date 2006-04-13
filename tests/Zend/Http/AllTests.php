@@ -6,7 +6,7 @@ if (!defined('PHPUnit2_MAIN_METHOD')) {
 require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
-require_once 'Zend/Http/Client/ResponseTest.php';
+require_once 'Zend/Http/ResponseTest.php';
 require_once 'Zend/Http/ClientTest.php';
 
 class Zend_Http_AllTests
@@ -21,12 +21,12 @@ class Zend_Http_AllTests
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend_HttpClient');
 
         $suite->addTestSuite('Zend_Http_ClientTest');
-		$suite->addTestSuite('Zend_Http_Client_ResponseTest');
+		$suite->addTestSuite('Zend_Http_ResponseTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit2_MAIN_METHOD == 'Zend_HttpClient_AllTests::main') {
+if (PHPUnit2_MAIN_METHOD == 'Zend_Http_AllTests::main') {
     Zend_HttpClient_AllTests::main();
 }
