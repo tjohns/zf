@@ -1,160 +1,164 @@
-<sect1 id="zend.httpclient.introduction">
-    <title>Einführung</title>
-    <para>
-        <code>Zend_Http_Client</code> stellt ein einfaches Interface für die Ausführung von HTTP 
-        Anfragen bereit. <code>Zend_Http_Client</code> kann GET, POST, PUT und DELETE Anfragen 
-        ausführen.
-    </para>
-    <note>
-        <code>Zend_Http_Client</code> verfolgt standardmäßig bis zu 5 HTTP Weiterleitungen. Um dieses
-        Verhalten zu ändern, übergebe die maximale Anzahl der erlaubten Weiterleitungen an die 
-        <code>get()</code> Methode.
-    </note>
-    <para>
-        <example>
-            <title>Eine einfache GET Anfrage durchführen</title>
-            <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
-try {
-    $http = new Zend_Http_Client('http://example.org');
-    $response = $http->get();
-    if ($response->isSuccessful()) {
-        echo $response->getBody();
-    } else {
-        echo '<p>Ein Fehler ist aufgetreten.</p>';
+<sect1 id="zend.http,client.introduction">
+    <title>Zend_Http_Client</title>
+
+    <sect2 id="zend.http.client.introduction">
+        <title>Einführung</title>
+        <para>
+            <code>Zend_Http_Client</code> stellt ein einfaches Interface für die Ausführung von HTTP 
+            Anfragen bereit. <code>Zend_Http_Client</code> kann GET, POST, PUT und DELETE Anfragen 
+            ausführen.
+        </para>
+        <note>
+            <code>Zend_Http_Client</code> verfolgt standardmäßig bis zu 5 HTTP Weiterleitungen. Um dieses
+            Verhalten zu ändern, übergebe die maximale Anzahl der erlaubten Weiterleitungen an die 
+            <code>get()</code> Methode.
+        </note>
+        <para>
+            <example>
+                <title>Eine einfache GET Anfrage durchführen</title>
+                <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/HttpClient.php';
+    try {
+        $http = new Zend_Http_Client('http://example.org');
+        $response = $http->get();
+        if ($response->isSuccessful()) {
+            echo $response->getBody();
+        } else {
+            echo '<p>Ein Fehler ist aufgetreten.</p>';
+        }
+    } catch (Zend_Http_Client_Exception $e) {
+        echo '<p>Ein Fehler ist aufgetreten (' .$e->getMessage(). ')</p>';
     }
-} catch (Zend_Http_Client_Exception $e) {
-    echo '<p>Ein Fehler ist aufgetreten (' .$e->getMessage(). ')</p>';
-}
-?>]]></programlisting>
+    ?>]]></programlisting>
+            </example>
+        </para>
+    </sect2>
+    <sect2 id="zend.http.client.basic-get-requests">
+        <title>Einfache GET Anfrage mit vorgegebenen HTTP Headern</title>
+        <para>
+            Der Konstruktur von <code>Zend_Http_Client</code> erstellt eine <code>Zend_Http_Client</code>
+            Instanz für das Senden von HTTP Anfragen.
+        </para>
+        <para>
+            Bei der Verwendung von <code>Zend_Http_Client</code> auf eine einzelne URL kannst Du in den
+            meisten Fällen die URL und die relevanten Header an den <emphasis>Konstruktor</emphasis> 
+            wie in dem folgenden Beispiel übergeben:
+        </para>
+        <example>
+            <title>Erstellen einer einfachen Zend_Http_Client Instanz</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/HttpClient.php';
+    
+    // Übergebe die URL und einen einzelnen Header
+    $http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
+    ?>]]>       </programlisting>
         </example>
-    </para>
-</sect1>
-<sect1 id="zend.httpclient.basic-get-requests">
-    <title>Einfache GET Anfrage mit vorgegebenen HTTP Headern</title>
-    <para>
-        Der Konstruktur von <code>Zend_Http_Client</code> erstellt eine <code>Zend_Http_Client</code>
-        Instanz für das Senden von HTTP Anfragen.
-    </para>
-    <para>
-        Bei der Verwendung von <code>Zend_Http_Client</code> auf eine einzelne URL kannst Du in den
-        meisten Fällen die URL und die relevanten Header an den <emphasis>Konstruktor</emphasis> 
-        wie in dem folgenden Beispiel übergeben:
-    </para>
-    <example>
-        <title>Erstellen einer einfachen Zend_Http_Client Instanz</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
-
-// Übergebe die URL und einen einzelnen Header
-$http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
-?>]]>       </programlisting>
-    </example>
-    <para />
-    <example>
-        <title>Senden von mehreren Headern</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
-
-// Übergebe die URL und mehrere Header
-$http = new Zend_Http_Client('http://example.org',
-                        array('Accept: text/html', 'Accept-Language: en-us,en;q=0.5'));
-?>]]>       </programlisting>
-    </example>
-    <para>
-        Wenn du <code>Zend_Http_Client</code> verwenden möchtest, um Anfragen an 
-        <emphasis>mehrere</emphasis> URLs zu senden, siehe unter
-        <xref linkend="zend.httpclient.requesting-multiple-domains" />
-    </para>
-</sect1>
-<sect1 id="zend.httpclient.requesting-multiple-domains">
-    <title>Mehrere Domains anfragen</title>
-    <para>
-        <code>Zend_Http_Client</code> unterstützt das Senden von Anfragen an mehrere Domains 
-        durch das Setzen der abzufragenden URLs mittels <code>Zend_Http_Client::setUri()</code>.
-    </para>
-    <note>
-        <para>Dies ist eine große Hilfe beim Abfragen mehrerer RSS Feeds.</para>
-    </note>
-    <example>
+        <para />
+        <example>
+            <title>Senden von mehreren Headern</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/HttpClient.php';
+    
+    // Übergebe die URL und mehrere Header
+    $http = new Zend_Http_Client('http://example.org',
+                            array('Accept: text/html', 'Accept-Language: en-us,en;q=0.5'));
+    ?>]]>       </programlisting>
+        </example>
+        <para>
+            Wenn du <code>Zend_Http_Client</code> verwenden möchtest, um Anfragen an 
+            <emphasis>mehrere</emphasis> URLs zu senden, siehe unter
+            <xref linkend="zend.http.client.requesting-multiple-domains" />
+        </para>
+    </sect2>
+    <sect2 id="zend.http.client.requesting-multiple-domains">
         <title>Mehrere Domains anfragen</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
-
-// Instanziiere unser Client Objekt
-$http = new Zend_Http_Client();
-
-// Setze die URI auf den Hauptfeed von Slashdot
-$http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
-
-// Rufe den Feed ab
-$slashdot = $http->get();
-
-// Nun rufe den BBC Nachrichten Feed ab
-$http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml');
-
-// Rufe den Feed ab
-$bbc = $http->get();
-?>]]>   </programlisting>
-    </example>
-</sect1>
-<sect1 id="zend.httpclient.settimeout">
-    <title>Ändern der HTTP Zeitüberschreitung</title>
-    <para>
-        <code>Zend_Http_Client::setTimeout()</code> erlaubt dir, die Zeitüberschreitung in Sekunden 
-        für eine HTTP Verbindung zu setzen.
-    </para>
-    <note>
-        <para>Der Standardwert für die Zeitüberschreitung ist 10 Sekunden.</para>
-    </note>
-</sect1>
-<sect1 id="zend.httpclient.setheaders">
-    <title>Dynamisches Setzen der HTTP Header</title>
-    <para>
-        Bei der Verwendung von <code>Zend_Http_Client::setHeaders()</code> kannst Du ein 
-        <emphasis>Array</emphasis> mit Header setzen.
-    </para>
-    <important>
         <para>
-            Headers müssen das Format beachten:
-            <option><code>Header: value</code></option>
+            <code>Zend_Http_Client</code> unterstützt das Senden von Anfragen an mehrere Domains 
+            durch das Setzen der abzufragenden URLs mittels <code>Zend_Http_Client::setUri()</code>.
         </para>
-    </important>
-</sect1>
-<sect1 id="zend.httpclient.making-other-requests">
-    <title>Durchführen von HTTP POST, PUT and DELETE Anfragen</title>
-    <para>
-        Das Durchführen von HTTP POST, PUT and DELETE Anfragen mit <code>Zend_Http_Client</code> wird
-        durch die Methoden <code>post()</code>, <code>put()</code> und <code>delete()</code> 
-        entsprechend unterstützt. Die <code>post()</code> und <code>put()</code> Methoden benötigen
-        einen einzelnen String Parameter <code>$data</code>, in dem ein String mit den korrekt 
-        codierten Daten enthalten sein soll, wie im folgenden: 
-        <emphasis><code>name=value&amp;foo=bar</code></emphasis>. Die <code>delete()</code> Methode
-        benötigt keine Parameter.
-    </para>
-    <example>
-        <title>Senden von POST Daten mit Zend_Http_Client</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
-
-// Instanziiere unser Client Objekt
-$http = new Zend_Http_Client();
-
-// Setze die URI auf einen Verarbeiter für POST Daten
-$http->setUri('http://example.org/post/processor');
-
-// Speichere die spezifischen GET Variablen als HTTP POST Daten
-$postData = 'foo=' . urlencode($_GET['foo']) . '&bar=' . urlencode($_GET['bar']);
-
-// Führe die HTTP POST Anfrage aus und speichere die HTTP Antwort
-$httpResponse = $http->post($postData);
-?>]]>   </programlisting>
+        <note>
+            <para>Dies ist eine große Hilfe beim Abfragen mehrerer RSS Feeds.</para>
+        </note>
+        <example>
+            <title>Mehrere Domains anfragen</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/HttpClient.php';
+    
+    // Instanziiere unser Client Objekt
+    $http = new Zend_Http_Client();
+    
+    // Setze die URI auf den Hauptfeed von Slashdot
+    $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
+    
+    // Rufe den Feed ab
+    $slashdot = $http->get();
+    
+    // Nun rufe den BBC Nachrichten Feed ab
+    $http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml');
+    
+    // Rufe den Feed ab
+    $bbc = $http->get();
+    ?>]]>   </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.http.client.settimeout">
+        <title>Ändern der HTTP Zeitüberschreitung</title>
         <para>
-            Das Durchführen einer PUT Anfrage verläuft genauso wie in dem obigen Beispiel für die
-            Durchführung einer POST Anfrage; tausche nur die <code>put()</code> Methode mit der
-            <code>post()</code> Methode aus.
+            <code>Zend_Http_Client::setTimeout()</code> erlaubt dir, die Zeitüberschreitung in Sekunden 
+            für eine HTTP Verbindung zu setzen.
         </para>
-    </example>
+        <note>
+            <para>Der Standardwert für die Zeitüberschreitung ist 10 Sekunden.</para>
+        </note>
+    </sect2>
+    <sect2 id="zend.http.client.setheaders">
+        <title>Dynamisches Setzen der HTTP Header</title>
+        <para>
+            Bei der Verwendung von <code>Zend_Http_Client::setHeaders()</code> kannst Du ein 
+            <emphasis>Array</emphasis> mit Header setzen.
+        </para>
+        <important>
+            <para>
+                Headers müssen das Format beachten:
+                <option><code>Header: value</code></option>
+            </para>
+        </important>
+    </sect2>
+    <sect2 id="zend.http.client.making-other-requests">
+        <title>Durchführen von HTTP POST, PUT and DELETE Anfragen</title>
+        <para>
+            Das Durchführen von HTTP POST, PUT and DELETE Anfragen mit <code>Zend_Http_Client</code> wird
+            durch die Methoden <code>post()</code>, <code>put()</code> und <code>delete()</code> 
+            entsprechend unterstützt. Die <code>post()</code> und <code>put()</code> Methoden benötigen
+            einen einzelnen String Parameter <code>$data</code>, in dem ein String mit den korrekt 
+            codierten Daten enthalten sein soll, wie im folgenden: 
+            <emphasis><code>name=value&amp;foo=bar</code></emphasis>. Die <code>delete()</code> Methode
+            benötigt keine Parameter.
+        </para>
+        <example>
+            <title>Senden von POST Daten mit Zend_Http_Client</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/HttpClient.php';
+    
+    // Instanziiere unser Client Objekt
+    $http = new Zend_Http_Client();
+    
+    // Setze die URI auf einen Verarbeiter für POST Daten
+    $http->setUri('http://example.org/post/processor');
+    
+    // Speichere die spezifischen GET Variablen als HTTP POST Daten
+    $postData = 'foo=' . urlencode($_GET['foo']) . '&bar=' . urlencode($_GET['bar']);
+    
+    // Führe die HTTP POST Anfrage aus und speichere die HTTP Antwort
+    $httpResponse = $http->post($postData);
+    ?>]]>   </programlisting>
+            <para>
+                Das Durchführen einer PUT Anfrage verläuft genauso wie in dem obigen Beispiel für die
+                Durchführung einer POST Anfrage; tausche nur die <code>put()</code> Methode mit der
+                <code>post()</code> Methode aus.
+            </para>
+        </example>
+    </sect2>
 </sect1>
 &module_specs.Zend_Http_Client_Response;
 <!--
