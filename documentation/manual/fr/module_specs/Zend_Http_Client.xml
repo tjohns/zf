@@ -1,4 +1,8 @@
-<sect1 id="zend.httpclient.introduction">
+<sect1 id="zend.http.client">
+    <title>Zend_Http_Client</title>
+    
+    <sect2 id="zend.http.client.introduction">
+    
     <title>Introduction</title>
     <para>
         <code>Zend_Http_Client</code> fournit une interface simple avec laquelle vous pourrez effectuer des requêtes HTTP. 
@@ -27,42 +31,46 @@ try {
 ?>]]></programlisting>
         </example>
     </para>
-</sect1>
-<sect1 id="zend.httpclient.basic-get-requests">
+    </sect2>
+    <sect2 id="zend.http.client.basic-get-requests">
     <title>Requêtes GET de base avec en-têtes HTTP</title>
     <para>
-        Le constructeur de <code>Zend_Http_Client</code> crée une instance capable d'envoyer des requêtes HTTP.
+        Le constructeur <code>Zend_Http_Client</code> crée une instance de <code>Zend_Http_Client</code> permettant d'envoyer des requêtes HTTP.
     </para>
     <para>
-        Lorsque vous souhaitez utiliser <code>Zend_Http_Client</code> sur une seule URL, dans la plupart des cas vous pouvez 
-        passer l'URL et les en-têtes voulus au <emphasis>constructeur</emphasis>, comme dans les exemples suivants :
+        Lorsque vous utilisez <code>Zend_Http_Client</code> sur une seule URL, dans la plupart des cas vous pouvez 
+        passer l'URL et les en-têtes voulues au <emphasis>constructeur</emphasis>, comme dans les exemples suivants :
     </para>
     <example>
         <title>Créer un objet Zend_Http_Client de base</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
-
-// Définition de l'URL et de l'en-tête
-$http = new Zend_Http_Client('http://exemple.org', 'Accept: text/html');
-?>]]>       </programlisting>
+        <programlisting role="php">
+            <![CDATA[<?php
+            require_once 'Zend/HttpClient.php';
+            
+            // Définition de l'URL et de l'en-tête
+            $http = new Zend_Http_Client('http://exemple.org', 'Accept: text/html');
+            ?>]]>       
+        </programlisting>
     </example>
     <para />
     <example>
         <title>Envoyer plusieurs en-têtes</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
-
-// Définition de l'URL et de plusieurs en-têtes
-$http = new Zend_Http_Client('http://exemple.org',
-                        array('Accept: text/html', 'Accept-Language: 
-fr-fr,fr;q=0.5'));
-?>]]>       </programlisting>
+        <programlisting role="php">
+        <![CDATA[<?php
+            require_once 'Zend/HttpClient.php';
+            
+            // Définition de l'URL et de plusieurs en-têtes
+            $http = new Zend_Http_Client('http://exemple.org',
+            array('Accept: text/html', 'Accept-Language: fr-fr,fr;q=0.5'));
+        ?>]]>
+        </programlisting>
     </example>
     <para>
-         Si vous souhaitez utiliser <code>Zend_Http_Client</code> pour envoyer des requêtes à <emphasis>plusieurs</emphasis> URL, voyez <xref linkend="zend.httpclient.requesting-multiple-domains" />
+         Si vous souhaitez utiliser <code>Zend_Http_Client</code> pour envoyer des requêtes à <emphasis>plusieurs</emphasis> URL, 
+         voyez <xref linkend="zend.http.client.requesting-multiple-domains" />
     </para>
-</sect1>
-<sect1 id="zend.httpclient.requesting-multiple-domains">
+    </sect2>
+    <sect2 id="zend.http.client.requesting-multiple-domains">
     <title>Envoyer une requête à plusieurs domaines</title>
     <para>
         <code>Zend_Http_Client</code> prend en charge l'envoi d'une requête à plusieurs domaines; pour cela, définissez l'URL où 
@@ -73,27 +81,29 @@ fr-fr,fr;q=0.5'));
     </note>
     <example>
         <title>Envoyer une requête à plusieurs domaines</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
-
-// Création de l'objet client
-$http = new Zend_Http_Client();
-
-// Définition de l'URI comme étant celle du flux principal de Slashdot
-$http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
-
-// Obtention du flux
-$slashdot = $http->get();
-
-// Définition du flux d'actualités de la BBC
-$http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml');
-
-// Obtention le flux
-$bbc = $http->get();
-?>]]>   </programlisting>
+        <programlisting role="php"><![CDATA[
+        <?php
+            require_once 'Zend/HttpClient.php';
+            
+            // Création de l'objet client
+            $http = new Zend_Http_Client();
+            
+            // Définition de l'URI comme étant celle du flux principal de Slashdot
+            $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
+            
+            // Obtention du flux
+            $slashdot = $http->get();
+            
+            // Définition du flux d'actualités de la BBC
+            $http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml');
+            
+            // Obtention le flux
+            $bbc = $http->get();
+            ?>]]>   
+        </programlisting>
     </example>
-</sect1>
-<sect1 id="zend.httpclient.settimeout">
+</sect2>
+<sect2 id="zend.http.client.settimeout">
     <title>Modifier le délai d'attente HTTP</title>
     <para>
          La méthode <code>Zend_Http_Client::setTimeout()</code> vous permet de définir le délai d'attente en secondes pour une connexion HTTP.
@@ -101,8 +111,8 @@ $bbc = $http->get();
     <note>
         <para>Le délai d'attente par défaut est de 10 secondes.</para>
     </note>
-</sect1>
-<sect1 id="zend.httpclient.setheaders">
+</sect2>
+<sect2 id="zend.http.client.setheaders">
     <title>Définir dynamiquement les en-têtes HTTP</title>
     <para>
         Pour définir dynamiquement les en-têtes HTTP, utilisez la méthode <code>Zend_Http_Client::setHeaders()</code> en lui passant un tableau d'en-têtes.
@@ -112,8 +122,8 @@ $bbc = $http->get();
              Les en-têtes doivent être écrits au format : <option><code>En-tête: valeur</code></option>.
         </para>
     </important>
-</sect1>
-<sect1 id="zend.httpclient.making-other-requests">
+</sect2>
+<sect2 id="zend.http.client.making-other-requests">
     <title>Effectuer des requêtes HTTP POST, PUT et DELETE</title>
     <para>
         L'envoi de requêtes HTTP POST, PUT et DELETE est facilité par <code>Zend_Http_Client</code> au moyen de trois méthodes : 
@@ -124,29 +134,31 @@ $bbc = $http->get();
     </para>
     <example>
         <title>Envoyer des données POST au moyen de Zend_Http_Client</title>
-        <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/HttpClient.php';
-
-// Instanciation de l'objet client
-$http = new Zend_Http_Client();
-
-// Définition de l'URI comme étant celle d'une application traitant des données 
-POST
-$http->setUri('http://exemple.org/post/application');
-
-// Enregistrement des variables GET spécifiques sous forme de données HTTP POST
-$donneesPOST = 'toto=' . urlencode($_GET['toto']) . '&barre=' . 
-urlencode($_GET['barre']);
-
-// Exécution de la requête HTTP POST et enregistrement de la réponse HTTP
-$reponseHTTP = $http->post($donneesPOST);
-?>]]>   </programlisting>
+        <programlisting role="php">
+        <![CDATA[<?php
+            require_once 'Zend/HttpClient.php';
+            
+            // Instanciation de l'objet client
+            $http = new Zend_Http_Client();
+            
+            // Définition de l'URI comme étant celle d'une application traitant des données 
+            POST
+            $http->setUri('http://exemple.org/post/application');
+            
+            // Enregistrement des variables GET spécifiques sous forme de données HTTP POST
+            $donneesPOST = 'toto=' . urlencode($_GET['toto']) . '&barre=' . 
+            urlencode($_GET['barre']);
+            
+            // Exécution de la requête HTTP POST et enregistrement de la réponse HTTP
+            $reponseHTTP = $http->post($donneesPOST);
+            ?>]]>   
+         </programlisting>
         <para>
             Pour effectuer une requête PUT, faites la même chose que dans l'exemple ci-dessus mais remplacez <code>post()</code> par <code>put()</code> .
         </para>
     </example>
+</sect2>
 </sect1>
-&module_specs.Zend_Http_Client_Response;
 <!--
 vim:se ts=4 sw=4 et:
 -->

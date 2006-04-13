@@ -14,7 +14,7 @@
 		<title>Configuration Serveur</title>
 		<para>
 		    Le Zend_Controller est construit pour supporter les sites web modernes, avec des URI propres (peu voire pas de paramètres de requêtes). 
-		    En tant que telle, la configuration du serveur web doit permettre la reformulation des URI afin de rediriger toutes les requêtes sur un m�me 
+		    En tant que telle, la configuration du serveur web doit permettre la reformulation des URI afin de rediriger toutes les requêtes sur un même 
 		    un même fichier, appelé ici "<code>index.php</code>", qui va simplement amorcer <code>Zend_Controller_Front</code>. 
 		    Sur les serveurs Web Apache, cela est pris en charge par le module <code>mod_rewrite</code>.
 		</para>

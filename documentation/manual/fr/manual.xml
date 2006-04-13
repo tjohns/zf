@@ -57,9 +57,10 @@
         <title>Zend_Filter</title>
         &module_specs.Zend_Filter;
     </chapter>
-    <chapter id="zend.httpclient">
-        <title>Zend_HttpClient</title>
-        &module_specs.Zend_HttpClient;
+    <chapter id="zend.http">
+        <title>Zend_Http</title>
+        &module_specs.Zend_Http_Client;
+        &module_specs.Zend_Http_Response;
     </chapter>
     <chapter id="zend.inputfilter">
         <title>Zend_InputFilter</title>

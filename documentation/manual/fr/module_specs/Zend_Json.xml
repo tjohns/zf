@@ -30,7 +30,7 @@ $json = Zend_Json::encode($phpNatif);
 <sect1 id="zend.json.objects">
     <title>Objets JSON</title>
     <para>
-        Lorsque vous encodez des objet PHP en tant que JSON, toutes les propriétés publiques de cette objet sont encodées dans un objet JSON.
+        Lorsque vous encodez des objets PHP en tant que JSON, toutes les propriétés publiques de cet objet sont encodées dans un objet JSON.
     </para>
     <para>
         Bien que depuis, les objets Javascript correspondent de très près aux tableau associatifs de PHP, décoder des objets JSON pose une légère difficulté.
