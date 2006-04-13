@@ -16,12 +16,12 @@
 				<listitem>
 					<para>
 						Le système existant de routage d'URI ne convient pas, par exemple lors de son intégration dans un site Web existant qui 
-						utilise déjà ses propres conventions de routage, qui ne s'accordent pas avec les mécanisme de routage fournit par le Framework Zend.
+						utilise déjà ses propres conventions de routage, qui ne s'accordent pas avec les mécanisme de routage fournis par le Framework Zend.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-					     Vous avez besoin d'implémenter un routage pour quelque chose de complètement différent. La class <code>Zend_Controller_Router</code> 
+					     Vous avez besoin d'implémenter un routage pour quelque chose de complètement différent. La classe <code>Zend_Controller_Router</code> 
 					     ne fonctionne qu'avec des URIs. Il est possible et préférable que vous vouliez utiliser le design pattern MVC pour développer un 
 					     autre type de programme, comme une application en console. Dans le cas d'une application en console, un routeur personnalisé devrait 
 					     traiter les arguments de la ligne de commande pour définir la route.
@@ -40,7 +40,7 @@
 					<para>
 					    Vous souhaitez fournir des possibilités aditionnelles qui seront héritées par tous vos contrôleurs. 
 					    Par exemple <code>Zend_Controller_Action</code> n'intègre pas <code>Zend_View</code> par défaut. 
-					    Cependant, vous pourriez étendre votre propre contrôleur pour faire cela, et l'utiliser ne nécessiterais pas de modifier ni 
+					    Cependant, vous pourriez étendre votre propre contrôleur pour faire cela, et l'utiliser ne nécessiterait pas de modifier ni 
 					    <code>Zend_Controller_Router</code> ni <code>Zend_Controller_Dispatcher</code>.
 					</para>
 				</listitem>
@@ -57,7 +57,7 @@
 		
 		<para>
 		    Lors d'un sous-classement d'une des classes du Zend_Controlleur, il est fortement recommandé de suivre ces conventions pour nommer ou 
-		    enregistrer les fichiers. Suivre cette méthode vous assure qu'un autre développeur familier avec la Framework Zend sera capable 
+		    enregistrer les fichiers. Suivre cette méthode vous assure qu'un autre développeur familier avec le Framework Zend sera capable 
 		    de comprendre facilement votre projet.
 		</para>
 		
@@ -90,7 +90,7 @@
 			</para>
 			
 			<para>
-				Par exemple, un projet de Widget, Inc. qui implémente uniquement un routeur personnalisé, l'arborescence ressemblerais à ceci :
+				Par exemple, un projet de Widget, Inc. qui implémente uniquement un routeur personnalisé, l'arborescence ressemblerait à ceci :
 				
 <programlisting role="php"><![CDATA[
 /library
@@ -106,8 +106,8 @@
 			</para>
 			
 			<para>
-                 Veuillez noter aussi que dans l'exemple ci-dessus, un fichier <code>README.txt</code> à été placé dans <code>Widget/Controller/</code>. 
-                 Zend vous encourage fortement à documenter vos projets en proposant des tests séparés, et un documentation pour vos clients. 
+                 Veuillez noter aussi que dans l'exemple ci-dessus, un fichier <code>README.txt</code> a été placé dans <code>Widget/Controller/</code>. 
+                 Zend vous encourage fortement à documenter vos projets en proposant des tests séparés, et une documentation pour vos clients. 
                  Cependant, nous vous conseillons aussi de placer un simple fichier <code>README.txt</code> directement dans le répertoire pour 
                  expliquer brièvement vos changements, et leurs fonctionnements.
 			</para>

@@ -84,7 +84,7 @@ Zend_Controller_Front::run('/chemin/de/vos/controlleurs')
 		<title>Arborescence des Répertoires</title>
 		
 		<para>
-		    Il est recommandé que les site Web utilisant le Framework Zend partagent une même arborescence. 
+		    Il est recommandé que les sites Web utilisant le Framework Zend partagent une même arborescence. 
 		    Bien que cela ne soit pas possible dans tous les cas, il l'est pour beaucoup. 
 		    Choisir de se conformer à cette structure va rendre votre code plus facilement compréhensible pour quelqu'un 
 		    de familier avec les conventions du Framework Zend.

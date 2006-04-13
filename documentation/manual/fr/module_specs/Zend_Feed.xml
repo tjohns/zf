@@ -1,41 +1,41 @@
 <sect1 id="zend.feed.introduction">
     <title>Introduction</title>
     <para>
-    Le composant <code>Zend_Feed</code> offre des services permettant de 
-    traiter des flux RSS et Atom. Il permet d'accéder aux éléments d'un 
-    flux, aux attributs d'un flux et aux attributs des entrées d'un flux, 
-    tout cela au moyen d'une syntaxe intuitive. <code>Zend_Feed</code> prend 
-    aussi complètement en charge la modification de la structure des flux et 
-    des entrées, avec la même syntaxe intuitive que précédemment, et il sait 
-    transformer le résultat en XML. À l'avenir, la prise en charge des 
-    modifications pourrait aussi inclure la prise en charge du protocole de 
-    publication Atom.
+        Le composant <code>Zend_Feed</code> offre des services permettant de 
+        traiter des flux RSS et Atom. Il permet d'accéder aux éléments d'un 
+        flux, aux attributs d'un flux et aux attributs des entrées d'un flux, 
+        tout cela au moyen d'une syntaxe intuitive. <code>Zend_Feed</code> prend 
+        aussi complètement en charge la modification de la structure des flux et 
+        des entrées, avec la même syntaxe intuitive que précédemment, et il sait 
+        transformer le résultat en XML. À l'avenir, la prise en charge des 
+        modifications pourrait aussi inclure la prise en charge du protocole de 
+        publication Atom.
     </para>
 
     <para>
         Sur le plan de la programmation, <code>Zend_Feed</code> est constitué 
-d'une classe de base <code>Zend_Feed</code> et de classes de base 
-abstraites <code>Zend_Feed_Abstract</code> et 
-<code>Zend_Feed_EntryAbstract</code>, permettant de représenter 
-respectivement des flux et des entrées; <code>Zend_Feed</code> contient 
-aussi des implémentations particulières de ces classes abstraites pour 
-les flux et entrées RSS et Atom ainsi qu'un assistant en coulisses qui 
-assure le bon fonctionnement de la syntaxe intuitive.
+        d'une classe de base <code>Zend_Feed</code> et de classes de base 
+        abstraites <code>Zend_Feed_Abstract</code> et 
+        <code>Zend_Feed_EntryAbstract</code>, permettant de représenter 
+        respectivement des flux et des entrées; <code>Zend_Feed</code> contient 
+        aussi des implémentations particulières de ces classes abstraites pour 
+        les flux et entrées RSS et Atom ainsi qu'un assistant en coulisses qui 
+        assure le bon fonctionnement de la syntaxe intuitive.
     </para>
 
     <para>
         Dans l'exemple ci-dessous, nous illustrons une utilisation simple de 
-<code>Zend_Feed</code> : on obtient un flux RSS et on enregistre les 
-portions du flux qui nous intéressent dans un tableau PHP simple, qui 
-pourra ensuite être utilisé pour afficher les données, les stocker dans 
-une base de données etc.
+        <code>Zend_Feed</code> : on obtient un flux RSS et on enregistre les 
+        portions du flux qui nous intéressent dans un tableau PHP simple, qui 
+        pourra ensuite être utilisé pour afficher les données, les stocker dans 
+        une base de données etc.
     </para>
 
     <note>
         Beaucoup de flux RSS ont à leur disposition différentes propriétés, pour 
-les canaux comme pour les éléments. La spécification RSS spécifie 
-beaucoup de propriétés optionnelles et gardez donc cela à l'esprit 
-lorsque vous écrivez du code qui manipule des données RSS.
+        les canaux comme pour les éléments. La spécification RSS spécifie 
+        beaucoup de propriétés optionnelles et gardez donc cela à l'esprit 
+        lorsque vous écrivez du code qui manipule des données RSS.
     </note>
 
     <example>
@@ -93,7 +93,7 @@ $flux = Zend_Feed::import('http://flux.exemple.com/nomDuFlux');
     </para>
     <para>
         Vous pouvez aussi utiliser <code>Zend_Feed</code> pour aller chercher le 
-contenu d'un flux à partir d'un fichier ou d'une chaîne PHP :
+        contenu d'un flux à partir d'un fichier ou d'une chaîne PHP :
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -166,18 +166,18 @@ $canal = new Zend_Feed_Rss('http://rss.exemple.com/nomDuCanal');
 echo $canal->title();
 
 ?>]]></programlisting>
-Notez la syntaxe utilisée : un appel de fonction. <code>Zend_Feed</code> 
-utilise une convention selon laquelle les propriétés sont traitées comme 
-des objets XML si elles sont demandées au moyen de la syntaxe 
-<code>$obj->propriété</code> et comme des chaînes si elles sont 
-demandées au moyen de la syntaxe <code>$obj->propriété()</code>. Ceci 
-permet d'accéder à la totalité du contenu textuel d'un nœud particulier 
-tout comme à l'ensemble des enfants de ce nœud.
+    Notez la syntaxe utilisée : un appel de fonction. <code>Zend_Feed</code> 
+    utilise une convention selon laquelle les propriétés sont traitées comme 
+    des objets XML si elles sont demandées au moyen de la syntaxe 
+    <code>$obj->propriété</code> et comme des chaînes si elles sont 
+    demandées au moyen de la syntaxe <code>$obj->propriété()</code>. Ceci 
+    permet d'accéder à la totalité du contenu textuel d'un nœud particulier 
+    tout comme à l'ensemble des enfants de ce nœud.
     </para>
 
     <para>
-                Si les propriétés du canal possèdent des attributs, ils sont accessibles 
-à l'aide de l'indiçage PHP :
+    Si les propriétés du canal possèdent des attributs, ils sont accessibles 
+    à l'aide de l'indiçage PHP :
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -225,7 +225,7 @@ associés au canal RSS et à ses éléments pris séparément (les entrées).
     </para>
 
     <para>
-        Les éléments optionnels pour les canaux sont, entre autres :
+        Les éléments optionnels pour les canaux sont :
     </para>
 
     <para>
@@ -244,7 +244,8 @@ associés au canal RSS et à ses éléments pris séparément (les entrées).
     </para>
 
     <para>
- Les éléments optionnels pour les entrées sont, entre autres :
+        Les éléments RSS <code>&lt;item&gt;</code> n'ont pas d'éléments requis particulier. Cependant soit 
+        <code>title</code> soit <code>description</code> doivent être présents.
     </para>
 
     <para>
@@ -305,24 +306,24 @@ même vide, sera évalué comme <code>TRUE</code>, donc le test échouera.
 <title>Consommer un flux Atom</title>
 
     <para>
-La classe <code>Zend_Feed_Atom</code> est utilisée pratiquement de la 
-même manière que <code>Zend_Feed_Rss</code>. Tout comme 
-<code>Zend_Feed_Rss</code>, elle offre aussi un accès aux propriétés du 
-flux et elle permet d'itérer sur les entrées du flux. La différence 
-principale réside dans la structure du protocole Atom lui-même. Atom est 
-le successeur de RSS; c'est un protocole plus général et il est conçu 
-pour prendre en charge plus facilement les flux qui incluent directement 
-leur contenu, et ce en divisant la balise RSS <code>description</code> 
-en deux éléments : <code>summary</code> (résumé) et <code>content</code> 
-(contenu).
+    La classe <code>Zend_Feed_Atom</code> est utilisée pratiquement de la 
+    même manière que <code>Zend_Feed_Rss</code>. Tout comme 
+    <code>Zend_Feed_Rss</code>, elle offre aussi un accès aux propriétés du 
+    flux et elle permet d'itérer sur les entrées du flux. La différence 
+    principale réside dans la structure du protocole Atom lui-même. Atom est 
+    le successeur de RSS; c'est un protocole plus général et il est conçu 
+    pour prendre en charge plus facilement les flux qui incluent directement 
+    leur contenu, et ce en divisant la balise RSS <code>description</code> 
+    en deux éléments : <code>summary</code> (résumé) et <code>content</code> 
+    (contenu).
     </para>
 
     <example>
         <title>Emploi basique de <code>Zend_Feed_Atom</code></title>
         <para>
             Pour lire un flux Atom et afficher le titre (propriété 
-<code>title</code>) et le résumé (propriété <code>summary</code>) de 
-chaque entrée :
+            <code>title</code>) et le résumé (propriété <code>summary</code>) de 
+            chaque entrée :
         </para>
         <programlisting role="php"><![CDATA[
 <?php
@@ -389,10 +390,10 @@ l'entrée</para>
                 <para><code>content</code> (contenu) - Le contenu de l'entrée dans son entier; vous pouvez l'ignorer si le flux ne contient que des résumés</para>
             </listitem>
             <listitem>
-                <para><code>author</code> (auteur) - Possède aussi les sous-balises <code>name</code> (nom) et <code>email</code>, comme pour les flux</para>
+                <para><code>author</code> (auteur) - Avec les sous-balises <code>name</code> (nom) et <code>email</code></para>
             </listitem>
             <listitem>
-                <para><code>published</code> (publié) - La date à laquelle l'entrée à été publiée, au format RFC 3339</para>
+                <para><code>published</code> (publié) - La date à laquelle l'entrée a été publiée, au format RFC 3339</para>
             </listitem>
             <listitem>
                 <para><code>updated</code> (publié) - La date à laquelle l'entrée a été mise à jour, au format RFC 3339</para>
@@ -411,16 +412,16 @@ l'entrée</para>
 
     <para>
         Les éléments Atom <code>&lt;entry&gt;</code> sont aussi valides tout 
-seuls. Généralement l'URL d'une entrée constitue l'URL du flux suivie de 
-<code>/&lt;idEntree&gt;</code>, par exemple 
-<code>http://atom.exemple.com/flux/1</code> si on reprend l'URL que nous 
-avons utilisée ci-dessus.
+        seuls. Généralement l'URL d'une entrée constitue l'URL du flux suivie de 
+        <code>/&lt;idEntree&gt;</code>, par exemple 
+        <code>http://atom.exemple.com/flux/1</code> si on reprend l'URL que nous 
+        avons utilisée ci-dessus.
     </para>
 
     <para>
        Si vous lisez une entrée seule, vous obtiendrez toujours un objet 
-<code>Zend_Feed_Atom</code> mais cette classe crééra automatiquement un 
-flux "anonyme" pour contenir l'entrée.
+        <code>Zend_Feed_Atom</code> mais cette classe crééra automatiquement un 
+        flux "anonyme" pour contenir l'entrée.
     </para>
 
     <example>
@@ -481,8 +482,8 @@ echo $entree->saveXML();
 ?>]]>   </programlisting>
         <para>
            Ce code affichera une représentation XML complète (y compris le 
-prologue <code>&lt;?xml ...&gt;</code>) de la nouvelle entrée, avec les 
-espaces de nom XML nécessaires.
+            prologue <code>&lt;?xml ...&gt;</code>) de la nouvelle entrée, avec les 
+            espaces de noms XML nécessaires.
         </para>
         <para>
 Notez que le code ci-dessus fonctionnera même si l'entrée existante 
@@ -540,10 +541,10 @@ espace de noms personnalisé.
 
     <para>
          Voici un exemple d'entrée Atom personnalisée qui gère son propre espace 
-de noms <code>monen</code>. Notez aussi que la classe se charge 
-d'appeler la méthode <code>registerNamespace()</code> pour que 
-l'utilisateur n'ait au final pas du tout à se soucier des espaces de 
-nom.
+        de noms <code>monen</code>. Notez aussi que la classe se charge 
+        d'appeler la méthode <code>registerNamespace()</code> pour que 
+        l'utilisateur n'ait au final pas du tout à se soucier des espaces de 
+        noms.
     </para>
 
     <example>

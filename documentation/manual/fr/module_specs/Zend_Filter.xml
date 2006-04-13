@@ -2,8 +2,7 @@
     <title>Introduction</title>
     <para>
      <literal>Zend_Filter</literal> fournit une bibliothèque de méthodes statiques permettant de filtrer des données. 
-     Pour le filtrage des données passées en entrée, voyez plutôt le Chapitre 7, consacré 
-     à <xref linkend="zend.inputfilter" /> car ce composant constitue une plate-forme dédiée au filtrage des données passées en 
+     Pour le filtrage des données passées en entrée, voyez plutôt le <xref linkend="zend.inputfilter" /> car ce composant constitue une plate-forme dédiée au filtrage des données passées en 
      entrée, et il utilise les méthodes fournies par cette classe. 
      Toutefois, comme <literal>Zend_InputFilter</literal> est conçu en priorité pour fonctionner avec des tableaux, 
      <literal>Zend_Filter</literal> reste utile pour le filtrage de variables scalaires, 

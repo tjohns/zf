@@ -30,7 +30,7 @@
 				<listitem>
 					<para>
 					    <code>Zend_Controller_Router</code> est le routeur. 
-					    Le routage est le processus qui consiste à prendre une URI et àla décomposer pour déterminer quel 
+					    Le routage est le processus qui consiste à prendre une URI et à la décomposer pour déterminer quel 
 					    contrôleur et action de ce contrôleur doit recevoir la requête. 
 					    Cette définition du contrôleur, de l'action et des paramètres optionnels est empaquetée dans un objet de valeur 
 					    appelé <code>Zend_Controller_Dispatcher_Token</code>. 
@@ -44,7 +44,7 @@
 					    <code>Zend_Controller_Dispatcher</code> est l'aiguilleur. 
 					    L'aiguillage est le processus qui consiste à prendre le <code>Zend_Controller_Dispatcher_Token</code>, trouver le fichier de contrôleur approprié, 
 					    instancier un contrôleur (qui doit implémenter <code>Zend_Controller_Action</code>), et au final, lancer la méthode d'action de cet objet contrôleur. 
-					    Contrairment au routage, qui n'à lieu qu'une seule fois, l'aiguillage à lieu dans une boucle. 
+					    Contrairement au routage, qui n'à lieu qu'une seule fois, l'aiguillage à lieu dans une boucle. 
 					    <code>Zend_Controller_Dispatcher</code> est appelé de façon répétée par <code>Zend_Controller_Front</code> jusqu'à ce que toutes les actions aient 
 					    été aiguillées les unes après les autres.
 					</para>
@@ -62,7 +62,7 @@
 			Le workflow du <code>Zend_Controller</code> est assez simple. 
 			Une requête est reçue par <code>Zend_Controller_Front</code>, qui à son tour apelle <code>Zend_Controller_Router</code> 
 			pour déterminer quel contrôleur (et quelle action dans ce contrôleur) aiguiller. 
-			<code>Zend_Controller_Router</code> decompose l'URI dans un objet <code>Zend_Controller_Dispatcher_Token</code> qui décrits où aiguiller. 
+			<code>Zend_Controller_Router</code> décompose l'URI dans un objet <code>Zend_Controller_Dispatcher_Token</code> qui décrits où aiguiller. 
 			<code>Zend_Controller_Front</code> entre ensuite dans une boucle d'aiguillage. 
 			Il apelle <code>Zend_Controller_Dispatcher</code>, le passe dans le token pour aiguiller dans l'actuel contrôleur et l'actuelle action. 
 			Après que le contrôleur aie finit, le contrôle retourne au <code>Zend_Controller_Front</code>. 
@@ -75,20 +75,20 @@
 		<title>Processus de routage</title>
 
 		<para>
-		    Avant que votre premier contrôleur soit construit, vous avec besoin de comprendre le fonctionnement du processus de 
+		    Avant que votre premier contrôleur soit construit, vous avez besoin de comprendre le fonctionnement du processus de 
 		    routage tel qu'il est implémenté dans <code>Zend_Controller_Router</code>. 
-		    Rappelez vous que le workflow est composé du routage, qui à lieu une seule fois, et de l'aiguillage qui à lieu dans une boucle.
+		    Rappelez vous que le workflow est composé du routage, qui n'à lieu une seule fois, et de l'aiguillage qui à lieu dans une boucle.
 		</para>
 
 		<para>
-		    <code>Zend_Controller_Front</code> apelle <code>Zend_Controller_Router</code> pour envoyer une URI dans un 
+		    <code>Zend_Controller_Front</code> appelle <code>Zend_Controller_Router</code> pour envoyer une URI dans un 
 		    contrôleur -- et une action à l'intérieur de ce contrôleur. 
 		    <code>Zend_Controller_Router</code> prend cette URI et la décompose en un objet de valeur <code>Zend_Controller_Dispatcher_Token</code>, 
 		    qui sera passé dans l'aiguilleur (<code>Zend_Controller_Dispatcher</code>).
 		</para>
 
 		<para>
-		    Le routeur utilise un très simple analyseur pour déterminer le nom du contrôleur et le nom de l'action qu'il contient :
+		    Le routeur utilise un analyseur très simple pour déterminer le nom du contrôleur et le nom de l'action qu'il contient :
 
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/controleur/action/]]>
@@ -156,7 +156,7 @@ Action    : index]]>
 			    Le nom de l'action à appeler à l'intérieur de ce contrôleur est accessible avec <code>getActionName()</code> et <code>setActionName()</code>.
 			</para></listitem>
 			<listitem><para>
-			    Les paramères à passer à cette action sont un tableau associatif de paires clés/valeurs qui sont accessibles avec <code>getParams()</code> et <code>setParams()</code>.
+			    Les paramètres à passer dans cette action sont un tableau associatif de paires clés/valeurs, accessibles avec <code>getParams()</code> et <code>setParams()</code>.
 			</para></listitem>
 		</itemizedlist>
 	</sect2>
@@ -166,7 +166,7 @@ Action    : index]]>
 
 		<para>
 		    L'aiguillage est l'action de prendre un jeton <code>Zend_Controller_Dispatcher_Token</code>, d'en extraire les 
-		    informations contenues : un nom de contrôleur, un nom d'action, et des paramètres, d'instancier un 
+		    informations contenues : un nom de contrôleur, un nom d'action, des paramètres, et ensuite instancier un 
 		    contrôleur et appeler une action de ce contrôleur.
 		</para>
 	</sect2>

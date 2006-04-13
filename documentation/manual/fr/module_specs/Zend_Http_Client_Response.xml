@@ -4,7 +4,7 @@
         <title>Introduction</title>
         <para>
             La classe <code>Zend_Http_Client_Response</code> permet d'accéder facilement aux réponses renvoyées par <xref linkend="zend.httpclient" />. 
-            Elle offre un ensemble de méthodes intuitives permettant de manipuler les données d'une réponse HTTP reçue en réponse à une requête :
+            Elle offre un ensemble de méthodes intuitives permettant de manipuler les données d'une réponse HTTP reçue suite à une requête :
             <itemizedlist>
                 <listitem>
                     <code>isError()</code>: Renvoie TRUE si un code HTTP d'erreur a été reçu; FALSE sinon

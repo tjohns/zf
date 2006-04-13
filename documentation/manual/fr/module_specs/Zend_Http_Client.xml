@@ -10,7 +10,7 @@
     </note>
     <para>
         <example>
-            <title>PEffectuer une requête GET de base</title>
+            <title>Effectuer une requête GET de base</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 try {
@@ -31,10 +31,10 @@ try {
 <sect1 id="zend.httpclient.basic-get-requests">
     <title>Requêtes GET de base avec en-têtes HTTP</title>
     <para>
-        Le constructeur de <code>Zend_Http_Client</code> crée une instance de <code>Zend_Http_Client</code> capable d'envoyer des requêtes HTTP.
+        Le constructeur de <code>Zend_Http_Client</code> crée une instance capable d'envoyer des requêtes HTTP.
     </para>
     <para>
-        Lorsque vous souhaitez utiliser <code>Zend_Http_Client</code> sur une seule URL, la plupart des cas vous pouvez 
+        Lorsque vous souhaitez utiliser <code>Zend_Http_Client</code> sur une seule URL, dans la plupart des cas vous pouvez 
         passer l'URL et les en-têtes voulus au <emphasis>constructeur</emphasis>, comme dans les exemples suivants :
     </para>
     <example>
@@ -67,7 +67,6 @@ fr-fr,fr;q=0.5'));
     <para>
         <code>Zend_Http_Client</code> prend en charge l'envoi d'une requête à plusieurs domaines; pour cela, définissez l'URL où 
         envoyer la requête grâce à la méthode <code>Zend_Http_Client::setUri()</code>.
-        using .
     </para>
     <note>
         <para>Ceci est très pratique pour envoyer une requête à plusieurs flux RSS.</para>
@@ -77,7 +76,7 @@ fr-fr,fr;q=0.5'));
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 
-// Instantiation de l'objet client
+// Création de l'objet client
 $http = new Zend_Http_Client();
 
 // Définition de l'URI comme étant celle du flux principal de Slashdot
@@ -86,11 +85,10 @@ $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
 // Obtention du flux
 $slashdot = $http->get();
 
-// Obtention du flux d'actualités de la BBC
-$http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/
-rss.xml');
+// Définition du flux d'actualités de la BBC
+$http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml');
 
-// On obtient le flux
+// Obtention le flux
 $bbc = $http->get();
 ?>]]>   </programlisting>
     </example>
@@ -119,7 +117,7 @@ $bbc = $http->get();
     <title>Effectuer des requêtes HTTP POST, PUT et DELETE</title>
     <para>
         L'envoi de requêtes HTTP POST, PUT et DELETE est facilité par <code>Zend_Http_Client</code> au moyen de trois méthodes : 
-        <code>post()</code>, <code>put()</code>) et <code>delete()</code>, respectivement. Les méthodes <code>post()</code> et <code>put()</code> 
+        respectivement <code>post()</code>, <code>put()</code> et <code>delete()</code>. Les méthodes <code>post()</code> et <code>put()</code> 
         acceptent chacune un seul paramètre, <code>$donnees</code>; 
         ce paramètre doit contenir les données POST correctement encodées et au format suivant : <emphasis><code>nom=valeur&amp;toto=barre</code></emphasis>. 
         La méthode <code>delete()</code> n'accepte aucun paramètre.
