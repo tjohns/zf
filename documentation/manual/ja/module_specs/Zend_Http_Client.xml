@@ -81,7 +81,7 @@
             <para>これは、例えば複数の RSS フィードを取得する場合などに有用です。</para>
         </note>
         <example>
-            <title>Requesting Multiple Domains</title>
+            <title>複数のドメインに対するリクエスト</title>
             <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Http/Client.php';
 
