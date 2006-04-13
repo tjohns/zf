@@ -1,14 +1,14 @@
 <?php
 /**
- * @package    Zend_HttpClient
+ * @package    Zend_Http_Client
  * @subpackage UnitTests
  */
 
 
 /**
- * Zend_HttpClient
+ * Zend_Http_Client
  */
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 /**
  * PHPUnit2 test case
@@ -17,10 +17,10 @@ require_once 'PHPUnit2/Framework/TestCase.php';
 
 
 /**
- * @package    Zend_HttpClient
+ * @package    Zend_Http_Client
  * @subpackage UnitTests
  */
-class Zend_HttpClient_ResponseTest extends PHPUnit2_Framework_TestCase
+class Zend_Http_Client_ResponseTest extends PHPUnit2_Framework_TestCase
 {
 	protected $_remoteEnabled = false;
 
@@ -29,8 +29,8 @@ class Zend_HttpClient_ResponseTest extends PHPUnit2_Framework_TestCase
         /**
          * @todo reimplement with markAsSkipped for PHPUnit 3.0
          */
-        if (defined('TESTS_ZEND_HTTPCLIENT_REMOTE_ENABLED')) {
-            $this->_remoteEnabled = TESTS_ZEND_HTTPCLIENT_REMOTE_ENABLED;
+        if (defined('TESTS_ZEND_HTTP_CLIENT_REMOTE_ENABLED')) {
+            $this->_remoteEnabled = TESTS_ZEND_HTTP_CLIENT_REMOTE_ENABLED;
         }
     }
 
@@ -40,11 +40,11 @@ class Zend_HttpClient_ResponseTest extends PHPUnit2_Framework_TestCase
     		return;
     	}
 
-    	$http = new Zend_HttpClient(TESTS_ZEND_HTTPCLIENT_REMOTE_URI);
+    	$http = new Zend_Http_Client(TESTS_ZEND_HTTP_CLIENT_REMOTE_URI);
     	$result = $http->get();
     	$this->assertTrue($result->isSuccessful(), 'Unsuccessful status code returned');
        	$this->assertEquals(200, $result->getStatus(),
-       	                   'Success Status Code not detected in Zend_HttpClient_Response::isSuccess()');
+       	                   'Success Status Code not detected in Zend_Http_Client_Response::isSuccess()');
 	}
 
     public function testFailedRequest()
@@ -53,10 +53,10 @@ class Zend_HttpClient_ResponseTest extends PHPUnit2_Framework_TestCase
     		return;
     	}
 
-    	$http = new Zend_HttpClient(TESTS_ZEND_HTTPCLIENT_REMOTE_URI . '/intentionallywrongdir');
+    	$http = new Zend_Http_Client(TESTS_ZEND_HTTP_CLIENT_REMOTE_URI . '/intentionallywrongdir');
     	$result = $http->get();
     	$this->assertEquals(404, $result->getStatus(), 'Expected 404 status returned');
-    	$this->assertTrue($result->isError(), 'Error Status Code not detected in Zend_HttpClient_Response::isError()');
+    	$this->assertTrue($result->isError(), 'Error Status Code not detected in Zend_Http_Client_Response::isError()');
     }
 
     public function testRedirectRequest()
@@ -74,7 +74,7 @@ class Zend_HttpClient_ResponseTest extends PHPUnit2_Framework_TestCase
     	if (!$this->_remoteEnabled) {
     		return;
     	}
-    	$http = new Zend_HttpClient(TESTS_ZEND_HTTPCLIENT_REMOTE_URI . '/intentionallywrongdir');
+    	$http = new Zend_Http_Client(TESTS_ZEND_HTTP_CLIENT_REMOTE_URI . '/intentionallywrongdir');
     	$result = $http->get();
     	$this->assertNotNull($result->getBody(), 'Document body not returned');
     	$this->assertContains('could not be found', $result->getBody(), 'Incorrect document body returned');
@@ -85,10 +85,10 @@ class Zend_HttpClient_ResponseTest extends PHPUnit2_Framework_TestCase
     	if (!$this->_remoteEnabled) {
     		return;
     	}
-    	$http = new Zend_HttpClient(TESTS_ZEND_HTTPCLIENT_REMOTE_URI);
+    	$http = new Zend_Http_Client(TESTS_ZEND_HTTP_CLIENT_REMOTE_URI);
     	$result = $http->get();
     	$this->assertType('array', $result->getHeaders(),
-    	                  'Headers not returned; Zend_HttpClient_Response::$_requestHeaders is not an array');
+    	                  'Headers not returned; Zend_Http_Client_Response::$_requestHeaders is not an array');
     	$this->assertTrue(in_array('Content-Type', array_keys($result->getHeaders())),
     	                  'Required Content-Type header not found');
     }

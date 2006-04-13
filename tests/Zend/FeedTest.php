@@ -11,9 +11,9 @@
 require_once 'Zend/Feed.php';
 
 /**
- * Zend_HttpClient_File
+ * Zend_Http_Client_File
  */
-require_once 'Zend/HttpClient/File.php';
+require_once 'Zend/Http/Client/File.php';
 
 /**
  * PHPUnit2 Test Case
@@ -33,10 +33,10 @@ class Zend_FeedTest extends PHPUnit2_Framework_TestCase
 
     public function setUp()
     {
-        Zend_Feed::setHttpClient(new Zend_HttpClient_File());
+        Zend_Feed::setHttpClient(new Zend_Http_Client_File());
         $this->_client = Zend_Feed::getHttpClient();
 
-        $this->_feedDir = 'Zend/Feed/_files';
+        $this->_feedDir = dirname(__FILE__) . '/Feed/_files';
     }
 
     public function testAtomGoogle()
@@ -127,23 +127,15 @@ class Zend_FeedTest extends PHPUnit2_Framework_TestCase
     protected function _importAtomValid($filename)
     {
         $this->_client->setFilename("$this->_feedDir/$filename");
-        try {
-            $feed = Zend_Feed::import('http');
-            $this->assertTrue($feed instanceof Zend_Feed_Atom);
-        } catch (Exception $e) {
-            $this->fail("$filename - " . $e->getMessage());
-        }
+        $feed = Zend_Feed::import('http');
+        $this->assertTrue($feed instanceof Zend_Feed_Atom);
     }
 
     protected function _importRssValid($filename)
     {
         $this->_client->setFilename("$this->_feedDir/$filename");
-        try {
-            $feed = Zend_Feed::import('http');
-            $this->assertTrue($feed instanceof Zend_Feed_Rss);
-        } catch (Exception $e) {
-            $this->fail("$filename - " . $e->getMessage());
-        }
+        $feed = Zend_Feed::import('http');
+        $this->assertTrue($feed instanceof Zend_Feed_Rss);
     }
 
     protected function _importInvalid($filename)

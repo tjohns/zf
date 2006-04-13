@@ -7,9 +7,7 @@ require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
 require_once 'Zend/FeedTest.php';
-require_once 'Zend/Feed/AllTests.php';
-require_once 'Zend/HttpClientTest.php';
-require_once 'Zend/HttpClient/AllTests.php';
+require_once 'Zend/Http/AllTests.php';
 require_once 'Zend/JsonTest.php';
 require_once 'Zend/MailTest.php';
 require_once 'Zend/MimeTest.php';
@@ -30,9 +28,7 @@ class Zend_AllTests
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend');
 
         $suite->addTestSuite('Zend_FeedTest');
-        $suite->addTest(Zend_Feed_AllTests::suite());
-        $suite->addTestSuite('Zend_HttpClientTest');
-        $suite->addTest(Zend_HttpClient_AllTests::suite());
+        $suite->addTest(Zend_Http_AllTests::suite());
         $suite->addTestSuite('Zend_JsonTest');
         $suite->addTestSuite('Zend_MimeTest');
         $suite->addTest(Zend_Mime_AllTests::suite());

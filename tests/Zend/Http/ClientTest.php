@@ -1,14 +1,14 @@
 <?php
 /**
- * @package    Zend_HttpClient
+ * @package    Zend_Http_Client
  * @subpackage UnitTests
  */
 
 
 /**
- * Zend_HttpClient
+ * Zend_Http_Client
  */
-require_once 'Zend/HttpClient.php';
+require_once 'Zend/Http/Client.php';
 
 /**
  * PHPUnit2 test case
@@ -17,10 +17,10 @@ require_once 'PHPUnit2/Framework/TestCase.php';
 
 
 /**
- * @package    Zend_HttpClient
+ * @package    Zend_Http_Client
  * @subpackage UnitTests
  */
-class Zend_HttpClientTest extends PHPUnit2_Framework_TestCase
+class Zend_Http_ClientTest extends PHPUnit2_Framework_TestCase
 {
     protected $_remoteEnabled = false;
 
@@ -29,48 +29,48 @@ class Zend_HttpClientTest extends PHPUnit2_Framework_TestCase
         /**
          * @todo reimplement with markAsSkipped for PHPUnit 3.0
          */
-        if (defined('TESTS_ZEND_HTTPCLIENT_REMOTE_ENABLED')) {
-            $this->_remoteEnabled = TESTS_ZEND_HTTPCLIENT_REMOTE_ENABLED;
+        if (defined('TESTS_ZEND_HTTP_CLIENT_REMOTE_ENABLED')) {
+            $this->_remoteEnabled = TESTS_ZEND_HTTP_CLIENT_REMOTE_ENABLED;
         }
     }
 
     public function testConstructValid()
     {
         // throws exception on failure
-        new Zend_HttpClient('http://zend.com', array('name: value'));
+        new Zend_Http_Client('http://zend.com', array('name: value'));
     }
 
     public function testConstructBadHeadersNotArray()
     {
 		try {
-            new Zend_HttpClient('http://zend.com', '');
-		} catch (Zend_HttpClient_Exception $e) {
+            new Zend_Http_Client('http://zend.com', '');
+		} catch (Zend_Http_Client_Exception $e) {
 			$this->assertRegexp('/headers must be supplied as an array/i', $e->getMessage());
 			return;
 		}
-		$this->fail('No exception was returned; expected Zend_HttpClient_Exception');
+		$this->fail('No exception was returned; expected Zend_Http_Client_Exception');
     }
 
     public function testConstructBadHeadersHeaderNotString()
     {
 		try {
-            new Zend_HttpClient('http://zend.com', array(1));
-		} catch (Zend_HttpClient_Exception $e) {
+            new Zend_Http_Client('http://zend.com', array(1));
+		} catch (Zend_Http_Client_Exception $e) {
 			$this->assertRegexp('/header must be a string/i', $e->getMessage());
 			return;
 		}
-		$this->fail('No exception was returned; expected Zend_HttpClient_Exception');
+		$this->fail('No exception was returned; expected Zend_Http_Client_Exception');
     }
 
     public function testConstructBadHeadersBadHeaderFormat()
     {
 		try {
-            new Zend_HttpClient('http://zend.com', array(''));
-		} catch (Zend_HttpClient_Exception $e) {
+            new Zend_Http_Client('http://zend.com', array(''));
+		} catch (Zend_Http_Client_Exception $e) {
 			$this->assertRegexp('/bad header/i', $e->getMessage());
 			return;
 		}
-		$this->fail('No exception was returned; expected Zend_HttpClient_Exception');
+		$this->fail('No exception was returned; expected Zend_Http_Client_Exception');
     }
 
     public function testValidGetRequest()
@@ -79,7 +79,7 @@ class Zend_HttpClientTest extends PHPUnit2_Framework_TestCase
             return;
         }
 
-        $http = new Zend_HttpClient(TESTS_ZEND_HTTPCLIENT_REMOTE_URI);
+        $http = new Zend_Http_Client(TESTS_ZEND_HTTP_CLIENT_REMOTE_URI);
         $response = $http->get();
         $this->assertEquals(200, $response->getStatus(), 'GET request returned unexpected response code (' .$response->getStatus(). ')');
         $this->assertType('array', $response->getHeaders(), 'GET request failed to return headers');
@@ -93,7 +93,7 @@ class Zend_HttpClientTest extends PHPUnit2_Framework_TestCase
         }
 
         try {
-            $http = new Zend_HttpClient('http://baduri.org');
+            $http = new Zend_Http_Client('http://baduri.org');
             $http->setTimeout(1);
             $response = $http->get();
         } catch (Exception $e) {
