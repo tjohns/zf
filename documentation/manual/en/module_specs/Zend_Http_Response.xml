@@ -1,10 +1,11 @@
-<sect1 id="zend.httpclient.response">
-    <title>Zend_Http_Client_Response</title>
-    <sect2 id="zend.httpclient.response.introduction">
+<sect1 id="zend.http.response">
+    <title>Zend_Http_Response</title>
+
+    <sect2 id="zend.http.response.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Http_Client_Response</code> provides easy access to the responses returned by
-            <xref linkend="zend.httpclient" />. It provides an intuitive set of methods for working
+            <code>Zend_Http_Response</code> provides easy access to the responses returned by
+            <xref linkend="zend.http.client" />. It provides an intuitive set of methods for working
             with the HTTP response data received from a request:
             <itemizedlist>
                 <listitem>
