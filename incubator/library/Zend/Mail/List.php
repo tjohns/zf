@@ -23,7 +23,7 @@
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_List implements Countable, ArrayAccess, Iterator //, IteratorAggregate
+class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
 {
     protected $_iterationPos = 0;
     protected $_iterationMax = 0;
@@ -34,8 +34,8 @@ class Zend_Mail_List implements Countable, ArrayAccess, Iterator //, IteratorAgg
      */
     public function __construct(Zend_Mail_Abstract $mailReader)
     {
-    	$this->_mailReader = $mailReader;
-    	$this->rewind();
+        $this->_mailReader = $mailReader;
+        $this->rewind();
     } 
 
     /**
@@ -84,16 +84,6 @@ class Zend_Mail_List implements Countable, ArrayAccess, Iterator //, IteratorAgg
      }
      
      /**
-      * IteratorAggregate::getIterator()
-      */
-     public function getIterator() 
-     {
-        $iterator = clone $this;
-        $iterator->rewind();
-        return $iterator;
-     }
-     
-     /**
       * Iterator::rewind()
       */
      public function rewind() 
@@ -107,7 +97,7 @@ class Zend_Mail_List implements Countable, ArrayAccess, Iterator //, IteratorAgg
       */
      public function current() 
      {
-        return $this->_mailReader->getSize($this->_iterationPos);
+        return $this->_mailReader->getMessage($this->_iterationPos);
      }
      
      /**
@@ -132,6 +122,18 @@ class Zend_Mail_List implements Countable, ArrayAccess, Iterator //, IteratorAgg
      public function valid() 
      {
         return $this->_iterationPos && $this->_iterationPos <= $this->_iterationMax;
+     }
+     
+     /**
+      * SeekableIterator::seek()
+      */
+     public function seek($pos)
+     {
+        if($pos > $this->_iterationMax) {
+            // OutOfBoundsException would be the right one here, but it seems like it was added after PHP 5.0.4
+            throw new Exception('Out of Bounds');
+        }
+        $this->_iterationPos = $pos;
      }
 }
 
