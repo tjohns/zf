@@ -303,7 +303,8 @@ class Zend_XmlRpc_Client
         // @todo pluggable client?
         $http = new Zend_Http_Client($this->_serverAddress, array('Content-Type: text/xml'));
 
-        $response = $http->post($request_data); /* @var $response Zend_Http_Client_Response */
+        $response = $http->post($request_data);
+        /* @var $response Zend_Http_Response */
 
         return $this->_parseResponse($response->getBody());
     }

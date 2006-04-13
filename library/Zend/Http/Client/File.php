@@ -77,13 +77,13 @@ class Zend_Http_Client_File extends Zend_Http_Client_Abstract
    /**
      * Send a GET HTTP Request
      *
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     public function get()
     {
         // if the filename was never set or set to '', fake a code 400
         if (empty($this->_filename)) {
-            return new Zend_Http_Client_Response(400, array(), '');
+            return new Zend_Http_Response(400, array(), '');
         }
 
         $file = @file_get_contents($this->_filename);
@@ -91,7 +91,7 @@ class Zend_Http_Client_File extends Zend_Http_Client_Abstract
             throw new Zend_Http_Client_Exception("Failed reading file \"{$this->_filename}\"");
         }
 
-        return new Zend_Http_Client_Response(200, array(), $file);
+        return new Zend_Http_Response(200, array(), $file);
     }
 
 
@@ -99,7 +99,7 @@ class Zend_Http_Client_File extends Zend_Http_Client_Abstract
      * Send a POST HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     public function post($data)
     {
@@ -113,7 +113,7 @@ class Zend_Http_Client_File extends Zend_Http_Client_Abstract
               . implode("\n", $request) . "\n\n"
               . $data . "\n" );
 
-        return new Zend_Http_Client_Response(201, array(), '');
+        return new Zend_Http_Response(201, array(), '');
     }
 
 
@@ -121,7 +121,7 @@ class Zend_Http_Client_File extends Zend_Http_Client_Abstract
      * Send a PUT HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     public function put($data)
     {
@@ -135,14 +135,14 @@ class Zend_Http_Client_File extends Zend_Http_Client_Abstract
               . implode("\n", $request) . "\n\n"
               . $data . "\n" );
 
-        return new Zend_Http_Client_Response(200, array(), '');
+        return new Zend_Http_Response(200, array(), '');
     }
 
 
     /**
      * Send a DELETE HTTP Request
      *
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     public function delete()
     {
@@ -154,7 +154,7 @@ class Zend_Http_Client_File extends Zend_Http_Client_Abstract
               . implode("\n", $request) . "\n\n"
               . $data . "\n" );
 
-        return new Zend_Http_Client_Response(204, array(), '');
+        return new Zend_Http_Response(204, array(), '');
     }
 
 }

@@ -22,8 +22,8 @@
 /** Zend_Http_Client_Exception */
 require_once 'Zend/Http/Client/Exception.php';
 
-/** Zend_Http_Client_Response */
-require_once 'Zend/Http/Client/Response.php';
+/** Zend_Http_Response */
+require_once 'Zend/Http/Response.php';
 
 /** Zend_Uri */
 require_once 'Zend/Uri.php';
@@ -168,7 +168,7 @@ abstract class Zend_Http_Client_Abstract
     /**
      * Send a GET HTTP Request
      *
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     abstract public function get();
 
@@ -177,7 +177,7 @@ abstract class Zend_Http_Client_Abstract
      * Send a POST HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     abstract public function post($data);
 
@@ -186,7 +186,7 @@ abstract class Zend_Http_Client_Abstract
      * Send a PUT HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     abstract public function put($data);
 
@@ -194,7 +194,7 @@ abstract class Zend_Http_Client_Abstract
     /**
      * Send a DELETE HTTP Request
      *
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     abstract public function delete();
 }

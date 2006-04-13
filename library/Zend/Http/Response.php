@@ -13,7 +13,6 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Http
- * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
@@ -21,44 +20,43 @@
 
 /**
  * @package    Zend_Http
- * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Http_Client_Response
+class Zend_Http_Response
 {
 	/**
      * HTTP Response Code (i.e. 404 or 200)
      *
      * @var null|int
      */
-    protected $_responseCode = null;
+    protected $_code;
 
     /**
      * Response Headers
      *
      * @var array
      */
-    protected $_responseHeaders = array();
+    protected $_headers;
 
     /**
      * Response body
      *
      * @var null|string
      */
-    protected $_responseBody = null;
+    protected $_body;
 
 
 	/**
 	 * Class Constructor, read and parse HTTP response
 	 *
-	 * @param resource $socket
+	 * @param null
 	 */
-	public function __construct($responseCode, $responseHeaders, $responseBody)
+	public function __construct($code=null, $headers=array(), $body=null)
 	{
-		$this->_responseCode    = $responseCode;
-		$this->_responseHeaders = $responseHeaders;
-		$this->_responseBody    = $responseBody;
+		$this->_code    = $code;
+		$this->_headers = $headers;
+		$this->_body    = $body;
 	}
 
 
@@ -70,7 +68,7 @@ class Zend_Http_Client_Response
 	public function isError()
 	{
 		// Check if response is one of the 400 or 500 error codes
-		return substr($this->_responseCode, 0, 1) == 4 || substr($this->_responseCode, 0, 1) == 5;
+		return substr($this->_code, 0, 1) == 4 || substr($this->_code, 0, 1) == 5;
 	}
 
 
@@ -81,7 +79,7 @@ class Zend_Http_Client_Response
 	 */
 	public function isSuccessful()
 	{
-		return substr($this->_responseCode, 0, 1) == 2;
+		return substr($this->_code, 0, 1) == 2;
 	}
 
 
@@ -92,7 +90,7 @@ class Zend_Http_Client_Response
 	 */
 	public function isRedirect()
 	{
-		return substr($this->_responseCode, 0, 1) == 3;
+		return substr($this->_code, 0, 1) == 3;
 	}
 
 
@@ -103,7 +101,7 @@ class Zend_Http_Client_Response
 	 */
 	public function getBody()
 	{
-		return $this->_responseBody;
+		return $this->_body;
 	}
 
 
@@ -114,7 +112,7 @@ class Zend_Http_Client_Response
 	 */
 	public function getStatus()
 	{
-		return $this->_responseCode;
+		return $this->_code;
 	}
 
 
@@ -125,6 +123,6 @@ class Zend_Http_Client_Response
 	 */
 	public function getHeaders()
 	{
-		return $this->_responseHeaders;
+		return $this->_headers;
 	}
 }

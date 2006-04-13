@@ -54,7 +54,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * Send a GET HTTP Request
      *
      * @param  int $redirectMax Maximum number of HTTP redirections followed
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     public function get($redirectMax = 5)
     {
@@ -111,7 +111,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * Send a POST HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     public function post($data)
     {
@@ -133,7 +133,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * Send a PUT HTTP Request
      *
      * @param string $data Data to send in the request
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     public function put($data)
     {
@@ -154,7 +154,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     /**
      * Send a DELETE HTTP Request
      *
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     public function delete()
     {
@@ -199,7 +199,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * Read Data from the Socket
      *
      * @param Resource $socket Socket returned by {@see Zend_Http_Client::_openConnection()}
-     * @return Zend_Http_Client_Response
+     * @return Zend_Http_Response
      */
     protected function _read($socket)
     {
@@ -227,7 +227,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
 
         fclose($socket);
 
-        return new Zend_Http_Client_Response($responseCode, $responseHeaders, $responseBody);
+        return new Zend_Http_Response($responseCode, $responseHeaders, $responseBody);
     }
 }
 
