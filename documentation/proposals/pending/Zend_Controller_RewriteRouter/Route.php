@@ -18,6 +18,9 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
+/** Zend_Controller_Router_Exception */
+require_once 'Zend/Controller/Router/Route/Interface.php';
+
 /**
  * Route
  *
@@ -28,10 +31,11 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  * @see        http://manuals.rubyonrails.com/read/chapter/65
  */
-class Zend_Controller_Router_Route implements Zend_Controller_Route_Interface
+class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Interface
 {
 
-    const URL_VARIABLE    = ':';
+    const URL_VARIABLE = ':';
+    const REGEX_DELIMITER = '#';
     const DEFAULT_REGEX = '[a-z0-9\-_]+';
 
     private $_parts;
@@ -52,14 +56,15 @@ class Zend_Controller_Router_Route implements Zend_Controller_Route_Interface
                 $regex = (isset($reqs[$name]) ? $reqs[$name] : self::DEFAULT_REGEX);
                 $this->_parts[$pos] = array('name' => $name, 'regex' => $regex);
             } else {
-                $this->_parts[$pos] = array('regex' => preg_quote($part, '#'));
+                $this->_parts[$pos] = array('regex' => preg_quote($part, self::REGEX_DELIMITER));
             }
 
         }
 
     }
 
-    public function match($path) {
+    public function match($path)
+    {
 
         $values = $this->_defaults;
 
@@ -68,7 +73,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Route_Interface
         foreach ($this->_parts as $pos => $part) {
 
             $name = isset($part['name']) ? $part['name'] : null;
-            $regex = '#^'.$part['regex'].'$#i';
+            $regex = self::REGEX_DELIMITER . '^'.$part['regex'].'$' . self::REGEX_DELIMITER . 'i';
 
             if (!empty($path[$pos]) && preg_match($regex, $path[$pos])) {
 
@@ -76,7 +81,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Route_Interface
                     $values[$name] = $path[$pos];
                 }
 
-            } elseif ($name !== null && $this->_defaults[$name]) {
+            } elseif ($name !== null && isset($this->_defaults[$name])) {
                 continue;
             } else return false;
 
@@ -86,11 +91,13 @@ class Zend_Controller_Router_Route implements Zend_Controller_Route_Interface
 
     }
 
-    public function assemble($data = array()) {
+    public function assemble($data = array())
+    {
 
         $url = array();
 
         foreach ($this->_parts as $key => $part) {
+            
             if (isset($part['name'])) {
 
                 if (isset($data[$part['name']])) {
@@ -98,22 +105,18 @@ class Zend_Controller_Router_Route implements Zend_Controller_Route_Interface
                 } elseif (isset($this->_defaults[$part['name']])) {
                     $url[$key] = $this->_defaults[$part['name']];
                 } else
-                    throw Exception($part['name'] . ' is not specified');
+                    throw new Zend_Controller_Router_Exception($part['name'] . ' is not specified');
 
             } else {
                 $url[$key] = $part['regex'];
             }
+            
         }
 
         return implode('/', $url);
 
     }
 
-}
-
-interface Zend_Controller_Route_Interface {
-    public function __construct($route, $defaults = array(), $reqs = array());
-    public function match($path);
 }
 
 ?>

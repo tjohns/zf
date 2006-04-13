@@ -157,4 +157,17 @@ class RouteTest extends PHPUnit2_Framework_TestCase
 
     }
 
+    public function testAssembleWithVariableMissing()
+    {
+
+        $route = new Zend_Controller_Router_Route('archive/:year', array('controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
+
+        try {
+	        $url = $route->assemble();
+        } catch (Exception $e) {}
+
+        $this->assertTrue($e instanceof Zend_Controller_Router_Exception, 'Expected Zend_Controller_Router_Exception to be thrown');
+
+    }
+
 }
