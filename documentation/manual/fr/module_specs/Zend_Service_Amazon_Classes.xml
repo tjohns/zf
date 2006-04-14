@@ -42,7 +42,7 @@
                 <code>Zend_Service_Amazon_Item</code> a un nombre de propriétés directement relié à  leur contre-parties de l'API standard Amazon.
             </para>
             <table>
-                <title>Zend_Service_Amazon_Item Propriétés</title>
+                <title>Propriétés de Zend_Service_Amazon_Item</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
@@ -173,7 +173,7 @@
         <sect4 id="zend.service.amazon.classes.image.properties">
             <title>Propriétés</title>
             <table>
-                <title>Zend_Service_Amazon_Image Propriétés</title>
+                <title>Propriétés de Zend_Service_Amazon_Image</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
@@ -246,7 +246,7 @@
         <sect4 id="zend.service.amazon.classes.offerset.parameters">
             <title>Propriétés</title>
             <table>
-                <title>Zend_Service_Amazon_OfferSet Propriétés</title>
+                <title>Propriétés de Zend_Service_Amazon_OfferSet</title>
                 <tgroup cols="3">
                     <thead>
                         <row>

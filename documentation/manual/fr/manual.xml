@@ -86,9 +86,15 @@
         <title>Zend_Pdf</title>
         &module_specs.Zend_Pdf;
     </chapter>
-    <chapter id="zend.search">
+	<chapter id="zend.search">
         <title>Zend_Search</title>
-        &module_specs.Zend_Search;
+        &module_specs.Zend_Search-Overview;
+        &module_specs.Zend_Search-IndexCreation;
+        &module_specs.Zend_Search-Searching;
+        &module_specs.Zend_Search-Queries;
+        &module_specs.Zend_Search-Charset;
+        &module_specs.Zend_Search-Extending;
+        &module_specs.Zend_Search-JavaLucene;
     </chapter>
     <chapter id="zend.service">
         <title>Zend_Service</title>
