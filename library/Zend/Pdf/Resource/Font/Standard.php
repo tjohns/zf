@@ -41,6 +41,18 @@ class Zend_Pdf_Font_Standard extends Zend_Pdf_Font
 
         $this->_resource->Subtype  = new Zend_Pdf_Element_Name('Type1');
         $this->_resource->BaseFont = new Zend_Pdf_Element_Name($fontName);
+        $this->_resource->Encoding = new Zend_Pdf_Element_Name('WinAnsiEncoding');
+    }
+
+    /**
+     * Convert string encoding from current locale to font encoding
+     *
+     * @param string $in
+     * @return string
+     */
+    public function applyEncoding($in)
+    {
+        return iconv('', 'CP1252//IGNORE', $in);
     }
 }
 

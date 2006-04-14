@@ -1036,7 +1036,7 @@ class Zend_Pdf_Page
 
         $this->_addProcSet('Text');
 
-        $textObj = new Zend_Pdf_Element_String($text);
+        $textObj = new Zend_Pdf_Element_String($this->_font->applyEncoding($text));
         $xObj    = new Zend_Pdf_Element_Numeric($x);
         $yObj    = new Zend_Pdf_Element_Numeric($y);
 

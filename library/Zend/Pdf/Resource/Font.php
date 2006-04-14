@@ -52,5 +52,13 @@ abstract class Zend_Pdf_Font extends Zend_Pdf_Resource
 
         $this->_resource->Type = new Zend_Pdf_Element_Name('Font');
     }
+
+    /**
+     * Convert string encoding from current locale to font encoding
+     *
+     * @param string $in
+     * @return string
+     */
+    abstract public function applyEncoding($in);
 }
 
