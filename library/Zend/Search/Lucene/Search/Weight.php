@@ -40,20 +40,20 @@ abstract class Zend_Search_Lucene_Search_Weight
      *
      * @return float
      */
-    public abstract function getValue();
+    abstract public function getValue();
 
     /**
      * The sum of squared weights of contained query clauses.
      *
      * @return float
      */
-    public abstract function sumOfSquaredWeights();
+    abstract public function sumOfSquaredWeights();
 
     /**
      * Assigns the query normalization factor to this.
      *
      * @param $norm
      */
-    public abstract function normalize($norm);
+    abstract public function normalize($norm);
 }
 
