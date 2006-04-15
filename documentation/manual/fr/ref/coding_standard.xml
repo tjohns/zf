@@ -317,19 +317,19 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
                 <para>
                     La substitution des variables est permise en utilisant une de ces deux formes :
                     <programlisting role="php"><![CDATA[
-$greeting = "Hello $name, welcome back!";
+$greeting = "Bonjour $name, bienvenue!";
 
-$greeting = "Hello {$name}, welcome back!";
+$greeting = "Bonjour {$name}, bienvenue!";
 
-// Cette forme n'est pas permises : 
+// Cette forme n'est pas permise : 
 
-$greeting = "Hello ${name}, welcome back!";]]></programlisting>
+$greeting = "Bonjour ${name}, bienvenue!";]]></programlisting>
                 </para>
 
                 <para>
                     Pour des raison d'uniformité, cette forme n'est pas permise :
                     <programlisting role="php"><![CDATA[
-$greeting = "Hello ${name}, welcome back!";]]></programlisting>
+$greeting = "Bonjour ${name}, bienvenue!";]]></programlisting>
                 </para>
             </sect3>
 
