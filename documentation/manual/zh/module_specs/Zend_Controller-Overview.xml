@@ -1,113 +1,74 @@
 <sect1 id="zend.controller.overview">
-	<title>Overview</title>
+	<title>概述</title>
 
 	<sect2 id="zend.controller.overview.introduction">
-		<title>Introduction</title>
-		<para>
-			<code>Zend_Controller</code> provides the foundation for building a website based
-			on the Model-View-Controller (MVC) pattern.
+		<title>简介</title>
+		<para>			Zend_Controller是使用MVC模式来构建一个站点的基础。Zend_Controller体系是一个轻量的，模块化和可扩展的体系。它只提供最核心的必要的部分，允许开发者有很大的自由来灵活地构建自己的站点。使用Zend_Controller的站点，其代码结构会有一部份是相似的。
+		</para>
+
+		<para>			
 		</para>
 
 		<para>
-			The <code>Zend_Controller</code> system is designed to be lightweight, modular,
-			and extensible.  It is a minimalist design to permit flexibility and some freedom to users
-			while providing enough structure so that systems built around <code>Zend_Controller</code> share
-			some common conventions and similar code layout.
-		</para>
-
-		<para>
-			The <code>Zend_Controller</code> workflow is implemented by several components.  While
-			it is not necessary to completely understand the underpinnings of all of these components
-			to use the system, having a working knowledge of the process is helpful.
+			<code>Zend_Controller</code> 的工作流(workflow)是通过几个组件来实现的。虽然不需要完全理解这几个组件的含义，如果你对工作流程有点了解是很有帮助的。
 
 			<itemizedlist>
 				<listitem>
 					<para>
-						<code>Zend_Controller_Front</code>
-						orchestrates the entire workflow of the <code>Zend_Controller</code> system.  It
-						is an interpretation of the FrontController pattern.  <code>Zend_Controller_Front</code>
-						processes all requests received by the server and is ultimately responsible for
-						delegating requests to ActionControllers (<code>Zend_Controller_Action</code>).
+						<code>Zend_Controller_Front</code>是Zend_Controller_Controller体系的组织者，它是FrontController设计模式的实现。Zend_Controller_Front处理服务器接受的所有请求，并最后负责将请求分配给ActionController (<code>Zend_Controller_Action</code>)
 					</para>
 				</listitem>
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Router</code> is the router.  Routing is
-						the process of taking a URI endpoint and decomposing it to
-						determine which controller, and action of that controller, should receive
-						the request.  This definition of controller, action, and optional parameters,
-						is packaged into a value object called <code>Zend_Controller_Dispatcher_Token</code>.
-						This is then processed by <code>Zend_Controller_Dispatcher</code>.  Routing occurs
-						only once: when the request is initially received and before the first controller is dispatched.
+						<code>Zend_Controller_Router</code>相当于一个路由器。路由是将一个URI分解并决定由哪一个controller，和用什么 Action来处理的过程。controller，action和可选的参数的定义，被封装成一个对象--Zend_Controller_Dispather_Token，然后由Zend_Controller_Dispatcher来处理。路由只发生一次：当请求被服务器接收到时，在分配到第一个控制器之前。 
+					</para>
+					<para>					(所谓router，和我们熟知的网络路由器的功能是很相似的，具有判断网络地址和选择路径的功能，这里就是用来重定向 --Haohappy注) 
 					</para>
 				</listitem>
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Dispatcher</code> is the dispatcher.  Dispatching is
-						the process of taking the <code>Zend_Controller_Dispatcher_Token</code>, finding
-						the appropriate controller file, instantiating a controller class in that file
-						(must implement <code>Zend_Controller_Action</code>), and finally running the action method in
-						that controller object.  Unlike routing, which occurs only once, dispatching occurs
-						in a loop.  <code>Zend_Controller_Dispatcher</code> is repeatedly called by
-						<code>Zend_Controller_Front</code> until all actions have been dispatched sequentially.
+						<code>Zend_Controller_Dispatcher</code>即分配器。
+					</para>
+
+					<para>
+					“分配”的过程即根据Zend_Controller_Dispatcher_Token来查找适合的contoller文件，实例化其中的 controller类(必须实现Zend_Controller_Action)，并且最后在控制器内运行action。和路由不同，分配的过程不断重复的，Zend_Controller_Dispatcher被Zend_Controller_Front不断调用直到所有action都依次分配完毕。
 					</para>
 				</listitem>
 
 				<listitem>
-					<para>
-						<code>Zend_Controller_Action</code> is the base controller component.  Each
-						controller is a single class that extends the <code>Zend_Controller_Action class</code>,
-						and this class has action methods.
+					<para>						<code>Zend_Controller_Action</code>是最基本的控制器。每个具体的控制器都是从Zend_Controller_Action类继承而来，是Zend_Controller_Action的子类，并且有自己的action方法。
 					</para>
 				</listitem>
 			</itemizedlist>
 
-			The workflow of <code>Zend_Controller</code> is relatively simple.  A request is received by
-			<code>Zend_Controller_Front</code>, which in turn calls <code>Zend_Controller_Router</code> to determine which
-			controller (and action in that controller) to dispatch.  <code>Zend_Controller_Router</code> decomposes the URI
-			into a <code>Zend_Controller_Dispatcher_Token</code> object that describes where to dispatch.
-			<code>Zend_Controller_Front</code> then enters a dispatch loop.  It calls <code>Zend_Controller_Dispatcher</code>,
-			passing it the token, to dispatch to the actual controller and action.  After the controller has finished,
-			control returns to <code>Zend_Controller_Front</code>.  If the controller has indicated that another controller
-			should be dispatched by returning a new token, the loop continues and another dispatch is performed.
-			Otherwise, the process ends.
+			Zend_Controller的工作流程相当简单。Zend_Controller_Front接收一个请求，然后由Zend_Controller_Router来决定分配给哪个controller。Zend_Controller_Router把URI分解封装成一个Zend_Controller_Dispatcher_Token 对象。Zend_Controller_Front接着进入一个分配循环，调用Zend_Controller_Dispatcher，把token对象传给dispatcher来分配到具体的controller和action进行处理。在controller结束后，又把控制权交加给 Zend_Controller_Front。如果controller发现需要分配另一个controller（返回一个新的token对象），循环会一直继续直到另一次分配执行完毕。
 		</para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.routing-process">
-		<title>Route Process</title>
+		<title>Route Process 路由过程</title>
 
 		<para>
-			Before your first controller can be built, you need to understand how the routing
-			process works as it is implemented in <code>Zend_Controller_Router</code>.  Remember that the
-			workflow is divided into routing, which occurs only once, and dispatching, which
-			occurs thereafter in a loop.
+			在你构建第一个控制器之前，你需要理解Zend_Controller_Router中的重定向过程是如何工作的。记住工作流程分为两步：一是重定向（routing），只发生一次；二是分配（dispatching），循环过程。
 		</para>
 
 		<para>
-			<code>Zend_Controller_Front</code> calls <code>Zend_Controller_Router</code> to map a URI
-			to a controller -- and an action within that controller.  <code>Zend_Controller_Router</code>
-			takes the URI and decomposes it into a value object, <code>Zend_Controller_Dispatcher_Token</code>,
-			which will be passed to the dispatcher (<code>Zend_Controller_Dispatcher</code>).
+			<code>Zend_Controller_Front</code> 调用Zend_Controller_Router来使一个URI映射到一个controller及其中的action上。Zend_Controller_Router分解URI，生成一个对象Zend_Controller_Dispatcher_Token，然后再传递给分配器（Zend_Controller_Dispatcher）。
 		</para>
 
 		<para>
-			The router uses a very simple mapping to determine the name of the controller and
-			the name of the action within that controller:
+			router使用很简单的方法来决定使用的controller及其action：
 
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
 			</programlisting>
-
-			Notice above that the first segment is always the name of the controller and the
-			second segment is always the name of the action.
+			上面controller就是我们要采用的控制器，action就是我们要采用的action。
 		</para>
 
 		<para>
-			Optionally, parameters may be defined in the URI that will be passed to the controller.
-			These take the form of key/value pairs:
+			可选择地，参数可以在URI中定义，并传递给controller。格式为key/value　：
 
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/key1/value1/]]>
@@ -115,9 +76,7 @@ http://framework.zend.com/controller/action/key1/value1/]]>
 		</para>
 
 		<para>
-			If nothing is present in the <code>/controller/</code> part of the URI, then this will become
-			"<code>index</code>".  If nothing is present in the <code>/action/</code> part of the URI, then
-			this will also become "<code>index</code>".  These examples illustrate:
+			如果/controller/这部分没有写明，默认调用index。 如果/action/这部份没有写，也默认调用index。如：
 
 				<programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
@@ -135,49 +94,37 @@ Action    : index]]>
 			</para>
 
 			<note>
-				We are currently developing a new router with a URI rewriting engine that will give
-				much more flexible capabilities than are presently available in the router.
-				This will be included in a preview release in the very near future.
+				我们正在开发一个新的使用URI重写引擎的router，这样可以更灵活一些。新版本会很快发布。
 			</note>
 
-			<para>
-				The controller name, the action name within that controller, and any optional parameters
-				are packaged into a token, <code>Zend_Controller_Dispatcher_Token</code>.  This token
-				is returned to <code>Zend_Controller_Front</code>, which will then enter the dispatch loop.
-				Once in the dispatch loop, the token will be passed to <code>Zend_Controller_Dispatcher</code>.
+			<para>				controller，action的名称及参数将会被封装到一个token对象中--Zend_Controller_Dispatcher_Token。这个对象被传回到Zend_Controller_Front，然后进入分配过程，被传递给Zend_Controller_Dispatcher。
 			</para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatch-token">
-		<title>Dispatch Token</title>
+		<title>Token对象</title>
 
-		<para>
-			The dispatch token is a simple value object that is passed between <code>Zend_Controller_Front</code>
-			and classes that implement the router and dispatcher interfaces.  It packages a definition of a controller,
-			an action, and parameters to be passed to the action.
+		<para>			Token对象是个很简单的对象，在Zend_Controller_Front和实现router，dispatcher接口的类间传递。它把controller,action和参数封装在一起。
 		</para>
 
 		<itemizedlist>
 			<listitem><para>
-				The controller name is accessed by <code>getControllerName()</code> and <code>setControllerName()</code>.
+				controller的名称通过getControllerName()及setControllerName()来获得和设置
 			</para></listitem>
 			<listitem><para>
-				The name of the action to call within that controller is accessed by <code>getActionName()</code> and <code>setActionName()</code>.
+				action的名称过getActionName()和setActionName()来获得和设置.
 			</para></listitem>
 			<listitem><para>
-				Parameters to be passed to that action are an associative array of key/value pairs that are accessed by <code>getParams()</code>
-				and <code>setParams()</code>.
+				传递给action的参数是个数组(key/value形式)，可以通过getParams()来获得，通过setParams()来设置
 			</para></listitem>
 		</itemizedlist>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatching">
-		<title>Dispatch Process</title>
+		<title>Dispatch Process 分配过程</title>
 
 		<para>
-			Dispatching is the process of taking a token, <code>Zend_Controller_Dispatcher_Token</code>, extracting
-			the information contained in it: a controller name, an action name, and option parameters,
-			and then instantiating a controller and calling an action of that controller.
+			所谓分配过程，就是根据token对象(Zend_Controller_Dispatcher_Token) ，抽取其中的信息：controller的名称，action的名称，参数等等，然后实例化一个controller，并调用其中的action来进行处理。
 		</para>
 	</sect2>
 </sect1>
