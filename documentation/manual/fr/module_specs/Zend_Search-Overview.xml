@@ -1,191 +1,204 @@
 <sect1 id="zend.search.overview">
-    <title>Overview</title>
+    <title>Vue d'ensemble</title>
 
     <sect2 id="zend.search.introduction">
         <title>Introduction</title>
         <para>
-            Zend_Search_Lucene is a general purpose text search engine written entirely in PHP 5.
-            Since it stores its index on the filesystem and does not require a database
-            server, it can add search capabilities to almost any PHP-driven website.
-            Zend_Search_Lucene supports the following features:
+            Zend_Search_Lucene est un moteur de recherche textuel général totalement écrit en PHP 5.
+            Bien qu'il stocke ses indexes dans le système de fichier, et ne nécessite pas de base de données, 
+            il peut ajouter des capacités de recherche sur presque tout les sites PHP utilisant une base de données.
             
+            Zend_Search_Lucene supporte les fonctionnalités suivantes :
             <itemizedlist>
                 <listitem>
-                    <para>Ranked searching - best results returned first</para>
+                    <para>Recherche par pertinence - les meilleurs résultats sont retournés en premier</para>
                 </listitem>
                 <listitem>
                     <para>
-                       Many powerful query types: phrase queries, wildcard queries,
-                       proximity queries, range queries and more
+                       Beaucoup de type de puissantes recherche : 
+                         recherche sur des phrases, 
+                         recherche joker, 
+                         recherche de proximité, 
+                         recherche par intervalle  
+                         et bien plus
                         <footnote>
                            <para>
-                             Only term and multi term queries are supported at this time.
+                             Seules les recherches par mots ou groupes de mots sont supporté pour le moment.
                            </para>
                         </footnote>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Search by specific field (e.g., title, author, contents)</para>
+                    <para>Recherche par champs spécifiques (e.i., titre, auteur, contenu)</para>
                 </listitem>
             </itemizedlist>
         
-            Zend_Search_Lucene was derived from the Apache Lucene project.  For more information on Lucene, visit
-            <ulink url="http://lucene.apache.org/java/docs/"/>.
+            Zend_Search_Lucene est dérivé du projet Apache Lucene.
+            Pour plus d'informations vous pouvez visitez <ulink url="http://lucene.apache.org/java/docs/"/>.
         </para>
     </sect2>
     
 	<sect2 id="zend.search.index-creation.documents-and-fields">
-		<title>Document and Field Objects</title>
+		<title>Objets document et champ</title>
             <para>
-                Zend_Search_Lucene operates with documents as atomic subjects for indexing.  A document is
-                divided into named fields, and fields have content that can be searched.
+                ZSearch considère les documents comme des sujets atomique à pour l'indexation.
+                Un document est divisé en champs nommés, et les champs ont du contenu dans lequel on peut rechercher.
             </para>
         
             <para>
-                A documented is represented by the Zend_Search_Lucene_Document object, and this object contains
-                Zend_Search_Lucene_Field objects that represent the fields.
+                Un document est representé par l'objet Zend_Search_Lucene_Document, 
+                et cet objet contient des objets Zend_Search_Lucene_Field qui représentent les champs.
             </para>
         
             <para>
-                It is important to note that any kind of information can be added to the index.
-                Application-specific information or metadata can be stored in the document
-                fields, and later retrieved with the document during search.
+                Il est important de noter qu'aucune sorte d'information peut être ajoutée à l'index.
+                Les informations spécifiques à l'application, ou les métadonnées peuvent être stockée
+                dans les champs du document, et retrouvés ensuite pendant la recherche.
             </para>
         
             <para>
-                It is the responsibility of your application to control the indexer.  
-                This means that data can be indexed from any source
-                that is accessible by your application.  For example, this could be the
-                filesystem, a database, an HTML form, etc.
+                Il est de votre responsabilité de contrôler l'indexeur.
+                Cela signifie que les données peuvent-être indexées à partir de n'importe
+                quelle source accessible par votre application. 
+                Cela peut-être aussi bien le système de fichier, qu'une base de donnée, 
+                qu'un formulaire HTML, etc.
             </para>            
             
             <para>
-                <code>Zend_Search_Lucene_Field</code> class provides several static methods to create fields with
-                different characteristics:
+                La classe <code>Zend_Search_Lucene_Field</code> fournit plusieurs méthodes statiques pour créer
+                des champs de différentes caractéristiques : 
             </para>
         
-            <programlisting role="php"><![CDATA[<?php
-$doc = new Zend_Search_Lucene_Document();
+            <programlisting role="php"><![CDATA[
+            <?php
+            $doc = new Zend_Search_Lucene_Document();
+            
+            // Field is not tokenized, but is indexed and stored within the index.
+            // Stored fields can be retrived from the index.
+            $doc->addField(Zend_Search_Lucene_Field::Keyword('doctype', 
+                                                             'autogenerated'));
+            
+            // Field is not tokenized nor indexed, but is stored in the index.
+            $doc->addField(Zend_Search_Lucene_Field::UnIndexed('created', 
+                                                               time()));
+            
+            // Binary String valued Field that is not tokenized nor indexed,
+            // but is stored in the index.
+            $doc->addField(Zend_Search_Lucene_Field::Binary('icon', 
+                                                            $iconData));
+            
+            // Field is tokenized and indexed, and is stored in the index.
+            $doc->addField(Zend_Search_Lucene_Field::Text('annotation', 
+                                                          'Document annotation text'));
+            
+            // Field is tokenized and indexed, but that is not stored in the index.
+            $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', 
+                                                              'My document content'));
 
-// Field is not tokenized, but is indexed and stored within the index.
-// Stored fields can be retrived from the index.
-$doc->addField(Zend_Search_Lucene_Field::Keyword('doctype', 
-                                                 'autogenerated'));
-
-// Field is not tokenized nor indexed, but is stored in the index.
-$doc->addField(Zend_Search_Lucene_Field::UnIndexed('created', 
-                                                   time()));
-
-// Binary String valued Field that is not tokenized nor indexed,
-// but is stored in the index.
-$doc->addField(Zend_Search_Lucene_Field::Binary('icon', 
-                                                $iconData));
-
-// Field is tokenized and indexed, and is stored in the index.
-$doc->addField(Zend_Search_Lucene_Field::Text('annotation', 
-                                              'Document annotation text'));
-
-// Field is tokenized and indexed, but that is not stored in the index.
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', 
-                                                  'My document content'));
-
-?>]]></programlisting>
+            ?>
+            ]]></programlisting>
         
             <para>
-                You could give names for fields by your own choice.  A "contents" field name is used to search 
-                by default.  It's good idea to place main document data into this field with this name.
+                Vous pouvez donner le nom que vous voulez aux champs. 
+                Le nom &quot;contents&quot; est utilisé par défaut. 
+                C'est une bonne idée de placer les principales données de votre documents dans le champs ainsi nommé.
             </para>
 	</sect2>
 	
 	<sect2 id="zend.search.index-creation.understanding-field-types">
-		<title>Understanding Field Types</title>
+		<title>Comprendre les types de champ</title>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Keyword</code> fields are stored and indexed, meaning they can be searched as well as 
-                    displayed them back in search results. They are not split up into seperate 
-                    words by tokenization.  Enumerated database fields usually translate well to Keyword 
-                    fields in Zend_Search_Lucene.
+                    Les champs <code>Keyword</code> sont stockés et indexé, c'est à dire qu'il est possible de rechercher
+                    dedans, aussi bien que les afficher dans les résultats de recherche. 
+                    Ils ne sont pas séparés en mots par un processus de tokenization.
+                    Les champs énumérés d'une base de données se traduisent bien en champs <code>Keyword</code>
+                    pour Zend_Search_Lucene.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>UnIndexed</code> fields are not searchable, but they are returned with search hits.  Database 
-                    timestamps, primary keys, file system paths, and other external identifiers are good 
-                    candidates for UnIndexed fields.
+                    Les champs <code>UnIndexed</code> n'offrent pas de possibilité de recherche, mais sont retournés
+                    avec les résultats de recherche.
+                    Les timestamps et clés primaires de base de données, chemins du système de fichier, et tout autre
+                    indentifiant externe sont de bons candidats pour des champs <code>UnIndexed</code>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Binary</code> fields are not tokenized or indexed, but are stored for retrieval with search hits. 
-                    They can be used to store any data encoded as a binary string, such as an image icon.
+                    Les champs <code>Binary</code> ne sont ni tokenizés, ni indexé, mais sont stockés pour être récupérés
+                    avec les résultats de recherche.
+                    Ils peuvent être utilisé pour stocker toute donnée encodée comme chaine binaire, comme par exemple
+                    des icônes.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Text</code> fields are stored, indexed, and tokenized. Text fields are appropriate for storing 
-                    information like subjects and titles that need to be searchable as well as returned with 
-                    search results.
+                    Les champs <code>Text</code> sont stockés, indexé et tokenizé. Les champs <code>Text</code> sont
+                    bien appropriés pour stocker des informations comme des sujets et titres qui doivent être recherchables
+                    aussi bien que retournés avec les résultats de recherche.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>UnStored</code> fields are tokenized and indexed, but not stored in the index. Large amounts of 
-                    text are best indexed using this type of field. Storing data creates a larger index on 
-                    disk, so if you need to search but not redisplay the data, use an UnStored field. 
-                    UnStored fields are practical when using a Zend_Search_Lucene index in 
-                    combination with a relational database. You can index large data fields with UnStored 
-                    fields for searching, and retrieve them from your relational database by using a seperate 
-                    fields as an identifier.
+                    Les champs <code>UnStored</code> sont tokenizés et indexé, mais pas stockés dans l'index.
+                    Les grandes quantités de texte sont mieux indexées en utilisant ce type de champ. Stocker
+                    de données crée un index plus grand sur le disque, donc si vous avez besoin d'effectuer une
+                    recherche, mais de ne pas ré-afficher les données, utiliser le champ <code>UnStored</code>.
+                    Les champs <code>UnStored</code> sont pratiques lorsque l'on souhaite utiliser un index Zend_Search_Lucene
+                    en combinaison avec une base de données relationnelle. Vous pouvez indexer de gros champs de fichiers dédiés
+                    à la recherche avec les champs <code>UnStored</code>, et les récupérer depuis votre base de données en utilisant
+                    un champ séparé comme identifiant.
     		   </para>
 
                 <table>
-                    <title>Zend_Search_Lucene_Field Types</title>
+                    <title>Types de Zend_Search_Lucene_Field</title>
                     <tgroup cols="4">
                         <thead>
                             <row>
-                                <entry>Field Type</entry>
-                                <entry>Stored</entry>
-                                <entry>Indexed</entry>
-                                <entry>Tokenized</entry>
-                                <entry>Binary</entry>
+                                <entry>Type de champ</entry>
+                                <entry>Stocké</entry>
+                                <entry>Indexé</entry>
+                                <entry>Tokenizé</entry>
+                                <entry>Binaire</entry>
                             </row>
                         </thead>
                         <tbody>
                             <row>
                                 <entry>Keyword</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
+                                <entry>Oui</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
+                                <entry>Non</entry>
                             </row>
                             <row>
                                 <entry>UnIndexed</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
+                                <entry>Non</entry>
+                                <entry>Non</entry>
                             </row>
                             <row>
                                 <entry>Binary</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
-                                <entry>Yes</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
+                                <entry>Non</entry>
+                                <entry>Oui</entry>
                             </row>
                             <row>
                                 <entry>Text</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
+                                <entry>Oui</entry>
+                                <entry>Oui</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
                             </row>
                             <row>
                                 <entry>UnStored</entry>
-                                <entry>No</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
+                                <entry>Non</entry>
+                                <entry>Oui</entry>
+                                <entry>Oui</entry>
+                                <entry>Non</entry>
                             </row>                        
                         </tbody>
                     </tgroup>
