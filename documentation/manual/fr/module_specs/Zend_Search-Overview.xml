@@ -5,8 +5,8 @@
         <title>Introduction</title>
         <para>
             Zend_Search_Lucene est un moteur de recherche textuel général totalement écrit en PHP 5.
-            Bien qu'il stocke ses indexes dans le système de fichier, et ne nécessite pas de base de données, 
-            il peut ajouter des capacités de recherche sur presque tout les sites PHP utilisant une base de données.
+            Bien qu'il stocke ses index dans le système de fichiers, et ne nécessite pas de base de données, 
+            il peut ajouter des capacités de recherche sur presque tous les sites PHP utilisant une base de données.
             
             Zend_Search_Lucene supporte les fonctionnalités suivantes :
             <itemizedlist>
@@ -23,7 +23,7 @@
                          et bien plus
                         <footnote>
                            <para>
-                             Seules les recherches par mots ou groupes de mots sont supporté pour le moment.
+                             Seules les recherches par mots ou groupes de mots sont supportées pour le moment.
                            </para>
                         </footnote>
                     </para>
@@ -34,14 +34,14 @@
             </itemizedlist>
         
             Zend_Search_Lucene est dérivé du projet Apache Lucene.
-            Pour plus d'informations vous pouvez visitez <ulink url="http://lucene.apache.org/java/docs/"/>.
+            Pour plus d'informations vous pouvez visiter <ulink url="http://lucene.apache.org/java/docs/"/>.
         </para>
     </sect2>
     
 	<sect2 id="zend.search.index-creation.documents-and-fields">
 		<title>Objets document et champ</title>
             <para>
-                ZSearch considère les documents comme des sujets atomique à pour l'indexation.
+                ZSearch considère les documents comme des sujets atomiques pour l'indexation.
                 Un document est divisé en champs nommés, et les champs ont du contenu dans lequel on peut rechercher.
             </para>
         
@@ -52,15 +52,15 @@
         
             <para>
                 Il est important de noter qu'aucune sorte d'information peut être ajoutée à l'index.
-                Les informations spécifiques à l'application, ou les métadonnées peuvent être stockée
-                dans les champs du document, et retrouvés ensuite pendant la recherche.
+                Les informations spécifiques à l'application, ou les métadonnées peuvent être stockées
+                dans les champs du document, et retrouvées ensuite pendant la recherche.
             </para>
         
             <para>
                 Il est de votre responsabilité de contrôler l'indexeur.
                 Cela signifie que les données peuvent-être indexées à partir de n'importe
                 quelle source accessible par votre application. 
-                Cela peut-être aussi bien le système de fichier, qu'une base de donnée, 
+                Cela peut-être aussi bien le système de fichiers, qu'une base de données, 
                 qu'un formulaire HTML, etc.
             </para>            
             
@@ -101,16 +101,16 @@
             <para>
                 Vous pouvez donner le nom que vous voulez aux champs. 
                 Le nom &quot;contents&quot; est utilisé par défaut. 
-                C'est une bonne idée de placer les principales données de votre documents dans le champs ainsi nommé.
+                C'est une bonne idée de placer les principales données de votre document dans le champ ainsi nommé.
             </para>
 	</sect2>
 	
 	<sect2 id="zend.search.index-creation.understanding-field-types">
-		<title>Comprendre les types de champ</title>
+		<title>Comprendre les types de champs</title>
         <itemizedlist>
             <listitem>
                 <para>
-                    Les champs <code>Keyword</code> sont stockés et indexé, c'est à dire qu'il est possible de rechercher
+                    Les champs <code>Keyword</code> sont stockés et indexés, c'est à dire qu'il est possible de rechercher
                     dedans, aussi bien que les afficher dans les résultats de recherche. 
                     Ils ne sont pas séparés en mots par un processus de tokenization.
                     Les champs énumérés d'une base de données se traduisent bien en champs <code>Keyword</code>
@@ -121,28 +121,28 @@
                 <para>
                     Les champs <code>UnIndexed</code> n'offrent pas de possibilité de recherche, mais sont retournés
                     avec les résultats de recherche.
-                    Les timestamps et clés primaires de base de données, chemins du système de fichier, et tout autre
-                    indentifiant externe sont de bons candidats pour des champs <code>UnIndexed</code>.
+                    Les timestamps et clés primaires de base de données, chemins du système de fichiers, et tout autre
+                    identifiant externe sont de bons candidats pour des champs <code>UnIndexed</code>.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Les champs <code>Binary</code> ne sont ni tokenizés, ni indexé, mais sont stockés pour être récupérés
+                    Les champs <code>Binary</code> ne sont ni tokenizés, ni indexés, mais sont stockés pour être récupérés
                     avec les résultats de recherche.
-                    Ils peuvent être utilisé pour stocker toute donnée encodée comme chaine binaire, comme par exemple
+                    Ils peuvent être utilisés pour stocker toute donnée encodée comme chaine binaire, comme par exemple
                     des icônes.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Les champs <code>Text</code> sont stockés, indexé et tokenizé. Les champs <code>Text</code> sont
+                    Les champs <code>Text</code> sont stockés, indexés et tokenizés. Les champs <code>Text</code> sont
                     bien appropriés pour stocker des informations comme des sujets et titres qui doivent être recherchables
                     aussi bien que retournés avec les résultats de recherche.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Les champs <code>UnStored</code> sont tokenizés et indexé, mais pas stockés dans l'index.
+                    Les champs <code>UnStored</code> sont tokenizés et indexés, mais pas stockés dans l'index.
                     Les grandes quantités de texte sont mieux indexées en utilisant ce type de champ. Stocker
                     de données crée un index plus grand sur le disque, donc si vous avez besoin d'effectuer une
                     recherche, mais de ne pas ré-afficher les données, utiliser le champ <code>UnStored</code>.
