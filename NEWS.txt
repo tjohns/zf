@@ -29,8 +29,10 @@ Zend Framework                                                             NEWS
 - Zend_Console_Args in the incubator but not yet refactored (Jason Garber)
 - Zend_Mail enhancements in the incubator by Austria Telekom (Nico, Clez)
 - Zend_Service classes no longer subclass Zend_Service_Rest (Davey, Andi, et al)
+- Zend_Service classes now use new Zend_InputFilter (Davey)
 - Fixed bug in Zend_Service_Amazon::itemLookup() (Davey)
 - Fixed bug in Zend_Service_Flickr::userSearch() (Davey)
+- Fixed bug in Zend_Uri_Http::__construct(). Reported by Adrian Gheorghe. (Mike)
 
 =RELEASE 0.1.2 / 8-Mar-2006=
 - Unit test suite is now included. (Mike)

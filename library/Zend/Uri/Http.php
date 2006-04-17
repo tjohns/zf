@@ -74,14 +74,6 @@ class Zend_Uri_Http extends Zend_Uri
         $this->_scheme = $scheme;
 
         /**
-         * If no scheme-specific part was supplied, the user intends to create
-         * a new URI with this object.  No further parsing is required.
-         */
-        if (strlen($schemeSpecific) == 0) {
-            return;
-        }
-
-        /**
          * Set up grammar rules for validation via regular expressions. These are to be used with slash-delimited
          * regular expression strings.
          */
@@ -95,6 +87,14 @@ class Zend_Uri_Http extends Zend_Uri
         $this->_regex['path']       = '(?:\/' . $this->_regex['segment'] . ')+';
         $this->_regex['uric']       = '(?:' . $this->_regex['reserved'] . '|' . $this->_regex['unreserved'] . '|'
                                     . $this->_regex['escaped'] . ')';
+
+        /**
+         * If no scheme-specific part was supplied, the user intends to create
+         * a new URI with this object.  No further parsing is required.
+         */
+        if (strlen($schemeSpecific) == 0) {
+            return;
+        }
 
         /**
          * Parse the scheme-specific URI parts into the instance variables.
