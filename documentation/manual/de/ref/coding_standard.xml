@@ -329,7 +329,7 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
                     <programlisting role="php"><![CDATA[
 $greeting = "Hello $name, welcome back!";
 
-$greeting = "Hello {$name}, welcome back!";
+$greeting = "Hello {$name}, welcome back!";]]></programlisting>
                 </para>
 
                 <para>

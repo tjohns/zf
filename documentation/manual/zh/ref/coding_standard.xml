@@ -49,7 +49,7 @@
             <title>General</title>
 
             <para>
-                For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is 
+                For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is
 				not required by PHP.  Not including it prevents trailing whitespace from being accidentally
 				injected into the output.
             </para>
@@ -329,7 +329,7 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
                     <programlisting role="php"><![CDATA[
 $greeting = "Hello $name, welcome back!";
 
-$greeting = "Hello {$name}, welcome back!";
+$greeting = "Hello {$name}, welcome back!";]]></programlisting>
                 </para>
 
                 <para>
