@@ -80,9 +80,9 @@ require_once 'Zend/Service/Amazon/ResultSet.php';
 require_once 'Zend/Service/Amazon/SimilarProduct.php';
 
 /**
- * Zend_InputFilter
+ * Zend_Filter
  */
-require_once 'Zend/InputFilter.php';
+require_once 'Zend/Filter.php';
 
 
 /**
@@ -91,11 +91,9 @@ require_once 'Zend/InputFilter.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Service_Amazon extends Zend_Service_Rest
+class Zend_Service_Amazon
 {
 	public $appId;
-
-	protected $_uri;
 
 	static protected $_sortVerbs = array('relevance', 'salesrank', 'price', '-price',
 	                                     'most-recent', '-date', 'title', '-title',
@@ -837,8 +835,12 @@ class Zend_Service_Amazon extends Zend_Service_Rest
                                     'FR' => 'http://webservices.amazon.fr',
                                     'CA' => 'http://webservices.amazon.ca');
 
-    protected $_array;
-    protected $_inputFilter;
+    /**
+     * Zend_Service_Rest Object
+     *
+     * @var Zend_Service_Rest
+     */
+    protected $_rest;
 
 	/**
      * Constructs a new Amazon Web Services Client
@@ -857,10 +859,9 @@ class Zend_Service_Amazon extends Zend_Service_Rest
             throw new Zend_Service_Exception("Amazon Web Service: Unknown country code: $countryCode");
         }
 
-        $this->setUri($this->_baseUriList[$countryCode]);
-
         $this->_array = array();
-        $this->_inputFilter = new Zend_InputFilter($this->_array, false);
+        $this->_rest = new Zend_Service_Rest();
+        $this->_rest->setUri($this->_baseUriList[$countryCode]);
     }
 
 
@@ -877,7 +878,7 @@ class Zend_Service_Amazon extends Zend_Service_Rest
         $defaultOptions = array('ResponseGroup' => 'Small');
         $options = $this->_prepareOptions('ItemSearch', $options, $defaultOptions);
         $this->_validateItemSearch($options);
-        $response = $this->restGet('/onca/xml', $options);
+        $response = $this->_rest->restGet('/onca/xml', $options);
 
         if ($response->isError()) {
         	throw new Zend_Service_Exception('An error occurred sending request. Status code: '
@@ -911,7 +912,7 @@ class Zend_Service_Amazon extends Zend_Service_Rest
         $options['ItemId'] = $asin;
         $options = $this->_prepareOptions('ItemLookup', $options, $defaultOptions);
         $this->_validateItemLookup($options);
-        $response = $this->restGet('/onca/xml', $options);
+        $response = $this->_rest->restGet('/onca/xml', $options);
 
         if ($response->isError()) {
         	throw new Zend_Service_Exception('An error occurred sending request. Status code: '
@@ -923,10 +924,10 @@ class Zend_Service_Amazon extends Zend_Service_Rest
         self::_checkErrors($dom);
         $xpath = new DOMXPath($dom);
         $xpath->registerNamespace('az', 'http://webservices.amazon.com/AWSECommerceService/2005-10-05');
-        $items = $xpath->query('//az:Items/Item');
+        $items = $xpath->query('//az:Items/az:Item');
 
         if ($items->length == 1) {
-          return new Zend_Service_Amazon_Item($dom);
+          return new Zend_Service_Amazon_Item($items->item(0));
         }
 
         return null;
@@ -940,9 +941,6 @@ class Zend_Service_Amazon extends Zend_Service_Rest
             throw new Zend_Service_Exception('Options must be specified as an array');
         }
 
-        /**
-         * @todo use input filter for this?
-         */
         // Validate keys in the $options array
         $this->_compareOptions($options, array('Marketplace',
                                                'AssociateTag',
@@ -1019,9 +1017,8 @@ class Zend_Service_Amazon extends Zend_Service_Rest
                                           'Seattle', 'Washington, D.C.'));
         }
 
-        $filter = new Zend_InputFilter($options, false);
         if (isset($options['ItemPage'])) {
-        	if (!$filter->isBetween('ItemPage',0, 2500, true)) {
+        	if (!Zend_Filter::isBetween($options['ItemPage'],0, 2500, true)) {
         	    throw new Zend_Service_Exception($options['ItemPage'] . ' is not valid for the "ItemPage" option.');
         	}
         }
@@ -1041,9 +1038,6 @@ class Zend_Service_Amazon extends Zend_Service_Rest
             throw new Zend_Service_Exception('Options must be specified as an array');
         }
 
-        /**
-         * @todo use input filter for this?
-         */
         // Validate keys in the $options array
         $this->_compareOptions($options, array('ItemId',
                                                'IdType',
@@ -1059,16 +1053,6 @@ class Zend_Service_Amazon extends Zend_Service_Rest
                                                'Service',
                                                'SubscriptionId',
                                                'Operation'));
-
-        // Validate SearchIndex (required)
-        if (empty($options['SearchIndex'])) {
-            throw new Zend_Service_Exception('Query requires a SearchIndex');
-        } else {
-            $this->_validateInArray('SearchIndex',
-                                    $options['SearchIndex'],
-                                    array_keys(self::$_searchSort));
-        }
-
 
         // Validate ResponseGroup (required)
         if (empty($options['ResponseGroup'])) {
@@ -1101,10 +1085,8 @@ class Zend_Service_Amazon extends Zend_Service_Rest
                                           'Seattle', 'Washington, D.C.'));
         }
 
-        $filter = new Zend_InputFilter($options, false);
-
         if (isset($options['ItemPage'])) {
-        	if (!$filter->isBetween('ItemPage',0, 2500, true)) {
+        	if (!Zend_Filter::isBetween($options['ItemPage'],0, 2500, true)) {
         	    throw new Zend_Service_Exception($options['ItemPage'] . ' is not a valid value for the "ItemPage" option.');
         	}
         }

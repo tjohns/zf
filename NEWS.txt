@@ -1,6 +1,6 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-=RELEASE 0.1.3 / ?-Apr-2006=
+=RELEASE 0.1.3 / 17-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
 - Zend_InputFilter has test* methods for retrieving valid data. (Chris)
 - Fixed bug in Zend_View_Abstract::__isset(). Reported by James Simmons. (Mike)
@@ -26,6 +26,11 @@ Zend Framework                                                             NEWS
 - Removed formatting (newlines, tabs) from Zend_Json encoding methods (Matthew)
 - Fixed escaping in Zend_Json_Encoder (Matthew)
 - Zend_HttpClient moved to Zend_Http_Client (Mike)
+- Zend_Console_Args in the incubator but not yet refactored (Jason Garber)
+- Zend_Mail enhancements in the incubator by Austria Telekom (Nico, Clez)
+- Zend_Service classes no longer subclass Zend_Service_Rest (Davey, Andi, et al)
+- Fixed bug in Zend_Service_Amazon::itemLookup() (Davey)
+- Fixed bug in Zend_Service_Flickr::userSearch() (Davey)
 
 =RELEASE 0.1.2 / 8-Mar-2006=
 - Unit test suite is now included. (Mike)

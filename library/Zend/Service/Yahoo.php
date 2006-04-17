@@ -79,9 +79,9 @@ require_once 'Zend/Service/Yahoo/WebResult.php';
 require_once 'Zend/Service/Yahoo/WebResultSet.php';
 
 /**
- * Zend_InputFilter
+ * Zend_Filter
  */
-require_once 'Zend/InputFilter.php';
+require_once 'Zend/Filter.php';
 
 
 /**
@@ -90,13 +90,20 @@ require_once 'Zend/InputFilter.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Service_Yahoo extends Zend_Service_Rest {
+class Zend_Service_Yahoo {
+    /**
+     * Yahoo Developer Application ID
+     *
+     * @var string
+     */
     public $appId;
 
     /**
-     * @var Zend_Uri_Http
+     * Zend_Service_Rest instance
+     *
+     * @var Zend_Service_Rest
      */
-    protected $_uri;
+    protected $_rest;
 
     /**
      * Constructs a new search object for the given application id.
@@ -106,7 +113,8 @@ class Zend_Service_Yahoo extends Zend_Service_Rest {
     public function __construct($appid)
     {
         $this->appId = $appid;
-        $this->_uri = Zend_Uri::factory("http://api.search.yahoo.com");
+        $this->_rest = new Zend_Service_Rest();
+        $this->_rest->setUri("http://api.search.yahoo.com");
     }
 
 
@@ -139,9 +147,11 @@ class Zend_Service_Yahoo extends Zend_Service_Rest {
 
         $this->_validateImageSearch($options);
 
-        $this->_uri->setHost('api.search.yahoo.com');
+        $this->_rest = new Zend_Service_Rest;
 
-        $response = $this->restGet('/ImageSearchService/V1/imageSearch', $options);
+        $this->_rest->setUri('api.search.yahoo.com');
+
+        $response = $this->_rest->restGet('/ImageSearchService/V1/imageSearch', $options);
 
         if ($response->isError()) {
         	throw new Zend_Service_Exception('An error occurred sending request. Status code: ' .
@@ -196,7 +206,7 @@ class Zend_Service_Yahoo extends Zend_Service_Rest {
 
         $this->_uri->setHost('api.local.yahoo.com');
 
-        $response = $this->restGet('/LocalSearchService/V1/localSearch', $options);
+        $response = $this->_rest->restGet('/LocalSearchService/V1/localSearch', $options);
 
         if ($response->isError()) {
         	throw new Zend_Service_Exception('An error occurred sending request. Status code: ' .
@@ -239,7 +249,7 @@ class Zend_Service_Yahoo extends Zend_Service_Rest {
 
         $this->_uri->setHost('api.search.yahoo.com');
 
-        $response = $this->restGet('/NewsSearchService/V1/newsSearch', $options);
+        $response = $this->_rest->restGet('/NewsSearchService/V1/newsSearch', $options);
 
         if ($response->isError()) {
         	throw new Zend_Service_Exception('An error occurred sending request. Status code: ' .
@@ -288,7 +298,7 @@ class Zend_Service_Yahoo extends Zend_Service_Rest {
 
         $this->_uri->setHost('api.search.yahoo.com');
 
-        $response = $this->restGet('/WebSearchService/V1/webSearch', $options);
+        $response = $this->_rest->restGet('/WebSearchService/V1/webSearch', $options);
 
         if ($response->isError()) {
         	throw new Zend_Service_Exception('An error occurred sending request. Status code: ' .
@@ -318,32 +328,31 @@ class Zend_Service_Yahoo extends Zend_Service_Rest {
 
         $this->_compareOptions($options, $valid_options);
 
-        $filter = new Zend_InputFilter($options, false);
-
         if (isset($options['results'])) {
-            if (!$filter->isBetween('results', 1, 20, true)) {
+            if (!Zend_Filter::isBetween($options['results'], 1, 20, true)) {
                 throw new Zend_Service_Exception($options['results'] . ' is not valid for the "results" option.');
             }
         }
+
         if (isset($options['start'])) {
-            if (!$filter->isBetween('start', 1, 1000, true)) {
+            if (!Zend_Filter::isBetween($options['start'], 1, 1000, true)) {
                 throw new Zend_Service_Exception($options['start'] . ' is not valid for the "start" option.');
             }
         }
 
         if (isset($options['longitude'])) {
-            if (!$filter->isBetween('longitude', -90, 90, true)) {
+            if (!Zend_Filter::isBetween($options['longitude'], -90, 90, true)) {
                 throw new Zend_Service_Exception($options['longitude'] . ' is not valid for the "longitude" option.');
             }
         }
         if (isset($options['latitude'])) {
-            if (!$filter->isBetween('latitude', -180, 180, true)) {
+            if (!Zend_Filter::isBetween($options['latitude'], -180, 180, true)) {
                 throw new Zend_Service_Exception($options['latitude'] . ' is not valid for the "latitude" option.');
             }
         }
 
         if (isset($options['zip'])) {
-            if (!$filter->isZip('zip')) {
+            if (!Zend_Filter::isZip($options['zip'])) {
                 throw new Zend_Service_Exception($options['zip'] . ' is not a valid for the "zip" option.');
             }
         }
@@ -389,16 +398,14 @@ class Zend_Service_Yahoo extends Zend_Service_Rest {
             }
         }
 
-        $filter = new Zend_InputFilter($options, false);
-
         if (isset($options['results'])) {
-            if (!$filter->isBetween('results', 1, 50, true)) {
+            if (!Zend_Filter::isBetween($options['results'], 1, 50, true)) {
                 throw new Zend_Service_Exception($options['results'] . ' is not valid for the "results" option.');
             }
         }
 
         if (isset($options['start'])) {
-            if (!$filter->isBetween('start', 1, 1000, true)) {
+            if (!Zend_Filter::isBetween($options['start'], 1, 1000, true)) {
                 throw new Zend_Service_Exception($options['start'] . ' is not valid for the "start" option.');
             }
         }
@@ -442,15 +449,13 @@ class Zend_Service_Yahoo extends Zend_Service_Rest {
 
         $this->_compareOptions($options, $valid_options);
 
-        $filter = new Zend_InputFilter($options, false);
-
         if (isset($options['results'])) {
-            if (!$filter->isBetween('results', 1, 20, true)) {
+            if (!Zend_Filter::isBetween($options['results'], 1, 20, true)) {
                 throw new Zend_Service_Exception($options['results'] . ' is not valid for the "results" option.');
             }
         }
         if (isset($options['start'])) {
-            if (!$filter->isBetween('start', 1, 1000, true)) {
+            if (!Zend_Filter::isBetween($options['start'], 1, 1000, true)) {
                 throw new Zend_Service_Exception($options['start'] . ' is not valid for the "start" option.');
             }
         }
@@ -480,15 +485,13 @@ class Zend_Service_Yahoo extends Zend_Service_Rest {
 
         $this->_compareOptions($options, $valid_options);
 
-        $filter = new Zend_InputFilter($options, false);
-
         if (isset($options['results'])) {
-            if (!$filter->isBetween('results', 1, 20, true)) {
+            if (!Zend_Filter::isBetween($options['results'], 1, 20, true)) {
                 throw new Zend_Service_Exception($options['results'] . ' is not valid for the "results" option.');
             }
         }
         if (isset($options['start'])) {
-            if (!$filter->isBetween('start', 1, 1000, true)) {
+            if (!Zend_Filter::isBetween($options['start'], 1, 1000, true)) {
                 throw new Zend_Service_Exception($options['start'] . ' is not valid for the "start" option.');
             }
         }

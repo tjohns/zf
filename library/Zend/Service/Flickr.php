@@ -45,9 +45,9 @@ require_once 'Zend/Service/Flickr/Result.php';
 require_once 'Zend/Service/Flickr/Image.php';
 
 /**
- * Zend_InputFilter
+ * Zend_Filter
  */
-require_once 'Zend/InputFilter.php';
+require_once 'Zend/Filter.php';
 
 
 /**
@@ -56,7 +56,7 @@ require_once 'Zend/InputFilter.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies Inc. (http://www.zend.com)
  * @license    Zend Framework License version 1.0
  */
-class Zend_Service_Flickr extends Zend_Service_Rest
+class Zend_Service_Flickr
 {
     /**
      * Your Flickr API key
@@ -64,6 +64,13 @@ class Zend_Service_Flickr extends Zend_Service_Rest
      * @var string
      */
     public $apiKey;
+
+    /**
+     * Zend_Service_Rest Object
+     *
+     * @var Zend_Service_Rest
+     */
+    protected $_rest;
 
     /**
      * Zend_Service_Flickr Constructor, setup character encoding
@@ -77,7 +84,8 @@ class Zend_Service_Flickr extends Zend_Service_Rest
         iconv_set_encoding('internal_encoding', 'UTF-8');
 
         $this->apiKey = $apiKey;
-        $this->setUri('http://www.flickr.com');
+        $this->_rest = new Zend_Service_Rest();
+        $this->_rest->setUri('http://www.flickr.com');
         $this->_array = array();
     }
 
@@ -114,7 +122,7 @@ class Zend_Service_Flickr extends Zend_Service_Rest
         $this->_validateTagSearch($options);
 
         // now search for photos
-        $response = $this->restGet('/services/rest/', $options);
+        $response = $this->_rest->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
         	throw new Zend_Service_Exception('An error occurered sending request. Status code: '
@@ -173,7 +181,7 @@ class Zend_Service_Flickr extends Zend_Service_Rest
         $this->_validateUserSearch($options);
 
         // now search for photos
-        $response = $this->restGet('/services/rest/', $options);
+        $response = $this->_rest->restGet('/services/rest/', $options);
 
         if ($response->isError()) {
         	throw new Zend_Service_Exception('An error occurered sending request. Status code: '
@@ -204,13 +212,12 @@ class Zend_Service_Flickr extends Zend_Service_Rest
 
         $this->_compareOptions($options, $valid_options);
 
-        $filter = new Zend_InputFilter($options, false);
 
-        if (!$filter->isBetween('per_page', 1, 500, true)) {
+        if (!Zend_Filter::isBetween($options['per_page'], 1, 500, true)) {
             throw new Zend_Service_Exception($options['per_page'] . ' is not valid for the "per_page" option');
         }
 
-        if (!$filter->isInt('page')) {
+        if (!Zend_Filter::isInt($options['page'])) {
             throw new Zend_Service_Exception($options['page'] . ' is not valid for the "page" option');
         }
 
@@ -244,13 +251,11 @@ class Zend_Service_Flickr extends Zend_Service_Rest
 
         $this->_compareOptions($options, $valid_options);
 
-        $filter = new Zend_InputFilter($options, false);
-
-        if (!$filter->isBetween('per_page', 1, 500, true)) {
+        if (!Zend_Filter::isBetween($options['per_page'], 1, 500, true)) {
             throw new Zend_Service_Exception($options['per_page'] . ' is not valid for the "per_page" option');
         }
 
-        if (!$filter->isInt('page')) {
+        if (!Zend_Filter::isInt($options['page'])) {
             throw new Zend_Service_Exception($options['page'] . ' is not valid for the "page" option');
         }
 
@@ -284,7 +289,7 @@ class Zend_Service_Flickr extends Zend_Service_Rest
         $options = array('api_key' => $this->apiKey, 'method' => $method, 'username' => $username);
 
         if (!empty($username)) {
-        	$response = $this->restGet('/services/rest/', $options);
+        	$response = $this->_rest->restGet('/services/rest/', $options);
 
         	if ($response->isError()) {
         		throw new Zend_Service_Exception('An error occurered sending request. Status code: '
@@ -317,7 +322,7 @@ class Zend_Service_Flickr extends Zend_Service_Rest
         $options = array('api_key' => $this->apiKey, 'method' => $method, 'find_email' => $email);
 
         if (!empty($email)) {
-        	$response = $this->restGet('/services/rest/', $options);
+        	$response = $this->_rest->restGet('/services/rest/', $options);
 
         	if ($response->isError()) {
         		throw new Zend_Service_Exception('An error occurered sending request. Status code: '
@@ -346,7 +351,7 @@ class Zend_Service_Flickr extends Zend_Service_Rest
 
         $options = array('api_key' => $this->apiKey, 'method' => $method, 'photo_id' => $id);
         if (!empty($id)) {
-            $response = $this->restGet('/services/rest/', $options);
+            $response = $this->_rest->restGet('/services/rest/', $options);
             $dom = new DOMDocument();
             $dom->loadXML($response->getBody());
             $xpath = new DOMXPath($dom);
