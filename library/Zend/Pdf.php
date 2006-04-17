@@ -66,6 +66,11 @@ require_once 'Zend/Pdf/Resource/Image.php';
 /** Zend_Pdf_Image_JPEG */
 require_once 'Zend/Pdf/Resource/Image/JPEG.php';
 
+/** Zend_Pdf_Image_TIFF */
+require_once 'Zend/Pdf/Resource/Image/TIFF.php';
+
+/** Zend_Pdf_Image_PNG */
+require_once 'Zend/Pdf/Resource/Image/PNG.php';
 
 /**
  * General entity which describes PDF document.
