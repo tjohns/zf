@@ -1,0 +1,95 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+Zend_View_Layout
+
+
+Proposers
+-----------------------------------------------
+Alexandre Fresneda Riveira
+
+
+Revision
+-----------------------------------------------
+1.0
+
+
+Overview
+-----------------------------------------------
+Zend_View_Layout is very simple and efficient layout management.
+
+
+References
+-----------------------------------------------
+http://jakarta.apache.org/velocity/tools/view/layoutservlet.html
+
+
+Requirements
+-----------------------------------------------
+none
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+Zend_View
+
+
+Theory of Operation
+-----------------------------------------------
+It provides a simple and efficient layout control.
+The programmer must only point an archive php inside of path of
+Zend_View, so that all the layout is modified. The var's defined
+in the main archive also are seen in the layout archive.
+
+Class Index
+-----------------------------------------------
+Zend_View
+Zend_View_Layout
+
+Use Cases
+-----------------------------------------------
+//page.php
+
+<? $this->layout = 'layout.php' ?>
+((Describe the operation of the component in detail.))
+
+This is a page...
+
+
+
+//layout.php
+<html>
+      <head><title>My Layout</title>
+      <body>
+      <?php echo $this->content ?>
+      </body>
+</html>
+
+//controller
+$view = new Zend_View_Layout();
+$view->render('page.php');
+
+//output
+<html>
+
+      <head><title>My Layout</title>
+      <body>
+      This is a page...
+      </body>
+</html>
+
+Class Skeletons
+-----------------------------------------------
+Zend_View_Layout extends Zend_View {
+
+  /**
+   * reimplement method
+   */
+  public function render($name) { }
+
+
+}
+
+
