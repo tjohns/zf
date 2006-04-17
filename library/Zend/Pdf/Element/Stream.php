@@ -102,6 +102,6 @@ class Zend_Pdf_Element_Stream extends Zend_Pdf_Element
      */
     public function toString($factory = null)
     {
-        return "stream\n\r" . $this->value . "\n\rendstream";
+        return "stream\r\n" . $this->value . "\r\nendstream";
     }
 }
