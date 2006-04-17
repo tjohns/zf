@@ -40,7 +40,7 @@ class Zend_Pdf_Filter_ASCIIHEX extends Zend_Pdf_Filter
      */
     public static function encode(&$data, $params = null)
     {
-        return bin2hex($input) . '>';
+        return bin2hex($data) . '>';
     }
 
     /**
