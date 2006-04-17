@@ -1,63 +1,50 @@
 <sect1 id="zend.controller.getting-started">
-	<title>Getting Started</title>
+	<title>入门</title>
 	
 	<sect2 id="zend.controller.getting-started.introduction">
-		<title>Introduction</title>
-		<para>
-			The <code>Zend_Controller</code> system was built with extensibility in mind, either
-			by subclassing the existing classes or writing new classes that implement 
-			the interfaces <code>Zend_Controller_Router_Interface</code> and <code>Zend_Controller_Dispatcher_Interface</code>.
+		<title>简介</title>
+		<para>			Zend_Controller体系具有可扩展性，可以通过继承已有的类或者自己写个新的类来实现Zend_Controller_Router_Interface或Zend_Controller_Dispatcher_Interface接口。
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.server-configuration">
-		<title>Server Configuration</title>
+		<title>服务器设置</title>
 		<para>
-			Zend_Controller is built to support modern websites with clean URIs (few or no query parameters).  As such,
-			the suggested configuration requires support from the webserver in the form of URI rewriting to redirect 
-			all requests to a single file, here called "index.php", which will simply bootstrap <code>Zend_Controller_Front</code>.  
-			On Apache webservers, this is handled by an optional module called mod_rewrite.
+			Zend_Controller 支持比较漂亮的URI(没有乱七八糟的查询参数)，这需要你的服务器支持URI重写功能。如果你使用Apache服务器，可以通过设置mod_rewrite模块来实现。
 		</para>
 
 		<para>
-			The first step in configuring the server is to sucessfully install and enable mod_rewrite.  The next step
-			is to put two files in the document root: .htaccess and index.php.  The .htaccess file is used by Apache
-			and must contain a mod_rewrite rule to redirect all requests to index.php.  For development purposes, it
-			is often simplest to write a mod_rewrite rule that will redirect all requests to index.php except for certain
-			file extensions.  Here is an example of such a file:
+			第一步，首先安装Apache并启用mod_rewrite模块。然后把两个文件放到根目录下：.htaccess和index.php。 .htaccess文件用来让服务器读取，其中必须包含一个mod_rewrite的重写规则，使所有请求都被重定向到index.php。下面是个例子：
 
 			<programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
 
-			In the example above, all requests not containing one of the above file extensions will be passed to index.php.
-			This is useful for development, however in production the rewrite rules should be
-			written to exclude directories instead.
+			在上例中，所有请求(除了对那几个扩展名的文件的请求)都被转向到index.php。在开发中这是很有用的，当然在程序正式运行时重写规则应该写成把某些目录排除而不是文件。
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.bootstrap">
-		<title>Bootstrap File</title>
+		<title>Bootstrap文件</title>
+
+		<para>(Bootstrap相当于一小段引导程序，如果你用过Struts或Phrame，可能会有一点了解--Haohappy注)
+		</para>
 		
 		<para>
-			After setting up the .htaccess file, create a new file called <code>index.php</code>.  This is a bootstrap file.  
-			The purpose of the index.php file is only to bootstrap Zend_Controller_Front, which should ideally be
-			located outside of the document root.
+			在设置好 .htaccess文件之后，建立一个新的文件index.php，这是一个入口文件，目的在于启动Zend_Controller_Front。Zend_Controller_Front最好要放在你的站点根目录以外。
 		</para>
 
 		<note>	
-			The bootstrap file should be the only PHP file stored in the document root.			
+			bootstrap文件必须是根目录下唯一的PHP文件。			
 		</note>
 
 		<para>
-			For security purposes, Zend very strong recommends not storing any PHP files in directories that are 
-			accessible by the webserver (those that are beneath the document root).  While this is not possible in 
-			every scenario, such as shared hosting, this should be considered a best practice and observed whenever possible.  
+			出处安全方面的考虑，我们强烈建议在所有可能通过服务器访问的目录下（站点根目录的子目录）不放置任何PHP文件。有时候这可能做不到，例如虚拟主机。
 		</para>
 
 		<para>
-			Create the bootstrap file, <code>index.php</code>, in the document root to bootstrap Zend_Controller_Front:
+			建立bootstrap文件:index.php 在根目录中来启动Zend_Controller_Front：
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -67,33 +54,22 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 
 ?>]]></programlisting>
 
-			See the next section regarding the <code>/path/to/your/controllers</code>.
-
-			As instructed in <code>README.txt</code>, the directory of the Zend Framework library must be in the
-			<code>include_path</code>.  If this is not set in <code>php.ini</code>, <code>set_include_path()</code> 
-			can be called in this file before the <code>require_once()</code>.
+			看下面的章节来理解 /path/to/your/controllers。就像在README.txt中所介绍的，Zend Framework的library 目录必须在include_path中。如果没有在php.ini中设置，你可以通过set_include_path()函数来设置（放在require_once()之前）。
 		</para>
 
-		<note>
-			At this time, we are presently investigating solutions will not require mod_rewrite installation.  We
-			intend to suggest a configuration for systems both with and without mod_rewrite capabilities.  Also,
-			please note this system is not bound to Apache or mod_rewrite specifically, any webserver with similar
-			redirection capabilities should be sufficient.
+		<note>			我们现在正在寻找不需要服务器mod_rewrite模块支持的解决方案。我们希望能提供有mod_rewrite和没有mod_rewrite两种情况下的配置。注意：服务器不仅限于Apache和mod_rewrite模块，任何具有类似的功能的服务器都可以。
 		</note>
 	</sect2>	
 		
 	<sect2 id="zend.controller.getting-started.directory-structure">
-		<title>Directory Structure</title>
+		<title>目录结构</title>
 		
 		<para>
-			It is recommended that websites built with the Zend Framework share a common directory structure.  While
-			this is not possible in every case, it is for many or perhaps most.  Choosing to conform to this structure
-			will make your code more easily understandable by someone familiar with the conventions of the Zend Framework.
+			建议使用 Zend Framework的站点采用相同的目录结构。这样可以让其它熟悉Zend Framework的人更好地理解你的程序。
 		</para>
 		
 		<para>	
-			The suggested directory structure consists of both library directories (from Zend and elsewhere) 
-			and application directories.
+			建议的目录结构包括library目录(Zend自带的或你自己的)和application目录。
 
 			<programlisting role="php"><![CDATA[
 /application
@@ -111,7 +87,7 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 		</para>
 		
 		<note>
-			This section is not yet complete.  It is under heavy construction and is subject to change.
+			这一章节尚未完成，可能会有大量内容补充或修改。
 		</note>
 	</sect2>	
 		
@@ -119,8 +95,7 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 		<title>IndexController</title>
 
 		<para>
-			Every site must define a controller named <code>IndexController</code>.  This is the controller
-			that is reached when no controller is specified in the URI, such as in this URI:
+			每个站点都必须定义一个名为IndexController的控制器。没指定控制器时默认采用这个控制器。如：
 
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/
@@ -152,7 +127,7 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
 			<note>
-				This section is not yet complete.  It is under heavy construction and is subject to change.
+				这一章节尚未完成，可能会有大量内容补充或修改。
 			</note>			
 		</para>
 	</sect2>			

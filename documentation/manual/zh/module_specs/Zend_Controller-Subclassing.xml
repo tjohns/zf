@@ -1,83 +1,55 @@
 <sect1 id="zend.controller.subclassing">
-	<title>Subclassing</title>
+	<title>子类化（继承）</title>
 	
 	<sect2 id="zend.controller.subclassing.introduction">
-		<title>Introduction</title>
-		<para>
-			The <code>Zend_Controller</code> system was built with extensibility in mind, either
-			by subclassing the existing classes or writing new classes that implement 
-			the interfaces <code>Zend_Controller_Router_Interface</code> and <code>Zend_Controller_Dispatcher_Interface</code>.
+		<title> 简介</title>
+		<para>			Zend_Controller体系具有可扩展性，可以通过继承已有的类或者自己写个新的类来实现Zend_Controller_Router_Interface或Zend_Controller_Dispatcher_Interface接口。
 		</para>
 		
 		<para>
-			Possible reasons for implementing a new router or dispatcher might be:
+			打算实现一个新的router或dispatcher的原因可能是：
 			
 			<itemizedlist>
 				<listitem>
-					<para>
-						The existing URI routing system is not suitable in some way, such as integrating
-						into an existing website that uses its own conventions for routing that do not
-						mesh with the routing mechanism provided with the Zend Framework.
+					<para>已有的URI routing系统不合适，如把用Zend Framework的站点集成到一个已经存在的有自己的定向规则的站点。
 					</para>
 				</listitem>
 				<listitem>
-					<para>
-						You need to implement routing for something completely different.  The <code>Zend_Controller_Router</code>
-						class only deals with URIs.  It's possible and likely that you might want to use the MVC
-						pattern for developing another type of program, such as a console application.  In the case of
-						a console application, a custom router could process command line arguments to determine
-						the route.
+					<para>						你想用MVC模式来开发其它形式的PHP程序，如命令行形式的。那么你就需要自己定制一个router来处理命令行的参数了。
 					</para>
 				</listitem>
 				<listitem>
-					<para>
-						The mechanism provided by <code>Zend_Controller_Dispatcher</code> is not suitable.  The default configuration
-						assumes a convention that controllers are classes and actions are methods of those classes.
-						However, there are many other strategies for doing this.  One example would be where controllers
-						are directories and actions are files within those directories.
+					<para>						Zend_Controller_Dispatcher提供的机制不适用于你的程序。默认的情况是controller是类而action是类中的方法。但是也有其它情况如controller是一个目录，而action是其中的文件。这样你也要自己写。
 					</para>
 				</listitem>
 				<listitem>
-					<para>
-						You wish to provide additional capabilities that will be inherited by all of your controllers.
-						For example, <code>Zend_Controller_Action</code> does not integrate with <code>Zend_View</code> by default.  
-						However, you could extend your own controller to do this, and using it would not require modifying the
-						supplied <code>Zend_Controller_Router</code> or <code>Zend_Controller_Dispatcher</code>.
+					<para>						你想为你的控制器提供更多功能。例如Zend_Controller_Action默认没有和Zend_View集成。当然你也可以通过继承来实现，这样可以不用改变Zend_Controller_Router或者Zend_Controller_Dispatcher。
 					</para>
 				</listitem>
-			</itemizedlist>
-				
-			Please be careful when overriding significant parts of the system, particularly the dispatcher.  One of
-			the advantages of <code>Zend_Controller</code> is that it establishes common conventions for building applications.  If
-			too much of this default behavior is changed, some of these advantages are lost.  However, there are many
-			different needs and one solution can't fit them all, so the freedom is provided if needed.
+			</itemizedlist>				
+			P当你覆写系统的重要部分时要非常小心，特别是dispatcher。Zend_Controller的优点之一是它对于构建各种应用程序规定了一些固定的规则。如果你改写太多，有可能就失去这个优点。不过，现实当中有各种不同的需要，不可能只采用一种解决方案，所以在需要的时候可以考虑自己来改写。
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.subclassing.conventions">
-		<title>Conventions</title>
+		<title>约定（规则）</title>
 		
-		<para>
-			When subclassing any of the Zend_Controller classes, you are strongly encouraged to follow these
-			conventions for naming or storing files.  Doing so will ensure that another programmer who is familiar
-			with the Zend Framework will be able to understand your project easily.
+		<para>			当继承任何Zend_Controller的类时，你最好遵循以下命名和文件存储规则。这样做可以让另一个熟悉Zend Framework的程序员很容易地理解你的项目。
 		</para>
 		
 		<sect3 id="zend.controller.subclassing.prefix">
-			<title>Prefix</title>
+			<title>前缀</title>
 				
 			<para>
-				Classes included with the Zend Framework follow a convention where every class is prefixed by
-				"Zend_".  This is the prefix.  We recommend that you name all of your classes in the same way,
-				e.g. if your company name is Widget, Inc., the prefix might be "Widget_".  
+			Zend Framework中的所有类的名称都有一个前缀“Zend_” ，我们建议你的类可以模仿这种方法，例如你的公司名称为Widget，则前缀可以是“Widget_” 。 
 			</para>
 		</sect3>
 		
 		<sect3 id="zend.controller.directory.layout">
-			<title>Directory Layout</title>
+			<title>目录分布</title>
 			
 			<para>
-				The <code>Zend_Controller</code> classes are stored in the library directory as follows:
+				Zend_Controller的各个类在library目录下是这样分布的：
 
     <programlisting role="php"><![CDATA[
 /library
@@ -88,13 +60,11 @@
       Router.php
 ]]></programlisting>			
 
-				When subclassing <code>Zend_Controller</code> classes, it is recommended that the new classes
-				be stored in an identical structure under your prefix.  This will make them easy to find for
-				someone during that learning process of reviewing the code for your project.  
+			当继承Zend_Controller类时，建议新的类放在带有你的前缀的和以上结构完全相同的目录下。这样别人在查看你的代码时，可以很容易找到相应的代码。
 			</para>
 			
 			<para>
-				For example, a project from Widget, Inc. which implements only a custom router might look like this:
+			例如，Widget公司的一个项目，只实现了一个自定义的router，看起来可能是这样的：
 				
 <programlisting role="php"><![CDATA[
 /library
@@ -103,28 +73,21 @@
     /Controller
       Router.php
       README.txt
-]]></programlisting>			
+]]></programlisting>		
 
-				Notice in this example that the <code>Widget/Controller/</code> directory mirrors the <code>Zend/Controller/</code>
-				directory wherever possible.  In this case, it provides the class <code>Widget_Controller_Router</code>,
-				which would be either a subclass or replacement for <code>Zend_Controller_Router</code> implementing
-				<code>Zend_Controller_Router_Interface</code>.
+			注意在这个例子中Widget/Controller/映射到Zend/Controller/。另外，这个例子提供了一个Widget_Controller_Router，这可能是Zend_Controller_Router的子类，也可以是替代（通过实现Zend_Controller_Router_Interface接口）。
 			</para>
 			
-			<para>
-				Also, notice in the example above that a <code>README.txt</code> file has been placed in <code>Widget/Controller/</code>.
-				Zend strongly encourages you to document your projects through supplying separate tests and
-				documentation for customers.  However, we encourage you to also place a simple <code>README.txt</code> file
-				right in the directory to briefly explain your changes and how they work.
+			<para>			同时，注意上例中在Widget/Controller/下有个README.txt文件。我们强烈建议你为客户提供各种测试和文档，同时也建议你放置一个简单的README.txt文件在适当的目录，用来简要说明代码的修正过程和它们是如何工作的。
 			</para>
 		</sect3>
 	</sect2>
 	
 	<sect2 id="zend.controller.router.interface">
-		<title>Router Interface</title>
+		<title>Router 接口</title>
 		
 		<para>
-			The interface <code>Zend_Controller_Router_Interface</code> provides a definition for only one method:
+			Zend_Controller_Router_Interface接口只定义了一个方法：
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -135,39 +98,28 @@
    */
   public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
 
-?>]]></programlisting>
-			
-			Routing only occurs once: when the request is first received into the system.  The purpose of the
-			router is to generate a <code>Zend_Controller_Dispatch_Token</code> that specifies a controller and action of
-			that controller.  This is then passed to the dispatcher.  If it is not possible to map a route to 
-			a dispatch token (nonsenical route) then a boolean, <code>FALSE</code>, should be returned.
+?>]]></programlisting>	
+			Routing过程只发生一次：当请求被系统接收时。router的目的在于生成一个描述controller和action的Zend_Controller_Dispatch_Token。Token对象被传给dispatcher。如果无法将一个路径分配到一个dispatch token(无效的访问路径)，则会返回false。
 		</para>
 		
 		<para>
-			Some routers may process dynamic elements and need a way to determine if the dispatch token generated
-			is actually dispatchable before returning it.  For this reason, the router receives the object handle 
-			of the dispatcher as the sole argument to its <code>route()</code> method.  The dispatcher provides a method,
-			<code>isDispatchable()</code>, for this testing.
+		一些router需要处理动态的元素，需要判断生成的dispatch token在return之前是否是可分配的。 出于这个原因，router把对象当成它的route()方法的唯一的参数 。 dispatcher则提供了一个 isDispatchable()方法来测试是否是可分配的。
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.dispatcher.interface">
-		<title>Dispatcher Interface</title>
+		<title>Dispatcher 接口</title>
 		
 		<para>
-			<code>Zend_Controller_Front</code> will first call the router to receive the first dispatch token, which it will
-			pass to the dispatcher.  The dispatcher will dispatch the action (instantiate the controller, call
-			its action) and then return with either a boolean, FALSE, or another dispatch token.  
+		Zend_Controller_Front会先调用router，接收第一个dispatch token，然后传递给dispatcher。dispatcher将分配action(实例化一个controller，调用它的action)并返回一个FALSE或者另一个 dispatch token。 
 		</para>
 		
 		<para>
-			<code>Zend_Controller_Front</code> repeatedly calls the dispatcher until a dispatch token is not returned from
-			it.  This is known as the dispatch loop.  It allows for actions to be processed sequentially
-			until all work has been done.
+		Zend_Controller_Front重复调用dispatcher直到不返回dispatch token为止。这就是所谓的dispatch循环，它让所有的action依次处理，直到处理完毕。
 		</para>
 		
 		<para>
-			The interface <code>Zend_Controller_Dispatcher_Interface</code> provides definitions for two methods:
+			Zend_Controller_Dispatcher_Interface接口定义了两个方法：
 			
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -179,10 +131,7 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 
-		<code>isDispatchable()</code> checks if a dispatch token is dispatchable.  If it is, it returns <code>TRUE</code>.  
-		Otherwise, it returns <code>FALSE</code>.  The definition of what is dispatchable is left to the class 
-		implementing the interface.  In the case of the default implementation, <code>Zend_Controller_Dispatcher</code>, it means
-		that the controller file exists, the class exists within the file, and the action method exists within the class.
+		isDispatchable()方法检查一个 dispatch token 是否是可分配的。如果可以，返回TRUE，否则返回FALSE。默认地对于Zend_Controller_Dispatcher，可分配的意思就是说controller文件存在，文件内也存在相应的类，并且类中存在相应的action方法，
 		
 		<programlisting role="php"><![CDATA[<?php
 			
@@ -194,8 +143,7 @@ public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 		
-		<code>dispatch()</code> is where the work gets done.  This method must execute the action of the controller.
-		It must return either a dispatch token or a boolean, FALSE, to indicate that there is no more work to do.
+		dispatch()方法就是action执行的地方，必须执行controller的action。它可以返回一个dispatch token或者返回一个FALSE，表示工作已经全部完成。
 		
 		</para>
 	</sect2>
