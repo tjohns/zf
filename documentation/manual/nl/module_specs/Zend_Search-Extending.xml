@@ -351,7 +351,7 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
     /**
 	 * Zet de bestandpositie indicator en zet de bestandswijzer voort.
 	 * De nieuwe positie, berekend in bytes vanaf het begin van het
-	 * bestand, wordt bekomen door offset aan de door whence aangegeven
+	 * bestand, wordt verkregen door offset aan de door $whence aangegeven
 	 * positie te voegen, welke waarden als volgt zijn gedefinieerd::
      * SEEK_SET - Zet de positie gelijk aan offset bytes.
      * SEEK_CUR - Zet de positie aan de huidige lokatie plus offset.

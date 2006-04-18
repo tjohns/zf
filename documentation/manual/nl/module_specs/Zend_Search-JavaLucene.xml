@@ -5,7 +5,7 @@
 		<title>Bestandsformaten</title>
         <para>
           Het bestandsformaat van het Zend_Search_Lucene index bestand is binary compatible met Lucene
-          versie 1.4 en erboven.
+          versie 1.4 en hoger.
         </para>
     
         <para>
@@ -30,7 +30,7 @@
             <listitem>
                 <para>
                 <filename>*.cfs</filename> bestanden bevatten index segmenten.
-				Nota! Een geoptimizeerde index heeft altijd slechts één segment.
+				Nota! Een geoptimaliseerde index heeft altijd slechts één segment.
                 </para>
             </listitem>
             <listitem>
@@ -45,8 +45,8 @@
 	<sect2 id="zend.search.java-lucene.source-code">
 		<title>Java Broncode</title>
         <para>
-			De volgende Java programmalisting geeft een voorbeeld van hoe je een bestand
-			indexeerd via Java Lucene:
+			Het volgende Java programmavoorbeeld geeft een voorbeeld van hoe je een bestand
+			indexeert via Java Lucene:
         </para>
     
         <programlisting role="java"><![CDATA[
@@ -92,35 +92,35 @@ indexWriter.addDocument(doc);]]>
         <para>
 			LuceneIndexCreation.jar leest tekst bestanden door en maakt er een index voor aan. Gebruik:
         <programlisting role="java"><![CDATA[
-    java -jar LuceneIndexCreation.jar [-c] [-s] <dokument_pad> <index_pad>
+    java -jar LuceneIndexCreation.jar [-c] [-s] <document_pad> <index_pad>
     -c   - dwing de index naar case sensitive
     -s   - inhoud in de index opslaan
     ]]></programlisting>
-			Dit commando leest een map <code>&lt;dokument_map&gt;</code> door, met inbegrip van alle onderliggende mappen,
-			en maakt een Lucene index aan. De index is een set bestanden die in een andere map, gespecifieerd door
-			<code>&lt;index_map&gt;</code>, zullen worden opgeslaan..
+			Dit commando leest een map <code>&lt;document_map&gt;</code> door, inclusief alle onderliggende mappen,
+			en maakt een Lucene index aan. De index is een set bestanden die in een andere map, gespecificeerd door
+			<code>&lt;index_map&gt;</code>, zullen worden opgeslagen..
         </para>
     
         <para>
-			Voor elk dokument dat moet worden geïndexeerd maakt LuceneIndexCreation een dokumentobjekt aan
-			met drie velden: een <emphasis>contents</emphasis> veld dat de inhoud (body) van het dokument
-			bevatn een <emphasis>modifies</emphasis> veld dat de bestandswijzigingstijd bevat en tenslotte het
+			Voor elk document dat moet worden geïndexeerd maakt LuceneIndexCreation een documentobject aan
+			met drie velden: een <emphasis>contents</emphasis> veld dat de inhoud (body) van het document
+			bevat en een <emphasis>modifies</emphasis> veld dat de bestandswijzigingstijd bevat en tenslotte het
 			<code>&lt;path&gt;</code> veld dat het volledige pad en de bestandsnaam bevat.
         </para>
     
         <para>
-			Indien de <option>-c</option> optie werd gespecifieerd zal de index tot case sensitive gedwongen worden. Indien
+			Indien de <option>-c</option> optie werd gespecificeerd zal de index tot case sensitive gedwongen worden. Indien
 			niet, zullen alle termen naar kleine letters worden geconverteerd voor ze aan de index worden toegevoegd.
         </para>
     
         <para>
-			Indien de <option>-s</option> optie werd gespecifieerd, zal de inhoud van het dokument ook in de index
-			worden opgeslaan. Die kan dan via de velden <code>path</code> en <code>modified</code> terug worden opgeroepen.
+			Indien de <option>-s</option> optie werd gespecificeerd, zal de inhoud van het document ook in de index
+			worden opgeslagen. Die kan dan via de velden <code>path</code> en <code>modified</code> worden opgeroepen.
         </para>
         
         <para>
-			Anders worden alleen de <code>path</code> en <code>modified</code> velden opgeslaan, en
-			het <code>contents</code> veld wordt slechts geïndexeerd. In dat geval moet de dokumentinhoud
+			Anders worden alleen de <code>path</code> en <code>modified</code> velden opgeslagen, en
+			het <code>contents</code> veld wordt slechts geïndexeerd. In dat geval moet de documentinhoud
 			vanaf een oorspronkelijke bron worden opgehaald via zijn <code>path</code>.
         </para>
         
