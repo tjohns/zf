@@ -25,7 +25,7 @@ loadFile($filename, $dirs=null, $once=false)
 
 ?>]]></programlisting>
 
-    <para>Het <code>$filename</code> argument specifieert het bestand 
+    <para>Het <code>$filename</code> argument specificeert het bestand 
 	dat moet worden geladen. Let op: $filename mag geen padinformatie bevatten. 
 	Er wordt een veiligheidscheck gedaan op <code>$filename</code>. 
 	<code>$filename</code> kan enkel alfanumerieke tekens, min-tekens ("-"), 
@@ -33,10 +33,10 @@ loadFile($filename, $dirs=null, $once=false)
 	toepassing op het argument <code>$dirs</code>.
     </para>
 
-    <para>Het argument <code>$dirs</code> specifieert de paden of het pad waarin het 
+    <para>Het argument <code>$dirs</code> specificeert de paden of het pad waarin het 
 	bestand moet worden gezocht. Indien <code>NULL</code>, zal er enkel in het 
 	<code>include_path</code> worden gezocht. Indien het een string of een array is, 
-	zal er in de gespecifeerde paden en het <code>include_path</code> worden gezocht.
+	zal er in de gespecificeerde paden en het <code>include_path</code> worden gezocht.
     </para>
 
     <para>
@@ -112,7 +112,7 @@ loadInterface($interface, $dirs)
 <sect1 id="zend.isreadable">
     <title>Zend::isReadable()</title>
 
-    <para>Geeft de waarde <code>TRUE</code> terug indien een bastand leesbaar
+    <para>Geeft de waarde <code>TRUE</code> terug indien een bestand leesbaar
 	is, anders <code>FALSE</code>.</para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -121,9 +121,9 @@ isReadable($filename)
 
 ?>]]></programlisting>
 
-    <para>Het argument <code>$filename</code> specifieert de bestandsnaam die
+    <para>Het argument <code>$filename</code> specificeert de bestandsnaam die
 	nagegaan dient te worden, en mag padinformatie bevatten. Deze methode is
-	een omwikkeling voor de PHP functie
+	een "wrapper" voor de PHP functie
 	<ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.
 	De PHP functie zoekt niet in <code>include_path</code>, terwijl 
 	<code>Zend::isReadable()</code> dat wèl doet.
@@ -135,7 +135,7 @@ isReadable($filename)
 
     <para>
 	<code>Zend::dump()</code> drukt informatie over een uitdrukking af 
-	(of geeft deze terug). Het is een omwikkeling voor de PHP functie
+	(of geeft deze terug). Het is een "wrapper" voor de PHP functie
 	<ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>. Ze
 	omvat de weergave in (X)HTML <code>&lt;pre&gt;</code> afbakeningen en
 	kan die optioneel prefixen met een stuk tekst.
@@ -148,7 +148,7 @@ dump($var, $label=null, $echo=true)
 ?>]]></programlisting>
 
     <para>
-	Het <code>$var</code> argument specifieert de uitdrukking of variabele
+	Het <code>$var</code> argument specificeert de uitdrukking of variabele
 	waarvoor de informatie zal worden afgedrukt.
     </para>
 
@@ -160,7 +160,7 @@ dump($var, $label=null, $echo=true)
     </para>
 
     <para>
-	De boolean <code>$echo</code> kontroleert of de weergave van
+	De boolean <code>$echo</code> controleert of de weergave van
 	<code>Zend::dump()</code> wordt weergegeven of niet. Indien het <code>TRUE</code>
 	is, wordt deze weergegeven. Ongeacht de waarde van <code>$echo</code> zal de
 	output altijd worden terugegeven.
@@ -172,7 +172,7 @@ dump($var, $label=null, $echo=true)
     <title>Zend::register()</title>
 
     <para>
-	Een objekt in de objektenlijst opslaan.
+	Een object in de objectenlijst opslaan.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -183,22 +183,22 @@ register($name, $object)
 
     <para>
 	De registry is een mechanisme voor het verstrekken van singleton instanties 
-	van objekten aan de toepassingsruimte. Het objekt wordt slechts éénmaal
+	van objecten aan de toepassingsruimte. Het object wordt slechts éénmaal
 	opgeslaan en kan opgevraagd worden wanneer nodig. Het is steeds dezelfde
-	instantie van het objekt dat word terugegeven.
+	instantie van het object dat word terugegeven.
     </para>
 
     <para>
-	<code>$name</code> is eender welke string die toelaat het objekt een naam
-	te geven in de objektenlijst. Deze naam kan dan aan <code>Zend::registry()</code>
-	worden doorgegeven om het objekt opnieuw te verkrijgen.
+	<code>$name</code> is eender welke string die toelaat het object een naam
+	te geven in de objectenlijst. Deze naam kan dan aan <code>Zend::registry()</code>
+	worden doorgegeven om het object opnieuw te verkrijgen.
     </para>
 
     <para>
-	Het <code>$name</code> argument moet een string zijn, alleen objekten mogen
-	opgeslaan worden in de registry, een objekt kan nooit worden verwijderd
-	uit de registry en een objektinstantie kan slechts éénmaal worden
-	opgeslaan in de registry.
+	Het <code>$name</code> argument moet een string zijn, alleen objecten mogen
+	opgeslagen worden in de registry, een object kan nooit worden verwijderd
+	uit de registry en een objectinstantie kan slechts éénmaal worden
+	opgeslagen in de registry.
 	Het niet nakomen van deze regels zal een <code>Zend_Exception</code> opwerpen.
     </para>
 </sect1>
@@ -207,7 +207,7 @@ register($name, $object)
     <title>Zend::registry()</title>
 
     <para>
-	Geeft een objekt van de registry terug of een lijst van alle objekten in de registry.
+	Geeft een object van de registry terug of een lijst van alle objecten in de registry.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -218,13 +218,13 @@ registry($name=null)
 
     <para>
 	Indien het <code>$name</code> argument <code>NULL</code> is zal een array 
-	terugegeven worden waarvan de keys de namen van de objekten in de registry 
-	zijn en de waarden de klassenamen van de objekten.
+	teruggegeven worden waarvan de keys de namen van de objecten in de registry 
+	zijn en de waarden de klassenamen van de objecten.
     </para>
 
     <para>
-	Als <code>$name</code> een string is zal de overeenkomstige objekt handle 
-	worden teruggegeven. Indien er geen objekt bestaat in de registry met
+	Als <code>$name</code> een string is zal de overeenkomstige object handle 
+	worden teruggegeven. Indien er geen object bestaat in de registry met
 	de naam <code>$name</code> zal er een  <code>Zend_Exception</code>
 	worden opgeworpen.
     </para>

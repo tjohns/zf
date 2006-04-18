@@ -15,11 +15,11 @@
 	<sect2 id="zend.controller.getting-started.server-configuration">
 		<title>Server Configuratie</title>
 		<para>
-			Zend_Controller is gebouwd om moderne webstekken met "propere" URIs (weinig of geen query parameters)
+			Zend_Controller is gebouwd om moderne websites met "propere" URIs (weinig of geen query parameters)
 			te ondersteunen.
 			Als zodanig heeft de voorgestelde configuratie de hulp nodig van de webserver in de vorm van het
 			herschrijven van de URI zodat alle aanvragen naar een enkel bestand kunnen worden doorgestuurd.
-			Dit bestand noemt "index.php" en is gewoon een bootstrap voor <code>Zend_Controller_Front</code>.
+			Dit bestand heet "index.php" en is gewoon een bootstrap voor <code>Zend_Controller_Front</code>.
 			Op Apache webservers word dit afgehandeld door de optionele module "mod_rewrite".
 		</para>
 
@@ -51,13 +51,13 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		</para>
 
 		<note>	
-			Het bootstrap bestand zou het enige PHP bestand moeten zijn dat in de documentroot is opgeslagen.
+			Het bootstrap bestand zou het enige PHP bestand moeten zijn dat in de document root is opgeslagen.
 		</note>
 
 		<para>
 			Om veiligheidsredenen raadt Zend héél sterk aan geen PHP bestanden op te slaan in mappen die door
 			de webserver toegankelijk zijn (submappen van de document root). Hoewel dit niet altijd
-			mogelijk is, zoals bij gemutualiseerde webhosting, zou dit toch moeten worden beschouwd als een
+			mogelijk is, zoals bij gedeelde webhosting, zou dit toch moeten worden beschouwd als een
 			ideaal en toegepast waar mogelijk.
 		</para>
 
@@ -73,7 +73,7 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers')
 
 ?>]]></programlisting>
 
-			Zie de volgende sektie wat betreft <code>/pad/naar/jouw/controllers</code>.
+			Zie de volgende sectie wat betreft <code>/pad/naar/jouw/controllers</code>.
 
 			Zoals aangegeven in <code>README.txt</code> moet het Zend Framework pad in <code>include_path</code>
 			zijn. Indien dit niet in <code>php.ini</code> aangeduid is, kan je <code>set_include_path()</code> 
@@ -89,17 +89,17 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers')
 	</sect2>	
 		
 	<sect2 id="zend.controller.getting-started.directory-structure">
-		<title>Mappenstruktuur</title>
+		<title>Mappenstructuur</title>
 		
 		<para>
-			Het is aanbevolen dat websites gebouwd met de Zend Framework een gemeenschappelijke mappenstruktuur
+			Het is aanbevolen dat websites gebouwd met de Zend Framework een gemeenschappelijke mappenstructuur
 			hebben. Hoewel dit niet in alle gevallen mogelijk is, is het dat toch voor velen en waarschijnlijk
-			de meeste. De keuze om deze regel is gemotiveerd omdat die jouw code gemakkelijker begrijpbaar zal maken voor
+			de meeste. De keuze voor deze regel is gemotiveerd omdat die jouw code gemakkelijker begrijpbaar zal maken voor
 			iemand die de Zend Framework overeenkomsten kent.
 		</para>
 		
 		<para>	
-			De voorgestelde mappenstruktuur bestaat uit zowel bibliotheekmappen (van Zend en elders) en
+			De voorgestelde mappenstructuur bestaat uit zowel bibliotheekmappen (van Zend en elders) en
 			toepassingsmappen.
 
 			<programlisting role="php"><![CDATA[
@@ -118,7 +118,7 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers')
 		</para>
 		
 		<note>
-			Deze sektie is nog niet kompleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
+			Deze sectie is nog niet compleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
 		</note>
 	</sect2>	
 		
@@ -127,7 +127,7 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers')
 
 		<para>
 			Elke site moet een controller genaamd <code>IndexController</code> definiëren. Dit is de
-			controller die wordt bereikt indien geen enkele controller werd gespecifieerd in de URI,
+			controller die wordt bereikt indien geen enkele controller werd gespecificeerd in de URI,
 			zoals in volgende URI:
 
 			<programlisting role="php"><![CDATA[
@@ -161,7 +161,7 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
 			<note>
-			Deze sektie is nog niet kompleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
+			Deze sectie is nog niet compleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
 			</note>			
 		</para>
 	</sect2>			

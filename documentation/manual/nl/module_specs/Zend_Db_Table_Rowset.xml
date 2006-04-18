@@ -7,11 +7,11 @@
         <title>Inleiding</title>
 
         <para>
-			Zend_Db_Table_Rowset is een iterator voor Zend_Db_Table_Row objekt 
+			Zend_Db_Table_Rowset is een iterator voor Zend_Db_Table_Row object 
 			verzamelingen. In het algemeen instantieer je geen alleenstaande
 			Zend_Db_Table_Rowset; maar krijg je een Zend_Db_Table_Rowset terug als
 			resultaat van een oproep aan Zend_Db_Table::find() of fetchAll(). Je
-			kan dan door de verzameling Zend_Db_Table_Row objekten lopen en deze
+			kan dan door de verzameling Zend_Db_Table_Row objecten lopen en deze
 			wijzigen indien je dat wenst.
         </para>
 
@@ -19,7 +19,7 @@
 
     <sect2 id="zend.db.table.rowset.fetch">
 
-        <title>Een Rowset bekomen</title>
+        <title>Een Rowset verkrijgen</title>
 
         <para>
 			Het eerste wat je moet doen is een Zend_Db_Table klasse instantiëren.
@@ -48,12 +48,12 @@ $table = new RoundTable();
         </programlisting>
 
         <para>
-			Verkrijg vele recorss van de database door
+			Verkrijg vele records van de database door
 			Zend_Db_Table::find() met meerdere keys te gebruiken,
 			of door Zend_Db_Table::fetchAll() te gebruiken; het aldus
-			bekomen resultaat zal een Zend_Db_Table_Rowset objekt zijn
+			bekomen resultaat zal een Zend_Db_Table_Rowset object zijn
 			dat je toelaat door de individuele Zend_Db_Table_Row 
-			objekten in de recordset te lopen.
+			objecten in de recordset te lopen.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -61,8 +61,8 @@ $table = new RoundTable();
 $rowset = $table->fetchAll();
 
 //
-// $rowset is nu een Zend_Db_Table_Rowset objekt bestaande uit
-// één Zend_Db_Table_Row objekt per record in de resultaten
+// $rowset is nu een Zend_Db_Table_Rowset object bestaande uit
+// één Zend_Db_Table_Row object per record in de resultaten
 //
 ?>]]>
         </programlisting>
@@ -75,9 +75,9 @@ $rowset = $table->fetchAll();
 
         <para>
             Zend_Db_Table_Rowset implementeert de SPL Iterator interface,
-			wat betekent dat je door Zend_Db_Table_Rowset objekten kan lopen
+			wat betekent dat je door Zend_Db_Table_Rowset objecten kan lopen
 			zoals je dat doet met arrays door foreach() te gebruiken. Elke
-			waarde die je zo verkrijgt zal een Zend_Db_Table_Row objekt zijn
+			waarde die je zo verkrijgt zal een Zend_Db_Table_Row object zijn
 			dat overeenkomt met een record van de tabel. Je kan dan de
 			eigenschappen ervan afbeelden, wijzigen en terug opslaan.
         </para>

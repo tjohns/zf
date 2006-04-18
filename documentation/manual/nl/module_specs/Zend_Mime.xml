@@ -2,7 +2,7 @@
     <title>Inleiding</title>
     <para>
         <code>Zend_Mime</code> is een hulpklasse voor het afhandelen van multipart MIME berichten. Ze wordt gebruikt
-		door <link linkend="zend.mail"><code>Zend_Mail</code></link>, en kan gebruilt worden door toepassingen die 
+		door <link linkend="zend.mail"><code>Zend_Mail</code></link>, en kan gebruikt worden door toepassingen die 
 		MIME ondersteuning nodig hebben.
     </para>
     <para>
@@ -15,7 +15,7 @@
                 <code>boundaryLine()</code>: Geeft de gehele MIME boundary regel terug.
             </listitem>
             <listitem>
-                <code>encodeBase64()</code>: Encodeerd een string met base64.
+                <code>encodeBase64()</code>: Encodeert een string met base64.
             </listitem>
             <listitem>
                 <code>encodeQuotedPrintable()</code>: Encodeert een string met het quoted-printable mechanisme.

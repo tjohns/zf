@@ -18,7 +18,7 @@
 				<listitem>
 					<para>
 						Het bestaande URI routing systeem is niet toepasbaar om één of andere reden, zoals
-						de integratie in een bestaande website die zijn eigen konventies voor routing
+						de integratie in een bestaande website die zijn eigen conventies voor routing
 						heeft en die niet overeenkomen met het routing systeem van het Zend Framework.
 					</para>
 				</listitem>
@@ -26,17 +26,17 @@
 					<para>
 						Je moet een routing systeem implementeren voor iets volledig anders. De <code>Zend_Controller_Router</code>
 						klasse kan alleen URIs afhandelen. Het is mogelijk en waarschijnlijk dat je het MVC patroon
-						wil gebruiken om een ander type programma te ontwikkelen, zoals een konsole toepassing. In het
-						geval van een konsole toepassing zou een aangepaste router argumenten van de command line moeten kunnen 
+						wil gebruiken om een ander type programma te ontwikkelen, zoals een console toepassing. In het
+						geval van een console toepassing zou een aangepaste router argumenten van de command line moeten kunnen 
 						verwerken om de route te determineren.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Het mechanisme dat door <code>Zend_Controller_Dispatcher</code> wordt verstrekt is niet toepasbaar. De
-						standaard configuratie neemt een overeenkomst aan die zegt dat controller klassen zijn en akties
+						standaard configuratie neemt een overeenkomst aan die zegt dat controller klassen zijn en acties
 						methodes van die klassen. Er zijn evenwel vele andere strategiën om dit te doen. Eén voorbeeld zou
-						zijn waar de controllers mappen zijn en de akties bestanden in die mappen.
+						zijn waar de controllers mappen zijn en de acties bestanden in die mappen.
 					</para>
 				</listitem>
 				<listitem>
@@ -63,8 +63,8 @@
 		
 		<para>
 			Bij het onderklassen van een Zend_Controller klasse is het sterk aangeraden de volgende overeenkomsten
-			te respekteren bij de benaming en het opslaan van bestanden. Door dit te doen verzeker je ervan dat
-			een andere programmeur die het Zend Framework kent gemakkelijk je projekt kan verstaan.
+			te respecteren bij de benaming en het opslaan van bestanden. Door dit te doen verzeker je ervan dat
+			een andere programmeur die het Zend Framework kent gemakkelijk je project kan begrijpen.
 		</para>
 		
 		<sect3 id="zend.controller.subclassing.prefix">
@@ -94,13 +94,13 @@
 ]]></programlisting>			
 
 				Bij het onderklassen van <code>Zend_Controller</code> klassen is het aangeraden dat de nieuwe 
-				klassen opgeslaan worden in een gelijkaardige struktuur onder jouw prefix. Dat maakt het
+				klassen opgeslagen worden in een gelijkaardige structuur onder jouw prefix. Dat maakt het
 				gemakkelijk om ze te vinden voor iemand gedurende dat leerprocess dat het nakijken van de
-				code van jouw projekt is.
+				code van jouw project is.
 			</para>
 			
 			<para>
-				Bijvoorbeeld, een projekt Widget NV dat alleen een aangepaste router implementeerd zou op
+				Bijvoorbeeld, een project Widget NV dat alleen een aangepaste router implementeerd zou op
 				het volgende kunnen lijken:
 				
 <programlisting role="php"><![CDATA[
@@ -112,7 +112,7 @@
       README.txt
 ]]></programlisting>			
 
-				Merk in dit voobeeld op dat de <code>Widget/Controller/</code> map de <code>Zend/Controller/</code> weerspiegelt
+				Merk in dit voorbeeld op dat de <code>Widget/Controller/</code> map de <code>Zend/Controller/</code> weerspiegelt
 				waar dat ook maar enigzins mogelijk is. In dit geval verstrekt het een <code>Widget_Controller_Router</code>
 				klasse die een onderklasse of een vervanging is voor <code>Zend_Controller_Router</code> en die de
 				<code>Widget_Controller_Router_Interface</code> implementeert.
@@ -120,9 +120,9 @@
 			
 			<para>
 				Merk ook op in het voorbeeld hierboven dat een <code>README.txt</code> bestand is opgeslaan in
-				<code>Widget/Controller</code>. Zend moedigt je sterk aan je projekten te dokumenteren door
-				afzonderlijke tests en dokumentatie te verstrekken voor je klanten. We moedigen je ook sterk aan
-				een eenvoudig <code>README.txt</code> bestandje te plaatsen in de map om kort je veranderingen
+				<code>Widget/Controller</code>. Zend moedigt je sterk aan je projecten te documenteren door
+				afzonderlijke tests en documentatie te verstrekken voor je klanten. We moedigen je ook sterk aan
+				een eenvoudig <code>README.txt</code> bestand te plaatsen in de map om kort je veranderingen
 				uit te leggen en hoe ze werken.
 			</para>
 		</sect3>
@@ -147,7 +147,7 @@
 
 			Routing gebeurt slecht één enkele keer: wanneer het verzoek voor het eerst door het systeem wordt ontvangen.
 			Het doel van de router is een <code>Zend_Controller_Dispatch_Token</code> aan te maken dat een controller
-			en een aktie van die controller definieert. Dit wordt dan doorgegeven aan de dispatcher. Indien het niet
+			en een actie van die controller definieert. Dit wordt dan doorgegeven aan de dispatcher. Indien het niet
 			mogelijk is een route naar een dispatch token te mappen (nonsenical route) dan moet er een boolean,
 			<code>FALSE</code> worden teruggestuurd.
 		</para>
@@ -155,7 +155,7 @@
 		<para>
 			Sommige routers kunnen dynamische elementen verwerken en hebben een manier nodig om de determineren of het
 			aldus gegenereerde token inderdaad dispatchbaar is voordat het wordt teruggestuurd. Om deze reden ontvangt
-			de router de objekt handle van de dispatcher als enig argument voor zijn <code>route()</code> methode.
+			de router de object handle van de dispatcher als enig argument voor zijn <code>route()</code> methode.
 			De dispatcher verstrekt een methode, <code>isDispatchable()</code> om dit te testen.
 		</para>
 	</sect2>
@@ -164,14 +164,14 @@
 		<title>Dispatcher Interface</title>
 		
 		<para>
-			<code>Zend_Controller_Front</code> zal eerst de router solliciteren om een eerste disptach token te ontvangen en
-			zal dit doorgeven aan de dispatcher. De dispatcher zal de aktie (de controller instantiëren, zijn aktie 
-			oproepen) dispatchen en dan ofwel een boolean, FALSE, terugkeren, of een ander dispatch token.
+			<code>Zend_Controller_Front</code> zal eerst de router benaderen om een eerste dispatch token te ontvangen en
+			zal dit doorgeven aan de dispatcher. De dispatcher zal de actie (de controller instantiëren, zijn actie 
+			oproepen) dispatchen en dan ofwel een boolean, FALSE, teruggeven, of een ander dispatch token.
 		</para>
 		
 		<para>
 			<code>Zend_Controller_Front</code> roept herhaaldelijk de dispatcher op tot deze geen dispatch token meer terug
-			stuurt. Dit staat bekend als de dispatch loop. Het laat toe akties opeenvolgend te verwerken tot al het werk 
+			stuurt. Dit staat bekend als de dispatch loop. Het laat toe acties opeenvolgend te verwerken tot al het werk 
 			gedaan is.
 		</para>
 		
@@ -191,7 +191,7 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 		<code>isDispatchable()</code> gaat na of een dispatch token kan gedispatched worden. Indien dat zo is geeft het
 		<code>TRUE</code> terug. Anders geeft het <code>FALSE</code> terug. In het geval van de standaard implementatie,
 		<code>Zend_Controller_Dispatcher</code>, betekent dit dat het controller bestand bestaat, dat de klasse in het 
-		bestand betaat en dat de aktiemethode in de klasse bestaat.
+		bestand betaat en dat de actiemethode in de klasse bestaat.
 		
 		<programlisting role="php"><![CDATA[<?php
 			
@@ -203,8 +203,8 @@ public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 		
-		<code>dispatch()</code> is waar het echte werk wordt gedaan. Deze methode moet de aktie van de controller 
-		uitvoeren. Het moet ofwel een dispatch token terugkeren of een boolean, FALSE, om aan te geven dat er geen
+		<code>dispatch()</code> is waar het echte werk wordt gedaan. Deze methode moet de actie van de controller 
+		uitvoeren. Het moet ofwel een dispatch token teruggeven of een boolean, FALSE, om aan te geven dat er geen
 		werk meer te doen is.
 		
 		</para>

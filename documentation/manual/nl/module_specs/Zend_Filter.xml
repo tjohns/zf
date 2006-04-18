@@ -1,6 +1,6 @@
 <sect1 id="zend.filter.introduction">
     <title>Inleiding</title>
-    <para><literal>Zend_Filter</literal> verstrekt een bibliotheek van statsiche methodes om
+    <para><literal>Zend_Filter</literal> verstrekt een bibliotheek van statisiche methodes om
 	data te filteren. Om invoer te filteren moet je <xref
     linkend="zend.inputfilter" /> gebruiken in de plaats van Zend_Filter, want het verstrekt
 	een framework om invoer te filteren door het gebruik van de methodes die deze klasse aanbiedt.

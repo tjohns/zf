@@ -9,7 +9,7 @@
         <para>
 			Zend_Db_Select is een werktuig dat je helpt SQL SELECT verklaringen
 			te bouwen op een manier waardoor deze niet database gebonden zijn.
-			Het kan uiteraard niet perfekt zijn, maar het helpt je een goed
+			Het kan uiteraard niet perfect zijn, maar het helpt je een goed
 			stuk om je queries database-onafhankelijk te maken, en daardoor
 			overdraagbaar van een database naar een andere. Bovendien helpt het
 			je je queries beter bestand te maken tegen SQL injectie aanvallen.
@@ -34,12 +34,12 @@ $params = array (
 $db = Zend_Db::factory('pdoMysql', $params);
 
 $select = $db->select();
-// $select is nu een Zend_Db_Select_PdoMysql objekt
+// $select is nu een Zend_Db_Select_PdoMysql object
 
 ?>]]></programlisting>
 
         <para>
-			Dan maak je een SELECT query via dat objekt en zijn methodes en
+			Dan maak je een SELECT query via dat object en zijn methodes en
 			die maakt dan een string die je aan Zend_Db_Adapter kan doorgeven
 			om queries of ophalingen uit te voeren.
         </para>
@@ -70,9 +70,9 @@ $select->from('round_table', '*')
 $sql = $select->__toString();
 $result = $db->fetchAll($sql);
 
-// een andere manier is om het $select objekt zelf door te geven;
+// een andere manier is om het $select object zelf door te geven;
 // Zend_Db_Adapter Is slim genoeg om de __toString() methode op
-// Zend_Db_Select objekten toe te passen om de querystring te
+// Zend_Db_Select objecten toe te passen om de querystring te
 // verkrijgen.
 $result = $db->fetchAll($select);
 
@@ -108,18 +108,18 @@ $result = $db->fetchAll($select, $params);
 
     <sect2 id="zend.db.select.fromcols">
 
-        <title>Kolommen FROM een Tabel</title>
+        <title>Kolommen FROM een tabel</title>
 
         <para>
-			Om kolommen van een bepaalde tabel de selekteren gebruik je de
+			Om kolommen van een bepaalde tabel de selecteren gebruik je de
 			from() methode, de tabel en de kolommen die je ervan wil
-			verkijgen specifierend. Je kan zowel tabel als kolom aliassen
+			verkijgen specificerend. Je kan zowel tabel als kolom aliassen
 			gebruiken en je kan from() zoveel gebruiken als nodig is.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// maak een $db objekt en neem aan dat we de Mysql adapter gebruiken
+// maak een $db object en neem aan dat we de Mysql adapter gebruiken
 $select = $db->select();
 
 // SELECT a, b, c FROM some_table
@@ -139,11 +139,11 @@ $select->from('bar', 'bar.col AS col2');
 
     <sect2 id="zend.db.select.joincols">
 
-        <title>Kolommen van geJOINde Tabellen</title>
+        <title>Kolommen van geJOINde tabellen</title>
 
         <para>
-			Om kolommen van gejoinde tabellen te selekteren kan je de
-			join() methode grbuiken. Geef eerst de gejoinde tabelnaam op,
+			Om kolommen van gejoinde tabellen te selecteren kan je de
+			join() methode gebruiken. Geef eerst de gejoinde tabelnaam op,
 			dan de join voorwaarde en uiteindelijk de kolommen die je van
 			de join wil terugkrijgen. Je kan join() zoveel maal gebruiken
 			als dat nodig is.
@@ -151,7 +151,7 @@ $select->from('bar', 'bar.col AS col2');
 
         <programlisting role="php"><![CDATA[<?php
 	
-// maak een $db objekt en neem aan dat we de Mysql adapter gebruiken
+// maak een $db object en neem aan dat we de Mysql adapter gebruiken
 $select = $db->select();
 
 //
@@ -165,7 +165,7 @@ $select->join('bar', 'foo.id = bar.id', '*');
 ?>]]></programlisting>
 
         <para>
-			Voor het moment is alleen de JOIN syntax geondersteund; geen
+			Voor het moment is alleen de JOIN syntax ondersteund; geen
 			LEFT JOINs, RIGHT JOINs enz. Latere versies zullen deze
 			concepten in een database-onafhankelijke manier ondersteunen.
         </para>
@@ -174,18 +174,18 @@ $select->join('bar', 'foo.id = bar.id', '*');
 
     <sect2 id="zend.db.select.where">
 
-        <title>WHERE Voorwaarden</title>
+        <title>WHERE voorwaarden</title>
 
         <para>
-			Om WHERE voorwaarden to te voegen gebruik je de where() methode.
+			Om WHERE voorwaarden toe te voegen gebruik je de where() methode.
 			Je kan een gewone string doorgeven, of een string met de
-			vraagtekene plaatshouder en een waarde die er moet worden ingequot
+			vraagteken plaatshouder en een waarde die er moet worden ingequote
 			(de waarde zal in qoutes worden gewikkeld door 
 			Zend_Db_Adapter::quoteInto() te gebruiken.
         </para>
 
         <para>
-			Meerdere aanvragen aan where() zal de voorwaarden aan elkaar ANDen;
+			Meerdere aanvragen aan where() zal de voorwaarden aan elkaar AND-en;
 			als je een OR voorwaarde nodig hebt, gebruik dan orWhere().
         </para>
 
@@ -220,7 +220,7 @@ $select->orWhere('id IN(?)', array(1, 2, 3);
 
     <sect2 id="zend.db.select.group">
 
-        <title>GROUP BY Clausule</title>
+        <title>GROUP BY clausule</title>
 
         <para>
 			Om rijen te groeperen gebruik je de group() methode zoveel maal
@@ -256,14 +256,14 @@ $select->group(array('bar', 'baz'));
         <title>HAVING voorwaarden</title>
 
         <para>
-			Om HAVING voorwaarden aan de selektieregels toe te voegen gebruik
+			Om HAVING voorwaarden aan de selectieregels toe te voegen gebruik
 			je de having() methode. Deze methode heeft een identieke werking
 			als de where() methode.
         </para>
 
         <para>
 			Indien je having() meerdere malen oproept worden de voorwaarden
-			aaneen geAND; om OR voorwaarden te verkrijgen gebruik je orHaving().
+			aaneen ge-AND; om OR voorwaarden te verkrijgen gebruik je orHaving().
         </para>
         <programlisting role="php"><![CDATA[<?php
 	
@@ -285,7 +285,7 @@ $select->having('count_id > ?', 1);
 
     <sect2 id="zend.db.select.order">
 
-        <title>ORDER BY Clausule</title>
+        <title>ORDER BY clausule</title>
 
         <para>
 			Om kolommen te ordenen gebruik je de order() methode zoveel maal als
@@ -320,7 +320,7 @@ $select->order(array('noble_title DESC', 'first_name'));
         <title>LIMIT per Count en Offset</title>
 
         <para>
-			Zend_Dn_Select ondersteund een database onafhankelijke LIMIT clausule.
+			Zend_Db_Select ondersteunt een database onafhankelijke LIMIT clausule.
 			Voor vele databases, zoals MySQL en PostgreSQL is dit relatief
 			eenvoudig omdat ze de "LIMIT :count [OFFSET :offset]" syntax
 			ondersteunen.

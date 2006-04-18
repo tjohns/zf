@@ -1,14 +1,14 @@
 <sect1 id="zend.json.introduction">
     <title>Inleiding</title>
     <para>
-        <code>Zend_Json</code> verstrekt gemakkelijke methodes om bron PHP naar 
-		het JSON formaat te serializeren et JSON te decoderen naar bron PHP. Voor
+        <code>Zend_Json</code> verstrekt gemakkelijke methodes om PHP naar 
+		het JSON formaat te serializeren en JSON te decoderen naar PHP. Voor
 		meer informatie over JSON kan je terecht op 
-		<ulink url="http://www.json.org/">de webstek van het JSON projekt</ulink>.
+		<ulink url="http://www.json.org/">de website van het JSON project</ulink>.
     </para>
     <para>
 		JSON, JavaScript Object Notation, kan gebruikt worden als een lichtgewicht
-		data transporteur tussen javascript en andere programmeertalen. Vermits
+		data transporteur tussen javascript en andere programmeertalen. Omdat
 		JSON onmiddellijk in Javascript kan worden geëvalueerd is het een ideaal
 		formaat om te gebruiken met Web 2.0 interfaces; het is een eenvoudiger
 		alternatief dan XML voor AJAX interfaces.
@@ -19,10 +19,10 @@
     <title>Basisgebruik</title>
     <para>
 		Het gebruik van <code>Zend_Json</code> impliceert het gebruik van de
-		volgende twee publiek voorhanden methodes: <code>Zend_Json::encode()</code> 
+		volgende twee publiek beschikbare methodes: <code>Zend_Json::encode()</code> 
 		en <code>Zend_Json::decode()</code>. 
         <programlisting role="php"><![CDATA[<?php
-// Een waarde bekomen:
+// Een waarde verkrijgen:
 $phpNative = Zend_Json::decode($encodedValue);
 
 // Encodering om het terug naar de klant te sturen:
@@ -32,35 +32,35 @@ $json = Zend_Json::encode($phpNative);
 </sect1>
 
 <sect1 id="zend.json.objects">
-    <title>JSON Objekten</title>
+    <title>JSON Objecten</title>
     <para>
-		Wanneer je PHP objekten als JSON encodeerd zullen alle publieke
-		eigenschappen van dat objekt naar JSON objekten worden gecodeerd.
+		Wanneer je PHP objecten als JSON encodeerd zullen alle publieke
+		eigenschappen van dat object naar JSON objecten worden gecodeerd.
     </para>
     <para>
-		Het decoderen van JSON objekten houdt weliswaar een klein probleempje in,
-		vermits Javascript objekten heel dicht tegen PHP associatieve arrays
-		aanleunen. Sommigen suggereren dat een klasse identificator zou moeten
-		doorgespeeld worden, en een objekt instantie van die klasse zou moeten
-		worden gebouwd en bevolkt met de key/waarde-paren van het JSON objekt;
+		Het decoderen van JSON objecten houdt weliswaar een klein probleempje in,
+		omdat Javascript objecten heel dicht tegen PHP associatieve arrays
+		aanleunen. Sommigen suggereren dat een klasse identificator doorgegeven zou moeten
+		worden, en een object instantie van die klasse zou moeten
+		worden gebouwd en bevolkt met de key/waarde-paren van het JSON object;
 		anderen denken dat dit een potentieel groot veiligheidsrisico inhoudt.
     </para>
     <para>
-		<code>Zend_Json</code> zal JSON objekten standaard als associatieve arrays
-		decoderen. Als je liever een objekt terugkrijgt, kan je dit zo opvragen:
+		<code>Zend_Json</code> zal JSON objecten standaard als associatieve arrays
+		decoderen. Als je liever een object terugkrijgt, kan je dit zo opvragen:
         <programlisting role="php"><![CDATA[<?php
-// Decodeer objekten als objekten
+// Decodeer objecten als objecten
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 ?>]]></programlisting>
-		Alle zo gedecodeerde objekten worden teruggestuurd als <code>StdClass</code> 
-		objekten met eigenschappen die overeenkomen met de key/waarde-paren in de JSON
+		Alle zo gedecodeerde objecten worden teruggestuurd als <code>StdClass</code> 
+		objecten met eigenschappen die overeenkomen met de key/waarde-paren in de JSON
 		notatie.
     </para>
     <para>
-		De aanbeveling van de Zend Framework is dat de developpeur individueel
-		zou moeten beslissen hoe hij JSON objekten gedecodeerd wil hebben.
-		Indien een objekt van een bepaald type zou moeten worden gemaakt, kan dat
-		worden gemaakt in de code van de developpeur en bevolkt worden met de
+		De aanbeveling van het Zend Framework is dat de ontwikkelaar individueel
+		zou moeten beslissen hoe hij JSON objecten gedecodeerd wil hebben.
+		Indien een object van een bepaald type zou moeten worden gemaakt, kan dat
+		worden gemaakt in de code van de ontwikkelaar en bevolkt worden met de
 		waarden die <code>Zend_Json</code> heeft gedecodeerd.
     </para>
 </sect1>

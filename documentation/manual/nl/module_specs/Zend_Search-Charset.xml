@@ -41,7 +41,7 @@
                    Indien de data in non-ascci karakters of UTF-8 is geschreven.
                </para>
             </footnote>
-			(zowel voor het opslaan als voor het querying van de brondokumenten):
+			(zowel voor het opslaan als voor het queryen van de brondocumenten):
         </para>
 
         <programlisting role="php"><![CDATA[<?php

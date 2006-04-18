@@ -7,12 +7,12 @@
         <title>Inleiding</title>
 
         <para>
-			Zend_Db_Table_Row is een datarij gateway voor de Zend Framework. In het
-			algemeen instantieer je Zend_Db_Table_Row niet alleen maar krij je een
+			Zend_Db_Table_Row is een datarij gateway voor het Zend Framework. In het
+			algemeen instantieer je Zend_Db_Table_Row niet alleen maar krijg je een
 			Zend_Db_Table_Row terug als een resultaat van Zend_Db_Table::find() of
 			Zend_Db_Table::fetchRow(). Eenmaal je een Zend_Db_Table_Row hebt kan je
-			de recorwaarden wijzigen (voorgesteld als klasse-eigenschappen) en dan de
-			wijzigingen terg naar de oorspronkelijke tabel sturen via save().
+			de recordwaarden wijzigen (voorgesteld als klasse-eigenschappen) en dan de
+			wijzigingen terug naar de oorspronkelijke tabel sturen via save().
         </para>
 
     </sect2>
@@ -37,7 +37,7 @@ $params = array (
 
 $db = Zend_Db::factory('pdoMysql', $params);
 
-// zet de standaard adapter voor alle Zend_Db_Table objekten
+// zet de standaard adapter voor alle Zend_Db_Table objecten
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
@@ -54,15 +54,15 @@ $table = new RoundTable();
 			zijn waarvan elke eigenschap een "camelCaps" benaming van een 
 			"underscore_naam" kolom van de tabel is.
 			Bijvoorbeeld, "first_name" in de tabel zal "firstName" worden in
-			de objekteigenschappen.
+			de objecteigenschappen.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// verkrijg een record van de tabel als een Zend_Db_Table_Row objekt
+// verkrijg een record van de tabel als een Zend_Db_Table_Row object
 $row = $table->fetchRow('first_name = "Robin"');
 
 //
-// $row is nu een Zend_Db_Tabke_Row objekt met publieke eigenschappen
+// $row is nu een Zend_Db_Table_Row objekt met publieke eigenschappen
 // die naar tabelkolommen mappen:
 //
 // $row->id = '3'
@@ -81,8 +81,8 @@ $row = $table->fetchRow('first_name = "Robin"');
         <title>Waarden wijzigen</title>
 
         <para>
-			Het wijzigen van rijwaarden is heel eenvoudig: werk gewoon met de objekt
-			eigenschappen zoals je dat met eender welk ander objekt zou doen. Als je
+			Het wijzigen van rijwaarden is heel eenvoudig: werk gewoon met de object
+			eigenschappen zoals je dat met eender welk ander object zou doen. Als je
 			klaar bent kan je de rij terugschrijven naar de oorspronkelijke tabel met save().
         </para>
 
@@ -91,11 +91,11 @@ $row = $table->fetchRow('first_name = "Robin"');
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// verkrijg een record van de tabel als een Zend_Db_Table_Row objekt
+// verkrijg een record van de tabel als een Zend_Db_Table_Row object
 $row = $table->fetchRow('first_name = "Robin"');
 
 //
-// $row is nu een Zend_Db_Tabke_Row objekt met publieke eigenschappen
+// $row is nu een Zend_Db_Table_Row object met publieke eigenschappen
 // die naar tabelkolommen mappen:
 //
 // $row->id = '3'
@@ -111,7 +111,7 @@ $row->save();
 
         <para>
 			Het is evenwel verboden de waarden van primaire keys te wijzigen; indien
-			je dat toch doet zal Zend_Db_Table_Row een fout opwerpen.
+			je dat toch doet zal Zend_Db_Table_Row een exceptie opwerpen.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -119,7 +119,7 @@ $row->save();
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// verkrijg een record van de tabel als een Zend_Db_Table_Row objekt
+// verkrijg een record van de tabel als een Zend_Db_Table_Row object
 $row = $table->fetchRow('first_name = "Robin"');
 
 // kunnen we de primaire key "id" wijzigen?

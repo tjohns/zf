@@ -7,7 +7,7 @@
         <title>Inleiding</title>
 
         <para>
-			Zend_Db_Table is een tabellenmodule voor het Zend Framework. het
+			Zend_Db_Table is een tabellenmodule voor het Zend Framework. Het
 			verbindt je met een database via Zend_Db_Adapter, onderzoekt het
 			schema van de tabel en helpt je dan in het manipuleren en 
 			opvragen van rijen uit de tabel.
@@ -20,7 +20,7 @@
         <title>Om te beginnen</title>
 
         <para>
-			Het eerste wat moet gedaan worden is een standaard database
+			Het eerste wat gedaan moet worden is een standaard database
 			adapter te geven aan de abstracte Zend_Db_Table klasse; tenzij
 			je het anders opgeeft zullen alle Zend_Db_Table instanties deze
 			standaard adapter gebruiken.
@@ -38,7 +38,7 @@ $params = array (
 
 $db = Zend_Db::factory('pdoMysql', $params);
 
-// zet de standaard adapter voor alle Zend_Db_Table objekten
+// zet de standaard adapter voor alle Zend_Db_Table objecten
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 ?>]]>
@@ -49,7 +49,7 @@ Zend_Db_Table::setDefaultAdapter($db);
 			"round_table" hebt in je database. Om Zend_Db_Table te
 			gebruiken met deze database moet je eenvoudigweg 
 			Zend_Db_Table uitbreiden door een nieuwe klasse "RoundTable"
-			te maken (merk op hoe we de round_table naam "kameeleren").
+			te maken (merk op hoe we de round_table naam "kameleren").
 			Nu kunnen we via deze klasse rijen onderzoeken , manipuleren 
 			en resultaten opvragen van de "round_table" tabel in de database.
         </para>
@@ -132,9 +132,9 @@ class ClassName extends Zend_Db_Table
         <title>Rijen invoegen</title>
 
         <para>
-			In een nieuwe rij in jouw tabel in te voegen roep je gewoon
+			Om een nieuwe rij in jouw tabel in te voegen roep je gewoon
 			insert() op met een associatieve array van kolom:waarde data.
-			De data zal automatisch korrekt worden omwikkeld met quotes,
+			De data zal automatisch correct worden omwikkeld met quotes,
 			en de laatst ingevoegde ID wordt teruggestuurd. (Merk op dat
 			dit verschilt van Zend_Db_Adapter::insert(), waar het aantal
 			beïnvloede rijen wordt teruggestuurd.)
@@ -168,7 +168,7 @@ $id = $table->insert($data);
         <title>Rijen updaten</title>
 
         <para>
-			Om eender welk aantal rijen in je tabel up te daten roep je
+			Om eender welk aantal rijen in je tabel te updaten roep je
 			update() op met een associatieve array van kolom:waarde data
 			die moet worden gezet, samen met een WHERE clausule om de
 			rijen die moeten worden geupdate te definiëren. Het zal de tabel
@@ -176,9 +176,9 @@ $id = $table->insert($data);
         </para>
 
         <para>
-			De data die gezet moet worden zal automatisch korrekt worden
+			De data die gezet moet worden zal automatisch correct worden
 			omwikkeld met quotes, maar de WHERE clausule niet, die moet je
-			dus zeld quoten met het Zend_Db_Adapter objekt van de tabel.
+			dus zelf quoten met het Zend_Db_Adapter object van de tabel.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -212,13 +212,13 @@ $rows_affected = $table->update($set, $where);
         <para>
 			Om eender welk aantal rijen te verwijderen uit een tabel
 			roep je delete() op met een WHERE clausule om de rijen
-			die verwijderd moeten worden te identifiëren. Het zal het
+			die verwijderd moeten worden te identificeren. Het zal het
 			aantal verwijderde rijen terugsturen.
         </para>
 
         <para>
 			De WHERE clausule zal niet in quotes worden omwikkeld, dus
-			die moet je zelf quoten met het Zend_Db_Adapter objekt van 
+			die moet je zelf quoten met het Zend_Db_Adapter object van 
 			de tabel.
         </para>
 
@@ -248,7 +248,7 @@ $rows_affected = $table->delete($where);
         <para>
 			Het is eenvoudig om rijen uit een tabel te verkrijgen door
 			gebruik te maken van de primaire key waarden in de find()
-			methode. Deze methode keert een Zend_Db_Table_Row objekt
+			methode. Deze methode keert een Zend_Db_Table_Row object
 			terug indien je één enkele key probeert te vinden, of een
 			Zend_Db_Table_Rowset objekt indien je meerdere keys probeert
 			te vinden met find().
@@ -273,17 +273,17 @@ $rowset = $table->find(array(1, 2, 3));
         <title>Eén enkele rij ophalen</title>
 
         <para>
-			Hoewel je gemekkellijk een rij kan vinden via zijn primaire key met 
+			Hoewel je gemakkellijk een rij kan vinden via zijn primaire key met 
 			find(), zal je vaak verschillende voorwaarden willen toevoegen om een
-			rij te verkrijgen. Juist hiervor verstrekt Zend_Db_Table fetchRow().
+			rij te verkrijgen. Juist hiervoor verstrekt Zend_Db_Table fetchRow().
 			Gebruik fetchRow() met een WHERE clausule (en een optionele ORDER 
-			clausule), en Zend_Db_Table zal een Zend_Db_Row objekt terugkeren met
+			clausule), en Zend_Db_Table zal een Zend_Db_Row object teruggeven met
 			de eerste rij die aan de voorwaarden voldoet.
         </para>
 
         <para>
 			De WHERE clausule zal niet in quotes worden omwikkeld, dus
-			die moet je zelf quoten met het Zend_Db_Adapter objekt van 
+			die moet je zelf quoten met het Zend_Db_Adapter object van 
 			de tabel.
         </para>
 
@@ -321,12 +321,12 @@ $row = $table->fetchRow($where, $order);
 			methode WHERE en ORDER clausules, maar kan bovendien
 			limit-count en limit-offset waarden aanvaarden om het aantal
 			teruggekeerde rijen te beperken. Het zal een Zend_Db_Table_Rowset
-			objekt terugkeren met de geselekteerde records.
+			object teruggeven met de geselecteerde records.
         </para>
 
         <para>
 			De WHERE clausule zal niet in quotes worden omwikkeld, dus
-			die moet je zelf quoten met het Zend_Db_Adapter objekt van 
+			die moet je zelf quoten met het Zend_Db_Adapter object van 
 			de tabel.
         </para>
 
@@ -354,11 +354,11 @@ $rowset = $table->fetchRow($where, $order, $count, $offset);
 
     <sect2 id="zend.db.table.domain-logic">
 
-        <title>Domein Logika Invoegen</title>
+        <title>Domein Logica Invoegen</title>
 
         <para>
 			Als een tabelmodule leent Zend_Db_Table er zichzelf goed toe om
-			je eigen domeinlogika in te kapselen. Bijvoorbeeld, je kan de
+			je eigen domeinlogica in te kapselen. Bijvoorbeeld, je kan de
 			insert() en update() methodes overschrijven om de gepostte data
 			te manipuleren of te valideren voordat die naar de database wordt
 			geschreven.
