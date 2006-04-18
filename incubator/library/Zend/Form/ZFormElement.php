@@ -359,7 +359,7 @@ abstract class ZFormElement implements ZFormElementEventListenerInterface {
      * changed which triggers a value change event. This method is
      * abstract so subclasses can define the contents of that value
      *
-     * @retur mixed
+     * @return mixed
      */
     abstract public function getValue();
 
