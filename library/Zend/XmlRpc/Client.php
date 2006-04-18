@@ -13,6 +13,7 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_XmlRpc
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
@@ -43,7 +44,8 @@ require_once 'Zend/XmlRpc/Value.php';
 /**
  * An XML-RPC client implementation
  *
- * @package    Zend_XmlRpc_Client
+ * @package    Zend_XmlRpc
+ * @subpackage Client
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */

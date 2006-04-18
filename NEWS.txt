@@ -1,6 +1,6 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-=RELEASE 0.1.3 / 17-Apr-2006=
+=RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
 - Zend_InputFilter has test* methods for retrieving valid data. (Chris)
 - Fixed bug in Zend_View_Abstract::__isset(). Reported by James Simmons. (Mike)
