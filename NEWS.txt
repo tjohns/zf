@@ -33,6 +33,10 @@ Zend Framework                                                             NEWS
 - Fixed bug in Zend_Service_Amazon::itemLookup() (Davey)
 - Fixed bug in Zend_Service_Flickr::userSearch() (Davey)
 - Fixed bug in Zend_Uri_Http::__construct(). Reported by Adrian Gheorghe. (Mike)
+- Improved some not well-formed PDF processing with Zend_Pdf. (Alexander)
+- Minor Zend_Pdf documentation fixes. (Alexander)
+- Fixed Zend_Pdf processing of inherited page attributes. (Alexander)
+- Fixed Zend_Pdf umlauts support for standard fonts. (Alexander)
 
 =RELEASE 0.1.2 / 8-Mar-2006=
 - Unit test suite is now included. (Mike)
