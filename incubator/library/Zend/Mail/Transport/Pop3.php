@@ -30,55 +30,64 @@ require_once 'Zend/Mail/Transport/Exception.php';
  */
 class Zend_Mail_Transport_Pop3 
 {
-    private $_socket;
-    private $_lastMessage = '';
+    /** @todo docblock */
     public $hasTop = null;
+    
+    /** @todo docblock */
+    private $_socket;
+    
+    /** @todo docblock */
+    private $_lastMessage = '';
+
+    /** @todo docblock */
     private $_timestamp;
 
+
     /**
-     * 
-     * public constructor
+     * Public constructor
      *
-     * @param string hostname of IP address of POP3 server, if given connect() is called
-     * @param int port of POP3 server, default is 110 (995 for ssl)
-     * @param bool use ssl
+     * @param string $host  hostname of IP address of POP3 server, if given connect() is called
+     * @param int    $port  port of POP3 server, default is 110 (995 for ssl)
+     * @param bool   $ssl   use ssl?
      */
     public function __construct($host = '', $port = null, $ssl = false) 
     {
-        if($host) {
+        if ($host) {
             $this->connect($host, $port);
         }
     }
     
+    
     /**
-     *
-     * public destructor
+     * Public destructor
      */
     public function __destruct()
     {
         $this->logout();
     }
     
+    
     /**
+     * Open connection to POP3 server
      *
-     * open connection to POP3 server
-     *
-     * @param host hostname of IP address of POP3 server
-     * @param int port of POP3 server, default is 110 (995 for ssl)
-     * @param bool use ssl
+     * @param  string $host  hostname of IP address of POP3 server
+     * @param  int    $port  of POP3 server, default is 110 (995 for ssl)
+     * @param  bool   $ssl   use ssl
+     * @throws Zend_Mail_Transport_Exception
      * @return string welcome message
      */
     public function connect($host, $port = null, $ssl = false) 
     {
-        if($ssl) {
+        if ($ssl) {
             $host = 'ssl://' . $host;
         }
-        if(is_null($port)) {
+        
+        if (is_null($port)) {
             $port = $ssl ? 995 : 110;
         }
     
         $this->_socket = @fsockopen($host, $port);
-        if(!$this->_socket) {
+        if (!$this->_socket) {
             throw new Zend_Mail_Transport_Exception('cannot connect to host');
         }
 
@@ -86,7 +95,7 @@ class Zend_Mail_Transport_Pop3
 
         strtok($welcome, '<');
         $this->_timestamp = strtok('>');
-        if(!strpos($this->_timestamp, '@')) {
+        if (!strpos($this->_timestamp, '@')) {
             $this->_timestamp = null;
         } else {
             $this->_timestamp = '<'.$this->_timestamp.'>';
@@ -95,50 +104,54 @@ class Zend_Mail_Transport_Pop3
         return $welcome;
     }
 
+
     /**
+     * Send a request
      *
-     * send a request
-     *
-     * @param string your request without newline
+     * @param string $request  your request without newline
      */ 
     public function sendRequest($request) 
     {
         $result = fputs($this->_socket, $request."\n");
-        if(!$result) {
+        if (!$result) {
             throw new Zend_Mail_Transport_Exception('send failed - connection closed?');
         }
     }
+
 
     /**
      *
      * read a response
      *
-     * @param if response should be read as single of multiline response (ends with "\n.\n")
+     * @param  boolean $multiline   // @todo description
+     * @throws Zend_Mail_Transport_Exception
      * @return string response
      */
     public function readResponse($multiline = false) 
     {
         $result = fgets($this->_socket);
-        if(!is_string($result)) {
+        if (!is_string($result)) {
             throw new Zend_Mail_Transport_Exception('read failed - connection closed?');
         }
+        
         $result = trim($result);
-        if(strpos($result, ' ')) {
+        if (strpos($result, ' ')) {
             list($status, $message) = explode(' ', $result, 2);
         } else {
             $status = $result;
             $message = '';
         }
+        
         $this->_lastMessage = $message;
 
-        if($status != '+OK') {
+        if ($status != '+OK') {
             throw new Zend_Mail_Transport_Exception('last request failed');
         }
 
-        if($multiline) {
+        if ($multiline) {
             $message = '';
             $line = fgets($this->_socket);
-            while($line && trim($line) != '.') {
+            while ($line && trim($line) != '.') {
                 $message .= $line;
                 $line = fgets($this->_socket);
             };
@@ -147,15 +160,14 @@ class Zend_Mail_Transport_Pop3
         return $message;
     }
 
+
     /**
-     *
-     * send request and get resposne
-     *
-     * @param string request
-     * @param bool multiline response
-     * @return string result from readResponse()
+     * Send request and get resposne
      * @see sendRequest(), readResponse()
      *
+     * @param  string $request    request
+     * @param  bool   $multiline  multiline response?
+     * @return string             result from readResponse()
      */
     public function request($request, $multiline = false) 
     {
@@ -165,8 +177,7 @@ class Zend_Mail_Transport_Pop3
 
 
     /**
-     *
-     * end communication with POP3 server (also closes socket)
+     * End communication with POP3 server (also closes socket)
      */
     public function logout() 
     {
@@ -177,18 +188,19 @@ class Zend_Mail_Transport_Pop3
         try {
             $this->request('QUIT');
         } catch (Exception $e) {
+            /** @todo catch specific exception, not Exception */
             // ignore error - we're closing the socket anyway
         }
+        
         fclose($this->_socket);
         $this->_socket = null;
     }
 
+
     /**
-     *
-     * get capabilities from POP3 server
+     * Get capabilities from POP3 server
      *
      * @return array list of capabilities
-     *
      */
     public function capa() 
     {
@@ -196,21 +208,23 @@ class Zend_Mail_Transport_Pop3
         return explode("\n", $result);
     }
 
+
     /**
-     *
      * Login to POP3 server. Can use APOP
      *
-     * @param string username
-     * @param string password
-     * @param bool if APOP should be tried
+     * @param  string $user      username
+     * @param  string $password  password
+     * @param  bool   $try_apop  should APOP be tried?
+     * @return void
      */
-    public function login($user, $password, $try_apop = true) 
+    public function login($user, $password, $tryApop = true) 
     {
-        if($try_apop && $this->_timestamp) {
+        if ($tryApop && $this->_timestamp) {
             try {
-                $this->request("APOP $user ".md5($this->_timestamp.$password));
+                $this->request("APOP $user " . md5($this->_timestamp . $password));
                 return;
             } catch (Exception $e) {
+                /** @todo catch specific exception, not Exception */
                 // ignore 
             }
         }
@@ -219,12 +233,13 @@ class Zend_Mail_Transport_Pop3
         $result = $this->request("PASS $password");
     }
 
+
     /**
+     * Make STAT call for message count and size sum
      *
-     * make STAT call for message count and size sum
-     *
-     * @param int out parameter with count of messages
-     * @param int out parameter with size in octects of messages
+     * @param  int $messages  out parameter with count of messages
+     * @param  int $octets    out parameter with size in octects of messages
+     * @return void
      */
     public function status(&$messages, &$octets)
     {
@@ -235,16 +250,16 @@ class Zend_Mail_Transport_Pop3
         list($messages, $octets) = explode(' ', $result);
     }
 
+
     /**
+     * Make LIST call for size of message(s)
      *
-     * make LIST call for size of message[s]
-     *
-     * @param int number of message
-     * @return int|array size of given message or list with array(num => size)
+     * @param  int $msgno  number of message
+     * @return int|array   size of given message or list with array(num => size)
      */
     public function getList($msgno = null)
     {
-        if(!is_null($msgno)) {
+        if ($msgno !== null) {
             $result = $this->request("LIST $msgno");
 
             list(, $result) = explode(' ', $result);
@@ -254,7 +269,7 @@ class Zend_Mail_Transport_Pop3
         $result = $this->request('LIST', true);
         
         $messages = array();
-        foreach($result as $line) {
+        foreach ($result as $line) {
             list($no, $size) = explode(' ', $line);
             $messages[(int)$no] = $size;
         }
@@ -262,16 +277,16 @@ class Zend_Mail_Transport_Pop3
         return $messages;
     }
 
+
     /**
+     * Make UIDL call for getting a uniqueid
      *
-     * make UIDL call for getting a uniqueid
-     *
-     * @param int number of message
-     * @return string|array uniqueid of message or list with array(num => uniqueid)
+     * @param  int $msgno    number of message
+     * @return string|array  uniqueid of message or list with array(num => uniqueid)
      */
     public function uniqueid($msgno = null) 
     {
-        if(!is_null($msgno)) {
+        if ($msgno !== null) {
             $result = $this->request("UIDL $msgno");
 
             list(, $result) = explode(' ', $result);
@@ -282,7 +297,7 @@ class Zend_Mail_Transport_Pop3
         
         $result = explode("\n", $result);
         $messages = array();
-        foreach($result as $line) {
+        foreach ($result as $line) {
             list($no, $id) = explode(' ', $line);
             $messages[(int)$no] = $id;
         }
@@ -291,31 +306,31 @@ class Zend_Mail_Transport_Pop3
     
     }
 
+
     /**
-     *
-     * make TOP call for getting headers and maybe some body lines
+     * Make TOP call for getting headers and maybe some body lines
      * This method also sets hasTop - before it it's not known if top is supported
      *
      * The fallback makes normale RETR call, which retrieves the whole message. Additional
      * lines are not removed.
      * 
-     * @param int number of message
-     * @param int number of wanted body lines (empty line is inserted after header lines)
-     * @param bool fallback with full retrieve if top is not supported
+     * @param int  $msgno     number of message
+     * @param int  $lines     number of wanted body lines (empty line is inserted after header lines)
+     * @param bool $fallback  fallback with full retrieve if top is not supported
      * @return string message headers with wanted body lines
      */
-    public function top($msgno, $lines = 0, $failback = false) 
+    public function top($msgno, $lines = 0, $fallback = false) 
     {
-        if($this->hasTop === false) {
-            if($failback) {
+        if ($this->hasTop === false) {
+            if ($fallback) {
                 return $this->retrive($msgno);
             } else {
-                throw new Zend_Mail_Transport_Exception('top not supported and no failback wanted');
+                throw new Zend_Mail_Transport_Exception('top not supported and no fallback wanted');
             }
         }
         $this->hasTop = true;
 
-        if(!$lines || (int)$lines < 1) {
+        if (!$lines || (int)$lines < 1) {
             $request = "TOP $msgno";
         } else {
             $request = "TOP $msgno $lines";
@@ -323,9 +338,10 @@ class Zend_Mail_Transport_Pop3
 
         try {
             $result = $this->request($request, true);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
+            /** @todo catch specific exception, not Exception */
             $this->hasTop = false;
-            if($failback) {
+            if ($fallback) {
                 $result = $this->retrive($msgno);
             } else {
                 throw $e;
@@ -335,12 +351,12 @@ class Zend_Mail_Transport_Pop3
         return $result;
     }
 
+
     /**
+     * Make a RETR call for retrieving a full message with headers and body
      *
-     * make a RETR call for retrieving a full message with headers and body
-     *
-     * @param int message number
-     * @return string message
+     * @param  int     $msgno  message number
+     * @return string          message
      */
     public function retrive($msgno) 
     {
@@ -348,30 +364,30 @@ class Zend_Mail_Transport_Pop3
         return $result;
     }
 
+
     /**
-     *
-     * make a NOOP call, maybe needed for keeping the server happy
+     * Make a NOOP call, maybe needed for keeping the server happy
      */
     public function noop() 
     {
         $this->request('NOOP');
     }
 
+
     /**
-     *
-     * make a DELE count to remove a message
+     * Make a DELE count to remove a message
      */
     public function delete($msgno) 
     {
         $this->request("DELE $msgno");
     }
 
+
     /**
-     * 
-     * make RSET call, which rollbacks delete requests
+     * Make RSET call, which rollbacks delete requests
      */
     public function undelete() 
     {
-        $this->request("RSET");
+        $this->request('RSET');
     }
 }
