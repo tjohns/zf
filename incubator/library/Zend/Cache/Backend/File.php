@@ -372,9 +372,12 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
      * @param tags array $tags array of tags
      * @return boolean true if no problem
      */
-    public function _clean($dir, $mode = 'all', $tags = array()) 
+    private function _clean($dir, $mode = 'all', $tags = array()) 
     {
-        if (!is_dir($dir)) return false;
+        if (!is_dir($dir)) {
+            return false;
+        }
+        
         $result = true;
         @chdir($dir);
         $glob = @glob('cache_*');
