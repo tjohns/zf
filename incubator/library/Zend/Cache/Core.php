@@ -17,7 +17,13 @@
  * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
- 
+
+
+/**
+ * @package    Zend_Cache
+ * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
+ * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
+ */
 class Zend_Cache_Core 
 {
     

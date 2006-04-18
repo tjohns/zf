@@ -14,6 +14,7 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Cache
+ * @subpackage Frontend
  * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
@@ -23,6 +24,13 @@
  */
 require_once 'Zend/Cache/Core.php';
 
+
+/**
+ * @package    Zend_Cache
+ * @subpackage Frontend
+ * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
+ * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
+ */
 class Zend_Cache_Frontend_Class extends Zend_Cache_Core
 {
        

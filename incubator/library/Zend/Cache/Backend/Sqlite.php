@@ -21,9 +21,11 @@
  * so we can mail you a copy immediately.
  *
  * @package    Zend_Cache
+ * @subpackage Backend
  * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
+ 
  
 /**
  * Zend_Cache_Backend_Interface
@@ -33,6 +35,7 @@ require_once 'Zend/Cache/Backend/Interface.php';
 
 /**
  * @package    Zend_Cache
+ * @subpackage Backend
  * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
