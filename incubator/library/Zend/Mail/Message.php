@@ -17,6 +17,7 @@
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
  
+ 
 /**
  * Zend_Mime_Decode
  */
@@ -30,14 +31,18 @@ require_once 'Zend/Mime/Decode.php';
  */
 class Zend_Mail_Message 
 {
-    protected $_headers, $_content;
+    /** @todo docblock */
+    protected $_headers;
+    
+    /** @todo docblock */
+    protected $_content;
+
 
     /**
+     * Public constructor
      *
-     * public constructor
-     *
-     * @param string full message with or without headers
-     * @param array optional headers already seperated from body
+     * @param string $rawMessage  full message with or without headers
+     * @param array  $headers     optional headers already seperated from body
      */
     public function __construct($rawMessage, $headers = null) 
     {
@@ -54,9 +59,9 @@ class Zend_Mail_Message
         }
     }
 
+
     /**
-     *
-     * body of message
+     * Body of message
      *
      * @return string body
      */
@@ -65,9 +70,9 @@ class Zend_Mail_Message
         return $this->_content;
     }
     
+    
     /**
-     *
-     * get all headers
+     * Get all headers
      *
      * @return array headers
      */
@@ -75,25 +80,25 @@ class Zend_Mail_Message
     {
         $result = array();
         
-        foreach($this->_headers as $name => $value) {
+        foreach ($this->_headers as $name => $value) {
             $result .= $name . ': '. $value . Zend_Mime::LINEEND; 
         }
         
         return $result;
     }
     
+    
     /**
+     * Getter for mail headers - name is matched in lowercase
      *
-     * getter for mail headers - name is matched in lowercase
-     *
-     * @param string header name
-     * @return string|array header line or array of headers if header exists more than once
+     * @param  string $name         header name
      * @throws Zend_Mail_Exception
+     * @return string|array         header line or array of headers if header exists more than once
      */
     public function __get($name) 
     {
         $name = strtolower($name);
-        if(!isset($this->_headers[$name])) {
+        if (!isset($this->_headers[$name])) {
             throw new Zend_Mail_Exception("no Header with Name $name found");           
         }
         
