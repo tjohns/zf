@@ -63,6 +63,9 @@ require_once 'Zend/Pdf/Color/CMYK.php';
 /** Zend_Pdf_Image */
 require_once 'Zend/Pdf/Resource/Image.php';
 
+/** Zend_Pdf_Image */
+require_once 'Zend/Pdf/Resource/ImageFactory.php';
+
 /** Zend_Pdf_Image_JPEG */
 require_once 'Zend/Pdf/Resource/Image/JPEG.php';
 
