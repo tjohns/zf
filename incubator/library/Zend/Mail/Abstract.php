@@ -25,14 +25,15 @@
  */
 abstract class Zend_Mail_Abstract
 {
+    /** @todo docblock */
     protected $_has = array('folder'   => false,
                             'uniqueid' => false,
                             'delete'   => false,
                             'create'   => false,
                             'top'      => false);
     
+
     /**
-     * 
      * Getter for has-properties. The standard has properties 
      * are: hasFolder, hasUniqueid, hasDelete, hasCreate, hasTop
      * 
@@ -41,8 +42,8 @@ abstract class Zend_Mail_Abstract
      *   - false if a feature is not supported
      *   - null is it's not yet known or it can't be know if a feature is supported
      * 
-     * @param string property name
-     * @return bool supported or not
+     * @param  string $var  property name
+     * @return bool         supported or not
      */
     public function __get($var) 
     {
@@ -54,8 +55,8 @@ abstract class Zend_Mail_Abstract
         throw new Zend_Mail_Exception($var . ' not found');
     }
 
+
     /**
-     *
      * Get a full list of features supported by the specific mail lib and the server
      *
      * @return array list of features as array(featurename => true|false[|null])
@@ -64,79 +65,81 @@ abstract class Zend_Mail_Abstract
     {
         return $this->_has;
     }
+
     
     /**
-     *
      * Count messages with a flag or all messages in current box/folder
      * Flags might not be supported by all mail libs (exceptions is thrown)
      * 
-     * @param int filter by flags
-     * @return int number of messages
+     * @param  int $flags  filter by flags
      * @throws Zend_Mail_Exception
+     * @return int number of messages
      */
     abstract public function countMessages($flags = null);
 
+
     /**
-     * get a list of messages with number and size
+     * Get a list of messages with number and size
      *
-     * @param int number of message
-     * @return int|array size of given message of list with all messages as array(num => size)
+     * @param  int       $id  number of message
+     * @return int|array      size of given message of list with all messages as array(num => size)
      */
     abstract public function getSize($id = 0);
     
+
     /**
+     * Get a message with headers and body
      *
-     * get a message with headers and body
-     *
-     * @param int number of message
+     * @param  $id  int number of message
      * @return Zend_Mail_Message
      */
     abstract public function getMessage($id);
+
     
     /**
+     * Get a message with only header and $bodyLines lines of body
      *
-     * get a message with only header and $bodyLines lines of body
-     *
-     * @param int number of message
-     * @param int also retrieve this number of body lines
+     * @param  int $id            number of message
+     * @param  int $bodyLines     also retrieve this number of body lines
      * @return Zend_Mail_Message 
      */
     abstract public function getHeader($id, $bodyLines = 0);
+
     
     /**
+     * Create instance with parameters
      *
-     * create instance with parameters
-     *
-     * @params array mail reader specific parameters
+     * @param  array $params  mail reader specific parameters
      * @throws Zend_Mail_Exception
      */
     abstract public function __construct($params);
     
+
     /**
-     *
-     * Destructor calls ::close() and therefor closes the resource.
-     *
+     * Destructor calls close() and therefore closes the resource.
      */
     public function __destruct() 
     {
         $this->close();
     }
         
+
     /**
-     *
      * Close resource for mail lib. If you need to control, when the resource
      * is closed. Otherwise the destructor would call this.
-     *
      */
     abstract public function close();
+
     
     /**
-     *
      * Keep the resource alive.
-     *
      */
     abstract public function noop();
-    
+
+
+    /**
+     * @todo docblock
+     */
     abstract public function removeMessage($id);
 }
 
