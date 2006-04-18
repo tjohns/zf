@@ -4,11 +4,11 @@
 	<sect2 id="zend.search.queries.term-query">
 		<title>Term Query</title>
         <para>
-        Term queries are intended for a searching for a single term.
+        Term queries zijn bedoeld voor het zoeken met een enkele term.
         </para>
 
         <para>
-        Both of a search method can be used for term queries.
+        ## VERT: Both of a search method can be used for multi term queries. ##
         </para>
 
         <para>
@@ -18,10 +18,10 @@
         </programlisting>
         </para>
 
-        <para>or</para>
+        <para>of</para>
 
         <para>
-        Query construction by API:
+        Query opbouw door API:
         <programlisting role="php"><![CDATA[<?php
 
     $term  = new Zend_Search_Lucene_Index_Term('word1');
@@ -35,44 +35,37 @@
 	<sect2 id="zend.search.queries.multiterm-query">
 		<title>Multi-Term Query</title>
         <para>
-            Multi term queries are intended for a searching for a set of terms.
+            Multi term queries zijn bedoeld voor het zoeken op een set met termen.
         </para>
 
         <para>
-            Each term in a set can be defined as required, prohibited or neither
-            required, nor prohibited (optional).
+            Elke term in een set kan gedefinieerd worden als noodzakelijk, verboden of geen van beiden (optioneel).
 
             <itemizedlist>
                 <listitem>
                     <para>
-                    required which means that documents which do not match this term
-                    will not match the query;
+                    noodzakelijk betekent dat documenten waar de term niet in voorkomt, niet in het resultaat terugkomen;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    prohibited which means that documents which do match this term
-                    will not match the query;
+                    verboden betekent dat documenten waar deze term wel in voorkomt niet in het resultaat terugkomen;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    neither, in which case matched documents are neither prohibited from
-                    nor required to match the term. However, a document must match at least
-                    1 term to match the query.
+                    geen van beiden betekent dat de term niet verboden is voor documenten, maar de term ook niet noodzakelijk is. Een document moet in dit geval minimaal een term bevatten om in het resultaat terug te komen.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
 
         <para>
-            It means, that if optional terms are added to a query with required terms,
-            then they will have the same result set, but second query will have hits,
-            which match optional terms, moved to the top of result set.
+            Dit betekent dat wanneer een optionele term aan een query wordt toegevoerd met noodzakelijke termen, de documenten in het resultaat hetzelfde blijven, maar documenten waarin de optionele term gevonden word bovenaan de result set komen te staan.
         </para>
 
         <para>
-            Both of a search method can be used for multi term queries.
+        ## VERT: Both of a search method can be used for multi term queries. ##
         </para>
 
         <para>
@@ -84,19 +77,19 @@ $hits = $index->find('+word1 author:word2 -word3');
 ?>]]></programlisting>
 
         <itemizedlist>
-            <listitem>'+' is used to define required term.</listitem>
-            <listitem>'-' is used to define prohibited term.</listitem>
+            <listitem>'+' word gebruikt voor een noodzakelijke term.</listitem>
+            <listitem>'-' word gebruikt voor een verboden term.</listitem>
             <listitem>
-            'field:' prefix is used to indicate document field for a search.
-            If it's omitted, then 'contents' is used.
+            'field:' prefix word gebruikt om een document veld aan te geven bij het zoeken.
+            Wanneer het niet wordt ingegeven, wordt 'contents' gebruikt.
             </listitem>
         </itemizedlist>
         </para>
 
-        <para>or</para>
+        <para>of</para>
 
         <para>
-        Query construction by API:
+        Query opbouw door API:
         <programlisting role="php"><![CDATA[<?php
 
     $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
@@ -111,13 +104,12 @@ $hits = $index->find('+word1 author:word2 -word3');
         </para>
 
         <para>
-            <code>$signs</code> array contains an information about term type:
+            <code>$signs</code> array bevat informatie over het type term:
             <itemizedlist>
-                <listitem>true is used to define required term.</listitem>
-                <listitem>false is used to define prohibited term.</listitem>
+                <listitem>true word gebruikt om een noodzakelijke term te definieren.</listitem>
+                <listitem>false word gebruikt om een verboden term te definieren.</listitem>
                 <listitem>
-                null is used to define neither required,
-                nor prohibited term.
+                null word gebruikt om geen noodzakelijk en geen verboden term te definieren.
                 </listitem>
             </itemizedlist>
         </para>
@@ -126,26 +118,25 @@ $hits = $index->find('+word1 author:word2 -word3');
 	<sect2 id="zend.search.queries.phrase-query">
 		<title>Phrase Query</title>
         <para>
-            Phrase Queries are intended for a searching for a phrases.
+            Phrase Queries zijn bedoeld voor het zoeken op zinnen (uitdrukkingen?).
         </para>
 
         <para>
-            Phrase Queries are very flexible and allow to search exact phrases as well as sloppy phrases.
-            Exact phrases can also contain gaps or terms in the same places. (It can be generated by Analyser for different
-            purposes. Ex. term can be duplicated to increase term weight or several synonyms can be placed into one position).
-            According to this phrase queries can be constructed only by API now:
+            Phrase Queries zijn erg flexibel en staan toe om te zoeken op zowel exacte als 'slordige' zinnen. 
+            Exacte zinnen kunnen ook gaten of termen bevatten op bepaalde plaatsen. (Dit kan door de Analyser worden aangemaakt voor verschillende doeleinden. Voorbeeld: Een term kan gedupliceerd worden om een bepaalde term extra gewicht te geven of verschillende synoniemen kunnen op een plek worden geplaatst).
+            De volgende phrase queries kunnen alleen door de API worden aangemaakt:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $query1 = new Zend_Search_Lucene_Search_Query_Phrase();
 
-// Add 'word1' at 0 relative position.
+// Voeg 'word1' op relatieve positie 0 toe.
 $query1->addTerm(new Zend_Search_Lucene_Index_Term('word1'));
 
-// Add 'word2' at 1 relative position.
+// Voeg 'word2' op relatieve positie 1 toe.
 $query1->addTerm(new Zend_Search_Lucene_Index_Term('word2'));
 
-// Add 'word3' at 3 relative position.
+// Voeg 'word3' op relatieve positie 3 toe.
 $query1->addTerm(new Zend_Search_Lucene_Index_Term('word3'), 3);
 
 ...
@@ -155,7 +146,7 @@ $query2 = new Zend_Search_Lucene_Search_Query_Phrase(
 
 ...
 
-// Query without a gap.
+// Query zonder gat.
 $query3 = new Zend_Search_Lucene_Search_Query_Phrase(
                 array('word1', 'word2', 'word3'));
 
@@ -168,107 +159,102 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
 
         <para>
-            Phrase query can be constructed by one step with a class constructor or step by step with a
-            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> method.
+            Phrase query kunnen worden aangemaakt met een enkele stap in de klasse constructor of stap voor stap met de 
+            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> methode.
         </para>
 
         <para>
-            Zend_Search_Lucene_Search_Query_Phrase class constructor takes three optional arguments:
+            Zend_Search_Lucene_Search_Query_Phrase klasse constructor accepteert drie optionele argumenten:
         <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]></programlisting>
         </para>
 
         <para>
-            <code>$terms</code> is an array of strings, which contains a set of phrase terms.
-            If it's omitted or equal to null, then empty query is constructed.
+            <code>$terms</code> is een array van strings, welke een set van zin termen bevat.
+            Wanneer het niet wordt meegegeven of null is, wordt een lege query aangemaakt.
         </para>
 
         <para>
-            <code>$offsets</code> is an array of integers, which contains offsets of terms in a phrase.
-            If it's omitted or equal to null, then terms positions are supposed as <code>array(0, 1, 2, 3, ...)</code>.
+            <code>$offsets</code> is een array van integers, welke startpunten van termen in een zin bevatten.
+            Wanneer het niet wordt meegegeven of null is, wordt uitgegaan van posities zoals <code>array(0, 1, 2, 3, ...)</code>.
         </para>
 
         <para>
-            <code>$field</code> is a string, which indicates searched document field.
-            If it's omitted or equal to null, then default field is searched.
-            This version of Zend_Search_Lucene treates 'contents' field as a default, but it's planned to change this
-            behavior to "any field" in next versions.
+            <code>$field</code> is een string, welke aangeeft welk document veld doorzocht moet worden.
+            Wanneer het niet wordt meegegeven of null is, dan wordt het standaard veld doorzicht.
+            Deze versie van Zend_Search_Lucene behandelt het 'contents' veld als standaard, maar het plan is dit aan te passen tot "ieder veld" in volgende versies.
         </para>
 
         <para>
-            Thus:
+            Dus:
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]></programlisting>
-            will search for 'zend framework' phrase.
+            zoekt naar de 'zend framework' uitdrukking.
 
         <programlisting role="php"><![CDATA[<$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting>
-            will search for 'zend ????? download' phrase and match 'zend platform download', 'zend studio download',
-            'zend core download', 'zend framework download' and so on.
+            zoekt naar 'zend ????? download' en dus voldoet 'zend platform download', 'zend studio download',
+            'zend core download', 'zend framework download' hieraan.
 
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
-            will search for 'zend framework' phrase in a 'title' field.
+            zoekt naar 'zend framework' in het 'title' veld.
         </para>
 
 
         <para>
-            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> method takes two arguments.
-            Required <code>Zend_Search_Lucene_Index_Term</code> object and optional position:
+            <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> methode accepteert twee argumenten.
+            Noodzakelijk <code>Zend_Search_Lucene_Index_Term</code> object en optioneel positie:
         <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
         </para>
 
         <para>
-            <code>$term</code> describes next term in a phrase. It must indicate the same field as previous terms.
-            Otherwise an exception will be thrown.
+            <code>$term</code> omschrijft de volgende term binnen de uitdrukking. Het moet hetzelfde veld als eerdere termen omschrijven.
+            Anders wordt er een exceptie opgeworpen.
         </para>
 
         <para>
-            <code>$position</code> indicates term position.
+            <code>$position</code> geeft de positie van de term aan.
         </para>
 
         <para>
-            Thus:
+            Dus:
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'));
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'));]]></programlisting>
-            will search for 'zend framework' phrase.
+            zoekt naar de 'zend framework' uitdrukking.
 
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'), 0);
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'), 2);]]></programlisting>
-            will search for 'zend ????? download' phrase and match 'zend platform download', 'zend studio download',
-            'zend core download', 'zend framework download' and so on.
+            zoekt naar de 'zend ????? download' uitdrukking en dus zal 'zend platform download', 'zend studio download',
+            'zend core download', 'zend framework download' hieraan voldoen.
 
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend', 'title'));
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></programlisting>
-            will search for 'zend framework' phrase in a 'title' field.
+            zoekt naar 'zend framework' in het 'title' veld.
         </para>
 
 
         <para>
-            Sloop factor sets the number of other words permitted between words in query phrase. If zero,
-            then this is an exact phrase search.  For larger values this works like a WITHIN or NEAR operator.
+            Slop factor zet het aantal woorden dat is toegestaan binnen een query uitdrukking. Wanneer deze nul is, wordt er op een exacte uitdrukking gezocht. Voor hogere waardes werkt het als een WITHIN of NEAR operator.
         </para>
         <para>
-            The slop is in fact an edit-distance, where the units correspond to moves of terms in the query phrase
-            out of position.  For example, to switch the order of two words requires two moves (the first move places
-            the words atop one another), so to permit re-orderings of phrases, the slop must be at least two.
+            De 'slop' is eigenlijk een ## VERT: edit-distance ##, waar de eenheden corresponderen met wijzigingen in positie van termen in de query uitdrukking. Voorbeeld: om de volgorde van twee woorden aan te passen is twee wijzigingen (de eerste wijzigingen zet beide termen op dezelfde positie), om toe te staan uitdrukkingen te herschikken dient 'slop' minstens twee te zijn.
         </para>
         <para>
-            More exact matches are scored higher than sloppier matches, thus search results are sorted by exactness.
-            The slop is zero by default, requiring exact matches.
+            Exactere ## VERT: matches ## krijgen een hogere score dan slordigere ## VERT: matches ##, dus zoekresultaten worden geordend op exactheid. 'Slop' staat standaard op nul, waardoor exacte ## VERT: matches ## noodzakelijk zijn.
         </para>
         <para>
-            Sloop factor can be assigned after query creation:
+            Slop factor kan na het aanmaken van een query worden aangegeven: 
         </para>
         <programlisting role="php"><![CDATA[<?php
 
-// Query without a gap.
+// Query zonder een gat.
 $query = new Zend_Search_Lucene_Search_Query_Phrase(array('word1', 'word2'));
 
-// Search for 'word1 word2', 'word1 ... word2'
+// Zoek naar 'word1 word2', 'word1 ... word2'
 $query->setSlop(1);
 $hits1 = $index->find($query);
 
-// Search for 'word1 word2', 'word1 ... word2',
+// Zoek naar 'word1 word2', 'word1 ... word2',
 // 'word1 ... ... word2', 'word2 word1'
 $query->setSlop(2);
 $hits2 = $index->find($query);
