@@ -42,4 +42,3 @@ class Zend_Mail_Transport_Sendmail implements Zend_Mail_Transport_Interface
         mail(join(',', $mail->getRecipients()), $mail->getSubject(), $body, $headers);
     }
 }
-

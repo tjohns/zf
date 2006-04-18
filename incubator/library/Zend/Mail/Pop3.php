@@ -210,5 +210,3 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
         parent::__get($var);
     }
 }
-
-?>

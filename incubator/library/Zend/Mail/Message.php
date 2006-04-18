@@ -105,5 +105,3 @@ class Zend_Mail_Message
         return $this->_headers[$name];
     }
 }
-
-?>

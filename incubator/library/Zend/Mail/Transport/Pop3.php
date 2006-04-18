@@ -375,5 +375,3 @@ class Zend_Mail_Transport_Pop3
         $this->request("RSET");
     }
 }
-
-?>
