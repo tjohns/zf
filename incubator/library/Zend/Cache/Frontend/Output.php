@@ -23,6 +23,12 @@
  */
 require_once 'Zend/Cache/Core.php';
 
+
+/**
+* @package    Zend_Cache
+* @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
+* @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
+*/
 class Zend_Cache_Frontend_Output extends Zend_Cache_Core
 {
                  
@@ -35,6 +41,7 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
     {
         parent::__construct($options);
     }
+        
         
     /**
      * Start the cache
@@ -55,6 +62,7 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
         ob_implicit_flush(false);
         return false;
     }
+
 
     /**
      * Stop the cache
