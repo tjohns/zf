@@ -73,37 +73,6 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         $bits = ord(fread($imageFile, 1)); //Higher than 8 bit depths are only supported in later versions of PDF.
         $color = ord(fread($imageFile, 1));
 
-        switch ($color) {
-            case Zend_Pdf_Image_PNG::PNG_CHANNEL_RGB:
-                $colorSpace = 'DeviceRGB';
-                break;
-            case Zend_Pdf_Image_PNG::PNG_CHANNEL_GRAY:
-                $colorSpace = 'DeviceGray';
-                break;
-            case Zend_Pdf_Image_PNG::PNG_CHANNEL_INDEXED:
-                $colorSpace = 'Indexed';
-                /* This requires writing the PAL stream. Explained below where the PLTE chunk is decoded */
-                throw new Zend_Pdf_Exception( "Indexed Color PNGs are not yet supported" );
-                break;
-            case Zend_Pdf_Image_PNG::PNG_CHANNEL_GRAY_ALPHA:
-                /* Same problem as RGB+Alpha */
-                throw new Zend_Pdf_Exception( "PNGs with GRAYSCALE + Alpha are not yet supported" );
-                break;
-            case Zend_Pdf_Image_PNG::PNG_CHANNEL_RGB_ALPHA:
-                /*
-                 * Looked into this, im not sure how exactly, but to do this conversion; we
-                 * must remove the alpha channel from the data stream, and place it into a SMask
-                 * format with its own stream.
-                 *
-                 * This is probably the most common and therefore important mode to get working.
-                 */
-                $colorSpace = 'DeviceRGB';
-                throw new Zend_Pdf_Exception( "4 Channel RGB+Alpha Images Are Not Supported Yet. " );
-                break;
-            default:
-                throw new Zend_Pdf_Exception( "PNG Corruption: Invalid color space." );
-        }
-
         if (ord(fread($imageFile, 1)) != Zend_Pdf_Image_PNG::PNG_COMPRESSION_DEFAULT_STRATEGY) {
             //TODO: Add compression conversions
             throw new Zend_Pdf_Exception( "Only the default compression strategy is currently supported." );
@@ -141,8 +110,6 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                     if ($color != Zend_Pdf_Image_PNG::PNG_CHANNEL_INDEXED) {
                         throw new Zend_Pdf_Exception( "Only indexed color PNG's can contain palette entries." );
                     }
-                   //TODO: Actually write this stream data as a new XObject
-                   //FlateDecode filter, length .. Followed by a stream of this data. Once complete, this type can be enabled.
                    $paletteData = fread($imageFile, $chunkLength);
                    fseek($imageFile, 4, SEEK_CUR);
                    break;
@@ -184,6 +151,40 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                     break;
             }
         }
+        switch ($color) {
+            case Zend_Pdf_Image_PNG::PNG_CHANNEL_RGB:
+                $colorSpace = new Zend_Pdf_Element_Name('DeviceRGB');
+                break;
+            case Zend_Pdf_Image_PNG::PNG_CHANNEL_GRAY:
+                $colorSpace = new Zend_Pdf_Element_Name('DeviceGray');
+                break;
+            case Zend_Pdf_Image_PNG::PNG_CHANNEL_INDEXED:
+               $colorSpace                             = new Zend_Pdf_Element_Array();
+               $colorSpace->items[]                    = new Zend_Pdf_Element_Name('Indexed');
+               $colorSpace->items[]                    = new Zend_Pdf_Element_Name('DeviceRGB');
+               $colorSpace->items[]                    = new Zend_Pdf_Element_Numeric((strlen($paletteData)/3-1));
+               $paletteObject                          = $this->_objectFactory->newObject(new Zend_Pdf_Element_String_Binary($paletteData));
+               $colorSpace->items[]                    = $paletteObject;
+                break;
+            case Zend_Pdf_Image_PNG::PNG_CHANNEL_GRAY_ALPHA:
+                /* Same problem as RGB+Alpha */
+                throw new Zend_Pdf_Exception( "PNGs with GRAYSCALE + Alpha are not yet supported" );
+                break;
+            case Zend_Pdf_Image_PNG::PNG_CHANNEL_RGB_ALPHA:
+                /*
+                 * Looked into this, im not sure how exactly, but to do this conversion; we
+                 * must remove the alpha channel from the data stream, and place it into a SMask
+                 * format with its own stream.
+                 *
+                 * This is probably the most common and therefore important mode to get working.
+                 */
+                $colorSpace = new Zend_Pdf_Element_Name('DeviceRGB');
+                throw new Zend_Pdf_Exception( "4 Channel RGB+Alpha Images Are Not Supported Yet. " );
+                break;
+            default:
+                throw new Zend_Pdf_Exception( "PNG Corruption: Invalid color space." );
+        }
+
         if(empty($imageData)) {
             throw new Zend_Pdf_Exception( "Corrupt PNG Image. Manditory IDAT chunk not found." );
         }
@@ -200,13 +201,19 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         $imageDictionary = $this->_resource->dictionary;
         $imageDictionary->Width            = new Zend_Pdf_Element_Numeric($width);
         $imageDictionary->Height           = new Zend_Pdf_Element_Numeric($height);
-        $imageDictionary->ColorSpace       = new Zend_Pdf_Element_Name($colorSpace);
+        $imageDictionary->ColorSpace       = $colorSpace;
         $imageDictionary->BitsPerComponent = new Zend_Pdf_Element_Numeric($bits);
         $imageDictionary->Filter           = new Zend_Pdf_Element_Name('FlateDecode');
         $imageDictionary->DecodeParms      = new Zend_Pdf_Element_Dictionary($decodeParms);
 
+        if(!empty($smaskData)) {
+               $smaskStream = $this->_objectFactory->newStreamObject($smaskData);
+               $smaskStream->dictionary->Filter = new Zend_Pdf_Element_Name('FlateDecode');
+               $imageDictionary->SMask = $smaskStream;
+        }
+
         if(!empty($transparencyData)) {
-                $imageDictionary->Mask     = new Zend_Pdf_Element_Array($transparencyData);
+                $imageDictionary->Mask = new Zend_Pdf_Element_Array($transparencyData);
         }
 
         //Include only the image IDAT section data.
