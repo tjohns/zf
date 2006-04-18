@@ -1,0 +1,233 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+Zend_Config
+
+
+Proposers
+-----------------------------------------------
+Rob Allen (rob@akrabat.com
+
+
+Revision
+-----------------------------------------------
+1.0 - 18 April 2007: Initial submission
+
+
+Overview
+-----------------------------------------------
+Zend_Config is a very simple configuration file reader.
+It provides an easy means to read configuration files
+and access the data within them as a set of key->value
+pairs. It will support at least one nested level of data.
+Initially providing support for ini files, it should
+be easy to extend for other formats such as YAML.
+
+
+References
+-----------------------------------------------
+Mailing list thread resurrected here:
+    http://www.zend.com/lists/fw-general/200604/msg00178.html.
+Unfortunately, I could not find the original post by Andi Gutmans in the archives.
+
+Other discussion can be found here:
+    http://www.akrabat.com/index.php?s=Akrabat_Config
+
+
+Requirements
+-----------------------------------------------
+* Ability to load a single config file and provide access to the data
+  as an array.
+* Ability to load additional files which then override already loaded
+  data.
+* Optional load a single section from a config file.
+* For ini files, optional support for a single level "namespace" using
+  the syntax:
+        namespace.property = value
+* For ini files, support for including other sections within this
+  section's key using the syntax:
+        include = section
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+Zend_Exception
+
+
+Theory of Operation
+-----------------------------------------------
+Akrabat_Config_Abstract provides common functionality for all concrete
+implementations. It provides the standard retrieval functionality for
+concrete classes and prevents programmatic setting of config values.
+
+Akrabat_Config_Ini is a concrete implementation that loads ini files. It
+can either load an entire ini file or just a single section. It is
+possible to load multiple ini files in which case, values for
+duplicate keys will override the previously loaded value. This is useful
+to allow for overriding a common config file with context specific
+data such as for a staging or test server.
+
+Akrabat_Config_Ini also supports using the first "." in a key name to
+provide an additional nesting level. That is a key named db.name will
+be represented as $config['db']['name'].
+
+Akrabat_Config_ini also supports loading of keys from one section of the
+ini file into another section. This is done using a special key called
+"include". This key takes a comma separated list of section names.
+
+In the future, should there be demand for other config file types, a
+Zend_Config class could be created at a later stage that has a factory
+function that returns the correct concrete class based on the filename
+of the config file supplied.  For example, myapp.ini would create and
+return a Zend_Config_Ini object whereas myapp.yml would create and
+return a Zend_Config_Yaml object.
+
+
+Class Index
+-----------------------------------------------
+Zend_Config_Exception
+Zend_Config_Abstract
+Zend_Config_Ini
+
+
+Use Cases
+-----------------------------------------------
+Given the following ini file:
+    [all]
+    namespace.property = example
+    db.connection = foo
+    db.name = bar
+    hostname = www.zend.com
+
+    [andi_development]
+    include=all
+    hostname=andi_box
+    db.connection=localhost
+
+    [staging]
+    include=all
+    hostname=dev.zend.com
+
+
+Then we can do something like:
+
+<?php
+    $obj=new Zend_Config("myapp.ini", "andi_development");
+    print $obj->hostname;   // prints andi_box
+    print $obj->db['connection']; // prints localhost
+    print $obj->db['name']; // prints bar
+?>
+
+Alternatively we can do:
+<?php
+    $obj=new Zend_Config("myapp.ini");
+    print $obj->andi_development['hostname'];   // prints andi_box
+    print $obj->andi_development['db']['connection']; // prints localhost
+    print $obj->andi_development['db']['name']; // prints bar
+?>
+
+
+Given a config file containing:
+    [db]
+    adapter = pdoMysql
+    config.host = localhost
+    config.username = akrabat
+    config.password = 123456
+    config.dbname = atasks
+
+We can do:
+<?php
+    $obj = new Zend_Config('myapp.ini');
+    $db = Zend_Db::factory($obj->db['adapter'], $obj->db['config']);
+?>
+
+
+Class Skeletons
+-----------------------------------------------
+class Zend_Config_Exception extends Zend_Exception {}
+
+class Zend_Config_Abstract
+{
+    protected $_config;
+
+    function __construct($filename=null, $section=null) {}
+
+    /**
+     * Load a config file, overwriting any duplicate keys.
+     * If $section is null, then the entire file is loaded.
+     *
+     * @param string $filename
+     * @param string $section
+     */
+    abstract public function load($filename, $section=null);
+
+    /**
+     * Retreive a value from the config key called $name
+     *
+     * @param string $name
+     * @param mixed $default
+     * @return mixed
+     */
+    public function get($name, $default=false) {}
+
+    /**
+     * Does the config key $name exist?
+     *
+     * @param string $name
+     * @return boolean
+     */
+    public function exists($name) {}
+
+    /**
+     * magic function so that $obj->value will work.
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function __get($name) {}
+
+    /**
+     * This is a read only class... throw an exception on
+     * setting a key!
+     *
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __set($name, $value) {}
+
+}
+
+
+class Zend_Config_Ini extends Zend_Config_Abstract
+{
+    /**
+     * Load a config file, overwriting any duplicate keys.
+     * If $section is null, then the entire file is loaded.
+     *
+     * @param string $filename
+     * @param string $section
+     */
+    public function load($filename, $section=null) {}
+
+    /**
+     * Helper function to process the "include=" inheritance and then
+     * process the "dot" single level sub-array syntax in each key.
+     *
+     * @param array $iniArray
+     * @param string $section
+     * @return array
+     */
+    protected function processIncludes($iniArray, $section) {}
+
+    /**
+     * Helper function to handle single level namespace in the key.
+     * Uses the first "." as the separator.
+     *
+     * @param array $section
+     * @return array
+     */
+    protected function processLevelsInSection($section) {}
+
+}
