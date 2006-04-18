@@ -62,7 +62,7 @@ abstract class Zend_Mail_Abstract
      */
     public function getCapabilities() 
     {
-        return $_has;
+        return $this->_has;
     }
     
     /**
