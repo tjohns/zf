@@ -120,7 +120,7 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
      *   - password password for user 'username' [optional, default = '']
      *   - port port for POP3 server [optional, default = 110]
      *
-     * @params array mail reader specific parameters
+     * @param  $params array  mail reader specific parameters
      * @throws Zend_Mail_Exception
      */
     public function __construct($params) 
