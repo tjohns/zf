@@ -142,5 +142,3 @@ abstract class Zend_Mail_Abstract
      */
     abstract public function removeMessage($id);
 }
-
-?>
