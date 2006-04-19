@@ -50,7 +50,7 @@
             Image drawing.
             <footnote>
                 <para>
-                Only JPG images are supported now.
+                JPG, PNG [Up to 8bit+Alpha] and TIFF images are supported.
                 </para>
             </footnote>
             </para>
@@ -534,14 +534,21 @@ public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
         Image objects are represented by descendants of <code>Zend_Pdf_Image</code> class.
         </para>
         <para>
-        JPG images are only supported now:
+        JPG, PNG and TIFF images are supported now:
         </para>
         <example>
             <title>Image drawing.</title>
             <programlisting role="php"><![CDATA[<?php
 ...
+//Create image object directly (choose one)
 $image = new Zend_Pdf_Image_JPEG('my_image.jpg');
-$pdfPage->drawImage($image, 100, 100, 400, 300);;
+$image = new Zend_Pdf_Image_TIFF('my_image.tiff');
+$image = new Zend_Pdf_Image_PNG('my_image.png');
+
+//or use the Zend_Pdf_ImageFactory to load the appropriate type
+$image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
+
+$pdfPage->drawImage($image, 100, 100, 400, 300);
 ...
 ?>]]>
             </programlisting>
@@ -549,10 +556,12 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);;
 
         <para>
             <emphasis>Important! Zend_Pdf_Image_JPEG class requires PHP GD extension to be configured.</emphasis>
+            <emphasis>Important! Zend_Pdf_Image_PNG class requires ZLIB extension to be configured to work with Alpha channel images.</emphasis>
         </para>
         <para>
             Refer to the PHP documentation for detailed information
             (<ulink url="http://www.php.net/manual/en/ref.image.php">http://www.php.net/manual/en/ref.image.php</ulink>).
+            (<ulink url="http://www.php.net/manual/en/ref.zlib.php">http://www.php.net/manual/en/ref.zlib.php</ulink>).
         </para>
     </sect2>
 
@@ -995,7 +1004,7 @@ $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $style->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA_BOLD), 32);
 
 // Create new image object
-$stampImage = new Zend_Pdf_Image_JPEG(dirname(__FILE__) . '/stamp.jpg');
+$stampImage = Zend_Pdf_ImageFactory::factory(dirname(__FILE__) . '/stamp.jpg');
 
 // Mark page as modified
 foreach ($pdf->pages as $page){
