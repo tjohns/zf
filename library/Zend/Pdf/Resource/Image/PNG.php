@@ -157,7 +157,7 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                     break;
             }
         }
-        
+
         switch ($color) {
             case Zend_Pdf_Image_PNG::PNG_CHANNEL_RGB:
                 $colorSpace = new Zend_Pdf_Element_Name('DeviceRGB');
@@ -388,12 +388,12 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         $imageDictionary = $this->_resource->dictionary;
         $imageDictionary->Width            = new Zend_Pdf_Element_Numeric($width);
         $imageDictionary->Height           = new Zend_Pdf_Element_Numeric($height);
-        $imageDictionary->ColorSpace       = $colorSpace;	
+        $imageDictionary->ColorSpace       = $colorSpace;
         $imageDictionary->BitsPerComponent = new Zend_Pdf_Element_Numeric($bits);
         if($compressed) {
-            $imageDictionary->Filter           = new Zend_Pdf_Element_Name('FlateDecode');
+            $imageDictionary->Filter       = new Zend_Pdf_Element_Name('FlateDecode');
+            $imageDictionary->DecodeParms  = new Zend_Pdf_Element_Dictionary($decodeParms);
         }
-        $imageDictionary->DecodeParms      = new Zend_Pdf_Element_Dictionary($decodeParms);
 
         if(!empty($smaskData)) {
             /*
@@ -405,8 +405,7 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
             $smaskStream->dictionary->Width = new Zend_Pdf_Element_Numeric($width);
             $smaskStream->dictionary->Height = new Zend_Pdf_Element_Numeric($height);
             $smaskStream->dictionary->ColorSpace = new Zend_Pdf_Element_Name('DeviceGray');
-            $smaskStream->dictionary->BitsPerComponent = new Zend_Pdf_Element_Numeric($bits);	
-            $smaskStream->skipFilters(); //Not sure if this is needed since the stream isnt filtered.
+            $smaskStream->dictionary->BitsPerComponent = new Zend_Pdf_Element_Numeric($bits);
             $imageDictionary->SMask = $smaskStream;
         }
 
@@ -447,4 +446,7 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         }
     }
 }
-?>
+
+
+
+
