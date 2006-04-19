@@ -51,7 +51,7 @@
             画像の描画
             <footnote>
                 <para>
-                現在は JPG 画像のみをサポートしています。
+                JPG、PNG [8bit+Alpha まで] および TIFF 画像をサポートしています。
                 </para>
             </footnote>
             </para>
@@ -561,14 +561,21 @@ public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
         クラスを継承したクラスで表されます。
         </para>
         <para>
-        現在は JPG 画像のみがサポートされています。
+        現在は JPG、PNG および TIFF 画像がサポートされています。
         </para>
         <example>
             <title>画像の描画</title>
             <programlisting role="php"><![CDATA[<?php
 ...
+// (以下のいずれかを使用して) 画像オブジェクトを直接作成します
 $image = new Zend_Pdf_Image_JPEG('my_image.jpg');
-$pdfPage->drawImage($image, 100, 100, 400, 300);;
+$image = new Zend_Pdf_Image_TIFF('my_image.tiff');
+$image = new Zend_Pdf_Image_PNG('my_image.png');
+
+// あるいは Zend_Pdf_ImageFactory で適切な形式を読み込みます
+$image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
+
+$pdfPage->drawImage($image, 100, 100, 400, 300);
 ...
 ?>]]>
             </programlisting>
@@ -576,10 +583,12 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);;
 
         <para>
             <emphasis>重要! Zend_Pdf_Image_JPEG クラスは PHP の GD 拡張モジュールを必要とします。</emphasis>
+            <emphasis>重要! Zend_Pdf_Image_PNG クラスでアルファチャネルを使用した画像を扱うには、ZLIB 拡張モジュールを必要とします。</emphasis>
         </para>
         <para>
             詳細な情報は、PHP のドキュメント
-            (<ulink url="http://www.php.net/manual/ja/ref.image.php">http://www.php.net/manual/ja/ref.image.php</ulink>)
+            (<ulink url="http://www.php.net/manual/ja/ref.image.php">http://www.php.net/manual/ja/ref.image.php</ulink>),
+            (<ulink url="http://www.php.net/manual/ja/ref.zlib.php">http://www.php.net/manual/ja/ref.zlib.php</ulink>)
             を参照ください。
         </para>
     </sect2>
@@ -644,7 +653,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
                 <citetitle>PDF リファレンス</citetitle> によると、これは以下のように定義されています。
                 <blockquote>
 nonzero winding number ルールは、ある点がパスの内側にあるかどうかを
-判断するため、その点からあらゆる方向に放射線を引いて
+判断するため、その点からどこかの方向に放射線を引いて
 その線がパスを構成する線と交わる場所を調べます。
 0 からカウントをはじめ、放射線の左から右にパスの線が横切った場合に
 +1、放射線の右から左に横切った場合に -1 します。
@@ -676,7 +685,7 @@ nonzero winding number ルールは、ある点がパスの内側にあるかど
                 <blockquote>
 nonzero winding number ルールに対するもうひとつのルールが even-odd ルールです。
 このルールでは、ある点が「内側である」かどうかを判断する材料として、
-その点からあらゆる方向に放射線を引いてその線がパスを構成する線と何回交わるか
+その点からどこかの方向に放射線を引いてその線がパスを構成する線と何回交わるか
 ということを用います。交わる回数が奇数だった場合、その点は内側です。
 交わる回数が偶数だった場合、その点は外側です。単純なパスの場合は、
 これは nonzero winding number ルールと同じ結果になります。
@@ -1028,8 +1037,8 @@ $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $style->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA_BOLD), 32);
 
-// 新しいg増オブジェクトを作成します。
-$stampImage = new Zend_Pdf_Image_JPEG(dirname(__FILE__) . '/stamp.jpg');
+// 新しい画像オブジェクトを作成します。
+$stampImage = Zend_Pdf_ImageFactory::factory(dirname(__FILE__) . '/stamp.jpg');
 
 // ページに修正マークをつけます。
 foreach ($pdf->pages as $page){

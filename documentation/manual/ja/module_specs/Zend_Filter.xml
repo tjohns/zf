@@ -1,57 +1,62 @@
-<sect1 id="zend.filter.introduction">
-    <title>導入</title>
-    <para>
-    <literal>Zend_Filter</literal> は、
-    データをフィルタリングするための静的メソッドのライブラリを提供します。
-    入力のフィルタリングには <xref linkend="zend.inputfilter" /> を代わりに使用すべきです。
-    なぜなら、これは <literal>Zend_Filter</literal>
-    が提供するメソッドを用いて入力をフィルタリングするフレームワークだからです。
-    しかし、<literal>Zend_InputFilter</literal> は主として配列を対象にして設計されているので、
-    スカラー値をフィルタリングするには <literal>Zend_Filter</literal>
-    が便利でしょう。こちらは PHP の文字列関数と同様に扱えます。
-    </para>
-    <programlisting>
-<![CDATA[<?php
-
-$alphaUsername = Zend_Filter::getAlpha('John123Doe');
-
-/* $alphaUsername = 'JohnDoe'; */
-
-?>]]>
-    </programlisting>
+<sect1 id="zend.filter.filter">
+    <title>Zend_Filter</title>
+    
+    <sect2 id="zend.filter.filter.introduction">
+        <title>導入</title>
+        <para>
+        <literal>Zend_Filter</literal> は、
+        データをフィルタリングするための静的メソッドのライブラリを提供します。
+        入力のフィルタリングには <xref linkend="zend.inputfilter" /> を代わりに使用すべきです。
+        なぜなら、これは <literal>Zend_Filter</literal>
+        が提供するメソッドを用いて入力をフィルタリングするフレームワークだからです。
+        しかし、<literal>Zend_InputFilter</literal> は主として配列を対象にして設計されているので、
+        スカラー値をフィルタリングするには <literal>Zend_Filter</literal>
+        が便利でしょう。こちらは PHP の文字列関数と同様に扱えます。
+        </para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $alphaUsername = Zend_Filter::getAlpha('John123Doe');
+    
+    /* $alphaUsername = 'JohnDoe'; */
+    
+    ?>]]>
+        </programlisting>
+    </sect2>
+    <sect2 id="zend.filter.filter.usecases">
+        <title>使用例</title>
+        <para>以下の使用例での <literal>$value</literal> は、任意のスカラー値を表します。</para>
+        <para>ホワイトリストフィルタリング</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    if ($email = Zend_Filter::isEmail($value)) {
+        /* $email は email 形式として有効です。 */
+    } else {
+        /* $email は email 形式ではありません。 */
+    }
+    
+    ?>]]>
+        </programlisting>
+        <para>ブラインドフィルタリング</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $alphaName = Zend_Filter::getAlpha($value);
+    
+    ?>]]>
+        </programlisting>
+        <para>ブラックリストフィルタリング</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $taglessComment = Zend_Filter::noTags($value);
+    
+    ?>]]>
+        </programlisting>
+    </sect2>
 </sect1>
-<sect1 id="zend.filter.usecases">
-    <title>使用例</title>
-    <para>以下の使用例での <literal>$value</literal> は、任意のスカラー値を表します。</para>
-    <para>ホワイトリストフィルタリング</para>
-    <programlisting>
-<![CDATA[<?php
-
-if ($email = Zend_Filter::isEmail($value)) {
-    /* $email は email 形式として有効です。 */
-} else {
-    /* $email は email 形式ではありません。 */
-}
-
-?>]]>
-    </programlisting>
-    <para>ブラインドフィルタリング</para>
-    <programlisting>
-<![CDATA[<?php
-
-$alphaName = Zend_Filter::getAlpha($value);
-
-?>]]>
-    </programlisting>
-    <para>ブラックリストフィルタリング</para>
-    <programlisting>
-<![CDATA[<?php
-
-$taglessComment = Zend_Filter::noTags($value);
-
-?>]]>
-    </programlisting>
-</sect1>
+    
 <!--
 vim:se ts=4 sw=4 et:
 -->
