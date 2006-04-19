@@ -38,7 +38,7 @@ abstract class Zend_Pdf_Filter
      * @return string
      * @throws Zend_Pdf_Exception
      */
-    public abstract static function encode(&$data, $params = null);
+    public abstract static function encode($data, $params = null);
 
     /**
      * Decode data
@@ -48,5 +48,5 @@ abstract class Zend_Pdf_Filter
      * @return string
      * @throws Zend_Pdf_Exception
      */
-    public abstract static function decode(&$data, $params = null);
+    public abstract static function decode($data, $params = null);
 }

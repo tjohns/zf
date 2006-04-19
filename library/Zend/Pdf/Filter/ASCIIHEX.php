@@ -38,7 +38,7 @@ class Zend_Pdf_Filter_ASCIIHEX extends Zend_Pdf_Filter
      * @return string
      * @throws Zend_Pdf_Exception
      */
-    public static function encode(&$data, $params = null)
+    public static function encode($data, $params = null)
     {
         return bin2hex($data) . '>';
     }
@@ -51,7 +51,7 @@ class Zend_Pdf_Filter_ASCIIHEX extends Zend_Pdf_Filter
      * @return string
      * @throws Zend_Pdf_Exception
      */
-    public static function decode(&$data, $params = null)
+    public static function decode($data, $params = null)
     {
         $output  = '';
         $oddCode = true;
