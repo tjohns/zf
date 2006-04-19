@@ -1,0 +1,159 @@
+<sect1 id="zend.http.client">
+    <title>Zend_Http_Client</title>
+
+    <sect2 id="zend.http.client.introduction">
+        <title>Introduction</title>
+        <para>
+            <code>Zend_Http_Client</code> provides an easy interface with which to perform HTTP requests.
+            <code>Zend_Http_Client</code> is able to perform GET, POST, PUT and DELETE requests.
+        </para>
+        <note>
+            <code>Zend_Http_Client</code> follows up to 5 HTTP redirections by default. To change this behavior, pass the
+            maximum number of allowed redirections to the <code>get()</code> method.
+        </note>
+        <para>
+            <example>
+                <title>Performing a Basic GET Request</title>
+                <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http/Client.php';
+    try {
+        $http = new Zend_Http_Client('http://example.org');
+        $response = $http->get();
+        if ($response->isSuccessful()) {
+            echo $response->getBody();
+        } else {
+            echo '<p>An error occurred</p>';
+        }
+    } catch (Zend_Http_Client_Exception $e) {
+        echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
+    }
+    ?>]]></programlisting>
+            </example>
+        </para>
+    </sect2>
+    <sect2 id="zend.http.client.basic-get-requests">
+        <title>Basic GET Requests with Specified HTTP Headers</title>
+        <para>
+            The <code>Zend_Http_Client</code> constructor creates a <code>Zend_Http_Client</code> instance for sending
+            HTTP requests.
+        </para>
+        <para>
+            When using <code>Zend_Http_Client</code> on a single URL, in most cases you can supply the URL and
+            relevant headers to the <emphasis>constructor</emphasis>, as in the following examples:
+        </para>
+        <example>
+            <title>Creating a Basic Zend_Http_Client</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http/Client.php';
+
+    // Specify the URL and a single header
+    $http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
+    ?>]]>       </programlisting>
+        </example>
+        <para />
+        <example>
+            <title>Sending Multiple Headers</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http/Client.php';
+
+    // Specify the URL and multiple headers
+    $http = new Zend_Http_Client('http://example.org',
+                            array('Accept: text/html', 'Accept-Language: en-us,en;q=0.5'));
+    ?>]]>       </programlisting>
+        </example>
+        <para>
+            If you wish to use <code>Zend_Http_Client</code> to send requests to <emphasis>multiple</emphasis> URLs,
+            see <xref linkend="zend.http.client.requesting-multiple-domains" />
+        </para>
+    </sect2>
+    <sect2 id="zend.http.client.requesting-multiple-domains">
+        <title>Requesting Multiple Domains</title>
+        <para>
+            <code>Zend_Http_Client</code> supports sending requests to multiple domains by setting the URL to query
+            using <code>Zend_Http_Client::setUri()</code>.
+        </para>
+        <note>
+            <para>A great use for this is when querying multiple RSS feeds.</para>
+        </note>
+        <example>
+            <title>Requesting Multiple Domains</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http/Client.php';
+
+    // Instantiate our client object
+    $http = new Zend_Http_Client();
+
+    // Set the URI to Slashdot's main feed
+    $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
+
+    // Retrieve the feed
+    $slashdot = $http->get();
+
+    // Now get the BBC news feed
+    $http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml');
+
+    // Retrieve the feed
+    $bbc = $http->get();
+    ?>]]>   </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.http.client.settimeout">
+        <title>Changing the HTTP Timeout</title>
+        <para>
+            <code>Zend_Http_Client::setTimeout()</code> allows you to set the timeout for the HTTP connection in
+            seconds.
+        </para>
+        <note>
+            <para>The default timeout is 10 seconds.</para>
+        </note>
+    </sect2>
+    <sect2 id="zend.http.client.setheaders">
+        <title>Setting HTTP Headers Dynamically</title>
+        <para>
+            Using <code>Zend_Http_Client::setHeaders()</code> you supply an <emphasis>array</emphasis> of
+            headers.
+        </para>
+        <important>
+            <para>
+                Headers must follow the format:
+                <option><code>Header: value</code></option>
+            </para>
+        </important>
+    </sect2>
+    <sect2 id="zend.http.client.making-other-requests">
+        <title>Making HTTP POST, PUT, and DELETE Requests</title>
+        <para>
+            Performing HTTP POST, PUT, and DELETE requests are facilitated in <code>Zend_Http_Client</code> by three
+            methods: <code>post()</code>, <code>put()</code>, and <code>delete()</code>, respectively. The
+            <code>post()</code> and <code>put()</code> methods each take a single string parameter, <code>$data</code>,
+            into which should be placed a string with the data properly encoded, as in the following:
+            <emphasis><code>name=value&amp;foo=bar</code></emphasis>. The <code>delete()</code> method has no
+            parameters.
+        </para>
+        <example>
+            <title>Sending POST data with Zend_Http_Client</title>
+            <programlisting role="php"><![CDATA[<?php
+    require_once 'Zend/Http/Client.php';
+
+    // Instantiate our client object
+    $http = new Zend_Http_Client();
+
+    // Set the URI to a POST data processor
+    $http->setUri('http://example.org/post/processor');
+
+    // Save specific GET variables as HTTP POST data
+    $postData = 'foo=' . urlencode($_GET['foo']) . '&bar=' . urlencode($_GET['bar']);
+
+    // Make the HTTP POST request and save the HTTP response
+    $httpResponse = $http->post($postData);
+    ?>]]>   </programlisting>
+            <para>
+                Making a PUT request is the same as in the example above for making a POST request; just substitute the
+                <code>put()</code> method for <code>post()</code>.
+            </para>
+        </example>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
