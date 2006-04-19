@@ -151,8 +151,7 @@ class Zend_Http_Client_File extends Zend_Http_Client_Abstract
 
         echo( get_class($this)
               . " does not support DELETE. Would issue the following request:\n\n"
-              . implode("\n", $request) . "\n\n"
-              . $data . "\n" );
+              . implode("\n", $request) . "\n" );
 
         return new Zend_Http_Response(204, array(), '');
     }
