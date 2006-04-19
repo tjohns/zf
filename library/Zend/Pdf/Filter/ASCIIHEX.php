@@ -57,8 +57,8 @@ class Zend_Pdf_Filter_ASCIIHEX extends Zend_Pdf_Filter
         $oddCode = true;
         $commentMode = false;
 
-        for ($count = 0; $count < strlen($input)  &&  $input{$count} != '>'; $count++) {
-            $charCode = ord($input{$count});
+        for ($count = 0; $count < strlen($data)  &&  $data[$count] != '>'; $count++) {
+            $charCode = ord($data[$count]);
 
             if ($commentMode) {
                 if ($charCode == 0x0A  || $charCode == 0x0D ) {
@@ -113,7 +113,7 @@ class Zend_Pdf_Filter_ASCIIHEX extends Zend_Pdf_Filter
         }
 
         /* Check that stream is terminated by End Of Data marker */
-        if ($input{$count} != '>') {
+        if ($data[$count] != '>') {
             throw new Zend_Pdf_Exception('Wrong encoded stream End Of Data marker.');
         }
 

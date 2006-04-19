@@ -3,7 +3,7 @@ Zend Framework                                                             NEWS
 =RELEASE 0.1.4 / ?-May-2006=
 - Zend_InputFilter moved to Zend_Filter_Input (Mike, Chris)
 - Fixed bug in Zend_Http_Client_File::delete() (Mike, Ralf)
-
+- Fixed bug in Zend_Pdf_Filter_ASCIIHEX::decode() (Mike, Ralf)
 
 =RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
