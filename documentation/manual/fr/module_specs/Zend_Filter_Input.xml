@@ -1,0 +1,265 @@
+<sect1 id="zend.filter.input">
+  <title>Zend_Filter_Input</title>
+    
+  <sect2 id="zend.filter.input.introduction">
+    <title>Introduction</title>
+    <para>
+     <literal>Zend_Filter_Input</literal> fournit des méthodes simples dédiées au filtrage 
+     des données passées en entrée; ces services implémentent une approche structurée et 
+     stricte du problème. Ce composant est à multiples facettes car il est adapté aux besoins 
+     de trois catégories différentes de personnes :
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>Les développeurs</para>
+            <para>
+            Bien que le filtrage des données passées en entrée ne sera jamais aussi facile 
+            que la solution consistant à ne rien faire, les développeurs doivent pouvoir 
+            s'assurer de l'intégrité de leurs données et ce sans avoir à ajouter de complexité 
+            inutile à leur code. <literal>Zend_Filter_Input</literal> fournit des méthodes simples 
+            adaptées aux scénarios les plus fréquents, des possibilités d'extension 
+            pour les scénarios moins courants et enfin une convention de nommage stricte 
+            qui encourage la clarté du code.
+            </para>
+        </listitem>
+        <listitem>
+            <para>Les chefs de projet</para>
+            <para>
+            Les chefs de projet de toute catégorie qui ont besoin de contrôler 
+            un groupe important de développeurs peuvent les forcer à employer une 
+            approche structurée du problème du filtrage de données en limitant ou 
+            éliminant les possibilités d'accès aux données brutes.
+            </para>
+        </listitem>
+        <listitem>
+            <para>Les auditeurs</para>
+            <para>
+            Les personnes qui auditent le code d'une application doivent pouvoir 
+            identifier rapidement et de manière fiable à quel moment et à quel endroit 
+            les données brutes sont employées par un développeur. Les caractéristiques du 
+            composant qui encouragent la clarté du code, facilitent aussi le travail des 
+            auditeurs en leur fournissant une distinction claire entre les différentes 
+            approches du problème du filtrage de données.
+            </para>
+        </listitem>
+    </itemizedlist>
+    <para>
+    Il existe une grande variété d'approches différentes du problème du filtrage de 
+    données et il existe aussi une grande variété de possibilités offertes aux développeurs PHP. 
+    Le filtrage par liste blanche, le filtrage par liste noire, les expressions régulières, 
+    les instructions conditionnelles et certaines fonctions PHP natives sont juste quelques exemples 
+    du pot pourri du filtrage de données. <literal>Zend_Filter_Input</literal> combine toutes ces possibilités en une 
+    seule et même API au comportement cohérent et aux conventions de nommage strictes. Toutes les 
+    méthodes adhèrent à une règle simple - si les données sont valides, elles sont renvoyées sinon 
+    <literal>FALSE</literal> est renvoyé : simplicité extrême!
+    </para>
+    <sect2 id="zend.filter.input.introduction.whitelist">
+        <title>Filtrage par liste blanche</title>
+        <para>
+        Les méthodes implémentant un filtrage par "liste blanche" commencent par <literal>is</literal>; 
+        <literal>isAlpha()</literal> et <literal>isEmail()</literal> en sont deux exemples. 
+        Ces méthodes inspectent les données passées 
+        en entrée selon des critères pré-définis et ne renvoient ces données que si elles adhèrent 
+        aux critères considérés. Si ce n'est pas le cas, <literal>FALSE</literal> est renvoyé. L'exemple suivant constitue 
+        une illustration simple :
+        </para>
+                <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST);
+        
+        if ($nomAlpha = $filtrePost->isAlpha('nom')) {
+            /* $nomAlpha ne contient que des caractères alphabétiques */
+        } else {
+            /* $nomAlpha est évalué comme FALSE */
+        }
+        
+        ?>]]>
+        </programlisting>
+        <para>
+        L'exemple ci-dessus échoue dans certains cas du fait de l'évaluation booléenne de la valeur 
+        renvoyée par la méthode isAlpha(). Si vous voulez faire une distinction entre les valeurs 
+        évaluées comme <literal>FALSE</literal> par PHP (comme l'entier <literal>0</literal> ou la chaîne vide) 
+        et l'objet <literal>FALSE</literal> lui-même, vous pouvez réaliser une comparaison stricte :
+        </para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST);
+        $nomAlpha = $filtrePost->isAlpha('nom');
+        
+        if ($nomAlpha !== FALSE) {
+            /* $nomAlpha ne contient que des caractères alphabétiques */
+        } else {
+            /* $nomAlpha === FALSE */
+        }
+        
+        ?>]]>
+        </programlisting>
+    </sect2>
+    <sect2 id="zend.filter.input.introduction.blind">
+        <title>Filtrage à l'aveugle</title>
+        <para>
+        Les méthodes implémentant un filtrage à l'aveugle commencent par <literal>get</literal>; <literal>getAlpha()</literal> 
+        et <literal>getDigits()</literal> en sont deux exemples. Ces méthodes n'inspectent pas les données passées en 
+        entrée mais renvoient la partie considérée comme valide de ces données. 
+        À titre d'exemple, <literal>getAlpha()</literal> renvoie uniquement les caractères alphabétiques des données, 
+        s'il y en a. (S'il n'y en a pas, la chaîne sera vide.) L'exemple suivant constitue 
+        une illustration simple :
+        </para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        /* $_POST['nom_utilisateur'] = 'Jacques123Dupond'; */
+        
+        $filtrePost = new Zend_Filter_Input($_POST);
+        $nomUtilisateurAlpha = $filtrePost->getAlpha('nom_utilisateur');
+        
+        /* $nomUtilisateurAlpha = 'JohnDoe'; */
+        
+        ?>]]>
+        </programlisting>
+    </sect2>
+    <sect2 id="zend.filter.input.introduction.blacklist">
+        <title>Filtrage par liste noire</title>
+        <para>
+        Les méthodes implémentant un filtrage par liste noire commencent par <literal>no</literal>; <literal>noTags()</literal>
+         et <literal>noPath()</literal> en sont deux exemples. 
+        Ces méthodes sont identiques aux méthodes de filtrage à l'aveugle sauf que le critère dont elles s'assurent 
+        représente ce qui est invalide et non valide. Les données invalides sont supprimées puis le reste (supposé valide) 
+        est renvoyé. L'exemple suivant constitue une illustration simple :
+        </para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        /* $_POST['commentaire'] = "<b>J'aime PHP!</b>"; */
+        
+        $filtrePost = new Zend_Filter_Input($_POST);
+        $commentaireSansBalises = $filtrePost->noTags('commentaire');
+        
+        /* $commentaireSansBalises = "J'aime PHP!"; */
+        
+        ?>]]>
+        </programlisting>
+    </sect2>
+  </sect2>
+    <sect2 id="zend.filter.input.theoryofoperation">
+        <title>Fonctionnement</title>
+        <para>
+        <literal>Zend_Filter_Input</literal> combine plusieurs approches différentes du filtrage de données en une seule et même API 
+        au comportement cohérent et aux conventions de nommage strictes (voir la section <xref linkend="zend.filter.input.introduction" />). Ceci met 
+        <literal>Zend_Filter_Input</literal> sur un pied d'égalité avec les solutions existantes mais cela ne facilite pas vraiment la 
+        vie des personnes qui souhaitent une approche plus structurée ou plus stricte. C'est pourquoi <literal>Zend_Filter_Input</literal> 
+        force par défaut les développeurs à accéder de manière contrôlée aux données passées en entrée.
+        </para>
+        
+        <para>
+        Deux syntaxes sont prises en charge. Dans l'approche par défaut (stricte), le seul argument passé au constructeur est le tableau devant être filtré :
+        </para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST);
+        $email = $filtrePost->isEmail('email');
+        
+        ?>]]>
+        </programlisting>
+        <para>
+        <literal>Zend_Filter_Input</literal> affecte <literal>NULL</literal> au tableau passé en argument (<literal>$_POST</literal> dans notre exemple) 
+        et ainsi l'accès direct aux données n'est plus possible. (Les données brutes ne sont accessibles que via la méthode <literal>getRaw()</literal>, 
+        bien plus simple à rechercher et/ou éviter.)
+        </para>
+        <para>
+        Pour l'approche optionnelle (non-stricte), vous devez passer <literal>FALSE</literal> en tant que deuxième argument du constructeur.
+        </para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST, FALSE);
+        $email = $filtrePost->isEmail('email');
+        
+        ?>]]>
+        </programlisting>
+        <para>
+        L'utilisation est exactement la même, sauf que <literal>Zend_Filter_Input</literal> ne définit pas le tableau original (<literal>$_POST</literal>)
+        à <literal>NULL</literal>, les développeurs peuvent donc toujours y avoir accès. Cette approche est déconseillée au profit de l'approche stricte.
+        </para>
+        <para>
+        <literal>Zend_Filter_Input</literal> est conçu en priorité pour fonctionner avec des tableaux. 
+        Beaucoup de sources de données sont présentes en PHP sous forme de tableaux 
+        (<literal>$_GET</literal>, <literal>$_POST</literal>,<literal>$_COOKIE</literal>, etc.) et 
+        les tableaux constituent en général un moyen courant de stocker les données provenant d'une source tierce. 
+        Si vous souhaitez filtrer un scalaire, voyez <xref linkend="zend.filter" />.    
+        </para>
+    </sect2>
+    <sect2 id="zend.filter.input.usecases">
+        <title>Exemples d'utilisation</title>
+        <para>Filtrage strict par liste blanche (conseillé) :</para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST);
+        
+        if ($email = $filtrePost->isEmail('email')) {
+            /* $email est une adresse e-mail valide */
+        } else {
+            /* $email n'est pas une adresse e-mail valide */
+        }
+        
+        ?>]]>
+        </programlisting>
+        <para>Filtrage à l'aveugle strict :</para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST);
+        $nomAlpha = $filtrePost->getAlpha('nom');
+        
+        ?>]]>
+        </programlisting>
+        <para>Filtrage strict par liste noire :</para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST);
+        $commentaireSansBalises = $filtrePost->noTags('commentaire');
+        
+        ?>]]>
+        </programlisting>
+        <para>Filtrage non-strict par liste blanche :</para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST, FALSE);
+        
+        if ($email = $filtrePost->isEmail('email')) {
+            /* $email est une adresse e-mail valide */
+        } else {
+            /* $email n'est pas une adresse e-mail valide */
+        }
+        
+        ?>]]>
+        </programlisting>
+        <para>Filtrage non-strict à l'aveugle :</para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST);
+        $nomAlpha = $filtrePost->getAlpha('nom');
+        
+        ?>]]>
+        </programlisting>
+        <para>Filtrage non-strict par liste noire :</para>
+        <programlisting>
+        <![CDATA[<?php
+        
+        $filtrePost = new Zend_Filter_Input($_POST, FALSE);
+        $commentaireSansBalises = $filtrePost->noTags('commentaire');
+        
+        ?>]]>
+        </programlisting>
+    </sect2>
+</sect1> 
+<!--
+vim:se ts=4 sw=4 et:
+-->
