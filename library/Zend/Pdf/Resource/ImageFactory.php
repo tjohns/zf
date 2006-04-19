@@ -9,16 +9,17 @@ require_once 'Zend/Pdf.php';
  * Helps manage the diverse set of supported image file types.
  *
  * @package    Zend_Pdf
+ * @todo Use Zend_Mime not file extension for type determination.
  */
 class Zend_Pdf_ImageFactory
 {
-    public static function factory($filename) {
+    static public function factory($filename) {
         if(!is_file($filename)) {
             throw new Zend_Pdf_Exception("Cannot create image resource. File not found.");
         }
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
         /* 
-         * TODO: Use Zend_Mime not file extension. In the mean time, if you need to
+         * There are plans to use Zend_Mime and not file extension. In the mean time, if you need to
          * use an alternate file extension just spin up the right processor directly.
          */
         switch (strtolower($extension)) {
