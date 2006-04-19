@@ -51,6 +51,12 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
      *
      * @param string $imageFileName
      * @throws Zend_Pdf_Exception
+     * @todo Add compression conversions to support compression strategys other than PNG_COMPRESSION_DEFAULT_STRATEGY.
+     * @todo Add pre-compression filtering.
+     * @todo Add interlaced image handling.
+     * @todo Add support for 16-bit images. Requires PDF version bump to 1.5 at least.
+     * @todo Add processing for all PNG chunks defined in the spec. gAMA etc.
+     * @todo Fix tRNS chunk support for Indexed (Paletted) images.
      */
     public function __construct($imageFileName)
     {
@@ -77,17 +83,14 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         $color = ord(fread($imageFile, 1));
 
         if (ord(fread($imageFile, 1)) != Zend_Pdf_Image_PNG::PNG_COMPRESSION_DEFAULT_STRATEGY) {
-            //TODO: Add compression conversions
             throw new Zend_Pdf_Exception( "Only the default compression strategy is currently supported." );
         }
 
         if (ord(fread($imageFile,1)) != Zend_Pdf_Image_PNG::PNG_FILTER_NONE) {
-                //TODO: Support PNG Filtering
-                throw new Zend_Pdf_Exception( "Filtering methods are not currently supported. " );
+            throw new Zend_Pdf_Exception( "Filtering methods are not currently supported. " );
         }
         if (ord(fread($imageFile,1)) != Zend_Pdf_Image_PNG::PNG_INTERLACING_DISABLED) {
-                //TODO: Support Interlacing
-                throw new Zend_Pdf_Exception( "Only non-interlaced images are currently supported." );
+            throw new Zend_Pdf_Exception( "Only non-interlaced images are currently supported." );
         }
 
         fseek($imageFile, 4, SEEK_CUR); //4 Byte Ending Sequence
@@ -102,7 +105,6 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
             $chunkLength            = $chunkLengthtmp['i'];
             $chunkType                      = fread($imageFile, 4);
             switch($chunkType) {
-                //TODO: Support all PNG chunks
                 case 'IDAT': //Image Data
                     /*
                      * Reads the actual image data from the PNG file. Since we know at this point that the compression
@@ -137,7 +139,6 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                             fseek($imageFile, $chunkLength - 6, SEEK_CUR);
                             break;
                         case Zend_Pdf_Image_PNG::PNG_CHANNEL_INDEXED:
-                            //TODO: Read "For color type 3 (indexed color), the tRNS chunk contains a series of one-byte alpha values, corresponding to entries in the PLTE chunk"
                             fseek($imageFile, $chunkLength, SEEK_CUR);
                             throw new Zend_Pdf_Exception( "tRNS chunk not yet supported for INDEXED color images.." );
                             break;
@@ -188,10 +189,13 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                  * the other will contain the Gray transparency overlay data. The former will become the object data and the latter
                  * will become the Shadow Mask (SMask).
                  */
-                 if($bits > 8) {
-                     //The calculations are slightly different for 16 bit depth images. We will have to correct the math to support 16bit.
-                     throw new Zend_Pdf_Exception('Not implemented yet. PNGs with bit depth greater than 8.');
-                 }
+                if($bits > 8) {
+                    /*
+                     * The calculations are slightly different for 16 bit depth images. We will have to correct the math to support 16bit.
+                     * Further, to support 16-bit images the PDF output version must be bumped to 1.5.
+                     */
+                    throw new Zend_Pdf_Exception('Not implemented yet. PNGs with bit depth greater than 8.');
+                }
                 $colorSpace = new Zend_Pdf_Element_Name('DeviceRGB');
 
                 $imageDataTmp = null;
@@ -213,8 +217,9 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                 }
 
                 $compressed = false;
-                $scanLineLength = (ceil(($bits * 4 * $width)/8)) + 1;
-                $bytesPerPixel = ceil(($bits * 4) / 8);
+		$channels = 4; //RGBA
+                $scanLineLength = (ceil(($bits * $channels * $width)/8)) + 1;
+                $bytesPerPixel = ceil(($bits * $channels) / 8);
 
                 $pngDataRawDecoded = '';
                 $lastScanLineDataDecoded = '';
@@ -328,6 +333,17 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         $this->_resource->skipFilters();
     }
 
+    /**
+     * Paeth Predictor
+     *
+     * The Paeth Predictor is used in PNG decompression. This is an implementation
+     * of the pseudocode given in the png specification.
+     *
+     * @param int $a
+     * @param int $b
+     * @param int $c
+     * @return int
+     */
     protected function _paethPredictor($a,$b,$c) {
         $p = $a + $b - $c;
         $pa = abs($p - $a);
