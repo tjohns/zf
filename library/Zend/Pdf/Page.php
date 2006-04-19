@@ -282,11 +282,6 @@ class Zend_Pdf_Page
         }
 
         $this->_pageDictionary->Resources->ProcSet->items[] = new Zend_Pdf_Element_Name($procSetName);
-
-        // Workaround for some strange bug.
-        // If it's not done here, then dictionary will be corrupted
-        // (ProcSet will be an onteger instead of Zend_Pdf_Element_Name object...)
-        $procSets[] = $this->_pageDictionary->Resources->ProcSet;
     }
 
     /**

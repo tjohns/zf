@@ -95,7 +95,7 @@ class Zend_Pdf_Element_Dictionary extends Zend_Pdf_Element
      * @param string $property
      * @return Zend_Pdf_Element | null
      */
-    public function __get($item)
+    public function &__get($item)
     {
         if (isset($this->_items[$item])) {
             return $this->_items[$item];

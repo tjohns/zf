@@ -271,11 +271,11 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
      * @return mixed
      * @throws Zend_Pdf_Exception
      */
-    public function __get($property)
+    public function &__get($property)
     {
         if ($property == 'dictionary') {
             /**
-             * If dtream is note decoded yet, then store original decoding options (do it only once).
+             * If stream is note decoded yet, then store original decoding options (do it only once).
              */
             if (( !$this->_streamDecoded ) && ($this->_originalDictionary === null)) {
                 $this->_storeOriginalDictionary();

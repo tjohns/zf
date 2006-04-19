@@ -75,7 +75,7 @@ class Zend_Pdf_Element_Array extends Zend_Pdf_Element
      * @param string $property
      * @return Zend_Pdf_PHPArray
      */
-    public function __get($property) {
+    public function &__get($property) {
         if ($property=='items') {
             return $this->_items;
         }
