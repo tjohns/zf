@@ -1,7 +1,7 @@
 <preface id="preface">
-    <title>Preface</title>
+    <title>Einleitung</title>
     <para>
-        This document is a programmers reference guide to the Zend Framework.
+        Dieses Dokument ist das Programmierer Referenzhandbuch für das Zend Framework.
     </para>
 </preface>
 <!--

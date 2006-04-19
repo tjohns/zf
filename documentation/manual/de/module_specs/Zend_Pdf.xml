@@ -1,6 +1,6 @@
 <sect1 id="zend.pdf.introduction">
     <!-- @todo review and revise upon completion of refactoring -->
-    <title>Einführung.</title>
+    <title>Einführung</title>
     <para>
         Die Zend_Pdf Komponente ist ein komplett in PHP 5 geschriebenes Werkzeug für die Veränderung von 
         PDF (Portable Document Format) Dateien. Es kann bestehende Dokumente laden, neue Dokumente 
@@ -11,7 +11,7 @@
     <itemizedlist>
         <listitem>
             <para>
-                Erstellen von neuen Dokumente oder Laden von vorhandenen Dokumenten.
+                Erstellen von neuen Dokumenten oder Laden von vorhandenen Dokumenten.
             <footnote>
                 <para>
                 PDF V1.4 (Acrobat 5) Dokumente werden für das Laden derzeit unterstützt.
@@ -66,7 +66,7 @@
 </sect1>
 
 <sect1 id="zend.pdf.create">
-    <title>Erstellen und Laden von PDF Dokumenten.</title>
+    <title>Erstellen und Laden von PDF Dokumenten</title>
     <para>
         Die <code>Zend_Pdf</code> Klasse bildet das PDF Dokument selber ab und stellt 
         Funktionalitäten auf Dokumentebene bereit.
@@ -85,7 +85,7 @@
     </para>
 
     <example>
-        <title>Erstellen und Laden von PDF Dokumenten.</title>
+        <title>Erstellen und Laden von PDF Dokumenten</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // Erstelle ein neues PDF Dokument
@@ -119,7 +119,7 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     </para>
 
     <example>
-        <title>Rückgabe einer vorgegebenen Revision eines PDF Dokuments.</title>
+        <title>Rückgabe einer vorgegebenen Revision eines PDF Dokuments</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // Lade die vorherige Revision des PDF Dokuments.
@@ -141,16 +141,16 @@ $pdf3->rollback($revisions - 1);
 
 
 <sect1 id="zend.pdf.save">
-    <title>Speichere Änderungen des PDF Dokuments.</title>
+    <title>Änderungen von PDF Dokumenten speichern</title>
     <para>
-        Es gibt zwei Methoden, die das Speichern von Änderungen am PDF Dokument bereit stellen.
+        Es gibt zwei Methoden für das Speichern von Änderungen am PDF Dokument.
         Dies sind die Methoden <code>Zend_Pdf::save()</code> und <code>Zend_Pdf::render()</code>.
     </para>
 
     <para>
         Die <code>Zend_Pdf::save($filename, $updateOnly = false)</code> Methode speichert das
-        Dokument in eine Datei. Wenn $updateOnly auf true gesetzt wird, wird ein neues PDF 
-        Dateisegment an das File angehängt, ansonsten wird es überschrieben.
+        Dokument in einer Datei. Wenn $updateOnly auf true gesetzt wird, wird ein neues PDF 
+        Segment an die Datei angehängt, ansonsten wird es überschrieben.
     </para>
 
     <para>
@@ -160,7 +160,7 @@ $pdf3->rollback($revisions - 1);
     </para>
 
     <example>
-        <title>Speichern eines PDF Dokuments.</title>
+        <title>Speichern eines PDF Dokuments</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // Lade das PDF Dokument.
@@ -181,9 +181,9 @@ $pdfString = $pdf->render();
 </sect1>
 
 <sect1 id="zend.pdf.pages">
-    <title>Dokument Seiten.</title>
+    <title>Dokument Seiten</title>
     <para>
-        Die Asbtraktion von PDF Dokumentseiten wird durch die Klasse <code>Zend_Pdf_Page</code> 
+        Die Abstraktion von PDF Dokumentseiten wird durch die Klasse <code>Zend_Pdf_Page</code> 
         abgebildet.
     </para>
 
@@ -197,7 +197,7 @@ $pdfString = $pdf->render();
         <code>Zend_Pdf_Page</code> Objekt zurückgibt. Der Unterschied ist, dass die 
         <code>Zend_Pdf::newPage()</code> Methode eine Seite erstellt, die bereits an das vorhandene
         Dokument angehängt worden ist. Im Gegensatz dazu können ungebundene Seiten bei verschiedenen 
-        PDF Dokumenten verwendet werden und sind ein wenig performanter.
+        PDF Dokumenten verwendet werden und sind ein wenig performanter
     <footnote>
         <para>
             Dies ist eine Einschränkung der V1.0 Version der Zend_Pdf Komponente. Sie wird in 
@@ -230,12 +230,12 @@ $pdfString = $pdf->render();
     <para>
         Dokumentseiten werden in der öffentlichen Eigenschaft <code>$pages</code> der 
         <code>Zend_Pdf</code> Klasse abgelegt. Dies ist ein Array mit <code>Zend_Pdf_Page</code>
-        Objekten. Es definiert den Satz und die Reihenfolge der Dokumentseiten vollständig und kann
+        Objekten. Es definiert den Satz und die Reihenfolge der Dokumentseiten und kann
         wie ein normales Array verändert werden:
     </para>
 
     <example>
-        <title>Verwaltung von PDF Dokumentseiten.</title>
+        <title>Verwaltung von PDF Dokumentseiten</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // Umgekehrte Seitenreihenfolge
@@ -256,16 +256,16 @@ unset($pdf->pages[$id]);
 </sect1>
 
 <sect1 id="zend.pdf.drawing">
-    <title>Drawing.</title>
+    <title>Zeichnen</title>
 
     <sect2 id="zend.pdf.drawing.geometry">
-        <title>Geometry.</title>
+        <title>Geometrie</title>
         <para>
-        PDF uses the same geometry as PostScript. It starts from bottom-left corner of page
-        and by default is measured in points (1/72 of an inch).
+            PDF verwendet die selbe Geometrie wie PostScript. Sie beginnt an der linken unteren 
+            Ecke der Seite und wird in Punkten (1/72 Zoll) gemessen.
         </para>
         <para>
-        Page size can be retrieved from a page object:
+            Die Seitengröße kann vom Seitenobjekt erhalten werden:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
@@ -276,40 +276,40 @@ $height = $pdfPage->getHeight();]]>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.color">
-        <title>Colors.</title>
+        <title>Farben</title>
         <para>
-        PDF has a powerful capabilities for colors representation. Zend_Pdf module supports Gray Scale,
-        RGB and CMYK color spaces. Any of them can be used in any place, where <code>Zend_Pdf_Color</code>
-        object is required. <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_RGB</code> and
-        <code>Zend_Pdf_Color_CMYK</code> classes provide this functionality:
+            PDF bietet leistungsfähige Möglichkeiten für die Farbdarstellung. Die Zend_Pdf 
+            Komponente unterstützt die Grauskala sowie RGB und CYMK Farbräume. Jede kann überall 
+            verwendet werden, wo ein <code>Zend_Pdf_Color</code> Objekt benötigt wird. Die 
+            <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_RGB</code> und
+            <code>Zend_Pdf_Color_CMYK</code> Klassen stellen folgende Funktionalitäten bereit:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
-// $grayLevel (float number). 0.0 (black) - 1.0 (white)
+// $grayLevel (Fließkommazahl). 0.0 (schwarz) - 1.0 (weiß)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
-// $r, $g, $b (float numbers). 0.0 (minimum intensity) - 1.0 (maximum intensity)
+// $r, $g, $b (Fließkommazahlen). 0.0 (minimale Helligkeit) - 1.0 (maximale Helligkeit)
 $color2 = new Zend_Pdf_Color_RGB($r, $g, $b);
 
-// $c, $m, $y, $k (float numbers). 0.0 (minimum intensity) - 1.0 (maximum intensity)
+// $c, $m, $y, $k (Fließkommazahlen). 0.0 (minimale Helligkeit) - 1.0 (maximale Helligkeit)
 $color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]>
             </programlisting>
         </para>
     </sect2>
 
-
     <sect2 id="zend.pdf.drawing.shape-drawing">
-        <title>Shape Drawing.</title>
+        <title>Zeichnen von Formen</title>
         <para>
-        All drawing operations can be done in a context of PDF page.
+            Alle Zeichenoperationen können im Kontext einer PDF Seite durchgeführt werden.
         </para>
         <para>
-        <code>Zend_Pdf_Page</code> class provides a set of drawing primitives:
+            Die <code>Zend_Pdf_Page</code> Klass stellt einen Satz von einfachen Formen bereit:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Draw a line from x1,y1 to x2,y2.
+ * Zeichne eine Linie von x1,y1 nach x2,y2.
  *
  * @param float $x1
  * @param float $y1
@@ -322,12 +322,12 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Draw a rectangle.
+ * Zeichne ein Rechteck.
  *
- * Fill types:
- * Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - fill rectangle and stroke (default)
- * Zend_Pdf_Const::SHAPEDRAW_STROKE      - stroke rectangle
- * Zend_Pdf_Const::SHAPEDRAW_FILL        - fill rectangle
+ * Füllarten:
+ * Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - fülle und strichele das Rechteck (Standard)
+ * Zend_Pdf_Const::SHAPEDRAW_STROKE      - strichele das Rechteck
+ * Zend_Pdf_Const::SHAPEDRAW_FILL        - fülle das Rechteck
  *
  * @param float $x1
  * @param float $y1
@@ -341,15 +341,15 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SH
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Draw a polygon.
+ * Zeichne ein Polygon
  *
- * If $fillType is Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE or Zend_Pdf_Const::SHAPEDRAW_FILL,
- * then polygon is automatically closed.
- * See detailed description of these methods in a PDF documentation
- * (section 4.4.2 Path painting Operators, Filling)
+ * Wenn $fillType Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE oder Zend_Pdf_Const::SHAPEDRAW_FILL ist,
+ * wird das Polygon automatisch geschlossen.
+ * Für eine detaillierte Beschreibung dieser Methode schaue in eine PDF Dokumentation
+ * (Kapitel 4.4.2 Path painting Operators, Filling)
  *
- * @param array $x  - array of float (the X co-ordinates of the vertices)
- * @param array $y  - array of float (the Y co-ordinates of the vertices)
+ * @param array $x  - Array mit Floats (die X Koordinaten der Eckpunkte)
+ * @param array $y  - Array mit Floats (the Y Koordinaten der Eckpunkte)
  * @param integer $fillType
  * @param integer $fillMethod
  */
@@ -361,22 +361,22 @@ public function drawPolygon($x, $y,
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Draw a circle centered on x, y with a radius of radius.
+ * Zeichne einen Kreis mit dem Mittelpunkt x, y dem Radius radius.
  *
- * Angles are specified in radians
+ * Winkel werden im Bogenmaß angegeben
  *
- * Method signatures:
+ * Methoden Signaturen:
  * drawCircle($x, $y, $radius);
  * drawCircle($x, $y, $radius, $fillType);
  * drawCircle($x, $y, $radius, $startAngle, $endAngle);
  * drawCircle($x, $y, $radius, $startAngle, $endAngle, $fillType);
  *
  *
- * It's not a really circle, because PDF supports only cubic Bezier curves.
- * But very good approximation.
- * It differs from a real circle on a maximum 0.00026 radiuses
- * (at PI/8, 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 and 15*PI/8 angles).
- * At 0, PI/4, PI/2, 3*PI/4, PI, 5*PI/4, 3*PI/2 and 7*PI/4 it's exactly a tangent to a circle.
+ * Es ist kein echter Kreis, weil PDF nur kubische Bezierkurven unterstützt.
+ * Aber es ist eine sehr Annäherung.
+ * Es unterscheidet sich von echten Kreisen maximal um 0.00026 Radien
+ * (Bei PI/8, 3*PI/8, 5*PI/8, 7*PI/8, 9*PI/8, 11*PI/8, 13*PI/8 und 15*PI/8 Winkeln).
+ * Bei 0, PI/4, PI/2, 3*PI/4, PI, 5*PI/4, 3*PI/2 und 7*PI/4 ist es exakt eine Tangente zu einem Kreis.
  *
  * @param float $x
  * @param float $y
@@ -391,15 +391,15 @@ public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $pa
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Draw an ellipse inside the specified rectangle.
+ * Zeichne eine Ellipse innerhalb des angegebenen Rechtecks.
  *
- * Method signatures:
+ * Methoden Signaturen:
  * drawEllipse($x1, $y1, $x2, $y2);
  * drawEllipse($x1, $y1, $x2, $y2, $fillType);
  * drawEllipse($x1, $y1, $x2, $y2, $startAngle, $endAngle);
  * drawEllipse($x1, $y1, $x2, $y2, $startAngle, $endAngle, $fillType);
  *
- * Angles are specified in radians
+ * Winkel werden im Bogenmaß angegeben
  *
  * @param float $x1
  * @param float $y1
@@ -415,14 +415,14 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
     </sect2>
 
     <sect2 id="zend.pdf.drawing.text-drawing">
-        <title>Text Drawing.</title>
+        <title>Zeichnen von Text</title>
         <para>
-        Text drawing operations are also exist in a context of PDF page:
+            Auch alle Textoperationen können im Kontext einer PDF Seite durchgeführt werden.
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Draw a line of text at the specified position.
+ * Zeichne eine Textzeile an einer bestimmten Position.
  *
  * @param string $text
  * @param float $x
@@ -433,20 +433,21 @@ public function drawText($text, $x, $y );]]>
             </programlisting>
         </para>
         <para>
-        Current font and current font size are used for text drawing operations. See detailed description below.
+            Der aktuelle Zeichensatz und die aktuelle Schriftgröße werden für Textoperationen 
+            verwendet. Bitte beachte die ausführliche Beschreibung unten.
         </para>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.using-fonts">
-        <title>Using fonts.</title>
+        <title>Verwendung von Zeichensätzen</title>
         <para>
-        <code>Zend_Pdf_Page::drawText()</code> method uses current font, which can be assigned
-        by <code>Zend_Pdf_Page::setFont()</code> method:
+            Die <code>Zend_Pdf_Page::drawText()</code> Methode verwendet den aktuellen Zeichensatz,
+            der mit der Methode <code>Zend_Pdf_Page::setFont()</code> festgelegt werden kann:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Set current font.
+ * Lege den aktuellen Zeichensatz fest.
  *
  * @param Zend_Pdf_Font $font
  * @param float $fontSize
@@ -455,25 +456,28 @@ public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
             </programlisting>
         </para>
         <para>
-        PDF supports Type1, TrueType, Type3 and composite fonts. There are also 14 standard Type1 fonts
-        provided by PDF. Zend_Pdf module provides only these standard fonts now. They can be obtained by using
-        <code>Zend_Pdf_Font_Standard</code> class. Concrete font is specified as a constructor argument:
+            PDF unterstützt Type1, TrueType, Type3 und zusammengesetzte Zeichensätze. Es gibt 
+            14 Type1 Standardzeichensätze, die von PDF bereit gestellt werden. Die 
+            Zend_Pdf Komponente unterstützt derzeit nur diese Standardzeichensätze. Auf diese kann
+            über die Klasse <code>Zend_Pdf_Font_Standard</code> zurückgegriffen werden. Der konkrete
+            Zeichensatz wird in einem Parameter des Konstruktur festgelegt:
         </para>
         <example>
-            <title>Create standard font.</title>
+            <title>Erstelle einen Standardzeichensatz</title>
             <programlisting role="php"><![CDATA[<?php
 ...
-// Create new font
+// Erstelle einen neuen Zeichensatz
 $font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
 
-// Apply font
+// Wende Zeichensatz an
 $pdfPage->setFont($font, 36);
 ...
 ?>]]>
             </programlisting>
         </example>
         <para>
-        Font constants for 14 standard fonts are defined within <code>Zend_Pdf_Const</code> class:
+            Die Zeichensatzkonstanten für die 14 Standardzeichensätze sind innerhalb der 
+            <code>Zend_Pdf_Const</code> Klasse definiert:
         <itemizedlist>
             <listitem>
                 <para>Zend_Pdf_Const::FONT_TIMES_ROMAN</para>
@@ -522,14 +526,15 @@ $pdfPage->setFont($font, 36);
     </sect2>
 
     <sect2 id="zend.pdf.drawing.image-drawing">
-        <title>Image Drawing.</title>
+        <title>Zeichnen von Grafiken</title>
         <para>
-        <code>Zend_Pdf_Page</code> class provides drawImage() method to draw image:
+            Die <code>Zend_Pdf_Page</code> Klasse stellt die drawImage() Methode für das Zeichnen
+            von Grafiken bereit:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Draw an image at the specified position on the page.
+ * Zeichne eine Grafik an der angegebenen Position der Seite.
  *
  * @param Zend_Pdf_Image $image
  * @param float $x1
@@ -541,21 +546,22 @@ public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
             </programlisting>
         </para>
         <para>
-        Image objects are represented by descendants of <code>Zend_Pdf_Image</code> class.
+            Grafikobjekte werden durch Ableitungen der <code>Zend_Pdf_Image</code> Klasse 
+            abgebildet.
         </para>
         <para>
-        JPG, PNG and TIFF images are supported now:
+            Es werden zur Zeit JPG, PNG und TIFF Grafiken unterstützt:
         </para>
         <example>
-            <title>Image drawing.</title>
+            <title>Zeichnen von Grafiken</title>
             <programlisting role="php"><![CDATA[<?php
 ...
-//Create image object directly (choose one)
+// Erstelle ein Grafikobjekt direkt (wähle eines aus)
 $image = new Zend_Pdf_Image_JPEG('my_image.jpg');
 $image = new Zend_Pdf_Image_TIFF('my_image.tiff');
 $image = new Zend_Pdf_Image_PNG('my_image.png');
 
-//or use the Zend_Pdf_ImageFactory to load the appropriate type
+// oder verwende Zend_Pdf_ImageFactory um den entsprechenden Typ zu laden
 $image = Zend_Pdf_ImageFactory::factory('my_image.jpg');
 
 $pdfPage->drawImage($image, 100, 100, 400, 300);
@@ -565,35 +571,37 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         </example>
 
         <para>
-            <emphasis>Important! Zend_Pdf_Image_JPEG class requires PHP GD extension to be configured.</emphasis>
-            <emphasis>Important! Zend_Pdf_Image_PNG class requires ZLIB extension to be configured to work with Alpha channel images.</emphasis>
+            <emphasis>Wichtig! Die Zend_Pdf_Image_JPEG Klasse setzt voraus, dass die GD 
+            Erweiterung für PHP konfiguriert wurde.</emphasis>
+            <emphasis>Wichtig! Die Zend_Pdf_Image_PNG Klasse setzt voraus, dass die ZLIB 
+            Erweiterung konfiguriert wurde, um mit Grafiken mit Alphakanal zu arbeiten.</emphasis>
         </para>
         <para>
-            Refer to the PHP documentation for detailed information
+            Wende dich an die PHP Dokumentation für weitere Informationen
             (<ulink url="http://www.php.net/manual/en/ref.image.php">http://www.php.net/manual/en/ref.image.php</ulink>).
             (<ulink url="http://www.php.net/manual/en/ref.zlib.php">http://www.php.net/manual/en/ref.zlib.php</ulink>).
         </para>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.line-drawing-style">
-        <title>Line drawing style.</title>
+        <title>Stil der Strichzeichnungen</title>
         <para>
-        Line drawing style is defined by line width, line color and line dashing pattern.
-        All of this parameters can be assigned by <code>Zend_Pdf_Page</code>
-        class methods:
+            Der Stil der Strichzeichnungen wurd durch die Linienbreite, die Linienfarbe und das
+            Strichmuster definiert. Alle diese Parameter können an die Klassenmethoden von 
+            <code>Zend_Pdf_Page</code> übergeben werden:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
-/** Set line color. */
+/** Setze die Linienfarbe. */
 public function setLineColor(Zend_Pdf_Color $color);
 
-/** Set line width. */
+/** Setze die Linienbreite. */
 public function setLineWidth(float $width);
 
 /**
- * Set line dashing pattern.
+ * Setze das Strichmuster.
  *
- * Pattern is an array of floats: array(on_length, off_length, on_length, off_length, ...)
+ * Pattern ist ein Array mit Fließkommazahlen: array(on_length, off_length, on_length, off_length, ...)
  * Phase is shift from the beginning of line.
  *
  * @param array $pattern
@@ -605,34 +613,36 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.fill-style">
-        <title>Fill style.</title>
+        <title>Füllstil</title>
         <para>
-        <code>Zend_Pdf_Page::drawRectangle()</code>, <code>Zend_Pdf_Page::drawPoligon()</code>,
-        <code>Zend_Pdf_Page::drawCircle()</code> and <code>Zend_Pdf_Page::drawEllipse()</code> methods take
-        <code>$fillType</code> argument as an optional parameter. It can be:
+            Die Methoden <code>Zend_Pdf_Page::drawRectangle()</code>, 
+            <code>Zend_Pdf_Page::drawPolygon()</code>, <code>Zend_Pdf_Page::drawCircle()</code> und 
+            <code>Zend_Pdf_Page::drawEllipse()</code> akzeptieren das <code>$fillType</code> 
+            Argument als optionalen Parameter. Es kann lauten:
         </para>
 
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_STROKE - stroke shape</para>
+                <para>Zend_Pdf_Const::SHAPEDRAW_STROKE - strichele die Form</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_FILL - only fill shape</para>
+                <para>Zend_Pdf_Const::SHAPEDRAW_FILL - fülle die Form</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - fill and stroke (default behavior)</para>
+                <para>Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - fülle und strichele die Form 
+                (Standardverhalten)</para>
             </listitem>
         </itemizedlist>
 
         <para>
-        <code>Zend_Pdf_Page::drawPoligon()</code> methods also takes an additional parameter
-        <code>$fillMethod</code>:
+            Die <code>Zend_Pdf_Page::drawPolygon()</code> Methode akzeptiert 
+            <code>$fillMethod</code> als zusätzlichen Parameter:
         </para>
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING (default behavior)</para>
+                <para>Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING (Standardverhalten)</para>
                 <para>
-                <citetitle>PDF reference</citetitle> describes this rule as follows:
+                <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
                 <blockquote>
 The nonzero winding number rule determines whether a given point is inside a
 path by conceptually drawing a ray from that point to infinity in any direction
@@ -663,7 +673,7 @@ according to the rule; the "doughnut hole" is outside.
             <listitem>
                 <para>Zend_Pdf_Const::FILLMETHOD_EVENODD</para>
                 <para>
-                <citetitle>PDF reference</citetitle> describes this rule as follows:
+                <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
                 <blockquote>
 An alternative to the nonzero winding number rule is the even-odd rule. This rule
 determines the "insideness" of a point by drawing a ray from that point in any
@@ -685,15 +695,15 @@ regardless of the directions in which the circles are drawn.
     </sect2>
 
     <sect2 id="zend.pdf.drawing.rotations">
-        <title>Rotations.</title>
+        <title>Drehungen</title>
         <para>
-        PDF page can be rotated before applying any draw operation.
-        It can be done by <code>Zend_Pdf_Page::rotate()</code> method:
+            Bevor eine Zeichenoperation angewendet wird, können PDF Seiten gedreht werden. Dies 
+            kann mit Hilfe der <code>Zend_Pdf_Page::rotate()</code> Methode durchgeführt werden:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Rotate the page around ($x, $y) point by specified angle (in radians).
+ * Drehe die Seite um den Punkt ($x, $y) mit dem angegebenen Winkel (im Bogenmaß).
  *
  * @param float $angle
  */
@@ -703,26 +713,27 @@ public function rotate($x, $y, $angle);]]>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.save-restore">
-        <title>Save/restore graphics state.</title>
+        <title>Speichern/Wiederherstellen des Grafikzustand</title>
         <para>
-        At any time page graphics state (current font, font size, line color, fill color,
-        line style, page rotation, clip area) can be saved and then restored. Save operation puts
-        data to a graphics state stack, restore operation retrieves it from there.
+            Jederzeit kann der Grafikzustand der Seite (aktueller Zeichensatz, Schriftgröße, 
+            Linienfarbe, Füllfarbe, Linienstil, Seitendrehung, Zeichenbereich) gespeichert und 
+            wiederhergestellt werden. Speicheroperationen legen die Daten auf einen Grafikzustand 
+            Stapel, Wiederherstelloperationen holen Sie daher zurück. 
         </para>
         <para>
-        There are to methods in <code>Zend_Pdf_Page</code> class for these operations:
+            Für diese Operationen gibt es in der <code>Zend_Pdf_Page</code> Klasse zwei Methoden:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Save the graphics state of this page.
- * This takes a snapshot of the currently applied style, position, clipping area and
- * any rotation/translation/scaling that has been applied.
+ * Speichere den Grafikzustand dieser Seite.
+ * Es wir ein Schnappschuss vom aktuell festgelegten Stil, Position, Zeichenbereich und
+ * jeder festgelegten Drehung/Umrechnung/Skalierung erstellt.
  */
 public function saveGS();
 
 /**
- * Restore the graphics state that was saved with the last call to saveGS().
+ * Stelle den Grafikzustand wieder her, der mit dem letzten Aufruf von saveGS() gespeichert wurde.
  */
 public function restoreGS();]]>
             </programlisting>
@@ -730,18 +741,20 @@ public function restoreGS();]]>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.clipping">
-        <title>Clipping draw area.</title>
+        <title>Zeichenbereich</title>
         <para>
-        PDF and Zend_Pdf module support clipping of draw area.
-        Current clip area limits the regions of the page affected by painting operators. It's a whole page initially.
+            PDF und die Zend_Pdf Komponente unterstützen die Begrenzung des Zeichenbereichs. Der
+            aktuelle Zeichenbereich begrenzt den Seitenbereich, der von Zeichenoperationen 
+            beeinflusst werden kann. Zu Beginn ist dies die gesamte Seite.
         </para>
         <para>
-        <code>Zend_Pdf_Page</code> class provides a set of methods for clipping operations.
+            Die <code>Zend_Pdf_Page</code> Klasse stellt einen Satz von Methoden für die Begrenzung
+            bereit.
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Intersect current clipping area with a rectangle.
+ * Durchschneide den aktuellen Zeichenbereich mit einem Rechteck.
  *
  * @param float $x1
  * @param float $y1
@@ -754,10 +767,10 @@ public function clipRectangle($x1, $y1, $x2, $y2);]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Intersect current clipping area with a polygon.
+ * Durchschneide den aktuellen Zeichenbereich mit einem Polygon.
  *
- * @param array $x  - array of float (the X co-ordinates of the vertices)
- * @param array $y  - array of float (the Y co-ordinates of the vertices)
+ * @param array $x  - Array mit Floats (die X Koordinaten der Eckpunkte)
+ * @param array $y  - Array mit Floats (die Y Koordinaten der Eckpunkte)
  * @param integer $fillMethod
  */
 public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING);]]>
@@ -766,7 +779,7 @@ public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Const::FILLMETHOD_NON
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Intersect current clipping area with a circle.
+ * Durchschneide den aktuellen Zeichenbereich mit einem Kreis.
  *
  * @param float $x
  * @param float $y
@@ -780,13 +793,13 @@ public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Intersect current clipping area with an ellipse.
+ * Durchschneide den aktuellen Zeichenbereich mit einer Ellipse.
  *
- * Method signatures:
+ * Methoden Signaturen:
  * drawEllipse($x1, $y1, $x2, $y2);
  * drawEllipse($x1, $y1, $x2, $y2, $startAngle, $endAngle);
  *
- * @todo process special cases with $x2-$x1 == 0 or $y2-$y1 == 0
+ * @todo verarbeite die Sonderfälle mit $x2-$x1 == 0 oder $y2-$y1 == 0
  *
  * @param float $x1
  * @param float $y1
@@ -801,24 +814,25 @@ public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = 
     </sect2>
 
     <sect2 id="zend.pdf.drawing.styles">
-        <title>Styles.</title>
+        <title>Stile</title>
         <para>
-        <code>Zend_Pdf_Style</code> class provides styles functionality.
+            Die <code>Zend_Pdf_Style</code> Klasse stellt Stilfunktionalitäten bereit.
         </para>
         <para>
-        Styles can be used to store a set of graphic state parameters and apply it to a PDF page by one operation:
+            Stile können verwendet werden, um mit einer Operation die Parameter für den 
+            Grafikzustand zu speichern und auf eine PDF Seite anzuwenden:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Set the style to use for future drawing operations on this page
+ * Lege den Stil für zukünftige Zeichenoperationen auf dieser Seite fest
  *
  * @param Zend_Pdf_Style $style
  */
 public function setStyle(Zend_Pdf_Style $style);
 
 /**
- * Return the style, applied to the page.
+ * Gebe den Stil der Seite zurück.
  *
  * @return Zend_Pdf_Style|null
  */
@@ -827,12 +841,13 @@ public function getStyle();]]>
         </para>
 
         <para>
-        <code>Zend_Pdf_Style</code> class provides a set of methods to set or get different graphics state parameters:
+            Die <code>Zend_Pdf_Style</code> Klasse stellt einen Satz von Methoden bereit, um 
+            verschiedene Parameter des Grafikstadiums zu setzen und zu holen:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Set line color.
+ * Setze die Linienfarbe.
  *
  * @param Zend_Pdf_Color $color
  */
@@ -842,7 +857,7 @@ public function setLineColor(Zend_Pdf_Color $color);]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Get line color.
+ * Hole die Linienfarbe.
  *
  * @return Zend_Pdf_Color|null
  */
@@ -852,7 +867,7 @@ public function getLineColor();]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Set line width.
+ * Setze die Linienbreite.
  *
  * @param float $width
  */
@@ -862,7 +877,7 @@ public function setLineWidth($width);]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Get line width.
+ * Hole die Linienbreite.
  *
  * @return float
  */
@@ -872,7 +887,7 @@ public function getLineWidth();]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Set line dashing pattern
+ * Setze das Strichmuster
  *
  * @param array $pattern
  * @param float $phase
@@ -883,7 +898,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Get line dashing pattern
+ * Hole das Strichmuster
  *
  * @return array
  */
@@ -903,7 +918,7 @@ public function getLineDashingPhase();]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Set fill color.
+ * Setze die Füllfarbe
  *
  * @param Zend_Pdf_Color $color
  */
@@ -913,7 +928,7 @@ public function setFillColor(Zend_Pdf_Color $color);]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Get fill color.
+ * Hole die Füllfarbe.
  *
  * @return Zend_Pdf_Color|null
  */
@@ -923,7 +938,7 @@ public function getFillColor();]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Set current font.
+ * Ändere den Zeichensatz.
  *
  * @param Zend_Pdf_Font $font
  * @param float $fontSize
@@ -934,7 +949,7 @@ public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Modify current font size
+ * Ändere die Schriftgröße
  *
  * @param float $fontSize
  */
@@ -944,7 +959,7 @@ public function setFontSize($fontSize);]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Get current font.
+ * Hole den Zeichensatz.
  *
  * @return Zend_Pdf_Font $font
  */
@@ -954,7 +969,7 @@ public function getFont();]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Get current font size
+ * Hole die Schriftgröße
  *
  * @return float $fontSize
  */
@@ -966,21 +981,21 @@ public function getFontSize();]]>
 </sect1>
 
 <sect1 id="zend.pdf.usage">
-    <title>Zend_Pdf module usage example.</title>
+    <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
     <para>
-    This section provides an example of module usage.
+        Dieser Abschnitt stellt ein Beispiel für die Anwendung der Komponente bereit.
     </para>
 
     <para>
-    This example can be found in a <filename>demos/Zend/Pdf/demo.php</filename> file.
+        Das Beispiel kann in der Datei <filename>demos/Zend/Pdf/demo.php</filename> gefunden werden.
     </para>
     <para>
-    There are also <filename>test.pdf</filename> file, which can be used with this demo
-    for test purposes.
+        Dort gibt es auch die Datei <filename>test.pdf</filename>, die für diese Demo zu 
+        Testzwecken verwendet werden kann. 
     </para>
 
     <example>
-        <title>Zend_Pdf module usage demo.</title>
+        <title>Anwendungsbeispiel für die Zend_Pdf Komponente</title>
         <programlisting role="php"><![CDATA[<?php
 /**
  * @package Zend_Pdf
@@ -991,7 +1006,7 @@ public function getFontSize();]]>
 require_once 'Zend/Pdf.php';
 
 if (!isset($argv[1])) {
-    echo "USAGE: php demo.php <pdf_file> [<output_pdf_file>]\n";
+    echo "VERWENDUNG: php demo.php <pdf_file> [<output_pdf_file>]\n";
     exit;
 }
 
@@ -1002,10 +1017,10 @@ if (file_exists($argv[1])) {
 }
 
 //------------------------------------------------------------------------------------
-// Reverse page order
+// Kehre die Seitenreihenfolge um
 $pdf->pages = array_reverse($pdf->pages);
 
-// Create new Style
+// Erstelle einen neuen Stil
 $style = new Zend_Pdf_Style();
 $style->setFillColor(new Zend_Pdf_Color_RGB(0, 0, 0.9));
 $style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
@@ -1013,10 +1028,10 @@ $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $style->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA_BOLD), 32);
 
-// Create new image object
+// Erstelle ein neues Grafikobjekt
 $stampImage = Zend_Pdf_ImageFactory::factory(dirname(__FILE__) . '/stamp.jpg');
 
-// Mark page as modified
+// Kennzeichne Seiten als verändert
 foreach ($pdf->pages as $page){
     $page->saveGS();
     $page->setStyle($style);
@@ -1031,46 +1046,48 @@ foreach ($pdf->pages as $page){
     $page->restoreGS();
 }
 
-// Add new page generated by Zend_Pdf object (page is attached to the specified the document)
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf Objekts (die Seite wird an das angegebene 
+// Dokument angehängt)
 $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 
-// Add new page generated by Zend_Pdf_Page object (page is not attached to the document)
+// Erstelle eine neue Seite mit Hilfe des Zend_Pdf_Page Objekts (die Seite wird nicht an das 
+// angegebene Dokument angehängt)
 $pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE));
 
-// Create new font
+// Erstelle einen neuen Zeichensatz
 $font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
 
-// Apply font and draw text
+// Lege Zeichensatz fest und zeichnen einen text
 $page1->setFont($font, 36);
 $page1->drawText('Helvetica 36 text string', 60, 500);
 
-// Use font object for another page
+// Verwende das Zeichensatz Objekt für eine andere Seite
 $page2->setFont($font, 24);
 $page2->drawText('Helvetica 24 text string', 60, 500);
 
-// Use another font
+// Verwenden einen anderen Zeichensatz
 $page2->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_TIMES_ROMAN), 32);
 $page2->drawText('Times-Roman 32 text string', 60, 450);
 
-// Draw rectangle
+// Zeichne ein Rechteck
 $page2->setFillColor(new Zend_Pdf_Color_GrayScale(0.8));
 $page2->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
 $page2->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $page2->drawRectangle(60, 400, 400, 350);
 
-// Draw circle
+// Zeichne einen Kreis
 $page2->setLineDashingPattern(Zend_Pdf_Const::LINEDASHING_SOLID);
 $page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 0));
 $page2->drawCircle(85, 375, 25);
 
-// Draw sectors
+// Zeichne Kreisausschnitte
 $page2->drawCircle(200, 375, 25, 2*M_PI/3, -M_PI/6);
 $page2->setFillColor(new Zend_Pdf_Color_CMYK(1, 0, 0, 0));
 $page2->drawCircle(200, 375, 25, M_PI/6, 2*M_PI/3);
 $page2->setFillColor(new Zend_Pdf_Color_RGB(1, 1, 0));
 $page2->drawCircle(200, 375, 25, -M_PI/6, M_PI/6);
 
-// Draw ellipse
+// Zeichne Ellipsen
 $page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 0));
 $page2->drawEllipse(250, 400, 400, 350);
 $page2->setFillColor(new Zend_Pdf_Color_CMYK(1, 0, 0, 0));
@@ -1078,7 +1095,7 @@ $page2->drawEllipse(250, 400, 400, 350, M_PI/6, 2*M_PI/3);
 $page2->setFillColor(new Zend_Pdf_Color_RGB(1, 1, 0));
 $page2->drawEllipse(250, 400, 400, 350, -M_PI/6, M_PI/6);
 
-// Draw and fill polygon
+// Zeichne und fülle ein Polygon
 $page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 1));
 $x = array();
 $y = array();
@@ -1090,7 +1107,7 @@ $page2->drawPolygon($x, $y,
                     Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
                     Zend_Pdf_Const::FILLMETHOD_EVENODD);
 
-// Draw line
+// Zeichne eine Linie
 $page2->setLineWidth(0.5);
 $page2->drawLine(60, 375, 400, 375);
 //------------------------------------------------------------------------------------
@@ -1098,7 +1115,7 @@ $page2->drawLine(60, 375, 400, 375);
 if (isset($argv[2])) {
     $pdf->save($argv[2]);
 } else {
-    $pdf->save($argv[1], true /* update */);
+    $pdf->save($argv[1], true /* Aktualisierung */);
 }
 ]]></programlisting>
     </example>
