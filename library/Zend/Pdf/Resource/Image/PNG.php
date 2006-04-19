@@ -56,7 +56,7 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
      * @todo Add interlaced image handling.
      * @todo Add support for 16-bit images. Requires PDF version bump to 1.5 at least.
      * @todo Add processing for all PNG chunks defined in the spec. gAMA etc.
-     * @todo Fix tRNS chunk support for Indexed (Paletted) images.
+     * @todo Fix tRNS chunk support for Indexed Images to a SMask.
      */
     public function __construct($imageFileName)
     {
@@ -117,35 +117,32 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                     break;
 
                 case 'PLTE': //Palette
-                    if ($color != Zend_Pdf_Image_PNG::PNG_CHANNEL_INDEXED) {
-                        throw new Zend_Pdf_Exception( "Only indexed color PNG's can contain palette entries." );
-                    }
-                   $paletteData = fread($imageFile, $chunkLength);
-                   fseek($imageFile, 4, SEEK_CUR);
-                   break;
+                    $paletteData = fread($imageFile, $chunkLength);
+                    fseek($imageFile, 4, SEEK_CUR);
+                    break;
 
-                case 'tRNS': //Basic (non-alpha channel) transparency. (untested)
+                case 'tRNS': //Basic (non-alpha channel) transparency.
+                    $trnsData = fread($imageFile, $chunkLength);
                     switch ($color) {
                         case Zend_Pdf_Image_PNG::PNG_CHANNEL_GRAY:
-                            $baseColor = unpack('n',fread($imageFile, 2));
-                            $transparencyData = array($baseColor['n']);
-                            fseek($imageFile, $chunkLength - 2, SEEK_CUR);
+                            $baseColor = ord(substr($trnsData, 1, 1));
+                            $transparencyData = array(new Zend_Pdf_Element_Numeric($baseColor), new Zend_Pdf_Element_Numeric($baseColor));
                             break;
                         case Zend_Pdf_Image_PNG::PNG_CHANNEL_RGB:
-                            $red = unpack('n', fread($imageFile, 2));
-                            $green = unpack('n', fread($imageFile, 2));
-                            $blue = unpack('n', fread($imageFile, 2));
-                            $transparencyData = array($red['n'], $green['n'], $blue['n']);
-                            fseek($imageFile, $chunkLength - 6, SEEK_CUR);
+                            $red = ord(substr($trnsData,1,1));
+                            $green = ord(substr($trnsData,3,1));
+                            $blue = ord(substr($trnsData,5,1));
+                            $transparencyData = array(new Zend_Pdf_Element_Numeric($red), new Zend_Pdf_Element_Numeric($red), new Zend_Pdf_Element_Numeric($green), new Zend_Pdf_Element_Numeric($green), new Zend_Pdf_Element_Numeric($blue), new Zend_Pdf_Element_Numeric($blue));
                             break;
                         case Zend_Pdf_Image_PNG::PNG_CHANNEL_INDEXED:
-                            fseek($imageFile, $chunkLength, SEEK_CUR);
-                            throw new Zend_Pdf_Exception( "tRNS chunk not yet supported for INDEXED color images.." );
+                            //Find the first transparent color in the index, we will mask that. (This is a bit of a hack. This should be a SMask and mask all entries values).
+                            if(($trnsIdx = strpos($trnsData, chr(0))) !== false) {
+                                $transparencyData = array(new Zend_Pdf_Element_Numeric($trnsIdx), new Zend_Pdf_Element_Numeric($trnsIdx));
+                            }
                             break;
                         case Zend_Pdf_Image_PNG::PNG_CHANNEL_GRAY_ALPHA:
                             // Fall through to the next case
                         case Zend_Pdf_Image_PNG::PNG_CHANNEL_RGB_ALPHA:
-                            fseek($imageFile, $chunkLength, SEEK_CUR);
                             throw new Zend_Pdf_Exception( "tRNS chunk illegal for Alpha Channel Images" );
                             break;
                     }
