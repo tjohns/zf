@@ -1,7 +1,7 @@
 <sect2 id="zend.service.amazon.classes">
     <title>Zend_Service_Amazon Klassen</title>
     <para>
-        De volgende klassen worden allemaal teruggekeerd door
+        De volgende klassen worden allemaal teruggegeven door
         <link linkend="zend.service.amazon.itemlookup"><code>Zend_Service_Amazon::itemLookup()</code></link>
         en
         <link linkend="zend.service.amazon.itemsearch"><code>Zend_Service_Amazon::itemSearch()</code></link>:
@@ -22,8 +22,7 @@
         <title>Zend_Service_Amazon_Item</title>
         <para>
             <code>Zend_Service_Amazon_Item</code> is de typeklasse die gebruikt wordt om een Amazon item voor te stellen dat
-			werd teruggestuurd door de web service. used to represent an Amazon item returned by the
-            web service. Het omvat elk van de item eigenschappen, met inbegrip van de titel, beschrijving, recensies enz...
+			werd teruggestuurd door de web service. Het omvat elk van de item eigenschappen, inclusief de titel, beschrijving, recensies enz...
         </para>
         <sect4 id="zend.service.amazon.classes.item.asxml">
             <title>Zend_Service_Amazon_Item::asXML()</title>
@@ -34,7 +33,7 @@
                     <void />
                 </methodsynopsis>
             </para>
-            <para>Geef de oorspronkelijke XML van het item terug</para>
+            <para>Geeft de oorspronkelijke XML van het item terug</para>
         </sect4>
         <sect4 id="zend.service.amazon.classes.item.properties">
             <title>Eigenschappen</title>
@@ -107,7 +106,7 @@
                                     <link
                                         linkend="zend.service.amazon.classes.customerreview">Zend_Service_Amazon_CustomerReview</link>
                                 </code>
-                                objekten
+                                objecten
                             </entry>
                         </row>
                         <row>
@@ -119,19 +118,19 @@
                                     <link
                                         linkend="zend.service.amazon.classes.editorialreview">Zend_Service_Amazon_EditorialReview</link>
                                 </code>
-                                objekten
+                                objecten
                             </entry>
                         </row>
                         <row>
                             <entry>SimilarProducts</entry>
                             <entry>array</entry>
                             <entry>
-								Gelijkaardige produkten voorgesteld als een array van
+								Gelijkaardige producten voorgesteld als een array van
                                 <code>
                                     <link
                                         linkend="zend.service.amazon.classes.similarproduct">Zend_Service_Amazon_SimilarProduct</link>
                                 </code>
-                                objekten
+                                objecten
                             </entry>
                         </row>
                         <row>
@@ -143,13 +142,13 @@
                                     <link
                                         linkend="zend.service.amazon.classes.accessories">Zend_Service_Amazon_Accessories</link>
                                 </code>
-                                objekten
+                                objecten
                             </entry>
                         </row>
                         <row>
                             <entry>Tracks</entry>
                             <entry>array</entry>
-                            <entry>Een array van liedjes nummers en namen voor muziek CDs en DVDs</entry>
+                            <entry>Een array van liedjes, nummers en namen voor muziek CDs en DVDs</entry>
                         </row>
                         <row>
                             <entry>ListmaniaLists</entry>
@@ -160,7 +159,7 @@
                                     <link
                                         linkend="zend.service.amazon.classes.listmania">Zend_Service_Amazon_ListmainList</link>
                                 </code>
-                                objekten
+                                objecten
                             </entry>
                         </row>
                         <row>
@@ -178,7 +177,7 @@
     </sect3>
     <sect3 id="zend.service.amazon.classes.image">
         <title>Zend_Service_Amazon_Image</title>
-        <para><code>Zend_Service_Amazon_Image</code> vetegenwoordigdt een (remote) beeld voor een produkt.</para>
+        <para><code>Zend_Service_Amazon_Image</code> vetegenwoordigt een (remote) beeld voor een produkt.</para>
         <sect4 id="zend.service.amazon.classes.image.properties">
             <title>Eigenschappen</title>
             <table>
@@ -218,7 +217,7 @@
     <sect3 id="zend.service.amazon.classes.resultset">
         <title>Zend_Service_Amazon_ResultSet</title>
         <para>
-            <code>Zend_Service_Amazon_ResultSet</code> objekten worden teruggestuurd door
+            <code>Zend_Service_Amazon_ResultSet</code> objecten worden teruggestuurd door
             <link linkend="zend.service.amazon.itemsearch">Zend_Service_Amazon::itemSearch()</link>
             en laten je toe gemakkelijk meervoudige resultaten de behandelen.
         </para>
@@ -235,7 +234,7 @@
                 <methodname>totalResults</methodname>
                 <void />
             </methodsynopsis>
-            <para>Geeft het totaal aantal resultaten bekomen door de zoekopdracht</para>
+            <para>Geeft het totaal aantal resultaten verkregen door de zoekopdracht</para>
         </sect4>
         <para>
             <link linkend="zend.service.amazon.classes">Terug naar de klasselijst</link>
@@ -250,7 +249,7 @@
             <link linkend="zend.service.amazon.itemlookup">Zend_Service_Amazon::itemLookup()</link>
             bevat een
             <code>Zend_Service_Amazon_OfferSet</code>
-            objekt via dewelke prijsinformatie voor het item kan worden opgevraagd.
+            object via welke prijsinformatie voor het item kan worden opgevraagd.
         </para>
         <sect4 id="zend.service.amazon.classes.offerset.parameters">
             <title>Eigenschappen</title>
@@ -268,7 +267,7 @@
                         <row>
                             <entry>LowestNewPrice</entry>
                             <entry>int</entry>
-                            <entry>Laagste prijs voor het item in &quot;Nieuw&quot; konditie</entry>
+                            <entry>Laagste prijs voor het item in &quot;Nieuw&quot; conditie</entry>
                         </row>
                         <row>
                             <entry>LowestNewPriceCurrency</entry>
@@ -280,7 +279,7 @@
                         <row>
                             <entry>LowestOldPrice</entry>
                             <entry>int</entry>
-                            <entry>Laagste prijs voor het item in &quot;Gebruikt&quot; konditie</entry>
+                            <entry>Laagste prijs voor het item in &quot;Gebruikt&quot; conditie</entry>
                         </row>
                         <row>
                             <entry>LowestOldPriceCurrency</entry>
@@ -292,7 +291,7 @@
                         <row>
                             <entry>TotalNew</entry>
                             <entry>int</entry>
-                            <entry>Totaal aantal &quot;nieuw&quot; konditie eenheden beschikbaar voor het item</entry>
+                            <entry>Totaal aantal &quot;nieuw&quot; conditie eenheden beschikbaar voor het item</entry>
                         </row>
                         <row>
                             <entry>TotalUsed</entry>
@@ -302,18 +301,18 @@
                         <row>
                             <entry>TotalCollectible</entry>
                             <entry>int</entry>
-                            <entry>Totaal aantal &quot;inbaar&quot; konditie eenheden beschikbaar voor het item</entry>
+                            <entry>Totaal aantal &quot;inbaar&quot; conditie eenheden beschikbaar voor het item</entry>
                         </row>
                         <row>
                             <entry>TotalRefurbished</entry>
                             <entry>int</entry>
-                            <entry>Totaal aantal &quot;gerenoveerd&quot; konditie eenheiden beschikbaar voor het item</entry>
+                            <entry>Totaal aantal &quot;gerenoveerd&quot; conditie eenheden beschikbaar voor het item</entry>
                         </row>
                         <row>
                             <entry>Offers</entry>
                             <entry>array</entry>
                             <entry>
-                                Een array van <code>Zend_Service_Amazon_Offer</code> objekten.
+                                Een array van <code>Zend_Service_Amazon_Offer</code> objecten.
                             </entry>
                         </row>
                     </tbody>
@@ -329,7 +328,7 @@
         <para>
             Elke aanbieding voor een item is een
             <code>Zend_Service_Amazon_Offer</code>
-            objekt.
+            object.
         </para>
         <sect4 id="zend.service.amazon.classes.offer.properties">
             <table>
@@ -356,7 +355,7 @@
                         <row>
                             <entry>Condition</entry>
                             <entry>string</entry>
-                            <entry>Konditie van het item</entry>
+                            <entry>conditie van het item</entry>
                         </row>
                         <row>
                             <entry>OfferListingId</entry>
@@ -394,12 +393,12 @@
     <sect3 id="zend.service.amazon.classes.similarproduct">
         <title>Zend_Service_Amazon_SimilarProduct</title>
         <para>
-			Wanneer je naar items zoekt geeft Amazon ook een lijst van gelijkaardige produkten terug die de
+			Wanneer je naar items zoekt geeft Amazon ook een lijst van gelijkaardige producten terug die de
 			zoekende persoon zouden kunnen interesseren. Elk van deze items is een 
-			<code>Zend_Service_Amazon_SimilarProduct</code> objekt.
+			<code>Zend_Service_Amazon_SimilarProduct</code> object.
         </para>
         <para>
-			Elk objekt bevat de informatie die je toelaat opeenvolgende verzoeken te maken om de volledige informatie
+			Elk object bevat de informatie die je toelaat opeenvolgende verzoeken te maken om de volledige informatie
 			van het item te verkrijgen.
         </para>
         <sect4 id="zend.service.amazon.classes.similarproduct.properties">
@@ -423,7 +422,7 @@
                         <row>
                             <entry>Title</entry>
                             <entry>string</entry>
-                            <entry>Titel van het produkt</entry>
+                            <entry>Titel van het product</entry>
                         </row>
                     </tbody>
                 </tgroup>
@@ -437,7 +436,7 @@
         <title>Zend_Service_Amazon_Accessories</title>
         <para>
 			Accessoires voor het teruggegeven item worden vertegenoordigd door 
-			<code>Zend_Service_Amazon_Accessories</code> objekten
+			<code>Zend_Service_Amazon_Accessories</code> objecten
         </para>
         <sect4 id="zend.service.amazon.classes.accessories.properties">
             <title>Eigenschappen</title>
@@ -455,12 +454,12 @@
                         <row>
                             <entry>ASIN</entry>
                             <entry>string</entry>
-                            <entry>Amazon Uniek ID voor het produkt (ASIN)</entry>
+                            <entry>Amazon Uniek ID voor het product (ASIN)</entry>
                         </row>
                         <row>
                             <entry>Title</entry>
                             <entry>string</entry>
-                            <entry>Titel van het produkt</entry>
+                            <entry>Titel van het product</entry>
                         </row>
                     </tbody>
                 </tgroup>
@@ -473,7 +472,7 @@
     <sect3 id="zend.service.amazon.classes.customerreview">
         <title>Zend_Service_Amazon_CustomerReview</title>
         <para>
-			Elke klantrecensie is teruggegeven als een <code>Zend_Service_Amazon_CustomerReview</code> objekt.
+			Elke klantrecensie is teruggegeven als een <code>Zend_Service_Amazon_CustomerReview</code> object.
         </para>
         <sect4 id="zend.service.amazon.classes.customerreview.properties">
             <title>Eigenschappen</title>
@@ -491,7 +490,7 @@
                         <row>
                             <entry>Rating</entry>
                             <entry>string</entry>
-                            <entry>Item klassificatie</entry>
+                            <entry>Item classificatie</entry>
                         </row>
                         <row>
                             <entry>HelpfulVotes</entry>
@@ -516,7 +515,7 @@
                         <row>
                             <entry>Summary</entry>
                             <entry>string</entry>
-                            <entry>Recensie samentvatting</entry>
+                            <entry>Recensie samenvatting</entry>
                         </row>
                         <row>
                             <entry>Content</entry>
@@ -534,7 +533,7 @@
     <sect3 id="zend.service.amazon.classes.editorialreview">
         <title>Zend_Service_Amazon_EditorialReview</title>
         <para>
-			Elke uitgeversrecensie van een item is een <code>Zend_Service_Amazon_EditorialReview</code> objekt
+			Elke uitgeversrecensie van een item is een <code>Zend_Service_Amazon_EditorialReview</code> object
         </para>
         <sect4 id="zend.service.amazon.classes.editorialreview.properties">
             <title>Eigenschappen</title>
@@ -570,7 +569,7 @@
     <sect3 id="zend.service.amazon.classes.listmania">
         <title>Zend_Service_Amazon_Listmania</title>
         <para>
-			Elke ListMania resultaatslijst is een <code>Zend_Service_Amazon_Listmania</code> objekt.
+			Elke ListMania resultaatlijst is een <code>Zend_Service_Amazon_Listmania</code> object.
         </para>
         <sect4 id="zend.service.amazon.classes.listmania.properties">
             <title>Eigenschappen</title>
