@@ -12,31 +12,30 @@
  * obtain it through the world-wide-web, please send a note to
  * license@zend.com so we can mail you a copy immediately.
  *
- * @package    Zend_InputFilter
+ * @package    Zend_Filter
+ * @subpackage Input
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc.
  *             (http://www.zend.com/)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework
  *             License version 1.0
  */
 
-/**
- * Zend_InputFilter_Exception
- */
-require_once 'Zend/InputFilter/Exception.php';
 
 /**
  * Zend_Filter
  */
 require_once 'Zend/Filter.php';
 
+
 /**
- * @package    Zend_InputFilter
+ * @package    Zend_Filter
+ * @subpackage Input
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc.
  *             (http://www.zend.com/)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework
  *             License version 1.0
  */
-class Zend_InputFilter
+class Zend_Filter_Input
 {
     protected $_source = NULL;
 
@@ -49,6 +48,7 @@ class Zend_InputFilter
         }
     }
 
+    
     /**
      * Returns only the alphabetic characters in value.
      *
@@ -60,6 +60,7 @@ class Zend_InputFilter
         return Zend_Filter::getAlpha($this->_source[$key]);
     }
 
+    
     /**
      * Returns only the alphabetic characters and digits in value.
      *
@@ -71,6 +72,7 @@ class Zend_InputFilter
         return Zend_Filter::getAlnum($this->_source[$key]);
     }
 
+    
     /**
      * Returns only the digits in value. This differs from getInt().
      *
@@ -82,6 +84,7 @@ class Zend_InputFilter
         return Zend_Filter::getDigits($this->_source[$key]);
     }
 
+    
     /**
      * Returns dirname(value).
      *
@@ -93,6 +96,7 @@ class Zend_InputFilter
         return Zend_Filter::getDir($this->_source[$key]);
     }
 
+    
     /**
      * Returns (int) value.
      *
@@ -104,6 +108,7 @@ class Zend_InputFilter
         return Zend_Filter::getInt($this->_source[$key]);
     }
 
+    
     /**
      * Returns realpath(value).
      *
@@ -115,6 +120,7 @@ class Zend_InputFilter
         return Zend_Filter::getPath($this->_source[$key]);
     }
 
+    
     /**
      * Returns value.
      *
@@ -126,6 +132,7 @@ class Zend_InputFilter
         return $this->_source[$key];
     }
 
+    
     /**
      * Returns value if every character is alphabetic or a digit,
      * FALSE otherwise.
@@ -142,6 +149,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if every character is alphabetic, FALSE
      * otherwise.
@@ -158,6 +166,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is greater than or equal to $min and less
      * than or equal to $max, FALSE otherwise. If $inc is set to
@@ -179,6 +188,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid credit card number format. The
      * optional second argument allows developers to indicate the
@@ -197,6 +207,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns $value if it is a valid date, FALSE otherwise. The
      * date is required to be in ISO 8601 format.
@@ -213,6 +224,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if every character is a digit, FALSE otherwise.
      * This is just like isInt(), except there is no upper limit.
@@ -229,6 +241,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid email format, FALSE otherwise.
      *
@@ -244,6 +257,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid float value, FALSE otherwise.
      *
@@ -259,6 +273,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is greater than $min, FALSE otherwise.
      *
@@ -275,6 +290,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid hexadecimal format, FALSE
      * otherwise.
@@ -291,6 +307,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid hostname, FALSE otherwise.
      * Depending upon the value of $allow, Internet domain names, IP
@@ -300,7 +317,6 @@ class Zend_InputFilter
      *
      * @param mixed $key
      * @param integer $allow bitfield for HOST_ALLOW_DNS, HOST_ALLOW_IP, HOST_ALLOW_LOCAL
-     * @throws Zend_Filter_Exception
      * @return mixed
      */
     public function testHostname($key, $allow = Zend_Filter::HOST_ALLOW_ALL)
@@ -312,6 +328,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid integer value, FALSE otherwise.
      *
@@ -327,6 +344,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid IP format, FALSE otherwise.
      *
@@ -342,6 +360,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is less than $max, FALSE otherwise.
      *
@@ -358,6 +377,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid format for a person's name,
      * FALSE otherwise.
@@ -374,6 +394,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is one of $allowed, FALSE otherwise.
      *
@@ -389,6 +410,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid phone number format, FALSE
      * otherwise. The optional second argument indicates the country.
@@ -405,6 +427,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it matches $pattern, FALSE otherwise. Uses
      * preg_match() for the matching.
@@ -422,6 +445,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     public function testUri($key)
     {
         if (Zend_Filter::isUri($this->_source[$key])) {
@@ -431,6 +455,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value if it is a valid US ZIP, FALSE otherwise.
      *
@@ -446,6 +471,7 @@ class Zend_InputFilter
         return FALSE;
     }
 
+    
     /**
      * Returns value with all tags removed.
      *
@@ -457,6 +483,7 @@ class Zend_InputFilter
         return Zend_Filter::noTags($this->_source[$key]);
     }
 
+    
     /**
      * Returns basename(value).
      *

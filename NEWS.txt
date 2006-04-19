@@ -1,5 +1,9 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+=RELEASE 0.1.4 / ?-May-2006=
+- Zend_InputFilter moved to Zend_Filter_Input (Mike, Chris)
+
+
 =RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
 - Zend_InputFilter has test* methods for retrieving valid data. (Chris)
