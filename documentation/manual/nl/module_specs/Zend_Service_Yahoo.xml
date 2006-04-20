@@ -5,7 +5,7 @@
         <para>
             <code>Zend_Service_Yahoo</code> is een eenvoudige API om veel van de Yahoo! REST APIs te gebruiken.
             <code>Zend_Service_Yahoo</code> laat je toe om Yahoo! Web search, Yahoo! News, Yahoo! Local en Yahoo!
-            Images te doorzoeken. Om de Yahoo! REST API, moet je een Yahoo! Application ID hebben. Om die te bekomen
+            Images te doorzoeken. Om de Yahoo! REST API te gebruiken, moet je een Yahoo! Application ID hebben. Om die te verkrijgen
 			kan je volgende formulier invullen en opsturen:
             <ulink url="http://api.search.yahoo.com/webservices/register_application">Application ID Request Form</ulink>.
         </para>
@@ -18,8 +18,8 @@
 			optionele tweede parameter als een array van zoekopties. Voor volledige details en een lijst van opties
 			verwijzen we je graag door naar de
             <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search
-            Dokumentatie</ulink>. De <code>webSearch()</code> methode geeft een 
-            <code>Zend_Service_Yahoo_WebResultSet</code> objekt terug.
+            Documentatie</ulink>. De <code>webSearch()</code> methode geeft een 
+            <code>Zend_Service_Yahoo_WebResultSet</code> object terug.
         </para>
         <example>
             <title>Het web doorzoeken met Yahoo!</title>
@@ -40,9 +40,9 @@ foreach ($results as $result) {
             methode te gebruiken. Deze methode aanvaardt een string query parameter en een optionele array van
 			zoekopties zoals voor de 
             <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> methode</link>. Voor alle details
-            en een lijst va nopties kan je terecht op de
+            en een lijst van opties kan je terecht op de
             <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Beeldzoeken
-            Dokumentatie</ulink>.
+            Documentatie</ulink>.
         </para>
         <example>
             <title>Beelden vinden met Yahoo!</title>
@@ -60,9 +60,9 @@ foreach ($results as $result) {
         <title>Plaatselijke bedrijven en diensten vinden met Yahoo!</title>
         <para>
 			Je kan plaatselijke bedrijven en diensten opzoeken met Yahoo! door de <code>localSearch()</code> methode te
-			gebruiken. Voor alle detaisl kan je terecht op de
+			gebruiken. Voor alle details kan je terecht op de
             <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Plaatselijk zoeken
-            Dokumentatie</ulink>.
+            Documentatie</ulink>.
         </para>
         <example>
             <title>Plaatselijke bedrijven en diensten vinden met Yahoo!</title>
@@ -82,7 +82,7 @@ foreach ($results as $result) {
             Yahoo! News zoeken is eenvoudig; gebruik eenvoudigweg de <code>newsSearch()</code> methode zoals in het
 			volgende voorbeeld. Voor alle details verwijzen we je door naar de 
             <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News zoeken
-            Dokumentatie</ulink>.
+            Documentatie</ulink>.
         </para>
         <example>
             <title>Yahoo! News zoeken</title>

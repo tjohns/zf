@@ -1,9 +1,9 @@
 <sect2 id="zend.service.yahoo.classes">
     <title>Zend_Service_Yahoo Klassen</title>
     <para>
-		De volgende klassen worden allemaal teruggestuurd door de verschillende Yahoo! opzoekingen. Elk zoektype
+		De volgende klassen worden allemaal teruggestuurd door de verschillende Yahoo! zoekopdrachten. Elk zoektype
 		stuurt een set resultaten terug die specifiek zijn aan het zoektype. Deze kunnen gemakkelijk worden
-		doorlopen vermits elk resultaat in een resultaattype objekt is bevat. Alle klassen voor resultaatsets
+		doorlopen omdat elk resultaat in een resultaattype object zit. Alle klassen voor resultaatsets
 		implementeren de <code>SeekableIterator</code> interface die ervoor zorgt dat je gemakkelijk door een
 		set resultaten kan lopen en een specifiek resultaat erin kan zoeken.
         <itemizedlist>
@@ -23,11 +23,11 @@
     <sect3 id="zend.service.yahoo.classes.resultset">
         <title>Zend_Service_Yahoo_ResultSet</title>
         <para>
-			Elk van de aan de opzoek specifieke resultaten is uitgebreid vanaf deze basisklasse.
+			Elk van de aan de zoekopdracht specifieke resultaten is uitgebreid vanaf deze basisklasse.
         </para>
         <para>
 			Elk van de specifieke set resultaten geeft een specifiek
-            <link linkend="zend.service.yahoo.classes.result">Zend_Service_Yahoo_Result</link> objekt terug.
+            <link linkend="zend.service.yahoo.classes.result">Zend_Service_Yahoo_Result</link> object terug.
         </para>
         <sect4 id="zend.service.yahoo.classes.resultset.totalResults">
             <title>Zend_Service_Yahoo_ResultSet::totalResults()</title>
@@ -83,7 +83,7 @@
     <sect3 id="zend.service.yahoo.classes.webresultset">
         <title>Zend_Service_Yahoo_WebResultSet</title>
         <para>
-            <code>Zend_Service_Yahoo_WebResultSet</code> vertegenwoordigdt een Yahoo! Web Search set resultaatsets.
+            <code>Zend_Service_Yahoo_WebResultSet</code> vertegenwoordigt een Yahoo! Web Search set resultaatsets.
         </para>
         <note>
             <para>
@@ -97,11 +97,11 @@
     <sect3 id="zend.service.yahoo.classes.imageresultset">
         <title>Zend_Service_Yahoo_ImageResultSet</title>
         <para>
-            <code>Zend_Service_Yahoo_ImageResultSet</code> vertegenwoordigdt een Yahoo! Image Search set resultaatsets.
+            <code>Zend_Service_Yahoo_ImageResultSet</code> vertegenwoordigt een Yahoo! Image Search set resultaatsets.
         </para>
         <note>
             <para>
-                <code>Zend_Service_Yahoo_ImageResultSet</code> extends <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
+                <code>Zend_Service_Yahoo_ImageResultSet</code> breidt <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link> uit.
             </para>
         </note>
         <para>
@@ -111,7 +111,7 @@
     <sect3 id="zend.service.yahoo.classes.localresultset">
         <title>Zend_Service_Yahoo_LocalResultSet</title>
         <para>
-            <code>Zend_Service_Yahoo_LocalResultSet</code> vertegenwoordigdt a Yahoo! Local Search set resultaatsets.
+            <code>Zend_Service_Yahoo_LocalResultSet</code> vertegenwoordigt een Yahoo! Local Search set resultaatsets.
         </para>
         <table>
             <title>Zend_Service_Yahoo_LocalResultSet Eigenschappen</title>
@@ -127,7 +127,7 @@
                     <row>
                         <entry>resultSetMapURL</entry>
                         <entry>string</entry>
-                        <entry>Het URL van een webpagina die een grafische kaart bevat met alle teruggestuurde resultaten erop
+                        <entry>De URL van een webpagina die een grafische kaart bevat met alle teruggestuurde resultaten erop
 						afgebeeld.</entry>
                     </row>
                 </tbody>
@@ -135,7 +135,7 @@
         </table>
         <note>
             <para>
-                <code>Zend_Service_Yahoo_LocalResultSet</code> extends <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link>
+                <code>Zend_Service_Yahoo_LocalResultSet</code> breidt <link linkend="zend.service.yahoo.classes.resultset">Zend_Service_Yahoo_ResultSet</link> uit.
             </para>
         </note>
         <para>
@@ -145,7 +145,7 @@
     <sect3 id="zend.service.yahoo.classes.newsresultset">
         <title>Zend_Service_Yahoo_NewsResultSet</title>
         <para>
-            <code>Zend_Service_Yahoo_NewsResultSet</code> vertegenwoordigdt een Yahoo! News Search set resultaatsets.
+            <code>Zend_Service_Yahoo_NewsResultSet</code> vertegenwoordigt een Yahoo! News Search set resultaatsets.
         </para>
         <note>
             <para>
@@ -159,7 +159,7 @@
     <sect3 id="zend.service.yahoo.classes.result">
         <title>Zend_Service_Yahoo_Result</title>
         <para>
-			Elk van de aan de opzoek specifieke resultaten is uitgebreid van deze basis klasse.
+			Elk van de aan de zoekopdracht specifieke resultaten is uitgebreid van deze basis klasse.
         </para>
         <sect4 id="zend.service.yahoo.classes.result.properties">
             <title>Eigenschappen</title>
@@ -200,7 +200,7 @@
      <sect3 id="zend.service.yahoo.classes.webresult">
         <title>Zend_Service_Yahoo_WebResult</title>
         <para>
-			Elk Web Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_WebResult</code> objekt.
+			Elk Web Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_WebResult</code> object.
         </para>
         <sect4 id="zend.service.yahoo.classes.webresult.properties">
             <title>Eigenschappen</title>
@@ -251,7 +251,7 @@
      <sect3 id="zend.service.yahoo.classes.imageresult">
         <title>Zend_Service_Yahoo_ImageResult</title>
         <para>
-			Elk Image Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_ImageResult</code> objekt.
+			Elk Image Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_ImageResult</code> object.
         </para>
         <sect4 id="zend.service.yahoo.classes.imageresult.properties">
             <title>Eigenschappen</title>
@@ -312,7 +312,7 @@
      <sect3 id="zend.service.yahoo.classes.localresult">
         <title>Zend_Service_Yahoo_LocalResult</title>
         <para>
-			Elk Local Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_LocalResult</code> objekt.
+			Elk Local Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_LocalResult</code> object.
         </para>
         <sect4 id="zend.service.yahoo.classes.localresult.properties">
             <title>Eigenschappen</title>
@@ -350,7 +350,7 @@
                         <row>
                             <entry>Rating</entry>
                             <entry>int</entry>
-                            <entry>Door gebruikers gegeven klassifikatie voor het resultaat</entry>
+                            <entry>Door gebruikers gegeven classificatie voor het resultaat</entry>
                         </row>
                         <row>
                             <entry>Distance</entry>
@@ -365,12 +365,12 @@
                         <row>
                             <entry>BusinessUrl</entry>
                             <entry>string</entry>
-                            <entry>URL voor de bedrijfswebstek, indien gekend</entry>
+                            <entry>URL voor de bedrijfswebsite, indien bekend</entry>
                         </row>
                         <row>
                             <entry>BusinessClickUrl</entry>
                             <entry>string</entry>
-                            <entry>URL om naar de bedrijfswebstek te linken, indien gekend</entry>
+                            <entry>URL om naar de bedrijfswebsite te linken, indien bekend</entry>
                         </row>
                     </tbody>
                 </tgroup>
@@ -383,7 +383,7 @@
      <sect3 id="zend.service.yahoo.classes.newsresult">
         <title>Zend_Service_Yahoo_NewsResult</title>
         <para>
-            Elk News Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_NewsResult</code> objekt.
+            Elk News Search resultaat wordt teruggestuurd als een <code>Zend_Service_Yahoo_NewsResult</code> object.
         </para>
         <sect4 id="zend.service.yahoo.classes.newsresult.properties">
             <title>Eigenschappen</title>
@@ -406,12 +406,12 @@
                         <row>
                             <entry>NewsSource</entry>
                             <entry>string</entry>
-                            <entry>Het bedrijf dat het artikel verspreidde</entry>
+                            <entry>Het bedrijf dat het artikel publiceerde</entry>
                         </row>
                         <row>
                             <entry>NewsSourceUrl</entry>
                             <entry>string</entry>
-                            <entry>De URL van het bedrijf dat het artikel verspreidde</entry>
+                            <entry>De URL van het bedrijf dat het artikel publiceerde</entry>
                         </row>
                         <row>
                             <entry>Language</entry>
@@ -421,7 +421,7 @@
                         <row>
                             <entry>PublishDate</entry>
                             <entry>string</entry>
-                            <entry>De publikatiedatum van het artikel als een UNIX timestamp</entry>
+                            <entry>De publicatiedatum van het artikel als een UNIX timestamp</entry>
                         </row>
                         <row>
                             <entry>ModificationDate</entry>
@@ -445,7 +445,7 @@
         <title>Zend_Service_Yahoo_Image</title>
         <para>
 			Alle beelden die door de Yahoo! Image Search of de Yahoo! News Search worden teruggestuurd
-            worden voorgesteld als <code>Zend_Service_Yahoo_Image</code> objekten
+            worden voorgesteld als <code>Zend_Service_Yahoo_Image</code> objecten
         </para>
         <sect4 id="zend.service.yahoo.classes.image.properties">
             <title>Eigenschappen</title>
