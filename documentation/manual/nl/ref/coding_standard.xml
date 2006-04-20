@@ -10,7 +10,7 @@
 
       <para>Dit document beschrijft de richtlijnen en
       hulpmiddelen voor softwareontwikkelaars en teams die programmeren met
-      behulp van of die programmeren op de Zend Framework. De aangesproken
+      behulp van of die programmeren op het Zend Framework. De aangesproken
       onderwerpen zijn:</para>
 
       <para><itemizedlist>
@@ -36,8 +36,8 @@
       <title>Doelen</title>
 
       <para>Goede coderichtlijnen zijn belangrijk in
-      alle ontwikkelingsprojekten, maar bijzonder meer wanneer meerdere
-      programmeurs aan eenzelfde projekt werken. De coderichtlijnen spelen een
+      alle ontwikkelingsprojecten, in het bijzonder wanneer meerdere
+      programmeurs aan eenzelfde project werken. De coderichtlijnen spelen een
       grote rol in het produceren van kwaliteitscode met mindere bugs en die
       gemakkelijker kan worden onderhouden.</para>
     </sect2>
@@ -99,7 +99,7 @@
       <title>Klassen</title>
 
       <para>De Zend Framework gebruikt een
-      klassebenamingsovereenkomst waarbij de namen van de klassen direkt
+      klassebenamingsovereenkomst waarbij de namen van de klassen direct
       overeenkomen met de mappen waarin ze zijn opgeslaan. De root directory
       van de Zend Framework is de "Zend" map, waaronder alle klassen
       hiërarchisch zijn ondergebracht.</para>
@@ -138,7 +138,7 @@ Zend_View_Helper
       <title>Interfaces</title>
 
       <para>Interface klassen moeten dezelfde overeenkomsten
-      respekteren als andere klassen (zie hierboven), maar moeten bovendien
+      respecteren als andere klassen (zie hierboven), maar moeten bovendien
       eindigen op het woord "interface", zoals in deze
       voorbeelden:</para>
 
@@ -163,7 +163,7 @@ Zend_Controller_Dispatcher_Interface</programlisting></para>
 Zend/Controller/Front.php
 
 Zend/View/Helper/FormRadio.php</programlisting> Bestandsnamen moeten de 
-	  overeenkomst met de klassenamen respekteren, zoals hierboven 
+	  overeenkomst met de klassenamen respecteren, zoals hierboven 
 	  beschreven.</para>
     </sect2>
 
@@ -177,7 +177,7 @@ Zend/View/Helper/FormRadio.php</programlisting> Bestandsnamen moeten de
       <para>Functienamen moeten altijd met een kleine letter
       beginnen. Indien een functienaam bestaat uit meer dan één woord, moet de
       eerste letter van elk nieuw woord een hoofdletter zijn. Dit wordt
-      gemeenlijk de "studlyCaps" of "camelCaps" methode
+      de "studlyCaps" of "camelCaps" methode
       genoemd.</para>
 
       <para>Langsprekendheid wordt aangeraden. Functienamen zouden
@@ -206,7 +206,7 @@ widgetFactory()</programlisting></para>
     <sect2 id="coding-standard.naming-conventions.variables">
       <title>Variabelen</title>
 
-      <para>Variabelnamen mogen alleen bestaan uit alfanumerieke
+      <para>Namen van variabelen mogen alleen bestaan uit alfanumerieke
       tekens. Underscores zijn niet toegestaan. Nummers zijn toegestaan maar
       worden afgeraden.</para>
 
@@ -216,8 +216,8 @@ widgetFactory()</programlisting></para>
       underscore in een functienaam. Eigenschappen verklaard als "public" mogen
       nooit met een underscore beginnen.</para>
 
-      <para>Zoals functienamen (zie sektie 3.3, hierboven) moeten
-      variabelnamen altijd met een kleine letter beginnen en volgen ze de
+      <para>Zoals functienamen (zie sectie 3.3, hierboven) moeten
+      namen van variabelen altijd met een kleine letter beginnen en volgen ze de
       "camelCaps" behoofdletteringsovereenkomst.</para>
 
       <para>Langsprekendheid is aangeraden. Variabelen zouden zoveel
@@ -228,17 +228,17 @@ widgetFactory()</programlisting></para>
     </sect2>
 
     <sect2 id="coding-standard.naming-conventions.constants">
-      <title>Konstanten</title>
+      <title>Constanten</title>
 
-      <para>Namen voor konstanten mogen zowel alfanumerieke tekens
+      <para>Namen voor constanten mogen zowel alfanumerieke tekens
       als de underscore bevatten. Nummers zijn toegelaten in
-      konstantnamen.</para>
+      constantnamen.</para>
 
-      <para>Konstantnamen moeten altijd alleen bestaan uit
+      <para>constantnamen moeten altijd alleen bestaan uit
       hoofdletters wat de alfatekens betreft.</para>
 
-      <para>Konstanten moeten worden gedefinieerd als klasseleden
-      door het concept "const" te gebruiken. Konstanten verklaren in het
+      <para>Constanten moeten worden gedefinieerd als klasseleden
+      door het concept "const" te gebruiken. Constanten verklaren in het
       globale bereik met "define" is toegelaten maar wordt afgeraden.</para>
     </sect2>
   </sect1>
@@ -278,18 +278,18 @@ $a = 'Voorbeeld String';</programlisting></para>
         quotes"). Dit is speciaal aangeraden voor SQL verklaringen:
         <programlisting role="php">
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";</programlisting>
-        De bovenstaande syntax is verkozen boven het ontsnappen van de apostrofen.</para>
+        De bovenstaande syntax is verkozen boven het "escapen" van de apostrofen.</para>
       </sect3>
 
       <sect3 id="coding-standard.coding-style.strings.variable-substitution">
         <title>Variabelvervanging</title>
 
-        <para>Variabelvervanging is toegstaan met respekt van de volgende vormen: <programlisting role="php">
+        <para>Variabelvervanging is toegestaan met respect van de volgende vormen: <programlisting role="php">
 $greeting = "Hello $name, welcome back!";
 
 $greeting = "Hello {$name}, welcome back!";</programlisting></para>
 
-        <para>Om eenvormigheid te respekteren is deze vorm niet toegestaan: <programlisting
+        <para>Om uniformiteit te respecteren is deze vorm niet toegestaan: <programlisting
         role="php">
 $greeting = "Hello ${name}, welcome back!";</programlisting></para>
       </sect3>
@@ -301,10 +301,10 @@ $greeting = "Hello ${name}, welcome back!";</programlisting></para>
 		vòòr en na de "." operator worden ingevoegd om de leesbaarheid te verbeteren: <programlisting role="php">
 $company = 'Zend' . 'Technologies';</programlisting></para>
 
-        <para>Wanneer men strings samenvoegt met de "." operatoris het teogelaten
+        <para>Wanneer men strings samenvoegt met de "." operator is het toegelaten
 		de verklaring in meerdere regels op te breken om de leesbaarheid te vergroten.
-		In date geval moet elke opeenvolgende regel met spaties worden opgevuld zodat
-		de "." operator aangeleind is onder de "=" operator: <programlisting role="php">
+		In dat geval moet elke opeenvolgende regel met spaties worden opgevuld zodat
+		de "." operator uitgelijnd is onder de "=" operator: <programlisting role="php">
 $sql = "SELECT `id`, `name` FROM `people` "
      . "WHERE `name` = 'Susan' "
      . "ORDER BY `name` ASC ";</programlisting></para>
@@ -323,14 +323,14 @@ $sql = "SELECT `id`, `name` FROM `people` "
 		Dit wordt evenwel afgeraden. Het is aangeraden dat alle arrays een 
 		basisindex van 0 hebben.</para>
 
-        <para>Wanneer men een geïndexeerde array verklaart met het <code>array</code>
+        <para>Wanneer men een geïndexeerde array definieert met het <code>array</code>
         concept moet er een spatie worden ingevoegd na elke komma afbakening om
 		de leesbaarheid te verbeteren: <programlisting role="php">
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio');</programlisting></para>
 
         <para>Het is ook toegelaten om een geïndexeerde array op meerdere
-		regels te verklaren. In dat geval moet elke opeenvolgende regel met spaties
-		worden opgevuld zodanig dat het begin van elke regel als volgt is opgeleind:
+		regels te definieren. In dat geval moet elke opeenvolgende regel met spaties
+		worden opgevuld zodanig dat het begin van elke regel als volgt is uitgelijnd:
 		<programlisting role="php">
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
                      $a, $b, $c,
@@ -341,9 +341,9 @@ $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
         <title>Associatieve Arrays</title>
 
         <para>Wanneer men associatieve arrays met het <code>array</code>
-        concept verklaart is het aangeraden de verklaring in meerdere regels op te
+        concept definieert is het aangeraden de verklaring in meerdere regels op te
 		breken. In dat geval moet elke opeenvolgende regel met spaties worden
-		opgevuld zodat de indexen (keys) en waarden (values) opgeleind zijn:
+		opgevuld zodat de indexen (keys) en waarden (values) uitgelijnd zijn:
         <programlisting role="php">
 $sampleArray = array('firstKey'  =&gt; 'firstValue',
                      'secondKey' =&gt; 'secondValue');</programlisting></para>
@@ -375,7 +375,7 @@ $sampleArray = array('firstKey'  =&gt; 'firstValue',
         <para>Dit is een voorbeeld van een aanvaardbare klasseverklaring:
         <programlisting role="php">
 /**
- * Documentation Block Here
+ * Documentatie Blok Hier
  */
 class SampleClass
 {
@@ -387,16 +387,16 @@ class SampleClass
       <sect3 id="coding-standard.coding-style.classes.member-variables">
         <title>Klasse lidvariabelen</title>
 
-        <para>Lidvariabelen moeten benaamd worden volgens de variabel 
+        <para>Lidvariabelen moeten benaamd worden volgens de variabele 
 		benamingsovereenkomst.</para>
 
         <para>Variabelen die in de klasse worden verklaard moeten bovenaan
-		in de klasse worden gelijst, vòòrdat functies worden verklaard.</para>
+		in de klasse worden opgesomd, vòòrdat functies worden verklaard.</para>
 
         <para>Het concept <code>var</code> is niet toegestaan. Lidvariabelen
-		moeten steeds hun zichtbaarheid verklaren door éen van de <code>private</code>, 
+		moeten steeds hun zichtbaarheid verklaren door één van de <code>private</code>, 
 		<code>protected</code>, of <code>public</code> concepten te gebruiken.
-		Toegang verlene aan lidvariabelen door hen publiek te maken is toegestaan
+		Toegang verlenen aan lidvariabelen door hen publiek te maken is toegestaan
 		maar wordt afgeraden ten voordele van de databenaderingsmethodes (set/get).</para>
       </sect3>
     </sect2>
@@ -409,7 +409,7 @@ class SampleClass
 
         <para>Functiebenaming moet de benamingsovereenkomsten volgen.</para>
 
-        <para>Functies binnenin klasses moeten steeds hun zichtbaarheid verklaren 
+        <para>Functies binnen klasses moeten steeds hun zichtbaarheid verklaren 
 		door één van de <code>private</code>, <code>protected</code>, of
         <code>public</code> concepten te gebruiken.</para>
 
@@ -423,7 +423,7 @@ class SampleClass
         <para>Dit is een voorbeeld van een aanvaardbare verklaring van een functie in een klasse:
         <programlisting role="php">
 /*
- * Documentation Block Here
+ * Documentatie blok hier
  */
 function sampleMethod($a)
 {
@@ -431,12 +431,12 @@ function sampleMethod($a)
     // moet geindenteerd worden met vier spaties
 }</programlisting></para>
 
-        <para><emphasis>NOTA:</emphasis> Doorgeven bij verwijzing (pass by reference) is 
+        <para><emphasis>NOTA:</emphasis> Doorgeven per verwijzing (pass by reference) is 
 		alleen toegestaan in de functieverklaring: <programlisting role="php">
 function sampleMethod(&amp;$a)
 {}</programlisting></para>
 
-        <para>Call-time pass by-reference is verboden.</para>
+        <para>Call-time pass by reference is verboden.</para>
 
         <para>De terugkeerwaarde mag niet tussen haakjes worden ingesloten.
 		Dat kan de leesbaarheid hinderen en kan ook de code breken indien een
@@ -457,15 +457,15 @@ function foo()
 
         <para>Functie-argumenten worden gescheiden door één enkele spatie
 		na de komma afbakening. Dit is een voorbeeld van een aanvaardbare
-		functie-aanroep voor een functie die drei argumenten heeft:
+		functie-aanroep voor een functie die drie argumenten heeft:
         <programlisting role="php">
 threeArguments(1, 2, 3);</programlisting></para>
 
-        <para>Call-time pass by-reference is verboden. Zie de sectie in verband met
+        <para>Call-time pass by reference is verboden. Zie de sectie over
 		functieverklaringen voor de juiste wijze om argumenten per verwijzing door te
 		sturen.</para>
 
-        <para>Voor functies dewelke argumenten arrays aanvaardden mag de 
+        <para>Voor functies welke arrays als argument aanvaardden mag de 
 		functieaanroep het "array" concept bevatten en kan deze in meerdere 
 		regels worden opgesplitst om de leesbaarheid te vergroten.
 		In deze gevallen blijven de regels voor het schrijven van arrays van
@@ -622,7 +622,7 @@ switch ($numPeople) {
       <sect3 id="coding-standards.inline-documentation.functions">
         <title>Functies</title>
 
-        <para>Elke funtie, methodes inbegrepen, moet een docblock hebben
+        <para>Elke functie, methodes inbegrepen, moet een docblock hebben
 		dat minstens het volgende bevat: <itemizedlist>
             <listitem>
               <para>Een beschrijving van de functie</para>
@@ -637,7 +637,7 @@ switch ($numPeople) {
             </listitem>
           </itemizedlist></para>
 
-        <para>Het is niet nodig om de "@access" afbakener teh gebruiken
+        <para>Het is niet nodig om de "@access" afbakener te gebruiken
 		want de zichtbaarheid is reeds bekend via het gebruik van
 		"public", "private", of "protected" bij het verklaren van de 
 		functie.</para>
