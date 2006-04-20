@@ -7,9 +7,9 @@
 ]>
 <book id="manual" lang="en">
     <bookinfo>
-        <title>Programmer's Reference Guide</title>
-        <subtitle>Zend Framework</subtitle>
-        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <title>Guía de Referencia del Programador</title>
+        <subtitle>Framework Zend</subtitle>
+        <edition>Guía de Referencia del Programador para el Framework Zend</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
@@ -116,3 +116,4 @@
 <!--
 vim:se ts=4 sw=4 et:
 -->
+
