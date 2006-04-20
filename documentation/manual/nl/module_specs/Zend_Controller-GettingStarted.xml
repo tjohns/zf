@@ -47,7 +47,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		<para>
 			Na het opzetten van het .htaccess bestand, moet je een nieuw bestand <code>index.php</code> aanmaken.
 			Dit is een bootstrap bestand. Het doel van index.php is enkel het bootstrappen van 
-			Zend_Controller_Front, welke zich ideaal gesproken buiten de documentroot zou moeten bevinden.
+			Zend_Controller_Front, die zich ideaal gesproken buiten de documentroot zou moeten bevinden.
 		</para>
 
 		<note>	

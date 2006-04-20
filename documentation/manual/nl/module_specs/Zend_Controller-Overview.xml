@@ -55,9 +55,9 @@
 						controller klasse in dat bestand (moet <code>Zend_Controller_Action</code>
 						implementeren), en uiteindelijk de actiemethode uitvoeren in dat controller object.
 						In tegenstelling tot routing, dat maar eenmaal gebeurt, 
-						gebeurt dispatching in een loop. <code>Zend_Controller_Dispatcher</code> wordt 
+						gebeurt dispatching in een lus. <code>Zend_Controller_Dispatcher</code> wordt 
 						herhaaldelijk opgeroepen door <code>Zend_Controller_Front</code> totdat alle 
-						acties opeenvolgend zijn gedispatched.
+						acties in binnenkomende volgorde zijn gedispatched.
 					</para>
 				</listitem>
 
@@ -74,11 +74,11 @@
 			<code>Zend_Controller_Front</code>, die op zijn beurt <code>Zend_Controller_Router</code> aanroept om
 			te determineren welke controller (en actie in die controller) gedispatched wordt. <code>Zend_Controller_Router</code>
 			breekt de URI op in een <code>Zend_Controller_Dispatcher_Token</code> object dat beschrijft waar te dispatchen.
-			<code>Zend_Controller_Front</code> gaat dan in een dispatch loop. Het roept de <code>Zend_Controller_Dispatcher</code>
+			<code>Zend_Controller_Front</code> gaat dan in een dispatch lus. Het roept de <code>Zend_Controller_Dispatcher</code>
 			op aan wie hij het token doorgeeft, om aan de uiteindelijke controller en actie te dispatchen. Nadat de
 			controller dat gedaan heeft, gaat de controle terug naar <code>Zend_Controller_Front</code>. Indien de controller
 			heeft aangeduid dat een andere controller gedispatched moet worden door een nieuw token terug te sturen gaat de 
-			loop verder en een andere dispatch wordt afgewerkt. Zo niet, dan is de verwerking afgelopen.
+			lus verder en een andere dispatch wordt afgewerkt. Zo niet, dan is de verwerking afgelopen.
 		</para>
 	</sect2>
 
@@ -89,7 +89,7 @@
 			Voordat je eerste controller kan gebouwd worden moet je begrijpen hoe het routing process werkt
 			zoals het geïmplementeerd is in <code>Zend_Controller_Router</code>. Vergeet niet dat het
 			werkschema opgedeeld is in routing, dat maar één keer gebeurt, en dispatching, dat daarna in
-			een loop voorkomt.
+			een lus voorkomt.
 		</para>
 
 		<para>
@@ -100,7 +100,7 @@
 		</para>
 
 		<para>
-			De router gebruikt een zeer eenvoudige mapping om de naam van de contoller en de naam van de 
+			De router gebruikt een zeer eenvoudige mapping om de naam van de controller en de naam van de 
 			actie in de controller te determineren:
 
 			<programlisting role="php"><![CDATA[
@@ -142,15 +142,15 @@ Action    : index]]>
 
 			<note>
 				Momenteel ontwikkelen we een nieuwe router met een URI herschrijvingsmotor die veel meer
-				flexibiliteit aan de router zal geven dan nu het geval is. Dit zal aanwezig zijn
+				flexibiliteit aan de router zal geven dan nu het geval is. De nieuwe router zal aanwezig zijn
 				in een preview versie in de zeer nabije toekomst.
 			</note>
 
 			<para>
 				De controller naam, de actienaam binnenin die controller en alle optionele parameters
 				zijn verpakt in een token, <code>Zend_Controller_Dispatcher_Token</code>. Dit token
-				wordt teruggekeerd naar <code>Zend_Controller_Front</code>, die dan in de dispatch loop
-				gaat. Eenmaal in de dispatch loop wordt het token aan de <code>Zend_Controller_Dispatcher</code>
+				wordt teruggekeerd naar <code>Zend_Controller_Front</code>, die dan in de dispatch lus
+				gaat. Eenmaal in de dispatch lus wordt het token aan de <code>Zend_Controller_Dispatcher</code>
 				gegeven.
 			</para>
 	</sect2>
@@ -161,7 +161,7 @@ Action    : index]]>
 		<para>
 			Het Dispatch Token is een eenvoudig waardeobject dat wordt doorgegeven tussen 
 			<code>Zend_Controller_Front</code> en klassen die de router en dispatcher interfaces implementeren.
-			Het is een verpakking van de definitie van een controller, een actie en de parameters die aan de
+			Het verenigd de definitie van een controller, een actie en de parameters die aan de
 			actie moeten worden doorgegeven.
 		</para>
 

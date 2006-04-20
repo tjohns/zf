@@ -25,9 +25,9 @@
 				<listitem>
 					<para>
 						Je moet een routing systeem implementeren voor iets volledig anders. De <code>Zend_Controller_Router</code>
-						klasse kan alleen URIs afhandelen. Het is mogelijk en waarschijnlijk dat je het MVC patroon
+						klasse kan alleen URIs afhandelen. Het is mogelijk --en waarschijnlijk-- dat je het MVC patroon
 						wil gebruiken om een ander type programma te ontwikkelen, zoals een console toepassing. In het
-						geval van een console toepassing zou een aangepaste router argumenten van de command line moeten kunnen 
+						geval van een console toepassing zou een aangepaste router argumenten van de commandoregel moeten kunnen 
 						verwerken om de route te determineren.
 					</para>
 				</listitem>

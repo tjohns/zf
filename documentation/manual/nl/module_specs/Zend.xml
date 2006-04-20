@@ -199,7 +199,7 @@ register($name, $object)
 	opgeslagen worden in de registry, een object kan nooit worden verwijderd
 	uit de registry en een objectinstantie kan slechts éénmaal worden
 	opgeslagen in de registry.
-	Het niet nakomen van deze regels zal een <code>Zend_Exception</code> opwerpen.
+	Het niet nakomen van deze regels zal een <code>Zend_Exception</code> doorgeven.
     </para>
 </sect1>
 
@@ -226,7 +226,7 @@ registry($name=null)
 	Als <code>$name</code> een string is zal de overeenkomstige object handle 
 	worden teruggegeven. Indien er geen object bestaat in de registry met
 	de naam <code>$name</code> zal er een  <code>Zend_Exception</code>
-	worden opgeworpen.
+	worden doorgegeven.
     </para>
 </sect1>
 <!--
