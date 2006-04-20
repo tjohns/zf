@@ -4,16 +4,16 @@
         <title>Inleiding voor het zoeken in Flickr</title>
         <para>
             <code>Zend_Service_Flickr</code> is een eenvoudige API om de Flickr REST web service te gebruiken. Om de Flickr
-			web services te gebruiken moet je een API key hebben. Om deze te bekomen en voor meer informtie over de
-			Flickr REST Web Service, kan je tercht op de
-            <ulink url="http://www.flickr.com/services/api/">Flickr API dokumentatie</ulink>.
+			web services te gebruiken moet je een API key hebben. Om deze te verkrijgen en voor meer informatie over de
+			Flickr REST Web Service, kan je terecht bij de
+            <ulink url="http://www.flickr.com/services/api/">Flickr API documentatie</ulink>.
         </para>
         <para>
 			In het volgende voorbeeld gebruiken we de <code>tagSearch()</code> methode om foto's te zoeken die &quot;php&quot; in
-			de vermeldingen hebben.
+			de tags hebben.
         </para>
         <example>
-            <title>Eenvoudige Flickr Photo opzoek</title>
+            <title>Eenvoudige Flickr Photo zoekopdracht</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Flickr.php';
 
@@ -34,25 +34,25 @@ foreach ($results as $result) {
         <title>Flickr gebruikers vinden</title>
         <para>
             <code>Zend_Service_Flickr</code> biedt drie verschillende mogelijkheden om Flickr gebruikersinformatie 
-			te bekomen:
+			te verkrijgen:
         </para>
         <itemizedlist>
             <listitem>
                 <code>userSearch()</code>: Aanvaardt een string query van spatiegescheiden vermeldingen en een optionele
 				tweede parameter als een array van zoekopties, en geeft een <code>Zend_Service_Flickr_ResultSet</code>
-                objekt terug.
+                object terug.
             </listitem>
             <listitem>
                 <code>getIdByUsername()</code>: Geeft een string user ID terug, verbonden met de opgegeven gebruikersnaam string.
             </listitem>
             <listitem>
-                <code>getIdByEmail()</code>: Geeft een string user ID terug, verbonden met de opgegeven gebruikersemail string.
+                <code>getIdByEmail()</code>: Geeft een string user ID terug, verbonden met de opgegeven gebruikerse-mail string.
             </listitem>
         </itemizedlist>
         <example>
-            <title>Een Flickr gerbuiker vinden door middel van zijn email adres</title>
+            <title>Een Flickr gebruiker vinden door middel van zijn e-mailadres</title>
             <para>
-				In dit voorbeeld hebben we het emailadres van de Flickr gebruiker, en we verkrijgen de gebruikersinformatie
+				In dit voorbeeld hebben we het e-mailadres van de Flickr gebruiker, en we verkrijgen de gebruikersinformatie
 				door de <code>userSearch()</code> methode te gebruiken:
             </para>
             <programlisting role="php"><![CDATA[<?php
@@ -70,12 +70,12 @@ foreach ($results as $result) {
     </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Flickr beelddetails opvragen</title>
-        <code>Zend_Service_Flickr</code> maakt het snel en eenvoudig om details van een beeld te bekomen via zijn ID.
+        <code>Zend_Service_Flickr</code> maakt het snel en eenvoudig om details van een beeld te verkrijgen via zijn ID.
         Gebruik gewoon de <code>getImageDetails()</code> methode zoals in het volgende voorbeeld:
         <example>
-            <title>Flickr beelddetails bekomen</title>
+            <title>Flickr beelddetails verkrijgen</title>
             <para>
-				Eenmaal je een Flickr beeld ID hebt is het eenvoudig informatie over dat beeld te verkrijgen:
+				Wanneer je een Flickr beeld ID hebt is het eenvoudig informatie over dat beeld te verkrijgen:
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Service/Flickr.php';
