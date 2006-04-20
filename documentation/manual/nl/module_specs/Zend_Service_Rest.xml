@@ -3,7 +3,7 @@
     <sect2 id="zend.service.rest.introduction">
         <title>Inleiding</title>
         <para>
-            <code>Zend_Service_Rest</code> is een basis REST klant om zoekopdrachten te maken een eender 
+            <code>Zend_Service_Rest</code> is een basis REST client om zoekopdrachten te maken voor eender 
 			welke REST-gebaseerde web service.
         </para>
         <example>
@@ -21,7 +21,7 @@ try {
 
     $rest->setURI('http://example.org');
 
-    // Geeft een Zend_HttpClient_Response Objekt terug
+    // Geeft een Zend_HttpClient_Response Object terug
     $response = $rest->restGet('/services/rest', 'foo=bar&baz=bat');
 
     if ($response->isSuccessful()) {
@@ -34,7 +34,7 @@ try {
 }
 ?>]]>       </programlisting>
             <note>
-				Je kan een korrekt geformateerde query string (zonder de voorafgaande vraagtekens "<code>?</code>") aan
+				Je kan een correct geformateerde query string (zonder de voorafgaande vraagtekens "<code>?</code>") aan
                 <code>restGet()</code> doorgeven, of je kan een associatieve array van naam/waarde-paren doorgeven. 
 				In ieder geval moeten de namen en waarden URL-encoded zijn (bv. met
                 <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>).
@@ -44,7 +44,7 @@ try {
 				<code>restGet()</code>, maar de data wordt respectievelijk via HTTP POST of PUT gezonden in plaats van via GET.
             </para>
             <para>
-				De <code>restDelete()</code> methode werkt met op een pad maar heeft geen tweede parameter in dewelke data
+				De <code>restDelete()</code> methode werkt met een pad maar heeft geen tweede parameter in welke data
 				kan worden doorgegeven.
             </para>
         </example>
