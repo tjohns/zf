@@ -1,41 +1,28 @@
 <sect1 id="zend.view.introduction">
 
-    <title>Introduction</title>
+    <title>简介</title>
     
-    <para>
-        Zend_View is a class for working with the "view" portion of
-        the model-view-controller pattern.  That is, it exists to
-        help keep the view script separate from the model and
-        controller scripts.  It provides a system of helpers, output
-        filters, and variable escaping.
+    <para>        Zend_View是用来在MVC模式中处理“View”部份的一个类。也就是说它用来使View部份的代码与Model及controller部分分离。它提供了helper,output filter,variable escaping等几个功能组件。
     </para>
     
     <para>
-        Zend_View is template system agnostic; you may use PHP as
-        your template language, or create instances of other
-        template systems and manipulate them within your view
-        script.
+        Zend_View使用PHP本身作为你的模板，或者你也可以建立其它模板引擎的实例，并用你的view代码来对其进行操作。
     </para>
 
     <para>
-        Essentially, using Zend_View happens in two major steps:
+        使用Zend_View主要有两步：
         
-        1.  Your controller script creates an instance of
-        Zend_View and assigns variables to that instance.
+        1. 你的Controller建立一个Zend_View实例，并将需要的变量传递给它；
         
-        2. The controller tells the Zend_View to render a particular
-        view, thereby handing control over the view script, which 
-        generates the view output.
+        2. Controller告诉Zend_View显示一个特定的视图，生成View输出的内容。
     </para>
     
     <sect2 id="zend.view.introduction.controller">
         
-        <title>Controller Script</title>
+        <title>控制器脚本</title>
         
         <para>
-            As a simple example, let us say your controller has a list
-            of book data that it wants to have rendered by a view.  The
-            controller script might look something like this:
+           下面是一个简单的例子。你有一个书籍清单，想把它输出来。控制器代码可能看起来是这样的：
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -55,12 +42,12 @@ $data = array(
     )
 );
 
-// now assign the book data to a Zend_View instance
+//传递数据给Zend_View类的实例　
 Zend::loadClass('Zend_View');
 $view = new Zend_View();
 $view->books = $data;
 
-// and render a view script called "booklist.php"
+//调用一段View代码"booklist.php"来显示数据
 echo $view->render('booklist.php');
 ?>]]>
         </programlisting>
@@ -69,17 +56,9 @@ echo $view->render('booklist.php');
     
     <sect2 id="zend.view.introduction.view">
     
-        <title>View Script</title>
+        <title>视图脚本</title>
         
-        <para>
-            Now we need the associated view script, "booklist.php". 
-            This is a PHP script like any other, with one exception:  it
-            executes inside the scope of the Zend_View instance, which
-            means that references to $this point to the Zend_View
-            instance properties and methods.  (Variables assigned to the
-            instance by the controller are public properties of the
-            Zend_View instance.)  Thus, a very basic view script could
-            look like this:
+        <para>            现在我们看看相关的视图代码"booklist.php"。这是一段普通的代码，但是有一点特别：它是在Zend_View实例的内部运行的。(controller传递给Zend_View实例的变量是public的)。一段非常基本的视图代码看起来是这样的：
         </para>
         
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
@@ -107,9 +86,8 @@ echo $view->render('booklist.php');
 <?php endif; ?>]]>
         </programlisting>
         
-        <para>
-            Note how we use the "escape()" method to apply output
-            escaping to variables.
+        <para>            
+			注意我们使用escapte()来过滤输出。
         </para>
         
     </sect2>
@@ -117,23 +95,18 @@ echo $view->render('booklist.php');
 </sect1>
 
 <sect1 id="zend.view.controllers">
-    <title>Controller Scripts</title>
+    <title>控制器脚本</title>
     
     <para>
-        The controller is where you instantiate and configure Zend_View.
-        You then assign variables to the view, and tell the view to 
-        render output using a particular script.
+        控制器是你初始化和配置 Zend_View的地方。你可以分配变量给view，并让view显示输出。
     </para>
     
     <sect2 id="zend.view.controllers.assign">
     
-        <title>Assigning Variables</title>
+        <title>变量赋值</title>
         
         <para>
-            Your controller script should assign necessary variables to the view
-            before it hands over control to the view script.  Normally, you
-            can do assignments one at a time by assigning to property names
-            of the view instance:
+            控制器需要向视图传递必要的变量，在它处理view的代码之前。通常你可以一次一个地完成变量赋值的工作。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -144,16 +117,9 @@ $view->c = "Sea";
 ?>]]>
         </programlisting>
         
-        <para>
-            However, this can be tedious when you have already collected the
-            values to be assigned into an array or object.
-        </para>
+        <para>            然而这样比较麻烦，那么可以将它们放进一个数组或对象中去。assign()方法允许你通过数组或对象进行赋值。下面这个例子和上例（一次一个赋值）的结果是一样的：
+        </para>        
         
-        <para>
-            The assign() method lets you assign from an array or object "in
-            bulk."  The following examples have the same effect as the above
-            one-by-one property assignments.
-        </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
@@ -179,9 +145,9 @@ $view->assign((array) $obj);
         </programlisting>
         
         <para>
-            Alternatively, you can use the assign method to assign
-            one-by-one by passing a string variable name, and then the
-            variable value.
+             另外，你也可使用这样的方法：
+
+		第一个参数是变量名，第二个是变量的值。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -196,14 +162,9 @@ $view->assign('c', "Sea");
 
     <sect2 id="zend.view.controllers.render">
         
-        <title>Rendering a View Script</title>
+        <title>调用视图脚本并打印输出</title>
         
-        <para>
-            Once you have assigned all needed variables, the controller
-            should tell Zend_View to render a particular view script.
-            Do so by calling the render() method.  Note that the method will
-            return the rendered view, not print it, so you need to print or
-            echo it yourself at the appropriate time.
+        <para>            完成变量赋值后，Controller通知Zend_View通过render()调用一段特定的视图代码。注意，这个方法将会返回处理后的视图，而不是直接输出，所以你要用print或echo来打印输出。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -219,20 +180,14 @@ echo $view->render('someView.php');
     
     <sect2 id="zend.view.controllers.script-paths">
         
-        <title>View Script Paths</title>
+        <title>视图脚本的路径</title>
         
         <para>
-            By default, Zend_View expects your view scripts to be in the
-            same directory as the controller script.  For example, if
-            your controller script is at "/path/to/app/controllers" and
-            it calls $view->render('someView.php'), Zend_View will look
-            for "/path/to/app/controllers/someVire.php".
+            默认地， Zend_View希望你的View脚本和Controller脚本在同一目录下。例如你的Controller文件在 “/path/to/app/controllers”目录下，并调用$view->render('someView.php')，则 Zend_View会查找"/path/to/app/controllers/someVire.php"文件。
         </para>
         
         <para>
-            Obviously, your view scripts are probably located elsewhere.  To
-            tell Zend_View where it should look for view scripts, use the
-            setScriptPath() method.
+            显然，你的View代码很可能放在其它地方，那么需要告诉 Zend_View去哪里找，使用 setScriptPath()方法。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -242,17 +197,10 @@ $view->setScriptPath('/path/to/app/views');
         </programlisting>
         
         <para>
-            Now when you call $view->render('someView.php'), it will look
-            for "/path/to/app/views/someView.php".
+            现在当你调用$view->render('someView.php')，它会去找"/path/to/app/views/someView.php"。
         </para>
         
-        <para>
-            In fact, you can "stack" paths using the addScriptPath()
-            method. As you add paths to the stack, Zend_View will look
-            at the most-recently-added path for the requested view
-            script.  This allows you override default views with custom
-            views so that you may create custom "themes" or "skins" for
-            some views, while leaving others alone.
+        <para>            事实上，你可以通过addScriptPath()增加路径。Zend_View会到最近增加的路径目录下找View脚本。这个方法允许你覆写默认的View，这样你可以定制和使用自己的皮肤或主题。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -273,28 +221,17 @@ $view->addScriptPath('/path/to/custom/');
 
 <sect1 id="zend.view.scripts">
     
-    <title>View Scripts</title>
+    <title>视图脚本</title>
         
-    <para>
-        Once your controller has assigned variables and called render(),
-        Zend_View then includes the requested view script and executes
-        it "inside" the scope of the Zend_View instance.  Therefore,
-        in your view scripts, references to $this actually point to the
-        Zend_View instance itself.
+    <para>        一旦你的Controller已经完成了变量赋值和调用render()，Zend_View就会调用视图脚本并在Zend_View的实例内部执行。因此，在你的视图脚本内，$this是指向Zend_View的实例的。
     </para>
     
     <para>
-        Variables assigned to the view from the controller are referred
-        to as instance properties.  For example, if the controller were
-        to assign a variable 'something', you would refer to it as
-        $this->something in the view script.  (This allows you to keep
-        track of which values were assigned to the script, and which are
-        internal to the script itself.)
+        如果控制器有一个变量"something" ，那么视图代码中就要用$this->something来调用。这样的作法可以让你分清哪些是来自Zend_View实例的变量，哪些是视图自身的变量。
     </para>
     
     <para>
-        By way of reminder, here is the example view script from the
-        Zend_View introduction.
+        为了说明，这里有一个例子：
     </para>
     
     <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
@@ -324,20 +261,13 @@ $view->addScriptPath('/path/to/custom/');
         
     <sect2 id="zend.view.scripts.escaping">
         
-        <title>Escaping Output</title>
+        <title>过滤输出</title>
         
-        <para>
-            One of the most important tasks to perform in a view script
-            is to make sure that output is escaped properly; among other
-            things, this helps to avoid cross-site scripting attacks. 
-            Unless you are using a function, method, or helper that does
-            escaping on its own, you should always escape variables when
-            you output them.
+        <para>            View脚本的最重要的工作之一是保证输出的内容是合适的，比如需要避免跨站攻击漏洞。除非你使用一个函数，类方法或协助器（helper）来过滤内容，你需要在输出时对变量进行过滤。
         </para>
         
         <para>
-            Zend_View comes with a method called escape() that does such
-            escaping for you.
+            Zend_View带有一个escape()方法来提供这个功能：
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -349,12 +279,7 @@ echo $this->escape($this->variable);
 ?>]]>
         </programlisting>
         
-        <para>
-            By default, the escape() method uses the PHP htmlspecialchars()
-            function for escaping.  However, depending on your environment,
-            you may wish for escaping to occur in a different way.  Use the
-            setEscape() method at the controller level to tell Zend_View
-            what escaping callback to use.
+        <para>            默认地，escape()方法使用PHP函数htmlspecialchars()来过滤。你可以通过setEscape()方法来在Controller内告诉Zend_View需要怎么过滤。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -377,24 +302,16 @@ echo $view->render(...);
         </programlisting>
         
         <para>
-            The callback function or method should take the value to be
-            escaped as its first parameter, and all other parameters should
-            be optional.
+            设定的过滤函数会将需要过滤的变量作为其第一个参数，其它参数是可选的。
         </para>
         
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
     
-        <title>Template Systems</title>
+        <title>模板系统</title>
         
-        <para>
-            Although PHP is itself a powerful template system, many
-            developers feel it is too powerful or complex for their
-            template designers.  As such, the view script may be used to
-            instantiate and manipulate a separate template object, such
-            as a PHPLIB-style template.  The view script for that kind
-            of activity might look something like this:
+        <para>            许多开发者觉得尽管PHP本身就是一个强大的模板系统，但对模板设计师来说，使用PHP标签过于复杂。所以，View脚本可能要被用来初始化和操作一个其它模板对象的实例，例如PHPLIB风格的模板。这时View脚本可能是这样的：
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -422,7 +339,7 @@ if ($this->books) {
         </programlisting>
         
         <para>
-            These would be the related template files:
+            下面是相关的模板文件：
         </para>
         
         <programlisting role="html"><![CDATA[
@@ -452,108 +369,79 @@ if ($this->books) {
 
 <sect1 id="zend.view.helpers">
     
-    <title>View Helpers</title>
+    <title>视图协助器（View Helper）</title>
     
-    <para>
-        In your view scripts, often it is necessary to perform certain
-        complex functions over and over; e.g., formatting a date,
-        generating form elements, or displaying action links.  You can
-        use helper classes to perform these behaviors for you.
+    <para>        在你的视图脚本中，经常需要执行某些特定的复杂的函数，例如，格式化日期，生成表单对象，或者显示action的链接等等。你可以使用协助器类来完成这些工作。
     </para>
     
-    <para>
-        To use a helper in your view script, call it using
-        $this->helperName(). Behind the scenes, Zend_View will load the
-        Zend_View_Helper_HelperName class, create an object instance of
-        it, and call its helperName() method.  The object instance is
-        persistent within the Zend_View instance, and is reused for all
-        future calls to $this->helperName().
+    <para>        你可以用$this->helperName()来调用helper。这时Zend_View会加载Zend_View_Helper_HelperName类，建立一个对象实例，并调用它的helperName()方法。对象的实例会在 Zend_View的实例内一直存在，并可以被$this->helperName()重复调用。
     </para>
     
     <sect2 id="zend.view.helpers.initial">
     
-        <title>Initial Helpers</title>
+        <title>基本的协助器</title>
         
         <para>
-            Zend_View comes with an initial set of helper classes, all of
-            which relate to form element generation.  They each perform the
-            appopriate output escaping automatically.  They are:
+            Zend_View自带了几个helper类，都是用来生成组件的。每个都有自动过滤变量的功能。
         </para>
         
         <itemizedlist>
             
             <listitem><para>
-                formButton($name, $value, $attribs): Creates an &lt;input
-                type="button" /&gt; element.
+                formButton($name, $value, $attribs): 生成&lt;input
+                type="button" /&gt; 
             </para></listitem>
             
             <listitem><para>
-                formCheckbox($name, $value, $attribs, $options): Creates
-                an &lt;input type="checkbox" /&gt; element.  The
-                $options param is an array where the first value is the
-                "checked" value, and the second is the "unchecked" value
-                (the defaults are '1' and '0').  If $value matches the
-                "checked" value, the box will be checked for you.
+                formCheckbox($name, $value, $attribs, $options): 生成&lt;input type="checkbox" /&gt;，$options参数是一个数组，第一个值是“checked”,第二个值是&quot;unchecked&quot;(默认为“1”和&quot;0&quot;)。如果$value匹配&quot;checked&quot;值，则这个checkbox显示为已选中。
             </para></listitem>
             
             <listitem><para>
-                formFile($name, $value, $attribs): Creates an &lt;input
-                type="file" /&gt; element.
+                formFile($name, $value, $attribs): 生成&lt;input
+                type="file" /&gt; 
             </para></listitem>
             
             <listitem><para>
-                formHidden($name, $value, $attribs): Creates an &lt;input
-                type="hidden" /&gt; element.
+                formHidden($name, $value, $attribs): 生成&lt;input
+                type="hidden" /&gt; 
             </para></listitem>
             
             <listitem><para>
-                formPassword($name, $value, $attribs): Creates an &lt;input
-                type="password" /&gt; element.
+                formPassword($name, $value, $attribs): 生成&lt;input
+                type="password" /&gt; 
             </para></listitem>
             
             <listitem><para>
-                formRadio($name, $value, $attribs, $options): Creates a
-                series of &lt;input type="radio" /&gt; elements, one for
-                each of the $options elements.  In the $options array, the
-                element key is the radio value, and the element value is the
-                radio label.  The $value radio will be preselected for you.
+                formRadio($name, $value, $attribs, $options): 生成一系列&lt;input type="button" /&gt;，每个$options数组元素一个，key为radio的值，并且元素的值是radio的标签。
             </para></listitem>
             
             <listitem><para>
-                formReset($name, $value, $attribs): Creates an &lt;input
-                type="reset" /&gt; element.
+                formReset($name, $value, $attribs): 生成&lt;input
+                type="reset" /&gt;
             </para></listitem>
             
             <listitem><para>
-                formSelect($name, $value, $attribs, $options): Creates a
-                &lt;select&gt;...&lt;/select&gt; block, with one
-                &lt;option&gt;one for each of the $options elements.  In
-                the $options array, the element key is the option value,
-                and the element value is the option label.  The $value
-                option(s) will be preselected for you.
+                formSelect($name, $value, $attribs, $options): 建立一个&lt;select&gt;...&lt;/select&gt;标签，其中的每个&lt;option&gt;对应于一个$option数组元素。元素的key是option的值，元素的值是option的标签。$value这个值的option默认为选中。
             </para></listitem>
             
             <listitem><para>
-                formSubmit($name, $value, $attribs): Creates an &lt;input
-                type="submit" /&gt; element.
+                formSubmit($name, $value, $attribs): 生成&lt;input
+                type="submit" /&gt; 
             </para></listitem>
             
             <listitem><para>
-                formText($name, $value, $attribs): Creates an &lt;input
-                type="text" /&gt; element.
+                formText($name, $value, $attribs): 生成&lt;input
+                type="text" /&gt; 
             </para></listitem>
             
             <listitem><para>
-                formTextarea($name, $value, $attribs): Creates a
-                &lt;textarea&gt;...&lt;/textarea&gt; block.
+                formTextarea($name, $value, $attribs): 生成&lt;textarea&gt;...&lt;/textarea&gt; 
             </para></listitem>
             
         </itemizedlist>
         
         <para>
-            Using these in your view scripts is very easy, here is an example.
-            Note that you all you need to to is call them; they will load
-            and instantiate themselves as they are needed.
+            使用非常简单，下面是个例子。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -577,7 +465,7 @@ if ($this->books) {
         </programlisting>
         
         <para>
-            The resulting output from the view script will look something like this:
+            以上视图脚本会输出这样的结果：
         </para>
         
         <programlisting role="php"><![CDATA[<form action="action.php" method="post">
@@ -602,14 +490,10 @@ if ($this->books) {
     
     <sect2 id="zend.view.helpers.paths">
         
-        <title>Helper Paths</title>
+        <title>Helper 的路径</title>
         
         <para>
-            As with view scripts, your controller can specify a stack of
-            paths for Zend_View to search for helper classes. By
-            default, Zend_View looks in "Zend/View/Helper/*" for helper
-            classes. You can tell Zend_View to look in other locations
-            using the setHelperPath() and addHelperPath() methods.
+            就像视图脚本那样，你的控制器也可以设定helper的路径给Zend_View。默认地，Zend_View会到 “Zend/View/Helper/”下查找helper类。你可以用setHelperPath() 和 addHelperPath()来定义自己的路径。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -619,12 +503,7 @@ $view->setHelperPath('/path/to/more/helpers');
         </programlisting>
         
         <para>
-            In fact, you can "stack" paths using the addHelperPath()
-            method. As you add paths to the stack, Zend_View will look
-            at the most-recently-added path for the requested helper
-            class.  This allows you to add to (or even override) the
-            initial distribution of helpers with your own custom
-            helpers.
+            你可以用addHelperPath()来增加helper的路径， Zend_View将使用最近增加的路径。这样你可以使用自己的helper。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -643,52 +522,37 @@ $view->addHelperPath('/other/path/to/helpers');
     
     <sect2 id="zend.view.helpers.custom">
         
-        <title>Writing Custom Helpers</title>
+        <title>编写自定义的Helper类</title>
         
         <para>
-            Writing custom helpers is easy; just follow these rules:
+            编写自定义的Helper类很容易，只要遵循以下几个原则即可：
         </para>
         
         <itemizedlist>
             
             <listitem><para>
-                The class name must be Zend_View_Helper_*, where * is
-                the helper name itself.  E.g., if you were writing a
-                helper called "specialPurpose", the class name would be
-                "Zend_View_Helper_SpecialPurpose" (note the
-                capitalization).
+                类名必须是 Zend_View_Helper_*，*是helper的名称。例如，你在写一个名为“specialPurpose”的类，类名将是Zend_View_Helper_SpecialPurpose（注意大小写）
             </para></listitem>
             
             <listitem><para>
-                The class must have a public method that matches the
-                helper name; this is the method that will be called when
-                your template calls "$this->specialPurpose()".  In our
-                "specialPurpose" helper example, the required method
-                declaration would be "public function specialPurpose()". 
+                类必须有一个public的方法，方法名与helper名称相同。这个方法将在你的模板调用"$this->specialPurpose()"时执行。在我们的“specialPurpose”例子中，相应的方法声明可以是“public function specialPurpose()”。
             </para></listitem>
             
             <listitem><para>
-                In general, the class should not echo or print or otherwise
-                generate output.  Instead, it should return values to be
-                printed or echoed.  The returned values should be escaped
-                appropriately.
+                一般来说，Helper类不应该echo或print或有其它形式的输出。它只需要返回值就可以了。返回的值应当被过滤。
             </para></listitem>
             
             <listitem><para>
-                The class must be in file named after the helper method.
-                Again using our "specialPurpose" helper example, the file
-                has to be named "SpecialPurpose.php".
+                类文件的命名应该是helper方法的名称，比如在"specialPurpose"例子中，文件要存为“SpecialPurpose.php”。
             </para></listitem>
         </itemizedlist>
         
         <para>
-            Place the helper class file somewhere in your helper path stack,
-            and Zend_View will automatically load, instantiate, persist,
-            and execute it for you.
+           把helper类的文件放在你的helper路径下， Zend_View就会自动加载，实例化，持久化，并执行。
         </para>
         
         <para>
-            Here is an example of our SpecialPurpose helper code:
+            下面是一个例子：
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -704,10 +568,7 @@ class Zend_View_Helper_SpecialPurpose {
 ?>]]>
         </programlisting>
         
-        <para>
-            Then in a view script, you can call the SpecialPurpose helper
-            as many times as you like; it will be instantiated once, and
-            then it persists for the life of that Zend_View instance.
+        <para>            在视图代码中，你可以调用SpecialPurpose协助器任意次。它只需要实例化一次，就会在Zend_View实例的生命周期内持久存在。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -719,7 +580,7 @@ echo $this->specialPurpose();
         </programlisting>
         
         <para>
-            The output would look something like this:
+            输出是这样的：
         </para>
         <programlisting role="php"><![CDATA[I have seen 'The Jerk' 1 time(s).
 I have seen 'The Jerk' 2 time(s).
