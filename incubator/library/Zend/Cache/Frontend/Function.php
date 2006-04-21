@@ -72,7 +72,7 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
         if (is_string($name)) {
             if (array_key_exists($name, $this->_options)) {
             	// This is a Core option
-                parent::setOptions($name, $value);
+                parent::setOption($name, $value);
                 return;
             }
             if (array_key_exists($name, $this->_specificOptions)) { 
@@ -84,7 +84,7 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
         Zend_Cache::throwException("Incorrect option name : $name");
     }
     
-    public function call($name, $parameters) 
+    public function call($name, $parameters = array()) 
     {
         // TODO : add some internal tags (to be able to clean a particulier function call or name)
         
@@ -122,8 +122,10 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
         if (!is_string($name)) {
             Zend_Cache::throwException('Incorrect function name');
         }
+        if (!is_array($parameters)) {
+            Zend_Cache::throwException('parameters argument must be an array');
+        }
         return md5($name . serialize($parameters));
     }
                  
 }
-
