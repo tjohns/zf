@@ -11,6 +11,9 @@ require_once 'FactoryTest.php';
 require_once 'CoreTest.php';
 require_once 'FileBackendTest.php';
 require_once 'SqliteBackendTest.php';
+require_once 'OutputFrontendTest.php';
+require_once 'FunctionFrontendTest.php';
+require_once 'ClassFrontendTest.php';
 
 class Zend_Cache_AllTests
 {
@@ -25,6 +28,9 @@ class Zend_Cache_AllTests
 		$suite->addTestSuite('Zend_Cache_FactoryTest');
 		$suite->addTestSuite('Zend_Cache_CoreTest');
         $suite->addTestSuite('Zend_Cache_FileBackendTest');
+        $suite->addTestSuite('Zend_Cache_OutputFrontendTest');
+        $suite->addTestSuite('Zend_Cache_FunctionFrontendTest');
+        $suite->addTestSuite('Zend_Cache_ClassFrontendTest');
         $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
         return $suite;
     }
