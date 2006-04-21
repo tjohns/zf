@@ -39,6 +39,6 @@ class Zend_Pdf_Element_Object_StreamTest extends PHPUnit2_Framework_TestCase
         $factory = new Zend_Pdf_ElementFactory(1);
 
         $obj = new Zend_Pdf_Element_Object_Stream('some data', 55, 3, $factory);
-        $this->assertEquals($obj->dump($factory), "55 3 obj \n<</Length 9 >>\nstream\n\rsome data\n\rendstream\nendobj\n");
+        $this->assertEquals($obj->dump($factory), "55 3 obj \n<</Length 9 >>\nstream".PHP_EOL."some data".PHP_EOL."endstream\nendobj\n");        
     }
 }
