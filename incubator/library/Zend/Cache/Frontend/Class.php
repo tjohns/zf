@@ -41,7 +41,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
      * 
      * @var array available options
      */
-   private $_specificOptions = array(
+    private $_specificOptions = array(
     	'cachedClass' => null,
     	'cachedObject' => null,
     	'cacheByDefault' => true,
@@ -96,7 +96,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         if (is_string($name)) {
             if (array_key_exists($name, $this->_options)) {
             	// This is a Core option
-                parent::setOptions($name, $value);
+                parent::setOption($name, $value);
                 return;
             }
             if (array_key_exists($name, $this->_specificOptions)) { 
@@ -118,24 +118,24 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         $cache = (($cacheBool1 || $cacheBool2) && (!$cacheBool3));
         if (!$cache) {
             // We do not have not cache
-            if ($mode == 'object') {
+            if ($this->_mode == 'object') {
                 return call_user_func_array(array($this->_object, $name), $parameters);
             } else {
                 return call_user_func_array(array($this->_class, $name), $parameters);
             }
         }
-        
-        $id = $this->_makeId($name, $parameters);
+
+        $id = $this->_makeId($name, $parameters);       
         if ($this->test($id)) {
             // A cache is available
             $result = $this->get($id);
             $output = $result[0];
-            $return = $result[1];
+            $return = $result[1];                      
         } else {
             // A cache is not available
             ob_start();
             ob_implicit_flush(false);
-            if ($mode == 'object') {
+            if ($this->_mode == 'object') {
                 $return = call_user_func_array(array($this->_object, $name), $parameters);
             } else {
                 $return = call_user_func_array(array($this->_class, $name), $parameters);
@@ -155,4 +155,3 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
     }
                  
 }
-
