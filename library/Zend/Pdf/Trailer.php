@@ -79,7 +79,8 @@ abstract class Zend_Pdf_Trailer
      */
     public function &__get($property)
     {
-        return $this->_dict->$property;
+        $property = $this->_dict->$property;
+        return $property;
     }
 
     /**
