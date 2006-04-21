@@ -56,5 +56,26 @@ abstract class Zend_Pdf_Image extends Zend_Pdf_Resource
         $this->_resource->dictionary->Type    = new Zend_Pdf_Element_Name('XObject');
         $this->_resource->dictionary->Subtype = new Zend_Pdf_Element_Name('Image');
     }
+    /**
+     * get the height in pixels of the image
+     *
+     * @return integer
+     */
+    abstract public function getPixelHeight();
+
+    /**
+     * get the width in pixels of the image
+     *
+     * @return integer
+     */
+    abstract public function getPixelWidth();
+
+    /**
+     * gets an associative array of information about an image
+     *
+     * @return array
+     */
+    abstract public function getProperties();
+
 }
 

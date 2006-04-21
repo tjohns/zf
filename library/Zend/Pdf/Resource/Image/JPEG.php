@@ -3,7 +3,7 @@
  * @package Zend_Pdf
  */
 
-/** Zend_Pdf_Font */
+/** Zend_Pdf_Image */
 require_once 'Zend/Pdf/Resource/Image.php';
 
 /** Zend_Pdf_Const */
@@ -26,6 +26,11 @@ require_once 'Zend/Pdf/Element/Name.php';
  */
 class Zend_Pdf_Image_JPEG extends Zend_Pdf_Image
 {
+
+    protected $_width;
+    protected $_height;
+    protected $_imageProperties;
+
     /**
      * Object constructor
      *
@@ -86,6 +91,34 @@ class Zend_Pdf_Image_JPEG extends Zend_Pdf_Image
         }
         fclose($imageFile);
         $this->_resource->skipFilters();
+
+	$this->_width = $imageInfo[0];
+	$this->_height = $imageInfo[1];
+	$this->_imageProperties = array();
+	$this->_imageProperties['bitDepth'] = $imageInfo['bits'];
+	$this->_imageProperties['jpegImageType'] = $imageInfo[2];
+	$this->_imageProperties['jpegColorType'] = $imageInfo['channels'];
+    }
+
+    /**
+     * Image width 
+     */
+    public function getPixelWidth() {
+        return $this->_width;
+    }
+
+    /**
+     * Image height
+     */
+    public function getPixelHeight() {
+        return $this->_height;
+    }
+
+    /**
+     * Image properties
+     */
+    public function getProperties() {
+        return $this->_imageProperties;
     }
 }
 

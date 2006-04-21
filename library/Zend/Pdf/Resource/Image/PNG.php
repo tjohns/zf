@@ -3,7 +3,7 @@
  * @package Zend_Pdf
  */
 
-/** Zend_Pdf_Font */
+/** Zend_Pdf_Image */
 require_once 'Zend/Pdf/Resource/Image.php';
 
 /** Zend_Pdf_Const */
@@ -46,6 +46,10 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
     const PNG_CHANNEL_GRAY_ALPHA = 4;
     const PNG_CHANNEL_RGB_ALPHA = 6;
 
+    protected $_width;
+    protected $_height;
+    protected $_imageProperties;
+
     /**
      * Object constructor
      *
@@ -82,16 +86,25 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         $bits = ord(fread($imageFile, 1)); //Higher than 8 bit depths are only supported in later versions of PDF.
         $color = ord(fread($imageFile, 1));
 
-        if (ord(fread($imageFile, 1)) != Zend_Pdf_Image_PNG::PNG_COMPRESSION_DEFAULT_STRATEGY) {
+        if (($compression = ord(fread($imageFile, 1))) != Zend_Pdf_Image_PNG::PNG_COMPRESSION_DEFAULT_STRATEGY) {
             throw new Zend_Pdf_Exception( "Only the default compression strategy is currently supported." );
         }
 
-        if (ord(fread($imageFile,1)) != Zend_Pdf_Image_PNG::PNG_FILTER_NONE) {
+        if (($prefilter = ord(fread($imageFile,1))) != Zend_Pdf_Image_PNG::PNG_FILTER_NONE) {
             throw new Zend_Pdf_Exception( "Filtering methods are not currently supported. " );
         }
-        if (ord(fread($imageFile,1)) != Zend_Pdf_Image_PNG::PNG_INTERLACING_DISABLED) {
+        if (($interlacing = ord(fread($imageFile,1))) != Zend_Pdf_Image_PNG::PNG_INTERLACING_DISABLED) {
             throw new Zend_Pdf_Exception( "Only non-interlaced images are currently supported." );
         }
+
+        $this->_width = $width;
+        $this->_height = $height;
+        $this->_imageProperties = array();
+	$this->_imageProperties['bitDepth'] = $bits;
+	$this->_imageProperties['pngColorType'] = $color;
+	$this->_imageProperties['pngFilterType'] = $prefilter;
+	$this->_imageProperties['pngCompressionType'] = $compression;
+	$this->_imageProperties['pngInterlacingType'] = $interlacing;
 
         fseek($imageFile, 4, SEEK_CUR); //4 Byte Ending Sequence
         $imageData = '';
@@ -419,6 +432,27 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
 
         //Skip double compression
         $this->_resource->skipFilters();
+    }
+
+    /**
+     * Image width
+     */
+    public function getPixelWidth() {
+	return $this->_width;
+    }
+
+    /**
+     * Image height
+     */
+    public function getPixelHeight() {
+        return $this->_height;
+    }
+
+    /**
+     * Image properties
+     */
+    public function getProperties() {
+        return $this->_imageProperties;
     }
 
     /**
