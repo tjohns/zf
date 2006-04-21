@@ -32,7 +32,7 @@ Zend Framework                                                             NEWS
 - Fixed escaping in Zend_Json_Encoder (Matthew)
 - Zend_HttpClient moved to Zend_Http_Client (Mike)
 - Zend_Console_Args in the incubator but not yet refactored (Jason Garber)
-- Zend_Mail enhancements in the incubator by Austria Telekom (Nico, Clez)
+- Zend_Mail enhancements in the incubator by Telekom Austria (Nico, Clez)
 - Zend_Service classes no longer subclass Zend_Service_Rest (Davey, Andi, et al)
 - Zend_Service classes now use new Zend_InputFilter (Davey)
 - Fixed bug in Zend_Service_Amazon::itemLookup() (Davey)
