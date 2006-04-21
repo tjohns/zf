@@ -109,7 +109,7 @@ class Zend_Pdf_Element_DictionaryTest extends PHPUnit2_Framework_TestCase
 
     public function testAdd()
     {
-        $dictionaryObj = new Zend_Pdf_Element_Dictionary($srcArray);
+        $dictionaryObj = new Zend_Pdf_Element_Dictionary();
         $dictionaryObj->add(new Zend_Pdf_Element_Name('Var1'), new Zend_Pdf_Element_Boolean(false));
         $dictionaryObj->add(new Zend_Pdf_Element_Name('Var2'), new Zend_Pdf_Element_Numeric(100.426));
         $dictionaryObj->add(new Zend_Pdf_Element_Name('Var3'), new Zend_Pdf_Element_Name('MyName'));
