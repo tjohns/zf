@@ -37,7 +37,7 @@ class Zend_Pdf_Filter_Compression_LZW extends Zend_Pdf_Filter_Compression
      * @return integer
      * @throws Zend_Pdf_Exception
      */
-    private static function _getEarlyChangeValue(&$params)
+    private static function _getEarlyChangeValue($params)
     {
         if (isset($params['EarlyChange'])) {
             $earlyChange = $params['EarlyChange'];
@@ -60,7 +60,7 @@ class Zend_Pdf_Filter_Compression_LZW extends Zend_Pdf_Filter_Compression
      * @return string
      * @throws Zend_Pdf_Exception
      */
-    public static function encode(&$data, $params = null)
+    public static function encode($data, $params = null)
     {
         if ($params != null) {
             $data = self::_applyEncodeParams($data, $params);
@@ -77,7 +77,7 @@ class Zend_Pdf_Filter_Compression_LZW extends Zend_Pdf_Filter_Compression
      * @return string
      * @throws Zend_Pdf_Exception
      */
-    public static function decode(&$data, $params = null)
+    public static function decode($data, $params = null)
     {
         throw new Zend_Pdf_Exception('Not implemented yet');
 

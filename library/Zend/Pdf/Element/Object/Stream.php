@@ -124,7 +124,7 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
                     }
                 }
             }
-        } else {
+        } else if ($this->_dictionary->Filter->getType() != Zend_Pdf_Element::TYPE_NULL) {
             $this->_originalDictionary['Filter'][0]      = $this->_dictionary->Filter->value;
             $this->_originalDictionary['DecodeParms'][0] = array();
             if ($this->_dictionary->DecodeParms !== null ) {

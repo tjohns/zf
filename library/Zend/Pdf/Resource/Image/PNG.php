@@ -100,11 +100,11 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         $this->_width = $width;
         $this->_height = $height;
         $this->_imageProperties = array();
-	$this->_imageProperties['bitDepth'] = $bits;
-	$this->_imageProperties['pngColorType'] = $color;
-	$this->_imageProperties['pngFilterType'] = $prefilter;
-	$this->_imageProperties['pngCompressionType'] = $compression;
-	$this->_imageProperties['pngInterlacingType'] = $interlacing;
+        $this->_imageProperties['bitDepth'] = $bits;
+        $this->_imageProperties['pngColorType'] = $color;
+        $this->_imageProperties['pngFilterType'] = $prefilter;
+        $this->_imageProperties['pngCompressionType'] = $compression;
+        $this->_imageProperties['pngInterlacingType'] = $interlacing;
 
         fseek($imageFile, 4, SEEK_CUR); //4 Byte Ending Sequence
         $imageData = '';
@@ -438,7 +438,7 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
      * Image width
      */
     public function getPixelWidth() {
-	return $this->_width;
+    return $this->_width;
     }
 
     /**
@@ -480,7 +480,3 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         }
     }
 }
-
-
-
-

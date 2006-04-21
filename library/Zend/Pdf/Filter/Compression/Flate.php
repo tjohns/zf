@@ -38,13 +38,27 @@ class Zend_Pdf_Filter_Compression_Flate extends Zend_Pdf_Filter_Compression
      * @return string
      * @throws Zend_Pdf_Exception
      */
-    public static function encode(&$data, $params = null)
+    public static function encode($data, $params = null)
     {
         if ($params != null) {
             $data = self::_applyEncodeParams($data, $params);
         }
 
-        throw new Zend_Pdf_Exception('Not implemented yet');
+        if (extension_loaded('zlib')) {
+            $trackErrors = ini_get( "track_errors");
+            ini_set('track_errors', '1');
+
+            if (($output = @gzcompress($data)) === false) {
+                ini_set('track_errors', $trackErrors);
+                throw new Zend_Pdf_Exception($php_errormsg);
+            }
+
+            ini_set('track_errors', $trackErrors);
+        } else {
+            throw new Zend_Pdf_Exception('Not implemented yet');
+        }
+
+        return $output;
     }
 
     /**
@@ -55,7 +69,7 @@ class Zend_Pdf_Filter_Compression_Flate extends Zend_Pdf_Filter_Compression
      * @return string
      * @throws Zend_Pdf_Exception
      */
-    public static function decode(&$data, $params = null)
+    public static function decode($data, $params = null)
     {
         global $php_errormsg;
 

@@ -149,16 +149,122 @@ abstract class Zend_Pdf_Filter_Compression extends Zend_Pdf_Filter
      * @return string
      * @throws Zend_Pdf_Exception
      */
-    protected static function _applyEncodeParams(&$data, $params) {
+    protected static function _applyEncodeParams($data, $params) {
         $predictor        = self::_getPredictorValue($params);
         $colors           = self::_getColorsValue($params);
         $bitsPerComponent = self::_getBitsPerComponentValue($params);
         $columns          = self::_getColumnsValue($params);
 
+        /** None of prediction */
         if ($predictor == 1) {
             return $data;
         }
 
+        /** TIFF Predictor 2 */
+        if ($predictor == 2) {
+            throw new Zend_Pdf_Exception('Not implemented yet' );
+        }
+
+        /** Optimal PNG prediction */
+        if ($predictor == 15) {
+            /** Use Paeth prediction as optimal */
+            $predictor = 14;
+        }
+
+        /** PNG prediction */
+        if ($predictor == 10 ||  /** None of prediction */
+            $predictor == 11 ||  /** Sub prediction     */
+            $predictor == 12 ||  /** Up prediction      */
+            $predictor == 13 ||  /** Average prediction */
+            $predictor == 14     /** Paeth prediction   */
+            ) {
+            $predictor -= 10;
+
+            $bitsPerSample  = $bitsPerComponent*$colors;
+            $bytesPerSample = ceil($bitsPerSample/8);
+            $bytesPerRow    = ceil($bitsPerSample*$columns/8);
+            $rows           = ceil(strlen($data)/($bytesPerRow + 1));
+            $output         = '';
+            $offset         = 0;
+
+            if (strlen($data) != $rows*$bytesPerRow) {
+                throw new Zend_Pdf_Exception('Wrong data length.');
+            }
+
+            switch ($predictor) {
+                case 0: // None of prediction
+                    for ($count = 0; $count < $rows; $count++) {
+                        $output .= chr($predictor);
+                        $output .= substr($data, $offset, $bytesPerRow);
+                        $offset += $bytesPerRow;
+                    }
+                    break;
+
+                case 1: // Sub prediction
+                    for ($count = 0; $count < $rows; $count++) {
+                        $output .= chr($predictor);
+
+                        $lastSample = array_fill(0, $bytesPerSample, 0);
+                        for ($count2 = 0; $count2 < $bytesPerRow; $count2++) {
+                            $newByte = ord($data{$offset++});
+                            // Note. chr() automatically cuts input to 8 bit
+                            $output .= chr($newByte - $lastSample[$count2 % $bytesPerSample]);
+                            $lastSample[$count2 % $bytesPerSample] = $newByte;
+                        }
+                    }
+                    break;
+
+                case 2: // Up prediction
+                    $lastRow = array_fill(0, $bytesPerRow, 0);
+                    for ($count = 0; $count < $rows; $count++) {
+                        $output .= chr($predictor);
+
+                        for ($count2 = 0; $count2 < $bytesPerRow; $count2++) {
+                            $newByte = ord($data{$offset++});
+                            // Note. chr() automatically cuts input to 8 bit
+                            $output .= chr($newByte - $lastRow[$count2]);
+                            $lastRow[$count2] = $newByte;
+                        }
+                    }
+                    break;
+
+                case 3: // Average prediction
+                    $lastRow = array_fill(0, $bytesPerRow, 0);
+                    for ($count = 0; $count < $rows; $count++) {
+                        $output .= chr($predictor);
+
+                        $lastSample = array_fill(0, $bytesPerSample, 0);
+                        for ($count2 = 0; $count2 < $bytesPerRow; $count2++) {
+                            $newByte = ord($data{$offset++});
+                            // Note. chr() automatically cuts input to 8 bit
+                            $output .= chr($newByte - floor(( $lastSample[$count2 % $bytesPerSample] + $lastRow[$count2])/2));
+                            $lastSample[$count2 % $bytesPerSample] = $lastRow[$count2] = $newByte;
+                        }
+                    }
+                    break;
+
+                case 4: // Paeth prediction
+                    $lastRow    = array_fill(0, $bytesPerRow, 0);
+                    $currentRow = array();
+                    for ($count = 0; $count < $rows; $count++) {
+                        $output .= chr($predictor);
+
+                        $lastSample = array_fill(0, $bytesPerSample, 0);
+                        for ($count2 = 0; $count2 < $bytesPerRow; $count2++) {
+                            $newByte = ord($data{$offset++});
+                            // Note. chr() automatically cuts input to 8 bit
+                            $output .= chr($newByte - self::_paeth( $lastSample[$count2 % $bytesPerSample],
+                                                                    $lastRow[$count2],
+                                                                    ($count2 - $bytesPerSample  <  0)?
+                                                                         0 : $lastRow[$count2 - $bytesPerSample] ));
+                            $lastSample[$count2 % $bytesPerSample] = $currentRow[$count2] = $newByte;
+                        }
+                        $lastRow = $currentRow;
+                    }
+                    break;
+            }
+            return $output;
+        }
 
         throw new Zend_Pdf_Exception('Unknown prediction algorithm - ' . $predictor . '.' );
     }
@@ -170,19 +276,13 @@ abstract class Zend_Pdf_Filter_Compression extends Zend_Pdf_Filter
      * @param array $params
      * @return string
      */
-    protected function _applyDecodeParams(&$data, $params) {
+    protected function _applyDecodeParams($data, $params) {
         $predictor        = self::_getPredictorValue($params);
         $colors           = self::_getColorsValue($params);
         $bitsPerComponent = self::_getBitsPerComponentValue($params);
         $columns          = self::_getColumnsValue($params);
 
-        $bitsPerSample    = $bitsPerComponent*$colors;
-        $bytesPerSample   = ceil($bitsPerSample/8);
-        $bytesPerRow      = ceil($bitsPerSample*$columns/8);
-        $output           = '';
-        $offset           = 0;
-
-        /** None prediction */
+        /** None of prediction */
         if ($predictor == 1) {
             return $data;
         }
@@ -192,105 +292,28 @@ abstract class Zend_Pdf_Filter_Compression extends Zend_Pdf_Filter
             throw new Zend_Pdf_Exception('Not implemented yet' );
         }
 
-        // PNG prediction functions also insert algorithm tag for each row
-        $rows = ceil(strlen($data)/($bytesPerRow + 1));
+        /**
+         * PNG prediction
+         * Prediction code is duplicated on each row.
+         * Thus all cases can be brought to one
+         */
+        if ($predictor == 10 ||  /** None of prediction */
+            $predictor == 11 ||  /** Sub prediction     */
+            $predictor == 12 ||  /** Up prediction      */
+            $predictor == 13 ||  /** Average prediction */
+            $predictor == 14 ||  /** Paeth prediction   */
+            $predictor == 15     /** Optimal prediction */) {
 
-        /** PNG prediction (none of prediction) */
-        if ($predictor == 10) {
-            for ($count = 0; $count < $rows; $count++) {
-                if (ord($data{$offset++}) != 0x00) {
-                    throw new Zend_Pdf_Exception(sprintf('Wrong algorithm tag. Offset - 0x%08X. Must be 0x00 (PNG Sub prediction) instead of 0x%02X.', --$offset, $data{$offset}));
-                }
+            $bitsPerSample  = $bitsPerComponent*$colors;
+            $bytesPerSample = ceil($bitsPerSample/8);
+            $bytesPerRow    = ceil($bitsPerSample*$columns/8);
+            $rows           = ceil(strlen($data)/($bytesPerRow + 1));
+            $output         = '';
+            $offset         = 0;
 
-                $output .= substr($data, $offset, $bytesPerRow);
-                $offset += $bytesPerRow;
-            }
-            return $output;
-        }
-
-        /** PNG prediction (Sub on all rows) */
-        if ($predictor == 11) {
-            for ($count = 0; $count < $rows; $count++) {
-                if (ord($data{$offset++}) != 0x01) {
-                    throw new Zend_Pdf_Exception(sprintf('Wrong algorithm tag. Offset - 0x%08X. Must be 0x01 (PNG Sub prediction) instead of 0x%02X.', --$offset, $data{$offset}));
-                }
-
-                $lastSample = array_fill(0, $bytesPerSample, 0);
-                for ($count2 = 0; $count2 < $bytesPerRow  &&  $offset < strlen($data); $count2++) {
-                    $newByte = (ord($data{$offset++}) + $lastSample[$count2 % $bytesPerSample]) & 0xFF;
-                    $lastSample[$count2 % $bytesPerSample] = $newByte;
-                    $output .= chr($newByte);
-                }
-            }
-            return $output;
-        }
-
-        /** PNG prediction (Up on all rows) */
-        if ($predictor == 12) {
-            $lastRow    = array_fill(0, $bytesPerRow, 0);
-            for ($count = 0; $count < $rows; $count++) {
-                if (ord($data{$offset++}) != 0x02) {
-                    throw new Zend_Pdf_Exception(sprintf('Wrong algorithm tag. Offset - 0x%08X. Must be 0x02 (PNG Sub prediction) instead of 0x%02X.', --$offset, $data{$offset}));
-                }
-
-                for ($count2 = 0; $count2 < $bytesPerRow  &&  $offset < strlen($data); $count2++) {
-                    $newByte = (ord($data{$offset++}) + $lastRow[$count2]) & 0xFF;
-                    $lastRow[$count2] = $newByte;
-                    $output .= chr($newByte);
-                }
-            }
-            return $output;
-        }
-
-        /** PNG prediction (Average on all rows) */
-        if ($predictor == 13) {
-            $lastRow    = array_fill(0, $bytesPerRow, 0);
-            for ($count = 0; $count < $rows; $count++) {
-                if (ord($data{$offset++}) != 0x03) {
-                    throw new Zend_Pdf_Exception(sprintf('Wrong algorithm tag. Offset - 0x%08X. Must be 0x03 (PNG Sub prediction) instead of 0x%02X.', --$offset, $data{$offset}));
-                }
-
-                $lastSample = array_fill(0, $bytesPerSample, 0);
-                for ($count2 = 0; $count2 < $bytesPerRow  &&  $offset < strlen($data); $count2++) {
-                    $newByte = (ord($data{$offset++}) +
-                                floor(( $lastSample[$count2 % $bytesPerSample] + $lastRow[$count2])/2)
-                               ) & 0xFF;
-                    $lastSample[$count2 % $bytesPerSample] = $lastRow[$count2] = $newByte;
-                    $output .= chr($newByte);
-                }
-            }
-            return $output;
-        }
-
-        /** PNG prediction (Paeth on all rows) */
-        if ($predictor == 14) {
-            $lastRow    = array_fill(0, $bytesPerRow, 0);
-            for ($count = 0; $count < $rows; $count++) {
-                if (ord($data{$offset++}) != 0x04) {
-                    throw new Zend_Pdf_Exception(sprintf('Wrong algorithm tag. Offset - 0x%08X. Must be 0x04 (PNG Sub prediction) instead of 0x%02X.', --$offset, $data{$offset}));
-                }
-
-                $lastSample = array_fill(0, $bytesPerSample, 0);
-                for ($count2 = 0; $count2 < $bytesPerRow  &&  $offset < strlen($data); $count2++) {
-                    $newByte = (ord($data{$offset++}) +
-                                self::_paeth($lastSample[$count2 % $bytesPerSample],
-                                             $lastRow[$count2],
-                                             ($count2 - $bytesPerSample  <  0)? 0 : $lastRow[$count2 - $bytesPerSample])
-                               ) & 0xFF;
-                    $lastSample[$count2 % $bytesPerSample] = $lastRow[$count2] = $newByte;
-                    $output .= chr($newByte);
-                }
-            }
-            return $output;
-        }
-
-
-        /** PNG prediction ("optimal" prediction. Prediction is specified on each row) */
-        if ($predictor == 15) {
             $lastRow    = array_fill(0, $bytesPerRow, 0);
             for ($count = 0; $count < $rows; $count++) {
                 $predictor = ord($data{$offset++});
-                echo "$predictor\n";
 
                 $lastSample = array_fill(0, $bytesPerSample, 0);
                 for ($count2 = 0; $count2 < $bytesPerRow  &&  $offset < strlen($data); $count2++) {
@@ -301,7 +324,6 @@ abstract class Zend_Pdf_Filter_Compression extends Zend_Pdf_Filter
 
                         case 1: // Sub prediction
                             $newByte = (ord($data{$offset++}) + $lastSample[$count2 % $bytesPerSample]) & 0xFF;
-                            printf("   0x%02X 0x%02X  0x%02X   %02d %02d\n", ord($data{$offset-1}), $newByte, $lastSample[$count2 % $bytesPerSample], $count2, $count2 % $bytesPerSample);
                             break;
 
                         case 2: // Up prediction
@@ -322,6 +344,9 @@ abstract class Zend_Pdf_Filter_Compression extends Zend_Pdf_Filter
                                                           0 : $lastRow[$count2 - $bytesPerSample])
                                        ) & 0xFF;
                             break;
+
+                        default:
+                            throw new Zend_Pdf_Exception('Unknown prediction tag.');
                     }
                     $lastSample[$count2 % $bytesPerSample] = $lastRow[$count2] = $newByte;
                     $output .= chr($newByte);
