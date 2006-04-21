@@ -15,3 +15,13 @@ expensive processing that may require even longer timeout durations.
 4/ Zend_Mail::_encodeHeader; needs to replace any '?' characters in
 $quotedValue with '=3F'. Otherwise, question marks in the header will
 break the encoding.
+
+5/ add folder support to mbox (aka files in a given base dir)
+
+6/ bulk mail sending support (replace or clear recipient headers)
+
+7/ support multipart in mail message and mime part classes (get a part or iterate over parts)
+
+8/ method to get message num for given uid
+
+9/ late fetch for mail body (for POP3 for now)
