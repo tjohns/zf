@@ -1,13 +1,13 @@
 Priority 1 :
 
 - end of unit tests :
-	=> Frontends are missing
+	=> File Frontend is missing
 	
 - bug fixes :)
 
 - end of Sqlite backend
 
-- "Page" frontend (sort of "jpcache")
+- "Page" frontend (clone of "jpcache")
 	=> to cache a whole page
 	=> automatic cache id
 	=> "HTTP not modified" header
@@ -15,7 +15,7 @@ Priority 1 :
 
 - work on the logging feature (which is not terminated)
 
-- EXAMPLES.txt file
+- EXAMPLES.txt file (File Frontend is missing)
 
 
 Priority 2 :
