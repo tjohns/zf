@@ -1,0 +1,14 @@
+
+* The Router routes using a Zend_Uri_Http object.
+  The Zend_Controller_Router_Interface does not allow passing of the Uri object.
+  In the Zend_Request proposal, a static readonly Zend_Request::uri which would making testing difficult.
+  Currently opted for adding an extra parameter to the route() method 
+  public function route(Zend_Controller_Dispatcher_Interface $dispatcher, Zend_Uri_Http $url)
+ 
+* Requirements are not applied to query string parameters. 
+
+* Zend_Uri_Http only builds complete urls. Whilst this would be required for redirects, /path?a=1 maybe preferable in web page content.
+
+* Zend_Uri_Http is lacking an getter for the query string as an array. Implemented in the Zend_Controller_YARouter_Route for now.
+
+* The class names are probably temporary. YA (Yet-Another).  
