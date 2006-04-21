@@ -310,7 +310,7 @@ class Zend_Pdf_ElementFactory
      * @todo Reusage of the freed object. It's not a support of new feature, but only improvement.
      *
      * @param mixed $objectValue
-     * @return Zend_Pdf_Element_Object
+     * @return Zend_Pdf_Element_Object_Stream
      */
     public function newStreamObject($streamValue)
     {
