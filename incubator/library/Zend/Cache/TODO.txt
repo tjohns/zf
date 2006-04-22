@@ -21,3 +21,8 @@ Priority 1 :
 Priority 2 :
 
 - complete documentation (zend format)
+
+
+Priority 3 :
+
+- new backends (memcached, shmop...)
