@@ -83,13 +83,9 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         $bits = ord(fread($imageFile, 1)); //Higher than 8 bit depths are only supported in later versions of PDF.
         $color = ord(fread($imageFile, 1));
 
-        if (($compression = ord(fread($imageFile, 1))) != Zend_Pdf_Image_PNG::PNG_COMPRESSION_DEFAULT_STRATEGY) {
-            throw new Zend_Pdf_Exception( "Only the default compression strategy is currently supported." );
-        }
+        $compression = ord(fread($imageFile, 1));
+        $prefilter = ord(fread($imageFile,1));
 
-        if (($prefilter = ord(fread($imageFile,1))) != Zend_Pdf_Image_PNG::PNG_FILTER_NONE) {
-            throw new Zend_Pdf_Exception( "Filtering methods are not currently supported. " );
-        }
         if (($interlacing = ord(fread($imageFile,1))) != Zend_Pdf_Image_PNG::PNG_INTERLACING_DISABLED) {
             throw new Zend_Pdf_Exception( "Only non-interlaced images are currently supported." );
         }
@@ -174,7 +170,8 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
         fclose($imageFile);
 
         $compressed = true;
-
+        $imageDataTmp = '';
+        $smaskData = '';
         switch ($color) {
             case Zend_Pdf_Image_PNG::PNG_CHANNEL_RGB:
                 $colorSpace = new Zend_Pdf_Element_Name('DeviceRGB');
@@ -203,12 +200,9 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                  * will become the Shadow Mask (SMask).
                  */
                 if($bits > 8) {
-                    /*
-                     * The calculations are slightly different for 16 bit depth images. We will have to correct the math to support 16bit.
-                     * Further, to support 16-bit images the PDF output version must be bumped to 1.5.
-                     */
-                    throw new Zend_Pdf_Exception('Not implemented yet. PNGs with bit depth greater than 8.');
+                    throw new Zend_Pdf_Exception("Alpha PNGs with bit depth > 8 are not yet supported");
                 }
+
                 $colorSpace = new Zend_Pdf_Element_Name('DeviceGray');
 
                 $decodingObjFactory = new Zend_Pdf_ElementFactory(1);
@@ -218,7 +212,7 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                 $decodingStream->dictionary->DecodeParms->Predictor        = new Zend_Pdf_Element_Numeric(15);
                 $decodingStream->dictionary->DecodeParms->Columns          = new Zend_Pdf_Element_Numeric($width);
                 $decodingStream->dictionary->DecodeParms->Colors           = new Zend_Pdf_Element_Numeric(2);   //GreyAlpha
-                $decodingStream->dictionary->DecodeParms->BitsPerComponent = new Zend_Pdf_Element_Numeric(8);
+                $decodingStream->dictionary->DecodeParms->BitsPerComponent = new Zend_Pdf_Element_Numeric($bits);
                 $decodingStream->skipFilters();
 
                 $pngDataRawDecoded = $decodingStream->value;
@@ -239,12 +233,9 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                  * will become the Shadow Mask (SMask).
                  */
                 if($bits > 8) {
-                    /*
-                     * The calculations are slightly different for 16 bit depth images. We will have to correct the math to support 16bit.
-                     * Further, to support 16-bit images the PDF output version must be bumped to 1.5.
-                     */
-                    throw new Zend_Pdf_Exception('Not implemented yet. PNGs with bit depth greater than 8.');
+                    throw new Zend_Pdf_Exception("Alpha PNGs with bit depth > 8 are not yet supported");
                 }
+
                 $colorSpace = new Zend_Pdf_Element_Name('DeviceRGB');
 
                 $decodingObjFactory = new Zend_Pdf_ElementFactory(1);
@@ -254,7 +245,7 @@ class Zend_Pdf_Image_PNG extends Zend_Pdf_Image
                 $decodingStream->dictionary->DecodeParms->Predictor        = new Zend_Pdf_Element_Numeric(15);
                 $decodingStream->dictionary->DecodeParms->Columns          = new Zend_Pdf_Element_Numeric($width);
                 $decodingStream->dictionary->DecodeParms->Colors           = new Zend_Pdf_Element_Numeric(4);   //RGBA
-                $decodingStream->dictionary->DecodeParms->BitsPerComponent = new Zend_Pdf_Element_Numeric(8);
+                $decodingStream->dictionary->DecodeParms->BitsPerComponent = new Zend_Pdf_Element_Numeric($bits);
                 $decodingStream->skipFilters();
 
                 $pngDataRawDecoded = $decodingStream->value;

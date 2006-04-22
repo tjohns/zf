@@ -180,6 +180,10 @@ abstract class Zend_Pdf_Filter_Compression extends Zend_Pdf_Filter
             ) {
             $predictor -= 10;
 
+            if($bitsPerComponent == 16) {
+                throw new Zend_Pdf_Exception("PNG Prediction with bit depth greater than 8 not yet supported.");
+            }
+
             $bitsPerSample  = $bitsPerComponent*$colors;
             $bytesPerSample = ceil($bitsPerSample/8);
             $bytesPerRow    = ceil($bitsPerSample*$columns/8);
