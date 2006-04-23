@@ -364,7 +364,7 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
      * 'old'            => remove too old cache entries ($tags is not used) 
      * 'matchingTag'    => remove cache entries matching all given tags 
      *                     ($tags can be an array of strings or a single string) 
-     * 'notMatchingTag' => remove cache entries not matching one of the given tags
+     * 'notMatchingTag' => remove cache entries not {matching one of the given tags}
      *                     ($tags can be an array of strings or a single string)    
      * 
      * @param string $dir directory to clean
@@ -391,7 +391,7 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
                     case 'old':
                         // files older than lifeTime get deleted from cache
                         if (!is_null($this->_directives['lifeTime'])) {
-                            if ((mktime() - @filemtime($file2)) > $this->_directives['lifeTime']) {
+                            if ((time() - @filemtime($file2)) > $this->_directives['lifeTime']) {
                                 $result = ($result) && ($this->_remove($file2));
                             }
                         }
