@@ -86,7 +86,7 @@ interface Zend_Cache_Backend_Interface
      * 'old'            => remove too old cache entries ($tags is not used) 
      * 'matchingTag'    => remove cache entries matching all given tags 
      *                     ($tags can be an array of strings or a single string) 
-     * 'notMatchingTag' => remove cache entries not matching one of the given tags
+     * 'notMatchingTag' => remove cache entries not {matching one of the given tags}
      *                     ($tags can be an array of strings or a single string)    
      * 
      * @param string $mode clean mode
