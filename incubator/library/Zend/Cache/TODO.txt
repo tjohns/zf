@@ -5,8 +5,6 @@ Priority 1 :
 	
 - bug fixes :)
 
-- end of Sqlite backend
-
 - "Page" frontend (clone of "jpcache")
 	=> to cache a whole page
 	=> automatic cache id
@@ -16,6 +14,8 @@ Priority 1 :
 - work on the logging feature (which is not terminated)
 
 - EXAMPLES.txt file (File Frontend is missing)
+
+- perfs analyze
 
 
 Priority 2 :
