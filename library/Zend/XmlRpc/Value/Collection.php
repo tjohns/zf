@@ -65,24 +65,10 @@ abstract class Zend_XmlRpc_Value_Collection extends Zend_XmlRpc_Value
             /* @var $value Zend_XmlRpc_Value */
 
             if (!$value instanceof parent) {
-                /** @todo will be used after a fix for http://bugs.php.net/bug.php?id=34065 */
-                // throw new Zend_Xml_Rpc_Value_Exception('Values of '. get_class($this) .' type must be Zend_XmlRpc_Value objects');
-                $e = new Zend_Xml_Rpc_Value_Exception('Values of '. get_class($this) .' type must be Zend_XmlRpc_Value objects');
-                break;
+                throw new Zend_Xml_Rpc_Value_Exception('Values of '. get_class($this) .' type must be Zend_XmlRpc_Value objects');
             }
             $values[$key] = $value->getValue();
         }
-        
-        /**
-         * @todo throwing exceptions inside foreach could cause leaks, use a workaround
-         *       like this until a fix is available
-         *
-         * @link http://bugs.php.net/bug.php?id=34065
-         */
-        if ($e) {
-            throw $e;
-        }
-        
         return $values;
     }
 
