@@ -35,6 +35,8 @@ class Zend_Cache_sqliteBackendTest extends PHPUnit2_Framework_TestCase {
             'cacheDBCompletePath' => $this->_cacheDir . 'cache.db'
         ));
         $this->_instance->save('bar : data to cache', 'bar', array('tag3', 'tag4'));
+        $this->_instance->save('bar2 : data to cache', 'bar2', array('tag3', 'tag1')); 
+        $this->_instance->save('bar3 : data to cache', 'bar3', array('tag2', 'tag3'));       
     }
     
     private function _getTmpDirWindows()
@@ -79,7 +81,7 @@ class Zend_Cache_sqliteBackendTest extends PHPUnit2_Framework_TestCase {
     
     public function tearDown()
     {
-        //$this->_instance->clean('all');
+        $this->_instance->___dropDatabaseFile();
         unset($this->_instance);
     }
     
@@ -152,17 +154,19 @@ class Zend_Cache_sqliteBackendTest extends PHPUnit2_Framework_TestCase {
     
     public function testSaveCorrectCall()
     {
-        $this->_instance->save('data to cache', 'foo', array('tag1', 'tag2'));
+        $res = $this->_instance->save('data to cache', 'foo', array('tag1', 'tag2'));
+        $this->assertTrue($res);
     }
     
     public function testSaveCorrectCallWithNullLifeTime()
     {
         $this->_instance->setDirectives(array('lifeTime' => null));
-        $this->_instance->save('data to cache', 'foo', array('tag1', 'tag2'));
+        $res = $this->_instance->save('data to cache', 'foo', array('tag1', 'tag2'));
+        $this->assertTrue($res);
     }
     
     public function testRemoveCorrectCall()
-    {
+    {   
         $this->assertTrue($this->_instance->remove('bar'));
         $this->assertFalse($this->_instance->test('bar')); 
         $this->assertFalse($this->_instance->remove('barbar'));
@@ -199,8 +203,88 @@ class Zend_Cache_sqliteBackendTest extends PHPUnit2_Framework_TestCase {
         return;
     }
     
-    // TODO : get()
-    // TODO : clean()
+    public function testGetCorrectCall1()
+    {
+        $this->assertFalse($this->_instance->get('barbar'));        
+    }
+    
+    public function testGetCorrectCall2()
+    {
+        $this->assertEquals('bar : data to cache', $this->_instance->get('bar'));
+    }
+    
+    public function testGetCorrectCall3()
+    {
+        $data = '"""""' . "'" . '\n' . 'ééééé';
+        $this->_instance->save($data, 'foo');
+        $this->assertEquals($data, $this->_instance->get('foo'));
+        $this->_instance->remove('foo');
+    }
+    
+    public function testGetCorrectCall4()
+    {
+        $this->_instance->___expire('bar');
+        $this->assertFalse($this->_instance->get('bar'));
+        $this->assertEquals('bar : data to cache', $this->_instance->get('bar', true));
+    }   
+
+    public function testCleanCorrectCall1()
+    {
+        // mode = all
+        $this->assertTrue($this->_instance->clean('all'));
+        $this->assertFalse($this->_instance->test('bar'));
+        $this->assertFalse($this->_instance->test('bar2'));
+    }
+    
+    public function testCleanCorrectCall2()
+    {
+        // mode = old
+        $this->_instance->___expire('bar2');
+        $this->assertTrue($this->_instance->clean('old'));
+        $this->assertTrue($this->_instance->test('bar') > 999999);
+        $this->assertFalse($this->_instance->test('bar2'));
+    }
+    
+    public function testCleanCorrectCall3()
+    {
+        // mode = matchingTags ('tag3')
+        $this->assertTrue($this->_instance->clean('matchingTag', array('tag3')));
+        $this->assertFalse($this->_instance->test('bar'));
+        $this->assertFalse($this->_instance->test('bar2'));
+    }
+    
+    public function testCleanCorrectCall4()
+    {
+        // mode = matchingTags ('tag3', 'tag4')
+        $this->assertTrue($this->_instance->clean('matchingTag', array('tag3', 'tag4')));
+        $this->assertFalse($this->_instance->test('bar'));
+        $this->assertTrue($this->_instance->test('bar2') > 999999);
+    }
+    
+    public function testCleanCorrectCall5()
+    {
+        // mode = notMatchingTags ('tag3')
+        $this->assertTrue($this->_instance->clean('notMatchingTag', array('tag3')));
+        $this->assertTrue($this->_instance->test('bar') > 999999);
+        $this->assertTrue($this->_instance->test('bar2') > 999999);
+    }
+    
+    public function testCleanCorrectCall6()
+    {
+        // mode = notMatchingTags ('tag4') 
+        $this->assertTrue($this->_instance->clean('notMatchingTag', array('tag4')));
+        $this->assertTrue($this->_instance->test('bar') > 999999);
+        $this->assertFalse($this->_instance->test('bar2'));
+    }
+    
+    public function testCleanCorrectCall7()
+    {
+        // mode = notMatchingTags ('tag4', 'tag1') 
+        $this->assertTrue($this->_instance->clean('notMatchingTag', array('tag4', 'tag1')));
+        $this->assertTrue($this->_instance->test('bar') > 999999);
+        $this->assertTrue($this->_instance->test('bar2') > 999999);
+        $this->assertFalse($this->_instance->test('bar3'));      
+    }
     
 }
 
