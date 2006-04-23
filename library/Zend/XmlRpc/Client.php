@@ -230,31 +230,19 @@ class Zend_XmlRpc_Client
         foreach ($simple_xml->method as $methodXml) {
             if (empty($methodXml->name)) {
                 // The method tag must contain a name tag
-                /** @todo will be used after a fix for http://bugs.php.net/bug.php?id=34065 */
-                // throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, METHOD tag must contain a NAME tag');
-                $e = new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, METHOD tag must contain a NAME tag');
-                break;
+                throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, METHOD tag must contain a NAME tag');
             }
             if (empty($methodXml->signature)) {
                 // The method tag must contain a signature tag
-                /** @todo will be used after a fix for http://bugs.php.net/bug.php?id=34065 */
-                // throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, METHOD tag must contain a SIGNATURE tag');
-                $e = new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, METHOD tag must contain a SIGNATURE tag');
-                break;
+                throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, METHOD tag must contain a SIGNATURE tag');
             }
             if (empty($methodXml->signature->returnValue)) {
                 // The method tag must contain a returnValue tag
-                /** @todo will be used after a fix for http://bugs.php.net/bug.php?id=34065 */
-                // throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, SIGNATURE tag must contain a returnValue tag');
-                $e = new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, SIGNATURE tag must contain a returnValue tag');
-                break;
+                throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, SIGNATURE tag must contain a returnValue tag');
             }
             if (empty($methodXml->signature->params)) {
                 // The method tag must contain a params tag
-                /** @todo will be used after a fix for http://bugs.php.net/bug.php?id=34065 */
-                // throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, SIGNATURE tag must contain a PARAMS tag');
-                $e = new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, SIGNATURE tag must contain a PARAMS tag');
-                break;
+                throw new Zend_XmlRpc_Client_Exception('Failed to parse methods signatures, SIGNATURE tag must contain a PARAMS tag');
             }
 
             // Parse the method parameters
@@ -268,17 +256,6 @@ class Zend_XmlRpc_Client
         	   'params'       => $methodParams
         	);
         }
-
-        /**
-         * @todo throwing exceptions inside foreach could cause leaks, use a workaround
-         *       like this until a fix is available
-         *
-         * @link http://bugs.php.net/bug.php?id=34065
-         */
-        if ($e) {
-            throw $e;
-        }
-
     }
 
 
