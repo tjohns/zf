@@ -60,6 +60,9 @@ require_once 'Zend/Pdf/Color/RGB.php';
 /** Zend_Pdf_Color_CMYK */
 require_once 'Zend/Pdf/Color/CMYK.php';
 
+/** Zend_Pdf_Color_HTML */
+require_once 'Zend/Pdf/Color/HTML.php';
+
 /** Zend_Pdf_Image */
 require_once 'Zend/Pdf/Resource/Image.php';
 

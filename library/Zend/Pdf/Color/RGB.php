@@ -69,18 +69,19 @@ class Zend_Pdf_Color_RGB extends Zend_Pdf_Color
      */
     public function __construct($r, $g, $b)
     {
+        /** Clamp values to legal limits. */
+        if ($r < 0) { $r = 0; }
+        if ($r > 1) { $r = 1; }
+
+        if ($g < 0) { $g = 0; }
+        if ($g > 1) { $g = 1; }
+
+        if ($b < 0) { $b = 0; }
+        if ($b > 1) { $b = 1; }
+
         $this->_r = new Zend_Pdf_Element_Numeric($r);
         $this->_g = new Zend_Pdf_Element_Numeric($g);
         $this->_b = new Zend_Pdf_Element_Numeric($b);
-
-        if ($this->_r->value < 0) { $this->_r->value = 0; }
-        if ($this->_r->value > 1) { $this->_r->value = 1; }
-
-        if ($this->_g->value < 0) { $this->_g->value = 0; }
-        if ($this->_g->value > 1) { $this->_g->value = 1; }
-
-        if ($this->_b->value < 0) { $this->_b->value = 0; }
-        if ($this->_b->value > 1) { $this->_b->value = 1; }
     }
 
     /**

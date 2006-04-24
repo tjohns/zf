@@ -37,18 +37,18 @@ class Zend_Pdf_Const
     const PAGESIZE_LETTER            = '612:792:';
     const PAGESIZE_LETTER_LANDSCAPE  = '792:612:';
 
-    static public $pageSizeAliases = array( 'A4'               => self::PAGESIZE_A4,
-                                            'A4-landscape'     => self::PAGESIZE_A4_LANDSCAPE,
-                                            'A4-Landscape'     => self::PAGESIZE_A4_LANDSCAPE,
-                                            'A4-LANDSCAPE'     => self::PAGESIZE_A4_LANDSCAPE,
-                                            'Letter'           => self::PAGESIZE_LETTER,
-                                            'LETTER'           => self::PAGESIZE_LETTER,
-                                            'Letter-landscape' => self::PAGESIZE_LETTER_LANDSCAPE,
-                                            'Letter-Landscape' => self::PAGESIZE_LETTER_LANDSCAPE,
-                                            'Letter-LANDSCAPE' => self::PAGESIZE_LETTER_LANDSCAPE,
-                                            'LETTER-landscape' => self::PAGESIZE_LETTER_LANDSCAPE,
-                                            'LETTER-Landscape' => self::PAGESIZE_LETTER_LANDSCAPE,
-                                            'LETTER-LANDSCAPE' => self::PAGESIZE_LETTER_LANDSCAPE,
+    static public $pageSizeAliases = array( 'A4'               => Zend_Pdf_Const::PAGESIZE_A4,
+                                            'A4-landscape'     => Zend_Pdf_Const::PAGESIZE_A4_LANDSCAPE,
+                                            'A4-Landscape'     => Zend_Pdf_Const::PAGESIZE_A4_LANDSCAPE,
+                                            'A4-LANDSCAPE'     => Zend_Pdf_Const::PAGESIZE_A4_LANDSCAPE,
+                                            'Letter'           => Zend_Pdf_Const::PAGESIZE_LETTER,
+                                            'LETTER'           => Zend_Pdf_Const::PAGESIZE_LETTER,
+                                            'Letter-landscape' => Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE,
+                                            'Letter-Landscape' => Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE,
+                                            'Letter-LANDSCAPE' => Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE,
+                                            'LETTER-landscape' => Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE,
+                                            'LETTER-Landscape' => Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE,
+                                            'LETTER-LANDSCAPE' => Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE,
                                           );
 
     // Type1 standard fonts
@@ -67,20 +67,20 @@ class Zend_Pdf_Const
     const FONT_SYMBOL               = 'Symbol';
     const FONT_ZAPFDINGBATS         = 'ZapfDingbats';
 
-    static public $standardFonts = array(self::FONT_TIMES_ROMAN,
-                                         self::FONT_TIMES_BOLD,
-                                         self::FONT_TIMES_ITALIC,
-                                         self::FONT_TIMES_BOLDITALIC,
-                                         self::FONT_HELVETICA,
-                                         self::FONT_HELVETICA_BOLD,
-                                         self::FONT_HELVETICA_ITALIC,
-                                         self::FONT_HELVETICA_BOLDITALIC,
-                                         self::FONT_COURIER,
-                                         self::FONT_COURIER_BOLD,
-                                         self::FONT_COURIER_ITALIC,
-                                         self::FONT_COURIER_BOLDITALIC,
-                                         self::FONT_SYMBOL,
-                                         self::FONT_ZAPFDINGBATS);
+    static public $standardFonts = array(Zend_Pdf_Const::FONT_TIMES_ROMAN,
+                                         Zend_Pdf_Const::FONT_TIMES_BOLD,
+                                         Zend_Pdf_Const::FONT_TIMES_ITALIC,
+                                         Zend_Pdf_Const::FONT_TIMES_BOLDITALIC,
+                                         Zend_Pdf_Const::FONT_HELVETICA,
+                                         Zend_Pdf_Const::FONT_HELVETICA_BOLD,
+                                         Zend_Pdf_Const::FONT_HELVETICA_ITALIC,
+                                         Zend_Pdf_Const::FONT_HELVETICA_BOLDITALIC,
+                                         Zend_Pdf_Const::FONT_COURIER,
+                                         Zend_Pdf_Const::FONT_COURIER_BOLD,
+                                         Zend_Pdf_Const::FONT_COURIER_ITALIC,
+                                         Zend_Pdf_Const::FONT_COURIER_BOLDITALIC,
+                                         Zend_Pdf_Const::FONT_SYMBOL,
+                                         Zend_Pdf_Const::FONT_ZAPFDINGBATS);
 
     // Shape filling types
     const SHAPEDRAW_STROKE      = 0;
