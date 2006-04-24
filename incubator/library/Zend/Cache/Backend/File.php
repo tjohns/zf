@@ -163,9 +163,6 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
         clearstatcache();
         $file = $this->_file($id);
         if (($doNotTestCacheValidity) || (is_null($this->_directives['lifeTime']))) {
-            if ($this->_directives['logging']) {
-                Zend_Log::log('skipping testing cache validity for "' . basename($file) . '"', Zend_Log::LEVEL_DEBUG, 'ZF');          
-            }
             if (!(@file_exists($file))) {
                 // We do not test cache validity but there is no file available
                 // so the cache is not hit !
@@ -201,7 +198,7 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
 		    if ($hashData != $hashControl) {
                 // Problem detected by the read control !
                 if ($this->_directives['logging']) {
-                    Zend_Log::log('readControl: stored hash and computed hash do not match', Zend_Log::LEVEL_WARNING, 'ZF');                      // we need to invalidate the corresponding cache
+                    Zend_Log::log('Zend_Cache_Backend_File::get() / readControl : stored hash and computed hash do not match', Zend_Log::LEVEL_WARNING);
 		        }
                 $this->_remove($file); 
 		        return false;    
@@ -328,6 +325,9 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
         if (!@unlink($file)) {
             # If we can't remove the file (because of locks or any problem), we will touch 
             # the file to invalidate it
+            if ($this->_directives['logging']) {
+                Zend_Log::log("Zend_Cache_Backend_File::_remove() : we can't remove $file => we are going to try to invalidate it", Zend_Log::LEVEL_WARNING);
+		    }
             if (is_null($this->_directives['lifeTime'])) return false;
             if (!file_exists($file)) return false;
             return @touch($file, time() - 2*abs($this->_directives['lifeTime'])); 
@@ -451,9 +451,6 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
      */
     private function _registerTag($id, $tag) 
     {
-        if ($this->_directives['logging']) {
-            Zend_Log::log("registering tag '$tag' for ID '$id'", Zend_Log::LEVEL_DEBUG, 'ZF');
-        }
         return $this->save('1', self::_tagCacheId($id, $tag));
     }
     
@@ -465,9 +462,6 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
      */
     private function _unregisterTag($id) 
     {
-        if ($this->_directives['logging']) {
-            Zend_Log::log("unregistering tags for ID '$id'", Zend_Log::LEVEL_DEBUG, 'ZF');
-        }
         $filesToRemove = @glob($this->_path(self::_idToFileName($id)) . "cache_internal_$id---*" );
         $result = true;
         foreach ($filesToRemove as $file) {

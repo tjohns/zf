@@ -67,7 +67,7 @@ class Zend_Cache_Core
      * - If null, the cache is valid forever.
      * 
      * ====> (boolean) logging :
-     * - If set to true, logging is activated
+     * - If set to true, logging is activated (but the system is slower)
      * 
      * @var array available options
      */
@@ -104,6 +104,11 @@ class Zend_Cache_Core
         }  
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);
+        }
+        if ($this->_options['logging']) {
+            if (!class_exists('Zend_Log', false)) {
+                Zend_Cache::throwException('logging feature is on but Zend_Log is not "loaded"');    
+            }
         }
     }
     
@@ -218,6 +223,9 @@ class Zend_Cache_Core
         $result = $this->_backend->save($data, $id, $tags);
         if (!$result) {
             // maybe the cache is corrupted, so we remove it !
+            if ($this->_options['logging']) {
+                Zend_Log::log("Zend_Cache_Core::save() : impossible to save cache (id=$id)", Zend_Log::LEVEL_WARNING);
+            }
             $this->remove($id);
             return false;
         }
@@ -225,7 +233,7 @@ class Zend_Cache_Core
             $data2 = $this->get($id, true, true);
             if ($data!=$data2) {
                 if ($this->_options['logging']) {
-                    Zend_Log::log('writeControl: written and read data do not match', Zend_Log::LEVEL_WARNING, 'ZF');
+                    Zend_Log::log('Zend_Cache_Core::save() / writeControl : written and read data do not match', Zend_Log::LEVEL_WARNING);
                 }
                 $this->remove($id);
                 return false;

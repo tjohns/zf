@@ -195,7 +195,12 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
         @sqlite_query($this->_db, "DELETE FROM cache WHERE id='$id'");
         $sql = "INSERT INTO cache (id, content, lastModified, expire) VALUES ('$id', '$data', $mktime, $expire)";
         $res = @sqlite_query($this->_db, $sql);       
-        if (!$res) return false;
+        if (!$res) {
+            if ($this->_directives['logging']) {
+                Zend_Log::log("Zend_Cache_Backend_Sqlite::save() : impossible to store the cache id=$id", Zend_Log::LEVEL_WARNING);
+	        }
+            return false;
+        }
         $res = true;
         foreach ($tags as $tag) {
             $res = $res && $this->_registerTag($id, $tag);
@@ -338,14 +343,15 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      * @return boolean true if no problem
      */
     private function _registerTag($id, $tag) {
-        if ($this->_directives['logging']) {
-            Zend_Log::log("registering tag '$tag' for ID '$id'", Zend_Log::LEVEL_DEBUG, 'ZF');
-        }
+        $res = @sqlite_query($this->_db, "DELETE FROM TAG WHERE tag='$tag' AND id='$id'");
         $res = @sqlite_query($this->_db, "INSERT INTO tag (name, id) VALUES ('$tag', '$id')");
-        if ($res) {
-            return true;
+        if (!$res) {        
+	        if ($this->_directives['logging']) {
+	            Zend_Log::log("Zend_Cache_Backend_Sqlite::_registerTag() : impossible to register tag=$tag on id=$id", Zend_Log::LEVEL_WARNING);
+	        }
+            return false;
         }
-        return false;
+        return true;
     }
     
     /**
@@ -369,13 +375,18 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      * @return boolean true if ok
      */
     private function _checkStructureVersion()
-    {
+    {       
         $result = @sqlite_query($this->_db, "SELECT num FROM version");
         if (!$result) return false;
         $row = @sqlite_fetch_array($result);
-        if (!$row) return false;
+        if (!$row) {
+            return false;
+        }
         if (((int) $row['num']) != 1) {
             // old cache structure
+            if ($this->_directives['logging']) {
+                Zend_Log::log('Zend_Cache_Backend_Sqlite::_checkStructureVersion() : old cache structure version detected => the cache is going to be dropped', Zend_Log::LEVEL_WARNING);
+	        }
             return false;
         }
         return true;

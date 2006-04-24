@@ -11,8 +11,6 @@ Priority 1 :
 	=> "HTTP not modified" header
 	[...] (Mislav is working on this)
 
-- work on the logging feature (which is not terminated)
-
 - EXAMPLES.txt file (File Frontend is missing)
 
 - perfs analyze
@@ -21,8 +19,9 @@ Priority 1 :
 Priority 2 :
 
 - complete documentation (zend format)
-
+- work on the logging feature (which is not terminated)
 
 Priority 3 :
 
 - new backends (memcached, shmop...)
+- improve logging feature with debug support (only warnings are implemented now)
