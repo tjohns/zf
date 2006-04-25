@@ -184,7 +184,7 @@ register($name, $object)
     <para>
 	De registry is een mechanisme voor het verstrekken van singleton instanties 
 	van objecten aan de toepassingsruimte. Het object wordt slechts éénmaal
-	opgeslaan en kan opgevraagd worden wanneer nodig. Het is steeds dezelfde
+	opgeslagen en kan opgevraagd worden wanneer nodig. Het is steeds dezelfde
 	instantie van het object dat word terugegeven.
     </para>
 
