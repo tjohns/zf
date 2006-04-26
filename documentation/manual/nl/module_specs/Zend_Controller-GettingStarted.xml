@@ -19,7 +19,7 @@
 			te ondersteunen.
 			Als zodanig heeft de voorgestelde configuratie de hulp nodig van de webserver in de vorm van het
 			herschrijven van de URI zodat alle aanvragen naar een enkel bestand kunnen worden doorgestuurd.
-			Dit bestand heet "index.php" en is gewoon een bootstrap voor <code>Zend_Controller_Front</code>.
+			Dit bestand heet "index.php" en is een bootstrap voor <code>Zend_Controller_Front</code>.
 			Op Apache webservers word dit afgehandeld door de optionele module "mod_rewrite".
 		</para>
 
@@ -35,8 +35,8 @@
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
-			In het voorbeeld hierboven worden alle aanvragen voor bestanden waarvan de extensie niet in de lijst zijn naar
-			index.php doorgestuurd. Dit is handig voor het ontwikkelen, maar in produktie zouden de regels mappen
+			In het voorbeeld hierboven worden alle aanvragen voor bestanden waarvan de extensie niet in de lijst staan naar
+			index.php doorgestuurd. Dit is handig voor het ontwikkelen, maar in productie zouden de regels mappen
 			moeten uitsluiten, geen bestandsextensies.
 		</para>
 	</sect2>
@@ -47,7 +47,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		<para>
 			Na het opzetten van het .htaccess bestand, moet je een nieuw bestand <code>index.php</code> aanmaken.
 			Dit is een bootstrap bestand. Het doel van index.php is enkel het bootstrappen van 
-			Zend_Controller_Front, die zich ideaal gesproken buiten de documentroot zou moeten bevinden.
+			Zend_Controller_Front, die zich bij voorkeur buiten de documentroot zou moeten bevinden.
 		</para>
 
 		<note>	
@@ -57,8 +57,8 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		<para>
 			Om veiligheidsredenen raadt Zend héél sterk aan geen PHP bestanden op te slaan in mappen die door
 			de webserver toegankelijk zijn (submappen van de document root). Hoewel dit niet altijd
-			mogelijk is, zoals bij gedeelde webhosting, zou dit toch moeten worden beschouwd als een
-			ideaal en toegepast waar mogelijk.
+			mogelijk is, zoals bij gedeelde webhosting, zou dit moeten worden beschouwd als een
+			"ideaal" en toegepast worden waar mogelijk.
 		</para>
 
 		<para>
@@ -75,9 +75,9 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers')
 
 			Zie de volgende sectie wat betreft <code>/pad/naar/jouw/controllers</code>.
 
-			Zoals aangegeven in <code>README.txt</code> moet het Zend Framework pad in <code>include_path</code>
-			zijn. Indien dit niet in <code>php.ini</code> aangeduid is, kan je <code>set_include_path()</code> 
-			gebruiken in dit bestand vòòr <code>require_once</code>.
+			Zoals aangegeven in <code>README.txt</code> moet het Zend Framework pad in het <code>include_path</code>
+			staan. Indien dit niet in <code>php.ini</code> geconfigureerd is, kan je <code>set_include_path()</code> 
+			gebruiken in dit bestand. Let op: doe dit vòòr <code>require_once</code>.
 		</para>
 
 		<note>
@@ -93,8 +93,8 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers')
 		
 		<para>
 			Het is aanbevolen dat websites gebouwd met de Zend Framework een gemeenschappelijke mappenstructuur
-			hebben. Hoewel dit niet in alle gevallen mogelijk is, is het dat toch voor velen en waarschijnlijk
-			de meeste. De keuze voor deze regel is gemotiveerd omdat die jouw code gemakkelijker begrijpbaar zal maken voor
+			hebben. Dit niet in alle gevallen mogelijk, maar toch voor velen en waarschijnlijk
+			de meeste. De keuze voor deze regel is aanbevolen omdat die jouw code gemakkelijker begrijpbaar zal maken voor
 			iemand die de Zend Framework overeenkomsten kent.
 		</para>
 		
