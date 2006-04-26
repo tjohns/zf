@@ -27,10 +27,9 @@ loadFile($filename, $dirs=null, $once=false)
 
     <para>Het <code>$filename</code> argument specificeert het bestand 
 	dat moet worden geladen. Let op: $filename mag geen padinformatie bevatten. 
-	Er wordt een veiligheidscheck gedaan op <code>$filename</code>. 
 	<code>$filename</code> kan enkel alfanumerieke tekens, min-tekens ("-"), 
-	underscores ("_") of punten (".") bevatten. Deze beperkingen zijn niet van van 
-	toepassing op het argument <code>$dirs</code>.
+	underscores ("_") of punten (".") bevatten. Dit is omwille van veiligheidsredenen. 
+	Deze beperkingen zijn niet van van toepassing op het argument <code>$dirs</code>.
     </para>
 
     <para>Het argument <code>$dirs</code> specificeert de paden of het pad waarin het 
@@ -69,10 +68,10 @@ loadClass($class, $dirs)
     </para>
 
     <para>
-	Indien u een klasse opvraagt met underscores in de naam en <code>$dirs</code>
-	is null (standaard waarde), zal <code>Zend::loadClass()</code> zelf de
+	Indien u een klasse opvraagt waarin underscores in de naam voorkomen en <code>$dirs</code>
+	gelijk is aan null (standaard waarde), zal <code>Zend::loadClass()</code> zelf de
 	<code>$dirs</code> kunnen achterhalen. Alle underscores die in het <code>$class</code> 
-	argument voorkomen, zullen geconverteerd worden naar padscheiders. Bijvoorbeeld, 
+	argument voorkomen, zullen geconverteerd worden naar directory seperators. Bijvoorbeeld, 
 	indien <code>$class</code> de waarde <code>Zend_Example_Class</code> heeft, zal dit 
 	gemapt worden naar het pad <code>Zend/Example/Class.php</code>.
     </para>
@@ -103,7 +102,7 @@ loadInterface($interface, $dirs)
 	Indien je een interface opvraagt met underscores in de naam en <code>$dirs</code>
 	is null (standaard waarde), zal <code>Zend::loadInterface()</code> zelf de
 	<code>$dirs</code> kunnen achterhalen. Alle underscores die in het <code>$interface</code> 
-	argument voorkomen, zullen geconverteerd worden naar padscheiders. 
+	argument voorkomen, zullen geconverteerd worden naar directory seperators. 
 	Bijvoorbeeld, indien <code>$interface</code> de waarde
     <code>Zend_Example_Interface</code> heeft, zal dit gemapt worden naar het pad
     <code>Zend/Example/Interface.php</code>.
