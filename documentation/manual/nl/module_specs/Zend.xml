@@ -16,7 +16,7 @@
     <code>Zend::loadFile()</code> laadt een PHP bestand dat PHP code kan bevatten. 
 	Het is een "wrapper" voor de PHP functie 
 	<ulink url="http://php.net/include"><code>include()</code></ulink> die een
-    <code>Zend_Exception</code> zal doorgeven in geval van mislukking.
+    <code>Zend_Exception</code> zal doorgeven indien er een fout is opgetreden.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
