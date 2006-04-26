@@ -144,7 +144,7 @@ class Zend_Controller_Front
 	     * Instantiate the default router if one was not set.
 	     */
         if (!$this->_router instanceof Zend_Controller_Router_Interface) {
-            require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Router.php';
+            require_once 'Zend/Controller/Router.php';
             $this->_router = new Zend_Controller_Router();
         }
         return $this->_router;
@@ -177,7 +177,7 @@ class Zend_Controller_Front
 	     * Instantiate the default dispatcher if one was not set.
 	     */
         if (!$this->_dispatcher instanceof Zend_Controller_Dispatcher_Interface) {
-            require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Dispatcher.php';
+            require_once 'Zend/Controller/Dispatcher.php';
             $this->_dispatcher = new Zend_Controller_Dispatcher();
         }
         return $this->_dispatcher;
