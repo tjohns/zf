@@ -29,7 +29,7 @@ loadFile($filename, $dirs=null, $once=false)
 	dat moet worden geladen. Let op: $filename mag geen padinformatie bevatten. 
 	<code>$filename</code> kan enkel alfanumerieke tekens, min-tekens ("-"), 
 	underscores ("_") of punten (".") bevatten. Dit is omwille van veiligheidsredenen. 
-	Deze beperkingen zijn niet van van toepassing op het argument <code>$dirs</code>.
+	Deze beperkingen zijn niet van toepassing op het argument <code>$dirs</code>.
     </para>
 
     <para>Het argument <code>$dirs</code> specificeert de paden of het pad waarin het 
