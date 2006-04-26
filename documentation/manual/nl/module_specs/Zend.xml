@@ -64,16 +64,16 @@ loadClass($class, $dirs)
 	Indien er wordt vastgesteld dat het bestand niet werd gevonden 
 	of de klasse niet bestaat zal er een <code>Zend_Exception</code> worden doorgegeven.
 	<code>Zend::loadFile()</code> wordt gebruikt voor het laden van het bestand.
-	Het <code>$dirs</code> argument wordt er onmiddellijk aan doorgegeven...
     </para>
 
     <para>
-	Indien u een klasse opvraagt waarin underscores in de naam voorkomen en <code>$dirs</code>
-	gelijk is aan null (standaard waarde), zal <code>Zend::loadClass()</code> zelf de
-	<code>$dirs</code> kunnen achterhalen. Alle underscores die in het <code>$class</code> 
-	argument voorkomen, zullen geconverteerd worden naar directory seperators. Bijvoorbeeld, 
-	indien <code>$class</code> de waarde <code>Zend_Example_Class</code> heeft, zal dit 
-	gemapt worden naar het pad <code>Zend/Example/Class.php</code>.
+	Indien u een klasse opvraagt waarin underscores in de naam voorkomen en het argument 
+	<code>$dirs</code> gelijk is aan null (standaard waarde), zal 
+	<code>Zend::loadClass()</code> zelf de <code>$dirs</code> kunnen achterhalen. 
+	Alle underscores die in het <code>$class</code> argument voorkomen, zullen geconverteerd 
+	worden naar directory seperators. Bijvoorbeeld, indien <code>$class</code> de waarde 
+	<code>Zend_Example_Class</code> heeft, zal dit gemapt worden naar het pad 
+	<code>Zend/Example/Class.php</code>.
     </para>
 </sect1>
 
@@ -99,13 +99,13 @@ loadInterface($interface, $dirs)
     </para>
 
     <para>
-	Indien je een interface opvraagt met underscores in de naam en <code>$dirs</code>
-	is null (standaard waarde), zal <code>Zend::loadInterface()</code> zelf de
-	<code>$dirs</code> kunnen achterhalen. Alle underscores die in het <code>$interface</code> 
-	argument voorkomen, zullen geconverteerd worden naar directory seperators. 
-	Bijvoorbeeld, indien <code>$interface</code> de waarde
-    <code>Zend_Example_Interface</code> heeft, zal dit gemapt worden naar het pad
-    <code>Zend/Example/Interface.php</code>.
+	Indien je een interface opvraagt waarin underscores in de naam voorkomen en 
+	het argument <code>$dirs</code> gelijk is aan null (standaard waarde), zal 
+	<code>Zend::loadInterface()</code> zelf de <code>$dirs</code> kunnen achterhalen. 
+	Alle underscores die in het <code>$interface</code> argument voorkomen, zullen 
+	geconverteerd worden naar directory seperators. Bijvoorbeeld, indien 
+	<code>$interface</code> de waarde <code>Zend_Example_Interface</code> heeft, 
+	zal dit gemapt worden naar het pad <code>Zend/Example/Interface.php</code>.
     </para>
 </sect1>
 
@@ -153,9 +153,9 @@ dump($var, $label=null, $echo=true)
     </para>
 
     <para>
-	<code>$label</code> is optioneel en kan eender welke tekst bevatten. Die zal
-	dan voor de weergave van <code>Zend::dump()</code> worden weergegeven.
-	Dit is handig wanneer je informatie over meerdere variabelen op een enkele
+	<code>$label</code> is optioneel en kan eender welke tekst bevatten. Deze tekst 
+	zal dan voor de weergave van <code>Zend::dump()</code> worden weergegeven.
+	Dit is handig wanneer je informatie over meerdere variabelen op één enkele
 	pagina weer wil geven.
     </para>
 
@@ -190,16 +190,16 @@ register($name, $object)
 
     <para>
 	<code>$name</code> is eender welke string die toelaat het object een naam
-	te geven in de objectenlijst. Deze naam kan dan aan <code>Zend::registry()</code>
+	te geven in het register. Deze naam kan dan aan <code>Zend::registry()</code>
 	worden doorgegeven om het object opnieuw te verkrijgen.
     </para>
 
     <para>
-	Het <code>$name</code> argument moet een string zijn, alleen objecten mogen
+	Het <code>$name</code> argument moet een string zijn. Bovendien mogen enkel objecten 
 	opgeslagen worden in het register. Een object kan nooit worden verwijderd
 	uit het register en een objectinstantie kan slechts éénmaal worden
-	opgeslagen in het register.
-	Het niet nakomen van deze regels zal een <code>Zend_Exception</code> doorgeven.
+	opgeslagen in het register. Het niet nakomen van deze regels zal een 
+	<code>Zend_Exception</code> doorgeven.
     </para>
 </sect1>
 
