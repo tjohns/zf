@@ -10,7 +10,7 @@
     </note>
     <para>
         <example>
-            <title>Een Basis GET Verzoek maken</title>
+            <title>Een basis GET verzoek maken</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/HttpClient.php';
 try {
@@ -70,7 +70,7 @@ $http = new Zend_HttpClient('http://example.org',
 		door het zetten van de URL via de methode <code>Zend_HttpClient::setUri()</code>.
     </para>
     <note>
-        <para>Een geweldig gebruik hiervoor is als je meerdere RSS feeds ondervraagt.</para>
+        <para>Een geweldig gebruik hiervoor is als je meerdere RSS feeds uitleest.</para>
     </note>
     <example>
         <title>Multidomein verzoek</title>
@@ -80,7 +80,7 @@ require_once 'Zend/HttpClient.php';
 // Het client object instantiëren
 $http = new Zend_HttpClient();
 
-// Het URI naar Slashdot's hoofd feed zetten
+// De URI naar Slashdot's hoofd feed zetten
 $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
 
 // De feed opvragen
