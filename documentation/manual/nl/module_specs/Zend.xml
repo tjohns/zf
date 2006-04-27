@@ -95,7 +95,7 @@ loadInterface($interface, $dirs)
 	het laden van interfaces omdat de PHP functie 
 	<ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink>
 	het bestaan van interfaces niet kan nagaan (sinds PHP 5.0.2).
-	Gebruik <code>Zend::loadInterface()</code> in plaats ervan.
+	Gebruik <code>Zend::loadInterface()</code> in plaats hiervan.
     </para>
 
     <para>
@@ -134,7 +134,7 @@ isReadable($filename)
     <title>Zend::dump()</title>
 
     <para>
-	<code>Zend::dump()</code> geeft informatie over een uitdrukking weer 
+	<code>Zend::dump()</code> geeft informatie over een expressie weer 
 	(of geeft deze terug). Het is een "wrapper" voor de PHP functie
 	<ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>. Ze
 	omvat de weergave in (X)HTML <code>&lt;pre&gt;</code> tags en
@@ -148,7 +148,7 @@ dump($var, $label=null, $echo=true)
 ?>]]></programlisting>
 
     <para>
-	Het <code>$var</code> argument specificeert de uitdrukking of variabele
+	Het <code>$var</code> argument specificeert de expressie of variabele
 	waarvan de informatie zal worden opgevraagd.
     </para>
 
@@ -184,7 +184,7 @@ register($name, $object)
     <para>
 	Het register is een mechanisme voor het verstrekken van "singleton" instanties 
 	van objecten aan de toepassingsruimte. Het object wordt slechts éénmaal
-	opgeslagen en kan opgevraagd worden wanneer nodig. Het is steeds dezelfde
+	opgeslagen en kan opgevraagd worden indien nodig. Het is steeds dezelfde
 	instantie van het object dat wordt terugegeven.
     </para>
 
