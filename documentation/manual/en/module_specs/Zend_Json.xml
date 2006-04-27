@@ -7,11 +7,10 @@
         site</ulink>.
     </para>
     <para>
-        JSON, JavaScript Object Notation,  can be used as a lightweight data
-        interchange between javascript and other languages. Since JSON can be
-        directly evaluated in Javascript, it is an ideal format for using with
-        Web 2.0 interfaces; it is a simpler alternative than using XML for AJAX
-        interfaces.
+        JSON, JavaScript Object Notation, can be used for data
+        interchange between JavaScript and other languages. Since JSON can be
+        directly evaluated by JavaScript, it is a more efficient and lightweight
+        format than XML for exchanging data with JavaScript clients.
     </para>
 </sect1>
 
