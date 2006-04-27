@@ -22,7 +22,7 @@
         <title>Zend_Service_Amazon_Item</title>
         <para>
             <code>Zend_Service_Amazon_Item</code> is de typeklasse die gebruikt wordt om een Amazon item voor te stellen dat
-			werd teruggestuurd door de web service. Het omvat elk van de item eigenschappen, inclusief de titel, beschrijving, recensies enz...
+			werd teruggestuurd door de web service. Het omvat alle item eigenschappen, inclusief de titel, beschrijving, recensies enz...
         </para>
         <sect4 id="zend.service.amazon.classes.item.asxml">
             <title>Zend_Service_Amazon_Item::asXML()</title>
@@ -95,7 +95,7 @@
                                         linkend="zend.service.amazon.classes.offerset">Zend_Service_Amazon_OfferSet</link>
                                 </code>
                             </entry>
-                            <entry>Samenvatting van, en aanbiedingen voor het item</entry>
+                            <entry>Samenvatting van en aanbiedingen voor het item</entry>
                         </row>
                         <row>
                             <entry>CustomerReviews</entry>
@@ -125,7 +125,7 @@
                             <entry>SimilarProducts</entry>
                             <entry>array</entry>
                             <entry>
-								Gelijkaardige producten voorgesteld als een array van
+								Gelijksoortige producten voorgesteld als een array van
                                 <code>
                                     <link
                                         linkend="zend.service.amazon.classes.similarproduct">Zend_Service_Amazon_SimilarProduct</link>
@@ -177,7 +177,7 @@
     </sect3>
     <sect3 id="zend.service.amazon.classes.image">
         <title>Zend_Service_Amazon_Image</title>
-        <para><code>Zend_Service_Amazon_Image</code> vetegenwoordigt een (remote) beeld voor een produkt.</para>
+        <para><code>Zend_Service_Amazon_Image</code> vetegenwoordigt een (remote) beeld voor een product.</para>
         <sect4 id="zend.service.amazon.classes.image.properties">
             <title>Eigenschappen</title>
             <table>
@@ -219,11 +219,11 @@
         <para>
             <code>Zend_Service_Amazon_ResultSet</code> objecten worden teruggestuurd door
             <link linkend="zend.service.amazon.itemsearch">Zend_Service_Amazon::itemSearch()</link>
-            en laten je toe gemakkelijk meervoudige resultaten de behandelen.
+            en laten je toe gemakkelijk meervoudige resultaten verwerken.
         </para>
         <note>
             <para>
-				Implementeert de <code>SeekableIterator</code> voor gemakkelijke iteratie (bijvoorbeeld door <code>foreach</code>) te
+				Implementeert de <code>SeekableIterator</code> voor gemakkelijke iteratie (bijvoorbeeld door <code>foreach</code> te
 				gebruiken) evenals onmiddellijke toegang tot een specifiek resultaat door <code>seek()</code> te gebruiken.
             </para>
         </note>
@@ -291,22 +291,22 @@
                         <row>
                             <entry>TotalNew</entry>
                             <entry>int</entry>
-                            <entry>Totaal aantal &quot;nieuw&quot; conditie eenheden beschikbaar voor het item</entry>
+                            <entry>Totaal aantal beschikbare items in &quot;nieuw&quot; conditie</entry>
                         </row>
                         <row>
                             <entry>TotalUsed</entry>
                             <entry>int</entry>
-                            <entry>Totaal aantal &quot;gebruikt&quot; konditie eenheden beschikbaar voor het item</entry>
+                            <entry>Totaal aantal beschikbare items in &quot;gebruikt&quot; conditie</entry>
                         </row>
                         <row>
                             <entry>TotalCollectible</entry>
                             <entry>int</entry>
-                            <entry>Totaal aantal &quot;inbaar&quot; conditie eenheden beschikbaar voor het item</entry>
+                            <entry>Totaal aantal beschikbare items in &quot;verzamelaars&quot; conditie</entry>
                         </row>
                         <row>
                             <entry>TotalRefurbished</entry>
                             <entry>int</entry>
-                            <entry>Totaal aantal &quot;gerenoveerd&quot; conditie eenheden beschikbaar voor het item</entry>
+                            <entry>Totaal aantal beschikbare items in &quot;gerenoveerd&quot; conditie</entry>
                         </row>
                         <row>
                             <entry>Offers</entry>
@@ -350,7 +350,7 @@
                         <row>
                             <entry>GlancePage</entry>
                             <entry>string</entry>
-                            <entry>URL voor een pagina met een samenvatting van de Handelaar</entry>
+                            <entry>URL voor een pagina met een samenvatting van de handelaar</entry>
                         </row>
                         <row>
                             <entry>Condition</entry>
@@ -360,7 +360,7 @@
                         <row>
                             <entry>OfferListingId</entry>
                             <entry>string</entry>
-                            <entry>ID van de Aanbiedingslijst</entry>
+                            <entry>ID van de aanbiedingslijst</entry>
                         </row>
                         <row>
                             <entry>Price</entry>
@@ -393,7 +393,7 @@
     <sect3 id="zend.service.amazon.classes.similarproduct">
         <title>Zend_Service_Amazon_SimilarProduct</title>
         <para>
-			Wanneer je naar items zoekt geeft Amazon ook een lijst van gelijkaardige producten terug die de
+			Wanneer je naar items zoekt geeft Amazon ook een lijst van gelijksoortige producten terug die de
 			zoekende persoon zouden kunnen interesseren. Elk van deze items is een 
 			<code>Zend_Service_Amazon_SimilarProduct</code> object.
         </para>
@@ -417,7 +417,7 @@
                         <row>
                             <entry>ASIN</entry>
                             <entry>string</entry>
-                            <entry>Amazon Uniek ID voor het produkt (ASIN)</entry>
+                            <entry>Amazon Uniek ID voor het product (ASIN)</entry>
                         </row>
                         <row>
                             <entry>Title</entry>
@@ -435,7 +435,7 @@
     <sect3 id="zend.service.amazon.classes.accessories">
         <title>Zend_Service_Amazon_Accessories</title>
         <para>
-			Accessoires voor het teruggegeven item worden vertegenoordigd door 
+			Accessoires voor het teruggegeven item worden vertegenwoordigd door 
 			<code>Zend_Service_Amazon_Accessories</code> objecten
         </para>
         <sect4 id="zend.service.amazon.classes.accessories.properties">
@@ -472,7 +472,7 @@
     <sect3 id="zend.service.amazon.classes.customerreview">
         <title>Zend_Service_Amazon_CustomerReview</title>
         <para>
-			Elke klantrecensie is teruggegeven als een <code>Zend_Service_Amazon_CustomerReview</code> object.
+			Elke klantrecensie wordt teruggegeven als een <code>Zend_Service_Amazon_CustomerReview</code> object.
         </para>
         <sect4 id="zend.service.amazon.classes.customerreview.properties">
             <title>Eigenschappen</title>

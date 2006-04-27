@@ -3,7 +3,7 @@
     <sect3 id="zend.service.amazon.query.introduction">
         <title>Inleiding</title>
         <para>
-            <code>Zend_Service_Amazon_Query</code> biedt een alternatieve API om de Amazon Web Service te gebruiken.
+            <code>Zend_Service_Amazon_Query</code> bied een alternatieve API om de Amazon Web Service te gebruiken.
 			De alternatieve API gebruikt het Fluent Interface ontwerppatroon. Dus, alle oproepen kunnen gemaakt worden
 			door aaneengeregen methode-oproepen te maken.
 			(bv: <code>$obj->method()->method2($arg)</code>)

@@ -9,10 +9,10 @@
         </para>
         <para>
             <code>Zend_Service_Amazon</code> staat ontwikkelaars toe om informatie die door Amazon.com web sites worden verstrekt
-			direct te verkrijgen via de Amazon Web Services API. Voorbeelden:
+			direct op te vragen via de Amazon Web Services API. Voorbeelden:
             <itemizedlist>
                 <listitem>
-					Item informatie opslaan, zoals beelden, beschrijvingen, prijzen, en meer
+					Item informatie opvragen, zoals beelden, beschrijvingen, prijzen, en meer
                 </listitem>
                 <listitem>
 					Klant- en uitgeversrecensies
@@ -29,7 +29,7 @@
             </itemizedlist>
         </para>
         <para>
-			Om <code>Zend_Service_Amazon</code> te gebruiken dien je reeds een Amazon developer API key moeten hebben. Om die
+			Om <code>Zend_Service_Amazon</code> te gebruiken dien je een Amazon developer API key moeten hebben. Om die
 			te verkrijgen, en voor meer informatie, kan je terecht op de
             <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> website.
         </para>
@@ -71,8 +71,8 @@ foreach ($results as $result) {
     <sect2 id="zend.service.amazon.countrycodes">
         <title>Landcodes</title>
         <para>
-			Standaard verbindt <code>Zend_Service_Amazon</code> met de Amazon web service in de Verenigde Staten ("<code>US</code>"). 
-			Om verbinding te maken met een ander land geef je eenvoudigweg de gepaste landcode op als de tweede parameter van de
+			Standaard maakt <code>Zend_Service_Amazon</code> een verbinding met de Amazon web service in de Verenigde Staten ("<code>US</code>"). 
+			Om verbinding te maken met een ander land geef je eenvoudigweg de landcode van dit land op als de tweede parameter van de
 			constructor:
         </para>
         <example>
@@ -104,7 +104,7 @@ $item = $amazon->itemLookup('B0000A432X');
         </example>
         <para>
 			De <code>itemLookup()</code> methode aanvaardt ook een optionele tweede parameter om zoekopties af te handelen.
-			Voor alle details, met inbegrip van een lijst van voorhandige opties, zie de
+			Voor alle details, inclusief een lijst van beschikbare opties, zie de
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevante Amazon documentatie</ulink>.
         </para>
@@ -128,7 +128,7 @@ foreach($response as $r) {
         </example>
         <para>
             De <code>itemSearch()</code> methode aanvaardt een enkele array array parameter om zoekopties af te handelen.
-			Voor alle details, met inbegrip van een lijst van voorhandige opties, zie de
+			Voor alle details, inclusief een lijst van beschikbare opties, zie de
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevante Amazon documentatie</ulink>
         </para>
