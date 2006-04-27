@@ -9,7 +9,7 @@
 		</para>
 
 		<para>
-			Het <code>Zend_Controller</code> systeem is ontworpen om lichtgewicht, moduleerbaar
+			Het <code>Zend_Controller</code> systeem is ontworpen om licht, moduleerbaar
 			en uitbreidbaar te zijn. Het is een minimalistisch ontwerp om flexibiliteit en
 			vrijheid aan de gebruikers te geven en tevens genoeg structuur te verstrekken
 			zodanig dat alle systemen die rond <code>Zend_Controller</code> worden gebouwd dezelfde
@@ -37,8 +37,8 @@
 				<listitem>
 					<para>
 						<code>Zend_Controller_Router</code> is de router. Routing is het verwerken en
-						opbreken van een URI eindbestemming om te determineren welke controller en
-						welke actie van die controller het verzoek zou moeten behandelen. Deze definitie van
+						opbreken van een URI eindbestemming om vast te stellen welke controller en
+						welke actie van die controller het verzoek moet behandelen. Deze definitie van
 						controller, actie en optionele parameters is verpakt in een waardeobject genaamd
 						<code>Zend_Controller_Dispatcher_Token</code>.
 						Dit wordt dan verwerkt door de <code>Zend_Controller_Dispatcher</code>. Routing 
@@ -63,7 +63,7 @@
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Action</code> is de basiscomponent van de controller. Elke 
+						<code>Zend_Controller_Action</code> is het basiscomponent van de controller. Elke 
 						controller is een enkele klasse welke de <code>Zend_Controller_Action class</code>
 						uitbreidt, en deze klasse heeft actiemethodes.
 					</para>
@@ -72,7 +72,7 @@
 
 			Het werkschema van <code>Zend_Controller</code> is relatief eenvoudig. Een verzoek wordt ontvangen door
 			<code>Zend_Controller_Front</code>, die op zijn beurt <code>Zend_Controller_Router</code> aanroept om
-			te determineren welke controller (en actie in die controller) gedispatched wordt. <code>Zend_Controller_Router</code>
+			vast te stellen welke controller (en actie in die controller) gedispatched wordt. <code>Zend_Controller_Router</code>
 			breekt de URI op in een <code>Zend_Controller_Dispatcher_Token</code> object dat beschrijft waar te dispatchen.
 			<code>Zend_Controller_Front</code> gaat dan in een dispatch lus. Het roept de <code>Zend_Controller_Dispatcher</code>
 			op aan wie hij het token doorgeeft, om aan de uiteindelijke controller en actie te dispatchen. Nadat de
@@ -107,7 +107,7 @@
 http://framework.zend.com/controller/action/]]>
 			</programlisting>
 			
-			Merk hierboven op dat het eerste segment altijd de naam van de controller en het tweede
+			Merk hierboven op dat het eerste segment altijd de naam van de controller is en het tweede
 			segment altijd de naam van de actie is.
 		</para>
 
@@ -143,7 +143,7 @@ Action    : index]]>
 			<note>
 				Momenteel ontwikkelen we een nieuwe router met een URI herschrijvingsmotor die veel meer
 				flexibiliteit aan de router zal geven dan nu het geval is. De nieuwe router zal aanwezig zijn
-				in een preview versie in de zeer nabije toekomst.
+				in een preview versie in de nabije toekomst.
 			</note>
 
 			<para>
