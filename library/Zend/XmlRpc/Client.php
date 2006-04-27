@@ -66,6 +66,13 @@ class Zend_XmlRpc_Client
     protected $_serverAddress;
 
     /**
+     * The HTTP client object to use for connecting the XML-RPC server.
+     *
+     * @var Zend_Http_client_Abstract
+     */
+    protected $_httpClient = null;
+
+    /**
      * The response from an XML-RPC method call, held in a Zend_XmlRpc_Value object
      *
      * @var Zend_XmlRpc_Value|null
@@ -127,7 +134,7 @@ class Zend_XmlRpc_Client
     }
 
 
-    /**
+     /**
      * Using the magic __call function to call methods directly by method name
      *
      * @param string $methodName  The method we call from the service
@@ -292,6 +299,33 @@ class Zend_XmlRpc_Client
 
 
     /**
+     * Sets the HTTP client object to use for connecting the XML-RPC server.
+     * If none is set, the a default Zend_Http_Client will be used.
+     *
+     * @param Zend_Http_Client_Abstract $httpClient
+     */
+    public function __setHttpClient(Zend_Http_Client_Abstract $httpClient)
+    {
+        $this->_httpClient = $httpClient;
+    }
+
+
+    /**
+	 * Gets the HTTP client object.
+	 *
+	 * @return Zend_Http_Client_Abstract
+	 */
+	protected function __getHttpClient()
+	{
+		if (!$this->_httpClient instanceof Zend_Http_Client_Abstract) {
+			$this->_httpClient = new Zend_Http_Client();
+		}
+
+		return $this->_httpClient;
+	}
+
+
+    /**
      * Send a XML-RPC request to the service (for a specific method)
      *
      * @param string $method Name of the method we want to call
@@ -302,8 +336,13 @@ class Zend_XmlRpc_Client
     {
         $request_data = $this->_buildRequest($method, $params);
 
-        // @todo pluggable client?
-        $http = new Zend_Http_Client($this->_serverAddress, array('Content-Type: text/xml'));
+        $http = $this->__getHttpClient();
+
+        // Set the server address
+        $http->setUri($this->_serverAddress);
+        // Set the content-type header as text/xml
+        // What if the given HTTP client already has headres ? it shouldn't override them
+        $http->setHeaders(array('Content-Type: text/xml'));
 
         $response = $http->post($request_data);
         /* @var $response Zend_Http_Response */
