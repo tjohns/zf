@@ -1,7 +1,7 @@
 <sect1 id="zend.inputfilter.introduction">
     <title>Inleiding</title>
     <para><literal>Zend_InputFilter</literal> verstrekt faciliteiten die een 
-	gestructureerd en weinig soepele benadering van invoerfilteren. Het doel
+	gestructureerd en weinig soepele benadering van invoerfilteren mogelijk maken. Het doel
 	is veelvoudig want het beantwoord aan de benodigdheden van drie verschillende
 	groepen van mensen:</para>
     <itemizedlist>
@@ -37,7 +37,7 @@
 	voorbeelden van de invoerfilter potpourri. 
 	<literal>Zend_InputFilter</literal> 
 	combineert al deze mogelijkheden in een enkele API met verenigd gedrag en strikte
-	benoemingsovereenkomsten. Alle methodes luisteren naar een eenvoudige regel - als
+	benamingsovereenkomsten. Alle methodes luisteren naar een eenvoudige regel - als
 	de data geldig is, wordt ze teruggestuurd, zo niet wordt <literal>FALSE</literal>
 	teruggestuurd. Extreme simpliciteit.</para>
     <sect2 id="zend.inputfilter.introduction.whitelist">
@@ -45,7 +45,7 @@
         <para>Witte lijst filtermethodes beginnen met de <literal>is</literal>
         prefix, zoals <literal>isAlpha()</literal> en <literal>isEmail()</literal>. 
 		Deze methodes inspecteren invoer aan de hand van vooraf gedefinieerde criteria
-		en geven de data alleen terug indien ze aan de criteria voldoet. Zoniet wordt
+		en geven de data alleen terug indien ze aan de criteria voldoet. Is dit niet het geval, dan wordt
 		<literal>FALSE</literal> teruggestuurd. Hier volgt een voorbeeld:</para>
         <programlisting>
 <![CDATA[<?php
@@ -127,9 +127,9 @@ $taglessComment = $filterPost->noTags('comment');
 </sect1>
 <sect1 id="zend.inputfilter.theoryofoperation">
     <title>Werkingstheorie</title>
-    <para><literal>Zend_InputFilter</literal> consolideerd een paar verschillende
+    <para><literal>Zend_InputFilter</literal> consolideert een paar verschillende
 	benaderingen voor invoer filteren in een enkele API met een verenigd gedrag
-	en strikte benoemingsovereenkomsten (zie 
+	en strikte benamingsovereenkomsten (zie 
 	<xref linkend="zend.inputfilter.introduction" />). Deze eigenschappen brengen
 	<literal>Zend_InputFilter</literal> op gelijke voet met bestaande oplossingen,
 	maar ze doen niets om diegenen die een meer gestructureerde en strikte aanbreng
@@ -160,9 +160,9 @@ $email = $filterPost->isEmail('email');
 
 ?>]]>
     </programlisting>
-    <para>Het gebruik van de filter is net dezelfde, maar <literal>Zend_InputFilter</literal> 
-	zet de oorspronkelijke array (<literal>$_POST</literal>) niet tot <literal>NULL</literal>,
-	zodat ontwikkelaars er nog onmiddellijk toegang toe hebben. Deze manier van werken is
+    <para>Het gebruik van het filter is identiek, maar <literal>Zend_InputFilter</literal> 
+	zet de oorspronkelijke array (<literal>$_POST</literal>) niet naar <literal>NULL</literal>,
+	zodat ontwikkelaars er nog directe toegang toe hebben. Deze manier van werken is
 	afgeraden ten voordele van de strikte benadering.</para>
     <para><literal>Zend_InputFilter</literal> is ontworpen voor arrays. Veel invoerbronnen
 	zijn reeds in PHP's superglobal arrays (<literal>$_GET</literal>, <literal>$_POST</literal>,

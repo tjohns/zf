@@ -4,7 +4,7 @@
 	data te filteren. Om invoer te filteren moet je <xref
     linkend="zend.inputfilter" /> gebruiken in de plaats van Zend_Filter, want het verstrekt
 	een framework om invoer te filteren door het gebruik van de methodes die deze klasse aanbiedt.
-	Vermits <literal>Zend_InputFilter</literal> voornamelijk voor arrays is ontworpen kan
+	Omdat <literal>Zend_InputFilter</literal> voornamelijk voor arrays is ontworpen kan
     <literal>Zend_Filter</literal> hulpzaam zijn om scalaire waarden te filteren omdat het zich
 	gedraagt zoals PHP string functies:</para>
     <programlisting>
