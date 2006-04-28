@@ -7,8 +7,7 @@
     <para>
         La notation JSON (JavaScript Object Notation [Ndt : Notation-Objet JavaScript]) peut être utilisée comme un système 
         d'échange de données entre JavaScript et d'autres langages. Comme la notation JSON peut être évaluée directement par 
-        JavaScript, JSON constitue un format idéal pour les interfaces du Web 2.0; c'est une alternative plus simple que XML 
-        pour les interfaces AJAX.
+        JavaScript, c'est une alternative plus simple que XML pour les interfaces AJAX.
     </para>
 </sect1>
 
