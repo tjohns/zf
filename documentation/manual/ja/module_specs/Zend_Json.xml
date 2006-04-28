@@ -9,10 +9,10 @@
     </para>
     <para>
         JSON (JavaScript Object Notation : JavaScript によるオブジェクト記法)
-        は、javascript とその他の言語との間のデータ交換を行う軽量な手法です。
-        JSON は直接 Javascript としてされるので、Web 2.0
-        のインターフェイスとして使用するのに最適です。AJAX
-        インターフェイスにおける XML の代わりとして、よりシンプルに使用することができます。
+        は、JavaScript とその他の言語との間のデータ交換を行うために用いられます。
+        JSON は JavaScript によって直接評価されます。そのため、JavaScript
+        クライアントとのデータ交換に使用する書式としては、
+        XML より効率的で軽量なものとなります。
     </para>
 </sect1>
 
