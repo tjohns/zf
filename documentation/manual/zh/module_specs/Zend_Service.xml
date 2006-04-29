@@ -1,5 +1,5 @@
 <sect1 id="zend.service.introduction">
-    <title>Introduction</title>
+    <title>简介</title>
     <para>
         <code>Zend_Service</code> is an abstract class which serves as a foundation for web service
         implementations (e.g. XML-RPC).
