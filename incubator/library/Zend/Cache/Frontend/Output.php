@@ -50,7 +50,6 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
      * Start the cache
      *
      * @param string $id cache id
-     * @param array $tags TODO : explain tags
      * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
      * @return boolean true if the cache is hit (false else)
      */
