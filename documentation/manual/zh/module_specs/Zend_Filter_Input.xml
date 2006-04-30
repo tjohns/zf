@@ -1,0 +1,183 @@
+<sect1 id="zend.filter.input">
+    <title>Zend_Filter_Input</title>
+
+    <sect2 id="zend.filter.input.introduction">
+        <title>简介</title>
+        <para><literal>Zend_Filter_Input</literal>，为改善代码的结构和过滤输入数据，提供了一种简单的机能。其目的是多方面的，主要是为了满足三类不同人群的需求：</para>
+        <itemizedlist>
+            <listitem>
+                <para>开发人员</para>
+                <para>纵使，过滤输入数据不像什么都不做那么简单，但是开发人员必须确保数据的完整性，同时又不添加复杂的代码。<literal>Zend_Filter_Input</literal>为一些常见的用例提供了简单的函数方法，对于那些并不常见的用例<literal>Zend_Filter_Input</literal>也具有易扩展性，同时规范的命名规则使代码更加的清晰。</para>
+            </listitem>
+            <listitem>
+                <para>管理人员</para>
+                <para>那些需要维持对一个庞大的开发小组的控制的管理者，能够通过限制或者禁止直接访问原始数据，来强制执行一种规则方法，对输入数据进行过滤。</para>
+            </listitem>
+            <listitem>
+                <para>审核人员</para>
+                <para>审核人员，需要快速正确地确定开发人员何时何地使用了原始数据。<literal>Zend_Filter_Input</literal>使代码变得更加的清晰的同时，帮助了审核人员明确区分了不同的输入数据过滤方法。</para>
+            </listitem>
+        </itemizedlist>
+        <para>有多种方法和机能，供PHP开发人员用来输入数据的过滤。白名单过滤，黑名单过滤，正则表达式，条件语句，PHP函数，这些只仅仅是输入数据过滤的一部分例子。<literal>Zend_Filter_Input</literal>联合了所有这些机能，提供了一个统一的、命名规范的API。所有<literal>Zend_Filter_Input</literal>函数方法都遵守这么一个简单的规则：如果是有效的数据就被返回数据本身，否则就返回<literal>FALSE</literal>。就是如此的简单！</para>
+        <sect2 id="zend.filter.input.introduction.whitelist">
+            <title>白名单过滤(Whitelist Filtering)</title>
+            <para>白名单过滤方法的函数名以<literal>test</literal>开头，例如<literal>testAlpha()</literal>、<literal>testEmail()</literal>。这些方法按照预先定义的准则检查输入数据，如果符合准则就返回数据本身，否则返回<literal>FALSE</literal>。下面是一个简单的例子。</para>
+            <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    
+    if ($alphaName = $filterPost->testAlpha('name')) {
+        /* $alphaName contains only alphabetic characters. */
+    } else {
+        /* $alphaName evaluates to FALSE. */
+    }
+    
+    ?>]]>
+            </programlisting>
+            <para>这个方法在给返回值赋布尔值的时候要谨慎。如果你想在PHP中区分值被赋值为<literal>FALSE</literal>的情况（整数0、空字符串），你可以使用严格比较("==="或者"!==")：</para>
+            <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $alphaName = $filterPost->testAlpha('name');
+    
+    if ($alphaName !== FALSE) {
+        /* $alphaName contains only alphabetic characters. */
+    } else {
+        /* $alphaName === FALSE */
+    }
+    
+    ?>]]>
+            </programlisting>
+        </sect2>
+        <sect2 id="zend.filter.input.introduction.blind">
+            <title>不明数据过滤(Blind Filtering)</title>
+            <para>不明数据过滤方法的函数名以get开发，例如<literal>getAlpha()</literal>、<literal>getDigits()</literal>。这些方法不检查输入数据，直接返回有效的那一部分数据。举个例子，<literal>getAlpha()</literal>只返回那些英文字母（如果不存在英文字母，则返回空字符串）。下面是一个简单的例子：</para>
+            <programlisting>
+    <![CDATA[<?php
+    
+    /* $_POST['username'] = 'John123Doe'; */
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $alphaUsername = $filterPost->getAlpha('username');
+    
+    /* $alphaUsername = 'JohnDoe'; */
+    
+    ?>]]>
+            </programlisting>
+        </sect2>
+        <sect2 id="zend.filter.input.introduction.blacklist">
+            <title>黑名单过滤(Blacklist Filtering)</title>
+            <para>黑名单过滤方法的函数名以no开头，例如<literal>noTags()</literal>、<literal>noPath()</literal>。除了执行的准不同外，这些方法和那些不明数据过滤方法一样。无效的数据被移除，剩余的数据被返回。下面是一个简单的例子：</para>
+            <programlisting>
+    <![CDATA[<?php
+    
+    /* $_POST['comment'] = '<b>I love PHP!</b>'; */
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $taglessComment = $filterPost->noTags('comment');
+    
+    /* $taglessComment = 'I love PHP!'; */
+    
+    ?>]]>
+            </programlisting>
+        </sect2>
+    </sect2>
+    <sect2 id="zend.filter.input.theoryofoperation">
+        <title>运转原理</title>
+        <para><literal>Zend_Filter_Input</literal>为输入数据的过滤，提供了一个统一的、命名规范的API（请见<xref linkend="zend.filter.input.introduction" />）。这些特性，使得<literal>Zend_Filter_Input</literal>与现有的解决方案平起平坐，但是<literal>Zend_Filter_Input</literal> 不做更进一步的过滤。因此，<literal>Zend_Filter_Input</literal>默认地约束了输入数据的使用。</para>
+        <para><literal>Zend_Filter_Input</literal>有两种用法，默认（严格的）的用法是，只传递一个数组参数给<literal>Zend_Filter_Input</literal>构造器：</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $email = $filterPost->isEmail('email');
+    
+    ?>]]>
+        </programlisting>
+        <para>这里，<literal>Zend_Filter_Input</literal>设置$_POST为NULL，这样就不可能直接访问原始数据了。（要访问原始数据的只能通过getRaw()方法）</para>
+        <para>作为可选的，FALSE被当作第二个参数传给<literal>Zend_Filter_Input</literal>的构造器：</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    $email = $filterPost->isEmail('email');
+    
+    ?>]]>
+        </programlisting>
+        <para>这里，<literal>Zend_Filter_Input</literal>不改变原始数组<literal>$_POST</literal>的值，所以开发人员还可以直接访问<literal>$_POST</literal>。不过，这样做是比较不明智的。</para>
+        <para><literal>Zend_Filter_Input</literal>是用来过滤数组的。我们在存储源数据的时候，通常用的是数组，而且许多源数据也都是藏在PHP超级数组下的（<literal>$_GET</literal>，<literal>$_POST</literal>，<literal>$COOKIE</literal>，等等）。如果你要过滤一个标量，请见<xref linkend="zend.filter" />。</para>
+    </sect2>
+    <sect2 id="zend.filter.input.usecases">
+        <title>用例</title>
+        <para>严格的白名单过滤 （首选的）：</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    
+    if ($email = $filterPost->isEmail('email')) {
+        /* $email is a valid email format. */
+    } else {
+        /* $email is not a valid email format. */
+    }
+    
+    ?>]]>
+        </programlisting>
+        <para>严格的不明数据过滤：</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $alphaName = $filterPost->getAlpha('name');
+    
+    ?>]]>
+        </programlisting>
+        <para>严格的黑名单过滤：</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $taglessComment = $filterPost->noTags('comment');
+    
+    ?>]]>
+        </programlisting>
+        <para>宽松的白名单过滤：</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    
+    if ($email = $filterPost->isEmail('email')) {
+        /* $email is a valid email format. */
+    } else {
+        /* $email is not a valid email format. */
+    }
+    
+    ?>]]>
+        </programlisting>
+        <para>宽松的不明数据过滤：</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    $name = $filterPost->getAlpha('name');
+    
+    ?>]]>
+        </programlisting>
+        <para>宽松的黑名单过滤：</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    $comment = $filterPost->noTags('comment');
+    
+    ?>]]>
+        </programlisting>
+    </sect2>
+</sect1>    
+    
+<!--
+vim:se ts=4 sw=4 et:
+-->
