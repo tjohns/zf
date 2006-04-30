@@ -235,7 +235,6 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
     {
         clearstatcache();
         $file = $this->_file($id);
-        // TODO : logs !
         $firstTry = true;
         $result = false;
         while (1 == 1) {

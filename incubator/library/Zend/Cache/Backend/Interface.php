@@ -28,9 +28,7 @@
  */
 interface Zend_Cache_Backend_Interface
 {
-    
-    // TODO : constructor ???
-    
+   
     /**
      * Set the frontend directives
      * 
