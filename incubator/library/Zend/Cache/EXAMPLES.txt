@@ -294,3 +294,32 @@ $res3 = $cache->foobar(2, 5)
 echo($res3);
 
 ?>
+
+
+// ==========================================================
+// === Classical use of the "File" frontend of Zend_Cache ===
+// ==========================================================
+
+<?php
+
+// The file frontend is used to get a cache driven by a master file
+// for example, you have a config file declared as master file
+// => all your cache records will be invalidated if the config file is touched
+// (very usefull to avoid the parsing of a XML file at each time for example)
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+	'lifeTime' => null // no lifetime,
+    'masterFile' => '/path/to/your/master.file' // your master file here
+);
+
+$backendOptions = array(
+    'cacheDir' => '/tmp/' // Directory where to put the cache files (make sure to add a trailing slash)
+);
+
+$cache = Zend_Cache::factory('File', 'File', $frontendOptions, $backendOptions);
+
+// [...] identical to the "Core" use
+
+?>
