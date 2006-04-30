@@ -61,6 +61,7 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);
         }
+        clearstatcache();
         if (!($this->_masterFile_mtime = @filemtime($options['masterFile']))) {
             Zend_Cache::throwException('Unable to read masterFile : '.$this->_specificOptions['masterFile']);
         }
@@ -77,7 +78,7 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
         if (is_string($name)) {
             if (array_key_exists($name, $this->_options)) {
             	// This is a Core option
-                parent::setOptions($name, $value);
+                parent::setOption($name, $value);
                 return;
             }
             if (array_key_exists($name, $this->_specificOptions)) { 
@@ -89,22 +90,24 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
         Zend_Cache::throwException("Incorrect option name : $name");
     }
     
-    public function get($id, $doNotTestCacheValidity = false)
+    public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
     {
         if (!$doNotTestCacheValidity) {
             if ($this->test($id)) {
-                return parent::get($id, true);
+                return parent::get($id, true, $doNotUnserialize);
             }
             return false;
         }
-        return parent::get($id, true);
+        return parent::get($id, true, $doNotUnserialize);
     }
         
     public function test($id) 
     {
         $lastModified = parent::test($id);
         if ($lastModified) {
-            return ($lastModified > $this->_masterFile_mtime);
+            if ($lastModified > $this->_masterFile_mtime) {
+                return $lastModified;
+            }
         }
         return false;
     }
