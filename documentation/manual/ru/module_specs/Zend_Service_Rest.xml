@@ -1,0 +1,54 @@
+<sect1 id="zend.service.rest">
+    <title>Zend_Service_Rest</title>
+    <sect2 id="zend.service.rest.introduction">
+        <title>Introduction</title>
+        <para>
+            <code>Zend_Service_Rest</code> is a basic REST client for performing queries against any REST based web
+            service.
+        </para>
+        <example>
+            <title>A basic REST Request</title>
+            <para>
+                In the following code, the <code>setUri()</code> method sets the <emphasis>base</emphasis> URI for the
+                REST web service. Then, the <code>restGet()</code> method is called to perform a GET request on a given
+                path with an optional query string.
+            </para>
+            <programlisting><![CDATA[<?php
+require_once 'Zend/Service/Rest.php;
+
+try {
+    $rest = new Zend_Service_Rest();
+
+    $rest->setURI('http://example.org');
+
+    // Returns a Zend_HttpClient_Response Object
+    $response = $rest->restGet('/services/rest', 'foo=bar&baz=bat');
+
+    if ($response->isSuccessful()) {
+        echo $response->getBody();
+    } else {
+        echo '<p>An error occurred</p>';
+    }
+} catch (Zend_Exception $e) {
+        echo '<p>An error occurred (' .$e->getMessage(). ')<p>';
+}
+?>]]>       </programlisting>
+            <note>
+                You can pass a properly formatted query string (without the leading question mark "<code>?</code>") to
+                <code>restGet()</code>, or you can pass an associative array of name-value pairs. Regardless of which
+                method you choose, the names and values must be URL-encoded (e.g., with
+                <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>).
+            </note>
+            <para>
+                Using <code>restPost()</code> and <code>restPut()</code> is the same as using <code>restGet()</code>, but the data are sent via HTTP POST or PUT, respectively, instead of GET.
+            </para>
+            <para>
+                The <code>restDelete()</code> method operates on a path, but does not have a second parameter into
+                which data may be passed.
+            </para>
+        </example>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

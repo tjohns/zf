@@ -1,0 +1,60 @@
+<sect1 id="zend.filter.filter">
+    <title>Zend_Filter</title>
+    
+    <sect2 id="zend.filter.filter.introduction">
+        <title>Introduction</title>
+        <para><literal>Zend_Filter</literal> provides a library of static methods
+        for filtering data. For input filtering, you should use <xref
+        linkend="zend.filter.input" /> instead, because it provides a framework for
+        filtering input using the methods provided by this class. However, because
+        <literal>Zend_InputFilter</literal> is designed primarily for arrays,
+        <literal>Zend_Filter</literal> can be useful for filtering scalars, because
+        it behaves like PHP's string functions:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $alphaUsername = Zend_Filter::getAlpha('John123Doe');
+    
+    /* $alphaUsername = 'JohnDoe'; */
+    
+    ?>]]>
+        </programlisting>
+    </sect2>
+    <sect2 id="zend.filter.filter.usecases">
+        <title>Use Cases</title>
+        <para>In each of these use cases, <literal>$value</literal> represents an
+        arbitrary scalar value.</para>
+        <para>Whitelist Filtering:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    if ($email = Zend_Filter::isEmail($value)) {
+        /* $email is a valid email format. */
+    } else {
+        /* $email is not a valid email format. */
+    }
+    
+    ?>]]>
+        </programlisting>
+        <para>Blind Filtering:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $alphaName = Zend_Filter::getAlpha($value);
+    
+    ?>]]>
+        </programlisting>
+        <para>Blacklist Filtering:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $taglessComment = Zend_Filter::noTags($value);
+    
+    ?>]]>
+        </programlisting>
+    </sect2>
+</sect1>
+    
+<!--
+vim:se ts=4 sw=4 et:
+-->

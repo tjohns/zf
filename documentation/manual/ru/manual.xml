@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+    "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
+[
+    <!ENTITY % magic.fixup SYSTEM "./entities.ent">
+    %magic.fixup;
+]>
+<book id="manual" lang="en">
+    <bookinfo>
+        <title>Programmer's Reference Guide</title>
+        <subtitle>Zend Framework</subtitle>
+        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
+        <copyright>
+            <year>2005-<?dbtimestamp format="Y"?></year>
+            <holder>
+                Zend Technologies Inc.
+                (<ulink url="http://www.zend.com" />)
+            </holder>
+        </copyright>
+        <!--
+        A Title page graphic can be included like this
+            <mediaobject>
+              <imageobject>
+                <imagedata fileref="../web/images/foo.jpg"/>
+              </imageobject>
+            </mediaobject>
+        -->
+    </bookinfo>
+    <!-- &ref.preface; -->
+    <!-- &ref.install; -->
+    <!-- &ref.conf;    -->
+    <chapter id="zend">
+        <title>Zend</title>
+        &module_specs.Zend;
+    </chapter>
+	<chapter id="zend.controller">
+		<title>Zend_Controller</title>
+		&module_specs.Zend_Controller-Overview;
+		&module_specs.Zend_Controller-GettingStarted;
+		&module_specs.Zend_Controller-Subclassing;
+		&module_specs.Zend_Controller-Plugins;
+	</chapter>
+    <chapter id="zend.db">
+        <title>Zend_Db</title>
+        &module_specs.Zend_Db_Adapter;
+        &module_specs.Zend_Db_Select;
+        &module_specs.Zend_Db_Table;
+        &module_specs.Zend_Db_Table_Row;
+        &module_specs.Zend_Db_Table_Rowset;
+    </chapter>
+    <chapter id="zend.feed">
+        <title>Zend_Feed</title>
+        &module_specs.Zend_Feed;
+    </chapter>
+    <chapter id="zend.filter">
+        <title>Zend_Filter</title>
+        &module_specs.Zend_Filter;
+        &module_specs.Zend_Filter_Input;
+    </chapter>
+    <chapter id="zend.http">
+        <title>Zend_Http</title>
+        &module_specs.Zend_Http_Client;
+        &module_specs.Zend_Http_Response;
+    </chapter>
+    <chapter id="zend.json">
+        <title>Zend_Json</title>
+        &module_specs.Zend_Json;
+    </chapter>
+    <chapter id="zend.log">
+        <title>Zend_Log</title>
+        &module_specs.Zend_Log;
+    </chapter>
+    <chapter id="zend.mail">
+        <title>Zend_Mail</title>
+        &module_specs.Zend_Mail;
+    </chapter>
+    <chapter id="zend.mime">
+        <title>Zend_Mime</title>
+        &module_specs.Zend_Mime;
+    </chapter>
+    <chapter id="zend.pdf">
+        <title>Zend_Pdf</title>
+        &module_specs.Zend_Pdf;
+    </chapter>
+	<chapter id="zend.search">
+        <title>Zend_Search</title>
+        &module_specs.Zend_Search-Overview;
+        &module_specs.Zend_Search-IndexCreation;
+        &module_specs.Zend_Search-Searching;
+        &module_specs.Zend_Search-Queries;
+        &module_specs.Zend_Search-Charset;
+        &module_specs.Zend_Search-Extending;
+        &module_specs.Zend_Search-JavaLucene;
+	</chapter>
+    <chapter id="zend.service">
+        <title>Zend_Service</title>
+        &module_specs.Zend_Service;
+    </chapter>
+    <chapter id="zend.view">
+        <title>Zend_View</title>
+        &module_specs.Zend_View;
+    </chapter>
+    <chapter id="zend.xmlrpc">
+        <title>Zend_XmlRpc</title>
+        &module_specs.Zend_XmlRpc;
+    </chapter>
+    <!-- &ref.faq; -->
+    &ref.coding_standard;
+    &ref.copyrights;
+    <index id="the.index" />
+</book>
+<!--
+vim:se ts=4 sw=4 et:
+-->
