@@ -1,0 +1,21 @@
+Reviewed by Zend team on Wednesday, 19 Apr 2006.
+Decision: Accepted
+
+Since the time that this proposal was made with code by 
+Martel Valgoerad, Jared Williams has submitted an alternate
+solution.  Both use very similar routing rules but the 
+implementation details are different.
+
+We have conditionally accepted this proposal, with the
+understanding that Zend will work together with Martel
+and Jared to develop a solution with the best features
+from each.  Zend will first merge this code, taking the
+best features from each, and will the commit this to
+the incubator after giving it a real-life test.  We would 
+then like Jared and Martel to work with us to further 
+advance it.
+
+This router will completely replace the existing router
+solution.  Common issues that have been raised on the 
+mailing list, particularly better support for subdirectories
+(shared hosters), must be addressed by this new solution.
