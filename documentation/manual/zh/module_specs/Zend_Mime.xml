@@ -1,31 +1,29 @@
 <sect1 id="zend.mime.introduction">
-    <title>Introduction</title>
+    <title>介绍</title>
     <para>
-        <code>Zend_Mime</code> is a support class for handling multipart MIME messages. It is used by <link
-        linkend="zend.mail"><code>Zend_Mail</code></link>, and may be used by applications requiring
-        MIME support.
+        <code>Zend_Mime</code> 是一个用来处理含有多个部分的 MIME 消息的辅助类. 它未 <link
+        linkend="zend.mail"><code>Zend_Mail</code></link> 提供支持, 并且可以被其他需要 MIME 支持的应用程序使用.
     </para>
     <para>
-        <code>Zend_Mime</code> provides a simple set of methods to work with MIME:
+        <code>Zend_Mime</code> 提供了一套简单的方法以便使用 MIME:
         <itemizedlist>
             <listitem>
-                <code>boundary()</code>: Returns the MIME boundary string.
+                <code>boundary()</code>: 返回 MIME 分界字符串.
             </listitem>
             <listitem>
-                <code>boundaryLine()</code>: Returns the complete MIME boundary line.
+                <code>boundaryLine()</code>: 返回完整的 MIME 分界行.
             </listitem>
             <listitem>
-                <code>encodeBase64()</code>: Encodes a string into base64 encoding.
+                <code>encodeBase64()</code>: 将一个字符串进行 base64 编码.
             </listitem>
             <listitem>
-                <code>encodeQuotedPrintable()</code>: Encodes a string with the quoted-printable mechanism.
+                <code>encodeQuotedPrintable()</code>: 使用 quoted-printable 机制对字符串进行编码.
             </listitem>
             <listitem>
-                <code>isPrintable()</code>: Returns TRUE if the given string contains no unprintable characters,
-                FALSE otherwise.
+                <code>isPrintable()</code>: 如果给定的字符串不含有不可显示(译者：原文是 unprintable ) 的字符则返回 TRUE, 否则返回 FALSE. 
             </listitem>
             <listitem>
-                <code>mimeEnd()</code>: Returns the complete MIME end boundary line.
+                <code>mimeEnd()</code>: 返回完整的 MIME 结束标志行.
             </listitem>
         </itemizedlist>
     </para>
