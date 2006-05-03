@@ -1,0 +1,23 @@
+Reviewed by Zend team on Thursday, 20 Apr 2006.
+Decision: Rejected
+
+We think that the proposal is too simplistic.  It doesn't 
+provide any significant benefit from simply creating a 
+database table for a queue and using Zend_Db_Table as a
+FIFO to push and pop rows.   
+
+We feel it also doesn't deal with basic features needed in 
+a queue such as transactional state and priorities.  
+
+For the messenging to be really useful and more than just 
+a glorified cron job, a persistent (non-PHP) component 
+is very desirable, e.g. Spread (http://www.spread.org/)
+or ActiveMQ (http://www.activemq.org/).  This is outside 
+the scope of the Zend Framework.
+
+We do see usefulness in implementing the simpler messenging 
+protocols such as STOMP (http://stomp.codehaus.org/) to
+allow PHP to be a client to a message queue.  
+
+However, we do not think that it would be of interest to the 
+majority of our users, so these should not be part of our core. 

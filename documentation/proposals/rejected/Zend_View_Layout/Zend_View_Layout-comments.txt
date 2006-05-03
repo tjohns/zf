@@ -1,0 +1,14 @@
+Reviewed by Zend team on Wednesday, 19 Apr 2006.
+Decision: Rejected
+
+Subtemplates can already be rendered by calling 
+$this->render($scriptName) again inside the view
+script.  Helpers can also be written to do this.
+
+There are a variety of ways to build layouts 
+using this method and creating a special subclass of
+Zend_View specifically to do this isn't necessary.
+
+However, we are possibly going to make some changes to
+Zend_View in the future, and will consider building 
+in a mechanism specifically for layouts.

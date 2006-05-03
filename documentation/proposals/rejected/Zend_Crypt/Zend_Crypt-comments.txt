@@ -1,0 +1,22 @@
+Reviewed by Zend team on Wednesday, 19 Apr 2006.
+Decision: Rejected
+
+Initially, we thought that this would be good for inclusion
+in the Zend Framework.  After more discussion, we all
+agree that this wouldn't be used by the majority of our
+users, so it should not be part of our core.
+
+PEAR uses concrete classes for each encryption and note that 
+there is significant encryption support in PEAR already.  
+We don't need to duplicate good work going on there.  See: 
+http://pear.php.net/packages.php?catpid=6&catname=Encryption
+
+One differentiator between this proposal and the PEAR
+classes is that this one proposes a unified API.  However, 
+with so many kinds of encryptions, we question if this 
+really makes sense.  For example, we don't see how to 
+effective mold private/public key & block ciphers
+into the same API, even when using adaptation as proposed.
+
+We suggest contributing your ideas on encryption to PEAR 
+so their project can benefit from your efforts.

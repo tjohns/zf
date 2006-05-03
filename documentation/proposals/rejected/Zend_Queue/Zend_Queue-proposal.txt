@@ -1,0 +1,281 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+Zend_Queue
+
+
+Proposers
+-----------------------------------------------
+Calvin Liu <lycboy@gmail.com>
+(and anyone else who is interested in this component are welcome)
+
+
+Revision
+-----------------------------------------------
+1.0
+
+
+Overview
+-----------------------------------------------
+Queue is a data structure that programmers often used. But the component is not
+an abstract of the data structure, but a tool for user applications. We can
+find queue in many appllications. For example, we can use queue to change large
+concurrent requests to a series and process them one by one. In this aspect, 
+using queue will decrease server load greatly. Queue is also used to delay some
+non-realtime jobs to backgroud services.
+The goal of this component is to help users use queue easily in their
+applications. It will contains some implementations in common application
+context.
+
+
+References
+-----------------------------------------------
+http://www.algorithmist.com/index.php/Queue
+class_queue.php (http://www.phpclasses.org/browse/file/5025.html)
+
+
+Requirements
+-----------------------------------------------
+Some database functions (for queue that using database as its container)
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+Zend_Db (for queue that using database as its container)
+Zend_Json (for queue elements that stored as JSON format)
+
+
+Theory of Operation
+-----------------------------------------------
+((Describe the operation of the component in detail.))
+A queue is a collection of items in which only the oldest item may be accessed
+or removed. New items are added to the back and old items are removed from the
+front. Also known as "first-in, first-out"(FIFO) or "last-in, last-out"(LILO).
+To use this component, we should:
+1. Create a new element.
+2. Wrap a local variable to this element.
+3. Create a queue
+4. Push the new created element into the queue
+(Next steps perhaps will be asynchronous as the previous steps)
+5. Pop a queue element from the queue
+6. Unwrap the poped element to local variable
+
+Class Index
+-----------------------------------------------
+Interfaces:
+Zend_Queue_Interface
+Zend_Queue_Element_Interface
+Zend_Queue_Element_Formatter_Interface
+
+Queue classes:
+Zend_Queue_FileSystem
+Zend_Queue_Array
+Zend_Queue_Db
+(Perhaps Zend_Queue_Db is only an abstract class, and there will be some
+subclasses such as Zend_Queue_Db_Sqlite, Zend_Queue_Db_Mysql, etc.)
+
+Queue element classes:
+Zend_Queue_Element
+
+Queue element formatter classes:
+Zend_Queue_Element_Formatter_Default: PHP serialized
+Zend_Queue_Element_Formatter_Json
+Zend_Queue_Element_Formatter_Xml
+
+Exception class
+Zend_Queue_Exception
+
+Use Cases
+-----------------------------------------------
+Consider the next business:
+  * Upload an image and post the description of the image
+  * Store image properties and descriptions into db
+  * Generate a thumbnail of this image
+The business may take long time if the uploaded image file size is very big
+or there are many concurrent requests. If we put the long-time jobs to a
+backgroud service(perhaps use crontab or a daemon), both the page response time
+and the server load will be reduced.
+
+
+1. Create a new queue element.
+<?php
+
+$element = new Zend_Queue_Element();
+
+?>
+
+  In this component we can use element in different encodings, such as PHP
+serialized string, JSON, or XML. (BUT the details stored format of an element
+should be hidden for end users. Only when users want to deal with the elments
+by themselves instead of Zend_Queue, they could declare the format clearly.)
+
+2. Wrap a local variable to this element.
+
+<?php
+
+$info = array(
+              'temp_stored_img' => '/image/temp/test.jpg',
+	      'description' => 'test',
+	     );
+$element->wrap($info);
+
+?>
+
+  Any types of variable are accepted, not only an array.
+
+3. Create a queue
+  Queue is implemented in some different types. For example, users will be
+able to create a queue that use a directory as the queue container, or an
+array that stored in memmory, or a database. (In this operation users should
+be able to choose a specific implementation which will be easily integrated
+into their own applications.)
+
+<?php
+
+$queue = new Zend_Queue_FileSystem();    //Here we use file system as container
+
+?>
+
+4. Push the new created element into the queue
+<?php
+
+$queue->push($element);
+
+
+//...
+//Perhaps there are various process push many elements into the queue
+
+?>
+
+5. Pop a queue element from the queue and unwrap the poped element to local
+variable.
+
+<?php
+
+//Next steps perhaps will be asynchronous as the previous steps
+//Here we consider the queue has already been created as same as before
+//   $queue = new Zend_Queue_FileSystem();
+
+//Here will be a background service do the long-time jobs persistently
+while (true)
+{
+   while (true)
+   {
+       //Pop an element
+       $element = $queue->pop();
+
+       if (!$element)
+       {
+           //If we get an empty element, break current loop
+	   //This perhaps because the queue is empty
+           break;
+       }
+
+       //else we unwrap the raw data...
+       $info = $element->unwrap();
+
+       //We can do some long-time jobs now
+       //...
+   }
+
+?>
+
+
+
+Class Skeletons
+-----------------------------------------------
+<?php
+
+interface Zend_Queue_Interface
+{
+    /**
+     * Push an element into queue
+     *
+     * @param Zend_Queue_Element $element
+     * @return bool
+     * @throws Zend_Queue_Exception
+     */
+    public function push(Zend_Queue_Element_Interface $element);
+    
+    /**
+     * Pop an element
+     * @return Zend_Queue_Element
+     * @throws Zend_Queue_Exception
+     */
+    public function pop();
+}
+
+interface Zend_Queue_Element_Interface
+{
+	/**
+	 * Select a formatter
+	 * This method will select a formatter according to the formatter that
+	 * set by setFormatter() method.
+	 * Default type is Zend_Queue_Element_Formatter_Default
+	 * @return Zend_Queue_Element_Formatter_Interface
+	 */
+	protected function getFormatter();
+	
+	/**
+	 * Set formatter type
+	 * This method is a LOW-LEVEL function.
+	 * Default type is 'default', unless user call it clearly for another type
+	 *
+	 * @param Zend_Queue_Element_Formatter_Interface $formatter
+	 * @return bool
+	 */
+	public function setFormatter(Zend_Queue_Element_Formatter_Interface $formatter);
+	
+	/**
+	 * Wrap a local variable to element
+	 *
+	 * @param mixed $var
+	 * @return bool
+	 * @throws Zend_Queue_Exception
+	 */
+	public function wrap($var);
+	
+	/**
+	 * Restore the wrapped variable
+	 * @return mixed
+	 * @throws Zend_Queue_Exception
+	 */
+	public function unwrap();
+	
+	/**
+	 * Get formatted data
+	 * This is a low level function which should be called only by Zend_Queue instance
+	 */
+	public function __getData();
+
+	/**
+	 * Set formatted data
+	 * This is a low level function which should be called only by Zend_Queue
+	 */
+	public function __setData();
+}
+
+interface Zend_Queue_Element_Formatter_Interface
+{
+	/**
+	 * Format a variable to an interchangeable format
+	 *
+	 * @param mixed $var
+	 * @return bool
+	 */
+	public static function format($var);
+
+	
+	/**
+	 * Restore a variable from an interchangeable format
+	 *
+	 * @param string $formattedData
+	 * @return mixed
+	 */
+	public static function restore($formattedData);
+}
+
+?>
+

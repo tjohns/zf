@@ -1,0 +1,13 @@
+Reviewed by Zend team on Thursday, 20 Apr 2006.
+Decision: Rejected
+
+We are presently working with IBM on this integration,
+but it is still early in the process.
+
+The final version will not require a special controller
+subclass for AJAX, or storing a special AJAX object
+in the registry that must be retrieved by each controller.
+
+Please continue to watch the SVN and participate in the
+mailing list and help us as it begins to take shape
+in the core.

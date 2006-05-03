@@ -1,0 +1,15 @@
+Reviewed by Zend team on Wednesday, 19 Apr 2006.
+Decision: Rejected
+
+There are now at least five different proposals for Zend_Auth 
+classes or combination Auth/ACL classes.  We will collect them
+all and place them in this folder for future reference.
+
+At this time, we have decided not to implement any of these 
+concrete classes as part of the Zend Framework core.
+
+However, since auth support has been a relatively common request,
+we have decided to provide a very basic auth suggestion in the form 
+of an abstract class upon which users could build their own auth system.  
+In time, if we see common needs and patterns of use, we may choose to 
+revisit this decision and provide a basic solution.
