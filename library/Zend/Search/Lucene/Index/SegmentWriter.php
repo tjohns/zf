@@ -114,17 +114,12 @@ class Zend_Search_Lucene_Index_SegmentWriter
     private $_fields;
 
     /**
-     * Normalization factors.
-     * An array fieldName => normVector
-     * normVector is a binary string.
-     * Each byte corresponds to an indexed document in a segment and
-     * encodes normalization factor (float value, encoded by
-     * Zend_Search_Lucene_Search_Similarity::encodeNorm())
+     * Sizes of the indexed fields.
+     * Used for normalization factors calculation.
      *
      * @var array
      */
-    private $_norms;
-
+    private $_fieldLengths;
 
     /**
      * '.fdx'  file - Stored Fields, the field index.
@@ -134,7 +129,7 @@ class Zend_Search_Lucene_Index_SegmentWriter
     private $_fdxFile;
 
     /**
-     * '.fdx'  file - Stored Fields, the field data.
+     * '.fdt'  file - Stored Fields, the field data.
      *
      * @var Zend_Search_Lucene_Storage_File
      */
@@ -153,10 +148,11 @@ class Zend_Search_Lucene_Index_SegmentWriter
         $this->_name      = $name;
         $this->_docCount  = 0;
 
-        $this->_fields   = array();
-        $this->_termDocs = array();
-        $this->_files    = array();
-        $this->_norms    = array();
+        $this->_fields       = array();
+        $this->_termDocs     = array();
+        $this->_files        = array();
+        $this->_norms        = array();
+        $this->_fieldLengths = array();
 
         $this->_fdxFile = null;
         $this->_fdtFile = null;
@@ -211,6 +207,7 @@ class Zend_Search_Lucene_Index_SegmentWriter
                     $tokenList = array();
                     $tokenList[] = new Zend_Search_Lucene_Analysis_Token($field->stringValue, 0, strlen($field->stringValue));
                 }
+                $this->_fieldLengths[$field->name][$this->_docCount] = count($tokenList);
 
                 $position = 0;
                 foreach ($tokenList as $token) {
@@ -277,11 +274,28 @@ class Zend_Search_Lucene_Index_SegmentWriter
         foreach ($this->_fields as $field) {
             $fnmFile->writeString($field->name);
             $fnmFile->writeByte(($field->isIndexed       ? 0x01 : 0x00) |
-                                ($field->storeTermVector ? 0x02 : 0x00) |
+                                ($field->storeTermVector ? 0x02 : 0x00)
 // not supported yet            0x04 /* term positions are stored with the term vectors */ |
 // not supported yet            0x08 /* term offsets are stored with the term vectors */   |
-/* not supported yet */         0x10 /* norms are omitted for the indexed field */
                                );
+
+            if ($field->isIndexed) {
+                $fieldNum   = $this->_fields[$field->name]->number;
+                $fieldName  = $field->name;
+                $similarity = Zend_Search_Lucene_Search_Similarity::getDefault();
+                $norm       = '';
+
+                for ($count = 0; $count < $this->_docCount; $count++) {
+                    $numTokens = isset($this->_fieldLengths[$fieldName][$count]) ?
+                                      $this->_fieldLengths[$fieldName][$count] : 0;
+                    $norm .= chr($similarity->encodeNorm($similarity->lengthNorm($fieldName, $numTokens)));
+                }
+
+                $normFileName = $this->_name . '.f' . $fieldNum;
+                $fFile = $this->_directory->createFile($normFileName);
+                $fFile->writeBytes($norm);
+                $this->_files[] = $normFileName;
+            }
         }
 
         $this->_files[] = $this->_name . '.fnm';

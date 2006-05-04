@@ -114,7 +114,7 @@ abstract class Zend_Search_Lucene_Storage_File
 
     /**
      * Writes num bytes of data (all, if $num===null) to the end
-     * of the file.
+     * of the string.
      *
      * @param string $data
      * @param integer $num

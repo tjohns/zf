@@ -231,6 +231,17 @@ class Zend_Search_Lucene_Index_SegmentInfo
         return $this->_docCount;
     }
 
+    /**
+     * Get field position in a fields dictionary
+     *
+     * @param integer $fieldNum
+     * @return integer
+     */
+    private function _getFieldPosition($fieldNum) {
+        // Treat values which are not in a translation table as a 'direct value'
+        return isset($this->_fieldsDicPositions[$fieldNum]) ?
+                           $this->_fieldsDicPositions[$fieldNum] : $fieldNum;
+    }
 
     /**
      * Loads Term dictionary from TermInfoIndex file
@@ -309,7 +320,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
         if ($searchField == -1) {
             return null;
         }
-        $searchDicField = $this->_fieldsDicPositions[$searchField];
+        $searchDicField = $this->_getFieldPosition($searchField);
 
         // search for appropriate value in dictionary
         $lowIndex = 0;
@@ -319,7 +330,8 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $mid = ($highIndex + $lowIndex) >> 1;
             $midTerm = $this->_termDictionary[$mid];
 
-            $delta = $searchDicField - $this->_fieldsDicPositions[$midTerm->field];
+            $fieldNum = $this->_getFieldPosition($midTerm->field);
+            $delta = $searchDicField - $fieldNum;
             if ($delta == 0) {
                 $delta = strcmp($term->text, $midTerm->text);
             }
@@ -360,8 +372,8 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $proxPointer = $prevTermInfo->proxPointer;
         for ($count = $prevPosition*$indexInterval + 1;
              $count < $termCount &&
-             ( $this->_fieldsDicPositions[ $termFieldNum ] < $searchDicField ||
-              ($this->_fieldsDicPositions[ $termFieldNum ] == $searchDicField &&
+             ( $this->_getFieldPosition($termFieldNum) < $searchDicField ||
+              ($this->_getFieldPosition($termFieldNum) == $searchDicField &&
                strcmp($termValue, $term->text) < 0) );
              $count++) {
             $termPrefixLength = $tisFile->readVInt();
