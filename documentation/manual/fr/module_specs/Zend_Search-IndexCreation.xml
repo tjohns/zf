@@ -1,5 +1,5 @@
 <sect1 id="zend.search.index-creation">
-	<title>Building Indexes</title>
+	<title>Créer des indexes</title>
 
 	<sect2 id="zend.search.index-creation.creating">
         <title>Créer un nouvel index</title>
@@ -36,16 +36,34 @@
         ]]></programlisting>
 
         <para>
-            Les nouveaux documents ajoutés peuvent être récupérés depuis l'index après un commit.
+            Les nouveaux documents ajoutés peuvent être récupérés depuis l'index après une opération de commit.
         </para>
         <para>
             <code>Zend_Search_Lucene::commit()</code> est automatiquement appelé à la fin de l'éxecution du 
             script et avant toute recherche.
         </para>
         <para>
-            Chaque appel à <code>commit()</code> génère un nouveau segment d'index. Elle doit donc être appelée
-            aussi rarement que possible. De plus, commiter une grande quantité de documents en une seule
-            fois consomme plus de mémoire.
+            Chaque appel à <code>commit()</code> génère un nouveau segment d'index. 
+            <footnote>
+                <para>
+                Les fichiers de segment d'index Lucene ne peuvent être mis à jour.
+                La mise à jour d'un segment nécessite la réorganisation de tous les segments.
+                Référrez vous au format de fichier d'index pour plus de détails (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
+                Augmenter le nombre de segments réduit la qualité de l'index, mais l'optimisation de l'index permet de réparer cela.
+                L'optimisation consiste à regrouper plusieurs segments en un seul. Ce processus ne met à jour aucun segment.
+                Il génère un nouveau gros segment, génère une nouvelle liste de segemnts (fichier 'segment.new'), qui contient
+                le segement nouvellement optimisé au lieu du jeu de vieux segements, et renomme ensuite 'segments.new' en 'segments'.
+                </para>
+                <para>
+                L'optimisation est un processus itératif. Les très petits segments (par exemple ceux qui sont généré par l'ajout
+                d'un seul document) sont regroupés dans un segment plus gros, et ainsi de suite. L'optimisation peut fonctionner
+                sur un flux de segment et n'est pas gourmand en mémoire. Ainsi le processus d'optimisation ne prend pas beaucoup
+                de ressources et ne verouille pas les fichiers d'index pour la recherche, la mise à jour ou le regroupement d'autres
+                segments.
+                </para>
+            </footnote>
+            Il doit être fait aussi rarement que possible.
+            De plus, commiter une grande quantité de documents en une seule fois consomme plus de mémoire.
         </para>
         <para>
             L'optimisation automatique de la gestion des segment est un sujet d'amélioration future pour Zend_Search_Lucene.
