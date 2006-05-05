@@ -1,0 +1,73 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+Zend_Mail_List
+
+Proposers
+-----------------------------------------------
+Nico Edtinger, Telekom Austria
+
+Revision
+-----------------------------------------------
+Zend_Mail_List Proposal 2006-05-03
+
+
+Overview
+-----------------------------------------------
+The Zend_Mail_List class is a wrapper around the mail reading classes
+that implements all the funky interfaces for accessing the mail storage
+as array and iteration.
+
+References
+-----------------------------------------------
+
+
+Requirements
+-----------------------------------------------
+Map mail reading functions to PHP as possible.
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+Zend_Mail_Abstract or derived class 
+
+
+Theory of Operation
+-----------------------------------------------
+Zend_Mail_List translates the interfaces, which the PHP engine needs, to the
+mail reading APIs. ArrayAccess and Countable are implemented to access
+a specific message and count all messages. Iterator is used for iterating
+over all messages.
+                
+Class Index
+-----------------------------------------------
+Zend_Mail_List
+
+
+Use Cases
+-----------------------------------------------
+<?php
+
+Zend::loadClass('Zend_Mail_Mbox');
+Zend::loadClass('Zend_Mail_List');
+
+$mail = new Zend_Mail_Mbox(array('filename' => 'foo.mbox'));
+$list = new Zend_Mail_List($mail);
+
+echo count($list), " mails in your mbox file\n";
+foreach($list as $message) {
+	echo $message->subject, "\n";
+}
+
+?>
+
+
+Class Skeletons
+-----------------------------------------------
+Zend_Mail_List::__construct(Zend_Mail_Abstract $mailReader)
+	init with a existing mail reading class
+for Countable: count()
+for ArrayAccess: offsetExists(int $id), offsetGet(int $id), offsetSet(), offsetUnset()
+	offsetSet() is not supported and throws an exception
+for Iterator: rewind(), current(), key(), next(), valid(), seek()
