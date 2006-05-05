@@ -693,7 +693,7 @@ switch ($numPeople) {
                 <para>
                     All documentation blocks ("docblocks") must be compatible with the phpDocumentor format.
                     Describing the phpDocumentor format is beyond the scope of this document.
-                    For more information, visit: <ulink url="http://phpdoc.org/">http://phpdoc.org"></ulink>
+                    For more information, visit: <ulink url="http://phpdoc.org/">http://phpdoc.org/</ulink>
                 </para>
 
                 <para>

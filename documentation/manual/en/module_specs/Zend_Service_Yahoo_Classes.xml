@@ -82,8 +82,7 @@
     <sect3 id="zend.service.yahoo.classes.webresultset">
         <title>Zend_Service_Yahoo_WebResultSet</title>
         <para>
-            <code>Zend_Service_Yahoo_WebResultSet</code> represents a Yahoo! Web Search result set
-            result set.
+            <code>Zend_Service_Yahoo_WebResultSet</code> represents a Yahoo! Web Search result set.
         </para>
         <note>
             <para>
@@ -97,8 +96,7 @@
     <sect3 id="zend.service.yahoo.classes.imageresultset">
         <title>Zend_Service_Yahoo_ImageResultSet</title>
         <para>
-            <code>Zend_Service_Yahoo_ImageResultSet</code> represents a Yahoo! Image Search result set
-            result set.
+            <code>Zend_Service_Yahoo_ImageResultSet</code> represents a Yahoo! Image Search result set.
         </para>
         <note>
             <para>
@@ -112,8 +110,7 @@
     <sect3 id="zend.service.yahoo.classes.localresultset">
         <title>Zend_Service_Yahoo_LocalResultSet</title>
         <para>
-            <code>Zend_Service_Yahoo_LocalResultSet</code> represents a Yahoo! Local Search result set
-            result set.
+            <code>Zend_Service_Yahoo_LocalResultSet</code> represents a Yahoo! Local Search result set.
         </para>
         <table>
             <title>Zend_Service_Yahoo_LocalResultSet Properties</title>
@@ -146,8 +143,7 @@
     <sect3 id="zend.service.yahoo.classes.newsresultset">
         <title>Zend_Service_Yahoo_NewsResultSet</title>
         <para>
-            <code>Zend_Service_Yahoo_NewsResultSet</code> represents a Yahoo! News Search result set
-            result set.
+            <code>Zend_Service_Yahoo_NewsResultSet</code> represents a Yahoo! News Search result set.
         </para>
         <note>
             <para>
@@ -446,7 +442,7 @@
      <sect3 id="zend.service.yahoo.classes.image">
         <title>Zend_Service_Yahoo_Image</title>
         <para>
-            All images returned either by the Yahoo! Image Search of the Yahoo! News Search
+            All images returned either by the Yahoo! Image Search or the Yahoo! News Search
             are represented by <code>Zend_Service_Yahoo_Image</code> objects
         </para>
         <sect4 id="zend.service.yahoo.classes.image.properties">
