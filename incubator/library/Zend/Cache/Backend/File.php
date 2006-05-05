@@ -200,7 +200,7 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
                 if ($this->_directives['logging']) {
                     Zend_Log::log('Zend_Cache_Backend_File::get() / readControl : stored hash and computed hash do not match', Zend_Log::LEVEL_WARNING);
 		        }
-                $this->_remove($file); 
+                $this->_remove($file);
 		        return false;    
             }
         }

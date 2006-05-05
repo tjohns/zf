@@ -27,7 +27,7 @@
 abstract class Zend_Cache 
 {
 
-    static public $availableFrontends = array('Core', 'Output', 'Class', 'File', 'Function');
+    static public $availableFrontends = array('Core', 'Output', 'Class', 'File', 'Function', 'Page');
     static public $availableBackends = array('File', 'Sqlite');
         
     /**

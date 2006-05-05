@@ -154,10 +154,11 @@ class Zend_Cache_Core
      */
     public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
     {
-        $this->_lastId = $id;
         if (!$this->_options['caching']) {
             return false;
         }
+        $this->_lastId = $id;
+        
         self::_validateIdOrTag($id);
         $data = $this->_backend->get($id, $doNotTestCacheValidity);
         if ($data===false) {
@@ -303,7 +304,7 @@ class Zend_Cache_Core
         if (substr($string, 0, 9) == 'internal_') {
             Zend_Cache::throwException('"interval_*" ids or tags are reserved');
         }
-        if (!preg_match('~^[a-zA-Z0-9_]+$~', $string)) {
+        if (!preg_match('~^[\w]+$~', $string)) {
             Zend_Cache::throwException('Invalid id or tag : must use only [a-zA-A0-9_]');
         }
     }
@@ -320,7 +321,7 @@ class Zend_Cache_Core
         if (!is_array($tags)) {
             Zend_Cache::throwException('Invalid tags array : must be an array');
         }
-        while (list(, $tag) = each($tags)) {
+        foreach($tags as $tag) {
             self::_validateIdOrTag($tag);
         }
         reset($tags);
