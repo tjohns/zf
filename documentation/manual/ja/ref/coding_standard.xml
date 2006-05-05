@@ -703,7 +703,8 @@ switch ($numPeople) {
                     次の <code>case</code> に処理を流すという書き方をする場合もあるでしょう。
                     これらの場合を単なる記述漏れと区別するために、<code>case</code> 文で
                     <code>break</code> あるいは <code>return</code> を指定しなかった場合は
-                    "// break intentionally omitted" というコメントを含めるようにします。
+                    "// break intentionally omitted" (訳注:「意図的に break を省略しました」)
+                    というコメントを含めるようにします。
                 </para>
             </sect3>
         </sect2>
@@ -718,7 +719,7 @@ switch ($numPeople) {
                     ドキュメントブロック ("docblocks") は、phpDocumentor
                     と互換性のある書式でなければなりません。
                     phpDocumentor の書式については、このドキュメントの対象範囲外です。
-                    詳細な情報は <ulink url="http://phpdoc.org/">http://phpdoc.org"></ulink>
+                    詳細な情報は <ulink url="http://phpdoc.org/">http://phpdoc.org/</ulink>
                     を参照ください。
                 </para>
 
