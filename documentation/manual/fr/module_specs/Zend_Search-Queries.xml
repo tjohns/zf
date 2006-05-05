@@ -252,7 +252,7 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
             The slop is zero by default, requiring exact matches.
         </para>
         <para>
-            Sloop factor can be assigned after query creation:
+            Slop factor can be assigned after query creation:
         </para>
         <programlisting role="php"><![CDATA[<?php
 

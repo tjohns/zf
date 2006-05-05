@@ -26,7 +26,7 @@
         </para>
 
         <para>
-            Cependant, les analyseurs de texte, et le parseur de requête utilise ctype_alpha()
+            Cependant, les analyseurs de texte, et le parseur de requête utilisent ctype_alpha()
             pour tokeniser le texte et les requêtes. ctype_alpha() ne supporte pas l'UTF-8 et 
             devra être remplacé par quelque chose d'autre dans un future proche.
         </para>

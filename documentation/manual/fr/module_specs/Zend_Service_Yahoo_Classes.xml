@@ -440,7 +440,7 @@
      <sect3 id="zend.service.yahoo.classes.image">
         <title>Zend_Service_Yahoo_Image</title>
         <para>
-            Toutes les images retournées, soit par Yahoo! Image Search de Yahoo! News Search sont représentées par un objet <code>Zend_Service_Yahoo_Image</code>.
+            Toutes les images retournées, par Yahoo! Image Search ou Yahoo! News Search sont représentées par un objet <code>Zend_Service_Yahoo_Image</code>.
         </para>
         <sect4 id="zend.service.yahoo.classes.image.properties">
             <title>Propriétés</title>
