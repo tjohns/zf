@@ -1,10 +1,14 @@
 <sect1 id="zend.xmlrpc.introduction">
-    <title>Introduction</title>
+    <title>Introductie</title>
     <para>
-        XML-RPC is a "...remote procedure calling using HTTP as the transport and XML as the encoding. XML-RPC is designed to be as simple as possible, while allowing complex data structures to be transmitted, processed and returned." (<ulink url="http://www.xmlrpc.com/">XML-RPC Home Page</ulink>).
+        XML-RPC is een " ... manier van op afstand aanroepen van procedures gebruik makend
+	van HTTP als transport mechanisme en XML als encoding. XML-RPC is ontworden om zo
+	simpel mogelijk te zijn, terwijl complexe data structuren worden verstuurd, 
+	verwerkt en teruggestuurd." (<ulink url="http://www.xmlrpc.com/">XML-RPC Home Page</ulink>).
     </para>
     <para>
-      The Zend Framework implementation for an XML-RPC client (and in the future for an XML-RPC server) makes the usage of XML-RPC even simpler, trying to make the usage of XML-RPC similar as possible to the PHP5 <ulink url="http://www.php.net/soap">SOAP web service extension</ulink>.
+      De implementatie voor een XML-RPC client (en in de toekomst een XML-RPC server) in het Zend Framework maakt het nog simpeler om XML-RPC te gebruiken. Het is een poging
+      XML-RPC net zo simpel te maken als de PHP <ulink url="http://www.php.net/soap">SOAP web service extensie</ulink>.
     </para>
 </sect1>
 &module_specs.Zend_XmlRpc_Client;
