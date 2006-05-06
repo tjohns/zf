@@ -34,7 +34,7 @@
 				<listitem>
 					<para>
 						Het mechanisme dat door <code>Zend_Controller_Dispatcher</code> wordt verstrekt is niet toepasbaar. De
-						standaard configuratie neemt een overeenkomst aan die zegt dat controller klassen zijn en acties
+						standaard configuratie neemt een overeenkomst aan die zegt dat controllers klassen zijn en acties
 						methodes van die klassen. Er zijn evenwel vele andere strategiën om dit te doen. Eén voorbeeld zou
 						zijn waar de controllers mappen zijn en de acties bestanden in die mappen.
 					</para>
@@ -44,7 +44,7 @@
 						Je wil bijkomende mogelijkheden verstrekken die door al je controllers worden geërfd. Bijvoorbeeld,
 						<code>Zend_Controller_Action</code> kan niet standaard geïntegreerd worden met <code>Zend_View</code>.
 						Wat je evenwel wèl kan doen is je eigen controller aanpassen zodat die kan integreren met
-						<code>Zend_View</code> en die gebruiken vermijdt het wijzigen van de verstrekte 
+						<code>Zend_View</code>. Die gebruiken vermijdt het wijzigen van de verstrekte 
 						<code>Zend_Controller_Router</code> of <code>Zend_Controller_Dispatcher</code>.
 					</para>
 				</listitem>
@@ -53,7 +53,7 @@
 			Wees voorzichtig met het wijzigen van belangrijke delen van het systeem, en in het bijzonder de dispatcher. Een van
 			de voordelen van <code>Zend_Controller</code> is dat het algemene overeenkomsten vestigt voor het bouwen van 
 			toepassingen. Indien teveel van dit standaard gedrag wordt gewijzigd, zal een deel van deze voordelen verloren
-			zijn. Er zijn evenwel vele verschillende benodigdheden en één enkele oplossing is niet ideaal voor allen. De
+			gaan. Er zijn evenwel vele verschillende benodigdheden en één enkele oplossing is niet ideaal voor alle situaties. De
 			vrijheid om te wijzigen is dus verstrekt indien nodig.
 		</para>
 	</sect2>
@@ -148,7 +148,7 @@
 			Routing gebeurt slecht één enkele keer: wanneer het verzoek voor het eerst door het systeem wordt ontvangen.
 			Het doel van de router is een <code>Zend_Controller_Dispatch_Token</code> aan te maken dat een controller
 			en een actie van die controller definieert. Dit wordt dan doorgegeven aan de dispatcher. Indien het niet
-			mogelijk is een route naar een dispatch token te mappen (nonsenical route) dan moet er een boolean,
+			mogelijk is een route naar een dispatch token te mappen (nonsensical route) dan moet er een boolean,
 			<code>FALSE</code> worden teruggestuurd.
 		</para>
 		
@@ -188,10 +188,10 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 
-		<code>isDispatchable()</code> gaat na of een dispatch token kan gedispatched worden. Indien dat zo is geeft het
+				<code>isDispatchable()</code> gaat na of een dispatch token gedispatched kan worden. Indien dat zo is geeft het
 		<code>TRUE</code> terug. Anders geeft het <code>FALSE</code> terug. In het geval van de standaard implementatie,
 		<code>Zend_Controller_Dispatcher</code>, betekent dit dat het controller bestand bestaat, dat de klasse in het 
-		bestand betaat en dat de actiemethode in de klasse bestaat.
+		bestand bestaat en dat de actiemethode in de klasse bestaat.
 		
 		<programlisting role="php"><![CDATA[<?php
 			
