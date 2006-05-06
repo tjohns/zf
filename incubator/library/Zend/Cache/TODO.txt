@@ -6,12 +6,11 @@ Priority 1 :
 	=> "HTTP not modified" header
 	[...] (Mislav is working on this)
 
-- perfs analyze
-
 
 Priority 2 :
 
 - complete documentation (zend format)
+
 
 Priority 3 :
 
