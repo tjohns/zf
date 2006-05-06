@@ -359,14 +359,19 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      */
     private function _buildStructure()
     {
+        @sqlite_query($this->_db, 'DROP INDEX tag_id_index');
+        @sqlite_query($this->_db, 'DROP INDEX tag_name_index');
+        @sqlite_query($this->_db, 'DROP INDEX cache_id_expire_index');
         @sqlite_query($this->_db, 'DROP TABLE version');
         @sqlite_query($this->_db, 'DROP TABLE cache');
         @sqlite_query($this->_db, 'DROP TABLE tag');
         @sqlite_query($this->_db, 'CREATE TABLE version (num INTEGER PRIMARY KEY)');
-        @sqlite_query($this->_db, 'INSERT INTO version (num) VALUES (1)');
         @sqlite_query($this->_db, 'CREATE TABLE cache (id TEXT PRIMARY KEY, content BLOB, lastModified INTEGER, expire INTEGER)');
         @sqlite_query($this->_db, 'CREATE TABLE tag (name TEXT, id TEXT)');  
-        //TODO : indexes 
+        @sqlite_query($this->_db, 'CREATE INDEX tag_id_index ON tag(id)');
+        @sqlite_query($this->_db, 'CREATE INDEX tag_name_index ON tag(name)');
+        @sqlite_query($this->_db, 'CREATE INDEX cache_id_expire_index ON cache(id, expire)');
+        @sqlite_query($this->_db, 'INSERT INTO version (num) VALUES (1)');        
     }
     
     /**
