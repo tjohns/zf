@@ -56,14 +56,11 @@
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
         &module_specs.Zend_Filter;
+	&module_specs.Zend_Filter.Input;
     </chapter>
     <chapter id="zend.httpclient">
         <title>Zend_HttpClient</title>
         &module_specs.Zend_HttpClient;
-    </chapter>
-    <chapter id="zend.inputfilter">
-        <title>Zend_InputFilter</title>
-        &module_specs.Zend_InputFilter;
     </chapter>
     <chapter id="zend.json">
         <title>Zend_Json</title>
