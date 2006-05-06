@@ -38,7 +38,9 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
     /**
      * Available options
      * 
-     * TODO : docs
+     * ====> (string) masterFile :
+     * - the complete path and name of the master file 
+     * - this option has to be set ! 
      * 
      * @var array available options
      */
@@ -46,6 +48,11 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
     	'masterFile' => ''
     ); 
     
+    /**
+     * Master file mtime
+     * 
+     * @var int
+     */
     private $_masterFile_mtime = null;
           
     /**
@@ -90,6 +97,14 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
         Zend_Cache::throwException("Incorrect option name : $name");
     }
     
+    /**
+     * Test if a cache is available for the given id and (if yes) return it (false else)
+     * 
+     * @param string $id cache id
+     * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
+     * @param boolean $doNotUnserialize do not serialize (even if automaticSerialization is true) => for internal use
+     * @return mixed cached datas (or false)
+     */
     public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
     {
         if (!$doNotTestCacheValidity) {
@@ -100,7 +115,13 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
         }
         return parent::get($id, true, $doNotUnserialize);
     }
-        
+   
+    /**
+     * Test if a cache is available for the given id 
+     *
+     * @param string $id cache id
+     * @return boolean true is a cache is available, false else
+     */     
     public function test($id) 
     {
         $lastModified = parent::test($id);

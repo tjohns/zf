@@ -37,7 +37,22 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
     /**
      * Available options
      * 
-     * TODO docs
+     * ====> (string) cachedClass :
+     * - if set to a class name, we will cache an abstract class and will use only static calls
+     * - 'cachedClass' or 'cachedObject' has to be set (but not both !)
+     * 
+     * ====> (mixed) cachedObject :
+     * - if set to an object, we will cache this object methods
+     * - 'cachedClass' or 'cachedObject' has to be set (but not both !)
+     * 
+     * ====> (boolean) cacheByDefault : 
+     * - if true, method calls will be cached by default
+     * 
+     * ====> (array) cachedMethods :
+     * - an array of method names which will be cached (even if cacheByDefault = false)
+     * 
+     * ====> (array) nonCachedMethods :
+     * - an array of method names which won't be cached (even if cacheByDefault = true)
      * 
      * @var array available options
      */
@@ -49,8 +64,25 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         'nonCachedMethods' => array()
     );
     
+    /**
+     * Caching mode : 'class' or 'object'
+     *
+     * @var string
+     */
     private $_mode = null;
+    
+    /**
+     * The name of the cached abstract class (if mode == 'class')
+     * 
+     * @var string
+     */
     private $_class = null;
+    
+    /**
+     * The cached object (if mode == 'object')
+     * 
+     * @var mixed
+     */
     private $_object = null;
        
     /**
@@ -108,10 +140,15 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         Zend_Cache::throwException("Incorrect option name : $name");
     }
     
+    /**
+     * Main method : call the specified method or get the result from cache
+     * 
+     * @param string $name method name
+     * @param array $parameters method parameters
+     * @return mixed result
+     */
     public function __call($name, $parameters) 
     {
-        // TODO : add some internal tags (to be able to clean a particulier method call or name)
-        
         $cacheBool1 = $this->_specificOptions['cacheByDefault'];
         $cacheBool2 = in_array($name, $this->_specificOptions['cachedMethods']);
         $cacheBool3 = in_array($name, $this->_specificOptions['nonCachedMethods']);
@@ -120,11 +157,9 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
             // We do not have not cache
             if ($this->_mode == 'object') {
                 return call_user_func_array(array($this->_object, $name), $parameters);
-            } else {
-                return call_user_func_array(array($this->_class, $name), $parameters);
             }
+            return call_user_func_array(array($this->_class, $name), $parameters);
         }
-
         $id = $this->_makeId($name, $parameters);       
         if ($this->test($id)) {
             // A cache is available
@@ -148,7 +183,14 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         echo $output;
         return $return;
     }
-        
+    
+    /**
+     * Make a cache id from the method name and parameters
+     * 
+     * @param string $name method name
+     * @param array $parameters method parameters
+     * @return string cache id
+     */        
     private function _makeId($name, $parameters) 
     {
         return md5($name . serialize($parameters));

@@ -54,12 +54,16 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
     private $_directives = array();
     
     /**
-     * TODO : docs
+     * Array to log actions
+     * 
+     * @var array $_log
      */
     private $_log = array();
     
     /**
-     * TODO : docs
+     * Current index for log array
+     * 
+     * @var int $_index
      */
     private $_index = 0;
     
@@ -201,7 +205,9 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
     }  
     
     /**
-     * TODO : doc
+     * Get the last log
+     * 
+     * @return string the last log
      */
     public function getLastLog()
     {
@@ -209,7 +215,9 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
     }
     
     /**
-     * TODO : doc
+     * Get the log index
+     * 
+     * @return int log index
      */
     public function getLogIndex()
     {
@@ -217,7 +225,9 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
     }
     
     /**
-     * TODO : doc
+     * Get the complete log array
+     * 
+     * @return array complete log array
      */
     public function getAllLogs()
     {
@@ -230,7 +240,10 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
     // -----------------------
     
     /**
-     * TODO : doc
+     * Add an event to the log array
+     * 
+     * @param string $methodName methodName
+     * @param array $args arguments
      */
     private function _addLog($methodName, $args)
     {

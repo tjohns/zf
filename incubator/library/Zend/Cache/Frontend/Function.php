@@ -38,7 +38,14 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
     /**
      * This frontend specific options
      * 
-     * TODO : docs
+     * ====> (boolean) cacheByDefault : 
+     * - if true, function calls will be cached by default
+     * 
+     * ====> (array) cachedFunctions :
+     * - an array of function names which will be cached (even if cacheByDefault = false)
+     * 
+     * ====> (array) nonCachedFunctions :
+     * - an array of function names which won't be cached (even if cacheByDefault = true)
      * 
      * @var array options
      */
@@ -84,10 +91,15 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
         Zend_Cache::throwException("Incorrect option name : $name");
     }
     
+    /**
+     * Main method : call the specified function or get the result from cache
+     * 
+     * @param string $name function name
+     * @param array $parameters function parameters
+     * @return mixed result
+     */
     public function call($name, $parameters = array()) 
     {
-        // TODO : add some internal tags (to be able to clean a particulier function call or name)
-        
         $cacheBool1 = $this->_specificOptions['cacheByDefault'];
         $cacheBool2 = in_array($name, $this->_specificOptions['cachedFunctions']);
         $cacheBool3 = in_array($name, $this->_specificOptions['nonCachedFunctions']);
@@ -96,7 +108,6 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
             // We do not have not cache
             return call_user_func_array($name, $parameters);
         }
-        
         $id = $this->_makeId($name, $parameters);
         if ($this->test($id)) {
             // A cache is available
@@ -116,7 +127,14 @@ class Zend_Cache_Frontend_Function extends Zend_Cache_Core
         echo $output;
         return $return;
     }
-        
+    
+    /**
+     * Make a cache id from the function name and parameters
+     * 
+     * @param string $name function name
+     * @param array $parameters function parameters
+     * @return string cache id
+     */    
     private function _makeId($name, $parameters) 
     {
         if (!is_string($name)) {
