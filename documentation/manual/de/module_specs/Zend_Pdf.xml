@@ -721,7 +721,7 @@ public function rotate($x, $y, $angle);]]>
             Stapel, Wiederherstelloperationen holen Sie daher zurück. 
         </para>
         <para>
-            Für diese Operationen gibt es in der <code>Zend_Pdf_Page</code> Klasse zwei Methoden:
+            In der <code>Zend_Pdf_Page</code> Klasse gibt es für diese Operationen zwei Methoden:
         </para>
         <para>
             <programlisting role="php"><![CDATA[

@@ -365,7 +365,7 @@ foreach ($feed as $entry) {
                 Überschrift eines RSS Eintrags</para>
             </listitem>
             <listitem>
-                <para><code>link</code> - Ein Link zu einem anderen Format oder eine alternativen
+                <para><code>link</code> - Ein Link zu einem anderen Format oder einer alternativen
                 Ansicht diesen Eintrags</para>
             </listitem>
             <listitem>

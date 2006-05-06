@@ -6,10 +6,10 @@
         JSON <ulink url="http://www.json.org/">besuche die Website des JSON Projekts</ulink>.
     </para>
     <para>
-        JSON, JavaScript Object Notation, kann für den leichtgewichtigen Datenaustausch zwischen
-        Javascript und anderen Sprachen verwendet werden. Da JSON direkt in Javascript ausgewertet
-        werden kann, ist es das ideale Format für die Zusammenarbeit mit Web 2.0 Schnittstellen; es
-        ist eine einfachere Alternative als die Verwendung von XML für AJAX Schnittstellen.
+        JSON, JavaScript Object Notation, kann für den Datenaustausch zwischen Javascript und 
+        anderen Sprachen verwendet werden. Da JSON direkt in Javascript ausgewertet werden kann, 
+        ist es ein effizienteres und leichtgewichtigeres Format für den Datenaustausch mit 
+        Javascript Clients als XML.
     </para>
 </sect1>
 

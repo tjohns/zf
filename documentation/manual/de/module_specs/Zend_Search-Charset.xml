@@ -28,7 +28,7 @@
         </para>
 
         <para>
-            However, text analyzers and query parser text analyzer and query parser use
+            However, text analyzers and query parser use
             ctype_alpha() for tokenizing text and queries. ctype_alpha() doesn't support
             UTF-8 and needs to be replaced by something else in nearest future.
         </para>

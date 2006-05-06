@@ -244,7 +244,7 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
 
 
         <para>
-            Sloop factor sets the number of other words permitted between words in query phrase. If zero,
+            Slop factor sets the number of other words permitted between words in query phrase. If zero,
             then this is an exact phrase search.  For larger values this works like a WITHIN or NEAR operator.
         </para>
         <para>
@@ -257,7 +257,7 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
             The slop is zero by default, requiring exact matches.
         </para>
         <para>
-            Sloop factor can be assigned after query creation:
+            Slop factor can be assigned after query creation:
         </para>
         <programlisting role="php"><![CDATA[<?php
 
