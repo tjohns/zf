@@ -221,16 +221,16 @@ class Zend_Feed
         $feeds = array();
         if (isset($matches[1]) && count($matches[1]) > 0) {
             foreach ($matches[1] as $link) {
-                $xml = @simplexml_load_string("$link />");
+                $xml = @simplexml_load_string(rtrim($link, ' /') . ' />');
                 if ($xml === false) {
                     continue;
                 }
                 $attributes = $xml->attributes();
-                if (!isset($attributes['rel']) || strcasecmp($attributes['rel'], 'alternate')) {
+                if (!isset($attributes['rel']) || !@preg_match('~^(?:alternate|service\.feed)~i', $attributes['rel'])) {
                     continue;
                 }
                 if (!isset($attributes['type']) ||
-                    !@preg_match('~^application/(?:atom|rss)\+xml~', $attributes['type'])) {
+                    	!@preg_match('~^application/(?:atom|rss|rdf)\+xml~', $attributes['type'])) {
                     continue;
                 }
                 if (!isset($attributes['href'])) {
