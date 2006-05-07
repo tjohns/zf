@@ -89,7 +89,7 @@ print_r( $server->system->listMethods() );
             <programlisting role="php"><![CDATA[...
 /** 2 parameters are passed in this procedure
  *  The first parameter is a string that will be auto-converted into an XML-RPC string type
- *  The second parameter is an assosiative array that will be converted into an XML-RPC struct 
+ *  The second parameter is an associative array that will be converted into an XML-RPC struct 
  */
 
 $p1 = 'parameter 1';
@@ -112,7 +112,7 @@ $service->serviceProcedure($p1, $p2);
                         When the procedure requires base64 or dateTime.iso8601 type (which doesn't exists as a PHP native type)
                     </listitem>
                     <listitem>
-                        When auto-convertion may fail (i.e. you want to pass an empty XML-RPC struct as a parameter. Empty structs are represented as empty arrays in PHP but, if you give an empty array as a parameter it will be auto-converted to an XML-RPC array since it's not an assosiative array)
+                        When auto-convertion may fail (i.e. you want to pass an empty XML-RPC struct as a parameter. Empty structs are represented as empty arrays in PHP but, if you give an empty array as a parameter it will be auto-converted to an XML-RPC array since it's not an associative array)
                     </listitem>
                 </itemizedlist>
             </para>
@@ -176,7 +176,7 @@ $service->serviceProcedure($p1, $p2);
             <programlisting role="php"><![CDATA[...
 /** 2 parameters are passed to this procedure
  *  The first parameter is an XML-RPC base64 type that is created using the static Zend_XmlRpc_Value::getXmlRpcValue() function
- *  The second parameter is an XML-RPC strcture that is created explictly
+ *  The second parameter is an XML-RPC structure that is created explictly
  */
 
 $p1 = ZXmlRpcValue::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
