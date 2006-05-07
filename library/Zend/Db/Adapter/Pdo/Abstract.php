@@ -106,28 +106,6 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         return $this->_connection->prepare($sql);
     }
 
-    /**
-     * Inserts a table row with specified data.
-     *
-     * @param string $table The table to insert data into.
-     * @param array $bind Column-value pairs.
-     * @return int The number of affected rows.
-     */
-    public function insert($table, $bind)
-    {
-        // col names come from the array keys
-        $cols = array_keys($bind);
-
-        // build the statement
-        $sql = "INSERT INTO $table "
-             . '(' . implode(', ', $cols) . ') '
-             . 'VALUES (:' . str_replace("_", "", implode(', :', $cols)) . ')';
-
-        // execute the statement and return the number of affected rows
-        $result = $this->query($sql, $bind);
-        return $result->rowCount();
-    }
-
 
     /**
      * Gets the last inserted ID.
