@@ -1,7 +1,7 @@
 <sect1 id="zend.xmlrpc.client">
 	<title>Zend_XmlRpc_Client</title>
 	<sect2 id="zend.xmlrpc.client.introduction">
-		<title>Introductie</title>
+		<title>Inleiding</title>
 		<para>
 			Het gebruik van de <code>Zend_XmlRpc_Client</code> komt erg overeen met het gebruik van <code>SoapClient</code> objecten (<ulink url="http://www.php.net/soap">SOAP web service extensie</ulink>).
 			Je kan gewoonweg de XML-RPC service procedures aanroepen als  <code>Zend_XmlRpc_Client</code> methodes.
@@ -10,16 +10,15 @@
 		<example>
 			<title>A basis XML-RPC request</title>
 			<programlisting role="php"><![CDATA[<?php
-								 /**
-								 * Maak verbinding met de framework.zend.com server en krijg een array met de beschikbare methodes.
-								 */
-								 require_once 'Zend/XmlRpc/Client.php';
-								 
-								 $server = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
-								 
-								 print_r( $server->system->listMethods() );
-					
-					?>]]>
+/**
+* Maak verbinding met de framework.zend.com server en krijg een array met de beschikbare methodes.
+*/
+require_once 'Zend/XmlRpc/Client.php';
+
+$server = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
+
+print_r( $server->system->listMethods() );
+?>]]>
 				</programlisting>
 			</example>
 			<para>
@@ -89,17 +88,17 @@
 						</tbody>
 					</tgroup>
 				</table>
-				<programlisting role="php"><![CDATA[...
-								       /** 2 parameters worden in deze procedure doorgegeven
-								       *  De eerste parameter is een string die automatisch zal worden omgezet in een XML-RPC string type
-								       *  De tweede parameter is een associatieve array die zal worden omgezet in een XML-RPC struct
-								       */
-								       
-								       $p1 = 'parameter 1';
-								       $p2 = array('name' => 'Joe', 'age' => 30);
-						
-						$service->serviceProcedure($p1, $p2);
-					...]]>
+				<programlisting role="php"><![CDATA[<?php
+/** 2 parameters worden in deze procedure doorgegeven
+*  De eerste parameter is een string die automatisch zal worden omgezet in een XML-RPC string type
+*  De tweede parameter is een associatieve array die zal worden omgezet in een XML-RPC struct
+*/
+
+$p1 = 'parameter 1';
+$p2 = array('name' => 'Joe', 'age' => 30);
+
+$service->serviceProcedure($p1, $p2);
+?>]]>
 				</programlisting>
 			</sect3>
 			<sect3 id='zend.xmlrpc.client.parameters.xmlrpc_value'>
@@ -179,17 +178,17 @@
 						</tbody>
 					</tgroup>
 				</table>
-				<programlisting role="php"><![CDATA[...
-								       /** 2 parameters worden aan deze procedure doorgegeven
-								       *  De eerste parameter is een XML-RPC base64 type dat werd gemaakt door de statische functie Zend_XmlRpc_Value::getXmlRpcValue() aan te roepen
-								       *  De tweede parameter is een XML-RPC structuur die expliciet werd gemaakt
-								       */
-								       
-								       $p1 = ZXmlRpcValue::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
-								       $p2 = new Zend_XmlRpc_Value_Struct(array('name' => 'Joe', 'age' => 30));
-						
-						$service->serviceProcedure($p1, $p2);
-					...]]>
+				<programlisting role="php"><![CDATA[<?php
+/** 2 parameters worden aan deze procedure doorgegeven
+*  De eerste parameter is een XML-RPC base64 type dat werd gemaakt door de statische functie Zend_XmlRpc_Value::getXmlRpcValue() aan te roepen
+*  De tweede parameter is een XML-RPC structuur die expliciet werd gemaakt
+*/
+
+$p1 = ZXmlRpcValue::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
+$p2 = new Zend_XmlRpc_Value_Struct(array('name' => 'Joe', 'age' => 30));
+
+$service->serviceProcedure($p1, $p2);
+?>]]>
 				</programlisting>
 				<para>
 					<note>
@@ -231,35 +230,35 @@
 			<example>
 				<title>Een XML-RPC service aanroepen met type hints</title>
 				<programlisting role="php"><![CDATA[<?php
-									 /**
-									 * Verbinden met een XML-RPC server, en zijn handtekening bestand opslaan (het equivalent 
-									 * van een SOAP WSDL bestand)
-									 */
-									 require_once 'Zend/XmlRpc/Client.php';
-									 
-									 $service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc');
-									 
-									 file_put_contents('/tmp/xmlrpc-signatures/example.xml', $service->__getMethodsXml());
-					
-					/* Het $service object bevat alle handtekeningen van de XML-RPC server. Wanneer de serviceProcedure word opgeroepen zal zijn parameter ($param) naar het juiste type worden omgezet aan de hand van de handtekening van de procedure.
-					*/
-					$service->serviceProcedure($param);
-					?>]]>
+/**
+* Verbinden met een XML-RPC server, en zijn handtekening bestand opslaan (het equivalent 
+* van een SOAP WSDL bestand)
+*/
+require_once 'Zend/XmlRpc/Client.php';
+
+$service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc');
+
+file_put_contents('/tmp/xmlrpc-signatures/example.xml', $service->__getMethodsXml());
+
+/* Het $service object bevat alle handtekeningen van de XML-RPC server. Wanneer de serviceProcedure word opgeroepen zal zijn parameter ($param) naar het juiste type worden omgezet aan de hand van de handtekening van de procedure.
+*/
+$service->serviceProcedure($param);
+?>]]>
 					</programlisting>
 					<programlisting role="php"><![CDATA[<?php
-										/**
-										* Verbinden met een XML-RPC server, gebruik makend van een bestaand handtekeningbestand. Zo verzekeren 
-										* we ons ervan dat de doorgegeven parameters van het juiste type zijn.
-										*/
-										require_once 'Zend/XmlRpc/Client.php';
-										
-										$signature_file_xml = file_get_contents('/tmp/xmlrpc-signatures/example.xml');
-										$service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc', 'namespace', $signature_file_xml);
-										
-										/* Het $service object bevat alle handtekeningen van de XML-RPC server. Wanneer de serviceProcedure word opgeroepen zal zijn parameter ($param) naar het juiste type worden omgezet aan de hand van de handtekening van de procedure.
-										*/
-										$service->serviceProcedure($param);
-						?>]]>
+/**
+* Verbinden met een XML-RPC server, gebruik makend van een bestaand handtekeningbestand. Zo verzekeren 
+* we ons ervan dat de doorgegeven parameters van het juiste type zijn.
+*/
+require_once 'Zend/XmlRpc/Client.php';
+
+$signature_file_xml = file_get_contents('/tmp/xmlrpc-signatures/example.xml');
+$service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc', 'namespace', $signature_file_xml);
+
+/* Het $service object bevat alle handtekeningen van de XML-RPC server. Wanneer de serviceProcedure word opgeroepen zal zijn parameter ($param) naar het juiste type worden omgezet aan de hand van de handtekening van de procedure.
+*/
+$service->serviceProcedure($param);
+?>]]>
 						</programlisting>
 					</example>
 				</sect2>
@@ -285,18 +284,18 @@
 							</listitem>
 						</itemizedlist>
 					</para>
-					<programlisting role="php"><![CDATA[...
-									       $service->serviceProcedure();
-						
-						$response = $service->__getResponse();
-						// $response is de PHP variabele omgezet van het type van de teruggegeven XML-RPC waarde
-						
-						$response = $service->__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
-						// $response is een string die de XML bevat die de door de procedure teruggegeven waarde voorstelt
-						
-						$response = $service->__getResponse(ZXmlRpcClient::RESPONSE_ZXMLRPC_OBJECT);
-						// $response is een Zend_XmlRpc_Value instantie die de door de procedure teruggegeven waarde voorstelt
-						...]]>
+					<programlisting role="php"><![CDATA[<?php
+$service->serviceProcedure();
+
+$response = $service->__getResponse();
+// $response is de PHP variabele omgezet van het type van de teruggegeven XML-RPC waarde
+
+$response = $service->__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
+// $response is een string die de XML bevat die de door de procedure teruggegeven waarde voorstelt
+
+$response = $service->__getResponse(ZXmlRpcClient::RESPONSE_ZXMLRPC_OBJECT);
+// $response is een Zend_XmlRpc_Value instantie die de door de procedure teruggegeven waarde voorstelt
+?>]]>
 					</programlisting>
 				</sect2>
 			</sect1>
