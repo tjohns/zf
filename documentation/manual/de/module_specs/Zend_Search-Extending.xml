@@ -109,7 +109,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </sect2>
 
     <sect2 id="zend.search.extending.scoring">
-		<title>Scoring Algorithms</title>
+		<title>Algorithmen für Punktwertermittlung</title>
         <para>
             The score of query <literal>q</literal> for document <literal>d</literal>
             is defined as follows:

@@ -12,7 +12,7 @@
 
         <para>
             Der PHP Quellcode unten zeigt ein Beispiel, wie eine Datei durch Verwendung der
-            Zend_Search_Lucene Programmierschnittstelle indiziert werden kann:
+            Zend_Search_Lucene Programmierschnittstelle (API) indiziert werden kann:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
