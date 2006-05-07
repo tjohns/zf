@@ -10,6 +10,7 @@ Zend Framework                                                             NEWS
 - Added abstract methods to Zend_Pdf_Image for image details w/h etc (Kevin) 
 - The Zend Framework is now released under the simpler new BSD license. (Andi)
 - Fixed bug in Zend_Feed::findFeeds(). Reported by Ben Ramsey. (Mike)
+- Zend_Db_Adapter_Pdo_Abstract::insert() has been removed (Rob)
 
 =RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
