@@ -1,4 +1,7 @@
-<sect1 id="zend.filter.input.introduction">
+<sect1 id="zend.filter.input">
+    <title>Zend_Filter_Input</title>
+    
+    <sect2 id="zend.filter.input.introduction">
     <title>Inleiding</title>
     <para><literal>Zend_Filter_Input</literal> verstrekt faciliteiten die een 
 	gestructureerd en weinig soepele benadering van invoerfilteren mogelijk maken. Het doel
@@ -40,6 +43,7 @@
 	benamingsovereenkomsten. Alle methodes luisteren naar een eenvoudige regel - als
 	de data geldig is, wordt ze teruggestuurd, zo niet wordt <literal>FALSE</literal>
 	teruggestuurd. Extreme simpliciteit.</para>
+    </sect2>
     <sect2 id="zend.filter.input.introduction.whitelist">
         <title>Witte lijst filteren</title>
         <para>Witte lijst filtermethodes beginnen met de <literal>is</literal>
@@ -124,118 +128,119 @@ $taglessComment = $filterPost->noTags('comment');
 ?>]]>
         </programlisting>
     </sect2>
-</sect1>
-<sect1 id="zend.filter.input.theoryofoperation">
-    <title>Werkingstheorie</title>
-    <para><literal>Zend_Filter_Input</literal> consolideert een paar verschillende
-	benaderingen voor invoer filteren in een enkele API met een verenigd gedrag
-	en strikte benamingsovereenkomsten (zie 
-	<xref linkend="zend.filter.input.introduction" />). Deze eigenschappen brengen
-	<literal>Zend_Filter_Input</literal> op gelijke voet met bestaande oplossingen,
-	maar ze doen niets om diegenen die een meer gestructureerde en strikte aanbreng
-	nodig hebben te helpen. Daarom versterkt <literal>Zend_Filter_Input</literal>
-	controle voor toegang tot invoer.</para>
-    <para>Twee syntaxen worden ondersteund. In de (strikte) standaard benadering
-	wordt er slechts één enkel argument aan de constructor doorgegeven - de array
-	die gefilterd moet worden::</para>
-    <programlisting>
-<![CDATA[<?php
 
-$filterPost = new Zend_Filter_Input($_POST);
-$email = $filterPost->isEmail('email');
+    <sect2 id="zend.filter.input.theoryofoperation">
+        <title>Werkingstheorie</title>
+        <para><literal>Zend_Filter_Input</literal> consolideert een paar verschillende
+    	benaderingen voor invoer filteren in een enkele API met een verenigd gedrag
+    	en strikte benamingsovereenkomsten (zie 
+    	<xref linkend="zend.filter.input.introduction" />). Deze eigenschappen brengen
+    	<literal>Zend_Filter_Input</literal> op gelijke voet met bestaande oplossingen,
+    	maar ze doen niets om diegenen die een meer gestructureerde en strikte aanbreng
+    	nodig hebben te helpen. Daarom versterkt <literal>Zend_Filter_Input</literal>
+    	controle voor toegang tot invoer.</para>
+        <para>Twee syntaxen worden ondersteund. In de (strikte) standaard benadering
+    	wordt er slechts één enkel argument aan de constructor doorgegeven - de array
+    	die gefilterd moet worden::</para>
+        <programlisting>
+    <![CDATA[<?php
 
-?>]]>
-    </programlisting>
-    <para><literal>Zend_Filter_Input</literal> zet de doorgegeven array
-    (<literal>$_POST</literal>) tot <literal>NULL</literal>, zodat onmiddellijke toegang
-	niet langer mogelijk is. (De rauwe data is alleen voorhanden via de <literal>getRaw()</literal> 
-	methode, die gemakkelijker te monitoren en/of te vermijden is.)</para>
-    <para>In de optionele (niet strikte) benadering wordt <literal>FALSE</literal> als
-	het tweede argument aan de constructor doorgegeven:</para>
-    <programlisting>
-<![CDATA[<?php
+    $filterPost = new Zend_Filter_Input($_POST);
+    $email = $filterPost->isEmail('email');
 
-$filterPost = new Zend_Filter_Input($_POST, FALSE);
-$email = $filterPost->isEmail('email');
+    ?>]]>
+        </programlisting>
+        <para><literal>Zend_Filter_Input</literal> zet de doorgegeven array
+        (<literal>$_POST</literal>) tot <literal>NULL</literal>, zodat onmiddellijke toegang
+    	niet langer mogelijk is. (De rauwe data is alleen voorhanden via de <literal>getRaw()</literal> 
+    	methode, die gemakkelijker te monitoren en/of te vermijden is.)</para>
+        <para>In de optionele (niet strikte) benadering wordt <literal>FALSE</literal> als
+    	het tweede argument aan de constructor doorgegeven:</para>
+        <programlisting>
+    <![CDATA[<?php
 
-?>]]>
-    </programlisting>
-    <para>Het gebruik van het filter is identiek, maar <literal>Zend_Filter_Input</literal> 
-	zet de oorspronkelijke array (<literal>$_POST</literal>) niet naar <literal>NULL</literal>,
-	zodat ontwikkelaars er nog directe toegang toe hebben. Deze manier van werken is
-	afgeraden ten voordele van de strikte benadering.</para>
-    <para><literal>Zend_Filter_Input</literal> is ontworpen voor arrays. Veel invoerbronnen
-	zijn reeds in PHP's superglobal arrays (<literal>$_GET</literal>, <literal>$_POST</literal>,
-    <literal>$_COOKIE</literal>, etc.) gegoten, en een array is een welgekend concept om
-	invoer van andere bronnen op te slaan. Indien je een scalaire waarde moet filteren, zie
-    <xref linkend="zend.filter" />.</para>
-</sect1>
-<sect1 id="zend.filter.input.usecases">
-    <title>Gebruik</title>
-    <para>Strikt Witte Lijst Filteren (Voorkeur):</para>
-    <programlisting>
-<![CDATA[<?php
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    $email = $filterPost->isEmail('email');
 
-$filterPost = new Zend_Filter_Input($_POST);
+    ?>]]>
+        </programlisting>
+        <para>Het gebruik van het filter is identiek, maar <literal>Zend_Filter_Input</literal> 
+    	zet de oorspronkelijke array (<literal>$_POST</literal>) niet naar <literal>NULL</literal>,
+    	zodat ontwikkelaars er nog directe toegang toe hebben. Deze manier van werken is
+    	afgeraden ten voordele van de strikte benadering.</para>
+        <para><literal>Zend_Filter_Input</literal> is ontworpen voor arrays. Veel invoerbronnen
+    	zijn reeds in PHP's superglobal arrays (<literal>$_GET</literal>, <literal>$_POST</literal>,
+        <literal>$_COOKIE</literal>, etc.) gegoten, en een array is een welgekend concept om
+    	invoer van andere bronnen op te slaan. Indien je een scalaire waarde moet filteren, zie
+        <xref linkend="zend.filter" />.</para>
+    </sect2>
+    <sect2 id="zend.filter.input.usecases">
+        <title>Gebruik</title>
+        <para>Strikt Witte Lijst Filteren (Voorkeur):</para>
+        <programlisting>
+    <![CDATA[<?php
 
-if ($email = $filterPost->isEmail('email')) {
-    /* $email is een geldig email formaat. */
-} else {
-    /* $email is geen geldig email formaat. */
-}
+    $filterPost = new Zend_Filter_Input($_POST);
 
-?>]]>
-    </programlisting>
-    <para>Strikt Blind Filteren:</para>
-    <programlisting>
-<![CDATA[<?php
+    if ($email = $filterPost->isEmail('email')) {
+        /* $email is een geldig email formaat. */
+    } else {
+        /* $email is geen geldig email formaat. */
+    }
 
-$filterPost = new Zend_Filter_Input($_POST);
-$alphaName = $filterPost->getAlpha('name');
+    ?>]]>
+        </programlisting>
+        <para>Strikt Blind Filteren:</para>
+        <programlisting>
+    <![CDATA[<?php
 
-?>]]>
-    </programlisting>
-    <para>Strikt Zwarte Lijst Filteren:</para>
-    <programlisting>
-<![CDATA[<?php
+    $filterPost = new Zend_Filter_Input($_POST);
+    $alphaName = $filterPost->getAlpha('name');
 
-$filterPost = new Zend_Filter_Input($_POST);
-$taglessComment = $filterPost->noTags('comment');
+    ?>]]>
+        </programlisting>
+        <para>Strikt Zwarte Lijst Filteren:</para>
+        <programlisting>
+    <![CDATA[<?php
 
-?>]]>
-    </programlisting>
-    <para>Niet-Strikt Witte Lijst Filteren:</para>
-    <programlisting>
-<![CDATA[<?php
+    $filterPost = new Zend_Filter_Input($_POST);
+    $taglessComment = $filterPost->noTags('comment');
 
-$filterPost = new Zend_Filter_Input($_POST, FALSE);
+    ?>]]>
+        </programlisting>
+        <para>Niet-Strikt Witte Lijst Filteren:</para>
+        <programlisting>
+    <![CDATA[<?php
 
-if ($email = $filterPost->isEmail('email')) {
-    /* $email is een geldig email formaat. */
-} else {
-    /* $email is geen geldig email formaat. */
-}
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
 
-?>]]>
-    </programlisting>
-    <para>Niet Strikt Blind Filteren:</para>
-    <programlisting>
-<![CDATA[<?php
+    if ($email = $filterPost->isEmail('email')) {
+        /* $email is een geldig email formaat. */
+    } else {
+        /* $email is geen geldig email formaat. */
+    }
 
-$filterPost = new Zend_Filter_Input($_POST, FALSE);
-$name = $filterPost->getAlpha('name');
+    ?>]]>
+        </programlisting>
+        <para>Niet Strikt Blind Filteren:</para>
+        <programlisting>
+    <![CDATA[<?php
 
-?>]]>
-    </programlisting>
-    <para>Niet Strikt Zwarte Lijst Filteren:</para>
-    <programlisting>
-<![CDATA[<?php
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    $name = $filterPost->getAlpha('name');
 
-$filterPost = new Zend_Filter_Input($_POST, FALSE);
-$comment = $filterPost->noTags('comment');
+    ?>]]>
+        </programlisting>
+        <para>Niet Strikt Zwarte Lijst Filteren:</para>
+        <programlisting>
+    <![CDATA[<?php
 
-?>]]>
-    </programlisting>
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    $comment = $filterPost->noTags('comment');
+
+    ?>]]>
+        </programlisting>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
