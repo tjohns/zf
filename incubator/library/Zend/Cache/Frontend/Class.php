@@ -15,7 +15,7 @@
  *
  * @package    Zend_Cache
  * @subpackage Frontend
- * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
  
@@ -28,7 +28,7 @@ require_once 'Zend/Cache/Core.php';
 /**
  * @package    Zend_Cache
  * @subpackage Frontend
- * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Cache_Frontend_Class extends Zend_Cache_Core

@@ -15,7 +15,7 @@
  *
  * @package    Zend_Cache
  * @subpackage Backend
- * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -29,7 +29,7 @@ require_once 'Zend/Cache/Backend/Interface.php';
 /**
  * @package    Zend_Cache
  * @subpackage Backend
- * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface 

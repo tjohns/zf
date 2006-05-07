@@ -14,14 +14,14 @@
  * to license@zend.com so we can send you a copy immediately.
  * 
  * @package    Zend_Cache
- * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
  
 
 /** 
  * @package    Zend_Cache
- * @copyright  Copyright (c) 2006 Fabien MARTY, Mislav MAROHNIC
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Cache 
