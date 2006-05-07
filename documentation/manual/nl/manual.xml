@@ -56,7 +56,7 @@
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
         &module_specs.Zend_Filter;
-	&module_specs.Zend_Filter.Input;
+	    &module_specs.Zend_Filter_Input;
     </chapter>
     <chapter id="zend.httpclient">
         <title>Zend_HttpClient</title>
