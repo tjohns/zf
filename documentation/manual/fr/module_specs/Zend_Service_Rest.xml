@@ -19,7 +19,7 @@ try {
 
     $rest->setURI('http://exemple.org');
 
-    // Retourne un objet Zend_HttpClient_Response
+    // Retourne un objet Zend_Http_Response
     $response = $rest->restGet('/services/rest', 'foo=bar&baz=bat');
 
     if ($response->isSuccessful()) {
