@@ -1,56 +1,56 @@
 <sect1 id="zend.log.introduction">
-    <title>Introduction</title>
+    <title>简介</title>
     <para>
-        <code>Zend_Log</code> is a general purpose logging class.  <code>Zend_Log</code> is a static class that
-        can not be instantiated directly.  It holds an array of instances of <code>Zend_Log</code>, one for
-        each log used by the application.  Each logger instance uses an adapter that implements
-        <code>Zend_Log_Adapter_Interface</code>.
+        <code>Zend_Log</code> 是一个通用的日志类  <code>Zend_Log</code> 是一个静态类 ，它不能被直接实例化
+        .  它自身维护着一个包含一组<code>Zend_Log</code>实例(对象)的数组, 每一个实例对应应用程序的每一类日志记录，
+		每一个日志(记录器)的实例使用一个实现了<code>Zend_Log_Adapter_Interface</code>
+        接口的适配器(adaptor).
     </para>
 
     <para>
-        To use <code>Zend_Log</code>, <ulink url="http://php.net/include">include()</ulink> the
-        <code>Zend_Log</code> class and any adapter classes that will be used. For example, if an application
-        will log to both the console (PHP's output buffer) and text files, the following files would be
-        included:
+        要使用 <code>Zend_Log</code>类, 先使用<ulink url="http://php.net/include">include()</ulink> 引入
+        <code>Zend_Log</code> 类和其他你需要使用的适配器(adaptor)类. 例如, 如果一个应用程序既要在用户终端(PHP的输出缓冲)
+		又要在文本文件中记录日志, 需要引入下面的文件
+        :
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Log.php';                  // Zend_Log base class
-require_once 'Zend/Log/Adapter/Console.php';  // Console log adapter
-require_once 'Zend/Log/Adapter/File.php';     // File log adapter
+require_once 'Zend/Log.php';                  // Zend_Log 基类
+require_once 'Zend/Log/Adapter/Console.php';  // 用户终端日志适配器
+require_once 'Zend/Log/Adapter/File.php';     // 文件日志适配器
 ]]></programlisting>
 
-        <code>Zend_Log</code> can be used in a simplified way for a single log, can be configured for multiple
-        logs, and can also be used to log internal operations of many Zend Framework classes.
+        <code>Zend_Log</code> 可以用来简化单目标的日志记录操作, 加以配置可以处理复杂的（多目标）日志记录
+		, 同样也被很多Zend Framewrok的类用来记录内部的操作.
     </para>
 </sect1>
 
 <sect1 id="zend.log.simple-logging">
-    <title>Logging to a Single Log</title>
+    <title>记录日志到单一的目标中</title>
     <para>
-        A Logger is created by calling the <code>Zend_Log::registerLogger()</code> method with a
-        <code>Zend_Log_Adapter_Interface</code> instance as an argument.
+        一个日志记录器可以通过调用<code>Zend_Log::registerLogger()</code> 方法来生成 ，
+		传入<code>Zend_Log_Adapter_Interface</code>的实例作为参数 .
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Log.php';                // Zend_Log base class
-require_once 'Zend/Log/Adapter/File.php';   // File log adapter
+require_once 'Zend/Log.php';                // Zend_Log 基类
+require_once 'Zend/Log/Adapter/File.php';   // 文件日志适配器
 
-// Register the file logger
+// 注册一个文件日志记录器
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
 ]]></programlisting>
     </para>
 
     <para>
-        Messages are then sent to the log with <code>Zend_Log::log()</code>.
+        然后，我们可以通过调用<code>Zend_Log::log()</code>来记录日志的信息.
 
         <programlisting role="php"><![CDATA[
 /**
- * Send a message to the log.  An optional second argument specifies the log
- * level.  If no level is supplied, LEVEL_DEBUG is assumed.
+ * 发送一条信息到日志中.  第二个参数为一个可选参数，它用来指定日志的级别(level)
+ * .  如果我们没有提供日志级别, 程序假定其为LEVEL_DEBUG.
  */
 Zend_Log::log('First logging message.');
 
 /**
- * Log a severe message.
+ * 记录一条Severe级别的消息.
  */
 Zend_Log::log('A serious error has occurred.', Zend_Log::LEVEL_SEVERE);
 ]]></programlisting>
@@ -58,11 +58,10 @@ Zend_Log::log('A serious error has occurred.', Zend_Log::LEVEL_SEVERE);
 </sect1>
 
 <sect1 id="zend.log.log-levels">
-   <title>Log Levels</title>
+   <title>日记级别</title>
    <para>
-       <code>Zend_Log::log()</code> will log all messages as <code>LEVEL_DEBUG</code> unless a different level
-       is supplied as the optional second argument.  The following levels are available as constants of the
-       <code>Zend_Log</code> class.
+	   默认情况下， <code>Zend_Log::log()</code>将使用<code>LEVEL_DEBUG</code>作为日志的级别记录我们发送的消息,
+	   除非我们使用它的第二个参数来提供一个级别.  下面的级别是<code>Zend_Log</code>现有的日志级别常量.
 
        <programlisting role="php"><![CDATA[
 LEVEL_DEBUG     = 1
@@ -74,25 +73,24 @@ LEVEL_SEVERE    = 16
 </sect1>
 
 <sect1 id="zend.log.advanced-logging">
-   <title>Advanced Logging: Multiple Loggers</title>
+   <title>高级的日志记录: 多记录器</title>
    <para>
-        <code>Zend_Log</code> supports logging to multiple log adapters.  It can either send a message to all
-        logs, or target a message to a specific log.
+        <code>Zend_Log</code> 支持使用多个日至记录器来记录日志.  它既可以同时发送消息到多个日志目标中，也可以发送日志到指定的目标.
    </para>
 
    <para>
-        When creating multiple loggers, each log must be given a unique name.  Loggers are registered with the
-        <code>registerLogger()</code> method, with the log name supplied as the optional second argument.
+        当创建多目标日志记录器时, 每一个日志必须要指定一个唯一的名字.  用<code>registerLogger()</code>
+        方法来注册日志记录器, 日志的名字可以又方法的第二个(可选)参数来提供.
    </para>
 
    <para>
-        In the example below, two loggers are created: one for the console, and one for a file.  They will be
-        given the names <code>Console</code> and <code>File</code>, respectively.
+        在下面的例子里, 两个日志记录器将会被创建: 一个针对用户终端, 一个针对文件.  
+        它们将分别被命名为<code>Console</code> 和 <code>File</code>.
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Log.php';                 // Zend_Log base class
-require_once 'Zend/Log/Adapter/File.php';    // File log adapter
-require_once 'Zend/Log/Adapter/Console.php'; // Console log adapter
+require_once 'Zend/Log.php';                 // Zend_Log 基类
+require_once 'Zend/Log/Adapter/File.php';    // 文件日志适配器
+require_once 'Zend/Log/Adapter/Console.php'; // 用户终端日志适配器
 
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'File');
 Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Console');
