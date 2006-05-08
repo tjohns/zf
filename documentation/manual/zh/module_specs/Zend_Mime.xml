@@ -1,29 +1,29 @@
 <sect1 id="zend.mime.introduction">
-    <title>½éÉÜ</title>
+    <title>ä»‹ç»</title>
     <para>
-        <code>Zend_Mime</code> ÊÇÒ»¸öÓÃÀ´´¦Àíº¬ÓĞ¶à¸ö²¿·ÖµÄ MIME ÏûÏ¢µÄ¸¨ÖúÀà. ËüÎ´ <link
-        linkend="zend.mail"><code>Zend_Mail</code></link> Ìá¹©Ö§³Ö, ²¢ÇÒ¿ÉÒÔ±»ÆäËûĞèÒª MIME Ö§³ÖµÄÓ¦ÓÃ³ÌĞòÊ¹ÓÃ.
+        <code>Zend_Mime</code> æ˜¯ä¸€ä¸ªç”¨æ¥å¤„ç†å«æœ‰å¤šä¸ªéƒ¨åˆ†çš„ MIME æ¶ˆæ¯çš„è¾…åŠ©ç±». å®ƒæœª <link
+        linkend="zend.mail"><code>Zend_Mail</code></link> æä¾›æ”¯æŒ, å¹¶ä¸”å¯ä»¥è¢«å…¶ä»–éœ€è¦ MIME æ”¯æŒçš„åº”ç”¨ç¨‹åºä½¿ç”¨.
     </para>
     <para>
-        <code>Zend_Mime</code> Ìá¹©ÁËÒ»Ì×¼òµ¥µÄ·½·¨ÒÔ±ãÊ¹ÓÃ MIME:
+        <code>Zend_Mime</code> æä¾›äº†ä¸€å¥—ç®€å•çš„æ–¹æ³•ä»¥ä¾¿ä½¿ç”¨ MIME:
         <itemizedlist>
             <listitem>
-                <code>boundary()</code>: ·µ»Ø MIME ·Ö½ç×Ö·û´®.
+                <code>boundary()</code>: è¿”å› MIME åˆ†ç•Œå­—ç¬¦ä¸².
             </listitem>
             <listitem>
-                <code>boundaryLine()</code>: ·µ»ØÍêÕûµÄ MIME ·Ö½çĞĞ.
+                <code>boundaryLine()</code>: è¿”å›å®Œæ•´çš„ MIME åˆ†ç•Œè¡Œ.
             </listitem>
             <listitem>
-                <code>encodeBase64()</code>: ½«Ò»¸ö×Ö·û´®½øĞĞ base64 ±àÂë.
+                <code>encodeBase64()</code>: å°†ä¸€ä¸ªå­—ç¬¦ä¸²è¿›è¡Œ base64 ç¼–ç .
             </listitem>
             <listitem>
-                <code>encodeQuotedPrintable()</code>: Ê¹ÓÃ quoted-printable »úÖÆ¶Ô×Ö·û´®½øĞĞ±àÂë.
+                <code>encodeQuotedPrintable()</code>: ä½¿ç”¨ quoted-printable æœºåˆ¶å¯¹å­—ç¬¦ä¸²è¿›è¡Œç¼–ç .
             </listitem>
             <listitem>
-                <code>isPrintable()</code>: Èç¹û¸ø¶¨µÄ×Ö·û´®²»º¬ÓĞ²»¿ÉÏÔÊ¾(ÒëÕß£ºÔ­ÎÄÊÇ unprintable ) µÄ×Ö·ûÔò·µ»Ø TRUE, ·ñÔò·µ»Ø FALSE. 
+                <code>isPrintable()</code>: å¦‚æœç»™å®šçš„å­—ç¬¦ä¸²ä¸å«æœ‰ä¸å¯æ˜¾ç¤º(è¯‘è€…ï¼šåŸæ–‡æ˜¯ unprintable ) çš„å­—ç¬¦åˆ™è¿”å› TRUE, å¦åˆ™è¿”å› FALSE. 
             </listitem>
             <listitem>
-                <code>mimeEnd()</code>: ·µ»ØÍêÕûµÄ MIME ½áÊø±êÖ¾ĞĞ.
+                <code>mimeEnd()</code>: è¿”å›å®Œæ•´çš„ MIME ç»“æŸæ ‡å¿—è¡Œ.
             </listitem>
         </itemizedlist>
     </para>

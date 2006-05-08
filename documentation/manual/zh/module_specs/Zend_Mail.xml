@@ -1,14 +1,14 @@
 <sect1 id="zend.mail.introduction">
-    <title>¼ò½é</title>
+    <title>ç®€ä»‹</title>
     <para>
-        <code>Zend_Mail</code> Ìá¹©ÁËÍ¨ÓÃ»¯µÄ¹¦ÄÜÀ´±à¼­ºÍ·¢ËÍÎÄ±¾ÒÔ¼°¼æÈÝMIME±ê×¼µÄº¬ÓÐ¶à¸ö²¿·ÖµÄÓÊ¼þÐÅÏ¢. ÓÊ¼þ¿ÉÒÔÊ¹ÓÃ <code>Zend_Mail</code> Í¨¹ý php ÄÚ½¨µÄ
-        <ulink url="http://php.net/mail"><code>mail()</code></ulink> º¯Êý»òÕßÖ±½ÓÍ¨¹ý SMTP Á¬½Ó·¢ËÍ.
+        <code>Zend_Mail</code> æä¾›äº†é€šç”¨åŒ–çš„åŠŸèƒ½æ¥ç¼–è¾‘å’Œå‘é€æ–‡æœ¬ä»¥åŠå…¼å®¹MIMEæ ‡å‡†çš„å«æœ‰å¤šä¸ªéƒ¨åˆ†çš„é‚®ä»¶ä¿¡æ¯. é‚®ä»¶å¯ä»¥ä½¿ç”¨ <code>Zend_Mail</code> é€šè¿‡ php å†…å»ºçš„
+        <ulink url="http://php.net/mail"><code>mail()</code></ulink> å‡½æ•°æˆ–è€…ç›´æŽ¥é€šè¿‡ SMTP è¿žæŽ¥å‘é€.
     </para>
     <example>
-        <title>Ê¹ÓÃ Zend_Mail ·¢ËÍ¼òµ¥ÓÊ¼þ</title>
+        <title>ä½¿ç”¨ Zend_Mail å‘é€ç®€å•é‚®ä»¶</title>
         <para>
-            Ò»¸ö¼òµ¥ÓÊ¼þÓÉÒ»¸ö»òÕß¼¸¸öÊÕ¼þÈË,Ò»¸öÖ÷Ìâ, Ò»¸öÓÊ¼þÖ÷ÌåºÍÒ»¸ö·¢¼þÈË×é³É. Í¨¹ýÏÂÃæµÄ²½Öè¿ÉÒÔÍ¨¹ý PHP µÄ
-             <ulink url="http://php.net/mail"><code>mail()</code></ulink> º¯Êý·¢ËÍ´ËÀàÓÊ¼þ:
+            ä¸€ä¸ªç®€å•é‚®ä»¶ç”±ä¸€ä¸ªæˆ–è€…å‡ ä¸ªæ”¶ä»¶äºº,ä¸€ä¸ªä¸»é¢˜, ä¸€ä¸ªé‚®ä»¶ä¸»ä½“å’Œä¸€ä¸ªå‘ä»¶äººç»„æˆ. é€šè¿‡ä¸‹é¢çš„æ­¥éª¤å¯ä»¥é€šè¿‡ PHP çš„
+             <ulink url="http://php.net/mail"><code>mail()</code></ulink> å‡½æ•°å‘é€æ­¤ç±»é‚®ä»¶:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
@@ -21,24 +21,24 @@ $mail->send();
        </para>
     </example>
     <note>
-    	Äã±ØÐëÖÁÉÙÖÆ¶¨Ò»¸öÊÕ¼þÈË, Ò»¸ö·¢¼þÈË (ÀýÈçÍ¨¹ý <code>setFrom()</code> ·½·¨)ºÍÒ»¸öÓÊ¼þÏûÏ¢Ö÷Ìå (ÎÄ±¾ ºÍ/»òÕß HTML) À´Í¨¹ý <code>Zend_Mail</code> ·¢ËÍÓÊ¼þ. 
+    	ä½ å¿…é¡»è‡³å°‘åˆ¶å®šä¸€ä¸ªæ”¶ä»¶äºº, ä¸€ä¸ªå‘ä»¶äºº (ä¾‹å¦‚é€šè¿‡ <code>setFrom()</code> æ–¹æ³•)å’Œä¸€ä¸ªé‚®ä»¶æ¶ˆæ¯ä¸»ä½“ (æ–‡æœ¬ å’Œ/æˆ–è€… HTML) æ¥é€šè¿‡ <code>Zend_Mail</code> å‘é€é‚®ä»¶. 
     </note>
     <para>
-    	Í¨¹ý "get" ·½·¨¿ÉÒÔ¶ÁÈ¡¾ø´ó¶àÊý´¢´æÔÚ "mail" ¶ÔÏóÖÐµÄÓÊ¼þÊôÐÔ. ¸ü½øÒ»²½µÄÏ¸½ÚÇë²ÎÔÄAPIÎÄµµ.
-    	Ò»¸öÌØÀýÊÇ <code>getRecipients()</code>.Ëü·µ»ØÒ»¸öº¬ÓÐËùÓÐÏÈÇ°±»¼ÓÈëµÄÊÕ¼þµØÖ·µÄÊý×é.
+    	é€šè¿‡ "get" æ–¹æ³•å¯ä»¥è¯»å–ç»å¤§å¤šæ•°å‚¨å­˜åœ¨ "mail" å¯¹è±¡ä¸­çš„é‚®ä»¶å±žæ€§. æ›´è¿›ä¸€æ­¥çš„ç»†èŠ‚è¯·å‚é˜…APIæ–‡æ¡£.
+    	ä¸€ä¸ªç‰¹ä¾‹æ˜¯ <code>getRecipients()</code>.å®ƒè¿”å›žä¸€ä¸ªå«æœ‰æ‰€æœ‰å…ˆå‰è¢«åŠ å…¥çš„æ”¶ä»¶åœ°å€çš„æ•°ç»„.
     </para>
     <para>
-        ³öÓÚ°²È«Ô­Òò, <code>Zend_Mail</code> »á¹ýÂËÓÊ¼þÍ·ÖÐËùÓÐº¬ÓÐ (<code>\n</code>) ×Ö·ûµÄ×Ö¶ÎÒÔ·ÀÖ¹»ùÓÚheader injection( ÒëÕß: ÓÊ¼þÍ·²åÈë )µÄÂ©¶´¹¥»÷.
+        å‡ºäºŽå®‰å…¨åŽŸå› , <code>Zend_Mail</code> ä¼šè¿‡æ»¤é‚®ä»¶å¤´ä¸­æ‰€æœ‰å«æœ‰ (<code>\n</code>) å­—ç¬¦çš„å­—æ®µä»¥é˜²æ­¢åŸºäºŽheader injection( è¯‘è€…: é‚®ä»¶å¤´æ’å…¥ )çš„æ¼æ´žæ”»å‡».
     </para>
 </sect1>
 <sect1 id="zend.mail.sending">
-    <title>Í¨¹ý SMTP ·¢ËÍÓÊ¼þ</title>
+    <title>é€šè¿‡ SMTP å‘é€é‚®ä»¶</title>
     <para>
-    	ÎªÁËÍ¨¹ý SMTP ·¢ËÍÓÊ¼þ,Ò»¸ö <code>Zend_Mail_Transport_Smtp</code> ¶ÔÏóÐèÒªÔÚ <code>send()</code> ·½·¨±»µ÷ÓÃÖ®Ç°Í¨¹ý <code>Zend_Mail</code> 
-    	ÊµÀý»¯ºÍ×¢²á. Õâ¸ö SMTP transport ¶ÔÏó»á±»ËùÓÐµ±Ç°½Å±¾ÖÐµÄ<code>Zend_Mail::send()</code> Ê¹ÓÃ:
+    	ä¸ºäº†é€šè¿‡ SMTP å‘é€é‚®ä»¶,ä¸€ä¸ª <code>Zend_Mail_Transport_Smtp</code> å¯¹è±¡éœ€è¦åœ¨ <code>send()</code> æ–¹æ³•è¢«è°ƒç”¨ä¹‹å‰é€šè¿‡ <code>Zend_Mail</code> 
+    	å®žä¾‹åŒ–å’Œæ³¨å†Œ. è¿™ä¸ª SMTP transport å¯¹è±¡ä¼šè¢«æ‰€æœ‰å½“å‰è„šæœ¬ä¸­çš„<code>Zend_Mail::send()</code> ä½¿ç”¨:
     </para>
     <example>
-        <title>Í¨¹ý SMTP ·¢ËÍÓÊ¼þ</title>
+        <title>é€šè¿‡ SMTP å‘é€é‚®ä»¶</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail/Transport/Smtp.php';
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
@@ -46,22 +46,22 @@ Zend_Mail::setDefaultTransport($tr);
 ?>]]>   </programlisting>
     </example>
     <para>
-        Ê¹ÓÃ <code>setDefaultTransport()</code> ·½·¨ºÍ 
-        <code>Zend_Mail_Transport_Smtp</code> ¶ÔÏó²¢²»·ÑÊÂ. 
-        ÕâÁ½ÐÐ¿ÉÒÔÔÚÉèÖÃÊ± ( ÀýÈç config.inc »òÕßÀàËÆÎÄ¼þ ) ¾Í±»´¦Àí´Ó¶øÎªÕû¸ö½Å±¾ÅäÖÃ <code>Zend_Mail</code> ÀàµÄÐÐÎª.
-        Èç´Ë¿ÉÒÔ°ÑÅäÖÃÐÅÏ¢±£³ÖÔÚÓ¦ÓÃÂß¼­Ö®Íâ - ÓÊ¼þÊÇÍ¨¹ý SMTP »¹ÊÇ <ulink url="http://php.net/mail"><code>mail()</code></ulink> ·¢ËÍ, 
-        Ê¹ÓÃÊ²Ã´ÓÊ¼þ·þÎñÆ÷µÈµÈ.
+        ä½¿ç”¨ <code>setDefaultTransport()</code> æ–¹æ³•å’Œ 
+        <code>Zend_Mail_Transport_Smtp</code> å¯¹è±¡å¹¶ä¸è´¹äº‹. 
+        è¿™ä¸¤è¡Œå¯ä»¥åœ¨è®¾ç½®æ—¶ ( ä¾‹å¦‚ config.inc æˆ–è€…ç±»ä¼¼æ–‡ä»¶ ) å°±è¢«å¤„ç†ä»Žè€Œä¸ºæ•´ä¸ªè„šæœ¬é…ç½® <code>Zend_Mail</code> ç±»çš„è¡Œä¸º.
+        å¦‚æ­¤å¯ä»¥æŠŠé…ç½®ä¿¡æ¯ä¿æŒåœ¨åº”ç”¨é€»è¾‘ä¹‹å¤– - é‚®ä»¶æ˜¯é€šè¿‡ SMTP è¿˜æ˜¯ <ulink url="http://php.net/mail"><code>mail()</code></ulink> å‘é€, 
+        ä½¿ç”¨ä»€ä¹ˆé‚®ä»¶æœåŠ¡å™¨ç­‰ç­‰.
     </para>
 </sect1>
 <sect1 id="zend.mail.multiple-emails">
-    <title>Í¨¹ý SMTP Á¬½Ó·¢ËÍ¶à¸öÓÊ¼þ</title>
+    <title>é€šè¿‡ SMTP è¿žæŽ¥å‘é€å¤šä¸ªé‚®ä»¶</title>
     <para>
-        ÔÚÈ±Ê¡×´Ì¬ÏÂ, ÏµÍ³»áÎªÃ¿Ò»¸ö±»·¢ËÍµÄÓÊ¼þ½¨Á¢Ò»¸ö SMTP Á¬½Ó . Èç¹ûÄãÏëÍ¨¹ýÒ»¸ö SMTP Á¬½Ó·¢ËÍ¶à¸öÓÊ¼þ, 
-        Äã¿ÉÒÔ×Ô¼º¿ØÖÆ <code>connect()</code> º¯Êý. Èç¹ûtransport¶ÔÏóÔÚ<code>send()</code>±»µ÷ÓÃÖ®Ç°¾ÍÒÑ¾­½¨Á¢ÁËÒ»¸öÁ¬½Ó, 
-        ÄÇÃ´Õâ¸öÁ¬½Ó»á±»Ê¹ÓÃ²¢ÇÒ²»»á±»¹Ø±Õ.
+        åœ¨ç¼ºçœçŠ¶æ€ä¸‹, ç³»ç»Ÿä¼šä¸ºæ¯ä¸€ä¸ªè¢«å‘é€çš„é‚®ä»¶å»ºç«‹ä¸€ä¸ª SMTP è¿žæŽ¥ . å¦‚æžœä½ æƒ³é€šè¿‡ä¸€ä¸ª SMTP è¿žæŽ¥å‘é€å¤šä¸ªé‚®ä»¶, 
+        ä½ å¯ä»¥è‡ªå·±æŽ§åˆ¶ <code>connect()</code> å‡½æ•°. å¦‚æžœtransportå¯¹è±¡åœ¨<code>send()</code>è¢«è°ƒç”¨ä¹‹å‰å°±å·²ç»å»ºç«‹äº†ä¸€ä¸ªè¿žæŽ¥, 
+        é‚£ä¹ˆè¿™ä¸ªè¿žæŽ¥ä¼šè¢«ä½¿ç”¨å¹¶ä¸”ä¸ä¼šè¢«å…³é—­.
     </para>
     <example>
-        <title>Í¨¹ý SMTP Á¬½Ó·¢ËÍ¶à¸öÓÊ¼þ</title>
+        <title>é€šè¿‡ SMTP è¿žæŽ¥å‘é€å¤šä¸ªé‚®ä»¶</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
@@ -78,14 +78,14 @@ $tr->disconnect();
     </example>
 </sect1>
 <sect1 id="zend.mail.different-transports">
-    <title>Ê¹ÓÃ²»Í¬µÄTransport¶ÔÏó</title>
+    <title>ä½¿ç”¨ä¸åŒçš„Transportå¯¹è±¡</title>
     <para>
-        Èç¹ûÏëÊ¹ÓÃ²»Í¬µÄÁ¬½Ó·¢ËÍ²»Í¬µÄÓÊ¼þ, ÄãÒ²¿ÉÒÔ²»Ô¤ÏÈµ÷ÓÃ<code>setDefaultTransport()</code>¶ø
-        Ö±½Ó½«Transport¶ÔÏó´«µÝ¸ø<code>send()</code>. ±»´«µÝµÄtransport¶ÔÏó»áÔÚÊµ¼ÊµÄ<code>send()</code>µ÷ÓÃÖÐ
-        ¸²¸ÇÈ±Ê¡µÄtransport:
+        å¦‚æžœæƒ³ä½¿ç”¨ä¸åŒçš„è¿žæŽ¥å‘é€ä¸åŒçš„é‚®ä»¶, ä½ ä¹Ÿå¯ä»¥ä¸é¢„å…ˆè°ƒç”¨<code>setDefaultTransport()</code>è€Œ
+        ç›´æŽ¥å°†Transportå¯¹è±¡ä¼ é€’ç»™<code>send()</code>. è¢«ä¼ é€’çš„transportå¯¹è±¡ä¼šåœ¨å®žé™…çš„<code>send()</code>è°ƒç”¨ä¸­
+        è¦†ç›–ç¼ºçœçš„transport:
     </para>
     <example>
-        <title>Ê¹ÓÃ²»Í¬µÄTransport¶ÔÏó</title>
+        <title>ä½¿ç”¨ä¸åŒçš„Transportå¯¹è±¡</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
@@ -100,18 +100,18 @@ $mail->send();  // use default again
 ?>]]>   </programlisting>
     </example>
     <note>
-    	¶îÍâµÄ transport ¿ÉÒÔÍ¨¹ýÓ¦ÓÃ <code>Zend_Mail_Transport_Interface</code> ½Ó¿ÚÀ´ÊµÏÖ.
+    	é¢å¤–çš„ transport å¯ä»¥é€šè¿‡åº”ç”¨ <code>Zend_Mail_Transport_Interface</code> æŽ¥å£æ¥å®žçŽ°.
     </note>
 </sect1>
 <sect1 id="zend.mail.html-mails">
-    <title>HTML ÓÊ¼þ</title>
+    <title>HTML é‚®ä»¶</title>
     <para>
-    	Ê¹ÓÃ<code>setBodyHTML()</code>À´ÉèÖÃÓÊ¼þÕýÎÄÒÔ·¢ËÍHTMLÐÎÊ½µÄÓÊ¼þ. 
-    	MIME ÀàÐÍ»á×Ô¶¯±»ÉèÖÃÎª <code>text/html</code>.
-    	Èç¹ûÄã¼ÈÊ¹ÓÃ HTML ÓÖÊ¹ÓÃ´¿ÎÄ±¾, ÄÇÃ´ÏµÍ³»á×Ô¶¯Éú³ÉÒ»¸öÀàÐÍÎª multipart/alternative µÄÓÊ¼þÐÅÏ¢:
+    	ä½¿ç”¨<code>setBodyHTML()</code>æ¥è®¾ç½®é‚®ä»¶æ­£æ–‡ä»¥å‘é€HTMLå½¢å¼çš„é‚®ä»¶. 
+    	MIME ç±»åž‹ä¼šè‡ªåŠ¨è¢«è®¾ç½®ä¸º <code>text/html</code>.
+    	å¦‚æžœä½ æ—¢ä½¿ç”¨ HTML åˆä½¿ç”¨çº¯æ–‡æœ¬, é‚£ä¹ˆç³»ç»Ÿä¼šè‡ªåŠ¨ç”Ÿæˆä¸€ä¸ªç±»åž‹ä¸º multipart/alternative çš„é‚®ä»¶ä¿¡æ¯:
     </para>
     <example>
-        <title>·¢ËÍ HTML ÓÊ¼þ</title>
+        <title>å‘é€ HTML é‚®ä»¶</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
@@ -126,15 +126,15 @@ $mail->send();
     </example>
 </sect1>
 <sect1 id="zend.mail.attachments">
-    <title>¸½¼þ</title>
+    <title>é™„ä»¶</title>
     <para>
-    	Ê¹ÓÃ<code>addAttachment()</code>·½·¨¿ÉÒÔ½«ÎÄ¼þ×÷Îª¸½¼þÅäÊô¸øÓÊ¼þ.
-        <code>Zend_Mail</code>»áÈ±Ê¡µØÈÏÎª¸½¼þÊÇ¶þ½øÖÆ¶ÔÏó(application/octet-stream),ÒÔ
-        base64±àÂë´«Êä, ²¢ÇÒ×÷Îª¸½¼þ´¦Àí. Í¨¹ý´«µÝ¶îÍâµÄ²ÎÊý¸ø<code>addAttachment()</code>·½·¨¿ÉÒÔ
-        ¸²¸ÇÉÏÊöÈ±Ê¡Éè¶¨:
+    	ä½¿ç”¨<code>addAttachment()</code>æ–¹æ³•å¯ä»¥å°†æ–‡ä»¶ä½œä¸ºé™„ä»¶é…å±žç»™é‚®ä»¶.
+        <code>Zend_Mail</code>ä¼šç¼ºçœåœ°è®¤ä¸ºé™„ä»¶æ˜¯äºŒè¿›åˆ¶å¯¹è±¡(application/octet-stream),ä»¥
+        base64ç¼–ç ä¼ è¾“, å¹¶ä¸”ä½œä¸ºé™„ä»¶å¤„ç†. é€šè¿‡ä¼ é€’é¢å¤–çš„å‚æ•°ç»™<code>addAttachment()</code>æ–¹æ³•å¯ä»¥
+        è¦†ç›–ä¸Šè¿°ç¼ºçœè®¾å®š:
     </para>
     <example>
-        <title>´ø¸½¼þµÄÓÊ¼þ</title>
+        <title>å¸¦é™„ä»¶çš„é‚®ä»¶</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
@@ -145,8 +145,8 @@ $mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_
 ?>]]>   </programlisting>
     </example>
     <para>
-        Èç¹ûÄãÏëµÃµ½¶Ô´Ë¸½¼þµÄMIME²¿·ÖµÄ¸ü¶à¿ØÖÆ£¬Äã¿ÉÒÔÊ¹ÓÃ <code>addAttachment()</code> ·½·¨µÄ·µ»ØÖµÀ´ÐÞ¸ÄËû£¨¸½¼þµÄMIME²¿·Ö£©µÄÊôÐÔ. 
-        ·½·¨ <code>addAttachment()</code> ·µ»ØÒ»¸ö <code>Zend_Mime_Part</code> ¶ÔÏó:
+        å¦‚æžœä½ æƒ³å¾—åˆ°å¯¹æ­¤é™„ä»¶çš„MIMEéƒ¨åˆ†çš„æ›´å¤šæŽ§åˆ¶ï¼Œä½ å¯ä»¥ä½¿ç”¨ <code>addAttachment()</code> æ–¹æ³•çš„è¿”å›žå€¼æ¥ä¿®æ”¹ä»–ï¼ˆé™„ä»¶çš„MIMEéƒ¨åˆ†ï¼‰çš„å±žæ€§. 
+        æ–¹æ³• <code>addAttachment()</code> è¿”å›žä¸€ä¸ª <code>Zend_Mime_Part</code> å¯¹è±¡:
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
@@ -162,34 +162,34 @@ $mail->send();
     </para>
 </sect1>
 <sect1 id="zend.mail.adding-recipients">
-    <title>Ôö¼ÓÊÕ¼þÈË</title>
+    <title>å¢žåŠ æ”¶ä»¶äºº</title>
     <para>
-        ÓÐÈýÖÖ·½·¨¿ÉÒÔÔö¼ÓÊÕ¼þÈË:
+        æœ‰ä¸‰ç§æ–¹æ³•å¯ä»¥å¢žåŠ æ”¶ä»¶äºº:
         <itemizedlist>
         <listitem>
-        <para><code>addTo()</code>: Ôö¼ÓÒ»¸öÊÕ¼þÈËµ½Í·ÐÅÏ¢ "To" £¨ÊÕ¼þÈË£©</para>
+        <para><code>addTo()</code>: å¢žåŠ ä¸€ä¸ªæ”¶ä»¶äººåˆ°å¤´ä¿¡æ¯ "To" ï¼ˆæ”¶ä»¶äººï¼‰</para>
         </listitem>
         <listitem>
-        <para><code>addCc()</code>: Ôö¼ÓÒ»¸öÊÕ¼þÈËµ½Í·ÐÅÏ¢ "Cc" £¨³­ËÍ£© </para>
+        <para><code>addCc()</code>: å¢žåŠ ä¸€ä¸ªæ”¶ä»¶äººåˆ°å¤´ä¿¡æ¯ "Cc" ï¼ˆæŠ„é€ï¼‰ </para>
         </listitem>
         <listitem>
-        <para><code>addBcc()</code>: Ôö¼ÓÒ»¸öÊÕ¼þÈËµ½Í·ÐÅÏ¢ "Bcc" £¨Òþ²Ø³­ËÍ£©</para>
+        <para><code>addBcc()</code>: å¢žåŠ ä¸€ä¸ªæ”¶ä»¶äººåˆ°å¤´ä¿¡æ¯ "Bcc" ï¼ˆéšè—æŠ„é€ï¼‰</para>
         </listitem>
         </itemizedlist>
     </para>
     <note>
-        <code>addTo()</code> ºÍ <code>addCc()</code> ½ÓÊÜ¿ÉÑ¡µÄµÚ¶þ¸ö²ÎÊýÓÃÓÚÉú³ÉÓÃ»§¿É¶ÁµÄÍ·ÐÅÏ¢ (ÒëÕß: ÀàËÆÓÚ²¢ÐÐÓÚÓÊ¼þµØÖ·µÄ±ðÃû,ÈÃÊ¹ÓÃÕßÖªµÀÓÊ¼þ·¢ËÍ¸øË­) . 
+        <code>addTo()</code> å’Œ <code>addCc()</code> æŽ¥å—å¯é€‰çš„ç¬¬äºŒä¸ªå‚æ•°ç”¨äºŽç”Ÿæˆç”¨æˆ·å¯è¯»çš„å¤´ä¿¡æ¯ (è¯‘è€…: ç±»ä¼¼äºŽå¹¶è¡ŒäºŽé‚®ä»¶åœ°å€çš„åˆ«å,è®©ä½¿ç”¨è€…çŸ¥é“é‚®ä»¶å‘é€ç»™è°) . 
     </note>
 </sect1>
 <sect1 id="zend.mail.boundary">
-    <title>¸Ä±ä MIME ·Ö½çÏß</title>
+    <title>æ”¹å˜ MIME åˆ†ç•Œçº¿</title>
     <para>
-    	ÔÚÒ»¸ö°üº¬¶à¸ö²¿·ÖµÄÓÊ¼þÀï£¬ÓÃÓÚ·Ö¸ôÓÊ¼þµÄ²»Í¬²¿·ÖµÄMIME·Ö½çÏßÍ¨³£ÊÇËæ»úÉú³ÉµÄ.
-        µ«ÊÇÔÚÄ³Ð©Çé¿öÏÂ, ÄãÒ²Ðí»áÏ£ÍûÊ¹ÓÃÌØ¶¨µÄMIME·Ö½çÏß.ÈçÏÂÃæµÄÀý×ÓËùÊ¾Äã¿ÉÒÔÊ¹ÓÃ
-        <code>setMimeBoundary()</code> ·½·¨À´×öµ½ÕâÒ»µã:
+    	åœ¨ä¸€ä¸ªåŒ…å«å¤šä¸ªéƒ¨åˆ†çš„é‚®ä»¶é‡Œï¼Œç”¨äºŽåˆ†éš”é‚®ä»¶çš„ä¸åŒéƒ¨åˆ†çš„MIMEåˆ†ç•Œçº¿é€šå¸¸æ˜¯éšæœºç”Ÿæˆçš„.
+        ä½†æ˜¯åœ¨æŸäº›æƒ…å†µä¸‹, ä½ ä¹Ÿè®¸ä¼šå¸Œæœ›ä½¿ç”¨ç‰¹å®šçš„MIMEåˆ†ç•Œçº¿.å¦‚ä¸‹é¢çš„ä¾‹å­æ‰€ç¤ºä½ å¯ä»¥ä½¿ç”¨
+        <code>setMimeBoundary()</code> æ–¹æ³•æ¥åšåˆ°è¿™ä¸€ç‚¹:
     </para>
     <example>
-        <title>¸Ä±ä MIME ·Ö½çÏß</title>
+        <title>æ”¹å˜ MIME åˆ†ç•Œçº¿</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
@@ -200,13 +200,13 @@ $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++);
     </example>
 </sect1>
 <sect1 id="zend.mail.additional-headers">
-    <title>Ôö¼ÓÓÊ¼þÍ·ÐÅÏ¢</title>
+    <title>å¢žåŠ é‚®ä»¶å¤´ä¿¡æ¯</title>
     <para>
-        Ê¹ÓÃ<code>addHeader()</code> ·½·¨¿ÉÒÔÉèÖÃÈÎÒâµÄÍ·ÐÅÏ¢. ËüÐèÒªÁ½¸ö²ÎÊý£¬Í·ÐÅÏ¢µÄÃû×ÖºÍÖµ. µÚÈý¸ö²ÎÊýÊÇ¿ÉÑ¡²ÎÊý£¬Ëü¾ö¶¨ÁËÕâ¸öÍ·ÐÅÏ¢ÊÇ·ñ
-        ¿ÉÒÔÓÐ¶à¸öÖµ:
+        ä½¿ç”¨<code>addHeader()</code> æ–¹æ³•å¯ä»¥è®¾ç½®ä»»æ„çš„å¤´ä¿¡æ¯. å®ƒéœ€è¦ä¸¤ä¸ªå‚æ•°ï¼Œå¤´ä¿¡æ¯çš„åå­—å’Œå€¼. ç¬¬ä¸‰ä¸ªå‚æ•°æ˜¯å¯é€‰å‚æ•°ï¼Œå®ƒå†³å®šäº†è¿™ä¸ªå¤´ä¿¡æ¯æ˜¯å¦
+        å¯ä»¥æœ‰å¤šä¸ªå€¼:
     </para>
     <example>
-        <title>Ôö¼ÓÓÊ¼þÍ·ÐÅÏ¢</title>
+        <title>å¢žåŠ é‚®ä»¶å¤´ä¿¡æ¯</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
@@ -218,31 +218,31 @@ $mail->addHeader('X-greetingsTo', 'Dad', true);
     </example>
 </sect1>
 <sect1 id="zend.mail.character-sets">
-    <title>×Ö·û¼¯</title>
+    <title>å­—ç¬¦é›†</title>
     <para>
-        <code>Zend_Mail</code> ²»»á¶ÔÓÊ¼þ×Ö·û¼¯µÄÕýÈ·ÐÔ½øÐÐ¼ì²é. µ±<code>Zend_Mail</code>³õÊ¼»¯µÄÊ±ºò, 
-        »á¸øÒ»¸ö¸øÓÊ¼þ±¾ÉíµÄ×Ö·û¼¯, È±Ê¡Îªiso8859-1.³ÌÐò±ØÐëÈ·±£Ã¿¸öÌí¼ÓÖÁÓÊ¼þ¶ÔÏóµÄ²¿·Ö¶¼±»±ã±»±àÂëÎªÕýÈ·µÄ×Ö·û¼¯. 
-        ÔÚÌí¼ÓÒ»¸öÐÂµÄÓÊ¼þ²¿·ÖÊ±£¬¿ÉÒÔÎªÃ¿¸ö²¿·ÖÖÆ¶¨²»Í¬µÄ×Ö·û¼¯.
+        <code>Zend_Mail</code> ä¸ä¼šå¯¹é‚®ä»¶å­—ç¬¦é›†çš„æ­£ç¡®æ€§è¿›è¡Œæ£€æŸ¥. å½“<code>Zend_Mail</code>åˆå§‹åŒ–çš„æ—¶å€™, 
+        ä¼šç»™ä¸€ä¸ªç»™é‚®ä»¶æœ¬èº«çš„å­—ç¬¦é›†, ç¼ºçœä¸ºiso8859-1.ç¨‹åºå¿…é¡»ç¡®ä¿æ¯ä¸ªæ·»åŠ è‡³é‚®ä»¶å¯¹è±¡çš„éƒ¨åˆ†éƒ½è¢«ä¾¿è¢«ç¼–ç ä¸ºæ­£ç¡®çš„å­—ç¬¦é›†. 
+        åœ¨æ·»åŠ ä¸€ä¸ªæ–°çš„é‚®ä»¶éƒ¨åˆ†æ—¶ï¼Œå¯ä»¥ä¸ºæ¯ä¸ªéƒ¨åˆ†åˆ¶å®šä¸åŒçš„å­—ç¬¦é›†.
     </para>
     <note>
-    	×Ö·û¼¯Ö»ÄÜ¶ÔÎÄ±¾ÐÎÊ½µÄ²¿·ÖÊ¹ÓÃ.
+    	å­—ç¬¦é›†åªèƒ½å¯¹æ–‡æœ¬å½¢å¼çš„éƒ¨åˆ†ä½¿ç”¨.
     </note>
 </sect1>
 <sect1 id="zend.mail.encoding">
-    <title>±àÂë</title>
+    <title>ç¼–ç </title>
     <para>
-    	ÎÄ±¾ºÍHTMLÐÅÏ¢ÔÚÈ±Ê¡ÏÂÒÔquotedprintable»úÖÆ±àÂë. ÔÚ <code>addAttachment()</code>µ÷ÓÃµÄÊ±ºò
-    	Èç¹ûÃ»ÓÐÖÆ¶¨±àÂë·½Ê½»ò·ÖÅä¸øMIME¶ÔÏó£¬ËùÓÐÆäËûµÄ¸½¼þ½«ÒÔbase64±àÂë.
-        7Bit ºÍ 8Bit ±àÂëÄ¿Ç°½ö½öÔÚ¶þ½øÖÆÊý¾ÝÉÏÍ¨¹ý.
+    	æ–‡æœ¬å’ŒHTMLä¿¡æ¯åœ¨ç¼ºçœä¸‹ä»¥quotedprintableæœºåˆ¶ç¼–ç . åœ¨ <code>addAttachment()</code>è°ƒç”¨çš„æ—¶å€™
+    	å¦‚æžœæ²¡æœ‰åˆ¶å®šç¼–ç æ–¹å¼æˆ–åˆ†é…ç»™MIMEå¯¹è±¡ï¼Œæ‰€æœ‰å…¶ä»–çš„é™„ä»¶å°†ä»¥base64ç¼–ç .
+        7Bit å’Œ 8Bit ç¼–ç ç›®å‰ä»…ä»…åœ¨äºŒè¿›åˆ¶æ•°æ®ä¸Šé€šè¿‡.
     </para>
     <para>
-        <code>Zend_Mail_Transport_Smtp</code> ½«ÒÔÒ»¸öµã(.)»òÕßÁ½¸öµã(..)ÆðÊ¼µÄÐÐÒÔÈ·±£ÓÊ¼þ²»Î¥·´SMTPÐ­Òé.
+        <code>Zend_Mail_Transport_Smtp</code> å°†ä»¥ä¸€ä¸ªç‚¹(.)æˆ–è€…ä¸¤ä¸ªç‚¹(..)èµ·å§‹çš„è¡Œä»¥ç¡®ä¿é‚®ä»¶ä¸è¿åSMTPåè®®.
     </para>
 </sect1>
 <sect1 id="zend.mail.smtp-authentication">
-    <title>SMTP ÈÏÖ¤</title>
+    <title>SMTP è®¤è¯</title>
     <para>
-        Zend FramkworkÄ¿Ç°ÔÝÊ±²»Ö§³ÖSMTPÈÏÖ¤.        
+        Zend Framkworkç›®å‰æš‚æ—¶ä¸æ”¯æŒSMTPè®¤è¯.        
     </para>
 </sect1>
 <!--
