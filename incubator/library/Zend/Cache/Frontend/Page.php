@@ -50,6 +50,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      * Constructor
      * 
      * @param array $options associative array of options
+     * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
      */
     public function __construct($options = array(), $doNotTestCacheValidity = false)
     {
@@ -75,17 +76,20 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
             return true;
         }
         ob_start(array(__CLASS__, '_flush'));
-        ob_implicit_flush(false); // has sense?
+        ob_implicit_flush(false);
         return false;
     }
     
     /**
      * callback for output buffering
      * (shouldn't really be called manually)
+     * 
+     * @param string $data buffered output
+     * @return string data to send to browser
      */
     public function _flush($data)
     {
-        $this->save($data, null);
+        $this->save($data);
         return $data;
     }
     
@@ -95,46 +99,59 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      * @param   int     Unix timestamp
      * @return  string  generated ETag
      */
-    protected function _ETag($t){
-        if(!isset($_SERVER['QUERY_STRING']) && !self::$sessionMode) $etag = $t;
-        else {
+    protected function _ETag($t) 
+    {
+        if (!isset($_SERVER['QUERY_STRING']) && !self::$sessionMode) {
+            $etag = $t;
+        } else {
             $variables = @$_SERVER['QUERY_STRING'];
-            if(self::$sessionMode) $variables .= print_r($_SESSION,true).session_name().'='.session_id();
+            if (self::$sessionMode) {
+                $variables .= serialize($_SESSION) . session_name() . '=' . session_id();
+            }
             $etag = md5($t.$variables);
         }
-        return '"'.$etag.'"';
+        return '"' . $etag . '"';
     }
     
     /**
      * Formats GMT date according to RFC 1123
+     * 
+     * @param int $t timestamp
+     * @param int $offset
+     * @return string GMT date according to RFC 1123
      */
-    public static function date($t = null, $offset = 0){
-        if(is_null($t)) $t = time();
+    public static function date($t = null, $offset = 0)
+    {
+        if (is_null($t)) $t = time();
         return substr(gmdate('r', $t + 3600*$offset), 0, -5) . 'GMT';
     }
     
     /**
      * Check for HTTP error 412: precondition failed
      * 
+     * @param string $etag ETag
+     * @param int $timestamp timestamp
+     * @return boolean is error 512 ?
      * @link http://www.w3.org/Protocols/rfc2616/rfc2616.html
      */
-    protected static function is412($etag, $timestamp){
-        return (
-                // rfc2616-sec14.html#sec14.24
-                isset($_SERVER['HTTP_IF_MATCH'])
-                && ($etags = stripslashes($_SERVER['HTTP_IF_MATCH'])) != '*'
-                && strpos($etags, $etag) === false
-            ) || (
-                // rfc2616-sec14.html#sec14.28
-                isset($_SERVER['HTTP_IF_UNMODIFIED_SINCE'])
-                && ($ctime = (int) strtotime($_SERVER['HTTP_IF_UNMODIFIED_SINCE'])) > 0
-                && (self::$clientVersion = $ctime) < $timestamp
-            );
+    protected static function is412($etag, $timestamp) 
+    {
+        // rfc2616-sec14.html#sec14.24
+        $bool1 = isset($_SERVER['HTTP_IF_MATCH'])
+                 && ($etags = stripslashes($_SERVER['HTTP_IF_MATCH'])) != '*'
+                 && strpos($etags, $etag) === false;
+        // rfc2616-sec14.html#sec14.28
+        $bool2 = isset($_SERVER['HTTP_IF_UNMODIFIED_SINCE'])
+                 && ($ctime = (int) strtotime($_SERVER['HTTP_IF_UNMODIFIED_SINCE'])) > 0
+                 && (self::$clientVersion = $ctime) < $timestamp;
+        return ($bool1 || $bool2);
     }
+    
     /**
      * Send correct headers for HTTP error 412: precondition failed
      */
-    protected static function send412(){
+    protected static function send412()
+    {
         // rfc2616-sec10.html#sec10.4.13
         header('HTTP/1.1 412 Precondition Failed');
         //header('Cache-Control: private, max-age=0, must-revalidate');
@@ -146,29 +163,48 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     /**
      * Check for HTTP response 304: not modified
      * 
+     * @param string $etag ETag
+     * @param int $timestamp timestamp
+     * @return boolean is response 304 ?
      * @link http://www.w3.org/Protocols/rfc2616/rfc2616.html
      */
-    protected static function is304($etag, $timestamp){
+    protected static function is304($etag, $timestamp)
+    {
         // rfc2616-sec14.html#sec14.26
-        if(!isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) return isset($_SERVER['HTTP_IF_NONE_MATCH']) &&
-            ( ($etags = stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == '*' || strpos($etags, $etag) !== false );
-        
+        if (!isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
+            $bool1 = isset($_SERVER['HTTP_IF_NONE_MATCH']);
+            $bool2 = (($etags = stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == '*');
+            $bool3 = (strpos($etags, $etag) !== false);
+            return $bool1 && ($bool2 || $bool3);
+        }
         // rfc2616-sec14.html#sec14.25 and rfc1945.txt
-        else return ($ctime = (int) strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])) > 0 &&
-            (self::$clientVersion = $ctime) >= $timestamp;
+        $ctime = (int) strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']);
+        if ($ctime > 0) {
+            self::$clientVersion = $ctime;
+            return ($ctime >= $timestamp);
+        }
+        return false;
     }
-    protected static function send304($etag){
+    
+    /**
+     * Send correct headers for HTTP response 304: not modified
+     * 
+     * @param string $etag ETag
+     */    
+    protected static function send304($etag)
+    {
         // rfc2616-sec10.html#sec10.3.5
         header($_SERVER['SERVER_PROTOCOL'].' 304 Not Modified');
         header('ETag: '.$etag);
-        header('Connection: close'); //Comment this line under IIS
+        header('Connection: close'); // TODO : Comment this line under IIS
     }
     
     /**
      * HTTP conditional logic
      * TODO: extract logic and delete this method!
      */
-    public function validate($timestamp = 0, $ttl = 0, $cachePrivacy = self::CONTROL_PRIVATE){
+    public function validate($timestamp = 0, $ttl = 0, $cachePrivacy = self::CONTROL_PRIVATE)
+    {
         if(headers_sent()) return false;
         
         /**
@@ -213,9 +249,10 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      * 
      * @param   int $timestamp  new timestamp to update headers with
      */
-    public function updateHeaders($timestamp, $etag = null){
-        if(headers_sent()) return false;
-        if(!$etag) $etag = $this->_ETag($timestamp);
+    public function updateHeaders($timestamp, $etag = null)
+    {
+        if (headers_sent()) return false;
+        if (!$etag) $etag = $this->_ETag($timestamp);
         header('Last-Modified: ' . self::date($timestamp));
         header('ETag: ' . $etag);
         return true;
