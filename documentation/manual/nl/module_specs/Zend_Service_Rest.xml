@@ -21,7 +21,7 @@ try {
 
     $rest->setURI('http://example.org');
 
-    // Geeft een Zend_HttpClient_Response Object terug
+    // Geeft een Zend_Http_Response Object terug
     $response = $rest->restGet('/services/rest', 'foo=bar&baz=bat');
 
     if ($response->isSuccessful()) {
