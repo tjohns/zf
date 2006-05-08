@@ -151,7 +151,7 @@ $httpResponse = $http->post($postData);
         </para>
     </example>
 </sect1>
-&module_specs.Zend_Http_Client_Response;
+&module_specs.Zend_Http_Response;
 <!--
 vim:se ts=4 sw=4 et:
 -->
