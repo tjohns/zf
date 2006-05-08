@@ -1,6 +1,6 @@
 Priority 1 :
 
-- "Page" frontend (clone of "jpcache")
+- end of "Page" frontend (clone of "jpcache")
 	=> to cache a whole page
 	=> automatic cache id
 	=> "HTTP not modified" header
