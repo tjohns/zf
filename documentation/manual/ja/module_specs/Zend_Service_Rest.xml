@@ -24,7 +24,7 @@ try {
 
     $rest->setURI('http://example.org');
 
-    // Zend_HttpClient_Response オブジェクトを返します
+    // Zend_Http_Response オブジェクトを返します
     $response = $rest->restGet('/services/rest', 'foo=bar&baz=bat');
 
     if ($response->isSuccessful()) {
