@@ -3,44 +3,43 @@
     <sect2 id="zend.service.amazon.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Service_Amazon</code> is a simple API for using Amazon web services.
-            <code>Zend_Service_Amazon</code> has two APIs: a more traditional one that follows Amazon's own API, and a
-            simpler "Query API" for constructing even complex search queries easily.
+            <code>Zend_Service_Amazon</code> 是一个简单的用来操作Amazon web services的API.
+            <code>Zend_Service_Amazon</code> 含两组不同的API,　一组是传统的遵循 Amazon's自身标准的API；
+			另一个是一组相对简单的API,通过它我们可以非常容易的构建哪怕是很复杂的搜索请求。
         </para>
         <para>
-            <code>Zend_Service_Amazon</code> enables developers to retrieve information appearing throughout Amazon.com
-            web sites directly through the Amazon Web Services API. Examples include:
+            <code>Zend_Service_Amazon</code> 允许开发者通过Amazon的Web Services的API来直接得到Amazon.com网站中的信息
+			． 例子包括：
             <itemizedlist>
                 <listitem>
-                    Store item information, such as images, descriptions, pricing, and more
+                    保存出版物的信息, 如 图片, 描述, 价格,　等
                 </listitem>
                 <listitem>
-                    Customer and editorial reviews
+                    顾客和编辑的评
                 </listitem>
                 <listitem>
-                    Similar products and accessories
+                    类似的产品或附属产品
                 </listitem>
                 <listitem>
-                    Amazon.com offers
+                    Amazon.com 报价
                 </listitem>
                 <listitem>
-                    ListMania lists
+                    ListMania 列表
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-            In order to use <code>Zend_Service_Amazon</code>, you should already have an Amazon developer API key. To
-            get a key and for more information, please visit the
-            <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> web site.
+            为了使用 <code>Zend_Service_Amazon</code>, 你应当已经拥有了Amazon开发者API key
+			, 如果你要了解更多信息，请访问
+            <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> .
         </para>
         <note>
-            Your Amazon developer API key is linked to your Amazon identity, so take appropriate measures to keep your
-            API key private.
+            你的Amazon开发者API key是和你的Amazon Id相联系的， 所以请小心使用，不要随便泄漏啦 .
         </note>
         <example>
-            <title>Search Amazon Using the Traditional API</title>
+            <title>用传统的API搜索Amazon</title>
             <para>
-                In this example, we search for PHP books at Amazon and loop through the results, printing them.
+                在这个例子中, 我们在Amazon中搜索PHP图书，然后遍历结果并打印出它们.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
@@ -52,10 +51,9 @@ foreach ($response as $r) {
 ?>]]>       </programlisting>
         </example>
         <example>
-            <title>Search Amazon Using the Query API</title>
+            <title> 使用Query API搜索来Amazon</title>
             <para>
-                Here, we also search for PHP books at Amazon, but we instead use the Query API, which
-                resembles the Fluent Interface design pattern.
+                这里, 我们同样在Amazon中搜索PHP图书, 但是我们将使用Query API来代替上面的方式, 类似 Fluent Interface 设计模式.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
@@ -69,33 +67,31 @@ foreach ($results as $result) {
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.countrycodes">
-        <title>Country Codes</title>
+        <title>国家代码</title>
         <para>
-            By default, <code>Zend_Service_Amazon</code> connects to the United States ("<code>US</code>") Amazon
-            web service. To connect from a different country, simply specify the appropriate country code string
-            as the second parameter to the constructor:
+            默认情况下,  <code>Zend_Service_Amazon</code> 会选择连接到 Amazon 美国("US") 的web service. 如果你希望它连接到其他的国家,
+			 可以简单的指定一个适当的国家代码作为构造函数的第二的参数来实现:
         </para>
         <example>
-            <title>Choosing an Amazon Web Service Country</title>
+            <title>选择一个 Amazon Web Service 国家</title>
             <programlisting><![CDATA[<?php
 // Connect to Amazon in Japan
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
 ?>]]>       </programlisting>
             <note>
-                Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                <code>UK</code>, and <code>US</code>.
+                有效的国家代码: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                <code>UK</code>, 和 <code>US</code>.
             </note>
         </example>
     </sect2>
     <sect2 id="zend.service.amazon.itemlookup">
-        <title>Looking up a Specific Amazon Item by ASIN</title>
+        <title>用ASIN来搜索指定的Amazon出版物</title>
         <para>
-            The <code>itemLookup()</code> method provides the ability to fetch a particular Amazon item when
-            the ASIN is known.
+            如果你知道一个出版物的ASIN,你可以通过<code>itemLookup()</code> 方法来获得这个出版物.
         </para>
         <example>
-            <title>Looking up a Specific Amazon Item by ASIN</title>
+            <title>用ASIN来搜索指定的Amazon出版物</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
@@ -103,20 +99,19 @@ $item = $amazon->itemLookup('B0000A432X');
 ?>]]>       </programlisting>
         </example>
         <para>
-            The <code>itemLookup()</code> method also accepts an optional second parameter for handling search
-            options. For full details, including a list of available options, please see the
+            <code>itemLookup()</code> 方法还可以接受第二个参数（可选）来传递搜索选项 . 更多细节, 包括现有的选项列表, 请参考
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevant Amazon documentation</ulink>.
         </para>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
-        <title>Performing Amazon Item Searches</title>
+        <title>对Amazon出版物的搜索</title>
         <para>
-            Searching for items based on any of various available criteria are made simple using the
-            <code>itemSearch()</code> method, as in the following example:
+            基于现有的各种条件来查询一个出版物可以简单的通过
+            <code>itemSearch()</code> 方法来实现．如下面的例子:
         </para>
         <example>
-            <title>Performing Amazon Item Searches</title>
+            <title>对Amazon出版物的搜索</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
@@ -127,14 +122,12 @@ foreach($response as $r) {
 ?>]]>       </programlisting>
         </example>
         <para>
-            The <code>itemSearch()</code> method accepts a single array parameter for handling search
-            options. For full details, including a list of available options, please see the
+            The <code>itemSearch()</code> 方法接受一个数组作为参数来处理搜索请求.　更多细节, 包括现有的选项列表, 请参考
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>
         </para>
         <tip>
-            The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> class
-            is an easy to use wrapper around this method.
+            The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> 类是对这个方法的简单包装.
         </tip>
     </sect2>
     &module_specs.Zend_Service_Amazon_Query;

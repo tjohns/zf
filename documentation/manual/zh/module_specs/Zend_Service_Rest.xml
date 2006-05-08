@@ -3,15 +3,14 @@
     <sect2 id="zend.service.rest.introduction">
         <title>Introduction</title>
         <para>
-            <code>Zend_Service_Rest</code> is a basic REST client for performing queries against any REST based web
-            service.
+            <code>Zend_Service_Rest</code> 是一个的REST客户端，他用来对基于REST的web service进行查询
+			.
         </para>
         <example>
-            <title>A basic REST Request</title>
+            <title>一个基本的 REST 请求</title>
             <para>
-                In the following code, the <code>setUri()</code> method sets the <emphasis>base</emphasis> URI for the
-                REST web service. Then, the <code>restGet()</code> method is called to perform a GET request on a given
-                path with an optional query string.
+                在下面的代码中，首先使用  <code>setUri()</code> 方法设置REST web service的 <emphasis>base</emphasis> URI 
+				. 然后，调用<code>restGet()</code> 方法来对指定的路径（可以附加查询参数）执行一个GET请求.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Rest.php;
@@ -21,7 +20,7 @@ try {
 
     $rest->setURI('http://example.org');
 
-    // Returns a Zend_HttpClient_Response Object
+    // 返回一个 Zend_HttpClient_Response 对象
     $response = $rest->restGet('/services/rest', 'foo=bar&baz=bat');
 
     if ($response->isSuccessful()) {
@@ -34,17 +33,17 @@ try {
 }
 ?>]]>       </programlisting>
             <note>
-                You can pass a properly formatted query string (without the leading question mark "<code>?</code>") to
-                <code>restGet()</code>, or you can pass an associative array of name-value pairs. Regardless of which
-                method you choose, the names and values must be URL-encoded (e.g., with
+                你可以传递一个格式标准的url查询参数(没有 "<code>?</code>")  到 
+                <code>restGet()</code>, 或者你可以传递一个包含名称->数值的关联数组给它. 
+				无论你执行的是那个方法, 你都要对名称和数值进行URL编码(比如用 
                 <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>).
             </note>
             <para>
-                Using <code>restPost()</code> and <code>restPut()</code> is the same as using <code>restGet()</code>, but the data are sent via HTTP POST or PUT, respectively, instead of GET.
+                <code>restPost()</code> 和 <code>restPut()</code> 的用法和 <code>restGet()</code>相同, 只不过数据传输的方式不同
+				，通过 HTTP POST 或 PUT来代替GET.
             </para>
             <para>
-                The <code>restDelete()</code> method operates on a path, but does not have a second parameter into
-                which data may be passed.
+                <code>restDelete()</code> 方法用来操作一个路径, 但它不包含第二个参数来传递查询参数和数据.
             </para>
         </example>
     </sect2>
