@@ -1,5 +1,5 @@
 <sect1 id="zend.httpclient.response">
-    <title>Zend_HttpClient_Response</title>
+    <title>Zend_Http_Response</title>
     <sect2 id="zend.httpclient.response.introduction">
         <title>Introduction</title>
         <para>
