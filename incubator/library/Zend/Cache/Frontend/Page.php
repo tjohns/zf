@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * THIS FRONTEND IS ONLY A FIRST DRAFT !
+ * IT STILL NEEDS LOVE TO WORK AS EXPECTED !
+ */
+ 
+/**
  * Zend Framework
  *
  * LICENSE
