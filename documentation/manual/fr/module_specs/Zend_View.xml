@@ -209,7 +209,7 @@ echo $view->render('uneVue.php');
     
     <sect2 id="zend.view.controllers.script-paths">
         
-        <title>Cehmin des scripts de vue</title>
+        <title>Chemin des scripts de vue</title>
         
         <para>
             Par défaut, <code>Zend_View</code> attend que vos scripts de vues soient dans le même

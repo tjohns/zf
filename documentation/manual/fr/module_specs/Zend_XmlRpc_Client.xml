@@ -127,7 +127,7 @@ $service->serviceProcedure($p1, $p2);
                 avec la constante de type XML-RPC voulue.
             </para>
             <table>
-                <title>L'objet <code>Zend_XmlRpc_Value</code> représentant les types XML-RPC</title>
+                <title>L'objet Zend_XmlRpc_Value représentant les types XML-RPC</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
@@ -213,7 +213,7 @@ $service->serviceProcedure($p1, $p2);
         </sect3>
     </sect2>
     <sect2 id="zend.xmlrpc.client.wsdl">
-        <title>typage objet implicite des paramètres (Type hinting)</title>
+        <title>Typage objet implicite des paramètres (Type hinting)</title>
         <para>
             La principale différence entre les services web XML-RPC et SOAP est le fichier WSDL. Le protocole SOAP has habituellement un fichier WSDL qui décrit
             l'interface du service web, conformément à cette interface, les clients SOAP savent quel est le type nécessaire du paramètre qui doit être envoyé

@@ -47,7 +47,7 @@ $index->addDocument($doc);
         <para>
             Voici un exemple d'Analyser personnalisé, qui prend pour termes des mots de 2 chiffres  :
             <example>
-                <title>Custom text Analyser.</title>
+                <title>Analyseur de text personnalisé</title>
                 <programlisting role="php"><![CDATA[<?php
 /** Voici un analyseur de texte personnalisé, qui traite les mots contenant des chiffres comme un seul terme */
 

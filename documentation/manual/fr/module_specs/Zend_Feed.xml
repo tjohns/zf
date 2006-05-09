@@ -319,7 +319,7 @@ même vide, sera évalué comme <code>TRUE</code>, donc le test échouera.
     </para>
 
     <example>
-        <title>Emploi basique de <code>Zend_Feed_Atom</code></title>
+        <title>Emploi basique de Zend_Feed_Atom</title>
         <para>
             Pour lire un flux Atom et afficher le titre (propriété 
             <code>title</code>) et le résumé (propriété <code>summary</code>) de 
@@ -444,7 +444,7 @@ seule balise <code>&lt;entry&gt;</code> :
     </para>
 
     <example>
-        <title>Utiliser directement l'objet <code>Zend_Feed_EntryAtom</code></title>
+        <title>Utiliser directement l'objet Zend_Feed_EntryAtom</title>
         <programlisting role="php"><![CDATA[
 <?php
 
