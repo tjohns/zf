@@ -71,10 +71,11 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * @param string $unformatted
      * @return string
      */
-    public function formatActionName($unformatted)
-    {
-        return strtolower(substr($this->_formatName($unformatted),0,1)) . substr($unformatted,1) . 'Action';
-    }
+	public function formatActionName($unformatted)
+	{
+	    $formatted = $this->_formatName($unformatted);
+	    return strtolower(substr($formatted, 0, 1)) . substr($formatted, 1) . 'Action';
+	}
 
 
     /**

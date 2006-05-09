@@ -12,6 +12,7 @@ Zend Framework                                                             NEWS
 - Fixed bug in Zend_Feed::findFeeds(). Reported by Ben Ramsey. (Mike)
 - Zend_Db_Adapter_Pdo_Abstract::insert() has been removed (Rob)
 - Fixed bug in Zend_Log::log(). Ticket #28 (Mike)
+- Fixed bug in Zend_Controller_Dispatcher::formatActionName(). Ticket #10 (Mike)
 
 =RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
