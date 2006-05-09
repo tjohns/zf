@@ -1,12 +1,11 @@
 <sect1 id="zend.controller.plugins">
-	<title>Plugins</title>
-	
-	<sect2 id="zend.controller.plugins.introduction">
-		<title>Introduction</title>
+    <title>Плагины</title>
 
-		<note>
-			This section is under construction.
-		</note>
-	</sect2>
-		
+    <sect2 id="zend.controller.plugins.introduction">
+        <title>Введение</title>
+
+        <note>
+            Этот раздел находится в разработке.
+        </note>
+    </sect2>
 </sect1>
