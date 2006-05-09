@@ -381,7 +381,7 @@ class Zend_Log
 	    $logger = self::_getInstance($logName);
 
 	    if ($level | $logger->_levelMask) {
-	        $message = $logger->_messagePrefix . $message . $logger->_messageSuffix;
+	        $fields['message'] = $logger->_messagePrefix . $message . $logger->_messageSuffix;
     		$logger->_adapter->write($fields);
 	    }
 
