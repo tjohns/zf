@@ -1,0 +1,13 @@
+
+- Detect recursion in Controller_Front
+
+- Exception handling inside Controller_Front
+
+- Make mod_rewrite an optional dependency only.
+
+- End-user Documentation
+
+- Routing mechanism is a placeholder at this time.  Although it is fully
+  working, and we're using it on some sites, it is not flexible enough.  We
+  are going to replace it with a flexible URI rewriting system.
+
