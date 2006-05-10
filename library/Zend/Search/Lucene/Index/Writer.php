@@ -202,7 +202,9 @@ class Zend_Search_Lucene_Index_Writer
         $newSegmentFile->writeInt((int)0xFFFFFFFF);
         $newSegmentFile->writeLong($this->_version);
         $newSegmentFile->writeInt($this->_segmentNameCounter);
-        $newSegmentFile->writeInt($this->_segments + count($this->_newSegments));
+
+        $this->_segments += count($this->_newSegments);
+        $newSegmentFile->writeInt($this->_segments);
 
         $segmentsFile->seek(20);
         $newSegmentFile->writeBytes($segmentsFile->readBytes($this->_directory->fileLength('segments') - 20));
