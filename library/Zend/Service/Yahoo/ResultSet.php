@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Service
  * @subpackage Yahoo
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -24,6 +25,7 @@
  *       implemented here?  Does seek() gain us anything in this context?  Why
  *       not use just Iterator or ArrayAccess + Iterator?
  * 
+ * @category   Zend
  * @package    Zend_Service
  * @subpackage Yahoo
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
