@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Client
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -29,6 +30,7 @@ require_once 'Zend/XmlRpc/Exception.php';
  * ZXmlRpcClientException add 2 functions for handling the fault response of failed XML-RPC requests
  * The fault response has 2 parameters, the fault code and fault string
  *
+ * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Client
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)

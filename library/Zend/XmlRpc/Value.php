@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -64,6 +65,7 @@ require_once 'Zend/XmlRpc/Value/Struct.php';
  * Using this function, users/Zend_XmlRpc_Client object can create the Zend_XmlRpc_Value objects
  * from PHP variables, XML string or by specifing the exact XML-RPC natvie type
  *
+ * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
