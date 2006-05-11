@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Search_Lucene
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -53,6 +54,7 @@ require_once 'Zend/Search/Lucene/Search/Similarity.php';
 
 
 /**
+ * @category   Zend
  * @package    Zend_Search_Lucene
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License

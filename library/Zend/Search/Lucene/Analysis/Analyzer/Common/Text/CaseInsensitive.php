@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -27,11 +28,13 @@ require_once 'Zend/Search/Lucene/Analysis/TokenFilter/LowerCase.php';
 
 
 /**
+ * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+
 
 class Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive extends Zend_Search_Lucene_Analysis_Analyzer_Common_Text
 {

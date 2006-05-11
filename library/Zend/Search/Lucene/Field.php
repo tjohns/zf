@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Document
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -27,6 +28,7 @@
  * stored in the index, so that they may be returned with hits
  * on the document.
  *
+ * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Document
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)

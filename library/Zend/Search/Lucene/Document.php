@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Document
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -26,6 +27,7 @@ require_once 'Zend/Search/Lucene/Field.php';
 /**
  * A Document is a set of fields. Each field has a name and a textual value.
  *
+ * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Document
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
