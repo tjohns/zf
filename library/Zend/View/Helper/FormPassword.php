@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -28,6 +29,7 @@ require_once 'Zend/View/Helper/FormElement.php';
 /**
  * Helper to generate a "password" element
  * 
+ * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
