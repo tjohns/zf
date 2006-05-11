@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Pdf
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -37,6 +38,7 @@ require_once 'Zend/Pdf/Color/GrayScale.php';
  * Factory class which vends Zend_Pdf_Color objects from typical HTML
  * representations.
  *
+ * @category   Zend
  * @package    Zend_Pdf
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
