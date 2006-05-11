@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Feed
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -29,6 +30,7 @@ require_once 'Zend/Feed/EntryAbstract.php';
  * dealing with RSS data. It provides no additional methods; it is
  * here for type checking and to handle RSS-specific tag names.
  *
+ * @category   Zend
  * @package    Zend_Feed
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
