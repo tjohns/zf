@@ -43,37 +43,37 @@
     </sect1>
 
     <sect1 id="coding-standard.php-file-formatting">
-        <title>PHP File Formatting</title>
+        <title>PHP Dateiformatierung</title>
 
         <sect2 id="coding-standard.php-file-formatting.general">
-            <title>General</title>
+            <title>Allgemein</title>
 
             <para>
-                For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is
-				not required by PHP.  Not including it prevents trailing whitespace from being accidentally
-				injected into the output.
+                Für Dateien, welche nur PHP Code beinhalten ist der schliessende Tag ("?>") nicht
+                zugelassen.  Er wird von PHP nicht benötigt.  Durch das Weglassen kann man verhindern,
+                dass ausversehen Leerzeilen in die Ausgabe eingefügt werden.
             </para>
 
             <para>
-                <emphasis>IMPORTANT:</emphasis> Inclusion of arbitrary binary data as permitted by <code>__HALT_COMPILER()</code>
-                is prohibited from any Zend framework PHP file or files derived from them. Use of
-                this feature is only permitted for special installation scripts.
+                <emphasis>WICHTIG:</emphasis> Einbeziehen von beliebigen binärischen Daten durch <code>__HALT_COMPILER()</code>
+                ist in jeder Zend Framework PHP Datei oder einer ihr abgeleiteten Datei verboten. Das Benutzen
+                ist nur bei speziellen Installationsskirpten erlaubt.
             </para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.indentation">
-            <title>Indentation</title>
-
-            <para>Use an indent of 4 spaces, with no tabs.</para>
+            <title>Einrücken</title>
+            <para>Benutze einen Einzug von 4 Leerzeichen, jedoch ohne Tabs.</para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.max-line-length">
-            <title>Maximum Line Length</title>
+            <title>Maximale Zeilenlänge</title>
 
             <para>
-                The target line length is 80 characters, i.e. developers should aim keep code
-                as close to the 80-column boundary as is practical. However, longer lines are
-                acceptable. The maximum length of any line of PHP code is 120 characters.
+                Die Zielzeilenlänge ist 80 Zeichen. Entwickler sollten so nah wie
+                möglich an der 80 Zeichen Grenze bleiben, soweit dies praktikabel
+                ist. Längere Zeilen sind aber erlaubt. Die maximale Länge einer
+                Zeile beträgt 120 Zeichen.
             </para>
         </sect2>
 
@@ -81,15 +81,16 @@
             <title>Line Termination</title>
 
             <para>
-                Line termination is the standard way for Unix text files. Lines must end only
-                with a linefeed (LF). Linefeeds are represented as ordinal 10, or hexadecimal 0x0A.
+                Zeilenbegrenzung ist der normale Weg für Unix Textdateien. Zeilen müssen mit
+                einem Zeilenvorschub (LF) enden. Zeilenvorschübe werden duch eine ordinale 10,
+                oder durch 0x0A (hexadecimal) dargestellt.
             </para>
 
-            <para>Do not use carriage returns (CR) like Macintosh computers (0x0D).</para>
+            <para>Benutze kein Wagenrücklauf (CR) wie bei Macintosh (0x0D).</para>
 
             <para>
-                Do not use the carriage return/linefeed combination (CRLF) as Windows computers
-                (0x0D, 0x0A).
+                Benutze nicht die Kombination aus Wagenrücklauf und Zeilenvorschub (CRLF) wie
+                bei Windows (0x0D, 0x0A).
             </para>
         </sect2>
     </sect1>
