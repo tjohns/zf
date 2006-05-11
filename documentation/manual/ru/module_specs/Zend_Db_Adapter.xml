@@ -4,21 +4,35 @@
 
     <sect2 id="zend.db.adapter.introduction">
 
-        <title>Introduction</title>
+        <title>Введение</title>
 
         <para>
+			<code>Zend_Db_Adapter</code> является абстрактным слоем доступа к интерфейсу БД для Zend
+			Framework. Вы можете использовать основанный на PDO <code>Zend_Db_Adapter</code> для подключения
+			и работой с любой СУБД, поддерживающей SQL, используя один и тот же интерфейс. В число таких СУБД
+			входят Microsoft SQL Server, MySQL, PostgreSQL, SQLite и другие.
+<!--
             <code>Zend_Db_Adapter</code> is the database API abstraction layer for the Zend Framework.
             Based on PDO, you can use <code>Zend_Db_Adapter</code> to connect to and work with any
             of the supported SQL database systems using the same API.  These
             include Microsoft SQL Server, MySQL, PostgreSQL, SQLite, and others.
+-->
         </para>
 
-        <para>To create an instance of <code>Zend_Db_Adapter</code> for your
-        particular database backend, you need to call
-        <code>Zend_Db::factory()</code> with the name of the adapter and an
-        array of parameters describing the connection. For example, to connect
-        to a MySQL database called "camelot" on the local host as a user named
-        "malory":</para>
+        <para>
+			Для того, чтобы создать экземпляр <code>Zend_Db_Adapter</code> для вашей конкретной БД, вам нужно
+			вызвать <code>Zend_Db::factory()</code> с именем адаптера и массивом параметров,
+			описывающих соединение. Например, подключение к базе данных MySQL с именем
+			"camelot" на локальном хосте под именем пользователя "malory":
+<!--
+			To create an instance of <code>Zend_Db_Adapter</code> for your
+			particular database backend, you need to call
+			<code>Zend_Db::factory()</code> with the name of the adapter and an
+			array of parameters describing the connection. For example, to connect
+			to a MySQL database called "camelot" on the local host as a user named
+			"malory":
+-->
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -34,7 +48,10 @@ $db = Zend_Db::factory('pdoMysql', $params);
 ?>]]></programlisting>
 
         <para>
+			 Подключение к базе данных SQLite с названием "camelot" производится аналогичным образом:
+<!--
             Similarly, to connect to an SQLite database called "camelot":
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -48,132 +65,174 @@ $db = Zend_Db::factory('pdoSqlite', $params);
 ?>]]></programlisting>
 
         <para>
-            Either way, you will be able to use the exact same API to
-            query the database.
+			И в том, и в другом варианте вы можете использовать один и тот же API для того, чтобы
+			делать запросы к базе данных.
+<!--
+            Either way, you will be able to use the exact same API to query the database.
+-->
         </para>
     </sect2>
 
     <sect2 id="zend.db.adapter.quoting">
 
-        <title>Quoting Against SQL Injection</title>
+        <title>Добавление кавычек против SQL-инъекций</title>
 
         <para>
+			Вы должны всегда окружать кавычками значения, которые подставляются в оператор
+			SQL, это поможет предотвратить атаки посредством SQL-инъекций.
+			<code>Zend_Db_Adapter</code> предоставляет два метода (посредством включенного объекта PDO).
+<!--
             You should always quote values that are to be used in an
             SQL statement; this is to help prevent SQL injection attacks.
             <code>Zend_Db_Adapter</code> provides two methods (via the underlying PDO object)
             to help you manually quote values.
+-->
         </para>
 
         <para>
+			Первый из них - метод <code>quote()</code>. Он будет добавлять кавычки в скалярное значение
+			соответственно вашему адаптеру БД. Если вы пытаетесь добавить кавычки в массив, то метод
+			вернет строку из значений массива, разделенных запятыми и окруженных кавычками (это
+			полезно для функций, которые принимают список параметров).
+<!--        
             The first of these is the <code>quote()</code> method.  It will quote a
             scalar value appropriately for your database adapter; if you
             attempt to quote an array, it will return a comma-separated
             string of the array values, each properly quoted (this is
             useful for functions that take a list parameter).
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
-// create a $db object, assuming Mysql as the adapter.
+// создается объект $db, предполагается, что Mysql является адаптером
 
-// quote a scalar
+// добавление кавычек в строку
 $value = $db->quote('St John"s Wort');
-// $value is now '"St John\"s Wort"' (note the surrounding quotes)
+// значением $value сейчас является строка '"St John\"s Wort"'
+// (обратите внимание на окружающие кавычки)
 
-// quote an array
+// добавление кавычек в массив
 $value = $db->quote(array('a', 'b', 'c');
-// $value is now '"a", "b", "c"' (a comma-separated string)
+// значением $value сейчас является '"a", "b", "c"' (разделенная запятыми строка)
 
 ?>]]></programlisting>
 
         <para>
+			Вторым является метод <code>quoteInto()</code>. Вы передаете в него строку-основу с указанием
+			меток заполнения в виде вопросительных знаков и после одно скалярное значение, либо массив для
+			подстановки с добавлением кавычек в строку-основу. Это полезно для построения запросов и
+			конструкций. Скалярные значения и массивы обрабатываются точно так же, как в
+			методе <code>quote()</code>.
+<!--
             The second is the <code>quoteInto()</code> method.  You provide a base
             string with a question-mark placeholder, and then one scalar
             or array to quote into it.  This is useful for constructing
             queries and clauses as-you-go.  Scalars and arrays work just
             as in the <code>quote()</code> method.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, assuming Mysql as the adapter.
+// создание объекта $db, предполагается, что Mysql является адаптером
 
-// quote a scalar into a WHERE clause
+// подстановка скалярного значения в конструкцию WHERE
 $where = $db->quoteInto('id = ?', 1);
-// $where is now 'id = "1"' (note the surrounding quotes)
+// значением $where сейчас является 'id = "1"'
+// (обратите внимание на окружающие кавычки)
 
-// quote an array into a WHERE clause
+// подстановка массива в конструкцию WHERE
 $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
-// $where is now 'id IN("1", "2", "3")' (a comma-separated string)
+// значением $where сейчас является 'id IN("1", "2", "3")'
+// (разделенная запятыми строка)
 
 ?>]]></programlisting>
     </sect2>
 
     <sect2 id="zend.db.adapter.queries">
 
-        <title>Direct Queries</title>
+        <title>Прямые запросы</title>
 
         <para>
+			Имея экземпляр <code>Zend_Db_Adapter</code>, вы можете выполнять запросы прямо в SQL.
+			<code>Zend_Db_Adapter</code> передает эти запросы включенному объекту PDO, который подготавливает
+			и выполняет их, и затем передает обратно объект <code>PDOStatement</code> для ваших манипуляций
+			с результатами (если они есть).
+<!--
             Once you have a <code>Zend_Db_Adapter</code> instance, you can execute queries
             directly in SQL.  <code>Zend_Db_Adapter</code> passes these queries to the
             underlying PDO object, which prepares and executes them, and
             then passes back a PDOStatement object for you to manipulate
             the results (if any).
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then query the database
-// with a properly-quoted SQL statement.
+// создается объект $db и затем делается запрос к БД
+// с оператором SQL, в который подставлено значение с добавлением кавычек
 $sql = $db->quoteInto(
     'SELECT * FROM example WHERE date > ?',
     '2006-01-01'
 );
 $result = $db->query($sql);
 
-// use the PDOStatement $result to fetch all rows as an array
+// используется PDOStatement $result, чтобы извлечь все строки результата в массив
 $rows = $result->fetchAll();
 
 ?>]]></programlisting>
 
         <para>
+			Вы можете автоматически присваивать все данные в вашем запросе. Это означает, что вы можете
+			устанавливать в запросе метки заполнения с различными именами и затем передавать массив данных,
+			замещающих эти метки.  В замещающие данные автоматически добавляются кавычки, обеспечивая
+			повышение безопасности от атак с применением SQL-инъекций.
+<!--
             You may bind data into your query automatically.  This means
             you can set multiple named placeholders in the query, and
             then pass an array of data that is substituted for those
             placeholders.  The substituted values are automatically
             quoted for you, providing greater security against SQL
             injection attacks.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then query the database.
-// this time, use placeholder binding.
+// создается объект $db и затем делается запрос к БД
+// на этот раз используется присваивание значений меткам заполнения
 $result = $db->query(
     'SELECT * FROM example WHERE date > :placeholder',
     array('placeholder' => '2006-01-01')
 );
 
-// use the PDOStatement $result to fetch all rows as an array
+// используется PDOStatement $result, чтобы извлечь все строки результата в массив
 $rows = $result->fetchAll();
 
 ?>]]></programlisting>
 
         <para>
+			Возможно, вы захотите подготавливать и присваивать данные в операторах SQL вручную. Для этого
+			используйте метод <code>prepare()</code> для получения подготовленного <code>PDOStatement</code>,
+			с которым вы можете непосредственно манипулировать.
+<!--        
             Optionally, you may wish to prepare and bind data to SQL statements
             manually.  To do so, use the <code>prepare()</code> method to get a prepared
             <code>PDOStatement</code> that you can manipulate directly.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then query the database.
-// this time, prepare a PDOStatement for manual binding.
+// создается объект $db и затем делается запрос к БД
+// на этот раз подготавливатется PDOStatement для ручного присвоения значений
 $stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
 $stmt->bindValue('placeholder', '2006-01-01');
 $stmt->execute();
 
-// use the PDOStatement to fetch all rows as an array
+// используется PDOStatement $result,
+// чтобы извлечь все строки результата в массив
 $rows = $stmt->fetchAll();
 
 ?>]]></programlisting>
@@ -181,25 +240,32 @@ $rows = $stmt->fetchAll();
 
     <sect2 id="zend.db.adapter.transactions">
 
-        <title>Transactions</title>
+        <title>Транзакции</title>
 
         <para>
+			По умолчанию PDO (и соответственно <code>Zend_Db_Adapter</code>) находится в режиме
+			автоматического завершения транзакции (auto-commit). Это означает, что все изменения
+			сохраняются, как только они выполнены. Если вы хотите выполнять операторы внутри транзакций,
+			просто вызывайте  метод <code>beginTransaction()</code>, затем либо <code>commit()</code> для
+			фиксации изменений, либо <code>rollBack()</code>, чтобы	отменить изменения.			
+<!--        
             By default, PDO (and thus <code>Zend_Db_Adapter</code>) are in "auto-commit" mode.
             This means that all queries are committed as they are executed.
             If you wish to execute within a transaction, simply call the
             <code>beginTransaction()</code> method, then either <code>commit()</code> or <code>rollBack()</code>
             your changes.  <code>Zend_Db_Adapter</code> returns to auto-commit mode until
             you call <code>beginTransaction()</code> again.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then start a transaction.
+// создается объект $db и затем устанавливается начало транзакции
 $db->beginTransaction();
 
-// attempt a query.
-// if it succeeds, commit the changes;
-// if it fails, roll back.
+// попытка сделать запрос
+// если запрос успешный, то фиксация изменений
+// если неудача, то откат
 try {
     $db->query(...);
     $db->commit();
@@ -213,21 +279,32 @@ try {
 
     <sect2 id="zend.db.adapter.insert">
 
-        <title>Inserting Rows</title>
+        <title>Вставка строк</title>
 
         <para>
+			В качестве удобства вы можете использовать метод <code>insert()</code> для создания оператора
+			INSERT и присвоения данных для вставки. Данные для присвоения автоматически окружаются
+			кавычками	для того, чтобы предотвратить атаки с использованием SQL-инъекций.
+<!--        
             As a convenience, you may use the <code>insert()</code> method to create
             an INSERT statement for you and bind data to be inserted into it.
             (The bound data is quoted for you automatically to help prevent
             SQL injection attacks.)
+-->
         </para>
 
         <para>
+			Возвращаемое значение <emphasis>не является</emphasis> последним сгенерированным
+			идентификатором, поскольку таблица может не иметь столбцы с автоинкрементом. Вместо этого
+			возвращается количество затронутых строк (обычно 1). Если вы хотите получать идентификатор
+			последней добавленной записи, вызывайте после вставки метод <code>lastInsertId()</code>.
+<!--
             The return value is <emphasis>not</emphasis> the last inserted ID, as the table
             may not have an auto-incremented column; instead, the return value
             is the number of rows affected (usually 1).  If you want the
             ID of the last inserted record, call the <code>lastInsertId()</code> method after the
             insert.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -238,18 +315,19 @@ try {
 //     VALUES ("King", "Arthur", "blue");
 //
 
-// create a $db object, and then...
-// the row data to be inserted in column => value format
+// создается объект $db
+
+// массив данных для подстановки в формате 'имя столбца' => 'значение'
 $row = array (
     'noble_title'    => 'King',
     'first_name'     => 'Arthur',
     'favorite_color' => 'blue',
 );
 
-// the table into which the row should be inserted
+// таблица, в которую должна быть вставлена строка
 $table = 'round_table';
 
-// insert the row and get the row ID
+// вставка строки и получение ID строки
 $rows_affected = $db->insert($table, $row);
 $last_insert_id = $db->lastInsertId();
 
@@ -258,19 +336,29 @@ $last_insert_id = $db->lastInsertId();
 
     <sect2 id="zend.db.adapter.update">
 
-        <title>Updating Rows</title>
+        <title>Обновление строк</title>
 
         <para>
+			В качестве удобства вы можете использовать метод <code>update()</code> для создания оператора
+			UPDATE и присвоения данных для обновления. Данные для присвоения автоматически окружаются
+			кавычками для того, чтобы предотвратить атаки с использованием SQL-инъекций.
+<!--			
             As a convenience, you may use the <code>update()</code> method to create
             an UPDATE statement for you and bind data to be updated into it.
             (The bound data is quoted for you automatically to help prevent
             SQL injection attacks.)
+-->
         </para>
 
         <para>
+			Вы можете предоставлять необязательную конструкцию WHERE для указания, какие строки обновить.
+			(Заметьте, что конструкция WHERE не является присваиваемым параметром, поэтому вам
+			нужно самостоятельно добавить кавычки для значений в этой конструкции).
+<!--
             You may provide an optional WHERE clause
             to tell which rows to update.  (Note that the WHERE clause is not
             a bound parameter, so you need to quote values in it yourself.)
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -281,19 +369,20 @@ $last_insert_id = $db->lastInsertId();
 //     WHERE first_name = "Robin";
 //
 
-// create a $db object, and then...
-// the new values to set in the update, in column => value format.
+// создается объект $db
+
+// новые значения для установки в update, в формате 'имя столбца' => 'значение'.
 $set = array (
     'favorite_color' => 'yellow',
 );
 
-// the table to update
+// таблица для обновления
 $table = 'round_table';
 
-// the WHERE clause
+// конструкция WHERE
 $where = $db->quoteInto('first_name = ?', 'Robin');
 
-// update the table and get the number of rows affected
+// обновление таблицы и получение количества затронутых рядов
 $rows_affected = $db->update($table, $set, $where);
 
 ?>]]></programlisting>
@@ -301,13 +390,19 @@ $rows_affected = $db->update($table, $set, $where);
 
     <sect2 id="zend.db.adapter.delete">
 
-        <title>Deleting Rows</title>
+        <title>Удаление строк</title>
 
         <para>
+			В качестве удобства вы можете использовать метод для создания оператора DELETE.
+			Вы можете предоставлять необязательную конструкцию WHERE для указания, какие строки
+			удалить. (Заметьте, что конструкция WHERE не является присваиваемым параметром, поэтому вам
+			нужно самостоятельно добавить кавычки для значений в этой конструкции).
+<!--
             As a convenience, you may use the <code>delete()</code> method to create
             a DELETE statement for you; you may provide an optional WHERE clause
             to tell which rows to delete.  (Note that the WHERE clause is not
             a bound parameter, so you need to quote values in it yourself.)
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -317,14 +412,15 @@ $rows_affected = $db->update($table, $set, $where);
 //     WHERE first_name = "Patsy";
 //
 
-// create a $db object, and then...
-// the table to delete from
+// создается объект $db
+
+// таблица для удаления
 $table = 'round_table';
 
-// the WHERE clause
+// конструкция WHERE
 $where = $db->quoteInto('first_name = ?', 'Patsy');
 
-// update the table and get the number of rows affected
+// удаление из таблицы и получение количества затронутых рядов
 $rows_affected = $db->delete($table, $where);
 
 ?>]]></programlisting>
@@ -332,9 +428,16 @@ $rows_affected = $db->delete($table, $where);
 
     <sect2 id="zend.db.adapter.fetch">
 
-        <title>Fetching Rows</title>
+        <title>Извлечение строк</title>
 
         <para>
+			Несмотря на то, что вы можете делать запросы непосредственно в БД с помощью метода
+			<code>query()</code>, зачастую все, что вам нужно сделать - это выборка строк и получение
+			результата. Набор методов <code>fetch*()</code> сделает это для вас. Для каждого из этих
+			методов вы передаете SQL-оператор SELECT. Если вы используете именованные метки замещения, то можете
+			передавать еще массив присваиваемых значений, для замещения в данном операторе с
+			добавлением кавычек.  Методами <code>fetch*()</code> являются:
+<!--        
             Although you may query the database directly with the <code>query()</code>
             method, frequently all you need to do is select rows and get
             the results.  The <code>fetch*()</code> series of methods does this for you.
@@ -342,6 +445,7 @@ $rows_affected = $db->delete($table, $where);
             statement; if you use named placeholders in the statement, you
             may also pass an array of bind values to be quoted and replaced
             into the statement for you.  The <code>fetch*()</code> methods are:
+-->
         </para>
 
         <itemizedlist>
@@ -355,41 +459,42 @@ $rows_affected = $db->delete($table, $where);
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then...
+// создается объект $db
 
-// fetch all columns of all rows as a sequential array
+// извлечение всех столбцов и всех строк в виде индексного массива
 $result = $db->fetchAll(
     "SELECT * FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch all columns of all rows as an associative array;
-// the first column is used as the array key.
+// извлечение всех столбцов и всех строк в виде ассоциативного массива
+// первый столбец используется как ключ массива
 $result = $db->fetchAssoc(
     "SELECT * FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch the first column of all rows returned
+// извлечение одного столбца для всех строк
 $result = $db->fetchCol(
     "SELECT first_name FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch only the first value
+// извлечение одного значения
 $result = $db->fetchOne(
     "SELECT COUNT(*) FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch a series of key-value pairs; the first column is
-// the array key, the second column is the array value
+// извлечение последовательности пар ключ-значение;
+// первый столбец является ключом массива,
+// второй - значением массива
 $result = $db->fetchPairs(
     "SELECT first_name, favorite_color FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch only the first row returned
+// извлечение только одной строки
 $result = $db->fetchRow(
     "SELECT * FROM round_table WHERE first_name = :name",
     array('name' => 'Lancelot')
