@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Db
  * @subpackage Profiler
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -30,6 +31,7 @@ require_once 'Zend/Db/Profiler/Query.php';
 require_once 'Zend/Db/Profiler/Exception.php';
 
 /**
+ * @category   Zend
  * @package    Zend_Db
  * @subpackage Profiler
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
