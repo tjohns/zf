@@ -12,6 +12,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Mail
  * @subpackage Transport
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -35,6 +36,7 @@ require_once 'Zend/Mail/Transport/Interface.php';
  * minimum implementation according to RFC2821:
  * EHLO, MAIL FROM, RCPT TO, DATA, RSET, NOOP, QUIT
  *
+ * @category   Zend
  * @package    Zend_Mail
  * @subpackage Transport
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
