@@ -50,7 +50,7 @@
 
             <para>
                 Für Dateien, welche nur PHP Code beinhalten ist der schliessende Tag ("?>") nicht
-                zugelassen.  Er wird von PHP nicht benötigt.  Durch das Weglassen kann man verhindern,
+                zugelassen.  Er wird von PHP nicht benötigt.  Durch das Weglassen wird verhindert,
                 dass ausversehen Leerzeilen in die Ausgabe eingefügt werden.
             </para>
 
