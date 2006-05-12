@@ -552,7 +552,7 @@ if ($this->books) {
         
         <para>
             Using these in your view scripts is very easy, here is an example.
-            Note that you all you need to to is call them; they will load
+            Note that you all you need to do is call them; they will load
             and instantiate themselves as they are needed.
         </para>
         
