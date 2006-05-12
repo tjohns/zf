@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <appendix id="coding-standard">
-  <title>Zend Framework Codestandaards</title>
+  <title>Zend Framework Programmeer Standaard</title>
 
   <sect1 id="coding-standard.overview">
     <title>Overzicht</title>
@@ -10,8 +10,7 @@
 
       <para>Dit document beschrijft de richtlijnen en
       hulpmiddelen voor softwareontwikkelaars en teams die programmeren met
-      behulp van of die programmeren op het Zend Framework. De aangesproken
-      onderwerpen zijn:</para>
+      behulp van of die programmeren op het Zend Framework. De volgende onderwerpen zullen aan de orde komen:</para>
 
       <para><itemizedlist>
           <listitem>
@@ -19,7 +18,7 @@
           </listitem>
 
           <listitem>
-            <para revisionflag="changed">Benoemingsovereenkomst</para>
+            <para revisionflag="changed">Benamingsovereenkomst</para>
           </listitem>
 
           <listitem>
@@ -38,7 +37,7 @@
       <para>Goede coderichtlijnen zijn belangrijk in
       alle ontwikkelingsprojecten, in het bijzonder wanneer meerdere
       programmeurs aan eenzelfde project werken. De coderichtlijnen spelen een
-      grote rol in het produceren van kwaliteitscode met mindere bugs en die
+      grote rol in het produceren van kwaliteitscode met minder bugs en die
       gemakkelijker kan worden onderhouden.</para>
     </sect2>
   </sect1>
@@ -62,7 +61,7 @@
     </sect2>
 
     <sect2 id="coding-standard.php-file-formatting.indentation">
-      <title>Indentie</title>
+      <title>Indenting</title>
 
       <para>Gebruik een indent van 4 spaties, zonder tabulatie</para>
     </sect2>
@@ -98,9 +97,9 @@
     <sect2 id="coding-standard.naming-conventions.classes">
       <title>Klassen</title>
 
-      <para>De Zend Framework gebruikt een
+      <para>Het Zend Framework gebruikt een
       klassebenamingsovereenkomst waarbij de namen van de klassen direct
-      overeenkomen met de mappen waarin ze zijn opgeslaan. De root directory
+      overeenkomen met de mappen waarin ze zijn opgeslagen. De root directory
       van de Zend Framework is de "Zend" map, waaronder alle klassen
       hiërarchisch zijn ondergebracht.</para>
 
@@ -116,9 +115,9 @@
       toegestaan terwijl "Zend_Pdf" aanvaardbaar is.</para>
 
       <para>Zend Framework klassenamen waarvan Zend of één van de
-      bijdragende partners de auteur is en die met de Framework worden
+      bijdragende partners de auteur is en die met het Framework worden
       verzonden moeten altijd beginnen met "Zend_" en moeten in de "Zend/" map
-      hiërarchie worden opgeslaan.</para>
+      hiërarchie worden opgeslagen.</para>
 
       <para>Dit zijn voorbeelden van aanvaardbare
       klassenamen:</para>
@@ -128,9 +127,9 @@
 Zend_View
 
 Zend_View_Helper
-</programlisting> <emphasis>BELANGRIJK:</emphasis> Code die werkt met de Framework maar er geen
-      deel van is, bv. code geschreven door een frameworkgebruiker en niet
-      door Zend of één van de framework partnerbedrijven, mogen nooit
+</programlisting> <emphasis>BELANGRIJK:</emphasis> Code die werkt met het Framework maar er geen
+      deel van is, bv. code geschreven door een Frameworkgebruiker en niet
+      door Zend of één van de Framework partnerbedrijven, mogen nooit
       beginnen met "Zend_".</para>
     </sect2>
 
@@ -156,7 +155,7 @@ Zend_Controller_Dispatcher_Interface</programlisting></para>
       <para>Elk bestand dat PHP code bevat moet eindigen op de
       extensie ".php". Deze voorbeelden tonen aanvaardbare bestandsnamen voor
       bestanden die klassen bevatten uit de voorbeelden in de vorige
-      sektie:</para>
+      sectie:</para>
 
       <para><programlisting role="php">Zend/Db.php
 
@@ -235,7 +234,7 @@ widgetFactory()</programlisting></para>
       constantnamen.</para>
 
       <para>constantnamen moeten altijd alleen bestaan uit
-      hoofdletters wat de alfatekens betreft.</para>
+      hoofdletters wat de alfanumerieke tekens betreft.</para>
 
       <para>Constanten moeten worden gedefinieerd als klasseleden
       door het concept "const" te gebruiken. Constanten verklaren in het
@@ -275,7 +274,7 @@ $a = 'Voorbeeld String';</programlisting></para>
 
         <para>Wanneer een letterlijke string zelf apostrofen bevat is het
 		toegelaten de string af te bakenen met aanhalingstekens ("double
-        quotes"). Dit is speciaal aangeraden voor SQL verklaringen:
+        quotes"). Dit is dringend aangeraden voor SQL verklaringen:
         <programlisting role="php">
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";</programlisting>
         De bovenstaande syntax is verkozen boven het "escapen" van de apostrofen.</para>
@@ -284,7 +283,7 @@ $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'"
       <sect3 id="coding-standard.coding-style.strings.variable-substitution">
         <title>Variabelvervanging</title>
 
-        <para>Variabelvervanging is toegestaan met respect van de volgende vormen: <programlisting role="php">
+        <para>Variabelvervanging is toegestaan met respect voor de volgende vormen: <programlisting role="php">
 $greeting = "Hello $name, welcome back!";
 
 $greeting = "Hello {$name}, welcome back!";</programlisting></para>
@@ -488,7 +487,7 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
         <code>elseif</code> concepten moeten een enkele spatie voor de openende
 		haakjes van de conditie, en een enkele spatie na de sluitende haakjes.</para>
 
-        <para>Binnenin de voorwaardeverklaringen tussen de haakjes moeten 
+        <para>In de voorwaardeverklaringen tussen de haakjes moeten 
 		operators gescheiden worden met spaties om de leesbaarheid te 
 		bevorderen. Binnenhaakjes zijn aangeraden voor het groeperen van
 		meer complexe voorwaarden.</para>
@@ -570,7 +569,7 @@ switch ($numPeople) {
         <para>Alle documentatieblokken ("docblocks") moeten compatibel zijn
 		met het phpDocumentor formaat. Een beschrijving van het
 		phpDocumentor formaat is buiten het bereik van dit document.
-		Voor meer informatie kan u terecht op: <ulink
+		Voor meer informatie kunt u terecht op: <ulink
         url="http://phpdoc.org/">http://phpdoc.org"</ulink></para>
 
         <para>Alle broncodebestanden geschreven voor het Zend Framework of dat
@@ -584,7 +583,7 @@ switch ($numPeople) {
 
         <para>Elk bestand dat PHP code bevat moet een hoofdblok aan het
 		begin van het bestand bevatten dat minstens de volgende
-		pgpDocumentor afbakeners bevat: <programlisting role="php">
+		phpDocumentor gegevens bevat: <programlisting role="php">
 /**
  * Korte beschrijving van het bestand
  *
@@ -604,7 +603,7 @@ switch ($numPeople) {
         <title>Klassen</title>
 
         <para>Elke klasse moet een docblock bevatten dat minstens
-		de volgende phpDocumentor afbakeners bevat: <programlisting role="php">
+		de volgende phpDocumentor gegevens bevat: <programlisting role="php">
 /**
  * Korte beschrijving van de klasse
  *
@@ -637,15 +636,15 @@ switch ($numPeople) {
             </listitem>
           </itemizedlist></para>
 
-        <para>Het is niet nodig om de "@access" afbakener te gebruiken
+        <para>Het is niet nodig om de "@access" tags te gebruiken
 		want de zichtbaarheid is reeds bekend via het gebruik van
 		"public", "private", of "protected" bij het verklaren van de 
 		functie.</para>
 
-        <para>Indien een functie of methode een uitzondering mag werpen,
+        <para>Indien een functie of methode een exception mag teruggeven,
 		gebruik @throws:
         <programlisting role="php">
-@throws exceptionclass [beschrijving]
+@throws exceptionClass [beschrijving]
 </programlisting></para>
       </sect3>
     </sect2>
