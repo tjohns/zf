@@ -432,10 +432,11 @@ abstract class Zend_View_Abstract
     {
         // add the path to the stack
         foreach ((array) $path as $dir) {
-            // make sure it ends in a separator.
-            if (substr($dir, -1) != DIRECTORY_SEPARATOR) {
-                $dir .= DIRECTORY_SEPARATOR;
-            }
+        	// attempt to strip any possible separator and
+        	// append the system directory separator
+            $dir = rtrim($dir, '\\/' . DIRECTORY_SEPARATOR) 
+                 . DIRECTORY_SEPARATOR;
+            
             // add to the top of the stack.
             array_unshift($this->_path[$type], $dir);
         }
@@ -449,15 +450,13 @@ abstract class Zend_View_Abstract
      */
     private function _setPath($type, $path)
     {
-        // e.g., from "helper" to "/helpers/"
-        $dir = DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR;
+        $dir = DIRECTORY_SEPARATOR . ucfirst($type) . DIRECTORY_SEPARATOR;
         $this->_path[$type] = array(dirname(__FILE__) . $dir);
         $this->_addPath($type, $path);
     }
 
     /**
      * Loads a helper or filter class.
-     * @todo should use Zend::loadClass()
      *
      * @param string $type The class type ('helper' or 'filter').
      * @param string $name The base name.
@@ -469,19 +468,26 @@ abstract class Zend_View_Abstract
         // (note the case changes)
         $class = 'Zend_View_' . ucfirst($type) . '_' . ucfirst($name);
 
-        // if the class does not exist, attempt to load it from the
-        // path stacks
-        if (! class_exists($class)) {
-            // only look for "$Name.php"
-            $file = ucfirst($name) . '.php';
-            foreach ($this->_path[$type] as $dir) {
-                if (is_readable($dir . $file)) {
-                    include $dir . $file;
-                    break;
+        // if the class does not exist, attempt to load it from the path stack
+        if (class_exists($class, false)) {
+        	return $class;
+        }
+        
+        // only look for "$Name.php"
+        $file = ucfirst($name) . '.php';
+        foreach ($this->_path[$type] as $dir) {
+            if (is_readable($dir . $file)) {
+                include $dir . $file;
+                
+                if (! class_exists($class, false)) {
+                	$msg = "$type '$name' loaded but class '$class' not found within";
+                	throw new Zend_View_Exception($msg);
                 }
-                throw new Zend_View_Exception("$type '$name' not found in path.");
+                
+                return $class;
             }
         }
-        return $class;
+        
+        throw new Zend_View_Exception("$type '$name' not found in path.");
     }
 }

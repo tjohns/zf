@@ -15,6 +15,8 @@ require_once 'Zend/Mime/AllTests.php';
 require_once 'Zend/Pdf/AllTests.php';
 require_once 'Zend/UriTest.php';
 require_once 'Zend/Uri/AllTests.php';
+require_once 'Zend/ViewTest.php';
+
 
 class Zend_AllTests
 {
@@ -35,7 +37,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Pdf_AllTests::suite());
         $suite->addTestSuite('Zend_UriTest');
         $suite->addTest(Zend_Uri_AllTests::suite());
-
+        $suite->addTestSuite('Zend_ViewTest');
         return $suite;
     }
 }
