@@ -44,7 +44,7 @@ class Zend_Service_Amazon_Item
     public $Tracks;
     public $ListmaniaLists;
     public $PromotionalTag;
-    private $_xml;
+    private $_dom;
 
 
     /**
@@ -147,7 +147,7 @@ class Zend_Service_Amazon_Item
             }
         }
 
-        $this->xml = $dom;
+        $this->_dom = $dom;
     }
 
 
@@ -158,7 +158,7 @@ class Zend_Service_Amazon_Item
      */
     function asXML()
     {
-        return $this->dom->ownerDocument->saveXML($this->dom);
+        return $this->_dom->ownerDocument->saveXML($this->_dom);
     }
 }
 
