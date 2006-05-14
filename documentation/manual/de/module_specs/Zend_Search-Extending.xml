@@ -1,27 +1,30 @@
 <sect1 id="zend.search.extending">
-	<title>Extensibility</title>
+	<title>Erweiterbarkeit</title>
 
 	<sect2 id="zend.search.extending.analysis">
-        <title>Text Analysis</title>
+        <title>Textanalyse</title>
         <para>
-            <code>Zend_Search_Lucene_Analysis_Analyzer</code> class is used by indexer to tokenize document
-            text fields.
+            Die <code>Zend_Search_Lucene_Analysis_Analyzer</code> Klasse wird vom Indexer verwendet,
+            um die Textfelder des Dokuments in Token aufzuteilen.
         </para>
 
         <para>
-            <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> and <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code> methods are used
-            to get and set default analyser.
+            Die Methoden <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> und 
+            <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code> werden verwendet, um 
+            den Standardanalysator zu erhalten oder zu festzulegen.
         </para>
 
         <para>
-            Thus you can assign your own text analayser or choose it from the set of predefined analysers:
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</code> and <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> (default).
-            Both of them interpret token as a sequense of letters. <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> converts tokens
-            to lower case.
+            Deshalb kannst Du deinen eigene Textanalysator festlegen oder ihn aus den vordefinierten
+            Analysatoren auswählen: <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text</code> 
+            und <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> 
+            (Standard). Beide interpretieren einen Token als eine Sequenz aus Buchstaben. 
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> 
+            konvertiert Token in Kleinbuchstaben.
         </para>
 
         <para>
-            To switch between analysers use code:
+            Um zwischen Analysatoren zu wechseln, verwende folgenden Code:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -34,23 +37,25 @@ $index->addDocument($doc);
 ?>]]></programlisting>
 
         <para>
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> is designed to be a parent for all user
-            defined analyzers. User should only define <code>tokenize()</code> method, which takes an input data as a string
-            and return array of tokens.
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> wurde als Vorgänger für alle 
+            benutzerdefinierten Analysatoren entwickelt. Benutzer sollten nur die 
+            <code>tokenize()</code> Methode definieren, welche Eingabedaten als String entgegen 
+            nimmt und ein Array mit Tokens zurückgibt.
         </para>
 
         <para>
-            <code>tokenize()</code> method should apply <code>normalize()</code> method to all tokens. It will allow
-            to use token filters with your analyser.
+            Die <code>tokenize()</code> Methode sollte die <code>normalize()</code> auf alle Tokens
+            anwenden. Dies erlaubt die Verwendung von Tokenfiltern in deinem Analysator.
         </para>
 
         <para>
-            Here is an example of custom Analyzer, which takes words with digits as a terms:
+            Hier ist ein Beispiel für einen eigenen Analysator, welcher Wörter mit Ziffern als 
+            Begriffe verwendet:
 
             <example>
-                <title>Custom text Analyser.</title>
+                <title>Eigener Textanalysator</title>
                 <programlisting role="php"><![CDATA[<?php
-/** Here is a custome text analyser, which treats words with digits as one term */
+/** Hier ist ein eigener Textanalysator, der Worte mit Ziffern als einen Begriff behandelt */
 
 
 /** Zend_Search_Lucene_Analysis_Analyzer_Common */
@@ -59,8 +64,8 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
     /**
-     * Tokenize text to a terms
-     * Returns array of Zend_Search_Lucene_Analysis_Token objects
+     * Teile Text in Begriffe auf
+     * Gibt ein Array mit Zend_Search_Lucene_Analysis_Token Objekten zurück
      *
      * @param string $data
      * @return array
@@ -71,19 +76,19 @@ class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 
         $position = 0;
         while ($position < strlen($data)) {
-            // skip white space
+            // überspringe Leerzeichen
             while ($position < strlen($data) && !ctype_alpha($data{$position}) && !ctype_digit($data{$position})) {
                 $position++;
             }
 
             $termStartPosition = $position;
 
-            // read token
+            // lese Token
             while ($position < strlen($data) && (ctype_alpha($data{$position}) || ctype_digit($data{$position}))) {
                 $position++;
             }
 
-            // Empty token, end of stream.
+            // Leerer Token, Ende der Kette
             if ($position == $termStartPosition) {
                 break;
             }
@@ -111,8 +116,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
     <sect2 id="zend.search.extending.scoring">
 		<title>Algorithmen für Punktwertermittlung</title>
         <para>
-            The score of query <literal>q</literal> for document <literal>d</literal>
-            is defined as follows:
+            Der Punktwert einer Abfrage <literal>q</literal> für das Dokument <literal>d</literal> 
+            ist wie folgt definiert:
         </para>
 
         <para>
@@ -121,55 +126,63 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </para>
 
         <para>
-            tf(t in d) - <code>Zend_Search_Lucene_Search_Similarity::tf($freq)</code> - a score factor based on a term or phrase's frequency in a document.
+            tf(t in d) - <code>Zend_Search_Lucene_Search_Similarity::tf($freq)</code> - 
+            ein Punktwertfaktor, der auf der Häufigkeit des Begriffes oder der Phrase innerhalb des
+            Dokuments basiert.
         </para>
 
         <para>
-            idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code> - a score factor for a simple term for the specified index.
+            idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code> - 
+            ein Punktwertfaktor für einen einfachen Begriff eines spezifischen Indizes.
         </para>
 
         <para>
-            getBoost(t.field in d) - boost factor for the term field.
+            getBoost(t.field in d) - Verstärkungsfaktor für das Begriffsfeld.
         </para>
 
         <para>
-            lengthNorm($term) - the normalization value for a field given the total
-            number of terms contained in a field. This value is stored within the index.
-            These values, together with field boosts, are stored in an index and multiplied
-            into scores for hits on each field by the search code.
+            lengthNorm($term) - der Normalisierungswert für ein Feld, der die Gesamtzahl der 
+            Begriffe innerhalb eines Fields enthält. Dieser Wert wird im Index abgelegt. Diese Wert
+            werden zusammen mit dem Verstärkungsfaktor im Index abgelegt und vom Suchcode für 
+            alle Treffer eines Feldes zu Punktwerten multipliziert.
         </para>
         <para>
-            Matches in longer fields are less precise, so implementations of this method
-            usually return smaller values when numTokens is large, and larger values when numTokens is small.
-        </para>
-
-        <para>
-            coord(q,d) - <code>Zend_Search_Lucene_Search_Similarity::coord($overlap, $maxOverlap)</code> - a score
-            factor based on the fraction of all query terms that a document contains.
+            Treffer in längeren Feldern sind weniger präzise, so dass Implementierungen dieser 
+            Methode normalerweise kleinere Werte zurückgeben, wenn numTokens groß ist, und größere 
+            Werte, wenn numTokens klein ist.
         </para>
 
         <para>
-            The presence of a large portion of the query terms indicates a better match
-            with the query, so implementations of this method usually return larger values
-            when the ratio between these parameters is large and smaller values when
-            the ratio between them is small.
+            coord(q,d) - <code>Zend_Search_Lucene_Search_Similarity::coord($overlap, $maxOverlap)</code> - 
+            ein Punktwertfaktor, der auf dem Anteil aller Abfragebegriffe basiert, die ein Dokument
+            enthält.
         </para>
 
         <para>
-            queryNorm(q) -  the normalization value for a query given the sum of the squared weights
-            of each of the query terms. This value is then multiplied into the weight of each query
+            Das Vorhandensein eines grossen Teils der Abfragebegriffe gibt einen besseren Treffer 
+            für die Abfrage an, so dass Implementierungen dieser Methode normalerweise größere 
+            Werte zurückgeben, wenn das Verhältnis zwischen diesen Parametern groß ist, und kleinere
+            Werte, wenn es klein ist.
+        </para>
+
+        <para>
+            queryNorm(q) - der Normalisierungswert für eine Abfrage, welcher die Summe der 
+            quadrierten Gewichtungen jedes Begriffes eine Abfrage enthält. Dieser Wert wird für das
+            Gewicht jedes Abfragebegriffes multipliziert.
             term.
         </para>
 
         <para>
-            This does not affect ranking, but rather just attempts to make scores from different
-            queries comparable.
+            Dieses wirkt sich nicht auf die Reihenfolge ist, versucht aber, die Punktwerte 
+            für verschiedenen Abfragen vergleichbar zu machen.   
         </para>
 
         <para>
-            Scoring algorithm can be customized by defining your own Similatity class. To do this
-            extend Zend_Search_Lucene_Search_Similarity class as defined below, then use
-            <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code> method to set it as default.
+            Algorithmen für Punktwertermittlung können durch die Definition einer eigenen 
+            Ähnlichkeitsklasse angepasst werden. Hierfür muss die 
+            Zend_Search_Lucene_Search_Similarity Klasse wie unten angegeben erweitert werden und 
+            dann die <code>Zend_Search_Lucene_Search_Similarity::setDefault($similarity);</code>
+            Methode für das Setzen des Standards verwendet werden.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -188,8 +201,8 @@ class MySimilarity extends Zend_Search_Lucene_Search_Similarity {
     }
 
     /**
-     * It's not used now. Computes the amount of a sloppy phrase match,
-     * based on an edit distance.
+     * Es wird jetzt nicht verwendet. Berechnet den Wert eines Treffers 
+     * für eine ungenauen Phrasenanfrage.
      */
     public function sloppyFreq($distance) {
         return 1.0;
@@ -211,38 +224,41 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
 	</sect2>
 
 	<sect2 id="zend.search.extending.storage">
-		<title>Storage Containers</title>
+		<title>Storage Container</title>
         <para>
-        An abstract class Zend_Search_Lucene_Storage_Directory defines directory functionality.
+            Eine abstrakte Klasse Zend_Search_Lucene_Storage_Directory definiert Funktionalitäten 
+            für Verzeichnisse.
         </para>
 
         <para>
-        The Zend_Search_Lucene constructor uses either a string or Zend_Search_Lucene_Storage_Directory object
-        as an input.
+            Der Zend_Search_Lucene Konstruktur verwendet als Eingabe entweder einen String oder ein 
+            Zend_Search_Lucene_Storage_Directory Objekt.
         </para>
 
         <para>
-        Zend_Search_Lucene_Storage_Directory_Filesystem class implements directory functionality for file system.
+            Die Zend_Search_Lucene_Storage_Directory_Filesystem Klasse implementiert 
+            Verzeichnisfunktionalitäten für das Dateisystem.
         </para>
 
         <para>
-        If string is used as an input for the Zend_Search_Lucene constructor, then the index reader
-        (Zend_Search_Lucene object) treats it as a file system path and instantiates
-        Zend_Search_Lucene_Storage_Directory_Filesystem object by themselves.
+            Wenn ein String als Eingabe für den Zend_Search_Lucene Konstruktur verwendet wird, 
+            behandelt der Indexleser (das Zend_Search_Lucene Objekt) es wie einen Dateipfad und 
+            instanziiert ein Zend_Search_Lucene_Storage_Directory_Filesystem Objekt.
         </para>
 
         <para>
-        You can define your own directory implementation by extending Zend_Search_Lucene_Storage_Directory class.
+            Du kannst deinen eigenen Verzeichnisimplementation durch die Erweiterung der 
+            Zend_Search_Lucene_Storage_Directory Klasse definieren.
         </para>
 
         <para>
-        Zend_Search_Lucene_Storage_Directory methods:
+        Zend_Search_Lucene_Storage_Directory Methoden:
 
         <programlisting><![CDATA[<?php
 
 abstract class Zend_Search_Lucene_Storage_Directory {
 /**
- * Closes the store.
+ * Schließt den Speicher
  *
  * @return void
  */
@@ -250,7 +266,7 @@ abstract function close();
 
 
 /**
- * Creates a new, empty file in the directory with the given $filename.
+ * Erstellt im Verzeichnis eine neue, leere Datei mit dem übergebenen Dateinamen $filename.
  *
  * @param string $name
  * @return void
@@ -259,7 +275,7 @@ abstract function createFile($filename);
 
 
 /**
- * Removes an existing $filename in the directory.
+ * Entfernt eine vorhande Datei $filename aus dem Verzeichnis.
  *
  * @param string $filename
  * @return void
@@ -268,7 +284,7 @@ abstract function deleteFile($filename);
 
 
 /**
- * Returns true if a file with the given $filename exists.
+ * Gibtv true zurück, wenn eine Datei mit dem übergebenen Dateinamen $filename existiert
  *
  * @param string $filename
  * @return boolean
@@ -277,7 +293,7 @@ abstract function fileExists($filename);
 
 
 /**
- * Returns the length of a $filename in the directory.
+ * Gibt die länge eine Datei $filename im Verzeichnis zurück
  *
  * @param string $filename
  * @return integer
@@ -286,7 +302,7 @@ abstract function fileLength($filename);
 
 
 /**
- * Returns the UNIX timestamp $filename was last modified.
+ * Gibt den UNIX Zeitstempel für die letzte Änderung der Datei $filename zurück.
  *
  * @param string $filename
  * @return integer
@@ -295,7 +311,7 @@ abstract function fileModified($filename);
 
 
 /**
- * Renames an existing file in the directory.
+ * Benennt eine vorhandene Datei im Verzeichnis um.
  *
  * @param string $from
  * @param string $to
@@ -305,7 +321,7 @@ abstract function renameFile($from, $to);
 
 
 /**
- * Sets the modified time of $filename to now.
+ * Ändert die Änderungstzeit der Datei $filename auf jetzt um
  *
  * @param string $filename
  * @return void
@@ -314,7 +330,8 @@ abstract function touchFile($filename);
 
 
 /**
- * Returns a Zend_Search_Lucene_Storage_File object for a given $filename in the directory.
+ * Gibt ein Zend_Search_Lucene_Storage_File Objekt für den Dateinamen $filename aus dem 
+ * Verzeichnis zurück.
  *
  * @param string $filename
  * @return Zend_Search_Lucene_Storage_File
@@ -327,33 +344,35 @@ abstract function getFileObject($filename);
         </para>
 
         <para>
-        <code>getFileObject($filename)</code> method of Zend_Search_Lucene_Storage_Directory class returns
-        Zend_Search_Lucene_Storage_File object.
+            Die <code>getFileObject($filename)</code> Methode der Zend_Search_Lucene_Storage_Directory
+            Klasse gibt ein Zend_Search_Lucene_Storage_File Objekt zurück.
         </para>
         <para>
-        Zend_Search_Lucene_Storage_File abstract class implements file abstraction and index file reading
-        primitives.
+            Die abstrakte Klasse Zend_Search_Lucene_Storage_File implementiert einfache Funktionen
+            für Dateiabstraktion und das Lesen von Indexdateien.
         </para>
         <para>
-        You must also extend Zend_Search_Lucene_Storage_File class for your Directory implementation.
+            Du musst außerdem die Zend_Search_Lucene_Storage_File Klasse für deine 
+            Verzeichnisimplementation erweitern.
         </para>
         <para>
-        Only two methods of Zend_Search_Lucene_Storage_File class must be overloaded in your implementation:
+            Nur zwei Methoden der Zend_Search_Lucene_Storage_File Klasse müssen in deiner 
+            Implementation überladen werden:
 
         <programlisting><![CDATA[<?php
 
 class MyFile extends Zend_Search_Lucene_Storage_File {
     /**
-     * Sets the file position indicator and advances the file pointer.
-     * The new position, measured in bytes from the beginning of the file,
-     * is obtained by adding offset to the position specified by whence,
-     * whose values are defined as follows:
-     * SEEK_SET - Set position equal to offset bytes.
-     * SEEK_CUR - Set position to current location plus offset.
-     * SEEK_END - Set position to end-of-file plus offset. (To move to
-     * a position before the end-of-file, you need to pass a negative value
-     * in offset.)
-     * Upon success, returns 0; otherwise, returns -1
+     * Setzt den Indikator für die Dateiposition rückt den Dateizeiger
+     * voran. Die neue Position, gemessen in Bytes vom Dateianfangm 
+     * wird erreicht durch das Hinzufügen eines Versatzes zu der
+     * angegebenen Position. Dessen Werte sind wie folgt definiert: 
+     * SEEK_SET - Setze die Position auf den Versatz.
+     * SEEK_CUR - Setze die Position auf die aktuelle Position plus Versatz.
+     * SEEK_END - Setze die Position aufs Dateisende plus Versatz. (Um den 
+     * Zeiger auf eine Position vor dem Dateiende zu bewegen, übergebe einen
+     * negativen Wert als Versatz.)
+     * Bei Erfolg wird 0, andernfalls -1 zurückgegeben
      *
      * @param integer $offset
      * @param integer $whence
@@ -364,7 +383,7 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
     }
 
     /**
-     * Read a $length bytes from the file and advance the file pointer.
+     * Lese $length Bytes aus der Datei und setze den Dateizeiger vor.
      *
      * @param integer $length
      * @return string
