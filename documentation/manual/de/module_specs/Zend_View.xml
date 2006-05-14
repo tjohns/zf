@@ -531,7 +531,7 @@ if ($this->books) {
         
         <para>
             Die Verwendung dieser Helfer in deinem View Skript ist sehr einfach, hier ist ein
-            Beispiel. Beachte, dass du dieser Helfer nur aufrufen brauchst; sie werden automatisch
+            Beispiel. Beachte, dass du diese Helfer nur aufzurufen brauchst; sie werden automatisch
             geladen und instanziiert, sobald sie benötigt werden.
         </para>
         
