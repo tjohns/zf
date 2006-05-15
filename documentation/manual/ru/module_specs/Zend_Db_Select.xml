@@ -4,23 +4,34 @@
 
     <sect2 id="zend.db.select.introduction">
 
-        <title>Introduction</title>
+        <title>Введение</title>
 
         <para>
+            <code>Zend_Db_Select</code> является инструментом, помогающим строить SQL-операторы
+            SELECT, не зависящие от типа СУБД. Очевидно, он не может быть совершенен, но
+            он проделал длинный путь к тому, чтобы помочь сделать ваши запросы переносимыми
+            между серверными СУБД. Кроме того, он помогает сделать ваши запросы устойчивыми
+            против SQL-инъекций.
+<!--        
             Zend_Db_Select is a tool to help you build SQL SELECT statements in
             a database-independent way.  Obviously this can't be perfect,
             but it does go a long way toward helping your queries be
             portable between database backends.  In addition, it aids
             you in making your queries resistant to SQL injection attacks.
+-->
         </para>
 
         <para>
+            Наиболее легкий способ создания экземпляра <code>Zend_Db_Select</code> - использование
+            метода <code>Zend_Db_Adapter::select()</code>.
+<!--
             The easiest way to create an instance of Zend_Db_Select is to use the
             Zend_Db_Adapter::select() method.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+		
 require_once 'Zend/Db.php';
 
 $params = array (
@@ -33,14 +44,19 @@ $params = array (
 $db = Zend_Db::factory('pdoMysql', $params);
 
 $select = $db->select();
-// $select is now a Zend_Db_Select_PdoMysql object
+// $select теперь является объектом Zend_Db_Select_PdoMysql
 
 ?>]]></programlisting>
 
         <para>
+            Далее вы строите запрос SELECT, используя этот объект и его методы, затем генерируете
+            строку, которая передается <code>Zend_Db_Adapter</code> для запросов
+            (метод <code>query()</code>) или извлечения (группа методов <code>fetch*()</code>).
+<!--
             You then construct a SELECT query using that object and its
             methods, then generate a string for passing back to Zend_Db_Adapter
             for queries or fetches.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -53,32 +69,36 @@ $select = $db->select();
 //     LIMIT 10 OFFSET 20
 //
 
-// you can use an iterative style...
+// вы можете использовать итеративный стиль...
 $select->from('round_table', '*');
 $select->where('noble_title = ?', 'Sir');
 $select->order('first_name');
 $select->limit(10,20);
 
-// ...or a "fluent" style:
+// ...или делать это "на лету":
 $select->from('round_table', '*')
        ->where('noble_title = ?', 'Sir')
        ->order('first_name')
        ->limit(10,20);
 
-// regardless, fetch the results
+// извлечение результата
 $sql = $select->__toString();
 $result = $db->fetchAll($sql);
 
-// alternatively, you can pass the $select object itself;
-// Zend_Db_Adapter is smart enough to call __toString() on the
-// Zend_Db_Select objects to get the query string.
+// альтернативно, вы можете передавать сам объект $select
+// Zend_Db_Adapter достаточно разумен, чтобы вызывать метод
+// __toString() для объектов Zend_Db_Select, чтобы получить строку запроса
 $result = $db->fetchAll($select);
 
 ?>]]></programlisting>
 
         <para>
+            Еще вы можете применять связанные параметры в своих запросах вместо
+            подстановки по порядку.
+<!--        
             You can also use bound parameters in your queries instead of
             quoting-as-you-go.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -96,7 +116,7 @@ $select->from('round_table', '*')
        ->order('first_name')
        ->limit(10,20);
 
-// regardless, fetch the results using bound parameters
+// извлечение результатов с использованием связанных параметров
 $params = array('title' => 'Sir');
 $result = $db->fetchAll($select, $params);
 
@@ -106,23 +126,32 @@ $result = $db->fetchAll($select, $params);
 
     <sect2 id="zend.db.select.fromcols">
 
-        <title>Columns FROM a Table</title>
+        <title>
+            Извлечение столбцов
+            <!--Columns FROM a Table-->
+        </title>
 
         <para>
+            Для  извлечения столбцов из определенной таблицы используйте метод
+            <code>from()</code>, задавая таблицу и столбцы, которые хотите получить из нее.
+            Вы можете использовать псевдонимы таблиц и столбцов, также можете вызывать
+            <code>from()</code> столько раз, сколько вам нужно.
+<!--        
             To select columns from a specific table, use the from() method,
             specifying the table and the columns you want from it.  You can
             use both table and column aliases, and you can use from() as
             many times as you need.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, assuming Mysql as the adapter.
+// создание объекта $db, затем получение инструмента SELECT
 $select = $db->select();
 
 // SELECT a, b, c FROM some_table
 $select->from('some_table', 'a, b, c');
-// equivalent:
+// эквивалент:
 $select->from('some_table', array('a', 'b', 'c');
 
 // SELECT bar.col FROM foo AS bar
@@ -137,18 +166,27 @@ $select->from('bar', 'bar.col AS col2');
 
     <sect2 id="zend.db.select.joincols">
 
-        <title>Columns from JOINed Tables</title>
+        <title>
+            Объединение таблиц
+            <!--Columns from JOINed Tables-->
+        </title>
 
         <para>
+            Для извлечения столбцов с использованием объединения таблиц используйте
+            метод <code>join()</code>. Сначала указывается имя присоединяемой таблицы, затем
+            условие соединения, и в заключение столбцы, которые вы хотите получить из объединенных
+            таблиц. Вы можете вызывать <code>join()</code> столько раз, сколько вам нужно.
+<!--        
             To select columns using joined tables, use the join() method.
             First give the joining table name, then the joining condition,
             and finally the columns you want from the join.  You can use
             join() as many times as you need.
-        </para>
+-->
+</para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, assuming Mysql as the adapter.
+// создание объекта $db, затем получение инструмента SELECT
 $select = $db->select();
 
 //
@@ -162,32 +200,50 @@ $select->join('bar', 'foo.id = bar.id', '*');
 ?>]]></programlisting>
 
         <para>
+            В настоящее время поддерживается только конструкция JOIN. Конструкции LEFT JOIN,
+            RIGHT JOIN и т.д. не поддерживаются. Будущие релизы будут поддерживать их в форме,
+            независимой от типа выбранной СУБД.
+<!--
             Currently, only the JOIN syntax is supported; no LEFT JOINs,
             RIGHT JOINs, etc.  Future releases will support these in a
             database-neutral fashion.
+-->
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.select.where">
 
-        <title>WHERE Conditions</title>
+        <title>
+            Условия WHERE
+            <!--WHERE Conditions-->
+        </title>
 
         <para>
+            Для добавления условий WHERE, используйте метод <code>where()</code>.
+            Вы можете передать либо обычную строку, либо строку с метками заполнения и значения
+            для подстановки с добавлением кавычек (подстановка выполняется посредством
+            <code>Zend_Db_Adapter::quoteInto</code>).
+<!--
             To add WHERE conditions, use the where() method.  You can
             pass either a regular string, or you can pass a string
             with a question-mark placeholder and a value to quote into it
             (the value will be quoted using Zend_Db_Adapter::quoteInto).
+-->
         </para>
 
         <para>
+            Многократный вызов <code>where()</code> будет добавлять условия с AND.
+            Если вам нужен OR, используйте метод <code>orWhere()</code>.
+<!--
             Multiple calls to where() will AND the conditions together;
             if you need to OR a condition, use orWhere().
+-->        
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// создание объекта $db, затем получение инструмента SELECT
 $select = $db->select();
 
 //
@@ -197,8 +253,8 @@ $select = $db->select();
 //     AND favorite_color = "yellow"
 //
 $select->from('round_table', '*');
-$select->where('noble_title = "Sir"'); // embedded value
-$select->where('favorite_color = ?', 'yellow'); // quoted value
+$select->where('noble_title = "Sir"'); // встроенное значение
+$select->where('favorite_color = ?', 'yellow'); // подставляемое значение
 
 //
 // SELECT *
@@ -216,15 +272,22 @@ $select->orWhere('id IN(?)', array(1, 2, 3);
 
     <sect2 id="zend.db.select.group">
 
-        <title>GROUP BY Clause</title>
+        <title>
+            Группировка
+            <!--GROUP BY Clause-->
+        </title>
 
         <para>
+            Для группировки строк используйте метод <code>group()</code> столько раз, сколько
+            вам нужно.
+<!--        
             To group rows, use the group() method as many times as you wish.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// создание объекта $db, затем получение инструмента SELECT
 $select = $db->select();
 
 //
@@ -236,10 +299,10 @@ $select->from('foo', 'COUNT(id)');
 $select->group('bar');
 $select->group('baz');
 
-// an equivalent group() call:
+// эквивалентный вызов group():
 $select->group('bar, baz');
 
-// another equivalent group() call:
+// другой эквивалентный вызов group():
 $select->group(array('bar', 'baz'));
 
 ?>]]></programlisting>
@@ -248,20 +311,30 @@ $select->group(array('bar', 'baz'));
 
     <sect2 id="zend.db.select.having">
 
-        <title>HAVING Conditions</title>
+        <title>
+            Условия HAVING
+        </title>
 
         <para>
+            Для добавления условий HAVING используйте метод <code>having()</code>. Этот метод
+            идентичен методу <code>where()</code> по функционированию.
+<!--        
             To add HAVING conditions to the selected results, use the having()
             method.  This method is identical in function to the where() method.
+-->
         </para>
 
         <para>
+            Если вы вызываете <code>having()</code> несколько раз, условия будут добавляться
+            с AND. Если вам нужен OR, используйте метод <code>orHaving()</code>.
+<!--
             If you call having() multiple times, the conditions are ANDed together;
             if you want to OR a condition, use orHaving().
+-->
         </para>
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// создание объекта $db, затем получение инструмента SELECT
 $select = $db->select();
 
 //
@@ -279,15 +352,22 @@ $select->having('count_id > ?', 1);
 
     <sect2 id="zend.db.select.order">
 
-        <title>ORDER BY Clause</title>
+        <title>
+            Сортировка
+            <!--ORDER BY Clause-->
+        </title>
 
         <para>
+            Для сортировки столбцов используйте метод <code>order()</code> столько раз,
+            сколько нужно.
+<!--        
             To ORDER columns, use the order() method as many times as you wish.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// создание объекта $db, затем получение инструмента SELECT
 $select = $db->select();
 
 //
@@ -298,10 +378,10 @@ $select->from('round_table', '*');
 $select->order('noble_title DESC');
 $select->order('first_name');
 
-// an equivalent order() call:
+// эквивалентный вызов order():
 $select->order('noble_title DESC, first_name');
 
-// another equivalent order() call:
+// другой эквивалентный вызов order():
 $select->order(array('noble_title DESC', 'first_name'));
 
 ?>]]></programlisting>
@@ -310,16 +390,31 @@ $select->order(array('noble_title DESC', 'first_name'));
 
     <sect2 id="zend.db.select.limit">
 
-        <title>LIMIT By Count and Offset</title>
+        <title>
+            Ограничение по количеству строк и смещению
+            <!--LIMIT By Count and Offset-->
+        </title>
 
         <para>
+            <code>Zend_Db_Select</code> предлагает независимую от типа СУБД поддержку
+            LIMIT. Для многих баз данных - таких, как MySQL и PostgreSQL - это относительно легко,
+            так как они поддерживают синтаксис "LIMIT :количество_строк [OFFSET :смещение]".
+<!--        
             Zend_Db_Select offers database-abstracted LIMIT clause support.
             For many databases, such as MySQL and PostgreSQL, this is
             relatively easy, as they support the the "LIMIT :count
             [OFFSET :offset]" syntax.
+-->
         </para>
 
         <para>
+            Для других баз данных - таких, как Microsoft SQL и Oracle - это не так легко, поскольку они
+            совсем не поддерживают конструкцию LIMIT. MS-SQL имеет только конструкцию TOP, Oracle
+            требует, чтобы запрос был написан специальным образом для эмуляции LIMIT. Благодаря
+            алгоритму, по которому <code>Zend_Db_Select</code> работает внутри,  мы можем
+            "на лету" переписывать SELECT для эмуляции функционала LIMIT из вышеупомянутых
+            СУБД с открытыми исходниками.
+<!--
             For other databases, such as Microsoft SQL and Oracle, this
             is not so easy, as they do not support LIMIT clauses at all.
             MS-SQL has only a TOP clause, and Oracle  requires that a query
@@ -327,50 +422,56 @@ $select->order(array('noble_title DESC', 'first_name'));
             the way Zend_Db_Select works internally, we can rewrite the SELECT
             on-the-fly to emulate the LIMIT functionality of the aforementioned
             open-source database systems.
+-->
         </para>
 
         <para>
+            Для ограничения возвращаемых результатов по количеству строк и смещению
+            используйте метод <code>limit()</code> c количеством строк и смещением в
+            качестве необязатеьного параметра.
+<!--        
             To LIMIT the returned results by count and offset, use the limit()
             method with a count and optional offset.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// first, a simple "LIMIT :count"
+// для начала простой "LIMIT :количество_строк"
 $select = $db->select();
 $select->from('foo', '*');
 $select->order('id');
 $select->limit(10);
 
 //
-// In MySQL/PostgreSQL/SQLite, this translates to:
+// в MySQL/PostgreSQL/SQLite это будет преобразовано в:
 //
 // SELECT * FROM foo
 //     ORDER BY id ASC
 //     LIMIT 10
 //
-// But in Microsoft SQL, this translates to:
+// а в Microsoft SQL это будет преобразовано в:
 //
 // SELECT TOP 10 * FROM FOO
 //     ORDER BY id ASC
 //
 //
 
-// now, a more complex "LIMIT :count OFFSET :offset"
+// а теперь более сложный "LIMIT :количество_строк OFFSET :смещение"
 $select = $db->select();
 $select->from('foo', '*');
 $select->order('id');
 $select->limit(10, 20);
 
 //
-// In MySQL/PostgreSQL/SQLite, this translates to:
+// в MySQL/PostgreSQL/SQLite это будет преобразовано в:
 //
 // SELECT * FROM foo
 //     ORDER BY id ASC
 //     LIMIT 10 OFFSET 20
 //
-// But in Microsoft SQL, which has no offset support, this translates to
-// something like:
+// а в Microsoft SQL, который не поддерживает смещения, это будет
+// преобразовано в нечто подобное:
 //
 // SELECT * FROM (
 //     SELECT TOP 10 * FROM (
@@ -378,7 +479,7 @@ $select->limit(10, 20);
 //     ) ORDER BY id ASC
 // )
 //
-// Zend_Db_Adapter does the query translation for you automatically.
+// Zend_Db_Adapter автоматически сделает перобразования за вас
 //
 
 ?>]]></programlisting>
@@ -387,27 +488,36 @@ $select->limit(10, 20);
 
     <sect2 id="zend.db.select.paging">
 
-        <title>LIMIT By Page And Count</title>
+        <title>
+            Ограничение по странице и количеству строк
+            <!--LIMIT By Page And Count-->
+        </title>
 
         <para>
+            <code>Zend_Db_Select</code> также предлагает ограничение, основанное на страницах.
+            Если вы хотите получить определенную "страницу" результатов,
+            используйте метод <code>limitPage()</code>; сначала передается номер требуемой
+            страницы, затем количество строк, которое показывается на каждой странице.
+<!--
             Zend_Db_Select offers page-based limits as well.  If you wish to
             retrieve a certain "page" of results, use the limitPage() method;
             first pass the page number you want, and then the number of
             rows that appear on each page.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// build the basic select...
+// построение основы запроса...
 $select = $db->select();
 $select->from('foo', '*');
 $select->order('id');
 
-// ... and limit to page 3 where each page has 10 rows
+// ... и ограничение до страницы 3, где каждая страница имеет 10 строк
 $select->limitPage(3, 10);
 
 //
-// In MySQL/PostgreSQL/SQLite, this translates to:
+// в MySQL/PostgreSQL/SQLite это будет преобразовано в:
 //
 // SELECT * FROM foo
 //     ORDER BY id ASC
