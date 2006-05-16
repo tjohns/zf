@@ -1,5 +1,5 @@
 <sect1 id="zend.mime.introduction">
-    <title>介绍</title>
+    <title>简介</title>
     <para>
         <code>Zend_Mime</code> 是一个用来处理含有多个部分的 MIME 消息的辅助类. 它未 <link
         linkend="zend.mail"><code>Zend_Mail</code></link> 提供支持, 并且可以被其他需要 MIME 支持的应用程序使用.
