@@ -7,13 +7,13 @@
         <title>Введение</title>
 
         <para>
-			<code>Zend_Db_Table_Rowset</code> является итератором для
-			наборов объектов <code>Zend_Db_Table_Row</code>. В общих чертах,
-			вы не создаете непосредственно экземпляр <code>Zend_Db_Table_Rowset</code>,
-			вместо этого вы получаете <code>Zend_Db_Table_Row</code> как возращаемое
-			значение при вызове методов <code>Zend_Db_Table::find()</code>
-			или <code>fetchAll()</code>. После этого вы можете производить итерацию набора
-			объектов<code>Zend_Db_Table_Row</code> и изменять их по своему желанию.
+            <code>Zend_Db_Table_Rowset</code> является итератором для
+            наборов объектов <code>Zend_Db_Table_Row</code>. Обычно
+            вы не создаете экземпляр <code>Zend_Db_Table_Rowset</code> непосредственно,
+            вместо этого получаете <code>Zend_Db_Table_Rowset</code> как возращаемый
+            результат вызова методов <code>Zend_Db_Table::find()</code>
+            или <code>fetchAll()</code>. После этого вы можете производить итерацию набора
+            объектов<code>Zend_Db_Table_Row</code> и изменять их по своему желанию.
 <!--
             Zend_Db_Table_Rowset is an iterator for Zend_Db_Table_Row object collections.
             In general, you do not instantiate Zend_Db_Table_Rowset by itself; instead,
@@ -30,7 +30,7 @@
         <title>Извлечение набора строк</title>
 
         <para>
-            Первое, что надо сделать - создать экземпляр класса <code>Zend_Db_Table</code>.
+            Первое, что нужно сделать - создать экземпляр класса <code>Zend_Db_Table</code>.
 <!--
             The first thing to do is instantiate a Zend_Db_Table class.
 -->
@@ -74,12 +74,12 @@ $table = new RoundTable();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// fetch many records from the table
+// извлечение множества записей из таблицы
 $rowset = $table->fetchAll();
 
 //
-// $rowset is now a Zend_Db_Table_Rowset object composed of
-// one Zend_Db_Table_Row object per record in the results
+// $rowset теперь является объектом Zend_Db_Table_Rowset,
+// состоящим из одного объекта Zend_Db_Table_Row на каждую запись в результате
 //
 ?>]]>
         </programlisting>
@@ -88,37 +88,45 @@ $rowset = $table->fetchAll();
 
     <sect2 id="zend.db.table.rowset.iterate">
 
-        <title>Iterating Through the Rowset</title>
+        <title>Итерация набора строк</title>
 
         <para>
+            <code>Zend_Db_Table_Rowset</code> реализует интерфейс итератора SPL, это означает,
+            что вы можете обходить объекты <code>Zend_Db_Table_Rowset</code> как массивы,
+            используя <code>foreach()</code>. Каждое значение, которое вы извлечете таким
+            способом, будет объектом <code>Zend_Db_Table_Row</code>, который соответствует
+            одной записи, полученной из таблицы. Вы можете просматривать, изменять и сохранять
+            свойства для этих записей.
+<!--
             Zend_Db_Table_Rowset implements the SPL Iterator interface,
             which means you can loop through Zend_Db_Table_Rowset objects like arrays
             using foreach().  Each value you retrieve this way will be a Zend_Db_Table_Row
             that corresponds to one record from the table; you can then view, modify, and
             save the properties for that record.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
+// соединение с таблицей в БД
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// fetch many records from the table
+// извлечение множества записей из таблицы
 $rowset = $table->fetchAll();
 
-// display them all
+// отображение их всех
 foreach ($rowset as $row) {
-    // $row is a Zend_Db_Table_Row object
+    // $row теперь является объектом Zend_Db_Table_Row
     echo "<p>" . htmlspecialchars($row->nobleTitle) . " "
        . htmlspecialchars($row->firstName) . "'s "
        . "favorite color is " . htmlspecialchars($row->favoriteColor)
        . ".</p>\n";
 
-    // update the number of times we have displayed this row,
-    // (which maps to a column in the table "times_displayed")
+    // изменение количества отображений для данной строки
+    // (ему соответствует столбец "times_displayed" в таблице)
     $row->timesDisplayed ++;
 
-    // save the record with the new information
+    // сохранение записи с новой информацией
     $row->save();
 }
 ?>]]>
