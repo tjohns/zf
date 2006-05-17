@@ -4,28 +4,40 @@
 
     <sect2 id="zend.db.table.rowset.introduction">
 
-        <title>Introduction</title>
+        <title>Введение</title>
 
         <para>
+			<code>Zend_Db_Table_Rowset</code> является итератором для
+			наборов объектов <code>Zend_Db_Table_Row</code>. В общих чертах,
+			вы не создаете непосредственно экземпляр <code>Zend_Db_Table_Rowset</code>,
+			вместо этого вы получаете <code>Zend_Db_Table_Row</code> как возращаемое
+			значение при вызове методов <code>Zend_Db_Table::find()</code>
+			или <code>fetchAll()</code>. После этого вы можете производить итерацию набора
+			объектов<code>Zend_Db_Table_Row</code> и изменять их по своему желанию.
+<!--
             Zend_Db_Table_Rowset is an iterator for Zend_Db_Table_Row object collections.
             In general, you do not instantiate Zend_Db_Table_Rowset by itself; instead,
             you retrieve a Zend_Db_Table_Rowset as the return result from a call to
             Zend_Db_Table::find() or fetchAll().  You can then iterate through the
             collected Zend_Db_Table_Row objects and modify them as you wish.
+-->
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.rowset.fetch">
 
-        <title>Fetching a Rowset</title>
+        <title>Извлечение набора строк</title>
 
         <para>
+            Первое, что надо сделать - создать экземпляр класса <code>Zend_Db_Table</code>.
+<!--
             The first thing to do is instantiate a Zend_Db_Table class.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// создание адаптера
 require_once 'Zend/Db.php';
 $params = array (
     'host'     => '127.0.0.1',
@@ -36,22 +48,29 @@ $params = array (
 
 $db = Zend_Db::factory('pdoMysql', $params);
 
-// set the default adapter for all Zend_Db_Table objects
+// установка адаптера по умолчанию для всех объектов Zend_Db_Table
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
-// connect to a table in the database
+// соединение с таблицей в БД
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 ?>]]>
         </programlisting>
 
         <para>
+            Далее, получите множество записей из БД, используя <code>Zend_Db_Table::find()</code>
+            с набором ключей или <code>Zend_Db_Table::fetchAll()</code>.
+            Возвращенный результат будет объектом <code>Zend_Db_Table_Rowset</code>,
+            который позволит вам производить обход каждого отдельного объекта
+            <code>Zend_Db_Table_Row</code> в наборе записей.
+<!--
             Next, retrieve many records from the database using
             Zend_Db_Table::find() with multiple keys, or by using
             Zend_Db_Table::fetchAll(); the returned result will be a
             Zend_Db_Table_Rowset object that will let you iterate through
             the individual Zend_Db_Table_Row objects in the record set.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php

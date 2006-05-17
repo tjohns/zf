@@ -4,29 +4,40 @@
 
     <sect2 id="zend.db.table.introduction">
 
-        <title>Introduction</title>
+        <title>Введение</title>
 
         <para>
+            <code>Zend_Db_Table</code> является модулем Zend Framework для таблиц. Он
+            соединяется с вашей базой данных посредством <code>Zend_Db_Adapter</code>,
+            исследует таблицу на предмет структуры, далее помогает вам в манипуляциях
+            и извлечении строк из этой таблицы.
+<!--        
             Zend_Db_Table is a TableModule for the Zend Framework.  It
             connects to your database via Zend_Db_Adapter, examines a table
             for its schema, then aids you in manipulating and fetching
             rows from that table.
+-->
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.getting-started">
 
-        <title>Getting Started</title>
+        <title>Начало работы</title>
 
         <para>
+            Первое, что нужно сделать - установить для абстрактного класса <code>Zend_Db_Table</code>
+            адаптер БД по умолчанию. Все экземпляры класса <code>Zend_Db_Table</code>
+            будут использовать этот адаптер по умолчанию, пока вы не укажете другое.
+ <!--
             The first thing to do is feed the abstract Zend_Db_Table class
             a default database adapter; unless you specify otherwise,
             all Zend_Db_Table instances will use this default adapter.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// создание адаптера
 require_once 'Zend/Db.php';
 $params = array (
     'host'     => '127.0.0.1',
@@ -37,19 +48,27 @@ $params = array (
 
 $db = Zend_Db::factory('pdoMysql', $params);
 
-// set the default adapter for all Zend_Db_Table objects
+// установка адаптера по умолчанию для всех объектов Zend_Db_Table
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 ?>]]>
         </programlisting>
 
         <para>
+            Теперь предположим, что вы имеете в своей БД таблицу, которая называется
+            "round_table". Чтобы использовать <code>Zend_Db_Table</code> с этой таблицей,
+            просто унаследуйте класс <code>Zend_Db_Table</code>, чтобы создать дочерний класс под
+            именем <code>RoundTable</code> (обратите внимание, что имя класса копирует имя таблицы).
+            Далее мы можем изучать, манипулировть строками и извлекать результаты из таблицы
+            'round_table' в БД с помощью этого класса.
+<!--
             Next, let's assume that you have a table in your database
             called "round_table".  To use Zend_Db_Table with that database
             table, simply extend Zend_Db_Table to create a new class called
             RoundTable (note how we "camelize" the round_table name).
             Then we can examine, manipulate rows, and fetch results from
             the 'round_table' table in the database via that class.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -62,9 +81,17 @@ $table = new RoundTable();
 
     <sect2 id="zend.db.table.name-and-key">
 
-        <title>Table Name and Primary Key</title>
+        <title>Имя таблицы и первичные ключи</title>
 
         <para>
+            По умолчанию <code>Zend_Db_Table</code> ожидает, что имя данной таблицы в БД будет
+            таким же, как и имя ее собственного класса (в котором разделение слов
+            ЗаглавнымиБуквами заменено разделением знаками_подчеркивания). Таким образом,
+            класс <code>Zend_Db_Table</code> с именем SomeTableName соответствует SQL таблице
+            с именем 'some_table_name'. Если вы желаете, чтобы ваш класс соответствовал чему-либо
+            иному, чем имя класса в форме со знаком подчеркивания, переопределите свойство
+            <code>$_name</code>, когда описываете свой класс.
+<!--
             By default, Zend_Db_Table expects that the table name in the
             database will be the same as its own class name (when converted
             from CamelCaps to underscore_words).  Thus, a Zend_Db_Table class
@@ -72,40 +99,52 @@ $table = new RoundTable();
             If you want your class to map to something other than the
             underscore form of the class name, override the $_name property
             when defining your class.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 class ClassName extends Zend_Db_Table
 {
-    // default table name is 'class_name'
-    // but we want to map to something else
+    // имя таблицы по умолчанию - 'class_name',
+    // но мы хотим установить соответствие с чем-то другим
     protected $_name = 'another_table_name';
 }
 ?>]]>
         </programlisting>
 
         <para>
+            По умолчанию <code>Zend_Db_Table</code> ожидает, что ваша таблица имеет первичный
+            ключ с именем 'id'. (Лучше, если этот столбец является автоинкрементным, но это
+            не обязательно.) Если ваш первичный ключ назван по-другому, вы можете
+            переопределить свойство <code>$_primary</code>, когда описываете свой класс.
+<!--        
             By default, Zend_Db_Table expects your table to have a primary
             key named 'id'.  (It is better if this column is
             auto-incremented, but is not required.)  If your primary key
             is named something other than 'id', you can override the
             $_primary property when defining your class.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 class ClassName extends Zend_Db_Table
 {
-    // default primary key is 'id'
-    // but we want to use something else
+    // первичный ключ по умолчанию - 'id',
+    // но мы хотим использовать другой
     protected $_primary = 'another_column_name';
 }
 ?>]]>
         </programlisting>
 
         <para>
+            Альтернативно, вы можете установить их в методе <code>_setup()</code>
+            вашего унаследованного класса - только убедитесь, что после
+            этого вызывается <code>parent::_setup()</code>.
+<!--
             Alternatively, you may set these in the _setup() method of
             your extended class; just be sure to call the parent::_setup()
             when you are done.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -125,15 +164,22 @@ class ClassName extends Zend_Db_Table
 
     <sect2 id="zend.db.table.insert">
 
-        <title>Inserting Rows</title>
+        <title>Вставка строк</title>
 
         <para>
+            Для того, чтобы вставить новую строку в свою таблицу, просто вызывайте
+            <code>insert()</code> с ассоциативным массивом из пар "имя столбца": "значение". В данные
+            будут автоматически добавлены кавычки; метод возвращает последний добавленный ID.
+            (Обратите внимание на то, что этим он отличается от <code>Zend_Db_Adapter::insert()</code>,
+            который возвращает количество затронутых строк.)
+<!--
             To insert a new row into your table, simply call insert()
             with an associative array of column:value data.  The data
             will be quoted for you automatically, and the last insert ID
             will be returned.  (Note that this differs from
             Zend_Db_Adapter::insert(), where the number of rows affected will
             be returned.)
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -161,19 +207,31 @@ $id = $table->insert($data);
 
     <sect2 id="zend.db.table.udpate">
 
-        <title>Updating Rows</title>
+        <title>Обновление строк</title>
 
         <para>
+            Для того, чтобы обновить любое количество строк в своей таблице, вызывайте
+            <code>update()</code> с ассоциативным массивом  из пар "имя столбца": "значение
+            для установки",  наряду с этим передается условие WHERE для определения, какие
+            строки дожны быть обновлены. Метод обновит таблицу и вернет количество затронутых
+            строк.
+<!--
             To update any number of rows in your table, call update()
             with an associative array of column:value data to set, along
             with a WHERE clause to determine which rows will be updated.
             It will update the table and return the number of rows affected.
+-->
         </para>
 
         <para>
+            В данные для установки будут будут автоматически добавлены кавычки, но это не относится
+            к условию WHERE, поэтому вам нужно самим добавить кавычки с помощью принадлежащего
+            таблице объекта <code>Zend_Db_Adapter</code>.
+<!--
             The data to be set will be quoted for you automatically, but
             the WHERE clause will not, so you need to quote that
             yourself with the table's Zend_Db_Adapter object.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -202,17 +260,26 @@ $rows_affected = $table->update($set, $where);
 
     <sect2 id="zend.db.table.delete">
 
-        <title>Deleting Rows</title>
+        <title>Удаление строк</title>
 
         <para>
+            Для того, чтобы удалить любое количество строк в своей таблице, вызывайте
+            <code>delete()</code> с условием WHERE для определения, какие строки должны
+            быть удалены. Метод будет возвращать количество удаленных строк.
+<!--
             To delete any number of rows in your table, call delete()
             with a WHERE clause to determine which rows will be deleted.
             It will then return the number of rows deleted.
+-->
         </para>
 
         <para>
+            В условие WHERE не добавляются кавычки за вас, поэтому вам нужно самим добавить
+            кавычки с помощью объекта <code>Zend_Db_Adapter</code> таблицы.
+<!--
             The WHERE clause will not be quoted for you, so you need to
             quote that yourself with the table's Zend_Db_Adapter object.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -236,14 +303,20 @@ $rows_affected = $table->delete($where);
 
     <sect2 id="zend.db.table.findbykey">
 
-        <title>Finding Rows by Primary Key</title>
+        <title>Поиск строк по первичному ключу</title>
 
         <para>
-            As a convienience, you can easily retrieve rows from the
+            Вы можете легко извлекать строки из таблицы, используя значения первичного
+            ключа через метод <code>find()</code>. Этот метод возвращает объект 
+            <code>Zend_Db_Table_Row</code>, если вы пытаетесь найти только один ключ, или
+            <code>Zend_Db_Table_Rowset</code>, если вы пытаетесь найти несколько ключей.
+<!--
+            As a convenience, you can easily retrieve rows from the
             table using primary key values with the find() method.  This
             method returns a Zend_Db_Table_Row object if you attempt to find()
             only one key, or a Zend_Db_Table_Rowset object if you attempt to find()
             multiple keys.
+-->
         </para>
         <programlisting role="php"><![CDATA[<?php
 class RoundTable extends Zend_Db_Table {}
@@ -262,20 +335,33 @@ $rowset = $table->find(array(1, 2, 3));
 
     <sect2 id="zend.db.table.fetchonerow">
 
-        <title>Fetching One Row</title>
+        <title>Извлечение одной строки</title>
 
         <para>
+            Несмотря на то, что вы можете использовать метод <code>find()</code> для поиска
+            строк по их первичным ключам, часто вам нужно добавлять различные условия,
+            когда извлекате строки. <code>Zend_Db_Table</code> предоставляет
+            <code>fetchRow()</code> только для этой цели. Вызывайте <code>fetchRow()</code> с
+            условием WHERE (и необязательно условием ORDER),
+            и <code>Zend_Db_Table</code> вернет <code>Zend_Db_Table_Row</code>, который
+            будет с первой строкой, удовлетворяющей вашим условиям.
+<!--
             While you can easily find() a row by its primary key, often you
             will need to add various conditions when retrieving a row. Zend_Db_Table
             provides fetchRow() for just this purpose.  Call fetchRow() with
             a WHERE clause (and an optional ORDER clause), and Zend_Db_Table will
             return a Zend_Db_Table_Row that with the first record that matches your
             conditions.
+-->
         </para>
 
         <para>
+            Заметьте, что в условие WHERE не добавляются кавычки за вас, поэтому вам
+            нужно самим добавить кавычки с помощью объекта <code>Zend_Db_Adapter</code> таблицы.
+<!--
             Note that your WHERE clause will not be quoted for you, so you
             will need to quote it yourself with the table's Zend_Db_Adapter.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -304,19 +390,31 @@ $row = $table->fetchRow($where, $order);
 
     <sect2 id="zend.db.table.fetchmultiple">
 
-        <title>Fetching Multiple Rows</title>
+        <title>Извлечение множества строк</title>
 
         <para>
+            Если вам нужно получить много строк за один раз, используйте метод
+            <code>fetchAll()</code>. Как и <code>fetchRow()</code>, он принимает условия
+            WHERE и ORDER, но вдобавок принимает еще количество строк и  смещение для
+            ограничения количества возвращаемых строк. Метод будет возвращать объект
+            <code>Zend_Db_Table_Rowset</code> с выбранными строками.
+<!--
             If you need to retrieve many rows at once, use the fetchAll()
             method.  As with fetchRow(), it takes a WHERE and ORDER clause,
             but also takes limit-count and limit-offset values to restrict
             the number of rows returned.  It will return a Zend_Db_Table_Rowset
             object with the selected records.
+-->
         </para>
 
         <para>
+            Заметьте, что в условие WHERE не добавляются кавычки за вас, поэтому вам
+            нужно самим добавить кавычки с помощью объекта <code>Zend_Db_Adapter</code>
+            таблицы.
+<!--
             Note that your WHERE clause will not be quoted for you, so you
             will need to quote it yourself with the table's Zend_Db_Adapter.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -343,13 +441,22 @@ $rowset = $table->fetchRow($where, $order, $count, $offset);
 
     <sect2 id="zend.db.table.domain-logic">
 
-        <title>Adding Domain Logic</title>
+        <title>
+            Добавление логики предметной области
+            <!--Adding Domain Logic-->
+        </title>
 
         <para>
+            <code>Zend_Db_Table</code> дает возможность инкапсулировать
+            свою собственную логику предметной области. Например, вы можете переопределить
+            методы <code>insert()</code> и <code>update()</code> для проверки отправляемых данных
+            или манипуляций с ними перед тем, как они будут отправлены БД.
+<!--
             As a TableModule, Zend_Db_Table lends itself well to encapsulating
             your own particular domain logic.  For example, you can override
             the insert() and update() methods to manipulate or validate the
             submitted data before it goes to the database.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -377,8 +484,12 @@ class RoundTable extends Zend_Db_Table
         </programlisting>
 
         <para>
+            Аналогичным образом вы можете добавлять свои собственные методы для поиска
+            записей по чему-либо иному, чем первичные ключи.
+<!--
             Similarly, you can add your own find() methods to look up
             records by something other than their primary key.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php

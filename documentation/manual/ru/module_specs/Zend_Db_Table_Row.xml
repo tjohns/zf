@@ -4,29 +4,42 @@
 
     <sect2 id="zend.db.table.row.introduction">
 
-        <title>Introduction</title>
+        <title>Введение</title>
 
         <para>
+            <code>Zend_Db_Table_Row</code>  является интерфейсом Zend Framework
+            для строк данных. В общих чертах, вы не создаете непосредственно экземпляр
+            <code>Zend_Db_Table_Row</code>, вместо этого вы получаете
+            <code>Zend_Db_Table_Row</code> как возращаемое значение методов
+            <code>Zend_Db_Table::find()</code> или <code>Zend_Db_Table::fetchRow()</code>.
+            Имея <code>Zend_Db_Table_Row</code>, вы можете редактировать значения
+            записи (представленные как свойства класса) и затем сохранять изменения
+            в исходной таблице методом <code>save()</code>.
+<!--
             Zend_Db_Table_Row is a row data gateway for the Zend Framework.  In
             general, you do not instantiate Zend_Db_Table_Row by itself; instead,
             you get a Zend_Db_Table_Row back as a return result from Zend_Db_Table::find()
             or Zend_Db_Table::fetchRow().  Once you have a Zend_Db_Table_Row, you can
             edit the record values (represented as class properties) and then
             save() the changes back to the originating table.
+-->
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.row.fetch">
 
-        <title>Fetching a Row</title>
+        <title>Извлечение строки</title>
 
         <para>
+            Первое, что надо сделать - создать экземпляр класса <code>Zend_Db_Table</code>.
+<!--
             The first thing to do is instantiate a Zend_Db_Table class.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// создание адаптера
 require_once 'Zend/Db.php';
 $params = array (
     'host'     => '127.0.0.1',
@@ -37,17 +50,24 @@ $params = array (
 
 $db = Zend_Db::factory('pdoMysql', $params);
 
-// set the default adapter for all Zend_Db_Table objects
+// установка адаптера по умолчанию для всех объектов Zend_Db_Table
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
-// connect to a table in the database
+// соединение с таблицей в БД
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 ?>]]>
         </programlisting>
 
         <para>
+            Далее, получите одну запись из БД, используя <code>Zend_Db_Table::find()</code>
+            с единственным ключом, либо используя <code>Zend_Db_Table::fetchRow()</code>.
+            Возвращенный результат будет объектом <code>Zend_Db_Table_Row</code>, где
+            каждое свойство имеет имя с буквамиОбоихРегистров, соответствующее
+            имени столбца с знаками_подчеркивания. Т.е., "first_name" в таблице становится
+            "firstName" в свойствах объекта.
+<!--
             Next, retrieve one record from the database using
             Zend_Db_Table::find() with a single key, or by using
             Zend_Db_Table::fetchRow().  The returned result will be a
@@ -55,15 +75,16 @@ $table = new RoundTable();
             "camelCaps" name mapped to an "underscore_words" column name
             from the table.  E.g., "first_name" in the table will become
             "firstName" in the object properties.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// fetch a record from the table as a Zend_Db_Table_Row object
+// извлечение записи из таблицы как объект Zend_Db_Table_Row
 $row = $table->fetchRow('first_name = "Robin"');
 
 //
-// $row is now a Zend_Db_Table_Row object with public properties
-// that map to table columns:
+// $row теперь является объектом Zend_Db_Table_Row
+// с открытыми свойствами, которые соответствуют столбцам таблицы:
 //
 // $row->id = '3'
 // $row->nobleTitle = 'Sir'
@@ -78,54 +99,63 @@ $row = $table->fetchRow('first_name = "Robin"');
 
     <sect2 id="zend.db.table.row.modify">
 
-        <title>Modifying Values</title>
+        <title>Изменение значений</title>
 
         <para>
+            Изменение значений строки производится очень легко - просто работайте со
+            свойствами объекта. Когда все сделано, вы можете сохранить строку обратно в таблицу
+            методом <code>save()</code>.
+<!--
             Modifying row values is very easy: just work with the object properties
             the way you would with any other object.  Then you can save() the row back
             to the table when you are done.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
+// соединение с таблицей в БД
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// fetch a record from the table as a Zend_Db_Table_Row object
+// извлечение записи из таблицы как объект Zend_Db_Table_Row
 $row = $table->fetchRow('first_name = "Robin"');
 
 //
-// $row is now a Zend_Db_Table_Row object() with public properties
-// that map to table columns:
+// $row теперь является объектом Zend_Db_Table_Row
+// с открытыми свойствами, которые соответствуют столбцам таблицы:
 //
 // $row->id = '3'
 // $row->nobleTitle = 'Sir'
 // $row->firstName = 'Robin'
 // $row->favoriteColor = 'yellow'
 //
-// change the favorite color and save back to the table.
+// изменение любимого цвета и сохранение обратно в таблицу
 $row->favoriteColor = 'blue';'
 $row->save();
 ?>]]>
         </programlisting>
 
         <para>
+            Однако вам не дозволено менять значения первичного ключа. Если вы сделаете это,
+            <code>Zend_Db_Table_Row</code> сгенерирует исключение.
+<!--
             However, you are not allowed to change primary key values; if you
             do so, Zend_Db_Table_Row will throw an exception.
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
+// соединение с таблицей в БД
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// fetch a record from the table as a Zend_Db_Table_Row object
+// извлечение записи из таблицы как объект Zend_Db_Table_Row
 $row = $table->fetchRow('first_name = "Robin"');
 
-// can we change the primary key "id"?
+// можем ли мы изменить первичный ключ "id"?
 try {
     $row->id = 5;
-    echo "We should not see this message, as an exception was thrown.";
+    echo "Мы не должны видеть это сообщение, поскольку было сгенерировано исключение.";
 } catch (Zend_Db_Table_RowException $e) {
     echo $e->getMessage();
 }
