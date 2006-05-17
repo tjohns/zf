@@ -13,6 +13,9 @@ Zend Framework                                                             NEWS
 - Zend_Db_Adapter_Pdo_Abstract::insert() has been removed (Rob)
 - Fixed bug in Zend_Log::log(). Ticket #28 (Mike)
 - Fixed bug in Zend_Controller_Dispatcher::formatActionName(). Ticket #10 (Mike)
+- Change to how arrays are handled in Zend_Json_Encoder; when using numeric
+  indices, if indices do not start with 0 and end with (count($array)-1), array
+  will be encoded as associative array. (Matthew)
 
 =RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)

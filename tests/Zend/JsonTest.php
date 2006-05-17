@@ -185,6 +185,17 @@ class Zend_JsonTest extends PHPUnit2_Framework_TestCase
     }
 	
     /**
+     * test associative array encoding/decoding, with integer keys not starting
+     * at 0
+     * 
+     * @access public
+     * @return void
+     */
+    public function testAssocArray3() 
+    {
+        $this->_testEncodeDecode(array(array(1 => 'one', 2 => 'two')));
+    }
+	    /**
      * test object encoding/decoding (decoding to array)
      * 
      * @access public

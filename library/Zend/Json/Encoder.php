@@ -145,23 +145,20 @@ class Zend_Json_Encoder
      * Recursively encodes each value of an array and returns a JSON encoded
      * array string.
      *
+     * Arrays are defined as integer-indexed arrays starting at index 0, where
+     * the last index is (count($array) -1); any deviation from that is
+     * considered an associative array, and will be encoded as such.
+     *
      * @param $array array
      * @return string
      */
     protected function _encodeArray(&$array)
     {
         $tmpArray = array();
-        $assoc = false;
 
         // Check for associative array
-        foreach (array_keys($array) as $key) {
-            if (!is_int($key)) {
-                $assoc = true;
-                break;
-            }
-        }
-        
-        if ($assoc) {
+        if (array_keys($array) !== range(0, count($array) - 1)) {
+            // Associative array
             $result = '{';
             foreach ($array as $key => $value) {
                 $key = (string) $key;
@@ -172,6 +169,7 @@ class Zend_Json_Encoder
             $result .= implode(', ', $tmpArray);
             $result .= '}';
         } else {
+            // Indexed array
             $result = '[';
             $length = count($array);
             for ($i = 0; $i < $length; $i++) {
