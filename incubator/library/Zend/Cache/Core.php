@@ -79,7 +79,17 @@ class Zend_Cache_Core
         'lifeTime' => 3600,
         'logging' => false
     ); 
-              
+    
+    /**
+     * Array of options which have to be transfered to backend
+     */
+    protected static $_directivesList = array('lifeTime', 'logging');
+    
+    /**
+     * Not used for the core, just a sort a hint to get a common setOption() method (for the core and for frontends)
+     */
+    protected $_specificOptions = array();
+               
     /**
      * Last used cache id
      * 
@@ -103,7 +113,7 @@ class Zend_Cache_Core
             Zend_Cache::throwException('Options parameter must be an array');
         }  
         while (list($name, $value) = each($options)) {
-            $this->setOption($name, $value);
+            $this->_setOption($name, $value);
         }
         if ($this->_options['logging']) {
             if (!class_exists('Zend_Log', false)) {
@@ -123,11 +133,38 @@ class Zend_Cache_Core
             Zend_Cache::throwException('Incorrect backend object !');
         }
         $this->_backend= $backendObject;
-        $directives = array(
-            'lifeTime' => $this->_options['lifeTime'],
-            'logging' => $this->_options['logging']
-        );
+        // some options (listed in $_directivesList) have to be given
+        // to the backend too (even if they are not "backend specific") 
+        $directives = array();
+        foreach (Zend_Cache_Core::$_directivesList as $directive) {
+            $directives[$directive] = $this->_option[$directive];
+        }
         $this->_backend->setDirectives($directives);
+    }
+    
+    /**
+     * Public frontend to set an option
+     * 
+     * There is an additional validation (relatively to the protected _setOption method) 
+     * 
+     * @param string $name name of the option
+     * @param mixed $value value of the option
+     */
+    public function setOption($name, $value)
+    {
+        if (is_string($name)) {
+            if (array_key_exists($name, $this->_options)) {
+            	// This is a Core option
+                $this->_setOption($name, $value);
+                return;
+            }
+            if (array_key_exists($name, $this->_specificOptions)) { 
+        		// This a specic option of this frontend
+                $this->_specificOptions[$name] = $value;
+                return;
+            }
+        } 
+        Zend_Cache::throwException("Incorrect option name : $name");
     }
     
     /**
@@ -136,12 +173,27 @@ class Zend_Cache_Core
      * @param string $name name of the option
      * @param mixed $value value of the option
      */
-    public function setOption($name, $value)
+    private function _setOption($name, $value)
     {
         if (!is_string($name) || !array_key_exists($name, $this->_options)) {
             Zend_Cache::throwException("Incorrect option name : $name");
         }
         $this->_options[$name] = $value;
+    }
+    
+    /**
+     * Force a new lifetime
+     * 
+     * The new value is set for the core/frontend but for the backend too (directive)
+     * 
+     * @param int $newLifeTime new lifetime (in seconds)
+     */
+    public function setLifeTime($newLifeTime)
+    {
+        $this->_options['lifeTime'] = $newLifeTime;
+        $this->_backend->setDirectives(array(
+            'lifeTime' => $newLifeTime
+        ));
     }
     
     /**
