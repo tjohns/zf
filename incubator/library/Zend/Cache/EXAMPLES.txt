@@ -224,7 +224,7 @@ require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
 	'lifeTime' => 7200 // cache lifetime of 2 hours,
-    'cachedClass' => 'test'
+    'cachedEntity' => 'test'
 );
 
 $backendOptions = array(
@@ -272,7 +272,7 @@ require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
 	'lifeTime' => 7200 // cache lifetime of 2 hours,
-    'cachedObject' => new test()
+    'cachedEntity' => new test()
 );
 
 $backendOptions = array(
