@@ -44,7 +44,7 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
      * 
      * @var array available options
      */
-    private $_specificOptions = array(
+    protected $_specificOptions = array(
     	'masterFile' => ''
     ); 
     
@@ -73,30 +73,7 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
             Zend_Cache::throwException('Unable to read masterFile : '.$this->_specificOptions['masterFile']);
         }
     }    
-    
-    /**
-     * Set an option
-     * 
-     * @param string $name name of the option
-     * @param mixed $value value of the option
-     */
-    public function setOption($name, $value)
-    {
-        if (is_string($name)) {
-            if (array_key_exists($name, $this->_options)) {
-            	// This is a Core option
-                parent::setOption($name, $value);
-                return;
-            }
-            if (array_key_exists($name, $this->_specificOptions)) { 
-        		// This a specic option of this frontend
-                $this->_specificOptions[$name] = $value;
-                return;
-            }
-        } 
-        Zend_Cache::throwException("Incorrect option name : $name");
-    }
-    
+       
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
      * 
