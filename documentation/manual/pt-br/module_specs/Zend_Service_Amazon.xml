@@ -1,144 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.service.amazon">
-    <title>Zend_Service_Amazon</title>
-    <sect2 id="zend.service.amazon.introduction">
-        <title>Introduction</title>
-        <para>
-            <code>Zend_Service_Amazon</code> is a simple API for using Amazon web services.
-            <code>Zend_Service_Amazon</code> has two APIs: a more traditional one that follows Amazon's own API, and a
-            simpler "Query API" for constructing even complex search queries easily.
-        </para>
-        <para>
-            <code>Zend_Service_Amazon</code> enables developers to retrieve information appearing throughout Amazon.com
-            web sites directly through the Amazon Web Services API. Examples include:
-            <itemizedlist>
-                <listitem>
-                    Store item information, such as images, descriptions, pricing, and more
-                </listitem>
-                <listitem>
-                    Customer and editorial reviews
-                </listitem>
-                <listitem>
-                    Similar products and accessories
-                </listitem>
-                <listitem>
-                    Amazon.com offers
-                </listitem>
-                <listitem>
-                    ListMania lists
-                </listitem>
-            </itemizedlist>
-        </para>
-        <para>
-            In order to use <code>Zend_Service_Amazon</code>, you should already have an Amazon developer API key. To
-            get a key and for more information, please visit the
-            <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> web site.
-        </para>
-        <note>
-            Your Amazon developer API key is linked to your Amazon identity, so take appropriate measures to keep your
-            API key private.
-        </note>
-        <example>
-            <title>Search Amazon Using the Traditional API</title>
-            <para>
-                In this example, we search for PHP books at Amazon and loop through the results, printing them.
-            </para>
-            <programlisting><![CDATA[<?php
+  <title>Zend_Service_Amazon</title>
+
+  <sect2 id="zend.service.amazon.introduction">
+    <title>Introdução</title>
+
+    <para><code>Zend_Service_Amazon</code> é uma simples API para utilização
+    dos web services do Amazon. <code>Zend_Service_Amazon</code> possui duas
+    APIs: uma mais tradicional que segue o padrão da própria Amazon API, e uma
+    simples API de consultas para facilitar a construção de pesquisas mais
+    complexas.</para>
+
+    <para><code>Zend_Service_Amazon</code> dá aos desenvolvedores a capacidade
+    de recuperar informações como se estivessem accessando os sites Amazon.com
+    diretamente através da Amazon Web Services API. Exemplos incluídos:
+    <itemizedlist>
+        <listitem>
+           Armazenar informações de ítens, como imagens, descrições, preços, entre outros. 
+        </listitem>
+
+        <listitem>
+           Revisões editoriais e por parte do cliente. 
+        </listitem>
+
+        <listitem>
+           Produtos similares e acessórios.
+        </listitem>
+
+        <listitem>
+           Ofertas do Amazon.com. 
+        </listitem>
+
+        <listitem>
+           Listas do tipo ListMania. 
+        </listitem>
+      </itemizedlist></para>
+
+    <para>Para usar o <code>Zend_Service_Amazon</code>, você deve possuir uma
+    chave de desenvolvedor para acessar a Amazon API. Para obter uma chave e
+    outras informações, por favor visite o web site <ulink
+    url="http://www.amazon.com/gp/aws/landing.html">Amazon Web
+    Services</ulink>.</para>
+
+    <note>
+       Sua chave de desenvolvedor Amazon API está ligada à sua identificação Amazon, então, tome medidas de segurança apropriadas para garantir a privacidade de sua chave. 
+    </note>
+
+    <example>
+      <title>Busca no Amazon usando a API tradicional</title>
+
+      <para>Neste exemplo, pesquisamos por livros de PHP no Amazon, executando
+      um laço para imprimir os resultados.</para>
+
+      <programlisting>&lt;?php
 require_once 'Zend/Service/Amazon.php';
-$amazon = new Zend_Service_Amazon('AMAZON_API_KEY&');
-$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+$amazon = new Zend_Service_Amazon('AMAZON_API_KEY&amp;');
+$response = $amazon-&gt;itemSearch(array('SearchIndex' =&gt; 'Books', 'Keywords' =&gt; 'php'));
 foreach ($response as $r) {
-    echo $r->Title .'<br />';
+    echo $r-&gt;Title .'&lt;br /&gt;';
 }
-?>]]>       </programlisting>
-        </example>
-        <example>
-            <title>Search Amazon Using the Query API</title>
-            <para>
-                Here, we also search for PHP books at Amazon, but we instead use the Query API, which
-                resembles the Fluent Interface design pattern.
-            </para>
-            <programlisting><![CDATA[<?php
+?&gt;       </programlisting>
+    </example>
+
+    <example>
+      <title>Busca no Amazon usando a Query API</title>
+
+      <para>Aqui, nós pesquisamos por livros de PHP no Amazon, mas usando a
+      API de consulta, que implementa o padrão de projeto "Fluent
+      Interface".</para>
+
+      <programlisting>&lt;?php
 require_once 'Zend/Service/Amazon/Query.php';
 $query = new Zend_Service_Amazon_Query('AMAZON_API_KEY');
-$query->category('Books')->Keywords('PHP');
-$results = $query->search();
+$query-&gt;category('Books')-&gt;Keywords('PHP');
+$results = $query-&gt;search();
 foreach ($results as $result) {
-    echo $result->Title .'<br />';
+    echo $result-&gt;Title .'&lt;br /&gt;';
 }
-?>]]>       </programlisting>
-        </example>
-    </sect2>
-    <sect2 id="zend.service.amazon.countrycodes">
-        <title>Country Codes</title>
-        <para>
-            By default, <code>Zend_Service_Amazon</code> connects to the United States ("<code>US</code>") Amazon
-            web service. To connect from a different country, simply specify the appropriate country code string
-            as the second parameter to the constructor:
-        </para>
-        <example>
-            <title>Choosing an Amazon Web Service Country</title>
-            <programlisting><![CDATA[<?php
+?&gt;       </programlisting>
+    </example>
+  </sect2>
+
+  <sect2 id="zend.service.amazon.countrycodes">
+    <title>Códigos de Países</title>
+
+    <para>Por padrão, <code>Zend_Service_Amazon</code> conecta ao web service
+    do Amazon localizado nos Estado Unidos ("<code>US</code>"). Para
+    conectar-se a um país diferente, simplesmente especifique a respectiva
+    string de código de país como segundo parâmetro para o construtor:</para>
+
+    <example>
+      <title>Selecionando o Amazon Web Service de um país</title>
+
+      <programlisting>&lt;?php
 // Connect to Amazon in Japan
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
-?>]]>       </programlisting>
-            <note>
-                Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                <code>UK</code>, and <code>US</code>.
-            </note>
-        </example>
-    </sect2>
-    <sect2 id="zend.service.amazon.itemlookup">
-        <title>Looking up a Specific Amazon Item by ASIN</title>
-        <para>
-            The <code>itemLookup()</code> method provides the ability to fetch a particular Amazon item when
-            the ASIN is known.
-        </para>
-        <example>
-            <title>Looking up a Specific Amazon Item by ASIN</title>
-            <programlisting><![CDATA[<?php
+?&gt;       </programlisting>
+
+      <note>Códigos válidos podem ser: <code>CA</code>, <code>DE</code>,
+      <code>FR</code>, <code>JP</code>, <code>UK</code>, e
+      <code>US</code>.</note>
+    </example>
+  </sect2>
+
+  <sect2 id="zend.service.amazon.itemlookup">
+    <title>Procurando por um ítem específico do Amazon com o código
+    ASIN</title>
+
+    <para>O método <code>itemLookup()</code> oferece a capacidade de procurar
+    por um ítem em particular quando o código ASIN é conhecido.</para>
+
+    <example>
+      <title>Procurando por um ítem específico no Amazon usando ASIN</title>
+
+      <programlisting>&lt;?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$item = $amazon->itemLookup('B0000A432X');
-?>]]>       </programlisting>
-        </example>
-        <para>
-            The <code>itemLookup()</code> method also accepts an optional second parameter for handling search
-            options. For full details, including a list of available options, please see the
-            <ulink
-                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevant Amazon documentation</ulink>.
-        </para>
-    </sect2>
-    <sect2 id="zend.service.amazon.itemsearch">
-        <title>Performing Amazon Item Searches</title>
-        <para>
-            Searching for items based on any of various available criteria are made simple using the
-            <code>itemSearch()</code> method, as in the following example:
-        </para>
-        <example>
-            <title>Performing Amazon Item Searches</title>
-            <programlisting><![CDATA[<?php
+$item = $amazon-&gt;itemLookup('B0000A432X');
+?&gt;       </programlisting>
+    </example>
+
+    <para>O método <code>itemLookup()</code> também aceita um segundo parâmetro opcional para lidar com as opções de busca. Para maiores detalhes, incluíndo uma lista de opções disponíveis, por favor consulte a <ulink
+    url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation"> respectiva documentação do Amazon 
+    </ulink>.</para>
+  </sect2>
+
+  <sect2 id="zend.service.amazon.itemsearch">
+    <title>Executando pesquisas de ítens no Amazon</title>
+
+    <para>Efetuar buscas de ítens, baseando-se em um dos vários critérios de busca disponíveis, são tarefas simples se empregado o método <code>itemSearch()</code>, como mostrado no exemplo seguinte:</para>
+
+    <example>
+      <title>Efetuando buscas de ítens no Amazon</title>
+
+      <programlisting>&lt;?php
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY');
-$response = $amazon->itemSearch(array('SearchIndex' => 'Books', 'Keywords' => 'php'));
+$response = $amazon-&gt;itemSearch(array('SearchIndex' =&gt; 'Books', 'Keywords' =&gt; 'php'));
 foreach($response as $r) {
-    echo $r->Title .'<br />';
+    echo $r-&gt;Title .'&lt;br /&gt;';
 }
-?>]]>       </programlisting>
-        </example>
-        <para>
-            The <code>itemSearch()</code> method accepts a single array parameter for handling search
-            options. For full details, including a list of available options, please see the
-            <ulink
-                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>
-        </para>
-        <tip>
-            The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> class
-            is an easy to use wrapper around this method.
-        </tip>
-    </sect2>
+?&gt;       </programlisting>
+    </example>
+
+    <para>O método <code>itemSearch()</code> aceita um simples array de parâmetros para lidar com as opções de busca. Para mais detalhes, incluíndo uma lista de opções disponíveis, consulte a <ulink
+    url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation"> respectiva
+    documentação do Amazon</ulink></para>
+
+    <tip>
+       A classe  
+
+      <link linkend="zend.service.amazon.query">
+        <code>Zend_Service_Amazon_Query</code>
+      </link>
+
+       é um meio fácil de usar um encapsulamento deste método. 
+    </tip>
+  </sect2>
     &module_specs.Zend_Service_Amazon_Query;
     &module_specs.Zend_Service_Amazon_Classes;
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

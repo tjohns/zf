@@ -1,189 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.search.searching">
-	<title>Searching an Index</title>
+  <title>Pesquisando em um Índice</title>
 
-	<sect2 id="zend.search.searching.query-parser">
-		<title>Building Queries</title>
+  <sect2 id="zend.search.searching.query-parser">
+    <title>Construindo Consultas</title>
 
-        <para>
-            There are two ways to search the index. The first method uses
-            Query Parser to construct query from a string. The second provides
-            the ability to create your own queries through the Zend_Search_Lucene API.
-        </para>
+    <para>Existem duas maneiras de pesquisar o índice. O primeiro método usa
+    um analisador de consultas para construir a pesquisa a partir de uma
+    string. O segundo oferece a possibilidade de criação de consultas
+    customizadas através da API do Zend_Search_Lucene.</para>
 
-        <para>
-        Before choosing to use the provided Query Parser, please consider
-        the following:
+    <para>Antes de decidir utilizar o analisador de consultas considere o
+    seguinte: <orderedlist>
+        <listitem>
+          Se você pretende primeiro gerar programaticamente a string de consulta para depois submetê-la ao analisador então você deve considerar cuidadosamente a possibilidade a criação de suas consultas diretamente pela API. Em outras palavras, o analisador foi projetado para trabalhar com entradas de texto fornecidas por seres humanos e não com entradas geradas por software. 
+        </listitem>
 
-            <orderedlist>
-                <listitem>
-                    If you are programmatically generating a query string and then parsing
-                    it with the query parser then you should seriously consider building
-                    your queries directly with the query API. In other words, the query
-                    parser is designed for human-entered text, not for program-generated text.
-                </listitem>
-                <listitem>
-                    Untokenized fields are best added directly to queries, and not through
-                    the query parser. If a field's values are generated programmatically
-                    by the application, then so should query clauses for this field.
-                    An analyzer, which the query parser uses, is designed to convert
-                    human-entered text to terms. Program-generated values, like dates,
-                    keywords, etc., should be consistently program-generated.
-                </listitem>
-                <listitem>
-                    In a query form, fields which are general text should use the query parser.
-                    All others, such as date ranges, keywords, etc. are better added directly
-                    through the query API. A field with a limit set of values, that can be
-                    specified with a pull-down menu should not be added to a query string
-                    which is subsequently parsed, but rather added as a TermQuery clause.
-                </listitem>
-            </orderedlist>
+        <listitem>
+          Campos não tokenizados funcionam melhor se adicionados diretamente às consultas, do que pela ação do analisador. Se o conteúdo de um campo é gerado pela aplicação, então deveria haver um cláusula de consulta para este campo. Um interpretador, que é utilizado pelo analisador de consultas, é projetado para converter entradas de texto provenientes de seres humanos para cláusulas de busca. Valores gerados por programas, tais como datas, palavras-chave, etc.,  deveriam ser consistentes o suficiente para não necessitar do interpretador. 
+        </listitem>
 
-        </para>
+        <listitem>
+           Em um formulário de busca, somente os campos designados para receber texto deveriam ser submentidos ao analisador de consultas. Todo o resto (datas, tokens, etc.), pode ser submetido diretamente através da API de consulta. Um campo contendo um conjunto de valores, que pode ser exibido como um menu de persiana (pull-down), não deveria ser incluído na string de busca (e consequentemente submetido ao analisador), mas classificado como uma cláusula de busca. 
+        </listitem>
+      </orderedlist></para>
 
-        <para>
-            Both ways use the same API method to search through the index:
-
-        <programlisting role="php"><![CDATA[<?php
+    <para>Ambas as formas empregam o mesmo método da API para pesquisar no
+    índice: <programlisting role="php">&lt;?php
 
 require_once('Zend/Search/Lucene.php');
 
 $index = new Zend_Search_Lucene('/data/my_index');
 
-$index->find($query);
+$index-&gt;find($query);
 
-?>]]></programlisting>
+?&gt;</programlisting> O método <code>Zend_Search_Lucene::find()</code>
+    determina o tipo de dado de entrada automaticamente e usa o analisador de
+    consultas para construir um objeto Zend_Search_Lucene_Search_Query
+    apropriado a partir da string.</para>
 
-            The <code>Zend_Search_Lucene::find()</code> method determines input type automatically and
-            uses query parser to construct appropriate Zend_Search_Lucene_Search_Query object
-            from a string.
-        </para>
+    <para>It is important to note that <code>find()</code> IS case sensitive.
+    By default, LuceneIndexCreation.jar normalizes all documents to lowercase.
+    This can be turned off with a command line switch (type
+    LuceneIndexCreation.jar with no arguments for help). The case of the text
+    supplied to <code>find()</code> must match that of the index. If the index
+    is normalized to lowercase, then all text supplied to <code>find()</code>
+    must pass through <code>strtolower()</code>, or else it may not
+    match.</para>
 
-        <para>
-            It is important to note that <code>find()</code> IS case sensitive.  By default,
-            LuceneIndexCreation.jar normalizes all documents to lowercase.  This can be turned
-            off with a command line switch (type LuceneIndexCreation.jar with no arguments
-            for help).  The case of the text supplied to <code>find()</code> must match that
-            of the index.  If the index is normalized to lowercase, then all text supplied
-            to <code>find()</code> must pass through <code>strtolower()</code>, or else it
-            may not match.
-        </para>
-	</sect2>
+    <para>É importante ressaltar que o método <code>find()</code>é sensivel à
+    caixa. Por padrão, LuceneIndexCreation.jar normaliza todos os documentos
+    para minúsculas. Isso pode ser desativado informando um parâmetro na linha
+    de comando (tecle LuceneIndexCreation.jar sem argumentos para exibir a
+    lista de opções). A caixa do texto passado a <code>find()</code>deve ser a
+    mesma usada pelo índice. Se o índice foi normalizado para minúsculas,
+    então o texto informado a <code>find()</code>deverá ser submetido antes a
+    <code>strtolower()</code>, caso contrário ele poderá não ser
+    comparado.</para>
+  </sect2>
 
-	<sect2 id="zend.search.searching.results">
-		<title>Search Results</title>
-        <para>
-            The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
-            two properties: <code>$hit->document</code> is a document number within
-            the index and <code>$hit->score</code> is a score of the hit in
-            a search result. Result is ordered by score (top scores come first).
-        </para>
+  <sect2 id="zend.search.searching.results">
+    <title>Resultados da Pesquisa</title>
 
-        <para>
-            The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found by
-            the hit as a property of the hit.  In this example, a hit is returned and
-            the corresponding document has two fields: title and author.
+    <para>The search result is an array of Zend_Search_Lucene_Search_QueryHit
+    objects. Each of these has two properties: <code>$hit-&gt;document</code>
+    is a document number within the index and <code>$hit-&gt;score</code> is a
+    score of the hit in a search result. Result is ordered by score (top
+    scores come first).</para>
 
-        <programlisting role="php"><![CDATA[<?php
+    <para>O resultado da pesquisa é um array de objetos da classe
+    Zend_Search_Lucene_Search_QueryHit. Cada um contendo duas propriedades:
+    <code>$hit-&gt;document</code> é um número de documento no índice e
+    <code>$hit-&gt;score</code> é a pontuação de acertos no resultado da
+    busca. O resultado é ordenado pela pontuação em ordem decrescente.</para>
+
+    <para>O objeto Zend_Search_Lucene_Search_QueryHit também exibe cada campo
+    do Zend_Search_Lucene_Document encontrado pela busca como uma propriedade
+    do objeto ("hit"). No exemplo abaixo, um acerto é retornado e o documento
+    correspondente possui dois campos: título e autor.<programlisting
+    role="php">&lt;?php
 
 require_once('Zend/Search/Lucene.php');
 
 $index = new Zend_Search_Lucene('/data/my_index');
 
-$hits = $index->find($query);
+$hits = $index-&gt;find($query);
 
 foreach ($hits as $hit) {
-    echo $hit->id;
-    echo $hit->score;
+    echo $hit-&gt;id;
+    echo $hit-&gt;score;
 
-    echo $hit->title;
-    echo $hit->author;
+    echo $hit-&gt;title;
+    echo $hit-&gt;author;
 }
 
-?>]]></programlisting>
-        </para>
+?&gt;</programlisting></para>
 
-        <para>
-        Optionally, the original Zend_Search_Lucene_Document object can be returned from the
-        Zend_Search_Lucene_Search_QueryHit.
-
-        You can retrieve indexed parts of the document by using the <code>getDocument()</code>
-        method of the index object and then get them by
-        <code>getFieldValue()</code> method:
-        <programlisting role="php"><![CDATA[<?php
+    <para>Opcionalmente, o objeto Zend_Search_Lucene_Document original pode
+    ser retornado pelo objeto Zend_Search_Lucene_Search_QueryHit. Se você
+    consegue recuperar partes indexadas do documento usando o método
+    <code>getDocument()</code> no índice, o documento pode ser obtido pelo
+    método <code>getFieldValue()</code>: <programlisting role="php">&lt;?php
 
 require_once('Zend/Search/Lucene.php');
 
 $index = new Zend_Search_Lucene('/data/my_index');
 
-$hits = $index->find($query);
+$hits = $index-&gt;find($query);
 foreach ($hits as $hit) {
     // return Zend_Search_Lucene_Document object for this hit
-    echo $document = $hit->getDocument();
+    echo $document = $hit-&gt;getDocument();
 
     // return a Zend_Search_Lucene_Field object
     // from the Zend_Search_Lucene_Document
-    echo $document->getField('title');
+    echo $document-&gt;getField('title');
 
     // return the string value of the Zend_Search_Lucene_Field object
-    echo $document->getFieldValue('title');
+    echo $document-&gt;getFieldValue('title');
 
     // same as getFieldValue()
-    echo $document->title;
+    echo $document-&gt;title;
 }
 
-?>]]></programlisting>
+?&gt;</programlisting> Os campos que estão contidos no objeto
+    Zend_Search_Lucene_Document são determinados em tempo de indexação. Os
+    campos do documento ou serão indexados ou indexador e armazenados no
+    documento pela aplicação indexadora (por exemplo:
+    LuceneIndexCreation.jar). </para>
 
-        The fields available from the Zend_Search_Lucene_Document object are determined at
-        the time of indexing.  The document fields are either indexed, or
-        index and stored, in the document by the indexing application
-        (e.g. LuceneIndexCreation.jar).
-        </para>
+    <para>Pay attention, that document identity ('path' in our example) is
+    also stored in the index and must be retrieved from them.</para>
 
-        <para>
-        Pay attention, that document identity ('path' in our example) is also stored
-        in the index and must be retrieved from them.
-        </para>
+    <para>Note que a identidade do documento ("path" em nosso exemplo) também
+    será armazenado no índice e deverá ser recuperado a partir do
+    mesmo.</para>
+  </sect2>
 
-	</sect2>
+  <sect2 id="zend.search.searching.results-scoring">
+    <title>Pontuação dos Resultados</title>
 
+    <para>O módulo Zend_Search_Lucene emprega o mesmo algoritmo de pontuação
+    adotado pelo Java Lucene. Os resultados da busca são ordenados pela
+    respectiva pontuação em ordem decrescente.</para>
 
-	<sect2 id="zend.search.searching.results-scoring">
-		<title>Results Scoring</title>
-        <para>
-            Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
-            Saerch results are ordered by score. Hits with greater score come first.
-        </para>
+    <para>Em dois documentos com pontuações distintas, o que recebeu a maior
+    pontuação contém mais termos que atendem aos requisitos da consulta do que
+    o de pontuação menor.</para>
 
-        <para>
-            Different score means, that one document matches the query more then another.
-        </para>
+    <para>Simplificando: Pontuações maiores indicam uma frequência maior de
+    acertos ou frases.</para>
 
-        <para>
-            Roughly speaking, search hits, which contain searched term or phrase more frequently, have greater score.
-        </para>
-
-        <para>
-            Score can be retrived by <code>score</code> property of hit:
-        <programlisting role="php"><![CDATA[<?php
-$hits = $index->find($query);
+    <para>A pontuação pode ser recuperada pela propriedade <code>score</code>
+    do objeto "hit": <programlisting role="php">&lt;?php
+$hits = $index-&gt;find($query);
 
 foreach ($hits as $hit) {
-    echo $hit->id;
-    echo $hit->score;
+    echo $hit-&gt;id;
+    echo $hit-&gt;score;
 }
 
-?>]]></programlisting>
-        </para>
+?&gt;</programlisting></para>
 
-        <para>
-            Zend_Search_Lucene_Search_Similarity class is used to calculate score.
-            See <link linkend="zend.search.extending.scoring">Extensibility. Scoring Algorithms</link> section for details.
-        </para>
-
-	</sect2>
-
+    <para>A classe Zend_Search_Lucene_Search_Similarity é usada para calcular
+    a pontuação. Consulte a seção <link
+    linkend="zend.search.extending.scoring">Extensibilidade. Algoritmos de
+    Pontuação</link> para mais detalhes.</para>
+  </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

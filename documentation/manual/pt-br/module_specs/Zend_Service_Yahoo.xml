@@ -1,26 +1,20 @@
-<sect1 id="zend.service.yahoo">
+﻿<sect1 id="zend.service.yahoo">
     <title>Zend_Service_Yahoo</title>
     <sect2 id="zend.service.yahoo.introduction">
-        <title>Introduction</title>
+        <title>Introdução</title>
         <para>
-            <code>Zend_Service_Yahoo</code> is a simple API for using many of the Yahoo! REST APIs.
-            <code>Zend_Service_Yahoo</code> allows you to search Yahoo! Web search, Yahoo! News, Yahoo! Local, Yahoo!
-            Images. In order to use the Yahoo! REST API, you must have a Yahoo! Application ID. To obtain an Application ID, please complete and submit the
-            <ulink url="http://api.search.yahoo.com/webservices/register_application">Application ID Request Form</ulink>.
+            <code>Zend_Service_Yahoo</code> é uma simples API para fazer uso das muitas APIs baseadas em REST do "Yahoo!".
+            <code>Zend_Service_Yahoo</code> permite a você fazer buscas no Yahoo! Web search, Yahoo! News, Yahoo! Local, e Yahoo! Images. Para fazer uso da Yahoo! REST API, vice deve possuir uma Yahoo! Application ID. Para obtê-la, preencha o <ulink url="http://api.search.yahoo.com/webservices/register_application">Formulário de Requisição de Application ID</ulink> e envie.
         </para>
     </sect2>
     <sect2 id="zend.service.yahoo.websearch">
-        <title>Searching the Web with Yahoo!</title>
+        <title>Pesquisando a Web com o Yahoo!</title>
         <para>
-            <code>Zend_Service_Yahoo</code> enables you to search the Web with Yahoo! using the
-            <code>webSearch()</code> method, which accepts a string query parameter and an optional second parameter
-            as an array of search options. For full details and an option list, please visit the
-            <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search
-            Documentation</ulink>. The <code>webSearch()</code> method returns a
-            <code>Zend_Service_Yahoo_WebResultSet</code> object.
+            <code>Zend_Service_Yahoo</code> permite executar buscas na web com o Yahoo! usando o método <code>webSearch()</code>, que aceita uma string de busca como parâmetro principal e um um array de opções de busca como segundo parâmetro opcional. Para maiores detalhes e uma lista de opções, visite o site <ulink url="http://developer.yahoo.net/search/web/V1/webSearch.html">Yahoo! Web Search
+            Documentation</ulink>. O método <code>webSearch()</code> retorna um objeto <code>Zend_Service_Yahoo_WebResultSet</code>.
         </para>
         <example>
-            <title>Searching the Web with Yahoo!</title>
+            <title>Pesquisando a Web com o Yahoo!</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
@@ -32,17 +26,13 @@ foreach ($results as $result) {
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.imagesearch">
-        <title>Finding Images with Yahoo!</title>
+        <title>Localizando imagens com o Yahoo!</title>
         <para>
-            You can search for Images with Yahoo using <code>Zend_Service_Yahoo</code>'s <code>imageSearch()</code>
-            method. This method accepts a string query parameter and an optional array of search options, as for the
-            <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code> method</link>. For full details
-            and an option list, please visit the
-            <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search
+            Você pode procurar por imagens com o Yahoo usando o método <code>imageSearch()</code> do <code>Zend_Service_Yahoo</code>. Este método aceita [This method aceita uma string de busca como parâmetro principal e um um array de opções de busca como segundo parâmetro opcional, da mesma forma que o método <link linkend="zend.service.yahoo.websearch"><code>webSearch()</code></link>. Para maiores detalhes e uma lista de opções, visite o site <ulink url="http://developer.yahoo.net/search/image/V1/imageSearch.html">Yahoo! Image Search
             Documentation</ulink>.
         </para>
         <example>
-            <title>Finding Images with Yahoo!</title>
+            <title>Localizando imagens com o Yahoo!</title>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Yahoo.php';
 $yahoo = new Zend_Service_Yahoo("YAHOO_APPLICATION_ID");
@@ -54,12 +44,11 @@ foreach ($results as $result) {
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.localsearch">
-        <title>Finding Local Businesses and Services with Yahoo!</title>
+        <title>Localizando atividades de Comércio e Serviços locais com o Yahoo!</title>
         <para>
-            You can search for local businesses and services with Yahoo! by using the <code>localSearch()</code> method.
-            For full details, please see the
-            <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Local Search
-            Documentation</ulink>.
+            Você pode pesquisar por atividades locais de comércio e serviços usando o método <code>localSearch()</code> do "Yahoo!".
+            Para maiores informações consulte a documentação do <ulink url="http://developer.yahoo.net/search/local/V1/localSearch.html">Yahoo! Local Search
+            </ulink>.
         </para>
         <example>
             <title>Finding Local Businesses and Services with Yahoo!</title>
@@ -74,12 +63,9 @@ foreach ($results as $result) {
         </example>
     </sect2>
     <sect2 id="zend.service.yahoo.newssearch">
-        <title>Searching Yahoo! News</title>
+        <title>Pesquisando o Yahoo! News</title>
         <para>
-            Searching Yahoo! News is simple; just use the <code>newsSearch()</code> method, as in the following
-            example. For full details, please see the
-            <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search
-            Documentation</ulink>.
+            Pesquisar no Yahoo! News é simples; basta usar o método <code>newsSearch()</code>, como mostrado no exemplo seguinte. Para maiores informações consulte a documentação do <ulink url="http://developer.yahoo.net/search/news/V1/newsSearch.html">Yahoo! News Search</ulink>.
         </para>
         <example>
             <title>Searching Yahoo! News</title>

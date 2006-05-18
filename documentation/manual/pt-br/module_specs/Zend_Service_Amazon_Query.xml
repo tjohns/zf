@@ -1,42 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <sect2 id="zend.service.amazon.query">
-    <title>Using the Alternative Query API</title>
-    <sect3 id="zend.service.amazon.query.introduction">
-        <title>Introduction</title>
-        <para>
-            <code>Zend_Service_Amazon_Query</code> provides an alternative API for using the Amazon Web Service.
-            The alternative API uses the Fluent Interface pattern. That is, all calls can be made using chained method
-            calls. (e.g., <code>$obj->method()->method2($arg)</code>)
-        </para>
-        <para>
-            The <code>Zend_Service_Amazon_Query</code> API uses overloading to easily set up an item search and then
-            allows you to search based upon the criteria specified. Each of the options is provided as a method call,
-            and each method's argument corresponds to the named option's value:
-        </para>
-        <example>
-            <title>Search Amazon Using the Alternative Query API</title>
-            <para>
-                In this example, the alternative query API is used as a fluent interface to specify options and their
-                respective values:
-            </para>
-            <programlisting><![CDATA[<?php
+  <title>Usando a Query API Alternativa</title>
+
+  <sect3 id="zend.service.amazon.query.introduction">
+    <title>Introdução</title>
+
+    <para><code>Zend_Service_Amazon_Query</code> oferece uma API alternativa
+    para utilizar o Amazon Web Service. A API alternetiva utiliza o padrão de
+    projeto "Fluent Interface". Ou seja, todas as chamadas são feitas usando
+    métodos encadeados (ex:
+    <code>$obj-&gt;method()-&gt;method2($arg)</code>)</para>
+
+    <para>A API <code>Zend_Service_Amazon_Query</code> usa sobrecarga para
+    facilitar a definição dos ítens de busca, permitindo buscas baseadas nos
+    critérios especificados. Cada uma das opções é implementada como uma
+    chamada a método, e cada argumento respectivo, corresponde ao nome da
+    opção:</para>
+
+    <example>
+      <title>Pesquisando o Amazon usando a Query API Alternativa</title>
+
+      <para>Neste exemplo, a Query API alternativa é usada como uma interface
+      "fluente" para especificar opções e seus respectivos valores:</para>
+
+      <programlisting>&lt;?php
 require_once 'Zend/Service/Amazon/Query.php';
 $query = new Zend_Service_Amazon_Query('MY_API_KEY');
-$query->Category('Books')->Keywords('PHP');
-$results = $query->search();
+$query-&gt;Category('Books')-&gt;Keywords('PHP');
+$results = $query-&gt;search();
 foreach ($results as $result) {
-    echo $result->Title .'<br />';
+    echo $result-&gt;Title .'&lt;br /&gt;';
 }
-?>]]>       </programlisting>
-            <para>
-                This sets the option <code>Category</code> to "Books" and <code>Keywords</code> to "PHP".
-            </para>
-            <para>
-                For more information on the available options, please refer to the
-                <ulink
-                    url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>.
-            </para>
-        </example>
-    </sect3>
+?&gt;       </programlisting>
+
+      <para>Isto atribui à opção <code>Category</code> o valor "Books" e à
+      opção <code>Keywords</code> o valor "PHP".</para>
+
+      <para>Para mais informações e opções disponíveis, consulte a <ulink
+      url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">documentação
+      do Amazon </ulink> específica ao assunto.</para>
+    </example>
+  </sect3>
 </sect2>
 <!--
 vim:se ts=4 sw=4 et:
