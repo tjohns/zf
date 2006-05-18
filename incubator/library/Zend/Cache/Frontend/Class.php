@@ -37,13 +37,9 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
     /**
      * Available options
      * 
-     * ====> (string) cachedClass :
+     * ====> (mixed) cachedEntity :
      * - if set to a class name, we will cache an abstract class and will use only static calls
-     * - 'cachedClass' or 'cachedObject' has to be set (but not both !)
-     * 
-     * ====> (mixed) cachedObject :
      * - if set to an object, we will cache this object methods
-     * - 'cachedClass' or 'cachedObject' has to be set (but not both !)
      * 
      * ====> (boolean) cacheByDefault : 
      * - if true, method calls will be cached by default
@@ -56,34 +52,19 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
      * 
      * @var array available options
      */
-    private $_specificOptions = array(
-    	'cachedClass' => null,
-    	'cachedObject' => null,
+    protected $_specificOptions = array(
+    	'cachedEntity' => null,
     	'cacheByDefault' => true,
     	'cachedMethods' => array(),
         'nonCachedMethods' => array()
     );
-    
+            
     /**
-     * Caching mode : 'class' or 'object'
-     *
-     * @var string
-     */
-    private $_mode = null;
-    
-    /**
-     * The name of the cached abstract class (if mode == 'class')
-     * 
-     * @var string
-     */
-    private $_class = null;
-    
-    /**
-     * The cached object (if mode == 'object')
+     * The cached object or the name of the cached abstract class
      * 
      * @var mixed
      */
-    private $_object = null;
+    private $_cachedEntity = null;
        
     /**
      * Constructor
@@ -92,53 +73,19 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
      */
     public function __construct($options = array())
     {
-        if ((isset($options['cachedClass'])) and (isset($options['cachedObject']))) {
-            Zend_Cache::throwException('cachedClass and cachedObject options are exclusive');
-        }
-        if ((!isset($options['cachedClass'])) and (!isset($options['cachedObject']))) {
-            Zend_Cache::throwException('one of cachedClass or cachedObject option must be set');
-        }
-        if (isset($options['cachedClass'])) {
-            $this->_mode= 'class';
-            if (!is_string($options['cachedClass'])) {
-                Zend_Cache::throwException('cachedObject option must be a string');
-            }
-            $this->_class = $options['cachedClass'];
+        if (!isset($options['cachedEntity'])) {
+            Zend_Cache::throwException('cachedEntity must be set !');
         } else {
-            $this->_mode = 'object';
-            if (!is_object($options['cachedObject'])) {
-                Zend_Cache::throwException('cachedObject option must be an object');
+            if (!is_string($options['cachedEntity']) && !is_object($options['cachedEntity'])) {
+                Zend_Cache::throwException('cachedEntity must be an object or a class name');
             }
-            $this->_object = $options['cachedObject'];
         }
+        $this->_cachedEntity = $options['cachedEntity'];
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);
         }
         $this->setOption('automaticSerialization', true);
     }    
-    
-    /**
-     * Set an option
-     * 
-     * @param string $name name of the option
-     * @param mixed $value value of the option
-     */
-    public function setOption($name, $value)
-    {
-        if (is_string($name)) {
-            if (array_key_exists($name, $this->_options)) {
-            	// This is a Core option
-                parent::setOption($name, $value);
-                return;
-            }
-            if (array_key_exists($name, $this->_specificOptions)) { 
-        		// This a specic option of this frontend
-                $this->_specificOptions[$name] = $value;
-                return;
-            }
-        } 
-        Zend_Cache::throwException("Incorrect option name : $name");
-    }
     
     /**
      * Main method : call the specified method or get the result from cache
@@ -155,10 +102,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         $cache = (($cacheBool1 || $cacheBool2) && (!$cacheBool3));
         if (!$cache) {
             // We do not have not cache
-            if ($this->_mode == 'object') {
-                return call_user_func_array(array($this->_object, $name), $parameters);
-            }
-            return call_user_func_array(array($this->_class, $name), $parameters);
+            return call_user_func_array(array($this->_cachedEntity, $name), $parameters);
         }
         $id = $this->_makeId($name, $parameters);       
         if ($this->test($id)) {
@@ -170,11 +114,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
             // A cache is not available
             ob_start();
             ob_implicit_flush(false);
-            if ($this->_mode == 'object') {
-                $return = call_user_func_array(array($this->_object, $name), $parameters);
-            } else {
-                $return = call_user_func_array(array($this->_class, $name), $parameters);
-            }
+            $return = call_user_func_array(array($this->_cachedEntity, $name), $parameters);
             $output = ob_get_contents();
             ob_end_clean();
             $data = array($output, $return);
