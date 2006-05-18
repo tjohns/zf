@@ -1,64 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.search.charset">
-	<title>Character set.</title>
+  <title>Conjuntos de Caracteres</title>
 
-	<sect2 id="zend.search.charset.description">
-        <title>UTF-8 and single-byte character sets support.</title>
+  <sect2 id="zend.search.charset.description">
+    <title>Suporte aos conjuntos de caracteres UTF-8 e byte-simples.</title>
 
-        <para>
-            Zend_Search_Lucene is designed to work with UTF-8 charset. Index files store
-            unicode data in Java's "modified UTF-8 encoding". Zend_Search_Lucene core
-            completely supports it with one exception.
-            <footnote>
-               <para>
-                   Zend_Search_Lucene supports only Basic Multilingual Plane
-                   (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
-                   "supplementary characters" (characters whose code points are
-                   greater than 0xFFFF)
-               </para>
-               <para>
-                   Java 2 represents these characters as a pair of char (16-bit)
-                   values, the first from the high-surrogates range (0xD800-0xDBFF),
-                   the second from the low-surrogates range (0xDC00-0xDFFF). Then
-                   they are encoded as usual UTF-8 characters in six bytes.
-                   Standard UTF-8 representation uses four bytes for supplementary
-                   characters.
-               </para>
-            </footnote>
+    <para>Zend_Search_Lucene foi projetado para trabalhar com conjuntos de
+    caracteres UTF-8. Arquivos de indice armazenam dados unicode no formato de
+    codificação "UTF-8 modificado" usado pelo Java. O núcleo do
+    Zend_Search_Lucene suporta-os plenamente, com uma exceção: <footnote>
+        <para>Zend_Search_Lucene suporta somente os caracteres do Plano
+        Multilingual Básico (BMP) (de 0x0000 a 0xFFFF), não suportando os
+        caracteres suplementares (caracteres acima de 0xFFFF)</para>
 
-        </para>
+        <para>O Java 2 representa estes caracteres como um par de valores do
+        tipo char (16 bits), o primeiro vem da faixa superior (0xD800-0xDBFF),
+        o segundo, da faixa inferior (0xDC00-0xDFFF). Logo eles são
+        codificados como caracteres usuais UTF-8 em seis bytes. A
+        representação padrão UTF-8 utiliza quatro bytes para caracteres
+        suplementares.</para>
+      </footnote></para>
 
-        <para>
-            However, text analyzers and query parser text analyzer and query parser use
-            ctype_alpha() for tokenizing text and queries. ctype_alpha() doesn't support
-            UTF-8 and needs to be replaced by something else in nearest future.
-        </para>
+    <para>Em todo caso, tanto os analizadores de texto, quanto os
+    interpretadores e processadores de consultas, utilizam a função
+    ctype_alpha() para tokenizar os textos e as consultas. A função
+    ctype_alpha() não suporta UTF-8 e sua substituição deve ser considerada em
+    um futuro próximo.</para>
 
-        <para>
-            Before that we are strongly recomend to convert your data into ASCII
-            representation
-            <footnote>
-               <para>
-                   If data could contain non-ascii character or come in UTF-8.
-               </para>
-            </footnote>
-            (both for storing source documents, and for querying):
-        </para>
+    <para>Por enquanto, recomendamos a conversão dos dados para a
+    representação ASCII. <footnote>
+        <para>Se os dados estiverem em formato UTF-8 ou, obrigatoriamente,
+        contiverem caracteres inexistentes em ASCII.</para>
+      </footnote> (isso vale tanto para consultas, quanto para armazenagem de
+    documentos fonte):</para>
 
-        <programlisting role="php"><![CDATA[<?php
+    <programlisting role="php">&lt;?php
 $doc = new Zend_Search_Lucene_Document();
 ...
 $docText = iconv('ISO-8859-1', 'ASCII//TRANSLIT', $docText);
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docText));
+$doc-&gt;addField(Zend_Search_Lucene_Field::UnStored('contents', $docText));
 
 ...
 
 $query = iconv('', 'ASCII//TRANSLIT', $query);
-$hits = $index->find($query);
-?>]]></programlisting>
-
-    </sect2>
+$hits = $index-&gt;find($query);
+?&gt;</programlisting>
+  </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->
