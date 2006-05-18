@@ -2,8 +2,8 @@
     <title>Introduction</title>
     <para>
         <code>Zend_Mime</code> est une classe de support pour gérer les messages MIME en plusieures parties.
-        Elle est utilisé par <link linkend="zend.mail"><code>Zend_Mail</code></link> et <link
-        linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>, est peut-être utilisée
+        Elle est utilisé par <link linkend="zend.mail"><code>Zend_Mail</code></link> et 
+        <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>, est peut-être utilisée
         dans l'application qui nécessite un support MIME.
     </para>
     <sect2 id="zend.mime.static">
