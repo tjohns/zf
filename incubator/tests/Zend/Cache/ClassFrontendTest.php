@@ -46,7 +46,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit2_Framework_TestCase {
     {
         if (!$this->_instance1) {
             $options1 = array(
-                'cachedClass' => 'test'
+                'cachedEntity' => 'test'
             );
             $this->_instance1 = new Zend_Cache_Frontend_Class($options1);
             $this->_backend1 = new Zend_Cache_Backend_Test();
@@ -54,7 +54,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit2_Framework_TestCase {
         }
         if (!$this->_instance2) {
             $options2 = array(
-                'cachedObject' => new test()
+                'cachedEntity' => new test()
             );
             $this->_instance2 = new Zend_Cache_Frontend_Class($options2);
             $this->_backend2 = new Zend_Cache_Backend_Test();
@@ -72,7 +72,7 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit2_Framework_TestCase {
     {
         $options = array(
             'cacheByDefault' => false,
-            'cachedClass' => 'test'
+            'cachedEntity' => 'test'
         );
         $test = new Zend_Cache_Frontend_Class($options);      
     }
@@ -81,26 +81,12 @@ class Zend_Cache_ClassFrontendTest extends PHPUnit2_Framework_TestCase {
     {
         $options = array(
             'cacheByDefault' => false,
-            'cachedObject' => new test()
+            'cachedEntity' => new test()
         );
         $test = new Zend_Cache_Frontend_Class($options);      
     }
-    
-    public function testConstructorBadCall1()
-    {
-        $options = array(
-            'cachedClass' => 'test',
-            'cachedObject' => new test()
-        );
-        try {
-            $test = new Zend_Cache_Frontend_Class($options);      
-        } catch (Zend_Cache_Exception $e) {
-            return;
-        }
-        $this->fail('Zend_Cache_Exception was expected but not thrown'); 
-    }
-    
-    public function testConstructorBadCall2()
+        
+    public function testConstructorBadCall()
     {
         $options = array(
             'cacheByDefault' => true

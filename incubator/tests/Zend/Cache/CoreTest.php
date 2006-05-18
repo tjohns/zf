@@ -91,7 +91,7 @@ class Zend_Cache_CoreTest extends PHPUnit2_Framework_TestCase {
     
     public function testSetOptionCorrectCall()
     {
-        $this->_instance->setOption('lifeTime', 1200);
+        $this->_instance->setOption('caching', false);
     }
        
     public function testSetOptionBadCall()
