@@ -108,6 +108,21 @@ class Zend_Search_Lucene_Index_SegmentInfo
     private $_norms = array();
 
     /**
+     * List of deleted documents.
+     * bitset if bitset extension is loaded or array otherwise.
+     *
+     * @var mixed
+     */
+    private $_deleted;
+
+    /**
+     * $this->_deleted update flag
+     *
+     * @var boolean
+     */
+    private $_deletedDirty = false;
+
+    /**
      * Zend_Search_Lucene_Index_SegmentInfo constructor needs Segmentname,
      * Documents count and Directory as a parameter.
      *
@@ -154,6 +169,38 @@ class Zend_Search_Lucene_Index_SegmentInfo
         }
         array_multisort($fieldNames, SORT_ASC, SORT_REGULAR, $fieldNums);
         $this->_fieldsDicPositions = array_flip($fieldNums);
+
+        try {
+            $delFile = $this->openCompoundFile($name . '.del');
+
+            $byteCount = $delFile->readInt();
+            $bitCount  = $delFile->readInt();
+
+            if ($bitCount == 0) {
+                $delBytes = '';
+            } else {
+                $delBytes = $delFile->readBytes($byteCount);
+            }
+
+            if (extension_loaded('bitset')) {
+                $this->_deleted = $delBytes;
+            } else {
+                $this->_deleted = array();
+                for ($count = 0; $count < $byteCount; $count++) {
+                    for ($bit = 0; $bit < 8; $bit++) {
+                        if ($delBytes{$count} & (1<<$bit)) {
+                            $this->_deleted[$count*8 + $bit] = 1;
+                        }
+                    }
+                }
+            }
+        } catch(Zend_Search_Exception $e) {
+            if (strpos($e->getMessage(), 'compound file doesn\'t contain') !== false ) {
+                $this->_deleted = null;
+            } else {
+                throw $e;
+            }
+        }
     }
 
     /**
@@ -421,6 +468,61 @@ class Zend_Search_Lucene_Index_SegmentInfo
         }
 
         return Zend_Search_Lucene_Search_Similarity::decodeNorm( ord($this->_norms[$fieldNum]{$id}) );
+    }
+
+
+    /**
+     * Returns true if any documents have been deleted from this index segment.
+     *
+     * @return boolean
+     */
+    public function hasDeletions()
+    {
+        return $this->_deleted !== null;
+    }
+
+
+    /**
+     * Deletes a document from the index segment.
+     * $id is an internal document id
+     *
+     * @param integer
+     */
+    public function delete($id)
+    {
+        $this->_deletedDirty = true;
+
+        if (extension_loaded('bitset')) {
+            if ($this->_deleted === null) {
+                $this->_deleted = bitset_empty($id);
+            }
+            bitset_incl($this->_deleted, $id);
+        } else {
+            if ($this->_deleted === null) {
+                $this->_deleted = array();
+            }
+
+            $this->_deleted[$id] = 1;
+        }
+    }
+
+    /**
+     * Checks, that document is deleted
+     *
+     * @param integer
+     * @return boolean
+     */
+    public function isDeleted($id)
+    {
+        if ($this->_deleted === null) {
+            return false;
+        }
+
+        if (extension_loaded('bitset')) {
+            return bitset_in($this->_deleted, $id);
+        } else {
+            return isset($this->_deleted[$id]);
+        }
     }
 }
 

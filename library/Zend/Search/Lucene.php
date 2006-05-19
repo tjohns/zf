@@ -281,10 +281,7 @@ class Zend_Search_Lucene
         }
 
         if ($id >= $this->_docCount) {
-            /**
-             * @todo exception here?
-             */
-            return null;
+            throw new Zend_Search_Lucene_Exception('Document id is out of the range.');
         }
 
         $segCount = 0;
@@ -362,6 +359,7 @@ class Zend_Search_Lucene
                     // read freq
                     $frqFile->readVInt();
                 }
+
                 $result[] = $segmentStartDocId + $docId;
             }
 
@@ -417,6 +415,7 @@ class Zend_Search_Lucene
                     $termPosition += $prxFile->readVInt();
                     $positions[] = $termPosition;
                 }
+
                 $result[ $segmentStartDocId + $docId ] = $positions;
             }
 
@@ -467,8 +466,60 @@ class Zend_Search_Lucene
      */
     public function norm( $id, $fieldName )
     {
-        if( $id >= $this->_docCount )
+        if ($id >= $this->_docCount) {
             return null;
+        }
+
+        $segmentStartId = 0;
+        foreach ($this->_segmentInfos as $segInfo) {
+            if ($segmentStartId + $segInfo->count() > $id) {
+                break;
+            }
+
+            $segmentStartId += $segInfo->count();
+        }
+
+        if ($segInfo->isDeleted($id - $segmentStartId)) {
+            return 0;
+        }
+
+        return $segInfo->norm($id - $segmentStartId, $fieldName);
+    }
+
+    /**
+     * Returns true if any documents have been deleted from this index.
+     *
+     * @return boolean
+     */
+    public function hasDeletions()
+    {
+        foreach ($this->_segmentInfos as $segmentInfo) {
+            if ($segmentInfo->hasDeletions()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+     * Deletes a document from the index.
+     * $id is an internal document id
+     *
+     * @param integer|Zend_Search_Lucene_Search_QueryHit $id
+     * @throws Zend_Search_Lucene_Exception
+     */
+    public function delete($id)
+    {
+        if ($id instanceof Zend_Search_Lucene_Search_QueryHit) {
+            /* @var $id Zend_Search_Lucene_Search_QueryHit */
+            $id = $id->id;
+        }
+
+        if ($id >= $this->_docCount) {
+            throw new Zend_Search_Lucene_Exception('Document id is out of the range.');
+        }
 
         $segCount = 0;
         $nextSegmentStartId = $this->_segmentInfos[ 0 ]->count();
@@ -476,11 +527,10 @@ class Zend_Search_Lucene
                $segCount++;
                $nextSegmentStartId += $this->_segmentInfos[ $segCount ]->count();
         }
-
         $segmentStartId = $nextSegmentStartId - $this->_segmentInfos[ $segCount ]->count();
-
-        return $this->_segmentInfos[ $segCount ]->norm($id - $segmentStartId, $fieldName);
+        $this->_segmentInfos[ $segCount ]->delete($id - $segmentStartId);
     }
+
 
 
     /**
@@ -536,29 +586,6 @@ class Zend_Search_Lucene
     {
         return array();
     }
-
-
-    /**
-     * Returns true if any documents have been deleted from this index.
-     *
-     * @todo Implementation
-     * @return boolean
-     */
-    public function hasDeletions()
-    {
-        return false;
-    }
-
-
-    /**
-     * Deletes a document from the index.  $doc may contain a Zend_Search_Lucene_Document
-     * or the number of the document to delete.
-     *
-     * @todo Implementation
-     * @param mixed $item_to_del
-     */
-    public function delete($doc)
-    {}
 
 
     /**
