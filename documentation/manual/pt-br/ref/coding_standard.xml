@@ -1,133 +1,133 @@
 <appendix id="coding-standard">
-  <title>Zend Framework PHP Coding Standard</title>
+  <title>Padrões de Codificação do Framework Zend para PHP</title>
     <sect1 id="coding-standard.overview">
-        <title>Overview</title>
+        <title>Visão Geral</title>
 
         <sect2 id="coding-standard.overview.scope">
-            <title>Scope</title>
+            <title>Escopo</title>
 
             <para>
-                This document provides the guidelines and resources for developers
-                and teams developing or developing on the Zend Framework. The
-                subjects covered are:
+		Este documento provê as linhas principais e recursos para desenvolvedores
+		e times de desenvolvimento no Framework da Zend. São cobertos os seguintes 
+    assuntos:
 
                 <itemizedlist>
                     <listitem>
-                        <para>PHP File Formatting</para>
+                        <para>Formato do Arquivo PHP</para>
                     </listitem>
 
                     <listitem>
-                        <para>Naming Conventions</para>
+                        <para>Convenção de Nomes</para>
                     </listitem>
 
                     <listitem>
-                        <para>Coding Style</para>
+                        <para>Estilo de Código</para>
                     </listitem>
 
                     <listitem>
-                        <para>Inline Documentation</para>
+                        <para>Documentação Inline</para>
                     </listitem>
                 </itemizedlist>
             </para>
         </sect2>
 
         <sect2 id="coding-standard.overview.goals">
-            <title>Goals</title>
+            <title>Objetivos</title>
 
             <para>
-                Good coding standards are important in any development project, but particularly
-                when multiple developers are working on the same project. Having coding standards
-                helps ensure that the code is of high quality, has fewer bugs, and is easily maintained.
+		Bons padrões de código são importantes em qualquer projeto de desenvolvimento,
+		mas particularmente quando múltiplos desenvolvedores estão trabalhando no mesmo 
+		projeto. Ter padrões ajuda a assegurar que o código seja de alta qualidade, 
+    tenha poucos bugs e seja de fácil manutenção.
             </para>
         </sect2>
     </sect1>
 
     <sect1 id="coding-standard.php-file-formatting">
-        <title>PHP File Formatting</title>
+        <title>Formato do Arquivo PHP</title>
 
         <sect2 id="coding-standard.php-file-formatting.general">
-            <title>General</title>
+            <title>Geral</title>
 
             <para>
-                For files that contain only PHP code, the closing tag ("?>") is never permitted.  It is
-				not required by PHP.  Not including it prevents trailing whitespace from being accidentally
-				injected into the output.
+		Para arquivos que contenham somente código PHP, a tag de fechamento ("?>") não é permitida.
+		Ela não é requerida pelo PHP. Não incluir esta tag evita espaços em branco na saída, 
+		deixados acidentalmente.
             </para>
 
             <para>
-                <emphasis>IMPORTANT:</emphasis> Inclusion of arbitrary binary data as permitted by <code>__HALT_COMPILER()</code>
-                is prohibited from any Zend framework PHP file or files derived from them. Use of
-                this feature is only permitted for special installation scripts.
+                <emphasis>IMPORTANTE:</emphasis>A inclusão de dados binários arbitrários, como o permitido por 
+                <code>__HALT_COMPILER()</code> é proibido em qualquer framework Zend, arquivo PHP ou arquivos 
+                derivados deles. O uso desta funcionalidade só é permitida para scripts especiais de instalação.
             </para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.indentation">
-            <title>Indentation</title>
+            <title>Indentação</title>
 
-            <para>Use an indent of 4 spaces, with no tabs.</para>
+            <para>Use indentação de 4 espaços, sem tabs.</para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.max-line-length">
-            <title>Maximum Line Length</title>
+            <title>Tamanho máximo de linha</title>
 
             <para>
-                The target line length is 80 characters, i.e. developers should aim keep code
-                as close to the 80-column boundary as is practical. However, longer lines are
-                acceptable. The maximum length of any line of PHP code is 120 characters.
+		A intenção é utilizar linhas com 80 caracteres, por exemplo, desenvolvedores
+		devem procurar manter seu código próximo a 80 colunas se isso for prático.
+		De qualquer forma, linhas longas são aceitáveis.
+		O tamanho máximo de uma linha de código PHP é de 120 caracteres.
             </para>
         </sect2>
 
         <sect2 id="coding-standard.php-file-formatting.line-termination">
-            <title>Line Termination</title>
+            <title>Final de Linha</title>
 
             <para>
-                Line termination is the standard way for Unix text files. Lines must end only
-                with a linefeed (LF). Linefeeds are represented as ordinal 10, or hexadecimal 0x0A.
+                O final de linha segue o padrão para arquivos texto no Unix. Linhas devem acabar somente com um
+                linefeed (LF). Linefeeds são representados como ordinal 10, ou hexadecimal 0x0A.
             </para>
 
-            <para>Do not use carriage returns (CR) like Macintosh computers (0x0D).</para>
+            <para>Não use retorno de carro (CR)como nos computadores Macintosh (0x0D).</para>
 
             <para>
-                Do not use the carriage return/linefeed combination (CRLF) as Windows computers
-                (0x0D, 0x0A).
+                Não use a combinação de retorno de carro/linefeed (CRLF) como nos computadores Windows (0x0D, 0x0A).
             </para>
         </sect2>
     </sect1>
 
     <sect1 id="coding-standard.naming-conventions">
-        <title>Naming Conventions</title>
+        <title>Convenções de Nomes</title>
 
         <sect2 id="coding-standard.naming-conventions.classes">
             <title>Classes</title>
 
             <para>
-                The Zend Framework employs a class naming convention whereby the names
-                of the classes directly map to the directories in which they are stored.
-                The root level directory of the Zend Framework is the "Zend/" directory,
-                under which all classes are stored hierarchially.
+		O Framework Zend emprega uma convenção por meio dos nomes das
+		classes, diretamente mapeados aos diretórios nos quais estão arquivados.
+    O diretório raiz do Framework Zend é o diretório "Zend/", abaixo do qual
+		todas as classes são arquivadas hierarquicamente.
             </para>
 
             <para>
-                Class names may only contain alphanumeric characters.   Numbers are permitted
-                in class names but are discouraged.  Underscores are only permitted in place
-                of the path separator -- the filename "Zend/Db/Table.php" must map to the
-                class name "Zend_Db_Table".
+		Nomes de classes podem conter somente caracteres alfanuméricos. Números em nomes de classes são permitidos, 
+		mas desencorajados. Sublinhados são permitidos somente no lugar do separador de caminho -- o nome do arquivo 
+		"Zend/Db/Table.php" deve ser mapeado para o nome de classe  "Zend_Db_Table".
             </para>
 
             <para>
-                If a class name is comprised of more than one word, the first letter of each new
-                word must be capitalized.  Successive capitalized letters are not allowed, e.g.
-                a class "Zend_PDF" is not allowed while "Zend_Pdf" is acceptable.
+		Se o nome de uma classe é composto por mais de uma palavra, a primeira letra de cada nova
+		palavra deve ser maiúscula. Letras maiúsculas sucessivas não são permitidas, por exemplo
+    a classe "Zend_PDF" não é permitida enquanto "Zend_Pdf" é aceita.
             </para>
 
             <para>
-                Zend Framework classes that are authored by Zend or one of the participating
-                partner companies and distributed with the Framework must always start with
-                "Zend_" and must be stored under the "Zend/" directory hierarchy accordingly.
+		As classes do Framework Zend de autoria da Zend ou de uma das companhias parceiras
+		participantes e distribuídas com o Framework devem sempre iniciar com "Zend_" e 
+		devem estar arquivadas sob a hierarquia do diretório "Zend/".
             </para>
 
             <para>
-                These are examples of acceptable names for classes:
+                São exemplos de nomes aceitáveis para classes:
 
                 <programlisting role="php"><![CDATA[
 Zend_Db
@@ -137,9 +137,9 @@ Zend_View
 Zend_View_Helper
 ]]></programlisting>
 
-                <emphasis>IMPORTANT:</emphasis> Code that operates with the framework but is not
-                part of the framework, e.g. code written by a framework end-user and not Zend or
-                one of the framework's partner companies, must never start with "Zend_".
+                <emphasis>IMPORTANTE:</emphasis> Código que opera com o framework mas que não é parte dele, 
+		por exemplo, código escrito por um usuário final e não pela Zend ou uma das companhias parceiras, 
+		não pode começar com "Zend_".
             </para>
         </sect2>
 
@@ -147,9 +147,9 @@ Zend_View_Helper
             <title>Interfaces</title>
 
             <para>
-                Interface classes must follow the same conventions as other classes (see above),
-                however must end with the word "Interface", such as in these examples:
-
+		Classes de interface devem seguir as mesmas convenções como outras classes (veja acima),
+		porém deve acabar com a palavra "Interface", como nestes exemplos:
+                
                 <programlisting role="php"><![CDATA[
 Zend_Log_Adapter_Interface
 Zend_Controller_Dispatcher_Interface]]></programlisting>
@@ -157,18 +157,17 @@ Zend_Controller_Dispatcher_Interface]]></programlisting>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.filenames">
-            <title>Filenames</title>
+            <title>Nomes de Arquivos</title>
 
             <para>
-                For all other files, only alphanumeric characters, underscores, and the dash
-                character ("-") are permitted. Spaces and are prohibited.
+		Para todos os outros arquivos, somente caracteres alfanuméricos, sublinhado, e traço "-"
+		são permitidos. Espaços e ponto são proibidos.
             </para>
 
             <para>
-                Any file that contains any PHP code must end with the extension ".php". These
-                examples show the acceptable filenames for containing the class names from the
-                examples in the section above:
-
+                Qualquer arquivo que contenha qualquer código PHP deve acabar com a extensão ".php".
+		Estes exemplos mostram nomes de arquivo aceitáveis para as classes que estes contenham,
+		baseados nos exemplos da seção acima:
                 <programlisting role="php"><![CDATA[
 Zend/Db.php
 
@@ -176,32 +175,32 @@ Zend/Controller/Front.php
 
 Zend/View/Helper/FormRadio.php]]></programlisting>
 
-                File names must follow the mapping to class names described above.
+		Nomes de arquivos devem seguir o mapeamento para nomes de classes descrito acima.
             </para>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.functions-and-methods">
-            <title>Functions and Methods</title>
+            <title>Funções e Métodos</title>
 
             <para>
-                Function names may only contain alphanumeric characters. Underscores are not permitted.
-                Numbers are permitted in function names but are discouraged.
+		Nomes de funções devem conter somente caracteres alfanuméricos. Sublinhados não são permitidos.
+                Números são permitidos nos nomes, mas são desencorajados.
             </para>
 
             <para>
-                Function names must always start with a lowercase letter. When a function name consists
-                of more than one word, the first letter of each new word must be capitalized. This is
-                commonly called the "studlyCaps" or "camelCaps" method.
+		Nomes de funções devem sempre começar com letra minúscula. Quando um nome consistir em mais de 
+		uma palavra, a primeira letra de cada nova palavra deve ser maiúscula. Isto é comumente chamado o 
+		método "studlyCaps" ou "camelCaps".
             </para>
 
             <para>
-                Verbosity is encouraged. Function names should be as verbose as is practical to enhance the
-                understandability of code.
+		Verbalização é encorajada. Nomes de funções devem ser tão longos quanto práticos para melhorar
+		o entendimento do código.
             </para>
 
             <para>
-                These are examples of acceptable names for functions:
-
+		Estes são exemplos de nomes aceitáveis para funções:
+                
                 <programlisting role="php"><![CDATA[
 filterInput()
 
@@ -211,73 +210,71 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
-                For object-oriented programming, accessors for objects should always be prefixed with
-                either "get" or "set". When using design patterns, such as the singleton or factory
-                patterns, the name of the method should contain the pattern name where practical to
-                make the pattern more readily recognizable.
+		Para programação orientada ao objeto, acessores para objetos devem sempre ser prefixados com
+		"get" ou "set". Quando usando padrões de projeto, como o Singleton ou Factory Patterns,
+		o nome do método deve conter o nome do padrão, como prática para que o padrão seja reconhecido na 
+		leitura.
             </para>
 
             <para>
-                Functions in the global scope ("floating functions") are permitted but discouraged.
-                It is recommended that these functions should be wrapped in a static class.
+		Funções no escopo global ("funções soltas") são permitidas mas desencorajadas.
+		É recomendável que estas funções sejam empacotadas numa classe estática.
             </para>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.variables">
-            <title>Variables</title>
+            <title>Variáveis</title>
 
             <para>
-                Variable names may only contain alphanumeric characters. Underscores are not permitted.
-                Numbers are permitted in variable names but are discouraged.
+		Nomes de variáveis devem conter somente caracteres alfanuméricos. Sublinhados não são permitidos.
+		Números são permitidos nos nomes, mas desencorajados.
             </para>
 
             <para>
-                For class member variables that are declared with the "private" or "protected" construct,
-                the first character of the function name must be a single underscore. This is the only
-                acceptable usage of an underscore in a function name. Member variables declared "public"
-                may never start with an underscore.
+		Para variáveis membros de classes que são declaradas com o construtor "private" ou "protected",
+		o primeiro caractere do nome da variável deve ser um único sublinhado. Este é o único uso aceitável
+		de sublinhado no nome. Variáveis membros declaradas "public" não podem começar com sublinhado.
             </para>
 
             <para>
-                Like function names (see section 3.3, above) variable names must always start with a
-                lowercase letter and follow the "camelCaps" capitalization convention.
+		Como nos nomes de funções (veja a seção 3.3 acima) nomes de variáveis devem iniciar com uma letra
+		minúscula e seguir a convenção "camelCaps".
             </para>
 
             <para>
-                Verbosity is encouraged. Variables should always be as verbose as practical. Terse variable
-                names such as "$i" and "$n" are discouraged for anything other than the smallest loop contexts.
-                If a loop contains more than 20 lines of code, the variables for the indices need to have more
-                descriptive names.
+		Verbalização é encorajada. Nomes de variáveis devem ser tão longos quanto práticos. Nomes como
+		"$i" e "$n" são desencorajados para qualquer coisa que não esteja num contexto de loop pequeno.
+		Se um loop contém mais de 20 linhas de código, as variáveis para os indices precisam ter um nome mais
+		descritivo.
             </para>
         </sect2>
 
         <sect2 id="coding-standard.naming-conventions.constants">
-            <title>Constants</title>
+            <title>Constantes</title>
 
             <para>
-                Constants may contain both alphanumeric characters and the underscore. Numbers are permitted
-                in constant names.
+		            Constantes podem conter caracteres alfanuméricos e sublinhado. Números são permitidos nos nomes.
             </para>
 
             <para>
-                Constants must always have all letters capitalized.
+                Constantes devem ter sempre todas suas letras em maiúsculo.
             </para>
 
             <para>
-                Constants must be defined as class members by using the "const" construct. Defining constants
-                in the global scope with "define" is permitted but discouraged.
+		Constantes devem ser definidas como membros de classe usando o construtor "const".
+		Definir constantes no escopo global com "define" é permitido, mas desencorajado.
             </para>
         </sect2>
     </sect1>
 
     <sect1 id="coding-standard.coding-style">
-        <title>Coding Style</title>
+        <title>Estilo de Código</title>
 
         <sect2 id="coding-standard.coding-style.php-code-demarcation">
-            <title>PHP Code Demarcation</title>
+            <title>Demarcação de Código PHP</title>
 
             <para>
-                PHP code must always be delimited by the full-form, standard PHP tags:
+		        Código PHP deve sempre estar delimitado de forma completa, com tags padrão do PHP:
 
                 <programlisting role="php"><![CDATA[
 <?php
@@ -286,76 +283,74 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
-                Short tags are never allowed.
-            </para>
+		Tags curtas não são permitidas.
+	    </para>
         </sect2>
 
         <sect2 id="coding-standard.coding-style.strings">
             <title>Strings</title>
 
             <sect3 id="coding-standard.coding-style.strings.literals">
-                <title>String Literals</title>
+                <title>String Literal</title>
 
                 <para>
-                    When a string is literal (contains no variable substitutions), the apostrophe or
-                    "single quote" must always used to demarcate the string:
+		    Quando uma string é literal (não contém substituições de variável), deve ser usado apóstrofo
+		    ou aspas simples para demarcar o texto.
 
                     <programlisting role="php"><![CDATA[
-$a = 'Example String';]]></programlisting>
+$a = 'Exemplo de Texto';]]></programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.literals-containing-apostrophes">
-                <title>String Literals Containing Apostrophes</title>
+                <title>String Literal Contendo Apóstrofos</title>
 
                 <para>
-                    When a literal string itself contains apostrophes, it is permitted to demarcate
-                    the string with quotation marks or "double quotes". This is especially encouraged
-                    for SQL statements:
+		    Quando uma string literal contém apóstrofos dentro de si, é permitido demarcar
+		    o texto com aspas ou "aspas duplas". Isto é especialmente encorajado para declarações SQL:
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]></programlisting>
 
-                    The above syntax is preferred over escaping apostrophes.
+		    A sintaxe acima é preferida ao invés de escapar os apóstrofos.
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.variable-substitution">
-                <title>Variable Substitution</title>
+                <title>Substituição de Variáveis</title>
 
                 <para>
-                    Variable substitution is permitted using either of these two forms:
+		    A substituição de variáveis é permitida usando qualquer uma das duas formas:
 
                     <programlisting role="php"><![CDATA[
-$greeting = "Hello $name, welcome back!";
+$greeting = "Olá $nome, bem-vindo de volta!";
 
-$greeting = "Hello {$name}, welcome back!";]]></programlisting>
+$greeting = "Olá {$nome}, bem-vindo de volta!";]]></programlisting>
                 </para>
 
                 <para>
-                    For consistency, this form is not permitted:
+                    Por consistência, a forma a seguir não é permitida:
 
                     <programlisting role="php"><![CDATA[
-$greeting = "Hello ${name}, welcome back!";]]></programlisting>
+$greeting = "Olá ${nome}, bem-vindo de volta!";]]></programlisting>
                 </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.strings.string-concatenation">
-                <title>String Concatenation</title>
+                <title>Concatenação de String</title>
 
                 <para>
-                    Strings may be concatenated using the "." operator. A space must always
-                    be added before and after the "." operator to improve readability:
+		    Strings devem ser concatenadas usando o operador ".". Um espaço deve sempre
+		    ser adicionado antes e depois do operador "." para melhorar a legibilidade: 
 
                     <programlisting role="php"><![CDATA[
 $company = 'Zend' . 'Technologies';]]></programlisting>
                 </para>
 
                 <para>
-                    When concatenating strings with the "." operator, it is permitted to
-                    break the statement into multiple lines to improve readability. In these
-                    cases, each successive line should be padded with whitespace such that the
-                    "."; operator is aligned under the "=" operator:
+		    Quando estiver concatenando strings com o operador ".", é permitido quebrar a declaração em
+		    várias linhas para melhorar a legibilidade. Nestes casos, cada linha sucessiva deverá ser colocada
+		    num bloco com espaço em branco de forma que o operador "." esteja alinhado abaixo do operador "=":
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` FROM `people` "
@@ -369,42 +364,42 @@ $sql = "SELECT `id`, `name` FROM `people` "
             <title>Arrays</title>
 
             <sect3 id="coding-standard.coding-style.arrays.numerically-indexed">
-                <title>Numerically Indexed Arrays</title>
+                <title>Arrays Indexados Numericamente</title>
 
-                <para>Negative numbers are not permitted as indices.</para>
+                <para>Números negativos não são permitidos como índices.</para>
 
                 <para>
-                    An indexed array may be started with any non-negative number, however
-                    this is discouraged and it is recommended that all arrays have a base index of 0.
+		    Um array indexado pode começar com qualquer número não negativo, porém
+		    isto é desencorajado. É recomendado que todo array tenha um índice inicial 0.
                 </para>
 
-                <para>
-                    When declaring indexed arrays with the <code>array</code> construct, a trailing space must be
-                    added after each comma delimiter to improve readability:
-
-                    <programlisting role="php"><![CDATA[
+		<para>
+			Quando declarar arrays indexados com o construtor <code>array</code>, um espaço deve ser
+			adicionado depois de cada vírgula para melhorar a legibilidade:
+			
+			<programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio');]]></programlisting>
-                </para>
-
-                <para>
-                    It is also permitted to declare multiline indexed arrays using the "array" construct.
-                    In this case, each successive line must be padded with spaces such that beginning of
-                    each line aligns as shown below:
-
-                    <programlisting role="php"><![CDATA[
+		</para>
+		
+		<para>
+			Também é permitido declarar arrays indexados em várias linhas usando o construtor "array".
+			Neste caso, cada linha sucessiva deve ser colocada num bloco com espaços de forma que
+			o início de cada código alinhe-se conforme mostrado abaixo:
+			
+			<programlisting role="php"><![CDATA[
 $sampleArray = array(1, 2, 3, 'Zend', 'Studio',
-                     $a, $b, $c,
-                     56.44, $d, 500);]]></programlisting>
-                </para>
-            </sect3>
-
+		    $a, $b, $c,
+		    56.44, $d, 500);]]></programlisting>
+		</para>
+	   </sect3>
+	   
             <sect3 id="coding-standard.coding-style.arrays.associative">
-                <title>Associative Arrays</title>
+                <title>Arrays Associativos</title>
 
                 <para>
-                    When declaring associative arrays with the <code>array</code> construct, it is encouraged
-                    to break the statement into multiple lines. In this case, each successive line must be
-                    padded with whitespace such that both the keys and the values are aligned:
+		    Quando declarar arrays associativos com o construtor <code>array</code>, é recomendado
+		    quebrar a declaração em múltiplas linhas. Neste caso, cada linha sucessiva deve estar num bloco
+		    com espaço em branco, de forma que as chaves e valores estejam alinhados:
 
                     <programlisting role="php"><![CDATA[
 $sampleArray = array('firstKey'  => 'firstValue',
@@ -417,118 +412,121 @@ $sampleArray = array('firstKey'  => 'firstValue',
             <title>Classes</title>
 
             <sect3 id="coding-standard.coding-style.classes.declaration">
-                <title>Class Declaration</title>
+                <title>Declaração de Classes</title>
 
                 <para>
-                    Classes must be named by following the naming conventions.
+		    Classes devem ser nomeadas seguindo a convenção de nomes.
                 </para><para>
-                    The brace is always written on the line underneath the class name ("one true brace" form).
+		    A chave de abertura é sempre escrita embaixo do nome da classe (forma de "uma única chave real").
                 </para><para>
-                    Every class must have a documentation block that conforms to the PHPDocumentor standard.
+		    Toda classe deve ter um bloco de documentação, dentro do padrão do PHPDocumentor.
                 </para><para>
-                    Any code within a class must be indented four spaces.
+                    Todo código dentro de uma classe deve estar indentado com quatro espaços.
                 </para><para>
-                    Only one class is permitted per PHP file.
+                    Somente uma classe é permitida por arquivo PHP.
                 </para><para>
-                    Placing additional code in a class file is permitted but discouraged. In these files, two blank lines must separate the class any additional PHP code in the file.
+                    Colocar código adicional em um arquivo de classe é permitido mas desencorajado. Nestes arquivos,
+		    duas linhas em branco devem separar a classe do código PHP adicional no arquivo.
                 </para><para>
-                    This is an example of an acceptable class declaration:
+		    Este é um exemplo de declaração aceitável de classe :
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Bloco de documentação aqui
  */
 class SampleClass
 {
-    // entire content of class
-    // must be indented four spaces
+    // conteúdo completo da classe
+    // deve estar indentado com quatro espaços
 }]]></programlisting>
-                </para>
+	            </para>
             </sect3>
 
             <sect3 id="coding-standard.coding-style.classes.member-variables">
-                <title>Class Member Variables</title>
+                <title>Variáveis Membros de Classe</title>
 
                 <para>
-                    Member variables must be named by following the variable naming conventions.
+		    Variáveis membro devem ser nomeadas de acordo com a convenção de nomes de variáveis.
                 </para><para>
-                    Any variables declared in a class must be listed at the top of the class, prior
-                    to declaring any functions.
+		    Quaisquer variáveis declaradas numa classe devem ser listadas no topo da classe, antes
+		    de declarar qualquer função.
                 </para><para>
-                    The <code>var</code> construct is not permitted.  Member variables always declare
-                    their visibility by using one of the <code>private</code>, <code>protected</code>,
-                    or <code>public</code> constructs. Accessing member variables directly by making
-                    them public is permitted but discouraged in favor of accessor
-                    variables (set/get).
+		    O construtor <code>var</code> não é permitido. Variáveis membro sempre declaram sua 
+		    visibilidade usando o construtor <code>private</code>, <code>protected</code>
+        ou <code>public</code>. Acessar variáveis membro diretamente tornando-as públicas
+		    é permitido mas desencorajado em favor de variáveis de acesso (set/get).
                 </para>
             </sect3>
         </sect2>
 
         <sect2 id="coding-standard.coding-style.functions-and-methods">
-            <title>Functions and Methods</title>
+            <title>Funções e Métodos</title>
 
             <sect3 id="coding-standard.coding-style.functions-and-methods.declaration">
-                <title>Function and Method Declaration</title>
+		        <title>Declaração de Funções e Métodos</title>
 
                 <para>
-                    Functions must be named by following the naming conventions.
+		    Nomes de funções devem seguir a convenção de nomes.
+	    	</para><para>
+		    Funções dentro de classes sempre declaram sua visibilidade usando o 
+		    construtor <code>private</code>, <code>protected</code> ou <code>public</code>.
+       </para><para>
+		    Como classes, a chave de abertura deve sempre ser escrita abaixo do nome da função 
+		    (forma de "uma única chave real").
+	    	
+                    Não há espaços entre o nome da função e os parênteses para os argumentos. 
+	     	</para><para>
+                    Funções no escopo global são fortemente desencorajadas.
                 </para><para>
-                    Functions inside classes must always declare their visibility by using
-                    one of the <code>private</code>, <code>protected</code>,
-                    or <code>public</code> constructs.
-                </para><para>
-                    Like classes, the brace is always written on the line underneath the
-                    function name ("one true brace" form).
-
-                    There is no space between the
-                    function name and the opening parenthesis for the arguments.
-                </para><para>
-                    Functions in the global scope are strongly discouraged.
-                </para><para>
-                    This is an example of an acceptable function declaration in a class:
+		    Este é um exemplo de declaração aceitável de função:
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Bloco de documentação aqui
  */
-class Foo
-{
+ class foo
+
     /**
-     * Documentation Block Here
-     */
+    * Bloco de documentação aqui
+    */
     public function bar()
     {
-        // entire content of function
-        // must be indented four spaces
+        // todo conteúdo da função
+        // deve ser indentado com quatro espaços
     }
 }]]></programlisting>
                 </para>
 
                 <para>
-                    <emphasis>NOTE:</emphasis> Passing by-reference is permitted in the function declaration only:
+                    <emphasis>NOTA:</emphasis> Passar valores por referência na declaração da função é 
+                    permitido somente neste caso:
 
                     <programlisting role="php"><![CDATA[
 /**
- * Documentation Block Here
+ * Bloco de documentação aqui
  */
-class Foo
-{
+ class foo
+
     /**
-     * Documentation Block Here
-     */
+    * Bloco de documentação aqui
+    */
     public function bar(&$baz)
-    {}
+    {
+        // todo conteúdo da função
+        // deve ser indentado com quatro espaços
+    }
 }]]></programlisting>
                 </para>
 
                 <para>
-                    Call-time pass by-reference is prohibited.
+		    Passar valores por referência ao chamar a função é proibido.
                 </para>
 
 
                 <para>
-                    The return value must not be enclosed in parentheses.  This can hinder readability
-                    and can also break code if a method is later changed to return by reference.
+		     O valor de retorno não deve estar entre parênteses. Isto pode impedir a boa legibilidade
+		     e pode ainda quebrar o código de um método que seja alterado posteriormente para retornar
+		     por referência.
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -537,7 +535,7 @@ class Foo
 class Foo
 {
     /**
-     * WRONG
+     * ERRADO
      */
     public function bar()
     {
@@ -545,7 +543,7 @@ class Foo
     }
 
     /**
-     * RIGHT
+     * CERTO
      */
     public function bar()
     {
@@ -557,24 +555,23 @@ class Foo
             </sect3>
 
             <sect3 id="coding-standard.coding-style.functions-and-methods.usage">
-                <title>Function and Method Usage</title>
+                <title>Uso de Funções e Métodos</title>
 
                 <para>
-                    Function arguments are separated
-                    by a single trailing space after the comma delimiter. This is an example of an
-                    acceptable function call for a function that takes three arguments:
+                    Argumentos de funções são separados por um espaço simples depois
+                    da vírgula. Este é um exemplo de chamada de função que tenha três argumentos:
 
                     <programlisting role="php"><![CDATA[
 threeArguments(1, 2, 3);]]></programlisting>
                 </para>
 
                 <para>
-                    Call-time pass by-reference is prohibited. See the function declarations section
-                    for the proper way to pass function arguments by-reference.
+                    Passar parâmetros por referência na chamada da função é proibido. Veja a seção de 
+                    declaração de funções para o modo correto de passar argumentos por referência.
                 </para><para>
-                    For functions whose arguments permitted arrays, the function call may include the
-                    "array" construct and can be split into multiple lines to improve readability.  In
-                    these cases, the standards for writing arrays still apply:
+                    Para funções que permitem arrays nos argumentos, a chamada da função pode incluir o 
+                    construtor "array" e pode ser dividido em várias linhas para melhorar a legibilidade.
+                    Nestes casos, o padrão para escrever arrays também se aplica:
 
                     <programlisting role="php"><![CDATA[
 threeArguments(array(1, 2, 3), 2, 3);
@@ -587,27 +584,27 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
         </sect2>
 
         <sect2 id="coding-standard.coding-style.control-statements">
-            <title>Control Statements</title>
+            <title>Instruções de Controle</title>
 
             <sect3 id="coding-standard.coding-style.control-statements.if-else-elseif">
                 <title>If / Else / Elseif</title>
 
                 <para>
-                    Control statements based on the <code>if</code> and <code>elseif</code>
-                    constructs must have a single space before the opening parenthesis of the conditional,
-                    and a single space after the closing parenthesis.
+                    Instruções de controle baseadas nos construtores <code>if</code> e <code>elseif</code>
+                    devem ter um espaço simples antes do parêntese de abertura da condição e um espaço
+                    simples depois do parêntese de fechamento.
                 </para>
 
                 <para>
-                    Within the conditional statements between the parentheses, operators must be separated
-                    by spaces for readability. Inner parentheses are encouraged to improve logical grouping
-                    of larger conditionals.
+                    Dentro das declarações condicionais entre os parênteses, operadores devem ser separados
+                    por espaços para legibilidade. Parênteses internos são encorajados para melhorar o agrupamento
+                    lógico de condicionais extensas.
                 </para>
 
                 <para>
-                    The opening brace is written on the same line as the conditional statement. The closing
-                    brace is always written on its own line. Any content within the braces must be
-                    indented four spaces.
+                    A chave de abertura é sempre escrita na mesma linha da instrução condicional. A chave de
+                    fechamento é sempre escrita em sua própria linha. Qualquer conteúdo dentro das chaves deve
+                    ser indentado por quatro espaços.
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -616,8 +613,8 @@ if ($a != 2) {
                 </para>
 
                 <para>
-                    For "if" statements that include "elseif" or "else", the formatting must be
-                    as in these examples:
+                    Para instruções "if" que incluem "elseif" ou "else", a formatação deve ser como
+                    nos exemplos:
 
                     <programlisting role="php"><![CDATA[
 if ($a != 2) {
@@ -634,14 +631,14 @@ if ($a != 2) {
 } else {
    $a = 7;
 }]]></programlisting>
-                    PHP allows for these statements to be written without braces in some circumstances.
-                    The coding standard makes no differentiation and all "if", "elseif" or "else" statements
-                    must use braces.
+                    O PHP permite, em certas circunstâncias, que as instruções sejam escritas sem as chaves.
+                    O padrão de código não as diferencia, pois todas instruções "if", "elseif" ou "else"
+                    devem utilizar as chaves.
                 </para>
 
                 <para>
-                    Use of the "elseif" construct is permitted but highly discouraged in favor of the
-                    "else if" combination.
+                    O uso do construtor "elseif" é permitido mas altamente desencorajado em favor da 
+                    combinação "else if".
                 </para>
             </sect3>
 
@@ -649,14 +646,14 @@ if ($a != 2) {
                 <title>Switch</title>
 
                 <para>
-                    Control statements written with the "switch" construct must have a single space before
-                    the opening parenthesis of the conditional statement, and also a single space after
-                    the closing parenthesis.
+                    Instruções de controle escritas com o construtor "switch" devem ter um espaço simples antes
+                    do parêntese de abertura da instrução condicional e um espaço simples depois do parêntese 
+                    de fechamento.
                 </para>
 
                 <para>
-                    All content within the "switch" statement must be indented four spaces. Content under
-                    each "case" statement must be indented an additional four spaces.
+                    Todo conteúdo da instrução "switch" deve ser indentado com quatro espaços. O conteúdo
+                    abaixo de cada instrução "case" deve ser indentado com quatro espaços adicionais.
                 </para>
 
                 <programlisting role="php"><![CDATA[
@@ -672,43 +669,45 @@ switch ($numPeople) {
 }]]></programlisting>
 
                 <para>
-                    The construct <code>default</code> may never be omitted from a <code>switch</code> statement.
+                    O construtor <code>default</code> jamais pode ser omitido da instrução <code>switch</code>.
                 </para>
 
                 <para>
-                    <emphasis>NOTE:</emphasis> It is sometimes useful to write a <code>case</code> statement which falls through
-                    to the next case by not including a <code>break</code> or <code>return</code> in that case. To distinguish
-                    these cases from bugs, any <code>case</code> statement where <code>break</code> or <code>return</code> are
-                    omitted must contain the comment "// break intentionally omitted".
+                    <emphasis>NOTA:</emphasis> Algumas vezes é útil escrever uma instrução <code>case</code> que entra no próximo
+                    case sem incluir um <code>break</code> ou <code>return</code>. Para distinguir aqueles cases dos bugs, 
+                    qualquer instrução <code>case</code> onde <code>break</code> ou <code>return</code> são omitidos deve
+                    conter o comentário "// break intentionally omitted".
                 </para>
             </sect3>
         </sect2>
 
         <sect2 id="coding-standards.inline-documentation">
-            <title>Inline Documentation</title>
+            <title>Documentação Inline </title>
 
             <sect3 id="coding-standards.inline-documentation.documentation-format">
-                <title>Documentation Format</title>
+                <title>Formato da Documentação</title>
 
                 <para>
-                    All documentation blocks ("docblocks") must be compatible with the phpDocumentor format.
-                    Describing the phpDocumentor format is beyond the scope of this document.
-                    For more information, visit: <ulink url="http://phpdoc.org/">http://phpdoc.org"></ulink>
+                    Todos blocos de documentação ("dockblocks") devem ser compatíveis com o formato do phpDocumentor.
+                    A descrição do formato do phpDocumentor está além do escopo deste documento.
+                    Para maiores informações, visite: <ulink url="http://phpdoc.org/">http://phpdoc.org"></ulink>
                 </para>
 
                 <para>
-                    All source code file written for the Zend Framework or that operates with the framework
-                    must contain a "file-level" docblock at the top of each file and a "class-level" docblock
-                    immediately above each class. Below are examples of such docblocks.
+                    Todo código fonte escrito para o Framework Zend ou que trabalhe com o framework deve conter
+                    um bloco de documentação em nível de arquivo no topo de cada arquivo e um bloco de documentação
+                    em nível de classe imediatamente acima de cada classe. Abaixo seguem exemplos destes blocos de 
+                    documentação:
                 </para>
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.files">
-                <title>Files</title>
+                <title>Arquivos</title>
 
                 <para>
-                    Every file that contains PHP code must have a header block at the top of the file that
-                    contains these phpDocumentor tags at a minimum:
+                    Cada arquivo que contenha código PHP deve ter um bloco de cabeçalho no topo do arquivo que
+                    contenha, no mínimo, estas tags do phpDocumentor:
+
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -728,10 +727,11 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.classes">
-                <title>Files</title>
+                <title>Classes</title>
 
                 <para>
-                    Every class must have a docblock that contains these phpDocumentor tags at a minimum:
+                    Toda classe deve ter um bloco de documentação que contenha, no mínimo, as seguintes 
+                    tags do phpDocumentor:
 
                     <programlisting role="php"><![CDATA[
 /**
@@ -750,25 +750,26 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documetnation.functions">
-                <title>Functions</title>
+                <title>Funções</title>
 
                 <para>
-                Every function, including object methods, must have a docblock that contains at a minimum:
+                Toda função, incluindo métodos de objetos, deve ter um bloco de documentação 
+                que contenha, no mínimo, as seguintes tags:
 
                     <itemizedlist>
-                        <listitem><para>A description of the function</para></listitem>
-                        <listitem><para>All of the arguments</para></listitem>
-                        <listitem><para>All of the possible return values</para></listitem>
+                        <listitem><para>Descrição da função</para></listitem>
+                        <listitem><para>Todos argumentos</para></listitem>
+                        <listitem><para>Todos os possíveis valores de retorno</para></listitem>
                     </itemizedlist>
                 </para>
 
                 <para>
-                    It is not necessary to use the "@access" tag because the access level is already known
-                    from the "public", "private", or "protected" construct used to declare the function.
+                    Não é necessário usar a tag "@access" pois o nível de acesso é conhecido através 
+                    do construtor "public", "private", ou "protected" usado para declarar a função.
                 </para>
 
                 <para>
-                    If a function/method may throw an exception, use @throws:
+                    Se uma função/método pode gerar uma excessão, use @throws:
 
                     <programlisting role="php"><![CDATA[
 @throws exceptionclass [description]
