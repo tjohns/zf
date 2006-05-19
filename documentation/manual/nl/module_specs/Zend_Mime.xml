@@ -1,30 +1,30 @@
 <sect1 id="zend.mime.introduction">
-    <title>Introduction</title>
+    <title>Inleiding</title>
     <para>
-        <code>Zend_Mime</code> is a support class for handling multipart MIME messages. It is used by <link
-        linkend="zend.mail"><code>Zend_Mail</code></link> and <link
-        linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> and may be used by applications requiring
-        MIME support.
+        <code>Zend_Mime</code> is een hulpklasse voor het afhandelen van multipart MIME berichten. 
+        Ze wordt gebruikt door <link linkend="zend.mail"><code>Zend_Mail</code></link>, en 
+        kan gebruikt worden door toepassingen die MIME ondersteuning nodig hebben.
     </para>
     <sect2 id="zend.mime.static">
-    <title>Static Methods and Constants</title>
+    <title>Statische Methodes en Constanten</title>
     <para>
-        <code>Zend_Mime</code> provides a simple set of static helper methods to work with MIME:
+        <code>Zend_Mime</code> verstrekt een set eenvoudige methodes om met MIME te werken:
         <itemizedlist>
             <listitem>
-                <code>Zend_Mime::isPrintable()</code>: Returns TRUE if the given string contains no unprintable characters,
-                FALSE otherwise.
+                <code>isPrintable()</code>: Geeft TRUE terug indien de gegeven string geen onafdrukbare tekens bevat, 
+				anders FALSE.
             </listitem>
             <listitem>
-                <code>Zend_Mime::encodeBase64()</code>: Encodes a string into base64 encoding.
+                <code>encodeBase64()</code>: Encodeert een string met base64.
             </listitem>
             <listitem>
-                <code>Zend_Mime::encodeQuotedPrintable()</code>: Encodes a string with the quoted-printable mechanism.
+                <code>encodeQuotedPrintable()</code>: Encodeert een string met het quoted-printable mechanisme.
             </listitem>
         </itemizedlist>
     </para>
     <para>
-        <code>Zend_Mime</code> defines a set of constants commonly used with MIME Messages:
+        <code>Zend_Mime</code> definieert een set van constanten die veel worden gebruikt
+        in MIME Messages:
         <itemizedlist>
             <listitem>
                 <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
