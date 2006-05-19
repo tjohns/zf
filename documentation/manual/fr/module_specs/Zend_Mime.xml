@@ -1,12 +1,18 @@
-<sect1 id="zend.mime.introduction">
-    <title>Introduction</title>
-    <para>
-        <code>Zend_Mime</code> est une classe de support pour gérer les messages MIME en plusieures parties.
-        Elle est utilisé par <link linkend="zend.mail"><code>Zend_Mail</code></link> et 
-        <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>, est peut-être utilisée
-        dans l'application qui nécessite un support MIME.
-    </para>
-    <sect2 id="zend.mime.static">
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="zend.mime.mime">
+    <title>Zend_Mime</title>
+    
+	<sect2 id="zend.mime.mime.introduction">
+	    <title>Introduction</title>
+	    <para>
+	        <code>Zend_Mime</code> est une classe de support pour gérer les messages MIME en plusieures parties.
+	        Elle est utilisé par <link linkend="zend.mail"><code>Zend_Mail</code></link> et 
+	        <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>, est peut-être utilisée
+	        dans l'application qui nécessite un support MIME.
+	    </para>
+	</sect2>
+	
+    <sect2 id="zend.mime.mime.static">
     <title>Méthodes statiques et constantes</title>
     <para>
         <code>Zend_Mime</code> fournit un jeu simple de méthodes statiques pour fonctionner avec MIME : 
@@ -41,7 +47,8 @@
         </itemizedlist>
     </para>
     </sect2>
-    <sect2 id="zend.mime.instatiation">
+	    
+    <sect2 id="zend.mime.mime.instatiation">
     <title>Instancier Zend_Mime</title>
     <para>
         Lors de l'instanciation d'un objet <code>Zend_Mime</code>, une frontière MIME
@@ -65,6 +72,7 @@
         </itemizedlist>
     </para>
     </sect2>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
