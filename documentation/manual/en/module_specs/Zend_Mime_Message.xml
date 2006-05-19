@@ -27,20 +27,21 @@
 		<title>Adding MIME Parts</title>
 		
 		<para><link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link>
-		Objects can be added to a given MimeMessage object be calling
+		Objects can be added to a given <code>Zend_Mime_Message</code> object by calling
 		<code>-&gt;addPart($part)</code></para>
 		
-		<para>An Array with all Parts in the MimeMessage is returned in an array
-		from the method <code>-&gt;getParts()</code> The Zend_Mime_Part Objects
+		<para>An array with all <code>Zend_Mime_Part</code> objects in the 
+		<code>Zend_Mime_Message</code> is returned
+		from the method <code>-&gt;getParts()</code>.  The Zend_Mime_Part objects
 		can then be changed since they are stored in the array as references. If
 		parts are added to the array or the sequence is changed, the array needs
-		to be given back to the Zend_Mime_Message Oject by calling
+		to be given back to the <code>Zend_Mime_Message</code> object by calling
 		<code>-&gt;setParts($partsArray)</code></para>
 		
 		<para>The function <code>-&gt;isMultiPart()</code> will return true if
-		more than 1 part is registered with the Zend_Mime_Message object and thus
-		the object would generate a Multipart-Mime-Message wenn generating the
-		actual optput.</para>
+		more than one part is registered with the <code>Zend_Mime_Message</code> object and thus
+		the object would generate a Multipart-Mime-Message when generating the
+		actual output.</para>
 	</sect2>
 
 	<sect2 id="zend.mime.message.bondary">
@@ -48,19 +49,19 @@
 		
 		<para><code>Zend_Mime_Message</code> usually creates and uses its own
 		<code>Zend_Mime</code> Object to generate a boundary. If you need to
-		define the boundary or want to change the behaviour of the ZMime Object
+		define the boundary or want to change the behaviour of the <code>Zend_Mime</code> object
 		used by <code>Zend_Mime_Message</code>, you can instantiate the ZMime
 		object yourself and then register it to <code>Zend_Mime_Message</code>.
 		Usually you will not need to do this. <code>-&gt;setMime(Zend_Mime
 		$mime)</code> sets a special instance of <code>Zend_Mime</code> to be used
-		by this Message</para>
+		by this <code>Zend_Mime_Message</code></para>
 		
 		<para><code>-&gt;getMime()</code> returns the instance of
 		<code>Zend_Mime</code> that will be used to render the message when
-		generateMessage() is called.</para>
+		<code>generateMessage()</code> is called.</para>
 		
-		<para><code>-&gt;generateMessage()</code> renders the ZMimeMessage content
-		to a string.</para>
+		<para><code>-&gt;generateMessage()</code> renders the <code>Zend_Mime_Message</code> 
+		content to a string.</para>
 	</sect2>
 
 	<sect2 id="zend.mime.message.parse">
