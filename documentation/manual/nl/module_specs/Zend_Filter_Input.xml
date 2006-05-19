@@ -2,133 +2,132 @@
     <title>Zend_Filter_Input</title>
     
     <sect2 id="zend.filter.input.introduction">
-    <title>Inleiding</title>
-    <para><literal>Zend_Filter_Input</literal> verstrekt faciliteiten die een 
-	gestructureerd en weinig soepele benadering van invoerfilteren mogelijk maken. Het doel
-	is veelvoudig want het beantwoord aan de benodigdheden van drie verschillende
-	groepen van mensen:</para>
-    <itemizedlist>
-        <listitem>
-            <para>Ontwikkelaars</para>
-            <para>Hoewel invoerfilteren nooit zo gemakkelijk kan zijn als
-			niets doen moeten ontwikkelaar de integriteit van hun data 
-			garanderen zonder hun code onnodig complex te maken.
-            <literal>Zend_Filter_Input</literal> biedt een eenvoudige methode
-			voor de meest voorkomende gevallen, uitbreidbaarheid voor
-			grensgevallen, en een strikte benamingsovereenkomst die de duidelijkheid
-			van de code bevordert.</para>
-        </listitem>
-        <listitem>
-            <para>Managers</para>
-            <para>Alle managers die controle over een grote groep ontwikkelaars
-			moeten houden kunnen een gestructereerde benadering voor invoerfilteren
-			opleggen door toegang tot rauwe invoer te beperken of te verbieden.</para>
-        </listitem>
-        <listitem>
-            <para>Auditeurs</para>
-            <para>Zij die de code van een toepassing auditeren moeten snel en
-			betrouwbaar kunnen identificeren wanneer en waar rauwe invoer wordt
-			gebruikt door een ontwikkelaar. De karakteristieken die codeklaarheid
-			bevorderen helpen ook auditeurs door een duidelijk verschil te maken
-			tussen de verschillende benaderingen voor invoerfilteren.</para>
-        </listitem>
-    </itemizedlist>
-    <para>Er bestaat een grote variëteit in de benadering van invoerfilteren, en er
-	bestaan ook vele verschillende faciliteiten die een PHP ontwikkelaar kan
-	gebruiken. Witte lijst filteren, zwarte lijst filteren, regular expressions,
-	voorwaardelijke verklaringen, en ingebouwde PHP functies zijn maar enkele 
-	voorbeelden van de invoerfilter potpourri. 
-	<literal>Zend_Filter_Input</literal> 
-	combineert al deze mogelijkheden in een enkele API met verenigd gedrag en strikte
-	benamingsovereenkomsten. Alle methodes luisteren naar een eenvoudige regel - als
-	de data geldig is, wordt ze teruggestuurd, zo niet wordt <literal>FALSE</literal>
-	teruggestuurd. Extreme simpliciteit.</para>
+        <title>Inleiding</title>
+        <para><literal>Zend_Filter_Input</literal> verstrekt faciliteiten die een 
+        gestructureerd en weinig soepele benadering van invoerfilteren mogelijk maken. Het doel
+        is veelvoudig want het beantwoord aan de benodigdheden van drie verschillende
+        groepen van mensen:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Ontwikkelaars</para>
+                <para>Hoewel invoerfilteren nooit zo gemakkelijk kan zijn als
+                niets doen moeten ontwikkelaar de integriteit van hun data 
+                garanderen zonder hun code onnodig complex te maken.
+                <literal>Zend_Filter_Input</literal> biedt een eenvoudige methode
+                voor de meest voorkomende gevallen, uitbreidbaarheid voor
+                grensgevallen, en een strikte benamingsovereenkomst die de duidelijkheid
+                van de code bevordert.</para>
+            </listitem>
+            <listitem>
+                <para>Managers</para>
+                <para>Alle managers die controle over een grote groep ontwikkelaars
+                moeten houden kunnen een gestructereerde benadering voor invoerfilteren
+                opleggen door toegang tot rauwe invoer te beperken of te verbieden.</para>
+            </listitem>
+            <listitem>
+                <para>Auditeurs</para>
+                <para>Zij die de code van een toepassing auditeren moeten snel en
+                betrouwbaar kunnen identificeren wanneer en waar rauwe invoer wordt
+                gebruikt door een ontwikkelaar. De karakteristieken die codeklaarheid
+                bevorderen helpen ook auditeurs door een duidelijk verschil te maken
+                tussen de verschillende benaderingen voor invoerfilteren.</para>
+            </listitem>
+        </itemizedlist>
+        <para>Er bestaat een grote variëteit in de benadering van invoerfilteren, en er
+        bestaan ook vele verschillende faciliteiten die een PHP ontwikkelaar kan
+        gebruiken. Witte lijst filteren, zwarte lijst filteren, regular expressions,
+        voorwaardelijke verklaringen, en ingebouwde PHP functies zijn maar enkele 
+        voorbeelden van de invoerfilter potpourri. 
+        <literal>Zend_Filter_Input</literal> 
+        combineert al deze mogelijkheden in een enkele API met verenigd gedrag en strikte
+        benamingsovereenkomsten. Alle methodes luisteren naar een eenvoudige regel - als
+        de data geldig is, wordt ze teruggestuurd, zo niet wordt <literal>FALSE</literal>
+        teruggestuurd. Extreme simpliciteit.</para>
+        <sect2 id="zend.filter.input.introduction.whitelist">
+            <title>Witte lijst filteren</title>
+            <para>Witte lijst filtermethodes beginnen met de <literal>is</literal>
+            prefix, zoals <literal>isAlpha()</literal> en <literal>isEmail()</literal>. 
+            Deze methodes inspecteren invoer aan de hand van vooraf gedefinieerde criteria
+            en geven de data alleen terug indien ze aan de criteria voldoet. Is dit niet het geval, dan wordt
+            <literal>FALSE</literal> teruggestuurd. Hier volgt een voorbeeld:</para>
+            <programlisting>
+    <![CDATA[<?php
+
+    $filterPost = new Zend_Filter_Input($_POST);
+
+    if ($alphaName = $filterPost->isAlpha('name')) {
+        /* $alphaName bevat alleen alfabetische tekens. */
+    } else {
+        /* $alphaName wordt als False geëvalueerd. */
+    }
+
+    ?>]]>
+            </programlisting>
+            <para>Deze aanpak is losjes door het feit dat ze een boolean
+            evaluatie doet op de teruggekeerde waarde. Indien je waarden die
+            mogelijk tot <literal>FALSE</literal> evalueren moet onderscheiden
+            (zoals de integer <literal>0</literal> en de lege string), kan je een
+            strikte vergelijking met <literal>FALSE</literal> doen:</para>
+            <programlisting>
+    <![CDATA[<?php
+
+    $filterPost = new Zend_Filter_Input($_POST);
+    $alphaName = $filterPost->isAlpha('name');
+
+    if ($alphaName !== FALSE) {
+        /* $alphaName bevat alleen alfabetische tekens. */
+    } else {
+        /* $alphaName === FALSE */
+    }
+
+    ?>]]>
+            </programlisting>
+        </sect2>
+        <sect2 id="zend.filter.input.introduction.blind">
+            <title>Blind Filteren</title>
+            <para>Blinde filtermethodes beginnen met de <literal>get</literal>
+            prefix, zoals <literal>getAlpha()</literal> en <literal>getDigits()</literal>. 
+            Deze methodes inspecteren de invoer niet maar geven in plaats daarvan
+            alleen het deel van de invoer terug die als geldig wordt beschouwd.
+            <literal>getAlpha()</literal> bijvoorbeeld, geeft alleen alfabetische
+            tekens terug indien die er zijn. (Zoniet is de overblijvende string leeg.)
+            Hier volgt een voorbeeld:</para>
+            <programlisting>
+    <![CDATA[<?php
+
+    /* $_POST['username'] = 'John123Doe'; */
+
+    $filterPost = new Zend_Filter_Input($_POST);
+    $alphaUsername = $filterPost->getAlpha('username');
+
+    /* $alphaUsername = 'JohnDoe'; */
+
+    ?>]]>
+            </programlisting>
+        </sect2>
+        <sect2 id="zend.filter.input.introduction.blacklist">
+            <title>Zwarte lijst Filteren</title>
+            <para>Zwarte lijst filtermethodes beginnen met de <literal>no</literal>
+            prefix, zoals <literal>noTags()</literal> en
+            <literal>noPath()</literal>. Deze methodes zijn gelijk aan de blinde
+            filtermethodes, behalve dat de filtercriteria gebaseerd zijn op
+            wat beschouwd wordt als ongeldige data in plaats van geldige data. Ongeldige
+            data wordt verwijderd, en de overblijvende data (verondersteld geldig te zijn)
+            wordt teruggestuurd. Hier volgt een eenvoudig voorbeeld:</para>
+            <programlisting>
+    <![CDATA[<?php
+
+    /* $_POST['comment'] = '<b>Ik hou van PHP!</b>'; */
+
+    $filterPost = new Zend_Filter_Input($_POST);
+    $taglessComment = $filterPost->noTags('comment');
+
+    /* $taglessComment = 'Ik hou van PHP!'; */
+
+    ?>]]>
+            </programlisting>
+        </sect2>
     </sect2>
-    <sect2 id="zend.filter.input.introduction.whitelist">
-        <title>Witte lijst filteren</title>
-        <para>Witte lijst filtermethodes beginnen met de <literal>is</literal>
-        prefix, zoals <literal>isAlpha()</literal> en <literal>isEmail()</literal>. 
-		Deze methodes inspecteren invoer aan de hand van vooraf gedefinieerde criteria
-		en geven de data alleen terug indien ze aan de criteria voldoet. Is dit niet het geval, dan wordt
-		<literal>FALSE</literal> teruggestuurd. Hier volgt een voorbeeld:</para>
-        <programlisting>
-<![CDATA[<?php
-
-$filterPost = new Zend_Filter_Input($_POST);
-
-if ($alphaName = $filterPost->isAlpha('name')) {
-    /* $alphaName bevat alleen alfabetische tekens. */
-} else {
-    /* $alphaName wordt als False geëvalueerd. */
-}
-
-?>]]>
-        </programlisting>
-        <para>Deze aanpak is losjes door het feit dat ze een boolean
-		evaluatie doet op de teruggekeerde waarde. Indien je waarden die
-		mogelijk tot <literal>FALSE</literal> evalueren moet onderscheiden
-		(zoals de integer <literal>0</literal> en de lege string), kan je een
-		strikte vergelijking met <literal>FALSE</literal> doen:</para>
-        <programlisting>
-<![CDATA[<?php
-
-$filterPost = new Zend_Filter_Input($_POST);
-$alphaName = $filterPost->isAlpha('name');
-
-if ($alphaName !== FALSE) {
-    /* $alphaName bevat alleen alfabetische tekens. */
-} else {
-    /* $alphaName === FALSE */
-}
-
-?>]]>
-        </programlisting>
-    </sect2>
-    <sect2 id="zend.filter.input.introduction.blind">
-        <title>Blind Filteren</title>
-        <para>Blinde filtermethodes beginnen met de <literal>get</literal>
-        prefix, zoals <literal>getAlpha()</literal> en <literal>getDigits()</literal>. 
-		Deze methodes inspecteren de invoer niet maar geven in plaats daarvan
-		alleen het deel van de invoer terug die als geldig wordt beschouwd.
-		<literal>getAlpha()</literal> bijvoorbeeld, geeft alleen alfabetische
-		tekens terug indien die er zijn. (Zoniet is de overblijvende string leeg.)
-		Hier volgt een voorbeeld:</para>
-        <programlisting>
-<![CDATA[<?php
-
-/* $_POST['username'] = 'John123Doe'; */
-
-$filterPost = new Zend_Filter_Input($_POST);
-$alphaUsername = $filterPost->getAlpha('username');
-
-/* $alphaUsername = 'JohnDoe'; */
-
-?>]]>
-        </programlisting>
-    </sect2>
-    <sect2 id="zend.filter.input.introduction.blacklist">
-        <title>Zwarte lijst Filteren</title>
-        <para>Zwarte lijst filtermethodes beginnen met de <literal>no</literal>
-        prefix, zoals <literal>noTags()</literal> en
-        <literal>noPath()</literal>. Deze methodes zijn gelijk aan de blinde
-		filtermethodes, behalve dat de filtercriteria gebaseerd zijn op
-		wat beschouwd wordt als ongeldige data in plaats van geldige data. Ongeldige
-		data wordt verwijderd, en de overblijvende data (verondersteld geldig te zijn)
-		wordt teruggestuurd. Hier volgt een eenvoudig voorbeeld:</para>
-        <programlisting>
-<![CDATA[<?php
-
-/* $_POST['comment'] = '<b>Ik hou van PHP!</b>'; */
-
-$filterPost = new Zend_Filter_Input($_POST);
-$taglessComment = $filterPost->noTags('comment');
-
-/* $taglessComment = 'Ik hou van PHP!'; */
-
-?>]]>
-        </programlisting>
-    </sect2>
-
     <sect2 id="zend.filter.input.theoryofoperation">
         <title>Werkingstheorie</title>
         <para><literal>Zend_Filter_Input</literal> consolideert een paar verschillende
