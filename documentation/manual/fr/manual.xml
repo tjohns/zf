@@ -76,8 +76,10 @@
         &module_specs.Zend_Mail;
     </chapter>
     <chapter id="zend.mime">
-        <title>Zend_Mime</title>
-        &module_specs.Zend_Mime;
+    	<title>Zend_Mime</title>
+    	&module_specs.Zend_Mime;
+    	&module_specs.Zend_Mime_Message;
+    	&module_specs.Zend_Mime_Part;
     </chapter>
     <chapter id="zend.pdf">
         <title>Zend_Pdf</title>
