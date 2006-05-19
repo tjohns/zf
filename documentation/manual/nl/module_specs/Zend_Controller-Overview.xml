@@ -25,9 +25,9 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<code>Zend_Controller_Front</code>
-						Orkestreert het gehele werkschema van het <code>Zend_Controller</code> systeem.
-						Het is een interpretatie van het FrontController patroon.
+						<code>Zend_Controller_Front</code> orkestreert het gehele werkschema van 
+						het <code>Zend_Controller</code> systeem. Het is een interpretatie van het 
+						FrontController patroon.
 						<code>Zend_Controller_Front</code> verwerkt alle door de server ontvangen aanvragen
 						en is uiteindelijk verantwoordelijk voor het doorgeven van de aanvragen aan de
 						ActionControllers (<code>Zend_Controller_Action</code>).
@@ -64,7 +64,7 @@
 				<listitem>
 					<para>
 						<code>Zend_Controller_Action</code> is het basiscomponent van de controller. Elke 
-						controller is een enkele klasse welke de <code>Zend_Controller_Action class</code>
+						controller is een alleenstaande klasse die de <code>Zend_Controller_Action class</code>
 						uitbreidt, en deze klasse heeft actiemethodes.
 					</para>
 				</listitem>
