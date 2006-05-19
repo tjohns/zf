@@ -1,77 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sect1 id="zend.mime.message.introduction">
-  <title>Introduction</title>
+<sect1 id="zend.mime.message">
+    <title>Zend_Mime_Message</title>
+    
+	<sect2 id="zend.mime.message.introduction">
+	  <title>Introduction</title>
+	
+	  <para><code>Zend_Mime_Message</code> represents a mime compliant message
+	  that can contain one or more seperate Parts (Represented as <link
+	  linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> objects). With
+	  MimeMessage, Mime compliant multipart messages can be generated from
+	  MimeParts. Encoding and Boundary handling are handled transparently by the
+	  class. MimeMessage Objects can also be reconstructed from given strings
+	  (experimental). Used by <link
+	  linkend="zend.mail"><code>Zend_Mail</code></link>.
+	  </para>
+	</sect2>
+  
+	<sect2 id="zend.mime.message.instantiation">
+		<title>Instantiation</title>
+		<para>
+			There is no explicit constructor for <code>Zend_Mime_Message</code>. 
+		</para>
+	</sect2>
+	
+	<sect2 id="zend.mime.message.addparts">
+		<title>Adding MIME Parts</title>
+		
+		<para><link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link>
+		Objects can be added to a given MimeMessage object be calling
+		<code>-&gt;addPart($part)</code></para>
+		
+		<para>An Array with all Parts in the MimeMessage is returned in an array
+		from the method <code>-&gt;getParts()</code> The Zend_Mime_Part Objects
+		can then be changed since they are stored in the array as references. If
+		parts are added to the array or the sequence is changed, the array needs
+		to be given back to the Zend_Mime_Message Oject by calling
+		<code>-&gt;setParts($partsArray)</code></para>
+		
+		<para>The function <code>-&gt;isMultiPart()</code> will return true if
+		more than 1 part is registered with the Zend_Mime_Message object and thus
+		the object would generate a Multipart-Mime-Message wenn generating the
+		actual optput.</para>
+	</sect2>
 
-  <para><code>Zend_Mime_Message</code> represents a mime compliant message
-  that can contain one or more seperate Parts (Represented as <link
-  linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> objects). With
-  MimeMessage, Mime compliant multipart messages can be generated from
-  MimeParts. Encoding and Boundary handling are handled transparently by the
-  class. MimeMessage Objects can also be reconstructed from given strings
-  (experimental). Used by <link
-  linkend="zend.mail"><code>Zend_Mail</code></link>.</para>
+	<sect2 id="zend.mime.message.bondary">
+		<title>Boundary handling</title>
+		
+		<para><code>Zend_Mime_Message</code> usually creates and uses its own
+		<code>Zend_Mime</code> Object to generate a boundary. If you need to
+		define the boundary or want to change the behaviour of the ZMime Object
+		used by <code>Zend_Mime_Message</code>, you can instantiate the ZMime
+		object yourself and then register it to <code>Zend_Mime_Message</code>.
+		Usually you will not need to do this. <code>-&gt;setMime(Zend_Mime
+		$mime)</code> sets a special instance of <code>Zend_Mime</code> to be used
+		by this Message</para>
+		
+		<para><code>-&gt;getMime()</code> returns the instance of
+		<code>Zend_Mime</code> that will be used to render the message when
+		generateMessage() is called.</para>
+		
+		<para><code>-&gt;generateMessage()</code> renders the ZMimeMessage content
+		to a string.</para>
+	</sect2>
 
-  <sect2 id="zend.mime.message.instantiation">
-     There is no explicit constructor for 
-
-    <code>Zend_Mime_Message</code>
-
-    . 
-  </sect2>
-
-  <sect2 id="zend.mime.message.addparts">
-    <title>Adding MIME Parts</title>
-
-    <para><link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link>
-    Objects can be added to a given MimeMessage object be calling
-    <code>-&gt;addPart($part)</code></para>
-
-    <para>An Array with all Parts in the MimeMessage is returned in an array
-    from the method <code>-&gt;getParts()</code> The Zend_Mime_Part Objects
-    can then be changed since they are stored in the array as references. If
-    parts are added to the array or the sequence is changed, the array needs
-    to be given back to the Zend_Mime_Message Oject by calling
-    <code>-&gt;setParts($partsArray)</code></para>
-
-    <para>The function <code>-&gt;isMultiPart()</code> will return true if
-    more than 1 part is registered with the Zend_Mime_Message object and thus
-    the object would generate a Multipart-Mime-Message wenn generating the
-    actual optput.</para>
-  </sect2>
-
-  <sect2 id="zend.mime.message.bondary">
-    <title>Boundary handling</title>
-
-    <para><code>Zend_Mime_Message</code> usually creates and uses its own
-    <code>Zend_Mime</code> Object to generate a boundary. If you need to
-    define the boundary or want to change the behaviour of the ZMime Object
-    used by <code>Zend_Mime_Message</code>, you can instantiate the ZMime
-    object yourself and then register it to <code>Zend_Mime_Message</code>.
-    Usually you will not need to do this. <code>-&gt;setMime(Zend_Mime
-    $mime)</code> sets a special instance of <code>Zend_Mime</code> to be used
-    by this Message</para>
-
-    <para><code>-&gt;getMime()</code> returns the instance of
-    <code>Zend_Mime</code> that will be used to render the message when
-    generateMessage() is called.</para>
-
-    <para><code>-&gt;generateMessage()</code> renders the ZMimeMessage content
-    to a string.</para>
-  </sect2>
-
-  <sect2 id="zend.mime.message.parse">
-    <title>parsing a string to create a Zend_Mime_Message object
-    (experimental)</title>
-
-    <para>A given MIME compliant message in string form can be used to
-    reconstruct a <code>Zend_Mime_Message</code> Object from it.
-    <code>Zend_Mime_Message</code> has a static factory Method to parse this
-    String and return a <code>Zend_Mime_Message</code> Object.</para>
-
-    <para><code>Zend_Mime_Message::createFromMessage($str, $boundary)</code>
-    decodes the given string and returns a <code>Zend_Mime_Message</code>
-    Object that can then be examined using <code>-&gt;getParts()</code></para>
-  </sect2>
+	<sect2 id="zend.mime.message.parse">
+		<title>parsing a string to create a Zend_Mime_Message object
+		(experimental)</title>
+		
+		<para>A given MIME compliant message in string form can be used to
+		reconstruct a <code>Zend_Mime_Message</code> Object from it.
+		<code>Zend_Mime_Message</code> has a static factory Method to parse this
+		String and return a <code>Zend_Mime_Message</code> Object.</para>
+		
+		<para><code>Zend_Mime_Message::createFromMessage($str, $boundary)</code>
+		decodes the given string and returns a <code>Zend_Mime_Message</code>
+		Object that can then be examined using <code>-&gt;getParts()</code></para>
+	</sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
