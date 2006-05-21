@@ -15,7 +15,6 @@ require_once 'Zend/Mime/Part.php';
  */
 require_once 'PHPUnit2/Framework/TestCase.php';
 
-
 /**
  * @package 	Zend_Mime
  * @subpackage  UnitTests
@@ -37,7 +36,7 @@ class Zend_Mime_PartTest extends PHPUnit2_Framework_TestCase
         $this->part = new Zend_Mime_Part($this->_testText);
         $this->part->encoding = Zend_Mime::ENCODING_BASE64;
         $this->part->type = "text/plain";
-        $this->part->fileName = 'test.txt';
+        $this->part->filename = 'test.txt';
         $this->part->disposition = 'attachment';
         $this->part->charset = 'iso8859-1';
         $this->part->id = '4711';
@@ -67,5 +66,32 @@ class Zend_Mime_PartTest extends PHPUnit2_Framework_TestCase
         $this->part->encoding = Zend_Mime::ENCODING_8BIT;
         $content = $this->part->getContent();
         $this->assertEquals($this->_testText, $content);
+    }
+    
+    public function testStreamEncoding()
+    {
+        $original = file_get_contents('Zend/Mime/PartTest.php');
+
+        // Test Base64
+        $fp = fopen('Zend/Mime/PartTest.php','rb');
+        $this->assertTrue(is_resource($fp));
+        $part = new Zend_Mime_Part($fp);
+        $part->encoding = Zend_Mime::ENCODING_BASE64;
+        $fp2 = $part->getEncodedStream();
+        $this->assertTrue(is_resource($fp2));
+        $encoded = stream_get_contents($fp2);
+        fclose($fp);
+        $this->assertEquals(base64_decode($encoded),$original);
+        
+        // test QuotedPrintable
+        $fp = fopen('Zend/Mime/PartTest.php','rb');
+        $this->assertTrue(is_resource($fp));
+        $part = new Zend_Mime_Part($fp);
+        $part->encoding = Zend_Mime::ENCODING_QUOTEDPRINTABLE;
+        $fp2 = $part->getEncodedStream();
+        $this->assertTrue(is_resource($fp2));
+        $encoded = stream_get_contents($fp2);
+        fclose($fp);
+        $this->assertEquals(quoted_printable_decode($encoded),$original);
     }
 }
