@@ -20,8 +20,8 @@ class Zend_Mime_AllTests
     {
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend_Mime');
 
-        $suite->addTestSuite('Zend_PartTest');
-        $suite->addTestSuite('Zend_MessageTest');
+        $suite->addTestSuite('Zend_Mime_PartTest');
+        $suite->addTestSuite('Zend_Mime_MessageTest');
 
         return $suite;
     }
