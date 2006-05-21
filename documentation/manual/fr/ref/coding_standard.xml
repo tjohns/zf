@@ -9,7 +9,7 @@
             <para>
                 Ce document fournit les lignes directrices et les ressources pour les développeurs
                 et les équipes participant au développement du Framework Zend. Le sujet traités sont
-                
+
                 <itemizedlist>
                     <listitem>
                         <para>Formattage des fichiers PHP</para>
@@ -49,15 +49,15 @@
             <title>Général</title>
 
             <para>
-                Pour les fichiers contenant uniquement du code PHP, le tag de fermeture (&quot;?&gt;&quot;) n'est 
+                Pour les fichiers contenant uniquement du code PHP, le tag de fermeture (&quot;?&gt;&quot;) n'est
                 jamais permis. Il n'est pas requis pas PHP. Ne pas l'inclure permet de prévenir les problèmes liés
                 à l'injection accidentelle d'espaces blancs dans la sortie.
             </para>
 
             <para>
                 <emphasis>IMPORTANT:</emphasis> L'inclusion de données binaires arbitraires comme il est permis
-                par <code>__HALT_COMPILER()</code> est prohibé dans tout fichier PHP du Framework Zend, ainsi que dans 
-                tout fichier dérivé. L'utilisation de cette possibilité est uniquement permise pour des scripts 
+                par <code>__HALT_COMPILER()</code> est prohibé dans tout fichier PHP du Framework Zend, ainsi que dans
+                tout fichier dérivé. L'utilisation de cette possibilité est uniquement permise pour des scripts
                 spéciaux d'installation.
             </para>
         </sect2>
@@ -112,12 +112,12 @@
             <para>
                 Les noms de classes ne peuvent contenir que des caractères alphanumérique. Les nombres
                 sont autorisés, mais déconseillés. Les tirets bas (&quot;_&quot;) ne sont autorisés que pour être
-                utilisés comme séparateur de chemin -- le nom &quot;Zend/Db/Table.php&quot; doit mener à la 
+                utilisés comme séparateur de chemin -- le nom &quot;Zend/Db/Table.php&quot; doit mener à la
                 classe appelée &quot;Zend_Db_Table&quot;.
             </para>
 
             <para>
-                Si un nom de classe comprend plus d'un mot, la première lettre de chaque nouveau mot doit 
+                Si un nom de classe comprend plus d'un mot, la première lettre de chaque nouveau mot doit
                 être mis en majuscule. La mise en majuscule successive de lettre n'est pas autorisée, i.e
                 une class &quot;Zend_PDF&quot; est interdit alors que &quot;Zend_Pdf&quot; est autorisé.
             </para>
@@ -129,7 +129,7 @@
             </para>
 
             <para>
-                Voici 3 exemples de noms de classes autorisés : 
+                Voici 3 exemples de noms de classes autorisés :
                 <programlisting role="php"><![CDATA[
 Zend_Db
 
@@ -148,7 +148,7 @@ Zend_View_Helper
             <title>Interfaces</title>
 
             <para>
-                Les interfaces doivent suivrent les même conventions que les autres classes (cf ci-dessus), 
+                Les interfaces doivent suivrent les même conventions que les autres classes (cf ci-dessus),
                 cependant elles doivent finir par le mot &quot;Interface&quot; comme le montre ces exemples :
                 <programlisting role="php"><![CDATA[
 Zend_Log_Adapter_Interface
@@ -188,7 +188,7 @@ Zend/View/Helper/FormRadio.php]]></programlisting>
 
             <para>
                 Les noms de fonctions doivent toujours commencer avec une letter en minuscule. Quand un nom de
-                fonction est composé de plus d'un seul mot, la première lettre de chaque mot doivent être mis en 
+                fonction est composé de plus d'un seul mot, la première lettre de chaque mot doivent être mis en
                 majuscule. C'est ce que l'on apelle communément la méthode &quot;studlyCaps&quot; ou &quot;camelCaps&quot;.
             </para>
 
@@ -302,7 +302,7 @@ $a = 'Example String';]]></programlisting>
 
                 <para>
                     Lorsque qu'une chaîne litérrale contient des apostrophes, il est permis de les démarquer en utilisant les guillemets doubles
-                    Ceci est particulièrement conseillé pour les requêtes SQL : 
+                    Ceci est particulièrement conseillé pour les requêtes SQL :
 
                     <programlisting role="php"><![CDATA[
 $sql = "SELECT `id`, `name` from `people` WHERE `name`='Fred' OR `name`='Susan'";]]></programlisting>
@@ -321,7 +321,7 @@ $greeting = "Bonjour $name, bienvenue!";
 
 $greeting = "Bonjour {$name}, bienvenue!";
 
-// Cette forme n'est pas permise : 
+// Cette forme n'est pas permise :
 
 $greeting = "Bonjour ${name}, bienvenue!";]]></programlisting>
                 </para>
@@ -364,7 +364,7 @@ $sql = "SELECT `id`, `name` FROM `people` "
                 <para>L'utilisation d'indices négatifs n'est pas permise.</para>
 
                 <para>
-                    Un tableau indexé doit commencer avec n'importe quel nombre positifs, 
+                    Un tableau indexé doit commencer avec n'importe quel nombre positifs,
                     cependant cette méthode est déconseillée. Il est conseillé de commencer l'indexation à 0.
                 </para>
 
@@ -445,13 +445,13 @@ class SampleClass
                     Les variables membres doivent être nommées en respectant les conventions de nommage.
                 </para>
                 <para>
-                    Toutes variable déclarée dans une classe doit être listée en haut de cette classe, avant 
+                    Toutes variable déclarée dans une classe doit être listée en haut de cette classe, avant
                     toute déclaration de fonction.
                 </para>
                 <para>
                     La construction <code>var</code> n'est pas permise. Les variables membres déclares toujours leur
                     visibilité en utilisant la construction <code>private</code>, <code>protected</code>,
-                    ou <code>public</code>. L'accès direct à ces variables membres en le rendant publiques est permis mais déconseillé. 
+                    ou <code>public</code>. L'accès direct à ces variables membres en le rendant publiques est permis mais déconseillé.
                     Il est préférable d'utiliser des accesseur (set/get).
                 </para>
             </sect3>
@@ -534,7 +534,7 @@ threeArguments(1, 2, 3);]]></programlisting>
                     correcte de passer des argument par référence.
                 </para>
                 <para>
-                    Pour les fonctions dont les arguments peuvent être des tableaux, l'appel à la fonction doit inclure la 
+                    Pour les fonctions dont les arguments peuvent être des tableaux, l'appel à la fonction doit inclure la
                     construction &quot;array&quot; et peut être divisé en plusieurs ligne pour améliorer la lecture. Dans ces cas,
                     les standards d'écriture de tableaux s'appliquent aussi :
                     <programlisting role="php"><![CDATA[
@@ -565,7 +565,7 @@ threeArguments(array(1, 2, 3, 'Zend', 'Studio',
                 </para>
 
                 <para>
-                    L'accolade ouvrante est écrite sur la même ligne que la condition. 
+                    L'accolade ouvrante est écrite sur la même ligne que la condition.
                     L'accolade fermant est toujours écrite sur sa propre ligne.
                     Tout contenu présent à l'intérieur des accolades doit être indenté par 4 espaces.
                     <programlisting role="php"><![CDATA[
@@ -593,12 +593,12 @@ if ($a != 2) {
    $a = 7;
 }]]></programlisting>
                     PHP permet que ces instruction soient écrites sans accolades dans certaines circonstances.
-                    La convention de codage ne fait pas de différentiation et toute les instructions 
+                    La convention de codage ne fait pas de différentiation et toute les instructions
                     &quot;if&quot;, &quot;elseif&quot; et &quot;else&quot; doivent utiliser des accolades.
                 </para>
 
                 <para>
-                    L'utilisation de la construction &quot;elseif&quot; est permise mais fortement déconseillée au profit de la 
+                    L'utilisation de la construction &quot;elseif&quot; est permise mais fortement déconseillée au profit de la
                     combinaison &quot;else if&quot;.
                 </para>
             </sect3>
@@ -612,7 +612,7 @@ if ($a != 2) {
                 </para>
 
                 <para>
-                    Tout le contenu à l'intérieur de l'instruction &quot;switch&quot; doit être indenté avec 4 espaces. 
+                    Tout le contenu à l'intérieur de l'instruction &quot;switch&quot; doit être indenté avec 4 espaces.
                     Le contenu sous chaque &quot;case&quot; doit être indenté avec encore 4 espaces supplémentaires.
                 </para>
 
@@ -654,14 +654,14 @@ switch ($numPeople) {
                 </para>
 
                 <para>
-                    Tout le fichier de code source écrit pour le Framework Zend ou qui opère avec ce framework 
+                    Tout le fichier de code source écrit pour le Framework Zend ou qui opère avec ce framework
                     doit conteni un docblock du fichier, en haut de chaque fichier, et un docblock de classe
                     immédiatement au dessus de chaque classe. Voici des exemples de tels docblocs :
                 </para>
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.files">
-                <title>Fichier</title>
+                <title>Fichiers</title>
 
                 <para>
                     Chaque fichier qui contient du code PHP doit avoir un bloc d'entête en haut du fichier qui contient
@@ -684,7 +684,7 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.classes">
-                <title>Fichiers</title>
+                <title>Classes</title>
 
                 <para>
                     Chaque classe doit avoir un docblock qui contient au minimum ces balise phpDocumentor:
