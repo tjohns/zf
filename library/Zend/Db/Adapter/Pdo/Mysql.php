@@ -84,7 +84,7 @@ class Zend_Db_Adapter_Pdo_Mysql extends Zend_Db_Adapter_Pdo_Abstract
             $descr[$val['field']] = array(
                 'name'    => $val['field'],
                 'type'    => $val['type'],
-                'notnull' => (bool) ($val['null'] === ''), // not null is empty, null is yes
+                'notnull' => (bool) ($val['null'] != 'YES'), // not null is NO or empty, null is YES
                 'default' => $val['default'],
                 'primary' => (strtolower($val['key']) == 'pri'),
             );
