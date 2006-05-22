@@ -99,13 +99,14 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                         	// If we got a well formed absolute URI, set it
                         	$this->setUri($headerValue);
                         	
-                        } elseif (preg_match('|^/|', $headerValue)) {
+                        } elseif (strpos($headerValue, '/') === 0) {
                         	// Else, if we got just an absolute path, set it
                         	$this->_uri->setPath($headerValue);
                         	
                         } else {
                         	// Else, assume we have a relative path
-                        	$path = dirname($this->_uri->getPath()) . '/' . $headerValue;
+                        	$path = dirname($this->_uri->getPath());
+                        	$path .= ($path == '/' ? $headerValue : "/{$headerValue}" );
                         	$this->_uri->setPath($path);
                         }
                         
