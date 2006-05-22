@@ -95,7 +95,20 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                     // If we have a Location header
                     if (strtolower($headerName) == "location") {
                         // Set the URI to the new value
-                        $this->setUri($headerValue);
+                        if (Zend_Uri_Http::check($headerValue)) {
+                        	// If we got a well formed absolute URI, set it
+                        	$this->setUri($headerValue);
+                        	
+                        } elseif (preg_match('|^/|', $headerValue)) {
+                        	// Else, if we got just an absolute path, set it
+                        	$this->_uri->setPath($headerValue);
+                        	
+                        } else {
+                        	// Else, assume we have a relative path
+                        	$path = dirname($this->_uri->getPath()) . '/' . $headerValue;
+                        	$this->_uri->setPath($path);
+                        }
+                        
                         // Continue with the new redirected request
                         continue 2;
                     }
