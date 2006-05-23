@@ -61,7 +61,7 @@ Requirements
         namespace.property = value
 * Iterator is implemented for easily listing of configuration
   information.
-* The special inheritence keyword "extends" will be be used to allow
+* The special inheritance keyword "extends" will be used to allow
   for including additional sections within this section. For ini files,
   the syntax would be:
         extends = section
@@ -80,7 +80,7 @@ construction. Zend_Config also implements Countable and Iterator to
 facilitate easy access to the data.
 
 Sometimes it is necessary to get at a group of config variables as an
-array (e.g., the $config paramter in Zend_Db::factory()). Zend_Config
+array (e.g., the $config parameter in Zend_Db::factory()). Zend_Config
 provides the function "asArray()" to allow easy integration with such
 requirements.
 
@@ -93,7 +93,7 @@ in a key name to provide additional nesting levels. That is, a key named
 Zend_Config_ini also supports loading of keys from one section of the
 ini file into another section. This is done using a special keyword
 called "extends". It is possible for the parent section to itself extend
-from another section. Multiple inheritence, such that a section can extend
+from another section. Multiple inheritance, such that a section can extend
 two or more other sections, is not permitted.
 
 In order to make it easy to use with Zend_Config, Zend_Config_Ini has a
@@ -139,7 +139,7 @@ Given the following "myapp.ini" file:
 Then we can do something like:
 
 <?php
-$obj=new Zend_Config(Zend_Config_Ini::load('myapp.ini', 'andi_dev'));
+$obj = new Zend_Config(Zend_Config_Ini::load('myapp.ini', 'andi_dev'));
 print $obj->hostname;       // prints "andi_box"
 print $obj->db->connection; // prints "localhost"
 print $obj->db->name;       // prints "local"
@@ -178,7 +178,7 @@ class Zend_Config implements Countable, Iterator
      * an array. The data are read only unless $allowModifications
      * is set to true on construction.
      *
-     * Zend_Config also implements Countable and Interator to
+     * Zend_Config also implements Countable and Iterator to
      * facilitate easy access to the data.
      *
      * @param array $array
