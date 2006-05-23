@@ -1,0 +1,14 @@
+Zend_Http_Client
+---------------------------------------------------------
+- Implement HTTP authentication
+
+- Implement proxy
+
+
+Zend_Http_Cookiejar
+---------------------------------------------------------
+- Path overriding: currently, if you have cookies with the same name from 
+  http://myserver/root/ and cookies from http://myserver/root/dir/ 
+  and you access /root/dir/, the client will send all cookies, while the
+  cookies belonging to /root/dir/ should override the /root/ cookies.
+
