@@ -9,8 +9,8 @@
     <bookinfo>
         <title>Guide de référence du programmeur</title>
         <subtitle>Framework Zend</subtitle>
-        <edition>Guide de référence du Framework Zend pour le programmeur</edition>
-        <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
+        <edition>Guide de référence du Framework Zend destiné au programmeur</edition>
+        <pubdate><?dbtimestamp format="d/m/Y"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
             <holder>
