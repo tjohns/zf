@@ -401,8 +401,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                     // Encode body as application/x-www-form-urlencoded
                     $this->setHeader('Content-type', self::ENC_URLENCODED);
                     
-                    foreach ($this->paramsPost as $name => $value) {
-                        $body .= urlencode($name) . '=' . urlencode($value) . '&';
+                    $params = $this->_getParametersRecursive($this->paramsPost, true);
+                    foreach ($params as $pp) {
+                        $body .= "{$pp[0]}={$pp[1]}&";
                     }
                     $body = substr($body, 0, strlen($body) - 1);
                     break;
