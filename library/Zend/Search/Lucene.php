@@ -96,6 +96,12 @@ class Zend_Search_Lucene
      */
     private $_docCount = 0;
 
+    /**
+     * Flag for index changes
+     *
+     * @var boolean
+     */
+    private $_hasChanges = false;
 
     /**
      * Opens the index.
@@ -527,6 +533,8 @@ class Zend_Search_Lucene
                $segCount++;
                $nextSegmentStartId += $this->_segmentInfos[ $segCount ]->count();
         }
+
+        $this->_hasChanges = true;
         $segmentStartId = $nextSegmentStartId - $this->_segmentInfos[ $segCount ]->count();
         $this->_segmentInfos[ $segCount ]->delete($id - $segmentStartId);
     }
@@ -555,6 +563,14 @@ class Zend_Search_Lucene
      */
     public function commit()
     {
+        if ($this->_hasChanges) {
+            foreach ($this->_segmentInfos as $segInfo) {
+                $segInfo->writeChanges();
+            }
+
+            $this->_hasChanges = false;
+        }
+
         if ($this->_writer !== null) {
             foreach ($this->_writer->commit() as $segmentName => $segmentInfo) {
                 if ($segmentInfo !== null) {

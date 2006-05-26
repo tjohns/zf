@@ -29,13 +29,6 @@
  */
 abstract class Zend_Search_Lucene_Storage_File
 {
-
-    /**
-     * Class constructor.  Open the file.
-     */
-    abstract public function __construct($filename, $mode='r');
-
-
     /**
      * Reads $length number of bytes at the current position in the
      * file and advances the file pointer.

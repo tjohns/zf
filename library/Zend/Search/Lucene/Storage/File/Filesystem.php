@@ -43,14 +43,13 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
      */
     private $_fileHandle;
 
-
     /**
      * Class constructor.  Open the file.
      *
      * @param string $filename
      * @param string $mode
      */
-    public function __construct($filename, $mode='rb')
+    public function __construct($filename, $mode='r+b')
     {
         global $php_errormsg;
 
@@ -65,8 +64,9 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
         }
 
         ini_set('track_errors', $trackErrors);
-    }
 
+        $this->_startOffset = $offset;
+    }
 
     /**
      * Sets the file position indicator and advances the file pointer.
@@ -78,6 +78,8 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
      * SEEK_END - Set position to end-of-file plus offset. (To move to
      * a position before the end-of-file, you need to pass a negative value
      * in offset.)
+     * SEEK_CUR is the only supported offset type for compound files
+     *
      * Upon success, returns 0; otherwise, returns -1
      *
      * @param integer $offset
