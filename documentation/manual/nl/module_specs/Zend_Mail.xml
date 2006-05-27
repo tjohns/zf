@@ -21,7 +21,7 @@ $mail->send();
        </para>
     </example>
     <note>
-		Om een mail te sturen met <code>Zend_Mail</code> moet je op zijn minst ééngeadresseerde, een
+		Om een mail te sturen met <code>Zend_Mail</code> moet je op zijn minst één geadresseerde, een
 		afzender (bijvoorbeeld met <code>setFrom()</code>) en een inhoud (tekst of HTML) ingeven.
     </note>
     <para>
@@ -52,7 +52,7 @@ Zend_Mail::setDefaultTransport($tr);
     </example>
     <para>
 		De <code>setDefaultTransport()</code> methode en de constructor van <code>Zend_Mail_Transport_Smtp</code> 
-		zijn geen dure operaties. Deze twee regels kunnen behandeld terwijl je de setup van het script doet
+		zijn geen dure operaties. Deze twee regels kunnen worden behandeld terwijl je de setup van het script doet
 		(bv: config.inc of iets dergelijks) om het gedrag van de <code>Zend_Mail</code> klasse voor de rest van
 		het script te configureren. Dit houdt de configuratielogica uit de toepassingslogica - of mail gezonden
 		word via SMTP of <ulink url="http://php.net/mail"><code>mail()</code></ulink>, welke mail server te
@@ -63,7 +63,7 @@ Zend_Mail::setDefaultTransport($tr);
     <title>Meerdere e-mails sturen via een SMTP verbinding</title>
     <para>
 		Standaard wordt een SMTP verbinding gemaakt voor elke e-mail die wordt gestuurd. Indien je meerdere
-		e-mails via een SMTP verbinding wil sturen moet je zelf <code>connect()</code> afhandelen. Als de
+		e-mails via eenzelfde SMTP verbinding wil sturen moet je zelf <code>connect()</code> afhandelen. Als de
 		transportwijze reeds vastgesteld is voor <code>send()</code> word opgeroepen zal dat transport
 		worden gebruikt en de verbinding zal niet afgesloten worden:
     </para>
@@ -104,7 +104,7 @@ $tr1 = new Zend_Mail_Transport_Smtp('server@example.com');
 $tr1 = new Zend_Mail_Transport_Smtp('other_server@example.com');
 $mail->send($tr1);
 $mail->send($tr2);
-$mail->send();  // use default again
+$mail->send();  // standaard transport weer gebruiken
 ?>]]>   </programlisting>
     </example>
     <note>
@@ -118,7 +118,7 @@ $mail->send();  // use default again
 		Om e-mail in HTML formaat te sturen moet je de inhoud geven via de methode <code>setBodyHTML()</code> in
 		plaats van <code>setBodyText()</code>. Het MIME inhoudstype zal automatisch naar <code>text/html</code>
 		worden gezet. Indien je zowel HTML als tekst inhoud gebruikt zal er automatisch een 
-		multipart/alternative MIME message gegenereerd:
+		multipart/alternative MIME message worden gegenereerd:
     </para>
     <example>
         <title>HTML E-Mail zenden</title>
@@ -140,8 +140,8 @@ $mail->send();
     <para>
 		Je kan bestanden aan e-mail bijvoegen door de <code>addAttachment()</code> methode te gebruiken. Het
 		standaard gedrag van <code>Zend_Mail</code> neemt aan dat de bijlage een binair object is 
-		(application/octet-stream), zou moeten gezonden worden met 64base encoding en moet als een
-		bijlage worden behandeld. Deze veronderstellingen kunnen overschreven worden door meer parameters aan
+		(application/octet-stream), het zou moeten gezonden worden met 64base encoding en als een
+		bijlage moet worden behandeld. Deze veronderstellingen kunnen overschreven worden door meer parameters aan
 		<code>addAttachment()</code> door te geven:
     </para>
     <example>
@@ -226,7 +226,7 @@ $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++);
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-$mail->addHeader('X-MailGenerator', 'MinSuperToepassing');
+$mail->addHeader('X-MailGenerator', 'MijnSuperToepassing');
 $mail->addHeader('X-greetingsTo', 'Mamma', true); // Meerdere waarden
 $mail->addHeader('X-greetingsTo', 'Pappa', true);
 ?>]]>   </programlisting>
@@ -235,7 +235,7 @@ $mail->addHeader('X-greetingsTo', 'Pappa', true);
 <sect1 id="zend.mail.character-sets">
     <title>Character Sets</title>
     <para>
-        <code>Zend_Mail</code> controleert niet of de berichtdelen de juiste character set hebben. Wanneer
+        <code>Zend_Mail</code> controleert niet of de berichtdelen de juiste karakterset hebben. Wanneer
 		<code>Zend_Mail</code> word geïnstantieerd mag er een charset voor het bericht zelf worden opgegeven.
 		De standaard waarde is iso8859-1. De toepassing moet er zich van vrijwaren dat alle aan het bericht
 		toegevoegde delen in de juiste charset zijn gecodeerd. Je een andere charset opgeven voor elk nieuw
