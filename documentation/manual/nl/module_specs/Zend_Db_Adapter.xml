@@ -89,7 +89,7 @@ $value = $db->quote(array('a', 'b', 'c');
 			De tweede methode is de <code>quoteInto()</code> methode. Je geeft een
 			basis string op met een vraagteken plaatshouder, en één scalaire waarde
 			of een array om erin te quoten. Dit is handig om queries en clausules
-			te maken "as-you-go". Sacalaire waarden en arrays werken hetzelfde als in
+			te maken "as-you-go". Scalaire waarden en arrays werken hetzelfde als in
 			de <code>quote()</code> methode.
         </para>
 
@@ -186,7 +186,7 @@ $rows = $stmt->fetchAll();
 			Standaard is PDO (en dus ook <code>Zend_Db_Adapter</code>) in "auto-commit" mode.
 			Dit betekent dat alle queries worden gecommit wanneer ze worden uitgevoerd.
 			Indien je wenst dat ze in een transactie worden uitgevoerd kan je eenvoudigweg
-			de <code>beginTransaction()</code> methode oproepen en, naar gelang, je veranderingen
+			de <code>beginTransaction()</code> methode oproepen en, naargelang, je veranderingen
 			<code>commit()</code> of <code>rollBack()</code>. <code>Zend_Db_Adapter</code> keert
 			terug naar "auto-commit" mode tot je opnieuw de <code>beginTransaction</code> methode
 			aanroept.
@@ -246,7 +246,7 @@ $row = array (
     'favorite_color' => 'blue',
 );
 
-// de tabel waarin de zij zou moeten worden ingevoegd
+// de tabel waarin de rij zou moeten worden ingevoegd
 $table = 'round_table';
 
 // voeg de rij in en verkrijg de rij ID
