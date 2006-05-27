@@ -1,5 +1,5 @@
 <sect1 id="zend.xmlrpc.introduction">
-    <title>Introductie</title>
+    <title>Inleiding</title>
     <para>
         XML-RPC is een " ... manier van op afstand aanroepen van procedures gebruik makend
 	van HTTP als transport mechanisme en XML als encoding. XML-RPC is ontworden om zo

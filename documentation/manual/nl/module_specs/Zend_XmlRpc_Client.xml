@@ -8,7 +8,7 @@
 			Specificeer het volledige adres van de service in de <code>Zend_XmlRpc_Client</code> constructor.
 		</para>
 		<example>
-			<title>A basis XML-RPC request</title>
+			<title>Een basis XML-RPC verzoek</title>
 			<programlisting role="php"><![CDATA[<?php
 /**
 * Maak verbinding met de framework.zend.com server en krijg een array met de beschikbare methodes.
