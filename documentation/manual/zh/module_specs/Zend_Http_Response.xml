@@ -2,34 +2,33 @@
     <title>Zend_Http_Response</title>
 
     <sect2 id="zend.http.response.introduction">
-        <title>Introduction</title>
+        <title>简介</title>
         <para>
-            <code>Zend_Http_Response</code> provides easy access to the responses returned by
-            <xref linkend="zend.http.client" />. It provides an intuitive set of methods for working
-            with the HTTP response data received from a request:
+            对于由<xref linkend="zend.http.client" />返回的应答(Response)信息，<code>Zend_Http_Response</code> 
+			可以提供简单的访问方式。 它提供一组友好的方法来获得从请求返回的应答信息:
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Returns TRUE if an HTTP error code was received; FALSE otherwise.
+                    <code>isError()</code>: 如果收到HTTP出错状态的代码,返回TRUE, 否则返回FALSE.
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Returns TRUE if an HTTP success code was received; FALSE otherwise.
+                    <code>isSuccessful()</code>: 如果得到HTTP请求成功的状态代码,返回TRUE, 否则返回FALSE.
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Returns TRUE if an HTTP redirect code was received; FALSE otherwise.
+                    <code>isRedirect()</code>: 如果得到HTTP重定向的状态代码,返回TRUE, 否则返回FALSE.
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Returns the HTTP status code.
+                    <code>getStatus()</code>: 返回HTTP请求的状态代码.
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Returns an array of HTTP response header strings.
+                    <code>getHeaders()</code>: 以数组的形式返回HTTP请求头部信息的字符串.
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Returns the HTTP response body as a string.
+                    <code>getBody()</code>: 返回HTTP正文内容(字符串).
                 </listitem>
             </itemizedlist>
         </para>
         <example>
-            <title>Working with HTTP Response Data</title>
+            <title>处理HTTP应答</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Http/Client.php';
 try {
@@ -38,7 +37,7 @@ try {
     if ($response->isSuccessful()) {
         echo $response->getBody();
     } else {
-        echo "<p>An error occurred</p>\n";
+        echo "<p>发生错误</p>\n";
         echo "HTTP Status: " . $response->getStatus() . "\n";
         echo "HTTP Headers:\n";
         $responseHeaders = $response->getHeaders();
