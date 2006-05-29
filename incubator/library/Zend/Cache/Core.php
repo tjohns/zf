@@ -330,7 +330,7 @@ class Zend_Cache_Core
         if (!$this->_options['caching']) {
             return true;
         }
-        if (!in_array($mode, array('old', 'all', 'matchingTag', 'notMatchingTag'))) {
+        if (!in_array($mode, array(Zend_Cache::CLEANING_MODE_ALL, Zend_Cache::CLEANING_MODE_OLD, Zend_Cache::CLEANING_MODE_MATCHING_TAG, Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG))) {
             Zend_Cache::throwException('Invalid cleaning mode');
         }
         self::_validateTagsArray($tags);

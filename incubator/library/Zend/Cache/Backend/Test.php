@@ -184,18 +184,18 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * (true else)
      *
      * Available modes are :
-     * 'all' (default)  => remove all cache entries ($tags is not used)
-     * 'old'            => remove too old cache entries ($tags is not used) 
-     * 'matchingTag'    => remove cache entries matching all given tags 
-     *                     ($tags can be an array of strings or a single string) 
-     * 'notMatchingTag' => remove cache entries not matching one of the given tags
-     *                     ($tags can be an array of strings or a single string)    
+     * Zend_Cache::CLEANING_MODE_ALL (default)    => remove all cache entries ($tags is not used)
+     * Zend_Cache::CLEANING_MODE_OLD              => remove too old cache entries ($tags is not used) 
+     * Zend_Cache::CLEANING_MODE_MATCHING_TAG     => remove cache entries matching all given tags 
+     *                                               ($tags can be an array of strings or a single string) 
+     * Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG => remove cache entries not {matching one of the given tags}
+     *                                               ($tags can be an array of strings or a single string)       
      * 
      * @param string $mode clean mode
      * @param tags array $tags array of tags
      * @return boolean true if no problem
      */
-    public function clean($mode = 'all', $tags = array()) 
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array()) 
     {
         $this->_addLog('clean', array($mode, $tags));
         if ($mode=='false') {

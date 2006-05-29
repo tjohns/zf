@@ -227,83 +227,79 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      * Clean some cache records
      *
      * Available modes are :
-     * 'all' (default)  => remove all cache entries ($tags is not used)
-     * 'old'            => remove too old cache entries ($tags is not used) 
-     * 'matchingTag'    => remove cache entries matching all given tags 
-     *                     ($tags can be an array of strings or a single string) 
-     * 'notMatchingTag' => remove cache entries not {matching one of the given tags}
-     *                     ($tags can be an array of strings or a single string)    
+     * Zend_Cache::CLEANING_MODE_ALL (default)    => remove all cache entries ($tags is not used)
+     * Zend_Cache::CLEANING_MODE_OLD              => remove too old cache entries ($tags is not used) 
+     * Zend_Cache::CLEANING_MODE_MATCHING_TAG     => remove cache entries matching all given tags 
+     *                                               ($tags can be an array of strings or a single string) 
+     * Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG => remove cache entries not {matching one of the given tags}
+     *                                               ($tags can be an array of strings or a single string)      
      * 
      * @param string $mode clean mode
      * @param tags array $tags array of tags
      * @return boolean true if no problem
      */
-    public function clean($mode = 'all', $tags = array()) 
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array()) 
     {
-        switch ($mode) {
-            case 'all':
-                $res1 = @sqlite_query($this->_db, 'DELETE FROM cache');
-                $res2 = @sqlite_query($this->_db, 'DELETE FROM tag');
-                return $res1 && $res2;
-                break;
-            case 'old':
-                $mktime = time();
-                $res1 = @sqlite_query($this->_db, "DELETE FROM tag WHERE id IN (SELECT id FROM cache WHERE expire>0 AND expire<=$mktime)");
-                $res2 = @sqlite_query($this->_db, "DELETE FROM cache WHERE expire>0 AND expire<=$mktime");
-                return $res1 && $res2;
-                break;
-            case 'matchingTag':
-                $first = true;
-                $ids = array();
+        if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
+            $res1 = @sqlite_query($this->_db, 'DELETE FROM cache');
+            $res2 = @sqlite_query($this->_db, 'DELETE FROM tag');
+            return $res1 && $res2;
+        }
+        if ($mode==Zend_Cache::CLEANING_MODE_OLD) {
+            $mktime = time();
+            $res1 = @sqlite_query($this->_db, "DELETE FROM tag WHERE id IN (SELECT id FROM cache WHERE expire>0 AND expire<=$mktime)");
+            $res2 = @sqlite_query($this->_db, "DELETE FROM cache WHERE expire>0 AND expire<=$mktime");
+            return $res1 && $res2;
+        }
+        if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
+            $first = true;
+            $ids = array();
+            foreach ($tags as $tag) {
+                $res = @sqlite_query($this->_db, "SELECT DISTINCT(id) AS id FROM tag WHERE name='$tag'");
+                if (!$res) {
+                    return false;
+                }
+                $rows = @sqlite_fetch_all($res, SQLITE_ASSOC);  
+                $ids2 = array();
+                foreach ($rows as $row) {
+                    $ids2[] = $row['id'];
+                }
+                if ($first) {
+                    $ids = $ids2;
+                    $first = false;
+                } else {
+                    $ids = array_intersect($ids, $ids2);
+                }
+            }
+            $result = true;
+            foreach ($ids as $id) {
+                $result = $result && ($this->remove($id));
+            }
+            return $result;
+        }
+        if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
+            $res = @sqlite_query($this->_db, "SELECT id FROM cache");
+            $rows = @sqlite_fetch_all($res, SQLITE_ASSOC);    
+            $result = true;
+            foreach ($rows as $row) {
+                $id = $row['id'];
+                $matching = false;
                 foreach ($tags as $tag) {
-                    $res = @sqlite_query($this->_db, "SELECT DISTINCT(id) AS id FROM tag WHERE name='$tag'");
+                    $res = @sqlite_query($this->_db, "SELECT COUNT(*) AS nbr FROM tag WHERE name='$tag' AND id='$id'");
                     if (!$res) {
                         return false;
                     }
-                    $rows = @sqlite_fetch_all($res, SQLITE_ASSOC);  
-                    $ids2 = array();
-                    foreach ($rows as $row) {
-                        $ids2[] = $row['id'];
-                    }
-                    if ($first) {
-                        $ids = $ids2;
-                        $first = false;
-                    } else {
-                        $ids = array_intersect($ids, $ids2);
+                    $nbr = (int) @sqlite_fetch_single($res);
+                    if ($nbr > 0) {
+                        $matching = true;
                     }
                 }
-                $result = true;
-                foreach ($ids as $id) {
-                    $result = $result && ($this->remove($id));
+                if (!$matching) {
+                    $result = $result && $this->remove($id);
                 }
-                return $result;
-                break;
-            case 'notMatchingTag':
-                $res = @sqlite_query($this->_db, "SELECT id FROM cache");
-                $rows = @sqlite_fetch_all($res, SQLITE_ASSOC);    
-                $result = true;
-                foreach ($rows as $row) {
-                    $id = $row['id'];
-                    $matching = false;
-                    foreach ($tags as $tag) {
-                        $res = @sqlite_query($this->_db, "SELECT COUNT(*) AS nbr FROM tag WHERE name='$tag' AND id='$id'");
-                        if (!$res) {
-                            return false;
-                        }
-                        $nbr = (int) @sqlite_fetch_single($res);
-                        if ($nbr > 0) {
-                            $matching = true;
-                        }
-                    }
-                    if (!$matching) {
-                        $result = $result && $this->remove($id);
-                    }
-                }     
-                return $result;         
-                break;    
-            default:
-                break;
-        }
+            }     
+            return $result;         
+        }     
         return false;
     }
     

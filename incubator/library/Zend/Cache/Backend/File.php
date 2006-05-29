@@ -359,19 +359,19 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
      * Clean some cache records (private method used for recursive stuff)
      *
      * Available modes are :
-     * 'all' (default)  => remove all cache entries ($tags is not used)
-     * 'old'            => remove too old cache entries ($tags is not used) 
-     * 'matchingTag'    => remove cache entries matching all given tags 
-     *                     ($tags can be an array of strings or a single string) 
-     * 'notMatchingTag' => remove cache entries not {matching one of the given tags}
-     *                     ($tags can be an array of strings or a single string)    
+     * Zend_Cache::CLEANING_MODE_ALL (default)    => remove all cache entries ($tags is not used)
+     * Zend_Cache::CLEANING_MODE_OLD              => remove too old cache entries ($tags is not used) 
+     * Zend_Cache::CLEANING_MODE_MATCHING_TAG     => remove cache entries matching all given tags 
+     *                                               ($tags can be an array of strings or a single string) 
+     * Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG => remove cache entries not {matching one of the given tags}
+     *                                               ($tags can be an array of strings or a single string)    
      * 
      * @param string $dir directory to clean
      * @param string $mode clean mode
      * @param tags array $tags array of tags
      * @return boolean true if no problem
      */
-    private function _clean($dir, $mode = 'all', $tags = array()) 
+    private function _clean($dir, $mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array()) 
     {
         if (!is_dir($dir)) {
             return false;
@@ -383,50 +383,46 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
         foreach ($glob as $file)  {
             $file2 = $dir . $file;
             if (is_file($file2)) {
-                switch ($mode) {
-                    case 'all':
-                        $result = ($result) && ($this->_remove($file2));
-                        break;
-                    case 'old':
-                        // files older than lifeTime get deleted from cache
-                        if (!is_null($this->_directives['lifeTime'])) {
-                            if ((time() - @filemtime($file2)) > $this->_directives['lifeTime']) {
-                                $result = ($result) && ($this->_remove($file2));
+                if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
+                    $result = ($result) && ($this->_remove($file2));
+                }
+                if ($mode==Zend_Cache::CLEANING_MODE_OLD) {
+                    // files older than lifeTime get deleted from cache
+                    if (!is_null($this->_directives['lifeTime'])) {
+                        if ((time() - @filemtime($file2)) > $this->_directives['lifeTime']) {
+                            $result = ($result) && ($this->_remove($file2));
+                        }
+                    }
+                }
+                if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
+                    $matching = true;
+                    $id = self::_fileNameToId($file);
+                    if (strlen($id) > 0) {
+                        foreach ($tags as $tag) {
+                            if (!($this->_testTag($id, $tag))) {
+                                $matching = false;
+                                break;
                             }
                         }
-                        break;
-                    case 'matchingTag':
-                        $matching = true;
-                        $id = self::_fileNameToId($file);
-                        if (strlen($id) > 0) {
-                            foreach ($tags as $tag) {
-                                if (!($this->_testTag($id, $tag))) {
-                                    $matching = false;
-                                    break;
-                                }
-                            }
-                            if ($matching) {
-                                $result = ($result) && ($this->remove($id));
+                        if ($matching) {
+                            $result = ($result) && ($this->remove($id));
+                        }
+                    }
+                }
+                if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
+                    $matching = false;
+                    $id = self::_fileNameToId($file);
+                    if (strlen($id) > 0) {
+                        foreach ($tags as $tag) {
+                            if ($this->_testTag($id, $tag)) {
+                                $matching = true;
+                                break;
                             }
                         }
-                        break;
-                    case 'notMatchingTag':
-                        $matching = false;
-                        $id = self::_fileNameToId($file);
-                        if (strlen($id) > 0) {
-                            foreach ($tags as $tag) {
-                                if ($this->_testTag($id, $tag)) {
-                                    $matching = true;
-                                    break;
-                                }
-                            }
-                            if (!$matching) {
-                                $result = ($result) && ($this->remove($id));
-                            }
-                        }                               
-                        break;
-                    default:
-                        break;
+                        if (!$matching) {
+                            $result = ($result) && ($this->remove($id));
+                        }
+                    }                               
                 }
             }
             if ((is_dir($file2)) and ($this->_options['hashedDirectoryLevel']>0)) {
