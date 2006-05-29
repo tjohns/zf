@@ -29,7 +29,12 @@ abstract class Zend_Cache
 
     static public $availableFrontends = array('Core', 'Output', 'Class', 'File', 'Function', 'Page');
     static public $availableBackends = array('File', 'Sqlite');
-        
+    
+    const CLEANING_MODE_ALL              = 'all';
+    const CLEANING_MODE_OLD	             = 'old';
+    const CLEANING_MODE_MATCHING_TAG	 = 'matchingTag';
+    const CLEANING_MODE_NOT_MATCHING_TAG = 'notMatchingTag';
+     
     /**
      * Factory
      * 
