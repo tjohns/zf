@@ -121,6 +121,30 @@ $index->commit();
             が使用可能です。
         </para>
     </sect2>
+
+    <sect2 id="zend.search.index-creation.document-updating">
+        <title>ドキュメントの更新</title>
+
+        <para>
+            Lucene インデックスファイルは、ドキュメントの更新をサポートしていません。
+            更新するためには、いったん削除した上で改めて追加する必要があります。
+        </para>
+
+        <para>
+            そのためには、インデックス内部のドキュメント ID を使用して
+            <code>Zend_Search_Lucene::delete()</code> メソッドをコールします。
+            この ID は、クエリでヒットした内容から 'id' プロパティで取得できます。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$removePath = ...;
+$hits = $index->find('path:' . $removePath);
+foreach ($hits as $hit) {
+    $index->delete($hit->id);
+}
+$index->commit();
+?>]]></programlisting>
+    </sect2>
 </sect1>
 
 <!--
