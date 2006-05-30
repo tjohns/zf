@@ -32,6 +32,8 @@ require_once 'Zend/Db/Table/Row.php';
  * @subpackage Table
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ *
+ * @todo also implement Countable if ZF minimum PHP version moves up to 5.1.
  */
 class Zend_Db_Table_Rowset implements Iterator
 {
