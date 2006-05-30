@@ -149,7 +149,7 @@ abstract class Zend_XmlRpc_Value
      * 1. Autodetecting the native type out of a PHP variable
      *    (if $type is not set or equal to Zend_XmlRpc_Value::AUTO_DETECT_TYPE)
      * 2. By specifing the native type ($type is one of the Zend_XmlRpc_Value::XMLRPC_TYPE_* constants)
-     * 3. From a XML string ($type is set to Zend_XmlRpc_Value::XML_STRING)
+     * 3. From a XML string or SimpleXMLElement object ($type is set to Zend_XmlRpc_Value::XML_STRING)
      *
      * By default the value type is autodetected according to it's PHP type
      *
@@ -345,12 +345,12 @@ abstract class Zend_XmlRpc_Value
         return $xmlrpc_val;
     }
 
-    
+
     private function _setXML($xml)
     {
         $this->_as_xml = $xml;
     }
-    
+
 }
 
 
