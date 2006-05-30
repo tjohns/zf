@@ -147,8 +147,8 @@ class Zend_Db_Statement_Oracle extends Zend_Db_Statement {
 
         if ($params && is_array($params)) {
             $error = false;
-            foreach ($params as $name=>$value) {
-                if (!oci_bind_by_name($this->_stmt, $name, $value)) {
+            foreach (array_keys($params) as $name) {
+                if (!oci_bind_by_name($this->_stmt, $name, $params[$name], -1)) {
                     $error = true;
                     break;
                 }
