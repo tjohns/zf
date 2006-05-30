@@ -107,6 +107,28 @@ $index->commit();
             can be used to optimize index with this version of Zend_Search_Lucene.
         </para>
     </sect2>
+
+    <sect2 id="zend.search.index-creation.document-updating">
+        <title>Updating Documents</title>
+
+        <para>
+            Lucene index file format doesn't support document updating. Document should be removed and re-added to do this.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene::delete()</code> method operates with an internal index document id. It can be retrieved
+            from a query hit by 'id' property:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$removePath = ...;
+$hits = $index->find('path:' . $removePath);
+foreach ($hits as $hit) {
+    $index->delete($hit->id);
+}
+$index->commit();
+?>]]></programlisting>
+    </sect2>
 </sect1>
 
 <!--
