@@ -64,8 +64,6 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
         }
 
         ini_set('track_errors', $trackErrors);
-
-        $this->_startOffset = $offset;
     }
 
     /**
