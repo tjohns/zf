@@ -251,15 +251,22 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                     if (Zend_Uri_Http::check($location)) {
                         $this->setUri($location);
                         
-                    // Else, if we got just an absolute path, set it
-                    } elseif(strpos($location, '/') === 0) {
-                        $this->_uri->setPath($headerValue);
-                    
-                    // Else, assume we have a relative path    
                     } else {
-                        // Get the current path directory, removing any trailing slashes
-                        $path = rtrim(dirname($this->uri->getPath()), "/");
-                        $this->uri->setPath($path . '/' . $location);
+                    	
+                    	// Split into path and query and set the query
+                    	list($location, $query) = explode('?', $location, 2);
+                    	$this->uri->setQueryString($query);
+                    	
+                    	// Else, if we got just an absolute path, set it
+                        if(strpos($location, '/') === 0) {
+                            $this->uri->setPath($headerValue);
+                    
+                        // Else, assume we have a relative path    
+                        } else {
+                            // Get the current path directory, removing any trailing slashes
+                            $path = rtrim(dirname($this->uri->getPath()), "/");
+                            $this->uri->setPath($path . '/' . $location);
+                        }
                     }
                     
                 // If we didn't get any location, stop redirecting
@@ -304,7 +311,8 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
         
         // Set the host header
         if (! isset($this->headers['host'])) {
-            $this->setHeader('host', $this->uri->getHost());
+            $host = $this->uri->getHost() . ($this->uri->getPort() == 80 ? '' : ':' . $this->uri->getPort());
+            $this->setHeader('host', $host);
         }
         
         // Set the connection header
