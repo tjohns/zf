@@ -46,8 +46,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      *
      * username => (string) Connect to the database as this username.
      * password => (string) Password associated with the username.
-     * host     => (string) What host to connect to (default 127.0.0.1)
-     * dbname   => (string) The name of the database to user
+     * database => Either the name of the local Oracle instance, or the
+     *             name of the entry in tnsnames.ora to which you want to connect.
      *
      * Additional keys are processed as key-value pairs for a PDO DSN string.
      *
@@ -69,8 +69,8 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      *
      * username => (string) Connect to the database as this username.
      * password => (string) Password associated with the username.
-     * host     => (string) What host to connect to (default 127.0.0.1)
-     * dbname   => (string) The name of the database to user
+     * database => Either the name of the local Oracle instance, or the
+     *             name of the entry in tnsnames.ora to which you want to connect.
      *
      * @param array $config An array of configuration keys.
      */
