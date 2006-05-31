@@ -1,10 +1,10 @@
 <sect1 id="zend.introduction">
-    <title>Introduction</title>
+    <title>Wstęp</title>
     <para>
-    The Zend class is the foundation class of the Zend Framework.  This
-    class evolved out of the framework's adherence to the DRY principle (Don't Repeat
-    Yourself).  It contains only static methods, and these methods
-    contain functionality that is required by many components in the Zend Framework.
+    Klasa Zend jest podstawową klasą Zend Framework. Została ona wydzielona
+    według zasady DRY (Don't Repeat Yourself - Nie Powtarzaj Siebie). Klasa zawiera
+    jedynie statyczne metody, a te metody zawierają funkcjonalność wymaganą przez 
+    wiele komponentów Zend Framework.
     </para>
 </sect1>
 
@@ -12,9 +12,9 @@
     <title>Zend::loadFile()</title>
 
     <para>
-    <code>Zend::loadFile()</code> loads a PHP file, which may contain any PHP code. It is a wrapper for the
-    PHP function <ulink url="http://php.net/include"><code>include()</code></ulink> that throws
-    <code>Zend_Exception</code> on failure.
+    <code>Zend::loadFile()</code> ładuje plik PHP, który może zawierać dowolny kod PHP. 
+    Jest aliasem dla funkcji PHP <ulink url="http://php.net/include"><code>include()</code></ulink>, 
+    który w przypadku niepowodzenia wyrzuca wyjątek <code>Zend_Exception</code>.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -23,30 +23,32 @@ loadFile($filename, $dirs=null, $once=false)
 
 ?>]]></programlisting>
 
-    <para>The <code>$filename</code> argument specifies the filename to load, which must not contain
-    any path information.  A security check is performed on <code>$filename</code>.  The
-    <code>$filename</code> may only contain alphanumeric characters, dashes ("-"), underscores ("_"), or
-    periods (".").  No such restriction is placed on the <code>$dirs</code> argument.
+    <para>Parametr <code>$filename</code> określa nazwę pliku do załadowania. Nie może
+    on zawierać żadnych informacji o ścieżce. Parametr <code>$filename</code> sprawdzany jest
+    pod kątem bezpieczeństwa. Parametr <code>$filename</code> może zawierać jedynie znaki 
+    alfanumeryczne, myślniki ("-"), podkreślniki ("_"), lub znaki kropki ("."). 
+    Takich ograniczeń nie posiada parametr <code>$dirs</code>.
     </para>
 
-    <para>The <code>$dirs</code> argument specifies directories to search for the file.  If
-    <code>NULL</code>, only the <code>include_path</code> will be searched.  If a string
-    or an array, the directory or directories specified will be searched, and then the
-    <code>include_path</code>.
+    <para>Parametr <code>$dirs</code> określa ścieżki w których funkcja będzie szukała pliku.
+    Jeżeli wartością parametru jest <code>NULL</code>, to sprawdzane są tylko ścieżki
+    z dyrektywy <code>include_path</code>. Jeżeli wartością jest łańcuch znaków lub
+    tablica to w pierwszej kolejności sprawdzana jest podana ścieżka (lub ścieżki), a 
+    dopiero potem dyrektywa <code>include_path</code>.
     </para>
 
     <para>
-    The <code>$once</code> argument is a boolean that specifies whether to use the PHP
-    functions <ulink url="http://php.net/include"><code>include()</code></ulink> or <ulink
-    url="http://php.net/include_once"><code>include_once()</code></ulink> for loading the file.
+    Parametr <code>$once</code> jest wartością logiczną określającą czy plik
+    ma być załadowany za pomocą funkcji <ulink url="http://php.net/include"><code>include()</code></ulink> czy <ulink
+    url="http://php.net/include_once"><code>include_once()</code></ulink>.
     </para>
 </sect1>
 
 <sect1 id="zend.loadclass">
     <title>Zend::loadClass()</title>
     <para>
-    <code>Zend::loadClass()</code> loads a PHP file whose filename is formatted like
-    "<code>$className.php</code>", and then checks for the existance of the class <code>$className</code>.
+    <code>Zend::loadClass()</code> ładuje plik PHP o nazwie w postaci "<code>$className.php</code>", 
+    a następnie sprawdza czy istnieje klasa o nazwie <code>$className</code>.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -56,24 +58,27 @@ loadClass($class, $dirs)
 ?>]]></programlisting>
 
     <para>
-    If the file is not found or the class does not exist after the load, a <code>Zend_Exception</code> is
-    thrown. <code>Zend::loadFile()</code> is used for loading, and the <code>$dirs</code> argument is
-    passed directly to it..
+    Jeśli plik nie zostaje znaleziony lub gdy po załadowaniu pliku klasa nie istnieje
+    wyrzucany jest wyjątek <code>Zend_Exception</code>. Do załadowania pliku używana
+    jest metoda <code>Zend::loadFile()</code>, a parametr <code>$dirs</code> jest
+    do niej bezpośrednio przekazywany.
     </para>
 
     <para>
-    If you ask for a class with underscores in the name, and <code>$dirs</code> is null (the default),
-    <code>Zend::loadClass()</code> will auto-discover the <code>$dirs</code> from the class name
-    by converting underscores to directory separators.  For example, if <code>$class</code> is
-    <code>Zend_Example_Class</code>, that will map to a path of <code>Zend/Example/Class.php</code>.
+    Jeśli próbuje się załadować klasę zawierającą podkreślniki w nazwie, a parametr 
+    <code>$dirs</code> ma wartość null (wartość domyślna), to metoda <code>Zend::loadClass()</code> 
+    spróbuje automatycznie pobrać parametr <code>$dirs</code> z nazwy klasy
+    zamieniając podkreślniki na separatory katalogów. Na przykład jeżeli parametr
+    <code>$class</code> ma wartość <code>Zend_Example_Class</code>, to zostanie
+    załadowana klasa <code>Zend/Example/Class.php</code>.
     </para>
 </sect1>
 
 <sect1 id="zend.loadinterface">
     <title>Zend::loadInterface()</title>
     <para>
-    <code>Zend::loadInterface()</code> works exactly the same as <code>Zend::loadClass()</code>, only it
-    loads an interface instead.
+    <code>Zend::loadInterface()</code> działa identycznie jak <code>Zend::loadClass()</code>, 
+    jednak zamiast klasy ładuje interfejs.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -83,23 +88,27 @@ loadInterface($interface, $dirs)
 ?>]]></programlisting>
 
     <para>
-    The <code>Zend::loadClass()</code> method cannot be used for loading interfaces because the PHP
-    function <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink> does cannot check
-    for interfaces (since PHP 5.0.2).  Use <code>Zend::loadInterface()</code> instead.
+    Metoda <code>Zend::loadClass()</code> nie może być używana do ładowania interfejsów
+    ponieważ funkcja PHP <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink> 
+    nie może sprawdzać istnienia interfejsów (od wersji PHP 5.0.2). Zamiast niej używamy
+    metody <code>Zend::loadInterface()</code>.
     </para>
 
     <para>
-    If you ask for an interface with underscores in the name, and <code>$dirs</code> is null (the default),
-    <code>Zend::loadInterface()</code> will auto-discover the <code>$dirs</code> from the interface name
-    by converting underscores to directory separators.  For example, if <code>$interface</code> is
-    <code>Zend_Example_Interface</code>, that will map to a path of <code>Zend/Example/Interface.php</code>.
+    Jeśli próbuje się załadować interfejs zawierający podkreślniki w nazwie, a parametr 
+    <code>$dirs</code> ma wartość null (wartość domyślna), to metoda <code>Zend::loadInterface()</code> 
+    spróbuje automatycznie pobrać parametr <code>$dirs</code> z nazwy interfejsu
+    zamieniając podkreślniki na separatory katalogów. Na przykład jeżeli parametr <code>$interface</code> 
+    ma wartość <code>Zend_Example_Interface</code>, to zostanie załadowany interfejs 
+    <code>Zend/Example/Interface.php</code>.
     </para>
 </sect1>
 
 <sect1 id="zend.isreadable">
     <title>Zend::isReadable()</title>
 
-    <para>Returns <code>TRUE</code> if a file is readable, FALSE otherwise.</para>
+    <para>Zwraca <code>TRUE</code> jeśli jest możliwy odczyt pliku, w przeciwnym
+    wypadku zwraca FALSE.</para>
 
     <programlisting role="php"><![CDATA[<?php
 	
@@ -107,10 +116,11 @@ isReadable($filename)
 
 ?>]]></programlisting>
 
-    <para>The <code>$filename</code> argument specifies the filename to check, which may
-    contain path information.  This method is a wrapper for the PHP function
-    <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.  The PHP function
-    does not search the <code>include_path</code>, while <code>Zend::isReadable()</code> does.
+    <para>Parametr <code>$filename</code> określa nazwę pliku do sprawdzenia, może
+    on zawierać informacje o ścieżce. Ta metoda jest aliasem dla funkcji PHP
+    <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.  
+    Różnią się one tym, że funkcja PHP nie sprawdza ścieżek z dyrektywy 
+    <code>include_path</code>, a metoda <code>Zend::isReadable()</code> sprawdza.
     </para>
 </sect1>
 
@@ -118,9 +128,10 @@ isReadable($filename)
     <title>Zend::dump()</title>
 
     <para>
-    <code>Zend::dump()</code> prints and/or returns information about an expression.  It is a wrapper
-    for the PHP function <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>.  It
-    wraps the output with (X)HTML <code>&lt;pre&gt;</code> tags and optionally prepends a label.
+    Metoda <code>Zend::dump()</code> wyświetla i/lub zwraca informacje o typie i wartości 
+    zmiennej. Jest aliasem dla funkcji PHP <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>.  
+    Metoda ujmuje dane wyjściowe w znaczniki (X)HTML <code>&lt;pre&gt;</code> oraz opcjonalnie dodaje
+    etykietę.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -130,18 +141,22 @@ dump($var, $label=null, $echo=true)
 ?>]]></programlisting>
 
     <para>
-    The <code>$var</code> argument specifies the expression or variable for which the information
-    will be obtained.
+    Parametr <code>$var</code> określa wyrażenie lub zmienną na temat których 
+    chcemy wyświetlić informacje.
     </para>
 
     <para>
-    The <code>$label</code> is any arbitrary text to be prepended to the output of
-    <code>Zend::dump()</code>.  This is useful when dumping many variables on a single screen.
+    Parametr <code>$label</code> jest dowolnym tekstem dołączanym do informacji
+    wyświetlanych przez metodę <code>Zend::dump()</code>. Jest przydatny gdy 
+    na jednym ekranie wyświetlamy informacje na temat większej ilości zmiennych lub
+    wyrażeń.
     </para>
 
-    <para>The boolean <code>$echo</code> controls whether the output of <code>Zend::dump()</code> is echoed
-    or not.  If <code>TRUE</code>, the output will be echoed.  Regardless of the state of
-    <code>$echo</code>, the output is always be returned.
+    <para>Parametr logiczny <code>$echo</code> kontroluje czy informacje 
+    na temat zmiennej lub wyrażenia są przez metodę <code>Zend::dump()</code> 
+    wyświetlane. Jeśli parametr ma wartość <code>TRUE</code>, 
+    to metoda wyświetli dane. Niezależenie od wartości parametru <code>$echo</code>, 
+    metoda zawsze zwraca informacje na temat zmiennej lub wyrażenia.
     </para>
 </sect1>
 
@@ -150,7 +165,7 @@ dump($var, $label=null, $echo=true)
     <title>Zend::register()</title>
 
     <para>
-    Registers an object in the object store.
+    Rejestruje obiekt w rejestrze.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -160,20 +175,22 @@ register($name, $object)
 ?>]]></programlisting>
 
     <para>
-    The registry is a mechanism for providing singleton instances of objects to the application space.  By
-    storing the object in the registry once, and then retrieving the object from the registry whenever it
-    is needed, the same instance is always returned.
+    Rejestr jest mechanizmem umożliwiającym aplikacji dostęp do jednej instancji
+    obiektu (singleton). Rejestrując obiekt w rejestrze, a następnie go odbierając
+    zawsze otrzymamy tą samą instancję obiektu.
     </para>
 
     <para>
-    The <code>$name</code> is an arbitrary string to name the object in the store.  This name will be
-    supplied to <code>Zend::registry()</code> to retrieve the object again.
+    Parametr <code>$name</code> jest nazwą obiektu przechowywanego w rejestrze.
+    Nazwa ta jest przekazywana jako parametr do metody <code>Zend::registry()</code> 
+    w celu powtórnego odebrania obiektu.
     </para>
 
     <para>
-    The <code>$name</code> argument must be a string, only objects may be stored in the registry, an object
-    can never be removed from the registry, and an instance can only be stored once in the registry.
-    Failure to obey these rules will result in <code>Zend_Exception</code> being thrown.
+    Parametr <code>$name</code> musi być łańcuchem znaków, w rejestrze mogą być
+    przechowywane tylko obiekty, obiekty nigdy nie mogą być usuwane z rejestru, a
+    instancja obiektu może być zarejestrowana tylko raz. Złamanie tych zasad 
+    spowoduje wyrzucenie wyjątku <code>Zend_Exception</code>.
     </para>
 </sect1>
 
@@ -181,7 +198,7 @@ register($name, $object)
     <title>Zend::registry()</title>
 
     <para>
-    Returns an object in the registry or lists all objects in the registry.
+    Zwraca z rejestru obiekt lub listę obiektów.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -191,18 +208,18 @@ registry($name=null)
 ?>]]></programlisting>
 
     <para>
-    If the <code>$name</code> argument is <code>NULL</code>, an array will be returned where the keys to the array
-    are the names of the objects in the registry and the values are the class names of those objects.
+    Jeśli parametr <code>$name</code> ma wartość <code>NULL</code>, zostaje zwrócona
+    tablica której kluczami są nazwy obiektów a wartościami nazwy ich klas.
     </para>
 
     <para>
-    If <code>$name</code> is a string, the object handle assigned to that name will be returned.  If
-    an object does not exist in the registry with that <code>$name</code>, a
-    <code>Zend_Exception</code> will be thrown.
+    Jeśli parametr <code>$name</code> jest łańcuchem znaków, zostaje zwrócony
+    uchwyt obiektu przypisanego do tej nazwy. Jeśli obiekt o nazwie <code>$name</code>
+    nie istnieje w rejestrze zostaje wyrzucony wyjątek <code>Zend_Exception</code>.
     </para>
 
     <para>
-    To quickly determine if an object is present in the registry, use Zend::isRegistered().
+    Do szybkiego sprawdzenia czy obiekt istnieje w rejestrze służy metoda Zend::isRegistered().
     </para>
 </sect1>
 <!--
