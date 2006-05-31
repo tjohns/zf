@@ -10,7 +10,7 @@
         <title>Guia de Referência do Programador</title>
         <subtitle>Framework Zend</subtitle>
         <edition>Guia de Referência do Programador</edition>
-        <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
+        <pubdate><?dbtimestamp format="d/m/Y"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
             <holder>
