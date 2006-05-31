@@ -276,12 +276,14 @@ class Zend_Pdf_Image_TIFF extends Zend_Pdf_Image
                                 throw new Zend_Pdf_Exception("LZWDecode Compression Mode Not Currently Supported");
                                 break;
                             case Zend_Pdf_Image_TIFF::TIFF_COMPRESSION_JPEG:
-                                $this->_filter = 'DCTDecode';
+                                $this->_filter = 'DCTDecode'; //Should work, doesnt...
+				throw new Zend_Pdf_Exception("JPEG Compression Mode Not Currently Supported");
                                 break;
                             case Zend_Pdf_Image_TIFF::TIFF_COMPRESSION_FLATE:
                                 //fall through to next case
                             case Zend_Pdf_Image_TIFF::TIFF_COMPRESSION_FLATE_OBSOLETE_CODE:
                                 $this->_filter = 'FlateDecode';
+				throw new Zend_Pdf_Exception("ZIP/Flate Compression Mode Not Currently Supported");
                                 break;
                             case Zend_Pdf_Image_TIFF::TIFF_COMPRESSION_PACKBITS:
                                 $this->_filter = 'RunLengthDecode';
