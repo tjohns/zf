@@ -98,7 +98,8 @@ class Zend_Service_Flickr
      * Additional query options include:
      *    # per_page:  how many results to return per query
      *    # page:  the starting page offset.  first result will be (page -1)*per_page + 1
-     *    # tag_mode: whether to 'any' or 'and' tags.  Default is 'any'.
+     *    # tag_mode: Either 'any' for an OR combination of tags, 
+     *                or 'all' for an AND combination. Default is 'any'. 
      *    # min_upload_date: Minimum upload date to search on.  Date should be a unix timestamp.
      *    # max_upload_date: Maximum upload date to search on.  Date should be a unix timestamp.
      *    # min_taken_date: Minimum upload date to search on.  Date should be a MySQL datetime.
