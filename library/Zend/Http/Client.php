@@ -70,8 +70,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
         for ($redirect = 0; $redirect <= $redirectMax; $redirect++) {
 
             // Build the HTTP request
+            $host_header = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort);
             $request = array_merge(array('GET ' . $this->_uri->getPath() . '?' . $this->_uri->getQuery() . ' HTTP/1.0',
-                                         'Host: ' . $this->_uri->getHost() . ':' . $this->_uri->getPort(),
+                                         'Host: ' . $host_header,
                                          'Connection: close'),
                                    $this->_headers);
 
@@ -98,16 +99,21 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                         if (Zend_Uri_Http::check($headerValue)) {
                         	// If we got a well formed absolute URI, set it
                         	$this->setUri($headerValue);
-                        	
-                        } elseif (strpos($headerValue, '/') === 0) {
-                        	// Else, if we got just an absolute path, set it
-                        	$this->_uri->setPath($headerValue);
-                        	
                         } else {
-                        	// Else, assume we have a relative path
-                        	$path = dirname($this->_uri->getPath());
-                        	$path .= ($path == '/' ? $headerValue : "/{$headerValue}" );
-                        	$this->_uri->setPath($path);
+                        	// Split into path and query and set the query
+                    	    list($headerValue, $query) = explode('?', $headerValue, 2);
+                    	    $this->_uri->setQueryString($query);
+                    	    
+                        	if (strpos($headerValue, '/') === 0) {
+                        		// If we got just an absolute path, set it
+                          	    $this->_uri->setPath($headerValue);
+                          	    
+                        	} else {
+                        	    // Else, assume we have a relative path
+                        	    $path = dirname($this->_uri->getPath());
+                        	    $path .= ($path == '/' ? $headerValue : "/{$headerValue}" );
+                        	    $this->_uri->setPath($path);
+                        	}
                         }
                         
                         // Continue with the new redirected request
@@ -135,8 +141,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     {
         $socket = $this->_openConnection();
 
+        $host_header = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort);
         $request = array_merge(array('POST ' . $this->_uri->getPath() . ' HTTP/1.0',
-                                     'Host: ' . $this->_uri->getHost() . ':' . $this->_uri->getPort(),
+                                     'Host: ' . $host_header,
                                      'Connection: close',
                                      'Content-length: ' . strlen($data)),
                                $this->_headers);
@@ -157,8 +164,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     {
         $socket = $this->_openConnection();
 
+        $host_header = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort);
         $request = array_merge(array('PUT ' . $this->_uri->getPath() . ' HTTP/1.0',
-                                     'Host: ' . $this->_uri->getHost() . ':' . $this->_uri->getPort(),
+                                     'Host: ' . $host_header,
                                      'Connection: close',
                                      'Content-length: ' . strlen($data)),
                                $this->_headers);
@@ -178,8 +186,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     {
         $socket = $this->_openConnection();
 
+        $host_header = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort);
         $request = array_merge(array('DELETE ' . $this->_uri->getPath() . ' HTTP/1.0',
-                                     'Host: ' . $this->_uri->getHost() . ':' . $this->_uri->getPort(),
+                                     'Host: ' . $host_header,
                                      'Connection: close'),
                                $this->_headers);
 
