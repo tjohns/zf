@@ -1,47 +1,75 @@
 <sect1 id="zend.feed.introduction">
-    <title>Introduction</title>
+    <title>Введение</title>
     <para>
+        <code>Zend_Feed</code> предназначен для работы с
+        лентами RSS и Atom. Он предоставляет естетственный синтаксис (natural syntax) для
+        доступа к элементам лент, атрибутам лент и публикаций, полностью поддерживает
+        изменение структуры лент и публикаций с использованием того же естетственного
+        синтаксиса и преобразует результаты изменений обратно в XML. В будущем эта
+        поддержка изменений может обеспечить добавление поддержки Atom Publishing Protocol.
+<!--
         <code>Zend_Feed</code> provides functionality for consuming RSS and Atom feeds. It provides a
         natural syntax for accessing elements of feeds, feed attributes, and entry attributes.
         <code>Zend_Feed</code> also has extensive support for modifying feed and entry structure with the
         same natural syntax, and turning the result back into XML. In the future, this modification support
         could provide support for the Atom Publishing Protocol.
+-->
     </para>
 
     <para>
+        Программно <code>Zend_Feed</code> состоит из базового класса
+        <code>Zend_Feed</code>, абстрактных базовых классов <code>Zend_Feed_Abstract</code>
+        и <code>Zend_Feed_EntryAbstract</code> для представления лент и публикаций,
+        конкретных реализаций лент и публикаций для RSS и Atom, а также
+        "закулисных" помощников для обеспечения работы естетственного синтаксиса.
+<!--
         Programmatically, <code>Zend_Feed</code> consists of a base <code>Zend_Feed</code> class, abstract
         <code>Zend_Feed_Abstract</code> and <code>Zend_Feed_EntryAbstract</code> base classes for
         representing Feeds and Entries, specific implementations of feeds and entries for RSS and Atom, and
         a behind-the-scenes helper for making the natural syntax magic work.
+-->
     </para>
 
     <para>
+        В примере ниже мы демонстрируем простое получение ленты RSS и
+        сохранение нужных данных из ленты в массив PHP, который
+        может быть использован для распечатки, сохранения в БД и т.д.
+<!--
         In the example below, we demonstrate a simple use case of retrieving an RSS feed and saving relevant
         portions of the feed data to a simple PHP array, which could then be used for printing the data, storing
         to a database, etc.
+-->
     </para>
 
     <note>
+        Многие ленты RSS имеют различные доступные свойства каналов и их элементов.
+        Спецификация RSS предоставляет множество необязательных свойств, поэтому имейте
+        это в виду, когда пишете код для работы с данными RSS.
+<!--
         Many RSS feeds have different channel and item properties available. The RSS specification provides for
         many optional properties, so be aware of this when writing code to work with RSS data.
+-->
     </note>
 
     <example>
-        <title>Putting Zend_Feed to Work on RSS Feed Data</title>
+        <title>
+            Включение Zend_Feed в работу с данными ленты RSS
+            <!-- Putting Zend_Feed to Work on RSS Feed Data -->
+        </title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Feed.php';
 
-// Fetch the latest Slashdot headlines
+// Извлечение последних новостей Slashdot
 try {
     $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
-    // feed import failed
+    // неудача при импортировании ленты
     echo "Exception caught importing feed: {$e->getMessage()}\n";
     exit;
 }
 
-// Initialize the channel data array
+// Инициализация массива данных каналов
 $channel = array(
     'title'       => $slashdotRss->title(),
     'link'        => $slashdotRss->link(),
@@ -49,7 +77,7 @@ $channel = array(
     'items'       => array()
     );
 
-// Loop over each channel item and store relevant data
+// Обход каналов и сохранение данных
 foreach ($slashdotRss as $item) {
     $channel['items'][] = array(
         'title'       => $item->title(),
@@ -63,10 +91,17 @@ foreach ($slashdotRss as $item) {
 </sect1>
 
 <sect1 id="zend.feed.importing">
-    <title>Importing Feeds with Zend_Feed</title>
+    <title>
+        Импортирование лент с помощью Zend_Feed
+        <!--Importing Feeds with Zend_Feed-->
+    </title>
     <para>
+        <code>Zend_Feed</code> дает разработчикам возможность очень легко получать ленты.
+        Если вам известен URI ленты, то просто используйте метод <code>Zend_Feed::import()</code>:
+<!--
         <code>Zend_Feed</code> enables developers to retrieve feeds very easily. If you know the URI of a
         feed, simply use the <code>Zend_Feed::import()</code> method:
+-->
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -75,94 +110,163 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');
 ?>]]>   </programlisting>
     </para>
     <para>
+        Еще вы можете использовать <code>Zend_Feed</code> для извлечения содержимого
+        ленты из файла или строки:
+<!--
         You can also use <code>Zend_Feed</code> to fetch the contents of a feed from a file or the contents
         of a PHP string variable:
+-->
         <programlisting role="php"><![CDATA[
 <?php
 
-// importing a feed from a text file
+// импортирование ленты из текстового файла
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
-// importing a feed from a PHP string variable
+// импортирование ленты из строки
 $feedFromPHP = Zend_Feed::importString($feedString);
 
 ?>]]></programlisting>
     </para>
     <para>
+        В обоих приведенных выше примерах в случае успеха возвращается
+        объект одного из классов, расширяющих <code>Zend_Feed_Abstract</code>, в
+        зависимости от типа ленты. Если посредством одного из вышеприведенных
+        методов для импортирования была извлечена лента RSS, то будет возвращен объект
+        <code>Zend_Feed_Rss</code>. Если же импортируется лента Atom, то
+        будет возвращен объект <code>Zend_Feed_Atom</code>. Эти методы для импортирования
+        будут генерировать исключение <code>Zend_Feed_Exception</code> в случае ошибки,
+        такой, как недоступная для чтения или плохо сформированная лента.
+<!--
         In each of the examples above, an object of a class that extends <code>Zend_Feed_Abstract</code> is
         returned upon success, depending on the type of the feed. If an RSS feed were retrieved via one of
         the import methods above, then a <code>Zend_Feed_Rss</code> object would be returned. On the other
         hand, if an Atom feed were imported, then a <code>Zend_Feed_Atom</code> object is returned. The
         import methods will also throw a <code>Zend_Feed_Exception</code> object upon failure, such as an
         unreadable or malformed feed.
+-->
     </para>
 </sect1>
 
 <sect1 id="zend.feed.findFeeds">
-    <title>Retrieving Feeds from Web Pages</title>
+    <title>
+        Получение лент из веб-страниц
+        <!-- Retrieving Feeds from Web Pages -->
+    </title>
     <para>
+       Веб-страницы часто содержат теги <code>&lt;link&gt;</code>, которые ссылаются на
+       ленты с соответсвующим данной странице содержимым. <code>Zend_Feed</code>
+       дает возможность извлечь все ленты, на которые ссылается веб-страница,
+       одним простым вызовом метода:
+<!--
         Web pages often contain <code>&lt;link&gt;</code> tags that refer to feeds with content relevant to
         the particular page. <code>Zend_Feed</code> enables you to retrieve all feeds referenced by a web
         page with one simple method call:
+-->
         <programlisting role="php"><![CDATA[
 <?php
 
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
 
 ?>]]></programlisting>
+        Здесь метод <code>findFeeds()</code> возвращает массив объектов лент
+        <code>Zend_Feed_Abstract</code>, на которые ссылались теги
+        <code>&lt;link&gt;</code> в коде веб-страницы <code>news.html</code>. В зависимости от
+        типа ленты, каждый элемент массива <code>$feedArray</code>
+        может быть экземпляром <code>Zend_Feed_Rss</code> или <code>Zend_Feed_Atom</code>.
+        <code>Zend_Feed</code> будет генерировать исключение <code>Zend_Feed_Exception</code>
+        в случае ошибки, такой, как возврат HTTP-кода 404 или плохо сформированная лента.
+<!--
         Here the <code>findFeeds()</code> method returns an array of <code>Zend_Feed_Abstract</code>
         objects that are referenced by <code>&lt;link&gt;</code> tags on the news.html web page. Depending on
         the type of each feed, each respective entry in the <code>$feedArray</code> array may be a
         <code>Zend_Feed_Rss</code> or <code>Zend_Feed_Atom</code> instance. <code>Zend_Feed</code> will throw a
         <code>Zend_Feed_Exception</code> upon failure, such as an HTTP 404 response code or a malformed feed.
+-->
     </para>
 </sect1>
 
 <sect1 id="zend.feed.consuming-rss">
-    <title>Consuming an RSS Feed</title>
+    <title>
+        Работа с лентой RSS
+        <!--Consuming an RSS Feed-->
+    </title>
     <para>
+        Чтение ленты такое же простое, как создание объекта <code>Zend_Feed_Rss</code>
+        с URI ленты:
+<!--
         Reading an RSS feed is as simple as instantiating a <code>Zend_Feed_Rss</code> object with the URL
         of the feed:
+-->
         <programlisting role="php"><![CDATA[
 <?php
 
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 
 ?>]]></programlisting>
+        Если при извлечении ленты произошла ошибка, то будет сгенерировано исключение
+        <code>Zend_Feed_Exception</code>.
+<!--
         If any errors occur fetching the feed, a <code>Zend_Feed_Exception</code> will be thrown.
+-->
     </para>
 
     <para>
+        Создав объект ленты, вы можете получить доступ к любым стандартным
+        свойствам канала RSS (channel) непосредственно в объекте.
+<!--
         Once you have a feed object, you can access any of the standard RSS "channel" properties directly
         on the object:
+-->
         <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->title();
 
 ?>]]></programlisting>
+        Обратите внимание на синтаксис функции. <code>Zend_Feed</code> использует соглашение
+        об интерпретации свойств как объекта XML, если они запрошены в синтаксисе
+        получения переменной (<code>$obj->property</code> и как строки, если они запрошены
+        в синтаксисе метода (<code>$obj->property()</code>). Это позволяет получить доступ
+        к полному тексту любого отдельного узла, что одновременно дает полный доступ
+        и ко всем дочерним элементам.
+<!--
         Note the function syntax. <code>Zend_Feed</code> uses a convention of treating properties as XML
         object if they are requested with variable "getter" syntax (<code>$obj->property</code>) and as
         strings if they are access with method syntax (<code>$obj->property()</code>). This enables access
         to the full text of any individual node while still allowing full access to all children.
+-->
     </para>
 
     <para>
+        Если свойства канала имеют атрибуты, то к ним можно получить доступ, используя
+        синтаксис массива PHP:
+<!--
         If channel properties have attributes, they are accessible using PHP's array syntax:
+-->
         <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->category['domain'];
 
 ?>]]></programlisting>
+        Поскольку атрибуты не могут иметь дочерние записи, то нет необходимости в синтаксисе
+        метода для получения значений атрибутов.
+<!--
         Since XML attributes cannot have children, method syntax is not necessary for accessing attribute
         values.
+-->
     </para>
 
     <para>
+        Весьма возможно, что вы хотите произвести обход ленты и произвести
+        какие-либо операции с ее публикациями. <code>Zend_Feed_Abstract</code> реализует
+        интерфейс PHP <code>Iterator</code>, поэтому вывод заголовков всех статей в канале будет
+        выглядеть следующим образом:
+<!--
         Most commonly you'll want to loop through the feed and do something with its entries.
         <code>Zend_Feed_Abstract</code> implements PHP's <code>Iterator</code> interface, so printing all
         titles of articles in a channel is just a matter of:
+-->
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -171,122 +275,213 @@ foreach ($channel as $item) {
 }
 
 ?>]]></programlisting>
+        Если вы не знакомы с RSS, то здесь приведены стандартные элементы, которые должны
+        присутствовать в канале (элемент <code>&lt;channel&gt;</code>) и отдельных публикациях
+        (элемент <code>&lt;item&gt;</code>) RSS.
+<!--
         If you are not familiar with RSS, here are the standard elements you can expect to be available in
         an RSS channel and in individual RSS items (entries).
+-->
     </para>
 
     <para>
+        Обязательные элементы канала:
+<!--
         Required channel elements:
+-->
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>title</code> - The name of the channel</para>
+                <para>
+                    <code>title</code> - Имя канала
+                    <!--The name of the channel-->
+                </para>
             </listitem>
             <listitem>
-                <para><code>link</code> - The URL of the web site corresponding to the channel</para>
+                <para>
+                    <code>link</code> - URL веб-сайта, соответствующего каналу
+                    <!-- The URL of the web site corresponding to the channel -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>description</code> - A sentence or several describing the channel</para>
+                <para>
+                    <code>description</code> - Одно или несколько предложений, составляющих
+                    описание канала
+                    <!-- A sentence or several describing the channel -->
+                </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
+        Обычно используемые необязательные элементы канала:
+<!--
         Common optional channel elements:
+-->
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>pubDate</code> - The publication date of this set of content, in RFC 822 date
-                format</para>
+                <para>
+                    <code>pubDate</code> - Дата публикации канала в формате RFC 822
+                    <!-- The publication date of this set of content, in RFC 822 date format -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>language</code> - The language the channel is written in</para>
+                <para>
+                    <code>language</code> - Язык, на котором написано содержимое канала
+                    <!-- The language the channel is written in</para> -->
             </listitem>
             <listitem>
-                <para><code>category</code> - One or more (specified by multiple tags) categories the
-                channel belongs to</para>
+                <para>
+                    <code>category</code> - Одна или несколько (задается несколькими тегами) категорий,
+                    к которым принадлежит канал
+                    <!-- One or more (specified by multiple tags) categories the channel belongs to -->
+                </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
+        Элементы <code>&lt;item&gt;</code> не имеют обязательных вложенных элементов.
+        Тем не менее, должны быть представлены <code>&lt;title&gt;</code> (заголовок) или
+        <code>&lt;description&gt;</code> (описание).
+<!--
         RSS <code>&lt;item&gt;</code> elements do not have any strictly required elements. However, either
         <code>title</code> or <code>description</code> must be present.
+-->
     </para>
 
     <para>
+        Обычно используемые элементы публикации
+<!--
         Common item elements:
+-->
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>title</code> - The title of the item</para>
+                <para>
+                    <code>title</code> - Заголовок публикации
+                    <!-- The title of the item -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>link</code> - The URL of the item</para>
+                <para>
+                    <code>link</code> - URL публикации
+                    <!-- The URL of the item -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>description</code> - A synopsis of the item</para>
+                <para>
+                    <code>description</code> - Краткое описание публикации
+                    <!-- A synopsis of the item -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>author</code> - The author's email address</para>
+                <para>
+                    <code>author</code> - E-mail автора
+                    <!-- The author's email address -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>category</code> - One more more categories that the item belongs to</para>
+                <para>
+                    <code>category</code> - Одна или несколько категорий, к которым принадлежит
+                    публикация
+                    <!-- One more more categories that the item belongs to -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>comments</code> - URL of comments relating to this item</para>
+                <para>
+                    <code>comments</code> - URL комментариев к данной публикации
+                    <!-- URL of comments relating to this item -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>pubDate</code> - The date the item was published, in RFC 822 date format</para>
+                <para>
+                    <code>pubDate</code> -  Дата публикации в формате RFC 822
+                    <!-- The date the item was published, in RFC 822 date format -->
+                </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
+        В своем коде вы можете проверить, имеет ли элемент непустое значение, следующим образом:
+<!--
         In your code you can always test to see if an element is non-empty with:
+-->
         <programlisting role="php"><![CDATA[
 <?php
 
 if ($item->propname()) {
-    // ... proceed.
+    // ... продолжение работы
 }
 
 ?>]]></programlisting>
     </para>
 
     <para>
+        Если вместо этого использовать <code>$item->propname</code>, то всегда будете
+        получать объект, который расценивается как <code>TRUE</code>, поэтому такая проверка
+        будет ошибочной.
+<!--
         If you use <code>$item->propname</code> instead, you will always get an empty object which will
         evaluate to <code>TRUE</code>, so your check will fail.
+-->
     </para>
 
     <para>
+        За дополнительной информацией обращайтесь к официальному описанию
+        спецификации RSS 2.0:
+        <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
+<!--
         For further information, the official RSS 2.0 specification is available at:
         <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
+-->
     </para>
 </sect1>
 
 <sect1 id="zend.feed.consuming-atom">
-<title>Consuming an Atom Feed</title>
+<title>
+    Работа с лентой Atom
+    <!-- Consuming an Atom Feed -->
+</title>
 
     <para>
+        <code>Zend_Feed_Atom</code> используется в основном так же, как и
+        <code>Zend_Feed_Rss</code>. Он предоставляет те же доступ к свойствам
+        ленты и обход публикаций в ленте.  Основное отличие заключается в самой
+        структуре ленты по протоколу Atom. Atom является преемником RSS, это более
+        обобщенный протокол. Он разработан для более легкой работы с лентами, и
+        предоставяет полное информационное содержимое внутри самой ленты, разделив
+        для этой цели тег <code>&lt;description&gt;</code> в RSS на два элемента -
+        <code>&lt;summary&gt;</code> (анонс) и <code>&lt;content&gt;</code> (содержимое).
+<!--    
         <code>Zend_Feed_Atom</code> is used in much the same way as <code>Zend_Feed_Rss</code>. It provides
         the same access to feed-level properties and iteration over entries in the feed. The main
         difference is in the structure of the Atom protocol itself. Atom is a successor to RSS; it is more
         generalized protocol and it is designed to deal more easily with feeds that provide their full
         content inside the feed, splitting RSS' <code>description</code> tag into two elements,
         <code>summary</code> and <code>content</code>, for that purpose.
+-->
     </para>
 
     <example>
-        <title>Basic Use of an Atom Feed</title>
+        <title>
+            Основы использования ленты Atom
+            <!--Basic Use of an Atom Feed-->
+        </title>
         <para>
+            Чтение ленты Atom и вывод <code>title</code>,
+            <code>summary</code> для  каждой публикации.
+<!--
             Read an Atom feed and print the <code>title</code> and <code>summary</code> of each entry:
+-->
         </para>
         <programlisting role="php"><![CDATA[
 <?php
@@ -302,92 +497,166 @@ foreach ($feed as $entry) {
     </example>
 
     <para>
+        В ленте Atom (элемент <code>&lt;feed&gt;</code>) должны присутствовать следующие свойства:
+<!--
         In an Atom feed you can expect to find the following feed properties:
+-->
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>title</code> - The feed's title, same as RSS's channel title</para>
-            </listitem>
-            <listitem>
-                <para><code>id</code> - Every feed and entry in Atom has a unique identifier</para>
-            </listitem>
-            <listitem>
-                <para><code>link</code> - Feeds can have multiple links, which are distinguished by a
-                <code>type</code> attribute</para>
                 <para>
+                    <code>title</code> - Заголовок ленты, аналогичен заголовку RSS-канала
+                    <!-- The feed's title, same as RSS's channel title -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>id</code> - Каждая лента и каждая публикация в Atom имеют свои
+                    уникальные идентификаторы
+                    <!-- Every feed and entry in Atom has a unique identifier -->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>link</code> - Лента может иметь одну или несколько ссылок, которые
+                    имеют атрибут <code>type</code>
+                    <!-- Feeds can have multiple links, which are distinguished by a <code>type</code> attribute -->
+                </para>
+                <para>
+                    Эквивалентом ссылке в RSS-канале будет <code>type="text/html"</code>. Если
+                    ссылка ведет на альтернативную версию того же контента, что представлен
+                    в ленте, она должна иметь атрибут <code>rel="alternate"</code>.
+<!--
                     The equivalent to RSS's channel link would be <code>type="text/html"</code>. If the link
                     is to an alternate version of the same content that's in the feed, it would have a
                     <code>rel="alternate"</code> attribute.
+-->
                 </para>
             </listitem>
             <listitem>
-                <para><code>subtitle</code> - The feed's description, equivalent to RSS' channel description
+                <para>
+                    <code>subtitle</code> - Описание ленты, эквивалентен описанию RSS-канала
+                    <!-- The feed's description, equivalent to RSS' channel description -->
                 </para>
-                <para><code>author->name()</code> - The feed author's name</para>
-                <para><code>author->email()</code> - The feed author's email address</para>
+                <para>
+                    <code>author->name()</code> - Имя автора ленты
+                    <!-- The feed author's name -->
+                </para>
+                <para>
+                    <code>author->email()</code> - E-mail автора ленты
+                    <!-- The feed author's email address -->
+                </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
+        Публикации  Atom (элемент <code>&lt;entry&gt;</code>) обычно имеют следующие свойства:
+<!--
         Atom entries commonly have the following properties:
+-->
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>id</code> - The entry's unique identifier</para>
+                <para>
+                    <code>id</code> - Уникальный идентификатор публикации
+                    <!-- The entry's unique identifier -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>title</code> - The entry's title, same as RSS item titles</para>
+                <para>
+                    <code>title</code> - Заголовок публикации
+                    <!-- The entry's title, same as RSS item titles -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>link</code> - A link to another format an an alternate view of this entry</para>
+                <para>
+                    <code>link</code> - Ссылка на альтернативное представление публикации в
+                    другом формате
+                    <!-- A link to another format an an alternate view of this entry -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>summary</code> - A summary of this entry's content</para>
+                <para>
+                    <code>summary</code> - Аннотация к содержимому публикации
+                    <!-- A summary of this entry's content -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>content</code> - The full content of the entry; can be skipped if the feed just
-                contains summaries</para>
+                <para>
+                    <code>content</code> - Полное содержимое публикации, может быть пропущен, если
+                    лента содержит только аннотации
+                    <!-- The full content of the entry; can be skipped if the feed just contains summaries -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>author</code> - with <code>name</code> and <code>email</code> sub-tags like
-                feeds have</para>
+                <para>
+                    <code>author</code> - с субтегами <code>name</code> и <code>email</code>,
+                    как у элемента <code>feed</code>
+                    <!-- with <code>name</code> and <code>email</code> sub-tags like feeds have -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>published</code> - the date the entry was published, in RFC 3339 format</para>
+                <para>
+                    <code>published</code> - Дата публикации в формате RFC 3339
+                    <!-- the date the entry was published, in RFC 3339 format -->
+                </para>
             </listitem>
             <listitem>
-                <para><code>updated</code> - the date the entry was last updated, in RFC 3339 format</para>
+                <para>
+                    <code>updated</code> - Дата последнего изменения публикации в формате RFC 3339 
+                    <!-- the date the entry was last updated, in RFC 3339 format -->
+                </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
+        За другими ресурсами и дополнительной информацией по Atom смотрите:
+<!--
         For more information on Atom and plenty of resources, see
         <ulink url="http://www.atomenabled.org/">http://www.atomenabled.org/</ulink>.
+-->
     </para>
 </sect1>
 
 <sect1 id="zend.feed.consuming-atom-single-entry">
-    <title>Consuming a Single Atom Entry</title>
+    <title>
+        Работа с отдельной публикацией Atom
+        <!-- Consuming a Single Atom Entry -->
+    </title>
 
     <para>
+        Отдельные элементы Atom'а <code>&lt;entry&gt;</code> сами по себе являются валидными.
+        Обычно URL публикации состоит из URL ленты и следующим после него ID публикации,
+        например, <code>http://atom.example.com/feed/1 (используется URL, приведенный ранее
+        в качестве примера)</code>.
+<!--
         Single Atom <code>&lt;entry&gt;</code> elements are also valid by themselves. Usually the URL for an
         entry is the feed's URL followed by <code>/&lt;entryId&gt;</code>, such as
         <code>http://atom.example.com/feed/1</code>, using the example URL we used above.
+-->
     </para>
 
     <para>
+        При чтении отдельной публикации также создается объект
+        <code>Zend_Feed_Atom</code>, но при этом автоматически создается "анонимная" лента,
+        содержащая данную публикацию.
+<!--
         If you read a single entry, you will still have a <code>Zend_Feed_Atom</code> object, but it will
         automatically create an "anonymous" feed to contain the entry.
+-->
     </para>
 
     <example>
-        <title>Reading a Single-Entry Atom Feed</title>
+        <title>
+            Чтение отдельной публикации ленты Atom
+            <!-- Reading a Single-Entry Atom Feed -->
+        </title>
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -400,12 +669,20 @@ $entry = $feed->current();
     </example>
 
     <para>
+        Альтернативно, вы можете непосредственно создавать объект публикации, если знаете,
+        что документ, находящийся по данному адресу, содержит только элемент
+        <code>&lt;entry&gt;</code>:
+<!--
         Alternatively, you could instantiate the entry object directly if you know you are accessing an
         <code>&lt;entry&gt;</code>-only document:
+-->
     </para>
 
     <example>
-        <title>Using the Entry Object Directly for a Single-Entry Atom Feed</title>
+        <title>
+            Непосредственное использование объекта публикации Atom
+            <!-- Using the Entry Object Directly for a Single-Entry Atom Feed -->
+        </title>
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -417,16 +694,28 @@ echo $entry->title();
 </sect1>
 
 <sect1 id="zend.feed.modifying-feed">
-    <title>Modifying Feed and Entry structures</title>
+    <title>
+        Изменение структуры лент и публикаций
+        <!-- Modifying Feed and Entry structures -->
+    </title>
 
     <para>
+        Естетственный синтаксис <code>Zend_Feed</code> используется для создания
+        и изменения лент и записей так же, как и для их чтения. Вы можете легко преобразовывать
+        свои новые или измененные объекты обратно в валидный XML для сохранения в файл
+        или отправки серверу.
+<!--
         <code>Zend_Feed</code>'s natural syntax extends to constructing and modifying feeds and entries as well
         as reading them. You can easily turn your new or modified objects back into well-formed XML for saving
         to a file or sending to a server.
+-->
     </para>
 
     <example>
-        <title>Modifying an Existing Feed Entry</title>
+        <title>
+            Изменение существующей публикации в ленте
+            <!-- Modifying an Existing Feed Entry -->
+        </title>
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -440,36 +729,57 @@ echo $entry->saveXML();
 
 ?>]]>   </programlisting>
         <para>
+            Это выведет полное (включая вступление <code>&lt;?xml ... &gt;</code>) XML-представление
+            новой публикации, включая необходимые пространства имен XML.
+<!--
             This will output a full (includes <code>&lt;?xml ... &gt;</code> prologue) XML representation of the
             new entry, including any necessary XML namespaces.
+-->
         </para>
         <para>
+            Обратите внимание на то, что вышеприведенный код будет работать, даже если
+            существующая запись не имеет тег <code>&lt;author&gt;</code>. Для присвоения вы
+            можете использовать столько уровней доступа через <code>-&gt;</code>, сколько
+            для получения; все промежуточные уровни будут созданы автоматически, если необходимо.
+<!--
             Note that the above will work even if the existing entry does not already have an author tag. You can
             use as many levels of <code>-&gt;</code> access as you like before getting to an assignment; all of the
             intervening levels will be created for you automatically if necessary.
+-->
         </para>
     </example>
 
     <para>
+        Если вы хотите использовать в своих записях пространство имен, отличное от
+        <code>atom:</code>, <code>rss:</code>, or <code>osrss:</code>, то вам нужно зарегистрировать
+        его через <code>Zend_Feed</code>, используя <code>Zend_Feed::registerNamespace()</code>.
+        Когда вы изменяете существующий элемент, он всегда будет сохранять
+        свое исходное пространство имен. Когда добавляете новый элемент, он будет включен в
+        пространство имен по умолчанию, если вы не укажете явно другое пространство имен.
+<!--
         If you want to use a namespace other than <code>atom:</code>, <code>rss:</code>, or <code>osrss:</code>
         in your entry, you need to register the namespace with <code>Zend_Feed</code> using <code>
         Zend_Feed::registerNamespace()</code>. When you are modifying an existing element, it will always
         maintain its original namespace. When adding a new element, it will go into the default namespace if
         you do not explicitly specify another namespace.
+-->
     </para>
 
     <example>
-        <title>Creating an Atom Entry with Elements of Custom Namespaces</title>
+        <title>
+            Создание публикации Atom с элементами в специальном пространстве имен
+            <!-- Creating an Atom Entry with Elements of Custom Namespaces -->
+        </title>
         <programlisting role="php"><![CDATA[
 <?php
 
 $entry = new Zend_Feed_EntryAtom();
-// id is always assigned by the server in Atom
+// id уже присвоен сервером
 $entry->title = 'my custom entry';
 $entry->author->name = 'Example Author';
 $entry->author->email = 'me@example.com';
 
-// Now do the custom part.
+// теперь выполнение специальной части
 Zend_Feed::registerNamespace('myns', 'http://www.example.com/myns/1.0');
 
 $entry->{'myns:myelement_one'} = 'my first custom value';
@@ -483,27 +793,44 @@ echo $entry->saveXML();
 </sect1>
 
 <sect1 id="zend.feed.custom-feed">
-    <title>Custom Feed and Entry Classes</title>
+    <title>
+        Специальные классы лент и записей
+        <!-- Custom Feed and Entry Classes -->
+    </title>
 
     <para>
+        Наконец, вы можете наследовать классы <code>Zend_Feed</code>, если хотите обеспечить
+        собственный формат или такие детали, как автоматическое управление элементами,
+        которые должны находиться в специальном пространстве имен.
+<!--
         Finally, you can extend the <code>Zend_Feed</code> classes if you'd like to provide your own format or
         niceties like automatic handling of elements that should go into a custom namespace.
+-->
     </para>
 
     <para>
+        Здесь приведен пример специального класса публикации Atom, который управляет
+        публикациями в собственным пространстве имен <code>myns:</code>. Обратите
+        внимание, что он автоматически делает вызов <code>registerNamespace()</code>,
+        так что конечным пользователям не нужно беспокоиться о пространствах имен.
+<!--
         Here is an example of a custom Atom entry class that handles its own <code>myns:</code> namespace
         entries. Note that it also makes the <code>registerNamespace()</code> call for you, so the end user
         doesn't need to worry about namespaces at all.
+-->
     </para>
 
     <example>
-        <title>Extending the Atom Entry Class with Custom Namespaces</title>
+        <title>
+            Расширение класса публикации Atom с добавлением специальных пространств имен
+            <!-- Extending the Atom Entry Class with Custom Namespaces -->
+        </title>
         <programlisting role="php"><![CDATA[
 <?php
 
 /**
- * The custom entry class automatically knows the feed URI (optional) and
- * can automatically add extra namespaces.
+* Специальный класс публикации знает URI ленты и может автоматически
+* добавлять дополнительные пространства имен
  */
 class MyEntry extends Zend_Feed_EntryAtom
 {
@@ -520,7 +847,7 @@ class MyEntry extends Zend_Feed_EntryAtom
     {
         switch ($var) {
             case 'myUpdated':
-                // Translate myUpdated to myns:updated.
+                // преобразование myUpdated в myns:updated.
                 return parent::__get('myns:updated');
 
             default:
@@ -532,7 +859,7 @@ class MyEntry extends Zend_Feed_EntryAtom
     {
         switch ($var) {
             case 'myUpdated':
-                // Translate myUpdated to myns:updated.
+                // преобразование myUpdated в myns:updated.
                 parent::__set('myns:updated', $value);
                 break;
 
@@ -545,8 +872,12 @@ class MyEntry extends Zend_Feed_EntryAtom
 
 ?>]]>   </programlisting>
         <para>
+            Далее для использования этого класса просто создаете его экземпляр и устанавливаете
+            свойство <code>myUpdated</code>:
+<!--
             Then to use this class, you'd just instantiate it directly and set the <code>myUpdated</code>
             property:
+-->
             <programlisting role="php"><![CDATA[
 <?php
 
