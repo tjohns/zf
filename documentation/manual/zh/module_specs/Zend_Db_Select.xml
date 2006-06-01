@@ -1,22 +1,21 @@
-<sect1 id="zend.db.select">
+﻿<sect1 id="zend.db.select">
 
     <title>Zend_Db_Select</title>
 
-    <sect2 id="zend.db.select.introduction">
+    <sect2 id="zend.db.select.简介">
 
-        <title>Introduction</title>
+        <title>简介 </title>
 
         <para>
-            Zend_Db_Select is a tool to help you build SQL SELECT statements in
-            a database-independent way.  Obviously this can't be perfect,
-            but it does go a long way toward helping your queries be
-            portable between database backends.  In addition, it aids
-            you in making your queries resistant to SQL injection attacks.
+            使用Zend_Db_Select方法是一种不受数据库约束构建select的sql语句的工具
+            （ares注：用户可以使用该方法生成查询的sql语句，而不需要考虑各种数据
+            库sql语句的差别）。虽然该方法明显还不完善，但是的确为我们提供一种方
+            法，帮助我们在不同的后台数据库进行相同的查询工作。除此之外，它还可
+            以避免sql语句攻击。
         </para>
 
         <para>
-            The easiest way to create an instance of Zend_Db_Select is to use the
-            Zend_Db_Adapter::select() method.
+            创建一个zend_db_select实例最简单的方法就是使用zend_db_adapter::select()方法
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -33,14 +32,13 @@ $params = array (
 $db = Zend_Db::factory('pdoMysql', $params);
 
 $select = $db->select();
-// $select is now a Zend_Db_Select_PdoMysql object
+// $select现在是一个Zend_Db_Select_PdoMysql对象
 
 ?>]]></programlisting>
 
         <para>
-            You then construct a SELECT query using that object and its
-            methods, then generate a string for passing back to Zend_Db_Adapter
-            for queries or fetches.
+            你可以使用该对象和它的相应方法构建一个select查询语句，然后生成
+            字符串符用来传送给zend_db_adapter进行查询或者读取结果。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -53,32 +51,31 @@ $select = $db->select();
 //     LIMIT 10 OFFSET 20
 //
 
-// you can use an iterative style...
+// 你可以使用一种重复定义的方式...
 $select->from('round_table', '*');
 $select->where('noble_title = ?', 'Sir');
 $select->order('first_name');
 $select->limit(10,20);
 
-// ...or a "fluent" style:
+// ...或者使用一种连续定义的方式:
 $select->from('round_table', '*')
        ->where('noble_title = ?', 'Sir')
        ->order('first_name')
        ->limit(10,20);
 
-// regardless, fetch the results
+// 但是，读取数据的方法相同
 $sql = $select->__toString();
 $result = $db->fetchAll($sql);
 
-// alternatively, you can pass the $select object itself;
-// Zend_Db_Adapter is smart enough to call __toString() on the
-// Zend_Db_Select objects to get the query string.
+// 对于以上任一种方式，你都可以传送$select对象本身
+// 使用Zend_Db_Select对象的 __toString()方法就可以得到查询语句
+
 $result = $db->fetchAll($select);
 
 ?>]]></programlisting>
 
         <para>
-            You can also use bound parameters in your queries instead of
-            quoting-as-you-go.
+            你也可以在你的查询语句中使用绑定的参数，而不需要自己为参数加引号。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -96,7 +93,7 @@ $select->from('round_table', '*')
        ->order('first_name')
        ->limit(10,20);
 
-// regardless, fetch the results using bound parameters
+// 读取结果使用绑定的参数
 $params = array('title' => 'Sir');
 $result = $db->fetchAll($select, $params);
 
@@ -106,49 +103,48 @@ $result = $db->fetchAll($select, $params);
 
     <sect2 id="zend.db.select.fromcols">
 
-        <title>Columns FROM a Table</title>
+        <title>同一表中查询多列数据</title>
 
         <para>
-            To select columns from a specific table, use the from() method,
-            specifying the table and the columns you want from it.  You can
-            use both table and column aliases, and you can use from() as
-            many times as you need.
+            当需要从某一个指定的表查询某几列时，可以使用from()方法，将需要
+            查询的表名和列名都在该方法中指定。表名和列名都可以通过别名代替
+            ，而且也可以根据需要多次使用from()方法。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, assuming Mysql as the adapter.
+// 创建一个$db对象，假定adapter为Mysql
 $select = $db->select();
 
-// SELECT a, b, c FROM some_table
+// 从some_table表中读取a,b,c三列
 $select->from('some_table', 'a, b, c');
-// equivalent:
+// 同样可以:
 $select->from('some_table', array('a', 'b', 'c');
 
-// SELECT bar.col FROM foo AS bar
+// 从foo AS bar表中读取列bar.col
 $select->from('foo AS bar', 'bar.col');
 
-// SELECT foo.col AS col1, bar.col AS col2 FROM foo, bar
+// 从foo, bar两个表中读取foo.col 别名为col1，bar.col别名为col2
 $select->from('foo', 'foo.col AS col1');
 $select->from('bar', 'bar.col AS col2');
 
 ?>]]></programlisting>
     </sect2>
 
-    <sect2 id="zend.db.select.joincols">
+    <sect2 id="zend.db.select.表联合查询">
 
-        <title>Columns from JOINed Tables</title>
+        <title>多表联合查询</title>
 
         <para>
-            To select columns using joined tables, use the join() method.
-            First give the joining table name, then the joining condition,
-            and finally the columns you want from the join.  You can use
-            join() as many times as you need.
+            当需要进行表联合查询时，可以使用join()方法。首先，设定进行表
+            联合查询的表名，然后是表联合的条件(ares注：该条件是针对多表
+            内部连接的条件)，最后是查询的列名。同样，你可以根据需要多次
+            使用join()方法。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, assuming Mysql as the adapter.
+// 创建一个$db对象，假定adapter为Mysql.
 $select = $db->select();
 
 //
@@ -162,22 +158,20 @@ $select->join('bar', 'foo.id = bar.id', '*');
 ?>]]></programlisting>
 
         <para>
-            Currently, only the JOIN syntax is supported; no LEFT JOINs,
-            RIGHT JOINs, etc.  Future releases will support these in a
-            database-neutral fashion.
+            目前为止，zend framework只支持普通的内部表结合语法，而不支持左结合
+            ，右结合，等等外部连接方式。未来版本，将会更多的支持更多的连接方式。
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.select.where">
 
-        <title>WHERE Conditions</title>
+        <title>WHERE条件</title>
 
         <para>
-            To add WHERE conditions, use the where() method.  You can
-            pass either a regular string, or you can pass a string
-            with a question-mark placeholder and a value to quote into it
-            (the value will be quoted using Zend_Db_Adapter::quoteInto).
+            当需要要增加where条件时，可以使用where（）方法。你可以传送一个
+            普通的查询语句字符串，也可以传送一个使用？作为占位符的字符串,然
+            后在占位符处加入通过加引号处理后的数据(将使用Zend_Db_Adapter::quoteInto方法进行数据处理)
         </para>
 
         <para>
@@ -187,7 +181,7 @@ $select->join('bar', 'foo.id = bar.id', '*');
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// 创建一个$db对象，调用SELECT方法.
 $select = $db->select();
 
 //
@@ -216,15 +210,15 @@ $select->orWhere('id IN(?)', array(1, 2, 3);
 
     <sect2 id="zend.db.select.group">
 
-        <title>GROUP BY Clause</title>
+        <title>GROUP BY分句</title>
 
         <para>
-            To group rows, use the group() method as many times as you wish.
+            根据需要，可以多次使用group()方法给查询到的数据进行分组
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// 创建一个$db对象，调用SELECT方法.
 $select = $db->select();
 
 //
@@ -236,10 +230,10 @@ $select->from('foo', 'COUNT(id)');
 $select->group('bar');
 $select->group('baz');
 
-// an equivalent group() call:
+// 同样可以这样调用 group() 方法:
 $select->group('bar, baz');
 
-// another equivalent group() call:
+// 还可以:
 $select->group(array('bar', 'baz'));
 
 ?>]]></programlisting>
@@ -248,20 +242,20 @@ $select->group(array('bar', 'baz'));
 
     <sect2 id="zend.db.select.having">
 
-        <title>HAVING Conditions</title>
+        <title>HAVING 条件</title>
 
         <para>
-            To add HAVING conditions to the selected results, use the having()
-            method.  This method is identical in function to the where() method.
+           当需要在查询结果中加入having条件时，可以使用having()方法。
+           这种方法与where()方法的功能一样。.
         </para>
 
         <para>
-            If you call having() multiple times, the conditions are ANDed together;
-            if you want to OR a condition, use orHaving().
+           当你多次调用having（）方法时，各个having的条件会“并”在一起进行操作；
+           假如你需要实现“或 ”操作，可以使用orHaving()方法
         </para>
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// 创建一个$db对象，调用SELECT方法.
 $select = $db->select();
 
 //
@@ -279,15 +273,15 @@ $select->having('count_id > ?', 1);
 
     <sect2 id="zend.db.select.order">
 
-        <title>ORDER BY Clause</title>
+        <title>ORDER BY 分句</title>
 
         <para>
-            To ORDER columns, use the order() method as many times as you wish.
+            根据需要，可以多次使用order()方法给查询到的数据进行排序
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// 创建一个$db对象，调用SELECT方法.
 $select = $db->select();
 
 //
@@ -298,10 +292,10 @@ $select->from('round_table', '*');
 $select->order('noble_title DESC');
 $select->order('first_name');
 
-// an equivalent order() call:
+// 同样可以这样调用 order() 方法:
 $select->order('noble_title DESC, first_name');
 
-// another equivalent order() call:
+// 还可以:
 $select->order(array('noble_title DESC', 'first_name'));
 
 ?>]]></programlisting>
@@ -310,67 +304,63 @@ $select->order(array('noble_title DESC', 'first_name'));
 
     <sect2 id="zend.db.select.limit">
 
-        <title>LIMIT By Count and Offset</title>
+        <title>通过总数和偏移量进行LIMIT限制</title>
 
         <para>
-            Zend_Db_Select offers database-abstracted LIMIT clause support.
-            For many databases, such as MySQL and PostgreSQL, this is
-            relatively easy, as they support the the "LIMIT :count
-            [OFFSET :offset]" syntax.
+            Zend_db_select可以支持数据库层的limit语句限制。对于一些数据库，例如mysql
+            和postgresql，实现这些是相对容易的，因为这些数据库本身就支持“limit：count”
+            语法。
         </para>
 
         <para>
-            For other databases, such as Microsoft SQL and Oracle, this
-            is not so easy, as they do not support LIMIT clauses at all.
-            MS-SQL has only a TOP clause, and Oracle  requires that a query
-            be written in a special fashion to emulate a LIMIT.  Because of
-            the way Zend_Db_Select works internally, we can rewrite the SELECT
-            on-the-fly to emulate the LIMIT functionality of the aforementioned
-            open-source database systems.
+            对于其他一些数据库来说，例如微软的sqlserver和oracle，要实现limit功能
+            就不那么简单了，因为他们本身就根本不支持limit语句。MS-SQL有一个top语
+            句来实现，而oracle要实现limit功能，查询语句的写法就更特殊一些。由于
+            zend_db_select内在地工作的方式，我们可以重写select语句以在oracle中
+            实现上述开源数据库系统的limit功能。
         </para>
 
         <para>
-            To LIMIT the returned results by count and offset, use the limit()
-            method with a count and optional offset.
+            要通过设定查询的总数和偏移量对返回的结果进行限制,可以使用limit()方法，
+            总数值和一个可选的偏移量作为调用该方法的参数。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// first, a simple "LIMIT :count"
+// 首先，一个简单的 "LIMIT :count"
 $select = $db->select();
 $select->from('foo', '*');
 $select->order('id');
 $select->limit(10);
 
 //
-// In MySQL/PostgreSQL/SQLite, this translates to:
+// 在mysql/psotgreSql/SQLite,可以得到这样的语句：
 //
 // SELECT * FROM foo
 //     ORDER BY id ASC
 //     LIMIT 10
 //
-// But in Microsoft SQL, this translates to:
+// 但是在Microsoft SQL下,可以得到这样的语句：
 //
 // SELECT TOP 10 * FROM FOO
 //     ORDER BY id ASC
 //
 //
 
-// now, a more complex "LIMIT :count OFFSET :offset"
+// 现在, 是更复杂的 "LIMIT :count OFFSET :offset"方法
 $select = $db->select();
 $select->from('foo', '*');
 $select->order('id');
 $select->limit(10, 20);
 
 //
-// In MySQL/PostgreSQL/SQLite, this translates to:
+// 在mysql/psotgreSql/SQLite,可以得到这样的语句：
 //
 // SELECT * FROM foo
 //     ORDER BY id ASC
 //     LIMIT 10 OFFSET 20
 //
-// But in Microsoft SQL, which has no offset support, this translates to
-// something like:
+// 但是在Microsoft SQL下,由于不支持偏移量功能,可以得到这样sql语句:
 //
 // SELECT * FROM (
 //     SELECT TOP 10 * FROM (
@@ -378,36 +368,35 @@ $select->limit(10, 20);
 //     ) ORDER BY id ASC
 // )
 //
-// Zend_Db_Adapter does the query translation for you automatically.
+// Zend_Db_Adapter 可以自动的完成sql语句的动态创建.
 //
 
 ?>]]></programlisting>
 
     </sect2>
 
-    <sect2 id="zend.db.select.paging">
+    <sect2 id="zend.db.select.分页">
 
-        <title>LIMIT By Page And Count</title>
+        <title>通过页数和总数进行LIMIT限制</title>
 
         <para>
-            Zend_Db_Select offers page-based limits as well.  If you wish to
-            retrieve a certain "page" of results, use the limitPage() method;
-            first pass the page number you want, and then the number of
-            rows that appear on each page.
+            Zend_db_select同样也提供了翻页的limit功能。假如你想要从结果中找到
+            特定“页数”的结果，使用limitPage()方法；将你需要的页数值和每页显示
+            的数据值数作为参数传过去即可.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// build the basic select...
+// 构造基础的select方法:
 $select = $db->select();
 $select->from('foo', '*');
 $select->order('id');
 
-// ... and limit to page 3 where each page has 10 rows
+// ... 限制到第三页,每页包括10行数据
 $select->limitPage(3, 10);
 
 //
-// In MySQL/PostgreSQL/SQLite, this translates to:
+// 在MySQL/PostgreSQL/SQLite下, 可以得到:
 //
 // SELECT * FROM foo
 //     ORDER BY id ASC
