@@ -2,7 +2,7 @@
 
     <title>Zend_Db_Adapter</title>
 
-    <sect2 id="zend.db.adapter.简介">
+    <sect2 id="zend.db.adapter.introduction">
 
         <title>简介</title>
 
@@ -50,7 +50,7 @@ $db = Zend_Db::factory('pdoSqlite', $params);
         </para>
     </sect2>
 
-    <sect2 id="zend.db.adapter.添加引号">
+    <sect2 id="zend.db.adapter.quoting">
 
         <title>添加引号防止数据库攻击</title>
 
