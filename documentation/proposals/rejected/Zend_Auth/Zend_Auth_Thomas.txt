@@ -1,0 +1,83 @@
+Zend Framework Component Proposal
+
+
+Proposed Component Name
+-----------------------------------------------
+Zend_Auth
+
+
+Proposers
+-----------------------------------------------
+Richard Thomas
+
+
+Revision
+-----------------------------------------------
+0.1
+
+
+Overview
+-----------------------------------------------
+Provide a clear and easy method to check user security permissions
+
+
+References
+-----------------------------------------------
+None
+
+
+Requirements
+-----------------------------------------------
+None
+
+
+Dependencies on Other Framework Components
+-----------------------------------------------
+None
+
+
+Theory of Operation
+-----------------------------------------------
+Provide a binary check operation to verify multiple levels of security.
+
+
+Class Index
+-----------------------------------------------
+Zend_Auth
+
+
+Use Cases
+-----------------------------------------------
+
+1. Somehow Authorize the user, during this process you get the user settings, his security level is assigned to $_SESSION['security']. Lets assume at this time its 3
+
+2. You have the user_perms table with the following
+Name -- Flag
+------------
+Login -- 1
+Write -- 2
+Edit  -- 3
+
+3. You init the permissions
+Perms::initPerms($db, $_SESSION['security']);
+
+4. You check permissions, user is trying to edit something
+Perms::permCheck('Edit'); This fails, user only has a 3 flag
+
+Or you want to check that they can write AND login
+Perms::permCheck(array('Login','Write')); This passed
+
+
+
+Class Skeletons
+-----------------------------------------------
+class Zend_Auth {
+    public static function initPerms();
+# Check against permissions list
+    public static function permCheck();
+# Load in an array of security permissions
+    public static function ArrayLoad();
+# Load security levels by db
+    public static function DBLoad();
+
+}
