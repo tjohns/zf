@@ -4,7 +4,7 @@
 
     <sect2 id="zend.db.adapter.introduction">
 
-        <title>简介</title>
+        <title>简介 </title>
 
         <para>
             <code>Zend_Db_Adapter</code>是zendfrmaeword的数据库抽象层api.
