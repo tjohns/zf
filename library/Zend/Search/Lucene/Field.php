@@ -52,7 +52,16 @@ class Zend_Search_Lucene_Field
     public function __construct($name, $stringValue, $isStored, $isIndexed, $isTokenized, $isBinary = false)
     {
         $this->name        = $name;
-        $this->stringValue = $stringValue;
+
+        if (!$isBinary) {
+            /**
+             * @todo Correct UTF-8 string should be required in future
+             * Until full UTF-8 support is not completed, string should be normalized to ANSII encoding
+             */
+            $this->stringValue = iconv('', 'ASCII//TRANSLIT', $stringValue);
+        } else {
+            $this->stringValue = $stringValue;
+        }
         $this->isStored    = $isStored;
         $this->isIndexed   = $isIndexed;
         $this->isTokenized = $isTokenized;
