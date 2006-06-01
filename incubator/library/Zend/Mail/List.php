@@ -26,13 +26,19 @@
  */
 class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
 {
-    /** @todo docblock */
+    /**
+     * current iteration position
+     */
     protected $_iterationPos = 0;
     
-    /** @todo docblock */
+    /**
+     * maximum iteration position (= message count)
+     */
     protected $_iterationMax = 0;
     
-    /** @todo docblock */
+    /**
+     * mail reading class controlled by Zend_Mail_List
+     */
     protected $_mailReader;
 
     
@@ -67,12 +73,12 @@ class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
       */
      public function offsetExists($id) 
      {
-        /** @todo should catch specific exception hierarchy, not Exception */
         try {
             if ($this->_mailReader->getHeader($id)) {
                 return true;
             }
-        } catch(Exception $e) {}
+        } catch(Zend_Mail_Exception $e) {}
+        
         return false;
      }
 
@@ -81,7 +87,7 @@ class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
       * ArrayAccess::offsetGet()
       * @internal
       * @param    int $id
-      * @todo     document return type
+      * @return   Zend_Mail_Message message object 
       */
      public function offsetGet($id) 
      {
@@ -94,16 +100,12 @@ class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
       * @internal
       * @param    id     $id
       * @param    mixed  $value
-      * @throws   Exception @todo Zend_Mail_Exception
+      * @throws   Zend_Mail_Exception
       * @return   void
       */
      public function offsetSet($id, $value) 
      {
-        /** 
-         * @todo better description 
-         * @todo throw Zend_Mail_Exception instead
-         */
-        throw new Exception('not supported');
+        throw new Zend_Mail_Exception('cannot write mail messages via array access');
      }
      
      
@@ -111,8 +113,7 @@ class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
       * ArrayAccess::offsetUnset()
       * @internal
       * @param    int   $id
-      * @return   mixed 
-      * @todo     document return type
+      * @return   boolean success 
       */
      public function offsetUnset($id) 
      {
@@ -135,8 +136,7 @@ class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
      /**
       * Iterator::current()
       * @internal
-      * @return   mixed
-      * @todo     document return type
+      * @return   Zend_Mail_Message current message
       */
      public function current() 
      {
@@ -147,8 +147,7 @@ class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
      /**
       * Iterator::key()
       * @internal
-      * @return   mixed
-      * @todo     document return type
+      * @return   int id of current position
       */
      public function key() 
      {
@@ -187,11 +186,8 @@ class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
      public function seek($pos)
      {
         if ($pos > $this->_iterationMax) {
-            /** 
-             * @todo throw Zend_Mail_Exception 
-            */
             // OutOfBoundsException would be the right one here, but it seems like it was added after PHP 5.0.4
-            throw new Exception('Out of Bounds');
+            throw new Zend_Mail_Exception('Out of Bounds');
         }
         $this->_iterationPos = $pos;
      }

@@ -31,10 +31,14 @@ require_once 'Zend/Mime/Decode.php';
  */
 class Zend_Mail_Message 
 {
-    /** @todo docblock */
+    /**
+     * headers of message as array
+     */
     protected $_headers;
     
-    /** @todo docblock */
+    /**
+     * raw message body
+     */
     protected $_content;
 
 

@@ -25,7 +25,9 @@
  */
 abstract class Zend_Mail_Abstract
 {
-    /** @todo docblock */
+    /**
+     * class capabilities with default values 
+     */
     protected $_has = array('folder'   => false,
                             'uniqueid' => false,
                             'delete'   => false,
@@ -138,7 +140,7 @@ abstract class Zend_Mail_Abstract
 
 
     /**
-     * @todo docblock
+     * delete a message from current box/folder
      */
     abstract public function removeMessage($id);
 }

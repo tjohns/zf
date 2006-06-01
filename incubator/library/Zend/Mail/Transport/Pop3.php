@@ -30,16 +30,19 @@ require_once 'Zend/Mail/Transport/Exception.php';
  */
 class Zend_Mail_Transport_Pop3 
 {
-    /** @todo docblock */
+    /**
+     * saves if server supports top
+     */
     public $hasTop = null;
     
-    /** @todo docblock */
+    /**
+     * socket to pop3
+     */
     private $_socket;
     
-    /** @todo docblock */
-    private $_lastMessage = '';
-
-    /** @todo docblock */
+    /**
+     * greeting timestamp for apop
+     */
     private $_timestamp;
 
 
@@ -98,7 +101,7 @@ class Zend_Mail_Transport_Pop3
         if (!strpos($this->_timestamp, '@')) {
             $this->_timestamp = null;
         } else {
-            $this->_timestamp = '<'.$this->_timestamp.'>';
+            $this->_timestamp = '<' . $this->_timestamp . '>';
         }
 
         return $welcome;
@@ -123,7 +126,7 @@ class Zend_Mail_Transport_Pop3
      *
      * read a response
      *
-     * @param  boolean $multiline   // @todo description
+     * @param  boolean response has multiple lines and should be read until "<nl>.<nl>"
      * @throws Zend_Mail_Transport_Exception
      * @return string response
      */
@@ -142,8 +145,6 @@ class Zend_Mail_Transport_Pop3
             $message = '';
         }
         
-        $this->_lastMessage = $message;
-
         if ($status != '+OK') {
             throw new Zend_Mail_Transport_Exception('last request failed');
         }
@@ -187,8 +188,7 @@ class Zend_Mail_Transport_Pop3
         
         try {
             $this->request('QUIT');
-        } catch (Exception $e) {
-            /** @todo catch specific exception, not Exception */
+        } catch (Zend_Mail_Transport_Exception $e) {
             // ignore error - we're closing the socket anyway
         }
         
@@ -223,8 +223,7 @@ class Zend_Mail_Transport_Pop3
             try {
                 $this->request("APOP $user " . md5($this->_timestamp . $password));
                 return;
-            } catch (Exception $e) {
-                /** @todo catch specific exception, not Exception */
+            } catch (Zend_Mail_Transport_Exception $e) {
                 // ignore 
             }
         }
@@ -338,8 +337,7 @@ class Zend_Mail_Transport_Pop3
 
         try {
             $result = $this->request($request, true);
-        } catch (Exception $e) {
-            /** @todo catch specific exception, not Exception */
+        } catch (Zend_Mail_Transport_Exception $e) {
             $this->hasTop = false;
             if ($fallback) {
                 $result = $this->retrive($msgno);

@@ -41,10 +41,14 @@ require_once 'Zend/Mail/Exception.php';
  */
 class Zend_Mail_Mbox extends Zend_Mail_Abstract 
 {
-    /** @todo docblock */
+    /**
+     * file handle to mbox file
+     */
     private $_fh;
     
-    /** @todo docblock */
+    /**
+     * start and end position of messages as array(0 => start, 1 => end)
+     */
     private $_positions;
     
     
@@ -61,7 +65,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
         if ($flags) {
             throw new Zend_Mail_Exception('mbox does not support flags');
         }
-        return count($this->_positions) - 1;
+        return count($this->_positions);
     }
     
     
@@ -74,29 +78,35 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     public function getSize($id = 0) 
     {
         if ($id) {
-            return $id == 1 
-                ? $this->_positions[0] 
-                : $this->_positions[$id - 1] - $this->_positions[$id - 2];
+            $pos = $this->_positions[$id - 1];
+            return $pos[1] - $pos[0];
         }
     
         $result = array();
-        $lastPos = 0;
         foreach ($this->_positions as $num => $pos) {
-            $result[$num + 1] = $pos - $lastPos;
-            $lastPos = $pos;
+            $result[$num + 1] = $pos[1] - $pos[0];
         }
         
         return $result;
     }
     
     
-    /** @todo docblock */
+    /**
+     * move file position to start of message and return end position
+     *
+     * @param int $id number of message
+     * @return int end position
+     */
     private function _goto($id) 
     {
-        fseek($this->_fh, $id == 0 ? 0 : $this->_positions[$id - 1]);
-        fgets($this->_fh); // consume first line (mbox marker)
+        if(!isset($this->_positions[$id - 1])) {
+            throw new Zend_Mail_Exception('id does not exist');
+        }
         
-        return $this->_positions[$id];
+        $pos = $this->_positions[$id - 1];
+        fseek($this->_fh, $pos[0]);
+        
+        return $pos[1];
     }
     
     
@@ -108,7 +118,6 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      */
     public function getMessage($id) 
     {
-        // @todo error handling
         $endPos = $this->_goto($id);
         
         $message = '';
@@ -129,7 +138,6 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      */
     public function getHeader($id, $bodyLines = 0) 
     {
-        // @todo error handling!
         $endPos = $this->_goto($id);
         
         $inHeader = true;
@@ -168,7 +176,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
             throw new Zend_Mail_Exception('no valid filename given in params');
         }
         
-        $this->_fh = fopen($params['filename'], 'r');
+        $this->_fh = @fopen($params['filename'], 'r');
         if (!$this->_fh) {
             throw new Zend_Mail_Exception('cannot open mbox file');
         }
@@ -176,16 +184,20 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
         $line = fgets($this->_fh);
         if (strpos($line, 'From ') !== 0) {
             throw new Zend_Mail_Exception('file is not a valid mbox format');
-            fclose($this->_fh);
+            @fclose($this->_fh);
         }
         
+        $messagePos = array(ftell($this->_fh), 0);
         while (($line = fgets($this->_fh)) !== false) {
             if (strpos($line, 'From ') === 0) {
-                $this->_positions[] = ftell($this->_fh) - strlen($line);
-            }   
+                $messagePos[1] = ftell($this->_fh) - strlen($line) - 2; // + newline
+                $this->_positions[] = $messagePos;
+                $messagePos = array(ftell($this->_fh), 0);
+            }
         }
         
-        $this->_positions[] = ftell($this->_fh);
+        $messagePos[1] = ftell($this->_fh);
+        $this->_positions[] = $messagePos;
         
         $this->_has['top'] = true;
     }
@@ -199,7 +211,8 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      */
     public function close() 
     {
-        fclose($this->_fh);
+        @fclose($this->_fh);
+        $this->_positions = array();
     }
     
     
@@ -215,7 +228,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     
     
     /**
-     * @todo docblock
+     * stub for not supported message deletion
      */
     public function removeMessage($id) 
     {
@@ -223,5 +236,3 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     }
 
 }
-
-?>
