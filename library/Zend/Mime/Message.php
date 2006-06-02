@@ -154,6 +154,17 @@ class Zend_Mime_Message {
     }
 
     /**
+     * get the headers of a given part as an array
+     *
+     * @param int $partnum
+     * @return array
+     */
+    public function getPartHeadersArray($partnum)
+    {
+        return $this->_parts[$partnum]->getHeadersArray();
+    }
+
+    /**
      * get the headers of a given part as a string
      *
      * @param int $partnum

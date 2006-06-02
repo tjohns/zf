@@ -34,9 +34,20 @@ interface Zend_Mail_Transport_Interface {
     /**
      * Send an eMail independent from the used transport
      *
+     * $headers is an array of headers. For most implementations, these should
+     * be constructed into a string using the following algorithm:
+     *
+     * <code>
+     * $final = '';
+     * foreach ($headers as $header) {
+     *     $final .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
+     * }
+     * </code>
+     *
      * @param Zend_Mail $mail
      * @param String $body
-     * @param String $headers
+     * @param Array $headers
+     * @param Array $to
      */
-    public function sendMail(Zend_Mail $mail, $body, $header);
+    public function sendMail(Zend_Mail $mail, $body, $headers, $to);
 }

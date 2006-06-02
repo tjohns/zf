@@ -357,10 +357,17 @@ class Zend_Mail_Transport_Smtp implements Zend_Mail_Transport_Interface {
      *
      * @param Zend_Mail $mail
      * @param string $body
-     * @param string $headers
+     * @param array $headers
+     * @param array $to
      */
-    public function sendMail(Zend_Mail $mail, $body, $headers)
+    public function sendMail(Zend_Mail $mail, $body, $headers, $to)
     {
+        // Format headers into a string
+        $headersSend = '';
+        foreach ($headers as $header) {
+            $headersSend .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
+        }
+
         $wasConnected = ($this->_con!==null); // check if the connection is already there
         if(!$wasConnected) $this->connect();// if not, establish a connection
         else $this->rset(); // if already connected, reset connection
@@ -369,7 +376,7 @@ class Zend_Mail_Transport_Smtp implements Zend_Mail_Transport_Interface {
             foreach($mail->getRecipients() AS $recipient) {
                 $this->rcpt_to($recipient);
             }
-            $this->data($headers."\r\n".$body);
+            $this->data($headersSend."\r\n".$body);
         }
         catch (Zend_Mail_Transport_Exception $e) {
             if(!$wasConnected) $this->disconnect(); // remove connection if we made one

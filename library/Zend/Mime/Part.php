@@ -39,7 +39,7 @@ class Zend_Mime_Part {
     public $encoding = Zend_Mime::ENCODING_8BIT;
     public $id;
     public $disposition;
-    public $filename;
+    public $fileName;
     public $description;
     public $charset;
     protected $_isStream = false;
@@ -120,6 +120,41 @@ class Zend_Mime_Part {
         }
     }
 
+    /**
+     * Create and return the array of headers for this MIME part
+     * 
+     * @access public
+     * @return array
+     */
+    public function getHeadersArray()
+    {
+        $headers = array();
+
+        $contentType = $this->type;
+        if ($this->charset) {
+            $contentType .= '; charset="' . $this->charset . '"';
+        }
+        $headers[] = array('Content-Type', $contentType);
+        $headers[] = array('Content-Transfer-Encoding', $this->encoding);
+
+        if ($this->id) {
+            $headers[]  = array('Content-ID', '<' . $this->id . '>');
+        }
+
+        if ($this->disposition) {
+            $disposition = $this->disposition;
+            if ($this->fileName) {
+                $disposition .= '; filename="' . $this->fileName . '"';
+            }
+            $headers[] = array('Content-Disposition', $disposition);
+        }
+
+        if ($this->description) {
+            $headers[] = array('Content-Description', $this->description);
+        }
+
+        return $headers;
+    }
 
     /**
      * Return the headers for this part as a string
@@ -128,30 +163,9 @@ class Zend_Mime_Part {
      */
     public function getHeaders()
     {
-        $res = 'Content-Type: '.$this->type;
-
-        if ($this->charset) {
-            $res.= '; charset="'.$this->charset.'"';
-        }
-
-        $res .= Zend_Mime::LINEEND
-              . 'Content-Transfer-Encoding: ' . $this->encoding
-              . Zend_Mime::LINEEND;
-
-        if ($this->id) {
-            $res.= 'Content-ID: <' .$this->id. '>' . Zend_Mime::LINEEND;
-        }
-
-        if ($this->disposition) {
-            $res.= 'Content-Disposition: ' . $this->disposition;
-            if ($this->filename) {
-                $res .= '; filename="' .$this->filename. '"';
-            }
-            $res .= Zend_Mime::LINEEND;
-        }
-
-        if ($this->description) {
-            $res .= 'Content-Description: ' . $this->description . Zend_Mime::LINEEND;
+        $res = '';
+        foreach ($this->getHeadersArray() as $header) {
+            $res .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
         }
 
         return $res;

@@ -25,11 +25,6 @@
 require_once 'Zend/Mail/Exception.php';
 
 /**
- * Zend_Mail_Transport_Sendmail
- */
-require_once 'Zend/Mail/Transport/Sendmail.php';
-
-/**
  * Zend_Mime
  */
 require_once 'Zend/Mime.php';
@@ -64,6 +59,7 @@ class Zend_Mail extends Zend_Mime_Message
     protected $_recipients = array();
     protected $_charset = null;
     protected $_from = null;
+    protected $_to = array();
     protected $_subject = null;
     protected $_hasTextBody = false;
     protected $_hasHtmlBody = false;
@@ -75,6 +71,8 @@ class Zend_Mail extends Zend_Mime_Message
      * sets the default Zend_Mail_Transport_Interface for all following
      * uses of Zend_Mail::send();
      *
+     * @todo Allow passing a string to indicate the transport to load
+     * @todo Allow passing in optional options for the transport to load
      * @param  Zend_Mail_Transport_Interface $transport
      */
     static public function setDefaultTransport(Zend_Mail_Transport_Interface $transport)
@@ -242,10 +240,14 @@ class Zend_Mail extends Zend_Mime_Message
      *
      * @param string $email
      */
-    protected function _addRecipient($email)
+    protected function _addRecipient($email, $to = false)
     {
         // prevent duplicates
         $this->_recipients[$email] = 1;
+
+        if ($to) {
+            $this->_to[] = $email;
+        }
     }
 
 
@@ -260,7 +262,7 @@ class Zend_Mail extends Zend_Mime_Message
     protected function _addRecipientAndHeader($headerName, $name, $email)
     {
         $email = strtr($email,"\r\n\t",'???');
-        $this->_addRecipient($email);
+        $this->_addRecipient($email, ('To' == $headerName) ? true : false);
         if ($name != '') {
             $name = $this->_encodeHeader('"' .$name. '" ');
         }
@@ -320,7 +322,7 @@ class Zend_Mail extends Zend_Mime_Message
      * @param String $email
      * @param String $name
      */
-    public function setFrom($email, $name)
+    public function setFrom($email, $name = '')
     {
         if ($this->_from === null) {
             $email = strtr($email,"\r\n\t",'???');
@@ -388,11 +390,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _getHeaders($boundary=null)
     {
-        $out = '';
-
-        foreach($this->_headers AS $header) {
-            $out .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
-        }
+        $out = $this->_headers;
 
         if ($boundary) {
             // Build Multipart Mail
@@ -404,10 +402,32 @@ class Zend_Mail extends Zend_Mime_Message
                 $type = 'multipart/mixed';
             }
 
-            $out .= 'Content-Type: ' . $type . '; charset="' . $this->_charset . '";'
+            $out[] = array(
+                'Content-Type', 
+                $type . '; charset="' . $this->_charset . '";'
                   . Zend_Mime::LINEEND
                   . "\t" . 'boundary="' .$boundary. '"' . Zend_Mime::LINEEND
-                  . 'MIME-Version: 1.0' . Zend_Mime::LINEEND;
+                  . 'MIME-Version: 1.0'
+            );
+        }
+
+        // Sanity check on headers -- should not be > 998 characters
+        $sane = true;
+        foreach ($out as $header) {
+            $first = true;
+            foreach (explode(Zend_Mime::LINEEND, $header[1]) as $line) {
+                if ($first) {
+                    $line = $header[0] . ': ' . $line;
+                }
+
+                if (998 < strlen($line)) {
+                    $sane = false;
+                    break 2; 
+                }
+            }
+        }
+        if (!$sane) {
+            throw new Zend_Mail_Exception('At least one mail header line is too long');
         }
 
         return $out;
@@ -436,7 +456,7 @@ class Zend_Mail extends Zend_Mime_Message
         $body = $this->generateMessage();
         $headers = $this->_getHeaders($mime->boundary());
         $this->_mimeBoundary = $mime->boundary();  // if no boundary was set before, set the used boundary now
-        $transport->sendMail($this, $body, $headers);
+        $transport->sendMail($this, $body, $headers, $this->_to);
     }
 
     /**
@@ -446,10 +466,10 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _sendSinglePart(Zend_Mail_Transport_Interface $transport)
     {
-        $headers = $this->_getHeaders() . $this->getPartHeaders(0);
+        $headers = array_merge($this->_getHeaders(), $this->getPartHeadersArray(0));
         $body = $this->generateMessage();
         $this->_mimeBoundary = null; // singlepart - no boundary used...
-        $transport->sendMail($this, $body, $headers);
+        $transport->sendMail($this, $body, $headers, $this->_to);
     }
 
 
@@ -482,6 +502,7 @@ class Zend_Mail extends Zend_Mime_Message
     {
         if ($transport === null) {
             if (! self::$_defaultTransport instanceof Zend_Mail_Transport_Interface) {
+                require_once 'Zend/Mail/Transport/Sendmail.php';
                 $transport = new Zend_Mail_Transport_Sendmail();
             } else {
                 $transport = self::$_defaultTransport;

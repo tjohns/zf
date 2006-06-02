@@ -37,12 +37,60 @@ require_once 'Zend/Mail/Transport/Interface.php';
  */
 class Zend_Mail_Transport_Sendmail implements Zend_Mail_Transport_Interface
 {
-    public function sendMail(Zend_Mail $mail, $body, $headers)
+    /**
+     * Send mail using PHP native mail()
+     *
+     * @param Zend_Mail $mail 
+     * @param string $body 
+     * @param array $headers 
+     * @param array $to 
+     * @access public
+     * @return void
+     * @throws Zend_Mail_Transport_Exception if missing to addresses or on
+     * mail() failure
+     */
+    public function sendMail(Zend_Mail $mail, $body, $headers, $to)
     {
+        // mail() uses its $to parameter to set the To: header, and the $subject
+        // parameter to set the Subject: header. We need to strip them out.
+        if (0 === strpos(PHP_OS, 'WIN')) {
+            // Windows doesn't like the form "Name <email>"; just use email
+            // addresses, and keep the To: header
+            $recipients = implode(',', $to);
+            if (empty($recipients)) {
+                throw new Zend_Mail_Transport_Exception('Missing To addresses');
+            }
+        } else {
+            // All others, simply grab the recipients and unset the To: header
+            if (!isset($headers['To'])) {
+                throw new Zend_Mail_Transport_Exception('Missing To header');
+            }
+
+            $recipients = str_replace(Zend_Mime::LINEEND . "\t", '', $headers['To'][1]);
+            unset($headers['To']);
+        }
+
+        // Build header string and grab subject
+        $subject     = '';
+        $headersSend = '';
+        foreach ($headers as $header) {
+            if ('Subject' == $header[0]) {
+                $subject = $header[1];
+                continue;
+            } 
+
+            $headersSend .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
+        }
+
+        // Trim headers
+        $headersSend = trim($headersSend);
+
         /**
          * @todo error checking
          */
-        mail(join(',', $mail->getRecipients()), $mail->getSubject(), $body, $headers);
+        if (!mail($recipients, $subject, $body, $headersSend)) {
+            throw new Zend_Mail_Transport_Exception('Unable to send mail');
+        }
     }
 }
 
