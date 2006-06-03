@@ -14,7 +14,7 @@
 				een gegeven pad met een optionele query string.
             </para>
             <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Rest.php;
+require_once 'Zend/Service/Rest.php';
 
 try {
     $rest = new Zend_Service_Rest();
