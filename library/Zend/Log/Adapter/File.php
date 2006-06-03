@@ -169,22 +169,23 @@ class Zend_Log_Adapter_File implements Zend_Log_Adapter_Interface
 
 
 	/**
-	 * Sets an option specific to the implementation of the log adapter.
+	 * Opens the logfile for writing.
 	 *
-	 * @param  $optionKey      Key name for the option to be changed.  Keys are adapter-specific
-	 * @param  $optionValue    New value to assign to the option
+	 * @param  $filename       Filename to open
+	 * @param  $accessMode     Either "w"rite or "a"ppend
 	 * @return bool            True
 	 */
-	public function open($filename=null, $accessMode='a')
+	public function open($filename=null, $accessMode=null)
 	{
-        if (is_null($filename)) {
-            $filename = $this->_filename;
+        if ($filename !== null) {
+            $this->_filename = $filename;
         }
 
-        $this->_filename = $filename;
-        $this->_setAccessMode($accessMode);
-
-        if (!$this->_fileResource = fopen($filename, $accessMode, false)) {
+        if ($accessMode !== null) {
+            $this->_setAccessMode($accessMode);
+        }
+        
+        if (! $this->_fileResource = @fopen($this->_filename, $this->_accessMode, false)) {
             throw new Zend_Log_Adapter_Exception("Log file \"$filename\" could not be opened");
         }
 
