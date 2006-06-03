@@ -144,13 +144,13 @@ $pdf3->rollback($revisions - 1);
     </para>
 
     <para>
-    <code>Zend_Pdf::save($filename, $updateOnly = false)</code> method saves document to a file. If $updateOnly is true,
-    then only new PDF file segment is appended to a file. Otherwise file is overwritten.
+    <code>Zend_Pdf::save($filename, $updateOnly = false)</code> saves the PDF document to a file. If $updateOnly 
+    is true, then only the new PDF file segment is appended to a file. Otherwise, the file is overwritten. 
     </para>
 
     <para>
-    <code>Zend_Pdf::render($filename, $updateOnly = false)</code> returns PDF document as a string. If $updateOnly is true,
-    then only new PDF file segment is returned.
+    <code>Zend_Pdf::render($newSegmentOnly = false)</code> returns the PDF document as a string.  If 
+    $newSegmentOnly is true, then only the new PDF file segment is returned. 
     </para>
 
     <example>
@@ -163,7 +163,7 @@ $pdf = Zend_Pdf::load($fileName);
 // Update document
 $pdf->save($fileName, true);
 // Save document as a new file
-$pdf->save($newFileName, true);
+$pdf->save($newFileName); 
 
 // Return PDF document as a string.
 $pdfString = $pdf->render();

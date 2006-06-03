@@ -5,14 +5,13 @@
 	<sect2 id="zend.mime.message.introduction">
 	  <title>Introduction</title>
 	
-	  <para><code>Zend_Mime_Message</code> represents a mime compliant message
+	  <para><code>Zend_Mime_Message</code> represents a MIME compliant message
 	  that can contain one or more seperate Parts (Represented as <link
 	  linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> objects). With
-	  MimeMessage, Mime compliant multipart messages can be generated from
-	  MimeParts. Encoding and Boundary handling are handled transparently by the
-	  class. MimeMessage Objects can also be reconstructed from given strings
-	  (experimental). Used by <link
-	  linkend="zend.mail"><code>Zend_Mail</code></link>.
+	  <code>Zend_Mime_Message</code>, MIME compliant multipart messages can be generated from
+      <code>Zend_Mime_Part</code> objects. Encoding and Boundary handling are handled transparently 
+      by the class. <code>Zend_Mime_Message</code> objects can also be reconstructed from given  
+	  strings (experimental). Used by <link linkend="zend.mail"><code>Zend_Mail</code></link>. 
 	  </para>
 	</sect2>
   
@@ -30,13 +29,13 @@
 		Objects can be added to a given <code>Zend_Mime_Message</code> object by calling
 		<code>-&gt;addPart($part)</code></para>
 		
-		<para>An array with all <code>Zend_Mime_Part</code> objects in the 
-		<code>Zend_Mime_Message</code> is returned
+		<para>An array with all <link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> 
+		objects in the <code>Zend_Mime_Message</code> is returned 
 		from the method <code>-&gt;getParts()</code>.  The Zend_Mime_Part objects
 		can then be changed since they are stored in the array as references. If
 		parts are added to the array or the sequence is changed, the array needs
-		to be given back to the <code>Zend_Mime_Message</code> object by calling
-		<code>-&gt;setParts($partsArray)</code></para>
+		to be given back to the <link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> 
+        object by calling <code>-&gt;setParts($partsArray)</code>.</para> 
 		
 		<para>The function <code>-&gt;isMultiPart()</code> will return true if
 		more than one part is registered with the <code>Zend_Mime_Message</code> object and thus
@@ -50,7 +49,7 @@
 		<para><code>Zend_Mime_Message</code> usually creates and uses its own
 		<code>Zend_Mime</code> Object to generate a boundary. If you need to
 		define the boundary or want to change the behaviour of the <code>Zend_Mime</code> object
-		used by <code>Zend_Mime_Message</code>, you can instantiate the ZMime
+		used by <code>Zend_Mime_Message</code>, you can instantiate the <code>Zend_Mime</code> 
 		object yourself and then register it to <code>Zend_Mime_Message</code>.
 		Usually you will not need to do this. <code>-&gt;setMime(Zend_Mime
 		$mime)</code> sets a special instance of <code>Zend_Mime</code> to be used
