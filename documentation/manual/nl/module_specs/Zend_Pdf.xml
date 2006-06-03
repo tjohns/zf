@@ -1,6 +1,6 @@
 <sect1 id="zend.pdf.introduction">
     <!-- @todo review and revise upon completion of refactoring -->
-    <title>Inleiding.</title>
+    <title>Inleiding</title>
     <para>
 	De <code>Zend_Pdf</code> module is een volledig in PHP 5 geschreven motor voor het manipuleren van PDF (Portable Document Format).
 	Het kan bestaande documenten laden, nieuwe documenten maken, documenten wijzigen en weer opslaan. Het laat dus eender
@@ -65,7 +65,7 @@
 </sect1>
 
 <sect1 id="zend.pdf.create">
-    <title>Maken en laden van PDF documenten.</title>
+    <title>Maken en laden van PDF documenten</title>
     <para>
     De <code>Zend_Pdf</code> klasse stelt het PDF document zelf op en verstrekt functionaliteit op document
 	niveau.
@@ -77,13 +77,13 @@
 
     <para>
     De <code>Zend_Pdf</code> klasse verstrekt ook twee statische methodes om bestaande
-	PDF documenten te laden. Deze zijn de <code>Zend_Pdf::load()</code> en <code>Zend_Pdf::parse()</code> 
+	PDF documenten te laden. Deze zijn de <code>Zend_Pdf::load()</code> en <code>Zend_Pdf::parse()</code>
 	methodes. Beiden geven een <code>Zend_Pdf</code> object als resultaat terug of werpen een
 	exceptie op indien er een probleem optrad.
     </para>
 
     <example>
-        <title>Maak een nieuw of laad een bestaand PDF document.</title>
+        <title>Maak een nieuw of laad een bestaand PDF document</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // Maak een nieuw PDF document.
@@ -115,7 +115,7 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     </para>
 
     <example>
-        <title>Een bepaalde revisie van een document opvragen.</title>
+        <title>Een bepaalde revisie van een document opvragen</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // Een vorige revisie van het PDF document opvragen.
@@ -137,9 +137,9 @@ $pdf3->rollback($revisions - 1);
 
 
 <sect1 id="zend.pdf.save">
-    <title>Wijzigen van het PDF document opslaan.</title>
+    <title>Wijzigen van het PDF document opslaan</title>
     <para>
-	Er kunnen twee methodes worden aangewend om gewijzigde PDF documenten op te slaan. Deze zijn de 
+	Er kunnen twee methodes worden aangewend om gewijzigde PDF documenten op te slaan. Deze zijn de
 	<code>Zend_Pdf::save()</code> en <code>Zend_Pdf::render()</code> methodes.
     </para>
 
@@ -150,12 +150,12 @@ $pdf3->rollback($revisions - 1);
     </para>
 
     <para>
-    <code>Zend_Pdf::render($filename, $updateOnly = false)</code> geeft het PDF document als een string terug. 
+    <code>Zend_Pdf::render($filename, $updateOnly = false)</code> geeft het PDF document als een string terug.
 	Indien $updateOnly TRUE is, wordt alleen het nieuwe PDF bestandssegment teruggestuurd.
     </para>
 
     <example>
-        <title>Een PDF document opslaan.</title>
+        <title>Een PDF document opslaan</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // PDF document laden.
@@ -176,7 +176,7 @@ $pdfString = $pdf->render();
 </sect1>
 
 <sect1 id="zend.pdf.pages">
-    <title>Document pagina's.</title>
+    <title>Document pagina's</title>
     <para>
 	De PDF document pagina abstractie word afgehandeld door de <code>Zend_Pdf_Page</code> klasse.
     </para>
@@ -194,7 +194,7 @@ $pdfString = $pdf->render();
     <footnote>
         <para>
 		Het is een limitatie van de V1.0 versie van de Zend_Pdf module. Deze limitatie zal verdwijnen in volgende
-		versies. Ongebonden pagina's zullen altijd een beter (optimaler) resultaat geven om pagina's in te delen 
+		versies. Ongebonden pagina's zullen altijd een beter (optimaler) resultaat geven om pagina's in te delen
 		onder documenten.
         </para>
     </footnote>Aan jou om de keuze te maken welke aanpak je kiest.
@@ -227,7 +227,7 @@ $pdfString = $pdf->render();
     </para>
 
     <example>
-        <title>PDF pagina management.</title>
+        <title>PDF pagina management</title>
         <programlisting role="php"><![CDATA[<?php
 ...
 // De volgorde omkeren
@@ -686,7 +686,7 @@ public function rotate($x, $y, $angle);]]>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.save-restore">
-        <title>Opslaan/herstellen van een grafische staat.</title>
+        <title>Opslaan/herstellen van een grafische staat</title>
         <para>
 		Op eender welk moment kan een grafische staat van een pagina (huidig lettertype, lettertype
 		grootte, lijnkleur, vulkleur, lijnstijl, paginarotatie, clip area) worden opgeslagen
@@ -714,7 +714,7 @@ public function restoreGS();]]>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.clipping">
-        <title>Clipping draw area.</title>
+        <title>Clipping draw area</title>
         <para>
 		PDF en de Zend_Pdf module ondersteunen clippen van een teken area.
 		De actieve clip area begrenst de regios van de pagina die door tekenoperaties worden beïnvloed.
@@ -953,7 +953,7 @@ public function getFontSize();]]>
 </sect1>
 
 <sect1 id="zend.pdf.usage">
-    <title>Een gebruiksvoorbeeld voor de Zend_Pdf module.</title>
+    <title>Een gebruiksvoorbeeld voor de Zend_Pdf module</title>
     <para>
 	Deze sectie geeft een voorbeeld van het gebruik van de Zend_Pdf module.
     </para>
