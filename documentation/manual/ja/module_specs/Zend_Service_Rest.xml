@@ -17,7 +17,7 @@
                 をコールし、GET リクエストを実行します。
             </para>
             <programlisting><![CDATA[<?php
-require_once 'Zend/Service/Rest.php;
+require_once 'Zend/Service/Rest.php';
 
 try {
     $rest = new Zend_Service_Rest();
