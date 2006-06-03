@@ -147,8 +147,6 @@ class Zend_Db_Table_Row
                 $this->_refresh();
             }
             
-            // regardless of success return the result
-            return $result;
             
         } else {
             
@@ -166,6 +164,9 @@ class Zend_Db_Table_Row
                 $this->_refresh();
             }
         }
+        
+        // regardless of success return the result
+        return $result;
     }
     
     /**
