@@ -2,24 +2,23 @@
 	<title>Overview</title>
 
 	<sect2 id="zend.controller.overview.introduction">
-		<title>Introduction</title>
+		<title>Wprowadzenie</title>
 		<para>
-			<code>Zend_Controller</code> provides the foundation for building a website based
-			on the Model-View-Controller (MVC) pattern.
+			<code>Zend_Controller</code> dostarcza system umożliwiający budowę witryny
+			opartej na wzorcu MVC (Model-View-Controller - Model-Widok-Kontroler).
 		</para>
 
 		<para>
-			The <code>Zend_Controller</code> system is designed to be lightweight, modular,
-			and extensible.  It is a minimalist design to permit flexibility and some freedom to users
+			System <code>Zend_Controller</code> został zaprojektowany aby być lekkim, modułowym
+			i rozszerzalnym. It is a minimalist design to permit flexibility and some freedom to users
 			while providing enough structure so that systems built around <code>Zend_Controller</code> share
 			some common conventions and similar code layout.
 		</para>
 
 		<para>
-			The <code>Zend_Controller</code> workflow is implemented by several components.  While
-			it is not necessary to completely understand the underpinnings of all of these components
-			to use the system, having a working knowledge of the process is helpful.
-
+			System <code>Zend_Controller</code> został zaimplementowany jako kilka komponentów. Nie jest
+			wymagane posiadanie dokładnej wiedzy na temat działania wszystkich tych komponentów, jednak
+			znajomość tego procesu może być pomocna.
 			<itemizedlist>
 				<listitem>
 					<para>
@@ -57,9 +56,9 @@
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Action</code> is the base controller component.  Each
-						controller is a single class that extends the <code>Zend_Controller_Action class</code>,
-						and this class has action methods.
+						<code>Zend_Controller_Action</code> jest podstawowym komponentem kontrolera. Każdy kontroler
+						jest pojedynczą klasą, która rozszerza klasę <code>Zend_Controller_Action</code>,
+						a ta klasa posiada metody które są akcjami.
 					</para>
 				</listitem>
 			</itemizedlist>

@@ -1,63 +1,66 @@
 <sect1 id="zend.controller.getting-started">
-	<title>Getting Started</title>
+	<title>Pierwsze kroki</title>
 	
 	<sect2 id="zend.controller.getting-started.introduction">
-		<title>Introduction</title>
+		<title>Wprowadzenie</title>
 		<para>
-			The <code>Zend_Controller</code> system was built with extensibility in mind, either
-			by subclassing the existing classes or writing new classes that implement 
-			the interfaces <code>Zend_Controller_Router_Interface</code> and <code>Zend_Controller_Dispatcher_Interface</code>.
+			Klasa <code>Zend_Controller</code> została zbudowana w sposób bardzo elastyczny.
+            Można ją rozwijać rozszerzając klasy istniejące lub pisząc nowe klasy implementujące
+			interfejsy <code>Zend_Controller_Router_Interface</code> oraz <code>Zend_Controller_Dispatcher_Interface</code>.
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.server-configuration">
-		<title>Server Configuration</title>
+		<title>Konfiguracja serwera</title>
 		<para>
-			Zend_Controller is built to support modern websites with clean URIs (few or no query parameters).  As such,
-			the suggested configuration requires support from the webserver in the form of URI rewriting to redirect 
-			all requests to a single file, here called "index.php", which will simply bootstrap <code>Zend_Controller_Front</code>.  
-			On Apache webservers, this is handled by an optional module called mod_rewrite.
+			Klasa Zend_Controller została zbudowana w celu zapewnienia nowoczesnym witrynom
+			estetycznych adresów URL (bez parametrów lub z ich małą ilością). Wymaga to
+			zmian w konfiguracji serwera www w kwestii przekierowania żądań do pojedynczego
+			pliku nazwanego "index.php". Ma on za zadanie ładować klasę <code>Zend_Controller_Front</code>.  
+			Na serwerach Apache funkcjonalność taka jest dostarczana przez opcjonalny moduł mod_rewrite.
 		</para>
 
 		<para>
-			The first step in configuring the server is to sucessfully install and enable mod_rewrite.  The next step
-			is to put two files in the document root: .htaccess and index.php.  The .htaccess file is used by Apache
-			and must contain a mod_rewrite rule to redirect all requests to index.php.  For development purposes, it
-			is often simplest to write a mod_rewrite rule that will redirect all requests to index.php except for certain
-			file extensions.  Here is an example of such a file:
+		    Pierwszym krokiem w konfiguracji serwera jest instalacja i uaktywnienie mod_rewrite. Następnym krokiem
+			jest stworzenie dwóch plików w głównym katalogu serwera www: .htaccess oraz index.php. Plik .htaccess jest używany
+			przez serwer Apache i musi zawierać reguły mod_rewrite aby przekierować wszystkie żądania do pliku index.php.
+			Najprostszym rozwiązaniem jest napisanie reguły mod_rewrite, która przekieruje wszystkie żądania do pliku
+			index.php z wyjątkiem żądań do plików o wybranych rozszerzeniach. Oto przykład takiego pliku:
 
 			<programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
 
-			In the example above, all requests not containing one of the above file extensions will be passed to index.php.
-			This is useful for development, however in production the rewrite rules should be
-			written to exclude directories instead.
+			W powyższym przykładzie wszystkie żądania do plików o rozszerzeniach innych niż
+			wymienione zostaną przekazane do pliku ładującego index.php. Jest to użyteczne podczas
+			tworzenia aplikacji, jednak potem reguły powinny wyłączać konkretne katalogi.
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.bootstrap">
-		<title>Bootstrap File</title>
+		<title>Plik ładujący</title>
 		
 		<para>
-			After setting up the .htaccess file, create a new file called <code>index.php</code>.  This is a bootstrap file.  
-			The purpose of the index.php file is only to bootstrap Zend_Controller_Front, which should ideally be
-			located outside of the document root.
+		    Po ustawieniu pliku .htaccess file, utwórz nowy plik o nazwie <code>index.php</code>.  
+		    Jest to plik ładujący. Jego zadaniem jest jedynie załadowanie klasy Zend_Controller_Front, 
+		    która powinna być umieszczona poza głównym katalogiem serwera.
 		</para>
 
 		<note>	
-			The bootstrap file should be the only PHP file stored in the document root.			
+		    Plik ładujący powinien być jedynym plikiem PHP umieszczonym w głównym
+		    katalogu serwera www.
 		</note>
 
 		<para>
-			For security purposes, Zend very strong recommends not storing any PHP files in directories that are 
-			accessible by the webserver (those that are beneath the document root).  While this is not possible in 
-			every scenario, such as shared hosting, this should be considered a best practice and observed whenever possible.  
+		    Ze względów bezpieczeństwa Zend odradza przechowywanie jakichkolwiek plików PHP
+		    w ścieżkach dostępnych poprzez serwer www (wewnątrz głównego katalogu serwera www).
+		    Jest to bardzo dobrą praktyką, powinna być ona stosowana zawsze gdy jest to możliwe.
 		</para>
 
 		<para>
-			Create the bootstrap file, <code>index.php</code>, in the document root to bootstrap Zend_Controller_Front:
+			Utwórz plik ładujący o nazwie <code>index.php</code> w głównym katalogu serwera www aby
+			załadować klasę Zend_Controller_Front:
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -67,33 +70,36 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 
 ?>]]></programlisting>
 
-			See the next section regarding the <code>/path/to/your/controllers</code>.
+			Przeczytaj następna sekcję odnośnie do <code>/path/to/your/controllers</code>.
 
-			As instructed in <code>README.txt</code>, the directory of the Zend Framework library must be in the
-			<code>include_path</code>.  If this is not set in <code>php.ini</code>, <code>set_include_path()</code> 
-			can be called in this file before the <code>require_once()</code>.
+			Jak napisano w pliku <code>README.txt</code>, ścieżka do katalogu zawierającego bibliotekę Zend Framework 
+			musi być podana w dyretywie <code>include_path</code>. Jeśli nie jest ona ustawiona
+			w pliku <code>php.ini</code>, możesz użyć funkcji <code>set_include_path()</code> 
+			w tym pliku, zanim użyjesz <code>require_once()</code>.
 		</para>
 
 		<note>
-			At this time, we are presently investigating solutions will not require mod_rewrite installation.  We
-			intend to suggest a configuration for systems both with and without mod_rewrite capabilities.  Also,
-			please note this system is not bound to Apache or mod_rewrite specifically, any webserver with similar
-			redirection capabilities should be sufficient.
+		    Obecnie szukamy sposobu nie wymagającego instalacji mod_rewrite. Chcemy zaproponować
+		    konfigurację zarówno dla systemów używających mod_rewrite jak i dla tych które tego modułu
+		    nie używają. Proszę także zwrócić uwagę na to, że ta funkcjonalność nie jest tylko przeznaczona
+		    dla serwera Apache, ale także dla każdego innego serwera posiadającego podobne możliwości
+		    w zakresie przekierowań żądań do plików.
 		</note>
 	</sect2>	
 		
 	<sect2 id="zend.controller.getting-started.directory-structure">
-		<title>Directory Structure</title>
+		<title>Struktura katalogów</title>
 		
 		<para>
-			It is recommended that websites built with the Zend Framework share a common directory structure.  While
-			this is not possible in every case, it is for many or perhaps most.  Choosing to conform to this structure
-			will make your code more easily understandable by someone familiar with the conventions of the Zend Framework.
+		    Zalecane jest aby witryny zbudowane w oparciu o Zend Framework miały podobną
+		    strukturę katalogów. Nie zawsze jest to możliwe, jednak w większości przypadków
+		    jest. Zgodność z tą strukturą spowoduje, że kod będzie bardziej zrozumiały
+		    dla osób zaznajomionych z konwencjami Zend Framework.
 		</para>
 		
 		<para>	
-			The suggested directory structure consists of both library directories (from Zend and elsewhere) 
-			and application directories.
+		    Zalecena struktura katalogów dotyczy zarówno bibliotek (Zend oraz wszystkich innych)
+		    jak i struktury katalogów samej aplikacji.
 
 			<programlisting role="php"><![CDATA[
 /application
@@ -111,7 +117,7 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 		</para>
 		
 		<note>
-			This section is not yet complete.  It is under heavy construction and is subject to change.
+			Ta sekcja nie jest jeszcze gotowa.
 		</note>
 	</sect2>	
 		
@@ -119,8 +125,8 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 		<title>IndexController</title>
 
 		<para>
-			Every site must define a controller named <code>IndexController</code>.  This is the controller
-			that is reached when no controller is specified in the URI, such as in this URI:
+		    Każda witryna musi mieć zdefiniowany kontroler o nazwie <code>IndexController</code>. Jest to kontroler
+		    który jest wywoływany kiedy w adresie URL nie ma określonego kontrolera, np. w takim adresie:
 
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/
@@ -128,9 +134,9 @@ http://framework.zend.com/
 		</para>
 
 		<para>
-			The <code>IndexController</code> class must be stored in a file named <code>IndexController.php</code>, and
-			this must be stored in the controllers directory.  The <code>IndexController</code> must subclass
-			<code>Zend_Controller_Action</code>.  Here is a sample <code>IndexController</code>:
+			Klasa <code>IndexController</code> musi być umieszczona w pliku <code>IndexController.php</code>, a
+			plik musi być umieszczony w katalogu kontrolerów. Klasa <code>IndexController</code> musi rozszerzać
+			klasę <code>Zend_Controller_Action</code>. Oto przykład klasy <code>IndexController</code>:
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -152,7 +158,7 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
 			<note>
-				This section is not yet complete.  It is under heavy construction and is subject to change.
+				Ta sekcja nie jest jeszcze gotowa.
 			</note>			
 		</para>
 	</sect2>			

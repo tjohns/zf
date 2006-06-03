@@ -1,12 +1,12 @@
 <sect1 id="zend.controller.subclassing">
-	<title>Subclassing</title>
+	<title>Rozszerzanie</title>
 	
 	<sect2 id="zend.controller.subclassing.introduction">
-		<title>Introduction</title>
+		<title>Wprowadzenie</title>
 		<para>
-			The <code>Zend_Controller</code> system was built with extensibility in mind, either
-			by subclassing the existing classes or writing new classes that implement 
-			the interfaces <code>Zend_Controller_Router_Interface</code> and <code>Zend_Controller_Dispatcher_Interface</code>.
+			Klasa <code>Zend_Controller</code> została zbudowana w sposób bardzo elastyczny.
+            Można ją rozwijać rozszerzając klasy istniejące lub pisząc nowe klasy implementujące
+			interfejsy <code>Zend_Controller_Router_Interface</code> oraz <code>Zend_Controller_Dispatcher_Interface</code>.
 		</para>
 		
 		<para>
