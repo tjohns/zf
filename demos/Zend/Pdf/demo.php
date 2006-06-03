@@ -4,6 +4,10 @@
  * @subpackage demo
  */
 
+// set include_path to library/ directory only -- see ticket #11
+set_include_path( dirname(dirname(dirname(dirname(__FILE__)))) 
+                  . DIRECTORY_SEPARATOR . 'library' );
+
 /** Zend_Pdf */
 require_once 'Zend/Pdf.php';
 
