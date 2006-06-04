@@ -151,15 +151,15 @@ $pdf3->rollback($revisions - 1);
     </para>
 
     <para>
-    <code>Zend_Pdf::save($filename, $updateOnly = false)</code> メソッドは、
+    <code>Zend_Pdf::save($filename, $updateOnly = false)</code> は、
     ドキュメントをファイルに保存します。$updateOnly が true の場合は、
     新しい PDF ファイルセグメントがファイルに追記されます。
     それ以外の場合はファイルが上書きされます。
     </para>
 
     <para>
-    <code>Zend_Pdf::render($filename, $updateOnly = false)</code> は、
-    PDF ドキュメントを文字列として返します。$updateOnly が true の場合は、
+    <code>Zend_Pdf::render($newSegmentOnly = false)</code> は、
+    PDF ドキュメントを文字列として返します。$newSegmentOnly が true の場合は、
     新しい PDF ファイルセグメントのみが返されます。
     </para>
 
@@ -173,7 +173,7 @@ $pdf = Zend_Pdf::load($fileName);
 // ドキュメントを更新します。
 $pdf->save($fileName, true);
 // ドキュメントを新しいファイルに保存します。
-$pdf->save($newFileName, true);
+$pdf->save($newFileName);
 
 // PDF ドキュメントを文字列で返します。
 $pdfString = $pdf->render();

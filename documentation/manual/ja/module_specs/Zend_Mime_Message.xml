@@ -5,13 +5,13 @@
 	<sect2 id="zend.mime.message.introduction">
 	  <title>導入</title>
 	
-	  <para><code>Zend_Mime_Message</code> は mime 準拠のメッセージを表すものであり、
+	  <para><code>Zend_Mime_Message</code> は MIME 準拠のメッセージを表すものであり、
 	  ひとつあるいは複数の部分に分かれたメッセージ (<link
 	  linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> オブジェクトで表されます)
-	  を保持することができます。MimeMessage では、MimeParts を使用して
-	  mime 準拠のマルチパートメッセージを作成します。
+	  を保持することができます。<code>Zend_Mime_Message</code> では、<code>Zend_Mime_Part</code> を使用して
+	  MIME 準拠のマルチパートメッセージを作成します。
 	  エンコーディングやバウンダリの処理も透過的に行われます。
-	  与えられた文字列から MimeMessage オブジェクトを再構成することも可能です
+	  与えられた文字列から <code>Zend_Mime_Message</code> オブジェクトを再構成することも可能です
 	  (実験段階です)。<link
 	  linkend="zend.mail"><code>Zend_Mail</code></link> で使用しています。</para>
 	</sect2>
@@ -33,11 +33,11 @@
 		
 		<para><code>-&gt;getParts()</code> メソッドは、
 		<code>Zend_Mime_Message</code> 内のすべての
-		<code>Zend_Mime_Part</code> オブジェクトを配列で返します。配列に保存されているのは
+		<link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> オブジェクトを配列で返します。配列に保存されているのは
 		Zend_Mime_Part オブジェクトへの参照なので、内容を変更することが可能です。
 		配列に新たなパートを追加したり並び順を変更したりした場合は、
 		<code>-&gt;setParts($partsArray)</code> をコールして配列を
-		<code>Zend_Mime_Message</code> オブジェクトに書き戻さなければなりません。</para>
+		<link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> オブジェクトに書き戻さなければなりません。</para>
 		
 		<para>関数 <code>-&gt;isMultiPart()</code> は、<code>Zend_Mime_Message</code>
 		オブジェクトに複数のパートが登録されている場合に true を返します。
@@ -52,7 +52,7 @@
 		バウンダリを独自に定義する必要があったり
 		<code>Zend_Mime_Message</code> が使用する <code>Zend_Mime</code>
 		オブジェクトの振る舞いを変更したりしたい場合は、
-		ZMime オブジェクトを自分で作成して <code>Zend_Mime_Message</code>
+		<code>Zend_Mime</code> オブジェクトを自分で作成して <code>Zend_Mime_Message</code>
 		に登録します。通常は、この必要はありません。
 		この <code>Zend_Mime_Message</code> で使用する <code>Zend_Mime</code>
 		インスタンスを設定するには、<code>-&gt;setMime(Zend_Mime
