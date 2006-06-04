@@ -2,14 +2,26 @@
     <title>Zend_Filter</title>
     
     <sect2 id="zend.filter.filter.introduction">
-        <title>Introduction</title>
-        <para><literal>Zend_Filter</literal> provides a library of static methods
-        for filtering data. For input filtering, you should use <xref
-        linkend="zend.filter.input" /> instead, because it provides a framework for
-        filtering input using the methods provided by this class. However, because
-        <literal>Zend_InputFilter</literal> is designed primarily for arrays,
-        <literal>Zend_Filter</literal> can be useful for filtering scalars, because
-        it behaves like PHP's string functions:</para>
+        <title>Введение</title>
+        <para>
+            <literal>Zend_Filter</literal> предоставляет библиотеку статических
+            методов для фильтрации данных. Для фильтрации входных данных нужно
+            использовать <xref linkend="zend.filter.input" />, потому что он предоставляет базовую
+            структуру для фильтрации входных данных, используя методы из класса
+            <literal>Zend_Filter</literal>. Но поскольку <literal>Zend_InputFilter</literal>
+            предназначен главным образом для работы с массивами, <literal>Zend_Filter</literal>
+            может быть полезен для фильтрации скалярных переменных, так как он
+            ведет себя наподобие строковых функций PHP:
+<!--
+            <literal>Zend_Filter</literal> provides a library of static methods
+            for filtering data. For input filtering, you should use <xref
+            linkend="zend.filter.input" /> instead, because it provides a framework for
+            filtering input using the methods provided by this class. However, because
+            <literal>Zend_InputFilter</literal> is designed primarily for arrays,
+            <literal>Zend_Filter</literal> can be useful for filtering scalars, because
+            it behaves like PHP's string functions:
+-->
+        </para>
         <programlisting>
     <![CDATA[<?php
     
@@ -21,22 +33,33 @@
         </programlisting>
     </sect2>
     <sect2 id="zend.filter.filter.usecases">
-        <title>Use Cases</title>
-        <para>In each of these use cases, <literal>$value</literal> represents an
-        arbitrary scalar value.</para>
-        <para>Whitelist Filtering:</para>
+        <title>Примеры использования</title>
+        <para>
+            В каждом из этих примеров <literal>$value</literal> представляет собой произвольное
+            скалярное значение:
+<!--
+            In each of these use cases, <literal>$value</literal> represents an
+            arbitrary scalar value.
+-->
+        </para>
+        <para>
+            Фильтрация по "белому списку" (whitelist):
+<!--
+            Whitelist Filtering:
+-->
+        </para>
         <programlisting>
     <![CDATA[<?php
     
     if ($email = Zend_Filter::isEmail($value)) {
-        /* $email is a valid email format. */
+        /* $email является валидным */
     } else {
-        /* $email is not a valid email format. */
+        /* $email не является валидным */
     }
     
     ?>]]>
         </programlisting>
-        <para>Blind Filtering:</para>
+        <para>Слепая (blind) фильтрация:</para>
         <programlisting>
     <![CDATA[<?php
     
@@ -44,7 +67,7 @@
     
     ?>]]>
         </programlisting>
-        <para>Blacklist Filtering:</para>
+        <para>Фильтрация по "черному листу" (blacklist):</para>
         <programlisting>
     <![CDATA[<?php
     
