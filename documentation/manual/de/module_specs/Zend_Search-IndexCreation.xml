@@ -118,6 +118,30 @@ $index->commit();
             können für die Indexoptimierung dieser Zend_Search_Lucene Version verwendet werden.  
         </para>
     </sect2>
+    <sect2 id="zend.search.index-creation.document-updating">
+        <title>Dokumente aktualisieren</title>
+
+        <para>
+            Das Lucene Indexdateiformat unterstützt keine Aktualisierung von Dokumenten. Ein 
+            Dokument sollte entfernt und wieder hinzugefügt werden, um eine Aktualisierung zu 
+            erreichen.
+        </para>
+
+        <para>
+            Die <code>Zend_Search_Lucene::delete()</code> Methode arbeitet mit einer internen
+            Index Dokumentennummer. Sie kann aus dem Ergebnistreffer über die 'id' Eigenschaft
+            erhalten werden:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$removePath = ...;
+$hits = $index->find('path:' . $removePath);
+foreach ($hits as $hit) {
+    $index->delete($hit->id);
+}
+$index->commit();
+?>]]></programlisting>
+    </sect2>
 </sect1>
 
 <!--

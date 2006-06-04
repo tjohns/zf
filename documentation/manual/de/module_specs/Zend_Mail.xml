@@ -175,12 +175,13 @@ $mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-// erstelle Nachricht...
+
 $at = $mail->addAttachment($myImage);
-$at->type = 'image/gif';
-$at->id = 12;
-$at->filename ='test.gif';
-//...
+$at->type        = 'image/gif';
+$at->disposition = Zend_Mime::DISPOSITION_INLINE;
+$at->encoding    = Zend_Mime::ENCODING_8BIT;
+$at->filename    = 'test.gif';
+
 $mail->send();
 ?>]]>   </programlisting>
     </para>
