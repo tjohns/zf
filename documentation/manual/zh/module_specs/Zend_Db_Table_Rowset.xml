@@ -4,28 +4,26 @@
 
     <sect2 id="zend.db.table.rowset.introduction">
 
-        <title>Introduction</title>
+        <title>简介</title>
 
         <para>
-            Zend_Db_Table_Rowset is an iterator for Zend_Db_Table_Row object collections.
-            In general, you do not instantiate Zend_Db_Table_Rowset by itself; instead,
-            you retrieve a Zend_Db_Table_Rowset as the return result from a call to
-            Zend_Db_Table::find() or fetchAll().  You can then iterate through the
-            collected Zend_Db_Table_Row objects and modify them as you wish.
+            Zend_Db_Table_Rowset是 Zend_Db_Table_Row对象集合的迭代器.通常来说,你不可以自己实例化Zend_Db_Table_Rowset,
+			而是通过调用Zend_Db_Table::find()方法或者fetchAll()方法将Zend_Db_Table_Rowset作为
+			结果数据返回过来.接下来就可以遍历Zend_Db_Table_Row对象集合并进行修改.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.rowset.fetch">
 
-        <title>Fetching a Rowset</title>
+        <title>取回结果集</title>
 
         <para>
-            The first thing to do is instantiate a Zend_Db_Table class.
+            首先,需要实例化一个Zend_Db_Table类.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// 设置一个 adapter
 require_once 'Zend/Db.php';
 $params = array (
     'host'     => '127.0.0.1',
@@ -36,31 +34,27 @@ $params = array (
 
 $db = Zend_Db::factory('pdoMysql', $params);
 
-// set the default adapter for all Zend_Db_Table objects
+// 为所有的Zend_Db_Table对象设置默认 
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
-// connect to a table in the database
+// 连接数据库表
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 ?>]]>
         </programlisting>
 
         <para>
-            Next, retrieve many records from the database using
-            Zend_Db_Table::find() with multiple keys, or by using
-            Zend_Db_Table::fetchAll(); the returned result will be a
-            Zend_Db_Table_Rowset object that will let you iterate through
-            the individual Zend_Db_Table_Row objects in the record set.
-        </para>
+		    接下来,可以使用Zend_Db_Table::find()方法和多个键值,或者使用Zend_Db_Table::fetchAll()方法对数据库进行查询,
+            返回的结果是一个Zend_Db_Table_Rowset对象,可以通过该对象遍历结果集中的每一个Zend_Db_Table_Row对象.
+         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// fetch many records from the table
+// 从表中取回多条记录
 $rowset = $table->fetchAll();
 
 //
-// $rowset is now a Zend_Db_Table_Rowset object composed of
-// one Zend_Db_Table_Row object per record in the results
+// $rowset现在是一个Zend_Db_Table_Rowset对象,该对象中每条记录就是一个Zend_Db_Table_Row对象
 //
 ?>]]>
         </programlisting>
@@ -69,37 +63,35 @@ $rowset = $table->fetchAll();
 
     <sect2 id="zend.db.table.rowset.iterate">
 
-        <title>Iterating Through the Rowset</title>
+        <title>遍历结果集</title>
 
         <para>
-            Zend_Db_Table_Rowset implements the SPL Iterator interface,
-            which means you can loop through Zend_Db_Table_Rowset objects like arrays
-            using foreach().  Each value you retrieve this way will be a Zend_Db_Table_Row
-            that corresponds to one record from the table; you can then view, modify, and
-            save the properties for that record.
+		    Zend_Db_Table_Rowset实现了简单程序设计语言的迭代器接口,也就是说,可以对Zend_Db_Table_Rowset
+			对象进行循环处理,就像使用foreach()函数处理数组一样.使用这种方法取回的每一个值都是一个对应表
+			中数据的Zend_Db_Table_Row对象,你可以查看,修改和保存该对象的属性(即表中的字段值.)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
+// 连接到数据库中的表
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// fetch many records from the table
+// 从表中取回多条记录
 $rowset = $table->fetchAll();
 
-// display them all
+// 显示所有的记录
 foreach ($rowset as $row) {
-    // $row is a Zend_Db_Table_Row object
+    // $row 是一个 Zend_Db_Table_Row 对象
     echo "<p>" . htmlspecialchars($row->nobleTitle) . " "
        . htmlspecialchars($row->firstName) . "'s "
        . "favorite color is " . htmlspecialchars($row->favoriteColor)
        . ".</p>\n";
 
-    // update the number of times we have displayed this row,
-    // (which maps to a column in the table "times_displayed")
+    // 更新我们显示改行的次数
+    // (对应表中的"times_displayed"字段)
     $row->timesDisplayed ++;
 
-    // save the record with the new information
+    // 保存新记录.
     $row->save();
 }
 ?>]]>
