@@ -35,13 +35,29 @@
         <itemizedlist>
             <listitem>
                 <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
+			</listitem>
+			<listitem>
                 <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+			</listitem>
+			<listitem>
                 <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
+			</listitem>
+			<listitem>
                 <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
-                <code>Zend_Mime::ENCODING_8BIT</code>: '8bit';
+			</listitem>
+			<listitem>
+                <code>Zend_Mime::ENCODING_8BIT</code>: '8bit'
+			</listitem>
+			<listitem>
                 <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
+			</listitem>
+			<listitem>
                 <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
+			</listitem>
+			<listitem>
                 <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
+			</listitem>
+			<listitem>
                 <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
             </listitem>
         </itemizedlist>

@@ -139,12 +139,13 @@ $pdf3->rollback($revisions - 1);
 
     <para>
      La méthode <code>Zend_Pdf::save($filename, $updateOnly = false)</code> sauvegarde un document dans un fichier. 
-     Si <code>$updateOnly</code> est à true, alors seul les nouvelles sections PDF sont ajouter au fichier. Sinon le fichier est écrasé.
+     Si <code>$updateOnly</code> est à true, alors seul les nouvelles sections PDF sont ajoutées au fichier. 
+	 Sinon le fichier est écrasé.
     </para>
 
     <para>
-     La méthode <code>Zend_Pdf::render($filename, $updateOnly = false)</code> retourne le document PDF dans une chaîne. 
-     Si <code>$updateOnly</code> est à true, alors seul les nouvelle sections du PDF sont retournées.
+     La méthode <code>Zend_Pdf::render($filename, $newSegmentOnly = false)</code> retourne le document PDF dans une chaîne. 
+     Si <code>$newSegmentOnly</code> est à true, alors seul les nouvelles sections du PDF sont retournées.
     </para>
 
     <example>
@@ -157,7 +158,7 @@ $pdf = Zend_Pdf::load($fileName);
 // Met à jour le document
 $pdf->save($fileName, true);
 // Sauvegarde le document dans un nouveau fichier.
-$pdf->save($newFileName, true);
+$pdf->save($newFileName);
 
 // Retourne le document PDF dans une string.
 $pdfString = $pdf->render();
