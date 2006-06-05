@@ -1,0 +1,7 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:555: checking for xep
+configure:602: checking for xinc
+configure:649: checking for fop
+configure:696: checking for xsltproc
