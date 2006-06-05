@@ -19,7 +19,7 @@
             $mail->addTo('somebody_else@example.com', 'un destinataire');
             $mail->setSubject('sujet de test');
             $mail->send();
-            ?>]]>       
+            ?>]]>
         </programlisting>
        </para>
     </example>
@@ -107,7 +107,7 @@ $mail->send($tr2);
 $mail->send();  // utilisation du transport par défaut
 ?>]]>   </programlisting>
     </example>
-    <note>  
+    <note>
         Des transports additionnels peuvent-être écrit en implémentant <code>Zend_Mail_Transport_Interface</code>.
     </note>
 </sect1>
@@ -160,12 +160,13 @@ $mail->addAttachment($monImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-// construction du message
-$at = $mail->addAttachment($monImage);
-$at->type = 'image/gif';
-$at->id = 12;
-$at->filename ='test.gif';
-//...
+
+$at = $mail->addAttachment($myImage);
+$at->type        = 'image/gif';
+$at->disposition = Zend_Mime::DISPOSITION_INLINE;
+$at->encoding    = Zend_Mime::ENCODING_8BIT;
+$at->filename    = 'test.gif';
+
 $mail->send();
 ?>]]>   </programlisting>
     </para>
@@ -194,11 +195,11 @@ $mail->send();
 <sect1 id="zend.mail.boundary">
     <title>Contrôler les limites MIME</title>
     <para>
-        Dans un message en plusieurs parties, une limite MIME est normallement générée aléatoirement pour séparer 
-        les différentes parties du message. 
-        Cependant dans le cas où vous souhaiteriez spécifier vous-même la limite MIME utilisée, 
+        Dans un message en plusieurs parties, une limite MIME est normallement générée aléatoirement pour séparer
+        les différentes parties du message.
+        Cependant dans le cas où vous souhaiteriez spécifier vous-même la limite MIME utilisée,
         vous pouvez appeler la méthode <code>setMimeBoundary()</code>,
-        comme le montre l'exemple suivant : 
+        comme le montre l'exemple suivant :
     </para>
     <example>
         <title>Changer la limite MIME</title>
@@ -215,7 +216,7 @@ $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++));
     <title>Entêtes additionnelles</title>
     <para>
         Des entêtes arbitraires peuvent être définies en utilisant la méthode <code>addHeader()</code>. Elle a besoin de deux
-        paramètres contenant le nom et la valeur du champ d'entête. Un troisième paramètre optionnel détermine si 
+        paramètres contenant le nom et la valeur du champ d'entête. Un troisième paramètre optionnel détermine si
         l'entête doit avoir une ou plusieurs valeurs :
     </para>
     <example>
@@ -251,7 +252,7 @@ $mail->addHeader('X-greetingsTo', 'Papa', true);
         binaires.
     </para>
     <para>
-        <code>Zend_Mail_Transport_Smtp</code> encode les lignes commençant par un ou deux points, ainsi l'email ne viole 
+        <code>Zend_Mail_Transport_Smtp</code> encode les lignes commençant par un ou deux points, ainsi l'email ne viole
         pas le protocole SMTP.
     </para>
 </sect1>
