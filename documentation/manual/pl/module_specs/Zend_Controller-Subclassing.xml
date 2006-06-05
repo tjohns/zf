@@ -10,74 +10,81 @@
 		</para>
 		
 		<para>
-			Possible reasons for implementing a new router or dispatcher might be:
+			Powodami dla których warto implementować nowy router lub dispatcher mogą być:
 			
 			<itemizedlist>
 				<listitem>
 					<para>
-						The existing URI routing system is not suitable in some way, such as integrating
-						into an existing website that uses its own conventions for routing that do not
-						mesh with the routing mechanism provided with the Zend Framework.
+					    Istniejący w Zend Framework system routingu URI nie jest 
+					    kompatybilny. Np. gdy chcemy go zintegrować z istniejącą witryną
+					    która używa swoich własnych konwencji routingu, które nie są
+					    kompatybilne z mechanizmem routingu dostarczanym przez Zend Framework.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						You need to implement routing for something completely different.  The <code>Zend_Controller_Router</code>
-						class only deals with URIs.  It's possible and likely that you might want to use the MVC
-						pattern for developing another type of program, such as a console application.  In the case of
-						a console application, a custom router could process command line arguments to determine
-						the route.
+					    Potrzebujesz zaimplementować routing dla czegoś zupełnie innego. Klasa <code>Zend_Controller_Router</code>
+						działa jedynie z adresami URI. Jest prawdopodobne że chciałbyś użyć wzorca MVC
+						do opracowania innego typu aplikacji, np. aplikacji konsolowej. W przypadku
+						aplikacji konsolowej własny router mógłby obrabiać argumenty linii poleceń w celu 
+						określenia nazw kontrolerów, nazw akcji oraz opcjonalnych parametrów.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						The mechanism provided by <code>Zend_Controller_Dispatcher</code> is not suitable.  The default configuration
-						assumes a convention that controllers are classes and actions are methods of those classes.
-						However, there are many other strategies for doing this.  One example would be where controllers
-						are directories and actions are files within those directories.
+						Mechanizm dostarczany przez <code>Zend_Controller_Dispatcher</code> nie jest kompatybilny.  
+						Domyślna konfiguracja przyjmuje taką konwencję, że kontrolery są klasami, a akcje metodami
+						tych klas. Bądź co bądź, jest wiele innych sposobów wykonania tego. Przykładem może być takie
+						rozwiązanie, w którym kontrolery są katalogami a akcje plikami w tych katalogach.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						You wish to provide additional capabilities that will be inherited by all of your controllers.
-						For example, <code>Zend_Controller_Action</code> does not integrate with <code>Zend_View</code> by default.  
-						However, you could extend your own controller to do this, and using it would not require modifying the
-						supplied <code>Zend_Controller_Router</code> or <code>Zend_Controller_Dispatcher</code>.
+					    Chciałbyś dostarczyć dodatkowe możliwości które będą odziedziczone
+					    przez wszystkie kontrolery. Na przykład <code>Zend_Controller_Action</code> 
+					    nie jest domyślnie zintegrowany z <code>Zend_View</code>. Jednak mógłbyś
+					    rozszerzyć swój własny kontroler aby to robił i zapewnienie takiej 
+					    funkcjonalności nie wymagałoby modyfikowania dostarczonych klas 
+						<code>Zend_Controller_Router</code> oraz <code>Zend_Controller_Dispatcher</code>.
 					</para>
 				</listitem>
 			</itemizedlist>
 				
-			Please be careful when overriding significant parts of the system, particularly the dispatcher.  One of
-			the advantages of <code>Zend_Controller</code> is that it establishes common conventions for building applications.  If
-			too much of this default behavior is changed, some of these advantages are lost.  However, there are many
-			different needs and one solution can't fit them all, so the freedom is provided if needed.
+			Proszę być ostrożnym podczas nadpisywania znaczących części systemu, sczególnie
+			wtedy gdy jest to dispatcher. Jedną z zalet klasy <code>Zend_Controller</code> 
+			jest to że wprowadza ona ogólne konwencje budowy aplikacji. Jeżeli odejdziemy
+			zbyt daleko od tych konwencji, możemy stracić część tych zalet. Jednak
+			jest wiele różnych zapotrzebowań i jedno rozwiązanie nie jest w stanie spełnić
+			ich wszystkich więc dowolność jest zapewniona gdy jest potrzebna.
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.subclassing.conventions">
-		<title>Conventions</title>
+		<title>Konwencje</title>
 		
 		<para>
-			When subclassing any of the Zend_Controller classes, you are strongly encouraged to follow these
-			conventions for naming or storing files.  Doing so will ensure that another programmer who is familiar
-			with the Zend Framework will be able to understand your project easily.
+		    Kiedy rozszerzasz którekolwiek klasy Zend_Controller powinieneś użyć takich
+		    samych konwencji w nazywaniu i przechowywaniu plików. Takie postępowanie
+		    spowoduje to, że inny programista który jest zaznajomiony z Zend Framework 
+		    będzie w stanie łatwo zrozumieć Twój projekt.
 		</para>
 		
 		<sect3 id="zend.controller.subclassing.prefix">
-			<title>Prefix</title>
+			<title>Przedrostki</title>
 				
 			<para>
-				Classes included with the Zend Framework follow a convention where every class is prefixed by
-				"Zend_".  This is the prefix.  We recommend that you name all of your classes in the same way,
-				e.g. if your company name is Widget, Inc., the prefix might be "Widget_".  
+			    Klasy ładowane przez Zend Framework są nazywane wg tej samej konwencji,
+			    każda z nich jest poprzedzona przedrostkiem "Zend_". Zalecamy abyś nazywał
+			    wszystkie swoje klasy w analogiczny sposób, np. jeśli Twoja firma nazywa
+			    się Widget Inc., to prefiksem mogłoby być "Widget_".
 			</para>
 		</sect3>
 		
 		<sect3 id="zend.controller.directory.layout">
-			<title>Directory Layout</title>
+			<title>Struktura katalogów</title>
 			
 			<para>
-				The <code>Zend_Controller</code> classes are stored in the library directory as follows:
+				Klasa <code>Zend_Controller</code> jest przechowywana w taki sposób:
 
     <programlisting role="php"><![CDATA[
 /library
@@ -88,13 +95,15 @@
       Router.php
 ]]></programlisting>			
 
-				When subclassing <code>Zend_Controller</code> classes, it is recommended that the new classes
-				be stored in an identical structure under your prefix.  This will make them easy to find for
-				someone during that learning process of reviewing the code for your project.  
+				Kiedy rozszerzasz klasy <code>Zend_Controller</code>, zalecane jest aby
+				nowa klasa była przechowywana w identyczny sposób z uwzględnieniem własnego
+				prefiksu. To spowoduje że będą one łatwe do znalezienia i zrozumienia 
+				dla kogoś kto przegląda kod Twojego projektu.
 			</para>
 			
 			<para>
-				For example, a project from Widget, Inc. which implements only a custom router might look like this:
+			    Na przykład struktura projektu firmy Widget Inc., który implementuje jedynie 
+			    własny router mogłaby wyglądać w ten sposób:
 				
 <programlisting role="php"><![CDATA[
 /library
@@ -105,26 +114,28 @@
       README.txt
 ]]></programlisting>			
 
-				Notice in this example that the <code>Widget/Controller/</code> directory mirrors the <code>Zend/Controller/</code>
-				directory wherever possible.  In this case, it provides the class <code>Widget_Controller_Router</code>,
-				which would be either a subclass or replacement for <code>Zend_Controller_Router</code> implementing
+                Pamiętaj, że w tym przykładzie <code>Widget/Controller/</code> ma taką samą strukturę
+                jak <code>Zend/Controller/</code> kiedy tylko jest to możliwe. W tym przypadku definiuje 
+                on klasę <code>Widget_Controller_Router</code>, która może być klasa rozszerzającą lub
+                zastępującą klasę <code>Zend_Controller_Router</code> implementującą
 				<code>Zend_Controller_Router_Interface</code>.
 			</para>
 			
 			<para>
-				Also, notice in the example above that a <code>README.txt</code> file has been placed in <code>Widget/Controller/</code>.
-				Zend strongly encourages you to document your projects through supplying separate tests and
-				documentation for customers.  However, we encourage you to also place a simple <code>README.txt</code> file
-				right in the directory to briefly explain your changes and how they work.
+			    Zwróć także uwagę na to, że w powyższym przykładzie plik <code>README.txt</code> został
+			    umieszczony w katalogu <code>Widget/Controller/</code>. Zend zaleca abyś dokumentował
+			    swoje projekty dostarczając klientom osobne testy oraz dokumentację. Jakkolwiek, zalecamy
+			    Ci abyś także tworzył prosty plik <code>README.txt</code> w katalogu swojej klasy
+			    aby wyjaśnić zmiany oraz zasady jej działania.
 			</para>
 		</sect3>
 	</sect2>
 	
 	<sect2 id="zend.controller.router.interface">
-		<title>Router Interface</title>
+		<title>Interfejs Routera</title>
 		
 		<para>
-			The interface <code>Zend_Controller_Router_Interface</code> provides a definition for only one method:
+			Interfejs <code>Zend_Controller_Router_Interface</code> definiuje jedynie jedną metodę:
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -137,37 +148,40 @@
 
 ?>]]></programlisting>
 			
-			Routing only occurs once: when the request is first received into the system.  The purpose of the
-			router is to generate a <code>Zend_Controller_Dispatch_Token</code> that specifies a controller and action of
-			that controller.  This is then passed to the dispatcher.  If it is not possible to map a route to 
-			a dispatch token (nonsenical route) then a boolean, <code>FALSE</code>, should be returned.
+			Proces routingu ma miejsce tylko raz: wtedy gdy system po raz pierwszy otrzymuje żądanie.
+			Celem routera jest wygenerowanie obiektu <code>Zend_Controller_Dispatch_Token</code> który
+			określa kontroler oraz akcję z tego kontrolera. To jest przekazywane do dispatchera. Jeśli
+			nie jest możliwe określenie mapowanie trasy do tokena to zwracana jest wartość logiczna 
+			<code>FALSE</code>.
 		</para>
 		
 		<para>
-			Some routers may process dynamic elements and need a way to determine if the dispatch token generated
-			is actually dispatchable before returning it.  For this reason, the router receives the object handle 
-			of the dispatcher as the sole argument to its <code>route()</code> method.  The dispatcher provides a method,
-			<code>isDispatchable()</code>, for this testing.
+		    Niektóre routery mogą przetwarzać dynamiczne elementy i przed zwróceniem
+		    wygenerowanego tokena potrzebują możliwości sprawdzenia czy jest możliwe
+		    jego wykonanie. Z tego powodu, metoda <code>route()</code> routera otrzymuje 
+		    uchwyt obiektu dispatchera jako jedyny argument. Dispatcher posiada metodę 
+		    <code>isDispatchable()</code> do sprawdzania możliwości jego wykonania.
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.dispatcher.interface">
-		<title>Dispatcher Interface</title>
+		<title>Interfejs dispatchera</title>
 		
 		<para>
-			<code>Zend_Controller_Front</code> will first call the router to receive the first dispatch token, which it will
-			pass to the dispatcher.  The dispatcher will dispatch the action (instantiate the controller, call
-			its action) and then return with either a boolean, FALSE, or another dispatch token.  
+			<code>Zend_Controller_Front</code> wpierw wywołuje router w celu otrzymania tokena, który
+			będzie przekazany do dispatchera. Dispatcher uruchomi akcję (tworząc instancję kontrolera 
+			i wywołując jego akcję) a następnie zwróci logiczną wartość FALSE lub kolejny token.
+
 		</para>
 		
 		<para>
-			<code>Zend_Controller_Front</code> repeatedly calls the dispatcher until a dispatch token is not returned from
-			it.  This is known as the dispatch loop.  It allows for actions to be processed sequentially
-			until all work has been done.
+			<code>Zend_Controller_Front</code> w pętli wywołuje dispatcher dopóki zwracany 
+			jest kolejny token. Nazywamy to pętlą uruchomieniową (dispatch loop). Pozwala ona
+			na sekwencyjne uruchamianie akcji aż wszystkie zostaną wykonane.
 		</para>
 		
 		<para>
-			The interface <code>Zend_Controller_Dispatcher_Interface</code> provides definitions for two methods:
+			Interfejs <code>Zend_Controller_Dispatcher_Interface</code> dostarcza definicje dwóch metod:
 			
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -179,10 +193,13 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 
-		<code>isDispatchable()</code> checks if a dispatch token is dispatchable.  If it is, it returns <code>TRUE</code>.  
-		Otherwise, it returns <code>FALSE</code>.  The definition of what is dispatchable is left to the class 
-		implementing the interface.  In the case of the default implementation, <code>Zend_Controller_Dispatcher</code>, it means
-		that the controller file exists, the class exists within the file, and the action method exists within the class.
+		Metoda <code>isDispatchable()</code> sprawdza czy jest możliwe uruchomienie akcji
+		z tokena. Jeśli jest to możliwe, zwraca ona wartość <code>TRUE</code>. W przeciwnym
+		wypadku zwraca wartość <code>FALSE</code>. Decyzja o tym czy jest możliwe
+		uruchomienie akcji została pozostawiona klasie implementującej interfejs.
+		W domyślnej implementacji klasy <code>Zend_Controller_Dispatcher</code> oznacza to
+		sprawdzenie, czy plik kontrolera istnieje, czy klasa istnieje w tym pliku
+		oraz czy wewnątrz klasy istnieje żądana akcja.
 		
 		<programlisting role="php"><![CDATA[<?php
 			
@@ -194,8 +211,9 @@ public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 		
-		<code>dispatch()</code> is where the work gets done.  This method must execute the action of the controller.
-		It must return either a dispatch token or a boolean, FALSE, to indicate that there is no more work to do.
+		<code>dispatch()</code> jest metodą, która wykonuje całą pracę. Ta metoda 
+		musi uruchomić akcję kontrolera. Musi zwrócić kolejny token lub wartość 
+		logiczną FALSE aby określić czy są jeszcze jakieś akcje do uruchomienia.
 		
 		</para>
 	</sect2>

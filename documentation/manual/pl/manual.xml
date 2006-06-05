@@ -5,7 +5,7 @@
     <!ENTITY % magic.fixup SYSTEM "./entities.ent">
     %magic.fixup;
 ]>
-<book id="manual" lang="en">
+<book id="manual" lang="pl">
     <bookinfo>
         <title>Przewodnik Programisty</title>
         <subtitle>Zend Framework</subtitle>

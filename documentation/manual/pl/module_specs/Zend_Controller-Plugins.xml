@@ -1,6 +1,6 @@
 <sect1 id="zend.controller.plugins">
 	<title>Wtyczki</title>
-	
+
 	<sect2 id="zend.controller.plugins.introduction">
 		<title>Wprowadzenie</title>
 
@@ -8,5 +8,5 @@
 			Ta sekcja nie jest jeszcze gotowa.
 		</note>
 	</sect2>
-		
+
 </sect1>

@@ -1,5 +1,5 @@
 <sect1 id="zend.controller.overview">
-	<title>Overview</title>
+	<title>Wstęp</title>
 
 	<sect2 id="zend.controller.overview.introduction">
 		<title>Wprowadzenie</title>
@@ -10,9 +10,10 @@
 
 		<para>
 			System <code>Zend_Controller</code> został zaprojektowany aby być lekkim, modułowym
-			i rozszerzalnym. It is a minimalist design to permit flexibility and some freedom to users
-			while providing enough structure so that systems built around <code>Zend_Controller</code> share
-			some common conventions and similar code layout.
+			i rozszerzalnym. Projekt jest minimalistyczny w celu zapewnienia elastyczności 
+		    i wolności użytkownikom, jednak zapewniając wystarczającą strukturę powoduje, że
+		    systemy zbudowane w oparciu o <code>Zend_Controller</code> będą napisane
+		    w podobnych konwencjach.
 		</para>
 
 		<para>
@@ -23,34 +24,37 @@
 				<listitem>
 					<para>
 						<code>Zend_Controller_Front</code>
-						orchestrates the entire workflow of the <code>Zend_Controller</code> system.  It
-						is an interpretation of the FrontController pattern.  <code>Zend_Controller_Front</code>
-						processes all requests received by the server and is ultimately responsible for
-						delegating requests to ActionControllers (<code>Zend_Controller_Action</code>).
+						instrumentuje całą przestrzeń systemu <code>Zend_Controller</code>. Jest
+						interpretacją wzorca projektowego FrontController. Obiekt <code>Zend_Controller_Front</code>
+						przetwarza wszystkie żądania otrzymywane przez serwer i jest ostatecznie odpowiedzialny
+						za przekazywanie żądań do odpowiednich kontrolerów (<code>Zend_Controller_Action</code>).
 					</para>
 				</listitem>
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Router</code> is the router.  Routing is
-						the process of taking a URI endpoint and decomposing it to
-						determine which controller, and action of that controller, should receive
-						the request.  This definition of controller, action, and optional parameters,
-						is packaged into a value object called <code>Zend_Controller_Dispatcher_Token</code>.
-						This is then processed by <code>Zend_Controller_Dispatcher</code>.  Routing occurs
-						only once: when the request is initially received and before the first controller is dispatched.
+						<code>Zend_Controller_Router</code> jest routerem. Routing jest
+						procesem pobierania adresu URI i rozkładania go w celu ustalenia,
+						który kontroler i która akcja powinny otrzymać żądanie. Nazwa 
+						kontrolera, nazwa akcji oraz opcjonalne parametry są pakowane 
+						do obiektu <code>Zend_Controller_Dispatcher_Token</code>.
+						Te dane są obraniane przez <code>Zend_Controller_Dispatcher</code>.  
+						Proces routingu ma miejsce tylko raz: pomiędzy odebraniem
+						żądania a wywołaniem pierwszego kontrolera.
 					</para>
 				</listitem>
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Dispatcher</code> is the dispatcher.  Dispatching is
-						the process of taking the <code>Zend_Controller_Dispatcher_Token</code>, finding
-						the appropriate controller file, instantiating a controller class in that file
-						(must implement <code>Zend_Controller_Action</code>), and finally running the action method in
-						that controller object.  Unlike routing, which occurs only once, dispatching occurs
-						in a loop.  <code>Zend_Controller_Dispatcher</code> is repeatedly called by
-						<code>Zend_Controller_Front</code> until all actions have been dispatched sequentially.
+						<code>Zend_Controller_Dispatcher</code> jest dispatcherem. Dispatching 
+						(wysyłanie) jest procesem pobierania obiektu <code>Zend_Controller_Dispatcher_Token</code>, 
+						szukania odpowiedniego kontrolera, tworzenia instancji klasy kontrolera z tego pliku 
+						(klasa ta musi implementować <code>Zend_Controller_Action</code>) i ostatecznie 
+						wywoływania metody akcji w tym obiekcie kontrolerze. W przeciwieństwie do routingu
+						który ma miejsce tylko raz, proces dispatchingu odbywa się w pętli.  
+						<code>Zend_Controller_Dispatcher</code> jest wywoływany przez
+						<code>Zend_Controller_Front</code> dopóki wszystkie akcje nie zostaną
+						wywołane.
 					</para>
 				</listitem>
 
@@ -63,50 +67,52 @@
 				</listitem>
 			</itemizedlist>
 
-			The workflow of <code>Zend_Controller</code> is relatively simple.  A request is received by
-			<code>Zend_Controller_Front</code>, which in turn calls <code>Zend_Controller_Router</code> to determine which
-			controller (and action in that controller) to dispatch.  <code>Zend_Controller_Router</code> decomposes the URI
-			into a <code>Zend_Controller_Dispatcher_Token</code> object that describes where to dispatch.
-			<code>Zend_Controller_Front</code> then enters a dispatch loop.  It calls <code>Zend_Controller_Dispatcher</code>,
-			passing it the token, to dispatch to the actual controller and action.  After the controller has finished,
-			control returns to <code>Zend_Controller_Front</code>.  If the controller has indicated that another controller
-			should be dispatched by returning a new token, the loop continues and another dispatch is performed.
-			Otherwise, the process ends.
+			Przestrzeń systemu <code>Zend_Controller</code> jest stosunkowo prosta. Żądanie jest odbierane
+			przez obiekt <code>Zend_Controller_Front</code>, który wywołuje <code>Zend_Controller_Router</code> 
+			w celu określenia kontrolera (i akcji w tym kontrolerze) do uruchomienia. <code>Zend_Controller_Router</code> 
+			rozkłada adres URI na części i zapisuje je w obiekcie <code>Zend_Controller_Dispatcher_Token</code>, który
+			zawiera informacje o tym który kontroler i akcję ma uruchomić. Wtedy <code>Zend_Controller_Front</code> 
+			rozpoczyna pętlę uruchamiania akcji z kontrolerów. Uruchamia <code>Zend_Controller_Dispatcher</code>,
+			przekazując mu token w celu uruchomienia odpowiedniego kontrolera i akcji. Gdy kontroler kończy działanie,
+		    kontrola wraca do obiektu <code>Zend_Controller_Front</code>. Jeśli kontroler zwracając nowy token
+		    wskazał kolejny kontroler, który powinien być uruchomiony pętla kontynuuje działanie i kolejny 
+		    kontroler zostaje uruchomiony. W przeciwnym wypadku proces się kończy.
 		</para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.routing-process">
-		<title>Route Process</title>
+		<title>Proces Routingu</title>
 
 		<para>
-			Before your first controller can be built, you need to understand how the routing
-			process works as it is implemented in <code>Zend_Controller_Router</code>.  Remember that the
-			workflow is divided into routing, which occurs only once, and dispatching, which
-			occurs thereafter in a loop.
+		    Zanim zbudujesz swój pierwszy kontroler, powinieneś zrozumieć jak działa proces
+		    routingu który jest zaimplementowany jako <code>Zend_Controller_Router</code>. Pamiętaj,
+		    że przestrzeń działania jest podzielona na routing, który ma miejsce tylko raz oraz na
+		    proces dispatchingu, który odbywa się w pętli.
 		</para>
 
 		<para>
-			<code>Zend_Controller_Front</code> calls <code>Zend_Controller_Router</code> to map a URI
-			to a controller -- and an action within that controller.  <code>Zend_Controller_Router</code>
-			takes the URI and decomposes it into a value object, <code>Zend_Controller_Dispatcher_Token</code>,
-			which will be passed to the dispatcher (<code>Zend_Controller_Dispatcher</code>).
+			<code>Zend_Controller_Front</code> wywołuje <code>Zend_Controller_Router</code> 
+			aby zmapować adres URI do kontrolera oraz do akcji wewnątrz kontrolera. 
+			<code>Zend_Controller_Router</code> pobiera adres URI a następnie rozkłada 
+			go na części i zapisuje w obiekcie <code>Zend_Controller_Dispatcher_Token</code>,
+			który będzie przekazany do dispatchera (<code>Zend_Controller_Dispatcher</code>).
 		</para>
 
 		<para>
-			The router uses a very simple mapping to determine the name of the controller and
-			the name of the action within that controller:
+			Router używa bardzo prostego mapowania nazwy kontrolera i nazwy akcji z tego kontrolera:
+
 
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
 			</programlisting>
 
-			Notice above that the first segment is always the name of the controller and the
-			second segment is always the name of the action.
+			Pamiętaj, że powyżej pierwsza część adresu jest nazwą kontrolera, a druga
+			część jest zawsze nazwą akcji.
 		</para>
 
 		<para>
-			Optionally, parameters may be defined in the URI that will be passed to the controller.
-			These take the form of key/value pairs:
+		    Opcjonalnie w adresie URI mogą być zdefiniowane parametry które zostaną
+		    przekazane do kontrolera. Przyjmują one postać par klucz/wartość:
 
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/key1/value1/]]>
@@ -114,36 +120,37 @@ http://framework.zend.com/controller/action/key1/value1/]]>
 		</para>
 
 		<para>
-			If nothing is present in the <code>/controller/</code> part of the URI, then this will become
-			"<code>index</code>".  If nothing is present in the <code>/action/</code> part of the URI, then
-			this will also become "<code>index</code>".  These examples illustrate:
+			Jeśli pierwsza część adresu URI (<code>/controller/</code>) jest pusta, 
+			zostanie przyjęta nazwa domyślnego kontrolera czyli "<code>index</code>". 
+			Jeśli pusta jest część <code>/action/</code>, zostanie przyjęta nazwa
+			akcji domyślnej czyli "<code>index</code>". Oto przykłady:
 
 				<programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
-Controller: roadmap
-Action    : future
+Kontroler: roadmap
+Akcja    : future
 
 http://framework.zend.com/roadmap/
-Controller: roadmap
-Action    : index
+Kontroler: roadmap
+Akcja    : index
 
 http://framework.zend.com/
-Controller: index
-Action    : index]]>
+Kontroler: index
+Akcja    : index]]>
 				</programlisting>
 			</para>
 
 			<note>
-				We are currently developing a new router with a URI rewriting engine that will give
-				much more flexible capabilities than are presently available in the router.
-				This will be included in a preview release in the very near future.
+			    Obecnie pracujemy nad nowym routerem z silnikiem przepisywania adresów URI,
+			    który da o wiele szersze możliwosci niż te obecnie dostępne w routerze.
+				Będzie to dostępne w niedalekiej przyszłości.
 			</note>
 
 			<para>
-				The controller name, the action name within that controller, and any optional parameters
-				are packaged into a token, <code>Zend_Controller_Dispatcher_Token</code>.  This token
-				is returned to <code>Zend_Controller_Front</code>, which will then enter the dispatch loop.
-				Once in the dispatch loop, the token will be passed to <code>Zend_Controller_Dispatcher</code>.
+			    Nazwa kontrolera, nazwa akcji z tego kontrolera oraz opcjonalne parametry są pakowane
+			    do tokena <code>Zend_Controller_Dispatcher_Token</code>. Ten token jest przekazywany
+			    do obiektu <code>Zend_Controller_Front</code>, który rozpocznie pętlę uruchamiania 
+			    kontrolerów. Gdy pętla trwa, token jest przekazywany do obiektu <code>Zend_Controller_Dispatcher</code>.
 			</para>
 	</sect2>
 
@@ -151,32 +158,33 @@ Action    : index]]>
 		<title>Dispatch Token</title>
 
 		<para>
-			The dispatch token is a simple value object that is passed between <code>Zend_Controller_Front</code>
-			and classes that implement the router and dispatcher interfaces.  It packages a definition of a controller,
-			an action, and parameters to be passed to the action.
+			Token jest prostym obiektem który jest przekazywany pomiędzy obiektem <code>Zend_Controller_Front</code>
+			a klasami które implementują interfejsy routera i dispatchera. Przechowuje on informacje o kontrolerze,
+			akcji oraz o parametrach które mają być przekazane do akcji.
 		</para>
 
 		<itemizedlist>
 			<listitem><para>
-				The controller name is accessed by <code>getControllerName()</code> and <code>setControllerName()</code>.
+				Dostęp do nazwy kontrolera uzyskujemy za pomocą metod <code>getControllerName()</code> oraz <code>setControllerName()</code>.
 			</para></listitem>
 			<listitem><para>
-				The name of the action to call within that controller is accessed by <code>getActionName()</code> and <code>setActionName()</code>.
+			    Dostęp do nazwy akcji uzyskujemy za pomocą metod <code>getActionName()</code> oraz <code>setActionName()</code>.
 			</para></listitem>
 			<listitem><para>
-				Parameters to be passed to that action are an associative array of key/value pairs that are accessed by <code>getParams()</code>
-				and <code>setParams()</code>.
+			    Parametry przekazane do akcji są tablicą asocjacyjną składającą
+			    się z par klucz/wartość, które są dostępne za pomocą metod <code>getParams()</code>
+				oraz <code>setParams()</code>.
 			</para></listitem>
 		</itemizedlist>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatching">
-		<title>Dispatch Process</title>
+		<title>Proces Dispatchingu</title>
 
 		<para>
-			Dispatching is the process of taking a token, <code>Zend_Controller_Dispatcher_Token</code>, extracting
-			the information contained in it: a controller name, an action name, and option parameters,
-			and then instantiating a controller and calling an action of that controller.
+			Dispatching (wysyłanie) jest procesem pobierania tokena <code>Zend_Controller_Dispatcher_Token</code>, 
+			rozpakowania informacji które on zawiera: nazwy kontrolera, nazwy akcji oraz opcjonalnych
+			parametrów i ostatecznie utworzeniem instancji kontrolera i wywołaniem akcji z tego kontrolera.
 		</para>
 	</sect2>
 </sect1>
