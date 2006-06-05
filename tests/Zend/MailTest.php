@@ -37,15 +37,20 @@ class Zend_Mail_Transport_Mock implements Zend_Mail_Transport_Interface
     public $from = null;
     public $called = false;
 
-    public function sendMail(Zend_Mail $mail, $body, $header)
+    public function sendMail(Zend_Mail $mail, $body, $headers, $to)
     {
          $this->mail = $mail;
          $this->body = $body;
-         $this->header = $header;
          $this->recipients = $mail->getRecipients();
          $this->subject = $mail->getSubject();
          $this->from = $mail->getFrom();
          $this->called = true;
+
+         // Prepare headers
+         $this->header = '';
+         foreach ($headers as $header) {
+             $this->header .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
+         }
     }
 }
 
@@ -118,14 +123,14 @@ class Zend_MailTest extends PHPUnit2_Framework_TestCase
         $mail->send($mock);
 
         $this->assertTrue($mock->called);
-        $this->assertContains('From: =?iso8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"?=', $mock->header);
+        $this->assertContains('From: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"?=', $mock->header);
         $this->assertNotContains("\nCc:foobar@example.com", $mock->header);
-        $this->assertContains('=?iso8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail2@example.com>', $mock->header);
-        $this->assertContains('Cc: =?iso8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail3@example.com>', $mock->header);
-        $this->assertContains('Subject: =?iso8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
+        $this->assertContains('=?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail2@example.com>', $mock->header);
+        $this->assertContains('Cc: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail3@example.com>', $mock->header);
+        $this->assertContains('Subject: =?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
         $this->assertContains('X-MyTest:', $mock->header);
         $this->assertNotContains("\nCc:foobar2@example.com", $mock->header);
-        $this->assertContains('=?iso8859-1?Q?Test-=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
+        $this->assertContains('=?iso-8859-1?Q?Test-=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
     }
 
     /**
