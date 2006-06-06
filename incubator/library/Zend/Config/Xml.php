@@ -38,26 +38,14 @@ class Zend_Config_Xml
      * Load the section $section from the config file $filename into
      * an associative array.
      *
-     * If any keys with $section are called "extends", then the section
-     * pointed to by the "extends" is then included into the properties.
+     * Sections are defined in the XML as children of the root element.
+     *
+     * In order to extend another section, a section defines the "extends"
+     * attribute having a value of the section name from which the extending
+     * section inherits values.
+     *
      * Note that the keys in $section will override any keys of the same
      * name in the sections that have been included via "extends".
-     *
-     * If any key includes a ".", then this will act as a separator to
-     * create a sub-property.
-     *
-     * example ini file:
-     *      [all]
-     *      db.connection = database
-     *      hostname = live
-     *
-     *      [staging]
-     *      extends = all
-     *      hostname = staging
-     *
-     * after calling $data = Zend_Config_Ini::load($file, 'staging'); then
-     *      $data['hostname'] = staging
-     *      $data['db']['connection'] = database
      *
      * @param string $filename
      * @param string $section
@@ -102,7 +90,7 @@ class Zend_Config_Xml
         $thisSection = $element->$section;
 
         if (isset($thisSection['extends'])) {
-            $config = $this->_processExtends($element, (string)$thisSection['extends'], $config);
+            $config = $this->_processExtends($element, (string) $thisSection['extends'], $config);
         }
 
         $config = $this->_arrayMergeRecursive($config, $this->_toArray($thisSection));
@@ -110,15 +98,11 @@ class Zend_Config_Xml
         return $config;
     }
 
+
     /**
-     * Assign the key's value to the property list. Handle the "dot"
-     * notation for sub-properties by passing control to
-     * processLevelsInKey().
+     * Returns an associative and possibly multidimensional array from a SimpleXMLElement.
      *
-     * @param array $config
-     * @param string $key
-     * @param string $value
-     * @throws Zend_Config_Exception
+     * @param SimpleXMLElement $xmlObject
      * @return array
      */
     protected function _toArray($xmlObject)
@@ -128,15 +112,7 @@ class Zend_Config_Xml
             if ($value->children()) {
                 $config[$key] = $this->_toArray($value);
             } else {
-                $config[$key] = (string)$value;
-
-                // convert to correct type for booleans
-                if (strtolower($config[$key]) == 'false') {
-                    $config[$key] = false;
-                }
-                if (strtolower($config[$key]) == 'true') {
-                    $config[$key] = true;
-                }
+                $config[$key] = (string) $value;
             }
         }
         return $config;
@@ -153,8 +129,8 @@ class Zend_Config_Xml
     protected function _arrayMergeRecursive($array1, $array2)
     {
         if (is_array($array1) && is_array($array2)) {
-            foreach ($array2 AS $key => $value) {
-                if(isset($array1[$key])) {
+            foreach ($array2 as $key => $value) {
+                if (isset($array1[$key])) {
                     $array1[$key] = $this->_arrayMergeRecursive($array1[$key], $value);
                 } else {
                     $array1[$key] = $value;

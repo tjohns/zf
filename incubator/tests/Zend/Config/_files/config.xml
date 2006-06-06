@@ -31,6 +31,6 @@
         </db>
     </other_staging>
 
-    <extendserror extends="nonexistant">
+    <extendserror extends="nonexistent">
     </extendserror>
 </config>

@@ -26,5 +26,3 @@ $config['other_staging']['db']['pass'] = 'anotherpwd';
 
 // invalid section
 $config['extendserror'] = 123;
-
-?>

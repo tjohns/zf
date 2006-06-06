@@ -137,8 +137,7 @@ class Zend_Config_Ini
                     $config[$pieces[0]] = array();
                 }
                 $config[$pieces[0]] = $this->_processLevelsInKey($config[$pieces[0]], $pieces[1], $value);
-            }
-            else {
+            } else {
                 throw new Zend_Config_Exception("Invalid key '$key'");
             }
         } else {
@@ -171,10 +170,8 @@ class Zend_Config_Ini
             } else {
                 $parent->$key = $value;
             }
-        } else {
-            if (strlen($key)) {
-                $parent[$key] = $value;
-            }
+        } else if (strlen($key)) {
+            $parent[$key] = $value;
         }
         return $parent;
     }
