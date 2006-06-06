@@ -39,7 +39,7 @@ class Zend_Mime_Part {
     public $encoding = Zend_Mime::ENCODING_8BIT;
     public $id;
     public $disposition;
-    public $fileName;
+    public $filename;
     public $description;
     public $charset;
     protected $_isStream = false;
@@ -143,8 +143,8 @@ class Zend_Mime_Part {
 
         if ($this->disposition) {
             $disposition = $this->disposition;
-            if ($this->fileName) {
-                $disposition .= '; filename="' . $this->fileName . '"';
+            if ($this->filename) {
+                $disposition .= '; filename="' . $this->filename . '"';
             }
             $headers[] = array('Content-Disposition', $disposition);
         }
