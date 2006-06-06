@@ -7,7 +7,7 @@ Zend Framework                                                             NEWS
 - Improved Zend_Pdf_Image_PNG to handle more types; Alpha, Indexed (Kevin)
 - Added Zend_Pdf_ImageFactory for creating image objects by filename (Kevin)
 - Added parsing support in Zend_Pdf_Image_TIFF for TIFF format images (Kevin)
-- Added abstract methods to Zend_Pdf_Image for image details w/h etc (Kevin) 
+- Added abstract methods to Zend_Pdf_Image for image details w/h etc (Kevin)
 - The Zend Framework is now released under the simpler new BSD license. (Andi)
 - Fixed bug in Zend_Feed::findFeeds(). Reported by Ben Ramsey. (Mike)
 - Zend_Db_Adapter_Pdo_Abstract::insert() has been removed (Rob)
@@ -20,12 +20,13 @@ Zend Framework                                                             NEWS
 - Zend_Config has been accepted to the incubator. (Rob)
 - Zend_Search_Lucene can now delete documents and update segments. (Alex)
 - Fixed problem with oci_bind_by_name() in Zend_Db_Statement_Oracle. (Gaylord)
-- Fixed header port number bug in Zend_Http_Client, ticket #97. (Shahar)  
+- Fixed header port number bug in Zend_Http_Client, ticket #97. (Shahar)
 - Added iconv() to string processing in Zend_Search_Lucene_Field. (Alex)
 - Several bugfixes to Zend_Mail & Zend_Mime, changeset [540]. (Matthew)
 - Fixed access mode handling in Zend_Log_Adapter_File, ticket #108. (Mike)
 - Fixed bug in Zend_Pdf command line demo, ticket #11. (Mike)
 - Fixed bug in Zend_Db_Table_Row::save(), ticket #50. (Mike)
+- Fixed bug in Zend_Db_Adapter_Pdo_Mysql::describeTable having NOT NULL, ticket #81, changeset [487] (Rob)
 
 =RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
