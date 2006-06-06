@@ -44,13 +44,18 @@ class Zend_Mime_PartTest extends PHPUnit2_Framework_TestCase
 
     public function testHeaders()
     {
-        $headers = $this->part->getHeaders();
-        $this->assertFalse(false === strpos($headers, 'Content-Type: text/plain'));
-        $this->assertFalse(false === strpos($headers, 'Content-Transfer-Encoding: ' . Zend_Mime::ENCODING_BASE64));
-        $this->assertFalse(false === strpos($headers, 'Content-Disposition: attachment'));
-        $this->assertFalse(false === strpos($headers, 'filename="test.txt"'));
-        $this->assertFalse(false === strpos($headers, 'charset="iso8859-1"'));
-        $this->assertFalse(false === strpos($headers, 'Content-ID: <4711>'));
+        $expectedHeaders = array('Content-Type: text/plain',
+                                 'Content-Transfer-Encoding: ' . Zend_Mime::ENCODING_BASE64,
+                                 'Content-Disposition: attachment',
+                                 'filename="test.txt"',
+                                 'charset="iso8859-1"',
+                                 'Content-ID: <4711>');
+
+        $actual = $this->part->getHeaders();
+
+        foreach ($expectedHeaders as $expected) {
+            $this->assertContains($expected, $actual);
+        }
     }
 
     public function testContentEncoding()
