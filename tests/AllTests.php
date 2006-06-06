@@ -15,6 +15,13 @@ if (is_readable('TestConfiguration.php')) {
     require_once 'TestConfiguration.php.dist';
 }
 
+/**
+ * Prepend library/ to the include_path.  This allows the tests to run out of the box and
+ * helps prevent finding other copies of the framework that might be present.
+ */
+set_include_path(get_include_path() . PATH_SEPARATOR 
+                 . dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library');
+
 require_once 'ZendTest.php';
 require_once 'Zend/AllTests.php';
 
