@@ -38,6 +38,27 @@ require_once 'Zend/Mail/Transport/Interface.php';
 class Zend_Mail_Transport_Sendmail implements Zend_Mail_Transport_Interface
 {
     /**
+     * Final headers string sent to transport
+     * @var string 
+     * @access public
+     */
+    public $header = null;
+
+    /**
+     * Recipient list
+     * @var string 
+     * @access public
+     */
+    public $recipients = null;
+
+    /**
+     * Subject
+     * @var string 
+     * @access public
+     */
+    public $subject = null;
+
+    /**
      * Send mail using PHP native mail()
      *
      * @param Zend_Mail $mail 
@@ -51,13 +72,35 @@ class Zend_Mail_Transport_Sendmail implements Zend_Mail_Transport_Interface
      */
     public function sendMail(Zend_Mail $mail, $body, $headers, $to)
     {
+        $this->recipients = implode(',', $to);
+        $this->_prepareHeaders($headers);
+
+        /**
+         * @todo error checking
+         */
+        if (!mail($this->recipients, $this->subject, $body, $this->header)) {
+            throw new Zend_Mail_Transport_Exception('Unable to send mail');
+        }
+    }
+
+    /**
+     * Format and fix headers
+     *
+     * mail() uses its $to and $subject arguments to set the To: and Subject:
+     * headers, respectively. This method strips those out as a sanity check to
+     * prevent duplicate header entries.
+     * 
+     * @access protected
+     * @param array $headers 
+     * @return void
+     */
+    protected function _prepareHeaders($headers)
+    {
         // mail() uses its $to parameter to set the To: header, and the $subject
         // parameter to set the Subject: header. We need to strip them out.
         if (0 === strpos(PHP_OS, 'WIN')) {
-            // Windows doesn't like the form "Name <email>"; just use email
-            // addresses, and keep the To: header
-            $recipients = implode(',', $to);
-            if (empty($recipients)) {
+            // If the current recipients list is empty, throw an error
+            if (empty($this->recipients)) {
                 throw new Zend_Mail_Transport_Exception('Missing To addresses');
             }
         } else {
@@ -66,31 +109,24 @@ class Zend_Mail_Transport_Sendmail implements Zend_Mail_Transport_Interface
                 throw new Zend_Mail_Transport_Exception('Missing To header');
             }
 
-            $recipients = str_replace(Zend_Mime::LINEEND . "\t", '', $headers['To'][1]);
+            $this->recipients = str_replace(Zend_Mime::LINEEND . "\t", '', $headers['To'][1]);
             unset($headers['To']);
         }
 
         // Build header string and grab subject
-        $subject     = '';
-        $headersSend = '';
+        $this->subject = '';
+        $this->header  = '';
         foreach ($headers as $header) {
             if ('Subject' == $header[0]) {
-                $subject = $header[1];
+                $this->subject = $header[1];
                 continue;
             } 
 
-            $headersSend .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
+            $this->header .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
         }
 
         // Trim headers
-        $headersSend = trim($headersSend);
-
-        /**
-         * @todo error checking
-         */
-        if (!mail($recipients, $subject, $body, $headersSend)) {
-            throw new Zend_Mail_Transport_Exception('Unable to send mail');
-        }
+        $this->header = trim($this->header);
     }
 }
 

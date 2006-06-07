@@ -11,6 +11,11 @@
 require_once 'Zend/Mail.php';
 
 /**
+ * Zend_Mail_Transport_Sendmail
+ */
+require_once 'Zend/Mail/Transport/Sendmail.php';
+
+/**
  * Zend_Mail_Transport_Smtp
  */
 require_once 'Zend/Mail/Transport/Smtp.php';
@@ -39,18 +44,45 @@ class Zend_Mail_Transport_Mock implements Zend_Mail_Transport_Interface
 
     public function sendMail(Zend_Mail $mail, $body, $headers, $to)
     {
-         $this->mail = $mail;
-         $this->body = $body;
-         $this->recipients = $mail->getRecipients();
-         $this->subject = $mail->getSubject();
-         $this->from = $mail->getFrom();
-         $this->called = true;
+        $this->mail       = $mail;
+        $this->body       = $body;
+        $this->recipients = $mail->getRecipients();
+        $this->subject    = $mail->getSubject();
+        $this->from       = $mail->getFrom();
+        $this->called     = true;
 
-         // Prepare headers
-         $this->header = '';
-         foreach ($headers as $header) {
-             $this->header .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
-         }
+        // Prepare headers
+        $this->header = '';
+        foreach ($headers as $header) {
+            $this->header .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
+        }
+    }
+}
+
+
+/**
+ * Mock mail transport class for testing Sendmail transport
+ */
+class Zend_Mail_Transport_Sendmail_Mock extends Zend_Mail_Transport_Sendmail
+{
+    /**
+     * @var Zend_Mail
+     */
+    public $mail = null;
+    public $body = null;
+    public $from = null;
+    public $called = false;
+
+    public function sendMail(Zend_Mail $mail, $body, $headers, $to)
+    {
+        $this->recipients = implode(',', $to);
+        $this->mail       = $mail;
+        $this->body       = $body;
+        $this->from       = $mail->getFrom();
+        $this->called     = true;
+
+        // Prepare headers
+        $this->_prepareHeaders($headers);
     }
 }
 
@@ -131,6 +163,41 @@ class Zend_MailTest extends PHPUnit2_Framework_TestCase
         $this->assertContains('X-MyTest:', $mock->header);
         $this->assertNotContains("\nCc:foobar2@example.com", $mock->header);
         $this->assertContains('=?iso-8859-1?Q?Test-=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
+    }
+
+    /**
+     * Check if Header Fields are stripped accordingly in sendmail transport;
+     * also check for header injection
+     */
+    public function testHeaderEncoding2()
+    {
+        $mail = new Zend_Mail();
+        $mail->setBodyText('My Nice Test Text');
+        // try header injection:
+        $mail->addTo("testmail@example.com\nCc:foobar@example.com");
+        $mail->addHeader('X-MyTest', "Test\nCc:foobar2@example.com", true);
+        // try special Chars in Header Fields:
+        $mail->setFrom('mymail@example.com', 'äüößÄÖÜ');
+        $mail->addTo('testmail2@example.com', 'äüößÄÖÜ');
+        $mail->addCc('testmail3@example.com', 'äüößÄÖÜ');
+        $mail->setSubject('äüößÄÖÜ');
+        $mail->addHeader('X-MyTest', 'Test-äüößÄÖÜ', true);
+
+        $mock = new Zend_Mail_Transport_Sendmail_Mock();
+        $mail->send($mock);
+
+        $this->assertTrue($mock->called);
+        $this->assertContains('From: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"?=', $mock->header);
+        $this->assertNotContains("\nCc:foobar@example.com", $mock->header);
+        $this->assertContains('Cc: =?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail3@example.com>', $mock->header);
+        $this->assertContains('X-MyTest:', $mock->header);
+        $this->assertNotContains("\nCc:foobar2@example.com", $mock->header);
+        $this->assertContains('=?iso-8859-1?Q?Test-=E4=FC=F6=DF=C4=D6=DC?=', $mock->header);
+
+        $this->assertNotContains('To: ', $mock->header);
+        $this->assertNotContains('Subject: ', $mock->header);
+        $this->assertContains('=?iso-8859-1?Q?=E4=FC=F6=DF=C4=D6=DC?=', $mock->subject);
+        $this->assertContains('=?iso-8859-1?Q?"=E4=FC=F6=DF=C4=D6=DC"=20?=<testmail2@example.com>', $mock->recipients);
     }
 
     /**
