@@ -92,7 +92,7 @@ class Zend_Uri_HttpTest extends PHPUnit2_Framework_TestCase
 
     public function testHostAsIP()
     {
-        $this->_testInvalidUri('http://127.0.0.1');
+        $this->_testValidUri('http://127.0.0.1');
     }
 
     public function testLocalhost()

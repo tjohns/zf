@@ -365,13 +365,9 @@ class Zend_Uri_Http extends Zend_Uri
             return false;
         }
         /**
-         * Check the host against the allowed values; delegated to Zend_Filter. As a feature, this only
-         * validates Internet domain names and local network names; IP addresses are considered invalid.
-         *
-         * @link http://www.faqs.org/rfcs/rfc2396.html
+         * Check the host against the allowed values; delegated to Zend_Filter.
          */
-        $allow = Zend_Filter::HOST_ALLOW_DNS | Zend_Filter::HOST_ALLOW_LOCAL;
-        return Zend_Filter::isHostname($host, $allow) !== FALSE;
+        return Zend_Filter::isHostname($host) !== FALSE;
     }
 
 
