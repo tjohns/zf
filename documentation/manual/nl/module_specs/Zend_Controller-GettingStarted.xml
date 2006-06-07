@@ -69,7 +69,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 				
 require_once 'Zend/Controller/Front.php';
 
-Zend_Controller_Front::run('/pad/naar/jouw/controllers')
+Zend_Controller_Front::run('/pad/naar/jouw/controllers');
 
 ?>]]></programlisting>
 
