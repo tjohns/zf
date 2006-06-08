@@ -3,25 +3,26 @@
     <title>Zend_Mime_Part</title>
     
 	<sect2 id="zend.mime.part.introduction">
-	  <title>Introduction</title>
+	  <title>Einführung</title>
 	
-	  <para>This class represents a single part of a MIME message. It contains the
-	  actual content of the message part plus information about its encoding,
-	  content type and original filename. It provides a method for generating a
-	  string from the stored data. <code>Zend_Mime_Part</code> objects can be
-	  added to <link
-	  linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> to
-	  assemble a complete multipart message.</para>
+	  <para>Diese Klasse repräsentiert einen einzelnen Abschnitte einer MIME Nachricht.
+	  Sie enthält den aktuellen Inhalt des Abschnitts der Nachricht und zusätzlich 
+	  Informationen über Ihre Verschlüsselung, den Typ und den originalen Dateinamen.
+	  Sie stellt ausserdem eine Methode, für die Erzeugung eines Strings aus den
+	  in Ihr gespeicherten Daten, zur Verfügung. <code>Zend_Mime_Part</code> Objekte 
+	  können zu <link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> 
+	  hinzugefügt werden, um zu einer kompletten mehrteiligen Nachricht verknüpft 
+	  zu werden.</para>
 	</sect2>
   
   <sect2 id="zend.mime.part.instantiation">
-    <title>Instantiation</title>
+    <title>Instanziierung</title>
 
-    <para><code>Zend_Mime_Part</code> is instantiated with a string that
-    represents the content of the new part. The type is assumed to be
-    OCTET-STREAM, encoding is 8Bit. After instantiating a
-    <code>Zend_Mime_Part</code>, meta information can be set by accessing its
-    attributes directly:</para>
+    <para><code>Zend_Mime_Part</code> wird instanziiert mit einem String welcher den
+    Inhalt des neuen Abschnitts repräsentiert. Der Typ wird angenommen mit OCTET-STREAM, 
+    die Verschlüsselung mit 8Bit. Nach der Instanziierung einer
+    <code>Zend_Mime_Part</code> kann die Meta Informationen gesetzt werden durch
+    direkten Zugriff auf die Attribute:</para>
 
     <programlisting role="php"><![CDATA[<?php            
 public $type = ZMime::TYPE_OCTETSTREAM;
@@ -35,23 +36,23 @@ public $charset;
 	</sect2>
 
   <sect2 id="zend.mime.part.methods">
-    <title>Methods for rendering the message part to a string</title>
+    <title>Methoden für das übertragen der des Teils der Nachricht zu einem String</title>
 
-    <para><code>-&gt;getContent()</code> returns the encoded content of the
-    MimePart as a string using the encoding specified in the attribute
-    $encoding. Valid values are ZMime::ENCODING_* Characterset conversions are
-    not performed.</para>
+    <para><code>-&gt;getContent()</code> gibt den verschlüsselten Inhalt des MimeParts als
+    String zurück, wobei die Verschlüsselung verwendet wird welche im Attribut 
+    $encoding definiert wurde. Gültige Werte sind ZMime::ENCODING_* Zeichensatz Konvertierungen 
+    werden nicht durchgeführt.</para>
 
-    <para><code>-&gt;getHeaders()</code> returns the Mime-Headers for the
-    MimePart as generated from the information in the publicly accessable
-    attributes. The attributes of the object need to be set correctly before
-    this method is called. <itemizedlist>
+    <para><code>-&gt;getHeaders()</code> gibt den Mime-Headers für den
+    MimePart zurück, erzeugt anhand der Informationen der öffentlich
+    zugänglichen Attribute. Die Attribute des Objektes müssen korrekt gesetzt sein,
+    bevor diese Methode aufgerufen wird.<itemizedlist>
         <listitem>
            
 
           <code>$charset</code>
 
-           has to be set to the actual charset of the content if it is a text type (Text or HTML). 
+           muß auf den aktuellen Charset des Inhaltes gesetzt werden, wenn dieser ein Texttyp ist (Text oder HTML).
         </listitem>
 
         <listitem>
@@ -59,7 +60,7 @@ public $charset;
 
           <code>$id</code>
 
-           may be set to identify a content-id for inline images in a HTML mail. 
+           kann gesetzt werden für die Erkennung einer Content-ID für Inline Grafiken in einer HTML Nachricht. 
         </listitem>
 
         <listitem>
@@ -67,7 +68,7 @@ public $charset;
 
           <code>$filename</code>
 
-           contains the name the file will get when downloading it. 
+           enthält den Namen welche die Datei bekommt wenn sie heruntergeladen wird. 
         </listitem>
 
         <listitem>
@@ -75,7 +76,8 @@ public $charset;
 
           <code>$disposition</code>
 
-           defines if the file should be treated as an attachment or if it is used inside the (HTML-) mail (inline). 
+           definiert ob die Datei als Anhang behandelt werden soll, oder ob sie in einer (HTML-) Nachricht 
+           verwendet wird (Inline).
         </listitem>
 
         <listitem>
@@ -83,7 +85,7 @@ public $charset;
 
           <code>$description</code>
 
-           is only used for informational purposes. 
+           wird nur zur Zweck der Information verwendet. 
         </listitem>
       </itemizedlist></para>
   </sect2>

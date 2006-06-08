@@ -3,78 +3,82 @@
     <title>Zend_Mime_Message</title>
     
 	<sect2 id="zend.mime.message.introduction">
-	  <title>Introduction</title>
+	  <title>Einführung</title>
 	
-	  <para><code>Zend_Mime_Message</code> represents a MIME compliant message
-	  that can contain one or more seperate Parts (Represented as <link
-	  linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> objects). With
-	  <code>Zend_Mime_Message</code>, MIME compliant multipart messages can be generated from
-	  <code>Zend_Mime_Part</code> objects. Encoding and Boundary handling are handled transparently 
-	  by the class. <code>Zend_Mime_Message</code> objects can also be reconstructed from given 
-	  strings (experimental). Used by <link linkend="zend.mail"><code>Zend_Mail</code></link>.
+	  <para><code>Zend_Mime_Message</code> repräsentiert eine Mime konforme Nachricht,
+	  welche einen oder mehrere Abschnitte (Repräsentiert durch <link
+	  linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> Objekte) beinhalten 
+	  kann. Mit MimeMessage können Mime konforme Nachrichten, durch die Klasse, erstellt
+	  werden. Verschlüsselungs- und BoundaryGrenzbehandlung werden transparent durch die Klasse
+	  behandelt. MimeMessage Objekte können auch durch übergebene Strings rekonstruiert 
+	  werden (Experimentell). Verwendet durch <link
+	  linkend="zend.mail"><code>Zend_Mail</code></link>.
 	  </para>
 	</sect2>
   
 	<sect2 id="zend.mime.message.instantiation">
-		<title>Instantiation</title>
+		<title>Instanziierung</title>
 		<para>
-			There is no explicit constructor for <code>Zend_Mime_Message</code>. 
+			Es gibt keinen expliziten Konstruktor für <code>Zend_Mime_Message</code>. 
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.mime.message.addparts">
-		<title>Adding MIME Parts</title>
+		<title>MIME Abschnitte hinzufügen</title>
 		
 		<para><link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link>
-		Objects can be added to a given <code>Zend_Mime_Message</code> object by calling
+		Objekte können zu einem bestehenden <code>Zend_Mime_Message</code> Objekt
+		hinzugefügt werden durch aufruf von
 		<code>-&gt;addPart($part)</code></para>
 		
-    <para>An array with all <link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> 
-    objects in the <code>Zend_Mime_Message</code> is returned
-		from the method <code>-&gt;getParts()</code>.  The Zend_Mime_Part objects
-		can then be changed since they are stored in the array as references. If
-		parts are added to the array or the sequence is changed, the array needs
-		to be given back to the <link linkend="zend.mime.part"><code>Zend_Mime_Part</code></link> 
-		object by calling <code>-&gt;setParts($partsArray)</code>.</para>
+		<para>Ein Array mit allen <code>Zend_Mime_Part</code> Objekten der 
+		<code>Zend_Mime_Message</code> wird von der Methode
+		<code>-&gt;getParts()</code> zurück gegeben.  Das Zend_Mime_Part Objekt
+		kann dann geändert werden, da es im Array als Referenz gespeichert wird.
+		Wenn Abschnitte zum Array hinzugefügt werden oder die Sequenz geändert wird,
+		muß das Array dem <code>Zend_Mime_Message</code> Objekt zurückgegeben werden,
+		durch Aufruf von 
+		<code>-&gt;setParts($partsArray)</code></para>
 		
-		<para>The function <code>-&gt;isMultiPart()</code> will return true if
-		more than one part is registered with the <code>Zend_Mime_Message</code> object and thus
-		the object would generate a Multipart-Mime-Message when generating the
-		actual output.</para>
+		<para>Die Funktion <code>-&gt;isMultiPart()</code> gibt true zurück, wenn mehr
+		als ein Abschnitt im <code>Zend_Mime_Message</code> Objekt registriert wurde,
+		und das Objekt deshalb bei der Erstellung des aktuellen Outputs eine 
+		Multipart-Mime-Message erstellen würde.</para>
 	</sect2>
 
 	<sect2 id="zend.mime.message.bondary">
-		<title>Boundary handling</title>
+		<title>Grenzbehandlung</title>
 		
-		<para><code>Zend_Mime_Message</code> usually creates and uses its own
-		<code>Zend_Mime</code> Object to generate a boundary. If you need to
-		define the boundary or want to change the behaviour of the <code>Zend_Mime</code> object
-		used by <code>Zend_Mime_Message</code>, you can instantiate the <code>Zend_Mime</code>
-		object yourself and then register it to <code>Zend_Mime_Message</code>.
-		Usually you will not need to do this. <code>-&gt;setMime(Zend_Mime
-		$mime)</code> sets a special instance of <code>Zend_Mime</code> to be used
-		by this <code>Zend_Mime_Message</code></para>
+		<para><code>Zend_Mime_Message</code> erzeugt und verwendet normalerweise sein
+		eigenes <code>Zend_Mime</code> Objekt zur Erstellung einer Grenze. Wenn eine eigene
+		granze erstellt werden, oder das das Verhalten des <code>Zend_Mime</code> Objekts
+		geändert werden muß, welches von <code>Zend_Mime_Message</code> verwendet wird, 
+		kann ein eigenes Zend Mime Objekt instanziiert und bei <code>Zend_Mime_Message</code>
+		registriert werden.
+		Normalerweise muß das nicht gemacht werden. <code>-&gt;setMime(Zend_Mime
+		$mime)</code> setzt eine spezielle Instanz von <code>Zend_Mime</code> welche durch 
+		diese <code>Zend_Mime_Message</code> verwendet wird.</para>
 		
-		<para><code>-&gt;getMime()</code> returns the instance of
-		<code>Zend_Mime</code> that will be used to render the message when
-		<code>generateMessage()</code> is called.</para>
+		<para><code>-&gt;getMime()</code> gibt eine Instanz von
+		<code>Zend_Mime</code> zurück, welche zur Wiedergabe der Nachricht verwendet wird,
+		wenn <code>generateMessage()</code> aufgerufen wird.</para>
 		
-		<para><code>-&gt;generateMessage()</code> renders the <code>Zend_Mime_Message</code> 
-		content to a string.</para>
+		<para><code>-&gt;generateMessage()</code> gibt den <code>Zend_Mime_Message</code> 
+		Inhalt in einem String wieder.</para>
 	</sect2>
 
 	<sect2 id="zend.mime.message.parse">
-		<title>parsing a string to create a Zend_Mime_Message object
-		(experimental)</title>
+		<title>Parst einen String um ein Zend_Mime_Message Objekt zu erstellen
+		(Experimentell)</title>
 		
-		<para>A given MIME compliant message in string form can be used to
-		reconstruct a <code>Zend_Mime_Message</code> Object from it.
-		<code>Zend_Mime_Message</code> has a static factory Method to parse this
-		String and return a <code>Zend_Mime_Message</code> Object.</para>
+		<para>Eine übergebene MIME konforme Nachricht in einem String kann dazu verwendet
+		werden, um daraus ein <code>Zend_Mime_Message</code> Objekt wieder herzustellen.
+		<code>Zend_Mime_Message</code> hat eine statische Factory Methode um den String zu 
+		parsen und gibt ein <code>Zend_Mime_Message</code> Objekt zurück.</para>
 		
 		<para><code>Zend_Mime_Message::createFromMessage($str, $boundary)</code>
-		decodes the given string and returns a <code>Zend_Mime_Message</code>
-		Object that can then be examined using <code>-&gt;getParts()</code></para>
+		entschlüsselt einen übergebenen String und gibt ein <code>Zend_Mime_Message</code>
+		Objekt zurück welches anschließend durch <code>-&gt;getParts()</code> überprüft werden kann</para>
 	</sect2>
 </sect1>
 <!--
