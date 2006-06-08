@@ -267,6 +267,8 @@ final class Zend
     /**
      * Registers a shared object.
      *
+     * @todo use SplObjectStorage if ZF minimum PHP requirement moves up to at least PHP 5.1.0
+     *
      * @param   string      $name The name for the object.
      * @param   object      $obj  The object to register.
      * @throws  Zend_Exception
