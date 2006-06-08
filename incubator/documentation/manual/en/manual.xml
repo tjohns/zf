@@ -33,8 +33,12 @@
     <!--chapter id="zend">
         <title>Zend</title>
         &module_specs.Zend;
+    </chapter-->
+    <chapter id="zend.config">
+        <title>Zend_Config</title>
+        &module_specs.Zend_Config;
     </chapter>
-    <chapter id="zend.controller">
+    <!--chapter id="zend.controller">
         <title>Zend_Controller</title>
         &module_specs.Zend_Controller-Overview;
         &module_specs.Zend_Controller-GettingStarted;
