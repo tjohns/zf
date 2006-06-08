@@ -262,6 +262,9 @@ $config = new Zend_Config(Zend_Config_Xml::load('/path/to/config.xml', 'staging'
 echo $config->database->host; // prints "dev.example.com"
 ?>]]>           </programlisting>
             </para>
+            <note>
+                Configuration data values from <code>Zend_Config_Xml</code> are always treated as strings.
+            </note>
         </example>
     </sect2>
 </sect1>
