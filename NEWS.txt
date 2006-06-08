@@ -22,13 +22,17 @@ Zend Framework                                                             NEWS
 - Fixed problem with oci_bind_by_name() in Zend_Db_Statement_Oracle. (Gaylord)
 - Fixed header port number bug in Zend_Http_Client, ticket #97. (Shahar)
 - Added iconv() to string processing in Zend_Search_Lucene_Field. (Alex)
-- Several bugfixes to Zend_Mail & Zend_Mime, changeset [540]. (Matthew)
+- Bugfixes to Zend_Mail modules to correct Sendmail transport header issues,
+  ticket #47, ticket #42, ticket #115, changeset [540], changeset [574].
+  (Matthew)
 - Fixed access mode handling in Zend_Log_Adapter_File, ticket #108. (Mike)
 - Fixed bug in Zend_Pdf command line demo, ticket #11. (Mike)
 - Fixed bug in Zend_Db_Table_Row::save(), ticket #50. (Mike)
 - Fixed bug in Zend_Db_Adapter_Pdo_Mysql::describeTable having NOT NULL, 
   ticket #81, changeset [487] (Rob)
 - Zend_Uri_Http now uses the default Zend_Filter::isHostname() rules. (Mike)
+- Fixed multipart/alternative handling when other attachments present in
+  Zend_Mail, ticket #59, changeset [583]. (Matthew)
 
 =RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
