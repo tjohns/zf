@@ -70,9 +70,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
         for ($redirect = 0; $redirect <= $redirectMax; $redirect++) {
 
             // Build the HTTP request
-            $host_header = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort);
+            $hostHeader = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort());
             $request = array_merge(array('GET ' . $this->_uri->getPath() . '?' . $this->_uri->getQuery() . ' HTTP/1.0',
-                                         'Host: ' . $host_header,
+                                         'Host: ' . $hostHeader,
                                          'Connection: close'),
                                    $this->_headers);
 
@@ -141,9 +141,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     {
         $socket = $this->_openConnection();
 
-        $host_header = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort);
+        $hostHeader = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort());
         $request = array_merge(array('POST ' . $this->_uri->getPath() . ' HTTP/1.0',
-                                     'Host: ' . $host_header,
+                                     'Host: ' . $hostHeader,
                                      'Connection: close',
                                      'Content-length: ' . strlen($data)),
                                $this->_headers);
@@ -164,9 +164,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     {
         $socket = $this->_openConnection();
 
-        $host_header = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort);
+        $hostHeader = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort());
         $request = array_merge(array('PUT ' . $this->_uri->getPath() . ' HTTP/1.0',
-                                     'Host: ' . $host_header,
+                                     'Host: ' . $hostHeader,
                                      'Connection: close',
                                      'Content-length: ' . strlen($data)),
                                $this->_headers);
@@ -186,9 +186,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     {
         $socket = $this->_openConnection();
 
-        $host_header = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort);
+        $hostHeader = $this->_uri->getHost() . ($this->_uri->getPort() == 80 ? '' : ':' . $this->_uri->getPort());
         $request = array_merge(array('DELETE ' . $this->_uri->getPath() . ' HTTP/1.0',
-                                     'Host: ' . $host_header,
+                                     'Host: ' . $hostHeader,
                                      'Connection: close'),
                                $this->_headers);
 
