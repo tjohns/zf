@@ -42,6 +42,8 @@ class Zend_Mime_Part {
     public $filename;
     public $description;
     public $charset;
+    public $boundary;
+    protected $_content;
     protected $_isStream = false;
 
 
@@ -134,6 +136,12 @@ class Zend_Mime_Part {
         if ($this->charset) {
             $contentType .= '; charset="' . $this->charset . '"';
         }
+
+        if ($this->boundary) {
+            $contentType .= ';' . Zend_Mime::LINEEND
+                          . " boundary=\"" . $this->boundary . '"';
+        }
+
         $headers[] = array('Content-Type', $contentType);
         $headers[] = array('Content-Transfer-Encoding', $this->encoding);
 

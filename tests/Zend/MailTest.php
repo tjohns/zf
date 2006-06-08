@@ -299,4 +299,61 @@ class Zend_MailTest extends PHPUnit2_Framework_TestCase
         $this->assertContains('Content-ID: <12>', $partBody2);
     }
 
+    /**
+     * Check if Mails with HTML and Text Body are generated correctly.
+     *
+     */
+    public function testMultipartAlternativePlusAttachment()
+    {
+        $mail = new Zend_Mail();
+        $mail->setBodyText('My Nice Test Text');
+        $mail->setBodyHtml('My Nice <b>Test</b> Text');
+        $mail->addTo('testmail@example.com', 'Test Recipient');
+        $mail->setFrom('mymail@example.com', 'Test Sender');
+        $mail->setSubject('Test: Alternate Mail with Zend_Mail');
+
+        $at = $mail->addAttachment('abcdefghijklmnopqrstuvexyz');
+        $at->type = 'image/gif';
+        $at->id = 12;
+        $at->filename = 'test.gif';
+
+        $mock = new Zend_Mail_Transport_Mock();
+        $mail->send($mock);
+
+        // check headers
+        $this->assertTrue($mock->called);
+        $this->assertContains('multipart/mixed', $mock->header);
+        $boundary = $mail->getMimeBoundary();
+        $this->assertContains('boundary="' . $boundary . '"', $mock->header);
+        $this->assertContains('MIME-Version: 1.0', $mock->header);
+
+        // check body
+        // search for first boundary
+        $p1 = strpos($mock->body, "--$boundary\n");
+        $this->assertNotEquals(null, $p1);
+
+        // cut out first (multipart/alternative) part
+        $start1 = $p1 + 3 + strlen($boundary);
+        $p2 = strpos($mock->body, "--$boundary\n", $start1);
+        $this->assertNotEquals(null, $p2);
+
+        $partBody1 = substr($mock->body, $start1, ($p2 - $start1));
+        $this->assertContains('Content-Type: multipart/alternative', $partBody1);
+        $this->assertContains('Content-Type: text/plain', $partBody1);
+        $this->assertContains('Content-Type: text/html', $partBody1);
+        $this->assertContains('My Nice Test Text', $partBody1);
+        $this->assertContains('My Nice <b>Test</b> Text', $partBody1);
+
+        // check second (image) part
+        // search for end boundary
+        $start2 = $p2 + 3 + strlen($boundary);
+        $p3 = strpos($mock->body, "--$boundary--");
+        $this->assertNotEquals(null, $p3);
+
+        $partBody2 = substr($mock->body, $start2, ($p3 - $start2));
+        $this->assertContains('Content-Type: image/gif', $partBody2);
+        $this->assertContains('Content-Transfer-Encoding: base64', $partBody2);
+        $this->assertContains('Content-ID: <12>', $partBody2);
+    }
+
 }

@@ -40,6 +40,9 @@ class Zend_Mime
     const DISPOSITION_INLINE = 'inline';
     const LINELENGTH = 74;
     const LINEEND = "\r\n";
+    const MULTIPART_ALTERNATIVE = 'multipart/alternative';
+    const MULTIPART_MIXED = 'multipart/mixed';
+    const MULTIPART_RELATED = 'multipart/related';
 
     protected $_boundary;
     protected static $makeUnique = 0;

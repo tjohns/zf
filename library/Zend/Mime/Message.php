@@ -132,20 +132,19 @@ class Zend_Mime_Message {
     public function generateMessage()
     {
         if (! $this->isMultiPart()) {
-            if (! array_key_exists(0, $this->_parts)) {
-                $body = '';
-            } else {
-                $body = $this->_parts[0]->getContent();
-            }
+            $body = array_shift($this->_parts);
+            $body = $body->getContent();
         } else {
             $mime = $this->getMime();
             $boundaryLine = $mime->boundaryLine();
             $body = 'This is a message in Mime Format.  If you see this, '
                   . "your mail reader does not support this format." . Zend_Mime::LINEEND;
 
-            for ($p=0; $p < count($this->_parts); $p++) {
-                $body .= $boundaryLine . $this->getPartHeaders($p)
-                      . Zend_Mime::LINEEND . $this->getPartContent($p);
+            foreach (array_keys($this->_parts) as $p) {
+                $body .= $boundaryLine 
+                       . $this->getPartHeaders($p)
+                       . Zend_Mime::LINEEND 
+                       . $this->getPartContent($p);
             }
 
             $body .= $mime->mimeEnd();

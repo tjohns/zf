@@ -61,11 +61,11 @@ class Zend_Mail extends Zend_Mime_Message
     protected $_from = null;
     protected $_to = array();
     protected $_subject = null;
-    protected $_hasTextBody = false;
-    protected $_hasHtmlBody = false;
+    protected $_textBody = false;
+    protected $_htmlBody = false;
     protected $_hasAttachments = false;
     protected $_mimeBoundary = null;
-
+    protected $_isMultipartAlternative = false;
 
     /**
      * sets the default Zend_Mail_Transport_Interface for all following
@@ -132,8 +132,7 @@ class Zend_Mail extends Zend_Mime_Message
         $mp->disposition = Zend_Mime::DISPOSITION_INLINE;
         $mp->charset = $charset;
 
-        $this->addPart($mp);
-        $this->_hasTextBody = true;
+        $this->_textBody = $mp;
         return $mp;
     }
 
@@ -157,8 +156,7 @@ class Zend_Mail extends Zend_Mime_Message
         $mp->disposition = Zend_Mime::DISPOSITION_INLINE;
         $mp->charset = $charset;
 
-        $this->addPart($mp);
-        $this->_hasHtmlBody = true;
+        $this->_htmlBody = $mp;
         return $mp;
     }
 
@@ -225,7 +223,8 @@ class Zend_Mail extends Zend_Mime_Message
         if ($append) {
             // append value if a header with this name already exists
             if (array_key_exists($headerName, $this->_headers) ) {
-                $this->_headers[$headerName][1] .= ',' .Zend_Mime::LINEEND. "\t" . $value;
+                $this->_headers[$headerName][1] .= ',' . Zend_Mime::LINEEND
+                                                 . ' ' . $value;
             } else {
                 $this->_headers[$headerName] = array($headerName, $value);
             }
@@ -395,18 +394,18 @@ class Zend_Mail extends Zend_Mime_Message
         if ($boundary) {
             // Build Multipart Mail
             if ($this->_hasAttachments) {
-                $type = 'multipart/mixed';
-            } else if ($this->_hasTextBody && $this->_hasHtmlBody) {
-                $type = 'multipart/alternative';
+                $type = Zend_Mime::MULTIPART_MIXED;
+            } elseif ($this->_textBody && $this->_htmlBody) {
+                $type = Zend_Mime::MULTIPART_ALTERNATIVE;
             } else {
-                $type = 'multipart/mixed';
+                $type = Zend_Mime::MULTIPART_MIXED;
             }
 
             $out[] = array(
                 'Content-Type', 
                 $type . '; charset="' . $this->_charset . '";'
                   . Zend_Mime::LINEEND
-                  . "\t" . 'boundary="' .$boundary. '"' . Zend_Mime::LINEEND
+                  . " " . 'boundary="' .$boundary. '"' . Zend_Mime::LINEEND
                   . 'MIME-Version: 1.0'
             );
         }
@@ -444,6 +443,49 @@ class Zend_Mail extends Zend_Mime_Message
         return $this->_from;
     }
 
+
+    /**
+     * Generate Mime Compliant Message from the current configuration
+     *
+     * Extends the parent class to ensure that multipart/alternative is
+     * added to the mail parts if both text and html are present in a
+     * message that contains an attachment.
+     *
+     * @return string
+     */
+    protected function _buildBody()
+    {
+        if ($this->_textBody && $this->_htmlBody) {
+            // Generate unique boundary for multipart/alternative
+            $mime = new Zend_Mime(null);
+            $boundaryLine = $mime->boundaryLine();
+
+            $body = $boundaryLine
+                 . $this->_textBody->getHeaders()
+                 . Zend_MIME::LINEEND
+                 . $this->_textBody->getContent()
+                 . Zend_MIME::LINEEND
+                 . $boundaryLine
+                 . $this->_htmlBody->getHeaders()
+                 . Zend_MIME::LINEEND
+                 . $this->_htmlBody->getContent()
+                 . Zend_MIME::LINEEND
+                 . $boundaryLine;
+
+            $mp = new Zend_Mime_Part($body);
+            $mp->type        = Zend_Mime::MULTIPART_ALTERNATIVE;
+            $mp->boundary    = $mime->boundary();
+            
+            // Ensure first part contains text alternatives
+            array_unshift($this->_parts, $mp);
+            $this->_isMultipartAlternative = true;
+        } elseif ($this->_htmlBody) {
+            array_unshift($this->_parts, $this->_htmlBody);
+        } elseif ($this->_textBody) {
+            array_unshift($this->_parts, $this->_textBody);
+        }
+    }
+
     /**
      * Sends a Multipart eMail using the given Transport
      *
@@ -453,8 +495,8 @@ class Zend_Mail extends Zend_Mime_Message
     {
         $mime = new Zend_Mime($this->_mimeBoundary);
         $this->setMime($mime);
-        $body = $this->generateMessage();
         $headers = $this->_getHeaders($mime->boundary());
+        $body = $this->generateMessage();
         $this->_mimeBoundary = $mime->boundary();  // if no boundary was set before, set the used boundary now
         $transport->sendMail($this, $body, $headers, $this->_to);
     }
@@ -480,11 +522,17 @@ class Zend_Mail extends Zend_Mime_Message
      */
     protected function _sendMail(Zend_Mail_Transport_Interface $transport)
     {
-        if (count($this->_parts)>1) {
+        $this->_buildBody();
+        $count = count($this->_parts);
+
+        if ($count > 1) {
             $this->_sendMultiPart($transport);
-        } else if (count($this->_parts)==1) {
+        } elseif ($count == 1) {
             $this->_sendSinglePart($transport);
         } else {
+            echo "Found $count parts\n";
+            echo ($this->_textBody || $this->_htmlBody) ? 'Text or HTML found' : 'No txt or HTML found';
+            echo "\n";
             throw new Zend_Mail_Exception('Empty Mail cannot be sent');
         }
     }
