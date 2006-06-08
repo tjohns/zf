@@ -66,7 +66,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 				
 require_once 'Zend/Controller/Front.php';
 
-Zend_Controller_Front::run('/sciezka/do/kontrolerow')
+Zend_Controller_Front::run('/sciezka/do/kontrolerow');
 
 ?>]]></programlisting>
 
