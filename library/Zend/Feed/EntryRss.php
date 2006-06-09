@@ -19,16 +19,12 @@
  */
 
 
-/**
- * Zend_Feed_EntryAbstract
- */
+/** Zend_Feed_EntryAbstract */
 require_once 'Zend/Feed/EntryAbstract.php';
 
 
 /**
- * Zend_Feed_EntryRss is the concrete subclass of Zend_Feed_EntryAbstract for
- * dealing with RSS data. It provides no additional methods; it is
- * here for type checking and to handle RSS-specific tag names.
+ * Concrete class for working with RSS items.
  *
  * @category   Zend
  * @package    Zend_Feed
@@ -45,4 +41,3 @@ class Zend_Feed_EntryRss extends Zend_Feed_EntryAbstract
     protected $_rootElement = 'item';
 
 }
-

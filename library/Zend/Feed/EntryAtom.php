@@ -19,15 +19,12 @@
  */
 
 
-/**
- * Zend_Feed_EntryAbstract
- */
+/** Zend_Feed_EntryAbstract */
 require_once 'Zend/Feed/EntryAbstract.php';
 
 
 /**
- * Zend_Feed_EntryAtom is the concrete entry subclass that users will deal
- * with whenever working with Atom data.
+ * Concrete class for working with Atom entries.
  *
  * @category   Zend
  * @package    Zend_Feed
@@ -37,16 +34,15 @@ require_once 'Zend/Feed/EntryAbstract.php';
 class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
 {
     /**
-     * Root XML element for ATOM entries.
+     * Root XML element for Atom entries.
      *
      * @var string
      */
     protected $_rootElement = 'entry';
 
     /**
-     * Root namespace for ATOM entries.
+     * Root namespace for Atom entries.
      */
     protected $_rootNamespace = 'atom';
 
 }
-

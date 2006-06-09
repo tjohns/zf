@@ -31,6 +31,8 @@ require_once 'Zend/Feed/EntryRss.php';
 
 
 /**
+ * RSS channel class
+ *
  * The Zend_Feed_Rss object is a concrete subclass of Zend_Feed_Abstract meant
  * for representing RSS channels. It does not add any methods to its
  * parent, just provides a classname to check against with the
@@ -45,14 +47,23 @@ require_once 'Zend/Feed/EntryRss.php';
 class Zend_Feed_Rss extends Zend_Feed_Abstract
 {
     /**
+     * The classname for individual feed elements.
+     *
+     * @var string
      */
     protected $_entryClassName = 'Zend_Feed_EntryRss';
 
     /**
+     * The element name for individual feed elements (RSS <item>s).
+     *
+     * @var string
      */
     protected $_entryElementName = 'item';
 
     /**
+     * The default namespace for RSS channels.
+     *
+     * @var string
      */
     protected $_defaultNamespace = 'rss';
 
@@ -80,6 +91,7 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
      * Make accessing individual elements of the feed easier.
      *
      * @param string $var The property to access.
+     * @return mixed
      */
     public function __get($var)
     {
@@ -95,4 +107,3 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
     }
 
 }
-

@@ -26,6 +26,10 @@ require_once 'Zend/Exception.php';
 
 
 /**
+ * Feed exceptions
+ *
+ * Class to represent exceptions that occur during Feed operations.
+ *
  * @category   Zend
  * @package    Zend_Feed
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)

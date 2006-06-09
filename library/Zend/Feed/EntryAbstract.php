@@ -19,14 +19,10 @@
  */
 
 
-/**
- * Zend_Feed
- */
+/** Zend_Feed */
 require_once 'Zend/Feed.php';
 
-/**
- * Zend_Feed_Element
- */
+/** Zend_Feed_Element */
 require_once 'Zend/Feed/Element.php';
 
 
@@ -42,10 +38,6 @@ require_once 'Zend/Feed/Element.php';
 abstract class Zend_Feed_EntryAbstract extends Zend_Feed_Element
 {
     /**
-     */
-    protected $_uri;
-
-    /**
      * Root XML element for entries. Subclasses must define this to a
      * non-null value.
      *
@@ -56,11 +48,15 @@ abstract class Zend_Feed_EntryAbstract extends Zend_Feed_Element
     /**
      * Root namespace for entries. Subclasses may define this to a
      * non-null value.
+     *
+     * @var string
      */
     protected $_rootNamespace = null;
 
 
     /**
+     * Zend_Feed_EntryAbstract constructor
+     *
      * The Zend_Feed_EntryAbstract constructor takes the URI of the feed the entry
      * is part of, and optionally an XML construct (usually a
      * SimpleXMLElement, but it can be an XML string or a DOMNode as
@@ -68,8 +64,6 @@ abstract class Zend_Feed_EntryAbstract extends Zend_Feed_Element
      */
     public function __construct($uri = null, $element = null)
     {
-        $this->_uri = $uri;
-
         if (!($element instanceof DOMElement)) {
             if ($element) {
                 // Load the feed as an XML DOMDocument object
@@ -78,7 +72,7 @@ abstract class Zend_Feed_EntryAbstract extends Zend_Feed_Element
                 $success = @$feedDOMDocument->loadXML($element);
                 @ini_restore('track_errors');
 
-                if (! $success) {
+                if (!$success) {
                     throw new Zend_Feed_Exception("DOMDocument cannot parse XML: $php_errormsg");
                 }
 
@@ -100,4 +94,3 @@ abstract class Zend_Feed_EntryAbstract extends Zend_Feed_Element
     }
 
 }
-

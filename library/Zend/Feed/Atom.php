@@ -31,6 +31,8 @@ require_once 'Zend/Feed/EntryAtom.php';
 
 
 /**
+ * Atom feed class
+ *
  * The Zend_Feed_Atom class is a concrete subclass of the general
  * Zend_Feed_Abstract class, tailored for representing an Atom feed. It shares
  * all of the same methods with its abstract parent. The distinction
@@ -47,14 +49,24 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
 {
 
     /**
+     * The classname for individual feed elements.
+     *
+     * @var string
      */
     protected $_entryClassName = 'Zend_Feed_EntryAtom';
 
     /**
+     * The element name for individual feed elements (Atom <entry>
+     * elements).
+     *
+     * @var string
      */
     protected $_entryElementName = 'entry';
 
     /**
+     * The default namespace for Atom feeds.
+     *
+     * @var string
      */
     protected $_defaultNamespace = 'atom';
 
@@ -95,6 +107,7 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
      * Make accessing individual elements of the feed easier.
      *
      * @param string $var The property to access.
+     * @return mixed
      */
     public function __get($var)
     {

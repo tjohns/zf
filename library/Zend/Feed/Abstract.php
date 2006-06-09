@@ -42,18 +42,25 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
 {
 
     /**
+     * Current index on the collection of feed entries for the
+     * Iterator implementation.
+     *
      * @var integer
      */
     protected $_entryIndex = 0;
 
     /**
+     * Cache of feed entries.
+     *
      * @var array
      */
     protected $_entries;
 
     /**
-     * The Zend_Feed_Abstract constructor takes the URI of a feed or a feed represented as a string
-     * and loads it as XML.
+     * Feed constructor
+     *
+     * The Zend_Feed_Abstract constructor takes the URI of a feed or a
+     * feed represented as a string and loads it as XML.
      *
      * @throws Zend_Feed_Exception If loading the feed failed.
      *
@@ -112,6 +119,9 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
 
 
     /**
+     * Cache the individual feed elements so they don't need to be
+     * searched for on every operation.
+     *
      * @internal
      */
     protected function _buildEntryCache()
@@ -146,6 +156,7 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
         $this->_entryIndex = 0;
     }
 
+
     /**
      * Required by the Iterator interface.
      *
@@ -160,6 +171,7 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
             $this->_entries[$this->_entryIndex]);
     }
 
+
     /**
      * Required by the Iterator interface.
      *
@@ -172,6 +184,7 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
         return $this->_entryIndex;
     }
 
+
     /**
      * Required by the Iterator interface.
      *
@@ -183,6 +196,7 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
     {
         ++$this->_entryIndex;
     }
+
 
     /**
      * Required by the Iterator interface.

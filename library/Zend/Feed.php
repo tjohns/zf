@@ -41,6 +41,8 @@ require_once 'Zend/Http/Client.php';
 
 
 /**
+ * Feed utility class
+ *
  * Base Zend_Feed class, containing constants and the Zend_Http_Client instance
  * accessor.
  *
@@ -70,6 +72,8 @@ class Zend_Feed
 
 
     /**
+     * Set the HTTP client instance
+     *
      * Sets the HTTP client object to use for retrieving the feeds.  If none
      * is set, the default Zend_Http_Client will be used.
      *
@@ -97,6 +101,14 @@ class Zend_Feed
 
 
     /**
+     * Get the full version of a namespace prefix
+     *
+     * Looks up a prefix (atom:, etc.) in the list of registered
+     * namespaces and returns the full namespace URI if
+     * available. Returns the prefix, unmodified, if it's not
+     * registered.
+     *
+     * @return string
      */
     public static function lookupNamespace($prefix)
     {
@@ -107,6 +119,14 @@ class Zend_Feed
 
 
     /**
+     * Add a namespace and prefix to the registered list
+     *
+     * Takes a prefix and a full namespace URI and adds them to the
+     * list of registered namespaces for use by
+     * Zend_Feed::lookupNamespace().
+     *
+     * @param string $prefix The namespace prefix
+     * @param string $namespaceURI The full namespace URI
      */
     public static function registerNamespace($prefix, $namespaceURI)
     {

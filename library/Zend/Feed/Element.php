@@ -20,7 +20,7 @@
 
 
 /**
- * Wraps a DOMElement allowing for simpler access to attributes.
+ * Wraps a DOMElement allowing for SimpleXML-like access to attributes.
  *
  * @category   Zend
  * @package    Zend_Feed
@@ -58,8 +58,10 @@ class Zend_Feed_Element implements ArrayAccess
 
 
     /**
-     * Return the underlying DOM object, which can then be manipulated
-     * with full DOM methods.
+     * Get a DOM representation of the element
+     *
+     * Returns the underlying DOM object, which can then be
+     * manipulated with full DOM methods.
      *
      * @return DOMDocument
      */
@@ -70,9 +72,13 @@ class Zend_Feed_Element implements ArrayAccess
 
 
     /**
+     * Update the object from a DOM element
+     *
      * Take a DOMElement object, which may be originally from a call
      * to getDOM() or may be custom created, and use it as the
-     * DOM tree for this ZFeedElement.
+     * DOM tree for this Zend_Feed_Element.
+     *
+     * @param DOMElement $element
      */
     public function setDOM(DOMElement $element)
     {
@@ -80,6 +86,12 @@ class Zend_Feed_Element implements ArrayAccess
     }
 
 
+    /**
+     * Set the parent element of this object to another
+     * Zend_Feed_Element.
+     *
+     * @internal
+     */
     public function setParent(Zend_Feed_Element $element)
     {
         $this->_parentElement = $element;
@@ -87,6 +99,11 @@ class Zend_Feed_Element implements ArrayAccess
     }
 
 
+    /**
+     * Appends this element to its parent if necessary.
+     *
+     * @internal
+     */
     protected function ensureAppended()
     {
         if (!$this->_appended) {
@@ -98,6 +115,12 @@ class Zend_Feed_Element implements ArrayAccess
 
 
     /**
+     * Get an XML string representation of this element
+     *
+     * Returns a string of this element's XML, including the XML
+     * prologue.
+     *
+     * @return string
      */
     public function saveXML()
     {
@@ -110,6 +133,11 @@ class Zend_Feed_Element implements ArrayAccess
 
 
     /**
+     * Get the XML for only this element
+     *
+     * Returns a string of this element's XML without prologue.
+     *
+     * @return string
      */
     public function saveXMLFragment()
     {
@@ -120,7 +148,12 @@ class Zend_Feed_Element implements ArrayAccess
     /**
      * Map variable access onto the underlying entry representation.
      *
+     * Get-style access returns a Zend_Feed_Element representing the
+     * child element accessed. To get string values, use method syntax
+     * with the __call() overriding.
+     *
      * @param string $var The property to access.
+     * @return mixed
      */
     public function __get($var)
     {
@@ -180,7 +213,9 @@ class Zend_Feed_Element implements ArrayAccess
 
 
     /**
-     * Only for PHP 5.1 and later.
+     * Map isset calls onto the underlying entry representation.
+     *
+     * Only supported by PHP 5.1 and later.
      */
     public function __isset($var)
     {
@@ -205,6 +240,8 @@ class Zend_Feed_Element implements ArrayAccess
 
 
     /**
+     * Get the value of an element with method syntax.
+     *
      * Map method calls to get the string value of the requested
      * element. If there are multiple elements that match, this will
      * return an array of those objects.
@@ -228,7 +265,9 @@ class Zend_Feed_Element implements ArrayAccess
 
 
     /**
-     * Only for PHP 5.1 and later. Remove all children matching $var.
+     * Remove all children matching $var.
+     *
+     * Only supported by PHP 5.1 and later.
      */
     public function __unset($var)
     {
@@ -241,6 +280,10 @@ class Zend_Feed_Element implements ArrayAccess
 
 
     /**
+     * Returns the nodeValue of this element when this object is used
+     * in a string context.
+     *
+     * @internal
      */
     public function __toString()
     {
@@ -249,6 +292,12 @@ class Zend_Feed_Element implements ArrayAccess
 
 
     /**
+     * Finds children with tagnames matching $var
+     *
+     * Similar to SimpleXML's children() method.
+     *
+     * @param string Tagname to match, can be either namespace:tagName or just tagName.
+     * @return array
      */
     protected function _children($var)
     {
@@ -340,4 +389,3 @@ class Zend_Feed_Element implements ArrayAccess
     }
 
 }
-
