@@ -42,6 +42,8 @@ class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
 
     /**
      * Root namespace for Atom entries.
+     *
+     * @var string
      */
     protected $_rootNamespace = 'atom';
 
