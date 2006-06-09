@@ -63,10 +63,10 @@ class Zend_Feed
      * @var array
      */
     protected static $_namespaces = array(
-        'osrss' => 'http://a9.com/-/spec/opensearchrss/1.0/',
+        'opensearch' => 'http://a9.com/-/spec/opensearchrss/1.0/',
         'atom' => 'http://www.w3.org/2005/Atom',
         'rss' => 'http://blogs.law.harvard.edu/tech/rss',
-        );
+    );
 
 
     /**
@@ -75,25 +75,25 @@ class Zend_Feed
      *
      * @param Zend_Http_Client_Abstract $httpClient
      */
-	public static function setHttpClient(Zend_Http_Client_Abstract $httpClient)
-	{
-		self::$_httpClient = $httpClient;
-	}
+    public static function setHttpClient(Zend_Http_Client_Abstract $httpClient)
+    {
+        self::$_httpClient = $httpClient;
+    }
 
 
-	/**
-	 * Gets the HTTP client object.
-	 *
-	 * @return Zend_Http_Client_Abstract
-	 */
-	public static function getHttpClient() {
-		if (!self::$_httpClient instanceof Zend_Http_Client_Abstract)
-		{
-			self::$_httpClient = new Zend_Http_Client();
-		}
+    /**
+     * Gets the HTTP client object.
+     *
+     * @return Zend_Http_Client_Abstract
+     */
+    public static function getHttpClient()
+    {
+        if (!self::$_httpClient instanceof Zend_Http_Client_Abstract) {
+            self::$_httpClient = new Zend_Http_Client();
+        }
 
-		return self::$_httpClient;
-	}
+        return self::$_httpClient;
+    }
 
 
     /**
@@ -104,6 +104,7 @@ class Zend_Feed
             self::$_namespaces[$prefix] :
             $prefix;
     }
+
 
     /**
      */
@@ -148,7 +149,7 @@ class Zend_Feed
         $success = @$doc->loadXML($string);
         @ini_restore('track_errors');
 
-        if (! $success) {
+        if (!$success) {
             throw new Zend_Feed_Exception("DOMDocument cannot parse XML: $php_errormsg");
         }
 
@@ -232,7 +233,7 @@ class Zend_Feed
                     continue;
                 }
                 if (!isset($attributes['type']) ||
-                    	!@preg_match('~^application/(?:atom|rss|rdf)\+xml~', $attributes['type'])) {
+                        !@preg_match('~^application/(?:atom|rss|rdf)\+xml~', $attributes['type'])) {
                     continue;
                 }
                 if (!isset($attributes['href'])) {
@@ -252,4 +253,3 @@ class Zend_Feed
     }
 
 }
-
