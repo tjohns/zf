@@ -90,5 +90,24 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
         $this->_buildEntryCache();
     }
 
+
+    /**
+     * Make accessing individual elements of the feed easier.
+     *
+     * @param string $var The property to access.
+     */
+    public function __get($var)
+    {
+        switch ($var) {
+            case 'entry':
+                // fall through to the next case
+            case 'entries':
+                return $this;
+
+            default:
+                return parent::__get($var);
+        }
+    }
+
 }
 

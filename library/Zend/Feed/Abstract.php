@@ -112,29 +112,6 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
 
 
     /**
-     * Make accessing individual elements of the feed easier.
-     *
-     * @param string $var The property to access.
-     */
-    public function __get($var)
-    {
-        switch ($var) {
-            case 'entry':
-                // fall through to the next case
-            case 'entries':
-                // fall through to the next case
-            case 'item':
-                // fall through to the next case
-            case 'items':
-                return $this;
-
-            default:
-                return parent::__get($var);
-        }
-    }
-
-
-    /**
      * @internal
      */
     protected function _buildEntryCache()
