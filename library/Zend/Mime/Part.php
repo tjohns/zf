@@ -128,7 +128,7 @@ class Zend_Mime_Part {
      * @access public
      * @return array
      */
-    public function getHeadersArray()
+    public function getHeadersArray($EOL = Zend_Mime::LINEEND)
     {
         $headers = array();
 
@@ -138,12 +138,15 @@ class Zend_Mime_Part {
         }
 
         if ($this->boundary) {
-            $contentType .= ';' . Zend_Mime::LINEEND
+            $contentType .= ';' . $EOL
                           . " boundary=\"" . $this->boundary . '"';
         }
 
         $headers[] = array('Content-Type', $contentType);
-        $headers[] = array('Content-Transfer-Encoding', $this->encoding);
+        
+        if ($this->encoding) {
+            $headers[] = array('Content-Transfer-Encoding', $this->encoding);
+        }
 
         if ($this->id) {
             $headers[]  = array('Content-ID', '<' . $this->id . '>');
@@ -169,11 +172,11 @@ class Zend_Mime_Part {
      *
      * @return String
      */
-    public function getHeaders()
+    public function getHeaders($EOL = Zend_Mime::LINEEND)
     {
         $res = '';
-        foreach ($this->getHeadersArray() as $header) {
-            $res .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
+        foreach ($this->getHeadersArray($EOL) as $header) {
+            $res .= $header[0] . ': ' . $header[1] . $EOL;
         }
 
         return $res;

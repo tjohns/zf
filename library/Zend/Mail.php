@@ -25,6 +25,11 @@
 require_once 'Zend/Mail/Exception.php';
 
 /**
+ * Zend_Mail_Transport_Abstract
+ */
+require_once 'Zend/Mail/Transport/Abstract.php';
+
+/**
  * Zend_Mime
  */
 require_once 'Zend/Mime.php';
@@ -52,30 +57,29 @@ class Zend_Mail extends Zend_Mime_Message
 {
 
     /**
-     * @var Zend_Mail_Transport_Interface
+     * @var Zend_Mail_Transport_Abstract
      */
     static protected $_defaultTransport = null;
-    protected $_headers = array();
-    protected $_recipients = array();
     protected $_charset = null;
+    protected $_headers = array();
     protected $_from = null;
     protected $_to = array();
+    protected $_recipients = array();
     protected $_subject = null;
-    protected $_textBody = false;
-    protected $_htmlBody = false;
-    protected $_hasAttachments = false;
+    protected $_bodyText = false;
+    protected $_bodyHtml = false;
     protected $_mimeBoundary = null;
-    protected $_isMultipartAlternative = false;
+    public $hasAttachments = false;
 
     /**
-     * sets the default Zend_Mail_Transport_Interface for all following
-     * uses of Zend_Mail::send();
+     * Sets the default mail transport for all following uses of
+     * Zend_Mail::send();
      *
      * @todo Allow passing a string to indicate the transport to load
      * @todo Allow passing in optional options for the transport to load
-     * @param  Zend_Mail_Transport_Interface $transport
+     * @param  Zend_Mail_Transport_Abstract $transport
      */
-    static public function setDefaultTransport(Zend_Mail_Transport_Interface $transport)
+    static public function setDefaultTransport(Zend_Mail_Transport_Abstract $transport)
     {
         self::$_defaultTransport = $transport;
     }
@@ -91,10 +95,22 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
-     * Set an arbitrary mime boundary for this mail object.
+     * Return charset string
+     * 
+     * @access public
+     * @return string
+     */
+    public function getCharset()
+    {
+        return $this->_charset;
+    }
+
+    /**
+     * Set an arbitrary mime boundary for the message
+     *
      * If not set, Zend_Mime will generate one.
      *
-     * @param String $boundary
+     * @param string $boundary
      */
     public function setMimeBoundary($boundary)
     {
@@ -102,8 +118,7 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
-     * returns the boundary string used for this
-     * email.
+     * Return the boundary string used for the message
      *
      * @return string
      */
@@ -112,12 +127,11 @@ class Zend_Mail extends Zend_Mime_Message
         return $this->_mimeBoundary;
     }
 
-
     /**
-     * Sets the Text body for this message.
+     * Sets the text body for the message.
      *
-     * @param String $txt
-     * @param String $charset
+     * @param string $txt
+     * @param string $charset
      * @return Zend_Mime_Part
     */
     public function setBodyText($txt, $charset=null)
@@ -132,16 +146,26 @@ class Zend_Mail extends Zend_Mime_Message
         $mp->disposition = Zend_Mime::DISPOSITION_INLINE;
         $mp->charset = $charset;
 
-        $this->_textBody = $mp;
+        $this->_bodyText = $mp;
         return $mp;
     }
 
+    /**
+     * Return text body Zend_Mime_Part
+     * 
+     * @access public
+     * @return false|Zend_Mime_Part
+     */
+    public function getBodyText()
+    {
+        return $this->_bodyText;
+    }
 
     /**
-     * Sets the HTML Body for this eMail
+     * Sets the HTML body for the message
      *
-     * @param String $html
-     * @param String $charset
+     * @param string $html
+     * @param string $charset
      * @return Zend_Mime_Part
      */
     public function setBodyHtml($html, $charset=null)
@@ -156,19 +180,30 @@ class Zend_Mail extends Zend_Mime_Message
         $mp->disposition = Zend_Mime::DISPOSITION_INLINE;
         $mp->charset = $charset;
 
-        $this->_htmlBody = $mp;
+        $this->_bodyHtml = $mp;
         return $mp;
     }
 
+    /**
+     * Return Zend_Mime_Part representing body HTML
+     * 
+     * @access public
+     * @return false|Zend_Mime_Part
+     */
+    public function getBodyHtml()
+    {
+        return $this->_bodyHtml;
+    }
 
     /**
-     * Adds an attachment to this eMail
+     * Adds an attachment to the message
      *
-     * @param String $body
-     * @param String $mimeType
-     * @param String $disposition
-     * @param String $encoding
-     * @return Zend_Mime_Part Created Part Object for advanced settings
+     * @param string $body
+     * @param string $mimeType
+     * @param string $disposition
+     * @param string $encoding
+     * @return Zend_Mime_Part Newly created Zend_Mime_Part object (to allow
+     * advanced settings)
      */
     public function addAttachment($body,
                                   $mimeType    = Zend_Mime::TYPE_OCTETSTREAM,
@@ -182,18 +217,30 @@ class Zend_Mail extends Zend_Mime_Message
         $mp->disposition = $disposition;
 
         $this->addPart($mp);
-        $this->_hasAttachments = true;
+        $this->hasAttachments = true;
 
         return $mp;
     }
 
+    /**
+     * Return a count of message parts
+     * 
+     * @access public
+     * @return void
+     */
+    public function getPartCount()
+    {
+        return count($this->_parts);
+    }
 
     /**
-     * Encode header fields according to RFC1522 if it contains
-     * non-printable characters
+     * Encode header fields 
      *
-     * @param String $value
-     * @return String
+     * Encodes header content according to RFC1522 if it contains non-printable
+     * characters.
+     *
+     * @param string $value
+     * @return string
      */
     protected function _encodeHeader($value)
     {
@@ -206,33 +253,30 @@ class Zend_Mail extends Zend_Mime_Message
       }
     }
 
-
     /**
-     * Adds another custom header to this eMail
-     * if append is true and the header does already
-     * exist, append the given string to the existing
-     * header.
+     * Add a header to the message
      *
-     * @param String $headerName
-     * @param String $value
-     * @param Boolean $append
+     * Adds a header to this message. If append is true and the header already
+     * exists, raises a flag indicating that the header should be appended.
+     *
+     * @param string $headerName
+     * @param string $value
+     * @param boolean $append
      */
     protected function _storeHeader($headerName, $value, $append=false)
     {
         $value = strtr($value,"\r\n\t",'???');
-        if ($append) {
-            // append value if a header with this name already exists
-            if (array_key_exists($headerName, $this->_headers) ) {
-                $this->_headers[$headerName][1] .= ',' . Zend_Mime::LINEEND
-                                                 . ' ' . $value;
-            } else {
-                $this->_headers[$headerName] = array($headerName, $value);
-            }
+        if (isset($this->_headers[$headerName])) {
+            $this->_headers[$headerName][] = $value;
         } else {
-            $this->_headers[] = array($headerName, $value);
+            $this->_headers[$headerName] = array($value);
         }
-    }
 
+        if ($append) {
+            $this->_headers[$headerName]['append'] = true;
+        }
+
+    }
 
     /**
      * Add a recipient
@@ -249,14 +293,12 @@ class Zend_Mail extends Zend_Mime_Message
         }
     }
 
-
     /**
-     * Helper function for adding a Recipient and the
-     * according header
+     * Helper function for adding a recipient and the corresponding header
      *
-     * @param String $headerName
-     * @param String $name
-     * @param String $email
+     * @param string $headerName
+     * @param string $name
+     * @param string $email
      */
     protected function _addRecipientAndHeader($headerName, $name, $email)
     {
@@ -269,35 +311,32 @@ class Zend_Mail extends Zend_Mime_Message
         $this->_storeHeader($headerName, $name .'<'. $email . '>', true);
     }
 
-
     /**
-     * Adds to-header and recipient
+     * Adds To-header and recipient
      *
-     * @param String $name
-     * @param String $email
+     * @param string $name
+     * @param string $email
      */
     public function addTo($email, $name='')
     {
         $this->_addRecipientAndHeader('To', $name, $email);
     }
 
-
     /**
      * Adds Cc-header and recipient
      *
-     * @param String $name
-     * @param String $email
+     * @param string $name
+     * @param string $email
      */
     public function addCc($email, $name='')
     {
         $this->_addRecipientAndHeader('Cc', $name, $email);
     }
 
-
     /**
      * Adds Bcc recipient
      *
-     * @param String $email
+     * @param string $email
      */
     public function addBcc($email)
     {
@@ -308,7 +347,7 @@ class Zend_Mail extends Zend_Mime_Message
     /**
      * Return list of recipient email addresses
      *
-     * @return Array (of strings)
+     * @return array (of strings)
      */
     public function getRecipients()
     {
@@ -316,10 +355,11 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
-     * Sets From Header and sender of the eMail
+     * Sets From-header and sender of the message
      *
-     * @param String $email
-     * @param String $name
+     * @param string $email
+     * @param string $name
+     * @throws Zend_Mail_Exception if called subsequent times
      */
     public function setFrom($email, $name = '')
     {
@@ -332,25 +372,34 @@ class Zend_Mail extends Zend_Mime_Message
         }
     }
 
+    /**
+     * Returns the sender of the mail
+     *
+     * @return string
+     */
+    public function getFrom()
+    {
+        return $this->_from;
+    }
 
     /**
-     * Sets the subject of the eMail
+     * Sets the subject of the message
      *
-     * @param String $subject
+     * @param string $subject
      */
     public function setSubject($subject)
     {
         if ($this->_subject === null) {
             $subject = strtr($subject,"\r\n\t",'???');
-            $this->_subject = $subject;
-            $this->_storeHeader('Subject', $this->_encodeHeader($subject));
+            $this->_subject = $this->_encodeHeader($subject);
+            $this->_storeHeader('Subject', $this->_subject);
         } else {
             throw new Zend_Mail_Exception('Subject set twice');
         }
     }
 
     /**
-     * returns the subject of the mail
+     * Returns the encoded subject of the message
      *
      * @return string
      */
@@ -360,16 +409,17 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
-     * Add a custom header to this eMail
+     * Add a custom header to the message
      *
-     * @param String $name
-     * @param String $value
-     * @param Boolean $append
+     * @param string $name
+     * @param string $value
+     * @param boolean $append
+     * @throws Zend_Mail_Exception on attempts to create standard headers
      */
     public function addHeader($name, $value, $append=false)
     {
         if (in_array(strtolower($name), array('to', 'cc', 'bcc', 'from', 'subject'))) {
-            throw new Zend_Mail_Exception('Cannot set standardheader here');
+            throw new Zend_Mail_Exception('Cannot set standard header from addHeader()');
         }
 
         $value = strtr($value,"\r\n\t",'???');
@@ -377,179 +427,29 @@ class Zend_Mail extends Zend_Mime_Message
         $this->_storeHeader($name, $value, $append);
     }
 
-
     /**
-     * Return all Mail Headers as a string. If a boundary is
-     * given, a multipart-header is generated with a mime-type
-     * of multipart/alternative or multipart/mixed depending on
-     * the MailParts in this ZMail object.
-     *
-     * @param String $boundary
-     * @return String
+     * Return mail headers
+     * 
+     * @access public
+     * @return void
      */
-    protected function _getHeaders($boundary=null)
+    public function getHeaders()
     {
-        $out = $this->_headers;
-
-        if ($boundary) {
-            // Build Multipart Mail
-            if ($this->_hasAttachments) {
-                $type = Zend_Mime::MULTIPART_MIXED;
-            } elseif ($this->_textBody && $this->_htmlBody) {
-                $type = Zend_Mime::MULTIPART_ALTERNATIVE;
-            } else {
-                $type = Zend_Mime::MULTIPART_MIXED;
-            }
-
-            $out[] = array(
-                'Content-Type', 
-                $type . '; charset="' . $this->_charset . '";'
-                  . Zend_Mime::LINEEND
-                  . " " . 'boundary="' .$boundary. '"' . Zend_Mime::LINEEND
-                  . 'MIME-Version: 1.0'
-            );
-        }
-
-        // Sanity check on headers -- should not be > 998 characters
-        $sane = true;
-        foreach ($out as $header) {
-            $first = true;
-            foreach (explode(Zend_Mime::LINEEND, $header[1]) as $line) {
-                if ($first) {
-                    $line = $header[0] . ': ' . $line;
-                }
-
-                if (998 < strlen($line)) {
-                    $sane = false;
-                    break 2; 
-                }
-            }
-        }
-        if (!$sane) {
-            throw new Zend_Mail_Exception('At least one mail header line is too long');
-        }
-
-        return $out;
+        return $this->_headers;
     }
-
-
-    /**
-     * returns the sender of the mail
-     *
-     * @return string
-     */
-    public function getFrom()
-    {
-        return $this->_from;
-    }
-
-
-    /**
-     * Generate Mime Compliant Message from the current configuration
-     *
-     * Extends the parent class to ensure that multipart/alternative is
-     * added to the mail parts if both text and html are present in a
-     * message that contains an attachment.
-     *
-     * @return string
-     */
-    protected function _buildBody()
-    {
-        if ($this->_textBody && $this->_htmlBody) {
-            // Generate unique boundary for multipart/alternative
-            $mime = new Zend_Mime(null);
-            $boundaryLine = $mime->boundaryLine();
-
-            $body = $boundaryLine
-                 . $this->_textBody->getHeaders()
-                 . Zend_MIME::LINEEND
-                 . $this->_textBody->getContent()
-                 . Zend_MIME::LINEEND
-                 . $boundaryLine
-                 . $this->_htmlBody->getHeaders()
-                 . Zend_MIME::LINEEND
-                 . $this->_htmlBody->getContent()
-                 . Zend_MIME::LINEEND
-                 . $boundaryLine;
-
-            $mp = new Zend_Mime_Part($body);
-            $mp->type        = Zend_Mime::MULTIPART_ALTERNATIVE;
-            $mp->boundary    = $mime->boundary();
-            
-            // Ensure first part contains text alternatives
-            array_unshift($this->_parts, $mp);
-            $this->_isMultipartAlternative = true;
-        } elseif ($this->_htmlBody) {
-            array_unshift($this->_parts, $this->_htmlBody);
-        } elseif ($this->_textBody) {
-            array_unshift($this->_parts, $this->_textBody);
-        }
-    }
-
-    /**
-     * Sends a Multipart eMail using the given Transport
-     *
-     * @param Zend_Mail_Transport_Interface $transport
-     */
-    protected function _sendMultiPart(Zend_Mail_Transport_Interface $transport)
-    {
-        $mime = new Zend_Mime($this->_mimeBoundary);
-        $this->setMime($mime);
-        $headers = $this->_getHeaders($mime->boundary());
-        $body = $this->generateMessage();
-        $this->_mimeBoundary = $mime->boundary();  // if no boundary was set before, set the used boundary now
-        $transport->sendMail($this, $body, $headers, $this->_to);
-    }
-
-    /**
-     * Sends a single part message using a given transport
-     *
-     * @param Zend_Mail_Transport_Interface $transport
-     */
-    protected function _sendSinglePart(Zend_Mail_Transport_Interface $transport)
-    {
-        $headers = array_merge($this->_getHeaders(), $this->getPartHeadersArray(0));
-        $body = $this->generateMessage();
-        $this->_mimeBoundary = null; // singlepart - no boundary used...
-        $transport->sendMail($this, $body, $headers, $this->_to);
-    }
-
-
-    /**
-     * Send this mail using the given transport
-     *
-     * @param Zend_Mail_Transport_Interface $transport
-     */
-    protected function _sendMail(Zend_Mail_Transport_Interface $transport)
-    {
-        $this->_buildBody();
-        $count = count($this->_parts);
-
-        if ($count > 1) {
-            $this->_sendMultiPart($transport);
-        } elseif ($count == 1) {
-            $this->_sendSinglePart($transport);
-        } else {
-            echo "Found $count parts\n";
-            echo ($this->_textBody || $this->_htmlBody) ? 'Text or HTML found' : 'No txt or HTML found';
-            echo "\n";
-            throw new Zend_Mail_Exception('Empty Mail cannot be sent');
-        }
-    }
-
 
     /**
      * Sends this email using the given transport or a previously
      * set DefaultTransport or the internal mail function if no
      * default transport had been set.
      *
-     * @param Zend_Mail_Transport_Interface $transport
+     * @param Zend_Mail_Transport_Abstract $transport
      * @return void
      */
     public function send($transport=null)
     {
         if ($transport === null) {
-            if (! self::$_defaultTransport instanceof Zend_Mail_Transport_Interface) {
+            if (! self::$_defaultTransport instanceof Zend_Mail_Transport_Abstract) {
                 require_once 'Zend/Mail/Transport/Sendmail.php';
                 $transport = new Zend_Mail_Transport_Sendmail();
             } else {
@@ -557,7 +457,7 @@ class Zend_Mail extends Zend_Mime_Message
             }
         }
 
-        $this->_sendMail($transport);
+        $transport->send($this);
     }
 
 }

@@ -26,9 +26,9 @@
 require_once 'Zend/Mail/Transport/Exception.php';
 
 /**
- * Zend_Mail_Transport_Interface
+ * Zend_Mail_Transport_Abstract
  */
-require_once 'Zend/Mail/Transport/Interface.php';
+require_once 'Zend/Mail/Transport/Abstract.php';
 
 
 /**
@@ -42,11 +42,10 @@ require_once 'Zend/Mail/Transport/Interface.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mail_Transport_Smtp implements Zend_Mail_Transport_Interface {
+class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
 
     const CONNECTION_TIMEOUT = 30;
     const COMMUNICATION_TIMEOUT = 2;
-    const LINEEND = "\r\n";
     const DEBUG = false;
 
     protected $_host;
@@ -162,7 +161,6 @@ class Zend_Mail_Transport_Smtp implements Zend_Mail_Transport_Interface {
         $this->_expect(250);
     }
 
-
     /**
      * sends a RCPT command for a recipient address
      * and validates the response.
@@ -175,7 +173,6 @@ class Zend_Mail_Transport_Smtp implements Zend_Mail_Transport_Interface {
         $this->_send('RCPT TO: <' .$to. '>');
         $this->_expect(250,251);
     }
-
 
     /**
      * sends the DATA command followed by the
@@ -190,8 +187,11 @@ class Zend_Mail_Transport_Smtp implements Zend_Mail_Transport_Interface {
     {
         $this->_send('DATA');
         $this->_expect(354);
-        foreach(explode(self::LINEEND ,$data) AS $line) {
-            if($line=='.') $line='..'; // important. replace single dot on a line
+        foreach(explode($this->EOL, $data) as $line) {
+            if ($line=='.') {
+                // important. replace single dot on a line
+                $line='..';
+            }
             $this->_send($line);
         }
         $this->_send('.');
@@ -342,7 +342,7 @@ class Zend_Mail_Transport_Smtp implements Zend_Mail_Transport_Interface {
      */
     protected function _send($str)
     {
-        $res = fwrite($this->_con, $str.self::LINEEND);
+        $res = fwrite($this->_con, $str.$this->EOL);
         if ($res === false) {
             throw new Zend_Mail_Transport_Exception('Could not write to SMTP server');
         }
@@ -353,35 +353,41 @@ class Zend_Mail_Transport_Smtp implements Zend_Mail_Transport_Interface {
     }
 
     /**
-     * send an email
+     * Send an email
      *
-     * @param Zend_Mail $mail
-     * @param string $body
-     * @param array $headers
      * @param array $to
      */
-    public function sendMail(Zend_Mail $mail, $body, $headers, $to)
+    public function _sendMail()
     {
-        // Format headers into a string
-        $headersSend = '';
-        foreach ($headers as $header) {
-            $headersSend .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
+        // Check if connection already present
+        $wasConnected = ($this->_con !== null);
+        if (!$wasConnected) {
+            // establish a connection
+            $this->connect();
+        } else {
+            // reset conection
+            $this->rset();
         }
 
-        $wasConnected = ($this->_con!==null); // check if the connection is already there
-        if(!$wasConnected) $this->connect();// if not, establish a connection
-        else $this->rset(); // if already connected, reset connection
         try {
-            $this->mail_from($mail->getFrom());
-            foreach($mail->getRecipients() AS $recipient) {
+            $this->mail_from($this->_mail->getFrom());
+            foreach ($this->_mail->getRecipients() as $recipient) {
                 $this->rcpt_to($recipient);
             }
-            $this->data($headersSend."\r\n".$body);
-        }
-        catch (Zend_Mail_Transport_Exception $e) {
-            if(!$wasConnected) $this->disconnect(); // remove connection if we made one
+            $this->data($this->header . $this->EOL . $this->body);
+        } catch (Zend_Mail_Transport_Exception $e) {
+            // remove connection if we made one
+            if (!$wasConnected) {
+                $this->disconnect();
+            }
+
+            // rethrow
             throw $e;
         }
-        if(!$wasConnected) $this->disconnect(); // remove connection if we made one
+
+        // remove connection if we made one
+        if(!$wasConnected) {
+            $this->disconnect();
+        }
     }
 }

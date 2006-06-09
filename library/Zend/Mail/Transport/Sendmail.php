@@ -21,9 +21,9 @@
 
 
 /**
- * Zend_Mail_Transport_Interface
+ * Zend_Mail_Transport_Abstract
  */
-require_once 'Zend/Mail/Transport/Interface.php';
+require_once 'Zend/Mail/Transport/Abstract.php';
 
 
 /**
@@ -35,22 +35,8 @@ require_once 'Zend/Mail/Transport/Interface.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mail_Transport_Sendmail implements Zend_Mail_Transport_Interface
+class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
 {
-    /**
-     * Final headers string sent to transport
-     * @var string 
-     * @access public
-     */
-    public $header = null;
-
-    /**
-     * Recipient list
-     * @var string 
-     * @access public
-     */
-    public $recipients = null;
-
     /**
      * Subject
      * @var string 
@@ -59,26 +45,33 @@ class Zend_Mail_Transport_Sendmail implements Zend_Mail_Transport_Interface
     public $subject = null;
 
     /**
+     * EOL for headers and MIME parts
+     * @var string 
+     * @access public
+     */
+
+    /**
+     * EOL character string
+     * @var string 
+     * @access public
+     */
+    public $EOL = PHP_EOL;
+
+    /**
      * Send mail using PHP native mail()
      *
-     * @param Zend_Mail $mail 
-     * @param string $body 
-     * @param array $headers 
-     * @param array $to 
      * @access public
      * @return void
-     * @throws Zend_Mail_Transport_Exception if missing to addresses or on
-     * mail() failure
+     * @throws Zend_Mail_Transport_Exception on mail() failure
      */
-    public function sendMail(Zend_Mail $mail, $body, $headers, $to)
+    public function _sendMail()
     {
-        $this->recipients = implode(',', $to);
-        $this->_prepareHeaders($headers);
-
-        /**
-         * @todo error checking
-         */
-        if (!mail($this->recipients, $this->subject, $body, $this->header)) {
+        if (!mail(
+                $this->recipients, 
+                $this->_mail->getSubject(), 
+                $this->body, 
+                $this->header)) 
+        {
             throw new Zend_Mail_Transport_Exception('Unable to send mail');
         }
     }
@@ -96,6 +89,10 @@ class Zend_Mail_Transport_Sendmail implements Zend_Mail_Transport_Interface
      */
     protected function _prepareHeaders($headers)
     {
+        if (!$this->_mail) {
+            throw new Zend_Mail_Transport_Exception('_prepareHeaders requires a registered Zend_Mail object');
+        }
+
         // mail() uses its $to parameter to set the To: header, and the $subject
         // parameter to set the Subject: header. We need to strip them out.
         if (0 === strpos(PHP_OS, 'WIN')) {
@@ -109,24 +106,18 @@ class Zend_Mail_Transport_Sendmail implements Zend_Mail_Transport_Interface
                 throw new Zend_Mail_Transport_Exception('Missing To header');
             }
 
-            $this->recipients = str_replace(Zend_Mime::LINEEND . "\t", '', $headers['To'][1]);
+            unset($headers['To']['append']);
+            $this->recipients = implode(',', $headers['To']);
             unset($headers['To']);
         }
 
-        // Build header string and grab subject
-        $this->subject = '';
-        $this->header  = '';
-        foreach ($headers as $header) {
-            if ('Subject' == $header[0]) {
-                $this->subject = $header[1];
-                continue;
-            } 
-
-            $this->header .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
+        // Remove subject header, if present
+        if (isset($headers['Subject'])) {
+            unset($headers['Subject']);
         }
 
-        // Trim headers
-        $this->header = trim($this->header);
+        // Prepare headers
+        parent::_prepareHeaders($headers);
     }
 }
 
