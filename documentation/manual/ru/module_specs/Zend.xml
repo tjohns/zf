@@ -317,8 +317,8 @@ registry($name=null)
 ?>]]></programlisting>
 
     <para>
-        Если значение аргумента <code>$name</code> равно <code>NULL</code>, будет
-        возвращен массив, в котором ключами являются имена объектов в реестре, а
+        Если значение аргумента <code>$name</code> равно <code>NULL</code>, то будет
+        возвращен массив, в котором ключами массива являются имена объектов в реестре, а
         значениями - имена классов, к которым принадлежат эти объекты.
 <!--
         If the <code>$name</code> argument is <code>NULL</code>, an array will be returned where the keys to the array
