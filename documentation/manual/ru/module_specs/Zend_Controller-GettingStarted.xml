@@ -106,11 +106,11 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 
 require_once 'Zend/Controller/Front.php';
 
-Zend_Controller_Front::run('/path/to/your/controllers')
+Zend_Controller_Front::run('/path/to/your/controllers');
 
 ?>]]></programlisting>
 
-            Относительно <code>/path/to/your/controllers</code> читайте в следующем разделе.
+            Подробнее про <code>/path/to/your/controllers</code> читайте в следующем разделе.
 <!--
             See the next section regarding the <code>/path/to/your/controllers</code>.
 -->
@@ -144,8 +144,8 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 
         <para>
             Рекомендуется, чтобы сайты, построенные с Zend Framework, использовали общую структуру каталогов.
-            Несмотря на то, что это возможно не во всех случаях, это возможно для многих или, навеное, большинства.
-            Следование данной структуре сделает ваш код более легким для понимания всякому, кто знаком с соглашениями
+            Несмотря на то, что это возможно не во всех случаях, это возможно для многих или, возможно, большинства случаев.
+            Следование данной структуре сделает ваш код более легким для понимания теми, кто знаком с соглашениями
             Zend Framework.
 <!--
             It is recommended that websites built with the Zend Framework share a common directory structure.  While
@@ -188,7 +188,7 @@ Zend_Controller_Front::run('/path/to/your/controllers')
         <title>IndexController</title>
 
         <para>
-            Каждый сайт должен устанавливать контроллер под именем <code>IndexController</code>. Это контроллер,
+            Любой сайт должен определять контроллер с именем <code>IndexController</code>. Это контроллер,
             который действует, когда в URI не определены контроллеры, как в этом URI:
 <!--
             Every site must define a controller named <code>IndexController</code>.  This is the controller
