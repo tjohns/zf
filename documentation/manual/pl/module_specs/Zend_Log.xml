@@ -1,68 +1,72 @@
 <sect1 id="zend.log.introduction">
-    <title>Introduction</title>
+    <title>Wprowadzenie</title>
     <para>
-        <code>Zend_Log</code> is a general purpose logging class.  <code>Zend_Log</code> is a static class that
-        can not be instantiated directly.  It holds an array of instances of <code>Zend_Log</code>, one for
-        each log used by the application.  Each logger instance uses an adapter that implements
-        <code>Zend_Log_Adapter_Interface</code>.
+        <code>Zend_Log</code> jest uniwersalną klasą rejestrującą. <code>Zend_Log</code> 
+        jest statyczną klasą, dla której nie możemy bezpośrednio utworzyć obiektu. 
+        Przechowuje ona tablicę instancji obiektów <code>Zend_Log</code>, po jednej
+        dla każdego z dzienników używanych przez aplikację. Kada instancja rejestratora używa 
+        adaptera który implementuje interfejs <code>Zend_Log_Adapter_Interface</code>.
     </para>
 
     <para>
-        To use <code>Zend_Log</code>, <ulink url="http://php.net/include">include()</ulink> the
-        <code>Zend_Log</code> class and any adapter classes that will be used. For example, if an application
-        will log to both the console (PHP's output buffer) and text files, the following files would be
-        included:
+        Aby użyć klasy <code>Zend_Log</code>, załaduj za pomocą funkcji 
+        <ulink url="http://php.net/include">include()</ulink> klasę <code>Zend_Log</code> 
+        oraz wszystkie klasy adapterów które będą używane. Na przykład gdy aplikacja
+        będzie rejestrowała do konsoli (domyślny bufor PHP) oraz do plików tekstowych,
+        następujące pliki powinny być dołączone:
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Log.php';                  // Zend_Log base class
-require_once 'Zend/Log/Adapter/Console.php';  // Console log adapter
-require_once 'Zend/Log/Adapter/File.php';     // File log adapter
+require_once 'Zend/Log.php';                  // Podstawowa klasa Zend_Log
+require_once 'Zend/Log/Adapter/Console.php';  // Adapter rejestrowania do konsoli
+require_once 'Zend/Log/Adapter/File.php';     // Adapter rejestrowania do pliku
 ]]></programlisting>
 
-        <code>Zend_Log</code> can be used in a simplified way for a single log, can be configured for multiple
-        logs, and can also be used to log internal operations of many Zend Framework classes.
+        Klasa <code>Zend_Log</code> może być używana w uproszczonej formie dla pojedynczego
+        dziennika, może być skonfigurowana dla wielu dzienników, może być także używana
+        do rejestrowania wewnętrznych operacji wielu klas Zend Framework.
     </para>
 </sect1>
 
 <sect1 id="zend.log.simple-logging">
-    <title>Logging to a Single Log</title>
+    <title>Rejestrowanie do pojedynczego dziennika</title>
     <para>
-        A Logger is created by calling the <code>Zend_Log::registerLogger()</code> method with a
-        <code>Zend_Log_Adapter_Interface</code> instance as an argument.
+        Rejestrator jest tworzony poprzez wywołanie metody <code>Zend_Log::registerLogger()</code> 
+        z argumentem w postaci instancji klasy <code>Zend_Log_Adapter_Interface</code>.
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Log.php';                // Zend_Log base class
-require_once 'Zend/Log/Adapter/File.php';   // File log adapter
+require_once 'Zend/Log.php';                // Podstawowa klasa Zend_Log
+require_once 'Zend/Log/Adapter/File.php';   // Adapter rejestrowania do pliku
 
-// Register the file logger
+// Utwórz rejestrator
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
 ]]></programlisting>
     </para>
 
     <para>
-        Messages are then sent to the log with <code>Zend_Log::log()</code>.
+        Wiadomości są wysyłane do dziennika za pomocą metody <code>Zend_Log::log()</code>.
 
         <programlisting role="php"><![CDATA[
 /**
- * Send a message to the log.  An optional second argument specifies the log
- * level.  If no level is supplied, LEVEL_DEBUG is assumed.
+ * Wysyła wiadomośc do dziennika.  Opcjonalny drugi argument określa priorytet wiadomości.
+ * Jeśli priorytet nie zostanie podany, zostanie przyjęty domyślny LEVEL_DEBUG.
  */
-Zend_Log::log('First logging message.');
+Zend_Log::log('Pierwsza wiadomość.');
 
 /**
- * Log a severe message.
+ * Zapisuje wiadomość o wysokim priorytecie.
  */
-Zend_Log::log('A serious error has occurred.', Zend_Log::LEVEL_SEVERE);
+Zend_Log::log('Wystąpił poważny błąd.', Zend_Log::LEVEL_SEVERE);
 ]]></programlisting>
     </para>
 </sect1>
 
 <sect1 id="zend.log.log-levels">
-   <title>Log Levels</title>
+   <title>Priorytety wiadomości</title>
    <para>
-       <code>Zend_Log::log()</code> will log all messages as <code>LEVEL_DEBUG</code> unless a different level
-       is supplied as the optional second argument.  The following levels are available as constants of the
-       <code>Zend_Log</code> class.
+       Metoda <code>Zend_Log::log()</code> będzie rejestrować wszystkie wiadomości nadając
+       im priorytet  <code>LEVEL_DEBUG</code> dopóki inny priorytet nie zostanie
+       podany jako drugi, opcjonalny argument. Następujące priorytety są dostępne jako
+       stałe w klasie <code>Zend_Log</code>:
 
        <programlisting role="php"><![CDATA[
 LEVEL_DEBUG     = 1
@@ -74,28 +78,30 @@ LEVEL_SEVERE    = 16
 </sect1>
 
 <sect1 id="zend.log.advanced-logging">
-   <title>Advanced Logging: Multiple Loggers</title>
+   <title>Zaawansowane logowanie: wiele dzienników</title>
    <para>
-        <code>Zend_Log</code> supports logging to multiple log adapters.  It can either send a message to all
-        logs, or target a message to a specific log.
+        Klasa <code>Zend_Log</code> umożliwia rejestrowanie do wielu dzienników. 
+        Może wysyłać wiadomośc do wszystkich dzienników lub do konkretnego dziennika.
    </para>
 
    <para>
-        When creating multiple loggers, each log must be given a unique name.  Loggers are registered with the
-        <code>registerLogger()</code> method, with the log name supplied as the optional second argument.
+        Gdy tworzymy wiele rejestratorów, każdy z nich musi otrzymać unikalną nazwę.
+        Rejestratory są tworzone za pomocą metody <code>registerLogger()</code> 
+        z nazwą rejestratora podaną jako opcjonalny argument.
    </para>
 
    <para>
-        In the example below, two loggers are created: one for the console, and one for a file.  They will be
-        given the names <code>Console</code> and <code>File</code>, respectively.
+        W poniższym przykładzie tworzone są dwa rejestratory: jeden dla konsoli
+        i jeden dla pliku. Zostaną one nazwane odpowiednio <code>Konsola</code> 
+        oraz <code>Plik</code>.
 
         <programlisting role="php"><![CDATA[
-require_once 'Zend/Log.php';                 // Zend_Log base class
-require_once 'Zend/Log/Adapter/File.php';    // File log adapter
-require_once 'Zend/Log/Adapter/Console.php'; // Console log adapter
+require_once 'Zend/Log.php';                 // Podstawowa klasa Zend_Log
+require_once 'Zend/Log/Adapter/File.php';    // Adapter rejestrowania do pliku
+require_once 'Zend/Log/Adapter/Console.php'; // Adapter rejestrowania do konsoli
 
-Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'File');
-Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Console');
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'Plik');
+Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Konsola');
 ]]></programlisting>
    </para>
 </sect1>
