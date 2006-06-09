@@ -42,6 +42,7 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
 {
 
     /**
+     * @var integer
      */
     protected $_entryIndex = 0;
 
@@ -49,7 +50,6 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
      * @var array
      */
     protected $_entries;
-
 
     /**
      * The Zend_Feed_Abstract constructor takes the URI of a feed or a feed represented as a string
@@ -90,7 +90,7 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
         $success = @$doc->loadXML($this->_element);
         @ini_restore('track_errors');
 
-        if (! $success) {
+        if (!$success) {
             throw new Zend_Feed_Exception("DOMDocument cannot parse XML: $php_errormsg");
         }
 
@@ -127,16 +127,6 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
                 // fall through to the next case
             case 'items':
                 return $this;
-
-            case 'service.feed':
-                // fall through to the next case
-            case 'service.post':
-                foreach ($this->_element->childNodes as $child) {
-                    if ($child->localName == 'link' && $child->getAttribute('rel') == $var) {
-                        return $child->getAttribute('href');
-                    }
-                }
-                return null;
 
             default:
                 return parent::__get($var);
@@ -188,8 +178,9 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
      */
     public function current()
     {
-        return new $this->_entryClassName($this->__get('service.feed'),
-                                          $this->_entries[$this->_entryIndex]);
+        return new $this->_entryClassName(
+            null,
+            $this->_entries[$this->_entryIndex]);
     }
 
     /**
@@ -227,5 +218,5 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
     {
         return (0 <= $this->_entryIndex && $this->_entryIndex < $this->count());
     }
-}
 
+}
