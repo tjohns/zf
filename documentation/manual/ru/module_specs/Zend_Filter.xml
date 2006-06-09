@@ -67,7 +67,7 @@
     
     ?>]]>
         </programlisting>
-        <para>Фильтрация по "черному листу" (blacklist):</para>
+        <para>Фильтрация по "черному списку" (blacklist):</para>
         <programlisting>
     <![CDATA[<?php
     
