@@ -11,6 +11,11 @@
 require_once 'Zend/Mail.php';
 
 /**
+ * Zend_Mail_Transport_Abstract
+ */
+require_once 'Zend/Mail/Transport/Abstract.php';
+
+/**
  * Zend_Mail_Transport_Sendmail
  */
 require_once 'Zend/Mail/Transport/Sendmail.php';
@@ -29,7 +34,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
 /**
  * Mock mail transport class for testing purposes
  */
-class Zend_Mail_Transport_Mock implements Zend_Mail_Transport_Interface
+class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
 {
     /**
      * @var Zend_Mail
@@ -57,6 +62,10 @@ class Zend_Mail_Transport_Mock implements Zend_Mail_Transport_Interface
             $this->header .= $header[0] . ': ' . $header[1] . Zend_Mime::LINEEND;
         }
     }
+
+    protected function _sendMail()
+    {}
+
 }
 
 
