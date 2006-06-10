@@ -15,6 +15,17 @@ if (is_readable('TestConfiguration.php')) {
     require_once 'TestConfiguration.php.dist';
 }
 
+/**
+ * Prepend library/ to the include_path (incubator first, then regular
+ * framework).  This allows the tests to run out of the box and helps
+ * prevent finding other copies of the framework that might be
+ * present.
+ */
+set_include_path(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'
+                 . PATH_SEPARATOR
+                 . dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'library'
+                 . PATH_SEPARATOR . get_include_path());
+
 require_once 'Zend/AllTests.php';
 
 class AllTests
