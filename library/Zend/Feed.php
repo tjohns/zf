@@ -62,6 +62,13 @@ class Zend_Feed
     protected static $_httpClient = null;
 
     /**
+     * Override HTTP PUT and DELETE request methods?
+     *
+     * @var boolean
+     */
+    protected static $_httpMethodOverride = false;
+
+    /**
      * @var array
      */
     protected static $_namespaces = array(
@@ -97,6 +104,35 @@ class Zend_Feed
         }
 
         return self::$_httpClient;
+    }
+
+
+    /**
+     * Toggle using POST instead of PUT and DELETE HTTP methods
+     *
+     * Some feed implementations do not accept PUT and DELETE HTTP
+     * methods, or they can't be used because of proxies or other
+     * measures. This allows turning on using POST where PUT and
+     * DELETE would normally be used; in addition, an
+     * X-Method-Override header will be sent with a value of PUT or
+     * DELETE as appropriate.
+     *
+     * @param boolean $override Whether to override PUT and DELETE.
+     */
+    public static function setHttpMethodOverride($override = true)
+    {
+        self::$_httpMethodOverride = $override;
+    }
+
+
+    /**
+     * Get the HTTP override state
+     *
+     * @return boolean
+     */
+    public static function getHttpMethodOverride()
+    {
+        return self::$_httpMethodOverride;
     }
 
 

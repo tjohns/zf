@@ -33,11 +33,11 @@ require_once 'Zend/Feed/EntryRss.php';
 /**
  * RSS channel class
  *
- * The Zend_Feed_Rss object is a concrete subclass of Zend_Feed_Abstract meant
- * for representing RSS channels. It does not add any methods to its
- * parent, just provides a classname to check against with the
- * instanceof operator, and expects to be handling RSS-formatted data
- * instead of Atom.
+ * The Zend_Feed_Rss class is a concrete subclass of
+ * Zend_Feed_Abstract meant for representing RSS channels. It does not
+ * add any methods to its parent, just provides a classname to check
+ * against with the instanceof operator, and expects to be handling
+ * RSS-formatted data instead of Atom.
  *
  * @category   Zend
  * @package    Zend_Feed
@@ -47,14 +47,14 @@ require_once 'Zend/Feed/EntryRss.php';
 class Zend_Feed_Rss extends Zend_Feed_Abstract
 {
     /**
-     * The classname for individual feed elements.
+     * The classname for individual channel elements.
      *
      * @var string
      */
     protected $_entryClassName = 'Zend_Feed_EntryRss';
 
     /**
-     * The element name for individual feed elements (RSS <item>s).
+     * The element name for individual channel elements (RSS <item>s).
      *
      * @var string
      */
@@ -75,10 +75,10 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
     {
         parent::__wakeup();
 
-        // Find the base feed element and create an alias to it.
+        // Find the base channel element and create an alias to it.
         $this->_element = $this->_element->getElementsByTagName('channel')->item(0);
         if (!$this->_element) {
-            throw new Zend_Feed_Exception('No root <channel> element found, cannot parse feed.');
+            throw new Zend_Feed_Exception('No root <channel> element found, cannot parse channel.');
         }
 
         // Find the entries and save a pointer to them for speed and
@@ -88,7 +88,7 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
 
 
     /**
-     * Make accessing some individual elements of the feed easier.
+     * Make accessing some individual elements of the channel easier.
      *
      * Special accessors 'item' and 'items' are provided so that if
      * you wish to iterate over an RSS channel's items, you can do so

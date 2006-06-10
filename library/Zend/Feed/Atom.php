@@ -34,11 +34,11 @@ require_once 'Zend/Feed/EntryAtom.php';
  * Atom feed class
  *
  * The Zend_Feed_Atom class is a concrete subclass of the general
- * Zend_Feed_Abstract class, tailored for representing an Atom feed. It shares
- * all of the same methods with its abstract parent. The distinction
- * is made in the format of data that Zend_Feed_Atom expects, and as a
- * further pointer for users as to what kind of feed object they have
- * been passed.
+ * Zend_Feed_Abstract class, tailored for representing an Atom
+ * feed. It shares all of the same methods with its abstract
+ * parent. The distinction is made in the format of data that
+ * Zend_Feed_Atom expects, and as a further pointer for users as to
+ * what kind of feed object they have been passed.
  *
  * @category   Zend
  * @package    Zend_Feed
@@ -85,7 +85,7 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
             $element = $this->_element->getElementsByTagName($this->_entryElementName)->item(0);
             if (!$element) {
                 throw new Zend_Feed_Exception('No root <feed> or <' . $this->_entryElementName
-                                            . '> element found, cannot parse feed.');
+                                              . '> element found, cannot parse feed.');
             }
 
             $doc = new DOMDocument($this->_element->version,
@@ -104,7 +104,56 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
 
 
     /**
-     * Make accessing individual elements of the feed easier.
+     * Easy access to <link> tags keyed by "rel" attributes.
+     *
+     * If $elt->link() is called with no arguments, we will attempt to
+     * return the value of the <link> tag(s) like all other
+     * method-syntax attribute access. If an argument is passed to
+     * link(), however, then we will return the "href" value of the
+     * first <link> tag that has a "rel" attribute matching $rel:
+     *
+     * $elt->link(): returns the value of the link tag.
+     * $elt->link('self'): returns the href from the first <link rel="self"> in the entry.
+     *
+     * @param string $rel The "rel" attribute to look for.
+     * @return mixed
+     */
+    public function link($rel = null)
+    {
+        if ($rel === null) {
+            return parent::__call('link', null);
+        }
+
+        // index link tags by their "rel" attribute.
+        $links = parent::__get('link');
+        if (!is_array($links)) {
+            if ($links instanceof Zend_Feed_Element) {
+                $links = array($links);
+            } else {
+                return $links;
+            }
+        }
+
+        foreach ($links as $link) {
+            if (empty($link['rel'])) {
+                continue;
+            }
+            if ($rel == $link['rel']) {
+                return $link['href'];
+            }
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Make accessing some individual elements of the feed easier.
+     *
+     * Special accessors 'entry' and 'entries' are provided so that if
+     * you wish to iterate over an Atom feed's entries, you can do so
+     * using foreach ($feed->entries as $entry) or foreach
+     * ($feed->entry as $entry).
      *
      * @param string $var The property to access.
      * @return mixed
@@ -123,4 +172,3 @@ class Zend_Feed_Atom extends Zend_Feed_Abstract
     }
 
 }
-
