@@ -43,5 +43,3 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE', ':memory:');
  */
 define('TESTS_ZEND_HTTPCLIENT_REMOTE_ENABLED', true);
 define('TESTS_ZEND_HTTPCLIENT_REMOTE_URI',     'http://zend.com');
-
-?>
