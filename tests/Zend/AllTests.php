@@ -6,7 +6,7 @@ if (!defined('PHPUnit2_MAIN_METHOD')) {
 require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
-require_once 'Zend/FeedTest.php';
+require_once 'Zend/Feed/AllTests.php';
 require_once 'Zend/Http/AllTests.php';
 require_once 'Zend/JsonTest.php';
 require_once 'Zend/MailTest.php';
@@ -29,7 +29,7 @@ class Zend_AllTests
     {
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend');
 
-        $suite->addTestSuite('Zend_FeedTest');
+        $suite->addTest(Zend_Feed_AllTests::suite());
         $suite->addTest(Zend_Http_AllTests::suite());
         $suite->addTestSuite('Zend_JsonTest');
         $suite->addTestSuite('Zend_MimeTest');

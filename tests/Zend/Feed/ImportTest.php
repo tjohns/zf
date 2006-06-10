@@ -26,7 +26,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @subpackage UnitTests
  *
  */
-class Zend_FeedTest extends PHPUnit2_Framework_TestCase
+class Zend_Feed_ImportTest extends PHPUnit2_Framework_TestCase
 {
     protected $_client;
     protected $_feedDir;
@@ -36,7 +36,7 @@ class Zend_FeedTest extends PHPUnit2_Framework_TestCase
         Zend_Feed::setHttpClient(new Zend_Http_Client_File());
         $this->_client = Zend_Feed::getHttpClient();
 
-        $this->_feedDir = dirname(__FILE__) . '/Feed/_files';
+        $this->_feedDir = dirname(__FILE__) . '/_files';
     }
 
     public function testAtomGoogle()
