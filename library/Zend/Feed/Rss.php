@@ -88,7 +88,12 @@ class Zend_Feed_Rss extends Zend_Feed_Abstract
 
 
     /**
-     * Make accessing individual elements of the feed easier.
+     * Make accessing some individual elements of the feed easier.
+     *
+     * Special accessors 'item' and 'items' are provided so that if
+     * you wish to iterate over an RSS channel's items, you can do so
+     * using foreach ($channel->items as $item) or foreach
+     * ($channel->item as $item).
      *
      * @param string $var The property to access.
      * @return mixed
