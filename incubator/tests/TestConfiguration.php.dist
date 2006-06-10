@@ -1,0 +1,10 @@
+<?php
+/**
+ * @package UnitTests
+ *
+ * This file defines configuration for running the unit tests for the Zend Framework Incubator.
+ * Some tests have dependencies to PHP extensions or databases which may not necessary
+ * installed on the target system.  For these cases, the ability to disable or configure
+ * testing is provided below.  Tests for components which should run universally, such
+ * as "Zend" or "Zend_InputFilter", are always run by the master suite and cannot be disabled.
+ */
