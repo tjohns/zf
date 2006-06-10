@@ -16,7 +16,7 @@ if (is_readable('TestConfiguration.php')) {
 }
 
 /**
- * Prepend library/ to the include_path.  This allows the tests to run out of the box and
+ * Append library/ to the include_path.  This allows the tests to run out of the box and
  * helps prevent finding other copies of the framework that might be present.
  */
 set_include_path(get_include_path() . PATH_SEPARATOR 
