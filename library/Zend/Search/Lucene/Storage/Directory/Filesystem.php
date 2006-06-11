@@ -181,7 +181,8 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
      */
     public function fileExists($filename)
     {
-        return file_exists($this->_dirPath .'/'. $filename);
+        return isset($this->_fileHandlers[$filename]) ||
+               file_exists($this->_dirPath . '/' . $filename);
     }
 
 

@@ -116,6 +116,24 @@ class Zend_Search_Lucene_Index_Writer
     private $_currentSegment;
 
     /**
+     * List of indexfiles extensions
+     *
+     * @var array
+     */
+    private static $_indexExtensions = array('.cfs' => '.cfs',
+                                             '.fnm' => '.fnm',
+                                             '.fdx' => '.fdx',
+                                             '.fdt' => '.fdt',
+                                             '.tis' => '.tis',
+                                             '.tii' => '.tii',
+                                             '.frq' => '.frq',
+                                             '.prx' => '.prx',
+                                             '.tvx' => '.tvx',
+                                             '.tvd' => '.tvd',
+                                             '.tvf' => '.tvf',
+                                             '.del' => '.del'  );
+
+    /**
      * Opens the index for writing
      *
      * IndexWriter constructor needs Directory as a parameter. It should be
@@ -134,7 +152,8 @@ class Zend_Search_Lucene_Index_Writer
             foreach ($this->_directory->fileList() as $file) {
                 if ($file == 'deletable' ||
                     $file == 'segments'  ||
-                    substr($file, strlen($file)-4) == '.cfs') {
+                    isset(self::$_indexExtensions[ substr($file, strlen($file)-4)]) ||
+                    preg_match('/\.f\d+$/i', $file) /* matches <segment_name>.f<decimal_nmber> file names */) {
                         $this->_directory->deleteFile($file);
                     }
             }

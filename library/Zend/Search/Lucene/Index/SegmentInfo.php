@@ -138,13 +138,15 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $this->_termDictionary = null;
 
         $this->_segFiles = array();
-        $cfsFile = $this->_directory->getFileObject($name . '.cfs');
-        $segFilesCount = $cfsFile->readVInt();
+        if ($this->_directory->fileExists($name . '.cfs')) {
+            $cfsFile = $this->_directory->getFileObject($name . '.cfs');
+            $segFilesCount = $cfsFile->readVInt();
 
-        for ($count = 0; $count < $segFilesCount; $count++) {
-            $dataOffset = $cfsFile->readLong();
-            $fileName = $cfsFile->readString();
-            $this->_segFiles[$fileName] = $dataOffset;
+            for ($count = 0; $count < $segFilesCount; $count++) {
+                $dataOffset = $cfsFile->readLong();
+                $fileName = $cfsFile->readString();
+                $this->_segFiles[$fileName] = $dataOffset;
+            }
         }
 
         $fnmFile = $this->openCompoundFile('.fnm');
@@ -174,6 +176,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $delFile = $this->openCompoundFile('.del');
 
             $byteCount = $delFile->readInt();
+            $byteCount = ceil($byteCount/8);
             $bitCount  = $delFile->readInt();
 
             if ($bitCount == 0) {
@@ -216,13 +219,18 @@ class Zend_Search_Lucene_Index_SegmentInfo
     {
         $filename = $this->_name . $extension;
 
-        if( !isset($this->_segFiles[ $filename ]) ) {
+        // Try to open common file first
+        if ($this->_directory->fileExists($filename)) {
+            return $this->_directory->getFileObject($filename);
+        }
+
+        if( !isset($this->_segFiles[$filename]) ) {
             throw new Zend_Search_Lucene_Exception('Index compound file doesn\'t contain '
                                        . $filename . ' file.' );
         }
 
         $file = $this->_directory->getFileObject( $this->_name.".cfs" );
-        $file->seek( $this->_segFiles[ $filename ] );
+        $file->seek($this->_segFiles[$filename]);
         return $file;
     }
 
@@ -537,97 +545,29 @@ class Zend_Search_Lucene_Index_SegmentInfo
             return;
         }
 
-        try {
-            if (extension_loaded('bitset')) {
-                $delBytes = $this->_deleted;
-                $bitCount = count(bitset_to_array($delBytes));
-            } else {
-                $byteCount = ceil($this->_docCount/8);
-                $delBytes = str_repeat(chr(0), $byteCount);
-                for ($count = 0; $count < $byteCount; $count++) {
-                    $byte = 0;
-                    for ($bit = 0; $bit < 8; $bit++) {
-                        if (isset($this->_deleted[$count*8 + $bit])) {
-                            $byte |= (1<<$bit);
-                        }
+        if (extension_loaded('bitset')) {
+            $delBytes = $this->_deleted;
+            $bitCount = count(bitset_to_array($delBytes));
+        } else {
+            $byteCount = floor($this->_docCount/8)+1;
+            $delBytes = str_repeat(chr(0), $byteCount);
+            for ($count = 0; $count < $byteCount; $count++) {
+                $byte = 0;
+                for ($bit = 0; $bit < 8; $bit++) {
+                    if (isset($this->_deleted[$count*8 + $bit])) {
+                        $byte |= (1<<$bit);
                     }
-                    $delBytes{$count} = chr($byte);
                 }
-                $bitCount = count($this->_deleted);
+                $delBytes{$count} = chr($byte);
             }
-
-
-            $delFile = $this->openCompoundFile($this->_name . '.del');
-            $byteCount = $delFile->readInt();
-            if ($byteCount < strlen($delBytes)) {
-                throw new Zend_Search_Lucene_Exception('.del file is too small');
-            }
-
-            $delFile->seek(4, SEEK_CUR);
-            $delFile->writeBytes($delBytes);
-        } catch(Zend_Search_Exception $e) {
-            if (strpos($e->getMessage(), 'compound file doesn\'t contain') !== false ||
-                strpos($e->getMessage(), '.del file is too small') !== false) {
-
-                unset($delFile);
-
-                $fileSizes = array();
-                $lastFile = null;
-                foreach ($this->_segFiles as $fileName => $dataOffset) {
-                    if ($lastFile !== null) {
-                        $fileSizes[$lastFile] += $dataOffset;
-                    }
-                    $fileSizes[$fileName] = -$dataOffset;
-                    $lastFile = $fileName;
-                }
-
-                $cfsFile = $this->_directory->getFileObject( $this->_name . '.cfs' );
-                $cfsFile->seek(0, SEEK_END);
-                $fileSizes[$lastFile] += $cfsFile->tell();
-
-                $fileSizes[$this->_name . '.del'] = 8 /* Uint32, Uint32 */ + strlen($delBytes);
-
-                $newCfsFile = $this->_directory->createFile($this->_name . '.cfs.new');
-                $newCfsFile->writeVInt(count($fileSizes));
-                $dataOffsetPointers = array();
-                foreach ($fileSizes as $fileName => $fileSize) {
-                    $dataOffsetPointers[$fileName] = $newCfsFile->tell();
-                    $newCfsFile->writeLong(0); // write dummy data
-                    $newCfsFile->writeString($fileName);
-                }
-
-                foreach ($fileSizes as $fileName => $fileSize) {
-                    // Get an actual data offset
-                    $newDataOffset = $newCfsFile->tell();
-                    // Seek to the data offset pointer
-                    $newCfsFile->seek($dataOffsetPointers[$fileName]);
-                    // Write actual data offset value
-                    $newCfsFile->writeLong($newDataOffset);
-                    // Seek back to the end of file
-                    $newCfsFile->seek($newDataOffset);
-
-                    // Write data
-                    if ($fileName != $this->_name . '.del') {
-                        $size = $fileSizes[$fileName];
-                        $cfsFile->seek($this->_segFiles[$fileName]);
-                        while ($size > 0 && ($nextBlock = $cfsFile->readBytes(min($byteCount, 16*1024))) != false ) {
-                            $newCfsFile->writeBytes($nextBlock);
-                            $size -= strlen($nextBlock);
-                        }
-                    } else {
-                        $newCfsFile->writeInt(strlen($delBytes));
-                        $newCfsFile->writeInt(strlen($bitCount));
-                        $newCfsFile->writeBytes($delBytes);
-                    }
-
-                    $this->_segFiles[$fileName] = $newDataOffset;
-                }
-
-                $this->_directory->renameFile($this->_name . '.cfs.new', $this->_name . '.cfs');
-            } else {
-                throw $e;
-            }
+            $bitCount = count($this->_deleted);
         }
+
+
+        $delFile = $this->_directory->createFile($this->_name . '.del');
+        $delFile->writeInt($this->_docCount);
+        $delFile->writeInt($bitCount);
+        $delFile->writeBytes($delBytes);
 
         $this->_deletedDirty = false;
     }

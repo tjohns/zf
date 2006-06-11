@@ -150,11 +150,12 @@ class Zend_Search_Lucene_Index_SegmentWriter
         $this->_name      = $name;
         $this->_docCount  = 0;
 
-        $this->_fields       = array();
-        $this->_termDocs     = array();
-        $this->_files        = array();
-        $this->_norms        = array();
-        $this->_fieldLengths = array();
+        $this->_fields         = array();
+        $this->_termDocs       = array();
+        $this->_files          = array();
+        $this->_norms          = array();
+        $this->_fieldLengths   = array();
+        $this->_termDictionary = array();
 
         $this->_fdxFile = null;
         $this->_fdtFile = null;
@@ -245,13 +246,13 @@ class Zend_Search_Lucene_Index_SegmentWriter
             }
 
             $this->_fdxFile->writeLong($this->_fdtFile->tell());
-
             $this->_fdtFile->writeVInt(count($storedFields));
             foreach ($storedFields as $field) {
                 $this->_fdtFile->writeVInt($this->_fields[$field->name]->number);
-                $this->_fdtFile->writeByte($field->isTokenized ? 0x01 : 0x00 |
-                                           $field->isBinary ?    0x02 : 0x00 |
-                                           0x00 /* 0x04 - third bit, compressed (ZLIB) */ );
+                $fieldBits = ($field->isTokenized ? 0x01 : 0x00) |
+                             ($field->isBinary ?    0x02 : 0x00) |
+                             0x00; /* 0x04 - third bit, compressed (ZLIB) */
+                $this->_fdtFile->writeByte($fieldBits);
                 if ($field->isBinary) {
                     $this->_fdtFile->writeVInt(strlen($field->stringValue));
                     $this->_fdtFile->writeBytes($field->stringValue);
@@ -367,31 +368,41 @@ class Zend_Search_Lucene_Index_SegmentWriter
      */
     private function _dumpDictionary()
     {
+        $termKeys = array_keys($this->_termDictionary);
+        sort($termKeys, SORT_STRING);
+
         $tisFile = $this->_directory->createFile($this->_name . '.tis');
         $tisFile->writeInt((int)0xFFFFFFFE);
-        $tisFile->writeLong(count($this->_termDictionary));
+        $tisFile->writeLong(count($termKeys));
         $tisFile->writeInt(self::$indexInterval);
         $tisFile->writeInt(self::$skipInterval);
 
         $tiiFile = $this->_directory->createFile($this->_name . '.tii');
         $tiiFile->writeInt((int)0xFFFFFFFE);
-        $tiiFile->writeLong((int)((count($this->_termDictionary) - 1)/self::$indexInterval) + 1);
+        $tiiFile->writeLong(ceil((count($termKeys) + 2)/self::$indexInterval));
         $tiiFile->writeInt(self::$indexInterval);
         $tiiFile->writeInt(self::$skipInterval);
+
+        /** Dump dictionary header */
+        $tiiFile->writeVInt(0);                    // preffix length
+        $tiiFile->writeString('');                 // suffix
+        $tiiFile->writeInt((int)0xFFFFFFFF);       // field number
+        $tiiFile->writeByte((int)0x0F);
+        $tiiFile->writeVInt(0);                    // DocFreq
+        $tiiFile->writeVInt(0);                    // FreqDelta
+        $tiiFile->writeVInt(0);                    // ProxDelta
+        $tiiFile->writeVInt(20);                   // IndexDelta
 
         $frqFile = $this->_directory->createFile($this->_name . '.frq');
         $prxFile = $this->_directory->createFile($this->_name . '.prx');
 
-        $termKeys = array_keys($this->_termDictionary);
-        sort($termKeys, SORT_STRING);
-
-        $termCount = 0;
+        $termCount = 1;
 
         $prevTerm     = null;
         $prevTermInfo = null;
         $prevIndexTerm     = null;
         $prevIndexTermInfo = null;
-        $prevIndexPosition = 0;
+        $prevIndexPosition = 20;
 
         foreach ($termKeys as $termId) {
             $freqPointer = $frqFile->tell();
@@ -418,7 +429,7 @@ class Zend_Search_Lucene_Index_SegmentWriter
             if (count($this->_termDocs[$termId]) >= self::$skipInterval) {
                 /**
                  * @todo Write Skip Data to a freq file.
-                 * It's not used now, but must be implemented to be compatible with Lucene
+                 * It's not used now, but make index more optimal
                  */
                 $skipOffset = $frqFile->tell() - $freqPointer;
             } else {
@@ -475,7 +486,8 @@ class Zend_Search_Lucene_Index_SegmentWriter
             $cfsFile->seek($dataOffset);
 
             $dataFile = $this->_directory->getFileObject($fileName);
-            $cfsFile->writeBytes($dataFile->readBytes($this->_directory->fileLength($fileName)));
+            $data = $dataFile->readBytes($this->_directory->fileLength($fileName));
+            $cfsFile->writeBytes($data);
 
             $this->_directory->deleteFile($fileName);
         }
