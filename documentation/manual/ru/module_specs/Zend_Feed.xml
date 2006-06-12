@@ -333,7 +333,8 @@ foreach ($channel as $item) {
             <listitem>
                 <para>
                     <code>language</code> - Язык, на котором написано содержимое канала
-                    <!-- The language the channel is written in</para> -->
+                    <!-- The language the channel is written in -->
+                </para>
             </listitem>
             <listitem>
                 <para>
