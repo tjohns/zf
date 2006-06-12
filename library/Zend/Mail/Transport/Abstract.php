@@ -48,11 +48,25 @@ abstract class Zend_Mail_Transport_Abstract {
     public $body = '';
 
     /**
+     * MIME boundary
+     * @var string 
+     * @access public
+     */
+    public $boundary = '';
+
+    /**
      * Mail header string
      * @var string 
      * @access public
      */
     public $header = '';
+
+    /**
+     * Array of message headers
+     * @var array 
+     * @access protected
+     */
+    protected $_headers = array();
 
     /**
      * Message is a multipart message
@@ -113,7 +127,6 @@ abstract class Zend_Mail_Transport_Abstract {
      */
     protected function _getHeaders($boundary)
     {
-        $headers = $this->_mail->getHeaders();
         if (null !== $boundary) {
             // Build multipart mail
             if ($this->_mail->hasAttachments) {
@@ -124,15 +137,17 @@ abstract class Zend_Mail_Transport_Abstract {
                 $type = Zend_Mime::MULTIPART_MIXED;
             }
 
-            $headers['Content-Type'] = array(
+            $this->_headers['Content-Type'] = array(
                 $type . '; charset="' . $this->_mail->getCharset() . '";'
                 . $this->EOL
                 . " " . 'boundary="' . $boundary . '"'
             );
-            $headers['MIME-Version'] = array('1.0');
+            $this->_headers['MIME-Version'] = array('1.0');
+
+            $this->boundary = $boundary;
         }
 
-        return $headers;
+        return $this->_headers;
     }
 
     /**
@@ -217,29 +232,49 @@ abstract class Zend_Mail_Transport_Abstract {
             $html->disposition = false;
 
             $body = $boundaryLine
-                . $text->getHeaders($this->EOL)
-                 . $this->EOL
-                 . $text->getContent()
-                 . $this->EOL
-                 . $boundaryLine
-                 . $html->getHeaders($this->EOL)
-                 . $this->EOL
-                 . $html->getContent()
-                 . $this->EOL
-                 . $boundaryEnd;
+                  . $text->getHeaders($this->EOL)
+                  . $this->EOL
+                  . $text->getContent()
+                  . $this->EOL
+                  . $boundaryLine
+                  . $html->getHeaders($this->EOL)
+                  . $this->EOL
+                  . $html->getContent()
+                  . $this->EOL
+                  . $boundaryEnd;
 
-            $mp = new Zend_Mime_Part($body);
-            $mp->type        = Zend_Mime::MULTIPART_ALTERNATIVE;
-            $mp->boundary    = $mime->boundary();
+            $mp           = new Zend_Mime_Part($body);
+            $mp->type     = Zend_Mime::MULTIPART_ALTERNATIVE;
+            $mp->boundary = $mime->boundary();
 
             $this->_isMultipart = true;
             
             // Ensure first part contains text alternatives
             array_unshift($this->_parts, $mp);
-        } elseif (false !== ($body = $this->_mail->getBodyHtml())) {
+
+            // Get headers
+            $this->_headers = $this->_mail->getHeaders();
+            return;
+        } 
+        
+        // If not multipart, then get the body
+        if (false !== ($body = $this->_mail->getBodyHtml())) {
             array_unshift($this->_parts, $body);
         } elseif (false !== ($body = $this->_mail->getBodyText())) {
             array_unshift($this->_parts, $body);
+        }
+
+        if (!isset($body)) {
+            throw new Zend_Mail_Transport_Exception('No body specified');
+        }
+
+        // Get headers
+        $this->_headers = $this->_mail->getHeaders();
+        $headers = $body->getHeadersArray($this->EOL);
+        foreach ($headers as $header) {
+            // Headers in Zend_Mime_Part are kept as arrays with two elements, a
+            // key and a value
+            $this->_headers[$header[0]] = array($header[1]);
         }
     }
 
