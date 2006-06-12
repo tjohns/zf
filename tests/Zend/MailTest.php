@@ -1,5 +1,4 @@
 <?php
-set_include_path('.:/home/matthew/dev/zend/framework-svn/library:/usr/local/php-5.1.2/lib/php');
 /**
  * @package 	Zend_Mail
  * @subpackage  UnitTests
