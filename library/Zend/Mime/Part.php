@@ -20,6 +20,11 @@
 
 
 /**
+ * Zend
+ */
+require_once 'Zend.php';
+
+/**
  * Zend_Mime
  */
 require_once 'Zend/Mime.php';

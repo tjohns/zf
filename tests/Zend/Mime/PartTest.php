@@ -75,10 +75,11 @@ class Zend_Mime_PartTest extends PHPUnit2_Framework_TestCase
     
     public function testStreamEncoding()
     {
-        $original = file_get_contents('Zend/Mime/PartTest.php');
+        $testfile = realpath(__FILE__);
+        $original = file_get_contents($testfile);
 
         // Test Base64
-        $fp = fopen('Zend/Mime/PartTest.php','rb');
+        $fp = fopen($testfile,'rb');
         $this->assertTrue(is_resource($fp));
         $part = new Zend_Mime_Part($fp);
         $part->encoding = Zend_Mime::ENCODING_BASE64;
@@ -89,7 +90,7 @@ class Zend_Mime_PartTest extends PHPUnit2_Framework_TestCase
         $this->assertEquals(base64_decode($encoded),$original);
         
         // test QuotedPrintable
-        $fp = fopen('Zend/Mime/PartTest.php','rb');
+        $fp = fopen($testfile,'rb');
         $this->assertTrue(is_resource($fp));
         $part = new Zend_Mime_Part($fp);
         $part->encoding = Zend_Mime::ENCODING_QUOTEDPRINTABLE;
