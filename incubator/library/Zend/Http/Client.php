@@ -41,6 +41,13 @@ require_once 'Zend/Http/Cookiejar.php';
 class Zend_Http_Client extends Zend_Http_Client_Abstract 
 {
     /**
+     * Supported HTTP Authentication methods
+     *
+     */
+    const AUTH_BASIC = 'basic';
+    //const AUTH_DIGEST = 'digest'; <-- not implemented yet
+
+    /**
      * Maximum number of redirections to follow, 0 for none.
      *
      * @var int
@@ -57,10 +64,17 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     /**
      * HTTP Authentication settings
      *
-     * @var array
+     * Expected to be an associative array with this structure:
+     * $this->auth = array('user' => 'username', 'password' => 'password', 'type' => 'basic')
+     * Where 'type' should be one of the supported authentication types (see the AUTH_* 
+     * constants), for example 'basic' or 'digest'.
+     * 
+     * If null, no authentication will be used.
+     * 
+     * @var array|null
      */
-    protected $auth = array('user' => null, 'password' => null, 'type' => null);
-    
+    protected $auth;
+
     /**
      * File upload arrays (used in POST requests)
      * 
@@ -107,21 +121,41 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     }
     
     /**
-     * Set HTTP authentication settings 
+     * Set HTTP authentication parameters
+     * 
+     * $type should be one of the supported types - see the self::AUTH_* 
+     * constants.
+     *  
+     * To enable authentication: 
+     *     @example $this->setAuth('shahar', 'secret', Zend_Http_Client::AUTH_BASIC);
+     * To disable authentication: 
+     *     @example $this->setAuth(false);
      *
-     * @param string|null $user User name or null to disable authentication
-     * @param string|null $password Password
+     * @see http://www.faqs.org/rfcs/rfc2617.html
+     * @param string|false $user User name or false disable authentication
+     * @param string $password Password
      * @param string $type Authentication type
      */
-    public function setAuth($user, $password = null, $type = 'Basic')
+    public function setAuth($user, $password = '', $type = self::AUTH_BASIC)
     {
-        $this->auth = array(
-            'user' => $user,
-            'password' => $password,
-            'type' => $type
-        );
+        // If we got false or null, disable authentication
+        if ($user === false || $user === null) {
+            $this->auth = null;
+            
+        // Else, set up authentication
+        } else {
+            // Check we got a proper authentication type
+            if (! defined('self::AUTH_' . strtoupper($type)))
+                throw new Zend_Http_Exception("Invalid or not supported authentication type: '$auth'");
+
+            $this->auth = array(
+                'user' => (string) $user,
+                'password' => (string) $password,
+                'type' => $type
+            );
+        }
     }
-    
+
     /**
      * Set the HTTP client's cookie jar.
      * 
@@ -188,9 +222,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      */
     public function resetParameters()
     {
-    	parent::resetParameters();
-    	
-    	$this->files = array();
+        parent::resetParameters();
+        
+        $this->files = array();
     }
     
     /**
@@ -252,12 +286,12 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                         $this->setUri($location);
                         
                     } else {
-                    	
-                    	// Split into path and query and set the query
-                    	list($location, $query) = explode('?', $location, 2);
-                    	$this->uri->setQueryString($query);
-                    	
-                    	// Else, if we got just an absolute path, set it
+                        
+                        // Split into path and query and set the query
+                        list($location, $query) = explode('?', $location, 2);
+                        $this->uri->setQueryString($query);
+                        
+                        // Else, if we got just an absolute path, set it
                         if(strpos($location, '/') === 0) {
                             $this->uri->setPath($headerValue);
                     
@@ -331,6 +365,12 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
             $this->setHeader('user-agent', $this->user_agent);
         }
         
+        // Set HTTP authentication if needed
+        if (is_array($this->auth)) {
+            $this->setHeader('Authorization', 
+                self::encodeAuthHeader($this->auth['user'], $this->auth['password'], $this->auth['type']));
+        }
+
         // Load cookies from cookie jar
         if (isset($this->Cookiejar)) {
             $cookstr = $this->Cookiejar->getMatchingCookies($this->uri, 
@@ -539,5 +579,41 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
         $ret .= "{$value}\r\n";
         
         return $ret;
+    }
+
+    /**
+     * Create a HTTP authentication "Authorization:" header according to the 
+     * specified user, password and authentication method.
+     *
+     * @see http://www.faqs.org/rfcs/rfc2617.html
+     * @param string $user
+     * @param string $password
+     * @param string $type
+     * @return string
+     */
+    static public function encodeAuthHeader($user, $password, $type = self::AUTH_BASIC)
+    {
+        $authHeader = null;
+        
+        switch ($type) {
+            case self::AUTH_BASIC:
+                // In basic authentication, the user name cannot contain ":"
+                if (strpos($user, ':') !== false)
+                    throw new Exception("The user name cannot contain ':' in 'Basic' HTTP authentication");
+
+                $authHeader = 'Basic ' . base64_encode($user . ':' . $password);
+                break;
+                
+            //case self::AUTH_DIGEST:
+                /**
+                 * @todo Implement digest authentication
+                 */
+            //    break;
+                
+            default:
+                throw new Zend_Http_Exception("Not a supported HTTP authentication type: '$type'");
+        }
+        
+        return $authHeader;
     }
 }
