@@ -136,11 +136,9 @@ $config['production'] = array(
 // overrides values as necessary
 $config['staging'] = $config['production'];
 $config['staging']['webhost'] = 'dev.example.com';
-$config['staging']['database'] = array(
-    'host'     => 'dev.example.com',
-    'username' => 'devuser',
-    'password' => 'devsecret'
-    );
+$config['staging']['database']['host'] = 'dev.example.com';
+$config['staging']['database']['username'] = 'devuser';
+$config['staging']['database']['password'] = 'devsecret';
 ?>]]>           </programlisting>
                 <note>
                     The configuration data array must be named <code>$config</code> in the loaded PHP script.
