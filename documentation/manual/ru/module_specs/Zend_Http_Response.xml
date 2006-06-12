@@ -2,34 +2,53 @@
     <title>Zend_Http_Response</title>
 
     <sect2 id="zend.http.response.introduction">
-        <title>Introduction</title>
+        <title>Введение</title>
         <para>
+            <code>Zend_Http_Response</code> обеспечивает легкий доступ к ответам,
+            возвращаемым <xref linkend="zend.http.client" />. Он предоставляет
+            интуитивно понятный набор методов для работы с данными ответа HTTP,
+            получаемым при произведении запроса:  
+<!--
             <code>Zend_Http_Response</code> provides easy access to the responses returned by
             <xref linkend="zend.http.client" />. It provides an intuitive set of methods for working
             with the HTTP response data received from a request:
+-->
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Returns TRUE if an HTTP error code was received; FALSE otherwise.
+                    <code>isError()</code>: Возвращает <code>TRUE</code>, если
+                    был получен код ошибки, иначе <code>FALSE</code>.
+                    <!-- Returns TRUE if an HTTP error code was received; FALSE otherwise. -->
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Returns TRUE if an HTTP success code was received; FALSE otherwise.
+                    <code>isSuccessful()</code>: Возвращает <code>TRUE</code>, если
+                    был получен код успешного выполнения, иначе <code>FALSE</code>.
+                    <!-- Returns TRUE if an HTTP success code was received; FALSE otherwise. -->
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Returns TRUE if an HTTP redirect code was received; FALSE otherwise.
+                    <code>isRedirect()</code>: Возвращает <code>TRUE</code>, если
+                    был получен код переадресации, иначе <code>FALSE</code>.
+                    <!-- Returns TRUE if an HTTP redirect code was received; FALSE otherwise. -->
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Returns the HTTP status code.
+                    <code>getStatus()</code>: Возвращает код состояния.
+                    <!-- Returns the HTTP status code. -->
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Returns an array of HTTP response header strings.
+                    <code>getHeaders()</code>: Возвращает массив строк с заголовками
+                    ответа HTTP.  
+                    <!-- Returns an array of HTTP response header strings. -->
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Returns the HTTP response body as a string.
+                    <code>getBody()</code>: Возвращает тело ответа HTTP в виде строки. 
+                    <!-- Returns the HTTP response body as a string. -->
                 </listitem>
             </itemizedlist>
         </para>
         <example>
-            <title>Working with HTTP Response Data</title>
+            <title>
+                Работа с данными ответа HTTP 
+                <!-- Working with HTTP Response Data -->
+            </title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Http/Client.php';
 try {
