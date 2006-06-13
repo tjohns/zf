@@ -251,7 +251,7 @@ $mail->addHeader('X-greetingsTo', 'Dad', true);
     <para>
         <code>Zend_Mail</code> prüft nicht auf die richtigen Zeichensätze für die Mailbestandteile.
         Wenn <code>Zend_Mail</code> instanziiert wird, kann ein Zeichensatz für die Mail selber
-        angegeben werden. Der Standardwert ist iso-8859-1. Die Anwendug muss sicherstellen, dass die 
+        angegeben werden. Der Standardwert ist <code>iso-8859-1</code>. Die Anwendug muss sicherstellen, dass die 
         Inhalte aller Bestandteile des Mailobjektes im richtigen Zeichensatz kodiert sind. Wenn ein
         neuer Mailbestandteil erstellt wird, kann für jeden Bestandteil ein anderer Zeichensatz 
         angegeben werden. 
