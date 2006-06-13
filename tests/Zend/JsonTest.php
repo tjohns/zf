@@ -239,10 +239,31 @@ class Zend_JsonTest extends PHPUnit2_Framework_TestCase
      * @access public
      * @return void
      */
-    public function testArrayOfObjects()
+    public function testDecodeArrayOfObjects()
     {
         $value = '[{"id":1},{"foo":2}]';
         $expect = array(array('id' => 1), array('foo' => 2));
+        $this->assertEquals($expect, Zend_Json::decode($value));
+    }
+
+    /**
+     * Test that objects of arrays decode properly; see issue #107
+     * 
+     * @access public
+     * @return void
+     */
+    public function testDecodeObjectOfArrays()
+    {
+        $value = '{"codeDbVar" : {"age" : ["int", 5], "prenom" : ["varchar", 50]}, "234" : [22, "jb"], "346" : [64, "francois"], "21" : [12, "paul"]}';
+        $expect = array(
+            'codeDbVar' => array(
+                'age'   => array('int', 5),
+                'prenom' => array('varchar', 50),
+            ),
+            234 => array(22, 'jb'),
+            346 => array(64, 'francois'),
+            21  => array(12, 'paul')
+        );
         $this->assertEquals($expect, Zend_Json::decode($value));
     }
 	
