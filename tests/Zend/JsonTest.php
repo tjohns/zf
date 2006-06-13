@@ -232,6 +232,19 @@ class Zend_JsonTest extends PHPUnit2_Framework_TestCase
         $this->assertTrue(isset($decoded->one), 'Expected property not set');
         $this->assertEquals($value->one, $decoded->one, 'Unexpected value');
     }
+
+    /**
+     * Test that arrays of objects decode properly; see issue #144
+     * 
+     * @access public
+     * @return void
+     */
+    public function testArrayOfObjects()
+    {
+        $value = '[{"id":1},{"foo":2}]';
+        $expect = array(array('id' => 1), array('foo' => 2));
+        $this->assertEquals($expect, Zend_Json::decode($value));
+    }
 	
 	/**
      * Test encoding and decoding in a single step

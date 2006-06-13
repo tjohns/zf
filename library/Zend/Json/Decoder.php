@@ -251,6 +251,7 @@ class Zend_Json_Decoder
                 break;
         }
 
+        $this->_getNextToken();
         return $result;
     }
 
@@ -263,11 +264,12 @@ class Zend_Json_Decoder
     protected function _decodeArray()
     {
     	$result = array();
-    	$tok = $this->_getNextToken(); // Move past the '['
-    	$index = 0;
+    	$starttok = $tok = $this->_getNextToken(); // Move past the '['
+    	$index  = 0;
 
     	while ($tok && $tok != self::RBRACKET) {
     	    $result[$index++] = $this->_decodeValue();
+
     	    $tok = $this->_token;
 
     	    if ($tok == self::RBRACKET || !$tok) {
@@ -275,7 +277,7 @@ class Zend_Json_Decoder
     	    }
 
     	    if ($tok != self::COMMA) {
-        		throw new Zend_Json_Exception('Missing "," in array encoding: '.$this->_source);
+        		throw new Zend_Json_Exception('Missing "," in array encoding: ' . $this->_source);
     	    }
 
     	    $tok = $this->_getNextToken();
@@ -292,7 +294,7 @@ class Zend_Json_Decoder
     protected function _eatWhitespace()
     {
     	if (preg_match(
-                '/(\t|\b|\f\n\r| )*/s',
+                '/(\t|\b|\f|\n|\r| )*/s',
                 $this->_source,
                 $matches,
                 PREG_OFFSET_CAPTURE,
@@ -311,17 +313,18 @@ class Zend_Json_Decoder
      */
     protected function _getNextToken()
     {
-    	$this->_token = self::EOF;
+    	$this->_token      = self::EOF;
     	$this->_tokenValue = null;
     	$this->_eatWhitespace();
 
-    	if ($this->_offset >= $this->_sourceLength)
+    	if ($this->_offset >= $this->_sourceLength) {
     	    return(self::EOF);
+        }
 
-    	$str = $this->_source;
+    	$str        = $this->_source;
     	$str_length = $this->_sourceLength;
-    	$i = $this->_offset;
-    	$start = $i;
+    	$i          = $this->_offset;
+    	$start      = $i;
 
     	switch ($str{$i}) {
         	case '{':
@@ -433,7 +436,7 @@ class Zend_Json_Decoder
         		$datum = $matches[0][0];
 
         		if (is_numeric($datum)) {
-        		    $val = intval($datum);
+        		    $val  = intval($datum);
         		    $fVal = floatval($datum);
         		    $this->_tokenValue = ($val == $fVal ? $val : $fVal);
         		} else {
