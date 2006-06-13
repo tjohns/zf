@@ -61,7 +61,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		<para>
 		    Aus Sicherheitsgründen empfiehlt Zend sehr stark, keine PHP Dateien in Verzeichnissen
 		    abzulegen, die vom Webserver aus erreichbar sind (solche, die unterhalb des 
-		    Hauptverzeichnis liegen). Während diese nicht in jeder Umgebung möglich ist, z.B. beim
+		    Hauptverzeichnis liegen). Während dies nicht in jeder Umgebung möglich ist, z.B. beim
 		    Shared Hosting, sollte dies als optimales Verfahren (best practice) betrachtet und 
 		    befolgt werden, wenn immer es möglich ist. 
 		</para>
