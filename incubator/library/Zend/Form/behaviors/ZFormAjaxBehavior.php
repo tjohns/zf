@@ -103,7 +103,7 @@ class ZFormAjaxBehavior extends ZFormElementBehavior {
 	if ($formElement instanceof ZFormElement) {
 	    parent::__construct($formElement);
 	}
-	$this->_isAsync = $isAync;
+	$this->_isAsync = $isAsync;
 	$this->_url = $url;
 	$this->_htmlid = $htmlid;
 	$this->setPosition($position);
