@@ -182,7 +182,7 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
         if (!$this->_checkStructureVersion()) {
             $this->_buildStructure();
             if (!$this->_checkStructureVersion()) {
-                Zend_Cache::throwException("Impossible to build cache structure in " . $options['cacheDBCompletePath']);
+                Zend_Cache::throwException("Impossible to build cache structure in " . $this->_options['cacheDBCompletePath']);
             }
         }    
         $data = @sqlite_escape_string($data);
