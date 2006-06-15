@@ -102,11 +102,15 @@ class Zend_Pdf_Filter_ASCIIHEX implements Zend_Pdf_Filter
                     }
 
                     if ($oddCode) {
+                        // Odd pass. Store hex digit for next pass
+                        // Scope of $hexCodeHigh variable is whole function
                         $hexCodeHigh = $code;
                     } else {
+                        // Even pass.
+                        // Add decoded character to the output
+                        // ($hexCodeHigh is stored in previous pass)
                         $output .= chr($hexCodeHigh*16 + $code);
                     }
-
                     $oddCode = !$oddCode;
 
                     break;
