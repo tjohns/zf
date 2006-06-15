@@ -1007,7 +1007,7 @@ class Zend_Service_Amazon
         if (isset($options['Sort'])) {
             $this->_validateInArray('Sort',
                                     $options['Sort'],
-                                    array_values(self::$_searchSort[$SearchIndex]));
+                                    array_values(self::$_searchSort[$options['SearchIndex']]));
         }
 
 
@@ -1075,7 +1075,7 @@ class Zend_Service_Amazon
         if (isset($options['Sort'])) {
             $this->_validateInArray('Sort',
                                     $options['Sort'],
-                                    array_values(self::$_searchSort[$SearchIndex]));
+                                    array_values(self::$_searchSort[$options['SearchIndex']]));
         }
 
 
