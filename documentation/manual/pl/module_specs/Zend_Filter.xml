@@ -2,14 +2,16 @@
     <title>Zend_Filter</title>
     
     <sect2 id="zend.filter.filter.introduction">
-        <title>Introduction</title>
-        <para><literal>Zend_Filter</literal> provides a library of static methods
-        for filtering data. For input filtering, you should use <xref
-        linkend="zend.filter.input" /> instead, because it provides a framework for
-        filtering input using the methods provided by this class. However, because
-        <literal>Zend_InputFilter</literal> is designed primarily for arrays,
-        <literal>Zend_Filter</literal> can be useful for filtering scalars, because
-        it behaves like PHP's string functions:</para>
+        <title>Wprowadzenie</title>
+        <para><literal>Zend_Filter</literal> dostarcza bibliotekę statycznych metod
+        filtrowania danych. Do filtrowania danych wejściowych powinieneś użyć klasy
+        <xref linkend="zend.filter.input" />, ponieważ zapewnia ona strukturę do
+        filtrowania danych wejściowych przy użyciu metod dostarczonych przez 
+        klasę <literal>Zend_Filter</literal>. Jakkolwiek klasa 
+        <literal>Zend_Filter_Input</literal> została pierwotnie zaprojektowana 
+        dla tablic, klasa <literal>Zend_Filter</literal> może być użyteczna do 
+        filtrowania danych skalarnych, ponieważ jej metod używamy podobnie jak
+        funkcji PHP operujących na łańcuchach znaków:</para>
         <programlisting>
     <![CDATA[<?php
     
@@ -21,22 +23,22 @@
         </programlisting>
     </sect2>
     <sect2 id="zend.filter.filter.usecases">
-        <title>Use Cases</title>
-        <para>In each of these use cases, <literal>$value</literal> represents an
-        arbitrary scalar value.</para>
-        <para>Whitelist Filtering:</para>
+        <title>Użycie</title>
+        <para>We wszystkich przykładach użycia, zmienna <literal>$value</literal> 
+        ma wartość w postaci skalarnej.</para>
+        <para>Filtrowanie Whitelist:</para>
         <programlisting>
     <![CDATA[<?php
     
     if ($email = Zend_Filter::isEmail($value)) {
-        /* $email is a valid email format. */
+        /* $email ma prawidłowy format. */
     } else {
-        /* $email is not a valid email format. */
+        /* $email ma nieprawidłowy format. */
     }
     
     ?>]]>
         </programlisting>
-        <para>Blind Filtering:</para>
+        <para>Filtrowanie Blind:</para>
         <programlisting>
     <![CDATA[<?php
     
@@ -44,7 +46,7 @@
     
     ?>]]>
         </programlisting>
-        <para>Blacklist Filtering:</para>
+        <para>Filtrowanie Blacklist:</para>
         <programlisting>
     <![CDATA[<?php
     
