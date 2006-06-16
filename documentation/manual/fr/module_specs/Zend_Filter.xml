@@ -1,23 +1,23 @@
 <sect1 id="zend.filter.filter">
     <title>Zend_Filter</title>
-    
+
   <sect2 id="zend.filter.filter.introduction">
     <para>
-     <literal>Zend_Filter</literal> fournit une bibliothèque de méthodes statiques permettant de filtrer des données. 
-     Pour le filtrage des données passées en entrée, voyez plutôt le <xref linkend="zend.filter.input" /> 
-     car ce composant constitue une plate-forme dédiée au filtrage des données passées en 
-     entrée, et il utilise les méthodes fournies par cette classe. 
-     Toutefois, comme <literal>Zend_InputFilter</literal> est conçu en priorité pour fonctionner avec des tableaux, 
-     <literal>Zend_Filter</literal> reste utile pour le filtrage de variables scalaires, 
+     <literal>Zend_Filter</literal> fournit une bibliothèque de méthodes statiques permettant de filtrer des données.
+     Pour le filtrage des données passées en entrée, voyez plutôt le <xref linkend="zend.filter.input" />
+     car ce composant constitue une plate-forme dédiée au filtrage des données passées en
+     entrée, et il utilise les méthodes fournies par cette classe.
+     Toutefois, comme <literal>Zend_Filter_Input</literal> est conçu en priorité pour fonctionner avec des tableaux,
+     <literal>Zend_Filter</literal> reste utile pour le filtrage de variables scalaires,
      du fait du comportement de ses méthodes qui agissent de la même manière que les fonctions PHP dédiées aux chaînes :
     </para>
     <programlisting>
     <![CDATA[<?php
-    
+
     $nomUtilisateurAlpha = Zend_Filter::getAlpha('Jean123Dupond');
-    
+
     /* $nomUtilisateurAlpha = 'JeanDupond'; */
-    
+
     ?>]]>
     </programlisting>
   </sect2>
@@ -26,33 +26,33 @@
     <para>
       Dans chacun de ces exemples d'utilisation, <literal>$valeur</literal> représente une valeur scalaire arbitraire.
     </para>
-    
+
     <para>Filtrage par liste blanche :</para>
     <programlisting>
     <![CDATA[<?php
-    
+
     if ($email = Zend_Filter::isEmail($valeur)) {
         /* $email constitue une adresse e-mail valide */
     } else {
         /* $email ne constitue pas une adresse e-mail valide */
     }
-    
+
     ?>]]>
     </programlisting>
     <para>Filtrage à l'aveugle :</para>
     <programlisting>
     <![CDATA[<?php
-    
+
     $nomAlpha = Zend_Filter::getAlpha($valeur);
-    
+
     ?>]]>
     </programlisting>
     <para>Filtrage par liste noire :</para>
     <programlisting>
     <![CDATA[<?php
-    
+
     $commentaireSansBalises = Zend_Filter::noTags($valeur);
-    
+
     ?>]]>
     </programlisting>
   </sect2>
