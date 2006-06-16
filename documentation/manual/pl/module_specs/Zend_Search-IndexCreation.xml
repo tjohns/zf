@@ -1,7 +1,7 @@
 <sect1 id="zend.search.index-creation">
-	<title>Building Indexes</title>
+    <title>Building Indexes</title>
 
-	<sect2 id="zend.search.index-creation.creating">
+    <sect2 id="zend.search.index-creation.creating">
         <title>Creating a New Index</title>
 
         <para>
@@ -46,7 +46,7 @@ $index->commit();
             Each commit() call generates new index segment.
             <footnote>
             <para>
-            Lucene index segment files are not updatable by their nature. Segment update needs full segment
+            Lucene index segment files cannot be updated by their nature. A segment update needs full segment
             reorganisation. See Lucene index file formats for details
             (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
             Increasing number of segments reduces quality of the index, but index optimization restores it.
@@ -62,7 +62,7 @@ $index->commit();
             </para>
             </footnote>
             So it must be requested as rarely as possible.
-            From the other side commiting large amount of documents in one step needs more memory.
+            From the other side committing large amount of documents in one step needs more memory.
         </para>
         <para>
             Automatic segment management optimization is a subject of future Zend_Search_Lucene enhancements.
@@ -73,8 +73,8 @@ $index->commit();
         <title>Updating Index</title>
 
         <para>
-            The same procedure is used to update existing index. The only difference is that index should be opened without
-            second parameter:
+            The same procedure is used to update an existing index. The only difference is that the index should be
+            opened without the second parameter:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
