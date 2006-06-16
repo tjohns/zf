@@ -126,7 +126,7 @@ class Zend_Log
      *
      * @param string $logName Name of the Zend_Log instance, which
      * will be the key to the Zend_Log::$_instances array.
-     * 
+     *
      * @param Zend_Log_Adapter_Interface $adapter
      */
 	private function __construct($logName, Zend_Log_Adapter_Interface $adapter)
@@ -139,7 +139,7 @@ class Zend_Log
 	/**
      * Returns the instance of Zend_Log in the Zend_Log::$_instances
      * array.
-     * 
+     *
      * @param logName $logName Key in the Zend_Log::$_instances
      * associate array.
      */
@@ -359,8 +359,8 @@ class Zend_Log
 	            $fields[$fieldName] = $fieldValue;
 	        }
 	    }
-        
-       
+
+
 	    /**
 	     * If the supplied logName is actually an array of logNames, then
          * call the function recursively to post to all the logs.
@@ -382,7 +382,7 @@ class Zend_Log
 	    /* @var $logger Zend_Log */
 	    $logger = self::_getInstance($logName);
 
-	    if ($level | $logger->_levelMask) {
+	    if ($level & $logger->_levelMask) {
 	        $fields['message'] = $logger->_messagePrefix . $message . $logger->_messageSuffix;
     		$logger->_adapter->write($fields);
 	    }
