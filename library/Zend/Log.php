@@ -43,12 +43,33 @@ require_once 'Zend/Log/Exception.php';
  */
 class Zend_Log
 {
+    /**
+     * Mask that includes all log levels
+     */
     const LEVEL_ALL     = 255;
-    const LEVEL_SEVERE  = 16;
-    const LEVEL_ERROR   = 8;
-    const LEVEL_WARNING = 4;
-    const LEVEL_INFO    = 2;
+
+    /**
+     * Log levels
+     */
     const LEVEL_DEBUG   = 1;
+    const LEVEL_INFO    = 2;
+    const LEVEL_WARNING = 4;
+    const LEVEL_ERROR   = 8;
+    const LEVEL_SEVERE  = 16;
+
+    /**
+     * This array contains the names of the log levels in order to support
+     * logging the names of the log message level instead of its numeric value.
+     *
+     * @var array
+     */
+    static protected $_levelNames = array(
+        1  => 'DEBUG',
+        2  => 'INFO',
+        4  => 'WARNING',
+        8  => 'ERROR',
+        16 => 'SEVERE'
+        );
 
     /**
      * The static class Zend_Log holds an array of Zend_Log instances
@@ -111,10 +132,13 @@ class Zend_Log
      */
     protected $_messageSuffix = '';
 
-
-
-    protected $_fields = array('message'   => '',
-                               'level'     => '');
+    /**
+     * Array of available fields for logging
+     *
+     * @var array
+     */
+    protected $_fields = array('message' => '',
+                               'level'   => '');
 
 
 
@@ -140,17 +164,18 @@ class Zend_Log
      * Returns the instance of Zend_Log in the Zend_Log::$_instances
      * array.
      *
-     * @param logName $logName Key in the Zend_Log::$_instances
-     * associate array.
+     * @param  logName $logName Key in the Zend_Log::$_instances associative array.
+     * @throws Zend_Log_Exception
+     * @return Zend_Log_Adapter_Interface
      */
-    private static function _getInstance($logName=null)
+    private static function _getInstance($logName = null)
     {
         if (is_null($logName)) {
             $logName = self::$_defaultLogName;
         }
 
         if (!self::hasLogger($logName)) {
-            throw new Zend_Log_Exception("No instance of log named \"$logName\".");
+            throw new Zend_Log_Exception("No instance of log named \"$logName\"");
         }
 
         return self::$_instances[$logName];
@@ -163,7 +188,8 @@ class Zend_Log
      *
      * @param  Zend_Log_Adapter_Interface $logAdapter Log adapter implemented from Zend_Log_Adapter_Interface
      * @param  string                     $logName    Name of this instance, used to access it from other static functions.
-     * @return bool                       True
+     * @throws Zend_Log_Exception
+     * @return boolean                    True
      */
     public static function registerLogger(Zend_Log_Adapter_Interface $logAdapter, $logName=null)
     {
@@ -185,9 +211,11 @@ class Zend_Log
     /**
      * Destroys an instance of Zend_Log in the $_instances array that was added by registerLogger()
      *
-     * @param string $logName Name of this instance, used to access it from other static functions.
+     * @param  string  $logName Name of this instance, used to access it from other static functions.
+     * @throws Zend_Log_Exception
+     * @return boolean True
      */
-    public static function unregisterLogger($logName=null)
+    public static function unregisterLogger($logName = null)
     {
         if (is_null($logName)) {
             $logName = self::$_defaultLogName;
@@ -207,9 +235,9 @@ class Zend_Log
      * the function returns True if at least one logger exists.
      *
      * @param   string $logName   Name of registered logger to check, or null.
-     * @return  bool              Registered logger?
+     * @return  boolean           Registered logger?
      */
-    public static function hasLogger($logName=null)
+    public static function hasLogger($logName = null)
     {
         if (!is_null($logName)) {
             return isset(self::$_instances[$logName]);
@@ -225,8 +253,8 @@ class Zend_Log
      * array(2) {
      *   ["LOG"]=>          array key is the logger name
      *   array(2) {
-     *      ["adapter"]=>   string, name of the Zend_Log_AdapterClass class
-     *      ["default"]=>   bool,   is this the default logger?
+     *      ["adapter"]=>   string,  name of the Zend_Log_AdapterClass class
+     *      ["default"]=>   boolean, is this the default logger?
      *    }
      *  }
      *
@@ -239,7 +267,7 @@ class Zend_Log
         }
 
         $loggerInfo = array();
-        foreach (self::$_instances as $logName=>$logger) {
+        foreach (self::$_instances as $logName => $logger) {
             $loggerInfo[$logName]['adapter'] = get_class($logger->_adapter);
             $loggerInfo[$logName]['default'] = ($logName == self::$_defaultLogName);
         }
@@ -253,13 +281,13 @@ class Zend_Log
      * named logger other than "LOG", the logger must have been registered with registerLogger().
      *
      * @param  string        $logName        Name of this instance, used to access it from other static functions.
-     * @return bool          True
+     * @return boolean       True
      */
-    public static function setDefaultLogger($logName=null)
+    public static function setDefaultLogger($logName = null)
     {
-        if (is_null($logName) || $logName=='LOG') {
+        if (is_null($logName) || $logName == 'LOG') {
             $logName = 'LOG';
-        } elseif (!self::hasLogger($logName)) {
+        } else if (!self::hasLogger($logName)) {
             throw new Zend_Log_Exception("Cannot set default, no instance of log named \"$logName\".");
         }
 
@@ -268,7 +296,14 @@ class Zend_Log
     }
 
 
-    public static function setFields($fields, $logName=null)
+    /**
+     * Sets the values for log fields. Omitted fields are set to default values.
+     *
+     * @param  array $fields
+     * @param  string $logName
+     * @return boolean True
+     */
+    public static function setFields($fields, $logName = null)
     {
         if (is_null($logName)) {
             $logName = self::$_defaultLogName;
@@ -287,7 +322,13 @@ class Zend_Log
     }
 
 
-    public static function getFields($logName=null)
+    /**
+     * Returns an array of the log fields.
+     *
+     * @param  string $logName
+     * @return array
+     */
+    public static function getFields($logName = null)
     {
         if (is_null($logName)) {
             $logName = self::$_defaultLogName;
@@ -304,10 +345,17 @@ class Zend_Log
      * @param integer $level
      * @param mixed $logName_or_fields
      * @param string $logName
-     * @return boolean
+     * @throws Zend_Log_Exception
+     * @return boolean True
      */
-    public static function log($message, $level=self::LEVEL_DEBUG, $logName_or_fields=null, $logName=null)
+    public static function log($message, $level = self::LEVEL_DEBUG, $logName_or_fields = null, $logName = null)
     {
+        // Check to see that the specified log level is actually a level
+        // and not the LEVEL_ALL mask or an invalid level.
+        if (!self::isLogLevel($level)) {
+            throw new Zend_Log_Exception('Unknown log level specified.');
+        }
+
         if (is_string($logName_or_fields)) {
             $logName = $logName_or_fields;
         } else {
@@ -328,7 +376,7 @@ class Zend_Log
                 } else {
                     // Fields passed must be in the array with keys matching the keys that were set by setFields().
                     $fields = array();
-                    foreach ($logName_or_fields as $fieldName=>$fieldValue) {
+                    foreach ($logName_or_fields as $fieldName => $fieldValue) {
                         $fields[$fieldName] = $fieldValue;
                     }
                 }
@@ -343,7 +391,7 @@ class Zend_Log
         if (is_null($logName)) {
             $logName = self::$_defaultLogName;
         } else {
-            if ($logName=='ZF' && !isset(self::$_instances['ZF'])) {
+            if ($logName == 'ZF' && !isset(self::$_instances['ZF'])) {
                 self::registerLogger(new Zend_Log_Adapter_Null(), 'ZF');
             }
         }
@@ -353,8 +401,8 @@ class Zend_Log
          * For any fields that were not specified, use the defaults.
          */
         $fields['message'] = $message;
-        $fields['level'] = $level;
-        foreach (self::getFields($logName) as $fieldName=>$fieldValue) {
+        $fields['level'] = self::$_levelNames[$level];
+        foreach (self::getFields($logName) as $fieldName => $fieldValue) {
             if (!array_key_exists($fieldName, $fields)) {
                 $fields[$fieldName] = $fieldValue;
             }
@@ -370,12 +418,6 @@ class Zend_Log
                 self::log($message, $level, $fields, $l);
             }
             return true;
-        }
-
-        // Check to see that the specified log level is actually a level
-        // and not a mask or an invalid level.
-        if (!self::isLogLevel($level)) {
-            throw new Zend_Log_Exception('Unknown log level specified.');
         }
 
         // Write the message to the log if the current log level will accept it.
@@ -395,6 +437,7 @@ class Zend_Log
      * Destroy all Zend_Log instances in Zend_Log::$_instances.  This is equivalent to calling unregister()
      * for each log instance.
      *
+     * @return boolean True
      */
     public static function close()
     {
@@ -410,9 +453,11 @@ class Zend_Log
      * Sets a message prefix.  The prefix will be automatically prepended to any message that is
      * sent to the specified log.
      *
-     * @param string         $logName        Name of this instance
+     * @param  string         $prefix         The prefix string
+     * @param  string         $logName        Name of this instance
+     * @return boolean        True
      */
-    public static function setMessagePrefix($prefix, $logName=null)
+    public static function setMessagePrefix($prefix, $logName = null)
     {
         self::_getInstance($logName)->_messagePrefix = $prefix;
         return true;
@@ -423,9 +468,11 @@ class Zend_Log
      * Sets a message suffix.  The suffix will be automatically appended to any message that is
      * sent to the specified log.
      *
-     * @param string         $logName        Name of this instance
+     * @param  string         $suffix         The suffix string
+     * @param  string         $logName        Name of this instance
+     * @return boolean        True
      */
-    public static function setMessageSuffix($suffix, $logName=null)
+    public static function setMessageSuffix($suffix, $logName = null)
     {
         self::_getInstance($logName)->_messageSuffix = $suffix;
         return true;
@@ -436,9 +483,12 @@ class Zend_Log
      * Sets the logging level of the log instance to one of the Zend_Log::LEVEL_* constants.  Only
      * messages with this log level will be logged by the instance, all others will be ignored.
      *
-     * @param string         $logName        Name of this instance
+     * @param  integer            $level
+     * @param  string             $logName        Name of this instance
+     * @throws Zend_Log_Exception
+     * @return boolean            True
      */
-    public static function setLevel($level, $logName=null)
+    public static function setLevel($level, $logName = null)
     {
         if (!self::isLogLevel($level)) {
             throw new Zend_Log_Exception('Unknown log level specified.');
@@ -453,12 +503,15 @@ class Zend_Log
      * Sets the logging level of the log instance based on a mask.  The mask is the bitwise OR
      * of any of the Zend_Log::LEVEL_* constants.
      *
-     * @param string    $logName        Name of this instance
+     * @param  integer            $mask           The log level mask
+     * @param  string             $logName        Name of this instance
+     * @throws Zend_Log_Exception
+     * @return boolean            True
      */
-    public static function setMask($mask, $logName=null)
+    public static function setMask($mask, $logName = null)
     {
-        if ($mask > 255) {
-            throw new Zend_Log_Exception('Level mask out of range (>255).');
+        if (!is_int($mask) || $mask < 0 || $mask > 255) {
+            throw new Zend_Log_Exception('Level mask out of range (should be integer between 0 and 255).');
         }
 
         $logger = self::_getInstance($logName);
@@ -470,9 +523,11 @@ class Zend_Log
     /**
      * Sets and adapter-specific option.
      *
+     * @param string    $optionKey      The option name
+     * @param string    $optionValue    The option value
      * @param string    $logName        Name of this instance
      */
-    public static function setAdapterOption($optionKey, $optionValue, $logName=null)
+    public static function setAdapterOption($optionKey, $optionValue, $logName = null)
     {
         $logger = self::_getInstance($logName);
         return $logger->_adapter->setOption($optionKey, $optionValue);
@@ -482,13 +537,13 @@ class Zend_Log
     /**
      * Tests if the supplied $level is one of the valid log levels (Zend_Log::LEVEL_* constants).
      *
-     * @param   int   $level      Value to test
-     * @return  bool              Is it a valid level?
+     * @param  int     $level       Value to test
+     * @return boolean              Is it a valid level?
      */
     public static function isLogLevel($level)
     {
-        return in_array($level, array(self::LEVEL_ALL, self::LEVEL_SEVERE, self::LEVEL_ERROR,
-                                      self::LEVEL_WARNING, self::LEVEL_INFO, self::LEVEL_DEBUG));
+        return in_array($level, array(self::LEVEL_SEVERE, self::LEVEL_ERROR, self::LEVEL_WARNING,
+                        self::LEVEL_INFO, self::LEVEL_DEBUG));
     }
 
 }
