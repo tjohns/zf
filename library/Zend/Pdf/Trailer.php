@@ -102,7 +102,7 @@ abstract class Zend_Pdf_Trailer
      */
     public function toString()
     {
-        return "trailer\r" . $this->_dict->toString() . "\r";
+        return "trailer\n" . $this->_dict->toString() . "\n";
     }
 
 

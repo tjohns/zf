@@ -516,11 +516,11 @@ class Zend_Pdf
 
             if ($updateInfo->isFree()) {
                 // Free object cross-reference table entry
-                $xrefSection[]  = sprintf("%010d %05d f\r\n", $lastFreeObject, $updateInfo->getGenNum());
+                $xrefSection[]  = sprintf("%010d %05d f \n", $lastFreeObject, $updateInfo->getGenNum());
                 $lastFreeObject = $objNum;
             } else {
                 // In-use object cross-reference table entry
-                $xrefSection[]  = sprintf("%010d %05d n\r\n", $segmentOffset + strlen($pdfSegment), $updateInfo->getGenNum());
+                $xrefSection[]  = sprintf("%010d %05d n \n", $segmentOffset + strlen($pdfSegment), $updateInfo->getGenNum());
                 $pdfSegment .= $updateInfo->getObjectDump();
             }
             $lastObjNum = $objNum;
@@ -529,11 +529,11 @@ class Zend_Pdf
         $xrefTable[] = $xrefSection;
 
         // Modify first entry (specail case - header of linked list of free objects).
-        $xrefTable[0][0] = sprintf("%010d 65535 f\r\n", $lastFreeObject);
+        $xrefTable[0][0] = sprintf("%010d 65535 f \n", $lastFreeObject);
 
-        $xrefTableStr = "xref\r";
+        $xrefTableStr = "xref\n";
         foreach ($xrefTable as $sectId => $xrefSection) {
-            $xrefTableStr .= sprintf("%d %d \r", $xrefSectionStartNums[$sectId], count($xrefSection));
+            $xrefTableStr .= sprintf("%d %d \n", $xrefSectionStartNums[$sectId], count($xrefSection));
             foreach ($xrefSection as $xrefTableEntry) {
                 $xrefTableStr .= $xrefTableEntry;
             }
@@ -544,8 +544,8 @@ class Zend_Pdf
 
         $pdfSegment .= $xrefTableStr
                     .  $this->_trailer->toString()
-                    . "startxref\r" . $xrefStartOffset . "\r"
-                    . "%%EOF\r";
+                    . "startxref\n" . $xrefStartOffset . "\n"
+                    . "%%EOF\n";
 
         if ($newSegmentOnly) {
             return $pdfSegment;
