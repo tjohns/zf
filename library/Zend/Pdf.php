@@ -22,9 +22,6 @@
 /** Zend_Pdf_Exception */
 require_once 'Zend/Pdf/Exception.php';
 
-/** Zend_Pdf_Const */
-require_once 'Zend/Pdf/Const.php';
-
 /** Zend_Pdf_Page */
 require_once 'Zend/Pdf/Page.php';
 
@@ -97,6 +94,20 @@ require_once 'Zend/Pdf/Resource/Image/PNG.php';
  */
 class Zend_Pdf
 {
+  /**** Class Constants ****/
+  
+    /**
+     * Version number of generated PDF documents.
+     */
+    const PDF_VERSION = 1.4;
+    
+    /**
+     * PDF file header.
+     */
+    const PDF_HEADER  = "%PDF-1.4\n%\xE2\xE3\xCF\xD3\n";
+     
+  
+  
     /**
      * Pages collection
      *
@@ -250,7 +261,7 @@ class Zend_Pdf
              */
             $docCatalog = $this->_objFactory->newObject(new Zend_Pdf_Element_Dictionary());
             $docCatalog->Type    = new Zend_Pdf_Element_Name('Catalog');
-            $docCatalog->Version = new Zend_Pdf_Element_Name(Zend_Pdf_Const::PDF_VERSION);
+            $docCatalog->Version = new Zend_Pdf_Element_Name(Zend_Pdf::PDF_VERSION);
             $this->_trailer->Root = $docCatalog;
 
             /**
@@ -564,4 +575,33 @@ class Zend_Pdf
     {
         $this->_javaScript = $javascript;
     }
+    
+    
+    /**
+     * Convert date to PDF format (it's close to ASN.1 (Abstract Syntax Notation
+     * One) defined in ISO/IEC 8824).
+     *
+     * @todo This really isn't the best location for this method. It should
+     *   probably actually exist as Zend_Pdf_Element_Date or something like that.
+     *
+     * @todo Address the following E_STRICT issue:
+     *   PHP Strict Standards:  date(): It is not safe to rely on the system's
+     *   timezone settings. Please use the date.timezone setting, the TZ
+     *   environment variable or the date_default_timezone_set() function. In
+     *   case you used any of those methods and you are still getting this
+     *   warning, you most likely misspelled the timezone identifier.
+     *
+     * @param integer $timestamp (optional) If omitted, uses the current time.
+     * @return string
+     */
+    public static function pdfDate($timestamp = null)
+    {
+        if (is_null($timestamp)) {
+            $date = date('\D\:YmdHisO');
+        } else {
+            $date = date('\D\:YmdHisO', $timestamp);
+        }
+        return substr_replace($date, '\'', -2, 0) . '\'';
+    }
+     
 }

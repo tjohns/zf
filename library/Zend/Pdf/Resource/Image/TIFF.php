@@ -21,9 +21,6 @@
 /** Zend_Pdf_Image */
 require_once 'Zend/Pdf/Resource/Image.php';
 
-/** Zend_Pdf_Const */
-require_once 'Zend/Pdf/Const.php';
-
 /** Zend_Pdf_Exception */
 require_once 'Zend/Pdf/Exception.php';
 

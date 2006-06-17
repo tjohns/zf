@@ -21,9 +21,6 @@
 /** Zend_Pdf_Exception */
 require_once 'Zend/Pdf/Exception.php';
 
-/** Zend_Pdf_Const */
-require_once 'Zend/Pdf/Const.php';
-
 /** Zend_Pdf_Font */
 require_once 'Zend/Pdf/Resource/Font.php';
 
@@ -63,6 +60,71 @@ require_once 'Zend/Pdf/Color/CMYK.php';
  */
 class Zend_Pdf_Page
 {
+  /**** Class Constants ****/
+  
+  
+  /* Page Sizes */
+  
+    /**
+     * Size representing an A4 page in portrait (tall) orientation.
+     */
+    const SIZE_A4                = '595:842:';
+  
+    /**
+     * Size representing an A4 page in landscape (wide) orientation.
+     */
+    const SIZE_A4_LANDSCAPE      = '842:595:';
+  
+    /**
+     * Size representing a US Letter page in portrait (tall) orientation.
+     */
+    const SIZE_LETTER            = '612:792:';
+  
+    /**
+     * Size representing a US Letter page in landscape (wide) orientation.
+     */
+    const SIZE_LETTER_LANDSCAPE  = '792:612:';
+    
+    
+  /* Shape Drawing */
+  
+    /**
+     * Stroke the path only. Do not fill.
+     */
+    const SHAPEDRAW_STROKE      = 0;
+    
+    /**
+     * Fill the path only. Do not stroke.
+     */
+    const SHAPEDRAW_FILL        = 1;
+    
+    /**
+     * Fill and stroke the path.
+     */
+    const SHAPEDRAW_FILLNSTROKE = 2;
+    
+    
+  /* Shape Filling Methods */
+  
+    /**
+     * Fill the path using the non-zero winding rule.
+     */
+    const FILLMETHOD_NONZEROWINDING = 0;
+    
+    /**
+     * Fill the path using the even-odd rule.
+     */
+    const FILLMETHOD_EVENODD        = 1;
+    
+    
+  /* Line Dash Types */
+    
+    /**
+     * Solid line dash.
+     */
+    const LINEDASHING_SOLID = 0;
+    
+  
 
     /**
      * Reference to the object with page dictionary.
@@ -170,19 +232,33 @@ class Zend_Pdf_Page
             $this->_pageDictionary = $param1;
             $this->_objFactory     = $param2;
             $this->_attached       = true;
-
             return;
+            
         } else if ($param1 instanceof Zend_Pdf_Page && $param2 === null && $param3 === null) {
             /** @todo implementation */
             throw new Zend_Pdf_Exception('Not implemented yet.');
+            
         } else if (is_string($param1) &&
                    ($param2 === null || $param2 instanceof Zend_Pdf_ElementFactory) &&
                    $param3 === null) {
             $this->_objFactory = ($param2 !== null)? $param2 : new Zend_Pdf_ElementFactory(1);
             $this->_attached = false;
-
-            if (array_key_exists($param1, Zend_Pdf_Const::$pageSizeAliases)) {
-                $param1 = Zend_Pdf_Const::$pageSizeAliases[$param1];
+            
+            switch (strtolower($param1)) {
+                case 'a4':
+                    $param1 = Zend_Pdf_Page::SIZE_A4;
+                    break;
+                case 'a4-landscape':
+                    $param1 = Zend_Pdf_Page::SIZE_A4_LANDSCAPE;
+                    break;
+                case 'letter':
+                    $param1 = Zend_Pdf_Page::SIZE_LETTER;
+                    break;
+                case 'letter-landscape':
+                    $param1 = Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE;
+                    break;
+                default:
+                    // should be in "x:y" form
             }
 
             $pageDim = explode(':', $param1);
@@ -199,19 +275,21 @@ class Zend_Pdf_Page
             /**
              * @todo support of pagesize recalculation to "default user space units"
              */
+             
         } else if (is_numeric($param1) && is_numeric($param2) &&
                    ($param3 === null || $param3 instanceof Zend_Pdf_ElementFactory)) {
             $this->_objFactory = ($param3 !== null)? $param3 : new Zend_Pdf_ElementFactory(1);
             $this->_attached = false;
             $pageWidth  = $param1;
             $pageHeight = $param2;
+            
         } else {
             throw new Zend_Pdf_Exception('Unrecognized method signature, wrong number of arguments or wrong argument types.');
         }
 
         $this->_pageDictionary = $this->_objFactory->newObject(new Zend_Pdf_Element_Dictionary());
         $this->_pageDictionary->Type         = new Zend_Pdf_Element_Name('Page');
-        $this->_pageDictionary->LastModified = new Zend_Pdf_Element_String(Zend_Pdf_Const::pdfDate());
+        $this->_pageDictionary->LastModified = new Zend_Pdf_Element_String(Zend_Pdf::pdfDate());
         $this->_pageDictionary->Resources    = new Zend_Pdf_Element_Dictionary();
         $this->_pageDictionary->MediaBox     = new Zend_Pdf_Element_Array();
         $this->_pageDictionary->MediaBox->items[] = new Zend_Pdf_Element_Numeric(0);
@@ -413,7 +491,7 @@ class Zend_Pdf_Page
     {
         $this->_addProcSet('PDF');
 
-        if ($pattern === Zend_Pdf_Const::LINEDASHING_SOLID) {
+        if ($pattern === Zend_Pdf_Page::LINEDASHING_SOLID) {
             $pattern = array();
             $phase   = 0;
         }
@@ -640,7 +718,7 @@ class Zend_Pdf_Page
      * @param array $y  - array of float (the Y co-ordinates of the vertices)
      * @param integer $fillMethod
      */
-    public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING)
+    public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILLMETHOD_NONZEROWINDING)
     {
         $this->_addProcSet('PDF');
 
@@ -659,7 +737,7 @@ class Zend_Pdf_Page
 
         $this->_contents .= $path;
 
-        if ($fillMethod == Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING) {
+        if ($fillMethod == Zend_Pdf_Page::FILLMETHOD_NONZEROWINDING) {
             $this->_contents .= " h\n W\n";
         } else {
             // Even-Odd fill method.
@@ -756,7 +834,7 @@ class Zend_Pdf_Page
         if ($param5 === null) {
             // drawEllipse($x1, $y1, $x2, $y2);
             $startAngle = null;
-            $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE;
+            $fillType = Zend_Pdf_Page::SHAPEDRAW_FILLNSTROKE;
         } else if ($param6 === null) {
             // drawEllipse($x1, $y1, $x2, $y2, $fillType);
             $startAngle = null;
@@ -768,7 +846,7 @@ class Zend_Pdf_Page
             $endAngle   = $param6;
 
             if ($param7 === null) {
-                $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE;
+                $fillType = Zend_Pdf_Page::SHAPEDRAW_FILLNSTROKE;
             } else {
                 $fillType = $param7;
             }
@@ -843,13 +921,13 @@ class Zend_Pdf_Page
                          .      $xC->toString() . ' ' . $yUp->toString() . " c\n";
 
         switch ($fillType) {
-            case Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE:
+            case Zend_Pdf_Page::SHAPEDRAW_FILLNSTROKE:
                 $this->_contents .= " B*\n";
                 break;
-            case Zend_Pdf_Const::SHAPEDRAW_FILL:
+            case Zend_Pdf_Page::SHAPEDRAW_FILL:
                 $this->_contents .= " f*\n";
                 break;
-            case Zend_Pdf_Const::SHAPEDRAW_STROKE:
+            case Zend_Pdf_Page::SHAPEDRAW_STROKE:
                 $this->_contents .= " S\n";
                 break;
         }
@@ -922,7 +1000,7 @@ class Zend_Pdf_Page
     /**
      * Draw a polygon.
      *
-     * If $fillType is Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE or Zend_Pdf_Const::SHAPEDRAW_FILL,
+     * If $fillType is Zend_Pdf_Page::SHAPEDRAW_FILLNSTROKE or Zend_Pdf_Page::SHAPEDRAW_FILL,
      * then polygon is automatically closed.
      * See detailed description of these methods in a PDF documentation
      * (section 4.4.2 Path painting Operators, Filling)
@@ -933,8 +1011,8 @@ class Zend_Pdf_Page
      * @param integer $fillMethod
      */
     public function drawPolygon($x, $y,
-                                $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
-                                $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING)
+                                $fillType = Zend_Pdf_Page::SHAPEDRAW_FILLNSTROKE,
+                                $fillMethod = Zend_Pdf_Page::FILLMETHOD_NONZEROWINDING)
     {
         $this->_addProcSet('PDF');
 
@@ -954,23 +1032,23 @@ class Zend_Pdf_Page
         $this->_contents .= $path;
 
         switch ($fillType) {
-            case Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE:
-                if ($fillMethod == Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING) {
+            case Zend_Pdf_Page::SHAPEDRAW_FILLNSTROKE:
+                if ($fillMethod == Zend_Pdf_Page::FILLMETHOD_NONZEROWINDING) {
                     $this->_contents .= " b\n";
                 } else {
                     // Even-Odd fill method.
                     $this->_contents .= " b*\n";
                 }
                 break;
-            case Zend_Pdf_Const::SHAPEDRAW_FILL:
-                if ($fillMethod == Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING) {
+            case Zend_Pdf_Page::SHAPEDRAW_FILL:
+                if ($fillMethod == Zend_Pdf_Page::FILLMETHOD_NONZEROWINDING) {
                     $this->_contents .= " h\n f\n";
                 } else {
                     // Even-Odd fill method.
                     $this->_contents .= " h\n f*\n";
                 }
                 break;
-            case Zend_Pdf_Const::SHAPEDRAW_STROKE:
+            case Zend_Pdf_Page::SHAPEDRAW_STROKE:
                 $this->_contents .= " S\n";
                 break;
         }
@@ -980,9 +1058,9 @@ class Zend_Pdf_Page
      * Draw a rectangle.
      *
      * Fill types:
-     * Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - fill rectangle and stroke (default)
-     * Zend_Pdf_Const::SHAPEDRAW_STROKE      - stroke rectangle
-     * Zend_Pdf_Const::SHAPEDRAW_FILL        - fill rectangle
+     * Zend_Pdf_Page::SHAPEDRAW_FILLNSTROKE - fill rectangle and stroke (default)
+     * Zend_Pdf_Page::SHAPEDRAW_STROKE      - stroke rectangle
+     * Zend_Pdf_Page::SHAPEDRAW_FILL        - fill rectangle
      *
      * @param float $x1
      * @param float $y1
@@ -990,7 +1068,7 @@ class Zend_Pdf_Page
      * @param float $y2
      * @param integer $fillType
      */
-    public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE)
+    public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPEDRAW_FILLNSTROKE)
     {
         $this->_addProcSet('PDF');
 
@@ -1003,13 +1081,13 @@ class Zend_Pdf_Page
                              .  $widthObj->toString() . ' ' . $height2Obj->toString() . " re\n";
 
         switch ($fillType) {
-            case Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE:
+            case Zend_Pdf_Page::SHAPEDRAW_FILLNSTROKE:
                 $this->_contents .= " B*\n";
                 break;
-            case Zend_Pdf_Const::SHAPEDRAW_FILL:
+            case Zend_Pdf_Page::SHAPEDRAW_FILL:
                 $this->_contents .= " f*\n";
                 break;
-            case Zend_Pdf_Const::SHAPEDRAW_STROKE:
+            case Zend_Pdf_Page::SHAPEDRAW_STROKE:
                 $this->_contents .= " S\n";
                 break;
         }

@@ -18,9 +18,6 @@
  */
 
 
-/** Zend_Pdf_Const */
-require_once 'Zend/Pdf/Const.php';
-
 /** Zend_Pdf_Element */
 require_once 'Zend/Pdf/Element.php';
 

@@ -51,7 +51,7 @@ class Zend_Pdf_Trailer_Generator extends Zend_Pdf_Trailer
      */
     public function getPDFLength()
     {
-        return strlen(Zend_Pdf_Const::PDF_HEADER);
+        return strlen(Zend_Pdf::PDF_HEADER);
     }
 
     /**
@@ -61,7 +61,7 @@ class Zend_Pdf_Trailer_Generator extends Zend_Pdf_Trailer
      */
     public function getPDFString()
     {
-        return Zend_Pdf_Const::PDF_HEADER;
+        return Zend_Pdf::PDF_HEADER;
     }
 
     /**
