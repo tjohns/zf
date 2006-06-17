@@ -25,11 +25,11 @@ require_once 'Zend/Pdf/Exception.php';
 /** Zend_Pdf_Page */
 require_once 'Zend/Pdf/Page.php';
 
-/** Zend_Pdf_Font */
-require_once 'Zend/Pdf/Resource/Font.php';
+/** Zend_Pdf_Cmap */
+require_once 'Zend/Pdf/Cmap.php';
 
-/** Zend_Pdf_Font_Standard */
-require_once 'Zend/Pdf/Resource/Font/Standard.php';
+/** Zend_Pdf_Font */
+require_once 'Zend/Pdf/Font.php';
 
 /** Zend_Pdf_Style */
 require_once 'Zend/Pdf/Style.php';

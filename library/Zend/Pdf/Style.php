@@ -28,7 +28,7 @@ require_once 'Zend/Pdf/Element/Numeric.php';
 /** Zend_Pdf_Element_Array */
 require_once 'Zend/Pdf/Element/Array.php';
 
-/** Zend_Pdf_Font */
+/** Zend_Pdf_Resource_Font */
 require_once 'Zend/Pdf/Resource/Font.php';
 
 
@@ -87,7 +87,7 @@ class Zend_Pdf_Style
     /**
      * Current font
      *
-     * @var Zend_Pdf_Font
+     * @var Zend_Pdf_Resource_Font
      */
     private $_font;
 
@@ -171,10 +171,10 @@ class Zend_Pdf_Style
     /**
      * Set current font.
      *
-     * @param Zend_Pdf_Font $font
+     * @param Zend_Pdf_Resource_Font $font
      * @param float $fontSize
      */
-    public function setFont(Zend_Pdf_Font $font, $fontSize)
+    public function setFont(Zend_Pdf_Resource_Font $font, $fontSize)
     {
         $this->_font = $font;
         $this->_fontSize = $fontSize;
@@ -234,7 +234,7 @@ class Zend_Pdf_Style
     /**
      * Get current font.
      *
-     * @return Zend_Pdf_Font $font
+     * @return Zend_Pdf_Resource_Font $font
      */
     public function getFont()
     {

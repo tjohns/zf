@@ -21,11 +21,8 @@
 /** Zend_Pdf_Exception */
 require_once 'Zend/Pdf/Exception.php';
 
-/** Zend_Pdf_Font */
+/** Zend_Pdf_Resource_Font */
 require_once 'Zend/Pdf/Resource/Font.php';
-
-/** Zend_Pdf_Font_Standard */
-require_once 'Zend/Pdf/Resource/Font/Standard.php';
 
 /** Zend_Pdf_Style */
 require_once 'Zend/Pdf/Style.php';
@@ -61,70 +58,70 @@ require_once 'Zend/Pdf/Color/CMYK.php';
 class Zend_Pdf_Page
 {
   /**** Class Constants ****/
-  
-  
+
+
   /* Page Sizes */
-  
+
     /**
      * Size representing an A4 page in portrait (tall) orientation.
      */
     const SIZE_A4                = '595:842:';
-  
+
     /**
      * Size representing an A4 page in landscape (wide) orientation.
      */
     const SIZE_A4_LANDSCAPE      = '842:595:';
-  
+
     /**
      * Size representing a US Letter page in portrait (tall) orientation.
      */
     const SIZE_LETTER            = '612:792:';
-  
+
     /**
      * Size representing a US Letter page in landscape (wide) orientation.
      */
     const SIZE_LETTER_LANDSCAPE  = '792:612:';
-    
-    
+
+
   /* Shape Drawing */
-  
+
     /**
      * Stroke the path only. Do not fill.
      */
     const SHAPEDRAW_STROKE      = 0;
-    
+
     /**
      * Fill the path only. Do not stroke.
      */
     const SHAPEDRAW_FILL        = 1;
-    
+
     /**
      * Fill and stroke the path.
      */
     const SHAPEDRAW_FILLNSTROKE = 2;
-    
-    
+
+
   /* Shape Filling Methods */
-  
+
     /**
      * Fill the path using the non-zero winding rule.
      */
     const FILLMETHOD_NONZEROWINDING = 0;
-    
+
     /**
      * Fill the path using the even-odd rule.
      */
     const FILLMETHOD_EVENODD        = 1;
-    
-    
+
+
   /* Line Dash Types */
-    
+
     /**
      * Solid line dash.
      */
     const LINEDASHING_SOLID = 0;
-    
-  
+
+
 
     /**
      * Reference to the object with page dictionary.
@@ -172,7 +169,7 @@ class Zend_Pdf_Page
     /**
      * Current font
      *
-     * @var Zend_Pdf_Font
+     * @var Zend_Pdf_Resource_Font
      */
     private $_font = null;
 
@@ -233,17 +230,17 @@ class Zend_Pdf_Page
             $this->_objFactory     = $param2;
             $this->_attached       = true;
             return;
-            
+
         } else if ($param1 instanceof Zend_Pdf_Page && $param2 === null && $param3 === null) {
             /** @todo implementation */
             throw new Zend_Pdf_Exception('Not implemented yet.');
-            
+
         } else if (is_string($param1) &&
                    ($param2 === null || $param2 instanceof Zend_Pdf_ElementFactory) &&
                    $param3 === null) {
             $this->_objFactory = ($param2 !== null)? $param2 : new Zend_Pdf_ElementFactory(1);
             $this->_attached = false;
-            
+
             switch (strtolower($param1)) {
                 case 'a4':
                     $param1 = Zend_Pdf_Page::SIZE_A4;
@@ -275,14 +272,14 @@ class Zend_Pdf_Page
             /**
              * @todo support of pagesize recalculation to "default user space units"
              */
-             
+
         } else if (is_numeric($param1) && is_numeric($param2) &&
                    ($param3 === null || $param3 instanceof Zend_Pdf_ElementFactory)) {
             $this->_objFactory = ($param3 !== null)? $param3 : new Zend_Pdf_ElementFactory(1);
             $this->_attached = false;
             $pageWidth  = $param1;
             $pageHeight = $param2;
-            
+
         } else {
             throw new Zend_Pdf_Exception('Unrecognized method signature, wrong number of arguments or wrong argument types.');
         }
@@ -511,10 +508,10 @@ class Zend_Pdf_Page
     /**
      * Set current font.
      *
-     * @param Zend_Pdf_Font $font
+     * @param Zend_Pdf_Resource_Font $font
      * @param float $fontSize
      */
-    public function setFont(Zend_Pdf_Font $font, $fontSize)
+    public function setFont(Zend_Pdf_Resource_Font $font, $fontSize)
     {
         $this->_addProcSet('Text');
         $fontName = $this->_attachResource('Font', $font->getResource());
@@ -548,7 +545,7 @@ class Zend_Pdf_Page
     /**
      * Get current font.
      *
-     * @return Zend_Pdf_Font $font
+     * @return Zend_Pdf_Resource_Font $font
      */
     public function getFont()
     {
@@ -562,7 +559,7 @@ class Zend_Pdf_Page
      */
     public function getFontSize()
     {
-        $this->_fontSize;
+        return $this->_fontSize;
     }
 
     /**
@@ -1099,9 +1096,11 @@ class Zend_Pdf_Page
      * @param string $text
      * @param float $x
      * @param float $y
+     * @param string $charEncoding (optional) Character encoding of source text.
+     *   Defaults to current locale.
      * @throws Zend_Pdf_Exception
      */
-    public function drawText($text, $x, $y )
+    public function drawText($text, $x, $y, $charEncoding = '')
     {
         if ($this->_font === null) {
             throw new Zend_Pdf_Exception('Font has not been set');
@@ -1109,7 +1108,7 @@ class Zend_Pdf_Page
 
         $this->_addProcSet('Text');
 
-        $textObj = new Zend_Pdf_Element_String($this->_font->applyEncoding($text));
+        $textObj = new Zend_Pdf_Element_String($this->_font->encodeString($text, $charEncoding));
         $xObj    = new Zend_Pdf_Element_Numeric($x);
         $yObj    = new Zend_Pdf_Element_Numeric($y);
 

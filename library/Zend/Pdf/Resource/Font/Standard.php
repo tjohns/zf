@@ -13,64 +13,63 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @package    Zend_Pdf
+ * @subpackage Fonts
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/**
- * Zend_Pdf_Font
- */
+/** Zend_Pdf_Resource_Font */
 require_once 'Zend/Pdf/Resource/Font.php';
 
-/**
- * Zend_Pdf_Const
- */
-require_once 'Zend/Pdf/Const.php';
 
 /**
- * Zend_Pdf_Exception
- */
-require_once 'Zend/Pdf/Exception.php';
-
-
-/**
- * Type1 standard fonts implementation
+ * Abstract class definition for the standard 14 Type 1 PDF fonts.
+ *
+ * The standard 14 PDF fonts are guaranteed to be availble in any PDF viewer
+ * implementation. As such, they do not require much data for the font's
+ * resource dictionary. The majority of the data provided by subclasses is for
+ * the benefit of our own layout code.
+ *
+ * The standard fonts and the corresponding subclasses that manage them:
+ * <ul>
+ *  <li>Courier - {@link Zend_Pdf_Resource_Font_Standard_Courier}
+ *  <li>Courier-Bold - {@link Zend_Pdf_Resource_Font_Standard_CourierBold}
+ *  <li>Courier-Oblique - {@link Zend_Pdf_Resource_Font_Standard_CourierOblique}
+ *  <li>Courier-BoldOblique - {@link Zend_Pdf_Resource_Font_Standard_CourierBoldOblique}
+ *  <li>Helvetica - {@link Zend_Pdf_Resource_Font_Standard_Helvetica}
+ *  <li>Helvetica-Bold - {@link Zend_Pdf_Resource_Font_Standard_HelveticaBold}
+ *  <li>Helvetica-Oblique - {@link Zend_Pdf_Resource_Font_Standard_HelveticaOblique}
+ *  <li>Helvetica-BoldOblique - {@link Zend_Pdf_Resource_Font_Standard_HelveticaBoldOblique}
+ *  <li>Symbol - {@link Zend_Pdf_Resource_Font_Standard_Symbol}
+ *  <li>Times - {@link Zend_Pdf_Resource_Font_Standard_Times}
+ *  <li>Times-Bold - {@link Zend_Pdf_Resource_Font_Standard_TimesBold}
+ *  <li>Times-Italic - {@link Zend_Pdf_Resource_Font_Standard_TimesItalic}
+ *  <li>Times-BoldItalic - {@link Zend_Pdf_Resource_Font_Standard_TimesBoldItalic}
+ *  <li>ZapfDingbats - {@link Zend_Pdf_Resource_Font_Standard_ZapfDingbats}
+ * </ul>
+ *
+ * Font objects should be normally be obtained from the factory methods
+ * {@link Zend_Pdf_Font::fontWithName} and {@link Zend_Pdf_Font::fontWithPath}.
  *
  * @package    Zend_Pdf
+ * @subpackage Fonts
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Pdf_Font_Standard extends Zend_Pdf_Font
+abstract class Zend_Pdf_Resource_Font_Standard extends Zend_Pdf_Resource_Font
 {
+  /**** Public Interface ****/
+
+
+  /* Object Lifecycle */
+
     /**
      * Object constructor
-     *
-     * @param string $fontName
-     * @throws Zend_Pdf_Exception
      */
-    public function __construct($fontName)
+    public function __construct()
     {
-        if (!in_array($fontName, Zend_Pdf_Const::$standardFonts)) {
-            throw new Zend_Pdf_Exception('Wrong font name');
-        }
-
         parent::__construct();
-
         $this->_resource->Subtype  = new Zend_Pdf_Element_Name('Type1');
-        $this->_resource->BaseFont = new Zend_Pdf_Element_Name($fontName);
-        $this->_resource->Encoding = new Zend_Pdf_Element_Name('WinAnsiEncoding');
     }
 
-    /**
-     * Convert string encoding from current locale to font encoding
-     *
-     * @param string $in
-     * @return string
-     */
-    public function applyEncoding($in)
-    {
-        return iconv('', 'CP1252//IGNORE', $in);
-    }
 }
-
