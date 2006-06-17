@@ -1,7 +1,7 @@
 <sect1 id="zend.search.index-creation">
-	<title>インデックスの構築</title>
+    <title>インデックスの構築</title>
 
-	<sect2 id="zend.search.index-creation.creating">
+    <sect2 id="zend.search.index-creation.creating">
         <title>新しいインデックスの作成</title>
 
         <para>

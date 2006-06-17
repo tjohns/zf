@@ -1,7 +1,7 @@
 <sect1 id="zend.search.extending">
-	<title>拡張性</title>
+    <title>拡張性</title>
 
-	<sect2 id="zend.search.extending.analysis">
+    <sect2 id="zend.search.extending.analysis">
         <title>テキスト解析</title>
         <para>
             <code>Zend_Search_Lucene_Analysis_Analyzer</code> クラスは、
@@ -117,7 +117,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </sect2>
 
     <sect2 id="zend.search.extending.scoring">
-		<title>重み付けのアルゴリズム</title>
+        <title>重み付けのアルゴリズム</title>
         <para>
             クエリ <literal>q</literal> の、ドキュメント <literal>d</literal>
             に対するスコアは以下のように定義されます。
@@ -220,10 +220,10 @@ $mySimilarity = new MySimilarity();
 Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
 
 ?>]]></programlisting>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.extending.storage">
-		<title>保存先</title>
+    <sect2 id="zend.search.extending.storage">
+        <title>保存先</title>
         <para>
         抽象クラス Zend_Search_Lucene_Storage_Directory では、ディレクトリ機能を提供しています。
         </para>
@@ -396,7 +396,7 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
 ?>]]></programlisting>
         </para>
 
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

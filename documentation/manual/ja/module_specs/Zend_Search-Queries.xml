@@ -1,13 +1,10 @@
 <sect1 id="zend.search.queries">
-	<title>クエリの形式</title>
+    <title>クエリの形式</title>
 
-	<sect2 id="zend.search.queries.term-query">
-		<title>単一の単語のクエリ</title>
+    <sect2 id="zend.search.queries.term-query">
+        <title>単一の単語のクエリ</title>
         <para>
         ひとつの単語を使用した検索を行うためのものです。
-        </para>
-
-        <para>
         以下の両方の方法が使用可能です。
         </para>
 
@@ -30,34 +27,35 @@
 
 ?>]]></programlisting>
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.queries.multiterm-query">
-		<title>複数の単語のクエリ</title>
+    <sect2 id="zend.search.queries.multiterm-query">
+        <title>複数の単語のクエリ</title>
         <para>
             単語の組み合わせによる検索を行うためのものです。
         </para>
 
         <para>
-            各単語は、必須・禁止・どちらでもない(オプション)
+            各単語は、<emphasis>required (必須)</emphasis>・<emphasis>prohibited (禁止)</emphasis>・
+            <emphasis>neither (どちらでもない)</emphasis>
             のいずれかを指定することができます。
 
             <itemizedlist>
                 <listitem>
                     <para>
-                    「必須」を指定した場合、
+                    <emphasis>required</emphasis> を指定した場合、
                     この単語を含まないドキュメントはクエリにマッチしません。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    「禁止」を指定した場合、
+                    <emphasis>prohibited</emphasis> を指定した場合、
                     この単語を含むドキュメントはクエリにマッチしません。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    「どちらでもない」を指定した場合、
+                    <emphasis>neither</emphasis> を指定した場合、
                     この単語を含むドキュメントは除外されるわけでもなく、
                     この単語を含まなければマッチしないというわけでもありません。
                     ただし、クエリにマッチするためには、
@@ -122,10 +120,10 @@ $hits = $index->find('+word1 author:word2 -word3');
                 </listitem>
             </itemizedlist>
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.queries.phrase-query">
-		<title>フレーズクエリ</title>
+    <sect2 id="zend.search.queries.phrase-query">
+        <title>フレーズクエリ</title>
         <para>
             熟語による検索を行うためのものです。
         </para>
@@ -292,7 +290,7 @@ $hits2 = $index->find($query);
 
 ?>]]></programlisting>
 
-	</sect2>
+    </sect2>
 </sect1>
 
 <!--

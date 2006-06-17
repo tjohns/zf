@@ -1,8 +1,8 @@
 <sect1 id="zend.search.searching">
-	<title>インデックスの検索</title>
+    <title>インデックスの検索</title>
 
-	<sect2 id="zend.search.searching.query-parser">
-		<title>クエリの作成</title>
+    <sect2 id="zend.search.searching.query-parser">
+        <title>クエリの作成</title>
 
         <para>
             インデックスを検索するには 2 通りの方法があります。
@@ -24,7 +24,7 @@
                     トークン化されていないフィールドについては、
                     クエリパーサを使用するよりも直接クエリに追加するほうが適しています。
                     フィールドの値がアプリケーションによって生成されるのなら、
-                    このフィールドをクエリの条件に使用しましょう。
+                    フィールドのクエリ条件についても自動処理で作成すべきです。
                     クエリパーサが使用している解析器は、人間が入力したテキストを
                     単語に分解するために設計されています。
                     日付やキーワードなどのプログラムが生成した値は、
@@ -73,10 +73,10 @@ $index->find($query);
             <code>find()</code> に指定するテキストは <code>strtolower()</code>
             しておかなければいけません。そうしないと条件にマッチしません。
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.searching.results">
-		<title>検索結果</title>
+    <sect2 id="zend.search.searching.results">
+        <title>検索結果</title>
         <para>
             検索結果は Zend_Search_Lucene_Search_QueryHit オブジェクトの配列となります。
             各オブジェクトは、2 つのプロパティを保持しています。
@@ -101,9 +101,7 @@ $index = new Zend_Search_Lucene('/data/my_index');
 $hits = $index->find($query);
 
 foreach ($hits as $hit) {
-    echo $hit->id;
     echo $hit->score;
-
     echo $hit->title;
     echo $hit->author;
 }
@@ -155,18 +153,15 @@ foreach ($hits as $hit) {
         もインデックス化して取得できるようにしなければならないことに注意しましょう。
         </para>
 
-	</sect2>
+    </sect2>
 
 
-	<sect2 id="zend.search.searching.results-scoring">
-		<title>結果の重み付け</title>
+    <sect2 id="zend.search.searching.results-scoring">
+        <title>結果の重み付け</title>
         <para>
             Zend_Search_Lucene は、Java Lucene と同じ重み付けアルゴリズムを使用します。
-            検索結果は重み順に並べ替えられます。スコアの高いものが先頭となります。
-        </para>
-
-        <para>
-            スコアが違うということは、そのクエリに対するマッチ具合が違うということになります。
+            検索結果は重み順に並べ替えられます。スコアの高いものが先頭となり、
+            スコアの高いもののほうが低いものよりクエリにマッチするようになります。
         </para>
 
         <para>
@@ -193,7 +188,7 @@ foreach ($hits as $hit) {
             を参照ください。
         </para>
 
-	</sect2>
+    </sect2>
 
 </sect1>
 
