@@ -278,21 +278,21 @@ class Zend_Pdf_Cmap_SegmentToDelta extends Zend_Pdf_Cmap
         $actualLength = strlen($cmapData);
         if ($actualLength < 23) {
             throw new Zend_Pdf_Exception('Insufficient table data',
-                                         Zend_Pdf_Exception::CMAPTABLEDATATOOSMALL);
+                                         Zend_Pdf_Exception::CMAP_TABLE_DATA_TOO_SMALL);
         }
 
         /* Sanity check: Make sure this is right data for this table type.
          */
         $type = $this->_extractUInt2($cmapData, 0);
-        if ($type != Zend_Pdf_Cmap::TYPE_SEGMENTTODELTA) {
+        if ($type != Zend_Pdf_Cmap::TYPE_SEGMENT_TO_DELTA) {
             throw new Zend_Pdf_Exception('Wrong cmap table type',
-                                         Zend_Pdf_Exception::CMAPWRONGTABLETYYPE);
+                                         Zend_Pdf_Exception::CMAP_WRONG_TABLE_TYPE);
         }
 
         $length = $this->_extractUInt2($cmapData, 2);
         if ($length != $actualLength) {
             throw new Zend_Pdf_Exception("Table length ($length) does not match actual length ($actualLength)",
-                                         Zend_Pdf_Exception::CMAPWRONGTABLELENGTH);
+                                         Zend_Pdf_Exception::CMAP_WRONG_TABLE_LENGTH);
         }
 
         /* Mapping tables should be language-independent. The font may not work
@@ -352,7 +352,7 @@ class Zend_Pdf_Cmap_SegmentToDelta extends Zend_Pdf_Cmap
          */
         if ($offset != $length) {
             throw new Zend_Pdf_Exception("Ending offset ($offset) does not match length ($length)",
-                                         Zend_Pdf_Exception::CMAPFINALOFFSETNOTLENGTH);
+                                         Zend_Pdf_Exception::CMAP_FINAL_OFFSET_NOT_LENGTH);
         }
     }
 

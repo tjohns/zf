@@ -344,7 +344,7 @@ class Zend_Pdf_Resource_Font_Standard_Symbol extends Zend_Pdf_Resource_Font_Stan
           0xf8fa =>   0xb9, 0xf8fb =>   0xba, 0xf8fc =>   0xbb, 0xf8fd =>   0xbc,
           0xf8fe =>   0xbd, 0xf8ff =>   0xbe);
         $this->cmap = Zend_Pdf_Cmap::cmapWithTypeData(
-          Zend_Pdf_Cmap::TYPE_BYTEENCODINGSTATIC, $cmapData);
+          Zend_Pdf_Cmap::TYPE_BYTE_ENCODING_STATIC, $cmapData);
 
 
         /* Resource dictionary */

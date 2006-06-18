@@ -111,7 +111,7 @@ abstract class Zend_Pdf_Font
     /**
      * A PostScript Type 1 font.
      */
-    const TYPE_TYPE1 = 2;
+    const TYPE_TYPE_1 = 2;
 
     /**
      * A TrueType font or an OpenType font containing TrueType outlines.
@@ -145,13 +145,13 @@ abstract class Zend_Pdf_Font
     /**
      * Name of the bold and italic style of the standard PDF font Courier.
      */
-    const FONT_COURIER_BOLDOBLIQUE = 'Courier-BoldOblique';
+    const FONT_COURIER_BOLD_OBLIQUE = 'Courier-BoldOblique';
 
     /**
      * Convenience constant for a common misspelling of
-     * {@link FONT_COURIER_BOLDOBLIQUE}.
+     * {@link FONT_COURIER_BOLD_OBLIQUE}.
      */
-    const FONT_COURIER_BOLDITALIC = 'Courier-BoldOblique';
+    const FONT_COURIER_BOLD_ITALIC = 'Courier-BoldOblique';
 
     /**
      * Name of the standard PDF font Helvetica.
@@ -177,13 +177,13 @@ abstract class Zend_Pdf_Font
     /**
      * Name of the bold and italic style of the standard PDF font Helvetica.
      */
-    const FONT_HELVETICA_BOLDOBLIQUE = 'Helvetica-BoldOblique';
+    const FONT_HELVETICA_BOLD_OBLIQUE = 'Helvetica-BoldOblique';
 
     /**
      * Convenience constant for a common misspelling of
-     * {@link FONT_HELVETICA_BOLDOBLIQUE}.
+     * {@link FONT_HELVETICA_BOLD_OBLIQUE}.
      */
-    const FONT_HELVETICA_BOLDITALIC = 'Helvetica-BoldOblique';
+    const FONT_HELVETICA_BOLD_ITALIC = 'Helvetica-BoldOblique';
 
     /**
      * Name of the standard PDF font Symbol.
@@ -214,7 +214,7 @@ abstract class Zend_Pdf_Font
     /**
      * Name of the bold and italic style of the standard PDF font Times.
      */
-    const FONT_TIMES_BOLDITALIC = 'Times-BoldItalic';
+    const FONT_TIMES_BOLD_ITALIC = 'Times-BoldItalic';
 
     /**
      * Name of the standard PDF font Zapf Dingbats.
@@ -286,12 +286,12 @@ abstract class Zend_Pdf_Font
      * URL of the font vendor. Some fonts may contain a unique serial number
      * embedded in this URL, which is used for licensing.
      */
-    const NAME_VENDORURL = 11;
+    const NAME_VENDOR_URL = 11;
 
     /**
      * URL of the font designer ({@link NAME_DESIGNER}).
      */
-    const NAME_DESIGNERURL = 12;
+    const NAME_DESIGNER_URL = 12;
 
     /**
      * Plain language licensing terms for the font.
@@ -301,29 +301,29 @@ abstract class Zend_Pdf_Font
     /**
      * URL of more detailed licensing information for the font.
      */
-    const NAME_LICENSEURL = 14;
+    const NAME_LICENSE_URL = 14;
 
     /**
      * Preferred font family. Used by some fonts to work around a Microsoft
      * Windows limitation where only four fonts styles can share the same
      * {@link NAME_FAMILY} value.
      */
-    const NAME_PREFERREDFAMILY = 16;
+    const NAME_PREFERRED_FAMILY = 16;
 
     /**
      * Preferred font style. A more descriptive string than {@link NAME_STYLE}.
      */
-    const NAME_PREFERREDSTYLE = 17;
+    const NAME_PREFERRED_STYLE = 17;
 
     /**
      * Suggested text to use as a representative sample of the font.
      */
-    const NAME_SAMPLETEXT = 19;
+    const NAME_SAMPLE_TEXT = 19;
 
     /**
      * PostScript CID findfont name.
      */
-    const NAME_CIDNAME = 20;
+    const NAME_CID_NAME = 20;
 
 
   /* Font Weights */
@@ -336,7 +336,7 @@ abstract class Zend_Pdf_Font
     /**
      * Extra-light (Ultra-light) font weight.
      */
-    const WEIGHT_EXTRALIGHT = 200;
+    const WEIGHT_EXTRA_LIGHT = 200;
 
     /**
      * Light font weight.
@@ -356,7 +356,7 @@ abstract class Zend_Pdf_Font
     /**
      * Semi-bold (Demi-bold) font weight.
      */
-    const WEIGHT_SEMIBOLD = 600;
+    const WEIGHT_SEMI_BOLD = 600;
 
     /**
      * Bold font weight.
@@ -366,7 +366,7 @@ abstract class Zend_Pdf_Font
     /**
      * Extra-bold (Ultra-bold) font weight.
      */
-    const WEIGHT_EXTRABOLD = 800;
+    const WEIGHT_EXTRA_BOLD = 800;
 
     /**
      * Black (Heavy) font weight.
@@ -379,12 +379,12 @@ abstract class Zend_Pdf_Font
     /**
      * Ultra-condensed font width. Typically 50% of normal.
      */
-    const WIDTH_ULTRACONDENSED = 1;
+    const WIDTH_ULTRA_CONDENSED = 1;
 
     /**
      * Extra-condensed font width. Typically 62.5% of normal.
      */
-    const WIDTH_EXTRACONDENSED = 2;
+    const WIDTH_EXTRA_CONDENSED = 2;
 
     /**
      * Condensed font width. Typically 75% of normal.
@@ -394,7 +394,7 @@ abstract class Zend_Pdf_Font
     /**
      * Semi-condensed font width. Typically 87.5% of normal.
      */
-    const WIDTH_SEMICONDENSED = 4;
+    const WIDTH_SEMI_CONDENSED = 4;
 
     /**
      * Normal (Medium) font width.
@@ -404,7 +404,7 @@ abstract class Zend_Pdf_Font
     /**
      * Semi-expanded font width. Typically 112.5% of normal.
      */
-    const WIDTH_SEMIEXPANDED = 6;
+    const WIDTH_SEMI_EXPANDED = 6;
 
     /**
      * Expanded font width. Typically 125% of normal.
@@ -414,12 +414,12 @@ abstract class Zend_Pdf_Font
     /**
      * Extra-expanded font width. Typically 150% of normal.
      */
-    const WIDTH_EXTRAEXPANDED = 8;
+    const WIDTH_EXTRA_EXPANDED = 8;
 
     /**
      * Ultra-expanded font width. Typically 200% of normal.
      */
-    const WIDTH_ULTRAEXPANDED = 9;
+    const WIDTH_ULTRA_EXPANDED = 9;
 
 
   /* Font Embedding Options */
@@ -427,23 +427,23 @@ abstract class Zend_Pdf_Font
     /**
      * Do not embed the font in the PDF document.
      */
-    const EMBED_DONTEMBED = 0x01;
+    const EMBED_DONT_EMBED = 0x01;
 
     /**
      * Embed, but do not subset the font in the PDF document.
      */
-    const EMBED_DONTSUBSET = 0x02;
+    const EMBED_DONT_SUBSET = 0x02;
 
     /**
      * Embed, but do not compress the font in the PDF document.
      */
-    const EMBED_DONTCOMPRESS = 0x04;
+    const EMBED_DONT_COMPRESS = 0x04;
 
     /**
      * Suppress the exception normally thrown if the font cannot be embedded
      * due to its copyright bits being set.
      */
-    const EMBED_SUPPRESSEMBEDEXCEPTION = 0x08;
+    const EMBED_SUPPRESS_EMBED_EXCEPTION = 0x08;
 
 
 
@@ -530,7 +530,7 @@ abstract class Zend_Pdf_Font
                 $font = new Zend_Pdf_Resource_Font_Standard_CourierOblique();
                 break;
 
-            case Zend_Pdf_Font::FONT_COURIER_BOLDOBLIQUE:
+            case Zend_Pdf_Font::FONT_COURIER_BOLD_OBLIQUE:
                 $font = new Zend_Pdf_Resource_Font_Standard_CourierBoldOblique();
                 break;
 
@@ -546,7 +546,7 @@ abstract class Zend_Pdf_Font
                 $font = new Zend_Pdf_Resource_Font_Standard_HelveticaOblique();
                 break;
 
-            case Zend_Pdf_Font::FONT_HELVETICA_BOLDOBLIQUE:
+            case Zend_Pdf_Font::FONT_HELVETICA_BOLD_OBLIQUE:
                 $font = new Zend_Pdf_Resource_Font_Standard_HelveticaBoldOblique();
                 break;
 
@@ -566,7 +566,7 @@ abstract class Zend_Pdf_Font
                 $font = new Zend_Pdf_Resource_Font_Standard_TimesItalic();
                 break;
 
-            case Zend_Pdf_Font::FONT_TIMES_BOLDITALIC:
+            case Zend_Pdf_Font::FONT_TIMES_BOLD_ITALIC:
                 $font = new Zend_Pdf_Resource_Font_Standard_TimesBoldItalic();
                 break;
 
@@ -576,7 +576,7 @@ abstract class Zend_Pdf_Font
 
             default:
                 throw new Zend_Pdf_Exception("Unknown font name: $name",
-                                             Zend_Pdf_Exception::BADFONTNAME);
+                                             Zend_Pdf_Exception::BAD_FONT_NAME);
         }
 
         /* Add this new font to the cache array and return it for use.
@@ -686,7 +686,7 @@ abstract class Zend_Pdf_Font
             /* The type of font could not be determined. Give up.
              */
             throw new Zend_Pdf_Exception("Cannot determine font type: $filePath",
-                                         Zend_Pdf_Exception::CANTDETERMINEFONTTYPE);
+                                         Zend_Pdf_Exception::CANT_DETERMINE_FONT_TYPE);
          }
 
     }
@@ -728,9 +728,9 @@ abstract class Zend_Pdf_Font
              */
             $fontParser = null;
             switch ($exception->getCode()) {
-                case Zend_Pdf_Exception::WRONGFONTTYPE:    // break intentionally omitted
-                case Zend_Pdf_Exception::BADTABLECOUNT:    // break intentionally omitted
-                case Zend_Pdf_Exception::BADMAGICNUMBER:
+                case Zend_Pdf_Exception::WRONG_FONT_TYPE:    // break intentionally omitted
+                case Zend_Pdf_Exception::BAD_TABLE_COUNT:    // break intentionally omitted
+                case Zend_Pdf_Exception::BAD_MAGIC_NUMBER:
                     return null;
 
                 default:

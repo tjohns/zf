@@ -370,7 +370,7 @@ class Zend_Pdf_Resource_Font_Standard_ZapfDingbats extends Zend_Pdf_Resource_Fon
           0x27b9 =>   0xc5, 0x27ba =>   0xc6, 0x27bb =>   0xc7, 0x27bc =>   0xc8,
           0x27bd =>   0xc9, 0x27be =>   0xca);
         $this->cmap = Zend_Pdf_Cmap::cmapWithTypeData(
-          Zend_Pdf_Cmap::TYPE_BYTEENCODINGSTATIC, $cmapData);
+          Zend_Pdf_Cmap::TYPE_BYTE_ENCODING_STATIC, $cmapData);
 
 
         /* Resource dictionary */

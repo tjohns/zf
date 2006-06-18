@@ -59,7 +59,7 @@ class Zend_Pdf_FileParser_Font_OpenType_TrueType extends Zend_Pdf_FileParser_Fon
 
             default:
                 throw new Zend_Pdf_Exception('Not a TrueType font file',
-                                             Zend_Pdf_Exception::WRONGFONTTYPE);
+                                             Zend_Pdf_Exception::WRONG_FONT_TYPE);
         }
 
         $this->fontType = Zend_Pdf_Font::TYPE_TRUETYPE;

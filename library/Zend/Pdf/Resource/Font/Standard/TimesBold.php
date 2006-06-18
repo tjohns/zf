@@ -286,7 +286,7 @@ class Zend_Pdf_Resource_Font_Standard_TimesBold extends Zend_Pdf_Resource_Font_S
           0x0123 => 0x0135,   0xf0 => 0x0136, 0x017e => 0x0137, 0x0146 => 0x0138,
             0xb9 => 0x0139, 0x012b => 0x013a, 0x20ac => 0x013b);
         $this->cmap = Zend_Pdf_Cmap::cmapWithTypeData(
-          Zend_Pdf_Cmap::TYPE_BYTEENCODINGSTATIC, $cmapData);
+          Zend_Pdf_Cmap::TYPE_BYTE_ENCODING_STATIC, $cmapData);
 
 
         /* Resource dictionary */

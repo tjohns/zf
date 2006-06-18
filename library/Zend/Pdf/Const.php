@@ -25,19 +25,23 @@
  * To repair your code, you will need to perform the following global 
  * search-and-replace operations:
  *
- *   Zend_Pdf_Const::PAGESIZE_     ->  Zend_Pdf_Page::SIZE_
- *   Zend_Pdf_Const::SHAPEDRAW_    ->  Zend_Pdf_Page::SHAPEDRAW_
- *   Zend_Pdf_Const::FILLMETHOD_   ->  Zend_Pdf_Page::FILLMETHOD_
- *   Zend_Pdf_Const::LINEDASHING_  ->  Zend_Pdf_Page::LINEDASHING_
- *   Zend_Pdf_Const::PDF_          ->  Zend_Pdf::PDF_
- *   Zend_Pdf_Const::pdfDate()     ->  Zend_Pdf::pdfDate()
+ *   Zend_Pdf_Const::PAGESIZE_                 -> Zend_Pdf_Page::SIZE_
+ *   Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE     -> Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE
+ *   Zend_Pdf_Const::SHAPEDRAW_                -> Zend_Pdf_Page::SHAPE_DRAW_
+ *   Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING -> Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING
+ *   Zend_Pdf_Const::FILLMETHOD_EVENODD        -> Zend_Pdf_Page::FILL_METHOD_EVEN_ODD
+ *   Zend_Pdf_Const::LINEDASHING_              -> Zend_Pdf_Page::LINE_DASHING_
+ *   Zend_Pdf_Const::PDF_                      -> Zend_Pdf::PDF_
+ *   Zend_Pdf_Const::pdfDate()                 -> Zend_Pdf::pdfDate()
  *
  * In addition, font object creation has been revamped. Font objects are now
  * instantiated via a factory methods. You will also need to perform the
- * following global search-and-replace operation:
+ * following global search-and-replace operations:
  *
  *   new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_  ->
  *     Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_
+ *
+ *   _BOLDITALIC  ->  _BOLD_ITALIC
  *
  * Finally, the old static arrays $pageSizeAliases and $standardFonts have been
  * completely removed. There are no replacements.

@@ -158,7 +158,7 @@ class Zend_Pdf_Style
      */
     public function setLineDashingPattern($pattern, $phase = 0)
     {
-        if ($pattern === Zend_Pdf_Page::LINEDASHING_SOLID) {
+        if ($pattern === Zend_Pdf_Page::LINE_DASHING_SOLID) {
             $pattern = array();
             $phase   = 0;
         }

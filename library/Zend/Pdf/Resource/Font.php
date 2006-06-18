@@ -215,23 +215,23 @@ abstract class Zend_Pdf_Resource_Font extends Zend_Pdf_Resource
      * <ul>
      *  <li>{@link Zend_Pdf_Font::NAME_FULL}
      *  <li>{@link Zend_Pdf_Font::NAME_FAMILY}
-     *  <li>{@link Zend_Pdf_Font::NAME_PREFERREDFAMILY}
+     *  <li>{@link Zend_Pdf_Font::NAME_PREFERRED_FAMILY}
      *  <li>{@link Zend_Pdf_Font::NAME_STYLE}
-     *  <li>{@link Zend_Pdf_Font::NAME_PREFERREDSTYLE}
+     *  <li>{@link Zend_Pdf_Font::NAME_PREFERRED_STYLE}
      *  <li>{@link Zend_Pdf_Font::NAME_DESCRIPTION}
      *  <li>{@link Zend_Pdf_Font::NAME_SAMPLETEXT}
      *  <li>{@link Zend_Pdf_Font::NAME_ID}
      *  <li>{@link Zend_Pdf_Font::NAME_VERSION}
      *  <li>{@link Zend_Pdf_Font::NAME_POSTSCRIPT}
-     *  <li>{@link Zend_Pdf_Font::NAME_CIDNAME}
+     *  <li>{@link Zend_Pdf_Font::NAME_CID_NAME}
      *  <li>{@link Zend_Pdf_Font::NAME_DESIGNER}
-     *  <li>{@link Zend_Pdf_Font::NAME_DESIGNERURL}
+     *  <li>{@link Zend_Pdf_Font::NAME_DESIGNER_URL}
      *  <li>{@link Zend_Pdf_Font::NAME_MANUFACTURER}
-     *  <li>{@link Zend_Pdf_Font::NAME_VENDORURL}
+     *  <li>{@link Zend_Pdf_Font::NAME_VENDOR_URL}
      *  <li>{@link Zend_Pdf_Font::NAME_COPYRIGHT}
      *  <li>{@link Zend_Pdf_Font::NAME_TRADEMARK}
      *  <li>{@link Zend_Pdf_Font::NAME_LICENSE}
-     *  <li>{@link Zend_Pdf_Font::NAME_LICENSEURL}
+     *  <li>{@link Zend_Pdf_Font::NAME_LICENSE_URL}
      * </ul>
      *
      * Note that not all names are available for all fonts. In addition, some
@@ -478,7 +478,7 @@ abstract class Zend_Pdf_Resource_Font extends Zend_Pdf_Resource
         foreach ($glyphNumbers as $key => $glyphNumber) {
             if (($glyphNumber < 0) || ($glyphNumber > $this->_glyphMaxIndex)) {
                 throw new Zend_Pdf_Exception("Glyph number is out of range: $glyphNumber",
-                                             Zend_Pdf_Exception::GLYPHOUTOFRANGE);
+                                             Zend_Pdf_Exception::GLYPH_OUT_OF_RANGE);
             }
             $widths[$key] = $this->_glyphWidths[$glyphNumber];
         }
@@ -498,7 +498,7 @@ abstract class Zend_Pdf_Resource_Font extends Zend_Pdf_Resource
     {
         if (($glyphNumber < 0) || ($glyphNumber > $this->_glyphMaxIndex)) {
             throw new Zend_Pdf_Exception("Glyph number is out of range: $glyphNumber",
-                                             Zend_Pdf_Exception::GLYPHOUTOFRANGE);
+                                             Zend_Pdf_Exception::GLYPH_OUT_OF_RANGE);
         }
         return $this->_glyphWidths[$glyphNumber];
     }

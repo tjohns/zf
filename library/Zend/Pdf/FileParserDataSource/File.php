@@ -74,19 +74,19 @@ class Zend_Pdf_FileParserDataSource_File extends Zend_Pdf_FileParserDataSource
     {
         if (! (is_file($filePath) || is_link($filePath))) {
             throw new Zend_Pdf_Exception("Invalid file path: $filePath",
-                                         Zend_Pdf_Exception::BADFILEPATH);
+                                         Zend_Pdf_Exception::BAD_FILE_PATH);
         }
         if (! is_readable($filePath)) {
             throw new Zend_Pdf_Exception("File is not readable: $filePath",
-                                         Zend_Pdf_Exception::NOTREADABLE);
+                                         Zend_Pdf_Exception::NOT_READABLE);
         }
         if (($this->_size = @filesize($filePath)) === false) {
             throw new Zend_Pdf_Exception("Error while obtaining file size: $filePath",
-                                         Zend_Pdf_Exception::CANTGETFILESIZE);
+                                         Zend_Pdf_Exception::CANT_GET_FILE_SIZE);
         }
         if (($this->_fileResource = @fopen($filePath, 'rb')) === false) {
             throw new Zend_Pdf_Exception("Cannot open file for reading: $filePath",
-                                         Zend_Pdf_Exception::CANTOPENFILE);
+                                         Zend_Pdf_Exception::CANT_OPEN_FILE);
         }
         $this->_filePath = $filePath;
     }
@@ -121,11 +121,11 @@ class Zend_Pdf_FileParserDataSource_File extends Zend_Pdf_FileParserDataSource
         $bytes = @fread($this->_fileResource, $byteCount);
         if ($bytes === false) {
             throw new Zend_Pdf_Exception('Unexpected error while reading file',
-                                         Zend_Pdf_Exception::ERRORDURINGREAD);
+                                         Zend_Pdf_Exception::ERROR_DURING_READ);
         }
         if (strlen($bytes) != $byteCount) {
             throw new Zend_Pdf_Exception("Insufficient data to read $byteCount bytes",
-                                         Zend_Pdf_Exception::INSUFFICIENTDATA);
+                                         Zend_Pdf_Exception::INSUFFICIENT_DATA);
         }
         $this->_offset += $byteCount;
         return $bytes;
@@ -177,11 +177,11 @@ class Zend_Pdf_FileParserDataSource_File extends Zend_Pdf_FileParserDataSource
         $result = @fseek($this->_fileResource, $offset, SEEK_SET);
         if ($result !== 0) {
             throw new Zend_Pdf_Exception('Error while setting new file position',
-                                         Zend_Pdf_Exception::CANTSETFILEPOSITION);
+                                         Zend_Pdf_Exception::CANT_SET_FILE_POSITION);
         }
         if (feof($this->_fileResource)) {
             throw new Zend_Pdf_Exception('Moved beyond the end of the file',
-                                         Zend_Pdf_Exception::MOVEBEYONDENDOFFILE);
+                                         Zend_Pdf_Exception::MOVE_BEYOND_END_OF_FILE);
         }
     }
 

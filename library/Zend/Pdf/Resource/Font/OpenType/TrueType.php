@@ -128,7 +128,7 @@ class Zend_Pdf_Resource_Font_OpenType_TrueType extends Zend_Pdf_Resource_Font_Op
          *
          * First, the developer might specifically request not to embed the font.
          */
-        if (! $this->_isEmbeddingOptionSet(Zend_Pdf_Font::EMBED_DONTEMBED)) {
+        if (! $this->_isEmbeddingOptionSet(Zend_Pdf_Font::EMBED_DONT_EMBED)) {
 
             /* Second, the font author may have set copyright bits that prohibit
              * the font program from being embedded. Yes this is controversial,
@@ -143,11 +143,11 @@ class Zend_Pdf_Resource_Font_OpenType_TrueType extends Zend_Pdf_Resource_Font_Op
                 /* This exception may be suppressed if the developer decides that
                  * it's not a big deal that the font program can't be embedded.
                  */
-                if (! $this->_isEmbeddingOptionSet(Zend_Pdf_Font::EMBED_SUPPRESSEMBEDEXCEPTION)) {
+                if (! $this->_isEmbeddingOptionSet(Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION)) {
                     $message = 'This font cannot be embedded in the PDF document. If you would like to use '
-                             . 'it anyway, you must pass Zend_Pdf_Font::EMBED_SUPPRESSEMBEDEXCEPTION '
+                             . 'it anyway, you must pass Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION '
                              . 'in the $options parameter of the font constructor.';
-                    throw new Zend_Pdf_Exception($message, Zend_Pdf_Exception::FONTCANNOTBEEMBEDDED);
+                    throw new Zend_Pdf_Exception($message, Zend_Pdf_Exception::FONT_CANT_BE_EMBEDDED);
                 }
 
             } else {
@@ -163,7 +163,7 @@ class Zend_Pdf_Resource_Font_OpenType_TrueType extends Zend_Pdf_Resource_Font_Op
                 $fontFile = $fontParser->getDataSource()->readAllBytes();
                 $fontFileObject = $this->_objectFactory->newStreamObject($fontFile);
                 $fontFileObject->dictionary->Length1 = new Zend_Pdf_Element_Numeric(strlen($fontFile));
-                if (! $this->_isEmbeddingOptionSet(Zend_Pdf_Font::EMBED_DONTCOMPRESS)) {
+                if (! $this->_isEmbeddingOptionSet(Zend_Pdf_Font::EMBED_DONT_COMPRESS)) {
                     /* Compress the font file using Flate. This generally cuts file
                      * sizes by about half!
                      */

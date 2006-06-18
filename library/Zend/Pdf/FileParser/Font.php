@@ -115,14 +115,14 @@ abstract class Zend_Pdf_FileParser_Font extends Zend_Pdf_FileParser
      *
      * @param integer $byteCount Number of bytes (characters * 2) to return.
      * @param integer $byteOrder (optional) Big- or little-endian byte order.
-     *   Use the BYTEORDER_ constants defined in {@link Zend_Pdf_FileParser}. If
+     *   Use the BYTE_ORDER_ constants defined in {@link Zend_Pdf_FileParser}. If
      *   omitted, uses big-endian.
      * @param string $characterSet (optional) --Ignored--
      * @return string
      * @throws Zend_Pdf_Exception
      */
     public function readStringUTF16($byteCount,
-                                    $byteOrder = Zend_Pdf_FileParser::BYTEORDER_BIGENDIAN,
+                                    $byteOrder = Zend_Pdf_FileParser::BYTE_ORDER_BIG_ENDIAN,
                                     $characterSet = '')
     {
         return parent::readStringUTF16($byteCount, $byteOrder, 'UTF-16BE');

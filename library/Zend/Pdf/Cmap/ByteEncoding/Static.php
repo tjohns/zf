@@ -51,7 +51,7 @@ class Zend_Pdf_Cmap_ByteEncoding_Static extends Zend_Pdf_Cmap_ByteEncoding
     {
         if (! is_array($cmapData)) {
             throw new Zend_Pdf_Exception('Constructor parameter must be an array',
-                                         Zend_Pdf_Exception::BADPARAMETERTYPE);
+                                         Zend_Pdf_Exception::BAD_PARAMETER_TYPE);
         }
         $this->_glyphIndexArray = $cmapData;
     }
