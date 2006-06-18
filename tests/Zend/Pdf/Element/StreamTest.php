@@ -37,7 +37,7 @@ class Zend_Pdf_Element_StreamTest extends PHPUnit2_Framework_TestCase
     public function testToString()
     {
         $streamObj = new Zend_Pdf_Element_Stream("some text (\x00\x01\x02)\n");
-        $this->assertEquals($streamObj->toString(), "stream\r\nsome text (\x00\x01\x02)\n\r\nendstream");
+        $this->assertEquals($streamObj->toString(), "stream\nsome text (\x00\x01\x02)\n\nendstream");
     }
 
     public function testLength()
@@ -51,14 +51,14 @@ class Zend_Pdf_Element_StreamTest extends PHPUnit2_Framework_TestCase
         $streamObj = new Zend_Pdf_Element_Stream("some text (\x00\x01\x02)\n");
         $streamObj->clear();
         $this->assertEquals($streamObj->length(), 0);
-        $this->assertEquals($streamObj->toString(), "stream\r\n\r\nendstream");
+        $this->assertEquals($streamObj->toString(), "stream\n\nendstream");
     }
 
     public function testAppend()
     {
         $streamObj = new Zend_Pdf_Element_Stream("some text (\x00\x01\x02)\n");
-        $streamObj->append("somethong\xAF");
+        $streamObj->append("something\xAF");
         $this->assertEquals($streamObj->length(), 16 + 10);
-        $this->assertEquals($streamObj->toString(), "stream\r\nsome text (\x00\x01\x02)\nsomethong\xAF\r\nendstream");
+        $this->assertEquals($streamObj->toString(), "stream\nsome text (\x00\x01\x02)\nsomething\xAF\nendstream");
     }
 }
