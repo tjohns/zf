@@ -495,10 +495,6 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     protected function _write($socket, $request)
     {
         fwrite($socket, $request . "\r\n");
-        
-        // For debugging purposes:
-        $fp = file_put_contents('/tmp/zend_http_client_debug', $request);
-        
     }
     
     /**
