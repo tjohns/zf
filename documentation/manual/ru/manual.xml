@@ -5,11 +5,11 @@
     <!ENTITY % magic.fixup SYSTEM "./entities.ent">
     %magic.fixup;
 ]>
-<book id="manual" lang="en">
+<book id="manual" lang="ru">
     <bookinfo>
-        <title>Programmer's Reference Guide</title>
+        <title>Руководство программиста</title>
         <subtitle>Zend Framework</subtitle>
-        <edition>Programmer's Reference Guide for Zend Framework</edition>
+        <edition>Руководство программиста по Zend Framework</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
@@ -34,13 +34,13 @@
         <title>Zend</title>
         &module_specs.Zend;
     </chapter>
-	<chapter id="zend.controller">
-		<title>Zend_Controller</title>
-		&module_specs.Zend_Controller-Overview;
-		&module_specs.Zend_Controller-GettingStarted;
-		&module_specs.Zend_Controller-Subclassing;
-		&module_specs.Zend_Controller-Plugins;
-	</chapter>
+    <chapter id="zend.controller">
+        <title>Zend_Controller</title>
+        &module_specs.Zend_Controller-Overview;
+        &module_specs.Zend_Controller-GettingStarted;
+        &module_specs.Zend_Controller-Subclassing;
+        &module_specs.Zend_Controller-Plugins;
+    </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
         &module_specs.Zend_Db_Adapter;
@@ -78,12 +78,14 @@
     <chapter id="zend.mime">
         <title>Zend_Mime</title>
         &module_specs.Zend_Mime;
+        &module_specs.Zend_Mime_Message;
+        &module_specs.Zend_Mime_Part;
     </chapter>
     <chapter id="zend.pdf">
         <title>Zend_Pdf</title>
         &module_specs.Zend_Pdf;
     </chapter>
-	<chapter id="zend.search">
+    <chapter id="zend.search">
         <title>Zend_Search</title>
         &module_specs.Zend_Search-Overview;
         &module_specs.Zend_Search-IndexCreation;
@@ -92,7 +94,7 @@
         &module_specs.Zend_Search-Charset;
         &module_specs.Zend_Search-Extending;
         &module_specs.Zend_Search-JavaLucene;
-	</chapter>
+    </chapter>
     <chapter id="zend.service">
         <title>Zend_Service</title>
         &module_specs.Zend_Service;
@@ -106,7 +108,6 @@
         &module_specs.Zend_XmlRpc;
     </chapter>
     <!-- &ref.faq; -->
-    &ref.coding_standard;
     &ref.copyrights;
     <index id="the.index" />
 </book>
