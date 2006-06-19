@@ -337,8 +337,14 @@ abstract class Zend_Http_Client_Abstract
      */
     public function resetParameters()
     {
+    	// Reset parameter data
     	$this->paramsGet = array();
     	$this->paramsPost = array();
+    	$this->raw_post_data = null;
+    	
+    	// Clear outdated headers
+    	if (isset($this->headers['content-type'])) unset($this->headers['content-type']);
+    	if (isset($this->headers['content-length'])) unset($this->headers['content-length']);
     }
     
     /**
