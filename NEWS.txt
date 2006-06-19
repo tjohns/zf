@@ -34,6 +34,7 @@ Zend Framework                                                             NEWS
 - Fixed multipart/alternative handling when other attachments present in
   Zend_Mail, ticket #59, changeset [583]. (Matthew)
 - Fixed multiple bugs in Zend_Http_Client, ticket #133. (Mike)
+- Added Zend_Db_Profiler documentation. (Matthew)
 
 =RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
