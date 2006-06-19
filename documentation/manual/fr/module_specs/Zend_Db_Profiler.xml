@@ -1,0 +1,242 @@
+<sect1 id="zend.db.profiler">
+
+    <title>Zend_Db_Profiler</title>
+
+    <sect2 id="zend.db.profiler.introduction">
+
+        <title>Introduction</title>
+
+        <para>
+            <code>Zend_Db_Profiler</code> peut être activé pour permettre le profilage
+            de requêtes. Les profils incluent les requête exécutées par l'adapteur, ainsi
+            que leur temps d'exécution, permettant l'inspection des requêtes qui ont été
+            exécutées sans avoir besoin de rajouter du code spécifique au débuggage aux classes.
+            L'utilisation avancé permet aussi au developpeur de filtrer quelles requêtes il
+            souhaite profiler.
+        </para>
+
+        <para>
+            Le profileur s'active soir en passant une directive au constructeur de l'adapteur,
+            soit en spécifiant à l'adapteur de l'activer plus tard.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Db.php';
+
+$params = array (
+    'host'     => '127.0.0.1',
+    'username' => 'malory',
+    'password' => '******',
+    'dbname'   => 'camelot',
+    'profiler' => true  // turn on profiler; set to false to disable (default)
+);
+
+$db = Zend_Db::factory('pdoMysql', $params);
+
+// coupe le profileur:
+$db->getProfiler()->setEnabled(false);
+
+// active le profileur:
+$db->getProfiler()->setEnabled(true);
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.profiler.using">
+
+        <title>Utiliser le profileur</title>
+
+        <para>
+            Vous pouvez récupérer le profileur en utilisant la méthode
+            <code>getProfiler()</code> de l'adapteur:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$profileur = $db->getProfiler();
+?>]]></programlisting>
+
+        <para>
+            Ceci retourne une instance de <code>Zend_Db_Profiler</code>.
+            Avec cette instance, le développeur peut examiner les requêtes
+            en utilisant un éventail de méthodes :
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <code>getTotalNumQueries()</code> retourne le nombre total de
+                requêtes profilées.
+            </listitem>
+            <listitem>
+                <code>getTotalElapsedSeconds()</code> retourne le nombre totale
+                de secondes écoulées pour chaque requête profilée.
+            </listitem>
+            <listitem>
+                <code>getQueryProfiles()</code> retourne un tableau de tous les
+                profils de requêtes.
+            </listitem>
+            <listitem>
+                <code>getLastQueryProfile()</code> retourne le plus récent profil
+                de requête, peut importe si la requête à fini de s'exécuter ou pas
+                (si l'exécution n'est pas finie, le temps de fin sera null).
+            </listitem>
+            <listitem>
+                <code>clear()</code> nettoie tous les anciens profils de la pile.
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            La valeur de retour de <code>getLastQueryProfile()</code> et
+            les élements individuels de <code>getQueryProfiles()</code> sont
+            des objets de type <code>Zend_Db_Profiler_Query</code> qui permettent
+            d'inspecter les requêtes:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <code>getQuery()</code> retourne le SQL de la requête
+                sous forme de texte.
+            </listitem>
+            <listitem>
+                <code>getElapsedSecs()</code> retourn le nombre de seconde
+                d'exécution de la requête.
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            L'information que <code>Zend_Db_Profiler</code> founie est utile pour profiler
+            des goulets d'étranglement dans les applications, ainsi que pour débugger les
+            requêtes qui viennent d'être exécutées. Pour le moment, pour voir la dernière
+            requête qui vient de s'exécuter:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$query = $profileur->getLastQueryProfile();
+
+echo $query->getQuery();
+?>]]></programlisting>
+
+        <para>
+            Si une page se génère lentement, utilisez le profileur pour déterminer
+            le nombre total de requêtes, et ensuite passer d'une requête à l'autre
+            pour voir laquelle a été la plus longue:
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$tempsTotal       = $profileur->gettotalElapsedSeconds();
+$nombreRequetes   = $profileur->getTotalNumQueries();
+$tempsLePlusLong  = 0;
+$requeteLaPlusLongue = null;
+
+foreach ($profileur->getQueryProfiles() as $query) {
+    if ($query->getElapsedSecs() > $tempsLePlusLong) {
+        $tempsLePlusLong  = $query->getElapsedSecs();
+        $requeteLaPlusLongue = $query->getQuery();
+    }
+}
+
+echo 'Executé ' . $nombreRequetes . ' requêtes en ' . $tempsTotal . ' secondes' . "\n";
+echo 'Temps moyen : ' . $nombreRequetes / $tempsTotal . ' secondes' . "\n";
+echo 'Requête la plus lente : ' . $tempsLePlusLong . "\n";
+echo "Requête la plus longue : \n" . $requeteLaPlusLongue . "\n";
+?>]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.db.profiler.advanced">
+
+        <title>Utilisation avancée du profileur</title>
+
+        <para>
+            En plus de l'inspection de requête, le profileur permet aussi
+            au développeur de filtrer quelles requêtes il veut profiler.
+            Les méthodes suivantes fonctionnent avec une instance de
+            <code>Zend_Db_Profiler</code> :
+        </para>
+
+        <sect3 id="zend.db.profiler.advanced.filtertime">
+            <title>Filtrer par temps d'exécution</title>
+
+            <para>
+                <code>setFilterElapsedSecs()</code> permet au développeur
+                de définir un temps minimum d'exécution de la requête avant
+                que celle-ci soit profilée. Pour retirer le filtre, passez
+                une valeur null à la méthode.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Seules les requêtes qui durent au moins 5 secondes sont profilées:
+$profileur->setFilterElapsedSecs(5);
+
+// Profil de toutes les requête, peu importe leur longueur:
+$profileur->setFilterElapsedSecs(null);
+?>]]></programlisting>
+        </sect3>
+
+        <sect3 id="zend.db.profiler.advanced.filtertype">
+            <title>Filtrer par type de requête</title>
+
+            <para>
+                <code>setFilterQueryType()</code> permet au développeur de définir
+                quel type de requêtes doivent être profilées; to profile multiple
+                types, logical OR them. Les types de requêtes sont définis sous
+                forme de constantes de <code>Zend_Db_Profiler</code> :
+            </para>
+
+            <itemizedlist>
+                <listitem>
+                    <code>Zend_Db_Profiler::CONNECT</code> : opérations de connexion ou
+                    de sélection de base de données.
+                </listitem>
+                <listitem>
+                    <code>Zend_Db_Profiler::QUERY</code> : requête générale qui ne
+                    correspond pas aux autres types.
+                </listitem>
+                <listitem>
+                    <code>Zend_Db_Profiler::INSERT</code> : toute requête qui ajoute
+                    des données dans la base de données, généralement INSERT.
+                </listitem>
+                <listitem>
+                    <code>Zend_Db_Profiler::UPDATE</code> : toute requête qui met à jour
+                    des données, généralement UPDATE.
+                </listitem>
+                <listitem>
+                    <code>Zend_Db_Profiler::DELETE</code> : toute requête qui efface des
+                    données, généralement DELETE.
+                </listitem>
+                <listitem>
+                    <code>Zend_Db_Profiler::SELECT</code> : toute requête qui récupère
+                    des données, généralement SELECT.
+                </listitem>
+                <listitem>
+                    <code>Zend_Db_Profiler::TRANSACTION</code> : toute requête qui concerne
+                    des opérations de transaction, comme start transaction, commit,
+                    ou rollback.
+                </listitem>
+            </itemizedlist>
+
+            <para>
+                Comment avec <code>setFilterElapsedSecs()</code>, vous pouvez retirer
+                tous les filtres en passant <code>null</code> comme unique argument.
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// profile uniquement les requêtes SELECT
+$profileur->setFilterQueryType(Zend_Db_Profiler::SELECT);
+
+// profile les requêtes SELECT, INSERT, et UPDATE
+$profileur->setFilterQueryType(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+
+// profile les requêtes DELETE
+$profileur->setFilterQueryType(Zend_Db_Profiler::DELETE);
+
+// Efface tous les filtres
+$profileur->setFilterQueryType(null);
+?>]]></programlisting>
+
+        </sect3>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
