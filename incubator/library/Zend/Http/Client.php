@@ -55,6 +55,24 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     protected $maxRedirects = 5;
     
     /**
+     * Redirection counter
+     *
+     * @var int
+     */
+    protected $redirectCounter = 0;
+    
+    /**
+     * Whether to strictly follow RFC 2616 when redirecting
+     * 
+     * If true, 301 & 302 responses will be treated as written in the RFC - 
+     * that is the same request method will be used in the new request. If 
+     * false (default), a GET request is always used in the next request.
+     *
+     * @var boolean
+     */
+    protected $doStrictRedirects = false;
+    
+    /**
      * HTTP proxy settings
      *
      * @var array
@@ -102,6 +120,27 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
         $this->maxRedirects = (int) $redirects; 
     }
     
+    /**
+     * Set whether to strictly follow RFC 2616 when redirecting or not
+     * (See documentation for Zend_Http_Client::doStrictRedirects for details)
+     *
+     * @param boolean $strict
+     */
+    public function setStrictRedirects($strict = true)
+    {
+        $this->doStrictRedirects = $strict;
+    }
+    
+    /**
+     * Get the number of redirections done on the last request
+     *
+     * @return int
+     */
+    public function getLastRedirectionsCount()
+    {
+    	return $this->redirectCounter;
+    }
+
     /**
      * Set a proxy server for the request
      *
@@ -269,50 +308,57 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      */
     public function request($method = null) 
     {
-        $req = 0;
+        $this->redirectCounter = 0;
         $response = null;
+        
         // Send the first request. If redirected, continue.
         do {
             $response = parent::request($method);
-            
+
             // Load cookies into cookie jar
             if (isset($this->Cookiejar)) $this->Cookiejar->addCookiesFromResponse($response, $this->uri);
-            
+
             // If we got redirected, look for the Location header
-            if ($response->isRedirect()) {
-                if ($location = $response->getHeader('location')) {
-                    // If we got a well formed absolute URI
-                    if (Zend_Uri_Http::check($location)) {
-                        $this->setUri($location);
-                        
-                    } else {
-                        
-                        // Split into path and query and set the query
-                        list($location, $query) = explode('?', $location, 2);
-                        $this->uri->setQueryString($query);
-                        
-                        // Else, if we got just an absolute path, set it
-                        if(strpos($location, '/') === 0) {
-                            $this->uri->setPath($headerValue);
-                    
-                        // Else, assume we have a relative path    
-                        } else {
-                            // Get the current path directory, removing any trailing slashes
-                            $path = rtrim(dirname($this->uri->getPath()), "/");
-                            $this->uri->setPath($path . '/' . $location);
-                        }
-                    }
-                    
-                // If we didn't get any location, stop redirecting
-                } else {
-                    break;
+            if ($response->isRedirect() && ($location = $response->getHeader('location'))) {
+            	
+                // Check whether we send the exact same request again, or drop the parameters
+                // and send a GET request
+                if ($response->getStatus() == 303 ||
+                ((! $this->doStrictRedirects) && ($response->getStatus() == 302 || $response->getStatus == 301))) {
+                    $this->resetParameters();
+                    $this->setMethod(self::METHOD_GET);
                 }
+
+                // If we got a well formed absolute URI
+                if (Zend_Uri_Http::check($location)) {
+                    $this->setUri($location);
+
+                } else {
+
+                    // Split into path and query and set the query
+                    list($location, $query) = explode('?', $location, 2);
+                    $this->uri->setQueryString($query);
+
+                    // Else, if we got just an absolute path, set it
+                    if(strpos($location, '/') === 0) {
+                        $this->uri->setPath($headerValue);
+
+                        // Else, assume we have a relative path
+                    } else {
+                        // Get the current path directory, removing any trailing slashes
+                        $path = rtrim(dirname($this->uri->getPath()), "/");
+                        $this->uri->setPath($path . '/' . $location);
+                    }
+                }
+                $this->redirectCounter++;
+                
+            } else {
+            	// If we didn't get any location, stop redirecting
+                break;
             }
             
-            $req++;
-            
-        } while ($response->isRedirect() && $req < $this->maxRedirects);
-        
+        } while ($this->redirectCounter < $this->maxRedirects);
+
         return $response;
     }
     

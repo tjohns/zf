@@ -1,9 +1,12 @@
+General
+---------------------------------------------------------
+- Write unit tests
+- Write documentation
+
 Zend_Http_Client
 ---------------------------------------------------------
-- Implement HTTP authentication
-
+- Implement digest HTTP authentication
 - Implement proxy
-
 
 Zend_Http_Cookiejar
 ---------------------------------------------------------

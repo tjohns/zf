@@ -98,14 +98,14 @@ class Zend_Http_Cookie
     public function __construct($name, $value, $domain, $expires = null, $path = null, $secure = false)
     {
         if (preg_match("/[=,; \t\r\n\013\014]/", $name))
-            throw new Zend_Http_Exception("Cookie name cannot contain these characters: =,; \t\r\n\013\014 ({$name})");
+            throw new Zend_Http_Exception("Cookie name cannot contain these characters: =,; \\t\\r\\n\\013\\014 ({$name})");
 
-        if (! $this->name = $name) 
+        if (! $this->name = (string) $name) 
             throw new Zend_Http_Exception('Cookies must have a name');
 
-                if (! $this->domain = $domain)
+        if (! $this->domain = (string) $domain)
             throw new Zend_Http_Exception('Cookies must have a domain');
-            
+
         $this->value = (string) $value;
         $this->expires = (is_null($expires) ? null : (int) $expires);
         $this->path = ($path ? $path : '/');
