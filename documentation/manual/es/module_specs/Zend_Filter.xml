@@ -7,7 +7,7 @@
         for filtering data. For input filtering, you should use <xref
         linkend="zend.filter.input" /> instead, because it provides a framework for
         filtering input using the methods provided by this class. However, because
-        <literal>Zend_InputFilter</literal> is designed primarily for arrays,
+        <literal>Zend_Filter_Input</literal> is designed primarily for arrays,
         <literal>Zend_Filter</literal> can be useful for filtering scalars, because
         it behaves like PHP's string functions:</para>
         <programlisting>

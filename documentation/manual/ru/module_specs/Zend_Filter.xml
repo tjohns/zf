@@ -8,7 +8,7 @@
             методов для фильтрации данных. Для фильтрации входных данных нужно
             использовать <xref linkend="zend.filter.input" />, потому что он предоставляет базовую
             структуру для фильтрации входных данных, используя методы из класса
-            <literal>Zend_Filter</literal>. Но поскольку <literal>Zend_InputFilter</literal>
+            <literal>Zend_Filter</literal>. Но поскольку <literal>Zend_Filter_Input</literal>
             предназначен главным образом для работы с массивами, <literal>Zend_Filter</literal>
             может быть полезен для фильтрации скалярных переменных, так как он
             ведет себя наподобие строковых функций PHP:
@@ -17,7 +17,7 @@
             for filtering data. For input filtering, you should use <xref
             linkend="zend.filter.input" /> instead, because it provides a framework for
             filtering input using the methods provided by this class. However, because
-            <literal>Zend_InputFilter</literal> is designed primarily for arrays,
+            <literal>Zend_Filter_Input</literal> is designed primarily for arrays,
             <literal>Zend_Filter</literal> can be useful for filtering scalars, because
             it behaves like PHP's string functions:
 -->

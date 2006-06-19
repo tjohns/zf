@@ -9,7 +9,7 @@
         入力のフィルタリングには <xref linkend="zend.inputfilter" /> を代わりに使用すべきです。
         なぜなら、これは <literal>Zend_Filter</literal>
         が提供するメソッドを用いて入力をフィルタリングするフレームワークだからです。
-        しかし、<literal>Zend_InputFilter</literal> は主として配列を対象にして設計されているので、
+        しかし、<literal>Zend_Filter_Input</literal> は主として配列を対象にして設計されているので、
         スカラー値をフィルタリングするには <literal>Zend_Filter</literal>
         が便利でしょう。こちらは PHP の文字列関数と同様に扱えます。
         </para>
