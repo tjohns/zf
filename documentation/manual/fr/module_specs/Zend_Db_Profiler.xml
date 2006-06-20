@@ -233,6 +233,35 @@ $profileur->setFilterQueryType(null);
 ?>]]></programlisting>
 
         </sect3>
+        <sect3 id="zend.db.profiler.advanced.getbytype">
+            <title>Récupérer les profils par type de requête</title>
+
+            <para>
+                Utiliser <code>setFilterQueryType()</code> peut réduire les profils
+                générés. Cependant il est parfois utile de garder tous les profils
+                et voit uniquement ceux dont on a besoin, à un moment donné.
+                Une autre possibilité de <code>getQueryProfiles()</code> est qu'il
+                est possible de filtrer à la volée, en passant un type de requête
+                (ou une combinaison logique de types de requête) comme premier
+                argument; voir <xref linkend="zend.db.profiler.advanced.filtertype" />
+                pour une liste des constantes de types de requête.
+            </para>
+
+            <programlisting role="php">
+            <![CDATA[<?php
+// Récupère uniquement les profils des requêtes SELECT
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
+
+// Récupère uniquement les profils des requêtes SELECT, INSERT, et UPDATE
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+
+// Récupère uniquement les profils des requêtes DELETE (on peut donc comprendre pourquoi les données
+// disparaissent)
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
+?>]]>
+            </programlisting>
+
+        </sect3>
 
     </sect2>
 
