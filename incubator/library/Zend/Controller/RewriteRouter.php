@@ -104,6 +104,9 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         /**
          * Find the matching route
          */
+        $controller = 'index';
+        $action = 'noRoute';
+        
         foreach (array_reverse($this->_routes, true) as $route) {
             if ($params = $route->match($path)) {
                 $controller = $params['controller'];
