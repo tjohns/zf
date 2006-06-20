@@ -36,7 +36,7 @@ require_once 'Zend/Controller/Router/Route.php';
 
 /**
  * Ruby routing based Router.
- * 
+ *
  * @package    Zend_Controller
  * @subpackage Router
  * @author     Michael Minicki aka Martel Valgoerad (martel@post.pl)
@@ -46,19 +46,45 @@ require_once 'Zend/Controller/Router/Route.php';
  */
 class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 {
-    
+
+    private $_rewriteBase = '/';
     private $_routes = array();
-    
+    private $_currentRoute = null;
+
     public function __construct()
     {
         // @todo add sane default
-        // $this->addRoute(':controller/:action', array('controller' => 'index', 'action' => 'index'));
+        // $this->addRoute('default', ':controller/:action', array('controller' => 'index', 'action' => 'index'));
     }
-    
-    public function addRoute($map, $params = array(), $reqs = array()) 
+
+    public function addRoute($name, $map, $params = array(), $reqs = array())
     {
-        array_unshift($this->_routes, new Zend_Controller_Router_Route($map, $params, $reqs));
-    } 
+        $this->_routes[$name] = new Zend_Controller_Router_Route($map, $params, $reqs);
+    }
+
+    public function getRoute($name)
+    {
+        if (!isset($this->_routes[$name]))
+            throw new Zend_Controller_Router_Exception("Route $name is not defined");
+        return $this->_routes[$name];
+    }
+
+    public function getCurrentRoute()
+    {
+        if (!isset($this->_currentRoute))
+            throw new Zend_Controller_Router_Exception("Current route is not defined");
+        return $this->_currentRoute;
+    }
+
+    public function setRewriteBase($value)
+    {
+        $this->_rewriteBase = (string) $value;
+    }
+
+    public function getRewriteBase()
+    {
+        return $this->_rewriteBase;
+    }
 
     public function route(Zend_Controller_Dispatcher_Interface $dispatcher)
     {
@@ -69,26 +95,32 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         if (strstr($path, '?')) {
             $path = substr($path, 0, strpos($path, '?'));
         }
-        
+
+        // Remove RewriteBase
+        if (strpos($path, $this->_rewriteBase) === 0) {
+            $path = substr($path, strlen($this->_rewriteBase));
+        }
+
         /**
          * Find the matching route
          */
-        foreach ($this->_routes as $route) {
+        foreach (array_reverse($this->_routes, true) as $route) {
             if ($params = $route->match($path)) {
                 $controller = $params['controller'];
                 $action     = $params['action'];
+                $this->_currentRoute = $route;
                 break;
             }
         }
-        
+
         $actionObj = new Zend_Controller_Dispatcher_Token($controller, $action, $params);
-        
+
         if (!$dispatcher->isDispatchable($actionObj)) {
             throw new Zend_Controller_Router_Exception('Request could not be mapped to a route.');
         } else {
             return $actionObj;
         }
-        
+
     }
-    
+
 }
