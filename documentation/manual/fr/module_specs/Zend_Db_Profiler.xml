@@ -214,7 +214,7 @@ $profileur->setFilterElapsedSecs(null);
             </itemizedlist>
 
             <para>
-                Comment avec <code>setFilterElapsedSecs()</code>, vous pouvez retirer
+                Comme avec <code>setFilterElapsedSecs()</code>, vous pouvez retirer
                 tous les filtres en passant <code>null</code> comme unique argument.
             </para>
 
