@@ -191,4 +191,12 @@ class Zend_Mail_List implements Countable, ArrayAccess, SeekableIterator
         }
         $this->_iterationPos = $pos;
      }
+     
+     /**
+      * fallback for mail reader class methods 
+      */
+     public function __call($method, $params)
+     {
+        return call_user_func_array(array($this->_mailReader, $method), $params);
+     }
 }

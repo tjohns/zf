@@ -135,4 +135,16 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
         
         $this->assertEquals(3, $count);
     }
+    
+    public function testFallback()
+    {
+        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+
+        try {
+            $result = $list->noop();
+            $this->assertTrue($result);
+        } catch (Exception $e) {
+            $this->fail('exception raised while calling noop thru fallback');
+        }       
+    }
 }
