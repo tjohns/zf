@@ -52,8 +52,8 @@
         <sect2 id="zend.filter.input.introduction.whitelist">
             <title>Whitelist Filtern</title>
             <para>
-                Die Methoden für das Whitelist Filtern beginnen mit dem Präfix <literal>is</literal>,
-                wie zum Beispiel <literal>isAlpha()</literal> und <literal>isEmail()</literal>.
+                Die Methoden für das Whitelist Filtern beginnen mit dem Präfix <literal>test</literal>,
+                wie zum Beispiel <literal>testAlpha()</literal> und <literal>testEmail()</literal>.
                 Diese Methoden prüfen die Eingabe gemäß der vordefinierten Kriterien und geben die 
                 Daten nur zurück, wenn sie die Kriterien befolgen. Falls nicht wird 
                 <literal>FALSE</literal> zurückgegeben. Das folgende Beispiel zeigt eine einfache
@@ -64,7 +64,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST);
     
-    if ($alphaName = $filterPost->isAlpha('name')) {
+    if ($alphaName = $filterPost->testAlpha('name')) {
         /* $alphaName enthält nur Buchstaben. */
     } else {
         /* $alphaName evaluiert als FALSE. */
@@ -83,7 +83,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST);
-    $alphaName = $filterPost->isAlpha('name');
+    $alphaName = $filterPost->testAlpha('name');
     
     if ($alphaName !== FALSE) {
         /* $alphaName enthält nur Buchstaben. */
@@ -161,7 +161,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST);
-    $email = $filterPost->isEmail('email');
+    $email = $filterPost->testEmail('email');
     
     ?>]]>
         </programlisting>
@@ -179,7 +179,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST, FALSE);
-    $email = $filterPost->isEmail('email');
+    $email = $filterPost->testEmail('email');
     
     ?>]]>
         </programlisting>
@@ -206,7 +206,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST);
     
-    if ($email = $filterPost->isEmail('email')) {
+    if ($email = $filterPost->testEmail('email')) {
         /* $email ist von einem gültigen E-Mail Format. */
     } else {
         /* $email ist von keinem gültigen E-Mail Format. */
@@ -238,7 +238,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST, FALSE);
     
-    if ($email = $filterPost->isEmail('email')) {
+    if ($email = $filterPost->testEmail('email')) {
         /* $email ist von einem gültigen E-Mail Format. */
     } else {
         /* $email ist von keinem gültigen E-Mail Format. */
