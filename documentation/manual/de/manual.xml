@@ -44,6 +44,7 @@
     <chapter id="zend.db">
         <title>Zend_Db</title>
         &module_specs.Zend_Db_Adapter;
+        &module_specs.Zend_Db_Profiler;
         &module_specs.Zend_Db_Select;
         &module_specs.Zend_Db_Table;
         &module_specs.Zend_Db_Table_Row;
