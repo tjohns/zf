@@ -2,15 +2,15 @@
     <!-- @todo review and revise upon completion of refactoring -->
     <title>Introduction.</title>
     <para>
-    <code>Zend_Pdf</code> est un module entièrement écrit en PHP5 permettant la manipulation de 
-    documents PDF (Portable Document Format). Il peut charger des documents existants, en créer de nouveaux, 
-    les modifier et les sauvegarders. Cela peut aider toute les applications PHP à générer dynamiquement des 
-    documents PDF en modifiant un modèle existant ou en générant un document de zéro. 
+    <code>Zend_Pdf</code> est un module entièrement écrit en PHP5 permettant la manipulation de
+    documents PDF (Portable Document Format). Il peut charger des documents existants, en créer de nouveaux,
+    les modifier et les sauvegarders. Cela peut aider toute les applications PHP à générer dynamiquement des
+    documents PDF en modifiant un modèle existant ou en générant un document de zéro.
     Le module Zend_Pdf supporte les fonctionnalités suivantes :
     <itemizedlist>
         <listitem>
             <para>
-             Créer un nouveau document ou en charger un qui existe déjà. 
+             Créer un nouveau document ou en charger un qui existe déjà.
             <footnote>
                 <para>
                  Les documents aux format PDF V1.4 (Acrobat 5) sont désormais supporté au chargement.
@@ -35,7 +35,7 @@
         </listitem>
         <listitem>
             <para>
-             Dessiner du texte en utilisant une des 16 polices standard.
+             Dessiner du texte en utilisant une des 14 polices standard ou vos propres font TrueType.
             </para>
         </listitem>
         <listitem>
@@ -73,8 +73,8 @@
     </para>
 
     <para>
-     La class <code>Zend_Pdf</code> fournis deux méthodes statiques pour charger un PDF existant. 
-     Ce sont les méthodes <code>Zend_Pdf::load()</code> et <code>Zend_Pdf::parse()</code>. 
+     La class <code>Zend_Pdf</code> fournis deux méthodes statiques pour charger un PDF existant.
+     Ce sont les méthodes <code>Zend_Pdf::load()</code> et <code>Zend_Pdf::parse()</code>.
      Les deux retournent un objet <code>Zend_Pdf</code> ou lance une exception en cas d'erreur.
     </para>
 
@@ -95,12 +95,12 @@ $pdf3 = Zend_Pdf::parse($pdfString);
     </example>
 
     <para>
-    Le format de fichier PDF supporte la mise à jour incrementale d'un document. 
-    Ainsi chaque fois que le document est mis à jour, une nouvelle version du document est crée. 
+    Le format de fichier PDF supporte la mise à jour incrementale d'un document.
+    Ainsi chaque fois que le document est mis à jour, une nouvelle version du document est crée.
     Le module <code>Zend_Pdf</code> supporte la récupération d'une version spécifique.
     </para>
     <para>
-     La version peut-être donné en second paramètre des méthodes <code>Zend_Pdf::load()</code> 
+     La version peut-être donné en second paramètre des méthodes <code>Zend_Pdf::load()</code>
      et <code>Zend_Pdf::parse()</code> ou obligatoire dans le cas d'un appel à <code>Zend_Pdf::rollback()</code>
         <footnote>
             <para>
@@ -138,13 +138,13 @@ $pdf3->rollback($revisions - 1);
     </para>
 
     <para>
-     La méthode <code>Zend_Pdf::save($filename, $updateOnly = false)</code> sauvegarde un document dans un fichier. 
-     Si <code>$updateOnly</code> est à true, alors seul les nouvelles sections PDF sont ajoutées au fichier. 
+     La méthode <code>Zend_Pdf::save($filename, $updateOnly = false)</code> sauvegarde un document dans un fichier.
+     Si <code>$updateOnly</code> est à true, alors seul les nouvelles sections PDF sont ajoutées au fichier.
 	 Sinon le fichier est écrasé.
     </para>
 
     <para>
-     La méthode <code>Zend_Pdf::render($filename, $newSegmentOnly = false)</code> retourne le document PDF dans une chaîne. 
+     La méthode <code>Zend_Pdf::render($filename, $newSegmentOnly = false)</code> retourne le document PDF dans une chaîne.
      Si <code>$newSegmentOnly</code> est à true, alors seul les nouvelles sections du PDF sont retournées.
     </para>
 
@@ -180,40 +180,40 @@ $pdfString = $pdf->render();
     </para>
 
     <para>
-     Une nouvelle page peut-être obtenu en créant un nouvel objet <code>Zend_Pdf_Page</code> ou en appellant la méthode <code>Zend_Pdf::newPage()</code> 
-     qui renvoit un objet <code>Zend_Pdf_Page</code>. La différence est que la méthode <code>Zend_Pdf::newPage()</code> créer une page directement attaché au document. 
+     Une nouvelle page peut-être obtenu en créant un nouvel objet <code>Zend_Pdf_Page</code> ou en appellant la méthode <code>Zend_Pdf::newPage()</code>
+     qui renvoit un objet <code>Zend_Pdf_Page</code>. La différence est que la méthode <code>Zend_Pdf::newPage()</code> créer une page directement attaché au document.
      A la différence des pages non attachées à un document, elle ne peut-être utilisé dans plusieurs documents PDF, mais est un peu plus performante.
-     
+
     <footnote>
         <para>
-        C'est une limitation de la version 1.0 du module Zend_Pdf. Ce sera corrigé dans une future version. 
+        C'est une limitation de la version 1.0 du module Zend_Pdf. Ce sera corrigé dans une future version.
         Mais les pages non attaché à un document donneront toujours de meilleurs résultats pour partager une page entre plusieurs documents.
         </para>
     </footnote>. C'est à vous de choisir quel approche doit-être utilisée.
     </para>
 
     <para>
-     Les méthodes <code>Zend_Pdf::newPage()</code> et <code>Zend_Pdf_Page</code> prennent le même paramètre. 
+     Les méthodes <code>Zend_Pdf::newPage()</code> et <code>Zend_Pdf_Page</code> prennent le même paramètre.
      C'est la taille de la page ($x, $y) en point (1/72 inch soit 0,352778 mm), ou une constante prédéfinis, qui correspond au format du papier :
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_A4</para>
+                <para>Zend_Pdf_Page::SIZE_A4</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_A4_LANDSCAPE</para>
+                <para>Zend_Pdf_Page::SIZE_A4_LANDSCAPE</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_LETTER</para>
+                <para>Zend_Pdf_Page::SIZE_LETTER</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE</para>
+                <para>Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-     Les pages du document pages sont stockés dans l'attribut <code>$pages</code>  de la classe <code>Zend_Pdf</code>. 
-     C'est un tableau d'objet <code>Zend_Pdf_Page</code>. Il définit l'ensemble des pages, ainsi que l'ordre de 
+     Les pages du document pages sont stockés dans l'attribut <code>$pages</code>  de la classe <code>Zend_Pdf</code>.
+     C'est un tableau d'objet <code>Zend_Pdf_Page</code>. Il définit l'ensemble des pages, ainsi que l'ordre de
      celle-ci et peut-être manipulé comme tableau classique :
     </para>
 
@@ -225,9 +225,9 @@ $pdfString = $pdf->render();
 $pdf->pages = array_reverse($pdf->pages);
 ...
 // Ajoute une nouvelle page
-$pdf->pages[] = new Zend_Pad_Page(Zend_Pdf_Const::PAGESIZE_A4);
+$pdf->pages[] = new Zend_Pad_Page(Zend_Pdf_Page::SIZE_A4);
 // Ajoute une nouvelle page
-  $pdf->pages[] = $pdf->newPage(Zend_Pdf_Const::PAGESIZE_A4);
+  $pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 
 // Retire la page spécifié
 unset($pdf->pages[$id]);
@@ -244,7 +244,7 @@ unset($pdf->pages[$id]);
     <sect2 id="zend.pdf.drawing.geometry">
         <title>Geométrie</title>
         <para>
-        Le format PDF utilise la même geométrie que le format PostScript. 
+        Le format PDF utilise la même geométrie que le format PostScript.
         Elle démarre d'en bas à gauche et est mesuré en points (1/72 inch soit 0,352778 mm).
         </para>
         <para>
@@ -261,9 +261,9 @@ $height = $pdfPage->getHeight();]]>
     <sect2 id="zend.pdf.drawing.color">
         <title>Couleurs</title>
         <para>
-         Le format PDF a d'excellentes capacités dans la représantation des couleurs. 
+         Le format PDF a d'excellentes capacités dans la représantation des couleurs.
          Le module <code>Zend_Pdf</code> supporte les espaces de couleur : niveaux de gris, RGB et CMJN.
-         Chacun d'entre eux peut-être utilisé à chauque fois qu'un objet <code>Zend_Pdf_Color</code> est requis. 
+         Chacun d'entre eux peut-être utilisé à chauque fois qu'un objet <code>Zend_Pdf_Color</code> est requis.
          Les classes <code>Zend_Pdf_Color_GrayScale</code>, <code>Zend_Pdf_Color_RGB</code> et <code>Zend_Pdf_Color_CMYK</code> fournissent cette fonctionnalité :
         </para>
         <para>
@@ -308,9 +308,9 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  * Dessine un rectangle.
  *
  * Type de remplissage:
- * Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - remplit le rectangle et dessine le contour (par défaut)
- * Zend_Pdf_Const::SHAPEDRAW_STROKE      - trace uniquement le contour du rectangle
- * Zend_Pdf_Const::SHAPEDRAW_FILL        - remplit le rectangle
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - remplit le rectangle et dessine le contour (par défaut)
+ * Zend_Pdf_Page::SHAPE_DRAW_STROKE      - trace uniquement le contour du rectangle
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL        - remplit le rectangle
  *
  * @param float $x1
  * @param float $y1
@@ -318,7 +318,7 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  * @param float $y2
  * @param integer $fillType
  */
-public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE);]]>
+public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);]]>
             </programlisting>
         </para>
         <para>
@@ -326,7 +326,7 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SH
 /**
  * Dessine un polygone.
  *
- * Si $fillType est Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE ou Zend_Pdf_Const::SHAPEDRAW_FILL,
+ * Si $fillType est Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE ou Zend_Pdf_Page::SHAPE_DRAW_FILL,
  * le polygone est automatiquement fermé.
  * Regardez la description détaillé de ces méthodes dans la
  * documentation du format PDF
@@ -338,8 +338,8 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SH
  * @param integer $fillMethod
  */
 public function drawPolygon($x, $y,
-                            $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
-                            $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING);]]>
+                            $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                            $fillMethod = $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
             </programlisting>
         </para>
         <para>
@@ -401,7 +401,11 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
     <sect2 id="zend.pdf.drawing.text-drawing">
         <title>Dessiner du texte</title>
         <para>
-         Les opérations de dessins existe bien sûr dans le contexte d'une page PDF :
+         Les opérations de dessins existe bien sûr dans le contexte d'une page PDF.
+         Vous pouvez dessiner une seule ligne de texte à n'importe quelle endroit dans la page
+         en fournissant les coordonnées x et y de la ligne de base.
+         La police courant ainsi que sa taille seront utilisées pour le dessin (voir la description
+         ci-dessous).
         </para>
         <para>
             <programlisting role="php"><![CDATA[
@@ -411,44 +415,79 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  * @param string $text
  * @param float $x
  * @param float $y
+ * @param string $charEncoding (optionnel) encodage des caractères du text.
+ * Par défaut la locale courante est utilisée.
  * @throws Zend_Pdf_Exception
  */
-public function drawText($text, $x, $y );]]>
+public function drawText($text, $x, $y, $charEncoding = '');]]>
             </programlisting>
         </para>
+        <example>
+            <title>Dessiner une ligne dans la page</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdfPage->drawText('Bonjour le monde!', 72, 720);
+...
+?>]]>
+            </programlisting>
+        </example>
         <para>
-        La police et la taille de police actuel sont utilisés pour les opérations de dessins de texte. Regardez la description détaillé plus bas.
+        Par défaut, les chaînes de texte sont interprétées en utilisant l'encodage de la locale courante.
+        Si vous avez une chaîne qui utilise un encodage différent (comme les chaînes UTF-8 lues depuis une fichier
+        sur le disque, ou une chaîne MacRoman obtenue depuis une base de données), vous pouvez indiquez
+        l'encodage au moment du dessin et Zend_Pdf gérera la conversion pour vous. Vous pouvez fournir des chaînes
+        dans n'importe quel encodage supporté par la fonction
+        <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code> de PHP:
         </para>
+        <example>
+            <title>Dessiner une chaîne UTF-8 sur une page.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// Lit une chaîne UTF-8 à partir du disque
+$unicodeString = fread($fp, 1024);
+
+// Dessine une chaîne dans la page
+$pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
+...
+?>]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.using-fonts">
         <title>Utiliser des polices de caractères</title>
         <para>
-         La méthode <code>Zend_Pdf_Page::drawText()</code> utilise la police courante, qui peut-être assigné en utilisant la méthode <code>Zend_Pdf_Page::setFont()</code> :
+            <code>Zend_Pdf_Page::drawText()</code> utilise la police courante ainsi que sa taille, qui sont définies avec la méthode
+            <code>Zend_Pdf_Page::setFont()</code> :
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
  * Choisis la police courante.
  *
- * @param Zend_Pdf_Font $font
+ * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
-public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
+public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
             </programlisting>
         </para>
         <para>
-         Le format PDF supportes les polices Type1, TrueType, Type3 et composite. 
-         Il y a 14 polices Type1 fournis par le format PDF. Le module Zend_Pdf permet uniquement d'utiliser ces polices pour le moment. 
-         Elle peuvent être obtenu en utilisant la classe <code>Zend_Pdf_Font_Standard</code>. 
-         La police est obtenu en la passant en argument au constructeur :
+            Les documents PDF supportent PostScript Type 1 et les polices TrueType, mais également deux types
+            spécifiques PDF, Type3 et les polices composites. Il y a aussi 14 polices Type 1 standard intégré
+            dans tout lecteur de PDF : Courier (4 styles), Helvetica (4 styles), Times (4 styles), Symbol, et Zapf Dingbats.
+        </para>
+        <para>
+            Zend_Pdf supporte actuellement les 14 polices standard mais également vos propres police TrueType.
+            Les objets de police obtenu via une des deux factory methods : <code>Zend_Pdf_Font::fontWithName($fontName)</code>
+            pour les 14 polices PDF standard ou <code>Zend_Pdf_Font::fontWithPath($filePath)</code> pour les polices
+            personnalisées.
         </para>
         <example>
             <title>Créer une police standard</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 // Crée une nouvelle police
-$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
+$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Font::FONT_HELVETICA);
 
 // Applique la police
 $pdfPage->setFont($font, 36);
@@ -457,52 +496,153 @@ $pdfPage->setFont($font, 36);
             </programlisting>
         </example>
         <para>
-         Des constantes pour les 14 polices standard sont définis dans la classe <code>Zend_Pdf_Const</code> :
+         Les constantes pour les 14 polices standard sont définis dans la classe <code>Zend_Pdf_Font</code> :
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_ROMAN</para>
+                <para>Zend_Pdf_Font::FONT_COURIER</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_BOLD</para>
+                <para>Zend_Pdf_Font::FONT_COURIER_BOLD</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_ITALIC</para>
+                <para>Zend_Pdf_Font::FONT_COURIER_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_BOLDITALIC</para>
+                <para>Zend_Pdf_Font::FONT_COURIER_BOLD_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA</para>
+                <para>Zend_Pdf_Font::FONT_TIMES</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA_BOLD</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_BOLD</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA_ITALIC</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA_BOLDITALIC</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_BOLD_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER_BOLD</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA_BOLD</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER_ITALIC</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER_BOLDITALIC</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA_BOLD_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_SYMBOL</para>
+                <para>Zend_Pdf_Font::FONT_SYMBOL</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_ZAPFDINGBATS</para>
+                <para>Zend_Pdf_Font::FONT_ZAPFDINGBATS</para>
             </listitem>
         </itemizedlist>
         </para>
+        <para>
+        You can also use any individual TrueType font (which usually has a '.ttf' extension) or an
+        OpenType font ('.otf' extension) if it contains TrueType outlines. Currently unsupported,
+        but planned for a future release are Mac OS X .dfont files and Microsoft TrueType Collection
+        ('.ttc' extension) files.
+        </para>
+        <para>
+        To use a TrueType font, you must provide the full file path to the font program. If the font
+        cannot be read for some reason, or if it is not a TrueType font, the factory method will throw
+        an exception:
+        </para>
+        <example>
+            <title>Create a TrueType font.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// Create new font
+$goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF');
+
+// Apply font
+$pdfPage->setFont($goodDogCoolFont, 36);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+        By default, custom fonts will be embedded in the resulting PDF document. This allows recipients
+        to view the page as intended, even if they don't have the proper fonts installed on their system.
+        If you are concerned about file size, you can request that the font program not be embedded by
+        passing a 'do not embed' option to the factory method:
+        </para>
+        <example>
+            <title>Create a TrueType font, but do not embed it in the PDF document.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// Create new font
+$goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF',
+                                               Zend_Pdf_Font::EMBED_DONT_EMBED);
+
+// Apply font
+$pdfPage->setFont($goodDogCoolFont, 36);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+        If the font program is not embedded but the recipient of the PDF file has the font installed on
+        their system, they will see the document as intended. If they do not have the correct font
+        installed, the PDF viewer application will do its best to synthesize a replacement.
+        </para>
+        <para>
+        Some fonts have very specific licensing rules which prevent them from being embedded in PDF
+        documents. So you are not caught off-guard by this, if you try to use a font that cannot be
+        embedded, the factory method will throw an exception.
+        </para>
+        <para>
+        You can still use these fonts, but you must either pass the do not embed flag as described above,
+        or you can simply suppress the exception:
+        </para>
+        <example>
+            <title>Do not throw an exception for fonts that cannot be embeded.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
+                                    Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+        This suppression technique is preferred if you allow an end-user to choose their own fonts. Fonts
+        which can be embedded in the PDF document will be; those that cannot, won't.
+        </para>
+        <para>
+        Font programs can be rather large, some reaching into the tens of megabytes. By default, all embedded
+        fonts are compressed using the Flate compression scheme, resulting in a space savings of 50% on average.
+        If, for some reason, you do not want to compress the font program, you can disable it with an option:
+        </para>
+        <example>
+            <title>Do not compress an embedded font.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
+                                    Zend_Pdf_Font::EMBED_DONT_COMPRESS);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+        Finally, when necessary, you can combine the embedding options by using the bitwise OR operator:
+        </para>
+        <example>
+            <title>Combining font embedding options.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
+                                    (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
+                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS));
+...
+?>]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.image-drawing">
@@ -553,7 +693,7 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);;
     <sect2 id="zend.pdf.drawing.line-drawing-style">
         <title>Style de lignes</title>
         <para>
-         Le style de ligne est définit par l'épaisseur, la couleur et le style de tiret. 
+         Le style de ligne est définit par l'épaisseur, la couleur et le style de tiret.
          Tout ces paramètres peuvent être assigné par les méthodes de la classe <code>Zend_Pdf_Page</code> :
         </para>
         <para>
@@ -581,20 +721,20 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
     <sect2 id="zend.pdf.drawing.fill-style">
         <title>Style de remplissage</title>
         <para>
-         Les méthodes <code>Zend_Pdf_Page::drawRectangle()</code>, <code>Zend_Pdf_Page::drawPoligon()</code>, 
-         <code>Zend_Pdf_Page::drawCircle()</code> et <code>Zend_Pdf_Page::drawEllipse()</code> prennent en argument optionel le type de 
+         Les méthodes <code>Zend_Pdf_Page::drawRectangle()</code>, <code>Zend_Pdf_Page::drawPoligon()</code>,
+         <code>Zend_Pdf_Page::drawCircle()</code> et <code>Zend_Pdf_Page::drawEllipse()</code> prennent en argument optionel le type de
          remplissage: <code>$fillType</code>. Il peut-être :
         </para>
 
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_STROKE - trace le contour de la forme</para>
+                <para>Zend_Pdf_Page::SHAPE_DRAW_STROKE - trace le contour de la forme</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_FILL - remplit la forme</para>
+                <para>Zend_Pdf_Page::SHAPE_DRAW_FILL - remplit la forme</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - remplissage et contour (par défaut)</para>
+                <para>Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - remplissage et contour (par défaut)</para>
             </listitem>
         </itemizedlist>
 
@@ -603,7 +743,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
         </para>
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING (par défaut)</para>
+                <para>$fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING (par défaut)</para>
                 <para>
                  La <citetitle>référence du format PDF</citetitle> descrit la règle comme ceci :
                 <blockquote>
@@ -634,7 +774,7 @@ according to the rule; the "doughnut hole" is outside.
             </para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FILLMETHOD_EVENODD</para>
+                <para>Zend_Pdf_Page::FILL_METHOD_EVEN_ODD</para>
                 <para>
                 La <citetitle>référence du format PDF</citetitle> descrit la règle comme ceci :
                 <blockquote>
@@ -677,8 +817,8 @@ public function rotate($x, $y, $angle);]]>
     <sect2 id="zend.pdf.drawing.save-restore">
         <title>Sauvegarder et restaurer l'état graphique.</title>
         <para>
-         L'état graphique (police courante, taille de caractère, couleur de ligne, couleur de remplissage, style de ligne, sens de la page, zone de dessin) 
-         peut-être sauvegarder à tout moment. L'opération de sauvegarde empile le contexte dans une pile de contexte graphique, l'opération de restauration 
+         L'état graphique (police courante, taille de caractère, couleur de ligne, couleur de remplissage, style de ligne, sens de la page, zone de dessin)
+         peut-être sauvegarder à tout moment. L'opération de sauvegarde empile le contexte dans une pile de contexte graphique, l'opération de restauration
          récupère le contexte depuis la pile.
         </para>
         <para>
@@ -704,7 +844,7 @@ public function restoreGS();]]>
     <sect2 id="zend.pdf.drawing.clipping">
         <title>Zone de dessins</title>
         <para>
-         Le format PDF et le module Zend_Pdf supporte le découpage de la zone de dessin. 
+         Le format PDF et le module Zend_Pdf supporte le découpage de la zone de dessin.
          La zone de dessins courante limite la zone de la page affecté par l'utilisation des opérateurs de dessins.
          Initialement c'est toute la page.
         </para>
@@ -733,7 +873,7 @@ public function clipRectangle($x1, $y1, $x2, $y2);]]>
  * @param array $y  - tableau de float (les coordonnées Y des sommets)
  * @param integer $fillMethod
  */
-public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING);]]>
+public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
             </programlisting>
         </para>
         <para>
@@ -899,9 +1039,10 @@ public function getFillColor();]]>
  * Choisis la police.
  *
  * @param Zend_Pdf_Font $font
+ * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
-public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
+public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
             </programlisting>
         </para>
         <para>
@@ -917,9 +1058,9 @@ public function setFontSize($fontSize);]]>
         <para>
             <programlisting role="php"><![CDATA[
 /**
- * Récupère la police.
+ * Récupère la police courante
  *
- * @return Zend_Pdf_Font $font
+ * @return Zend_Pdf_Resource_Font $font
  */
 public function getFont();]]>
             </programlisting>
@@ -983,7 +1124,7 @@ $style->setFillColor(new Zend_Pdf_Color_RGB(0, 0, 0.9));
 $style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
 $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-$style->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA_BOLD), 32);
+$style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32)
 
 // Crée un nouveau objet image
 $stampImage = new Zend_Pdf_Image_JPEG(dirname(__FILE__) . '/stamp.jpg');
@@ -1007,10 +1148,10 @@ foreach ($pdf->pages as $page){
 $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 
 // Ajoute une nouvelle page généré par l'objet Zend_Pdf (la page n'est pas attaché au document)
-$pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE));
+$pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
 
 // Crée une nouvelle police
-$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
+$font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // Applique la police et dessine du texte
 $page1->setFont($font, 36);
@@ -1021,7 +1162,7 @@ $page2->setFont($font, 24);
 $page2->drawText('Helvetica 24 text string', 60, 500);
 
 // Utilise une autre police
-$page2->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_TIMES_ROMAN), 32);
+$page2->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES_ROMAN), 32);
 $page2->drawText('Times-Roman 32 text string', 60, 450);
 
 // Dessine un rectangle
@@ -1031,7 +1172,7 @@ $page2->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $page2->drawRectangle(60, 400, 400, 350);
 
 // Dessine un cercle
-$page2->setLineDashingPattern(Zend_Pdf_Const::LINEDASHING_SOLID);
+$page2->setLineDashingPattern(Zend_Pdf_Page::LINE_DASHING_SOLID);
 $page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 0));
 $page2->drawCircle(85, 375, 25);
 
@@ -1059,8 +1200,8 @@ for ($count = 0; $count < 8; $count++) {
     $y[] = 375 + 25*sin(3*M_PI_4*$count);
 }
 $page2->drawPolygon($x, $y,
-                    Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
-                    Zend_Pdf_Const::FILLMETHOD_EVENODD);
+                    Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                    Zend_Pdf_Page::FILL_METHOD_EVEN_ODD);
 
 // Dessine une ligne
 $page2->setLineWidth(0.5);
