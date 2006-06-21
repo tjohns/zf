@@ -20,7 +20,7 @@ if (is_readable('TestConfiguration.php')) {
  * helps prevent finding other copies of the framework that might be present.
  */
 set_include_path(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'
-                 . PATH_SEPARATOR . get_include_path());
+                 . PATH_SEPARATOR . '.' . PATH_SEPARATOR . get_include_path());
 
 require_once 'ZendTest.php';
 require_once 'Zend/AllTests.php';
