@@ -14,8 +14,8 @@ class Zend_Mime_B64Filter extends php_user_filter {
     const MODE_ENCODE = 1;
     const MODE_DECODE = 2;
     protected $mode = null;
-    protected $backlog = "";
-    protected $lastline = "";
+    protected $backlog = '';
+    protected $lastline = '';
 
     function filter($in, $out, &$consumed, $closing)
     {
@@ -27,10 +27,10 @@ class Zend_Mime_B64Filter extends php_user_filter {
                     // have a length that can be divided by 3
                     $trailing = (strlen($this->backlog) . $bucket->datalen) % 3;
                     // cut the trailing characters to that the
-                    // remainder is dividable by 3 if it is not.
+                    // remainder is divisible by 3 if it is not.
                     if ($trailing > 0) {
                         $backlog = substr($bucket->data, (0 - $trailing));
-                        $chunk = substr($bucket->data,0, (0 - $trailing));
+                        $chunk = substr($bucket->data, 0, (0 - $trailing));
                     } else {
                         $backlog = '';
                         $chunk = $bucket->data;
@@ -85,7 +85,7 @@ class Zend_Mime_B64Filter extends php_user_filter {
     function onCreate()
     {
         if (strpos($this->filtername, 'encode')) {
-            $this->mode= self::MODE_ENCODE;
+            $this->mode = self::MODE_ENCODE;
         } else {
             $this->mode = self::MODE_DECODE;
         }
