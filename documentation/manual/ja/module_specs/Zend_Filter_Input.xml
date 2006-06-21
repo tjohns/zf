@@ -59,9 +59,9 @@
         <sect2 id="zend.filter.input.introduction.whitelist">
             <title>ホワイトリストフィルタリング</title>
             <para>
-            ホワイトリスト方式のフィルタリングメソッドは <literal>is</literal>
-            で始まります。例えば <literal>isAlpha()</literal> や
-            <literal>isEmail()</literal> などです。これらのメソッドは、
+            ホワイトリスト方式のフィルタリングメソッドは <literal>test</literal>
+            で始まります。例えば <literal>testAlpha()</literal> や
+            <literal>testEmail()</literal> などです。これらのメソッドは、
             事前に定義された条件にそって入力内容を調べ、
             条件を満たすデータのみを返します。条件を満たさない場合は
             <literal>FALSE</literal> が返されます。簡単な例を以下に示します。
@@ -71,7 +71,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST);
     
-    if ($alphaName = $filterPost->isAlpha('name')) {
+    if ($alphaName = $filterPost->testAlpha('name')) {
         /* $alphaName には英字しか含まれません。 */
     } else {
         /* $alphaName は FALSE と評価されました。*/
@@ -89,7 +89,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST);
-    $alphaName = $filterPost->isAlpha('name');
+    $alphaName = $filterPost->testAlpha('name');
     
     if ($alphaName !== FALSE) {
         /* $alphaName には英字しか含まれません。 */
@@ -172,7 +172,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST);
-    $email = $filterPost->isEmail('email');
+    $email = $filterPost->testEmail('email');
     
     ?>]]>
         </programlisting>
@@ -191,7 +191,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST, FALSE);
-    $email = $filterPost->isEmail('email');
+    $email = $filterPost->testEmail('email');
     
     ?>]]>
         </programlisting>
@@ -220,7 +220,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST);
     
-    if ($email = $filterPost->isEmail('email')) {
+    if ($email = $filterPost->testEmail('email')) {
         /* $email は email 形式として有効です。 */
     } else {
         /* $email は email 形式ではありません。 */
@@ -252,7 +252,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST, FALSE);
     
-    if ($email = $filterPost->isEmail('email')) {
+    if ($email = $filterPost->testEmail('email')) {
         /* $email は email 形式として有効です。 */
     } else {
         /* $email は email 形式ではありません。 */
