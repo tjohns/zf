@@ -3,14 +3,14 @@
  * PHP Stream Filter to encode and decode streams with Base64-encoding
  *
  * usage:
- *  Zend::loadClass('Zend_Mime_B54Filter');
- *  stream_filter_register("base64.*", "Zend_Mime_B64Filter"))
- *  stream_filter_append($fp, "base64.encode",STREAM_FILTER_READ);
- *or  stream_filter_append($fp, "base64.decode",STREAM_FILTER_READ);
- *
+ *  Zend::loadClass('Zend_Mime_B64Filter');
+ *  stream_filter_register('base64.*', 'Zend_Mime_B64Filter');
+ *  stream_filter_append($fp, 'base64.encode', STREAM_FILTER_READ);
+ * or
+ *  stream_filter_append($fp, 'base64.decode', STREAM_FILTER_READ);
  */
-class Zend_Mime_B64Filter extends php_user_filter {
-
+class Zend_Mime_B64Filter extends php_user_filter
+{
     const MODE_ENCODE = 1;
     const MODE_DECODE = 2;
     protected $mode = null;
