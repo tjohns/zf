@@ -53,8 +53,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 
     public function __construct()
     {
-        // @todo add sane default
-        // $this->addRoute('default', ':controller/:action', array('controller' => 'index', 'action' => 'index'));
+        $this->addRoute('default', ':controller/:action', array('controller' => 'index', 'action' => 'index'));
     }
 
     public function addRoute($name, $map, $params = array(), $reqs = array())
@@ -107,7 +106,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         $controller = 'index';
         $action = 'noRoute';
         
-        foreach (array_reverse($this->_routes, true) as $route) {
+        foreach (array_reverse($this->_routes) as $route) {
             if ($params = $route->match($path)) {
                 $controller = $params['controller'];
                 $action     = $params['action'];

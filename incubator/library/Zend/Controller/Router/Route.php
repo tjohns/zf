@@ -70,18 +70,22 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
         $path = explode('/', trim($path,'/'));
 
-        foreach ($this->_parts as $pos => $part) {
+        foreach ($path as $pos => $pathPart) {
+
+            if (!isset($this->_parts[$pos])) return false;
+            
+            $part = $this->_parts[$pos];
 
             $name = isset($part['name']) ? $part['name'] : null;
             $regex = self::REGEX_DELIMITER . '^'.$part['regex'].'$' . self::REGEX_DELIMITER . 'i';
 
-            if (!empty($path[$pos]) && preg_match($regex, $path[$pos])) {
+            if (preg_match($regex, $pathPart)) {
 
                 if ($name !== null) {
-                    $values[$name] = $path[$pos];
+                    $values[$name] = $pathPart;
                 }
 
-            } elseif ($name !== null && isset($this->_defaults[$name])) {
+            } elseif ($name !== null && array_key_exists($name, $this->_defaults)) {
                 continue;
             } else return false;
 
