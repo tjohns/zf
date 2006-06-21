@@ -206,6 +206,34 @@ $profiler->setFilterQueryType(null);
 
         </sect3>
 
+        <sect3 id="zend.db.profiler.advanced.getbytype">
+            <title>クエリの型を指定することによる情報の取得</title>
+
+            <para>
+                <code>setFilterQueryType()</code> を使用すると、生成される情報を減らすことができます。
+                すべての情報を保持しておくほうがよい場合もありますが、
+                普通はそのときに必要な情報のみが見られればよいでしょう。
+                <code>getQueryProfiles()</code> のもうひとつの機能として、
+                最初の引数にクエリの型 (あるいは複数の型の論理和)
+                を指定することによるその場での絞り込みが可能です。
+                クエリの型を表す定数については <xref linkend="zend.db.profiler.advanced.filtertype" /> 
+                を参照ください。
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// SELECT クエリの情報のみを取得します
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
+
+// SELECT、INSERT そして UPDATE クエリの情報のみを取得します
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+
+// DELETE クエリの情報を取得します (データがなぜ削除されたのかを
+// 知ることができます)
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
+?>]]></programlisting>
+
+        </sect3>
+
     </sect2>
 
 </sect1>

@@ -38,7 +38,8 @@
         </listitem>
         <listitem>
             <para>
-            14 種類の標準フォントのうちのいずれかを使用したテキストの描画
+            14 種類の標準 (組み込み) フォントのうちのいずれか、あるいはあなたが用意した
+            TrueType フォントを使用したテキストの描画
             </para>
         </listitem>
         <listitem>
@@ -222,16 +223,16 @@ $pdfString = $pdf->render();
     以下の定数が定義されています。
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_A4</para>
+                <para>Zend_Pdf_Page::SIZE_A4</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_A4_LANDSCAPE</para>
+                <para>Zend_Pdf_Page::SIZE_A4_LANDSCAPE</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_LETTER</para>
+                <para>Zend_Pdf_Page::SIZE_LETTER</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE</para>
+                <para>Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE</para>
             </listitem>
         </itemizedlist>
     </para>
@@ -251,9 +252,9 @@ $pdfString = $pdf->render();
 $pdf->pages = array_reverse($pdf->pages);
 ...
 // 新しいページを追加します。
-$pdf->pages[] = new Zend_Pad_Page(Zend_Pdf_Const::PAGESIZE_A4);
+$pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
 // 新しいページを追加します。
-$pdf->pages[] = $pdf->newPage(Zend_Pdf_Const::PAGESIZE_A4);
+$pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 
 // 指定したページを削除します。
 unset($pdf->pages[$id]);
@@ -336,9 +337,9 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  * 矩形を描画します。
  *
  * 描画方法
- * Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - 輪郭を描画して塗りつぶします (デフォルト)
- * Zend_Pdf_Const::SHAPEDRAW_STROKE      - 輪郭を描画します
- * Zend_Pdf_Const::SHAPEDRAW_FILL        - 矩形を塗りつぶします
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - 輪郭を描画して塗りつぶします (デフォルト)
+ * Zend_Pdf_Page::SHAPE_DRAW_STROKE      - 輪郭を描画します
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL        - 矩形を塗りつぶします
  *
  * @param float $x1
  * @param float $y1
@@ -346,7 +347,7 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  * @param float $y2
  * @param integer $fillType
  */
-public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE);]]>
+public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);]]>
             </programlisting>
         </para>
         <para>
@@ -354,7 +355,7 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SH
 /**
  * 多角形を描画します。
  *
- * $fillType が Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE あるいは Zend_Pdf_Const::SHAPEDRAW_FILL
+ * $fillType が Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE あるいは Zend_Pdf_Page::SHAPE_DRAW_FILL
  * の場合、多角形は自動的に閉じられます。このメソッドについての詳細は、
  * PDF のドキュメント (section 4.4.2 Path painting Operators, Filling)
  * を参照ください。
@@ -365,8 +366,8 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SH
  * @param integer $fillMethod
  */
 public function drawPolygon($x, $y,
-                            $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
-                            $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING);]]>
+                            $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                            $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
             </programlisting>
         </para>
         <para>
@@ -429,6 +430,10 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
         <title>テキストの描画</title>
         <para>
         テキストに対する描画操作も、PDF のページに対して行われます。
+        ベースラインの x 座標および y 座標を指定することで、
+        ページ内の任意の場所にテキストを 1 行描画することができます。
+        現在のフォントおよびフォントサイズを使用して、描画操作が行われます
+        (詳細は、以下を参照ください)。
         </para>
         <para>
             <programlisting role="php"><![CDATA[
@@ -438,22 +443,52 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  * @param string $text
  * @param float $x
  * @param float $y
+ * @param string $charEncoding (オプション) ソーステキストの文字エンコーディング。
+ *   デフォルトは現在のロケールです。
  * @throws Zend_Pdf_Exception
  */
-public function drawText($text, $x, $y );]]>
+public function drawText($text, $x, $y, $charEncoding = '');]]>
             </programlisting>
         </para>
+        <example>
+            <title>ページ上への文字列の描画</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdfPage->drawText('Hello world!', 72, 720);
+...
+?>]]>
+            </programlisting>
+        </example>
         <para>
-        現在設定されているフォントおよびサイズを使用して描画されます。
-        以下の詳細な説明を参照ください。
+        デフォルトでは、現在のロケールのエンコーディングによって
+        テキストの文字列が解釈されます。異なるエンコーディングを使用している場合
+        (例えば、ディスク上のファイルから UTF-8 の文字列を読み込んだり
+        レガシーなデータベースから MacRoman の文字列を取得したりなど) は、
+        描画の際に文字エンコーディングを指定することができます。
+        そうすることで、Zend_Pdf が変換処理を行います。PHP の
+        <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code>
+        関数がサポートしているエンコーディングなら、すべて入力として使用することが可能です。
         </para>
+        <example>
+            <title>UTF-8 でエンコードされた文字列をページに描画する</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// UTF-8 エンコードされた文字列をディスクから読み込みます
+$unicodeString = fread($fp, 1024);
+
+// 文字列をページ上に描画します
+$pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
+...
+?>]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.using-fonts">
         <title>フォントの使用</title>
         <para>
-        <code>Zend_Pdf_Page::drawText()</code> メソッドは、
-        現在設定されているフォントを使用します。
+        <code>Zend_Pdf_Page::drawText()</code> は、
+        現在設定されているフォントおよびフォントサイズを使用します。
         これは <code>Zend_Pdf_Page::setFont()</code> メソッドで設定できます。
         </para>
         <para>
@@ -461,25 +496,32 @@ public function drawText($text, $x, $y );]]>
 /**
  * 現在のフォントを設定します。
  *
- * @param Zend_Pdf_Font $font
+ * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
 public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
             </programlisting>
         </para>
         <para>
-        PDF は Type1、TrueType、Type3 および複合フォントをサポートしています。
-        PDF には標準で 14 種類の Type1 フォントが提供されています。
-        現在は、Zend_Pdf モジュールではこれらの標準フォントしかサポートしていません。
-        <code>Zend_Pdf_Font_Standard</code> クラスを使用してこれらのフォントを取得します。
-        コンストラクタの引数で、実際のフォントを指定します。
+        PDF ドキュメントは、PostScript Type 1 フォントおよび TrueType フォントだけでなく、
+        PDF 用の特別な形式である Type 3 フォントや複合フォントもサポートしています。
+        すべての PDF ビューアには、以下の 14 種類の標準 Type 1 フォントが組み込まれています。
+        その内容は Courier (4 種類)、Helvetica (4 種類)、Times (4 種類)、Symbol
+        そして Zapf Dingbats です。
+        </para>
+        <para>
+        現在 Zend_Pdf は、標準の 14 種類の PDF フォントだけでなく
+        独自の TrueType フォントもサポートしています。フォントオブジェクトを取得するには、
+        2 種類のファクトリーメソッドのいずれかを使用します。使用するメソッドは、
+        標準の 14 種類の PDF フォントの場合は <code>Zend_Pdf_Font::fontWithName($fontName)</code>、
+        独自のフォントの場合は <code>Zend_Pdf_Font::fontWithPath($filePath)</code> です。
         </para>
         <example>
             <title>標準フォントの作成</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 // 新しいフォントを作成します。
-$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
+$font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // フォントを適用します。
 $pdfPage->setFont($font, 36);
@@ -488,52 +530,155 @@ $pdfPage->setFont($font, 36);
             </programlisting>
         </example>
         <para>
-        14 種類の標準フォントは、<code>Zend_Pdf_Const</code> クラスで定義されています。
+        14 種類の標準フォント名を表す定数は、<code>Zend_Pdf_Font</code> クラスで定義されています。
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_ROMAN</para>
+                <para>Zend_Pdf_Font::FONT_COURIER</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_BOLD</para>
+                <para>Zend_Pdf_Font::FONT_COURIER_BOLD</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_ITALIC</para>
+                <para>Zend_Pdf_Font::FONT_COURIER_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_BOLDITALIC</para>
+                <para>Zend_Pdf_Font::FONT_COURIER_BOLD_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA</para>
+                <para>Zend_Pdf_Font::FONT_TIMES</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA_BOLD</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_BOLD</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA_ITALIC</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA_BOLDITALIC</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_BOLD_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER_BOLD</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA_BOLD</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER_ITALIC</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER_BOLDITALIC</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA_BOLD_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_SYMBOL</para>
+                <para>Zend_Pdf_Font::FONT_SYMBOL</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_ZAPFDINGBATS</para>
+                <para>Zend_Pdf_Font::FONT_ZAPFDINGBATS</para>
             </listitem>
         </itemizedlist>
         </para>
+        <para>
+        任意の TrueType フォント (通常は '.ttf' という拡張子です) も使用できますし、
+        TrueType アウトラインを含む OpenType フォント (拡張子は '.otf')
+        を使用することも可能です。現在はまだサポートしていませんが、将来は
+        Mac OS X の .dfont ファイルや Microsoft TrueType Collection
+        (拡張子 '.ttc') ファイルもサポートする予定です。
+        </para>
+        <para>
+        TrueType フォントを使用するには、フォントへのフルパスを指定しなければなりません。
+        何らかの理由でフォントが読み込めなかった場合、あるいはそれが TrueType
+        フォントでなかった場合は、ファクトリーメソッドが例外をスローします。
+        </para>
+        <example>
+            <title>TrueType フォントの作成</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// 新しいフォントを作成します
+$goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF');
+
+// フォントを適用します
+$pdfPage->setFont($goodDogCoolFont, 36);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+        デフォルトでは、独自のフォントは PDF ドキュメントに埋め込まれます。
+        そのため、閲覧者のシステムにそのフォントがインストールされていなくても、
+        ページをきちんと閲覧できるようになります。ファイルの大きさが気になる場合は、
+        ファクトリーメソッドのオプションで「フォントを埋め込まない」ことを指定することができます。
+        </para>
+        <example>
+            <title>TrueType を作成するが、PDF ドキュメントには埋め込まない</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// 新しいフォントを作成します
+$goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF',
+                                               Zend_Pdf_Font::EMBED_DONT_EMBED);
+
+// フォントを適用します
+$pdfPage->setFont($goodDogCoolFont, 36);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+        PDF ファイルにフォントが埋め込まれていないけれども
+        閲覧者のシステムにはそのフォントがインストールされている場合は、ドキュメントは通常通りに閲覧できます。
+        もし適切なフォントがインストールされていないは、PDF 閲覧アプリケーションが適切な代替フォントを選択します。
+        </para>
+        <para>
+        中には、PDF ドキュメントへの埋め込みを禁止するようなライセンスを使用しているフォントもあります。
+        これをあなどってはいけません。もし埋め込めないフォントを利用しようとすると、
+        ファクトリーメソッドは例外をスローします。
+        </para>
+        <para>
+        このようなフォントを使用することも可能ですが、そのためには、
+        上で説明した「埋め込まない」フラグを使用するか、あるいは例外を抑制しなければなりません。
+        </para>
+        <example>
+            <title>埋め込みが禁止されているフォントで、例外をスローさせないようにする</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
+                                    Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+        利用者にフォントを選択させる場合などは、この抑制方法を使用することをお勧めします。
+        PDF ドキュメントに埋め込めるフォントなら埋め込むでしょうし、
+        埋め込めないフォントは埋め込まないでしょう。
+        </para>
+        <para>
+        フォントのサイズは比較的大きく、中には 10 メガバイトに達するものもあります。
+        デフォルトでは埋め込みフォントは Flate 圧縮され、平均して 50% ほどサイズを節約できます。
+        何らかの理由でフォントを圧縮したくない場合は、以下のオプションで圧縮を無効にすることができます。
+        </para>
+        <example>
+            <title>埋め込みフォントを圧縮しない</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
+                                    Zend_Pdf_Font::EMBED_DONT_COMPRESS);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+        最後に、必要に応じていくつかの埋め込みオプションをビット OR 演算子で連結することもできます。
+        </para>
+        <example>
+            <title>フォントの埋め込みオプションを組み合わせる</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
+                                    (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
+                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS));
+...
+?>]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.image-drawing">
@@ -632,13 +777,13 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
 
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_STROKE - 図形の輪郭を描画します</para>
+                <para>Zend_Pdf_Page::SHAPE_DRAW_STROKE - 図形の輪郭を描画します</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_FILL - 図形を塗りつぶすだけです</para>
+                <para>Zend_Pdf_Page::SHAPE_DRAW_FILL - 図形を塗りつぶすだけです</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - 輪郭を描画し、塗りつぶします (デフォルトの挙動です)</para>
+                <para>Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - 輪郭を描画し、塗りつぶします (デフォルトの挙動です)</para>
             </listitem>
         </itemizedlist>
 
@@ -648,7 +793,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
         </para>
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING (デフォルトの挙動)</para>
+                <para>Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING (デフォルトの挙動)</para>
                 <para>
                 <citetitle>PDF リファレンス</citetitle> によると、これは以下のように定義されています。
                 <blockquote>
@@ -782,7 +927,7 @@ public function clipRectangle($x1, $y1, $x2, $y2);]]>
  * @param array $y  - float の配列 (頂点の Y 座標)
  * @param integer $fillMethod
  */
-public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING);]]>
+public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
             </programlisting>
         </para>
         <para>
@@ -949,10 +1094,10 @@ public function getFillColor();]]>
 /**
  * 現在のフォントを設定します。
  *
- * @param Zend_Pdf_Font $font
+ * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
-public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
+public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
             </programlisting>
         </para>
         <para>
@@ -970,7 +1115,7 @@ public function setFontSize($fontSize);]]>
 /**
  * 現在のフォントを取得します。
  *
- * @return Zend_Pdf_Font $font
+ * @return Zend_Pdf_Resource_Font $font
  */
 public function getFont();]]>
             </programlisting>
@@ -1035,7 +1180,7 @@ $style->setFillColor(new Zend_Pdf_Color_RGB(0, 0, 0.9));
 $style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
 $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-$style->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA_BOLD), 32);
+$style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
 
 // 新しい画像オブジェクトを作成します。
 $stampImage = Zend_Pdf_ImageFactory::factory(dirname(__FILE__) . '/stamp.jpg');
@@ -1064,7 +1209,7 @@ $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 $pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE));
 
 // 新しいフォントを作成します。
-$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
+$font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // フォントを適用してテキストを描画します。
 $page1->setFont($font, 36);
@@ -1075,7 +1220,7 @@ $page2->setFont($font, 24);
 $page2->drawText('Helvetica 24 text string', 60, 500);
 
 // 別のフォントを使用します。
-$page2->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_TIMES_ROMAN), 32);
+$page2->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_TIMES_ROMAN), 32);
 $page2->drawText('Times-Roman 32 text string', 60, 450);
 
 // 矩形を描画します。
@@ -1085,7 +1230,7 @@ $page2->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $page2->drawRectangle(60, 400, 400, 350);
 
 // 円を描画します。
-$page2->setLineDashingPattern(Zend_Pdf_Const::LINEDASHING_SOLID);
+$page2->setLineDashingPattern(Zend_Pdf_Page::LINE_DASHING_SOLID);
 $page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 0));
 $page2->drawCircle(85, 375, 25);
 
@@ -1113,8 +1258,8 @@ for ($count = 0; $count < 8; $count++) {
     $y[] = 375 + 25*sin(3*M_PI_4*$count);
 }
 $page2->drawPolygon($x, $y,
-                    Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
-                    Zend_Pdf_Const::FILLMETHOD_EVENODD);
+                    Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                    Zend_Pdf_Page::FILL_METHOD_EVEN_ODD);
 
 // 直線を描画します。
 $page2->setLineWidth(0.5);
