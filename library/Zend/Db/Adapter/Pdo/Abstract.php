@@ -75,6 +75,11 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
             throw new Zend_DB_Adapter_Exception('The PDO extension is required for this adapter but not loaded');
         }
 
+        // check the PDO driver is available
+        if (!in_array($this->_pdoType, PDO::getAvailableDrivers())) {
+            throw new Zend_DB_Adapter_Exception('The ' . $this->_pdoType . ' driver is not currently installed');
+        }
+
         // create PDO connection
         $q = $this->_profiler->queryStart('connect', Zend_Db_Profiler::CONNECT);
         $this->_connection = new PDO(
