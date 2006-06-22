@@ -94,7 +94,8 @@ class Zend_Mime_Part {
      * if this was created with a stream, return a filtered stream for
      * reading the content. very useful for large file attachments.
      *
-     * @return Stream
+     * @return stream
+     * @throws Zend_Mime_Exception if not a stream or unable to append filter
      */
     public function getEncodedStream() 
     {
@@ -105,18 +106,32 @@ class Zend_Mime_Part {
         //stream_filter_remove(); // ??? is that right?
         switch ($this->encoding) {
             case Zend_Mime::ENCODING_QUOTEDPRINTABLE:
-                Zend::loadClass('Zend_Mime_QpFilter');
-                if (!stream_filter_register('qp.*', 'Zend_Mime_QpFilter')) {
-                    throw new Zend_Mime_Exception('Failed to register filter');
+                $filter = stream_filter_append(
+                    $this->_content,
+                    'convert.quoted-printable-encode',
+                    STREAM_FILTER_READ,
+                    array(
+                        'line-length'      => 76,
+                        'line-break-chars' => Zend_Mime::LINEEND
+                    )
+                );
+                if (!is_resource($filter)) {
+                    throw new Zend_Mime_Exception('Failed to append quoted-printable filter');
                 }
-                stream_filter_append($this->_content, 'qp.encode', STREAM_FILTER_READ);
                 break;
             case Zend_Mime::ENCODING_BASE64:
-                Zend::loadClass('Zend_Mime_B64Filter');
-                if (!stream_filter_register('b64.*', 'Zend_Mime_B64Filter')) {
-                    throw new Zend_Mime_Exception('Failed to register filter');
+                $filter = stream_filter_append(
+                    $this->_content,
+                    'convert.base64-encode',
+                    STREAM_FILTER_READ,
+                    array(
+                        'line-length'      => 76,
+                        'line-break-chars' => Zend_Mime::LINEEND
+                    )
+                );
+                if (!is_resource($filter)) {
+                    throw new Zend_Mime_Exception('Failed to append base64 filter');
                 }
-                stream_filter_append($this->_content, 'b64.encode', STREAM_FILTER_READ);
                 break;
             default:
         }
