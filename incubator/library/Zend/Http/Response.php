@@ -357,7 +357,7 @@ class Zend_Http_Response
      */
     static public function extractCode(&$response_str)
     {
-        preg_match("|^HTTP/[\d\.x]+ (\d+) |", $response_str, $m);
+        preg_match("|^HTTP/[\d\.x]+ (\d+)|", $response_str, $m);
         
         if (isset($m[1])) {
             return (int) $m[1];
@@ -391,7 +391,7 @@ class Zend_Http_Response
      */
     static public function extractVersion(&$response_str) 
     {
-        preg_match("|^HTTP/([\d\.x]+) \d+ |", $response_str, $m);
+        preg_match("|^HTTP/([\d\.x]+) \d+|", $response_str, $m);
         
         if (isset($m[1])) {
             return $m[1];
