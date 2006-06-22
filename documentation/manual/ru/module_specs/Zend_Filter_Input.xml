@@ -109,15 +109,15 @@
             </title>
             <para>
                 Методы для фильтрации по "белому списку" начинаются с префикса 
-                <literal>is</literal>, как, например, <literal>isAlpha()</literal> и
-                <literal>isEmail()</literal>. Эти методы проверяют соответствие входных
+                <literal>test</literal>, как, например, <literal>testAlpha()</literal> и
+                <literal>testEmail()</literal>. Эти методы проверяют соответствие входных
                 данных предопределенному критерию и возвращают данные, только если
                 они соответствуют этому критерию. Если не соответствуют, то возвращается
                 <literal>FALSE</literal>. Следующий простой пример демонстрирует это:
 <!--
-                Whitelist filtering methods begin with the <literal>is</literal>
-                prefix, such as <literal>isAlpha()</literal> and
-                <literal>isEmail()</literal>. These methods inspect input according to
+                Whitelist filtering methods begin with the <literal>test</literal>
+                prefix, such as <literal>testAlpha()</literal> and
+                <literal>testEmail()</literal>. These methods inspect input according to
                 pre-defined criteria and return the data only if it adheres to the
                 criteria. If not, <literal>FALSE</literal> is returned. The following
                 provides a simple demonstration:
@@ -128,7 +128,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST);
     
-    if ($alphaName = $filterPost->isAlpha('name')) {
+    if ($alphaName = $filterPost->testAlpha('name')) {
         /* $alphaName содержит только алфавитные символы. */
     } else {
         /* $alphaName имеет значение FALSE. */
@@ -155,7 +155,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST);
-    $alphaName = $filterPost->isAlpha('name');
+    $alphaName = $filterPost->testAlpha('name');
     
     if ($alphaName !== FALSE) {
         /* $alphaName содержит только алфавитные символы. */
@@ -279,7 +279,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST);
-    $email = $filterPost->isEmail('email');
+    $email = $filterPost->testEmail('email');
     
     ?>]]>
         </programlisting>
@@ -309,7 +309,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST, FALSE);
-    $email = $filterPost->isEmail('email');
+    $email = $filterPost->testEmail('email');
     
     ?>]]>
         </programlisting>
@@ -359,7 +359,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST);
     
-    if ($email = $filterPost->isEmail('email')) {
+    if ($email = $filterPost->testEmail('email')) {
         /* $email имеет допустимый формат. */
     } else {
         /* $email имеет недопустимый формат. */
@@ -400,7 +400,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST, FALSE);
     
-    if ($email = $filterPost->isEmail('email')) {
+    if ($email = $filterPost->testEmail('email')) {
         /* $email имеет допустимый формат. */
     } else {
         /* $email имеет недопустимый формат. */

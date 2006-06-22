@@ -355,11 +355,50 @@ $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT);
 // профилировать запросы SELECT, INSERT и UPDATE
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
 
-// профилировать запросы DELETE (так вы можете определить, почему данные удаляются)
+// профилировать запросы DELETE (так мы можем определить, почему удаляются данные)
 $profiler->setFilterQueryType(Zend_Db_Profiler::DELETE);
 
 // удалить все фильтры
 $profiler->setFilterQueryType(null);
+?>]]></programlisting>
+
+        </sect3>
+
+        <sect3 id="zend.db.profiler.advanced.getbytype">
+            <title>Получение профилей по типу запроса</title>
+
+            <para>
+                Использование <code>setFilterQueryType()</code> может 
+                сократить количество генерируемых профилей. Тем не менее,
+                иногда может быть полезным хранить все профили, но просматривать
+                только те, которые нужны в данный момент. Другой метод
+                <code>getQueryProfiles()</code> - это то, что может делать такую
+                фильтрацию "на лету", ему передается тип запроса (или
+                логической комбинации типов запросов) в качестве его первого
+                аргумента; смотрите
+                <xref linkend="zend.db.profiler.advanced.filtertype" /> для
+                списка констант типов запросов.
+<!--
+                Using <code>setFilterQueryType()</code> can cut down on the
+                profiles generated. However, sometimes it can be more useful to
+                keep all profiles, but view only those you need at a given
+                moment. Another feature of <code>getQueryProfiles()</code> is
+                that it can do this filtering on-the-fly, by passing a query
+                type (or logical combination of query types) as its first
+                argument; see <xref linkend="zend.db.profiler.advanced.filtertype" /> 
+                for a list of the query type constants.
+-->
+            </para>
+
+            <programlisting role="php"><![CDATA[<?php
+// Получение только профилей запросов SELECT
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
+
+// Получение только профилей запросов SELECT, INSERT и UPDATE
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
+
+// Получение профилей запросов DELETE (так мы можем определить, почему удаляются данные)
+$profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
 ?>]]></programlisting>
 
         </sect3>
