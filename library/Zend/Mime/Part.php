@@ -29,6 +29,10 @@ require_once 'Zend.php';
  */
 require_once 'Zend/Mime.php';
 
+/**
+ * Zend_Mime_Exception
+ */
+require_once 'Zend/Mime/Exception.php';
 
 /**
  * Class representing a MIME part.
@@ -62,8 +66,8 @@ class Zend_Mime_Part {
     public function __construct($content)
     {
         $this->_content = $content;
-        if(is_resource($content)) {
-          $this->_isStream = true;
+        if (is_resource($content)) {
+            $this->_isStream = true;
         }
     }
 
@@ -81,7 +85,8 @@ class Zend_Mime_Part {
      *
      * @return bool
      */
-    public function isStream() {
+    public function isStream() 
+    {
       return $this->_isStream;
     }
     
@@ -91,39 +96,44 @@ class Zend_Mime_Part {
      *
      * @return Stream
      */
-    public function getEncodedStream() {
-      if(!$this->_isStream) throw new Zend_Mail_Exception('attempt to get a stream from a string part');
-      //stream_filter_remove(); // ??? is that right?
-      switch($this->encoding) {
-        case Zend_Mime::ENCODING_QUOTEDPRINTABLE:
-          Zend::loadClass('Zend_Mime_QpFilter');
-          if(!stream_filter_register("qp.*", "Zend_Mime_QpFilter")) 
-              throw new Zend_Mail_Exception("Failed to register filter");
-          stream_filter_append($this->_content, "qp.encode",STREAM_FILTER_READ);
-          break;
-        case Zend_Mime::ENCODING_BASE64 :
-          Zend::loadClass('Zend_Mime_B64Filter');
-          if(!stream_filter_register("b64.*", "Zend_Mime_B64Filter")) 
-              throw new Zend_Mail_Exception("Failed to register filter");
-          stream_filter_append($this->_content, "b64.encode",STREAM_FILTER_READ);
-          break;
-        default:
-      }
-      return $this->_content;   
+    public function getEncodedStream() 
+    {
+        if (!$this->_isStream) {
+            throw new Zend_Mime_Exception('Attempt to get a stream from a string part');
+        }
+
+        //stream_filter_remove(); // ??? is that right?
+        switch ($this->encoding) {
+            case Zend_Mime::ENCODING_QUOTEDPRINTABLE:
+                Zend::loadClass('Zend_Mime_QpFilter');
+                if (!stream_filter_register('qp.*', 'Zend_Mime_QpFilter')) {
+                    throw new Zend_Mime_Exception('Failed to register filter');
+                }
+                stream_filter_append($this->_content, 'qp.encode', STREAM_FILTER_READ);
+                break;
+            case Zend_Mime::ENCODING_BASE64:
+                Zend::loadClass('Zend_Mime_B64Filter');
+                if (!stream_filter_register('b64.*', 'Zend_Mime_B64Filter')) {
+                    throw new Zend_Mime_Exception('Failed to register filter');
+                }
+                stream_filter_append($this->_content, 'b64.encode', STREAM_FILTER_READ);
+                break;
+            default:
+        }
+        return $this->_content;   
     }
     
     /**
-     * Get the Content of the current Mail Part in the given encoding.
+     * Get the Content of the current Mime Part in the given encoding.
      *
      * @return String
      */
     public function getContent()
     {
-        if($this->_isStream) {
-          return stream_get_contents($this->getEncodedStream());
-        }
-        else {
-          return Zend_Mime::encode($this->_content, $this->encoding);
+        if ($this->_isStream) {
+            return stream_get_contents($this->getEncodedStream());
+        } else {
+            return Zend_Mime::encode($this->_content, $this->encoding);
         }
     }
 

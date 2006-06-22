@@ -1,13 +1,34 @@
 <?php
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Mime
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+
+/**
  * PHP Stream Filter to encode and decode streams with Base64-encoding
  *
  * usage:
- *  Zend::loadClass('Zend_Mime_B64Filter');
- *  stream_filter_register('base64.*', 'Zend_Mime_B64Filter');
- *  stream_filter_append($fp, 'base64.encode', STREAM_FILTER_READ);
- * or
- *  stream_filter_append($fp, 'base64.decode', STREAM_FILTER_READ);
+ * <code>
+ *     Zend::loadClass('Zend_Mime_B64Filter');
+ *     stream_filter_register("base64.*", "Zend_Mime_B64Filter"))
+ *     stream_filter_append($fp, "base64.encode",STREAM_FILTER_READ);
+ *     // or  
+ *     stream_filter_append($fp, "base64.decode",STREAM_FILTER_READ);
+ * </code>
  */
 class Zend_Mime_B64Filter extends php_user_filter
 {
@@ -17,16 +38,18 @@ class Zend_Mime_B64Filter extends php_user_filter
     protected $backlog = '';
     protected $lastline = '';
 
-    function filter($in, $out, &$consumed, $closing)
+    public function filter($in, $out, &$consumed, $closing)
     {
         while ($bucket = stream_bucket_make_writeable($in)) {
             $chunk = '';
             if ($this->mode == self::MODE_ENCODE) {
-                if ($bucket->datalen > 0) {
+                if ($bucket->datalen > 2) {
                     // first check that we only encode chunks that
-                    // have a length that can be divided by 3
-                    $trailing = (strlen($this->backlog) . $bucket->datalen) % 3;
-                    // cut the trailing characters to that the
+                    // have a length that can be divided by 3 (base64 == 6 bits
+                    // per character)
+                    $trailing = (strlen($this->backlog) + $bucket->datalen) % 3;
+
+                    // Cut the trailing characters to that the
                     // remainder is divisible by 3 if it is not.
                     if ($trailing > 0) {
                         $backlog = substr($bucket->data, (0 - $trailing));
@@ -35,10 +58,15 @@ class Zend_Mime_B64Filter extends php_user_filter
                         $backlog = '';
                         $chunk = $bucket->data;
                     }
+
+                    // Encode and chunk
                     $chunk = base64_encode($this->backlog . $chunk);
                     $chunk = chunk_split($this->lastline . $chunk, Zend_Mime::LINELENGTH, Zend_Mime::LINEEND);
                     $chunk = rtrim($chunk);
-                    $this->backlog = $backlog; // save backlog for next chunk...
+
+                    // save backlog for next chunk...
+                    $this->backlog = $backlog; 
+
                     // now cut the last line off, because this might
                     // not be LINEEND characters. We prepend this to
                     // the next chunk...
@@ -58,8 +86,9 @@ class Zend_Mime_B64Filter extends php_user_filter
             } else { // DECODE
                 if ($bucket->datalen > 0) {
                     $chunk = strtr($bucket->data, array("\n" => '', "\r" => ''));
-                    $trailing = (strlen($this->backlog) + strlen($chunk)) % 4;
-                    // cut the trailing characters to that the
+                    $trailing = (strlen($this->backlog) + strlen($chunk)) % 3;
+
+                    // cut the trailing characters so that the
                     // remainder is dividable by 3 if it is not.
                     if ($trailing > 0) {
                         $backlog = substr($chunk, (0 - $trailing));
@@ -74,15 +103,23 @@ class Zend_Mime_B64Filter extends php_user_filter
                 $chunk = base64_decode($this->backlog . $chunk);
                 $this->backlog = $backlog;
             }
-            $bucket->data = $chunk;
-            $consumed += $bucket->datalen;
+
+            $bucket->data    = $chunk;
+            $consumed       += $bucket->datalen;
             $bucket->datalen = strlen($chunk);
             stream_bucket_append($out, $bucket);
         }
+
         return PSFS_PASS_ON;
     }
 
-    function onCreate()
+    /**
+     * Select mode on stream filter creation
+     * 
+     * @access public
+     * @return void
+     */
+    public function onCreate()
     {
         if (strpos($this->filtername, 'encode')) {
             $this->mode = self::MODE_ENCODE;
@@ -90,5 +127,4 @@ class Zend_Mime_B64Filter extends php_user_filter
             $this->mode = self::MODE_DECODE;
         }
     }
-
 }
