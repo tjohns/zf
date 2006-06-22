@@ -26,7 +26,6 @@ require_once 'Zend/Controller/Router/Route/Interface.php';
  *
  * @package    Zend_Controller
  * @subpackage Router
- * @author     Michael Minicki aka Martel Valgoerad (martel@post.pl)
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  * @see        http://manuals.rubyonrails.com/read/chapter/65
@@ -36,7 +35,10 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
     const URL_VARIABLE = ':';
     const REGEX_DELIMITER = '#';
-    const DEFAULT_REGEX = '[a-z0-9\-_]+';
+    
+    // TODO: allow for all types of URI characters (per RFC 3986)
+    // http://en.wikipedia.org/wiki/URL_encoding
+    const DEFAULT_REGEX = '[a-z0-9\-\._]+';
 
     private $_parts;
     private $_defaults = array();

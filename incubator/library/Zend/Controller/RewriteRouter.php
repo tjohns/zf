@@ -39,7 +39,6 @@ require_once 'Zend/Controller/Router/Route.php';
  *
  * @package    Zend_Controller
  * @subpackage Router
- * @author     Michael Minicki aka Martel Valgoerad (martel@post.pl)
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  * @see        http://manuals.rubyonrails.com/read/chapter/65
@@ -53,7 +52,16 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 
     public function __construct()
     {
+        // Add default route:
         $this->addRoute('default', ':controller/:action', array('controller' => 'index', 'action' => 'index'));
+        
+        // Set magic default of RewriteBase:
+        $base = $_SERVER['SCRIPT_NAME'];
+        if (strpos($_SERVER['REQUEST_URI'], basename($base)) === false) {
+            $base = dirname($_SERVER['SCRIPT_NAME']);
+        }
+        $this->_rewriteBase = $base;
+        
     }
 
     public function addRoute($name, $map, $params = array(), $reqs = array())
