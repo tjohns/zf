@@ -17,7 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 
 
 /** Zend_Db_Adapter_Abstract */
@@ -82,21 +82,28 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
 
         // create PDO connection
         $q = $this->_profiler->queryStart('connect', Zend_Db_Profiler::CONNECT);
-        $this->_connection = new PDO(
-            $this->_dsn(),
-            $this->_config['username'],
-            $this->_config['password']
-        );
-        $this->_profiler->queryEnd($q);
 
-        // force names to lower case
-        $this->_connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+        try {
+            $this->_connection = new PDO(
+                $this->_dsn(),
+                $this->_config['username'],
+                $this->_config['password']
+            );
 
-        // always use exceptions.
-        $this->_connection->setAttribute(PDO::ATTR_ERRMODE,
-            PDO::ERRMODE_EXCEPTION);
+            $this->_profiler->queryEnd($q);
 
-        /** @todo Are there other portability attribs to consider? */
+            // force names to lower case
+            $this->_connection->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+
+            // always use exceptions.
+            $this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            /** @todo Are there other portability attribs to consider? */
+        }
+        catch (PDOException $e) {
+            throw new Zend_DB_Adapter_Exception('Connection to the database failed');
+        }
+
     }
 
 
