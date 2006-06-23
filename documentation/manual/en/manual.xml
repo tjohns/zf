@@ -109,6 +109,7 @@
         &module_specs.Zend_XmlRpc;
     </chapter>
     <!-- &ref.faq; -->
+    &ref.coding_standard;
     &ref.copyrights;
     <index id="the.index" />
 </book>
