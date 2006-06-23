@@ -278,6 +278,12 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
+                可読性を上げるため、定数名の単語の間はアンダースコアで区切らなければなりません。
+                例えば <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> は許されますが、
+                <code>EMBED_SUPPRESSEMBEDEXCEPTION</code> は許されません。
+            </para>
+
+            <para>
                 定数を宣言する際には、クラスのメンバとして "const"
                 で定義しなければなりません。"define"
                 によるグローバル定数の宣言も可能ですが、お勧めしません。
@@ -302,6 +308,9 @@ widgetFactory()]]></programlisting>
 
             <para>
                 短いタグは決して使用してはいけません。
+                PHP コードのみからなるファイルでは、終了タグ ("?>") 
+                は決して含めてはいけません
+                (<xref linkend="coding-standard.php-file-formatting.general" /> を参照ください)。
             </para>
         </sect2>
 
@@ -450,7 +459,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 </para><para>
                     クラスファイルの中にクラス以外のコードを追加することもできますが、
                     お勧めしません。このような場合には、クラス定義とその他のコードの間に
-                    空行を 2 行挿入します。
+                    空行を 2 行挿入しなければなりません。
                 </para><para>
                     これらの条件を満たすクラス宣言の例です。
 
