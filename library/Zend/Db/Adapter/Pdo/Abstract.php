@@ -99,9 +99,8 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
             $this->_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
             /** @todo Are there other portability attribs to consider? */
-        }
-        catch (PDOException $e) {
-            throw new Zend_DB_Adapter_Exception('Connection to the database failed');
+        } catch (PDOException $e) {
+            throw new Zend_DB_Adapter_Exception($e->getMessage(), $e->getCode());
         }
 
     }
