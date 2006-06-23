@@ -78,13 +78,13 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $this->router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
         $routes = $this->getNonPublicProperty($this->router, '_routes');
         
-        $this->assertEquals(2, count($routes));
+        $this->assertEquals(3, count($routes));
         $this->assertType('Zend_Controller_Router_Route', $routes['archive']);
         
         $this->router->addRoute('register', 'register/:action', array('controller' => 'profile', 'action' => 'register'));
         $routes = $this->getNonPublicProperty($this->router, '_routes');
         
-        $this->assertEquals(3, count($routes));
+        $this->assertEquals(4, count($routes));
         $this->assertType('Zend_Controller_Router_Route', $routes['register']);
 
     }
@@ -193,6 +193,62 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         }
         
         $this->fail('Unroutable object passed');
+        
+    }
+
+    public function testRewriteBaseRootWithRewrite()
+    {
+        
+        $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
+        $_SERVER['REQUEST_URI'] = '/aiev5/www/';
+        
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->getRewriteBase();
+        
+        $this->assertEquals('/aiev5/www', $rwBase);
+        
+    }
+
+    public function testRewriteBaseRootWithoutRewrite()
+    {
+        
+        $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
+        $_SERVER['REQUEST_URI'] = '/aiev5/www/index.php';
+        
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->getRewriteBase();
+        
+        $this->assertEquals('/aiev5/www/index.php', $rwBase);
+        
+    }
+
+    public function testRewriteBaseDeepUrlWithRewrite()
+    {
+        
+        $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
+        $_SERVER['REQUEST_URI'] = '/aiev5/www/publish/article';
+        
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->getRewriteBase();
+        
+        $this->assertEquals('/aiev5/www', $rwBase);
+        
+    }
+
+    public function testRewriteBaseDeepUrlWithoutRewrite()
+    {
+        
+        $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
+        $_SERVER['REQUEST_URI'] = '/aiev5/www/index.php/publish/article';
+        
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->getRewriteBase();
+        
+        $this->assertEquals('/aiev5/www/index.php', $rwBase);
         
     }
 

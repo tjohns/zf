@@ -52,16 +52,18 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 
     public function __construct()
     {
-        // Add default route:
-        $this->addRoute('default', ':controller/:action', array('controller' => 'index', 'action' => 'index'));
+        // Add default route (for root url - '/') 
+        $this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
+        
+        // Route for Router v1 compatibility
+        $this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));
         
         // Set magic default of RewriteBase:
         $base = $_SERVER['SCRIPT_NAME'];
         if (strpos($_SERVER['REQUEST_URI'], basename($base)) === false) {
-            $base = dirname($_SERVER['SCRIPT_NAME']);
+            $base = rtrim(dirname($base), '/');
         }
         $this->_rewriteBase = $base;
-        
     }
 
     public function addRoute($name, $map, $params = array(), $reqs = array())
