@@ -16,6 +16,7 @@ require_once 'Zend/Pdf/AllTests.php';
 require_once 'Zend/UriTest.php';
 require_once 'Zend/Uri/AllTests.php';
 require_once 'Zend/ViewTest.php';
+require_once 'Zend/FilterTest.php';
 
 
 class Zend_AllTests
@@ -38,6 +39,7 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_UriTest');
         $suite->addTest(Zend_Uri_AllTests::suite());
         $suite->addTestSuite('Zend_ViewTest');
+        $suite->addTestSuite('Zend_FilterTest');
         return $suite;
     }
 }
