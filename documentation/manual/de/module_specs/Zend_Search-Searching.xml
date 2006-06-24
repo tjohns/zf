@@ -99,9 +99,7 @@ $index = new Zend_Search_Lucene('/data/my_index');
 $hits = $index->find($query);
 
 foreach ($hits as $hit) {
-    echo $hit->id;
     echo $hit->score;
-
     echo $hit->title;
     echo $hit->author;
 }
@@ -158,13 +156,9 @@ foreach ($hits as $hit) {
         <para>
             Zend_Search_Lucene verwendet die selben Gewichtungsalgorithmen wie Java Lucene. Die
             Suchergebnisse werden nach einem Punktwert sortiert. Treffer mit höherem Punktwert
-            kommen zuerst.
+            kommen zuerst, und Dokumente mit höherem Punktwert passen auf die Abfrage besser als 
+            solche mit niedrigerem Punktwert.
             
-        </para>
-
-        <para>
-            Unterschiedliche Punktwerte bedeuten, dass ein Dokument der Anfrage mehr entspricht als
-            andere.
         </para>
 
         <para>

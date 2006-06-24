@@ -24,7 +24,7 @@
         </para>
 
         <para>
-            Um zwischen Analysatoren zu wechseln, verwende folgenden Code:
+            Um zwischen Analysatoren zu wechseln:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -44,8 +44,8 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            Die <code>tokenize()</code> Methode sollte die <code>normalize()</code> auf alle Tokens
-            anwenden. Dies erlaubt die Verwendung von Tokenfiltern in deinem Analysator.
+            Die <code>tokenize()</code> Methode sollte die <code>normalize()</code> Methode auf alle 
+            Tokens anwenden. Dies erlaubt die Verwendung von Tokenfiltern in deinem Analysator.
         </para>
 
         <para>
@@ -226,33 +226,34 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
 	<sect2 id="zend.search.extending.storage">
 		<title>Storage Container</title>
         <para>
-            Eine abstrakte Klasse Zend_Search_Lucene_Storage_Directory definiert Funktionalitäten 
-            für Verzeichnisse.
+            Eine abstrakte Klasse <code>Zend_Search_Lucene_Storage_Directory</code> definiert 
+            Funktionalitäten für Verzeichnisse.
         </para>
 
         <para>
-            Der Zend_Search_Lucene Konstruktur verwendet als Eingabe entweder einen String oder ein 
-            Zend_Search_Lucene_Storage_Directory Objekt.
+            Der <code>Zend_Search_Lucene</code> Konstruktur verwendet als Eingabe entweder einen 
+            String oder ein <code>Zend_Search_Lucene_Storage_Directory</code> Objekt.
         </para>
 
         <para>
-            Die Zend_Search_Lucene_Storage_Directory_Filesystem Klasse implementiert 
+            Die <code>Zend_Search_Lucene_Storage_Directory_Filesystem</code> Klasse implementiert 
             Verzeichnisfunktionalitäten für das Dateisystem.
         </para>
 
         <para>
-            Wenn ein String als Eingabe für den Zend_Search_Lucene Konstruktur verwendet wird, 
-            behandelt der Indexleser (das Zend_Search_Lucene Objekt) es wie einen Dateipfad und 
-            instanziiert ein Zend_Search_Lucene_Storage_Directory_Filesystem Objekt.
+            Wenn ein String als Eingabe für den <code>Zend_Search_Lucene</code> Konstruktur 
+            verwendet wird, behandelt der Indexleser (das <code>Zend_Search_Lucene Objekt</code>) 
+            es wie einen Dateipfad und instanziiert ein 
+            <code>Zend_Search_Lucene_Storage_Directory_Filesystem</code> Objekt.
         </para>
 
         <para>
             Du kannst deinen eigenen Verzeichnisimplementation durch die Erweiterung der 
-            Zend_Search_Lucene_Storage_Directory Klasse definieren.
+            <code>Zend_Search_Lucene_Storage_Directory</code> Klasse definieren.
         </para>
 
         <para>
-        Zend_Search_Lucene_Storage_Directory Methoden:
+        <code>Zend_Search_Lucene_Storage_Directory</code> Methoden:
 
         <programlisting><![CDATA[<?php
 
@@ -344,20 +345,21 @@ abstract function getFileObject($filename);
         </para>
 
         <para>
-            Die <code>getFileObject($filename)</code> Methode der Zend_Search_Lucene_Storage_Directory
-            Klasse gibt ein Zend_Search_Lucene_Storage_File Objekt zurück.
+            Die <code>getFileObject($filename)</code> Methode der 
+            <code>Zend_Search_Lucene_Storage_Directory</code> Klasse gibt ein 
+            <code>Zend_Search_Lucene_Storage_File</code> Objekt zurück.
         </para>
         <para>
-            Die abstrakte Klasse Zend_Search_Lucene_Storage_File implementiert einfache Funktionen
-            für Dateiabstraktion und das Lesen von Indexdateien.
+            Die abstrakte Klasse <code>Zend_Search_Lucene_Storage_File</code> implementiert einfache 
+            Funktionen für Dateiabstraktion und das Lesen von Indexdateien.
         </para>
         <para>
-            Du musst außerdem die Zend_Search_Lucene_Storage_File Klasse für deine 
+            Du musst außerdem <code>Zend_Search_Lucene_Storage_File</code> für deine 
             Verzeichnisimplementation erweitern.
         </para>
         <para>
-            Nur zwei Methoden der Zend_Search_Lucene_Storage_File Klasse müssen in deiner 
-            Implementation überladen werden:
+            Nur zwei Methoden der <code>Zend_Search_Lucene_Storage_File</code> Klasse müssen in 
+            deiner Implementation überladen werden:
 
         <programlisting><![CDATA[<?php
 

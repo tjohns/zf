@@ -4,11 +4,8 @@
 	<sect2 id="zend.search.queries.term-query">
 		<title>Begriffsabfrage</title>
         <para>
-            Begriffsabfragen sind für Suchen nach einem einzelnen Begriff gedacht.
-        </para>
-
-        <para>
-            Beide Suchmethoden können für Begriffsabfragen verwendet werden.
+            Begriffsabfragen sind für Suchen nach einem einzelnen Begriff gedacht. Beide 
+            Suchmethoden können für Begriffsabfragen verwendet werden.
         </para>
 
         <para>
@@ -39,27 +36,28 @@
         </para>
 
         <para>
-            Jeder Begriff dieses Satzes kann als notwendig, verboten oder weder notwendig noch 
-            verboten (optional) definiert werden.
+            Jeder Begriff dieses Satzes kann als <emphasis>required</emphasis> (notwendig), 
+            <emphasis>prohibited</emphasis> (verboten) oder <emphasis>neither</emphasis> (weder 
+            noch) definiert werden.
             
             <itemizedlist>
                 <listitem>
                     <para>
-                        notwendig, was bedeutet, dass Dokumente, die diesen Begriff nicht enthalten,
-                        nicht der Abfrage entsprechen;
+                        <emphasis>required</emphasis> bedeutet, dass Dokumente, die diesen 
+                        Begriff nicht enthalten, nicht der Abfrage entsprechen;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        verboten, was bedeutet, dass Dokumente, die diesen Begriff enthalten, nicht
-                        der Abfrage entsprechen;
+                        <emphasis>prohibited</emphasis> bedeutet, dass Dokumente, die diesen 
+                        Begriff enthalten, nicht der Abfrage entsprechen;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        keines von beiden, in welchem Fall Dokumenten den Begriff weder nicht 
-                        enthalten dürfen, noch den Begriff enthalten müssen. Nichtsdestrotrotz muß
-                        ein Dokument mindestens einem Begriff entsprechen, um der Abfrage 
+                        <emphasis>neither</emphasis>, in welchem Fall Dokumenten den Begriff weder 
+                        nicht enthalten dürfen, noch den Begriff enthalten müssen. Nichtsdestrotrotz 
+                        muß ein Dokument mindestens einem Begriff entsprechen, um der Abfrage 
                         zu entsprechen.
                     </para>
                 </listitem>
@@ -67,9 +65,9 @@
         </para>
 
         <para>
-            Dies bedeutet, dass beim Hinzufügen optionaler Begriffe zu einer Abfrage mit notwendigen
-            Begriffen, zwar derselbe Ergebnissatz (wie ohne die optionalen Begriffe) zurückgegeben 
-            wird, die Treffer, welche die optionalen Begriffe enthalten, aber weiter oben im 
+            Beim Hinzufügen optionaler Begriffe zu einer Abfrage mit notwendigen Begriffen wird 
+            zwar derselbe Ergebnissatz (wie ohne die optionalen Begriffe) zurückgegeben, die 
+            Treffer, welche die optionalen Begriffe enthalten, werden aber weiter oben im 
             Ergebnissatz erscheinen.
         </para>
 
@@ -115,9 +113,9 @@ $hits = $index->find('+word1 author:word2 -word3');
         <para>
             Das <code>$signs</code> Array enthält Informationen über den Begriffstyp:
             <itemizedlist>
-                <listitem>true wird für notwendige Begriffe verwendet.</listitem>
-                <listitem>false wird für verbotene Begriffe verwendet.</listitem>
-                <listitem>null wird für weder notwendige noch verbotene Begriffe verwendet.</listitem>
+                <listitem><code>true</code> wird für notwendige Begriffe verwendet.</listitem>
+                <listitem><code>false</code> wird für verbotene Begriffe verwendet.</listitem>
+                <listitem><code>null</code> wird für weder notwendige noch verbotene Begriffe verwendet.</listitem>
             </itemizedlist>
         </para>
 	</sect2>
@@ -131,10 +129,10 @@ $hits = $index->find('+word1 author:word2 -word3');
         <para>
             Phrasenabfragen sind sehr flexibel und erlauben es, sowohl nach einer exakten Phrase als
             auch nach ungenauen Phrasen zu suchen. Genaue Phrasen können auch Lücken oder 
-            mehrere Begriffe an der selben Stelle enthalten. (Dies kann mit Hilfe das Analysators 
+            mehrere Begriffe an der selben Stelle enthalten. Diese können mit Hilfe das Analysators 
             für verschiedene Zwecke generiert werden, z.B. kann ein Begriff verdoppelt werden, um 
             das Gewicht des Begriffs zu erhöhen oder verschiedene Synonyme können an einer Stelle 
-            platziert werden). Dem entsprechend können Phrasenabfragen nur mit Hilfe der 
+            platziert werden. Dem entsprechend können Phrasenabfragen nur mit Hilfe der 
             Programmierschnittstelle (API) erstellt werden. 
         </para>
 
