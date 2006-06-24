@@ -2,34 +2,34 @@
     <title>Zend_Http_Response</title>
 
     <sect2 id="zend.http.response.introduction">
-        <title>Introduction</title>
+        <title>Wprowadzenie</title>
         <para>
-            <code>Zend_Http_Response</code> provides easy access to the responses returned by
-            <xref linkend="zend.http.client" />. It provides an intuitive set of methods for working
-            with the HTTP response data received from a request:
+            <code>Zend_Http_Response</code> zapewnia łatwy dostęp do odpowiedzi 
+            otrzymanych od <xref linkend="zend.http.client" />. Zapewnia intuicyjny
+            zbiór metod do pracy z danymi odpowiedzi HTTP otrzymanymi z żądania:
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Returns TRUE if an HTTP error code was received; FALSE otherwise.
+                    <code>isError()</code>: Zwraca TRUE gdy został otrzymany kod błędu HTTP; W przeciwnym razie FALSE.
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Returns TRUE if an HTTP success code was received; FALSE otherwise.
+                    <code>isSuccessful()</code>: Zwraca TRUE gdy został otrzymany kod powodzenia HTTP; W przeciwnym razie FALSE.
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Returns TRUE if an HTTP redirect code was received; FALSE otherwise.
+                    <code>isRedirect()</code>: Zwraca TRUE gdy został otrzymany kod przekierowania HTTP; W przeciwnym razie FALSE.
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Returns the HTTP status code.
+                    <code>getStatus()</code>: Zwraca kod odpowiedzi HTTP.
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Returns an array of HTTP response header strings.
+                    <code>getHeaders()</code>: Zwraca tablicę nagłówków odpowiedzi HTTP.
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Returns the HTTP response body as a string.
+                    <code>getBody()</code>: Zwraca treść odpowiedzi HTTP jako łańcuch znaków.
                 </listitem>
             </itemizedlist>
         </para>
         <example>
-            <title>Working with HTTP Response Data</title>
+            <title>Praca z otrzymanymi danymi HTTP</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Http/Client.php';
 try {
@@ -38,16 +38,16 @@ try {
     if ($response->isSuccessful()) {
         echo $response->getBody();
     } else {
-        echo "<p>An error occurred</p>\n";
+        echo "<p>Wystąpił błąd</p>\n";
         echo "HTTP Status: " . $response->getStatus() . "\n";
-        echo "HTTP Headers:\n";
+        echo "HTTP Nagłówki:\n";
         $responseHeaders = $response->getHeaders();
         foreach ($responseHeaders as $responseHeaderName => $responseHeaderValue) {
             echo "$responseHeaderName: $responseHeaderValue\n";
         }
     }
 } catch (Zend_Http_Client_Exception $e) {
-    echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
+    echo '<p>Wystąpił błąd (' .$e->getMessage(). ')</p>';
 }
 ?>]]></programlisting>
         </example>
