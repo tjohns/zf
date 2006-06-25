@@ -145,9 +145,9 @@ abstract class Zend_Http_Client_Abstract
      * @param Zend_Uri_Http|string $uri
      * @param array $headers Optional request headers to set
      */
-    public function __construct($uri, $headers = null)
+    public function __construct($uri = null, $headers = null)
     {
-        $this->setUri($uri);
+        if (! is_null($uri)) $this->setUri($uri);
         if (! is_null($headers)) $this->setHeaders($headers);
         $this->user_agent = 'PHP/' . PHP_VERSION . ' Zend Framework/0.1.3';
     }
@@ -183,7 +183,7 @@ abstract class Zend_Http_Client_Abstract
      */
     public function getUri($as_string = false)
     {
-        if ($as_string) {
+        if ($as_string && $this->uri instanceof Zend_Uri_Http) {
             return $this->uri->__toString();
         } else {
             return $this->uri;
@@ -337,14 +337,14 @@ abstract class Zend_Http_Client_Abstract
      */
     public function resetParameters()
     {
-    	// Reset parameter data
-    	$this->paramsGet = array();
-    	$this->paramsPost = array();
-    	$this->raw_post_data = null;
-    	
-    	// Clear outdated headers
-    	if (isset($this->headers['content-type'])) unset($this->headers['content-type']);
-    	if (isset($this->headers['content-length'])) unset($this->headers['content-length']);
+        // Reset parameter data
+        $this->paramsGet = array();
+        $this->paramsPost = array();
+        $this->raw_post_data = null;
+        
+        // Clear outdated headers
+        if (isset($this->headers['content-type'])) unset($this->headers['content-type']);
+        if (isset($this->headers['content-length'])) unset($this->headers['content-length']);
     }
     
     /**
@@ -441,6 +441,9 @@ abstract class Zend_Http_Client_Abstract
      */
     public function request($method = null)
     {
+        if (! $this->uri instanceof Zend_Uri_Http)
+            throw new Zend_Http_Exception("No valid URI has been passed to the client");
+            
         if ($method) $this->setMethod($method);
         
         // Prepare the request string
