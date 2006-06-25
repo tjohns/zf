@@ -19,7 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once "Zend/Http/Exception.php";
+require_once 'Zend.php';
+require_once 'Zend/Http/Exception.php';
 
 /**
  * Zend_Http_Response represents an HTTP 1.0 / 1.1 response message. It 
@@ -200,7 +201,24 @@ class Zend_Http_Response
                 $body = $this->body;
                 break;
         }
+        
+        // Decode any content-encoding (gzip or deflate) if needed
+        switch (strtolower($this->getHeader('content-encoding'))) {
 
+            // Handle gzip encoding
+            case 'gzip':
+                $body = self::decodeGzip($body);
+                break;
+
+            // Handle deflate encoding
+            case 'deflate':
+                $body = self::decodeDeflate($body);
+                break;
+
+            default:
+                break;
+        }
+        
         return $body;
     }
 
@@ -518,6 +536,32 @@ class Zend_Http_Response
         }
         
         return $decBody;
+    }
+    
+    /**
+     * Decode a gzip encoded message (when Content-encoding = gzip)
+     *
+     * Currently requires PHP with zlib support
+     * 
+     * @param string $body
+     * @return string
+     */
+    static public function decodeGzip($body)
+    {
+        return gzinflate(substr($body, 10));
+    }
+
+    /**
+     * Decode a zlib deflated message (when Content-encoding = deflate)
+     *
+     * Currently requires PHP with zlib support
+     * 
+     * @param string $body
+     * @return string
+     */
+    static public function decodeDeflate($body)
+    {
+        return gzuncompress($body);
     }
 
     /**
