@@ -324,7 +324,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                 // Check whether we send the exact same request again, or drop the parameters
                 // and send a GET request
                 if ($response->getStatus() == 303 ||
-                ((! $this->doStrictRedirects) && ($response->getStatus() == 302 || $response->getStatus == 301))) {
+                ((! $this->doStrictRedirects) && ($response->getStatus() == 302 || $response->getStatus() == 301))) {
                     $this->resetParameters();
                     $this->setMethod(self::METHOD_GET);
                 }
