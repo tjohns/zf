@@ -34,6 +34,10 @@
         <title>Zend</title>
         &module_specs.Zend;
     </chapter-->
+    <chapter id="zend.cache">
+        <title>Zend_Cache</title>
+        &module_specs.Zend_Cache;
+    </chapter>
     <chapter id="zend.config">
         <title>Zend_Config</title>
         &module_specs.Zend_Config;
