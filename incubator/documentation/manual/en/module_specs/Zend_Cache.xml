@@ -1,0 +1,70 @@
+<sect1 id="zend.cache.introduction">
+    <title>Introduction</title>
+    <para>
+        <code>Zend_Cache</code> provides a generic way to cache some datas.
+    </para>
+    <para>
+        Cache records are stored throw a backend (<code>File</code>, <code>Sqlite</code>...) with a flexible
+        system of "ids" and "tags". Then, for example, it's easy to delete a specified part of cached 
+        datas ("all cache records marked with a given tag"...).
+    </para>
+    <para>
+    	The core of the module is really generic and flexible. Yet, for specific needs, you can use a
+    	frontend (<code>Output</code>, <code>Function</code>...) to get a more appropriate way of running.
+    </para>
+    <example>
+        <title>A first example with Zend_Cache core</title>
+        <para>
+            In this first example, we will use directly the core of Zend_Cache with the 
+            <code>File</code> backend.
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+	'lifeTime' => 7200 // cache lifetime of 2 hours
+);
+
+$backendOptions = array(
+    'cacheDir' => '/tmp/' // Directory where to put the cache files (make sure to add a trailing slash)
+);
+
+// We make a Zend_Cache_Core object
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+$id = 'foo'; // cache id of "what we want to cache"
+
+if (!($cache->test($id))) {
+	// cache missed
+	
+	// require_once ... for perfs reasons, all "require_once" have to be loaded ONLY if the cache is missed
+	// require_once ...
+	
+	// we build "what we want to cache"
+	// for example
+	$data = '';
+	for ($i=0;$i<10000;$i++) {
+		$data = $data . $i;
+	} 
+	
+	// We save the result into the cache
+    $cache->save($data);
+
+} else {
+	// cache hit
+	
+	$data = $cache->get($id);
+
+}
+
+// do something with $data :)
+// [...]
+?>]]>       </programlisting>
+       </para>
+    </example>
+    <note>
+        With Zend_Cache_Core, you have to manage the "cache identifier" by yourself.  
+    </note>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
