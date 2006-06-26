@@ -1,18 +1,17 @@
 <sect1 id="zend.xmlrpc.client">
     <title>Zend_XmlRpc_Client</title>
     <sect2 id="zend.xmlrpc.client.introduction">
-        <title>Introduction</title>
+        <title>介绍</title>
         <para>
-            Using the <code>Zend_XmlRpc_Client</code> is very similar to using <code>SoapClient</code> objects (<ulink url="http://www.php.net/soap">SOAP web service extension</ulink>).
-            You can simply call the XML-RPC service procedures as <code>Zend_XmlRpc_Client</code> methods.
-            Specify the service's full address in the <code>Zend_XmlRpc_Client</code> constructor.
+            <code>Zend_XmlRpc_Client</code>的用法和<code>SoapClient</code> 对象 (<ulink url="http://www.php.net/soap">SOAP web service extension</ulink>)是非常相似的。
+            你只需在<code>Zend_XmlRpc_Client</code>构造函数中指定服务端的完整地址，即可以用<code>Zend_XmlRpc_Client</code>的方法简单的调用XML-RPC 服务端的过程。
         </para>
         <example>
-            <title>A basic XML-RPC request</title>
+            <title>一个基本的XML-RPC请求</title>
             <programlisting role="php"><![CDATA[<?php
 /**
- * Connect to framework.zend.com server and an array describing
- * the methods available.
+ * 连接到framework.zend.com服务器并获得
+ * 一个描述服务端可用方法的数组。
  */
 require_once 'Zend/XmlRpc/Client.php';
 
@@ -25,33 +24,30 @@ print_r( $server->system->listMethods() );
         </example>
         <para>
             <note>
-                <code>Zend_XmlRpc_Client</code> attempts to make remote methods look as much like
-                native methods as possible.  If a remote method contains namespaces, such as 
-                <code>system.listMethods()</code> above, the call is made using object
-                chaining in PHP: <code>$server->system->listMethods()</code>.
+                用<code>Zend_XmlRpc_Client</code>尝试调用一个远程服务器的方法看起来就像调用本地方法那样简单。如果一个远程方法包含一个命名空间，就像前面的<code>system.listMethods()</code>那样，那么调用的时候可以用PHP的对象链的形式：<code>$server->system->listMethods()</code>。
             </note>
         </para>
     </sect2>
     <sect2 id="zend.xmlrpc.client.parameters">
-        <title>Using parameters</title>
+        <title>带参数</title>
         <para>
-            Some XML-RPC service procedures require parameters, the necessary parameters are passed as parameters for the <code>Zend_XmlRpc_Client</code> method.
-            XML-RPC procedure parameters must be a specific XML-RPC type.
-            Parameters can be passed in 2 ways: as PHP natives or <code>Zend_XmlRpc_Value</code> objects which represent XML-RPC types.
+            一些XML-RPC服务过程要求一些参数，那么必要的参数将被作为<code>Zend_XmlRpc_Client</code>方法的参数进行传递。
+            XML-RPC过程的参数必须指定XML-RPC类型。
+            参数能通过两种方法进行传递：PHP本地变量或是指定XML-RPC类型的<code>Zend_XmlRpc_Value</code>对象。
         </para>
         <sect3 id='zend.xmlrpc.client.parameters.php_native'>
-            <title>Passing PHP native variables as parameters</title>
+            <title>以PHP本地变量的形式传递参数</title>
             <para>
-                Parameters passed as native PHP variables, meaning as a string, integer, float, boolean, array or an object.
-                In this case, each PHP native type will be auto-detected and converted into one of the XML-RPC types according to this table:
+                用本地PHP变量传递参数，意味着参数将是一个字符串、整数、浮点数、布尔值、数组或者是一个对象。
+                在这种情况下，PHP本地变量将被自动检测类型并根据下表转换成一个XML-RPC类型：
             </para>
             <table>
-                <title>PHP native values convertion to XML-RPC types</title>
+                <title>PHP本地变量类型转化为XML-RPC类型</title>
                 <tgroup cols="2">
                     <thead>
                         <row>
-                            <entry>PHP native type</entry>
-                            <entry>XML-RPC type</entry>
+                            <entry>PHP变量类型</entry>
+                            <entry>XML-RPC类型</entry>
                         </row>
                     </thead>
                     <tbody>
@@ -76,7 +72,7 @@ print_r( $server->system->listMethods() );
                             <entry>array</entry>
                         </row>
                         <row>
-                            <entry>associative array</entry>
+                            <entry>associative array(关联数组)</entry>
                             <entry>struct</entry>
                         </row>
                         <row>
@@ -87,9 +83,9 @@ print_r( $server->system->listMethods() );
                 </tgroup>
             </table>
             <programlisting role="php"><![CDATA[...
-/** 2 parameters are passed in this procedure
- *  The first parameter is a string that will be auto-converted into an XML-RPC string type
- *  The second parameter is an assosiative array that will be converted into an XML-RPC struct 
+/** 在这个过程中两个参数被传递
+ *  第一个参数是一个字符串类型它将被自动转换成XML-RPC的字符串类型
+ *  第二个参数是一个关联数组它将被转化成一个XML-RCP结构类型
  */
 
 $p1 = 'parameter 1';
@@ -100,33 +96,33 @@ $service->serviceProcedure($p1, $p2);
             </programlisting>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.xmlrpc_value'>
-            <title>Passing <code>Zend_XmlRpc_Value</code> objects as parameters</title>
+            <title> 以<code>Zend_XmlRpc_Value</code> 对象的形式传递参数</title>
             <para>
-                Parameters passed as <code>Zend_XmlRpc_Value</code> objects. You can create one of the <code>Zend_XmlRpc_Value</code> instances to specify the exact XML-RPC type of your parameters.
-                The main reasons for explictly specifing the XML-RPC types are:
+                传递<code>Zend_XmlRpc_Value</code>对象作为参数。你可以创建一个<code>Zend_XmlRpc_Value</code>实例精确的说明你传递参数的XML-RPC类型。
+                精确说明XML-RPC类型的主要原因是：
                 <itemizedlist>
                     <listitem>
-                        When you want to make sure the correct parameter type is passed to the procedure (i.e. the procedure requires an integer and you may receive the parameter from the $_GET array as a string)
+                       当你想确保你传递给远程过程的参数是正确的类型时（也就是说，当远程过程要求的是一个整形而你传递的参数是从$_GET数组获得的字符串类型）。
                     </listitem>
                     <listitem>
-                        When the procedure requires base64 or dateTime.iso8601 type (which doesn't exists as a PHP native type)
+                        当远程过程要求一个base64或dateTime.iso8601类型时（PHP本地变量则不存在这种类型）。
                     </listitem>
                     <listitem>
-                        When auto-convertion may fail (i.e. you want to pass an empty XML-RPC struct as a parameter. Empty structs are represented as empty arrays in PHP but, if you give an empty array as a parameter it will be auto-converted to an XML-RPC array since it's not an assosiative array)
+                        当自动转换变量失败时（也就是说你想传递一个空的XML-RPC结构类型作为参数时。除了将一个空的PHP数组精确说明为一个空的XML-RPC结构之外，如果获得一个空的数组作为参数那么它将被自动转化为XML-RPC数组，而不是将其作为关联数组转化为一个XML-RPC结构。）
                     </listitem>
                 </itemizedlist>
             </para>
             <para>
-                There are 2 ways to create an <code>Zend_XmlRpc_Value</code> object: the explicit way (call the object's constructor) or using the <code>Zend_XmlRpc_Value::getXmlRpcValue()</code> static function with the required XML-RPC type constant.
+                有两种方法用于创建<code>Zend_XmlRpc_Value</code>对象：直接调用对象的构造函数或者用对象的<code>Zend_XmlRpc_Value::getXmlRpcValue()</code>静态方法带上必要的XML-RPC类型常量。
             </para>
             <table>
-                <title><code>Zend_XmlRpc_Value</code> object representing the XML-RPC types</title>
+                <title><code>Zend_XmlRpc_Value</code> 对象声明的XML-RPC类型</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
-                            <entry>XML-RPC type</entry>
-                            <entry>Matching <code>Zend_XmlRpc_Value</code> constant</entry>
-                            <entry><code>Zend_XmlRpc_Value</code> object</entry>
+                            <entry>XML-RPC 变量类型</entry>
+                            <entry>相匹配的 <code>Zend_XmlRpc_Value</code> 常量</entry>
+                            <entry><code>Zend_XmlRpc_Value</code> 对象</entry>
                         </row>
                     </thead>
                     <tbody>
@@ -174,9 +170,9 @@ $service->serviceProcedure($p1, $p2);
                 </tgroup>
             </table>
             <programlisting role="php"><![CDATA[...
-/** 2 parameters are passed to this procedure
- *  The first parameter is an XML-RPC base64 type that is created using the static Zend_XmlRpc_Value::getXmlRpcValue() function
- *  The second parameter is an XML-RPC strcture that is created explictly
+/** 传递两个参数给远程过程
+ *  第一个参数是用静态的Zend_XmlRpc_Value::getXmlRpcValue()方法创建的XML-RPC base64类型
+ *  第二个参数是用类型对象精确说明的XML-RPC结构
  */
 
 $p1 = ZXmlRpcValue::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
@@ -187,47 +183,47 @@ $service->serviceProcedure($p1, $p2);
             </programlisting>
             <para>
                 <note>
-                    The value of the parameter is still given in a PHP variable but will be converted to the specified type using PHP conversion techniques (i.e. if a string is given as a value to the <code>Zend_XmlRpc_Value_Integer</code> object, it will be converted using <code>(int)$value</code>).
+                    传递的参数值仍是PHP变量的值，只不过用PHP转换技术转换成指定的类型（也就是说一个字符串的值传给<code>Zend_XmlRpc_Value_Integer</code>对象时，将会被转换成整形以<code>(int)$value</code>的形式）。
                 </note>
             </para>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.as_xml'>
-            <title>Parse an XML string into XML-RPC parameter</title>
+            <title>将一个XML字符串解析为XML-RPC参数</title>
             <para>
-                This method of passing parameters is used internaly in the <code>Zend_XmlRpc</code> package and it's not recommended.
+                这种方法传递参数仅在<code>Zend_XmlRpc</code>内部使用，因此不推荐使用这种方法传递参数。
             </para>
             <para>
-                If you still need to use this method, you should use the <code>Zend_XmlRpc_Value::getXmlRpcValue()</code> static function to parse an XML string into a <code>Zend_XmlRpc_Value</code> object which represents the corresponding XML-RPC type.
-                The <code>Zend_XmlRpc_Value::getXmlRpcValue()</code> function should receive 2 parameters: the XML string and the <code>Zend_XmlRpc_Value::XML_STRING</code> constant.
+                如果你坚持要使用该方法，那么你应该用<code>Zend_XmlRpc_Value::getXmlRpcValue()</code>静态方法将一个XML字符串解析为一个 <code>Zend_XmlRpc_Value</code>对象指定的相应的XML-RPC类型。
+                <code>Zend_XmlRpc_Value::getXmlRpcValue()</code>方法需要两个参数：XML字符串和<code>Zend_XmlRpc_Value::XML_STRING</code>常量。
             </para>
         </sect3>
     </sect2>
     <sect2 id="zend.xmlrpc.client.wsdl">
-        <title>Type hinting of parameters</title>
+        <title>参数类型提示</title>
         <para>
-            The main difference between the XML-RPC and SOAP web services is the WSDL file. The SOAP protocol usualy has a WSDL file that describes the interface to the web service. According to this interface, the SOAP client knows what are the necessary parameter types it has to send to the server and what is the return value type.
-            Without the WSDL file, the user might have a problem knowing these types.
+            XML-RPC和SOAP web服务的最主要不同就是WSDL文件。SOAP协议通常用WSDL文件描述web服务接口。根据这个接口SOPA客户端懂得需要传递给服务端的参数类型并且知道返回的值是什么类型。
+            如果没有WSDL文件，那么用户可能在对变量类型的判断上会有些问题。
         </para>
         <para>
-            The XML-RPC protocol solution uses a special procedure of the service called <code>system.methodSignature</code>. This procedure gets a procedure name as a parameter and returns the signature of the given procedure. The signature is the necessary parameter's type and return value type of that procedure. 
+            XML-RPC协议解决这个问题的办法是调用一个特殊的远程过程<code>system.methodSignature</code>。这个过程得到一个过程名作为参数并返回一个该过程的签名。这个签名中包含这个过程需要传递的参数类型和返回值的类型。 
         </para>
         <note>
-            Not all XML-RPC servers support the special <code>system.methodSignature</code> procedure, servers who don't support it cannot support type hinting.
+            不是所有的XML-RPC服务器都支持这个特殊的<code>system.methodSignature</code>过程，不支持这个过程的服务器则无法支持参数类型提醒。
         </note>
         <para>
-            The <code>Zend_XmlRpc_Client</code> implements a sort of 'WSDL' type file for XML-RPC servers using the <code>system.methodSignature</code> procedure.
-            If requested, the <code>Zend_XmlRpc_Client</code> will request a list of all the procedures of an XML-RPC server, request all the signatures of those procedures, and keep all this data in an XML file (similar to the SOAP WSDL file).
-            When using the same XML-RPC server again, the user can supply the XML file and the <code>Zend_XmlRpc_Client</code> will type hint all the parameters for the requested procedure according to their signatures.
+            <code>Zend_XmlRpc_Client</code>实现了一个对XML-RPC服务器<code>system.methodSignature</code>过程返回的'WSDL'类型文件的排序。
+            如果发出请求的话，<code>Zend_XmlRpc_Client</code>将可以请求获得一份XML-RPC服务器的所有过程的列表，可以请求获得所有这些过程的签名，并将它们保存在XML文件中（就像SOAP的WSDL文件一样）。
+            当再次用到相同的XML-RPC服务器时，用户就能提供一个XML签名文件并且<code>Zend_XmlRpc_Client</code>将可以根据XML文件中过程的签名获得请求过程所有相关的变量类型提示。
         </para>
         <para>
-            The procedures signatures XML file is created by calling the <code>Zend_XmlRpc_Client::__getMethodsXml()</code> function (the function returns an XML string containing all the signature's data).
-            To set an existing signatures XML file, the user can pass the XML data as a parameter in the <code>Zend_XmlRpc_Client</code> constructor or call the <code>Zend_XmlRpc_Client::__setMethodsXml()</code> function.
+            过程的签名XML文件是通过调用<code>Zend_XmlRpc_Client::__getMethodsXml()</code>(这个方法返回一个包含所有签名数据的XML格式字符串)来生成的。
+            用户可以将XML数据作为<code>Zend_XmlRpc_Client</code>构造方法或者调用<code>Zend_XmlRpc_Client::__setMethodsXml()</code>方法时的参数来使用一个存在的签名XML文件。
         </para>
         <example>
-            <title>Calling an XML-RPC service with type hinting</title>
+            <title>用类型提示来调用一个XML-RPC服务</title>
             <programlisting role="php"><![CDATA[<?php
 /**
- * Connect to an XML-RPC server, and save it's signatures file (the XML-RPC eqvivilant to a SOAP WSDL file)
+ * 连接一个XML-RPC服务器，并保存它的签名文件(相当于SOAP的WSDL文件)
  */
 require_once 'Zend/XmlRpc/Client.php';
 
@@ -235,26 +231,25 @@ $service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc');
 
 file_put_contents('/tmp/xmlrpc-signatures/example.xml', $service->__getMethodsXml());
 
-/* The $service object contains all the signatures of the XML-RPC server,
-    when the serviceProcedure is called, its parameter ($param) is converted
-    to the necessary type according to the procedure's signature.
+/**
+ * $service 对象包含了所有XML-RPC服务器的签名，当serviceProcedure被调用时，它的参数将根据过程签名被转换成需要的类型。
  */
 $service->serviceProcedure($param);
 ?>]]>
             </programlisting>
             <programlisting role="php"><![CDATA[<?php
 /**
- * Connect to an XML-RPC server, using an existing signature file, we make sure
- * that the type of the parameters passed to the procedures are of the necessary type
+ * 连接XML-RPC服务器，使用一个存在的签名文件确保
+ * 我们传递的参数被转化为过程需要的类型。
  */
 require_once 'Zend/XmlRpc/Client.php';
 
 $signature_file_xml = file_get_contents('/tmp/xmlrpc-signatures/example.xml');
 $service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc', 'namespace', $signature_file_xml);
 
-/* The $service object contains all the signatures of the XML-RPC server,
-    when the serviceProcedure is called, its parameter ($param) is converted
-    to the necessary type according to the procedure's signature.
+/* $service 对象包含所有XML-RPC服务器的签名，
+   当serviceProcedur被调用时，它的参数($param)将根据过程的签名被
+   自动转化为过程需要的类型。
  */
 $service->serviceProcedure($param);
 ?>]]>
@@ -262,24 +257,24 @@ $service->serviceProcedure($param);
         </example>
     </sect2>
     <sect2 id="zend.xmlrpc.client.response">
-        <title>Getting the response</title>
+        <title>获取响应</title>
         <para>
-            The XML-RPC procedure returns a value in an XML-RPC type.
-            The <code>Zend_XmlRpc_Client</code> method which calls the XML-RPC procedure returns a PHP native type that was converted from the returned XML-RPC type.
+            调用XML-RPC的过程将返回一个XML-RPC类型的值。
+             <code>Zend_XmlRpc_Client</code>方法调用XML-RPC过程返回一个从XML-RPC类型转化而来的PHP本地类型。
         </para>
         <para>
-            You can use the <code>Zend_XmlRpc_Client::__getResponse()</code> function to retrieve the return value of the requested procedure.
-            The <code>__getResponse()</code> function receives a parameter which indicates the type of the return value.
-            The response options are:
+            你可以用<code>Zend_XmlRpc_Client::__getResponse()</code>方法来获得被请求过程的返回值。
+            <code>__getResponse()</code>方法需要一个参数用于说明返回值的类型。
+            响应选项是：
             <itemizedlist>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - Return the procedure return value as a PHP native type (convert the XML-RPC type into a PHP type).
+                    <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - 以PHP本地类型的形式返回过程的返回值（将XML-RPC类型转化为PHP类型）。
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - Return the XML string representation of the XML-RPC response.
+                    <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - 返回描述XML-RPC服务器端响应的XML字符串。
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Return a <code>Zend_XmlRpc_Value</code> object which represents the returned XML-RPC type.
+                    <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - 返回一个用于描述返回的XML-RPC类型的<code>Zend_XmlRpc_Value</code>对象。
                 </listitem>
             </itemizedlist>
         </para>
@@ -287,13 +282,13 @@ $service->serviceProcedure($param);
 $service->serviceProcedure();
 
 $response = $service->__getResponse();
-// $response is the PHP variable converted from the XML-RPC type return value
+// $response 是一个从XML-RPC类型返回值转化而来的PHP变量
   
 $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
-// $response is a string containing the XML representing the procedure return value
+// $response 是一个描述过程返回值的XML字符串
 
 $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_ZXMLRPC_OBJECT);
-// $response is a Zend_XmlRpc_Value instance representing the XML-RPC type return value
+// $response 是一个描述XML-RPC类型返回值的Zend_XmlRpc_Value实例
 ...]]>
         </programlisting>
     </sect2>
