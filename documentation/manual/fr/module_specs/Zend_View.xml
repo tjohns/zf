@@ -1,40 +1,40 @@
 <sect1 id="zend.view.introduction">
 
     <title>Introduction</title>
-    
+
     <para>
-        <code>Zend_View</code> est une classe qui permet de travailler avec la partie &quot;vue&quot; du 
+        <code>Zend_View</code> est une classe qui permet de travailler avec la partie &quot;vue&quot; du
         design pattern Modèle Vue Contrôleur. Elle existe pour aider à garder la vue séparée du modèle
-        et des scripts du contrôleur. Elle fournie un système d'aides, de filtre d'affichage, et d'échappement 
+        et des scripts du contrôleur. Elle fournie un système d'aides, de filtre d'affichage, et d'échappement
         de variables.
     </para>
-    
+
     <para>
         <code>Zend_View</code> est un système de template agnostique; vous pouvez utiliser PHP comme
-        langage de template, ou créer des instances d'autres systèmes de templates, et les manipuler à 
+        langage de template, ou créer des instances d'autres systèmes de templates, et les manipuler à
         travers les scripts de vue.
     </para>
 
     <para>
         L'utilisation de <code>Zend_View</code> se déroule en étape principales :
-        
+
         1. Votre script de contrôleur crée une instance de <code>Zend_View</code> et assigne
         des variables à cette instance.
-        
+
         2. Le contrôleur dit à <code>Zend_View</code> de rendre une vue particulière, et de ce fait
         va donner le contrôle au script de vue, qui va générer l'affichage.
     </para>
-    
+
     <sect2 id="zend.view.introduction.controller">
-        
+
         <title>Script du Controlleur</title>
-        
+
         <para>
             Comme exemple simple, imaginons que vous contrôleur aie une liste de données sur des livres
             qu'il veut rendre en passant par une vue. The contrôleur pourrait alors ressembler à
             quelque chose comme ça :
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // utilise un modèle pour obtenir les données sur les livres : auteurs et titres
 $data = array(
@@ -52,103 +52,103 @@ $data = array(
     )
 );
 
-// assigniation des données du livre à une instance <code>Zend_View</code>
-Zend::loadClass('<code>Zend_View</code>');
-$view = new <code>Zend_View</code>();
+// assigniation des données du livre à une instance Zend_View
+Zend::loadClass('Zend_View');
+$view = new Zend_View();
 $view->books = $data;
 
 // et appel du script de rendu d'affichage appelé &quot;booklist.php&quot;
 echo $view->render('booklist.php');
 ?>]]>
         </programlisting>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.introduction.view">
-    
+
         <title>Script de vue</title>
-        
+
         <para>
             Maintenant, nous avons besoin d'associer le script de vue, &quot;booklist.php&quot;.
-            C'est un script PHP comme les autres, à une exception près : il s'exécute dans la portée de 
+            C'est un script PHP comme les autres, à une exception près : il s'exécute dans la portée de
             l'instance <code>Zend_View</code>, ce qui veut dire que les référence à $this pointent vers les
             attributs et les méthodes de <code>Zend_View</code>. (Les variables assignées à l'instance par le contrôlleur
-            sont des propriétés publiques de l'instance <code>Zend_View</code>). Ainsi un script de vue de base 
+            sont des propriétés publiques de l'instance <code>Zend_View</code>). Ainsi un script de vue de base
             pourrait ressembler à ceci:
       </para>
-        
+
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
-    
+
     <!-- La table des livres -->
     <table>
         <tr>
             <th>Auteur</th>
             <th>Titre</th>
         </tr>
-        
+
         <?php foreach ($this->books as $key => $val): ?>
         <tr>
             <td><?php echo $this->escape($val['auteur']) ?></td>
             <td><?php echo $this->escape($val['titre']) ?></td>
         </tr>
         <?php endforeach; ?>
-        
+
     </table>
-    
+
 <?php else: ?>
-    
+
     <p>Aucun livre à afficher</p>
-    
+
 <?php endif; ?>]]>
         </programlisting>
-        
+
         <para>
             Notez l'utilisation de la méthode <code>escape</code> pour échapper les variables à afficher.
         </para>
-        
+
     </sect2>
-    
+
 </sect1>
 
 <sect1 id="zend.view.controllers">
     <title>Scripts de contrôleur</title>
-    
+
     <para>
-        Le contrôleur est l'endroit où vous instantiez et configurer <code>Zend_View</code>. 
+        Le contrôleur est l'endroit où vous instantiez et configurer <code>Zend_View</code>.
         Vous assignez ensuite des variables à la vue, et lui dite comment effectuer la sortie
         en utilisant un script particulier.
     </para>
-    
+
     <sect2 id="zend.view.controllers.assign">
-    
+
         <title>Assigner des variables</title>
-        
+
         <para>
             Votre script de contrôleur devrait assigner les variables nécessaires à la vue avant
             de passer le contrôle au script de vue. Normalement vous pouvez faire des assignations
-            une par une en assignant les noms des propriétés de l'instance de la vue : 
+            une par une en assignant les noms des propriétés de l'instance de la vue :
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-$view = new <code>Zend_View</code>();
+$view = new Zend_View();
 $view->a = "Ha";
 $view->b = "Bé";
 $view->c = "Cé";
 ?>]]>
         </programlisting>
-        
+
         <para>
-            Cependant, ceci peut être pénible quand vous avez déjà collecté (dans un tableau ou dans un objet) 
+            Cependant, ceci peut être pénible quand vous avez déjà collecté (dans un tableau ou dans un objet)
             les valeurs à assigner.
         </para>
-        
+
         <para>
             La méthode <code>assign()</code> vous laisse assigner "&quot;en vrac&quot; depuis un tableau ou un objet.
             Les exemples suivants ont le même effet que celui ci-dessus.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-$view = new <code>Zend_View</code>();
+$view = new Zend_View();
 
 // assigne un tableau de paires clés/valeurs, où la clé
 // est le nom de la variable, et la valeur, sa valeur assignée
@@ -168,106 +168,106 @@ $obj->c = "Cé";
 $view->assign((array) $obj);
 ?>]]>
         </programlisting>
-        
+
         <para>
-            Alternativement, vous pouvez utiliser la méthode <code>assign()</code> pour assigner 
+            Alternativement, vous pouvez utiliser la méthode <code>assign()</code> pour assigner
             la variables une par une, en passant le nom de la variable, et sa valeur.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-$view = new <code>Zend_View</code>();
+$view = new Zend_View();
 $view->assign('a', "Ha");
 $view->assign('b', "Bé");
 $view->assign('c', "Cé");
 ?>]]>
         </programlisting>
-        
+
     </sect2>
 
     <sect2 id="zend.view.controllers.render">
-        
+
         <title>Effectuer le rendu d'un script de vue</title>
-        
+
         <para>
             Une fois que vous avez assigné toutes les variables dont vous aviez besoin, le contrôleur
             devrait dire à <code>Zend_View</code> de rendre un script de vue particulier.
             Faites cela en appelant la méthode <code>render()</code>. Notez que la méthode va
-            retourner la vue rendue, mais ne va pas l'afficher, vous devez donc l'afficher avec 
+            retourner la vue rendue, mais ne va pas l'afficher, vous devez donc l'afficher avec
             print ou echo vous même, au moment voulu.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-$view = new <code>Zend_View</code>();
+$view = new Zend_View();
 $view->a = "Ha";
 $view->b = "Bé";
 $view->c = "Cé";
 echo $view->render('uneVue.php');
 ?>]]>
         </programlisting>
-    
+
     </sect2>
-    
+
     <sect2 id="zend.view.controllers.script-paths">
-        
+
         <title>Chemin des scripts de vue</title>
-        
+
         <para>
             Par défaut, <code>Zend_View</code> attend que vos scripts de vues soient dans le même
             dossier que le celui du contrôleur. Par exemple, si le script du contrôleur est dans
-            &quot;"/chemin/des/controleurs"&quot; et qu'il apelle $view->render('uneVue.php'), 
+            &quot;"/chemin/des/controleurs"&quot; et qu'il apelle $view->render('uneVue.php'),
             <code>Zend_View</code> va rechercher &quot;"/chemin/des/controleurs/uneVue.php"&quot;
         </para>
-        
+
         <para>
             Evidemment, vos script sont peut-être localisé ailleurs. Pour dire à <code>Zend_View</code>
             ou il doit chercher, utilisez la méthode <code>setScriptPath()</code>.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-$view = new <code>Zend_View</code>();
+$view = new Zend_View();
 $view->setScriptPath('/chemin/des/vues');
 ?>]]>
         </programlisting>
-        
+
         <para>
             Maintenat, vous appelez $view->render('uneVue.php'), il va rechercher dans &quot;/chemin/des/vues/uneVue.php&quot;.
         </para>
-        
+
         <para>
             En fait, vous pouvez &quot;empiler&quot; les chemins en utilisant la méthode <code>setScriptPath()</code>.
             Comme vous ajoutez des chemins dans la pile, <code>Zend_View</code> va rechercher le script de vue dans le
             le chemin le plus récemment ajouté. Cela vous permet de passer outre les vues par défaut, pour des vues
-            personnalisées. Ainsi vous pouvez créer des &quot;thèmes&quot; ou des &quot;skins&quot; pour certaines vues, 
+            personnalisées. Ainsi vous pouvez créer des &quot;thèmes&quot; ou des &quot;skins&quot; pour certaines vues,
             pendant que vous laissez les autres intactes.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-$view = new <code>Zend_View</code>();
+$view = new Zend_View();
 $view->addScriptPath('/chemin/des/vues');
 $view->addScriptPath('/chemin/des/vues-personnalisees');
 
-// maintenant, lorsque vous appelerez $view->render('booklist.php'), 
-// <code>Zend_View</code> va rechercher en premier dans "/chemin/des/vues-personnaliseesbooklist.php", puis
+// maintenant, lorsque vous appelerez $view->render('booklist.php'),
+// Zend_View va rechercher en premier dans "/chemin/des/vues-personnaliseesbooklist.php", puis
 // dans "/chemin/des/vues/booklist.php", et ensuite dans le répertoire courant
 // pour trouver le fichier &quot;booklist.php&quot;.
 ?>]]>
         </programlisting>
-        
+
     </sect2>
 
 </sect1>
 
 <sect1 id="zend.view.scripts">
-    
+
     <title>Scripts de vue</title>
-        
+
     <para>
-        une fois que le contrôleur a assigné les variables et appelé <code>render()</code>, 
+        une fois que le contrôleur a assigné les variables et appelé <code>render()</code>,
         <code>Zend_View</code> inclus le script de vue requis, et l'exécute &quot;à l'intérieur&quot;
         de la porté de l'instance <code>Zend_View</code>. Donc dans vos scripts de vue, les références à
         $this-> pointent en fait sur l'instance <code>Zend_View</code> elle-même.
     </para>
-    
+
     <para>
         Les variables assignées à la vue depuis le contrôleur lui sont référrées comme des propriétés
         de l'instance. Par exemple, si le contrôleur a assigné une variable &quot;quelque-chose&quot;, vous
@@ -275,51 +275,51 @@ $view->addScriptPath('/chemin/des/vues-personnalisees');
         (Cela vous permet de garder une trace pour savoir quelles valeurs ont été assignées au script, et quelles
         sont internes au script lui même.)
     </para>
-    
+
     <para>
         Pour rappel, voici l'exemple de script issu de l'introduction de ce chapitre sur <code>Zend_View</code>.
     </para>
-    
+
     <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
-    
+
     <!-- La table des livres -->
     <table>
         <tr>
             <th>Auteur</th>
             <th>Titre</th>
         </tr>
-        
+
         <?php foreach ($this->books as $key => $val): ?>
         <tr>
             <td><?php echo $this->escape($val['auteur']) ?></td>
             <td><?php echo $this->escape($val['titre']) ?></td>
         </tr>
         <?php endforeach; ?>
-        
+
     </table>
-    
+
 <?php else: ?>
-    
+
     <p>Aucun livre à afficher</p>
-    
+
 <?php endif; ?>]]>
     </programlisting>
-        
+
     <sect2 id="zend.view.scripts.escaping">
-        
+
         <title>Echapper la sortie</title>
-        
+
         <para>
             Une des tâches les plus importantes à effectuer dans un script de vue est de s'assurer
             que la sortie est correctement échappé; de plus ceci permet d'éviter les attaques de type
             cross-site scriptin. A moins que vous n'utilisiez une fonction, une méthode , ou une aidre
             qui gère l'échappement, vous devriez toujours échapper les variable lors de l'affichage.
         </para>
-        
+
         <para>
             <code>Zend_View</code> a une méthode appelée <code>escape()</code> qui se charge de l'échappement.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 // mauvaise pratique d'affichage
 echo $this->variable;
@@ -328,17 +328,17 @@ echo $this->variable;
 echo $this->escape($this->variable);
 ?>]]>
         </programlisting>
-        
+
         <para>
             Par défaut, la méthode <code>escape()</code> utilise la fonction PHP htmlspecialchar()
             pour l'échappement. Cependant, en fonction de votre environnement, you souhaitez peut-être un
             échappement différent. Utilisez la méthode <code>setEscape()</code> au niveau du contrôleur pour
             dire à <code>Zend_View</code> quelle méthode de rappel elle doit utiliser.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-// créé une instance <code>Zend_View</code>
-$view = new <code>Zend_View</code>();
+// créé une instance Zend_View
+$view = new Zend_View();
 
 // spécifie qu'il faut utiliser htmlentities comme rappel d'échappement
 $view->setEscape('htmlentities');
@@ -354,25 +354,25 @@ $view->setEscape(array($obj, 'methodName'));
 echo $view->render(...);
 ?>]]>
         </programlisting>
-        
+
         <para>
             La fonction ou méthode de rappel doit prendre la valeur à échapper dans le premier paramètre, et tout
             les autres paramètres devraient être optionnels.
         </para>
-        
+
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
-    
+
         <title>Systèmes de template</title>
-        
+
         <para>
             Bien que PHP lui-même un moteur de template puissant, beaucoup de développeurs pensent que c'est
             beaucoup trop puissant ou complexe pour les graphiste/intégrateur. Le script de vue peut être
             utilisé en tant que tel pour instantier et manipuler des objets de templates, comme les template
             PHPLIB. Le script de vue pour ce type d'activité pourrait ressemble à ceci :
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
 include_once 'template.inc';
 $tpl = new Template();
@@ -382,13 +382,13 @@ if ($this->books) {
         "booklist" => "booklist.tpl",
         "eachbook" => "eachbook.tpl",
     ));
-    
+
     foreach ($this->books as $key => $val) {
         $tpl->set_var('auteur', $this->escape($val['auteur']);
         $tpl->set_var('titre', $this->escape($val['titre']);
         $tpl->parse("livre", "eachbook", true);
     }
-    
+
     $tpl->pparse("output", "booklist");
 } else {
     $tpl->setFile("nobooks", "nobooks.tpl")
@@ -396,11 +396,11 @@ if ($this->books) {
 }
 ?>]]>
         </programlisting>
-        
+
         <para>
-            Et ceci pourrait être les fichiers de templates correspondants : 
+            Et ceci pourrait être les fichiers de templates correspondants :
         </para>
-        
+
         <programlisting role="html"><![CDATA[
 <!-- booklist.tpl -->
 <table>
@@ -421,104 +421,104 @@ if ($this->books) {
 <p>Aucun livre à afficher</p>
 ]]>
         </programlisting>
-        
+
     </sect2>
-    
+
 </sect1>
 
 <sect1 id="zend.view.helpers">
-    
+
     <title>Aides pour la vue</title>
-    
+
     <para>
         Dans vos scripts de vue, il est souvent nécessaire d'effectuer certaines actions complexe encore et encore;
         i.e formatter une date, générer des éléments de formulaire, afficher des liens d'action. Vous pouvez utiliser
         des classes d'aide pour effectuer ce genre de tâches.
     </para>
-    
+
     <para>
         Pour utiliser une aide dans votre script de vue, appelez le en utilisant <code>$this->helperName()</code>.
         Dans les coulisses, <code>Zend_View</code> va charger la classe <code>Zend_View</code>_Helper_HelperName, créer
         une instance de cet objet, et appeler sa méthode <code>helperName()</code>. L'instance de l'objet est persistance
         dans l'instance de <code>Zend_View</code>, et est réutilisée pour tout les appels futur à <code>$this->helperName()</code>.
     </para>
-    
+
     <sect2 id="zend.view.helpers.initial">
-    
+
         <title>Aides initiales</title>
-        
+
         <para>
-            <code>Zend_View</code> fournit avec un jeu de claisses d'aides initial, tout sont liées à la 
+            <code>Zend_View</code> fournit avec un jeu de claisses d'aides initial, tout sont liées à la
             génération d'éléments de formulaire. Chacune affiche et échappe l'élement voulu :
         </para>
-        
+
         <itemizedlist>
-            
+
             <listitem><para>
                 formButton($name, $value, $attribs): Crée un élément &lt;input type="button" /&gt;
             </para></listitem>
-            
+
             <listitem><para>
                 formCheckbox($name, $value, $attribs, $options): Crée une élément &lt;input type="checkbox" /&gt; .
-                Le paramètre $options est un tableau dans lequel la première valeur est la valeur &quot;checked&quot;, 
+                Le paramètre $options est un tableau dans lequel la première valeur est la valeur &quot;checked&quot;,
                 et la seconde &quot;unchecked&quot; (les défauts sont '1' et '0'). Si $value correspond à la valeur
                 &quot;checked&quot;, la boite sera cochée.
             </para></listitem>
-            
+
             <listitem><para>
                 formFile($name, $value, $attribs): Crée un élément &lt;input type="file" /&gt;
             </para></listitem>
-            
+
             <listitem><para>
                 formHidden($name, $value, $attribs): Crée un élément &lt;input type="hidden" /&gt; .
             </para></listitem>
-            
+
             <listitem><para>
                 formPassword($name, $value, $attribs): Crée un élément &lt;input type="password" /&gt; .
             </para></listitem>
-            
+
             <listitem><para>
                 formRadio($name, $value, $attribs, $options): Crée une série d'éléments &lt;input type="button" /&gt;,
                 une pour chaque element $options. Dans le tableau $options, la clé de l'élément est la valeur de la radio,
-                et la valeur de l'élément est l'étiquette de la radio. 
+                et la valeur de l'élément est l'étiquette de la radio.
                 La radio $value sera précoché pour vous.
             </para></listitem>
-            
+
             <listitem><para>
                 formReset($name, $value, $attribs): Crée un élément &lt;input type="reset" /&gt; .
             </para></listitem>
-            
+
             <listitem><para>
-                formSelect($name, $value, $attribs, $options): Crée un bloc &lt;select&gt;...&lt;/select&gt; , 
+                formSelect($name, $value, $attribs, $options): Crée un bloc &lt;select&gt;...&lt;/select&gt; ,
                 avec une &lt;option&gt; pour chaque élément $options. Dans le tableau $options, la clé de l'élément
-                est la valeur de l'option, et la valeur de l'élément est sont étiquette optionnelle. L'option (ou les options) 
+                est la valeur de l'option, et la valeur de l'élément est sont étiquette optionnelle. L'option (ou les options)
                 $value sera (ou seront) présélectionnées pour vous.
             </para></listitem>
-            
+
             <listitem><para>
                 formSubmit($name, $value, $attribs): Crée un élément &lt;input type="submit" /&gt; .
             </para></listitem>
-            
+
             <listitem><para>
                 formText($name, $value, $attribs): Crée un élément &lt;input type="text" /&gt; .
             </para></listitem>
-            
+
             <listitem><para>
                 formTextarea($name, $value, $attribs): Crée un bloc &lt;textarea&gt;...&lt;/textarea&gt;
             </para></listitem>
-            
+
         </itemizedlist>
-        
+
         <para>
             Les utiliser dans vos script de vue est très simple, voici un exemple.
             Notez que tout ce dont vous avez besoin, c'est de les appeler; elles vont
             se charger et s'instantier elle-même si besoin est.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-// dans votre script de vue, $this se réfèrre à l'instance de <code>Zend_View</code>.
+// dans votre script de vue, $this se réfèrre à l'instance de Zend_View.
 //
-// Partons du principe que vous avez déjà assigné une série d'options de sélect dans un 
+// Partons du principe que vous avez déjà assigné une série d'options de sélect dans un
 // tableau $countries =  array('us' => 'United States', 'il' => 'Israel', 'de' => 'Germany').
 ?>
 <form action="action.php" method="post">
@@ -533,11 +533,11 @@ if ($this->books) {
     </label></p>
 </form>]]>
         </programlisting>
-        
+
         <para>
-            La sortie résultante du script de vue ressemblera à ceci: 
+            La sortie résultante du script de vue ressemblera à ceci:
         </para>
-        
+
         <programlisting role="php"><![CDATA[<form action="action.php" method="post">
     <p><label>Votre email :
         <input type="text" name="email" value="you@example.com" size="32" />
@@ -555,97 +555,97 @@ if ($this->books) {
     </label></p>
 </form>]]>
         </programlisting>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.helpers.paths">
-        
+
         <title>Chemin des aides</title>
-        
+
         <para>
             Comme pour les scripts de vue, votre contrôleur peut spécifier une pile de chemins
             dans lesquels <code>Zend_View</code> cherchera les classes d'aides. Par défaut, <code>Zend_View</code>
             cherche dans &quot;Zend/View/Helper/*&quot; . Vous pouvez dire à <code>Zend_View</code> de regarder dans
             d'autres endroits en utilisant les méthodes <code>setHelperPath()</code> et <code>addHelperPath()</code>.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-$view = new <code>Zend_View</code>();
+$view = new Zend_View();
 $view->setHelperPath('/chemin/vers/plus/de/classes/d-aides');
 ?>]]>
         </programlisting>
-        
+
         <para>
             En fait, vous pouvez &quot;empiler&quot; les chemins en utilisant la méthode <code>addHelperPath()</code>
             Comme vous ajouter des chemins dans la pile, <code>Zend_View</code> va regarder dans le chemin le plus
             récemment ajouté, pour inclure la classe d'aide. Cela vous permet d'ajouter (ou bien de re-définir) la
             distribution initiale des aides, avec vos propes aides personnalisées.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-$view = new <code>Zend_View</code>();
+$view = new Zend_View();
 $view->addHelperPath('/chemin/vers/des/aides');
 $view->addHelperPath('/autre/chemin/vers/des/aides');
 
-// maintenant, lorsque vous appelerez $this->helperName(), <code>Zend_View</code>
+// maintenant, lorsque vous appelerez $this->helperName(), Zend_View
 // va rechercher en premier /chemin/vers/des/aides/HelperName.php, et ensuite dans
-// /autre/chemin/vers/des/aides/HelperName.php, et finalement dans 
+// /autre/chemin/vers/des/aides/HelperName.php, et finalement dans
 // Zend/View/Helpers/HelperName.php
 
 ?>]]>
         </programlisting>
-        
+
     </sect2>
-    
+
     <sect2 id="zend.view.helpers.custom">
-        
+
         <title>Ecrire des aides personnalisées</title>
-        
+
         <para>
             Ecrire des aides personnalisées est facile, vous devez juste suivre ces règle :
         </para>
-        
+
         <itemizedlist>
-            
+
             <listitem><para>
                 Le nom de la classe doit être <code>Zend_View</code>_Helper_*, où * est
-                le nom de l'aide. I.e, si vous voulez écrire une aide appelée &quot;actionSpeciale&quot;, 
+                le nom de l'aide. I.e, si vous voulez écrire une aide appelée &quot;actionSpeciale&quot;,
                 le nom de la classe sera &quot;<code>Zend_View</code>_Helper_ActionSpecial&quot;
                 (notez le changement de casse).
             </para></listitem>
-            
+
             <listitem><para>
-                La classe doit avoir une méthode publique dont le nom correspond au nom de l'aide; 
+                La classe doit avoir une méthode publique dont le nom correspond au nom de l'aide;
                 c'est la méthode qui sera appelé quand votre template appellera &quot;$this->actionSpeciale()&quot;.
                 Dans notre exemple &quot;$this->actionSpeciale()&quot;, la déclaration de méthode requise serait
                 &quot;public function actionSpeciale()&quot;.
             </para></listitem>
-            
+
             <listitem><para>
                 En général, la classe ne devrait pas afficher directement les données (via echo ou print).
                 Elle devrait retourner les valeurs pour être ensuite affichées. Les valeurs retournées devrait
                 être échappées de façon appropriées.
             </para></listitem>
-            
+
             <listitem><para>
                 La classe doit être dans un fichier ayant le même nom que la méthode d'aide.
                 Si on utilise la méthode &quot;actionSpeciale()&quot;, le fichier devra être nommé
                 &quot;ActionSpeciale.php&quot;
             </para></listitem>
         </itemizedlist>
-        
+
         <para>
-            Placez les fichier de classe d'aide quelque part dans la pile des chemins d'aide, et 
+            Placez les fichier de classe d'aide quelque part dans la pile des chemins d'aide, et
             <code>Zend_View</code> le chargera, l'instantiera, le rendre persistant, et l'exécutera automatiquement
             pour vous.
         </para>
-        
+
         <para>
             Voici un exemple du fichier &quot;ActionSpeciale.php&quot; :
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-class <code>Zend_View</code>_Helper_ActionSpeciale {
+class Zend_View_Helper_ActionSpeciale {
     protected $_count = 0;
     public function actionSpeciale()
     {
@@ -656,21 +656,21 @@ class <code>Zend_View</code>_Helper_ActionSpeciale {
 }
 ?>]]>
         </programlisting>
-        
+
         <para>
             Ensuite, dans un script de vue, vous pouvez appeler l'aide <code>ActionSpeciale</code>
             autant de fois que vous le souhaitez; elle sera instantiée une fois, et rendue persistante pendant
             toute la vie de l'instance de <code>Zend_View</code>.
         </para>
-        
+
         <programlisting role="php"><![CDATA[<?php
-// rappelez vous, $this se réfèrre à l'instance de <code>Zend_View</code>
+// rappelez vous, $this se réfèrre à l'instance de Zend_View
 echo $this->actionSpeciale();
 echo $this->actionSpeciale();
 echo $this->actionSpeciale();
 ?>]]>
         </programlisting>
-        
+
         <para>
             La sortie pourrait alors ressemble à ceci :
         </para>
@@ -679,9 +679,9 @@ J'ai vu 'The Big Lebowsky' 1 foi(s).
 J'ai vu 'The Big Lebowsky' 2 foi(s).
 J'ai vu 'The Big Lebowsky' 3 foi(s).]]>
         </programlisting>
-        
+
     </sect2>
-    
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
