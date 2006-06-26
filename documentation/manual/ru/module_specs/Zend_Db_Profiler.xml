@@ -8,12 +8,12 @@
 
         <para>
             <code>Zend_Db_Profiler</code> может быть включен для
-            профилирования запросов. Профили включают в
-            себя запросы, обработанные адаптером, а также время, затраченное
-            на обработку запроса. Это позволяет исследовать выполненные
-            запросы без добавления дополнительного отладочного кода в классы.
-            Расширенное использование также позволяет разработчикам
-            фильтровать запросы, предназначенные для профилирования.
+            для того, чтобы сделать возможным профайлинг запросов.
+            Профaйлы включают в себя запросы, обработанные адаптером, а также
+            время, затраченное на обработку запроса. Это позволяет исследовать
+            выполненные запросы без добавления дополнительного отладочного
+            кода в классы. Расширенное использование также позволяет
+            разработчикам указывать, для каких запросов создавать профайлы.
 <!--
             <code>Zend_Db_Profiler</code> can be enabled to allow profiling of
             queries. Profiles include the queries processed by the adapter as
@@ -25,7 +25,7 @@
         </para>
 
         <para>
-            Включение профилировщика производится либо передачей директивы
+            Включение профайлера производится либо передачей директивы
             конструктору адаптера, либо более поздним обращением к адаптеру
             для включения. 
 <!--
@@ -42,27 +42,27 @@ $params = array (
     'username' => 'malory',
     'password' => '******',
     'dbname'   => 'camelot',
-    'profiler' => true  // включение профилировщика;
+    'profiler' => true  // включение профайлера;
                         // для отключения используется false (значение по умолчанию)
 );
 
 $db = Zend_Db::factory('pdoMysql', $params);
 
-// отключение профилировщика:
+// отключение профайлера:
 $db->getProfiler()->setEnabled(false);
 
-// включение профилировщика:
+// включение профайлера:
 $db->getProfiler()->setEnabled(true);
 ?>]]></programlisting>
     </sect2>
 
     <sect2 id="zend.db.profiler.using">
 
-        <title>Использование профилировщика</title>
+        <title>Использование профайлера</title>
 
         <para>
-            Забор профилировщика производится в любой момент с использованием
-            метода адаптера <code>getProfiler()</code>:
+            Получение профайлера производится в любой момент с помощью
+            метода <code>getProfiler()</code> в адаптере БД:
 <!--
             At any point, grab the profiler using the adapter's
             <code>getProfiler()</code> method:
@@ -87,7 +87,7 @@ $profiler = $db->getProfiler();
         <itemizedlist>
             <listitem>
                 <code>getTotalNumQueries()</code> возвращает общее количество
-                запросов, которые были профилированы.
+                запросов, которые были обработаны профайлером.
 <!--
                 <code>getTotalNumQueries()</code> returns the total number
                 of queries that have been profiled.
@@ -95,14 +95,15 @@ $profiler = $db->getProfiler();
             </listitem>
             <listitem>
                 <code>getTotalElapsedSeconds()</code> возвращает общее
-                количество секунд, затраченное на все профилированные запросы.
+                количество секунд, затраченное на все запросы, обработанные
+                профайлером.
 <!--
                 <code>getTotalElapsedSeconds()</code> returns the total
                 number of seconds elapsed for all profiled queries.
 -->
             </listitem>
             <listitem>
-                <code>getQueryProfiles()</code> возвращает массив всех профилей
+                <code>getQueryProfiles()</code> возвращает массив всех профайлов
                 запросов.
 <!--
                 <code>getQueryProfiles()</code> returns an array of all
@@ -111,7 +112,7 @@ $profiler = $db->getProfiler();
             </listitem>
             <listitem>
                 <code>getLastQueryProfile()</code> возвращает последний
-                (самый недавний) профиль запроса, безотносительно того, был ли
+                (самый недавний) профайл запроса, безотносительно того, был ли
                 запрос завершен (Если не был завершен, то конечное время будет
                 равно <code>NULL</code>).
 <!--
@@ -121,7 +122,7 @@ $profiler = $db->getProfiler();
 -->
             </listitem>
             <listitem>
-                <code>clear()</code> удаляет все профили прошедших запросов из
+                <code>clear()</code> удаляет все профайлы прошлых запросов из
                 стека.
 <!--
                 <code>clear()</code> clears any past query profiles
@@ -131,9 +132,9 @@ $profiler = $db->getProfiler();
         </itemizedlist>
 
         <para>
-            Возвращаемое значение <code>getLastQueryProfile()</code> и его
-            отдельные элементы являются объектами
-            <code>Zend_Db_Profiler_Query</code>, котроые дают возможность
+            Возвращаемое <code>getLastQueryProfile()</code> значение и
+            отдельные элементы <code>getQueryProfiles()</code> являются объектами
+            <code>Zend_Db_Profiler_Query</code>, которые дают возможность
             исследовать отдельные запросы:   
 <!--
             The return value of <code>getLastQueryProfile()</code> and the
@@ -145,7 +146,7 @@ $profiler = $db->getProfiler();
 
         <itemizedlist>
             <listitem>
-                <code>getQuery()</code> возвращает код SQL запроса.
+                <code>getQuery()</code> возвращает код SQL-запроса.
 <!--
                 <code>getQuery()</code> returns the SQL text of the query.
 -->
@@ -162,7 +163,7 @@ $profiler = $db->getProfiler();
 
         <para>
             Информация, предоставляемая <code>Zend_Db_Profiler</code>, полезна
-            для профилирования "узких мест" в приложениях и отладки запросов.
+            для поиска "узких мест" в приложениях и отладки запросов.
             Например, чтобы посмотреть, какой запрос выполнялся
             последним:
 <!--
@@ -180,7 +181,7 @@ echo $query->getQuery();
 ?>]]></programlisting>
 
         <para>
-            Возможно, страница генерируется медленно. Используйте профилировщик
+            Возможно, страница генерируется медленно. Используйте профайлер
             для того, чтобя сначала определить общее количество секунд для
             всех запросов, затем выполните обход всех запросов, чтобы найти
             тот, который выполняется дольше всех:  
@@ -214,12 +215,12 @@ echo "Запрос с наибольшим временем выполнения
 
     <sect2 id="zend.db.profiler.advanced">
 
-        <title>Расширенное использование профилировщика<!--Advanced Profiler Usage--></title>
+        <title>Расширенное использование профайлера</title>
 
         <para>
-            Кроме исследования запросов, профилировщик также дает
-            возможность разработчикам фильтровать запросы, предназначенные
-            для профилирования. Следующие методы работают на экземпляре
+            Кроме исследования запросов, профайлер также дает
+            возможность разработчику фильтровать запросы, для которых
+            создаются профайлы. Следующие методы работают на экземпляре
             <code>Zend_Db_Profiler</code>:
 <!--
             In addition to query inspection, the profiler also allows the
@@ -236,9 +237,10 @@ echo "Запрос с наибольшим временем выполнения
 
             <para>
                 <code>setFilterElapsedSecs()</code> дает возможность
-                разработчикам устанавливать минимальное время запроса, после
-                которого запросы будут профилироваться. Для того, чтобы убрать
-                фильтрацию, передайте методу значение <code>NULL</code>.
+                разработчику устанавливать минимальное время запроса, после
+                которого будет проводиться профайлиг запросов.
+                Для того, чтобы убрать фильтрацию, передайте методу значение
+                <code>NULL</code>.
 <!--
                 <code>setFilterElapsedSecs()</code> allows the developer to set
                 a minimum query time before a query is profiled. To remove the
@@ -247,10 +249,10 @@ echo "Запрос с наибольшим временем выполнения
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Профилировать только те запросы, которые отнимают по меньшей мере 5 секунд:
+// Проводить профайлинг только тех запросы, которые отнимают по меньшей мере 5 секунд:
 $profiler->setFilterElapsedSecs(5);
 
-// Профилировать все запросы безотносительно времени выполнения:
+// Профайлировать все запросы безотносительно времени выполнения:
 $profiler->setFilterElapsedSecs(null);
 ?>]]></programlisting>
         </sect3>
@@ -259,9 +261,9 @@ $profiler->setFilterElapsedSecs(null);
             <title>Фильтрация по типу запроса</title>
 
             <para>
-                <code>setFilterQueryType()</code> дает разработчикам возможность
-                указывать, какие типы запросов должны профилироваться; для
-                профилирования нескольких типов запросов, используйте логическое
+                <code>setFilterQueryType()</code> дает разработчику возможность
+                указывать, для каких типов запросов должны создаваться профайлы;
+                для профайлинга нескольких типов запросов используйте логическое
                 <code>OR</code>. Типы запросов определены в следующих константах
                 <code>Zend_Db_Profiler</code>:
 <!--
@@ -338,9 +340,9 @@ $profiler->setFilterElapsedSecs(null);
             </itemizedlist>
 
             <para>
-                Как и с <code>setFilterElapsedSecs()</code>, вы можете удалить
-                все фильтры посредством передачи <code>NULL</code> в качестве
-                единственного аргумента. 
+                Как и в случае <code>setFilterElapsedSecs()</code>, вы можете
+                удалить все фильтры посредством передачи <code>NULL</code> в
+                качестве единственного аргумента. 
 <!--
                 As with <code>setFilterElapsedSecs()</code>, you can remove any
                 existing filters by passing <code>null</code> as the sole
@@ -349,13 +351,13 @@ $profiler->setFilterElapsedSecs(null);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// профилировать только запросы SELECT
+// профайлинг только запросов SELECT
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT);
 
-// профилировать запросы SELECT, INSERT и UPDATE
+// профайлинг запросов SELECT, INSERT и UPDATE
 $profiler->setFilterQueryType(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
 
-// профилировать запросы DELETE (так мы можем определить, почему удаляются данные)
+// профайлинг запросов DELETE (так мы можем определить, почему удаляются данные)
 $profiler->setFilterQueryType(Zend_Db_Profiler::DELETE);
 
 // удалить все фильтры
@@ -365,19 +367,18 @@ $profiler->setFilterQueryType(null);
         </sect3>
 
         <sect3 id="zend.db.profiler.advanced.getbytype">
-            <title>Получение профилей по типу запроса</title>
+            <title>Получение профайлов по типу запроса</title>
 
             <para>
                 Использование <code>setFilterQueryType()</code> может 
-                сократить количество генерируемых профилей. Тем не менее,
-                иногда может быть полезным хранить все профили, но просматривать
+                сократить количество генерируемых профайлов. Тем не менее,
+                иногда может быть полезным хранить все профайлы, но просматривать
                 только те, которые нужны в данный момент. Другой метод
                 <code>getQueryProfiles()</code> - это то, что может делать такую
                 фильтрацию "на лету", ему передается тип запроса (или
-                логической комбинации типов запросов) в качестве его первого
-                аргумента; смотрите
-                <xref linkend="zend.db.profiler.advanced.filtertype" /> для
-                списка констант типов запросов.
+                логическая комбинация типов запросов) в качестве его первого
+                аргумента; список констант типов запросов см. в подразделе
+                <xref linkend="zend.db.profiler.advanced.filtertype" />.
 <!--
                 Using <code>setFilterQueryType()</code> can cut down on the
                 profiles generated. However, sometimes it can be more useful to
@@ -391,13 +392,13 @@ $profiler->setFilterQueryType(null);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Получение только профилей запросов SELECT
+// Получение только профайлов запросов SELECT
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 
-// Получение только профилей запросов SELECT, INSERT и UPDATE
+// Получение только профайлов запросов SELECT, INSERT и UPDATE
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
 
-// Получение профилей запросов DELETE (так мы можем определить, почему удаляются данные)
+// Получение профайлов запросов DELETE (так мы можем определить, почему удаляются данные)
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
 ?>]]></programlisting>
 
