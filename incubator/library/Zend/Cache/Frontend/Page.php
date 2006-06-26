@@ -1,10 +1,9 @@
 <?php
 
-/**
- * THIS FRONTEND IS ONLY A FIRST DRAFT !
- * IT STILL NEEDS LOVE TO WORK AS EXPECTED !
- */
- 
+// THIS FRONTEND STILL NEED WORK AND TESTS
+// IT IS "ALPHA" STUFF
+// HTTPCONDITIONAL IS MISSING
+
 /**
  * Zend Framework
  *
@@ -39,45 +38,80 @@ require_once 'Zend/Cache/Core.php';
  */
 class Zend_Cache_Frontend_Page extends Zend_Cache_Core
 {
-    const CONTROL_PRIVATE = 0;
-    const CONTROL_PUBLIC = 1;
-    const CONTROL_FORCED_PUBLIC = 2;
     
-    public static $sessionMode = false;
-    public static $clientVersion = null;
-    
+    /**
+     * This frontend specific options
+     * 
+     * ====> (boolean) httpConditional : 
+     * - if true, http conditional mode is on
+     * WARNING : httpConditional OPTION IS NOT IMPLEMENTED FOR THE MOMENT (TODO)
+     * 
+     * ====> (boolean) cacheWithXXXVariables  (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookies')
+     * - if true,  cache is still on even if there are some variables in this superglobal array
+     * - if false, cache is off if there are some variables in this superglobal array
+     *
+     * ====> (boolean) makeIdWithXXXVariables (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookies')
+     * - if true, we have to use the content of this superglobal array to make a cache id
+     * - if false, the cache id won't be dependent of the content of this superglobal array
+     * 
+     * ====> (boolean) debugHeader :
+     * - if true, a debug text is added before each cached pages
+     * 
+     * @var array options
+     */
+    protected $_specificOptions = array(
+    	'httpConditional' => false,
+        'debugHeader' => true,
+        'cacheWithGetVariables' => false,
+        'cacheWithPostVariables' => false,
+        'cacheWithSessionVariables' => false,
+        'cacheWithFilesVariables' => false,
+        'cacheWithCookiesVariables' => true,
+        'makeIdWithGetVariables' => true,
+        'makeIdWithPostVariables' => true,
+        'makeIdWithSessionVariables' => true,
+        'makeIdWithFilesVariables' => true,
+        'makeIdWithCookiesVariables' => true
+    ); 
+        
     /**
      * Constructor
      * 
      * @param array $options associative array of options
      * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
      */
-    public function __construct($options = array(), $doNotTestCacheValidity = false)
+    public function __construct($options = array())
     {
-        // TODO: refactor options!
+        if (isset($options['httpConditional'])) {
+            if ($options['httpConditional']) {
+                Zend_Cache::throwException('httpConditional is not implemented for the moment !');
+            }
+        }
         parent::__construct($options);
-        return $this->_start($doNotTestCacheValidity);
     }
     
     /**
      * Start the cache
      *
-     * @param string $id cache id
-     * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
      * @return boolean true if the cache is hit (false else)
      */
-    protected function _start($doNotTestCacheValidity)
+    public function start()
     {
-        $id = 'something'; // TODO: generate ID here
-        
-        $data = $this->get($id, $doNotTestCacheValidity);
-        if ($data !== false) {
-            echo $data;
-            return true;
+        $id = $this->_makeId(); 
+        if (!$id) {
+            return false;
         }
-        ob_start(array(__CLASS__, '_flush'));
+        $data = $this->get($id);
+        if ($data !== false) {
+            if ($this->_specificOptions['debugHeader']) {
+                echo 'DEBUG HEADER : This is a cached page !';
+            }
+            echo $data;
+            die();
+        }
+        ob_start(array($this, '_flush'));
         ob_implicit_flush(false);
-        return false;
+        return true;
     }
     
     /**
@@ -94,168 +128,63 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     }
     
     /**
-     * Simple ETag generation
+     * Make an id depending on REQUEST_URI and superglobal arrays (depending on options)
      * 
-     * @param   int     Unix timestamp
-     * @return  string  generated ETag
+     * @return mixed a cache id (string), false if the cache should have not to be used
      */
-    protected function _ETag($t) 
+    private function _makeId()
     {
-        if (!isset($_SERVER['QUERY_STRING']) && !self::$sessionMode) {
-            $etag = $t;
-        } else {
-            $variables = @$_SERVER['QUERY_STRING'];
-            if (self::$sessionMode) {
-                $variables .= serialize($_SESSION) . session_name() . '=' . session_id();
+        $tmp = $_SERVER['REQUEST_URI'];
+        foreach (array('Get', 'Post', 'Session', 'Files', 'Cookies') as $arrayName) {           
+            $tmp2 = $this->_makePartialId($arrayName, $this->_specificOptions['cacheWith' . $arrayName . 'Variables'], $this->_specificOptions['makeIdWith' . $arrayName . 'Variables']);
+            if ($tmp2===false) {
+                return false;
             }
-            $etag = md5($t.$variables);
+            $tmp = $tmp . $tmp2;
         }
-        return '"' . $etag . '"';
+        return md5($tmp);
     }
     
     /**
-     * Formats GMT date according to RFC 1123
+     * Make a partial id depending on options
      * 
-     * @param int $t timestamp
-     * @param int $offset
-     * @return string GMT date according to RFC 1123
+     * @var string $arrayName superglobal array name
+     * @var $bool1 if true, cache is still on even if there are some variables in the superglobal array
+     * @var $bool2 if true, we have to use the content of the superglobal array to make a partial id
+     * @return mixed partial id (string) or false if the cache should have not to be used
      */
-    public static function date($t = null, $offset = 0)
+    private function _makePartialId($arrayName, $bool1, $bool2)
     {
-        if (is_null($t)) $t = time();
-        return substr(gmdate('r', $t + 3600*$offset), 0, -5) . 'GMT';
-    }
-    
-    /**
-     * Check for HTTP error 412: precondition failed
-     * 
-     * @param string $etag ETag
-     * @param int $timestamp timestamp
-     * @return boolean is error 512 ?
-     * @link http://www.w3.org/Protocols/rfc2616/rfc2616.html
-     */
-    protected static function is412($etag, $timestamp) 
-    {
-        // rfc2616-sec14.html#sec14.24
-        $bool1 = isset($_SERVER['HTTP_IF_MATCH'])
-                 && ($etags = stripslashes($_SERVER['HTTP_IF_MATCH'])) != '*'
-                 && strpos($etags, $etag) === false;
-        // rfc2616-sec14.html#sec14.28
-        $bool2 = isset($_SERVER['HTTP_IF_UNMODIFIED_SINCE'])
-                 && ($ctime = (int) strtotime($_SERVER['HTTP_IF_UNMODIFIED_SINCE'])) > 0
-                 && (self::$clientVersion = $ctime) < $timestamp;
-        return ($bool1 || $bool2);
-    }
-    
-    /**
-     * Send correct headers for HTTP error 412: precondition failed
-     */
-    protected static function send412()
-    {
-        // rfc2616-sec10.html#sec10.4.13
-        header('HTTP/1.1 412 Precondition Failed');
-        //header('Cache-Control: private, max-age=0, must-revalidate');
-        header('Content-Type: text/plain; charset=UTF-8');
-        echo "HTTP/1.1 Error 412 Precondition Failed:\n";
-        echo 'Precondition request failed positive evaluation';
-    }
-    
-    /**
-     * Check for HTTP response 304: not modified
-     * 
-     * @param string $etag ETag
-     * @param int $timestamp timestamp
-     * @return boolean is response 304 ?
-     * @link http://www.w3.org/Protocols/rfc2616/rfc2616.html
-     */
-    protected static function is304($etag, $timestamp)
-    {
-        // rfc2616-sec14.html#sec14.26
-        if (!isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])) {
-            $bool1 = isset($_SERVER['HTTP_IF_NONE_MATCH']);
-            $bool2 = (($etags = stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == '*');
-            $bool3 = (strpos($etags, $etag) !== false);
-            return $bool1 && ($bool2 || $bool3);
+        switch ($arrayName) {
+        case 'Get':
+            $var = $_GET;
+            break;
+        case 'Post':
+            $var = $_POST;
+            break;
+        case 'Session':
+            $var = $_SESSION;
+            break;
+        case 'Cookies':
+            $var = $_COOKIES;
+            break;
+        case 'Files':
+            $var = $_FILES;
+            break;            
+        default:
+            return false;
+        }    
+        if ($bool1) {
+            if ($bool2) {
+                return serialize($var);
+            }
+            return '';
         }
-        // rfc2616-sec14.html#sec14.25 and rfc1945.txt
-        $ctime = (int) strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']);
-        if ($ctime > 0) {
-            self::$clientVersion = $ctime;
-            return ($ctime >= $timestamp);
-        }
-        return false;
+        if (count($var) > 0) {
+            return false;
+        } 
+        return '';
     }
     
-    /**
-     * Send correct headers for HTTP response 304: not modified
-     * 
-     * @param string $etag ETag
-     */    
-    protected static function send304($etag)
-    {
-        // rfc2616-sec10.html#sec10.3.5
-        header($_SERVER['SERVER_PROTOCOL'].' 304 Not Modified');
-        header('ETag: '.$etag);
-        header('Connection: close'); // TODO : Comment this line under IIS
-    }
-    
-    /**
-     * HTTP conditional logic
-     * TODO: extract logic and delete this method!
-     */
-    public function validate($timestamp = 0, $ttl = 0, $cachePrivacy = self::CONTROL_PRIVATE)
-    {
-        if(headers_sent()) return false;
-        
-        /**
-         * Take script modification time into consideration, but also check that
-         * timestamp is not ahead of time
-         */
-        $timestamp = min(max($timestamp, getlastmod()), time());
-        $etag = self::ETag($timestamp);
-        
-        if(self::is412($etag, $timestamp)){
-            self::send412();
-            return true;
-        }
-        if(self::is304($etag, $timestamp)){
-            $_SERVER['REQUEST_METHOD'] == 'HEAD' || $_SERVER['REQUEST_METHOD'] == 'GET' ?
-                self::send304($etag) : self::send412();
-            return true;
-        }
-        
-        // header('HTTP/1.0 200 OK');
-        if(!$ttl) $cache = 'private, must-revalidate, ';
-        elseif($cachePrivacy == self::CONTROL_PRIVATE) $cache = 'private, ';
-        elseif($cachePrivacy == self::CONTROL_FORCED_PUBLIC) $cache = 'public, ';
-        else $cache = '';
-        $cache .= 'max-age=' . round($ttl);
-        
-        header('Cache-Control: ' . $cache); // rfc2616-sec14.html#sec14.9
-        header('Expires: ' . self::date($timestamp+$ttl)); // HTTP/1.0
-        
-        self::updateHeaders($timestamp, $etag);
-        // if($feedMode) header('Connection: close'); //rfc2616-sec14.html#sec14.10 //Comment this line under IIS
-        
-        if($_SERVER['REQUEST_METHOD'] == 'HEAD') return true; // rfc2616-sec9.html#sec9.4
-        return false;
-    }
-    
-    /**
-     * Update HTTP headers if the content has just been modified by the client's request.
-     * Note that (according to protocol) GET method should *never* cause data to be changed!
-     * 
-     * See rfc2616-sec14.html#sec14.21
-     * 
-     * @param   int $timestamp  new timestamp to update headers with
-     */
-    public function updateHeaders($timestamp, $etag = null)
-    {
-        if (headers_sent()) return false;
-        if (!$etag) $etag = $this->_ETag($timestamp);
-        header('Last-Modified: ' . self::date($timestamp));
-        header('ETag: ' . $etag);
-        return true;
-    }
 }
 
