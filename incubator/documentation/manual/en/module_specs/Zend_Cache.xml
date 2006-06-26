@@ -65,6 +65,135 @@ if (!($cache->test($id))) {
         With Zend_Cache_Core, you have to manage the "cache identifier" by yourself.  
     </note>
 </sect1>
+
+<sect1 id="zend.cache.factory">
+    <title>Zend_Cache factory</title>
+    <para>
+    	There is only one way to build a <code>Zend_Cache_*</code> object. In all cases 
+    	(backends and/or frontends), you have to use the <code>Zend_Cache</code> factory.
+    	Do not use frontends constructors directly, it won't work correctly !  
+    </para>
+    <para>
+    	The good way to build an usable instance of <code>Zend_Cache_*</code> is given
+    	in the following example :
+    	<programlisting role="php"><![CDATA[<?php
+    	
+# We "load" the Zend_Cache factory 
+require 'Zend/Cache.php'; 
+
+# We choose a backend (for example 'File' or 'Sqlite'...)
+$backendName = '[...]';
+
+# We choose a frontend (for example 'Core', 'Output', 'Page'...)
+$frontendName = '[...]';
+
+# We set an array of options for the choosen frontend
+$frontendOptions = array([...]);
+
+# We set an array of options for the choosen backend
+$backendOptions = array([...]);
+
+# We make the good instance 
+# (of course, the two last arguments are optional)
+$cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
+
+[...]
+
+?>]]>   </programlisting> 
+    </para> 
+    <para>
+    	In next lines of this documentation, we will assume that the <code>$cache</code>
+    	variable is set as shown in the previous example.    	
+    </para> 
+</sect1>
+
+<sect1 id="zend.cache.core">
+    <title>Zend_Cache_Core</title>
+    <sect2 id="zend.cache.core.introduction">
+    	<title>Introduction</title>
+    	<para>
+    		<code>Zend_Cache_Core</code> is a special frontend because it's actually the core
+    		of the module. All frontends inherit from this class. So most of methods and options
+    		described below are also available for other frontends.
+    	</para>
+    </sect2>
+    <sect2 id="zend.cache.core.options">
+    	<title>Available options (for this frontend in Zend_Cache factory)</title>
+	    <table>
+    		<title>Available options</title>
+    		<tgroup cols="4">
+     			<thead>
+      				<row>
+       					<entry>Option</entry>
+				        <entry>Data Type</entry>
+				        <entry>Default Value</entry>
+				        <entry>Description</entry>
+				    </row>
+     			</thead>
+     			<tbody>
+      				<row>
+      					<entry><code>caching</code></entry>
+      					<entry><code>boolean</code></entry>
+      					<entry><code>true</code></entry>
+      					<entry>
+      						enable / disable caching (can be very usefull for the debug of 
+      						cached scripts)	        	
+      					</entry>
+      				</row>
+      				<row>
+      					<entry><code>lifeTime</code></entry>
+      					<entry><code>int</code></entry>
+      					<entry><code>3600</code></entry>
+      					<entry>
+        					cache lifetime (in seconds), if set to <code>null</code>, the 
+        					cache is valid forever.       
+      					</entry>
+      				</row>
+      				<row>
+      					<entry><code>logging</code></entry>
+      					<entry><code>boolean</code></entry>
+      					<entry><code>false</code></entry>
+      					<entry>
+        					if set to true, logging thow <code>Zend_Log</code> is activated 
+        					(but the system is slower) 	    
+      					</entry>
+      				</row>
+      				<row>
+      					<entry><code>writeControl</code></entry>
+      					<entry><code>boolean</code></entry>
+      					<entry><code>true</code></entry>
+      					<entry>
+        					Enable / disable write control (the cache is read 
+        					just after writing to detect corrupt entries), enabling writeControl
+        					will lightly slow the cache writing but not the cache reading (it 
+        					can detect some corrupt cache files but it's not a perfect control)	    
+      					</entry>
+      				</row>
+      				<row>
+      					<entry><code>automaticSerialization</code></entry>
+      					<entry><code>boolean</code></entry>
+      					<entry><code>false</code></entry>
+      					<entry>
+        					Enable / disable automatic serialization, it can be used to save directly datas
+	        				which aren't strings (but it's slower)		    
+      					</entry>
+      				</row>
+      				<row>
+      					<entry><code>automaticCleaningFactor</code></entry>
+      					<entry><code>int</code></entry>
+      					<entry><code>0</code></entry>
+      					<entry>
+        					Disable / Tune the automatic cleaning process (garbage collector) :
+        					0 means no automatic cache cleaning, 1 means systematic cache cleaning
+        					and x (integer) &gt; 1 means automatic cleaning randomly 1 times on x cache write.
+      					</entry>
+      				</row>
+      			</tbody>
+      		</tgroup>
+      	</table>
+    </sect2>   
+</sect1>
+
 <!--
 vim:se ts=4 sw=4 et:
 -->
