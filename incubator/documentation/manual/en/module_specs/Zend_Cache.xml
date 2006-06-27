@@ -4,7 +4,7 @@
         <code>Zend_Cache</code> provides a generic way to cache some datas.
     </para>
     <para>
-        Cache records are stored throw a backend (<code>File</code>, <code>Sqlite</code>...) with a flexible
+        Cache records are stored through a backend (<code>File</code>, <code>Sqlite</code>...) with a flexible
         system of "ids" and "tags". Then, for example, it's easy to delete a specified part of cached 
         datas ("all cache records marked with a given tag"...).
     </para>
