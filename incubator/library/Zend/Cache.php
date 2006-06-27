@@ -26,10 +26,24 @@
  */
 abstract class Zend_Cache 
 {
-
+    
+    /**
+     * Available frontends
+     * 
+     * @var array $availableFrontends array of frontend name (string)
+     */
     static public $availableFrontends = array('Core', 'Output', 'Class', 'File', 'Function', 'Page');
+    
+    /**
+     * Available backends
+     * 
+     * @var array $availableBackends array of backends name (string)
+     */
     static public $availableBackends = array('File', 'Sqlite');
     
+    /**
+     * Consts for clean() method
+     */
     const CLEANING_MODE_ALL              = 'all';
     const CLEANING_MODE_OLD	             = 'old';
     const CLEANING_MODE_MATCHING_TAG	 = 'matchingTag';
@@ -74,6 +88,11 @@ abstract class Zend_Cache
         
     }     
     
+    /**
+     * Throw an exception
+     * 
+     * Note : for perf reasons, the "load" of Zend/Cache/Exception is dynamic
+     */
     static public function throwException($msg)
     {
         // For perfs reasons, we use this dynamic inclusion
