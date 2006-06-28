@@ -106,7 +106,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         }
 
         // Remove RewriteBase
-        if (strpos($path, $this->_rewriteBase) === 0) {
+        if (strlen($this->_rewriteBase) > 0 && strpos($path, $this->_rewriteBase) === 0) {
             $path = substr($path, strlen($this->_rewriteBase));
         }
 

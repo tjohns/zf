@@ -48,12 +48,12 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     {
 
         $route = trim($route, '/');
-        if (is_array($defaults)) $this->_defaults = array_merge($this->_defaults, $defaults);
-        if (is_array($reqs)) $this->_requirements = array_merge($this->_requirements, $reqs);
+        $this->_defaults = (array) $defaults;
+        $this->_requirements = (array) $reqs;
 
         foreach (explode('/', $route) as $pos => $part) {
 
-            if (self::URL_VARIABLE == $part[0]) {
+            if (substr($part, 0, 1) == self::URL_VARIABLE) {
                 $name = substr($part, 1);
                 $regex = (isset($reqs[$name]) ? $reqs[$name] : self::DEFAULT_REGEX);
                 $this->_parts[$pos] = array('name' => $name, 'regex' => $regex);
