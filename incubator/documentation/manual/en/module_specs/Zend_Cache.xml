@@ -191,7 +191,115 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       			</tbody>
       		</tgroup>
       	</table>
+    </sect2>
+    <sect2 id="zend.cache.core.examples">
+    	<title>Examples</title>
+    	<para>
+    		A first example is given in the tutorial at the very beginning.
+    	</para>
+    	<para>
+    		If you store only strings into cache (because with "automaticSerialization" option, it's possible to store
+			some booleans), you can use a more compact construction like :
+     	    <programlisting role="php"><![CDATA[<?php  
+     	    
+// [...] // require, configuration and factory
+
+$id = 'foo'; // cache id of "what we want to cache"
+
+if (!($data = $cache->get($id))) {
+	// cache missed
+	
+	$data = '';
+	for ($i=0;$i<10000;$i++) {
+		$data = $data . $i;
+	}
+	
+    $cache->save($data);
+    
+} 
+
+// [...] do something with $data (for example "echo $data;")
+     	    
+?>]]>       </programlisting> 
+        </para>  
+        <para>
+        	If you want to cache multiple blocks or datas, the idea is the same :
+     	    <programlisting role="php"><![CDATA[<?php  
+     	    
+// [...] // require, configuration and factory
+
+$id1 = 'foo'; // cache id of block1
+$id1 = 'foo'; // cache id of block2
+
+// BLOCK1
+if (!($data = $cache->get($id1))) {
+	// cache missed
+	
+	$data = '';
+	for ($i=0;$i<10000;$i++) {
+		$data = $data . $i;
+	}
+	
+    $cache->save($data);
+    
+} 
+echo($data);
+
+// NEVER CACHED BLOCK
+echo('NEVER CACHED !');
+
+// BLOCK2
+if (!($data = $cache->get($id2))) {
+	// cache missed
+	
+	$data = '';
+	for ($i=0;$i<10000;$i++) {
+		$data = $data . '!';
+	}
+	
+    $cache->save($data);
+    
+} 
+echo($data);
+
+
+?>]]>       </programlisting>         	
+        </para>   	 	
     </sect2>   
+    <sect2 id="zend.cache.core.clean">
+    	<title>clean the cache</title>
+    	<para>
+    		To remove/invalidate in particular cache id, you can use the <code>remove()</code>
+    		method :
+     	    <programlisting role="php"><![CDATA[<?php 
+     	    
+// [...]
+$cache->remove('idToRemove');
+// [...]
+    		
+?>]]>       </programlisting>    		
+    	</para>
+    	<para>
+    		To remove/invalidate several cache ids in one operation, you can use the <code>clean()</code>
+    		method. For example to remove all cache records :
+      	    <programlisting role="php"><![CDATA[<?php 
+     	    
+// [...]
+$cache->clean(Zend_Cache::CLEANING_MODE_ALL);
+// [...]
+    		
+?>]]>       </programlisting>     		
+			If you want to remove only outdated cache records :
+      	    <programlisting role="php"><![CDATA[<?php 
+     	    
+// [...]
+$cache->clean(Zend_Cache::CLEANING_MODE_OLD);
+// [...]
+    		
+?>]]>       </programlisting>    
+			[...]			
+    	</para>
+    </sect2>
 </sect1>
 
 <!--
