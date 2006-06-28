@@ -301,7 +301,52 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
     	</para>
     </sect2>
 </sect1>
-
+<sect1 id="zend.cache.output">
+    <title>Zend_Cache_Output</title>
+    <para>
+    	TO BE WRITTEN
+    </para>
+</sect1>    
+<sect1 id="zend.cache.page">
+    <title>Zend_Cache_Page</title>
+    <para>
+    	TO BE WRITTEN
+    </para>
+</sect1>  
+<sect1 id="zend.cache.file">
+    <title>Zend_Cache_File</title>
+    <para>
+    	TO BE WRITTEN
+    </para>
+</sect1> 
+<sect1 id="zend.cache.function">
+    <title>Zend_Cache_Function</title>
+    <para>
+    	TO BE WRITTEN
+    </para>
+</sect1> 
+<sect1 id="zend.cache.class">
+    <title>Zend_Cache_Class</title>
+    <para>
+    	TO BE WRITTEN
+    </para>
+</sect1> 
+<sect1 id="zend.cache.backends">
+    <title>Available backends for Zend_Cache</title>
+    <sect2 id="zend.cache.backends.file">
+    	<title>Zend_Cache_Backend_File</title>
+    	<para>
+    		TO BE WRITTEN
+    	</para>
+    </sect2>
+    <sect2 id="zend.cache.backends.sqlite">
+    	<title>Zend_Cache_Backend_Sqlite</title>
+    	<para>
+    		TO BE WRITTEN
+    	</para>
+    </sect2>
+</sect1> 
+  
 <!--
 vim:se ts=4 sw=4 et:
 -->
