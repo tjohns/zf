@@ -326,8 +326,6 @@ abstract class Zend_Db_Table {
      *
      * @param string|array $where An SQL WHERE clause.
      * @param string|array $order An SQL ORDER clause.
-     * @param int $count An SQL LIMIT count.
-     * @param int $offset An SQL LIMIT offset.
      * @return mixed The row results per the Zend_Db_Adapter fetch mode.
      */
     public function fetchRow($where = null, $order = null)
