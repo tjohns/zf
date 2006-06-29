@@ -17,6 +17,9 @@ require_once 'Zend/UriTest.php';
 require_once 'Zend/Uri/AllTests.php';
 require_once 'Zend/ViewTest.php';
 require_once 'Zend/FilterTest.php';
+require_once 'Zend/ConfigTest.php';
+require_once 'Zend/Config/AllTests.php';
+require_once 'Zend/Cache/AllTests.php';
 
 
 class Zend_AllTests
@@ -40,6 +43,9 @@ class Zend_AllTests
         $suite->addTest(Zend_Uri_AllTests::suite());
         $suite->addTestSuite('Zend_ViewTest');
         $suite->addTestSuite('Zend_FilterTest');
+        $suite->addTestSuite('Zend_ConfigTest');
+        $suite->addTest(Zend_Config_AllTests::suite());
+        $suite->addTest(Zend_Cache_AllTests::suite());
         return $suite;
     }
 }
