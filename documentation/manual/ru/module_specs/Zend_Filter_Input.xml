@@ -225,18 +225,18 @@
                 is removed, and the remaining data (assumed valid) is returned. The
                 following provides a simple demonstration:</para>
 -->
-            <programlisting>
-    <![CDATA[<?php
+                <programlisting><![CDATA[
+<?php
     
-    /* $_POST['comment'] = '<b>I love PHP!</b>'; */
+/* $_POST['comment'] = '<b>I love PHP!</b>'; */
+
+$filterPost = new Zend_Filter_Input($_POST);
+$taglessComment = $filterPost->noTags('comment');
+
+/* $taglessComment = 'I love PHP!'; */
     
-    $filterPost = new Zend_Filter_Input($_POST);
-    $taglessComment = $filterPost->noTags('comment');
-    
-    /* $taglessComment = 'I love PHP!'; */
-    
-    ?>]]>
-            </programlisting>
+?>]]></programlisting>
+            </para>
         </sect2>
     </sect2>
     <sect2 id="zend.filter.input.theoryofoperation">
