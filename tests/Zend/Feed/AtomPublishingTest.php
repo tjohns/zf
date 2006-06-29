@@ -62,10 +62,11 @@ class Zend_Feed_AtomPublishingTest extends PHPUnit2_Framework_TestCase {
     public function testEdit()
     {
         Zend_Feed::setHttpClient(new TestClient());
+        $contents = file_get_contents(dirname(__FILE__) .  '/_files/AtomPublishingTest-before-update.xml');
 
         /* The base feed URI is the same as the POST URI, so just supply the
          * Zend_Feed_EntryAtom object with that. */
-        $entry = new Zend_Feed_EntryAtom($this->uri, file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-before-update.xml'));
+        $entry = new Zend_Feed_EntryAtom($this->uri, $contents);
 
         /* Initial state. */
         $this->assertEquals('2005-05-23T16:26:00-08:00', $entry->updated(), 'Initial state of updated timestamp does not match');
@@ -95,9 +96,11 @@ class TestClient extends Zend_Http_Client_File {
 
     public function put($data)
     {
-        $expected = DOMDocument::load(dirname(__FILE__) . '/_files/AtomPublishingTest-expected-update.xml');
-        $got = DOMDocument::loadXML($data);
-        if ($expected->saveXML() != $got->saveXML()) {
+        $doc1 = new DOMDocument();
+        $doc1->load(dirname(__FILE__) . '/_files/AtomPublishingTest-expected-update.xml');
+        $doc2 = new DOMDocument();
+        $doc2->loadXML($data);
+        if ($doc1->saveXML() != $doc2->saveXML()) {
             $this->responseCode = 400;
             $this->responseBody = false;
             return null;

@@ -209,7 +209,7 @@ class Zend_Mime
      * @param string $encoding
      * @return string
      */
-    public function encode($str, $encoding)
+    static public function encode($str, $encoding)
     {
         switch ($encoding) {
             case self::ENCODING_BASE64:
