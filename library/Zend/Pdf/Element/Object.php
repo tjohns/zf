@@ -175,7 +175,7 @@ class Zend_Pdf_Element_Object extends Zend_Pdf_Element
      * @param string $property
      * @return mixed
      */
-    public function &__get($property)
+    public function __get($property)
     {
         $prop = $this->_value->$property;
         return $prop;

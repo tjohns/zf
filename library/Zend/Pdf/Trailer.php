@@ -77,10 +77,9 @@ abstract class Zend_Pdf_Trailer
      * @param string $property
      * @return mixed
      */
-    public function &__get($property)
+    public function __get($property)
     {
-        $property = $this->_dict->$property;
-        return $property;
+        return $this->_dict->$property;
     }
 
     /**

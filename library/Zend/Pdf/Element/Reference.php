@@ -198,7 +198,7 @@ class Zend_Pdf_Element_Reference extends Zend_Pdf_Element
      * @param string $property
      * @return mixed
      */
-    public function &__get($property)
+    public function __get($property)
     {
         if ($this->_ref === null) {
             $this->_dereference();
