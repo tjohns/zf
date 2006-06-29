@@ -8,9 +8,9 @@
 
         <para>
             <code>Zend_Db_Table</code> является модулем Zend Framework для таблиц. Он
-            соединяется с вашей базой данных посредством <code>Zend_Db_Adapter</code>,
-            исследует таблицу на предмет структуры, далее помогает вам в манипуляциях
-            и извлечении строк из этой таблицы.
+            устанавливает соединение с вашей базой данных посредством
+            <code>Zend_Db_Adapter</code>, исследует структуру таблицы,
+            далее помогает вам в манипулировании и извлечении строк из этой таблицы.
 <!--        
             Zend_Db_Table is a TableModule for the Zend Framework.  It
             connects to your database via Zend_Db_Adapter, examines a table
@@ -26,9 +26,10 @@
         <title>Начало работы</title>
 
         <para>
-            Первое, что нужно сделать - установить для абстрактного класса <code>Zend_Db_Table</code>
-            адаптер БД по умолчанию. Все экземпляры класса <code>Zend_Db_Table</code>
-            будут использовать этот адаптер по умолчанию, пока вы не укажете другое.
+            Первое, что нужно сделать -- установить для абстрактного класса
+            <code>Zend_Db_Table</code> адаптер БД по умолчанию. Все
+            экземпляры класса <code>Zend_Db_Table</code> будут использовать
+            этот адаптер по умолчанию, пока вы не укажете другое.
  <!--
             The first thing to do is feed the abstract Zend_Db_Table class
             a default database adapter; unless you specify otherwise,
@@ -105,7 +106,7 @@ $table = new RoundTable();
         <programlisting role="php"><![CDATA[<?php
 class ClassName extends Zend_Db_Table
 {
-    // имя таблицы по умолчанию - 'class_name',
+    // имя таблицы по умолчанию -- 'class_name',
     // но мы хотим установить соответствие с чем-то другим
     protected $_name = 'another_table_name';
 }
@@ -129,7 +130,7 @@ class ClassName extends Zend_Db_Table
         <programlisting role="php"><![CDATA[<?php
 class ClassName extends Zend_Db_Table
 {
-    // первичный ключ по умолчанию - 'id',
+    // первичный ключ по умолчанию -- 'id',
     // но мы хотим использовать другой
     protected $_primary = 'another_column_name';
 }
@@ -137,8 +138,8 @@ class ClassName extends Zend_Db_Table
         </programlisting>
 
         <para>
-            Альтернативно, вы можете установить их в методе <code>_setup()</code>
-            вашего унаследованного класса - только убедитесь, что после
+            Также вы можете установить их в методе <code>_setup()</code>
+            вашего унаследованного класса -- только убедитесь, что после
             этого вызывается <code>parent::_setup()</code>.
 <!--
             Alternatively, you may set these in the _setup() method of
@@ -393,11 +394,11 @@ $row = $table->fetchRow($where, $order);
         <title>Извлечение множества строк</title>
 
         <para>
-            Если вам нужно получить много строк за один раз, используйте метод
+            Если вам нужно получить больше одной строки за раз, используйте метод
             <code>fetchAll()</code>. Как и <code>fetchRow()</code>, он принимает условия
-            WHERE и ORDER, но вдобавок принимает еще количество строк и  смещение для
-            ограничения количества возвращаемых строк. Метод будет возвращать объект
-            <code>Zend_Db_Table_Rowset</code> с выбранными строками.
+            WHERE и ORDER, но, кроме этого, принимает еще количество строк и 
+            смещение для ограничения количества возвращаемых строк. Метод будет
+            возвращать объект <code>Zend_Db_Table_Rowset</code> с выбранными строками.
 <!--
             If you need to retrieve many rows at once, use the fetchAll()
             method.  As with fetchRow(), it takes a WHERE and ORDER clause,
@@ -408,7 +409,7 @@ $row = $table->fetchRow($where, $order);
         </para>
 
         <para>
-            Заметьте, что в условие WHERE не добавляются кавычки за вас, поэтому вам
+            Заметьте, что в условие WHERE не добавляются кавычки, поэтому вам
             нужно самим добавить кавычки с помощью объекта <code>Zend_Db_Adapter</code>
             таблицы.
 <!--
@@ -433,7 +434,7 @@ $order = 'first_name';
 $count = 10;
 $offset = 20;
 
-$rowset = $table->fetchRow($where, $order, $count, $offset);
+$rowset = $table->fetchAll($where, $order, $count, $offset);
 ?>]]>
         </programlisting>
 
@@ -448,8 +449,9 @@ $rowset = $table->fetchRow($where, $order, $count, $offset);
 
         <para>
             <code>Zend_Db_Table</code> дает возможность инкапсулировать
-            свою собственную логику предметной области. Например, вы можете переопределить
-            методы <code>insert()</code> и <code>update()</code> для проверки отправляемых данных
+            свою собственную логику предметной области. Например,
+            вы можете переопределить методы <code>insert()</code> и
+            <code>update()</code> для проверки отправляемых данных
             или манипуляций с ними перед тем, как они будут отправлены БД.
 <!--
             As a TableModule, Zend_Db_Table lends itself well to encapsulating
@@ -484,7 +486,7 @@ class RoundTable extends Zend_Db_Table
         </programlisting>
 
         <para>
-            Аналогичным образом вы можете добавлять свои собственные методы для поиска
+            Аналогичным образом вы можете добавить свои собственные методы для поиска
             записей по чему-либо иному, чем первичные ключи.
 <!--
             Similarly, you can add your own find() methods to look up
