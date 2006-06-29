@@ -33,7 +33,8 @@ $params = array (
 $db = Zend_Db::factory('pdoMysql', $params);
 
 $select = $db->select();
-// $select は Zend_Db_Select_PdoMysql オブジェクトになります
+// $select は、Pdo_Mysql アダプタでのみ使用可能なように設定された
+// Zend_Db_Select オブジェクトとなります
 
 ?>]]></programlisting>
 
