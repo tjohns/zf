@@ -1,16 +1,16 @@
 <appendix id="faq">
-    <title>Frequently Asked Questions</title>
+    <title>Najczęściej zadawane pytania (FAQ)</title>
 
     <qandaset>
         <qandaentry>
             <question>
                 <para>
-                    How do I do X?
+                    Jak mogę zrobić X?
                 </para>
             </question>
             <answer>
                 <para>
-                    The answer is...
+                    Odpowiedź...
                 </para>
             </answer>
         </qandaentry>

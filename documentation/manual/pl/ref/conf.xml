@@ -1,8 +1,8 @@
 <chapter id="conf">
-    <title>Configuration</title>
+    <title>Konfiguracja</title>
     <para>
-        This section describes configuration for the framework.
-        Ideally, none will be required :)
+        Ta sekcja opisuje konfigurację frameworka.
+        Na szczęście żadna nie jest wymagana :)
     </para>
 </chapter>
 <!--

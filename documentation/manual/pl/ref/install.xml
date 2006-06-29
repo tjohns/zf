@@ -1,12 +1,12 @@
 <chapter id="install">
-    <title>Installation</title>
+    <title>Instalacja</title>
     <para>
-        This chapter describes how to install the framework.
+        Ten rozdział przeprowadza przez proces instalacji frameworka.
     </para>
     <sect1 id="install.download">
-        <title>Downloading</title>
+        <title>Ściąganie frameworka</title>
         <para>
-            This section describes how to download the framework....
+            Ta sekcja mówi o tym, jak ściągnąć framework.
         </para>
     </sect1>
 </chapter>
