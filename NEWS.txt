@@ -35,6 +35,9 @@ Zend Framework                                                             NEWS
   Zend_Mail, ticket #59, changeset [583]. (Matthew)
 - Fixed multiple bugs in Zend_Http_Client, ticket #133. (Mike)
 - Added Zend_Db_Profiler documentation. (Matthew)
+- Zend_Config promoted to core library. (admin)
+- Zend_Cache promoted to core library. (admin)
+- Additional release notes from issue tracker: http://framework.zend.com/issues/secure/ReleaseNote.jspa?projectId=10000&styleName=Html&version=10000
 
 =RELEASE 0.1.3 / 18-Apr-2006=
 - Zend_Filter is* methods return strictly TRUE or FALSE. (Chris)
