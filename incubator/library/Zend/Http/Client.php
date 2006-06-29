@@ -341,7 +341,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
 
                     // Else, if we got just an absolute path, set it
                     if(strpos($location, '/') === 0) {
-                        $this->uri->setPath($headerValue);
+                        $this->uri->setPath($location);
 
                         // Else, assume we have a relative path
                     } else {
@@ -540,7 +540,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      */
     protected function _write($socket, $request)
     {
-        fwrite($socket, $request . "\r\n");
+        fwrite($socket, $request);
     }
     
     /**
