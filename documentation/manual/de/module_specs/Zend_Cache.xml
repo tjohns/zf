@@ -1,100 +1,103 @@
 <sect1 id="zend.cache.introduction">
-    <title>Introduction</title>
+    <title>Einführung</title>
     <para>
-        <code>Zend_Cache</code> provides a generic way to cache some datas.
+        <code>Zend_Cache</code> bietet einen generellen Weg an um Daten zu cachen.
     </para>
     <para>
-        Cache records are stored through a backend (<code>File</code>, <code>Sqlite</code>...) with a flexible
-        system of "ids" and "tags". Then, for example, it's easy to delete a specified part of cached 
-        datas ("all cache records marked with a given tag"...).
+        Cache Datensätze werden über ein Backend gespeichert (<code>File</code>, <code>Sqlite</code>...) mit
+        einem flexiblen System von "ids" und "tags". Dann ist es einfach, zum Beispiel einen bestimmten Teil
+        von gecachten Daten zu Löschen ("alle Cache Datensätze welche mit einem bestimmten Tag markiert sind"...).
     </para>
     <para>
-    	The core of the module is really generic and flexible. Yet, for specific needs, you can use a
-    	frontend (<code>Output</code>, <code>Function</code>...) to get a more appropriate way of running.
+    	Der Kern des Moduls ist wirklich sehr generell und flexibel. Nun, für spezielle Bedürfnisse, kann ein
+    	Frontend (<code>Output</code>, <code>Function</code>...) benutzt werden, um einen ansprechenderen Weg
+    	der Benutzung zu bekommen.
     </para>
     <example>
-        <title>A first example with Zend_Cache core</title>
+        <title>Ein erstes Beispiel mit dem Zend_Cache Kern</title>
         <para>
-            In this first example, we will use directly the core of Zend_Cache with the 
-            <code>File</code> backend.
+            In diesem ersten Beispiel wird der Kern von Zend_Cache direkt benutzt mit dem
+            <code>File</code> Backend.
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-	'lifeTime' => 7200 // cache lifetime of 2 hours
+	'lifeTime' => 7200 // Cache Lebensdauer von 2 Stunden
 );
 
 $backendOptions = array(
-    'cacheDir' => '/tmp/' // Directory where to put the cache files (make sure to add a trailing slash)
+    'cacheDir' => '/tmp/' // Verzeichnis in welches die Cache Dateien kommen 
+    (unbedingt den schließenden Schrägstrich hinzufügen)
 );
 
-// We make a Zend_Cache_Core object
+// Erstellung eines Zend_Cache_Core Objektes
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
-$id = 'foo'; // cache id of "what we want to cache"
+$id = 'foo'; // Cache Id von dem das "gecached werden soll"
 
 if (!($cache->test($id))) {
-	// cache missed
+	// Cache nicht gefunden
 	
-	// require_once ... for perfs reasons, all "require_once" have to be loaded ONLY if the cache is missed
+	// require_once ... für Perfektionsgründe müssen alle "require_once" NUR DANN geladen
+	//                  werden wenn der Cache verpasst wurde
 	// require_once ...
 	
-	// we build "what we want to cache"
-	// for example
+	// Erzeugung von dem das "gecached werden soll"
+	// zum Beispiel
 	$data = '';
 	for ($i=0;$i<10000;$i++) {
 		$data = $data . $i;
 	} 
 	
-	// We save the result into the cache
+	// Das Ergebnis wird in den Cache gespeichert
     $cache->save($data);
 
 } else {
-	// cache hit
+	// Cache gefunden
 	
 	$data = $cache->get($id);
 
 }
 
-// do something with $data :)
+// Irgendwas mit $data machen :)
 // [...]
 ?>]]>       </programlisting>
        </para>
     </example>
     <note>
-        With Zend_Cache_Core, you have to manage the "cache identifier" by yourself.  
+        Mit Zend_Cache_Core muß die "Cache Identifizierung" selbstständig gemanaged werden
     </note>
 </sect1>
 
 <sect1 id="zend.cache.factory">
-    <title>Zend_Cache factory</title>
+    <title>Zend_Cache Factory</title>
     <para>
-    	There is only one way to build a <code>Zend_Cache_*</code> object. In all cases 
-    	(backends and/or frontends), you have to use the <code>Zend_Cache</code> factory.
-    	Do not use frontends constructors directly, it won't work correctly !  
+    	Es gibt nur einen Weg um ein <code>Zend_Cache_*</code> Objekt zu erzeugen. In allen 
+    	Fällen (Backends und/oder Frontends) muß die <code>Zend_Cache</code> Factory benutzt werden.
+    	Die Frontend Konstruktoren nicht direkt benutzen, da es nicht richtig funktionieren würde.
     </para>
     <para>
-    	The good way to build an usable instance of <code>Zend_Cache_*</code> is given
-    	in the following example :
+    	Ein guter Weg um eine verwendbare Instanz von <code>Zend_Cache_*</code> zu erzeugen wird im
+    	folgenden Beispiel gezeigt :
     	<programlisting role="php"><![CDATA[<?php
     	
-# We "load" the Zend_Cache factory 
+# Die Zend_Cache Factory wird "geladen"
 require 'Zend/Cache.php'; 
 
-# We choose a backend (for example 'File' or 'Sqlite'...)
+# Ein Backend wird ausgewählt (zum Beispiel 'File' oder 'Sqlite'...)
 $backendName = '[...]';
 
-# We choose a frontend (for example 'Core', 'Output', 'Page'...)
+# Ein Frontend wird ausgewählt (zum Beispiel 'Core', 'Output', 'Page'...)
 $frontendName = '[...]';
 
-# We set an array of options for the choosen frontend
+# Wir setzen ein Array von Optionen für das ausgewählte Frontend
 $frontendOptions = array([...]);
 
-# We set an array of options for the choosen backend
+# Wir setzen ein Array von Optionen für das ausgewählte Backend
 $backendOptions = array([...]);
 
-# We make the good instance 
-# (of course, the two last arguments are optional)
+# Wir erzeugen eine gute Instanz
+# (die letzten 2 Argumente sind natürlich optional)
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
 [...]
@@ -102,32 +105,32 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
 ?>]]>   </programlisting> 
     </para> 
     <para>
-    	In next lines of this documentation, we will assume that the <code>$cache</code>
-    	variable is set as shown in the previous example.    	
+    	In den folgenden Zeilen dieser Dokumentation wird angenommen das die <code>$cache</code>
+    	Variable, wie im vorherigen Bespiel gezeigt, gesetzt wurde
     </para> 
 </sect1>
 
 <sect1 id="zend.cache.core">
     <title>Zend_Cache_Core</title>
     <sect2 id="zend.cache.core.introduction">
-    	<title>Introduction</title>
+    	<title>Einführung</title>
     	<para>
-    		<code>Zend_Cache_Core</code> is a special frontend because it's actually the core
-    		of the module. All frontends inherit from this class. So most of methods and options
-    		described below are also available for other frontends.
+    		<code>Zend_Cache_Core</code> ist ein spezielles Frontend weil es der Kern des Moduls ist.
+    		Alle Frontends sind von dieser Klasse abgeleitet. Deswegen sind die meisten der Methoden 
+    		und Optionen, welche anschließend beschrieben werden, auch in den anderen Frontends verfügbar.
     	</para>
     </sect2>
     <sect2 id="zend.cache.core.options">
-    	<title>Available options (for this frontend in Zend_Cache factory)</title>
+    	<title>Gültige Optionen (für dieses Frontend in Zend_Cache Factory)</title>
 	    <table>
-    		<title>Available options</title>
+    		<title>Gültige Optionen</title>
     		<tgroup cols="4">
      			<thead>
       				<row>
        					<entry>Option</entry>
-				        <entry>Data Type</entry>
-				        <entry>Default Value</entry>
-				        <entry>Description</entry>
+				        <entry>Daten Typ</entry>
+				        <entry>Default Wert</entry>
+				        <entry>Beschreibung</entry>
 				    </row>
      			</thead>
      			<tbody>
@@ -136,8 +139,8 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       					<entry><code>boolean</code></entry>
       					<entry><code>true</code></entry>
       					<entry>
-      						enable / disable caching (can be very usefull for the debug of 
-      						cached scripts)	        	
+      						Ein- / Ausschalten des Cachings (can sehr nützlich sein für das 
+      						debuggen von gecachten Skripten)
       					</entry>
       				</row>
       				<row>
@@ -145,8 +148,8 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       					<entry><code>int</code></entry>
       					<entry><code>3600</code></entry>
       					<entry>
-        					cache lifetime (in seconds), if set to <code>null</code>, the 
-        					cache is valid forever.       
+        					Lebenszeit des Caches (in Sekunden), wenn dieser auf <code>null</code> 
+        					gesetzt wird, ist der Cache für immer gültig.       
       					</entry>
       				</row>
       				<row>
@@ -154,8 +157,8 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       					<entry><code>boolean</code></entry>
       					<entry><code>false</code></entry>
       					<entry>
-        					if set to true, logging thow <code>Zend_Log</code> is activated 
-        					(but the system is slower) 	    
+        					Auf true gesetzt wird alles mit <code>Zend_Log</code> geloggt. 
+        					(aber das System wird langsamer)
       					</entry>
       				</row>
       				<row>
@@ -163,10 +166,11 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       					<entry><code>boolean</code></entry>
       					<entry><code>true</code></entry>
       					<entry>
-        					Enable / disable write control (the cache is read 
-        					just after writing to detect corrupt entries), enabling writeControl
-        					will lightly slow the cache writing but not the cache reading (it 
-        					can detect some corrupt cache files but it's not a perfect control)	    
+        					Ein- / Ausschalten der Schreibkontrolle (der Cache wird gelesen
+        					genau nach dem Schreiben, um defekte Einträge zu erkennen).
+        					Einschalten von writeControl verlangsamt das Schreiben des Caches aber nicht
+        					das Lesen des Caches (es können defekte Cache dateien erkannt werden, aber
+        					es ist keine perfekte Kontrolle)
       					</entry>
       				</row>
       				<row>
@@ -174,8 +178,8 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       					<entry><code>boolean</code></entry>
       					<entry><code>false</code></entry>
       					<entry>
-        					Enable / disable automatic serialization, it can be used to save directly datas
-	        				which aren't strings (but it's slower)		    
+        					Ein- / Ausschalten der automatischen Serialisierung. Sie kann benutzt werden
+        					um Daten, welche keine Strings sind, direkt zu speichern (aber es ist langsamer)
       					</entry>
       				</row>
       				<row>
@@ -183,9 +187,10 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       					<entry><code>int</code></entry>
       					<entry><code>0</code></entry>
       					<entry>
-        					Disable / Tune the automatic cleaning process (garbage collector) :
-        					0 means no automatic cache cleaning, 1 means systematic cache cleaning
-        					and x (integer) &gt; 1 means automatic cleaning randomly 1 times on x cache write.
+        					Ausschalten / Einstellen des automatischen Reinigungsprozesses (garbage collector) :
+        					0 heißt kein automatisches Reinigen, 1 heißt systematische Cache Reinigung
+        					und x (Integer) &gt; 1 heißt automatische zufällige Reinigung 1 mal bei allen
+        					x Cache Schreibvorgängen.
       					</entry>
       				</row>
       			</tbody>
@@ -193,21 +198,21 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       	</table>
     </sect2>
     <sect2 id="zend.cache.core.examples">
-    	<title>Examples</title>
+    	<title>Beispiele</title>
     	<para>
-    		A first example is given in the tutorial at the very beginning.
+    		Ein erstes Beispiel wurde im Tutorial ganz am Anfang gegeben.
     	</para>
     	<para>
-    		If you store only strings into cache (because with "automaticSerialization" option, it's possible to store
-			some booleans), you can use a more compact construction like :
+    		Wenn nur Strings in den Cache gespeichert werden (weil mit der "automaticSerialization" Option
+    		ist es möglich Booleans zu speichern), kann eine kompaktere Konstruktion wie diese benutzt werden :
      	    <programlisting role="php"><![CDATA[<?php  
      	    
-// [...] // require, configuration and factory
+// [...] // require, Konfiguration und Factory
 
-$id = 'foo'; // cache id of "what we want to cache"
+$id = 'foo'; // Cache Id von dem "was wir Cachen wollen"
 
 if (!($data = $cache->get($id))) {
-	// cache missed
+	// Cache nicht gefunden
 	
 	$data = '';
 	for ($i=0;$i<10000;$i++) {
@@ -218,22 +223,22 @@ if (!($data = $cache->get($id))) {
     
 } 
 
-// [...] do something with $data (for example "echo $data;")
+// [...] Irgendwas mit $data machen (zum Beispiel "echo $data;")
      	    
 ?>]]>       </programlisting> 
         </para>  
         <para>
-        	If you want to cache multiple blocks or datas, the idea is the same :
+        	Wenn mehrere Blöcke oder Daten gecached werden sollen, ist die Idee die selbe :
      	    <programlisting role="php"><![CDATA[<?php  
      	    
-// [...] // require, configuration and factory
+// [...] // require, Konfiguration und Factory
 
-$id1 = 'foo'; // cache id of block1
-$id1 = 'foo'; // cache id of block2
+$id1 = 'foo'; // Cache Id von block1
+$id1 = 'foo'; // Cache Id von block2
 
 // BLOCK1
 if (!($data = $cache->get($id1))) {
-	// cache missed
+	// Cache nicht gefunden
 	
 	$data = '';
 	for ($i=0;$i<10000;$i++) {
@@ -245,12 +250,12 @@ if (!($data = $cache->get($id1))) {
 } 
 echo($data);
 
-// NEVER CACHED BLOCK
-echo('NEVER CACHED !');
+// NIE GECACHTER BLOCK
+echo('NIE GECACHED !');
 
 // BLOCK2
 if (!($data = $cache->get($id2))) {
-	// cache missed
+	// Cache nicht gefunden
 	
 	$data = '';
 	for ($i=0;$i<10000;$i++) {
@@ -267,10 +272,10 @@ echo($data);
         </para>   	 	
     </sect2>   
     <sect2 id="zend.cache.core.clean">
-    	<title>clean the cache</title>
+    	<title>Reinigen des Caches</title>
     	<para>
-    		To remove/invalidate in particular cache id, you can use the <code>remove()</code>
-    		method :
+    		Um eine bestimmte Cache Id zu entfernen/annulieren kann die <code>remove()</code>
+    		Methode benutzt werden :
      	    <programlisting role="php"><![CDATA[<?php 
      	    
 // [...]
@@ -280,8 +285,8 @@ $cache->remove('idToRemove');
 ?>]]>       </programlisting>    		
     	</para>
     	<para>
-    		To remove/invalidate several cache ids in one operation, you can use the <code>clean()</code>
-    		method. For example to remove all cache records :
+    		Um mehrere Cache Ids in einer Operation zu entfernen/annulieren kann die <code>clean()</code>
+    		Methode benutzt werden. Zum Beispiel um alle Cache Einträge zu entfernen :
       	    <programlisting role="php"><![CDATA[<?php 
      	    
 // [...]
@@ -289,7 +294,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 // [...]
     		
 ?>]]>       </programlisting>     		
-			If you want to remove only outdated cache records :
+			Wenn nur abgelaufene Cache Einträge entfernt werden sollen :
       	    <programlisting role="php"><![CDATA[<?php 
      	    
 // [...]
@@ -304,45 +309,45 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
 <sect1 id="zend.cache.output">
     <title>Zend_Cache_Output</title>
     <para>
-    	TO BE WRITTEN
+    	WIRD NACHGEREICHT
     </para>
 </sect1>    
 <sect1 id="zend.cache.page">
     <title>Zend_Cache_Page</title>
     <para>
-    	TO BE WRITTEN
+        WIRD NACHGEREICHT
     </para>
 </sect1>  
 <sect1 id="zend.cache.file">
     <title>Zend_Cache_File</title>
     <para>
-    	TO BE WRITTEN
+        WIRD NACHGEREICHT
     </para>
 </sect1> 
 <sect1 id="zend.cache.function">
     <title>Zend_Cache_Function</title>
     <para>
-    	TO BE WRITTEN
+        WIRD NACHGEREICHT
     </para>
 </sect1> 
 <sect1 id="zend.cache.class">
     <title>Zend_Cache_Class</title>
     <para>
-    	TO BE WRITTEN
+        WIRD NACHGEREICHT
     </para>
 </sect1> 
 <sect1 id="zend.cache.backends">
-    <title>Available backends for Zend_Cache</title>
+    <title>Backends für Zend_Cache</title>
     <sect2 id="zend.cache.backends.file">
     	<title>Zend_Cache_Backend_File</title>
     	<para>
-    		TO BE WRITTEN
+          WIRD NACHGEREICHT
     	</para>
     </sect2>
     <sect2 id="zend.cache.backends.sqlite">
     	<title>Zend_Cache_Backend_Sqlite</title>
     	<para>
-    		TO BE WRITTEN
+          WIRD NACHGEREICHT
     	</para>
     </sect2>
 </sect1> 
