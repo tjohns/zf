@@ -44,7 +44,6 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
      * 
      * =====> (string) cacheDir :
      * - Directory where to put the cache files
-     * (make sure to add a trailing slash)
      * 
      * =====> (boolean) fileLocking :
      * - Enable / disable fileLocking
@@ -115,9 +114,28 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
     {      
         if (!is_array($options)) Zend_Cache::throwException('Options parameter must be an array');
         while (list($name, $value) = each($options)) {
-            $this->setOption($name, $value);
+            if ($name == 'cacheDir') { // particular case for this option
+               $this->setCacheDir($value);
+            } else {
+                $this->setOption($name, $value);
+            }
         }
     }  
+    
+    /**
+     * Set the cacheDir (particular case of setOption() method)
+     * 
+     * @param mixed $value
+     */
+    public function setCacheDir($value)
+    {
+        // add a trailing slash if necessary 
+        $last = substr($value, -1, 1);
+        if (($last != '/') and ($last != '\\')) {
+        	$value = $value . '/';
+        }
+        $this->setOption('cacheDir', $value);
+    }
     
     /**
      * Set the frontend directives
