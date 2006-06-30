@@ -6,7 +6,7 @@
         <para>
         <literal>Zend_Filter</literal> は、
         データをフィルタリングするための静的メソッドのライブラリを提供します。
-        入力のフィルタリングには <xref linkend="zend.inputfilter" /> を代わりに使用すべきです。
+        入力のフィルタリングには <xref linkend="zend.filter.input" /> を代わりに使用すべきです。
         なぜなら、これは <literal>Zend_Filter</literal>
         が提供するメソッドを用いて入力をフィルタリングするフレームワークだからです。
         しかし、<literal>Zend_Filter_Input</literal> は主として配列を対象にして設計されているので、

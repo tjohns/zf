@@ -68,7 +68,7 @@
         <para>
             <code>Zend_Http_Client</code> で<emphasis>複数の</emphasis> URL
             に対してリクエストを送信したい場合は、
-            <xref linkend="zend.httpclient.requesting-multiple-domains" /> を参照ください。
+            <xref linkend="zend.http.client.requesting-multiple-domains" /> を参照ください。
         </para>
     </sect2>
     <sect2 id="zend.http.client.requesting-multiple-domains">
