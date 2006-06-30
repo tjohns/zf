@@ -1,18 +1,15 @@
 Priority 1 :
 
+- end of the complete documentation (zend format)
+
 - end of "Page" frontend (clone of "jpcache")
 	=> to cache a whole page
 	=> automatic cache id
 	=> "HTTP not modified" header
-	[...] (Mislav is working on this)
+	[...] (Mislav is working on this) 
 
 
 Priority 2 :
-
-- complete documentation (zend format)
-
-
-Priority 3 :
 
 - new backends (memcached, shmop...)
 - an integrated cache for Zend_Controler ?
