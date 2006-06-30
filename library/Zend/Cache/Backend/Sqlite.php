@@ -43,8 +43,7 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      * Available options
      * 
      * =====> (string) cacheDBCompletePath :
-     * Directory where to put the cache files
-     * (make sure to add a trailing slash)
+     * - the complete path (filename included) of the SQLITE database
      * 
      * @var array available options
      */
