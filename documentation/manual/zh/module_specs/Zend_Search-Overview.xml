@@ -1,67 +1,55 @@
 <sect1 id="zend.search.overview">
-    <title>Overview</title>
+    <title>概述</title>
 
     <sect2 id="zend.search.introduction">
-        <title>Introduction</title>
+        <title>简介</title>
         <para>
-            Zend_Search_Lucene is a general purpose text search engine written entirely in PHP 5.
-            Since it stores its index on the filesystem and does not require a database
-            server, it can add search capabilities to almost any PHP-driven website.
-            Zend_Search_Lucene supports the following features:
+            Zend_Search_Lucene 是一个完全由 PHP 5 编写的通用文本搜索引擎。由于其将索引保存在文件系统中而不需要数据库支持，因此它几乎可以为任何由 PHP 驱动的网站增加搜索能力。Zend_Search_Lucene 支持下列特性：
             
             <itemizedlist>
                 <listitem>
-                    <para>Ranked searching - best results returned first</para>
+                    <para>具有排名功能的搜索——最符合要求的结果出现在最前面</para>
                 </listitem>
                 <listitem>
                     <para>
-                       Many powerful query types: phrase queries, wildcard queries,
-                       proximity queries, range queries and more
+                       许多强大的查询类型：短语查询、通配符查询、近似查询、范围查询等
                         <footnote>
                            <para>
-                             Only term and multi term queries are supported at this time.
+                             目前只支持单项和多项查询。
                            </para>
                         </footnote>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Search by specific field (e.g., title, author, contents)</para>
+                    <para>搜索特定的字段，如标题、作者、内容，等等</para>
                 </listitem>
             </itemizedlist>
         
-            Zend_Search_Lucene was derived from the Apache Lucene project.  For more information on Lucene, visit
-            <ulink url="http://lucene.apache.org/java/docs/"/>.
+            Zend_Search_Lucene 来源于 Apache Lucene project。要了解关于 Lucene 的更多详情，请访问
+            <ulink url="http://lucene.apache.org/java/docs/"/>。
         </para>
     </sect2>
     
 	<sect2 id="zend.search.index-creation.documents-and-fields">
-		<title>Document and Field Objects</title>
+		<title>文档和字段对象</title>
             <para>
-                Zend_Search_Lucene operates with documents as atomic subjects for indexing.  A document is
-                divided into named fields, and fields have content that can be searched.
+                Zend_Search_Lucene 把文档最为基本的索引主题。而文档(document)又分为若干被命名的字段(field)，字段中包含可供搜索的内容。
             </para>
         
             <para>
-                A documented is represented by the Zend_Search_Lucene_Document object, and this object contains
-                Zend_Search_Lucene_Field objects that represent the fields.
+                一个文档被表现为 Zend_Search_Lucene_Document 对象，这个对象包含了若干 Zend_Search_Lucene_Field 对象，用以表现相应的字段。
             </para>
         
             <para>
-                It is important to note that any kind of information can be added to the index.
-                Application-specific information or metadata can be stored in the document
-                fields, and later retrieved with the document during search.
+                需要特别说明的是任意类型的信息都可以被加入索引中。应用程序描述信息或者元信息(metadata)可以被保存在文档字段中，并在搜索过程中与文档一起被检索。
             </para>
         
             <para>
-                It is the responsibility of your application to control the indexer.  
-                This means that data can be indexed from any source
-                that is accessible by your application.  For example, this could be the
-                filesystem, a database, an HTML form, etc.
+                控制这些索引是你的应用程序的责任。这意味着任意你的应用程序可以访问的数据来源都可以进行索引。例如，这些数据可以来自于文件系统、数据库或者是 HTML 表单，等等。
             </para>            
             
             <para>
-                <code>Zend_Search_Lucene_Field</code> class provides several static methods to create fields with
-                different characteristics:
+                <code>Zend_Search_Lucene_Field</code> 类提供了一些静态方法用以创建具有不同特点的字段：
             </para>
         
             <programlisting role="php"><![CDATA[<?php
@@ -92,100 +80,85 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 ?>]]></programlisting>
         
             <para>
-                You could give names for fields by your own choice.  A "contents" field name is used to search 
-                by default.  It's good idea to place main document data into this field with this name.
+                你可以按照自己的需要给字段命名。名为“contents”的字段缺省的用于搜索。因此，将主要的文档内容放在这个字段中会是个好主意。
             </para>
 	</sect2>
 	
 	<sect2 id="zend.search.index-creation.understanding-field-types">
-		<title>Understanding Field Types</title>
+		<title>理解字段类型</title>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Keyword</code> fields are stored and indexed, meaning they can be searched as well as 
-                    displayed them back in search results. They are not split up into seperate 
-                    words by tokenization.  Enumerated database fields usually translate well to Keyword 
-                    fields in Zend_Search_Lucene.
+                    <code>Keyword</code> 关键词字段是被保存和被索引的，意思是它们既可以被搜索，也可以在搜索结果中被显示。它们并没有以记号化的方式拆分为多个不同的词。在 Zend_Search_Lucene 中，枚举形的数据库字段通常可以很好的转化为关键词字段。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>UnIndexed</code> fields are not searchable, but they are returned with search hits.  Database 
-                    timestamps, primary keys, file system paths, and other external identifiers are good 
-                    candidates for UnIndexed fields.
+                    <code>UnIndexed</code> 不索引字段是不可搜索的，但是它们会在搜索结果中返回用于生成点击信息。数据库的时间戳、主键、文件系统的路径、以及其它标识是不索引字段的好的候选人。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Binary</code> fields are not tokenized or indexed, but are stored for retrieval with search hits. 
-                    They can be used to store any data encoded as a binary string, such as an image icon.
+                    <code>Binary</code> 二进制字段是不记号化和不被索引的，但是被保存以供生成点击信息。它们可以用于保存任何以二进制方式编码的信息，例如图标等等。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Text</code> fields are stored, indexed, and tokenized. Text fields are appropriate for storing 
-                    information like subjects and titles that need to be searchable as well as returned with 
-                    search results.
+                    <code>Text</code> 文本字段是被保存的、被索引的和记号化的。文本字段适合用于保存像是主题、标题这样既能被搜索又能作为搜索结果返回的信息。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>UnStored</code> fields are tokenized and indexed, but not stored in the index. Large amounts of 
-                    text are best indexed using this type of field. Storing data creates a larger index on 
-                    disk, so if you need to search but not redisplay the data, use an UnStored field. 
-                    UnStored fields are practical when using a Zend_Search_Lucene index in 
-                    combination with a relational database. You can index large data fields with UnStored 
-                    fields for searching, and retrieve them from your relational database by using a seperate 
-                    fields as an identifier.
+                    <code>UnStored</code> 不保存字段是记号化和被索引的，但并不保存在索引中。大量的文本信息最好使用这种字段类型。保存的数据在硬盘上创建了大量的索引，如果你需要搜索而不需要在搜索结果中显示这些数据，就使用不保存字段。当结合使用 Zend_Search_Lucene 索引和关系数据库时最适合使用不保存字段。你通过不保存字段索引大量数据用于搜索，并通过作为标识的特定字段从你的关系数据库中获取它们。
     		   </para>
 
                 <table>
-                    <title>Zend_Search_Lucene_Field Types</title>
+                    <title>Zend_Search_Lucene_Field 类型</title>
                     <tgroup cols="4">
                         <thead>
                             <row>
-                                <entry>Field Type</entry>
-                                <entry>Stored</entry>
-                                <entry>Indexed</entry>
-                                <entry>Tokenized</entry>
-                                <entry>Binary</entry>
+                                <entry>字段类型</entry>
+                                <entry>保存</entry>
+                                <entry>索引</entry>
+                                <entry>记号化</entry>
+                                <entry>二进制</entry>
                             </row>
                         </thead>
                         <tbody>
                             <row>
                                 <entry>Keyword</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
+                                <entry>是</entry>
+                                <entry>是</entry>
+                                <entry>否</entry>
+                                <entry>否</entry>
                             </row>
                             <row>
                                 <entry>UnIndexed</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
+                                <entry>是</entry>
+                                <entry>否</entry>
+                                <entry>否</entry>
+                                <entry>否</entry>
                             </row>
                             <row>
                                 <entry>Binary</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
-                                <entry>Yes</entry>
+                                <entry>是</entry>
+                                <entry>否</entry>
+                                <entry>否</entry>
+                                <entry>是</entry>
                             </row>
                             <row>
                                 <entry>Text</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
+                                <entry>是</entry>
+                                <entry>是</entry>
+                                <entry>是</entry>
+                                <entry>否</entry>
                             </row>
                             <row>
                                 <entry>UnStored</entry>
-                                <entry>No</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
+                                <entry>否</entry>
+                                <entry>是</entry>
+                                <entry>是</entry>
+                                <entry>否</entry>
                             </row>                        
                         </tbody>
                     </tgroup>

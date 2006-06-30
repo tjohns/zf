@@ -34,16 +34,25 @@
         <title>Zend</title>
         &module_specs.Zend;
     </chapter>
-	<chapter id="zend.controller">
-		<title>Zend_Controller</title>
-		&module_specs.Zend_Controller-Overview;
-		&module_specs.Zend_Controller-GettingStarted;
-		&module_specs.Zend_Controller-Subclassing;
-		&module_specs.Zend_Controller-Plugins;
-	</chapter>
+    <chapter id="zend.cache">
+        <title>Zend_Cache</title>
+        &module_specs.Zend_Cache;
+    </chapter>
+    <chapter id="zend.config">
+        <title>Zend_Config</title>
+        &module_specs.Zend_Config;
+    </chapter>
+    <chapter id="zend.controller">
+        <title>Zend_Controller</title>
+        &module_specs.Zend_Controller-Overview;
+        &module_specs.Zend_Controller-GettingStarted;
+        &module_specs.Zend_Controller-Subclassing;
+        &module_specs.Zend_Controller-Plugins;
+    </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
         &module_specs.Zend_Db_Adapter;
+        &module_specs.Zend_Db_Profiler;
         &module_specs.Zend_Db_Select;
         &module_specs.Zend_Db_Table;
         &module_specs.Zend_Db_Table_Row;
@@ -53,8 +62,7 @@
         <title>Zend_Feed</title>
         &module_specs.Zend_Feed;
     </chapter>
-   
-	<chapter id="zend.filter">
+    <chapter id="zend.filter">
         <title>Zend_Filter</title>
         &module_specs.Zend_Filter;
         &module_specs.Zend_Filter_Input;
@@ -64,7 +72,6 @@
         &module_specs.Zend_Http_Client;
         &module_specs.Zend_Http_Response;
     </chapter>
-	
     <chapter id="zend.json">
         <title>Zend_Json</title>
         &module_specs.Zend_Json;
@@ -80,12 +87,14 @@
     <chapter id="zend.mime">
         <title>Zend_Mime</title>
         &module_specs.Zend_Mime;
+        &module_specs.Zend_Mime_Message;
+        &module_specs.Zend_Mime_Part;
     </chapter>
     <chapter id="zend.pdf">
         <title>Zend_Pdf</title>
         &module_specs.Zend_Pdf;
     </chapter>
-	<chapter id="zend.search">
+    <chapter id="zend.search">
         <title>Zend_Search</title>
         &module_specs.Zend_Search-Overview;
         &module_specs.Zend_Search-IndexCreation;
@@ -94,7 +103,7 @@
         &module_specs.Zend_Search-Charset;
         &module_specs.Zend_Search-Extending;
         &module_specs.Zend_Search-JavaLucene;
-	</chapter>
+    </chapter>
     <chapter id="zend.service">
         <title>Zend_Service</title>
         &module_specs.Zend_Service;

@@ -1,47 +1,37 @@
 <sect1 id="zend.search.charset">
-	<title>Character set.</title>
+	<title>字符集</title>
 
 	<sect2 id="zend.search.charset.description">
-        <title>UTF-8 and single-byte character sets support.</title>
+        <title> UTF-8 和单字节字符集支持</title>
 
         <para>
-            Zend_Search_Lucene is designed to work with UTF-8 charset. Index files store
-            unicode data in Java's "modified UTF-8 encoding". Zend_Search_Lucene core
-            completely supports it with one exception.
+            被设计于工作在 UTF-8 字符集下。索引文件在 Java 的"modified UTF-8 encoding"编码下保存文件。Zend_Search_Lucene 内核完全支持它，只有一处例外。
             <footnote>
                <para>
-                   Zend_Search_Lucene supports only Basic Multilingual Plane
-                   (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
-                   "supplementary characters" (characters whose code points are
-                   greater than 0xFFFF)
+                   Zend_Search_Lucene 只支持基本多语言平面(Basic Multilingual Plane, BMP)字符集(从 0x0000 到 0xFFFF)，不支持辅助字符集(supplementary characters)(那些代码指针大于 0xFFFF 的字符)
                </para>
                <para>
-                   Java 2 represents these characters as a pair of char (16-bit)
-                   values, the first from the high-surrogates range (0xD800-0xDBFF),
-                   the second from the low-surrogates range (0xDC00-0xDFFF). Then
-                   they are encoded as usual UTF-8 characters in six bytes.
-                   Standard UTF-8 representation uses four bytes for supplementary
-                   characters.
+                   Java 2 通过一对两个 16 位字符的值来表示这些字符，第一个来自高半代理(high-surrogates)区(0xD800-0xDBFF)，第二个来自低半代理(low- surrogates)区(0xDC00-0xDFFF)。它们将常用的 UTF-8 字符编码为 6 个字节。而标准的 UTF-8 通过四个字节来表示附加的字符。
+               </para>
+               <para>
+                  (译注：有关信息请参考 Unicode 标准。可能大家更想知道的是 BMP 中是否支持中文，答案是肯定的。事实上 BMP 中 CJK 字符集所占的比例最高。) 
                </para>
             </footnote>
 
         </para>
 
         <para>
-            However, text analyzers and query parser text analyzer and query parser use
-            ctype_alpha() for tokenizing text and queries. ctype_alpha() doesn't support
-            UTF-8 and needs to be replaced by something else in nearest future.
+            然而，各类文本和查询分析程序使用 ctype_alpha() 来进行文本和查询的记号化处理。而 ctype_alpha() 不支持 UTF-8，在不久的将来需要被替换为别的什么机制。
         </para>
 
         <para>
-            Before that we are strongly recomend to convert your data into ASCII
-            representation
+            在此之前我们强烈推荐将你的数据转化成 ASCII 表示
             <footnote>
                <para>
-                   If data could contain non-ascii character or come in UTF-8.
+                   如果数据包含非 ASCII 字符或者来自 UTF-8。
                </para>
             </footnote>
-            (both for storing source documents, and for querying):
+            (不管是存储原始文档，或者进行搜索)：
         </para>
 
         <programlisting role="php"><![CDATA[<?php

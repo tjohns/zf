@@ -1,17 +1,15 @@
 <sect1 id="zend.search.index-creation">
-	<title>Building Indexes</title>
+	<title>建立索引</title>
 
 	<sect2 id="zend.search.index-creation.creating">
-        <title>Creating a New Index</title>
+        <title>创建新索引</title>
 
         <para>
-            Index creation and updating capabilities are implemented within Zend_Search_Lucene module and Java Lucene.
-            You can use both of these capabilities.
+            在 Zend_Search_Lucene 模块和 Java Lucene 中实现了索引的创建和更新机制。你都可以使用。
         </para>
 
         <para>
-            The PHP code listing below provides an example of how to index a file
-            using Zend_Search_Lucene indexing API:
+            下面的 PHP 代码提供了一个如何使用 Zend_Search_Lucene 索引 API 的例子：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -35,28 +33,24 @@ $index->commit();
 ?>]]></programlisting>
 
         <para>
-            Newly added documents could be retrived from the index after commit
-            operation.
+            在进行了 commit 提交操作之后，新添加的文档就可以被检索了。
         </para>
         <para>
-            <code>Zend_Search_Lucene::commit()</code> is automatically called at the and of script execution and
-            before any search request.
+            <code>Zend_Search_Lucene::commit()</code> 会在脚本执行结束前以及任意搜索请求开始之前被自动调用。
         </para>
         <para>
-            Each commit() call generates new index segment. So it must be requested as rarely as possible.
-            From the other side commiting large amount of documents in one step needs more memory.
+            每一次 commit() 调用产生新的索引分段。因此尽可能少的请求它。当然另一方面，在一步中提交大量的文档需要更多的内存。
         </para>
         <para>
-            Automatic segment management optimization is a subject of future Zend_Search_Lucene enhancements.
+            字段分段管理优化是 Zend_Search_Lucene 未来要增强的内容。
         </para>
     </sect2>
 
     <sect2 id="zend.search.index-creation.updating">
-        <title>Updating Index</title>
+        <title>更新索引</title>
 
         <para>
-            The same procedure is used to update existing index. The only difference is that index should be opened without
-            second parameter:
+            同样的过程可以用于更新现存的索引。唯一的区别是打开相应的索引是不需要第二个参数：
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -78,15 +72,13 @@ $index->commit();
 ?>]]></programlisting>
 
         <para>
-            Each commit() call (explicit or implicit) generates new index segment.
+            每一次 commit() 调用(显式的或者隐式的)产生新的索引分段。
         </para>
         <para>
-            Zend_Search_Lucene doesn't manage segments automatically. Thus you should care about segment size.
-            From the one side large segment is more optimal, but from another large segment needs more memory during creation.
+            Zend_Search_Lucene 不会自动管理分段。因此你应该关注分段的大小。一方面一个大的分段可能更加理想，另一方面在创建时需要更大的内存。
         </para>
         <para>
-            Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-            can be used to optimize index with this version of Zend_Search_Lucene.
+            Lucene Java 和 Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)可以用于优化这个版本的 Zend_Search_Lucene 产生的索引。
         </para>
     </sect2>
 </sect1>

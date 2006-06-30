@@ -1,47 +1,32 @@
 <sect1 id="zend.search.searching">
-	<title>Searching an Index</title>
+	<title>搜索索引</title>
 
 	<sect2 id="zend.search.searching.query-parser">
-		<title>Building Queries</title>
+		<title>建立查询</title>
 
         <para>
-            There are two ways to search the index. The first method uses
-            Query Parser to construct query from a string. The second provides
-            the ability to create your own queries through the Zend_Search_Lucene API.
+            有两种方式可以在索引中进行搜索。第一个方式是使用查询分析程序(Query Parser)来从字符串中创建查询。第二个方式通过 Zend_Search_Lucene API 提供了创建自己的查询的可能。
         </para>
 
         <para>
-        Before choosing to use the provided Query Parser, please consider
-        the following:
+        在选择使用查询分析程序之前，请考虑下面问题：
 
             <orderedlist>
                 <listitem>
-                    If you are programmatically generating a query string and then parsing
-                    it with the query parser then you should seriously consider building
-                    your queries directly with the query API. In other words, the query
-                    parser is designed for human-entered text, not for program-generated text.
+                    如果你使用程序生成查询字串并传递给查询分析程序，那么你最好考虑直接使用查询 API 来建立查询。换句话说，查询分析程序是为人为输入的文本设计的，而不是为程序生成的文本准备的。
                 </listitem>
                 <listitem>
-                    Untokenized fields are best added directly to queries, and not through
-                    the query parser. If a field's values are generated programmatically
-                    by the application, then so should query clauses for this field.
-                    An analyzer, which the query parser uses, is designed to convert
-                    human-entered text to terms. Program-generated values, like dates,
-                    keywords, etc., should be consistently program-generated.
+                    非记号化字段最好直接加入查询中，而不是通过查询分析程序。如果一个字段的值是应用程序生成的，那么它应该按照这个条款进行查询。查询分析程序使用的机制，是设计来转换人为输入的文本的。像日期、关键词等等，都可以认为是程序生成的信息。
                 </listitem>
                 <listitem>
-                    In a query form, fields which are general text should use the query parser.
-                    All others, such as date ranges, keywords, etc. are better added directly
-                    through the query API. A field with a limit set of values, that can be
-                    specified with a pull-down menu should not be added to a query string
-                    which is subsequently parsed, but rather added as a TermQuery clause.
+                    在查询表单中，用于产生文本的字段应该是用查询分析程序。所有其它的诸如日期范围、关键词等，最好通过查询 API 直接加入查询中。一个具有一组取之范围的字段，可以通过下拉菜单来实现而不应该加入需要被分析的查询字串中，而不是增加一个查询项。
                 </listitem>
             </orderedlist>
 
         </para>
 
         <para>
-            Both ways use the same API method to search through the index:
+            两种途径都使用同样的 API 方法来搜索索引：
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -53,35 +38,26 @@ $index->find($query);
 
 ?>]]></programlisting>
 
-            The <code>Zend_Search_Lucene::find()</code> method determines input type automatically and
-            uses query parser to construct appropriate Zend_Search_Lucene_Search_Query object
-            from a string.
+            方法 <code>Zend_Search_Lucene::find()</code> 自动检查输入类型并使用查询分析程序从字符串建立适当的 Zend_Search_Lucene_Search_Query 对象。
         </para>
 
         <para>
-            It is important to note that <code>find()</code> IS case sensitive.  By default,
-            LuceneIndexCreation.jar normalizes all documents to lowercase.  This can be turned
-            off with a command line switch (type LuceneIndexCreation.jar with no arguments
-            for help).  The case of the text supplied to <code>find()</code> must match that
-            of the index.  If the index is normalized to lowercase, then all text supplied
-            to <code>find()</code> must pass through <code>strtolower()</code>, or else it
-            may not match.
+            需要特别注意的是 <code>find()</code> 是大小写敏感的。默认的，LuceneIndexCreation.jar
+            标准化所有文档为小写。可以通过命令行来关闭这个设置(输入不带参数的 LuceneIndexCreation.jar
+            命令来获取帮助)。提供给 <code>find()</code> 的文本大小写必须和索引中的相匹配。如果索引被正常设置为全小写，那么提供给
+          <code>find()</code> 的文本必须用 <code>strtolower()</code>处理，否则它可能无法被匹配。
         </para>
 	</sect2>
 
 	<sect2 id="zend.search.searching.results">
-		<title>Search Results</title>
+		<title>搜索结果</title>
         <para>
-            The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
-            two properties: <code>$hit->document</code> is a document number within
-            the index and <code>$hit->score</code> is a score of the hit in
-            a search result. Result is ordered by score (top scores come first).
+            搜索结果是一个 Zend_Search_Lucene_Search_QueryHit 对象数组。每一个数组元素具有两个属性：
+          <code>$hit->document</code> 是索引中的文档编号，<code>$hit->score</code> 是其在搜索结果中的分值。搜索结果是按照分值排序的(最高分的搜索结果位于最前面)。
         </para>
 
         <para>
-            The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found by
-            the hit as a property of the hit.  In this example, a hit is returned and
-            the corresponding document has two fields: title and author.
+            Zend_Search_Lucene_Search_QueryHit 对象还能将 Zend_Search_Lucene_Document 中的各个字段作为属性陈列出来。在下面这个例子中，搜索结果相应的文档具有两个字段：title 和 author。
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -103,12 +79,9 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-        Optionally, the original Zend_Search_Lucene_Document object can be returned from the
-        Zend_Search_Lucene_Search_QueryHit.
-
-        You can retrieve indexed parts of the document by using the <code>getDocument()</code>
-        method of the index object and then get them by
-        <code>getFieldValue()</code> method:
+        可选的，原始的 Zend_Search_Lucene_Document 对象可以从 Zend_Search_Lucene_Search_QueryHit 获得。你可以使用索引对象的 <code>getDocument()</code>
+        方法来获取文档进行了索引的部分并接着使用
+        <code>getFieldValue()</code> 方法。
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -133,37 +106,32 @@ foreach ($hits as $hit) {
 
 ?>]]></programlisting>
 
-        The fields available from the Zend_Search_Lucene_Document object are determined at
-        the time of indexing.  The document fields are either indexed, or
-        index and stored, in the document by the indexing application
-        (e.g. LuceneIndexCreation.jar).
+        能够获取的 Zend_Search_Lucene_Document 对象的字段是在进行索引的时候决定的。由索引创建程序(例如：LuceneIndexCreation.jar)在文档中建立的文档字段要么是被索引的，要么是被索引并保存的。
         </para>
 
         <para>
-        Pay attention, that document identity ('path' in our example) is also stored
-        in the index and must be retrieved from them.
+        请注意，文档标识(在本例中是'path')也保存在索引中，它必须被提取出来。
         </para>
 
 	</sect2>
 
 
 	<sect2 id="zend.search.searching.results-scoring">
-		<title>Results Scoring</title>
+		<title>结果评分</title>
         <para>
-            Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
-            Saerch results are ordered by score. Hits with greater score come first.
+            Zend_Search_Lucene 使用和 Java Lucene 一样的评分算法。搜索结果是按照分值进行排序的。分值越大，相应的搜索结果点击排在排位越靠前。
         </para>
 
         <para>
-            Different score means, that one document matches the query more then another.
+            不同的分值意味着一篇文档相比另一篇更能匹配查询要求。
         </para>
 
         <para>
-            Roughly speaking, search hits, which contain searched term or phrase more frequently, have greater score.
+            粗略的说，包含更多的搜索项或短语的搜索结果，将会具有更高的分值。
         </para>
 
         <para>
-            Score can be retrived by <code>score</code> property of hit:
+            可以通过 score 属性获取一个搜索结果的分值：
         <programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
 
@@ -176,8 +144,7 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Zend_Search_Lucene_Search_Similarity class is used to calculate score.
-            See <link linkend="zend.search.extending.scoring">Extensibility. Scoring Algorithms</link> section for details.
+            类 Zend_Search_Lucene_Search_Similarity 用于计算分值。请参阅<link linkend="zend.search.extending.scoring">“扩展性”中“评分算法”</link>一节了解详情。
         </para>
 
 	</sect2>

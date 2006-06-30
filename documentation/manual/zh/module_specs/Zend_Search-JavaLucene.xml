@@ -1,52 +1,48 @@
 <sect1 id="zend.search.java-lucene">
-    <title>Interoperating with Java Lucene</title>
+    <title>与 Java Lucene 的互操作性</title>
 
 	<sect2 id="zend.search.index-creation.file-formats">
-		<title>File Formats</title>
+		<title>文件格式</title>
         <para>
-          Zend_Search_Lucene index file formats are binary compatible with a Lucene
-          version 1.4 and above.
+          Zend_Search_Lucene 的索引文件格式和 1.4 或更高版本的 Lucene 二进制兼容。
         </para>
     
         <para>
-          A detailed description of this format is available here:
-          <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>.
+          关于文件格式的更详细的描述在这里：
+          <ulink url="http://lucene.apache.org/java/docs/fileformats.html"/>。
         </para>
 	</sect2>	
     
     <sect2 id="zend.search.index-creation.index-directory">
-        <title>Index Directory</title>
+        <title>索引目录</title>
     
         <para>
-        After index creation, the index directory will contain several files:
+        在创建了索引之后，索引目录中将包含下列文件：
         </para>
     
         <itemizedlist>
             <listitem>
                 <para>
-                <filename>segments</filename> file is a list of index segments.
+                <filename>segments</filename> 文件是一个索引分段的清单。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                <filename>*.cfs</filename> files contain index segments.
-                Note! Optimized index has always only one segment.
+                <filename>*.cfs</filename> 文件包含索引分段。请注意！优化了的索引总是只有一个分段。
                 </para>
             </listitem>
             <listitem>
                 <para>
-                <filename>deletable</filename> file is a list of files that are no longer used
-                by the index, but which could not be deleted.
+                <filename>deletable</filename> 文件是一个不再被索引使用但是无法删除的文件清单。
                 </para>
             </listitem>
         </itemizedlist>
     </sect2>	
 	
 	<sect2 id="zend.search.java-lucene.source-code">
-		<title>Java Source Code</title>
+		<title>Java 源代码</title>
         <para>
-            The Java program listing below provides an example of how to index a file
-            using Java Lucene:
+            下面的 Java 程序提供了一个如何使用 Java Lucene 索引文件的例子：
         </para>
     
         <programlisting role="java"><![CDATA[
@@ -81,50 +77,43 @@ indexWriter.addDocument(doc);]]>
     </sect2>
         
 	<sect2 id="zend.search.java-lucene.jar">  
-        <title>Using LuceneIndexCreation.jar</title>
+        <title>使用 LuceneIndexCreation.jar</title>
 	
         <para>
-            To get started with Zend_Search_Lucene quickly, a JAR file (Java) has been created to
-            generate an index from the command line.  For more information on JAR files,
-            please visit: <ulink url="http://java.sun.com/docs/books/tutorial/jar/basics/index.html"/>.
+            为了更快的开始使用 Zend_Search_Lucene，人们创建了一个基于 Java 的 JAR 文件用以通过命令行生成索引。要了解 JAR 文件的详情，请访问：
+         <ulink url="http://java.sun.com/docs/books/tutorial/jar/basics/index.html"/>。
         </para>
     
         <para>
-            LuceneIndexCreation.jar consumes text files and builds an index from them.  Usage:
+            LuceneIndexCreation.jar 读取文本文件并从它们创建索引。用法是：
         <programlisting role="java"><![CDATA[
     java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
     -c   - force index to be case sensitive
     -s   - store content in the index
     ]]></programlisting>
-            This command consumes the directory <code>&lt;document_dir&gt;</code>, including all of its subdirectories,
-            and produces a Lucene index.  The index is a set of files that will be stored in a separate
-            directory that is specified by <code>&lt;index_dir&gt;</code>.
+            这个命令读取目录 <code>&lt;document_dir&gt;</code>，包括它的子目录，并产生 Lucene 索引。索引是一组保存在由 <code>&lt;index_dir&gt;</code>指定的独立目录中的文件。
         </para>
     
         <para>
-            For each document to be indexed, LuceneIndexCreation creates a document object with three
-            fields: a <emphasis>contents</emphasis> field containing the contents (body) of the document,
-            a <emphasis>modified</emphasis> field containing the file modification time, and
-            the full path and filename in a <emphasis>path</emphasis> field.
+            对于每一个被索引的文档，LuceneIndexCreation 创建一个包含三个字段的文档对象：一个 <emphasis>contents</emphasis>
+            内容字段包含文档内容，一个 <emphasis>modified</emphasis> 修改字段包含文档的修改时间，以及一个
+          <emphasis>path</emphasis> 路径字段包含完整的路径和文件名。
         </para>
     
         <para>
-            If <option>-c</option> is specified, then index is forced to be case sensitive. Otherwise all terms are converted to lower case before to be added into the index.
+            如果声明了 <option>-c</option> 选项，则索引被强制为大小写相关。否则所有搜索项在加入索引之前被转化为小写。
         </para>
     
         <para>
-            If <option>-s</option> is specified, then document's content is also stored in the index
-            and can be retrieved with <code>path</code> and <code>modified</code> fields.
+            如果声明了 <option>-s</option> 那么文档的内容也被保存在索引中，可以通过 <code>path</code> 和 <code>modified</code> 字段直接获取。
         </para>
         
         <para>
-            Otherwise only <code>path</code> and <code>modified</code> fields are stored,
-            and <code>contents</code> field is only indexed. In this case document content must
-            be retrieved from an original source by its path.
+            否则，只有 <code>path</code> 和 <code>modified</code> 字段被保存，而 <code>contents</code> 字段仅进行索引。这种情况下文档内容只能通过其路径字段从原始文件中获取。
         </para>
         
         <para>
-            Please be careful, using <option>-s</option> option increases index size near five times.
+            请小心，使用 <option>-s</option> 选项会让索引的大小扩大近五倍。
         </para>
 	</sect2>
 
