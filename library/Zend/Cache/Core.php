@@ -137,7 +137,7 @@ class Zend_Cache_Core
         // to the backend too (even if they are not "backend specific") 
         $directives = array();
         foreach (Zend_Cache_Core::$_directivesList as $directive) {
-            $directives[$directive] = $this->_option[$directive];
+            $directives[$directive] = $this->_options[$directive];
         }
         $this->_backend->setDirectives($directives);
     }
