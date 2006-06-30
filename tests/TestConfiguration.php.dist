@@ -43,3 +43,10 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_DATABASE', ':memory:');
  */
 define('TESTS_ZEND_HTTPCLIENT_REMOTE_ENABLED', true);
 define('TESTS_ZEND_HTTPCLIENT_REMOTE_URI',     'http://zend.com');
+
+
+/**
+ * PHPUnit Code Coverage / Test Report
+ */
+define('TESTS_GENERATE_REPORT', false);
+define('TESTS_GENERATE_REPORT_TARGET', '/path/to/target');
