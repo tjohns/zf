@@ -18,7 +18,7 @@
     <example>
         <title>Zend_Cache の最初の例</title>
         <para>
-            まず最初の例として、Zend_Cache のコアを直接使用します。バックエンドには
+            まず最初の例として、Zend_Cache_Core を直接使用します。バックエンドには
             <code>File</code> を使用します。
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
@@ -245,7 +245,7 @@ if (!($data = $cache->get($id))) {
 // [...] // require、設定そしてファクトリ
 
 $id1 = 'foo'; // ブロック 1 のキャッシュ ID
-$id1 = 'foo'; // ブロック 2 のキャッシュ ID
+$id2 = 'bar'; // ブロック 2 のキャッシュ ID
 
 // ブロック 1
 if (!($data = $cache->get($id1))) {
