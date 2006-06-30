@@ -33,7 +33,7 @@ class AllTests
 
         if (TESTS_GENERATE_REPORT && extension_loaded('xdebug')) {
             $parameters = array('reportDirectory' => TESTS_GENERATE_REPORT_TARGET);
-	}
+        }
 
         PHPUnit2_TextUI_TestRunner::run(self::suite(), $parameters);
     }
