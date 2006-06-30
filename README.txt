@@ -31,7 +31,7 @@ this distribution should be considered stable and they are subject to
 change at any time.  However, you should have reasonable success using
 the files in this directory.  If you experience problems, and we expect
 you will at this early stage, please check the TODO files and then submit
-a report to our bug tracker at http://framework.zend.com/bugs/.
+a report to our bug tracker at http://framework.zend.com/issues.
 
 The /incubator directory contains recent contributions that may eventually
 be moved to the /library directory.  These are considered highly unstable.
