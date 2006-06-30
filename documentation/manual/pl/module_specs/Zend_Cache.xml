@@ -266,6 +266,44 @@ echo($data);
 ?>]]>       </programlisting>         	
         </para>   	 	
     </sect2>   
+    <sect2 id="zend.cache.core.idandtags">
+    	<title>Cache ID and tags</title>
+    	<para>
+    		A "cache id" is an unique key which identifies a given cache record. In some frontends
+    		(Core, Output...), you have to deal with "cache ids" by yourself. So, for example,
+    		be carefull to use an unique id for a given page or block.
+    	</para>
+    	<para>
+    		"tags" are a way to categorize cache records. When you save a cache with the <code>save()</code>
+    		method, you can set an array of tags to apply for this record. Then, you will be 
+    		able to clean all cache records tagged with a given tag... It's a really powerfull
+    		way to manage cache records by groups.
+    	</para>
+    	<para>
+    		Here is the complete syntax of the <code>save()</code> method :
+    		<programlisting role="php"><![CDATA[<?php
+     	    
+    /**
+     * Save some data in a cache 
+     * 
+     * @param mixed $data data to put in cache (can be another type than string if automaticSerialization is on)
+     * @param cache $id cache id (if not set, the last cache id will be used)
+     * @param array $tags cache tags
+     * @return boolean true if no problem
+     */
+    public function save($data, $id = null, $tags = array()) {}
+    		
+?>]]>       </programlisting>    	 
+			So for example, you can use :
+			<programlisting role="php"><![CDATA[<?php
+			
+// [...]
+$cache->save('data to store', 'uniqueID', array('tag1', 'tag4', 'tag5'));
+// [...]	
+			
+?>]]>       </programlisting> 						   	
+    	</para>
+    </sect2>
     <sect2 id="zend.cache.core.clean">
     	<title>clean the cache</title>
     	<para>
@@ -297,7 +335,15 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
 // [...]
     		
 ?>]]>       </programlisting>    
-			[...]			
+			If you want to remove cache entries matching the tags 'tag1' and 'tag3' :
+      	    <programlisting role="php"><![CDATA[<?php 
+     	    
+// [...]
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tag1', 'tag3'));
+// [...]
+    		
+?>]]>       </programlisting>
+			[...]	
     	</para>
     </sect2>
 </sect1>
@@ -336,14 +382,117 @@ $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
     <sect2 id="zend.cache.backends.file">
     	<title>Zend_Cache_Backend_File</title>
     	<para>
-    		TO BE WRITTEN
+    		This backends stores cache records into files (in a choosen directory). 
     	</para>
+    	<para>
+    		Available options are :
+    	</para>  		
+	    <table>
+    		<title>Available options</title>
+    		<tgroup cols="4">
+     			<thead>
+      				<row>
+       					<entry>Option</entry>
+				        <entry>Data Type</entry>
+				        <entry>Default Value</entry>
+				        <entry>Description</entry>
+				    </row>
+     			</thead>
+     			<tbody>
+      				<row>
+      					<entry><code>cacheDir</code></entry>
+      					<entry><code>string</code></entry>
+      					<entry><code>'/tmp/'</code></entry>
+      					<entry>
+      						Directory where to store cache files
+      						(make sure to add a trailing slash)  	
+      					</entry>
+      				</row>
+      				<row>
+      					<entry><code>fileLocking</code></entry>
+      					<entry><code>boolean</code></entry>
+      					<entry><code>true</code></entry>
+      					<entry>
+        					Enable / disable fileLocking : Can avoid cache corruption under 
+        					bad circumstances but it doesn't help on multithread webservers 
+        					or on NFS filesystems...
+      					</entry>
+      				</row>
+      				<row>
+      					<entry><code>readControl</code></entry>
+      					<entry><code>boolean</code></entry>
+      					<entry><code>true</code></entry>
+      					<entry>
+        					Enable / disable read control : if enabled, a control key is 
+        					embeded in the cache file and this key is compared with the 
+        					one calculated after the reading.	    
+      					</entry>
+      				</row>
+      				<row>
+      					<entry><code>readControlType</code></entry>
+      					<entry><code>string</code></entry>
+      					<entry><code>'crc32'</code></entry>
+      					<entry>
+        					Type of read control (only if read control is enabled). Available values are :
+        					'md5' (best but slowest), 'crc32' (lightly less safe but faster, better choice),
+        					'strlen' for a length only test (fastest).
+        				</entry>
+      				</row>
+      				<row>
+      					<entry><code>hashedDirectoryLevel</code></entry>
+      					<entry><code>int</code></entry>
+      					<entry><code>0</code></entry>
+      					<entry>
+        					Hashed directory structure level : 	0 means "no hashed directory 
+     						structure", 1 means "one level of directory", 2 means "two levels"... 
+     						This option can speed up the cache only when you have many thousands of 
+     						cache files. Only specific benchs can help you to choose the perfect 
+     						value for you. Maybe, 1 or 2 is a good start.
+      					</entry>
+      				</row>
+      				<row>
+      					<entry><code>hashedDirectoryUmask</code></entry>
+      					<entry><code>int</code></entry>
+      					<entry><code>0700</code></entry>
+      					<entry>
+      						Umask for the hashed directory structure
+        				</entry>
+      				</row>
+      			</tbody>
+      		</tgroup>
+      	</table>
     </sect2>
     <sect2 id="zend.cache.backends.sqlite">
     	<title>Zend_Cache_Backend_Sqlite</title>
     	<para>
-    		TO BE WRITTEN
+    		This backends stores cache records into a SQLITE database.
     	</para>
+    	<para>
+    		Available options are :
+    	</para>
+    	<table>
+    		<title>Available options</title>
+    		<tgroup cols="4">
+     			<thead>
+      				<row>
+       					<entry>Option</entry>
+				        <entry>Data Type</entry>
+				        <entry>Default Value</entry>
+				        <entry>Description</entry>
+				    </row>
+     			</thead>
+     			<tbody>
+      				<row>
+      					<entry><code>cacheDBCompletePath (mandatory)</code></entry>
+      					<entry><code>string</code></entry>
+      					<entry><code>null</code></entry>
+      					<entry>
+      						The complete path (filename included) of the SQLITE database
+      					</entry>
+      				</row>
+      			</tbody>
+      		</tgroup>
+      	</table>
     </sect2>
 </sect1> 
   
