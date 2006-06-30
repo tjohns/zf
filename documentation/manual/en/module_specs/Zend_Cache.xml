@@ -25,7 +25,7 @@ $frontendOptions = array(
 );
 
 $backendOptions = array(
-    'cacheDir' => '/tmp/' // Directory where to put the cache files (make sure to add a trailing slash)
+    'cacheDir' => '/tmp/' // Directory where to put the cache files
 );
 
 // We make a Zend_Cache_Core object
@@ -404,8 +404,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tag1', 'tag3'));
       					<entry><code>string</code></entry>
       					<entry><code>'/tmp/'</code></entry>
       					<entry>
-      						Directory where to store cache files
-      						(make sure to add a trailing slash)  	
+      						Directory where to store cache files	
       					</entry>
       				</row>
       				<row>
