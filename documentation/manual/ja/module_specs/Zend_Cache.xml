@@ -29,7 +29,6 @@ $frontendOptions = array(
 
 $backendOptions = array(
     'cacheDir' => '/tmp/' // キャッシュファイルを書き込むディレクトリ
-                          // (最後のスラッシュを忘れないようにしましょう)
 );
 
 // Zend_Cache_Core オブジェクトを作成します
@@ -423,8 +422,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tag1', 'tag3'));
                         <entry><code>string</code></entry>
                         <entry><code>'/tmp/'</code></entry>
                         <entry>
-                            キャッシュファイルを書き込むディレクトリ
-                            (最後のスラッシュを忘れないようにしましょう)。
+                            キャッシュファイルを書き込むディレクトリ。
                         </entry>
                     </row>
                     <row>
