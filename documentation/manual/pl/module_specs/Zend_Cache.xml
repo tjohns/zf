@@ -25,7 +25,7 @@ $frontendOptions = array(
 );
 
 $backendOptions = array(
-    'cacheDir' => '/tmp/' // Directory where to put the cache files (make sure to add a trailing slash)
+    'cacheDir' => '/tmp/' // Directory where to put the cache files
 );
 
 // We make a Zend_Cache_Core object
@@ -154,7 +154,7 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       					<entry><code>boolean</code></entry>
       					<entry><code>false</code></entry>
       					<entry>
-        					if set to true, logging thow <code>Zend_Log</code> is activated 
+        					if set to true, logging through <code>Zend_Log</code> is activated 
         					(but the system is slower) 	    
       					</entry>
       				</row>
@@ -229,7 +229,7 @@ if (!($data = $cache->get($id))) {
 // [...] // require, configuration and factory
 
 $id1 = 'foo'; // cache id of block1
-$id1 = 'foo'; // cache id of block2
+$id2 = 'bar'; // cache id of block2
 
 // BLOCK1
 if (!($data = $cache->get($id1))) {
@@ -276,7 +276,7 @@ echo($data);
     	<para>
     		"tags" are a way to categorize cache records. When you save a cache with the <code>save()</code>
     		method, you can set an array of tags to apply for this record. Then, you will be 
-    		able to clean all cache records tagged with a given tag... It's a really powerfull
+    		able to clean all cache records tagged with a given tag... It's a really powerful
     		way to manage cache records by groups.
     	</para>
     	<para>
@@ -404,8 +404,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tag1', 'tag3'));
       					<entry><code>string</code></entry>
       					<entry><code>'/tmp/'</code></entry>
       					<entry>
-      						Directory where to store cache files
-      						(make sure to add a trailing slash)  	
+      						Directory where to store cache files	
       					</entry>
       				</row>
       				<row>
@@ -465,7 +464,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tag1', 'tag3'));
     <sect2 id="zend.cache.backends.sqlite">
     	<title>Zend_Cache_Backend_Sqlite</title>
     	<para>
-    		This backends stores cache records into a SQLITE database.
+    		This backends stores cache records into a SQLite database.
     	</para>
     	<para>
     		Available options are :
@@ -487,7 +486,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tag1', 'tag3'));
       					<entry><code>string</code></entry>
       					<entry><code>null</code></entry>
       					<entry>
-      						The complete path (filename included) of the SQLITE database
+      						The complete path (filename included) of the SQLite database
       					</entry>
       				</row>
       			</tbody>
