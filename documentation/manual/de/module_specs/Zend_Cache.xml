@@ -27,7 +27,6 @@ $frontendOptions = array(
 
 $backendOptions = array(
     'cacheDir' => '/tmp/' // Verzeichnis in welches die Cache Dateien kommen 
-    (unbedingt den schließenden Schrägstrich hinzufügen)
 );
 
 // Erstellung eines Zend_Cache_Core Objektes
@@ -157,7 +156,7 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
       					<entry><code>boolean</code></entry>
       					<entry><code>false</code></entry>
       					<entry>
-        					Auf true gesetzt wird alles mit <code>Zend_Log</code> geloggt. 
+        					Auf true gesetzt, wird logging durch <code>Zend_Log</code> aktiviert. 
         					(aber das System wird langsamer)
       					</entry>
       				</row>
@@ -234,7 +233,7 @@ if (!($data = $cache->get($id))) {
 // [...] // require, Konfiguration und Factory
 
 $id1 = 'foo'; // Cache Id von block1
-$id1 = 'foo'; // Cache Id von block2
+$id2 = 'bar'; // Cache Id von block2
 
 // BLOCK1
 if (!($data = $cache->get($id1))) {
@@ -411,7 +410,6 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tag1', 'tag3'));
       					<entry><code>'/tmp/'</code></entry>
       					<entry>
       						Verzeichnis in welchem die Cache Dateien gespeichert werden
-      						(unbedingt den schließenden Schrägstrich hinzufügen)  	
       					</entry>
       				</row>
       				<row>
@@ -472,7 +470,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tag1', 'tag3'));
     <sect2 id="zend.cache.backends.sqlite">
     	<title>Zend_Cache_Backend_Sqlite</title>
     	<para>
-    		Dieses Backend speichert Cache Einträge in einer SQLITE Datenbank.
+    		Dieses Backend speichert Cache Einträge in einer SQLite Datenbank.
      	</para>
     	<para>
     		Mögliche Optionen sind :
@@ -494,7 +492,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tag1', 'tag3'));
       					<entry><code>string</code></entry>
       					<entry><code>null</code></entry>
       					<entry>
-      						Der komplette Pfad (inklusive Dateiname) der SQLITE Datenbank.
+      						Der komplette Pfad (inklusive Dateiname) der SQLite Datenbank.
       					</entry>
       				</row>
       			</tbody>
