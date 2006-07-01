@@ -94,7 +94,7 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
             }
             $this->_options[$name] = $value;
         }
-        if (!isset($options['cacheDBCompletePath'])) Zend_Cache::throwException('cacheDbCompletePath option has to set');
+        if (!isset($options['cacheDBCompletePath'])) Zend_Cache::throwException('cacheDBCompletePath option has to set');
         $this->_db = @sqlite_open($options['cacheDBCompletePath']);
         if (!($this->_db)) {
             Zend_Cache::throwException("Impossible to open " . $options['cacheDBCompletePath'] . " cache DB file");
