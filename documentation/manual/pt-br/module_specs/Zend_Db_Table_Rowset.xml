@@ -4,28 +4,28 @@
 
     <sect2 id="zend.db.table.rowset.introduction">
 
-        <title>Introduction</title>
+        <title>Introdução</title>
 
         <para>
-            Zend_Db_Table_Rowset is an iterator for Zend_Db_Table_Row object collections.
-            In general, you do not instantiate Zend_Db_Table_Rowset by itself; instead,
-            you retrieve a Zend_Db_Table_Rowset as the return result from a call to
-            Zend_Db_Table::find() or fetchAll().  You can then iterate through the
-            collected Zend_Db_Table_Row objects and modify them as you wish.
+            Zend_Db_Table_Rowset é um iterator para coleções de objetos Zend_Db_Table_Row.
+            De modo geral, você não instancia Zend_Db_Table_Rowset; em vez disso,
+			você recupera um objeto Zend_Db_Table_Rowset como o resultado de retorno de
+            Zend_Db_Table::find() ou fetchAll().  Você pode então percorrer os objetos
+			Zend_Db_Table_Row da coleção e modificá-los como desejar.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.rowset.fetch">
 
-        <title>Fetching a Rowset</title>
+        <title>Buscando um Rowset</title>
 
         <para>
-            The first thing to do is instantiate a Zend_Db_Table class.
+            A primeira coisa a fazer é instanciar a classe Zend_Db_Table.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// inicializa um adaptador
 require_once 'Zend/Db.php';
 $params = array (
     'host'     => '127.0.0.1',
@@ -36,31 +36,31 @@ $params = array (
 
 $db = Zend_Db::factory('pdoMysql', $params);
 
-// set the default adapter for all Zend_Db_Table objects
+// define o adaptador como padrão para todos os objetos Zend_Db_Table
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
-// connect to a table in the database
+// conecta com uma tabela no banco de dados
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 ?>]]>
         </programlisting>
 
         <para>
-            Next, retrieve many records from the database using
-            Zend_Db_Table::find() with multiple keys, or by using
-            Zend_Db_Table::fetchAll(); the returned result will be a
-            Zend_Db_Table_Rowset object that will let you iterate through
-            the individual Zend_Db_Table_Row objects in the record set.
+            Em seguida, recupere vários registros do banco de dados usando
+            Zend_Db_Table::find() com múltiplas chaves, ou usando
+            Zend_Db_Table::fetchAll();  o resultado retornado será um objeto
+            Zend_Db_Table_Rowset que permitirá a você percorra os objetos
+			Zend_Db_Table_Row individuais na coleção de registros.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// fetch many records from the table
+// busca vários registros da tabela
 $rowset = $table->fetchAll();
 
 //
-// $rowset is now a Zend_Db_Table_Rowset object composed of
-// one Zend_Db_Table_Row object per record in the results
+// $rowset é agora um objeto Zend_Db_Table_Rowset composto por 
+// um objeto Zend_Db_Table_Row por registro nos resultados
 //
 ?>]]>
         </programlisting>
@@ -69,37 +69,37 @@ $rowset = $table->fetchAll();
 
     <sect2 id="zend.db.table.rowset.iterate">
 
-        <title>Iterating Through the Rowset</title>
+        <title>Percorrendo o Rowset</title>
 
         <para>
-            Zend_Db_Table_Rowset implements the SPL Iterator interface,
-            which means you can loop through Zend_Db_Table_Rowset objects like arrays
-            using foreach().  Each value you retrieve this way will be a Zend_Db_Table_Row
-            that corresponds to one record from the table; you can then view, modify, and
-            save the properties for that record.
+            Zend_Db_Table_Rowset implementa a interface do SPL Iterator, o que
+            significa que você podepercorrer os objetos Zend_Db_Table_Rowset como se fossem matrizes
+            usando foreach().  Cada valor que você recebe deste modo será um Zend_Db_Table_Row
+            que corresponde a um registro da tabela; você pode então ver, modificar e salvar
+			as propriedades daquele registro.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
+// conecta com uma tabela no banco de dados
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// fetch many records from the table
+// busca vários registros da tabela
 $rowset = $table->fetchAll();
 
-// display them all
+// mostra todos
 foreach ($rowset as $row) {
-    // $row is a Zend_Db_Table_Row object
+    // $row é um objeto Zend_Db_Table_Row
     echo "<p>" . htmlspecialchars($row->nobleTitle) . " "
        . htmlspecialchars($row->firstName) . "'s "
        . "favorite color is " . htmlspecialchars($row->favoriteColor)
        . ".</p>\n";
 
-    // update the number of times we have displayed this row,
-    // (which maps to a column in the table "times_displayed")
+    // atualiza o número de vezes que mostramos este registro,
+    // (a propriedade corresponde à coluna "times_displayed" na tabela)
     $row->timesDisplayed ++;
 
-    // save the record with the new information
+    // salva o registro com a nova informação
     $row->save();
 }
 ?>]]>
