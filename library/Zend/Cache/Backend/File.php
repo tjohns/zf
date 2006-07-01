@@ -129,11 +129,8 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
      */
     public function setCacheDir($value)
     {
-        // add a trailing slash if necessary 
-        $last = substr($value, -1, 1);
-        if (($last != '/') and ($last != '\\')) {
-        	$value = $value . '/';
-        }
+        // add a trailing DIRECTORY_SEPARATOR if necessary 
+        $value = rtrim($value, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $this->setOption('cacheDir', $value);
     }
     
@@ -445,7 +442,7 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
             }
             if ((is_dir($file2)) and ($this->_options['hashedDirectoryLevel']>0)) {
                 // Recursive call
-                $result = ($result) && ($this->_clean($file2 . '/', $mode, $tags));
+                $result = ($result) && ($this->_clean($file2 . DIRECTORY_SEPARATOR, $mode, $tags));
                 if ($mode=='all') {
                     // if mode=='all', we try to drop the structure too                    
                     @rmdir($file2);
@@ -540,7 +537,7 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
             }
             $hash = md5($fileName);
             for ($i=0 ; $i<$this->_options['hashedDirectoryLevel'] ; $i++) {
-                $root = $root . 'cache_' . substr($hash, 0, $i + 1) . '/';
+                $root = $root . 'cache_' . substr($hash, 0, $i + 1) . DIRECTORY_SEPARATOR;
             }             
         }
         return $root;
