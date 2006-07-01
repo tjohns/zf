@@ -244,14 +244,19 @@ abstract class Zend_Http_Client_Abstract
     }
     
     /**
-     * Set a request header field
+     * Set or unset a request header field
      * 
      * The function validates the header, and sets it. If $override is false, 
      * and the header already exists, another value will be added to the same
      * header.
-     * if $value is null, name is considered a string of the format 
+     * 
+     * If $value is null, name is considered a string of the format 
      * "Header: value", which will be split to get the header name
      * and value.
+     * 
+     * If the value is still null or false after trying to split $name on 
+     * the ':' character (IE if $name does not contain ':'), the header will
+     * be unset.
      *
      * @param string $name Header name or entire header string
      * @param string $value Header value or null
@@ -269,21 +274,28 @@ abstract class Zend_Http_Client_Abstract
             throw new Zend_Http_Exception("{$name} is not a valid HTTP header name");
         }
         
-        $value = trim($value);
-        
         // Header names are storred lowercase internally.
         $name = strtolower($name);
         
-        // If override is set, set the header as is
-        if ($override || ! isset($this->headers[$name])) {
-            $this->headers[$name] = $value;
-            
-        // Else, if the header already exists, add a new value
+        // If $value is null or false, unset the header
+        if (is_null($value) || $value === false) {
+        	unset($this->headers[$name]);
+        	
+        // Else, set the header
         } else {
-            if (! is_array($this->headers[$name])) 
-                    $this->headers[$name] = array($this->headers[$name]);
+        	$value = trim($value);
+        	
+            // If override is set, set the header as is
+            if ($override || ! isset($this->headers[$name])) {
+                $this->headers[$name] = $value;
+            
+            // Else, if the header already exists, add a new value
+            } else {
+                if (! is_array($this->headers[$name])) 
+                        $this->headers[$name] = array($this->headers[$name]);
 
-            $this->headers[$name][] = $value;
+                $this->headers[$name][] = $value;
+            }
         }
     }
     

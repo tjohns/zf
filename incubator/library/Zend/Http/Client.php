@@ -331,6 +331,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
 
                 // If we got a well formed absolute URI
                 if (Zend_Uri_Http::check($location)) {
+                	$this->setHeader('host', null);
                     $this->setUri($location);
 
                 } else {

@@ -505,7 +505,10 @@ class Zend_Http_Response
     {
         $lines = explode("\r\n", $response_str);
         $line = null;
-        while ($line !== "")
+        
+        // Remove all header lines, keep counting response lines to avoid an
+        // infinit loop
+        while ($line !== "" && count($lines) > 0)
             $line = array_shift($lines);
 
         $body = implode("\r\n", $lines);
