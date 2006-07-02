@@ -115,11 +115,6 @@ class Zend_Cache_Core
         while (list($name, $value) = each($options)) {
             $this->_setOption($name, $value);
         }
-        if ($this->_options['logging']) {
-            if (!class_exists('Zend_Log', false)) {
-                Zend_Cache::throwException('logging feature is on but Zend_Log is not "loaded"');    
-            }
-        }
     }
     
     /**
@@ -179,6 +174,11 @@ class Zend_Cache_Core
             Zend_Cache::throwException("Incorrect option name : $name");
         }
         $this->_options[$name] = $value;
+        if ($name=='logging') {
+            if (!class_exists('Zend_Log', false)) {
+                Zend_Cache::throwException('logging feature is on but Zend_Log is not "loaded"');    
+            }
+        }
     }
     
     /**
