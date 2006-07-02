@@ -7,9 +7,9 @@
         <title>Introduction</title>
 
         <para>
-            <code>Zend_Db_Select</code> est un outil destiné vous aider à construire des instructions SQL SELECT de 
-            indépendemment du SGBD utilisé. Bien sûr cet outil ne peut pas être parfait, mais c'est quand même une grande 
-            avancée en matière de portabilité de vos requêtes. De plus, cet outil vous aide à rendre 
+            <code>Zend_Db_Select</code> est un outil destiné vous aider à construire des instructions SQL SELECT de
+            indépendemment du SGBD utilisé. Bien sûr cet outil ne peut pas être parfait, mais c'est quand même une grande
+            avancée en matière de portabilité de vos requêtes. De plus, cet outil vous aide à rendre
             vos requêtes résistantes aux attaques du type "injection SQL".
         </para>
 
@@ -18,7 +18,7 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 require_once 'Zend/Db.php';
 
 $params = array (
@@ -31,17 +31,16 @@ $params = array (
 $db = Zend_Db::factory('pdoMysql', $params);
 
 $select = $db->select();
-// $select is now a Zend_Db_Select_PdoMysql object
-
+// $select is now a Zend_Db_Select object configured for use only with the Pdo_Myql adapter.
 ?>]]></programlisting>
 
         <para>
-            Vous construisez ensuite une requête SELECT en utilisant cet objet et ses méthodes, puis vous générez une chaîne à  passer comme 
+            Vous construisez ensuite une requête SELECT en utilisant cet objet et ses méthodes, puis vous générez une chaîne à  passer comme
             requête ou comme argument d'une méthode fetch*() de <code>Zend_Db_Adapter</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // SELECT *
 //     FROM round_table
@@ -78,7 +77,7 @@ $resultat = $db->fetchAll($select);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 //
 // SELECT *
 //     FROM round_table
@@ -106,13 +105,13 @@ $result = $db->fetchAll($select, $params);
         <title>Sélectionner les colonnes d'une table : FROM</title>
 
         <para>
-            Pour sélectionner les colonnes d'une table particulière, utilisez la méthode <code>from()</code>, en 
-            spécifiant la table et les colonnes que vous désirez. Vous pouvez spécifier des alias 
+            Pour sélectionner les colonnes d'une table particulière, utilisez la méthode <code>from()</code>, en
+            spécifiant la table et les colonnes que vous désirez. Vous pouvez spécifier des alias
             pour les tables comme pour les colonnes et vous pouvez utiliser <code>from()</code> autant de fois que nécessaire.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // crée un objet $db, on suppose l'utilisation de MySQL
 $select = $db->select();
 
@@ -136,13 +135,13 @@ $select->from('barre', 'barre.col AS col2');
         <title>Sélectionner les colonnes de tables jointes : JOIN</title>
 
         <para>
-            Pour sélectionner des colonnes de tables jointes, utilisez la méthode <code>join()</code>. 
-            Spécifiez d'abord le nom de la table à joindre, puis la condition pour la jointure, et enfin les 
+            Pour sélectionner des colonnes de tables jointes, utilisez la méthode <code>join()</code>.
+            Spécifiez d'abord le nom de la table à joindre, puis la condition pour la jointure, et enfin les
             colonnes que vous voulez obtenir. Vous pouvez utiliser <code>join()</code> autant de fois que nécessaire.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // crée un objet $db, on suppose l'utilisation de MySQL
 $select = $db->select();
 
@@ -157,7 +156,7 @@ $select->join('bar', 'foo.id = bar.id', '*');
 ?>]]></programlisting>
 
         <para>
-            Pour le moment, seule la syntaxe JOIN est prise en charge; les syntaxes LEFT JOIN, RIGHT JOIN etc, ne sont pas prises en charge. 
+            Pour le moment, seule la syntaxe JOIN est prise en charge; les syntaxes LEFT JOIN, RIGHT JOIN etc, ne sont pas prises en charge.
             Les versions futures prendront en charge ces syntaxes de manière indépendante de la base de données.
         </para>
 
@@ -168,18 +167,18 @@ $select->join('bar', 'foo.id = bar.id', '*');
         <title>Conditions WHERE</title>
 
         <para>
-            Pour ajouter des conditions WHERE, utilisez la méthode where(). Vous pouvez lui passer une chaîne classique 
-            ou une chaîne contenant un emplacement réservé indiqué par un point d'interrogation et la valeur à  échapper à 
+            Pour ajouter des conditions WHERE, utilisez la méthode where(). Vous pouvez lui passer une chaîne classique
+            ou une chaîne contenant un emplacement réservé indiqué par un point d'interrogation et la valeur à  échapper à
             la place de l'emplacement (celle-ci sera échappée à  l'aide de la méthode <code>Zend_Db_Adapter::quoteInto()</code>).
         </para>
 
         <para>
-            Appeler plusieurs fois <code>where()</code> aura pour effet d'enchaîner les conditions avec le mot-clé AND; 
+            Appeler plusieurs fois <code>where()</code> aura pour effet d'enchaîner les conditions avec le mot-clé AND;
             si vous désirez utiliser le mot-clé OR, utilisez la méthode <code>orWhere()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // crée un objet $db, on suppose l'utilisation de MySQL
 $select = $db->select();
 
@@ -216,7 +215,7 @@ $select->orWhere('id IN(?)', array(1, 2, 3));
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // crée a objet $db, puis obtention de l'outil SELECT
 $select = $db->select();
 
@@ -244,7 +243,7 @@ $select->group(array('barre', 'baz'));
         <title>Conditions HAVING</title>
 
         <para>
-            Pour ajouter des conditions HAVING à la requête SELECT, utilisez la méthode <code>having()</code>. Cette méthode est identique 
+            Pour ajouter des conditions HAVING à la requête SELECT, utilisez la méthode <code>having()</code>. Cette méthode est identique
             au niveau du fonctionnement à la méthode <code>where()</code>.
         </para>
 
@@ -253,7 +252,7 @@ $select->group(array('barre', 'baz'));
             désirez utiliser le mot-clé OR, utilisez la méthode <code>orHaving()</code>.
         </para>
         <programlisting role="php"><![CDATA[<?php
-	
+
 // crée a objet $db, puis obtention de l'outil SELECT
 $select = $db->select();
 
@@ -279,7 +278,7 @@ $select->having('count_id > ?', 1);
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // crée a objet $db, puis obtention de l'outil SELECT
 $select = $db->select();
 
@@ -306,24 +305,24 @@ $select->order(array('titre DESC', 'prenom'));
         <title>Limiter le résultat par un décompte et un offset</title>
 
         <para>
-            <code>Zend_Db_Select</code> offre une abstraction de la clause LIMIT. Pour de nombreuses bases de données, telles que MySQL et PostgreSQL, 
+            <code>Zend_Db_Select</code> offre une abstraction de la clause LIMIT. Pour de nombreuses bases de données, telles que MySQL et PostgreSQL,
             ceci est relativement aisé dans la mesure où ces bases de données prennent en charge la syntaxe "LIMIT :decompte [OFFSET :offset]".
         </para>
 
         <para>
-            Pour d'autres bases de données, telles que Microsoft SQL Server et Oracle, ce n'est pas si facile car elles ne prennent pas du tout 
-            en charge les clauses LIMIT. MS-SQL ne possède qu'une clause TOP et, pour Oracle, la requête doit être écrite d'une manière 
-            spéciale afin d'émuler une clause LIMIT. Grâce à la manière dont fonctionne en interne <code>Zend_Db_Select</code>, nous pouvons réécrire 
+            Pour d'autres bases de données, telles que Microsoft SQL Server et Oracle, ce n'est pas si facile car elles ne prennent pas du tout
+            en charge les clauses LIMIT. MS-SQL ne possède qu'une clause TOP et, pour Oracle, la requête doit être écrite d'une manière
+            spéciale afin d'émuler une clause LIMIT. Grâce à la manière dont fonctionne en interne <code>Zend_Db_Select</code>, nous pouvons réécrire
             directement la requête SELECT afin d'émuler la fonctionnalité LIMIT des SGBD Open Source cités ci-dessus.
         </para>
 
         <para>
-            Pour limiter le résultat d'une requête par un décompte et un offset, utilisez la méthode <code>limit()</code> en lui passant un décompte et, 
+            Pour limiter le résultat d'une requête par un décompte et un offset, utilisez la méthode <code>limit()</code> en lui passant un décompte et,
             facultativement, un offset.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // d'abord, une clause simple "LIMIT :decompte"
 $select = $db->select();
 $select->from('toto', '*');
@@ -379,13 +378,13 @@ $select->limit(10, 20);
         <title>Limiter le résultat par pages</title>
 
         <para>
-             <code>Zend_Db_Select</code> peut aussi limiter les résultats par pages. Si vous souhaitez obtenir une "page" particulière du résultat, 
-             utilisez la méthode <code>limitPage();</code> passez-lui d'abord le numéro de la page que vous voulez et ensuite le nombre de lignes 
+             <code>Zend_Db_Select</code> peut aussi limiter les résultats par pages. Si vous souhaitez obtenir une "page" particulière du résultat,
+             utilisez la méthode <code>limitPage();</code> passez-lui d'abord le numéro de la page que vous voulez et ensuite le nombre de lignes
              qui apparaissent sur chaque page.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 // construction de la requête SELECT de base...
 $select = $db->select();
 $select->from('toto', '*');
