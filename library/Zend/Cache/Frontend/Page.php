@@ -46,11 +46,11 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      * - if true, http conditional mode is on
      * WARNING : httpConditional OPTION IS NOT IMPLEMENTED FOR THE MOMENT (TODO)
      * 
-     * ====> (boolean) cacheWithXXXVariables  (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookies')
+     * ====> (boolean) cacheWithXXXVariables  (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookie')
      * - if true,  cache is still on even if there are some variables in this superglobal array
      * - if false, cache is off if there are some variables in this superglobal array
      *
-     * ====> (boolean) makeIdWithXXXVariables (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookies')
+     * ====> (boolean) makeIdWithXXXVariables (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookie')
      * - if true, we have to use the content of this superglobal array to make a cache id
      * - if false, the cache id won't be dependent of the content of this superglobal array
      * 
@@ -66,12 +66,12 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
         'cacheWithPostVariables' => false,
         'cacheWithSessionVariables' => false,
         'cacheWithFilesVariables' => false,
-        'cacheWithCookiesVariables' => true,
+        'cacheWithCookieVariables' => true,
         'makeIdWithGetVariables' => true,
         'makeIdWithPostVariables' => true,
         'makeIdWithSessionVariables' => true,
         'makeIdWithFilesVariables' => true,
-        'makeIdWithCookiesVariables' => true
+        'makeIdWithCookieVariables' => true
     ); 
         
     /**
@@ -137,7 +137,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     private function _makeId()
     {
         $tmp = $_SERVER['REQUEST_URI'];
-        foreach (array('Get', 'Post', 'Session', 'Files', 'Cookies') as $arrayName) {           
+        foreach (array('Get', 'Post', 'Session', 'Files', 'Cookie') as $arrayName) {           
             $tmp2 = $this->_makePartialId($arrayName, $this->_specificOptions['cacheWith' . $arrayName . 'Variables'], $this->_specificOptions['makeIdWith' . $arrayName . 'Variables']);
             if ($tmp2===false) {
                 return false;
@@ -165,15 +165,15 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
             $var = $_POST;
             break;
         case 'Session':
-            if (isset($_SESSIONS)) {
-                $var = $_SESSIONS;
+            if (isset($_SESSION)) {
+                $var = $_SESSION;
             } else {
                 $var = null;
             }
             break;
-        case 'Cookies':
-            if (isset($_COOKIES)) {
-                $var = $_COOKIES;
+        case 'Cookie':
+            if (isset($_COOKIE)) {
+                $var = $_COOKIE;
             } else {
                 $var = null;
             }
