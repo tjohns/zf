@@ -39,7 +39,7 @@ abstract class Zend_Cache
      * 
      * @var array $availableBackends array of backends name (string)
      */
-    static public $availableBackends = array('File', 'Sqlite');
+    static public $availableBackends = array('File', 'Sqlite', 'Memcached');
     
     /**
      * Consts for clean() method
