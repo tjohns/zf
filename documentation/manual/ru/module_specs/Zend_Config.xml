@@ -1,0 +1,424 @@
+<sect1 id="zend.config.introduction">
+    <title>
+        Введение
+    </title>
+    <para>
+        <code>Zend_Config</code> разработан для упрощения использования
+        конфигурационных данных для веб-приложений. Он предоставляет основанный
+        на свойствах объектов интерфейс для чтения конфигурационных данных
+        из различных носителей данных, поддерживающих иерархическое хранение данных.
+        Сейчас <code>Zend_Config</code> предоставляет вспомогательные классы
+        для конфигурационных данных, сохраненных в текстовых файлах с помощью
+        <link linkend="zend.config.classes.array"><code>Zend_Config_Array</code></link>,
+        <link linkend="zend.config.classes.ini"><code>Zend_Config_Ini</code></link> и
+        <link linkend="zend.config.classes.xml"><code>Zend_Config_Xml</code></link>.
+<!--
+        <code>Zend_Config</code> is designed to simplify the use of configuration data for web applications. It
+        provides a property-based interface for reading configuration data from a variety of media supporting
+        hierarchical data storage. Currently <code>Zend_Config</code> provides helper classes for configuration
+        data stored in text files via
+        <link linkend="zend.config.classes.array"><code>Zend_Config_Array</code></link>,
+        <link linkend="zend.config.classes.ini"><code>Zend_Config_Ini</code></link>, and
+        <link linkend="zend.config.classes.xml"><code>Zend_Config_Xml</code></link>.
+-->
+    </para>
+    <para>
+        <code>Zend_Config</code> поддерживает единую модель наследования, которая
+        делает возможным наследование конфигурационных данных из одного раздела
+        в другой. Хотя <code>Zend_Config</code> поддерживает наследование деревьев
+        произвольной глубины, раздел конфигурационных данных может наследовать
+        только из одного родительского раздела.
+<!--
+        <code>Zend_Config</code> supports a single inheritance model that enables configuration data to be inherited
+        from one section of configuration data into another. Though <code>Zend_Config</code> supports inheritance
+        trees of arbitrary height, a configuration data section may only inherit from one parent section.
+-->
+    </para>
+    <para>
+        Внутри <code>Zend_Config</code> реализует интерфейсы Countable и Iterator
+        для того, чтобы обеспечить легкий доступ к конфигурационным данным. Данные
+        сделаны доступными в <code>Zend_Config</code> через ассоциативный массив,
+        который может быть многоуровневым. Вспомогательный класс, такой, как
+        <code>Zend_Config_Ini</code> обычно предоставляет этот массив в
+        <code>Zend_Config</code>, но интерфейс не требует следования этому
+        соглашению.
+<!--
+        Internally <code>Zend_Config</code> implements the Countable and Iterator interfaces in order to facilitate
+        easy access to configuration data. The data are made accessible to <code>Zend_Config</code> through an
+        associative array, which may be multidimensional. A helper class such as <code>Zend_Config_Ini</code>
+        typically provides this array to <code>Zend_Config</code>, but the interface does not require using this
+        convention.
+-->
+    </para>
+    <note>
+        Хотя <code>Zend_Config</code> позволяет производить модификации
+        загруженных конфигурационных данных "в памяти", это не рассчитано для
+        сохранения конфигурационных данных на конкретный носиель данных.
+        Инструменты для создания и изменения конфигурационных данных для конкретных
+        носителей данных в настоящее время не входят в сферу Zend Framework.
+        Сторонние разработки с открытым кодом часто подходят в целях
+        создания и изменения конфигурационных данных для различных носителей данных.
+<!--
+        Though <code>Zend_Config</code> allows in-memory modification of loaded configuration data, it is not
+        designed to facilitate saving configuration data to specific storage media. Tools for creating and modifying
+        configuration data for specific storage media are currently outside of the Zend Framework scope. Third-party
+        open source solutions are often available for the purpose of creating and modifying configuration data for
+        various storage media.
+-->
+    </note>
+    <example>
+        <title>
+            Загрузка конфигурационных данных из файла INI 
+            <!--Loading Configuration Data from an INI File-->
+        </title>
+        <para>
+            В данном примере конфигурационные данные для производственной среды
+            загружаются из файла INI с помощью
+            <link linkend="zend.config.classes.ini"><code>Zend_Config_Ini</code></link>:
+<!--
+            In this example configuration data for a production environment are loaded from an INI file using
+            <link linkend="zend.config.classes.ini"><code>Zend_Config_Ini</code></link>:
+-->
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config.php';
+require_once 'Zend/Config/Ini.php';
+$config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'production'));
+?>]]>       </programlisting>
+            Теперь конфигурационные данные доступны из свойств объекта <code>$config</code>.
+            Предположим, что конфигурационные данные содержат параметры соединения с базой данных
+            и что эти данные хранятся в файле INI в следующем виде:
+<!--
+            Now the configuration data are available from the <code>$config</code> object's properties. Suppose the
+            configuration data include database connection parameters and that the data are stored in the INI file
+            as:
+-->
+            <programlisting role="ini"><![CDATA[[production]
+database.type     = pdo_mysql
+database.host     = db.example.com
+database.username = dbuser
+database.password = secret
+database.name     = dbname]]>
+            </programlisting>
+            Приложение может установить соединение с базой данных следующим образом: 
+<!--
+            The application might create a connection to the database with:
+-->
+            <programlisting role="php"><![CDATA[<?php
+$myApplicationObject->databaseConnect($config->database->type,
+                                      $config->database->host,
+                                      $config->database->username,
+                                      $config->database->password,
+                                      $config->database->name);
+?>]]>       </programlisting>
+            Как показано выше, конфигурационные данные доступны через синтаксис
+            свойств объектов.
+<!--
+            As shown above, the configuration data are accessed with the object property syntax.
+-->
+       </para>
+    </example>
+    <para>
+        Мы также можем легко создать класс, наследующий от <code>Zend_Config</code>
+        для различных целей. Здесь приведен класс-наследник, добавляющий
+        публичный метод <code>dump()</code> для быстрого вывода загруженных
+        конфигурационных данных.   
+<!--
+        We can also extend
+        <code>Zend_Config</code> easily for various purposes. Here an extending class introduces a public
+        <code>dump()</code> method for quickly printing loaded configuration data:
+-->
+        <programlisting role="php"><![CDATA[<?php
+class MyConfig extends Zend_Config
+{
+    protected $_indent;
+
+    public function dump()
+    {
+        $this->_indent = 0;
+        echo "<pre>\n";
+        $this->_dumpRecursor($this);
+        echo "</pre>";
+    }
+
+    protected function _dumpRecursor($config)
+    {
+        foreach ($config as $key => $value) {
+            echo str_repeat("    ", $this->_indent) . "$key =>";
+            if ($value instanceof Zend_Config) {
+                echo "\n";
+                $this->_indent++;
+                $this->_dumpRecursor($value);
+                $this->_indent--;
+            } else {
+                echo " $value\n";
+            }
+        }
+    }
+}
+
+$config = new MyConfig(Zend_Config_Ini::load('/path/to/config.ini', 'production'));
+
+$config->dump();
+?>]]>   </programlisting>
+        Для конфигурационных данных в приведенном выше примере, это должно вывести:
+<!--
+        For the configuration data in the example above, this would print:
+-->
+        <programlisting role="text"><![CDATA[<pre>
+database =>
+    type => pdo_mysql
+    host => db.example.com
+    username => dbuser
+    password => secret
+    name => dbname
+</pre>]]>
+        </programlisting>
+    </para>
+</sect1>
+<sect1 id="zend.config.classes.array">
+    <title>Zend_Config_Array</title>
+    <sect2 id="zend.config.classes.array.introduction">
+        <title>Введение</title>
+        <code>Zend_Config_Array</code> позволяет разработчикам хранить конфигурационные
+        данные в многомерном ассоциативном массиве и иметь доступ к ним как к
+        свойствам объекта через <code>Zend_Config</code>.
+<!--
+        <code>Zend_Config_Array</code> enables developers to have configuration data stored in multidimensional
+        associative PHP arrays and accessed as object properties through <code>Zend_Config</code>.
+-->
+        <example>
+            <title>
+                Конфигурационные данные в массивах PHP  
+                <!--Configuration Data Stored in PHP Arrays-->
+            </title>
+            <para>
+                Этот пример иллюстрирует основы использования <code>Zend_Config_Array</code>
+                для загрузки конфигурационных данных из массивов PHP. Для начала
+                нам нужно создать массив PHP, содержащий конфигурационные данные:  
+<!--
+                This example illustrates a basic use of <code>Zend_Config_Array</code> for loading configuration
+                data from PHP arrays. First, we need to create PHP arrays having the configuration data:
+-->
+                <programlisting role="php"><![CDATA[<?php
+// Конфигурационные данные производственного сайта
+$config['production'] = array(
+    'webhost' => 'www.example.com',
+    'database' => array(
+        'type'     => 'pdo_mysql',
+        'host'     => 'db.example.com',
+        'username' => 'dbuser',
+        'password' => 'secret',
+        'name'     => 'dbname'
+    )
+);
+
+// Конфигурационные данные промежуточного сайта наследуются от
+// производственного варианта и значения замещаются на нужные
+$config['staging'] = $config['production'];
+$config['staging']['webhost'] = 'dev.example.com';
+$config['staging']['database']['host'] = 'dev.example.com';
+$config['staging']['database']['username'] = 'devuser';
+$config['staging']['database']['password'] = 'devsecret';
+?>]]>           </programlisting>
+                <note>
+                    Массив конфигурационных данных должен иметь имя <code>$config</code>
+                    в загружаемом скрипте PHP.
+<!--
+                    The configuration data array must be named <code>$config</code> in the loaded PHP script.
+-->
+                </note>
+                В примере выше наследование поддерживается посредством присваивания
+                раздела <code>production</code> разделу <code>staging</code>.
+                Теперь загрузка конфигурационных данных с <code>Zend_Config_Array</code>
+                производится просто:
+<!--
+                Inheritance is supported in the example above with an assignment of <code>production</code> section
+                values to the <code>staging</code> section. Now it is a simple matter to load the configuration
+                data with <code>Zend_Config_Array</code>:
+-->
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config.php';
+require_once 'Zend/Config/Array.php';
+
+$config = new Zend_Config(Zend_Config_Array::load('/path/to/config.php', 'staging'));
+
+echo $config->database->host; // выводит: "dev.example.com"
+?>]]>           </programlisting>
+            </para>
+        </example>
+        <para>
+            Заслуживает внимания то, что, поскольку конфигурационные данные добавлены
+            прямо в массив PHP, каждое значение конфигурационных данных имеет тот же
+            тип данных, который дан в скрипте PHP, содержащем массив
+            <code>$config</code>.                                     
+<!--
+            It is noteworthy that because the configuration data are directly added to PHP arrays, each
+            configuration data value has the same data type as given in the PHP script containing the
+            <code>$config</code> array.
+-->
+            <programlisting role="php"><![CDATA[<?php
+$config['staging']['debug']   = 'false'; // значение строкового типа
+$config['staging']['console'] = false; // значение булевого типа
+$config['staging']['timeout'] = 30; // значение целочисленного типа
+?>]]>       </programlisting>
+        </para>
+    </sect2>
+</sect1>
+<sect1 id="zend.config.classes.ini">
+    <title>Zend_Config_Ini</title>
+    <sect2 id="zend.config.classes.ini.introduction">
+        <title>Введение</title>
+        <code>Zend_Config_Ini</code> дает разработчикам возможность хранить
+        конфигурационные данные в хорошо известном формате INI и читать их посредством
+        свойств объекта через <code>Zend_Config</code>.
+<!--
+        <code>Zend_Config_Ini</code> enables developers to store configuration data in a familiar INI format and
+        read them via object properties through <code>Zend_Config</code>.
+-->
+        <example>
+            <title>
+                Конфигурационные данные в файле INI 
+                <!--Configuration Data Stored in INI Files-->
+            </title>
+            <para>
+                Этот пример иллюстрирует основы использования <code>Zend_Config_Ini</code>
+                для загрузки конфигурационных данных из файла INI. Предположим,
+                мы имеем следующие конфигурационные данные в <code>/path/to/config.ini</code>:  
+<!--
+                This example illustrates a basic use of <code>Zend_Config_Ini</code> for loading configuration
+                data from an INI file. Suppose we have the following configuration data in
+                <code>/path/to/config.ini</code>:
+-->
+                <programlisting role="ini"><![CDATA[; Конфигурационные данные производственного сайта
+[production]
+webhost           = www.example.com
+database.type     = pdo_mysql
+database.host     = db.example.com
+database.username = dbuser
+database.password = secret
+database.name     = dbname
+
+; Конфигурационные данные промежуточного сайта наследуются от
+; производственного варианта и значения замещаются на нужные
+[staging]
+extends = production
+database.host     = dev.example.com
+database.username = devuser
+database.password = devsecret]]>
+                </programlisting>
+                <note>
+                    Обратите внимание, что синтаксис файла INI походит на тот, что
+                    ожидается для функции PHP
+                    <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>,
+                    которую использует класс <code>Zend_Config_Ini</code>. Пожалуйста,
+                    ознакомьтесь с этой документацией, чтобы знать специфику
+                    поведения <code>Zend_Config_Ini</code> -- как, например,
+                    транслируются специальные значения <code>true</code>,
+                    <code>false</code>, <code>yes</code>, <code>no</code> и
+                    <code>null</code>.
+<!--
+                    Notice that the syntax of the INI file resembles that expected by the
+                    <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
+                    PHP function, which <code>Zend_Config_Ini</code> utilizes. Please review this documentation to
+                    be aware of the specific behavior of <code>Zend_Config_Ini</code>, such as how the special
+                    values of <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code>, and
+                    <code>null</code> are translated.
+-->
+                </note>
+                В синтаксисе INI наследование поддерживается посредством использования
+                ключевого слова <code>extends</code>. Значением ключа <code>extends</code>
+                должно быть имя раздела, из которого наследует данный раздел.
+                Конфигурационные данные загружаются из файла INI:
+<!--
+                Inheritance is supported in the INI syntax by using the keyword <code>extends</code>.
+                The value of the <code>extends</code> key should be the name of the section from which the extending section is to inherit.
+                The configuration data are then loaded from the INI file:
+-->                
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config.php';
+require_once 'Zend/Config/Ini.php';
+
+$config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'staging'));
+
+echo $config->database->host; // выводит: "dev.example.com"
+?>]]>           </programlisting>
+            </para>
+        </example>
+    </sect2>
+</sect1>
+<sect1 id="zend.config.classes.xml">
+    <title>Zend_Config_Xml</title>
+    <sect2 id="zend.config.classes.xml.introduction">
+        <title>Введение</title>
+        <code>Zend_Config_Xml</code> дает возможность разработчикам хранить
+        конфигурационные данные в простом формате XML и читать их посредством
+        свойств объекта через <code>Zend_Config</code>.
+<!--
+        <code>Zend_Config_Xml</code> enables developers to store configuration data in a simple XML format and
+        read them via object properties through <code>Zend_Config</code>.
+-->
+        <example>
+            <title>
+                Конфигурационные данные в файлах XML 
+                <!--Configuration Data Stored in XML Files-->
+            </title>
+            <para>
+                Этот пример иллюстрирует основы использования <code>Zend_Config_Xml</code>
+                для загрузки данных из файла XML. Предположим, мы имеем следующие
+                конфигурационные данные в <code>/path/to/config.xml</code>:
+<!--
+                This example illustrates a basic use of <code>Zend_Config_Xml</code> for loading configuration
+                data from an XML file. Suppose we have the following configuration data in
+                <code>/path/to/config.xml</code>:
+-->
+                <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+<config>
+    <production>
+        <webhost>www.example.com</webhost>
+        <database>
+            <type>pdo_mysql</type>
+            <host>db.example.com</host>
+            <username>dbuser</username>
+            <password>secret</password>
+            <name>dbname</name>
+        </database>
+    </production>
+    <staging extends="production">
+        <database>
+            <host>dev.example.com</host>
+            <username>devuser</username>
+            <password>devsecret</password>
+        </database>
+    </staging>
+</config>]]>    </programlisting>
+                В синтаксисе XML наследование поддерживается посредством использования
+                аттрибута <code>extends</code>. Значением аттрибута <code>extends</code>
+                должно быть имя раздела, из которого наследует данный раздел.
+                Конфигурационные данные загружаются из файла XML: 
+<!--
+                Inheritance is supported in the XML syntax by using the <code>extends</code> attribute.
+                The value of the <code>extends</code> attribute should be the name of the section from which the extending section is to inherit.
+                The configuration data are then loaded from the XML file:
+-->
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config.php';
+require_once 'Zend/Config/Xml.php';
+
+$config = new Zend_Config(Zend_Config_Xml::load('/path/to/config.xml', 'staging'));
+
+echo $config->database->host; // выводит: "dev.example.com"
+?>]]>           </programlisting>
+            </para>
+            <note>
+                Конфигурационные данные из <code>Zend_Config_Xml</code> всегда
+                интерпретируются как строки.
+<!--
+                Configuration data values from <code>Zend_Config_Xml</code> are always treated as strings.
+-->
+            </note>
+        </example>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
