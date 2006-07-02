@@ -165,10 +165,18 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
             $var = $_POST;
             break;
         case 'Session':
-            $var = $_SESSION;
+            if (isset($_SESSIONS)) {
+                $var = $_SESSIONS;
+            } else {
+                $var = null;
+            }
             break;
         case 'Cookies':
-            $var = $_COOKIES;
+            if (isset($_COOKIES)) {
+                $var = $_COOKIES;
+            } else {
+                $var = null;
+            }
             break;
         case 'Files':
             $var = $_FILES;
