@@ -1,49 +1,56 @@
 <sect1 id="zend.mail.introduction">
-    <title>Introduction</title>
+    <title>Wprowadzenie</title>
     <para>
-        <code>Zend_Mail</code> provides generalized functionality to compose and send both text and MIME-compliant
-        multipart e-mail messages. Mail can be sent with <code>Zend_Mail</code> via the php built-in
-        <ulink url="http://php.net/mail"><code>mail()</code></ulink> function or via direct SMTP connection.
+        <code>Zend_Mail</code> zapewnia możliwość tworzenia i wysyłania tekstowych 
+        wiadomości e-mail oraz wieloczęściowych wiadomości e-mail zgodnych z MIME.
+        Wiadomość może być wysłana przez <code>Zend_Mail</code> za pomocą wbudowanej
+        funkcji PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink> 
+        lub za pomocą zdalnego połączenia SMTP.
     </para>
     <example>
-        <title>Simple E-Mail with Zend_Mail</title>
+        <title>Wysyłanie prostego e-maila za pomocą Zend_Mail</title>
         <para>
-            A simple e-mail consists of some recipients, a subject, a body and a sender. To send such a mail using
-            the PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink> function, do the following:
+            Prosty e-mail składa się z odbiorców, z tematu, treści i z nadawcy. Aby wysłać taki 
+            e-mail używając funkcji PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink> 
+            możesz zrobić to w ten sposób:
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-$mail->setBodyText('This is the text of the mail.');
-$mail->setFrom('somebody@example.com', 'Some Sender');
-$mail->addTo('somebody_else@example.com', 'Some Recipient');
-$mail->setSubject('TestSubject');
+$mail->setBodyText('Treść wiadomości e-mail.');
+$mail->setFrom('somebody@example.com', 'Nadawca');
+$mail->addTo('somebody_else@example.com', 'Odbiorca');
+$mail->setSubject('Testowy Temat');
 $mail->send();
 ?>]]>       </programlisting>
        </para>
     </example>
     <note>
-        In order to send an e-mail with <code>Zend_Mail</code> you have to specify at least one recipient, a
-        sender (e.g., with <code>setFrom()</code>), and a message body (text and/or HTML).
+        Aby wysłać e-mail za pomocą <code>Zend_Mail</code> musisz określić chociaż
+        jednego odbiorcę, nadawcę (np., za pomocą <code>setFrom()</code>), i treść
+        wiadomości (tekst i/lub HTML).
     </note>
     <para>
-        For most mail attributes there are "get" methods to read the information stored in the mail object. For
-        further details, please refer to the API documentation. A special one is <code>getRecipients()</code>.
-        It returns an array with all recipient e-mail addresses that were added prior to the method call.
+         Dla większości atrybutów obiektu mail są dostępne metody "get" w służące do 
+         odczytywania przechowywanych w nim informacji. Więcej informacji można znaleść
+         w dokumentacji API. Specjalną metodą jest <code>getRecipients()</code>. Zwraca
+         ona tablicę w wszystkimi adresami e-mail odbiorców, które zostały dodane.
     </para>
     <para>
-        For security reasons, <code>Zend_Mail</code> filters all header fields to prevent header injection with
-        newline (<code>\n</code>) characters.
+        Ze względów bezpieczeństwa, <code>Zend_Mail</code> filtruje wszystkie nagłówki
+        aby zapobiec dołączeniu niechcianych nagłówków za pomocą znaku nowej linii 
+        (<code>\n</code>).
     </para>
 </sect1>
 <sect1 id="zend.mail.sending">
-    <title>Sending via SMTP</title>
+    <title>Wysyłanie przez SMTP</title>
     <para>
-        To send mail via SMTP, <code>Zend_Mail_Transport_Smtp</code> needs to be created and registered with
-        <code>Zend_Mail</code> before the <code>send()</code> method is called. For all remaining
-        <code>Zend_Mail::send()</code> calls in the current script, the SMTP transport will then be used:
+        Aby wysłać mail przez SMTP, obiekt <code>Zend_Mail_Transport_Smtp</code> 
+        musi być utworzony i zarejestrowany w obiekcie <code>Zend_Mail</code> 
+        zanim zostanie wywołana metoda <code>send()</code>. Dla kolejnych wywołań
+        <code>Zend_Mail::send()</code> w tym skrypcie będzie także użyty transport SMTP:
     </para>
     <example>
-        <title>Sending E-Mail via SMTP</title>
+        <title>Wysyłanie e-maila przez SMTP</title>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail/Transport/Smtp.php';
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
@@ -51,29 +58,31 @@ Zend_Mail::setDefaultTransport($tr);
 ?>]]>   </programlisting>
     </example>
     <para>
-        The <code>setDefaultTransport()</code> method and the constructor of
-        <code>Zend_Mail_Transport_Smtp</code> are not expensive. These two lines can be processed at script
-        setup time (e.g., config.inc or similar) to configure the behaviour of the <code>Zend_Mail</code> class
-        for the rest of the script. This keeps configuration information out of the application logic - whether
-        mail is sent via SMTP or <ulink url="http://php.net/mail"><code>mail()</code></ulink>, what mail server
-        to use, etc.
+        Metoda <code>setDefaultTransport()</code> oraz konstruktor <code>Zend_Mail_Transport_Smtp</code> 
+        nie są czasochłonne. Te dwie linie mogą być wykonane w czasie przygotowania 
+        skryptu (np. w pliku config.inc czy w podobnym) w celu skonfigurowania zachowania 
+        klasy <code>Zend_Mail</code> w reszcie skryptu. To utrzymuje informacje 
+        konfiguracyjne poza logiką aplikacji - to czy wiadomości mają być wysyłane 
+        przez SMTP czy przez funkcję PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink>, 
+        jaki serwer poczty ma być użyty itp.
     </para>
 </sect1>
 <sect1 id="zend.mail.multiple-emails">
-    <title>Sending Multiple Mails per SMTP Connection</title>
+    <title>Wysyłanie wielu maili podczas jednego połączenia SMTP</title>
     <para>
-        By default, an SMTP connection is established for every e-mail that is sent. If you want to send
-        multiple e-mails through one SMTP connection, you can handle the <code>connect()</code> yourself. If the
-        transport has already established a connection before <code>send()</code> is called, it will be used
-        and will not be closed:
+        Domyślnie, połączenie SMTP jest tworzone za każdym razem gdy wysyłamy e-mail.
+        Jeśli chcesz wysłać wiele wiadomości za pomocą jednego połączenia SMTP
+        możesz użyć funkcji <code>connect()</code>. Jeśli transport ma już utworzone
+        połączenie przez wywołaniem metody <code>send()</code>, będzie ono użyte
+        i nie będzie zamknięte:
     </para>
     <example>
-        <title>Sending Multiple Mails per SMTP Connection</title>
+        <title>Wysyłanie wielu maili podczas jednego połączenia SMTP</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-// build message...
+// tworzymy wiadomość
 require_once 'Zend/Mail/Transport/Smtp.php';
 $tr = new Zend_Mail_Transport_Smtp('mail.example.com');
 Zend_Mail::setDefaultTransport($tr);
@@ -86,78 +95,81 @@ $tr->disconnect();
     </example>
 </sect1>
 <sect1 id="zend.mail.different-transports">
-    <title>Using Different Transports</title>
+    <title>Używanie innych transportów</title>
     <para>
-        In case you want to send different e-mails through different connections, you can also pass the
-        transport object directly to <code>send()</code> without a prior call to
-        <code>setDefaultTransport()</code>. The passed object will override the default transport for the
-        actual <code>send()</code> request:
+        W przypadku gdy chcesz wysłać różne e-maile poprzez różne połączenia, możesz 
+        także przekazać obiekt transportu bezpośrednio do metody <code>send()</code> 
+        bez wcześniejszego wywołania <code>setDefaultTransport()</code>. Przekazany
+        obiekt nadpisze domyślny transport dla aktualnego wywołania <code>send()</code>:
     </para>
     <example>
-        <title>Using Different Transports</title>
+        <title>Używanie innych transportów</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-// build message...
+// tworzymy wiadomość...
 require_once 'Zend/Mail/Transport/Smtp.php';
 $tr1 = new Zend_Mail_Transport_Smtp('server@example.com');
 $tr2 = new Zend_Mail_Transport_Smtp('other_server@example.com');
 $mail->send($tr1);
 $mail->send($tr2);
-$mail->send();  // use default again
+$mail->send();  // znów używamy domyślnego transportu
 ?>]]>   </programlisting>
     </example>
     <note>
-        Additional transports can be written by implementing <code>Zend_Mail_Transport_Interface</code>.
+        Dodatkowe transporty mogą być napisane poprzez zaimplementowanie interfejsu
+        <code>Zend_Mail_Transport_Interface</code>.
     </note>
 </sect1>
 <sect1 id="zend.mail.html-mails">
-    <title>HTML E-Mail</title>
+    <title>E-mail w postaci HTML</title>
     <para>
-        To send an e-mail in HTML format, set the body using the method <code>setBodyHTML()</code> instead of
-        <code>setBodyText()</code>. The MIME content type will automatically be set to <code>text/html</code>
-        then. If you use both HTML and Text bodies, a multipart/alternative MIME message will automatically be
-        generated:
+        Aby wysłać e-mail w formacie HTML, ustaw treść za pomocą metody <code>setBodyHTML()</code> 
+        zamiast <code>setBodyText()</code>. Typ MIME zostanie automatycznie ustawiony na 
+        <code>text/html</code>. Jeśli używasz zarówno treści HTML jak i tekstowej to
+        automatycznie zostanie wygenerowana wiadomość o typie MIME <code>multipart/alternative</code>:
     </para>
     <example>
-        <title>Sending HTML E-Mail</title>
+        <title>Wysyłanie e-maila w postaci HTML</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-$mail->setBodyText('My Nice Test Text');
-$mail->setBodyHtml('My Nice <b>Test</b> Text');
-$mail->setFrom('somebody@example.com', 'Some Sender');
-$mail->addTo('somebody_else@example.com', 'Some Recipient');
-$mail->setSubject('TestSubject');
+$mail->setBodyText('Testowy tekst');
+$mail->setBodyHtml('<b>Testowy</b> tekst');
+$mail->setFrom('somebody@example.com', 'Nadawca');
+$mail->addTo('somebody_else@example.com', 'Odbiorca');
+$mail->setSubject('Testowy temat');
 $mail->send();
 ?>]]>   </programlisting>
     </example>
 </sect1>
 <sect1 id="zend.mail.attachments">
-    <title>Attachments</title>
+    <title>Załączniki</title>
     <para>
-        Files can be attached to an e-mail using the <code>addAttachment()</code> method. The default behaviour
-        of <code>Zend_Mail</code> is to assume the attachment is a binary object (application/octet-stream),
-        should be transferred with base64 encoding, and is handled as an attachment. These assumptions can be
-        overridden by passing more parameters to <code>addAttachment()</code>:
+        Pliki mogą być dołączone do e-maila za pomocą metody <code>addAttachment()</code>. 
+        Domyślnie <code>Zend_Mail</code> założy, że załącznik jest obiektem binarnym
+        (application/octet-stream), który będzie zakodowany w base64. Te założenie
+        może być nadpisane przez przekazanie opcjonalnych parametrów do metody
+        <code>addAttachment()</code>:
     </para>
     <example>
-        <title>E-Mail Messages with Attachments</title>
+        <title>Wiadomości e-mail z załącznikami</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
-// build message...
+// tworzymy wiadomość
 $mail->addAttachment($someBinaryString);
 $mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
 ?>]]>   </programlisting>
     </example>
     <para>
-        If you want more control over the MIME part generated for this attachment you can use the return value
-        of <code>addAttachment()</code> to modify its attributes. The <code>addAttachment()</code> method
-        returns a <code>Zend_Mime_Part</code> object:
+        Jeśli chcesz mieć większą kontrolę nad częścią MIME wygenerowaną dla tego
+        załącznika możesz użyć wartości zwróconej przez <code>addAttachment()</code>
+        aby zmodyfikować jej atrybuty. Metoda <code>addAttachment()</code> zwraca 
+        obiekt <code>Zend_Mime_Part</code>:
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
@@ -174,93 +186,100 @@ $mail->send();
     </para>
 </sect1>
 <sect1 id="zend.mail.adding-recipients">
-    <title>Adding Recipients</title>
+    <title>Dodawanie odbiorców</title>
     <para>
-        Recipients can be added in three ways:
+        Odbiorcy mogą być dodawani na trzy sposoby:
         <itemizedlist>
         <listitem>
-        <para><code>addTo()</code>: Adds a recipient to the mail with a "To" header</para>
+        <para><code>addTo()</code>: Dodaje odbiorcę do maila w nagłówku "To"</para>
         </listitem>
         <listitem>
-        <para><code>addCc()</code>: Adds a recipient to the mail with a "Cc" header</para>
+        <para><code>addCc()</code>: Dodaje odbiorcę do maila w nagłówku "Cc"</para>
         </listitem>
         <listitem>
-        <para><code>addBcc()</code>: Adds a recipient to the mail not visible in the header.</para>
+        <para><code>addBcc()</code>: Dodaje do maila odbiorcę niewidocznego w nagłówku.</para>
         </listitem>
         </itemizedlist>
     </para>
     <note>
-        <code>addTo()</code> and <code>addCc()</code> accept a second optional parameter that is used as a
-        human-readable name of the recipient for the header.
+        Metody <code>addTo()</code> oraz <code>addCc()</code> akceptują drugi opcjonalny
+        parametr, który jest używany jako nazwa odbiorcy.
     </note>
 </sect1>
 <sect1 id="zend.mail.boundary">
-    <title>Controlling the MIME Boundary</title>
+    <title>Pole rozgraniczające MIME</title>
     <para>
-        In a multipart message a MIME boundary for separating the different parts of the message is normally
-        generated at random. In some cases, however, you might want to specify the MIME boundary that is used.
-        This can be done using the <code>setMimeBoundary()</code> method, as in the following example:
+        W wieloczęściowej wiadomości pole rozgraniczające MIME używane do oddzielania
+        różnych części wiadomości zwykle jest generowane losowo. W niektórych przypadkach
+        możesz chciec określić jakie wartości ma mieć pole rozgraniczające. Możesz to
+        zrobić używając metody <code>setMimeBoundary()</code> jak w poniższym przykładzie:
     </para>
     <example>
-        <title>Changing the MIME Boundary</title>
+        <title>Zmiana pola rozgraniczającego MIME</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setMimeBoundary('=_' . md5(microtime(1) . $someId++);
-// build message...
+// tworzymy wiadomość
 ?>]]>   </programlisting>
     </example>
 </sect1>
 <sect1 id="zend.mail.additional-headers">
-    <title>Additional Headers</title>
+    <title>Dodatkowe nagłówki</title>
     <para>
-        Arbitrary mail headers can be set by using the <code>addHeader()</code> method. It requires two
-        parameters containing the name and the value of the header field. A third optional parameter determines
-        if the header should have only one or multiple values:
+        Dodatkowe nagłówki wiadomości mogą być ustawione za pomocą metody 
+        <code>addHeader()</code>. Wymaga ona dwóch parametrów: nazwy nagłówka oraz
+        jej wartości. Trzeci opcjonalny parametr decyduje o tym, czy nagłówek
+        powinien mieć jedną czy wiele wartości:
     </para>
     <example>
-        <title>Adding E-Mail Message Headers</title>
+        <title>Dodawanie nagłówków do wiadomości e-mail</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->addHeader('X-MailGenerator', 'MyCoolApplication');
-$mail->addHeader('X-greetingsTo', 'Mom', true); // multiple values
+$mail->addHeader('X-greetingsTo', 'Mom', true); // wiele wartości
 $mail->addHeader('X-greetingsTo', 'Dad', true);
 ?>]]>   </programlisting>
     </example>
 </sect1>
 <sect1 id="zend.mail.character-sets">
-    <title>Character Sets</title>
+    <title>Zestawy znaków</title>
     <para>
-        <code>Zend_Mail</code> does not check for the correct character set of the mail parts. When
-        instantiating <code>Zend_Mail</code>, a charset for the e-mail itself may be given. It defaults to
-        <code>iso-8859-1</code>. The application has to make sure that all parts added to that mail object have their content
-        encoded in the correct character set. When creating a new mail part, a different charset can be given for
-        each part.
+        <code>Zend_Mail</code> nie sprawdza poprawności zestawu znaków poszczególnych
+        części wiadomości. Kiedy tworzymy instancję <code>Zend_Mail</code>, możemy
+        wybrać zestaw znaków dla wiadomości. Domyślny to <code>iso-8859-1</code>. 
+        Aplikacja musi zapewnić to, żeby wszystkie części dodane do obiektu 
+        wiadomości miały zawartośc zakodowaną w prawidłowym zestawie znaków. Kiedy 
+        tworzymy nową część wiadomości, możemy użyć innego zestawu znaków dla każdej 
+        z części.
     </para>
     <note>
-        Character sets are only applicable for message parts in text format.
+        Zestawy znaków mają jedynie zastosowanie dla części wiadomości które są
+        w formacie tekstowym.
     </note>
 </sect1>
 <sect1 id="zend.mail.encoding">
-    <title>Encoding</title>
+    <title>Kodowanie</title>
     <para>
-        Text and HTML message bodies are encoded with the quotedprintable mechanism by default. All other
-        attachments are encoded via base64 if no other encoding is given in the <code>addAttachment()</code>
-        call or assigned to the MIME part object later. 7Bit and 8Bit encoding currently only pass on the
-        binary content data.
+        Treści wiadomości w formacie Text oraz HTML są domyślnie kodowane przy użyciu
+        mechanizmu quotedprintable. Wszystkie inne załączniki są kodowane za pomocą
+        base64 jeśli inne kodowanie nie zostało wybrane podczas wywołania metody
+        <code>addAttachment()</code> lub nie zostało później dodane do obiektu MIME.
+        Kodowania 7Bit oraz 8Bit obecnie działają jedynie z danymi binarnymi.
     </para>
     <para>
-        <code>Zend_Mail_Transport_Smtp</code> encodes lines starting with one dot or two dots so that the mail
-        does not violate the SMTP protocol.
+        <code>Zend_Mail_Transport_Smtp</code> koduje linie zaczynając je jedną
+        lub dwoma kropkami, więc wiadomość nie łamie zasad protokołu SMTP.
     </para>
 </sect1>
 <sect1 id="zend.mail.smtp-authentication">
-    <title>SMTP Authentication</title>
+    <title>Uwierzytelnianie SMTP</title>
     <para>
-        Various SMTP authentication methods may be added later but are currently unsupported.
+        Różne metody uwierzytelniania SMTP będą dodane w przyszłości, obecnie żadna 
+        nie jest obsługiwana.
     </para>
 </sect1>
 <!--
