@@ -11,7 +11,8 @@ Priority 1 :
 
 Priority 2 :
 
-- new backends (memcached, shmop...)
+- unit testing for Page frontend and Memcached backend (seems to be difficult)
+- new backends (shmop...)
 - an integrated cache for Zend_Controler ?
 - an integrated cache for Zend XMLRPC ?
 - improve logging feature with debug support (only warnings are implemented now)
