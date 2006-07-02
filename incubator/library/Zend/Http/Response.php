@@ -464,7 +464,7 @@ class Zend_Http_Response
     static public function extractHeaders(&$response_str)
     {
         $headers = array();
-        $lines = explode("\r\n", $response_str);
+        $lines = explode("\n", $response_str);
         $last_header = null;
 
         foreach($lines as $line) {
@@ -503,16 +503,9 @@ class Zend_Http_Response
      */
     static public function extractBody(&$response_str)
     {
-        $lines = explode("\r\n", $response_str);
-        $line = null;
+        list(, $body) = preg_split('/^\r?$/m', $response_str, 2);
+        $body = ltrim($body);
         
-        // Remove all header lines, keep counting response lines to avoid an
-        // infinit loop
-        while ($line !== "" && count($lines) > 0)
-            $line = array_shift($lines);
-
-        $body = implode("\r\n", $lines);
-
         return $body;
     }
 
