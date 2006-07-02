@@ -61,7 +61,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      */
     protected $_specificOptions = array(
     	'httpConditional' => false,
-        'debugHeader' => true,
+        'debugHeader' => false,
         'cacheWithGetVariables' => false,
         'cacheWithPostVariables' => false,
         'cacheWithSessionVariables' => false,
@@ -87,7 +87,9 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
                 Zend_Cache::throwException('httpConditional is not implemented for the moment !');
             }
         }
-        parent::__construct($options);
+        while (list($name, $value) = each($options)) {
+            $this->setOption($name, $value);
+        }
     }
     
     /**
