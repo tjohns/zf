@@ -7,8 +7,8 @@
         <title>Introduction</title>
 
         <para>
-            Le composant <code>Zend_Db_Table</code> constitue le module de gestion des tables du Framework Zend. 
-            Il se connecte à votre base de données via <code>Zend_Db_Adapter</code>, examine le schéma d'une table puis vous aide à manipuler 
+            Le composant <code>Zend_Db_Table</code> constitue le module de gestion des tables du Framework Zend.
+            Il se connecte à votre base de données via <code>Zend_Db_Adapter</code>, examine le schéma d'une table puis vous aide à manipuler
             et aller chercher les lignes de cette table.
         </para>
 
@@ -19,7 +19,7 @@
         <title>Mise en Route</title>
 
         <para>
-            La première chose à faire consiste à fournir à la classe abstraite <code>Zend_Db_Table</code> un adaptateur de base de données par défaut; 
+            La première chose à faire consiste à fournir à la classe abstraite <code>Zend_Db_Table</code> un adaptateur de base de données par défaut;
             sauf mention contraire de votre part, toutes les instances de <code>Zend_Db_Table</code> utiliseront cet adaptateur par défaut.
         </para>
 
@@ -45,9 +45,9 @@ Zend_Db_Table::setDefaultAdapter($db);
         </programlisting>
 
         <para>
-            Ensuite, supposons que vous disposez d'une table appelée "table_ronde" dans votre base de données. 
-            Pour utiliser <code>Zend_Db_Table</code> sur cette table de base de données, étendez simplement <code>Zend_Db_Table</code> pour créer 
-            une nouvelle classe appelée TableRonde (notez que nous avons transformé le nom table_ronde en utilisant la notation Camel). 
+            Ensuite, supposons que vous disposez d'une table appelée "table_ronde" dans votre base de données.
+            Pour utiliser <code>Zend_Db_Table</code> sur cette table de base de données, étendez simplement <code>Zend_Db_Table</code> pour créer
+            une nouvelle classe appelée TableRonde (notez que nous avons transformé le nom table_ronde en utilisant la notation Camel).
             Vous pourrez ensuite examiner via cette classe la table 'table_ronde', manipuler ses lignes et aller chercher des lignes particulières.
         </para>
 
@@ -64,9 +64,9 @@ $table = new RoundTable();
         <title>Nom de la table et clé primaire</title>
 
         <para>
-            Par défaut, <code>Zend_Db_Table</code> s'attend à ce que le nom de la table de votre base de données soit le même que son propre 
-            nom de classe (en le convertissant d'abord de la NotationCamel vers la notation mots_separes_par_tirets_bas). Ainsi, 
-            une classe <code>Zend_Db_Table</code> appelée UnNomDeTable est associée à une table SQL appelée 'un_nom_de_table'. Si vous voulez que 
+            Par défaut, <code>Zend_Db_Table</code> s'attend à ce que le nom de la table de votre base de données soit le même que son propre
+            nom de classe (en le convertissant d'abord de la NotationCamel vers la notation mots_separes_par_tirets_bas). Ainsi,
+            une classe <code>Zend_Db_Table</code> appelée UnNomDeTable est associée à une table SQL appelée 'un_nom_de_table'. Si vous voulez que
             votre classe soit associée à un nom autre que la forme avec tirets bas du nom de la classe, surchargez la propriété <code>$_name</code>
             lorsque vous définissez votre classe.
         </para>
@@ -82,8 +82,8 @@ class NomDeLaClasse extends Zend_Db_Table
         </programlisting>
 
         <para>
-            Par défaut, <code>Zend_Db_Table</code> s'attend à ce que votre table possède une clé primaire 
-            nommée 'id'. (C'est mieux si cette colonne est auto-incrémentée, mais ce n'est pas une nécessité.) 
+            Par défaut, <code>Zend_Db_Table</code> s'attend à ce que votre table possède une clé primaire
+            nommée 'id'. (C'est mieux si cette colonne est auto-incrémentée, mais ce n'est pas une nécessité.)
             Si votre clé primaire se nomme autrement que 'id', vous pouvez surcharger la propriété <code>$_primary</code> lorsque vous définissez votre classe.
         </para>
 
@@ -98,7 +98,7 @@ class NomDeLaClasse extends Zend_Db_Table
         </programlisting>
 
         <para>
-             Vous pouvez aussi définir ces propriétés dans la méthode <code>_setup()</code> de votre classe; assurez-vous simplement 
+             Vous pouvez aussi définir ces propriétés dans la méthode <code>_setup()</code> de votre classe; assurez-vous simplement
              d'appeler la méthode <code>_setup()</code> de la classe-parente une fois que c'est fait.
         </para>
 
@@ -122,9 +122,9 @@ class NomDeLaClasse extends Zend_Db_Table
         <title>Insertion de lignes</title>
 
         <para>
-             Pour insérer une nouvelle ligne dans votre table, appelez simplement <code>insert()</code> en lui passant un tableau associatif 
-             de données sous la forme colonne:valeur. Les données seront échappées automatiquement pour vous et l'ID de la dernière 
-             insertion sera renvoyé. 
+             Pour insérer une nouvelle ligne dans votre table, appelez simplement <code>insert()</code> en lui passant un tableau associatif
+             de données sous la forme colonne:valeur. Les données seront échappées automatiquement pour vous et l'ID de la dernière
+             insertion sera renvoyé.
              (Notez qu'en cela cette méthode diffère de <code>Zend_Db_Adapter::insert()</code>, qui renvoie le nombre de lignes affectées.)
         </para>
 
@@ -156,13 +156,13 @@ $id = $table->insert($donnees);
         <title>Mise à jour de lignes</title>
 
         <para>
-             Pour mettre à jour des lignes de votre table, appelez <code>update()</code> en lui passant un tableau associatif des données à 
-             modifier sous la forme <code>colonne:valeur</code> ainsi qu'une clause WHERE permettant de déterminer quelles lignes doivent 
+             Pour mettre à jour des lignes de votre table, appelez <code>update()</code> en lui passant un tableau associatif des données à
+             modifier sous la forme <code>colonne:valeur</code> ainsi qu'une clause WHERE permettant de déterminer quelles lignes doivent
              être mises à jour. Cette méthode mettra à jour la table et renverra le nombre de lignes affectées.
         </para>
 
         <para>
-             Les données à modifier seront automatiquement échappées pour vous mais pas la clause WHERE, que vous devez échapper vous-même 
+             Les données à modifier seront automatiquement échappées pour vous mais pas la clause WHERE, que vous devez échapper vous-même
              à l'aide de l'objet <code>Zend_Db_Adapter</code> de la table.
         </para>
 
@@ -195,7 +195,7 @@ $lignes_affectees = $table->update($set, $where);
         <title>Suppression de lignes</title>
 
         <para>
-             Pour supprimer des lignes de votre table, appelez <code>delete()</code> en lui passant une clause WHERE permettant 
+             Pour supprimer des lignes de votre table, appelez <code>delete()</code> en lui passant une clause WHERE permettant
              de déterminer quelles lignes doivent être supprimées. Cette méthode renverra ensuite le nombre de lignes supprimées.
         </para>
 
@@ -227,8 +227,8 @@ $lignes_affectees = $table->delete($where);
         <title>Trouver des lignes par clé primaire</title>
 
         <para>
-             Si vous le souhaitez, vous pouvez facilement obtenir des lignes de la table en fonction des valeurs de leurs clés primaires, grâce 
-             à la méthode <code>find()</code>. Cette méthode renvoie un objet <code>Zend_Db_Table_Row</code> si vous tentez de retrouver une seule clé ou un objet 
+             Si vous le souhaitez, vous pouvez facilement obtenir des lignes de la table en fonction des valeurs de leurs clés primaires, grâce
+             à la méthode <code>find()</code>. Cette méthode renvoie un objet <code>Zend_Db_Table_Row</code> si vous tentez de retrouver une seule clé ou un objet
              <code>Zend_Db_Table_Rowset</code> si vous tentez de retrouver plusieurs clés.
         </para>
         <programlisting role="php"><![CDATA[<?php
@@ -251,10 +251,10 @@ $lignes = $table->find(array(1, 2, 3));
         <title>Aller chercher une ligne</title>
 
         <para>
-             Même si vous pouvez facilement retrouver une ligne par sa clé primaire, vous aurez souvent besoin d'ajouter 
+             Même si vous pouvez facilement retrouver une ligne par sa clé primaire, vous aurez souvent besoin d'ajouter
              différentes conditions à la requête lorsque vous cherchez à obtenir une ligne particulière. <code>Zend_Db_Table</code>
-             offre précisément dans ce but la méthode <code>fetchRow()</code>. Appelez <code>fetchRow()</code> en lui passant une clause WHERE 
-             (et une clause ORDER optionnelle) et <code>Zend_Db_Table</code> renverra un objet <code>Zend_Db_Table_Row</code> associé au premier 
+             offre précisément dans ce but la méthode <code>fetchRow()</code>. Appelez <code>fetchRow()</code> en lui passant une clause WHERE
+             (et une clause ORDER optionnelle) et <code>Zend_Db_Table</code> renverra un objet <code>Zend_Db_Table_Row</code> associé au premier
              enregistrement qui correspond aux conditions spécifiées.
         </para>
 
@@ -291,14 +291,14 @@ $ligne = $table->fetchRow($where, $order);
         <title>Aller chercher plusieurs lignes</title>
 
         <para>
-             Si vous avez besoin d'obtenir plusieurs lignes en même temps, utilisez la méthode <code>fetchAll()</code>. 
-             Comme pour <code>fetchRow()</code>, elle prend en argument une clause WHERE et une clause ORDER mais aussi un décompte 
-             limite et une valeur offset limite afin de restreindre le nombre de lignes renvoyées. La méthode renverra un objet 
+             Si vous avez besoin d'obtenir plusieurs lignes en même temps, utilisez la méthode <code>fetchAll()</code>.
+             Comme pour <code>fetchRow()</code>, elle prend en argument une clause WHERE et une clause ORDER mais aussi un décompte
+             limite et une valeur offset limite afin de restreindre le nombre de lignes renvoyées. La méthode renverra un objet
              <code>Zend_Db_Table_Rowset</code> contenant les enregistrements sélectionnés.
         </para>
 
         <para>
-             Notez que la clause WHERE ne sera pas échappée pour vous et vous devez donc l'échapper 
+             Notez que la clause WHERE ne sera pas échappée pour vous et vous devez donc l'échapper
              vous-même à l'aide de l'objet <code>Zend_Db_Adapter</code> de la table.
         </para>
 
@@ -318,7 +318,7 @@ $order = 'prenom';
 $decompte = 10;
 $offset = 20;
 
-$lignes = $table->fetchRow($where, $order, $decompte, $offset);
+$lignes = $table->fetchAll($where, $order, $decompte, $offset);
 ?>]]>
         </programlisting>
 
@@ -329,8 +329,8 @@ $lignes = $table->fetchRow($where, $order, $decompte, $offset);
         <title>Ajouter votre propre logique</title>
 
         <para>
-             En bon module de table, <code>Zend_Db_Table</code> se prête bien à l'encapsulation de votre propre logique. 
-             Vous pouvez par exemple surcharger les méthodes <code>insert()</code> et <code>update()</code> pour qu'elles manipulent ou valident les 
+             En bon module de table, <code>Zend_Db_Table</code> se prête bien à l'encapsulation de votre propre logique.
+             Vous pouvez par exemple surcharger les méthodes <code>insert()</code> et <code>update()</code> pour qu'elles manipulent ou valident les
              données avant que celles-ci n'aillent dans la base de données.
         </para>
 
