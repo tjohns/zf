@@ -38,6 +38,14 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
 {
     /**
+     * PDO type
+     *
+     * @var string
+     */
+    protected $_pdoType = 'sqlite';
+    
+    
+    /**
      * DSN builder
      */
     protected function _dsn()
