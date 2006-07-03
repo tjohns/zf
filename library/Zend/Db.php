@@ -165,8 +165,10 @@ class Zend_Db {
             throw new Zend_Db_Exception('Configuration must be an array');
         }
 
-        if (substr($adapterName, 0, 3) == 'pdo') {
-            $adapterName = 'Zend_Db_Adapter_Pdo_' . substr($adapterName, 3);
+        $adapterName = strtolower($adapterName); # normalize input
+        if (substr($adapterName, 0, 3) === 'pdo') {
+            $adapterName = 'Zend_Db_Adapter_Pdo_' .
+                                       ucfirst(ltrim(substr($adapterName, 3),'_'));
         } else {
             $adapterName = 'Zend_Db_Adapter_' .
                            str_replace(' ',
