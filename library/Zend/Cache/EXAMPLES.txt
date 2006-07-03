@@ -150,7 +150,7 @@ $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions
 
 $id = 'foo'; // cache id of "what we want to cache"
 
-if ($cache->start($id)) {
+if (!($cache->start($id))) {
     // cache is not hit !
     
     // Output you want to cache
