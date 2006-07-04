@@ -46,8 +46,8 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 // $cache initialized in previous example
 
 // see if a cache already exists:
-if(!$result = $cache->get('myresult'))
-{
+if(!$result = $cache->get('myresult')) {
+
     // cache miss; connect to the database
     
     $db = Zend_Db::factory( [...] );
@@ -55,10 +55,12 @@ if(!$result = $cache->get('myresult'))
     $result = $db->fetchAll('SELECT * FROM huge_table');
     
     $cache->save($result, 'myresult');
-}
-else {
+    
+} else {
+
     // cache hit! shout so that we know
     echo "This one is from cache!\n\n";
+    
 }
 
 print_r($result);
@@ -88,8 +90,7 @@ $backendOptions = array('cacheDir' => './tmp/');
 $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
 
 // we pass a unique identifier to the start() method
-if(!$cache->start('mypage'))
-{
+if(!$cache->start('mypage')) {
     // output as usual:
     
     echo 'Hello world! ';
@@ -187,6 +188,7 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             method, you can set an array of tags to apply for this record. Then you will be 
             able to clean all cache records tagged with a given tag (or tags).
         </para>
+        <para>
         <programlisting role="php"><![CDATA[<?php
              
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
