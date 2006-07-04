@@ -6,7 +6,7 @@
     <title>Suporte aos conjuntos de caracteres UTF-8 e byte-simples.</title>
 
     <para>Zend_Search_Lucene foi projetado para trabalhar com conjuntos de
-    caracteres UTF-8. Arquivos de indice armazenam dados unicode no formato de
+    caracteres UTF-8. Arquivos de índice armazenam dados unicode no formato de
     codificação "UTF-8 modificado" usado pelo Java. O núcleo do
     Zend_Search_Lucene suporta-os plenamente, com uma exceção: <footnote>
         <para>Zend_Search_Lucene suporta somente os caracteres do Plano

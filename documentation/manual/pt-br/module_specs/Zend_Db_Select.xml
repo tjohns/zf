@@ -4,19 +4,19 @@
 
     <sect2 id="zend.db.select.introduction">
 
-        <title>Introduction</title>
+        <title>Introdução</title>
 
         <para>
-            Zend_Db_Select is a tool to help you build SQL SELECT statements in
-            a database-independent way.  Obviously this can't be perfect,
-            but it does go a long way toward helping your queries be
-            portable between database backends.  In addition, it aids
-            you in making your queries resistant to SQL injection attacks.
+            Zend_Db_Select é uma ferramenta para construir instruções SQL SELECT 
+            independentemente do banco de dados utilizado.  Obviamente isso não pode 
+			ser perfeito, mas é um avanço para ajudar a fazer consultas 
+            portáveis entre banco de dados diferentes.  Adicionalmente, ele ajuda
+            a proteger suas consultas contra ataques de SQL injection.
         </para>
 
         <para>
-            The easiest way to create an instance of Zend_Db_Select is to use the
-            Zend_Db_Adapter::select() method.
+            A maneira mais fácil de criar uma instância de Zend_Db_Select é usar o método
+            Zend_Db_Adapter::select().
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -33,14 +33,14 @@ $params = array (
 $db = Zend_Db::factory('pdoMysql', $params);
 
 $select = $db->select();
-// $select is now a Zend_Db_Select_PdoMysql object
+// $select é agora um objeto Zend_Db_Select_PdoMysql
 
 ?>]]></programlisting>
 
         <para>
-            You then construct a SELECT query using that object and its
-            methods, then generate a string for passing back to Zend_Db_Adapter
-            for queries or fetches.
+            Então você constrói uma consulta SELECT usando o objeto e seus
+            métodos, e em seguida gera uma string para devolver ao Zend_Db_Adapter
+            para consultas ou buscas.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -53,32 +53,32 @@ $select = $db->select();
 //     LIMIT 10 OFFSET 20
 //
 
-// you can use an iterative style...
+// você pode usar um estilo iterativo...
 $select->from('round_table', '*');
 $select->where('noble_title = ?', 'Sir');
 $select->order('first_name');
 $select->limit(10,20);
 
-// ...or a "fluent" style:
+// ...ou um estilo "fluente":
 $select->from('round_table', '*')
        ->where('noble_title = ?', 'Sir')
        ->order('first_name')
        ->limit(10,20);
 
-// regardless, fetch the results
+// de um modo ou de outro, busque os resultados
 $sql = $select->__toString();
 $result = $db->fetchAll($sql);
 
-// alternatively, you can pass the $select object itself;
-// Zend_Db_Adapter is smart enough to call __toString() on the
-// Zend_Db_Select objects to get the query string.
+// alternativamente, você pode passar o objeto $select;
+// Zend_Db_Adapter é esperto o suficiente para chamar __toString() nos
+// objetos Zend_Db_Select para pegar a string de consulta.
 $result = $db->fetchAll($select);
 
 ?>]]></programlisting>
 
         <para>
-            You can also use bound parameters in your queries instead of
-            quoting-as-you-go.
+            Você também pode usar parâmetros vinculados nas suas consultas em vez de
+            adicionar aspas a cada método.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -96,7 +96,7 @@ $select->from('round_table', '*')
        ->order('first_name')
        ->limit(10,20);
 
-// regardless, fetch the results using bound parameters
+// de um modo ou de outro, busque os resultados usando os parãmetros vinculados
 $params = array('title' => 'Sir');
 $result = $db->fetchAll($select, $params);
 
@@ -106,23 +106,23 @@ $result = $db->fetchAll($select, $params);
 
     <sect2 id="zend.db.select.fromcols">
 
-        <title>Columns FROM a Table</title>
+        <title>Colunas de uma Tabela (usando FROM)</title>
 
         <para>
-            To select columns from a specific table, use the from() method,
-            specifying the table and the columns you want from it.  You can
-            use both table and column aliases, and you can use from() as
-            many times as you need.
+            Para selecionar colunas de uma tabela específica, use o método from(),
+            specificando a tabela e as colunas que você quer.  Você pode
+			usar apelidos para a tabela e para colunas, e você pode usar from() 
+			quantas vezes precisar.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, assuming Mysql as the adapter.
+// crie um objeto $db, usando Mysql como o adaptador.
 $select = $db->select();
 
 // SELECT a, b, c FROM some_table
 $select->from('some_table', 'a, b, c');
-// equivalent:
+// equivalente:
 $select->from('some_table', array('a', 'b', 'c');
 
 // SELECT bar.col FROM foo AS bar
@@ -137,18 +137,18 @@ $select->from('bar', 'bar.col AS col2');
 
     <sect2 id="zend.db.select.joincols">
 
-        <title>Columns from JOINed Tables</title>
+        <title>Colunas de Tabelas (usando JOIN)</title>
 
         <para>
-            To select columns using joined tables, use the join() method.
-            First give the joining table name, then the joining condition,
-            and finally the columns you want from the join.  You can use
-            join() as many times as you need.
+            Para selecionar colunas usando tabelas unidas, use o método join().
+            Primeiro passe o nome da tabela que se unirá, então a condição da união,
+            e finalmente as colunas que você quer unir.  Você pode usar
+            join() quantas vezes precisar.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, assuming Mysql as the adapter.
+// crie um objeto $db, usando Mysql como adaptador.
 $select = $db->select();
 
 //
@@ -162,32 +162,32 @@ $select->join('bar', 'foo.id = bar.id', '*');
 ?>]]></programlisting>
 
         <para>
-            Currently, only the JOIN syntax is supported; no LEFT JOINs,
-            RIGHT JOINs, etc.  Future releases will support these in a
-            database-neutral fashion.
+            No momento, apenas a sintaxe de JOIN é suportada; não LEFT JOINs,
+            RIGHT JOINs, etc.  Versões futuras vão suportar estas operações de
+            um modo independente de bancos de dados.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.select.where">
 
-        <title>WHERE Conditions</title>
+        <title>Condições WHERE</title>
 
         <para>
-            To add WHERE conditions, use the where() method.  You can
-            pass either a regular string, or you can pass a string
-            with a question-mark placeholder and a value to quote into it
-            (the value will be quoted using Zend_Db_Adapter::quoteInto).
+            Para adicionar condições WHERE, use o método where().  Você pode
+            passar uma string regular, ou uma string com um ponto de interrogação
+			marcando um espaço reservado e um valor para adicionar aspas nela
+            (o valor receberá aspas usando Zend_Db_Adapter::quoteInto).
         </para>
 
         <para>
-            Multiple calls to where() will AND the conditions together;
-            if you need to OR a condition, use orWhere().
+            Chamadas múltiplas a where() adicionarão AND às condições;
+            se você precisar de OR, use orWhere().
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// crie um objeto $db, e pega a ferramenta SELECT.
 $select = $db->select();
 
 //
@@ -216,15 +216,15 @@ $select->orWhere('id IN(?)', array(1, 2, 3);
 
     <sect2 id="zend.db.select.group">
 
-        <title>GROUP BY Clause</title>
+        <title>Cláusula GROUP BY</title>
 
         <para>
-            To group rows, use the group() method as many times as you wish.
+            Para agrupar linhas, use o método group() quantas vezes você desejar.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// crie um objeto $db, e pega a ferramenta SELECT.
 $select = $db->select();
 
 //
@@ -236,10 +236,10 @@ $select->from('foo', 'COUNT(id)');
 $select->group('bar');
 $select->group('baz');
 
-// an equivalent group() call:
+// chamada equivalente de group():
 $select->group('bar, baz');
 
-// another equivalent group() call:
+// outra chamada equivalente de group():
 $select->group(array('bar', 'baz'));
 
 ?>]]></programlisting>
@@ -248,20 +248,20 @@ $select->group(array('bar', 'baz'));
 
     <sect2 id="zend.db.select.having">
 
-        <title>HAVING Conditions</title>
+        <title>Condição HAVING</title>
 
         <para>
-            To add HAVING conditions to the selected results, use the having()
-            method.  This method is identical in function to the where() method.
+            Para adicionar condições HAVING aos resultados selecionados, use o método having().
+			este método é id~entico em função ao método where().
         </para>
 
         <para>
-            If you call having() multiple times, the conditions are ANDed together;
-            if you want to OR a condition, use orHaving().
+            Se você chamar having() múltiplas vezes, as condições são unidas usando AND;
+            se você quiser uma condição OR, use orHaving().
         </para>
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// crie um objeto $db, e pega a ferramenta SELECT.
 $select = $db->select();
 
 //
@@ -279,15 +279,15 @@ $select->having('count_id > ?', 1);
 
     <sect2 id="zend.db.select.order">
 
-        <title>ORDER BY Clause</title>
+        <title>Cláusula ORDER BY</title>
 
         <para>
-            To ORDER columns, use the order() method as many times as you wish.
+            Para ordenar colunas com ORDER, use o método order() quantas vezes desejar.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, then get a SELECT tool.
+// crie um objeto $db, e pega a ferramenta SELECT.
 $select = $db->select();
 
 //
@@ -298,10 +298,10 @@ $select->from('round_table', '*');
 $select->order('noble_title DESC');
 $select->order('first_name');
 
-// an equivalent order() call:
+// chamada equivalente de order():
 $select->order('noble_title DESC, first_name');
 
-// another equivalent order() call:
+// outra chamada equivalente de order():
 $select->order(array('noble_title DESC', 'first_name'));
 
 ?>]]></programlisting>
@@ -310,67 +310,67 @@ $select->order(array('noble_title DESC', 'first_name'));
 
     <sect2 id="zend.db.select.limit">
 
-        <title>LIMIT By Count and Offset</title>
+        <title>LIMIT usando Count e Offset</title>
 
         <para>
-            Zend_Db_Select offers database-abstracted LIMIT clause support.
-            For many databases, such as MySQL and PostgreSQL, this is
-            relatively easy, as they support the the "LIMIT :count
-            [OFFSET :offset]" syntax.
+            Zend_Db_Select oferece abstrações pra suporte da cláusula LIMIT.
+            Para muitos bancos de dados, como MySQL e PostgreSQL, isso é 
+			relativamente fácil, pois eles suportam a sintaxe "LIMIT :count
+            [OFFSET :offset]".
         </para>
 
         <para>
-            For other databases, such as Microsoft SQL and Oracle, this
-            is not so easy, as they do not support LIMIT clauses at all.
-            MS-SQL has only a TOP clause, and Oracle  requires that a query
-            be written in a special fashion to emulate a LIMIT.  Because of
-            the way Zend_Db_Select works internally, we can rewrite the SELECT
-            on-the-fly to emulate the LIMIT functionality of the aforementioned
-            open-source database systems.
+            Para outros bancos de dados, como Microsoft SQL e Oracle, isso
+            não é tão fácil, pois eles não suportam cláusulas LIMIT.
+            MS-SQL tem apenas uma cláusula TOP, e Oracle requer que a consulta
+            seja escrita de uma maneira especial para emular um LIMIT.  Devido à
+			maneira como o Zend_Db_Select trabalhar internamente, nós podemos reescrever SELECT
+            para emular a funcionalidade LIMIT dos bancos de dados de código aberto mencionados
+            anteriormente.
         </para>
 
         <para>
-            To LIMIT the returned results by count and offset, use the limit()
-            method with a count and optional offset.
+            Para usar LIMIT nos resultados retornados usando count e offset, use o método limit()
+            com um valor count e um offset opcional.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// first, a simple "LIMIT :count"
+// primeiro, um simples "LIMIT :count"
 $select = $db->select();
 $select->from('foo', '*');
 $select->order('id');
 $select->limit(10);
 
 //
-// In MySQL/PostgreSQL/SQLite, this translates to:
+// Em MySQL/PostgreSQL/SQLite, isso se traduz para:
 //
 // SELECT * FROM foo
 //     ORDER BY id ASC
 //     LIMIT 10
 //
-// But in Microsoft SQL, this translates to:
+// Mas em Microsoft SQL, isso se traduz para:
 //
 // SELECT TOP 10 * FROM FOO
 //     ORDER BY id ASC
 //
 //
 
-// now, a more complex "LIMIT :count OFFSET :offset"
+// agora, um mais complexo "LIMIT :count OFFSET :offset"
 $select = $db->select();
 $select->from('foo', '*');
 $select->order('id');
 $select->limit(10, 20);
 
 //
-// In MySQL/PostgreSQL/SQLite, this translates to:
+// Em MySQL/PostgreSQL/SQLite, isso se traduz para:
 //
 // SELECT * FROM foo
 //     ORDER BY id ASC
 //     LIMIT 10 OFFSET 20
 //
-// But in Microsoft SQL, which has no offset support, this translates to
-// something like:
+// Mas em Microsoft SQL, que não tem suporte a offset, isso se traduz para
+// algo como:
 //
 // SELECT * FROM (
 //     SELECT TOP 10 * FROM (
@@ -378,7 +378,7 @@ $select->limit(10, 20);
 //     ) ORDER BY id ASC
 // )
 //
-// Zend_Db_Adapter does the query translation for you automatically.
+// Zend_Db_Adapter faz a tradução da consulta automaticamente.
 //
 
 ?>]]></programlisting>
@@ -387,27 +387,27 @@ $select->limit(10, 20);
 
     <sect2 id="zend.db.select.paging">
 
-        <title>LIMIT By Page And Count</title>
+        <title>LIMIT usando Page e Count</title>
 
         <para>
-            Zend_Db_Select offers page-based limits as well.  If you wish to
-            retrieve a certain "page" of results, use the limitPage() method;
-            first pass the page number you want, and then the number of
-            rows that appear on each page.
+            Zend_Db_Select também oferece limites baseados em páginas.  Se você quer
+            receber uma certa "página" de resultados, use o método limitPage();
+            primeiro passe o número da página que voc~e quer, e então o número de
+			linhas que aparecerão em cada página.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// build the basic select...
+// construa o select básico...
 $select = $db->select();
 $select->from('foo', '*');
 $select->order('id');
 
-// ... and limit to page 3 where each page has 10 rows
+// ... e limite o resultado à página 3, cada página com 10 linhas
 $select->limitPage(3, 10);
 
 //
-// In MySQL/PostgreSQL/SQLite, this translates to:
+// Em MySQL/PostgreSQL/SQLite, isso se traduz para:
 //
 // SELECT * FROM foo
 //     ORDER BY id ASC
