@@ -562,10 +562,15 @@ class Zend_Db_Adapter_Mysqli implements Zend_Db_Adapter_Interface {
      *
      * @param string $ident The identifier.
      * @return string The quoted identifier.
+     * @todo Quoting in this function does not work for versions older than 4.1.x:
+     *       http://dev.mysql.com/doc/refman/4.1/en/legal-names.html
+     * @todo filter according to *all* of the rules in:
+     *       http://dev.mysql.com/doc/refman/5.0/en/legal-names.html
+     * @todo this function is an exact duplicate of the one in Pdo/Mysql.php
      */
     public function quoteIdentifier($ident)
     {
-        $ident = str_replace('`', '\`', $ident);
+        $ident = str_replace('`', '``', $ident);
         return "`$ident`";
     }
 
