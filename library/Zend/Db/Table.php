@@ -233,7 +233,7 @@ abstract class Zend_Db_Table {
             $this->_name,
             $data
         );
-        return $this->_db->lastInsertId();
+        return $this->_db->lastInsertId($this->_name, $this->_primary);
     }
 
     /**

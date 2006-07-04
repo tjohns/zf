@@ -191,9 +191,11 @@ class Zend_Db_Adapter_Mysqli implements Zend_Db_Adapter_Interface {
     /**
      * Gets the last inserted ID.
      *
-     * @return int
+     * @param  string $tableName   not used in this adapter
+     * @param  string $primaryKey  not used in this adapter
+     * @return integer
      */
-    public function lastInsertId($name = null)
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
         $this->_connect();
         return $this->_connection->insert_id;

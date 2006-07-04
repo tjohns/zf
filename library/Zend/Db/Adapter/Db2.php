@@ -302,17 +302,20 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
 	/**
      * Gets the last inserted ID.
      *
-     * @param  string $name   Table name. if not given, uses the last table used
+     * @param  string $tableName   name of table associated with sequence
+     * @param  string $primaryKey  primary key in $tableName (not used in this adapter)
+     * @todo   can we skip the select COLNAME query,
+     *         if primaryKey is available?
      * @return integer
      */
-    public function lastInsertId($name = null)
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
     	// we must know the name of the table
-    	if (!$name) {
-    		$name = $this->_lastInsertTable;
+    	if (!$tableName) {
+    		$tableName = $this->_lastInsertTable;
     	}
   
-    	if (!$name) {
+    	if (!$tableName) {
     		return -1;
     	}
 
@@ -321,7 +324,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     	}
     	
     	$sql = "select COLNAME from syscat.colidentattributes "
-    	 	 . "where TABNAME='" . strtoupper($name) . "'";
+    	 	 . "where TABNAME='" . strtoupper($tableName) . "'";
     	$result = $this->fetchAssoc($sql);
     	if ($result) {
     		$identCol = $result[0]['COLNAME'];
@@ -329,7 +332,7 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
     		$identCol = 'ID';
     	}
     	
-    	$sql = "select max($identCol) as MAX from $name";
+    	$sql = "select max($identCol) as MAX from $tableName";
     	$result = $this->fetchAssoc($sql);
     	if ($result) {
     		return $result[0]['MAX'];

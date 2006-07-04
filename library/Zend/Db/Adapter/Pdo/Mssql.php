@@ -160,10 +160,11 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
     /**
      * Gets the last inserted ID.
      *
-     * @param string $name The sequence name (needed for some PDO drivers).
-     * @return int
+     * @param  string $tableName   not used in this adapter
+     * @param  string $primaryKey  not used in this adapter
+     * @return integer
      */
-    function lastInsertId($name=null)
+    public function lastInsertId($tableName = null, $primaryKey = null)
     {
         $sql = 'select @@IDENTITY';
         return (int)$this->fetchOne($sql);

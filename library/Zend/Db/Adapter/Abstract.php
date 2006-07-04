@@ -503,10 +503,11 @@ abstract class Zend_Db_Adapter_Abstract
     /**
      * Gets the last inserted ID.
      *
-     * @param  string $name   Sequence name
+     * @param  string $tableName   name of table (or sequence) associated with sequence
+     * @param  string $primaryKey  primary key in $tableName
      * @return integer
      */
-    abstract public function lastInsertId($name = null);
+    abstract public function lastInsertId($tableName = null, $primaryKey = null);
 
 
     /**

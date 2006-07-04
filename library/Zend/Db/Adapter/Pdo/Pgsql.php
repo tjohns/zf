@@ -109,4 +109,18 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
         }
         return $sql;
     }
+
+
+    /**
+     * Gets the last inserted ID.
+     *
+     * @param  string $tableName   table or sequence name needed for some PDO drivers
+     * @param  string $primaryKey  primary key in $tableName need for some PDO drivers
+     * @return integer
+     */
+    public function lastInsertId($tableName = null, $primaryKey = null)
+    {
+        $this->_connect();
+        return $this->_connection->lastInsertId($tableName .'_'. $primaryKey .'_seq');
+    }
 }
