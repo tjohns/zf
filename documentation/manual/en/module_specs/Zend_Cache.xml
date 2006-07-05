@@ -108,15 +108,16 @@ echo 'This is never cached ('.time().').';
            for demonstration purposes. Try running this and then refreshing several times; you will notice
            that the first number doesn't change while second changes as time passes. That is because the first
            number was output in the cached section and is saved among other output.
-           After half a minute (we set lifetime to 30 seconds) the
-           numbers should match again because the cache record expired -- only to be cached again.
+           After half a minute (we've set lifetime to 30 seconds) the
+           numbers should match again because the cache record expired -- only to be cached again. You
+           should try this in your brower or console.
        </para>
     </example>
-    <note>
+    <note><para>
         When using Zend_Cache, pay attention to the important cache identifier (passed to <code>save()</code>
         and <code>start()</code>). It must be unique for every resource you cache, otherwise unrelated
         cache records may wipe each other or, even worse, be displayed in place of the other.
-    </note>
+    </para></note>
 </sect1>
 
 
@@ -133,16 +134,16 @@ echo 'This is never cached ('.time().').';
         the condition is a Zend_Cache method itself. On the end if these blocks you must save what you've
         generated, however (eg. <code>Zend_Cache_Core::save()</code>).
     </para>
-    <note>
+    <note><para>
         The conditional execution design of your generating code is not necessary in some frontends
         (<code>Function</code>, for an example) when the whole logic is implemented inside the frontend.
-    </note>
-    <note>
+    </para></note>
+    <note><para>
         'Cache hit' is a term for a condition when a cache record is found, is valid and is 'fresh' (in other
         words hasn't expired yet). 'Cache miss' is everything else. When a cache miss happens, you must
         generate your data (as you would normally do) and have it cached. When you have a cache hit, on the
         other hand, the backend automatically fetches the record from cache transparently.
-    </note>
+    </para></note>
     <sect2 id="zend.cache.factory">
         <title>The <code>Zend_Cache</code> factory method</title>
         <para>
@@ -175,10 +176,10 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             In the following examples we will assume that the <code>$cache</code> variable holds a
             valid, instantiated frontend as already shown.
         </para>
-        <note>
+        <note><para>
             Always use <code>Zend_Cache::factory()</code> to get frontend instances. Instantiating
             frontends and backends yourself will not work as expected.
-        </note>
+        </para></note>
     </sect2>
     
     <sect2 id="zend.cache.tags">
@@ -186,15 +187,12 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
         <para>
             Tags are a way to categorize cache records. When you save a cache with the <code>save()</code>
             method, you can set an array of tags to apply for this record. Then you will be 
-            able to clean all cache records tagged with a given tag (or tags).
-        </para>
-        <para>
+            able to clean all cache records tagged with a given tag (or tags):
         <programlisting role="php"><![CDATA[<?php
              
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             
-?>]]></programlisting>
-        </para>
+?>]]></programlisting></para>
     </sect2>
     <sect2 id="zend.cache.clean">
         <title>Cleaning the cache</title>
@@ -234,231 +232,242 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
     </sect2>
 </sect1>
 
-
-<sect1 id="zend.cache.core">
-    <title>Zend_Cache_Core</title>
-    <sect2 id="zend.cache.core.introduction">
-        <title>Introduction</title>
-        <para>
-            <code>Zend_Cache_Core</code> is a special frontend because it's actually the core
-            of the module. All frontends inherit from this class, so the methods and options
-            described below are also available in other frontends (but are not necessarily used).
-        </para>
-    </sect2>
-    <sect2 id="zend.cache.core.options">
-        <title>Available options (for this frontend in Zend_Cache factory)</title>
-        <table>
+<sect1 id="zend.cache.frontends">
+    <title>Zend_Cache frontends</title>
+    
+    <sect2 id="zend.cache.core">
+        <title>Zend_Cache_Core</title>
+        <sect3 id="zend.cache.core.introduction">
+            <title>Introduction</title>
+            <para>
+                <code>Zend_Cache_Core</code> is a special frontend because it is the core
+                of the module. It is a generic cache frontend and is extended by other classes.
+            </para>
+            <note><para>
+                All frontends inherit from <code>Zend_Cache_Core</code> so that its methods and options
+                (described below) would also be available in other frontends, therefore they won't be
+                documented there.
+            </para></note>
+        </sect3>
+        <sect3 id="zend.cache.core.options">
             <title>Available options</title>
-            <tgroup cols="4">
-                 <thead>
-                      <row>
-                        <entry>Option</entry>
-                        <entry>Data Type</entry>
-                        <entry>Default Value</entry>
-                        <entry>Description</entry>
-                    </row>
-                 </thead>
-                 <tbody>
-                      <row>
-                          <entry><code>caching</code></entry>
-                          <entry><code>boolean</code></entry>
-                          <entry><code>true</code></entry>
-                          <entry>
-                              enable / disable caching (can be very usefull for the debug of 
-                              cached scripts)                
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>lifeTime</code></entry>
-                          <entry><code>int</code></entry>
-                          <entry><code>3600</code></entry>
-                          <entry>
-                            cache lifetime (in seconds), if set to <code>null</code>, the 
-                            cache is valid forever.       
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>logging</code></entry>
-                          <entry><code>boolean</code></entry>
-                          <entry><code>false</code></entry>
-                          <entry>
-                            if set to true, logging through <code>Zend_Log</code> is activated 
-                            (but the system is slower)         
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>writeControl</code></entry>
-                          <entry><code>boolean</code></entry>
-                          <entry><code>true</code></entry>
-                          <entry>
-                            Enable / disable write control (the cache is read 
-                            just after writing to detect corrupt entries), enabling writeControl
-                            will lightly slow the cache writing but not the cache reading (it 
-                            can detect some corrupt cache files but it's not a perfect control)        
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>automaticSerialization</code></entry>
-                          <entry><code>boolean</code></entry>
-                          <entry><code>false</code></entry>
-                          <entry>
-                            Enable / disable automatic serialization, it can be used to save directly datas
-                            which aren't strings (but it's slower)            
-                          </entry>
-                      </row>
-                      <row>
-                          <entry><code>automaticCleaningFactor</code></entry>
-                          <entry><code>int</code></entry>
-                          <entry><code>0</code></entry>
-                          <entry>
-                            Disable / Tune the automatic cleaning process (garbage collector):
-                            0 means no automatic cache cleaning, 1 means systematic cache cleaning
-                            and x &gt; 1 means automatic random cleaning 1 times in x write operations.
-                          </entry>
-                      </row>
-                  </tbody>
-              </tgroup>
-          </table>
+            <para>
+                These options are passed to the factory method as demonstrated in previous examples.
+            </para>
+            <table>
+                <title>Available options</title>
+                <tgroup cols="4">
+                     <thead>
+                          <row>
+                            <entry>Option</entry>
+                            <entry>Data Type</entry>
+                            <entry>Default Value</entry>
+                            <entry>Description</entry>
+                        </row>
+                     </thead>
+                     <tbody>
+                          <row>
+                              <entry><code>caching</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>true</code></entry>
+                              <entry>
+                                  enable / disable caching (can be very usefull for the debug of 
+                                  cached scripts)                
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>lifeTime</code></entry>
+                              <entry><code>int</code></entry>
+                              <entry><code>3600</code></entry>
+                              <entry>
+                                cache lifetime (in seconds), if set to <code>null</code>, the 
+                                cache is valid forever.       
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>logging</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                if set to true, logging through <code>Zend_Log</code> is activated 
+                                (but the system is slower)         
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>writeControl</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>true</code></entry>
+                              <entry>
+                                Enable / disable write control (the cache is read 
+                                just after writing to detect corrupt entries), enabling writeControl
+                                will lightly slow the cache writing but not the cache reading (it 
+                                can detect some corrupt cache files but it's not a perfect control)        
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>automaticSerialization</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                Enable / disable automatic serialization, it can be used to save directly datas
+                                which aren't strings (but it's slower)            
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>automaticCleaningFactor</code></entry>
+                              <entry><code>int</code></entry>
+                              <entry><code>0</code></entry>
+                              <entry>
+                                Disable / Tune the automatic cleaning process (garbage collector):
+                                0 means no automatic cache cleaning, 1 means systematic cache cleaning
+                                and x &gt; 1 means automatic random cleaning 1 times in x write operations.
+                              </entry>
+                          </row>
+                      </tbody>
+                  </tgroup>
+              </table>
+        </sect3>
+        
+        <sect3 id="zend.cache.core.examples">
+            <title>Examples</title>
+            <para>
+                A first example is given in the tutorial at the very beginning.
+            </para>
+            <para>
+                If you store only strings into cache (because with "automaticSerialization" option, it's possible
+                to store some booleans), you can use a more compact construction like:
+                 <programlisting role="php"><![CDATA[<?php  
+                 
+    // [...] // require, configuration and factory
+    
+    $id = 'foo'; // cache id of "what we want to cache"
+    
+    if (!($data = $cache->get($id))) {
+        // cache missed
+        
+        $data = '';
+        for ($i=0;$i<10000;$i++) {
+            $data = $data . $i;
+        }
+        
+        $cache->save($data);
+        
+    } 
+    
+    // [...] do something with $data (for example "echo $data;")
+                 
+    ?>]]>       </programlisting> 
+            </para>  
+            <para>
+                If you want to cache multiple blocks or datas, the idea is the same :
+                 <programlisting role="php"><![CDATA[<?php  
+                 
+    // [...] // require, configuration and factory
+    
+    $id1 = 'foo'; // cache id of block1
+    $id2 = 'bar'; // cache id of block2
+    
+    // BLOCK1
+    if (!($data = $cache->get($id1))) {
+        // cache missed
+        
+        $data = '';
+        for ($i=0;$i<10000;$i++) {
+            $data = $data . $i;
+        }
+        
+        $cache->save($data);
+        
+    } 
+    echo($data);
+    
+    // NEVER CACHED BLOCK
+    echo('NEVER CACHED !');
+    
+    // BLOCK2
+    if (!($data = $cache->get($id2))) {
+        // cache missed
+        
+        $data = '';
+        for ($i=0;$i<10000;$i++) {
+            $data = $data . '!';
+        }
+        
+        $cache->save($data);
+        
+    } 
+    echo($data);
+    
+    
+    ?>]]>       </programlisting>             
+            </para>            
+        </sect3>   
     </sect2>
     
-    <sect2 id="zend.cache.core.examples">
-        <title>Examples</title>
-        <para>
-            A first example is given in the tutorial at the very beginning.
-        </para>
-        <para>
-            If you store only strings into cache (because with "automaticSerialization" option, it's possible
-            to store some booleans), you can use a more compact construction like:
-             <programlisting role="php"><![CDATA[<?php  
-             
-// [...] // require, configuration and factory
-
-$id = 'foo'; // cache id of "what we want to cache"
-
-if (!($data = $cache->get($id))) {
-    // cache missed
-    
-    $data = '';
-    for ($i=0;$i<10000;$i++) {
-        $data = $data . $i;
-    }
-    
-    $cache->save($data);
-    
-} 
-
-// [...] do something with $data (for example "echo $data;")
-             
-?>]]>       </programlisting> 
-        </para>  
-        <para>
-            If you want to cache multiple blocks or datas, the idea is the same :
-             <programlisting role="php"><![CDATA[<?php  
-             
-// [...] // require, configuration and factory
-
-$id1 = 'foo'; // cache id of block1
-$id2 = 'bar'; // cache id of block2
-
-// BLOCK1
-if (!($data = $cache->get($id1))) {
-    // cache missed
-    
-    $data = '';
-    for ($i=0;$i<10000;$i++) {
-        $data = $data . $i;
-    }
-    
-    $cache->save($data);
-    
-} 
-echo($data);
-
-// NEVER CACHED BLOCK
-echo('NEVER CACHED !');
-
-// BLOCK2
-if (!($data = $cache->get($id2))) {
-    // cache missed
-    
-    $data = '';
-    for ($i=0;$i<10000;$i++) {
-        $data = $data . '!';
-    }
-    
-    $cache->save($data);
-    
-} 
-echo($data);
-
-
-?>]]>       </programlisting>             
-        </para>            
-    </sect2>   
-</sect1>
-
-<sect1 id="zend.cache.frontends.file">
-    <title>Zend_Cache_Frontend_File</title>
-    <sect2 id="zend.cache.frontends.file.introduction">
-        <title>Introduction</title>
-        <para>
-            <code>Zend_Cache_Frontend_File</code> is a frontend driven by the 
-            modification time of a "master file". It's really interesting for examples
-            in configuration or templates issues.
-        </para>
-        <para> 
-        	For instance, you have an XML configuration file which is parsed by a function 
-        	which returns a "config object" (like with <code>Zend_Config</code>). With
-        	<code>Zend_Cache_Frontend_File</code>, you can store the "config object" into
-        	cache (to avoid the parsing of the XML config file at each time) but with a
-        	sort of strong dependency on the "master file". So, if the XML config file
-        	is modified, the cache is immediatly invalidated.
-        </para>
-    </sect2>
-    <sect2 id="zend.cache.frontends.file.options">
-        <title>Available options (for this frontend in Zend_Cache factory)</title>
-        <table>
-            <title>Available options</title>
-            <tgroup cols="4">
-                 <thead>
-                      <row>
-                        <entry>Option</entry>
-                        <entry>Data Type</entry>
-                        <entry>Default Value</entry>
-                        <entry>Description</entry>
-                    </row>
-                 </thead>
-                 <tbody>
-                 	<row>
-				        <entry>[...]</entry>
-				        <entry>[...]</entry>
-				        <entry>[...]</entry>
-				        <entry>See Zend_Cache_Core for inherited options</entry>
-				     </row>
-                     <row>
-                          <entry><code>masterFile (mandatory)</code></entry>
-                          <entry><code>string</code></entry>
-                          <entry><code></code></entry>
-                          <entry>
-                              the complete path and name of the master file                 
-                          </entry>
-                     </row>
-                  </tbody>
-              </tgroup>
-          </table>
-    </sect2>   
-    <sect2 id="zend.cache.frontends.file.examples">
-        <title>Examples</title>
-        <para>
-            The use of this frontend is the same than <code>Zend_Cache_Core</code>. There
-            is no need of a specific example. The only thing to do is to 
-            define the <code>masterFile</code> backend option when using the factory.
-        </para>
+    <sect2 id="zend.cache.frontends.file">
+        <title>Zend_Cache_Frontend_File</title>
+        <sect3 id="zend.cache.frontends.file.introduction">
+            <title>Introduction</title>
+            <para>
+                <code>Zend_Cache_Frontend_File</code> is a frontend driven by the 
+                modification time of a "master file". It's really interesting for examples
+                in configuration or templates issues.
+            </para>
+            <para> 
+            	For instance, you have an XML configuration file which is parsed by a function 
+            	which returns a "config object" (like with <code>Zend_Config</code>). With
+            	<code>Zend_Cache_Frontend_File</code>, you can store the "config object" into
+            	cache (to avoid the parsing of the XML config file at each time) but with a
+            	sort of strong dependency on the "master file". So, if the XML config file
+            	is modified, the cache is immediatly invalidated.
+            </para>
+        </sect3>
+        <sect3 id="zend.cache.frontends.file.options">
+            <title>Available options (for this frontend in Zend_Cache factory)</title>
+            <table>
+                <title>Available options</title>
+                <tgroup cols="4">
+                     <thead>
+                          <row>
+                            <entry>Option</entry>
+                            <entry>Data Type</entry>
+                            <entry>Default Value</entry>
+                            <entry>Description</entry>
+                        </row>
+                     </thead>
+                     <tbody>
+                     	<row>
+    				        <entry>[...]</entry>
+    				        <entry>[...]</entry>
+    				        <entry>[...]</entry>
+    				        <entry>See Zend_Cache_Core for inherited options</entry>
+    				     </row>
+                         <row>
+                              <entry><code>masterFile (mandatory)</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code></code></entry>
+                              <entry>
+                                  the complete path and name of the master file                 
+                              </entry>
+                         </row>
+                      </tbody>
+                  </tgroup>
+              </table>
+        </sect3>   
+        <sect3 id="zend.cache.frontends.file.examples">
+            <title>Examples</title>
+            <para>
+                The use of this frontend is the same than <code>Zend_Cache_Core</code>. There
+                is no need of a specific example. The only thing to do is to 
+                define the <code>masterFile</code> backend option when using the factory.
+            </para>
+        </sect3>
     </sect2>
 </sect1>
 
 <sect1 id="zend.cache.backends">
-    <title>Available backends for Zend_Cache</title>
+    <title>Zend_Cache backends</title>
+    
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
