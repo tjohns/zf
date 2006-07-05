@@ -73,7 +73,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
      * @param int $port
      * @param string $myName  (for use with HELO)
      */
-    public function __construct($host, $port=25, $myName='127.0.0.1')
+    public function __construct($host = '127.0.0.1', $port=25, $myName='127.0.0.1')
     {
         $this->_host = $host;
         $this->_port = $port;
