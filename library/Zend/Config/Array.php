@@ -55,7 +55,7 @@ class Zend_Config_Array
         include $filename;
 
         if (!isset($config)) {
-            throw new Zend_Config_Exception("Cannot find $config array in $filename");
+            throw new Zend_Config_Exception("Array variable '\$config' cannot be found in $filename");
         }
         if (!isset($config[$section])) {
             throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
