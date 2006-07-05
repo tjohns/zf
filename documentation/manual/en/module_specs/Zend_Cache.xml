@@ -397,6 +397,65 @@ echo($data);
     </sect2>   
 </sect1>
 
+<sect1 id="zend.cache.frontends.file">
+    <title>Zend_Cache_Frontend_File</title>
+    <sect2 id="zend.cache.frontends.file.introduction">
+        <title>Introduction</title>
+        <para>
+            <code>Zend_Cache_Frontend_File</code> is a frontend driven by the 
+            modification time of a "master file". It's really interesting for examples
+            in configuration or templates issues.
+        </para>
+        <para> 
+        	For instance, you have an XML configuration file which is parsed by a function 
+        	which returns a "config object" (like with <code>Zend_Config</code>). With
+        	<code>Zend_Cache_Frontend_File</code>, you can store the "config object" into
+        	cache (to avoid the parsing of the XML config file at each time) but with a
+        	sort of strong dependency on the "master file". So, if the XML config file
+        	is modified, the cache is immediatly invalidated.
+        </para>
+    </sect2>
+    <sect2 id="zend.cache.frontends.file.options">
+        <title>Available options (for this frontend in Zend_Cache factory)</title>
+        <table>
+            <title>Available options</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>Option</entry>
+                        <entry>Data Type</entry>
+                        <entry>Default Value</entry>
+                        <entry>Description</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                 	<row>
+				        <entry>[...]</entry>
+				        <entry>[...]</entry>
+				        <entry>[...]</entry>
+				        <entry>See Zend_Cache_Core for inherited options</entry>
+				     </row>
+                     <row>
+                          <entry><code>masterFile (mandatory)</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code></code></entry>
+                          <entry>
+                              the complete path and name of the master file                 
+                          </entry>
+                     </row>
+                  </tbody>
+              </tgroup>
+          </table>
+    </sect2>   
+    <sect2 id="zend.cache.frontends.file.examples">
+        <title>Examples</title>
+        <para>
+            The use of this frontend is the same than <code>Zend_Cache_Core</code>. There
+            is no need of a specific example. The only thing to do is to 
+            define the <code>masterFile</code> backend option when using the factory.
+        </para>
+    </sect2>
+</sect1>
 
 <sect1 id="zend.cache.backends">
     <title>Available backends for Zend_Cache</title>
@@ -522,7 +581,7 @@ echo($data);
             you need a memcached daemon and <ulink url="http://pecl.php.net/package/memcache">the memcache PECL extension</ulink>.
         </para>
         <para>
-        	Be carefull : with this backend, "tags" are not supported for the moment as 
+        	Be careful : with this backend, "tags" are not supported for the moment as 
         	the "doNotTestCacheValidity=true" argument.
         </para>
         <para>
