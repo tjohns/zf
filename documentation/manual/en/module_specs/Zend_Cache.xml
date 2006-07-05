@@ -522,6 +522,10 @@ echo($data);
             you need a memcached daemon and <ulink url="http://pecl.php.net/package/memcache">the memcache PECL extension</ulink>.
         </para>
         <para>
+        	Be carefull : with this backend, "tags" are not supported for the moment as 
+        	the "doNotTestCacheValidity=true" argument.
+        </para>
+        <para>
             Available options are :
         </para>
         <table>
