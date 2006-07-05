@@ -463,6 +463,100 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
             </para>
         </sect3>
     </sect2>
+    
+    <sect2 id="zend.cache.frontends.page">
+    	<title>Zend_Cache_Frontend_Page</title>
+    	<sect3 id="zend.cache.frontends.page.introduction">
+        	<title>Introduction</title>
+        	<para>
+	            <code>Zend_Cache_Frontend_Page</code> is like <code>Zend_Cache_Frontend_Output</code>
+	            but designed for a complete page. It's impossible to use <code>Zend_Cache_Frontend_Page</code>
+	            for caching only a single block.
+	        </para>
+	        <para>
+	        	On the other hand, the "cache id" is calculated automatically with
+	        	<code>$_SERVER['REQUEST_URI']</code> and (depending on options) 
+	        	<code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_FILES</code>.
+	        	More over, you have only one method to call (<code>start()</code>) because the
+	        	<code>end()</code> call is fully automatic when the page is ended.
+	        </para>
+	        <para>
+	        	For the moment, it's not implemented but we plan to add a HTTP conditional system
+	        	to save bandwith (the system will send a HTTP 304 Not Modified if the cache is hit
+	        	and if the browser has already the good version).
+	        </para>
+	        <para>
+	        	Be carefull : Zend_Cache_Frontend_Page is really "alpha stuff".
+	        </para>
+    	</sect3>
+    	<sect3 id="zend.cache.frontends.page.options">
+	        <title>Available options (for this frontend in Zend_Cache factory)</title>
+	        <table>
+	            <title>Available options</title>
+	            <tgroup cols="4">
+	                 <thead>
+	                      <row>
+	                        <entry>Option</entry>
+	                        <entry>Data Type</entry>
+	                        <entry>Default Value</entry>
+	                        <entry>Description</entry>
+	                    </row>
+	                 </thead>
+	                 <tbody>
+	                 	<row>
+					        <entry>[...]</entry>
+					        <entry>[...]</entry>
+					        <entry>[...]</entry>
+					        <entry>See Zend_Cache_Core for inherited options</entry>
+					     </row>
+	                     <row>
+	                          <entry><code>httpConditional</code></entry>
+	                          <entry><code>boolean</code></entry>
+	                          <entry><code>false</code></entry>
+	                          <entry>
+	                              use the httpConditional system (not implemented for the moment)                 
+	                          </entry>
+	                     </row>
+	                     <row>
+	                          <entry><code>cacheWith{Get,Post,Session,Files,Cookie}Variables</code></entry>
+	                          <entry><code>boolean</code></entry>
+	                          <entry><code>false</code></entry>
+	                          <entry>
+	                                if true,  cache is still on even if there are some variables in the corresponding superglobal array ;
+	                                if false,  cache is off if there are some variables in the corresponding superglobal array             
+	                          </entry>
+	                     </row>
+	                     <row>
+	                          <entry><code>makeIdWith{Get,Post,Session,Files,Cookie}Variables</code></entry>
+	                          <entry><code>boolean</code></entry>
+	                          <entry><code>true</code></entry>
+	                          <entry>
+	                                if true, we have to use the content of the corresponding superglobal array to make a cache id
+	                                if false, the cache id won't be dependent of the content of the corresponding superglobal array
+	                          </entry>
+	                     </row>
+	                  </tbody>
+	              </tgroup>
+	          </table>
+	    </sect3>   
+    	<sect3 id="zend.cache.frontends.page.examples">
+        	<title>Examples</title>
+	        <para>
+	            Use of Zend_Cache_Frontend_Page is really trivial :
+	            <programlisting role="php"><![CDATA[<?php
+	           
+// [...] // require, configuration and factory
+	
+$cache->start();
+# Of course, if the cache is hit, the result is sent to the browser and the script stop here
+	
+// [...] Normal page [...]
+	
+?>]]>       </programlisting>
+	        </para>
+    	</sect3>
+	</sect2>
+    
 </sect1>
 
 <sect1 id="zend.cache.backends">
