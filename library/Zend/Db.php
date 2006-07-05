@@ -165,8 +165,13 @@ class Zend_Db {
             throw new Zend_Db_Exception('Configuration must be an array');
         }
 
-        $adapterName = strtolower($adapterName); # normalize input
-        if (substr($adapterName, 0, 3) === 'pdo') {
+        /**
+         * @todo Consider only allowing the adapter name in the factory, e.g. "pdo_mysql", 
+         *       case insensitive.  The adapter names are also the PHP extension names, so
+         *       it becomes a simple rule to remember.
+         */ 
+        $adapterName = strtolower($adapterName); // normalize input
+        if (substr($adapterName, 0, 3) == 'pdo') {
             $adapterName = 'Zend_Db_Adapter_Pdo_' .
                                        ucfirst(ltrim(substr($adapterName, 3),'_'));
         } else {
