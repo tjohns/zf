@@ -34,6 +34,10 @@
         <title>Zend</title>
         &module_specs.Zend;
     </chapter-->
+    <chapter id="zend.controller.rewriterouter">
+        <title>Zend_Controller_RewriteRouter</title>
+        &module_specs.Zend_Controller_RewriteRouter;
+    </chapter>
     <!--chapter id="zend.controller">
         <title>Zend_Controller</title>
         &module_specs.Zend_Controller-Overview;
