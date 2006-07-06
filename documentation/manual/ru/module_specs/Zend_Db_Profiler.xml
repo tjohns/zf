@@ -46,7 +46,7 @@ $params = array (
                         // для отключения используется false (значение по умолчанию)
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory('PDO_MYSQL', $params);
 
 // отключение профайлера:
 $db->getProfiler()->setEnabled(false);

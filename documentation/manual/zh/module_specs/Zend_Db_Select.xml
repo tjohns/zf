@@ -29,7 +29,7 @@ $params = array (
     'dbname'   => 'camelot'
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory('PDO_MYSQL', $params);
 
 $select = $db->select();
 // $select现在是一个Zend_Db_Select_PdoMysql对象

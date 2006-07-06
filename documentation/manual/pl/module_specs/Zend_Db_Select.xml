@@ -30,10 +30,10 @@ $params = array (
     'dbname'   => 'camelot'
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory('PDO_MYSQL', $params);
 
 $select = $db->select();
-// $select is now a Zend_Db_Select object configured for use only with the Pdo_Myql adapter.
+// $select is now a Zend_Db_Select object configured for use only with the PDO_MYSQL adapter.
 
 ?>]]></programlisting>
 

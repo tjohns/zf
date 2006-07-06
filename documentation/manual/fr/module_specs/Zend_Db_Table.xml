@@ -28,7 +28,7 @@
 // on définit un adaptateur
 require_once 'Zend/Db.php';
 $parametres = array (
-    'adapter'  => 'pdoMysql',
+    'adapter'  => 'PDO_MYSQL',
     'host'     => '127.0.0.1',
     'username' => 'arthur',
     'password' => '******',

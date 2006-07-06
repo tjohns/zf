@@ -29,7 +29,7 @@ $params = array (
     'profiler' => true  // プロファイラを使用します。false (デフォルト) にすると無効になります。
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory('PDO_MYSQL', $params);
 
 // プロファイラを無効にします
 $db->getProfiler()->setEnabled(false);

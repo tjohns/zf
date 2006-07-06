@@ -42,11 +42,11 @@ $params = array (
     'dbname'   => 'camelot'
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory('PDO_MYSQL', $params);
 
 $select = $db->select();
 // $select теперь является объектом, сконфигурированным для использования
-// исключительно с адаптером Pdo_Myql 
+// исключительно с адаптером PDO_MYSQL 
 
 ?>]]></programlisting>
 

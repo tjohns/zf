@@ -29,7 +29,7 @@ $params = array ('host'     => '127.0.0.1',
                  'password' => '******',
                  'dbname'   => 'camelot');
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory('PDO_MYSQL', $params);
 
 ?>]]></programlisting>
 
@@ -43,7 +43,7 @@ require_once 'Zend/Db.php';
 
 $params = array ('dbname' => 'camelot.sq3');
 
-$db = Zend_Db::factory('pdoSqlite', $params);
+$db = Zend_Db::factory('PDO_SQLITE', $params);
 
 ?>]]></programlisting>
 
@@ -60,7 +60,7 @@ require_once 'Zend/Db.php';
 $params = array ('dbname' => 'camelot.sq2',
                  'dsnprefix' => 'sqlite2');
 
-$db = Zend_Db::factory('pdoSqlite', $params);
+$db = Zend_Db::factory('PDO_SQLITE', $params);
 
 ?>]]></programlisting>
 

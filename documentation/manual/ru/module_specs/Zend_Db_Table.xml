@@ -47,7 +47,7 @@ $params = array (
     'dbname'   => 'camelot'
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory('PDO_MYSQL', $params);
 
 // установка адаптера по умолчанию для всех объектов Zend_Db_Table
 require_once 'Zend/Db/Table.php';

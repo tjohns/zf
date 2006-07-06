@@ -31,7 +31,7 @@ $params = array (
     'profiler' => true  // turn on profiler; set to false to disable (default)
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
+$db = Zend_Db::factory('PDO_MYSQL', $params);
 
 // turn off profiler:
 $db->getProfiler()->setEnabled(false);
