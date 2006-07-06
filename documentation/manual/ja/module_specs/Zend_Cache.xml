@@ -543,6 +543,10 @@ echo 'これはキャッシュされません ('.time().')';
 
 $cache->call('veryExpensiveFunc', $params);
 
+# $params は配列です。
+# 例えば、veryExpensiveFunc(1, 'foo', 'bar') のコールをキャッシュするには
+# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) とします。
+
 ?>]]>       </programlisting>
             </para>
             <para>
@@ -622,12 +626,54 @@ $cache->call('veryExpensiveFunc', $params);
         <sect3 id="zend.cache.frontend.class.examples">
             <title>例</title>
             <para>
-                例についての説明:
+                例えば、スタティックメソッドのコールをキャッシュするには次のようにします。
                  <programlisting role="php"><![CDATA[<?php
 
-// 例を書かないといけませんね。
+class test {
+   
+    # スタティックメソッド
+    public static function foobar($param1, $param2) {
+        echo "foobar_output($param1, $param2)";
+        return "foobar_return($param1, $param2)";   
+    }
 
-?>]]>       </programlisting>
+}
+
+// [...]
+$frontendOptions = array(
+    'cachedEntity' => 'test' // クラス名を指定します
+);
+// [...]
+
+# これはキャッシュされます
+$res = $cache->foobar('1', '2');
+
+?>]]>           </programlisting>
+                通常のメソッドのコールをキャッシュするには次のようにします。
+                <programlisting role="php"><![CDATA[<?php
+
+class test {
+   
+    private $_string = 'hello !';
+      
+    public function foobar2($param1, $param2) {
+        echo($this->_string);
+        echo "foobar2_output($param1, $param2)";
+        return "foobar2_return($param1, $param2)";   
+    }
+
+}
+
+// [...]
+$frontendOptions = array(
+    'cachedEntity' => new test() // クラスのインスタンスを指定します
+);
+// [...]
+
+# これはキャッシュされます
+$res = $cache->foobar2('1', '2');
+
+?>]]>           </programlisting>
             </para>
         </sect3>   
     </sect2>
@@ -959,6 +1005,22 @@ $cache->start();
                   </tbody>
               </tgroup>
           </table>
+    </sect2>
+    <sect2 id="zend.cache.backends.apc">
+        <title>Zend_Cache_Backend_APC</title>
+        <para>
+            このバックエンドは、キャッシュレコードを共有メモリに保存する際に
+            <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache)
+            拡張モジュールを使用します
+            (当然、このバックエンドを使用するにはこの拡張モジュールが必要です)。
+        </para>
+        <para>
+            注意: このバックエンドでは、今のところ "タグ" がサポートされていません。
+            また、引数 "doNotTestCacheValidity=true" もサポートされていません。
+        </para>
+        <para>
+            このバックエンドではオプションを使用しません。
+        </para>
     </sect2>
 </sect1> 
   
