@@ -510,6 +510,10 @@ echo 'This is never cached ('.time().').';
 
 $cache->call('veryExpensiveFunc', $params);
 
+# $params is an array
+# for example to call (with caching) veryExpensiveFunc(1, 'foo', 'bar'), you will use
+# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
+
 ?>]]>       </programlisting>
             </para>
             <para>
@@ -589,12 +593,54 @@ $cache->call('veryExpensiveFunc', $params);
         <sect3 id="zend.cache.frontend.class.examples">
             <title>Examples</title>
             <para>
-                Example description:
-                 <programlisting role="php"><![CDATA[<?php
+                For example, to cache static calls :
+                <programlisting role="php"><![CDATA[<?php
 
-// example needed
+class test {
+   
+    # Static method
+    public static function foobar($param1, $param2) {
+        echo "foobar_output($param1, $param2)";
+        return "foobar_return($param1, $param2)";   
+    }
 
-?>]]>       </programlisting>
+}
+
+// [...]
+$frontendOptions = array(
+    'cachedEntity' => 'test' // The name of the class
+);
+// [...]
+
+# The cached call
+$res = $cache->foobar('1', '2');
+
+?>]]>           </programlisting>
+                To cache classic method calls :
+                <programlisting role="php"><![CDATA[<?php
+
+class test {
+   
+    private $_string = 'hello !';
+      
+    public function foobar2($param1, $param2) {
+        echo($this->_string);
+        echo "foobar2_output($param1, $param2)";
+        return "foobar2_return($param1, $param2)";   
+    }
+
+}
+
+// [...]
+$frontendOptions = array(
+    'cachedEntity' => new test() // An instance of the class
+);
+// [...]
+
+# The cached call
+$res = $cache->foobar2('1', '2');
+
+?>]]>           </programlisting>
             </para>
         </sect3>   
     </sect2>
@@ -907,6 +953,21 @@ $cache->start();
                   </tbody>
               </tgroup>
           </table>
+    </sect2>
+    <sect2 id="zend.cache.backends.apc">
+        <title>Zend_Cache_Backend_APC</title>
+        <para>
+            This backends stores cache records in shared memory through 
+            the <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) extension
+            (which is of course need for using this backend).
+        </para>
+        <para>
+        	Be careful : with this backend, "tags" are not supported for the moment as 
+        	the "doNotTestCacheValidity=true" argument.
+        </para>
+        <para>
+            There is no option for this backend.
+        </para>
     </sect2>
 </sect1> 
   
