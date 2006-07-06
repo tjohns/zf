@@ -100,6 +100,9 @@ class Zend_Cache_Backend_Memcached implements Zend_Cache_Backend_Interface
      */
     public function __construct($options = array())
     {      
+        if (!extension_loaded('memcache')) {
+            Zend_Cache::throwException('The memcache extension must be loaded for using this backend !');
+        }
         if (!is_array($options)) Zend_Cache::throwException('Options parameter must be an array');
         while (list($name, $value) = each($options)) {
             $this->setOption($name, $value);
