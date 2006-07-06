@@ -37,13 +37,11 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
  */
 class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
 {
-    /**
-     * PDO type.
-     *
-     * @var string
-     */
-    protected $_pdoType = 'pgsql';
-
+    public function __construct($config)
+    {
+        $config['dsnprefix'] = 'pgsql';
+        return parent::__construct($config);
+    }
 
     /**
      * Quotes an identifier.
@@ -91,7 +89,6 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
         $sql = "SELECT * FROM $table LIMIT 1";
         return $this->_describeTable($sql);
     }
-
 
 
     /**

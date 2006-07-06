@@ -38,20 +38,32 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
 {
     /**
-     * PDO type
+     * Constructor.
      *
-     * @var string
+     * $config is an array of key/value pairs containing configuration
+     * options.  These options are common to most adapters:
+     *
+     * dbname   => (string) The name of the database to user (required,
+     *                      use :memory: for memory-based database)
+     * dsnprefix => (string) The PDO driver's DSN prefix (optional).
+     *
+     * @param array $config An array of configuration keys.
      */
-    protected $_pdoType = 'sqlite';
-    
-    
+    public function __construct($config)
+    {
+        if (!isset($config['dsnprefix'])) // allows use of sqlite2 DSN prefix
+            $config['dsnprefix'] = 'sqlite';
+
+        return parent::__construct($config);
+    }
+
+
     /**
      * DSN builder
      */
     protected function _dsn()
     {
-        $name = $this->_config['dbname'];
-        return "sqlite:$name";
+        return $this->_config['dsnprefix'].':'.$this->_config['dbname'];
     }
 
 

@@ -34,14 +34,31 @@ $db = Zend_Db::factory('pdoMysql', $params);
 ?>]]></programlisting>
 
         <para>
-            Similarly, to connect to an SQLite database called "camelot":
+            Similarly, to connect to an SQLite database called "camelot.sq3":
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Db.php';
 
-$params = array ('dbname' => 'camelot');
+$params = array ('dbname' => 'camelot.sq3');
+
+$db = Zend_Db::factory('pdoSqlite', $params);
+
+?>]]></programlisting>
+
+        <para>
+            Similarly, to connect to an SQLite2 database called "camelot.sq2":
+            For a memory-based sqlite database, do not specify a dsnprefix,
+            and use a dbname called ":memory:".
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+require_once 'Zend/Db.php';
+
+$params = array ('dbname' => 'camelot.sq2',
+                 'dsnprefix' => 'sqlite2');
 
 $db = Zend_Db::factory('pdoSqlite', $params);
 

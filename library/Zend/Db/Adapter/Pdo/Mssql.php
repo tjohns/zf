@@ -35,12 +35,11 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
  */
 class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
 {
-    /**
-     * PDO type.
-     *
-     * @var string
-     */
-    protected $_pdoType = 'mssql';
+    public function __construct($config)
+    {
+        $config['dsnprefix'] = 'mssql';
+        return parent::__construct($config);
+    }
 
 
     /**
@@ -156,6 +155,7 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
 
         return $sql;
     }
+
 
     /**
      * Gets the last inserted ID.

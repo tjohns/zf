@@ -77,10 +77,11 @@ abstract class Zend_Db_Adapter_Abstract
      * $config is an array of key/value pairs containing configuration
      * options.  These options are common to most adapters:
      *
-     * username => (string) Connect to the database as this username.
-     * password => (string) Password associated with the username.
-     * host     => (string) What host to connect to (default 127.0.0.1)
-     * dbname   => (string) The name of the database to user
+     * dbname   => (string) The name of the database to user (required)
+     * username => (string) Connect to the database as this username (optional).
+     * password => (string) Password associated with the username (optional).
+     * host     => (string) What host to connect to (default 127.0.0.1).
+     * dsnprefix => (string) The PDO driver's DSN prefix (PDO only, optional).
      *
      * @param array $config An array of configuration keys.
      */

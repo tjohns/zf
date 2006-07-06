@@ -46,6 +46,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         $dsn = $this->_config;
 
         // don't pass the username and password in the DSN
+        unset($dsn['dsnprefix']); // allows possibility of adapter servicing multiple drivers
         unset($dsn['username']);
         unset($dsn['password']);
 
@@ -54,7 +55,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
             $dsn[$key] = "$key=$val";
         }
 
-        return $this->_pdoType . ':' . implode(';', $dsn);
+        return $this->_config['dsnprefix'] . ':' . implode(';', $dsn);
     }
 
 
@@ -62,6 +63,7 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
      * Creates a PDO object and connects to the database.
      *
      * @return void
+     * @todo move PDO extension and driver checks out of this class (should use Zend_Environment).
      */
     protected function _connect()
     {
@@ -76,8 +78,8 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         }
 
         // check the PDO driver is available
-        if (!in_array($this->_pdoType, PDO::getAvailableDrivers())) {
-            throw new Zend_DB_Adapter_Exception('The ' . $this->_pdoType . ' driver is not currently installed');
+        if (!in_array($this->_config['dsnprefix'], PDO::getAvailableDrivers())) {
+            throw new Zend_DB_Adapter_Exception('The ' . $this->_config['dsnprefix'] . ' driver is not currently installed');
         }
 
         // create PDO connection
@@ -86,8 +88,8 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         try {
             $this->_connection = new PDO(
                 $this->_dsn(),
-                $this->_config['username'],
-                $this->_config['password']
+                isset($this->_config['username']) ? $this->_config['username']:null,
+                isset($this->_config['password']) ? $this->_config['password']:null
             );
 
             $this->_profiler->queryEnd($q);
