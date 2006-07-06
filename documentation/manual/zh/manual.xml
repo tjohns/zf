@@ -8,7 +8,7 @@
 <book id="manual" lang="zh_cn">
     <bookinfo>
         <title>Zend Framework手册 中文版</title>
-        <subtitle>Zend Framework手册中文版　由PHPEye.com团队组织翻译</subtitle>
+        <subtitle>Zend Framework</subtitle>
         <edition>Zend Framework手册 中文版</edition>
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
