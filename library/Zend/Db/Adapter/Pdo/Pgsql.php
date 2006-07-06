@@ -86,8 +86,42 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function describeTable($table)
     {
-        $sql = "SELECT * FROM $table LIMIT 1";
-        return $this->_describeTable($sql);
+        
+        $sql = "SELECT a.attnum, a.attname AS field, t.typname AS type, "
+             . "a.attnotnull AS isnotnull, "
+             . "( SELECT 't' "
+             . "FROM pg_index "
+             . "WHERE c.oid = pg_index.indrelid "
+             . "AND pg_index.indkey[0] = a.attnum "
+             . "AND pg_index.indisprimary = 't') AS pri, "
+             . "(SELECT pg_attrdef.adsrc "
+             . "FROM pg_attrdef "
+             . "WHERE c.oid = pg_attrdef.adrelid "
+             . "AND pg_attrdef.adnum=a.attnum) AS default "
+             . "FROM pg_attribute a, pg_class c, pg_type t "
+             . "WHERE c.relname = '{$table}' "
+             . "AND a.attnum > 0 "
+             . "AND a.attrelid = c.oid "
+             . "AND a.atttypid = t.oid "
+             . "ORDER BY a.attnum ";
+
+        $result = $this->fetchAll($sql);
+        $descr = array();
+        foreach ($result as $key => $val) {
+            if ($val['type'] === 'varchar') {
+                // need to add length to the type so we are compatible with
+                // Zend_Db_Adapter_Pdo_Pgsql!
+                $val['type'] .= '('.$val['length'].')';
+            }
+            $descr[$val['field']] = array(
+                'name'    => $val['field'],
+                'type'    => $val['type'],
+                'notnull' => (bool) ($val['isnotnull'] === ''),
+                'default' => $val['default'],
+                'primary' => (bool) ($val['pri'] == 't'),
+            );
+        }
+        return $descr;
     }
 
 
