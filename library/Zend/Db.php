@@ -165,13 +165,10 @@ class Zend_Db {
             throw new Zend_Db_Exception('Configuration must be an array');
         }
 
-        /**
-         * @todo Consider only allowing the adapter name in the factory, e.g. "pdo_mysql", 
-         *       case insensitive.  The adapter names are also the PHP extension names, so
-         *       it becomes a simple rule to remember.
-         */ 
         $adapterName = strtolower($adapterName); // normalize input
-        if (substr($adapterName, 0, 3) == 'pdo') {
+        if (substr($adapterName, 0, 3) === 'pdo') {
+            if ($adapterName{3} !== '_') // this check will be removed, and underscores will be required in 0.2
+                trigger_error("Use of adapter name '$adapterName' is deprecated.  Underscores will be required in 0.1.5 release.  Please use 'pdo_".(substr($adapterName,3))."'.", E_WARNING);
             $adapterName = 'Zend_Db_Adapter_Pdo_' .
                                        ucfirst(ltrim(substr($adapterName, 3),'_'));
         } else {
