@@ -66,7 +66,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
         'cacheWithPostVariables' => false,
         'cacheWithSessionVariables' => false,
         'cacheWithFilesVariables' => false,
-        'cacheWithCookieVariables' => true,
+        'cacheWithCookieVariables' => false,
         'makeIdWithGetVariables' => true,
         'makeIdWithPostVariables' => true,
         'makeIdWithSessionVariables' => true,
