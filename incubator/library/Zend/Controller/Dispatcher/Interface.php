@@ -28,6 +28,17 @@
 interface Zend_Controller_Dispatcher_Interface
 {
     /**
+     * Formats a string into an action name.  This is used to take a raw
+     * action name, such as one that would be packaged inside a Zend_Controller_Dispatcher_Token
+     * object, and reformat into a proper method name that would be found
+     * inside a class extending Zend_Controller_Action.
+     *
+     * @param string $unformatted
+     * @return string
+     */
+    public function formatActionName($unformatted);
+
+    /**
      * Returns TRUE if an action can be dispatched, or FALSE otherwise.
      *
      * @param  Zend_Controller_Dispatcher_Token $route
