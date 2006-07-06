@@ -173,10 +173,10 @@ class Zend_Db {
             if (strpos($adapterName, '_') !== false) {
                 $notice = "Use of '$adapterName' is deprecated.  Underscores will be required"
                         . " in 0.2.0 release.  Please use 'pdo_" . substr($adapterName, 3) . "'";
-                trigger_error($notice, E_USER_NOTICE);
+                trigger_error($notice, E_WARNING);
             }
             
-            $adapterName = 'Zend_Db_Adapter_Pdo_' . ucfirst(substr($adapterName, 3),'_');
+            $adapterName = 'Zend_Db_Adapter_Pdo_' . ucfirst(ltrim(substr($adapterName, 3),'_'));
         } else {
             $adapterName = 'Zend_Db_Adapter_' .
                            str_replace(' ',
