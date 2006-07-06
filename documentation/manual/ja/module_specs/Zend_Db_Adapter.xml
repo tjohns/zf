@@ -36,21 +36,38 @@ $db = Zend_Db::factory('pdoMysql', $params);
 ?>]]></programlisting>
 
         <para>
-            同様に、SQLite データベース "camelot" に接続するには、以下のようにします。
+            同様に、SQLite データベース "camelot.sq3" に接続するには、以下のようにします。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Db.php';
 
-$params = array ('dbname' => 'camelot');
+$params = array ('dbname' => 'camelot.sq3');
 
 $db = Zend_Db::factory('pdoSqlite', $params);
 
 ?>]]></programlisting>
 
         <para>
-            どちらの場合でも、まったく同じ API
+            同様に、SQLite2 データベース "camelot.sq2" に接続するには、以下のようにします。
+            メモリ上の sqlite データベースの場合は dsnprefix を指定せず、
+            dbname に ":memory:" を使用します。
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+require_once 'Zend/Db.php';
+
+$params = array ('dbname' => 'camelot.sq2',
+                 'dsnprefix' => 'sqlite2');
+
+$db = Zend_Db::factory('pdoSqlite', $params);
+
+?>]]></programlisting>
+
+        <para>
+            どの場合についても、まったく同じ API
             でデータベースに対する問い合わせを行うことができます。
         </para>
     </sect2>
