@@ -17,7 +17,7 @@
  * @subpackage Adapter
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 
 
 /**
@@ -86,7 +86,6 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function describeTable($table)
     {
-        
         $sql = "SELECT a.attnum, a.attname AS field, t.typname AS type, "
              . "a.attnotnull AS isnotnull, "
              . "( SELECT 't' "
@@ -111,14 +110,14 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
             if ($val['type'] === 'varchar') {
                 // need to add length to the type so we are compatible with
                 // Zend_Db_Adapter_Pdo_Pgsql!
-                $val['type'] .= '('.$val['length'].')';
+                $val['type'] .= '(' . $val['length'] . ')';
             }
             $descr[$val['field']] = array(
                 'name'    => $val['field'],
                 'type'    => $val['type'],
-                'notnull' => (bool) ($val['isnotnull'] === ''),
+                'notnull' => ($val['isnotnull'] == ''),
                 'default' => $val['default'],
-                'primary' => (bool) ($val['pri'] == 't'),
+                'primary' => ($val['pri'] == 't'),
             );
         }
         return $descr;
