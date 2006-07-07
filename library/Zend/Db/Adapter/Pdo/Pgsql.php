@@ -37,12 +37,14 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
  */
 class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
 {
-    public function __construct($config)
-    {
-        $config['dsnprefix'] = 'pgsql';
-        return parent::__construct($config);
-    }
-
+    /**
+     * PDO type.
+     *
+     * @var string
+     */
+    protected $_pdoType = 'pgsql';
+     
+    
     /**
      * Quotes an identifier.
      *
