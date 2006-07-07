@@ -44,6 +44,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     {
         error_reporting(E_ALL | E_STRICT);
         $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['SCRIPT_FILENAME'] = '/home/martel/WWW/test/index.php';
         $this->router = new Zend_Controller_RewriteRouter();
         $this->dispatcher = new Zend_Controller_Dispacher_Mock();
     }
@@ -198,10 +199,23 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         
     }
 
-    public function testRewriteBaseWithEmptyScriptName()
+    public function testRewriteBaseRootWithApacheConfigRewrite()
     {
-        // How is it possible? I can't reproduce it on my own 
-        $_SERVER['SCRIPT_NAME'] = '';
+        $_SERVER['SCRIPT_NAME'] = '/';
+        $_SERVER['REQUEST_URI'] = '/';
+        
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->getRewriteBase();
+        
+        $this->assertEquals('', $rwBase);
+        
+    }
+
+    public function testRewriteBaseDeepUrlWithApacheConfigRewrite()
+    {
+        $_SERVER['SCRIPT_NAME'] = '/news/create';
+        $_SERVER['REQUEST_URI'] = '/news/create';
         
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
