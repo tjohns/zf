@@ -81,7 +81,6 @@ abstract class Zend_Db_Adapter_Abstract
      * username => (string) Connect to the database as this username (optional).
      * password => (string) Password associated with the username (optional).
      * host     => (string) What host to connect to (default 127.0.0.1).
-     * dsnprefix => (string) The PDO driver's DSN prefix (PDO only, optional).
      *
      * @param array $config An array of configuration keys.
      */
