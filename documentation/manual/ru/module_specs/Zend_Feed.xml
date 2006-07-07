@@ -96,7 +96,7 @@ foreach ($slashdotRss as $item) {
         <!--Importing Feeds with Zend_Feed-->
     </title>
     <para>
-        <code>Zend_Feed</code> дает разработчикам возможность очень легко получать ленты.
+        <code>Zend_Feed</code> дает разработчикам возможность легко получать ленты.
         Если вам известен URI ленты, то просто используйте метод <code>Zend_Feed::import()</code>:
 <!--
         <code>Zend_Feed</code> enables developers to retrieve feeds very easily. If you know the URI of a
@@ -128,7 +128,7 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 ?>]]></programlisting>
     </para>
     <para>
-        В обоих приведенных выше примерах в случае успеха возвращается
+        В двух приведенных выше примерах в случае успеха возвращается
         объект одного из классов, расширяющих <code>Zend_Feed_Abstract</code>, в
         зависимости от типа ленты. Если посредством одного из вышеприведенных
         методов для импортирования была извлечена лента RSS, то будет возвращен объект
@@ -295,19 +295,19 @@ foreach ($channel as $item) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>title</code> - Имя канала
+                    <code>title</code> -- имя канала
                     <!--The name of the channel-->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>link</code> - URL веб-сайта, соответствующего каналу
+                    <code>link</code> -- URL веб-сайта, соответствующего каналу
                     <!-- The URL of the web site corresponding to the channel -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>description</code> - Одно или несколько предложений, составляющих
+                    <code>description</code> -- одно или несколько предложений, составляющих
                     описание канала
                     <!-- A sentence or several describing the channel -->
                 </para>
@@ -326,19 +326,19 @@ foreach ($channel as $item) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>pubDate</code> - Дата публикации канала в формате RFC 822
+                    <code>pubDate</code> -- дата публикации канала в формате RFC 822
                     <!-- The publication date of this set of content, in RFC 822 date format -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>language</code> - Язык, на котором написано содержимое канала
+                    <code>language</code> -- язык, на котором написано содержимое канала
                     <!-- The language the channel is written in -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>category</code> - Одна или несколько (задается несколькими тегами) категорий,
+                    <code>category</code> -- одна или несколько (задается несколькими тегами) категорий,
                     к которым принадлежит канал
                     <!-- One or more (specified by multiple tags) categories the channel belongs to -->
                 </para>
@@ -367,44 +367,44 @@ foreach ($channel as $item) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>title</code> - Заголовок публикации
+                    <code>title</code> -- заголовок публикации
                     <!-- The title of the item -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>link</code> - URL публикации
+                    <code>link</code> -- URL публикации
                     <!-- The URL of the item -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>description</code> - Краткое описание публикации
+                    <code>description</code> -- краткое описание публикации
                     <!-- A synopsis of the item -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>author</code> - E-mail автора
+                    <code>author</code> -- e-mail автора
                     <!-- The author's email address -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>category</code> - Одна или несколько категорий, к которым принадлежит
+                    <code>category</code> -- одна или несколько категорий, к которым принадлежит
                     публикация
                     <!-- One more more categories that the item belongs to -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>comments</code> - URL комментариев к данной публикации
+                    <code>comments</code> -- URL комментариев к данной публикации
                     <!-- URL of comments relating to this item -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>pubDate</code> -  Дата публикации в формате RFC 822
+                    <code>pubDate</code> --  дата публикации в формате RFC 822
                     <!-- The date the item was published, in RFC 822 date format -->
                 </para>
             </listitem>
@@ -437,7 +437,7 @@ if ($item->propname()) {
     </para>
 
     <para>
-        За дополнительной информацией обращайтесь к официальному описанию
+        За дополнительной информацией см. официальное описание
         спецификации RSS 2.0:
         <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
 <!--
@@ -460,7 +460,7 @@ if ($item->propname()) {
         структуре ленты по протоколу Atom. Atom является преемником RSS, это более
         обобщенный протокол. Он разработан для более легкой работы с лентами, и
         предоставяет полное информационное содержимое внутри самой ленты, разделив
-        для этой цели тег <code>&lt;description&gt;</code> в RSS на два элемента -
+        для этой цели тег <code>&lt;description&gt;</code> в RSS на два элемента --
         <code>&lt;summary&gt;</code> (анонс) и <code>&lt;content&gt;</code> (содержимое).
 <!--    
         <code>Zend_Feed_Atom</code> is used in much the same way as <code>Zend_Feed_Rss</code>. It provides
@@ -508,20 +508,20 @@ foreach ($feed as $entry) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>title</code> - Заголовок ленты, аналогичен заголовку RSS-канала
+                    <code>title</code> -- заголовок ленты, аналогичен заголовку RSS-канала
                     <!-- The feed's title, same as RSS's channel title -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>id</code> - Каждая лента и каждая публикация в Atom имеют свои
+                    <code>id</code> -- каждая лента и каждая публикация в Atom имеют свои
                     уникальные идентификаторы
                     <!-- Every feed and entry in Atom has a unique identifier -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>link</code> - Лента может иметь одну или несколько ссылок, которые
+                    <code>link</code> -- лента может иметь одну или несколько ссылок, которые
                     имеют атрибут <code>type</code>
                     <!-- Feeds can have multiple links, which are distinguished by a <code>type</code> attribute -->
                 </para>
@@ -538,15 +538,15 @@ foreach ($feed as $entry) {
             </listitem>
             <listitem>
                 <para>
-                    <code>subtitle</code> - Описание ленты, эквивалентен описанию RSS-канала
+                    <code>subtitle</code> -- описание ленты, эквивалентен описанию RSS-канала
                     <!-- The feed's description, equivalent to RSS' channel description -->
                 </para>
                 <para>
-                    <code>author->name()</code> - Имя автора ленты
+                    <code>author->name()</code> -- имя автора ленты
                     <!-- The feed author's name -->
                 </para>
                 <para>
-                    <code>author->email()</code> - E-mail автора ленты
+                    <code>author->email()</code> -- e-mail автора ленты
                     <!-- The feed author's email address -->
                 </para>
             </listitem>
@@ -564,52 +564,52 @@ foreach ($feed as $entry) {
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>id</code> - Уникальный идентификатор публикации
+                    <code>id</code> -- уникальный идентификатор публикации
                     <!-- The entry's unique identifier -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>title</code> - Заголовок публикации
+                    <code>title</code> -- заголовок публикации
                     <!-- The entry's title, same as RSS item titles -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>link</code> - Ссылка на альтернативное представление публикации в
+                    <code>link</code> -- ссылка на альтернативное представление публикации в
                     другом формате
                     <!-- A link to another format an an alternate view of this entry -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>summary</code> - Аннотация к содержимому публикации
+                    <code>summary</code> -- аннотация к содержимому публикации
                     <!-- A summary of this entry's content -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>content</code> - Полное содержимое публикации, может быть пропущен, если
+                    <code>content</code> -- полное содержимое публикации, может быть пропущен, если
                     лента содержит только аннотации
                     <!-- The full content of the entry; can be skipped if the feed just contains summaries -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>author</code> - с субтегами <code>name</code> и <code>email</code>,
+                    <code>author</code> -- с субтегами <code>name</code> и <code>email</code>,
                     как у элемента <code>feed</code>
                     <!-- with <code>name</code> and <code>email</code> sub-tags like feeds have -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>published</code> - Дата публикации в формате RFC 3339
+                    <code>published</code> -- дата публикации в формате RFC 3339
                     <!-- the date the entry was published, in RFC 3339 format -->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>updated</code> - Дата последнего изменения публикации в формате RFC 3339 
+                    <code>updated</code> -- дата последнего изменения публикации в формате RFC 3339 
                     <!-- the date the entry was last updated, in RFC 3339 format -->
                 </para>
             </listitem>
@@ -617,7 +617,7 @@ foreach ($feed as $entry) {
     </para>
 
     <para>
-        За другими ресурсами и дополнительной информацией по Atom смотрите:
+        За другими ресурсами и дополнительной информацией по Atom см.:
 <!--
         For more information on Atom and plenty of resources, see
         <ulink url="http://www.atomenabled.org/">http://www.atomenabled.org/</ulink>.

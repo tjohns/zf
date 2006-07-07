@@ -3,7 +3,7 @@
     <para>
         <code>Zend_Json</code> предоставляет удобные методы для
         преобразования кода PHP в JSON и декодирования JSON в код PHP.
-        За более подробной информацией о JSON можно
+        Для более подробной информации о JSON можно
         <ulink url="http://www.json.org/">посетить сайт проекта JSON</ulink>.
 <!--
         <code>Zend_Json</code> provides convenience methods for serializing

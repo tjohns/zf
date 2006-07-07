@@ -24,8 +24,7 @@
         <para>
             <example>
                 <title>
-                    Выполнение базовых запросов GET
-                    <!-- Performing a Basic GET Request -->
+                    Выполнение базовых запросов GET<!-- Performing a Basic GET Request -->
                 </title>
                 <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Http/Client.php';
@@ -46,8 +45,7 @@
     </sect2>
     <sect2 id="zend.http.client.basic-get-requests">
         <title>
-            Базовые запросы GET с установленными заголовками HTTP 
-            <!-- Basic GET Requests with Specified HTTP Headers -->
+            Базовые запросы GET с установленными заголовками HTTP <!-- Basic GET Requests with Specified HTTP Headers -->
         </title>
         <para>
             Конструктор <code>Zend_Http_Client</code> создает экземпляр
@@ -69,8 +67,7 @@
         </para>
         <example>
             <title>
-                Создание основного Zend_Http_Client
-                <!--Creating a Basic Zend_Http_Client-->
+                Создание основного Zend_Http_Client<!--Creating a Basic Zend_Http_Client-->
             </title>
             <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Http/Client.php';
@@ -82,8 +79,7 @@
         <para />
         <example>
             <title>
-                Передача нескольких заголовков
-                <!-- Sending Multiple Headers -->
+                Передача нескольких заголовков<!-- Sending Multiple Headers -->
             </title>
             <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Http/Client.php';
@@ -95,8 +91,8 @@
         </example>
         <para>
             Если вы хотите использовать <code>Zend_Http_Client</code> для
-            отправки запросов <emphasis>больше, чем одному</emphasis> URL-у, то
-            смотрите <xref linkend="zend.http.client.requesting-multiple-domains" />.
+            отправки запросов <emphasis>больше, чем по одному</emphasis> URL-у, то
+            см. <xref linkend="zend.http.client.requesting-multiple-domains" />.
 <!--
             If you wish to use <code>Zend_Http_Client</code> to send requests to <emphasis>multiple</emphasis> URLs,
             see <xref linkend="zend.http.client.requesting-multiple-domains" />
@@ -105,8 +101,7 @@
     </sect2>
     <sect2 id="zend.http.client.requesting-multiple-domains">
         <title>
-            Отправка запросов нескольким доменам
-            <!-- Requesting Multiple Domains -->
+            Отправка запросов нескольким доменам<!-- Requesting Multiple Domains -->
         </title>
         <para>
             <code>Zend_Http_Client</code> поддерживает отправку запросов
@@ -127,8 +122,7 @@
         </note>
         <example>
             <title>
-                Отправка запросов нескольким доменам
-                <!-- Requesting Multiple Domains -->
+                Отправка запросов нескольким доменам<!-- Requesting Multiple Domains -->
             </title>
             <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Http/Client.php';
@@ -152,8 +146,7 @@
     </sect2>
     <sect2 id="zend.http.client.settimeout">
         <title>
-            Изменение таймаута HTTP
-            <!-- Changing the HTTP Timeout -->
+            Изменение таймаута HTTP<!-- Changing the HTTP Timeout -->
         </title>
         <para>
             <code>Zend_Http_Client::setTimeout()</code> позволяет установить таймаут
@@ -174,8 +167,7 @@
     </sect2>
     <sect2 id="zend.http.client.setheaders">
         <title>
-            Динамическая установка заголовков HTTP 
-            <!-- Setting HTTP Headers Dynamically -->
+            Динамическая установка заголовков HTTP<!-- Setting HTTP Headers Dynamically -->
         </title>
         <para>
             Используя <code>Zend_Http_Client::setHeaders()</code>, вы можете добавлять
@@ -198,8 +190,7 @@
     </sect2>
     <sect2 id="zend.http.client.making-other-requests">
         <title>
-            Выполнение HTTP-запросов POST, PUT и DELETE
-            <!-- Making HTTP POST, PUT, and DELETE Requests -->
+            Выполнение HTTP-запросов POST, PUT и DELETE<!-- Making HTTP POST, PUT, and DELETE Requests -->
         </title>
         <para>
             В <code>Zend_Http_Client</code> выполнение HTTP-запросов POST,
@@ -221,8 +212,7 @@
         </para>
         <example>
             <title>
-                Отправка данных POST с помощью Zend_Http_Client 
-                <!-- Sending POST data with Zend_Http_Client -->
+                Отправка данных POST с помощью Zend_Http_Client <!-- Sending POST data with Zend_Http_Client -->
             </title>
             <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Http/Client.php';
