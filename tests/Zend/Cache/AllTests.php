@@ -7,7 +7,7 @@ if (!defined('PHPUnit2_MAIN_METHOD')) {
 require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
-error_reporting(E_STRICT);
+error_reporting(E_ALL | E_STRICT);
 date_default_timezone_set('Europe/Paris'); // to avoid an E_STRICT notice
 require_once 'FactoryTest.php';
 require_once 'CoreTest.php';
