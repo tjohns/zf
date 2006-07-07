@@ -68,13 +68,14 @@ class Zend_Db_Adapter_Mysqli implements Zend_Db_Adapter_Interface {
      *
      * Basic keys are:
      *
-     * username => (string) Connect to the database as this username.
-     * password => (string) Password associated with the username.
-     * host     => (string) What host to connect to (default 127.0.0.1)
-     * dbname   => (string) The name of the database to user
+     * host     => (string)  What host to connect to (default 127.0.0.1)
+     * port     => (integer) Port number of MySQL server listens on
+     * socket   => (string)  Socket or named pipe that should be used
+     * database => (string)  The name of the database to user
+     * username => (string)  Connect to the database as this username.
+     * password => (string)  Password associated with the username.
      *
-     * Additional keys are processed as key-value pairs for a PDO DSN string.
-     *
+     * @todo fix inconsistency between "database" used here and "dbname" use elsewhere
      * @var array
      */
     protected $_config = array(
