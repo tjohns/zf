@@ -49,8 +49,7 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      * database => Either the name of the local Oracle instance, or the
      *             name of the entry in tnsnames.ora to which you want to connect.
      *
-     * Additional keys are processed as key-value pairs for a PDO DSN string.
-     *
+     * @todo fix inconsistency between "database" used here and "dbname" use elsewhere
      * @var array
      */
     protected $_config = array(
