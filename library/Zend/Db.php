@@ -176,7 +176,7 @@ class Zend_Db {
                 trigger_error($notice, E_WARNING);
             }
             
-            $adapterName = 'Zend_Db_Adapter_Pdo_' . ucfirst(ltrim(substr($adapterName, 3),'_'));
+            $adapterName = 'Zend_Db_Adapter_Pdo_' . ucfirst(substr($adapterName, 4));
         } else {
             $adapterName = 'Zend_Db_Adapter_' .
                            str_replace(' ',
