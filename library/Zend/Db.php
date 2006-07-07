@@ -148,8 +148,7 @@ class Zend_Db {
      *
      * Additional keys are processed as key-value pairs for the adapter config array.
      *
-     * @todo Remove support for camelCased PDO $adapterName in 0.2.0.
-     * @todo Do we really want to start raising PHP notices?
+     * @todo Remove support for camelCased PDO $adapterName after 0.1.5.
      *
      * @param string $adapterName   Name of the adapter to return:
      *                              'pdo_mysql' -> Zend_Db_Adapter_Pdo_Mysql
@@ -171,8 +170,8 @@ class Zend_Db {
         $adapterName = strtolower($adapterName); // normalize input
         if (substr($adapterName, 0, 3) == 'pdo') {
             if (strpos($adapterName, '_') !== false) {
-                $notice = "Use of '$adapterName' is deprecated.  Underscores will be required"
-                        . " in 0.2.0 release.  Please use 'pdo_" . substr($adapterName, 3) . "'";
+                $notice = "Use of '$adapterName' is deprecated.  Underscores will be required "
+                        . "after release 0.1.5.  Please use 'pdo_" . substr($adapterName, 3) . "'";
                 trigger_error($notice, E_WARNING);
             }
             
