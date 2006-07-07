@@ -169,10 +169,10 @@ class Zend_Db {
 
         $adapterName = strtolower($adapterName); // normalize input
         if (substr($adapterName, 0, 3) == 'pdo') {
-            if (strpos($adapterName, '_') !== false) {
+            if (strpos($adapterName, '_') === false) {
                 $notice = "Use of '$adapterName' is deprecated.  Underscores will be required "
                         . "after release 0.1.5.  Please use 'pdo_" . substr($adapterName, 3) . "'";
-                trigger_error($notice, E_WARNING);
+                trigger_error($notice, E_USER_WARNING);
             }
             
             $adapterName = 'Zend_Db_Adapter_Pdo_' . ucfirst(substr($adapterName, 4));
