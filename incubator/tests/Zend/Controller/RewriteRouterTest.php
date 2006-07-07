@@ -42,6 +42,8 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     
     public function setUp()
     {
+        error_reporting(E_ALL | E_STRICT);
+        $_SERVER['REQUEST_URI'] = '/';
         $this->router = new Zend_Controller_RewriteRouter();
         $this->dispatcher = new Zend_Controller_Dispacher_Mock();
     }
@@ -193,6 +195,61 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         }
         
         $this->fail('Unroutable object passed');
+        
+    }
+
+    public function testRewriteBaseWithEmptyScriptName()
+    {
+        // How is it possible? I can't reproduce it on my own 
+        $_SERVER['SCRIPT_NAME'] = '';
+        
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->getRewriteBase();
+        
+        $this->assertEquals('', $rwBase);
+        
+    }
+
+    public function testRewriteBaseAbsoluteRootWithRewriteAndEmptyRequestUri()
+    {
+        
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $_SERVER['REQUEST_URI'] = '';
+        
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->getRewriteBase();
+        
+        $this->assertEquals('', $rwBase);
+        
+    }
+
+    public function testRewriteBaseAbsoluteRootWithRewrite()
+    {
+        
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $_SERVER['REQUEST_URI'] = '/';
+        
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->getRewriteBase();
+        
+        $this->assertEquals('', $rwBase);
+        
+    }
+
+    public function testRewriteBaseAbsoluteRootWithoutRewrite()
+    {
+        
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $_SERVER['REQUEST_URI'] = '/index.php';
+        
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->getRewriteBase();
+        
+        $this->assertEquals('/index.php', $rwBase);
         
     }
 

@@ -80,6 +80,17 @@ class Zend_Controller_RouteTest extends PHPUnit2_Framework_TestCase
 
     }
 
+    public function testOneVariableValue()
+    {
+
+        $route = new Zend_Controller_Router_Route(':action', array('controller' => 'ctrl', 'action' => 'action'));
+        $values = $route->match('act');
+
+        $this->assertEquals('ctrl', $values['controller']);
+        $this->assertEquals('act', $values['action']);
+
+    }
+
     public function testVariablesWithDefault()
     {
 
