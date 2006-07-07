@@ -4,29 +4,29 @@
 
     <sect2 id="zend.db.table.introduction">
 
-        <title>Introduction</title>
+        <title>Introdução</title>
 
         <para>
-            Zend_Db_Table is a TableModule for the Zend Framework.  It
-            connects to your database via Zend_Db_Adapter, examines a table
-            for its schema, then aids you in manipulating and fetching
-            rows from that table.
+            Zend_Db_Table é um módulo de tabelas para o Framework Zend.  Ele
+            conecta ao seu banco de dados através do Zend_Db_Adapter, examina o
+			esquema de uma tabela, e então ajuda você a manipular e buscar
+			linhas daquela tabela.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.getting-started">
 
-        <title>Getting Started</title>
+        <title>Iniciando</title>
 
         <para>
-            The first thing to do is feed the abstract Zend_Db_Table class
-            a default database adapter; unless you specify otherwise,
-            all Zend_Db_Table instances will use this default adapter.
+            A primeira coisa a fazer é alimentar a classe abstrata Zend_Db_Table
+            com um adaptador de banco de dados padrão; a menos que você especifique o oposto,
+            todas as instâncias de Zend_Db_Table usarão este adaptador padrão.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// define um adaptador
 require_once 'Zend/Db.php';
 $params = array (
     'host'     => '127.0.0.1',
@@ -37,19 +37,19 @@ $params = array (
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 
-// set the default adapter for all Zend_Db_Table objects
+// define o adaptador padrão para todos os objetos Zend_Db_Table
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 ?>]]>
         </programlisting>
 
         <para>
-            Next, let's assume that you have a table in your database
-            called "round_table".  To use Zend_Db_Table with that database
-            table, simply extend Zend_Db_Table to create a new class called
-            RoundTable (note how we "camelize" the round_table name).
-            Then we can examine, manipulate rows, and fetch results from
-            the 'round_table' table in the database via that class.
+            Em seguida, vamos assume que você tem uma tabela no seu banco de dados
+            chamada "round_table".  Para usar Zend_Db_Table com aquela tabela,
+			simplesmente extenda Zend_Db_Table para criar uma nova classe chamada
+            RoundTable (note como o nome round_table é "camelizado").
+            Então nós podemos examinar, manipular linhas, e buscar resultados da 
+            tabela 'round_table' no banco de dados através daquela classe.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -62,50 +62,49 @@ $table = new RoundTable();
 
     <sect2 id="zend.db.table.name-and-key">
 
-        <title>Table Name and Primary Key</title>
+        <title>Nome da Tabela e Chave Primária</title>
 
         <para>
-            By default, Zend_Db_Table expects that the table name in the
-            database will be the same as its own class name (when converted
-            from CamelCaps to underscore_words).  Thus, a Zend_Db_Table class
-            called SomeTableName maps to an SQL table called 'some_table_name'.
-            If you want your class to map to something other than the
-            underscore form of the class name, override the $_name property
-            when defining your class.
+            Por padrão, Zend_Db_Table espera que o nome da tabela no banco de dados
+			será o mesmo que o nome da sua prória classe (após convertido de 
+			CamelCaps para palavras_com_sobrescrito).  Portanto, uma classe Zend_Db_Table
+            chamada AlgumNomeDeTabela mapeia para uma tabela SQL chamada 'algum_nome_de_tabela'.
+            Se você quer que sua classe mapeie para algo diferente da forma com sobrescrito
+			do nome da tabela, sobrescrevaa propriedade $_name quando definir sua classe.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 class ClassName extends Zend_Db_Table
 {
-    // default table name is 'class_name'
-    // but we want to map to something else
+    // nome padrão da tabela é 'class_name'
+    // mas nós queremos mapear para algo diferente
     protected $_name = 'another_table_name';
 }
 ?>]]>
         </programlisting>
 
         <para>
-            By default, Zend_Db_Table expects your table to have a primary
-            key named 'id'.  (It is better if this column is
-            auto-incremented, but is not required.)  If your primary key
-            is named something other than 'id', you can override the
-            $_primary property when defining your class.
+            Por padrão, Zend_Db_Table espera que sua tabela tenha uma chave
+			primária chamada 'id'.  (É melhor que esta coluna seja
+            auto-incrementável, mas isso não é requerido.)  se sua chave primária
+            tem um nome diferente de 'id', você pode sobrescrever a propriedade
+            $_primary quando definir a sua classe.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 class ClassName extends Zend_Db_Table
 {
-    // default primary key is 'id'
-    // but we want to use something else
+    // nome padrão da chave primária é 'id'
+    // mas nós queremos usar algo diferente
     protected $_primary = 'another_column_name';
 }
 ?>]]>
         </programlisting>
 
         <para>
-            Alternatively, you may set these in the _setup() method of
-            your extended class; just be sure to call the parent::_setup()
-            when you are done.
+            Alternativamente, você pode fazer estas definições no método _setup() da 
+			sua classe extendida; apenas certifique-se de chamar parent::_setup()
+            ao final do método.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -125,15 +124,14 @@ class ClassName extends Zend_Db_Table
 
     <sect2 id="zend.db.table.insert">
 
-        <title>Inserting Rows</title>
+        <title>Inserindo Linhas</title>
 
         <para>
-            To insert a new row into your table, simply call insert()
-            with an associative array of column:value data.  The data
-            will be quoted for you automatically, and the last insert ID
-            will be returned.  (Note that this differs from
-            Zend_Db_Adapter::insert(), where the number of rows affected will
-            be returned.)
+            Para inserir uma nova linha na sua tabela, simplesmente chame insert()
+            passando uma matriz associativa com dados coluna:valor.  Os dados
+			serão protegidos para você automaticamente, e o último ID inserido
+            será retornado.  (Note que isso difere de Zend_Db_Adapter::insert(), 
+			em que o número de linhas afetadas será retornado.)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -161,19 +159,19 @@ $id = $table->insert($data);
 
     <sect2 id="zend.db.table.udpate">
 
-        <title>Updating Rows</title>
+        <title>Atualizando Linhas</title>
 
         <para>
-            To update any number of rows in your table, call update()
-            with an associative array of column:value data to set, along
-            with a WHERE clause to determine which rows will be updated.
-            It will update the table and return the number of rows affected.
+            Para atualizar qualquer número de linhas na sua tabela, chame update()
+            passsando uma matriz associativa com dados coluna:valor a serem definidos,
+			e uma cláusula WHERE para determinar quais linhas serão atualizadas.
+            A tabela será atualizada e o número de linhas afetadas será retornado.
         </para>
 
         <para>
-            The data to be set will be quoted for you automatically, but
-            the WHERE clause will not, so you need to quote that
-            yourself with the table's Zend_Db_Adapter object.
+            Os dados a serem definidos serão protegidos para você automaticamente, mas
+            a cláusula WHERE não, então você deve protegê-la com o objeto
+			Zend_Db_Adapter da tabela.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -202,17 +200,17 @@ $rows_affected = $table->update($set, $where);
 
     <sect2 id="zend.db.table.delete">
 
-        <title>Deleting Rows</title>
+        <title>Apagando Linhas</title>
 
         <para>
-            To delete any number of rows in your table, call delete()
-            with a WHERE clause to determine which rows will be deleted.
-            It will then return the number of rows deleted.
+            Para apagar qualquer número de linhas da sua tabela, chame delete()
+			com uma cláusula WHERE para determinar quasi linhas serão afetadas.
+			O número de linhas apagadas será retornado.
         </para>
 
         <para>
-            The WHERE clause will not be quoted for you, so you need to
-            quote that yourself with the table's Zend_Db_Adapter object.
+			A cláusula WHERE não será protegida automaticamente, então você deve protegê-la 
+			usando o objeto Zend_Db_Adapter da tabela.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -236,14 +234,14 @@ $rows_affected = $table->delete($where);
 
     <sect2 id="zend.db.table.findbykey">
 
-        <title>Finding Rows by Primary Key</title>
+        <title>Encontrando Linhas por Chave Primária</title>
 
         <para>
-            As a convienience, you can easily retrieve rows from the
-            table using primary key values with the find() method.  This
-            method returns a Zend_Db_Table_Row object if you attempt to find()
-            only one key, or a Zend_Db_Table_Rowset object if you attempt to find()
-            multiple keys.
+            Como conveniência, você pode facilmente buscar linhas da
+            tabela usando valores de chaves primárias como o método find().  Este
+            método retorna um objeto Zend_Db_Table_Row se você usar find()
+            passando apenas uma chave, ou um objeto Zend_Db_Table_Rowset se você
+			passar para find() uma matriz com múltiplas chaves.
         </para>
         <programlisting role="php"><![CDATA[<?php
 class RoundTable extends Zend_Db_Table {}
@@ -262,20 +260,20 @@ $rowset = $table->find(array(1, 2, 3));
 
     <sect2 id="zend.db.table.fetchonerow">
 
-        <title>Fetching One Row</title>
+        <title>Buscando Uma Linha</title>
 
         <para>
-            While you can easily find() a row by its primary key, often you
-            will need to add various conditions when retrieving a row. Zend_Db_Table
-            provides fetchRow() for just this purpose.  Call fetchRow() with
-            a WHERE clause (and an optional ORDER clause), and Zend_Db_Table will
-            return a Zend_Db_Table_Row that with the first record that matches your
-            conditions.
+            Você pode facilmente usar find() para buscar uma linha pela chave primária,
+			mas frequentemente você precisará adicionar várias condições quando buscar 
+			uma linha.. Zend_Db_Table oferece o mpetodo fetchRow() com este objetivo.
+			Chame fetchRow() passando uma cláusula WHERE (e uma cláusula ORDER opcional),
+			e Zend_Db_Table retornará um objeto Zend_Db_Table_Row com o primeiro registro
+			que combinar com suas condições.
         </para>
 
         <para>
-            Note that your WHERE clause will not be quoted for you, so you
-            will need to quote it yourself with the table's Zend_Db_Adapter.
+			Note que a cláusula WHERE não será protegida para você, então você 
+			deve protegê-la com o objeto Zend_Db_Adapter da tabela.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -304,19 +302,19 @@ $row = $table->fetchRow($where, $order);
 
     <sect2 id="zend.db.table.fetchmultiple">
 
-        <title>Fetching Multiple Rows</title>
+        <title>Buscando Múltiplas Linhas</title>
 
         <para>
-            If you need to retrieve many rows at once, use the fetchAll()
-            method.  As with fetchRow(), it takes a WHERE and ORDER clause,
-            but also takes limit-count and limit-offset values to restrict
-            the number of rows returned.  It will return a Zend_Db_Table_Rowset
-            object with the selected records.
+            Se você precisa buscar muitas linhas de uma vez, use o método
+			fetchAll().  Como em fetchRow(), ele recebe cláusulas WHERE e ORDER,
+            mas também valores limit-count e limit-offset para restringir
+            o número de linhas retornadas.  Ele irá retornar um objeto
+			Zend_Db_Table_Rowset com os registros selecionados.
         </para>
 
         <para>
-            Note that your WHERE clause will not be quoted for you, so you
-            will need to quote it yourself with the table's Zend_Db_Adapter.
+			Note que a cláusula WHERE não será protegida para você, então você 
+			deve protegê-la usando o objeto Zend_Db_Adapter da tabela.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -343,13 +341,13 @@ $rowset = $table->fetchRow($where, $order, $count, $offset);
 
     <sect2 id="zend.db.table.domain-logic">
 
-        <title>Adding Domain Logic</title>
+        <title>Incluindo Lógica de Domínio</title>
 
         <para>
-            As a TableModule, Zend_Db_Table lends itself well to encapsulating
-            your own particular domain logic.  For example, you can override
-            the insert() and update() methods to manipulate or validate the
-            submitted data before it goes to the database.
+            Como um módulo de tabela, Zend_Db_Table funciona bem para encapsular
+			sua lógica de domínio particular.  Por exemplo, voc~e pode sobrescrever
+			os métodos insert() e update() para manipular ou validar os dados
+			submetidos antes de irem para o banco de dados.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -377,8 +375,8 @@ class RoundTable extends Zend_Db_Table
         </programlisting>
 
         <para>
-            Similarly, you can add your own find() methods to look up
-            records by something other than their primary key.
+            Do mesmo modo, você pode implementar seu próprio método find() 
+			que busque registros não apenas pela chave primária.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
