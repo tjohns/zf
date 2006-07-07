@@ -38,22 +38,39 @@ require_once 'Zend/Db/Adapter/Pdo/Abstract.php';
 class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
 {
     /**
+     * PDO type
+     *
+     * @var string
+     */
+     protected $_pdoType = 'sqlite';
+     
+     
+    /**
      * Constructor.
      *
      * $config is an array of key/value pairs containing configuration
-     * options.  These options are common to most adapters:
+     * options.  Note that the SQLite options are different than most of
+     * the other PDO adapters in that no username or password are needed.
+     * Also, an extra config key "sqlite2" specifies compatibility mode.
      *
-     * dbname   => (string) The name of the database to user (required,
-     *                      use :memory: for memory-based database)
-     * dsnprefix => (string) The PDO driver's DSN prefix (optional).
+     * dbname    => (string) The name of the database to user (required,
+     *                       use :memory: for memory-based database)
+     *
+     * sqlite2   => (boolean) PDO_SQLITE defaults to SQLite 3.  For compatibility
+     *                        with an older SQLite 2 database, set this to TRUE.
      *
      * @param array $config An array of configuration keys.
      */
     public function __construct($config)
     {
-        if (!isset($config['dsnprefix'])) // allows use of sqlite2 DSN prefix
-            $config['dsnprefix'] = 'sqlite';
+        if (isset($config['sqlite2']) && $config['sqlite2']) {
+            $this->_pdoType = 'sqlite2';
+        }
 
+        // SQLite uses no username/password.  Stub to satisfy parent::_connect()
+        $this->_config['username'] = null;
+        $this->_config['password'] = null;
+        
         return parent::__construct($config);
     }
 
@@ -63,7 +80,7 @@ class Zend_Db_Adapter_Pdo_Sqlite extends Zend_Db_Adapter_Pdo_Abstract
      */
     protected function _dsn()
     {
-        return $this->_config['dsnprefix'].':'.$this->_config['dbname'];
+        return $this->_pdoType .':'. $this->_config['dbname'];        
     }
 
 
