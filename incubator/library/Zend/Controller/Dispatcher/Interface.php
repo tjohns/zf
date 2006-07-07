@@ -28,6 +28,17 @@
 interface Zend_Controller_Dispatcher_Interface
 {
     /**
+     * Formats a string into a controller name.  This is used to take a raw
+     * controller name, such as one that would be packaged inside a Zend_Controller_Dispatcher_Token
+     * object, and reformat it to a proper class name that a class extending
+     * Zend_Controller_Action would use.
+     *
+     * @param string $unformatted
+     * @return string
+     */
+    public function formatControllerName($unformatted);
+
+    /**
      * Formats a string into an action name.  This is used to take a raw
      * action name, such as one that would be packaged inside a Zend_Controller_Dispatcher_Token
      * object, and reformat into a proper method name that would be found
