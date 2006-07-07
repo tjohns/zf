@@ -45,13 +45,14 @@ class Zend_Db_Adapter_Db2 extends Zend_Db_Adapter_Abstract
      *
      * Basic keys are:
      *
-     * username => (string) Connect to the database as this username.
-     * password => (string) Password associated with the username.
-     * host     => (string) What host to connect to (default 127.0.0.1)
-     * dbname   => (string) The name of the database to user
-     *
-     * Additional keys are processed as key-value pairs for a PDO DSN string.
-     *
+     * username   => (string)  Connect to the database as this username.
+     * password   => (string)  Password associated with the username.
+     * host       => (string)  What host to connect to (default 127.0.0.1)
+     * dbname     => (string)  The name of the database to user
+     * protocol   => (string)  Protocol to use, defaults to "TCPIP"
+     * port       => (integer) Port number to use for TCP/IP if protocol is "TCPIP"
+     * persistent => (boolean) Set TRUE to use a persistent connection (db2_pconnect)
+     *     
      * @var array
      */
     protected $_config = array(
