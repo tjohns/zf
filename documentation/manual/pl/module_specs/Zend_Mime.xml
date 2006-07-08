@@ -2,34 +2,37 @@
     <title>Zend_Mime</title>
     
 	<sect2 id="zend.mime.mime.introduction">
-	    <title>Introduction</title>
+	    <title>Wprowadzenie</title>
 	    <para>
-	        <code>Zend_Mime</code> is a support class for handling multipart MIME messages. It is used by <link
-	        linkend="zend.mail"><code>Zend_Mail</code></link> and <link
-	        linkend="zend.mime.message"><code>Zend_Mime_Message</code></link> and may be used by applications requiring
-	        MIME support.
+	        <code>Zend_Mime</code> jest klasą wspierającą obsługę wielczęściowych
+	        wiadomości MIME. Jest ona używana przez klasy <link linkend="zend.mail">
+	        <code>Zend_Mail</code></link> oraz <link linkend="zend.mime.message">
+	        <code>Zend_Mime_Message</code></link> i może być używana przez aplikacje
+	        wymagające wsparcia MIME.
 	    </para>
 	</sect2>
 	
 	<sect2 id="zend.mime.mime.static">
-	<title>Static Methods and Constants</title>
+	<title>Metody statyczne i stałe</title>
 	<para>
-	    <code>Zend_Mime</code> provides a simple set of static helper methods to work with MIME:
+	    <code>Zend_Mime</code> zapewnia zbiór prostych statycznych metod do pracy z MIME:
 	    <itemizedlist>
 	        <listitem>
-	            <code>Zend_Mime::isPrintable()</code>: Returns TRUE if the given string contains no unprintable characters,
-	            FALSE otherwise.
+	            <code>Zend_Mime::isPrintable()</code>: Zwraca TRUE jeśli podany łańcuch
+	            znaków nie zawiera niedrukowalnych znaków. W przeciwnym razie zwraca FALSE.
 	        </listitem>
 	        <listitem>
-	            <code>Zend_Mime::encodeBase64()</code>: Encodes a string into base64 encoding.
+	            <code>Zend_Mime::encodeBase64()</code>: Koduje łańcuch znaków używając 
+	            kodowania base64.
 	        </listitem>
 	        <listitem>
-	            <code>Zend_Mime::encodeQuotedPrintable()</code>: Encodes a string with the quoted-printable mechanism.
+	            <code>Zend_Mime::encodeQuotedPrintable()</code>: Koduje łańcuch znaków
+	            używając mechanizmu quoted-printable.
 	        </listitem>
 	    </itemizedlist>
 	</para>
 	<para>
-	    <code>Zend_Mime</code> defines a set of constants commonly used with MIME Messages:
+	    <code>Zend_Mime</code> definiuje zbiór stałych używanych z wiadomościami MIME:
 	    <itemizedlist>
 	        <listitem>
 	            <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
@@ -55,25 +58,26 @@
 	</sect2>
 	
 	<sect2 id="zend.mime.mime.instantiation">
-	<title>Instantiating Zend_Mime</title>
+	<title>Tworzenie instancji Zend_Mime</title>
 	<para>
-	    When Instantiating a <code>Zend_Mime</code> Object, a MIME boundary is stored that
-	    is used for all subsequent non-static method calls on that object.
-	    If the constructor is called with a string parameter, this value
-	    is used as a MIME boundary. If not, a random MIME boundary is generated
-	    during construction time.
+	    Kiedy tworzony jest obiekt <code>Zend_Mime</code>, zapisywane jest pole 
+	    rozgraniczające MIME (MIME boundary) i jest ono używane we wszystkich
+	    następnych wywołaniach metod tego obiektu. Jeśli konstruktor jest 
+	    wywołany z łańcuchem znaków w parametrze, to ta wartość jest używana jako 
+	    pole rozgraniczające MIME. W przeciwnym razie generowane jest losowe 
+	    pole rozgraniczające.
 	</para>
 	<para>
-	    A <code>Zend_Mime</code> object has the following Methods:
+	    Obiekt <code>Zend_Mime</code> ma takie metody:
 	    <itemizedlist>
 	        <listitem>
-	            <code>boundary()</code>: Returns the MIME boundary string.
+	            <code>boundary()</code>: Zwraca wartość pola rozgraniczającego MIME.
 	        </listitem>
 	        <listitem>
-	            <code>boundaryLine()</code>: Returns the complete MIME boundary line.
+	            <code>boundaryLine()</code>: Zwraca kompletną linię z polem rozgraniczającym MIME.
 	        </listitem>
 	        <listitem>
-	            <code>mimeEnd()</code>: Returns the complete MIME end boundary line.
+	            <code>mimeEnd()</code>: Zwraca końcową linię z polem rozgraniczającym MIME.
 	        </listitem>
 	    </itemizedlist>
 	</para>
