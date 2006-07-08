@@ -38,7 +38,8 @@
         </listitem>
         <listitem>
             <para>
-                Zeichnen von Texten unter Verwendung von 14 Standard Zeichensätzen.
+                Zeichnen von Texten unter Verwendung eines von 14 eingebauten Standard Zeichensätzen
+                oder deiner eigenen TrueType Zeichensätze.
             </para>
         </listitem>
         <listitem>
@@ -213,16 +214,16 @@ $pdfString = $pdf->render();
         (1/72 Zoll) oder eine vordefinierte Konstante, die als Seitentyp verwendet wird:
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_A4</para>
+                <para>Zend_Pdf_Page::SIZE_A4</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_A4_LANDSCAPE</para>
+                <para>Zend_Pdf_Page::SIZE_A4_LANDSCAPE</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_LETTER</para>
+                <para>Zend_Pdf_Page::SIZE_LETTER</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE</para>
+                <para>Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE</para>
             </listitem>
         </itemizedlist>
     </para>
@@ -242,9 +243,9 @@ $pdfString = $pdf->render();
 $pdf->pages = array_reverse($pdf->pages);
 ...
 // Füge eine neue Seite hinzu
-$pdf->pages[] = new Zend_Pad_Page(Zend_Pdf_Const::PAGESIZE_A4);
+$pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
 // Füge eine neue Seite hinzu
-$pdf->pages[] = $pdf->newPage(Zend_Pdf_Const::PAGESIZE_A4);
+$pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
 
 // Entferne eine bestimmte Seite
 unset($pdf->pages[$id]);
@@ -325,9 +326,9 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  * Zeichne ein Rechteck.
  *
  * Füllarten:
- * Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - fülle und strichele das Rechteck (Standard)
- * Zend_Pdf_Const::SHAPEDRAW_STROKE      - strichele das Rechteck
- * Zend_Pdf_Const::SHAPEDRAW_FILL        - fülle das Rechteck
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fülle und strichele das Rechteck (Standard)
+ * Zend_Pdf_Page::SHAPE_DRAW_STROKE      - strichele das Rechteck
+ * Zend_Pdf_Page::SHAPE_DRAW_FILL        - fülle das Rechteck
  *
  * @param float $x1
  * @param float $y1
@@ -335,7 +336,7 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  * @param float $y2
  * @param integer $fillType
  */
-public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE);]]>
+public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);]]>
             </programlisting>
         </para>
         <para>
@@ -343,7 +344,7 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SH
 /**
  * Zeichne ein Polygon
  *
- * Wenn $fillType Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE oder Zend_Pdf_Const::SHAPEDRAW_FILL ist,
+ * Wenn $fillType Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE oder Zend_Pdf_Page::SHAPE_DRAW_FILL ist,
  * wird das Polygon automatisch geschlossen.
  * Für eine detaillierte Beschreibung dieser Methode schaue in eine PDF Dokumentation
  * (Kapitel 4.4.2 Path painting Operators, Filling)
@@ -354,8 +355,8 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Const::SH
  * @param integer $fillMethod
  */
 public function drawPolygon($x, $y,
-                            $fillType = Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
-                            $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING);]]>
+                            $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                            $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
             </programlisting>
         </para>
         <para>
@@ -417,7 +418,11 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
     <sect2 id="zend.pdf.drawing.text-drawing">
         <title>Zeichnen von Text</title>
         <para>
-            Auch alle Textoperationen können im Kontext einer PDF Seite durchgeführt werden.
+            Auch alle Textoperationen können im Kontext einer PDF Seite durchgeführt werden. Du 
+            kannst eine einzige Textzeile an jeder Position auf der Seite durch Übergabe der X und
+            Y Koordinaten für die Grundlinie zeichnen. Der aktuelle Zeichensatz und die aktuelle
+            Zeichengröße werden für die Textoperationen verwendet (beachte die detaillierte 
+            Beschreibung unten).
         </para>
         <para>
             <programlisting role="php"><![CDATA[
@@ -427,47 +432,85 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  * @param string $text
  * @param float $x
  * @param float $y
+ * @param string $charEncoding (optional) Zeichencodierung des Quelltexts.
+ *          Standard ist die aktuelle "locale".
  * @throws Zend_Pdf_Exception
  */
-public function drawText($text, $x, $y );]]>
+public function drawText($text, $x, $y, $charEncoding = '');]]>
             </programlisting>
         </para>
+        <example>
+            <title>Zeichne einen String auf der Seite.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$pdfPage->drawText('Hello world!', 72, 720);
+...
+?>]]>
+            </programlisting>
+        </example>
         <para>
-            Der aktuelle Zeichensatz und die aktuelle Schriftgröße werden für Textoperationen 
-            verwendet. Bitte beachte die ausführliche Beschreibung unten.
+            Standardmäßig werden Textstrings unter Verwendung der Zeichenkodierungsmethode der 
+            aktuelle "locale" interpretiert. Wenn du einen String hast, der eine andere 
+            Zeichenkodierungsmethode verwendet (wie zum Beispiel ein UTF-8 String, der aus einer
+            Datei auf der Platte gelesen wurde, oder ein MacRoman String, der aus einer älteren
+            Datenbank erhalten wurde), kannst du die Zeichenkodierung zum Zeitpunkt des Zeichnens 
+            angeben und Zend_Pdf wird die Konvertierung für dich durchführen. Du kannst Quellstrings
+            in jeder Kodierungsmethode übergeben, die von PHP's 
+            <code><ulink url="http://www.php.net/manual/function.iconv.php">iconv()</ulink></code>
+            Funktion unterstützt wird.
         </para>
+        <example>
+            <title>Zeiche einen UTF-8 kodierten String auf der Seite.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// Lese einen UTF-8 kodierten String von der Platte
+$unicodeString = fread($fp, 1024);
+
+// Zeichne den String auf der Seite
+$pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
+...
+?>]]>
+            </programlisting>
+        </example>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.using-fonts">
         <title>Verwendung von Zeichensätzen</title>
         <para>
-            Die <code>Zend_Pdf_Page::drawText()</code> Methode verwendet den aktuellen Zeichensatz,
-            der mit der Methode <code>Zend_Pdf_Page::setFont()</code> festgelegt werden kann:
+            <code>Zend_Pdf_Page::drawText()</code> verwendet den aktuellen Zeichensatz und die 
+            aktuelle Zeichengröße der Seite, die mit der Methode <code>Zend_Pdf_Page::setFont()</code> 
+            festgelegt werden:
         </para>
         <para>
             <programlisting role="php"><![CDATA[
 /**
  * Lege den aktuellen Zeichensatz fest.
  *
- * @param Zend_Pdf_Font $font
+ * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
-public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
+public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
             </programlisting>
         </para>
         <para>
-            PDF unterstützt Type1, TrueType, Type3 und zusammengesetzte Zeichensätze. Es gibt 
-            14 Type1 Standardzeichensätze, die von PDF bereit gestellt werden. Die 
-            Zend_Pdf Komponente unterstützt derzeit nur diese Standardzeichensätze. Auf diese kann
-            über die Klasse <code>Zend_Pdf_Font_Standard</code> zurückgegriffen werden. Der konkrete
-            Zeichensatz wird in einem Parameter des Konstruktur festgelegt:
+            PDF Dokumente unterstützt PostScript Type1 und TrueType Zeichensätze, sowie die zwei 
+            speziellen PDF Typen Type3 und zusammengesetzte Zeichensätze (composite fonts). Es gibt 
+            zudem 14 Type1 Standardzeichensätze, die von jedem PDF Viewer bereit gestellt werden:
+            Courier (4 Stile), Helvetica (4 Stile), Times (4 Stile), Symbol und Zapf Dingbats. 
+        </para>
+        <para>
+            Die Zend_Pdf Komponente unterstützt derzeit diese 14 Standardzeichensätze sowie deine 
+            eigenen TrueType Zeichensätze. Zeichensatzobjekte können über eine der zwei 
+            Fabrikmethoden (factory methods) erhalten werden: 
+            <code>Zend_Pdf_Font::fontWithName($fontName)</code> für die 14 PDF Standardzeichensätze
+            oder <code>Zend_Pdf_Font::fontWithPath($filePath)</code> für eigene Zeichensätze.
         </para>
         <example>
             <title>Erstelle einen Standardzeichensatz</title>
             <programlisting role="php"><![CDATA[<?php
 ...
 // Erstelle einen neuen Zeichensatz
-$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
+$font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // Wende Zeichensatz an
 $pdfPage->setFont($font, 36);
@@ -477,52 +520,164 @@ $pdfPage->setFont($font, 36);
         </example>
         <para>
             Die Zeichensatzkonstanten für die 14 Standardzeichensätze sind innerhalb der 
-            <code>Zend_Pdf_Const</code> Klasse definiert:
+            <code>Zend_Pdf_Font</code> Klasse definiert:
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_ROMAN</para>
+                <para>Zend_Pdf_Font::FONT_COURIER</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_BOLD</para>
+                <para>Zend_Pdf_Font::FONT_COURIER_BOLD</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_ITALIC</para>
+                <para>Zend_Pdf_Font::FONT_COURIER_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_TIMES_BOLDITALIC</para>
+                <para>Zend_Pdf_Font::FONT_COURIER_BOLDITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_ROMAN</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA_BOLD</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_BOLD</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA_ITALIC</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_HELVETICA_BOLDITALIC</para>
+                <para>Zend_Pdf_Font::FONT_TIMES_BOLDITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER_BOLD</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA_BOLD</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER_ITALIC</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA_ITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_COURIER_BOLDITALIC</para>
+                <para>Zend_Pdf_Font::FONT_HELVETICA_BOLDITALIC</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_SYMBOL</para>
+                <para>Zend_Pdf_Font::FONT_SYMBOL</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FONT_ZAPFDINGBATS</para>
+                <para>Zend_Pdf_Font::FONT_ZAPFDINGBATS</para>
             </listitem>
         </itemizedlist>
         </para>
+        <para>
+            Du kannst außerdem jeden individuellen TrueType Zeichensatz (welcher normalerweise eine
+            '.ttf' Erweiterung hat) oder einen OpenType Zeichensatz ('.otf' Erweiterung) verwenden,
+            wenn er TrueType Konturen enthält. Bisher nicht unterstützt, aber für zukünftige 
+            Versionen geplant, sind Mac OS X .dfont Dateien und Microsoft TrueType Collection
+            ('.ttc' Erweiterung) Dateien. 
+        </para>
+        <para>
+            Um einen TrueType Zeichensatz zu verwenden, mußt du den kompletten Verzeichnispfad zum
+            Zeichensatzprogramm angeben. Wenn der Zeichensatz aus welchem Grund auch immer nicht 
+            gelesen werden kann oder wenn es kein TrueType Zeichensatz ist, wird the Fabrikmethode
+            eine Ausnahme werfen:
+        </para>
+        <example>
+            <title>Erstelle einen TrueType Zeichensatz.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// Erstelle einen neuen Zeichensatz
+$goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF');
+
+// Verwende den Zeichensatz
+$pdfPage->setFont($goodDogCoolFont, 36);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+            Standardmäßig werden eigene Zeichensätze in das erstellte PDF Dokument eingebettet. Dies
+            ermöglicht den Empfänger, die Seite wie beabsichtigt anzuschauen, sogar wenn sie den 
+            entsprechenden Zeichensatz auf ihrem System gar nicht installiert haben. Wenn du dich
+            über die Dateigröße sorgst, kannst du angeben, dass das Zeichensatzprogramm nicht
+            eingebettet wird, indem du eine 'nicht einbetten' Option an die Fabrikmethode übergibst:
+        </para>
+        <example>
+            <title>Erstelle einen TrueType Zeichensatz, aber bette ihn nicht in das PDF Dokument ein.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+// Erstelle einen neuen Zeichensatz
+$goodDogCoolFont = Zend_Pdf_Font::fontWithPath('/path/to/GOODDC__.TTF',
+                                               Zend_Pdf_Font::EMBED_DONT_EMBED);
+
+// Verwende den Zeichensatz
+$pdfPage->setFont($goodDogCoolFont, 36);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+            Wenn das Zeichensatzprogramm nicht eingebettet wurde, aber den Empfänger der PDF Datei
+            diesen Zeichensatz auf seinem System installiert hat, wird er das Dokument so sehen wie
+            beabsichtigt. Wenn sie nicht den korrekten Zeichensatz installiert haben, wird der PDF
+            Viewer sich bemühen, um einen Ersatz herzustellen.
+        </para>
+        <para>
+            Einige Zeichensätze haben sehr spezielle Lizensierungsregeln, die das Einbetten in PDF
+            Dokumente verhindern. Damit du dadurch nicht überrascht wirst, wenn du versuchst einen
+            Zeichensatz einzubetten, der nicht eingebettet werden kann, wird die Fabrikmethode eine
+            Ausnahme werfen.
+        </para>
+        <para>
+            Du kannst diese Zeichensätze weiterhin verwenden, aber du mußt entweder die 'nicht 
+            einbetten' Option übergeben wie oben beschrieben oder du kannst einfach die Ausnahme 
+            unterdrücken:
+        </para>
+        <example>
+            <title>Werfe keine Ausnahme für Zeichensätze, die nicht eingebettet werden können.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = Zend_Pdf_Font::fontWithPath('/path/to/unEmbeddableFont.ttf',
+                                    Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+            Diese Unterdrückungstechnik wird bevorzugt, wenn du einen Endnutzer erlaubst, seine 
+            eigenen Zeichensätze auszuwählen. Zeichensätze, die in ein PDF Dokument eingebettet 
+            werden können, werden eingebettet, andere nicht.
+        </para>
+        <para>
+            Zeichensatzprogramme können sehr groß sein, manche erreichen Dutzende von Megabytes.
+            Standardmäßig werden alle eingebetteten Zeichensätze unter Verwendung des Flate
+            Kompressionsschemas komprimiert, woraus im Schnitt 50% an Speicherplatz gespart werden
+            kann. Wenn du aus welchem Grund auch immer nicht möchtest, dass das Zeichensatzprogramm
+            kompimiert wird, kannst du dies mit einer Option abschalten:
+        </para>
+        <example>
+            <title>Komprimiere einen eingebetten Zeichensatz nicht.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = Zend_Pdf_Font::fontWithPath('/path/to/someReallyBigFont.ttf',
+                                    Zend_Pdf_Font::EMBED_DONT_COMPRESS);
+...
+?>]]>
+            </programlisting>
+        </example>
+        <para>
+            Zuguterletzt, kannst du die Einbettungsoptionen mit Hilfe des OR Operators kombinieren,
+            wenn notwendig:
+        </para>
+        <example>
+            <title>Kombiniere die Zeichensatz Einbettungsoptionen.</title>
+            <programlisting role="php"><![CDATA[<?php
+...
+$font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
+                                    (Zend_Pdf_Font::EMBED_SUPPRESS_EMBED_EXCEPTION |
+                                     Zend_Pdf_Font::EMBED_DONT_COMPRESS));
+...
+?>]]>
+            </programlisting>
+        </example>
+
     </sect2>
 
     <sect2 id="zend.pdf.drawing.image-drawing">
@@ -623,13 +778,13 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
 
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_STROKE - strichele die Form</para>
+                <para>Zend_Pdf_Page::SHAPE_DRAW_STROKE - strichele die Form</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_FILL - fülle die Form</para>
+                <para>Zend_Pdf_Page::SHAPE_DRAW_FILL - fülle die Form</para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE - fülle und strichele die Form 
+                <para>Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE - fülle und strichele die Form 
                 (Standardverhalten)</para>
             </listitem>
         </itemizedlist>
@@ -640,7 +795,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
         </para>
         <itemizedlist>
             <listitem>
-                <para>Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING (Standardverhalten)</para>
+                <para>Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING (Standardverhalten)</para>
                 <para>
                 <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
                 <blockquote>
@@ -671,7 +826,7 @@ according to the rule; the "doughnut hole" is outside.
             </para>
             </listitem>
             <listitem>
-                <para>Zend_Pdf_Const::FILLMETHOD_EVENODD</para>
+                <para>Zend_Pdf_Page::FILL_METHOD_EVEN_ODD</para>
                 <para>
                 <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
                 <blockquote>
@@ -773,7 +928,7 @@ public function clipRectangle($x1, $y1, $x2, $y2);]]>
  * @param array $y  - Array mit Floats (die Y Koordinaten der Eckpunkte)
  * @param integer $fillMethod
  */
-public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Const::FILLMETHOD_NONZEROWINDING);]]>
+public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
             </programlisting>
         </para>
         <para>
@@ -940,10 +1095,10 @@ public function getFillColor();]]>
 /**
  * Ändere den Zeichensatz.
  *
- * @param Zend_Pdf_Font $font
+ * @param Zend_Pdf_Resource_Font $font
  * @param float $fontSize
  */
-public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
+public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
             </programlisting>
         </para>
         <para>
@@ -961,7 +1116,7 @@ public function setFontSize($fontSize);]]>
 /**
  * Hole den Zeichensatz.
  *
- * @return Zend_Pdf_Font $font
+ * @return Zend_Pdf_Resource_Font $font
  */
 public function getFont();]]>
             </programlisting>
@@ -1026,7 +1181,7 @@ $style->setFillColor(new Zend_Pdf_Color_RGB(0, 0, 0.9));
 $style->setLineColor(new Zend_Pdf_Color_GrayScale(0.2));
 $style->setLineWidth(3);
 $style->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
-$style->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA_BOLD), 32);
+$style->setFont(Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA_BOLD), 32);
 
 // Erstelle ein neues Grafikobjekt
 $stampImage = Zend_Pdf_ImageFactory::factory(dirname(__FILE__) . '/stamp.jpg');
@@ -1052,10 +1207,10 @@ $pdf->pages[] = ($page1 = $pdf->newPage('A4'));
 
 // Erstelle eine neue Seite mit Hilfe des Zend_Pdf_Page Objekts (die Seite wird nicht an das 
 // angegebene Dokument angehängt)
-$pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Const::PAGESIZE_LETTER_LANDSCAPE));
+$pdf->pages[] = ($page2 = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE));
 
 // Erstelle einen neuen Zeichensatz
-$font = new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_HELVETICA);
+$font = Zend_Pdf_Font::fontWithName(Zend_Pdf_Font::FONT_HELVETICA);
 
 // Lege Zeichensatz fest und zeichnen einen text
 $page1->setFont($font, 36);
@@ -1066,7 +1221,7 @@ $page2->setFont($font, 24);
 $page2->drawText('Helvetica 24 text string', 60, 500);
 
 // Verwenden einen anderen Zeichensatz
-$page2->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Const::FONT_TIMES_ROMAN), 32);
+$page2->setFont(new Zend_Pdf_Font_Standard(Zend_Pdf_Font::FONT_TIMES_ROMAN), 32);
 $page2->drawText('Times-Roman 32 text string', 60, 450);
 
 // Zeichne ein Rechteck
@@ -1076,7 +1231,7 @@ $page2->setLineDashingPattern(array(3, 2, 3, 4), 1.6);
 $page2->drawRectangle(60, 400, 400, 350);
 
 // Zeichne einen Kreis
-$page2->setLineDashingPattern(Zend_Pdf_Const::LINEDASHING_SOLID);
+$page2->setLineDashingPattern(Zend_Pdf_Page::LINE_DASHING_SOLID);
 $page2->setFillColor(new Zend_Pdf_Color_RGB(1, 0, 0));
 $page2->drawCircle(85, 375, 25);
 
@@ -1104,8 +1259,8 @@ for ($count = 0; $count < 8; $count++) {
     $y[] = 375 + 25*sin(3*M_PI_4*$count);
 }
 $page2->drawPolygon($x, $y,
-                    Zend_Pdf_Const::SHAPEDRAW_FILLNSTROKE,
-                    Zend_Pdf_Const::FILLMETHOD_EVENODD);
+                    Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
+                    Zend_Pdf_Page::FILL_METHOD_EVEN_ODD);
 
 // Zeichne eine Linie
 $page2->setLineWidth(0.5);
