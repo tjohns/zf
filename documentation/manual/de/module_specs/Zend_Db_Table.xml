@@ -335,7 +335,7 @@ $order = 'first_name';
 $count = 10;
 $offset = 20;
 
-$rowset = $table->fetchRow($where, $order, $count, $offset);
+$rowset = $table->fetchAll($where, $order, $count, $offset);
 ?>]]>
         </programlisting>
 
