@@ -34,7 +34,15 @@ class Zend_Cache_AllTests
         $suite->addTestSuite('Zend_Cache_OutputFrontendTest');
         $suite->addTestSuite('Zend_Cache_FunctionFrontendTest');
         $suite->addTestSuite('Zend_Cache_ClassFrontendTest');
-        $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
+        if (defined('TESTS_ZEND_CACHE_SQLITE')) {
+            if (TESTS_ZEND_CACHE_SQLITE) {
+                $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
+            }
+        } else {
+            // if not defined (partial tests only for Zend_Cache for example), we
+            // assume everything is ok
+            $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
+        }
         $suite->addTestSuite('Zend_Cache_FileFrontendTest');
         return $suite;
     }
