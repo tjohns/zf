@@ -40,9 +40,9 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     // http://en.wikipedia.org/wiki/URL_encoding
     const DEFAULT_REGEX = '[a-z0-9\-\._]+';
 
-    private $_parts;
-    private $_defaults = array();
-    private $_requirements = array();
+    protected $_parts;
+    protected $_defaults = array();
+    protected $_requirements = array();
 
     public function __construct($route, $defaults = array(), $reqs = array())
     {

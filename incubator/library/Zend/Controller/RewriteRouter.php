@@ -46,9 +46,9 @@ require_once 'Zend/Controller/Router/Route.php';
 class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 {
 
-    private $_rewriteBase = '/';
-    private $_routes = array();
-    private $_currentRoute = null;
+    protected $_rewriteBase = '/';
+    protected $_routes = array();
+    protected $_currentRoute = null;
 
     public function __construct()
     {
