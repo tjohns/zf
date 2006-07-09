@@ -1,0 +1,171 @@
+<sect1 id="zend.controller.rewriterouter.introduction">
+    <title>Introduction</title>
+    <para>
+        Zend_Controller_RewriteRouter é uma nova versão do roteador do framework. Roteamento é o processo de pegar a parte final de um URI
+        e decompô-la para determinar qual controlador e ação daquele controlador
+        devem receber a solicitação. Esta definição de controlador, ação e parâmetros opcionais é empacotada em um objeto chamado Zend_Controller_Dispatcher_Token que é então processado por Zend_Controller_Dispatcher. Roteamento só ocorre uma vez: quando a solicitação é inicialmente recebida e antes que o primeiro controador seja despachado..
+    </para>
+    <para>
+        Zend_Controller_RewriteRouter é projetado para funcionar semelhantemente ao mod_rewrite usando apenas estruturas de puro php. Ele é vagamente baseado no roteamento do Ruby on Rails e não requer conhecimento anterior de reescrita de URL em servidores web. Ele é projetado para funcionar com uma única regra de mod_rewrite (uma das duas):
+    </para>
+    <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+    <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1	]]></programlisting>
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.usage">
+    <title>Usando um roteador</title>
+
+    <para>
+        Para usar apropriadamente o RewriteRouter você precisa instanciá-lo,
+        adicionar alguns roteamentos definidos por você e injetá-lo no controlador. O código a seguir ilustra o procedimento:
+    </para>
+
+    <programlisting role="php"><![CDATA[
+/* -- crie um roteador -- */
+
+$router = new Zend_Controller_RewriteRouter();
+$router->addRoute('user', 'user/:username', array('controller' => 'user', 'action' => 'info'));
+
+/* -- defina-o em um controlador -- */
+
+$ctrl = Zend_Controller_Front::getInstance();
+$ctrl->setRouter($router);]]></programlisting>
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.basic">
+    <title>Roteamentos Básicos</title>
+
+    <para>
+        O coração do RewriteRouter são os roteamentos definidos pelo usuário. Roteamentos são criados chamando o método addRoute de RewriteRouter:
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('user', 'user/:username');]]></programlisting>
+
+    <para>
+        O primeiro parâmetro é o nome do roteamento. É redundante no momento
+        mas será usado no futuro em um view helper para permitir fácil geração de URLs em seus views. Quando você precisar usar um roteamento previamente configurado e nomeado, você pode pegá-lo com o método getRoute do RewriteRouter.
+    </para>
+
+    <para>
+        O segundo parâmetro é um roteamento que irá corresponder a uma URL
+        - por exemplo, o roteamento acima corresponderá a
+        <code>http://example.com/user/martel</code>. O sinal de dois pontos em um roteamento marca uma variável de URL que será acessível através do método Zend_Controller_Action::_getParam method. No nosso exemplo um parâmetro nomeado username será definido com o valor 'martel'.
+    </para>
+
+    <note>
+        Roteamentos são verificados em ordem reversa, por isso certifique-se de que seus roteamentos mais genéricos estão definidos primeiro.
+    </note>
+
+    <note>
+        Por enquanto a implementação atual permite o uso de qualquer caracter exceto uma barra (/) como um identificador de variável mas é altamente recomendado que se use apenas variáveis com caracteres amigáveis ao php. No futuro a implementação provavelmente será alterada e isso pode introduzir falhas no seu código.
+    </note>
+
+    <para>
+        Há duas variáveis especiais que podem ser usadas nos seus roteamentos
+        - 'controller' e 'action'. Estas variáveis especiais serão usadas para encontrar um controlador e/ou uma ação definidos na URL.
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('user', ':controller/:action');]]></programlisting>
+
+    <para>
+        Se você apontar seu navegador para 'http://example.com/news/latest' com este roteamento definido o Zend_Controller_Dispatcher vai invocar o método latestAction do seu NewsController.
+    </para>
+
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.variable-defaults">
+    <title>Padrões de Variáveis</title>
+
+    <para>
+        Cada variável no roteamento pode ter um padrão. Para isso você deve adicionar um terceiro parâmetro ao método addRoute. Este terceiro parâmetro é uma matriz com chaves para os nomes das variáveis e valores para os padrões desejados.
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
+    <para>
+        O que pode não estar claramente visível é que o roteamento acima vai functionar com URLs como 'http://example.com/archive/2005' e
+        'http://example.com/archive'. No último caso a variável year terá o valor de 2006.
+    </para>
+
+    <para>
+        No exemplo acima nós não definimos um controlador então ele sempre resultará em uma ação noRoute de um IndexController. Para deix-alo usável você deve definir um controlador válido e uma ação válida por padrão:
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'));]]></programlisting>
+
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.variable-requirements">
+    <title>Variáveis Obrigatórias</title>
+
+    <para>
+        É possível adicionar um quarto parâmetro para definir variáveis obrigatórias. Elas são definidas por expressões regulares:
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
+
+    <note>
+        Diferentemente de Ruby on Rails, o RewriteRouter do Zend Framework vai corresponder a um roteamento e usar o padrão quando a variável do quarto parâmetro não for encontrada. Por isso a URL 'http://example.com/archive/test' vai corresponder ao roteamento acima e definir year como 2006. Esta funcionalidade pode ser alterada no futuro e está sendo discutida no momento em que esta documentação é escrita.
+    </note>
+
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.rewritebase">
+    <title>URL Base e Subdiretórios</title>
+
+    <para>
+        Diferentemente do Router original, RewriteRouter pode ser usado em subdiretórios - ele automaticamente detecta sua URL base e define-a corretamente. Por exemplo: se você mantém o seu <code>index.php</code> em um subdiretório do servidor chamado <code>/projects/myapp/index.php</code>, o rewrite base (URL base) será definido como <code>/projects/myapp</code>. Esta string será então excluída do início do caminho antes de calcular qualquer correspondência de roteamento. Isso elimina a necessidade de colocà-la à frente de qualquer roteamento. O roteamento <code>'user/:username'</code> vai funcionar com URIs como
+        <code>http://localhost/projects/myapp/user/martel</code> e <code>http://example.com/user/martel</code>.
+    </para>
+
+    <note>
+        Rewrite base automática é sensitiva à maiúsculas e minúsculas, por isso certifique-se de que sua URL corresponderá a um subdirectório em um sistema de arquivos (mesmo em máquinas Windows). Do contrário você terá uma ação noRoute.
+    </note>
+
+    <para>
+        Se rewrite base for detectada incorretamente você pode sobrescrevê-la com seu próprio caminho base com a ajuda do método setRewriteBase da classe RewriteRouter:
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->setRewriteBase('/projects/myapp');]]></programlisting>
+
+    <note>
+        Este passo não será necessário na maioria dos casos e é fortemente desencorajado pois introduz uma nova variável de configuração que terá que ser alterada quando o código é movido para outra configuração de diretório.
+    </note>
+
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.default-routes">
+    <title>Roteamento Padrão</title>
+
+    <para>
+        Zend_Controller_RewriteRouter é preconfigurado com dois roteamentos padrão. O primeiro manipula a URL da raiz e está mapeado para a ação indexAction de IndexController: por isso você deve ter este método, conforme frisado no capítulo Getting Started (parágrafo 2.2.5). O segundo roteamento padrão é inclupido para garantir compatibilidade com a primeira versão do router. Ele vai corresponder a URIs na forma de <code>'controller/action'</code>.
+    </para>
+
+    <para>
+        Regras padrão estão configuradas como:
+    </para>
+
+    <programlisting role="php"><![CDATA[
+// Roteamento Padrão para a URL raiz
+$this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
+
+// Roteamento para Router - compatibilidade com v1
+$this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
+
+    <note>
+        Apesar de que Zend_Controller_RewriteRouter está configurado para ser compatível com versões anterioress ele não funcionará por enquanto com
+        URIs <code>controller/action</code> que têm parâmetros adicionais.
+    </note>
+
+</sect1>
