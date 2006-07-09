@@ -78,7 +78,9 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
 
 	<para>
 		There are two special variables which can be used in your routes - 'controller' and 'action'. These special
-		variables will be used to find a controller and/or an action chosen in the URL.
+		variables will be used to find a controller and/or an action chosen in the URL. The 'action' variable 
+		must always be defined either in the route or as a default parameter. The 'controller' variable will default 
+		to the IndexController if it is not defined.
 	</para>
 
 	<programlisting role="php"><![CDATA[
