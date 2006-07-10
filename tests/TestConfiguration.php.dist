@@ -9,6 +9,13 @@
  * as "Zend" or "Zend_InputFilter", are always run by the master suite and cannot be disabled.
  */
 
+/**
+ * Zend_Cache
+ *
+ * TESTS_ZEND_CACHE_SQLITE => sqlite extension has to be enabled
+ */
+define('TESTS_ZEND_CACHE_SQLITE', false);
+
 
 /**
  * Zend_Db_Adapter_Pdo_MySQL
