@@ -8,3 +8,20 @@
  * testing is provided below.  Tests for components which should run universally, such
  * as "Zend" or "Zend_InputFilter", are always run by the master suite and cannot be disabled.
  */
+
+/**
+ * Zend_Mail_Pop3 / Zend_Mail_Transport_Pop3
+ *
+ * IMPORTANT: you need to copy tests/Zend/Mail/_files/test.mbox to your mail directory
+ * for the tests to work.
+ */
+define('TESTS_ZEND_MAIL_POP3_ENABLED', false);
+define('TESTS_ZEND_MAIL_POP3_HOST', 'localhost');
+define('TESTS_ZEND_MAIL_POP3_USER', 'test');
+define('TESTS_ZEND_MAIL_POP3_PASSWORD', '');
+// test SSL connections if enabled in your test server
+define('TESTS_ZEND_MAIL_POP3_SSL', true);
+define('TESTS_ZEND_MAIL_POP3_TLS', true);
+// wrong port should be an existing server port, invalid a non existing (each on defined host)
+define('TESTS_ZEND_MAIL_POP3_WRONG_PORT', 80);
+define('TESTS_ZEND_MAIL_POP3_INVALID_PORT', 3141);

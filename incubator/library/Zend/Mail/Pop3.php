@@ -119,6 +119,7 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
      *   - user username
      *   - password password for user 'username' [optional, default = '']
      *   - port port for POP3 server [optional, default = 110]
+     *   - ssl 'SSL' or 'TLS' for secure sockets
      *
      * @param  $params array  mail reader specific parameters
      * @throws Zend_Mail_Exception
@@ -135,7 +136,7 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
         }
         $params['password'] = isset($params['password']) ? $params['password'] : '';
         $params['port']     = isset($params['port'])     ? $params['port']     : null;
-        $params['ssl']      = isset($params['ssl']) && $params['ssl'];
+        $params['ssl']      = isset($params['ssl']) ? $params['ssl'] : false;
         
         $this->_protocol = new Zend_Mail_Transport_Pop3();
         $this->_protocol->connect($params['host'], $params['port'], $params['ssl']);
@@ -207,6 +208,6 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
             return $this->_protocol->hasTop;
         }
         
-        parent::__get($var);
+        return parent::__get($var);
     }
 }

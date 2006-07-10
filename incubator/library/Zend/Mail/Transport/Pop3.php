@@ -75,18 +75,18 @@ class Zend_Mail_Transport_Pop3
      *
      * @param  string $host  hostname of IP address of POP3 server
      * @param  int    $port  of POP3 server, default is 110 (995 for ssl)
-     * @param  bool   $ssl   use ssl
+     * @param  string $ssl   use 'SSL' or 'TLS'
      * @throws Zend_Mail_Transport_Exception
      * @return string welcome message
      */
     public function connect($host, $port = null, $ssl = false) 
     {
-        if ($ssl) {
+        if ($ssl == 'SSL') {
             $host = 'ssl://' . $host;
         }
         
         if (is_null($port)) {
-            $port = $ssl ? 995 : 110;
+            $port = $ssl == 'SSL' ? 995 : 110;
         }
     
         $this->_socket = @fsockopen($host, $port);
@@ -103,7 +103,15 @@ class Zend_Mail_Transport_Pop3
         } else {
             $this->_timestamp = '<' . $this->_timestamp . '>';
         }
-
+        
+        if($ssl === 'TLS') {
+            $this->request('STLS');
+            $result = stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+            if(!$result) {
+                throw new Zend_Mail_Transport_Exception('cannot enable TLS');
+            }
+        }
+        
         return $welcome;
     }
 
@@ -262,15 +270,16 @@ class Zend_Mail_Transport_Pop3
             $result = $this->request("LIST $msgno");
 
             list(, $result) = explode(' ', $result);
-            return $result;
+            return (int)$result;
         }
 
         $result = $this->request('LIST', true);
-        
         $messages = array();
-        foreach ($result as $line) {
-            list($no, $size) = explode(' ', $line);
-            $messages[(int)$no] = $size;
+        $line = strtok($result, "\n");
+        while($line) {
+            list($no, $size) = explode(' ', trim($line));
+            $messages[(int)$no] = (int)$size;
+            $line = strtok("\n");
         }
 
         return $messages;
