@@ -1,12 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <sect1 id="zend.controller.plugins">
-	<title>Plugins</title>
-	
-	<sect2 id="zend.controller.plugins.introduction">
-		<title>Introduction</title>
+  <title>Plugins</title>
 
-		<note>
-			This section is under construction.
-		</note>
-	</sect2>
-		
+  <sect2 id="zend.controller.plugins.introduction">
+    <title>Introdução</title>
+
+    <note>
+       Esta seção ainda está em construção. 
+    </note>
+  </sect2>
 </sect1>
