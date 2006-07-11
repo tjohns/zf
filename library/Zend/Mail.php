@@ -35,6 +35,11 @@ require_once 'Zend/Mail/Transport/Abstract.php';
 require_once 'Zend/Mime.php';
 
 /**
+ * Zend_Mail_Transport_Abstract
+ */
+require_once 'Zend/Mail/Transport/Abstract.php';
+
+/**
  * Zend_Mime_Message
  */
 require_once 'Zend/Mime/Message.php';
@@ -340,8 +345,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     public function addBcc($email)
     {
-        $email = strtr($email,"\r\n\t",'???');
-        $this->_addRecipient($email);
+        $this->_addRecipientAndHeader('Bcc', '', $email);
     }
 
     /**
