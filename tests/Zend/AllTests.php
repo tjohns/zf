@@ -46,6 +46,7 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_ConfigTest');
         $suite->addTest(Zend_Config_AllTests::suite());
         $suite->addTest(Zend_Cache_AllTests::suite());
+        $suite->addTest(Zend_Controller_AllTests::suite())
         return $suite;
     }
 }
