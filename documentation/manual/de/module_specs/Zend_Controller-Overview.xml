@@ -37,7 +37,7 @@
 				<listitem>
 					<para>
 						<code>Zend_Controller_Router</code> ist der Router. Routing ist der Prozess
-						der Übernahme und Zerteilung eine^r URI, um zu ermitteln, welcher 
+						der Übernahme und Zerteilung einer URI, um zu ermitteln, welcher 
 						Controller und welche Aktion des Controllers die Anfrage erhalten soll.
 						Die Definition des Controllers, der Aktion sowie weiterer Parameter wird in 
 						einem Objekt mit Namen <code>Zend_Controller_Dispatcher_Token</code>
