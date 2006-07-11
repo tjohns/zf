@@ -1,6 +1,10 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-=RELEASE 0.1.4 / ?-Jun-2006=
+
+=RELEASE 0.1.5 / 10-Jul-2006=
+- release notes can be found in the issue tracker at http://framework.zend.com/issues under the project changelog.
+
+=RELEASE 0.1.4 / 29-Jun-2006=
 - Zend_InputFilter moved to Zend_Filter_Input (Mike, Chris)
 - Fixed bug in Zend_Http_Client_File::delete() (Mike, Ralf)
 - Fixed bug in Zend_Pdf_Filter_ASCIIHEX::decode() (Mike, Ralf)
