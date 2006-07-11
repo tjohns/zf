@@ -24,12 +24,12 @@ class Zend_Controller_Dispacher_Mock implements Zend_Controller_Dispatcher_Inter
 
     public function formatControllerName($unformatted)
     {
-
+        return $unformatted;
     }
 
     public function formatActionName($unformatted)
     {
-
+        return $unformatted;
     }
 
     public function isDispatchable(Zend_Controller_Dispatcher_Token $route)
