@@ -1,0 +1,241 @@
+<sect1 id="zend.controller.rewriterouter.introduction">
+    <title>導入</title>
+    <para>
+        Zend_Controller_RewriteRouter は、新しいバージョンのルータです。
+        ルーティングとは、受け取った URI を展開し、どのコントローラのどのアクションが
+        リクエストを処理するのかを決める処理のことです。
+        このコントローラの定義に従って、アクションおよびオプションのパラメータは
+        Zend_Controller_Dispatcher_Token というバリューオブジェクトにまとめられます。
+        このオブジェクトを処理するのが Zend_Controller_Dispatcher です。
+        ルーティングが行われるのは一度だけ、すなわちリクエストを最初に受け取ってから
+        最初のコントローラに処理が渡される際だけです。
+    </para>
+    <para>
+        Zend_Controller_RewriteRouter は、mod_rewrite 風の機能を
+        PHP だけで実現できるように設計されています。
+        この処理は Ruby on Rails のルーティングを多少参考にしており、
+        ウェブサーバの URL 書き換えに関する前提知識を必要としません。
+        以下の単純な mod_rewrite ルール (のいずれか) で動作するように設計されています。
+    </para>
+    <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+    <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.usage">
+    <title>ルータの使用法</title>
+
+    <para>
+        RewriteRouter を適切に使用するには、まずそのインスタンスを作成し、
+        次にユーザ定義のルーティングを追加し、それをコントローラに注入しなければなりません。
+        以下にコードの例を示します。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+/* -- ルータを作成します -- */
+
+$router = new Zend_Controller_RewriteRouter();
+$router->addRoute('user', 'user/:username', array('controller' => 'user', 'action' => 'info'));
+
+/* -- コントローラにルータを設定します -- */
+
+$ctrl = Zend_Controller_Front::getInstance();
+$ctrl->setRouter($router);]]></programlisting>
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.basic">
+    <title>基本的なルーティング</title>
+
+    <para>
+        RewriteRouter で最も重要なのが、ユーザ定義のルーティングです。
+        これは、RewriteRouter の addRoute メソッドをコールして作成します。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('user', 'user/:username');]]></programlisting>
+
+    <para>
+        最初のパラメータがこのルートの名前です。
+        将来は、URL ビューヘルパーの中でこれを使用し、ビュー内で簡単に
+        URL を生成できるようになる予定です。
+        ここで定義したルートを使用する方法も知っておく必要があるでしょう。
+        事前に定義したルートを取得するには、RewriteRouter の getRoute
+        メソッドを使用します。
+    </para>
+
+    <para>
+        二番目のパラメータは、そのルートに関連付ける URL です。
+        例えば、上の例で示したルートは <code>http://example.com/user/martel</code>
+        に対応します。ルート内のコロンは URL 変数を意味し、これは
+        Zend_Controller_Action::_getParam メソッドからアクセス可能です。
+        今回の例では、username という名前のパラメータに
+        'martel' という値が設定されます。
+    </para>
+
+    <note>
+        一番最後にマッチしたルートが適用されるので、
+        汎用的なルートは最初に定義するようにしましょう。
+    </note>
+
+    <note>
+        現在の実装では、変数の識別子としてスラッシュ (/)
+        以外のあらゆる文字を使用可能ですが、できるだけ PHP
+        の変数で使用可能な範囲の文字のみを使用することを強く推奨します。
+        この実装は将来変更される予定ですので、(PHP
+        の変数で使用できない文字を用いていると)
+        バグを引き起こす可能性があります。
+    </note>
+
+    <para>
+        ルートで使用される変数のうち、'controller' および 'action'
+        のふたつは特別な扱いとなります。これらの特殊変数は、URL から
+        コントローラとアクションを決定するために使用されます。
+        'action' 変数は、そのルートあるいはデフォルトパラメータとして
+        常に定義されていなければなりません。
+        'controller' 変数がもし定義されていない場合は、デフォルト値として
+        IndexController が使用されます。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('user', ':controller/:action');]]></programlisting>
+
+    <para>
+        このルートが定義されているときにブラウザで
+        'http://example.com/news/latest' を選択すると、
+        Zend_Controller_Dispatcher は NewsController の
+        latestAction を起動します。
+    </para>
+
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.variable-defaults">
+    <title>変数のデフォルト値</title>
+
+    <para>
+        ルートの中の変数には、すべてデフォルト値を設定することができます。
+        デフォルト値を設定するには、addRoute メソッドで 3 番目のパラメータを使用します。
+        このパラメータは配列形式となります。配列のキーに変数名、
+        そのキーに対応する値としてデフォルト値を設定します。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
+    <para>
+        ちょっとわかりにくいかもしれませんが、このルートは例えば
+        'http://example.com/archive/2005' および
+        'http://example.com/archive' にマッチします。後者の場合、変数 year
+        の値は 2006 となります。
+    </para>
+
+    <para>
+        上の例ではコントローラを設定していないので、常に IndexController の
+        noRoute アクションが起動してしまいます。この例が使い物になるようにするには、
+        コントローラとアクションのデフォルト値を設定しなければなりません。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'));]]></programlisting>
+
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.variable-requirements">
+    <title>変数の制限</title>
+
+    <para>
+        4 番目のパラメータで、変数に関する制限事項を設定することができます。
+        この制限は、正規表現で設定します。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
+
+    <note>
+        Ruby on Rails とは異なり、ZF の RewriteRouter は
+        4 番目のパラメータの制限を満たさない場合にもルートにマッチし、
+        デフォルト値を使用するようになっています。
+        そのため、URL 'http://example.com/archive/test' は上のルートにマッチし、
+        year は 2006 に設定されます。この機能は将来変更される予定で、
+        このマニュアルを書いている時点ではまだ議論中です。
+    </note>
+
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.rewritebase">
+    <title>ベース URL およびサブディレクトリ</title>
+
+    <para>
+        もとのルータとは異なり、RewriteRouter はサブディレクトリ内でも使用可能です。
+        RewriteRouter がベース URL を検出し、適切に設定します。例えば
+        <code>index.php</code> をどこかのサブディレクトリに
+        <code>/projects/myapp/index.php</code> のように配置した場合、
+        rewrite base (ベース URL) は <code>/projects/myapp</code> に設定されます。
+        パスがルートにマッチするか調べる際に、この文字列がパスから取り除かれます。
+        これにより、いろいろな可能性を考えてルートを用意する必要がなくなります。
+        ルート <code>'user/:username'</code> は、
+        <code>http://localhost/projects/myapp/user/martel</code> および
+        <code>http://example.com/user/martel</code> の両方にマッチするのです。
+    </para>
+
+    <note>
+        この処理は大文字小文字を区別します。そのため、
+        URL とファイルシステムのサブディレクトリ名が確実に一致する必要があります
+        (たとえ Windows マシンであっても同様です)。大文字小文字が一致しなかった場合は
+        noRoute アクションがコールされます。
+    </note>
+
+    <para>
+        rewrite base の検出に失敗する場合は、
+        RewriteRouter クラスのメソッド setRewriteBase を使用して
+        ベースパスを上書き指定することができます。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->setRewriteBase('/projects/myapp');]]></programlisting>
+
+    <note>
+        この処理は、たいていの場合は不要です。
+        これを使用することは推奨しません。なぜなら、
+        コードを別の場所に移動させたときにはこの内容も変更しなければならず、
+        それを管理するためにまたひとつ新たな設定項目が必要になってしまうからです。
+    </note>
+
+</sect1>
+
+<sect1 id="zend.controller.rewriterouter.default-routes">
+    <title>デフォルトのルート</title>
+
+    <para>
+        Zend_Controller_RewriteRouter には、デフォルトのルートとして
+        二種類が事前に定義されています。ひとつめはルート URL を処理するもので、
+        これは IndexController の IndexAction に関連付けられます。
+        そのため、<xref linkend="zend.controller.getting-started" />
+        に書かれているようにこれらのコントローラとアクションを準備する必要があります
+        (<xref linkend="zend.controller.overview.indexcontroller" /> を参照ください)。
+        もうひとつのデフォルトルートは、
+        以前のバージョンのルータとの互換性を保つために提供されています。
+        これは <code>'controller/action'</code> 形式の URI にマッチします。
+    </para>
+
+    <para>
+        デフォルトのルールは、以下のように設定されています。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+// ルート URL 用のデフォルトのルート
+$this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
+
+// 以前のルータとの互換性のためのルート
+$this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
+
+    <note>
+        Zend_Controller_RewriteRouter は過去との互換性を考慮して設定されていますが、
+        <code>controller/action</code> 形式の URI
+        に追加のパラメータが付いたものには現時点では対応できません。
+    </note>
+
+</sect1>

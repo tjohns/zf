@@ -94,6 +94,10 @@
         <title>Zend_Pdf</title>
         &module_specs.Zend_Pdf;
     </chapter>
+    <chapter id="zend.controller.rewriterouter">
+        <title>Zend_Controller_RewriteRouter</title>
+        &module_specs.Zend_Controller_RewriteRouter;
+    </chapter>
     <chapter id="zend.search">
         <title>Zend_Search</title>
         &module_specs.Zend_Search-Overview;
