@@ -6,7 +6,12 @@ if (!defined('PHPUnit2_MAIN_METHOD')) {
 require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
+require_once 'Zend/Cache/AllTests.php';
+require_once 'Zend/ConfigTest.php';
+require_once 'Zend/Config/AllTests.php';
+require_once 'Zend/Controller/AllTests.php';
 require_once 'Zend/Feed/AllTests.php';
+require_once 'Zend/FilterTest.php';
 require_once 'Zend/Http/AllTests.php';
 require_once 'Zend/JsonTest.php';
 require_once 'Zend/MailTest.php';
@@ -16,10 +21,6 @@ require_once 'Zend/Pdf/AllTests.php';
 require_once 'Zend/UriTest.php';
 require_once 'Zend/Uri/AllTests.php';
 require_once 'Zend/ViewTest.php';
-require_once 'Zend/FilterTest.php';
-require_once 'Zend/ConfigTest.php';
-require_once 'Zend/Config/AllTests.php';
-require_once 'Zend/Cache/AllTests.php';
 
 
 class Zend_AllTests
@@ -33,7 +34,12 @@ class Zend_AllTests
     {
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend');
 
+        $suite->addTest(Zend_Cache_AllTests::suite());
+        $suite->addTestSuite('Zend_ConfigTest');
+        $suite->addTest(Zend_Config_AllTests::suite());
+        $suite->addTest(Zend_Controller_AllTests::suite());
         $suite->addTest(Zend_Feed_AllTests::suite());
+        $suite->addTestSuite('Zend_FilterTest');
         $suite->addTest(Zend_Http_AllTests::suite());
         $suite->addTestSuite('Zend_JsonTest');
         $suite->addTestSuite('Zend_MimeTest');
@@ -42,11 +48,6 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_UriTest');
         $suite->addTest(Zend_Uri_AllTests::suite());
         $suite->addTestSuite('Zend_ViewTest');
-        $suite->addTestSuite('Zend_FilterTest');
-        $suite->addTestSuite('Zend_ConfigTest');
-        $suite->addTest(Zend_Config_AllTests::suite());
-        $suite->addTest(Zend_Cache_AllTests::suite());
-        $suite->addTest(Zend_Controller_AllTests::suite())
         return $suite;
     }
 }
