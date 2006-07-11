@@ -22,7 +22,18 @@ class Zend_Controller_Dispacher_Mock implements Zend_Controller_Dispatcher_Inter
 
     public $dispatchable = true;
 
-    public function isDispatchable(Zend_Controller_Dispatcher_Token $route) {
+    public function formatControllerName($unformatted)
+    {
+
+    }
+
+    public function formatActionName($unformatted)
+    {
+
+    }
+
+    public function isDispatchable(Zend_Controller_Dispatcher_Token $route)
+    {
         return $this->dispatchable;
     }
 
@@ -36,10 +47,10 @@ class Zend_Controller_Dispacher_Mock implements Zend_Controller_Dispatcher_Inter
  */
 class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
 {
-    
+
     protected $router;
     protected $dispatcher;
-    
+
     public function setUp()
     {
         error_reporting(E_ALL | E_STRICT);
@@ -71,22 +82,22 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         } catch (Exception $e) {
             return true;
         }
-        
+
         $this->fail();
-        
+
     }
 
     public function testAddRoutes()
     {
         $this->router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
         $routes = $this->getNonPublicProperty($this->router, '_routes');
-        
+
         $this->assertEquals(3, count($routes));
         $this->assertType('Zend_Controller_Router_Route', $routes['archive']);
-        
+
         $this->router->addRoute('register', 'register/:action', array('controller' => 'profile', 'action' => 'register'));
         $routes = $this->getNonPublicProperty($this->router, '_routes');
-        
+
         $this->assertEquals(4, count($routes));
         $this->assertType('Zend_Controller_Router_Route', $routes['register']);
 
@@ -102,7 +113,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     {
         $_SERVER['REQUEST_URI'] = '';
         $token = $this->router->route($this->dispatcher);
-        
+
         $this->assertEquals('index', $token->getControllerName());
         $this->assertEquals('index', $token->getActionName());
     }
@@ -111,66 +122,66 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     {
         $_SERVER['REQUEST_URI'] = 'archive/action/bogus';
         $token = $this->router->route($this->dispatcher);
-        
+
         $this->assertEquals('index', $token->getControllerName());
         $this->assertEquals('noRoute', $token->getActionName());
     }
-    
+
     /*
         Kevin McArthur:
-        
+
         I think i've sourced another small bug in the RewriteRouter.
-        
+
         http://url.com/test/abc%34asdf/def
-        
-        $router->addRoute('test/:type/:something', array('controller' => 'test', 
+
+        $router->addRoute('test/:type/:something', array('controller' => 'test',
         'action' => 'index'));
-        
-        This causes the router to try to noroute action (when theres a urlencoded 
+
+        This causes the router to try to noroute action (when theres a urlencoded
         value in the url for a parameter)
-        
+
         In fact the url should appear as
-        
+
         http://url.com/test/abc4asdf/def
-        
-        to the router, and the value should properly end up in the type parameter as 
+
+        to the router, and the value should properly end up in the type parameter as
         'abc4asdf' as it does if its not encoded.
     */
     public function testRouteWithEncodedUrl()
     {
-        
+
         $this->markTestSkipped('To be resolved with Zend_Http_Request');
-        
+
         $this->router->addRoute('test', 'test/:type/:something', array('controller' => 'test', 'action' => 'act'));
-        
+
         $_SERVER['REQUEST_URI'] = 'test/abc%34asdf/def';
         $token = $this->router->route($this->dispatcher);
-        
+
         $this->assertEquals('act', $token->getActionName());
         $this->assertEquals('test', $token->getControllerName());
-        
+
         $params = $token->getParams();
-        
+
         $this->assertEquals('abc4asdf', $params['type']);
         $this->assertEquals('def', $params['something']);
 
     }
-    
+
     public function testDefaulRouteMatched()
     {
-        
+
         $this->router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
         $this->router->addRoute('register', 'register/:action', array('controller' => 'profile', 'action' => 'register'));
-        
+
         $_SERVER['REQUEST_URI'] = 'ctrl/act';
         $token = $this->router->route($this->dispatcher);
-        
+
         $this->assertEquals('ctrl', $token->getControllerName());
         $this->assertEquals('act', $token->getActionName());
 
     }
-    
-    
+
+
     public function testFirstRouteMatched()
     {
 
@@ -179,7 +190,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
 
         $_SERVER['REQUEST_URI'] = 'archive/2006';
         $token = $this->router->route($this->dispatcher);
-        
+
         $this->assertEquals('archive', $token->getControllerName());
         $this->assertEquals('show', $token->getActionName());
 
@@ -188,139 +199,139 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     public function testNotDispatchable()
     {
         $this->dispatcher->dispatchable = false;
-        
+
         try {
             $this->router->route($this->dispatcher);
         } catch (Zend_Controller_Router_Exception $e) {
             return true;
         }
-        
+
         $this->fail('Unroutable object passed');
-        
+
     }
 
     public function testRewriteBaseRootWithApacheConfigRewrite()
     {
         $_SERVER['SCRIPT_NAME'] = '/';
         $_SERVER['REQUEST_URI'] = '/';
-        
+
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
         $rwBase = $router->getRewriteBase();
-        
+
         $this->assertEquals('', $rwBase);
-        
+
     }
 
     public function testRewriteBaseDeepUrlWithApacheConfigRewrite()
     {
         $_SERVER['SCRIPT_NAME'] = '/news/create';
         $_SERVER['REQUEST_URI'] = '/news/create';
-        
+
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
         $rwBase = $router->getRewriteBase();
-        
+
         $this->assertEquals('', $rwBase);
-        
+
     }
 
     public function testRewriteBaseAbsoluteRootWithRewriteAndEmptyRequestUri()
     {
-        
+
         $_SERVER['SCRIPT_NAME'] = '/index.php';
         $_SERVER['REQUEST_URI'] = '';
-        
+
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
         $rwBase = $router->getRewriteBase();
-        
+
         $this->assertEquals('', $rwBase);
-        
+
     }
 
     public function testRewriteBaseAbsoluteRootWithRewrite()
     {
-        
+
         $_SERVER['SCRIPT_NAME'] = '/index.php';
         $_SERVER['REQUEST_URI'] = '/';
-        
+
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
         $rwBase = $router->getRewriteBase();
-        
+
         $this->assertEquals('', $rwBase);
-        
+
     }
 
     public function testRewriteBaseAbsoluteRootWithoutRewrite()
     {
-        
+
         $_SERVER['SCRIPT_NAME'] = '/index.php';
         $_SERVER['REQUEST_URI'] = '/index.php';
-        
+
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
         $rwBase = $router->getRewriteBase();
-        
+
         $this->assertEquals('/index.php', $rwBase);
-        
+
     }
 
     public function testRewriteBaseRootWithRewrite()
     {
-        
+
         $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
         $_SERVER['REQUEST_URI'] = '/aiev5/www/';
-        
+
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
         $rwBase = $router->getRewriteBase();
-        
+
         $this->assertEquals('/aiev5/www', $rwBase);
-        
+
     }
 
     public function testRewriteBaseRootWithoutRewrite()
     {
-        
+
         $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
         $_SERVER['REQUEST_URI'] = '/aiev5/www/index.php';
-        
+
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
         $rwBase = $router->getRewriteBase();
-        
+
         $this->assertEquals('/aiev5/www/index.php', $rwBase);
-        
+
     }
 
     public function testRewriteBaseDeepUrlWithRewrite()
     {
-        
+
         $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
         $_SERVER['REQUEST_URI'] = '/aiev5/www/publish/article';
-        
+
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
         $rwBase = $router->getRewriteBase();
-        
+
         $this->assertEquals('/aiev5/www', $rwBase);
-        
+
     }
 
     public function testRewriteBaseDeepUrlWithoutRewrite()
     {
-        
+
         $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
         $_SERVER['REQUEST_URI'] = '/aiev5/www/index.php/publish/article';
-        
+
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
         $rwBase = $router->getRewriteBase();
-        
+
         $this->assertEquals('/aiev5/www/index.php', $rwBase);
-        
+
     }
 
 }
