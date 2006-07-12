@@ -138,7 +138,7 @@ class Zend_Cache_Backend_APC implements Zend_Cache_Backend_Interface
      */
     public function test($id)
     {
-        $result = $apc_fetch($id);
+        $result = apc_fetch($id);
         if ($result) {
             return true;
         }
