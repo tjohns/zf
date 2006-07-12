@@ -1,47 +1,52 @@
 <sect1 id="zend.feed.introduction">
-    <title>Introduction</title>
+    <title>Wprowadzenie</title>
     <para>
-        <code>Zend_Feed</code> provides functionality for consuming RSS and Atom feeds. It provides a
-        natural syntax for accessing elements of feeds, feed attributes, and entry attributes.
-        <code>Zend_Feed</code> also has extensive support for modifying feed and entry structure with the
-        same natural syntax, and turning the result back into XML. In the future, this modification support
-        could provide support for the Atom Publishing Protocol.
+        <code>Zend_Feed</code> zapewnia funkcjonalność umożliwiającą przetwarzanie
+        kanałów informacyjnych RSS oraz Atom. Zapewnia ona naturalną składnię umożliwiającą
+        dostęp do elementów kanałów informacyjnych, ich atrybutów oraz atrybutów samych wpisów.
+        <code>Zend_Feed</code> daje także obszerne wsparcie w modyfikowaniu kanałów
+        i struktury wpisów w ten sam naturalny sposób i umożliwia zapisanie rezultatów
+        jako XML. W przyszłości klasa ma zapewnić obsługę protokołu publikowania Atom
+        (Atom Publishing Protocol).
     </para>
 
     <para>
-        Programmatically, <code>Zend_Feed</code> consists of a base <code>Zend_Feed</code> class, abstract
-        <code>Zend_Feed_Abstract</code> and <code>Zend_Feed_EntryAbstract</code> base classes for
-        representing Feeds and Entries, specific implementations of feeds and entries for RSS and Atom, and
-        a behind-the-scenes helper for making the natural syntax magic work.
+        Programowo <code>Zend_Feed</code> składa się z bazowej klasy <code>Zend_Feed</code>,
+        abstrakcyjnych klas <code>Zend_Feed_Abstract</code> oraz <code>Zend_Feed_EntryAbstract</code> 
+        reprezentujących kanały informacyjne i ich wpisy, specyficznych implementacji
+        kanałów i wpisów dla RSS i Atom, oraz z pomocników odpowiedzialnych za 
+        naturalną składnię.
     </para>
 
     <para>
-        In the example below, we demonstrate a simple use case of retrieving an RSS feed and saving relevant
-        portions of the feed data to a simple PHP array, which could then be used for printing the data, storing
-        to a database, etc.
+        W przykładzie poniżej pokazujemy prosty przykład odbierania danych RSS
+        i zapisywania potrzebnych części danych kanału do prostej tablicy PHP,
+        która może być potem użyta do wyświetlenia danych, zapisania ich do bazy
+        danych itp.
     </para>
 
     <note>
-        Many RSS feeds have different channel and item properties available. The RSS specification provides for
-        many optional properties, so be aware of this when writing code to work with RSS data.
+        Wiele kanałów RSS ma dostępne różne właściwości samego kanału i jego elementów.
+        Specyfikacja RSS umożliwia użycie wielu opcjonalnych parametrów, więc
+        bądź ostrożny gdy będziesz pisał kod pracujący z RSS.
     </note>
 
     <example>
-        <title>Putting Zend_Feed to Work on RSS Feed Data</title>
+        <title>Użycie Zend_Feed do pobierania danych RSS</title>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Feed.php';
 
-// Fetch the latest Slashdot headlines
+// Ściągamy najnowsze nagłówki ze Slashdot
 try {
     $slashdotRss = Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Zend_Feed_Exception $e) {
-    // feed import failed
+    // importowanie danych nie udało się
     echo "Exception caught importing feed: {$e->getMessage()}\n";
     exit;
 }
 
-// Initialize the channel data array
+// inicjalizacja tablicy z danymi kanału
 $channel = array(
     'title'       => $slashdotRss->title(),
     'link'        => $slashdotRss->link(),
@@ -49,7 +54,7 @@ $channel = array(
     'items'       => array()
     );
 
-// Loop over each channel item and store relevant data
+// Pętla po każdym elemencie kanału i zapisanie potrzebnych danych
 foreach ($slashdotRss as $item) {
     $channel['items'][] = array(
         'title'       => $item->title(),
@@ -63,10 +68,11 @@ foreach ($slashdotRss as $item) {
 </sect1>
 
 <sect1 id="zend.feed.importing">
-    <title>Importing Feeds with Zend_Feed</title>
+    <title>Importowanie kanałów informacyjnych za pomocą Zend_Feed</title>
     <para>
-        <code>Zend_Feed</code> enables developers to retrieve feeds very easily. If you know the URI of a
-        feed, simply use the <code>Zend_Feed::import()</code> method:
+        <code>Zend_Feed</code> pozwala programistom bardzo łatwo odbierać wiadomości
+        z kanałów informacyjnych. Jeśli znasz adres URI kanału, w prosty sposób
+        użyj metody <code>Zend_Feed::import()</code>:
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -75,80 +81,88 @@ $feed = Zend_Feed::import('http://feeds.example.com/feedName');
 ?>]]>   </programlisting>
     </para>
     <para>
-        You can also use <code>Zend_Feed</code> to fetch the contents of a feed from a file or the contents
-        of a PHP string variable:
+        Możesz także użyć <code>Zend_Feed</code> do pobrania zawartości kanału
+        z pliku lub z łańcucha znaków PHP:
         <programlisting role="php"><![CDATA[
 <?php
 
-// importing a feed from a text file
+// importowanie kanału z pliku tekstowego
 $feedFromFile = Zend_Feed::importFile('feed.xml');
 
-// importing a feed from a PHP string variable
+// importowanie kanału z łańcucha znaków PHP
 $feedFromPHP = Zend_Feed::importString($feedString);
 
 ?>]]></programlisting>
     </para>
     <para>
-        In each of the examples above, an object of a class that extends <code>Zend_Feed_Abstract</code> is
-        returned upon success, depending on the type of the feed. If an RSS feed were retrieved via one of
-        the import methods above, then a <code>Zend_Feed_Rss</code> object would be returned. On the other
-        hand, if an Atom feed were imported, then a <code>Zend_Feed_Atom</code> object is returned. The
-        import methods will also throw a <code>Zend_Feed_Exception</code> object upon failure, such as an
-        unreadable or malformed feed.
+        We wszystkich powyższych przykładach w razie powodzenia operacji zwracany
+        jest obiekt klasy rozszerzającej <code>Zend_Feed_Abstract</code>, zależenie
+        od typu kanału. Jeśli zostały odebrane dane RSS za pomocą jednej z powyższych
+        metod importu, wtedy będzie zwrócony obiekt <code>Zend_Feed_Rss</code>. 
+        Z drugiej strony, gdy będą importowane dane kanału Atom, zwrócony zostanie
+        obiekt <code>Zend_Feed_Atom</code>. Metody importu w razie niepowodzenia
+        wyrzucają wyjątek <code>Zend_Feed_Exception</code>, czyli na przykład wtedy
+        gdy nie jest możliwe odczytanie kanału lub gdy dane są błędne.
     </para>
 </sect1>
 
 <sect1 id="zend.feed.findFeeds">
-    <title>Retrieving Feeds from Web Pages</title>
+    <title>Odbieranie kanałów informacyjnych ze stron internetowych</title>
     <para>
-        Web pages often contain <code>&lt;link&gt;</code> tags that refer to feeds with content relevant to
-        the particular page. <code>Zend_Feed</code> enables you to retrieve all feeds referenced by a web
-        page with one simple method call:
+        Strony internetowe często zawierają tagi <code>&lt;link&gt;</code>, które
+        odwołują się do kanałów informacyjnych odpowiadających danej stronie.
+        <code>Zend_Feed</code> pozwala odebrać wszystkie kanały informacyjne 
+        do których odwołuje się dana strona za pomocą wywołania prostej metody:
         <programlisting role="php"><![CDATA[
 <?php
 
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
 
 ?>]]></programlisting>
-        Here the <code>findFeeds()</code> method returns an array of <code>Zend_Feed_Abstract</code>
-        objects that are referenced by <code>&lt;link&gt;</code> tags on the news.html web page. Depending on
-        the type of each feed, each respective entry in the <code>$feedArray</code> array may be a
-        <code>Zend_Feed_Rss</code> or <code>Zend_Feed_Atom</code> instance. <code>Zend_Feed</code> will throw a
-        <code>Zend_Feed_Exception</code> upon failure, such as an HTTP 404 response code or a malformed feed.
+        Tutaj metoda <code>findFeeds()</code> zwraca tablicę obiektów <code>Zend_Feed_Abstract</code>
+        do których na stronie news.html są odniesienia w postaci <code>&lt;link&gt;</code>. Zależenie
+        od typu każdego z kanałów, każdy z wpisów w tablicy <code>$feedArray</code> może być
+        instancją obiektu <code>Zend_Feed_Rss</code> lub <code>Zend_Feed_Atom</code>. <code>Zend_Feed</code> wyrzucu
+        wyjątek <code>Zend_Feed_Exception</code> w razie niepowodzenia, na przykład gdy otrzyma
+        w odpowiedzi kod HTTP 404 lub gdy dane kanału będą nieprawidłowe.
     </para>
 </sect1>
 
 <sect1 id="zend.feed.consuming-rss">
-    <title>Consuming an RSS Feed</title>
+    <title>Odbieranie danych z kanału informacyjnego RSS</title>
     <para>
-        Reading an RSS feed is as simple as instantiating a <code>Zend_Feed_Rss</code> object with the URL
-        of the feed:
+        Odczytywanie kanału RSS jest tak proste jak utworzenie obiektu <code>Zend_Feed_Rss</code> z adresem
+        URL kanału przekazanym do konstruktora:
         <programlisting role="php"><![CDATA[
 <?php
 
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 
 ?>]]></programlisting>
-        If any errors occur fetching the feed, a <code>Zend_Feed_Exception</code> will be thrown.
+        Jeśli wystąpi jakiś błąd podczas obróbki danych pochodzących z kanału, 
+        zostanie wyrzucony wyjątek <code>Zend_Feed_Exception</code>.
     </para>
 
     <para>
-        Once you have a feed object, you can access any of the standard RSS "channel" properties directly
-        on the object:
+        Kiedy już masz obiekt kanału informacyjnego, możesz łatwo uzyskać dostęp
+        do standardowych właściwości kanału RSS bezpośrednio na obiekcie:
         <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->title();
 
 ?>]]></programlisting>
-        Note the function syntax. <code>Zend_Feed</code> uses a convention of treating properties as XML
-        object if they are requested with variable "getter" syntax (<code>$obj->property</code>) and as
-        strings if they are access with method syntax (<code>$obj->property()</code>). This enables access
-        to the full text of any individual node while still allowing full access to all children.
+        Zwróć uwagę na składnie funkcji. <code>Zend_Feed</code> używa konwencji 
+        traktującej właściwości jak obiekt XML gdy próbujemy uzyskać do nich dostęp
+        za pomocą składni "getter" (<code>$obj->property</code>) i jako łańcuch
+        znaków gdy próbujemy uzyskać dostęp jak do metody (<code>$obj->property()</code>). 
+        To pozwala na pełny dostęp do danych tekstowych przy jednoczesnym dostępie
+        do wszystkich niższych składników.
     </para>
 
     <para>
-        If channel properties have attributes, they are accessible using PHP's array syntax:
+        Jeśli właściwości kanału mają atrybuty, są one dostępne przy użyciu składni
+        tablic PHP:
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -160,9 +174,10 @@ echo $channel->category['domain'];
     </para>
 
     <para>
-        Most commonly you'll want to loop through the feed and do something with its entries.
-        <code>Zend_Feed_Abstract</code> implements PHP's <code>Iterator</code> interface, so printing all
-        titles of articles in a channel is just a matter of:
+        Najczęściej będziesz chciał przejść pętlą po danych kanału i zrobić coś
+        z jego wpisami. Klasa <code>Zend_Feed_Abstract</code> implementuje wbudowany
+        w PHP interfejs <code>Iterator</code>, więc wyświetlenie wszystkich tytułów
+        artykułów z kanału jest bardzo proste:
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -171,131 +186,134 @@ foreach ($channel as $item) {
 }
 
 ?>]]></programlisting>
-        If you are not familiar with RSS, here are the standard elements you can expect to be available in
-        an RSS channel and in individual RSS items (entries).
+        Jeśli nie jesteś obeznany z RSS, poniżej znajdziesz opis podstawowych
+        składników, które możesz znaleść w kanale RSS i w jego indywidualnych
+        elementach (wpisach).
     </para>
 
     <para>
-        Required channel elements:
-    </para>
-
-    <para>
-        <itemizedlist>
-            <listitem>
-                <para><code>title</code> - The name of the channel</para>
-            </listitem>
-            <listitem>
-                <para><code>link</code> - The URL of the web site corresponding to the channel</para>
-            </listitem>
-            <listitem>
-                <para><code>description</code> - A sentence or several describing the channel</para>
-            </listitem>
-        </itemizedlist>
-    </para>
-
-    <para>
-        Common optional channel elements:
+        Wymagane składniki kanału:
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>pubDate</code> - The publication date of this set of content, in RFC 822 date
-                format</para>
+                <para><code>title</code> - Nazwa kanału</para>
             </listitem>
             <listitem>
-                <para><code>language</code> - The language the channel is written in</para>
+                <para><code>link</code> - Adres URL strony internetowej odpowiadającej kanałowi</para>
             </listitem>
             <listitem>
-                <para><code>category</code> - One or more (specified by multiple tags) categories the
-                channel belongs to</para>
+                <para><code>description</code> - Opis kanału</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        RSS <code>&lt;item&gt;</code> elements do not have any strictly required elements. However, either
-        <code>title</code> or <code>description</code> must be present.
-    </para>
-
-    <para>
-        Common item elements:
+        Opcjonalne składniki kanału:
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>title</code> - The title of the item</para>
+                <para><code>pubDate</code> - Data publikacji zawartości, format RFC 822 format</para>
             </listitem>
             <listitem>
-                <para><code>link</code> - The URL of the item</para>
+                <para><code>language</code> - Język kanału</para>
             </listitem>
             <listitem>
-                <para><code>description</code> - A synopsis of the item</para>
-            </listitem>
-            <listitem>
-                <para><code>author</code> - The author's email address</para>
-            </listitem>
-            <listitem>
-                <para><code>category</code> - One more more categories that the item belongs to</para>
-            </listitem>
-            <listitem>
-                <para><code>comments</code> - URL of comments relating to this item</para>
-            </listitem>
-            <listitem>
-                <para><code>pubDate</code> - The date the item was published, in RFC 822 date format</para>
+                <para><code>category</code> - Jedna lub więcej kategorii do których należy kanał</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        In your code you can always test to see if an element is non-empty with:
+        Elementy RSS <code>&lt;item&gt;</code> nie mają wymaganych składników,
+        jednak albo składnik <code>title</code> albo <code>description</code> musi
+        istnieć w elemencie.
+    </para>
+
+    <para>
+        Składniki elementu kanału:
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para><code>title</code> - Tytuł elementu</para>
+            </listitem>
+            <listitem>
+                <para><code>link</code> - Adres URL elementu</para>
+            </listitem>
+            <listitem>
+                <para><code>description</code> - Opis elementu</para>
+            </listitem>
+            <listitem>
+                <para><code>author</code> - Adres email autora elementu</para>
+            </listitem>
+            <listitem>
+                <para><code>category</code> - Jedna lub więcej kategorii do których należy element</para>
+            </listitem>
+            <listitem>
+                <para><code>comments</code> - Adres URL komentarzy do tego elementu</para>
+            </listitem>
+            <listitem>
+                <para><code>pubDate</code> - Data publikacji elementu, w formacie RFC 822</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        W twoim kodzie zawsze możesz sprawdzić czy element nie jest pusty za pomocą:
         <programlisting role="php"><![CDATA[
 <?php
 
 if ($item->propname()) {
-    // ... proceed.
+    // ... kontynuuj.
 }
 
 ?>]]></programlisting>
     </para>
 
     <para>
-        If you use <code>$item->propname</code> instead, you will always get an empty object which will
-        evaluate to <code>TRUE</code>, so your check will fail.
+        Jeśli zamiast tego użyjesz <code>$item->propname</code>, zawsze dostaniesz
+        pusty obiekt który zostanie skonwertowany do wartości <code>TRUE</code>, 
+        więc test zawiedzie.
     </para>
 
     <para>
-        For further information, the official RSS 2.0 specification is available at:
+        Więcej informacji dostępnych jest w oficjalnej specyfikacji RSS 2.0:
         <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
     </para>
 </sect1>
 
 <sect1 id="zend.feed.consuming-atom">
-<title>Consuming an Atom Feed</title>
+<title>Odbieranie danych z kanału informacyjnego Atom</title>
 
     <para>
-        <code>Zend_Feed_Atom</code> is used in much the same way as <code>Zend_Feed_Rss</code>. It provides
-        the same access to feed-level properties and iteration over entries in the feed. The main
-        difference is in the structure of the Atom protocol itself. Atom is a successor to RSS; it is more
+        <code>Zend_Feed_Atom</code> jest używany w prawie taki sam sposób jak
+        <code>Zend_Feed_Rss</code>. Zapewnia taki sam dostęp do właściwości samego
+        kanału i taką samą iterację po wpisach w kanale. Główną różnicą jest sama
+        struktura protokołu Atom. Atom is a successor to RSS; it is more
         generalized protocol and it is designed to deal more easily with feeds that provide their full
         content inside the feed, splitting RSS' <code>description</code> tag into two elements,
         <code>summary</code> and <code>content</code>, for that purpose.
     </para>
 
     <example>
-        <title>Basic Use of an Atom Feed</title>
+        <title>Podstawowe użycie kanału Atom</title>
         <para>
-            Read an Atom feed and print the <code>title</code> and <code>summary</code> of each entry:
+            Odczytywanie kanału Atom i wyświetlenie pól <code>title</code> i <code>summary</code>
+            dla każdego z wpisów:
         </para>
         <programlisting role="php"><![CDATA[
 <?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/');
-echo 'The feed contains ' . $feed->count() . ' entries.' . "\n\n";
+echo 'Kanał zawiera ' . $feed->count() . ' wpisów.' . "\n\n";
 foreach ($feed as $entry) {
-    echo 'Title: ' . $entry->title() . "\n";
-    echo 'Summary: ' . $entry->summary() . "\n\n";
+    echo 'Tytuł: ' . $entry->title() . "\n";
+    echo 'Opis: ' . $entry->summary() . "\n\n";
 }
 
 ?>]]>   </programlisting>
