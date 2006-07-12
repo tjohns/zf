@@ -9,14 +9,14 @@
         <para>
             Zend_Db_Select ist ein Werkzeug, dass dich beim Erstellen von datenbankunabhängigen SQL 
             SELECT Abfragen unterstützt. Offensichtlich kann dies nicht perfekt sein, dennoch reicht
-            die Unterstützung weit, um deine Abfragen zwischen Datenbanken portierbar zu machen. 
-            Zusätzlich hilft es dir dabei, deine Abfragen gegen Attacken per SQL Injection 
+            die Unterstützung soweit, um deine Abfragen zwischen Datenbanken portierbar zu machen. 
+            Zusätzlich hilft es dir dabei deine Abfragen, gegen Attacken per SQL Injection, 
             resistent zu machen.
         </para>
 
         <para>
-            Der einfachste Weg, um eine Instant von Zend_Db_Select zu erstellen, ist die 
-            Zend_Db_Adapter::select() Methode zu verwenden.
+            Der einfachste Weg, um eine Instanz von Zend_Db_Select zu erstellen, ist die 
+            Verwendung der Zend_Db_Adapter::select() Methode.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -33,15 +33,15 @@ $params = array (
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 
 $select = $db->select();
-// $select ist nun ein Zend_Db_Select Objek, das nur für die Verwendung des PDO_MYSQL 
+// $select ist nun ein Zend_Db_Select Objekt, das nur für die Verwendung des PDO_MYSQL 
 // Adapters konfiguriert wurde.
 
 ?>]]></programlisting>
 
         <para>
-            Du kannst dann deine SELECT Anfrage durch Verwendung des Objektes und seiner Methoden 
-            erstellen, und danach einen String zu generieren, um ihn zurück an den Zend_Db_Adapter
-            für Abfragen zu übergeben.
+            Du kannst deine SELECT Anfrage durch Verwendung des Objektes und seiner Methoden 
+            erstellen, und danach einen String generieren, um ihn für Abfragen zurück an den 
+            Zend_Db_Adapter zu übergeben.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -54,7 +54,7 @@ $select = $db->select();
 //     LIMIT 10 OFFSET 20
 //
 
-// Du kannst schrittweisen Stil verwenden...
+// Du kannst einen schrittweisen Stil verwenden...
 $select->from('round_table', '*');
 $select->where('noble_title = ?', 'Sir');
 $select->order('first_name');
@@ -78,8 +78,8 @@ $result = $db->fetchAll($select);
 ?>]]></programlisting>
 
         <para>
-            Du kannst auch eingebundene Parameter in deinen Abfragen verwenden statt des in
-            schrittweisen Anführungszeichen setzen.
+            Du kannst auch eingebundene Parameter in deinen Abfragen verwenden statt alles in
+            schrittweise Anführungszeichen setzen.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -111,8 +111,8 @@ $result = $db->fetchAll($select, $params);
 
         <para>
             Um Spalten einer bestimmten Tabelle zu selektieren, verwende die from() Methode, unter
-            Angabe der Tabelle und der Spalten, die du erhalten möchtest. Du kannst Tabellen und 
-            Spalten Pseudonyme verwenden und du kannst from() so oft wie nötig verwenden. 
+            Angabe der Tabelle und der Spalten, die du erhalten möchtest. Du kannst Tabellen- und 
+            Spaltenpseudonyme verwenden und du kannst from() so oft wie nötig verwenden. 
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -175,13 +175,13 @@ $select->join('bar', 'foo.id = bar.id', '*');
         <para>
             Um WHERE Bedingungen hinzuzufügen, verwende die where() Methode. Du kannst entweder 
             einen normalen String oder einen String mit Fragezeichen als Platzhalter und einen 
-            zu ersetzenden Wert übergeben (der Wert wird in Anführungszeichen gesetzt mittels
-            Zend_Db_Adapter::quoteInto).
+            zu ersetzenden Wert übergeben (der Wert wird mittels
+            Zend_Db_Adapter::quoteInto in Anführungszeichen gesetzt).
         </para>
 
         <para>
             Mehrfache Aufrufe von where() verbinden die Bedingungen mit einem logischen AND; wenn
-            du einen Verbund mit logischem OR benötigst, verwenden orWhere().
+            du einen Verbund mit logischem OR benötigst, verwende orWhere().
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -327,7 +327,7 @@ $select->order(array('noble_title DESC', 'first_name'));
         </para>
 
         <para>
-            Um die erhaltenen Ergebnisse zu limitieren per Anzahl und Offset, verwende die limit()
+            Um die erhaltenen Ergebnisse zu limitieren, per Anzahl und Offset, verwende die limit()
             Methode mit einer Anzahl und optionalem Offset.
         </para>
 
