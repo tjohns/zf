@@ -778,7 +778,7 @@ abstract class Zend_Pdf_FileParser_Font_OpenType extends Zend_Pdf_FileParser_Fon
             $subtableOffset = $this->readUInt(4);
             if ($subtableOffset < 0) {    // Sanity check for 4-byte unsigned on 32-bit platform
                 $this->_debugLog('Offset 0x%x out of range for platformID: %d; skipping',
-                                 $tableOffset, $platformID);
+                                 $subtableOffset, $platformID);
                 continue;
             }
 
