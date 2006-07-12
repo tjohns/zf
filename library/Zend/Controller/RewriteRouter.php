@@ -56,7 +56,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         $this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
         
         // Route for Router v1 compatibility
-        $this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));
+        $this->addRoute('compat', ':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
         
         // Set magic default of RewriteBase:
         $filename = basename($_SERVER['SCRIPT_FILENAME']);
