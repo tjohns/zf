@@ -7,6 +7,7 @@ require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
 require_once 'Zend/Cache/AllTests.php';
+require_once 'Zend/Db/AllTests.php';
 require_once 'Zend/ConfigTest.php';
 require_once 'Zend/Config/AllTests.php';
 require_once 'Zend/Controller/AllTests.php';
@@ -35,6 +36,8 @@ class Zend_AllTests
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend');
 
         $suite->addTest(Zend_Cache_AllTests::suite());
+        $suite->addTestSuite('Zend_DbTest');
+        $suite->addTest(Zend_Db_AllTests::suite());
         $suite->addTestSuite('Zend_ConfigTest');
         $suite->addTest(Zend_Config_AllTests::suite());
         $suite->addTest(Zend_Controller_AllTests::suite());
