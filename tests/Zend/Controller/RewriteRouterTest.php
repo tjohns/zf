@@ -58,24 +58,28 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/home/martel/WWW/test/index.php';
         $this->router = new Zend_Controller_RewriteRouter();
         $this->dispatcher = new Zend_Controller_Dispacher_Mock();
+        
+        $this->version = (version_compare(PHPUnit2_Runner_Version::id(), '3.0.0alpha11') >= 0) ? 3 : 2;
     }
 
-/* 
     public function testDefaultRoute()
     {
-        $routes = $this->getNonPublicProperty($this->router, '_routes');
-        $this->assertType('Zend_Controller_Router_Route', $routes['default']);
+        if ($this->version == 3) {
+            $routes = $this->getNonPublicProperty($this->router, '_routes');
+            $this->assertType('Zend_Controller_Router_Route', $routes['default']);
+        }
     }
 
     public function testGetRoute()
     {
-        $route = $this->router->getRoute('default');
-        $routes = $this->getNonPublicProperty($this->router, '_routes');
-
-        $this->assertType('Zend_Controller_Router_Route', $route);
-        $this->assertSame($route, $routes['default']);
+        if ($this->version == 3) {
+            $route = $this->router->getRoute('default');
+            $routes = $this->getNonPublicProperty($this->router, '_routes');
+    
+            $this->assertType('Zend_Controller_Router_Route', $route);
+            $this->assertSame($route, $routes['default']);
+        }
     }
-*/
 
     public function testGetNonExistentRoute()
     {
@@ -89,23 +93,22 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
 
     }
 
-/*
     public function testAddRoutes()
     {
-        $this->router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
-        $routes = $this->getNonPublicProperty($this->router, '_routes');
-
-        $this->assertSame(3, count($routes));
-        $this->assertType('Zend_Controller_Router_Route', $routes['archive']);
-
-        $this->router->addRoute('register', 'register/:action', array('controller' => 'profile', 'action' => 'register'));
-        $routes = $this->getNonPublicProperty($this->router, '_routes');
-
-        $this->assertSame(4, count($routes));
-        $this->assertType('Zend_Controller_Router_Route', $routes['register']);
-
+        if ($this->version == 3) {
+            $this->router->addRoute('archive', 'archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
+            $routes = $this->getNonPublicProperty($this->router, '_routes');
+    
+            $this->assertSame(3, count($routes));
+            $this->assertType('Zend_Controller_Router_Route', $routes['archive']);
+    
+            $this->router->addRoute('register', 'register/:action', array('controller' => 'profile', 'action' => 'register'));
+            $routes = $this->getNonPublicProperty($this->router, '_routes');
+    
+            $this->assertSame(4, count($routes));
+            $this->assertType('Zend_Controller_Router_Route', $routes['register']);
+        }
     }
-*/
 
     public function testRoute()
     {
@@ -125,13 +128,15 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     public function testRouteNotMatched()
     {
         
-        $this->markTestSkipped("It's no longer easy to get a mismatch with defaults set so broadly. To be fixed soon.");
-        
-        $_SERVER['REQUEST_URI'] = 'archive/action/bogus';
-        $token = $this->router->route($this->dispatcher);
-
-        $this->assertSame('index', $token->getControllerName());
-        $this->assertSame('noRoute', $token->getActionName());
+        if ($this->version == 3) {
+            $this->markTestSkipped("It's no longer easy to get a mismatch with defaults set so broadly. To be fixed soon.");
+            
+            $_SERVER['REQUEST_URI'] = 'archive/action/bogus';
+            $token = $this->router->route($this->dispatcher);
+    
+            $this->assertSame('index', $token->getControllerName());
+            $this->assertSame('noRoute', $token->getActionName());
+        }
     }
 
     /*
@@ -157,27 +162,31 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     public function testRouteWithEncodedUrl()
     {
 
-        $this->markTestSkipped('To be resolved with Zend_Http_Request');
-
-        $this->router->addRoute('test', 'test/:type/:something', array('controller' => 'test', 'action' => 'act'));
-
-        $_SERVER['REQUEST_URI'] = 'test/abc%34asdf/def';
-        $token = $this->router->route($this->dispatcher);
-
-        $this->assertSame('act', $token->getActionName());
-        $this->assertSame('test', $token->getControllerName());
-
-        $params = $token->getParams();
-
-        $this->assertSame('abc4asdf', $params['type']);
-        $this->assertSame('def', $params['something']);
+        if ($this->version == 3) {
+    
+            $this->markTestSkipped('To be resolved with Zend_Http_Request');
+    
+            $this->router->addRoute('test', 'test/:type/:something', array('controller' => 'test', 'action' => 'act'));
+    
+            $_SERVER['REQUEST_URI'] = 'test/abc%34asdf/def';
+            $token = $this->router->route($this->dispatcher);
+    
+            $this->assertSame('act', $token->getActionName());
+            $this->assertSame('test', $token->getControllerName());
+    
+            $params = $token->getParams();
+    
+            $this->assertSame('abc4asdf', $params['type']);
+            $this->assertSame('def', $params['something']);
+            
+        }
 
     }
 
-    public function testDefaulRouteMatched()
+    public function testDefaultRouteMatched()
     {
 
-        $this->router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
+        $this->router->addRoute('archive', 'archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
         $this->router->addRoute('register', 'register/:action', array('controller' => 'profile', 'action' => 'register'));
 
         $_SERVER['REQUEST_URI'] = 'ctrl/act';
@@ -192,7 +201,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     public function testFirstRouteMatched()
     {
 
-        $this->router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
+        $this->router->addRoute('archive', 'archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
         $this->router->addRoute('register', 'register/:action', array('controller' => 'profile', 'action' => 'register'));
 
         $_SERVER['REQUEST_URI'] = 'archive/2006';

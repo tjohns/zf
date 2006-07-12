@@ -151,7 +151,7 @@ class Zend_Controller_RouteTest extends PHPUnit2_Framework_TestCase
     public function testVariablesWithDefaultAndValue()
     {
 
-        $route = new Zend_Controller_Router_Route(':controller/:action/:year', array('year' => 2006));
+        $route = new Zend_Controller_Router_Route(':controller/:action/:year', array('year' => '2006'));
         $values = $route->match('ctrl/act/2000');
 
         $this->assertSame('ctrl', $values['controller']);
@@ -185,7 +185,7 @@ class Zend_Controller_RouteTest extends PHPUnit2_Framework_TestCase
     public function testVariablesWithDefaultAndRequirement()
     {
 
-        $route = new Zend_Controller_Router_Route(':controller/:action/:year', array('year' => 2006), array('year' => '\d+'));
+        $route = new Zend_Controller_Router_Route(':controller/:action/:year', array('year' => '2006'), array('year' => '\d+'));
         $values = $route->match('ctrl/act/2000');
 
         $this->assertSame('ctrl', $values['controller']);

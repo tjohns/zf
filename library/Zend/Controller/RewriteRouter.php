@@ -46,7 +46,7 @@ require_once 'Zend/Controller/Router/Route.php';
 class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 {
 
-    protected $_rewriteBase = '/';
+    protected $_rewriteBase = '';
     protected $_routes = array();
     protected $_currentRoute = null;
 
@@ -65,7 +65,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
             // Default of '' for cases when SCRIPT_NAME doesn't contain a filename (ZF-205)
             $base = (strpos($base, $filename) !== false) ? dirname($base) : '';
         }
-        $this->_rewriteBase = rtrim($base, '/');
+        $this->_rewriteBase = rtrim($base, '/\\');
     }
 
     public function addRoute($name, $map, $params = array(), $reqs = array())
