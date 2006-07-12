@@ -88,7 +88,7 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
      */
     public function describeTable($table)
     {
-        $sql = "SELECT a.attnum, a.attname AS field, t.typname AS type, "
+        $sql = "SELECT a.attnum, a.attname AS field, t.typname AS type, format_type(a.atttypid, a.atttypmod) AS complete_type, "
              . "a.attnotnull AS isnotnull, "
              . "( SELECT 't' "
              . "FROM pg_index "
@@ -105,14 +105,14 @@ class Zend_Db_Adapter_Pdo_Pgsql extends Zend_Db_Adapter_Pdo_Abstract
              . "AND a.attrelid = c.oid "
              . "AND a.atttypid = t.oid "
              . "ORDER BY a.attnum ";
-
         $result = $this->fetchAll($sql);
         $descr = array();
         foreach ($result as $key => $val) {
             if ($val['type'] === 'varchar') {
                 // need to add length to the type so we are compatible with
                 // Zend_Db_Adapter_Pdo_Pgsql!
-                $val['type'] .= '(' . $val['length'] . ')';
+                $length = preg_replace('~.*\(([0-9]*)\).*~', '$1', $val['complete_type']);
+                $val['type'] .= '(' . $length . ')';
             }
             $descr[$val['field']] = array(
                 'name'    => $val['field'],
