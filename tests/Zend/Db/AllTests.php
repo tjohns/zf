@@ -13,6 +13,10 @@ if(TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_ENABLED == true) {
     require_once 'Zend/Db/Adapter/Pdo/MysqlTest.php';
 }
 
+if(TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED == true) {
+    require_once 'Zend/Db/Adapter/Pdo/SqliteTest.php';
+}
+
 class Zend_Db_AllTests
 {
     public static function main()
@@ -29,6 +33,10 @@ class Zend_Db_AllTests
         }
         if(TESTS_ZEND_DB_ADAPTER_PDO_MYSQL_ENABLED == true) {
             $suite->addTestSuite('Zend_Db_Adapter_Pdo_MysqlTest');
+        }
+
+        if(TESTS_ZEND_DB_ADAPTER_PDO_SQLITE_ENABLED == true) {
+            $suite->addTestSuite('Zend_Db_Adapter_Pdo_SqliteTest');
         }
 
         return $suite;
