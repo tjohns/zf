@@ -139,12 +139,12 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
             }
         }
 
-        $actionObj = new Zend_Controller_Dispatcher_Token($controller, $action, $params);
+        $token = new Zend_Controller_Dispatcher_Token($controller, $action, $params);
 
-        if (!$dispatcher->isDispatchable($actionObj)) {
+        if (!$dispatcher->isDispatchable($token)) {
             throw new Zend_Controller_Router_Exception('Request could not be mapped to a route.');
         } else {
-            return $actionObj;
+            return $token;
         }
 
     }
