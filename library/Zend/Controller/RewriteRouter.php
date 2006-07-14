@@ -52,11 +52,13 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 
     public function __construct()
     {
-        // Add default route (for root url - '/') 
-        $this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
+        // Add default route (for root url - '/')
+        $default = new Zend_Controller_Router_Route('', array('controller' => 'index', 'action' => 'index'));
+        $this->addRoute('default', $default);
         
         // Route for Router v1 compatibility
-        $this->addRoute('compat', ':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+        $compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+        $this->addRoute('compat', $compat); 
         
         // Set magic default of RewriteBase:
         $filename = basename($_SERVER['SCRIPT_FILENAME']);
@@ -68,9 +70,14 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         $this->_rewriteBase = rtrim($base, '/\\');
     }
 
-    public function addRoute($name, $map, $params = array(), $reqs = array())
-    {
-        $this->_routes[$name] = new Zend_Controller_Router_Route($map, $params, $reqs);
+    public function addRoute($name, Zend_Controller_Router_Route_Interface $route) {
+        $this->_routes[$name] = $route;
+    }
+
+    public function addRoutes($routes) {
+        foreach ($routes as $name => $route) {
+            $this->addRoute($name, $route);
+        }
     }
 
     public function getRoute($name)
@@ -85,6 +92,11 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         if (!isset($this->_currentRoute))
             throw new Zend_Controller_Router_Exception("Current route is not defined");
         return $this->_currentRoute;
+    }
+
+    public function getRoutes()
+    {
+        return $this->_routes;
     }
 
     public function setRewriteBase($value)

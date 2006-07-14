@@ -32,5 +32,6 @@ require_once 'Zend/Controller/Router/Exception.php';
 interface Zend_Controller_Router_Route_Interface {
     public function __construct($route, $defaults = array(), $reqs = array());
     public function match($path);
+    public function assemble($data = array());
 }
 
