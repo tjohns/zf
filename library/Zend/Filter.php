@@ -514,10 +514,10 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is a valid US ZIP, FALSE otherwise.
+     * Returns TRUE if it is a valid US ZIP, FALSE otherwise.
      *
      * @param mixed $value
-     * @return mixed
+     * @return bool
      */
     public static function isZip($value)
     {
