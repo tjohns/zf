@@ -23,7 +23,7 @@
         <title>Zeilen holen</title>
 
         <para>
-            Das erste das gemacht werden muß, ist die Zend_Db_Table Klasse zu instanziieren.
+            Das Erste das gemacht werden muß, ist die Zend_Db_Table Klasse zu instanziieren.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -50,10 +50,10 @@ $table = new RoundTable();
 
         <para>
             Anschließend kann eine Zeile von der Datenbank empfangen werden durch 
-            Verwendung von Zend_Db_Table::find() mit einem einzelnen Schlüssen, oder durch 
+            Verwendung von Zend_Db_Table::find() mit einem einzelnen Schlüssen oder durch 
             Verwendung von Zend_Db_Table::fetchRow(). Das zurückgegebene Ergebnis ist ein
-            Zend_Db_Table_Row Objekt wobei jede Eigenschaft im Objekt ein "camelCaps" Name
-            ist welcher auf einen "unterstrich_Wort" Spaltennamen der Tabelle verweist.
+            Zend_Db_Table_Row Objekt, wobei jede Eigenschaft im Objekt ein "camelCaps" Name
+            ist, welcher auf einen "unterstrich_Wort" Spaltennamen der Tabelle verweist.
             Z.B. "first_name" in der Tabelle wird "firstName" in den Eigenschaften des Objektes.
         </para>
 
@@ -81,8 +81,8 @@ $row = $table->fetchRow('first_name = "Robin"');
         <title>Werte ändern</title>
 
         <para>
-            Einen Wert zu Ändern ist sehr einfach: nur mit den Objekt Eigenschaften
-            arbeiten so wie mit denen von jedem anderen Objekt. Anschließend kann mit
+            Einen Wert zu ändern, ist sehr einfach: man muss nur mit den Objekt Eigenschaften
+            arbeiten, so wie mit denen von jedem anderen Objekt. Anschließend kann mit
             save() die Zeile in die Tabelle zurückgespeichert werden.
         </para>
 
@@ -110,7 +110,7 @@ $row->save();
         </programlisting>
 
         <para>
-            Trotzdem ist es nicht erlaubt die Primary Key Werte zu ändern;
+            Trotzdem ist es nicht erlaubt, den Wert des Primärschlüssels zu ändern;
             Wenn das versucht wird, wird Zend_Db_Table_Row eine Exception werfen.
         </para>
 
@@ -122,7 +122,7 @@ $table = new RoundTable();
 // Einen Eintrag von der Tabelle als Zend_Db_Table_Row objekt holen
 $row = $table->fetchRow('first_name = "Robin"');
 
-// Kann der Primary Key "id" verändert werden ?
+// Kann der Primärschlüssel "id" verändert werden ?
 try {
     $row->id = 5;
     echo "Diese Meldung wird nicht angezeigt, da eine Exception geworfen wird.";
