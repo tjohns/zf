@@ -58,6 +58,7 @@ class Zend_FilterTest extends PHPUnit2_Framework_TestCase
     public function testIsDigits()
     {
         $this->assertTrue(Zend_Filter::isDigits(123456), '123456 is just digits');
+        $this->assertTrue(Zend_Filter::isDigits(1), '1 is just digits');
         $this->assertFalse(Zend_Filter::isDigits('12345A'), '"12345A" is not just digits');
     }
 

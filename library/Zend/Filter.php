@@ -217,15 +217,15 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if every character is a digit, FALSE otherwise.
+     * Returns TRUE if every character is a digit, FALSE otherwise.
      * This is just like isInt(), except there is no upper limit.
      *
      * @param mixed $value
-     * @return mixed
+     * @return bool
      */
     public static function isDigits($value)
     {
-        return ctype_digit($value);
+        return ctype_digit((string) $value);
     }
 
     /**
