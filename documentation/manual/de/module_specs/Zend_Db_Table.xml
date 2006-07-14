@@ -37,14 +37,14 @@ $params = array (
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 
-// Erzeuge einen Adapter für alle Zend_Db_Table Objekte vor
+// Erzeuge einen Standardadapter für alle Zend_Db_Table Objekte
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 ?>]]>
         </programlisting>
 
         <para>
-            Als nächstes nehmen wir an, dass du eine Tabelle mit Namen 'round_table' in deiner 
+            Als nächstes nehmen wir an, dass du eine Tabelle mit dem Namen 'round_table' in deiner 
             Datenbank hast. Um Zend_Db_Table mit dieser Datenbanktabelle zu verwenden, erweitere
             Zend_Db_Table, um eine neue Klasse mit Namen RoundTable zu erstellen (beachte die
             "CamelCaps"-Schreibweise für den Namen 'round_table'). Dann können wir die 
@@ -78,7 +78,7 @@ $table = new RoundTable();
 class ClassName extends Zend_Db_Table
 {
     // Der standardmäßige Tabellennamen ist 'class_name'
-    // aber wenn du auf etwas anderes verwenden möchtest
+    // aber wir wollen etwas anderes verwenden
     protected $_name = 'another_table_name';
 }
 ?>]]>
@@ -95,7 +95,7 @@ class ClassName extends Zend_Db_Table
 class ClassName extends Zend_Db_Table
 {
     // Der standardmäßige Primärschlüssel ist 'id'
-    // aber wenn du auf etwas anderes verwenden möchtest
+    // aber wir wollen etwas anderes verwenden
     protected $_primary = 'another_column_name';
 }
 ?>]]>
@@ -162,8 +162,8 @@ $id = $table->insert($data);
 
         <para>
             Um eine beliebige Anzahl an Zeilen in deiner Tabelle zu aktualisieren, rufe update() mit
-            einem assoziativen Array mit Spalte:Wert Daten auf zusammen mit einer WHERE Klausel, um
-            anzugeben, welche Zeilen aktualisiert werden sollen. Es wird die Tabelle aktualisiert 
+            einem assoziativen Array mit Spalte:Wert Daten zusammen mit einer WHERE Klausel auf, um
+            anzugeben welche Zeilen aktualisiert werden sollen. Die Tabelle wird aktualisiert 
             und die Anzahl der betroffenen Zeilen zurück gegeben.
         </para>
 
@@ -203,8 +203,8 @@ $rows_affected = $table->update($set, $where);
 
         <para>
             Um eine beliebige Anzahl an Zeilen aus deiner Tabelle zu löschen, rufe delete() mit 
-            einer WHERE Klausel auf, um festzulegen, welche Zeilen gelöscht werden sollen. Es wird 
-            die Anzahl der gelöschten Zeilen zurück gegeben.
+            einer WHERE Klausel auf, um festzulegen welche Zeilen gelöscht werden sollen.
+            Die Anzahl der gelöschten Zeilen wird zurück gegeben.
         </para>
 
         <para>
@@ -236,8 +236,8 @@ $rows_affected = $table->delete($where);
         <title>Zeilen mit Hilfe des Primärschlüssels finden</title>
 
         <para>
-            Der Einfachheit halber kannst du Zeilen aus deiner Tabelle leicht anhand des 
-            Primärschlüssels mit der find() Methode holen. Diese Methode gibt ein Zend_Db_Table_Row
+            Der Einfachheit halber kannst du Zeilen aus deiner Tabelle leicht, anhand des 
+            Primärschlüssels mit der find() Methode, holen. Diese Methode gibt ein Zend_Db_Table_Row
             Objekt zurück, wenn du find() nur für einen Schlüssel verwendest, oder ein 
             Zend_Db_Table_Rowset Objekt, wenn du find() für mehrere Schlüssel verwendest.
         </para>
