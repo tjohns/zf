@@ -64,7 +64,8 @@ class Zend_Search_Lucene_Search_QueryTokenizer implements Iterator
 
         $currentToken = '';
         for ($count = 0; $count < strlen($inputString); $count++) {
-            if (ctype_alnum( $inputString{$count} )) {
+            if (ctype_alnum( $inputString{$count} ) ||
+                $inputString{$count} == '_') {
                 $currentToken .= $inputString{$count};
             } else {
                 // Previous token is finished
