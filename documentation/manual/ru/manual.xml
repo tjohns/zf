@@ -49,6 +49,10 @@
         &module_specs.Zend_Controller-Subclassing;
         &module_specs.Zend_Controller-Plugins;
     </chapter>
+    <chapter id="zend.controller.rewriterouter">
+        <title>Zend_Controller_RewriteRouter</title>
+        &module_specs.Zend_Controller_RewriteRouter;
+    </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
         &module_specs.Zend_Db_Adapter;
