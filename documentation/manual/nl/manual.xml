@@ -34,7 +34,15 @@
         <title>Zend</title>
         &module_specs.Zend;
     </chapter>
-	<chapter id="zend.controller">
+    <chapter id="zend.cache">
+	    <title>Zend_Cache</title>
+	    &module_specs.Zend_Cache;
+    </chapter>
+    <chapter id="zend.config">
+	    <title>Zend_Config</title>
+	    &module_specs.Zend_Config;
+    </chapter>
+    <chapter id="zend.controller">
 		<title>Zend_Controller</title>
 		&module_specs.Zend_Controller-Overview;
 		&module_specs.Zend_Controller-GettingStarted;
@@ -44,6 +52,7 @@
     <chapter id="zend.db">
         <title>Zend_Db</title>
         &module_specs.Zend_Db_Adapter;
+	&module_specs.Zend_Db_Profiler;
         &module_specs.Zend_Db_Select;
         &module_specs.Zend_Db_Table;
         &module_specs.Zend_Db_Table_Row;
@@ -106,6 +115,7 @@
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
         &module_specs.Zend_XmlRpc;
+	&module_specs.Zend_XmlRpc_Client;
     </chapter>
     <!-- &ref.faq; -->
     &ref.coding_standard;
