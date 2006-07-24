@@ -5,18 +5,18 @@
     </para>
     <para>
       Caching in het Zend Framework word door frontends uitgevoerd, terwijl cache records door backend
-      adapters worden opgeslaan (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...) via
-      een flexibel systeem van IDs en tags. Het gebruik van deze laatsten laat toe eenvoudig bepaalde
+      adapters worden opgeslagen (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...) via
+      een flexibel systeem van IDs en tags. Het gebruik van deze tags laat toe eenvoudig bepaalde
       record types te verwijderen (bijvoorbeeld: "verwijder alle cache records gemarkeerd met een
       bepaalde tag").
     </para>
     <para>
-        Het hart van de <code>Zend_Cache_Core</code> module is standaard, flexibel en configurabel.
+        De kern van de <code>Zend_Cache_Core</code> module is standaard, flexibel en configurabel.
         Er bestaan echter cache frontends voor specifieke doeleinden die <code>Zend_Cache_Core</code>
         uitbreiden: <code>Output</code>, <code>File</code>, <code>Function</code> en <code>Class</code>.
     </para>
     <example>
-        <title>Een frontend bekomen met <code>Zend_Cache::factory()</code></title>
+        <title>Een frontend verkrijgen met <code>Zend_Cache::factory()</code></title>
         <para>
             <code>Zend_Cache::factory()</code> instantieert juiste objecten en bindt ze samen.
             In dit eerste voorbeeld zullen we <code>Core</code> frontend gebruiken, samen met
@@ -25,15 +25,15 @@
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // cache levenstijd van 2 uur
+   'lifeTime' => 7200, // cache levensduur van 2 uur
    'automaticSerialization' => true
 );
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Map waar we de cache bestanden wegschrijven
+    'cacheDir' => './tmp/' // Directory waar we de cache bestanden wegschrijven
 );
 
-// getting a Zend_Cache_Core object
+// verkrijgen van een Zend_Cache_Core object
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 ?>]]></programlisting>
@@ -41,8 +41,8 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
        <para>
             Nu we een frontend hebben kunnen we eender welk type data cachen (we activeerden serialisatie).
             We kunnen bijvoorbeeld het resultaat van een zeer "dure" database query cachen. Nadat het
-            in de cache is opgeslaan, is het zelfs niet meer nodig een verbinding met de database te maken;
-            records worden van de cache gehaald en gedeserialiseerd.
+            in de cache is opgeslagen, is het zelfs niet meer nodig een verbinding met de database te maken;
+            records worden uit de cache gehaald en gedeserialiseerd.
             <programlisting role="php"><![CDATA[<?php
 
 // $cache die in het vorige voorbeeld werd geïnitialiseerd
@@ -61,7 +61,7 @@ if(!$result = $cache->get('myresult')) {
 } else {
 
     // cache bestaat! laat het weten
-    echo "Dit komt van de cache!\n\n";
+    echo "Dit komt uit de cache!\n\n";
     
 }
 
@@ -73,7 +73,7 @@ print_r($result);
     <example>
         <title>Output cachen met de <code>Zend_Cache</code> output frontend</title>
         <para>
-            We markeren secties in dewelke we output willen cachen door er een beetje conditionele
+            We markeren secties waarin we output willen cachen door er een beetje conditionele
             logica aan toe te voegen. We zetten de sectie tussen <code>start()</code> en <code>end()</code>
             methodes (dit wordt geïllustreerd in het eerste voorbeeld en is de voornaamste strategie
             voor het cachen).
@@ -81,13 +81,13 @@ print_r($result);
         <para>
             Tussen de twee methodes output je je data zoals gewoonlijk - alle output zal worden gecached als
             de uitvoering de <code>end()</code> methode tegenkomt. Bij de volgende uitvoering zal de hele 
-            sectie worden overgeslaan ten voordele van het bekomen van de data vanaf de cache (zolang de
+            sectie worden overgeslagen ten voordele van het verkrijgen van de data uit de cache (zolang de
             cache record geldig is).
             <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
-   'lifeTime' => 30,                  // cache levenstijd van een halve minuut
-   'automaticSerialization' => false  // dit is zowieso standaard
+   'lifeTime' => 30,                  // cache levensduur van een halve minuut
+   'automaticSerialization' => false  // dit is sowieso standaard
 );
 
 $backendOptions = array('cacheDir' => './tmp/');
@@ -101,7 +101,7 @@ if(!$cache->start('mijnpagina')) {
     echo 'Hallo wereld! ';
     echo 'Dit is gecached ('.time().') ';
     
-    $cache->end(); // de output wordt opgeslaan en naar de browser gestuurd
+    $cache->end(); // de output wordt opgeslagen en naar de browser gestuurd
 }
 
 echo 'Dit word nooit gecached ('.time().').';
@@ -111,9 +111,9 @@ echo 'Dit word nooit gecached ('.time().').';
        <para>
            Merk op dat we het resultaat van <code>time()</code> tweemaal weergeven; dit is iets dynamisch
            om het voorbeeld te toetsen. Probeer het voorbeeld verschillende malen uit te voeren; je zal
-           opmerken dat het eerste nummer niet verandert, terwijl het tweede verandert naargelang de tijd
+           merken dat het eerste nummer niet verandert, terwijl het tweede verandert naargelang de tijd
            vordert. Dit komt omdat het eerste nummer samen met de andere output in de cache werd opgeslaan.
-           Na een halve minuut (we hebben de levenstijd op 30 seconden gezet) moeten de nummers opnieuw
+           Na een halve minuut (we hebben de levensduur op 30 seconden gezet) moeten de nummers opnieuw
            gelijk zijn omdat de cache record niet meer geldig is -- voor hij opnieuw word gecached. Je
            zou dit in je browser of console moeten proberen.
        </para>
@@ -128,103 +128,83 @@ echo 'Dit word nooit gecached ('.time().').';
 
 
 <sect1 id="zend.cache.theory">
-    <title>The theory of caching</title>
+    <title>De theorie van het cachencaching</title>
     <para>
-        There are three key concepts in Zend_Cache. One is the unique indentifier (a string) that is used
-        to identify cache records. The second one is the <code>'lifeTime'</code> directive as seen in the
-        examples; it defines for how long the cached resource is considered 'fresh'. The third key concept
-        is conditional execution so that parts of your code can be skipped entirely, boosting performance.
-        The main frontend function (eg. <code>Zend_Cache_Core::get()</code>) is always designed to return
-        false for a cache miss if that makes sense for the nature of a frontend. That enables end-users to
-        wrap parts of the code they would like to cache (and skip) in <code>if(){ ... }</code> statements where
-        the condition is a Zend_Cache method itself. On the end if these blocks you must save what you've
-        generated, however (eg. <code>Zend_Cache_Core::save()</code>).
+        Er zijn drie belangrijke concepten in Zend_Cache. Een is de unieke identifier (een string) die wordt gebruikt om cache records te identificeren. De tweede is de <code>'lifeTime'</code> parameter zoals gezien in de voorbeelden; het definieert hoe lang de cache als 'vers' wordt beschouwd. Het derde belangrijke concept is voorwaardelijke uitvoering zodat delen van de code compleet overgeslagen kunnen worden, waardoor de performance wordt verbeterd. De belangrijkste frontend functie (bijv. <code>Zend_Cache_Core::get()</code> is altijd ontworpen om false terug te geven wanneer er geen waarde in de cache aanwezig is wanneer dat logisch is voor de aard van de frontend. Dat staat eindgebruikers toe om delen van de code te 'wrappen' die ze willen cachen (en dus overslaan) in <code>if(){...}</code> statements waarbij de voorwaarde een Zend_Cache methode is. Aan het einde van deze blokken moet je wel opslaan wat je hebt gegenereerd (bijvoorbeeld <code>Zend_Cache_Core::save()</code>).
     </para>
     <note><para>
-        The conditional execution design of your generating code is not necessary in some frontends
-        (<code>Function</code>, for an example) when the whole logic is implemented inside the frontend.
+        Het ontwerp van de voorwaardelijke uitvoer van de gemaakte code is niet noodzakelijk in sommige frontends (bijvoorbeeld <code>Function</code>) wanneer de logica aan de frontend is geimplementeerd.
     </para></note>
     <note><para>
-        'Cache hit' is a term for a condition when a cache record is found, is valid and is 'fresh' (in other
-        words hasn't expired yet). 'Cache miss' is everything else. When a cache miss happens, you must
-        generate your data (as you would normally do) and have it cached. When you have a cache hit, on the
-        other hand, the backend automatically fetches the record from cache transparently.
+        'Cache hit' is een term voor een voorwaarde waarbij een cache record wordt gevonden, valide is en 'vers' (in andere woorden, niet verlopen) is. 'Cache miss' is al het andere. Wanneer een cache miss voorkomt moet je je data genereren zoals normaal and cachen. Wanneer je een cache hit hebt, daarentegen, haalt de backend automatisch de record uit de cache.
     </para></note>
     <sect2 id="zend.cache.factory">
-        <title>The <code>Zend_Cache</code> factory method</title>
+        <title>De <code>Zend_Cache</code> factory methode</title>
         <para>
-            A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
-            in the following example :
+            Een goede manier om een bruikbare instantie van een <code>Zend_Cache</code> frontend te bouwen wordt gegeven in het volgende voorbeeld:
             <programlisting role="php"><![CDATA[<?php
         
-# We "load" the Zend_Cache factory 
+# We "laden" de Zend_Cache factory.
 require 'Zend/Cache.php'; 
 
-# We choose a backend (for example 'File' or 'Sqlite'...)
+# we kiezen een backend (bijvoorbeeld 'File' of 'Sqlite'...)
 $backendName = '[...]';
 
-# We choose a frontend (for example 'Core', 'Output', 'Page'...)
+# We kiezen een frontend (bijvoorbeeld 'Core', 'Output', 'Page'...)
 $frontendName = '[...]';
 
-# We set an array of options for the choosen frontend
+# We zetten een array met opties voor de gekozen frontend
 $frontendOptions = array([...]);
 
-# We set an array of options for the choosen backend
+# We zetten een array met opties voor de gekozen backend
 $backendOptions = array([...]);
 
-# We make the good instance 
-# (of course, the two last arguments are optional)
+# We maken de goede instantie.
+# (natuurlijk zijn de laatste twee argumenten optioneel)
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
 ?>]]></programlisting> 
         </para> 
         <para>
-            In the following examples we will assume that the <code>$cache</code> variable holds a
-            valid, instantiated frontend as shown and that you understand how to pass parametres
-            to your chosen backends.
+            In het volgende voorbeeld zullen we uitgaan dat de <code>$cache</code> variabele een valide, geinstantieerde frontend bevat zoals getoond en dat je begrijpt hoe je parameters naar je backends kan doorgeven.
         </para>
         <note><para>
-            Always use <code>Zend_Cache::factory()</code> to get frontend instances. Instantiating
-            frontends and backends yourself will not work as expected.
+            Gebruikt altijd <code>Zend_Cache::factory()</code> om frontend instanties te krijgen. Zelf frontends en backends instantieren zal niet zoals verwacht werken.
         </para></note>
     </sect2>
     
     <sect2 id="zend.cache.tags">
-        <title>Tagging records</title>
+        <title>Records taggen</title>
         <para>
-            Tags are a way to categorize cache records. When you save a cache with the <code>save()</code>
-            method, you can set an array of tags to apply for this record. Then you will be 
-            able to clean all cache records tagged with a given tag (or tags):
+            Tags zijn een manier om je cache records te categoriseren. Wanneer je een cache opslaat met de <code>save()</code> methode, kan je een array zetten met tags voor deze record. Vervolgens heb je de mogelijkheid om alle cache records met een bepaalde tag of met bepaalde tags op te schonen:
         <programlisting role="php"><![CDATA[<?php
              
-$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
+$cache->save($veel_data, 'mijnUniekeID', array('tagA', 'tagB', 'tagC'));
             
 ?>]]></programlisting></para>
     </sect2>
     <sect2 id="zend.cache.clean">
-        <title>Cleaning the cache</title>
+        <title>Opschonen van de cache</title>
         <para>
-            To remove/invalidate in particular cache id, you can use the <code>remove()</code>
-            method :
+            Om een specifieke cache id te verwijderen/invalideren kan je de <code>remove()</code> methode gebruiken:
              <programlisting role="php"><![CDATA[<?php 
              
-$cache->remove('idToRemove');
+$cache->remove('idOmTeVerwijderen');
             
 ?>]]></programlisting>            
         </para>
         <para>
-            To remove/invalidate several cache ids in one operation, you can use the <code>clean()</code>
-            method. For example to remove all cache records :
+            Om verschillende cache ids in een operatie te verwijderen/invalideren kan je de <code>clean()</code> methode gebruiken. Bijvoorbeeld om alle cache records te verwijderen:
               <programlisting role="php"><![CDATA[<?php 
 
-// clean all records
+// Schoon alle cache records op
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 
-// clean only outdated
+// Schoon alleen verlopen records op
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
             
 ?>]]>       </programlisting>    
-            If you want to remove cache entries matching the tags 'tagA' and 'tagC':
+            Als je cache records wil verwijderen die aan tags 'tagA' en 'tagC' voldoen:
               <programlisting role="php"><![CDATA[<?php 
              
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
@@ -232,9 +212,8 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
 ?>]]>       </programlisting>
         </para>
         <para>
-            Available cleaning modes are: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
-            <code>CLEANING_MODE_MATCHING_TAG</code> and <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. The
-            latter are, as their names suggest, combined with an array of tags in cleaning operations.
+            Beschikbare opschoon modes zijn: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
+            <code>CLEANING_MODE_MATCHING_TAG</code> en <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. De laatsten zijn, zoals hun namen doen vermoeden, gecombineerd met een array van tags voor de opschoonoperatie.
         </para>
     </sect2>
 </sect1>
@@ -245,31 +224,28 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
     <sect2 id="zend.cache.core">
         <title>Zend_Cache_Core</title>
         <sect3 id="zend.cache.core.introduction">
-            <title>Introduction</title>
+            <title>Introductie</title>
             <para>
-                <code>Zend_Cache_Core</code> is a special frontend because it is the core
-                of the module. It is a generic cache frontend and is extended by other classes.
+                <code>Zend_Cache_Core</code> is een speciale frontend omdat het de kern van de module is. Het is een generieke cache frontend en wordt uitgebreid door andere classes.
             </para>
             <note><para>
-                All frontends inherit from <code>Zend_Cache_Core</code> so that its methods and options
-                (described below) would also be available in other frontends, therefore they won't be
-                documented there.
+                Alle frontends erven van <code>Zend_Cache_Core</code> zodat zijn methodes en opties (zoals hieronder beschreven) ook beschikbaar zijn in andere frontends, dus ze zullen hier niet worden gedocumenteerd.
             </para></note>
         </sect3>
         <sect3 id="zend.cache.core.options">
-            <title>Available options</title>
+            <title>Beschikbare opties</title>
             <para>
-                These options are passed to the factory method as demonstrated in previous examples.
+                Deze opties worden doorgegeven aan de factory methode zoals hierboven gedemonstreerd.
             </para>
             <table>
-                <title>Available options</title>
+                <title>Beschikbare opties</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
-                            <entry>Option</entry>
+                            <entry>Optie</entry>
                             <entry>Data Type</entry>
-                            <entry>Default Value</entry>
-                            <entry>Description</entry>
+                            <entry>Standaard Waarde</entry>
+                            <entry>Omschrijving</entry>
                         </row>
                      </thead>
                      <tbody>
@@ -278,8 +254,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                  enable / disable caching (can be very usefull for the debug of 
-                                  cached scripts)                
+                                  zet de caching aan of uit (kan handig zijn om te debuggen)
                               </entry>
                           </row>
                           <row>
@@ -287,8 +262,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                               <entry><code>int</code></entry>
                               <entry><code>3600</code></entry>
                               <entry>
-                                cache lifetime (in seconds), if set to <code>null</code>, the 
-                                cache is valid forever.       
+                                Levensduur van de cache (in seconden), wanneer de waarde <code>null</code> is, blijft de cache altijd geldig.
                               </entry>
                           </row>
                           <row>
@@ -296,8 +270,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                                if set to true, logging through <code>Zend_Log</code> is activated 
-                                (but the system is slower)         
+                                Wanneer dit op true staat, wordt logging via <code>Zend_Log</code> aangezet (maar wordt het systeem trager)
                               </entry>
                           </row>
                           <row>
@@ -305,10 +278,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                Enable / disable write control (the cache is read 
-                                just after writing to detect corrupt entries), enabling writeControl
-                                will lightly slow the cache writing but not the cache reading (it 
-                                can detect some corrupt cache files but it's not a perfect control)        
+                                Zet schrijfcontrole aan (de cache wordt direct na schrijven gelezen om corrupte records te herkennen), door writeControl aan te zetten zal de cache iets trager wegschrijven maar het lezen wordt niet trager (het kan sommige corrupte cache bestanden herkennen maar is geen perfecte controle) 
                               </entry>
                           </row>
                           <row>
@@ -316,8 +286,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                                Enable / disable automatic serialization, it can be used to save directly datas
-                                which aren't strings (but it's slower)            
+                                Zet de automatische serialisatie aan of uit, dit kan worden gebruikt om direct informatie op te slaan dat geen string is (maar het is trager)
                               </entry>
                           </row>
                           <row>
@@ -325,9 +294,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                               <entry><code>int</code></entry>
                               <entry><code>0</code></entry>
                               <entry>
-                                Disable / Tune the automatic cleaning process (garbage collector):
-                                0 means no automatic cache cleaning, 1 means systematic cache cleaning
-                                and x &gt; 1 means automatic random cleaning 1 times in x write operations.
+                                Stel het automatische opschoonsysteem in (garbage collector): 0 betekent geen automatische opschoning, 1 betekent systematisch cache opschonen en x &gt; 1 betekent willekeurig opschonen 1 keer per x schrijf operaties.
                               </entry>
                           </row>
                       </tbody>
@@ -336,18 +303,17 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
         </sect3>
         
         <sect3 id="zend.cache.core.examples">
-            <title>Examples</title>
+            <title>Voorbeelden</title>
             <para>
-                An example is given in the manual at the very beginning.
+                Een voorbeeld wordt gegeven aan het begin van de handleiding.
             </para>
             <para>
-                If you store only strings into cache (because with "automaticSerialization" option, it's possible
-                to store some booleans), you can use a more compact construction like:
+                Wanneer je alleen strings in de cache wil opslaan (want met "automaticSerialization" is het mogelijk ook sommige booleans op te slaan), kan je een compactere constructie gebruiken:
                  <programlisting role="php"><![CDATA[<?php  
              
-// we assume you already have $cache
+// we gaan er vanuit dat je $cache al hebt
 
-$id = 'myBigLoop'; // cache id of "what we want to cache"
+$id = 'mijnGroteLoop'; // cache id van "wat we willen cachen"
 
 if (!($data = $cache->get($id))) {
     // cache miss
@@ -361,21 +327,21 @@ if (!($data = $cache->get($id))) {
     
 } 
 
-// [...] do something with $data (echo it, pass it on etc.)
+// [...] doe iets met $data (echo het, stuur het door enz.)
              
 ?>]]>       </programlisting> 
             </para>  
             <para>
-                If you want to cache multiple blocks or data instances, the idea is the same:
+                Als je meerdere blokken of data instanties wilt cachen, is het idee hetzelfde:
                  <programlisting role="php"><![CDATA[<?php  
              
-// make sure you use unique identifiers:
+// Zorg ervoor dat je unieke identifiers hebt:
 $id1 = 'foo';
 $id2 = 'bar';
 
-// block 1
+// blok 1
 if (!($data = $cache->get($id1))) {
-    // cache missed
+    // cache miss
     
     $data = '';
     for ($i=0;$i<10000;$i++) {
@@ -387,12 +353,12 @@ if (!($data = $cache->get($id1))) {
 } 
 echo($data);
 
-// this isn't affected by caching
-echo('NEVER CACHED! ');
+// Dit wordt niet door de cache beinvloed
+echo('NOOIT GECACHED! ');
 
-// block 2
+// blok 2
 if (!($data = $cache->get($id2))) {
-    // cache missed
+    // cache miss
     
     $data = '';
     for ($i=0;$i<10000;$i++) {
