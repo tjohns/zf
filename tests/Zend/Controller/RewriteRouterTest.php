@@ -54,9 +54,9 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     public function setUp()
     {
         error_reporting(E_ALL | E_STRICT);
-        $_SERVER['REQUEST_URI'] = '/';
-        $_SERVER['SCRIPT_FILENAME'] = '/home/martel/WWW/test/index.php';
+        $_SERVER['REQUEST_URI'] = '';
         $this->router = new Zend_Controller_RewriteRouter();
+        $this->router->setRewriteBase('/');
         $this->dispatcher = new Zend_Controller_Dispacher_Mock();
         
         $this->version = (version_compare(PHPUnit2_Runner_Version::id(), '3.0.0alpha11') >= 0) ? 3 : 2;
@@ -211,110 +211,182 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
 
     public function testRewriteBaseRootWithApacheConfigRewrite()
     {
-        $_SERVER['SCRIPT_NAME'] = '/';
+        // RewriteRule under Apache <VirtualHost>
+        // http://bugs.php.net/bug.php?id=38141
+        // http://issues.apache.org/bugzilla/show_bug.cgi?id=40102
+        
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs/test';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['SCRIPT_NAME'] = '/';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
-        $rwBase = $router->getRewriteBase();
+        $rwBase = $router->detectRewriteBase();
 
         $this->assertSame('', $rwBase);
     }
 
     public function testRewriteBaseDeepUrlWithApacheConfigRewrite()
     {
-        $_SERVER['SCRIPT_NAME'] = '/news/create';
-        $_SERVER['REQUEST_URI'] = '/news/create';
+        // RewriteRule under Apache <VirtualHost>
+        // http://bugs.php.net/bug.php?id=38141
+        // http://issues.apache.org/bugzilla/show_bug.cgi?id=40102
+
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs/test';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/archive/2006/05';
+        $_SERVER['SCRIPT_NAME'] = '/archive/2006/05';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
-        $rwBase = $router->getRewriteBase();
-
-        $this->assertSame('', $rwBase);
-    }
-
-    public function testRewriteBaseAbsoluteRootWithRewriteAndEmptyRequestUri()
-    {
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
-        $_SERVER['REQUEST_URI'] = '';
-
-        // Redundant to setUp
-        $router = new Zend_Controller_RewriteRouter();
-        $rwBase = $router->getRewriteBase();
+        $rwBase = $router->detectRewriteBase();
 
         $this->assertSame('', $rwBase);
     }
 
     public function testRewriteBaseAbsoluteRootWithRewrite()
     {
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        // RewriteRule in .htaccess 
+        // Absolute vhost root 
+
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs/test';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
-        $rwBase = $router->getRewriteBase();
+        $rwBase = $router->detectRewriteBase();
 
         $this->assertSame('', $rwBase);
     }
 
     public function testRewriteBaseAbsoluteRootWithoutRewrite()
     {
+        // RewriteRule in .htaccess
+        // Absolute vhost root 
+
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs/test';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
-        $_SERVER['REQUEST_URI'] = '/index.php';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
-        $rwBase = $router->getRewriteBase();
+        $rwBase = $router->detectRewriteBase();
+
+        $this->assertSame('', $rwBase);
+    }
+
+    public function testRewriteBaseAbsoluteRootWithoutRewrite2()
+    {
+        // RewriteRule in .htaccess
+        // Absolute vhost root 
+
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs/test';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/index.php';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->detectRewriteBase();
+
+        $this->assertSame('/index.php', $rwBase);
+    }
+
+    public function testRewriteBaseAbsoluteRootWithoutRewriteAndDeepUrl()
+    {
+        // RewriteRule in .htaccess 
+        // Absolute vhost root 
+
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs/test';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/index.php/archive/2006/05';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->detectRewriteBase();
 
         $this->assertSame('/index.php', $rwBase);
     }
 
     public function testRewriteBaseRootWithRewrite()
     {
-        $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
-        $_SERVER['REQUEST_URI'] = '/aiev5/www/';
+        // RewriteRule in .htaccess 
+        // subdir root 
+
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/test/';
+        $_SERVER['SCRIPT_NAME'] = '/test/index.php';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
-        $rwBase = $router->getRewriteBase();
+        $rwBase = $router->detectRewriteBase();
 
-        $this->assertSame('/aiev5/www', $rwBase);
+        $this->assertSame('/test', $rwBase);
     }
 
     public function testRewriteBaseRootWithoutRewrite()
     {
-        $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
-        $_SERVER['REQUEST_URI'] = '/aiev5/www/index.php';
+        // RewriteRule in .htaccess 
+        // subdir root 
+
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/test/index.php';
+        $_SERVER['SCRIPT_NAME'] = '/test/index.php';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
-        $rwBase = $router->getRewriteBase();
+        $rwBase = $router->detectRewriteBase();
 
-        $this->assertSame('/aiev5/www/index.php', $rwBase);
+        $this->assertSame('/test/index.php', $rwBase);
     }
 
     public function testRewriteBaseDeepUrlWithRewrite()
     {
-        $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
-        $_SERVER['REQUEST_URI'] = '/aiev5/www/publish/article';
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/test/archive/2006/05';
+        $_SERVER['SCRIPT_NAME'] = '/test/index.php';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
-        $rwBase = $router->getRewriteBase();
+        $rwBase = $router->detectRewriteBase();
 
-        $this->assertSame('/aiev5/www', $rwBase);
+        $this->assertSame('/test', $rwBase);
     }
 
     public function testRewriteBaseDeepUrlWithoutRewrite()
     {
-        $_SERVER['SCRIPT_NAME'] = '/aiev5/www/index.php';
-        $_SERVER['REQUEST_URI'] = '/aiev5/www/index.php/publish/article';
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/test/index.php/archive/2006/05';
+        $_SERVER['SCRIPT_NAME'] = '/test/index.php';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
-        $rwBase = $router->getRewriteBase();
+        $rwBase = $router->detectRewriteBase();
 
-        $this->assertSame('/aiev5/www/index.php', $rwBase);
+        $this->assertSame('/test/index.php', $rwBase);
+    }
+
+    public function testRewriteBaseDeepUrlWithRewriteAndFakeIndex()
+    {
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/test/archive/2006/05/index.php';
+        $_SERVER['SCRIPT_NAME'] = '/test/index.php';
+
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->detectRewriteBase();
+
+        $this->assertSame('/test', $rwBase);
     }
 
 }

@@ -46,7 +46,7 @@ require_once 'Zend/Controller/Router/Route.php';
 class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 {
 
-    protected $_rewriteBase = '';
+    protected $_rewriteBase = null;
     protected $_routes = array();
     protected $_currentRoute = null;
 
@@ -59,15 +59,6 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         // Route for Router v1 compatibility
         $compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
         $this->addRoute('compat', $compat); 
-        
-        // Set magic default of RewriteBase:
-        $filename = basename($_SERVER['SCRIPT_FILENAME']);
-        $base = $_SERVER['SCRIPT_NAME'];
-        if (strpos($_SERVER['REQUEST_URI'], $filename) === false) {
-            // Default of '' for cases when SCRIPT_NAME doesn't contain a filename (ZF-205)
-            $base = (strpos($base, $filename) !== false) ? dirname($base) : '';
-        }
-        $this->_rewriteBase = rtrim($base, '/\\');
     }
 
     public function addRoute($name, Zend_Controller_Router_Route_Interface $route) {
@@ -80,17 +71,31 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         }
     }
 
+    public function addConfig(Zend_Config $config, $section) 
+    {
+        if (is_null($config->{$section})) {
+            throw new Exception("No route configuration in section '{$section}'");
+        }
+        foreach ($config->{$section} as $name => $info) {
+            $reqs = (isset($info->reqs)) ? $info->reqs->asArray() : null;
+            $defs = (isset($info->defaults)) ? $info->defaults->asArray() : null;
+            $this->addRoute($name, new Zend_Controller_Router_Route($info->route, $defs, $reqs));
+        }
+    }
+
     public function getRoute($name)
     {
-        if (!isset($this->_routes[$name]))
+        if (!isset($this->_routes[$name])) {
             throw new Zend_Controller_Router_Exception("Route $name is not defined");
+        }
         return $this->_routes[$name];
     }
 
     public function getCurrentRoute()
     {
-        if (!isset($this->_currentRoute))
+        if (!isset($this->_currentRoute)) {
             throw new Zend_Controller_Router_Exception("Current route is not defined");
+        }
         return $this->_currentRoute;
     }
 
@@ -104,6 +109,17 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         $this->_rewriteBase = (string) $value;
     }
 
+    public function detectRewriteBase()
+    {
+        $filename = basename($_SERVER['SCRIPT_FILENAME']);
+        $base = $_SERVER['SCRIPT_NAME'];
+        if (strpos($_SERVER['REQUEST_URI'], $filename) === false) {
+            // Default of '' for cases when SCRIPT_NAME doesn't contain a filename (ZF-205)
+            $base = (strpos($base, $filename) !== false) ? dirname($base) : '';
+        }
+        return rtrim($base, '/\\');
+    }
+    
     public function getRewriteBase()
     {
         return $this->_rewriteBase;
@@ -117,6 +133,10 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         $path = $_SERVER['REQUEST_URI'];
         if (strstr($path, '?')) {
             $path = substr($path, 0, strpos($path, '?'));
+        }
+
+        if ($this->_rewriteBase === null) {
+            $this->_rewriteBase = $this->detectRewriteBase();
         }
 
         // Remove RewriteBase
