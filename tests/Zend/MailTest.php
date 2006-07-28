@@ -376,4 +376,21 @@ class Zend_MailTest extends PHPUnit2_Framework_TestCase
         $this->assertNotEquals($mock->returnPath, $mock->from);
     }
 
+    public function testNoBody()
+    {
+        $mail = new Zend_Mail();
+        $mail->setFrom('testmail@example.com', 'test Mail User');
+        $mail->setSubject('My Subject');
+        $mail->addTo('recipient1@example.com');
+
+        // First example: from and return-path should be equal
+        $mock = new Zend_Mail_Transport_Mock();
+        try {
+            $mail->send($mock);
+            $this->assertTrue($mock->called);
+        } catch (Exception $e) {
+            // success
+            $this->assertContains('No body specified', $e->getMessage());
+        }
+    }
 }

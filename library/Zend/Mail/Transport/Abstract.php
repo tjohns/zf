@@ -264,7 +264,7 @@ abstract class Zend_Mail_Transport_Abstract {
             array_unshift($this->_parts, $body);
         }
 
-        if (!isset($body)) {
+        if (!$body) {
             throw new Zend_Mail_Transport_Exception('No body specified');
         }
 
