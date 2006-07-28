@@ -370,7 +370,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
         }
 
         try {
-            $this->mail_from($this->_mail->getFrom());
+            $this->mail_from($this->_mail->getReturnPath());
             foreach ($this->_mail->getRecipients() as $recipient) {
                 $this->rcpt_to($recipient);
             }

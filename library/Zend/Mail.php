@@ -60,20 +60,83 @@ require_once 'Zend/Mime/Part.php';
  */
 class Zend_Mail extends Zend_Mime_Message
 {
+    /**#@+
+     * @access protected
+     */
 
     /**
      * @var Zend_Mail_Transport_Abstract
+     * @static
      */
     static protected $_defaultTransport = null;
+
+    /**
+     * Mail character set
+     * @var string
+     */
     protected $_charset = null;
+
+    /**
+     * Mail headers
+     * @var array
+     */
     protected $_headers = array();
+
+    /**
+     * From: address
+     * @var string
+     */
     protected $_from = null;
+
+    /**
+     * To: addresses
+     * @var array
+     */
     protected $_to = array();
+
+    /**
+     * Array of all recipients
+     * @var array
+     */
     protected $_recipients = array();
+
+    /**
+     * Return-Path header
+     * @var string 
+     */
+    protected $_returnPath = null;
+
+    /**
+     * Subject: header
+     * @var string
+     */
     protected $_subject = null;
+
+    /**
+     * text/plain MIME part
+     * @var false|Zend_Mime_Part
+     */
     protected $_bodyText = false;
+
+    /**
+     * text/html MIME part
+     * @var false|Zend_Mime_Part
+     */
     protected $_bodyHtml = false;
+
+    /**
+     * MIME boundary string
+     * @var string
+     */
     protected $_mimeBoundary = null;
+
+    /**#@-*/
+
+    /**
+     * Flag: whether or not email has attachments
+     * @var boolean
+     * @access public
+     */
     public $hasAttachments = false;
 
     /**
@@ -387,6 +450,42 @@ class Zend_Mail extends Zend_Mime_Message
     }
 
     /**
+     * Sets the Return-Path header for an email
+     * 
+     * @access public
+     * @param string $email 
+     * @return void
+     * @throws Zend_Mail_Exception if set multiple times
+     */
+    public function setReturnPath($email)
+    {
+        if ($this->_returnPath === null) {
+            $email = strtr($email,"\r\n\t",'???');
+            $this->_returnPath = $email;
+            $this->_storeHeader('Return-Path', $email, false);
+        } else {
+            throw new Zend_Mail_Exception('Return-Path Header set twice');
+        }
+    }
+
+    /**
+     * Returns the current Return-Path address for the email
+     *
+     * If no Return-Path header is set, returns the value of {@link $_from}.
+     * 
+     * @access public
+     * @return string
+     */
+    public function getReturnPath()
+    {
+        if (null !== $this->_returnPath) {
+            return $this->_returnPath;
+        }
+
+        return $this->_from;
+    }
+
+    /**
      * Sets the subject of the message
      *
      * @param string $subject
@@ -422,7 +521,7 @@ class Zend_Mail extends Zend_Mime_Message
      */
     public function addHeader($name, $value, $append=false)
     {
-        if (in_array(strtolower($name), array('to', 'cc', 'bcc', 'from', 'subject'))) {
+        if (in_array(strtolower($name), array('to', 'cc', 'bcc', 'from', 'subject', 'return-path'))) {
             throw new Zend_Mail_Exception('Cannot set standard header from addHeader()');
         }
 

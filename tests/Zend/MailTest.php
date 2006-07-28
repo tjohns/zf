@@ -39,17 +39,19 @@ class Zend_Mail_Transport_Mock extends Zend_Mail_Transport_Abstract
     /**
      * @var Zend_Mail
      */
-    public $mail    = null;
-    public $subject = null;
-    public $from    = null;
-    public $called  = false;
+    public $mail       = null;
+    public $returnPath = null;
+    public $subject    = null;
+    public $from       = null;
+    public $called     = false;
 
     public function _sendMail()
     {
-        $this->mail    = $this->_mail;
-        $this->subject = $this->_mail->getSubject();
-        $this->from    = $this->_mail->getFrom();
-        $this->called  = true;
+        $this->mail       = $this->_mail;
+        $this->subject    = $this->_mail->getSubject();
+        $this->from       = $this->_mail->getFrom();
+        $this->returnPath = $this->_mail->getReturnPath();
+        $this->called     = true;
     }
 }
 
@@ -343,6 +345,35 @@ class Zend_MailTest extends PHPUnit2_Framework_TestCase
         $this->assertContains('Content-Type: image/gif', $partBody2);
         $this->assertContains('Content-Transfer-Encoding: base64', $partBody2);
         $this->assertContains('Content-ID: <12>', $partBody2);
+    }
+
+    public function testReturnPath()
+    {
+        $mail = new Zend_Mail();
+        $res = $mail->setBodyText('This is a test.');
+        $mail->setFrom('testmail@example.com', 'test Mail User');
+        $mail->setSubject('My Subject');
+        $mail->addTo('recipient1@example.com');
+        $mail->addTo('recipient2@example.com');
+        $mail->addBcc('recipient1_bcc@example.com');
+        $mail->addBcc('recipient2_bcc@example.com');
+        $mail->addCc('recipient1_cc@example.com', 'Example no. 1 for cc');
+        $mail->addCc('recipient2_cc@example.com', 'Example no. 2 for cc');
+
+        // First example: from and return-path should be equal
+        $mock = new Zend_Mail_Transport_Mock();
+        $mail->send($mock);
+        $this->assertTrue($mock->called);
+        $this->assertEquals($mail->getFrom(), $mock->returnPath);
+
+        // Second example: from and return-path should not be equal
+        $mail->setReturnPath('sender2@example.com');
+        $mock = new Zend_Mail_Transport_Mock();
+        $mail->send($mock);
+        $this->assertTrue($mock->called);
+        $this->assertNotEquals($mail->getFrom(), $mock->returnPath);
+        $this->assertEquals($mail->getReturnPath(), $mock->returnPath);
+        $this->assertNotEquals($mock->returnPath, $mock->from);
     }
 
 }
