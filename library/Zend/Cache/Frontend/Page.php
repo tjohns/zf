@@ -46,34 +46,56 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      * - if true, http conditional mode is on
      * WARNING : httpConditional OPTION IS NOT IMPLEMENTED FOR THE MOMENT (TODO)
      * 
-     * ====> (boolean) cacheWithXXXVariables  (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookie')
-     * - if true,  cache is still on even if there are some variables in this superglobal array
-     * - if false, cache is off if there are some variables in this superglobal array
-     *
-     * ====> (boolean) makeIdWithXXXVariables (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookie')
-     * - if true, we have to use the content of this superglobal array to make a cache id
-     * - if false, the cache id won't be dependent of the content of this superglobal array
-     * 
      * ====> (boolean) debugHeader :
      * - if true, a debug text is added before each cached pages
+     * 
+     * ====> (array) defaultOptions :
+     * - an associative array of default options :
+     *     - (boolean) cache : cache is on by default if true
+     *     - (boolean) cacheWithXXXVariables  (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookie') :
+     *       if true,  cache is still on even if there are some variables in this superglobal array
+     *       if false, cache is off if there are some variables in this superglobal array
+     *     - (boolean) makeIdWithXXXVariables (XXXX = 'Get', 'Post', 'Session', 'Files' or 'Cookie') :
+     *       if true, we have to use the content of this superglobal array to make a cache id 
+     *       if false, the cache id won't be dependent of the content of this superglobal array
+     *     
+     * ====> (array) regexps :
+     * - an associative array to set options only for some REQUEST_URI
+     * - keys are (pcre) regexps
+     * - values are associative array with specific options to set if the regexp matchs on $_SERVER['REQUEST_URI']
+     *   (see defaultOptions for the list of available options)
+     * - if several regexps match the $_SERVER['REQUEST_URI'], only the last one will be used  
+     * 
+     * TODO : docs
      * 
      * @var array options
      */
     protected $_specificOptions = array(
-    	'httpConditional' => false,
+        'httpConditional' => false,
         'debugHeader' => false,
-        'cacheWithGetVariables' => false,
-        'cacheWithPostVariables' => false,
-        'cacheWithSessionVariables' => false,
-        'cacheWithFilesVariables' => false,
-        'cacheWithCookieVariables' => false,
-        'makeIdWithGetVariables' => true,
-        'makeIdWithPostVariables' => true,
-        'makeIdWithSessionVariables' => true,
-        'makeIdWithFilesVariables' => true,
-        'makeIdWithCookieVariables' => true
-    ); 
-        
+        'defaultOptions' => array(
+            'cacheWithGetVariables' => false,
+            'cacheWithPostVariables' => false,
+            'cacheWithSessionVariables' => false,
+            'cacheWithFilesVariables' => false,
+            'cacheWithCookieVariables' => false,
+            'makeIdWithGetVariables' => true,
+            'makeIdWithPostVariables' => true,
+            'makeIdWithSessionVariables' => true,
+            'makeIdWithFilesVariables' => true,
+            'makeIdWithCookieVariables' => true,
+            'cache' => true
+        ),
+        'regexps' => array()
+    );
+    
+    /**
+     * Internal array to store some options
+     * 
+     * @var array associative array of options
+     */
+    protected $_activeOptions = array();
+            
     /**
      * Constructor
      * 
@@ -88,8 +110,60 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
             }
         }
         while (list($name, $value) = each($options)) {
-            $this->setOption($name, $value);
+            switch ($name) {
+            case 'regexps':
+                $this->_setRegexps($value);
+                break;
+            case 'defaultOptions':
+                $this->_setDefaultOptions($value);
+                break;
+            default:
+                $this->setOption($name, $value);
+            }
         }
+    }
+    
+    /**
+     * Specific setter for the 'defaultOptions' option (with some additional tests)
+     * 
+     * @param array $options associative array
+     */
+    protected function _setDefaultOptions($options)
+    {
+        if (!is_array($options)) {
+            Zend_Cache::throwException('defaultOptions must be an array !');
+        }
+        foreach ($options as $key=>$value) {
+            if (!isset($this->_specificOptions['defaultOptions'][$key])) {
+                Zend_Cache::throwException("unknown option [$key] !");
+            } else {
+                $this->_specificOptions['defaultOptions'][$key] = $value;
+            }
+        }
+    }    
+    
+    /**
+     * Specific setter for the 'regexps' option (with some additional tests)
+     * 
+     * @param array $options associative array
+     */
+    protected function _setRegexps($regexps)
+    {
+        if (!is_array($regexps)) {
+            Zend_Cache::throwException('regexps option must be an array !');
+        }
+        foreach ($regexps as $regexp=>$conf) {
+            if (!is_array($conf)) {
+                Zend_Cache::throwException('regexps option must be an array of arrays !');
+            }
+            $validKeys = array_keys($this->_specificOptions['defaultOptions']);
+            foreach ($conf as $key=>$value) {
+                if (!in_array($key, $validKeys)) {
+                    Zend_Cache::throwException("unknown option [$key] !");
+                }
+            }
+        }
+        $this->setOption('regexps', $regexps);
     }
     
     /**
@@ -99,6 +173,22 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      */
     public function start()
     {
+        $lastMatchingRegexp = null;
+        foreach ($this->_specificOptions['regexps'] as $regexp => $conf) {
+            if (preg_match("`$regexp`", $_SERVER['REQUEST_URI'])) {
+                $lastMatchingRegexp = $regexp;       
+            }
+        }
+        $this->_activeOptions = $this->_specificOptions['defaultOptions'];
+        if (!is_null($lastMatchingRegexp)) {
+            $conf = $this->_specificOptions['regexps'][$lastMatchingRegexp];
+            foreach ($conf as $key=>$value) {
+                $this->_activeOptions[$key] = $value;
+            }
+        }
+        if (!($this->_activeOptions['cache'])) {
+            return false;
+        }
         $id = $this->_makeId(); 
         if (!$id) {
             return false;
@@ -138,7 +228,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     {
         $tmp = $_SERVER['REQUEST_URI'];
         foreach (array('Get', 'Post', 'Session', 'Files', 'Cookie') as $arrayName) {           
-            $tmp2 = $this->_makePartialId($arrayName, $this->_specificOptions['cacheWith' . $arrayName . 'Variables'], $this->_specificOptions['makeIdWith' . $arrayName . 'Variables']);
+            $tmp2 = $this->_makePartialId($arrayName, $this->_activeOptions['cacheWith' . $arrayName . 'Variables'], $this->_activeOptions['makeIdWith' . $arrayName . 'Variables']);
             if ($tmp2===false) {
                 return false;
             }
