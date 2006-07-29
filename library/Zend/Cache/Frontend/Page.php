@@ -66,8 +66,6 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
      *   (see defaultOptions for the list of available options)
      * - if several regexps match the $_SERVER['REQUEST_URI'], only the last one will be used  
      * 
-     * TODO : docs
-     * 
      * @var array options
      */
     protected $_specificOptions = array(
