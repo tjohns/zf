@@ -350,7 +350,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                                 自動クリーンアッププロセス (ガベージコレクタ) の設定を行います。
                                 0 を指定すると、自動キャッシュクリーニングを行いません。
                                 1 を指定すると計画的にキャッシュのクリーニングを行い、また
-                                x (1 よりおおきな整数) を指定すると、
+                                x (1 より大きな整数) を指定すると、
                                 x 回のキャッシュ書き込みについて 1 回の頻度で
                                 ランダムに自動クリーニングを行います。
                               </entry>
@@ -786,24 +786,58 @@ $res = $cache->foobar2('1', '2');
                               </entry>
                          </row>
                          <row>
-                              <entry><code>cacheWith{Get,Post,Session,Files,Cookie}Variables</code></entry>
+                              <entry><code>debugHeader</code></entry>
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                                    true の場合は、対応するスーバーグローバル配列に
-                                    変数が含まれていてもキャッシュはオンのままです。
-                                    false の場合は、対応するスーバーグローバル配列に
-                                    何らかの変数が含まれている場合にキャッシュをオフにします。
+                                  true の場合は、キャッシュされた各ページの先頭に
+                                  デバッグ用テキストが追加されます。
                               </entry>
                          </row>
                          <row>
-                              <entry><code>makeIdWith{Get,Post,Session,Files,Cookie}Variables</code></entry>
-                              <entry><code>boolean</code></entry>
-                              <entry><code>true</code></entry>
+                              <entry><code>defaultOptions</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code>array(...説明を参照ください...)</code></entry>
                               <entry>
-                                    true の場合は、対応するスーパーグローバル配列の内容を使用して
-                                    キャッシュ ID を作成します。false の場合は、キャッシュ ID
-                                    は対応するスーパーグローバル配列の内容に依存しません。
+                                  デフォルトのオプションを表す連想配列です。
+                                  <itemizedlist>
+                                      <listitem><code>(boolean, デフォルトは true) cache</code> :
+                                        true の場合はキャッシュが有効になります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは false) cacheWithGetVariables</code> :
+                                        true の場合は、<code>$_GET</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは false) cacheWithPostVariables</code> :
+                                        true の場合は、<code>$_POST</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは false) cacheWithSessionVariables</code> :
+                                        true の場合は、<code>$_SESSION</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは false) cacheWithFilesVariables</code> :
+                                        true の場合は、<code>$_FILES</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは false) cacheWithCookieVariables</code> :
+                                        true の場合は、<code>$_COOKIE</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは true) makeIdWithGetVariables</code> :
+                                        true の場合は、キャッシュ ID が <code>$_GET</code> 配列の内容に依存するようになります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは true) makeIdWithPostVariables</code> :
+                                        true の場合は、キャッシュ ID が <code>$_POST</code> 配列の内容に依存するようになります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは true) makeIdWithSessionVariables</code> :
+                                        true の場合は、キャッシュ ID が <code>$_SESSION</code> 配列の内容に依存するようになります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは true) makeIdWithFilesVariables</code> :
+                                        true の場合は、キャッシュ ID が <code>$_FILES</code> 配列の内容に依存するようになります。</listitem>
+                                      <listitem><code>(boolean, デフォルトは true) makeIdWithCookieVariables</code> :
+                                        true の場合は、キャッシュ ID が <code>$_COOKIE</code> 配列の内容に依存するようになります。</listitem>
+                                  </itemizedlist>
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>regexps</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry><code>array()</code></entry>
+                              <entry>
+                                  特定の REQUEST_URI に対してのみ適用するオプションを設定する連想配列です。
+                                  キーが (PCRE の) 正規表現、対応する値は連想配列となります。
+                                  この連想配列には、正規表現が $_SERVER['REQUEST_URI']
+                                  にマッチした場合に設定されるオプションを設定します
+                                  (使用可能なオプションについては defaultOptions を参照ください)。
+                                  複数の正規表現が $_SERVER['REQUEST_URI'] にマッチした場合は、
+                                  一番最後にマッチしたもののみが使用されます。
                               </entry>
                          </row>
                       </tbody>
@@ -819,15 +853,53 @@ $res = $cache->foobar2('1', '2');
 // [...] // require、設定そしてファクトリ
     
 $cache->start();
-# キャッシュにヒットした場合はその結果がブラウザに送信され、処理はここで停止します
+// キャッシュにヒットした場合はその結果がブラウザに送信され、処理はここで停止します
     
 // ページの残りの部分 ...
     
 ?>]]>       </programlisting>
             </para>
+            <para>
+                もう少し複雑な例を見てみましょう。これは、起動ファイル
+                (例えば Zend_Controller など) 内でキャッシュを集中管理する方法を示したものです。
+                <programlisting role="php"><![CDATA[<?php
+
+// [...] キャッシュセクションの前には、あまり多くの行を書かないようにしましょう。
+// [...] 例えば、処理速度を最適化するためには "require_once" や "Zend::loadClass"
+// [...] をキャッシュセクションの後におくべきです。
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+   'lifeTime' => 7200,
+   'debugHeader' => true, // デバッグ用
+   'regexps' => array(
+       '^/$' => array('cache' => true),         // IndexController 全体をキャッシュします
+       '^/index/' => array('cache' => true),    // IndexController 全体をキャッシュします
+       '^/article/' => array('cache' => false), // ArticleController はキャッシュしません
+       '^/article/view/' => array(              // ……が、ArticleController の "view" アクションは
+           'cache' => true,                     // キャッシュします。また、たとえ $_POST に何らかの
+           'cacheWithPostVariables' => true,    // 変数が含まれていてもキャッシュを行います
+           'makeIdWithPostVariables' => true,   // (しかし、そのキャッシュは $_POST 配列に依存します)。
+       )
+   )      
+);
+$backendOptions = array(
+    'cacheDir' => '/tmp/' 
+);
+
+// Zend_Cache_Frontend_Page オブジェクトを取得します
+$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+
+$cache->start();
+// キャッシュにヒットした場合はその結果がブラウザに送信され、スクリプトの処理はここで停止します。
+
+// [...] 起動ファイルの終点 (これらの行は、キャッシュにヒットした場合は実行されません)。
+                
+?>]]>           </programlisting>
+            </para>
         </sect3>
     </sect2>
-    
 </sect1>
 
 <sect1 id="zend.cache.backends">
