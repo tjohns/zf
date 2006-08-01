@@ -6,7 +6,7 @@ if (!defined('PHPUnit2_MAIN_METHOD')) {
 require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
-require_once 'Zend/Controller/AllTests.php';
+require_once 'Zend/Mail/AllTests.php';
 
 class Zend_AllTests
 {
@@ -19,8 +19,9 @@ class Zend_AllTests
     {
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend');
 
-        // place other tests here for incubator suite 
-        // $suite->addTest(Zend_Controller_AllTests::suite())
+        // place other tests here for incubator suite
+
+        $suite->addTest(Zend_Mail_AllTests::suite());
 
         return $suite;
     }
