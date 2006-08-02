@@ -141,7 +141,7 @@ class Zend_Measure_Capacity extends Zend_Measure_Abstract
     {
         $value = Zend_Locale_Format::getNumber($value, $locale);
         if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of capacity:'.$type);
+            parent::throwException('unknown type of capacity:'.$type);
         parent::setValue($value);
         parent::setType($type);
     }

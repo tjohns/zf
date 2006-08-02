@@ -22,7 +22,7 @@
 
 /**
  * @category   Zend
- * @package    Zend_Locale 
+ * @package    Zend_Locale
  * @subpackage Format
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -32,14 +32,14 @@ class Zend_Locale_Format
     /**
      * Returns the first found number from an string (or integer/float)
      * Parsing depends on given locale (grouping and decimal)
-     * 
+     *
      * Examples for input:
      * '  2345.4356,1234' = 23455456.1234
      * '+23,3452.123' = 233452.123
      * ' 12343 ' = 12343
      * '-9456km' = -9456
      * '0' = 0
-     * '(-){0,1}(\d+(\.){0,1})*(\,){0,1})\d+' 
+     * '(-){0,1}(\d+(\.){0,1})*(\,){0,1})\d+'
      */
     public static function getNumber($input, $locale)
     {
@@ -50,23 +50,23 @@ class Zend_Locale_Format
         $regex = '/('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.$symbols['decimal'].'){0,1}\d+/';
         preg_match($regex, $input, $treffer);
         if (!isset($treffer[0]))
-            $this->throwException('No value in '.$input.' found');
+            self::throwException('No value in '.$input.' found');
 
-        // Change locale input to be standard number 
+        // Change locale input to be standard number
         if ($symbols['minus'] != "-")
             $treffer[0] = strtr($treffer[0],$symbols['minus'],'-');
         $treffer[0] = str_replace($symbols['group'],"",$treffer[0]);
 
         if ($symbols['decimal'] != '.')
             $treffer[0] = str_replace($symbols['decimal'],".",$treffer[0]);
-            
-        return $treffer[0];
+
+        return (int) $treffer[0];
     }
 
 
     /**
      * Throw an exception
-     * 
+     *
      * Note : for performance reasons, the "load" of Zend/Measure/Exception is dynamic
      */
     public static function throwException($message)

@@ -6,7 +6,11 @@ if (!defined('PHPUnit2_MAIN_METHOD')) {
 require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
+require_once 'Zend/Currency/AllTests.php';
+require_once 'Zend/Date/AllTests.php';
+require_once 'Zend/Locale/AllTests.php';
 require_once 'Zend/Mail/AllTests.php';
+require_once 'Zend/Measure/AllTests.php';
 
 class Zend_AllTests
 {
@@ -21,7 +25,11 @@ class Zend_AllTests
 
         // place other tests here for incubator suite
 
+        $suite->addTest(Zend_Currency_AllTests::suite());
+        $suite->addTest(Zend_Date_AllTests::suite());
+        $suite->addTest(Zend_Locale_AllTests::suite());
         $suite->addTest(Zend_Mail_AllTests::suite());
+        $suite->addTest(Zend_Measure_AllTests::suite());
 
         return $suite;
     }
