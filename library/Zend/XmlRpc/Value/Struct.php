@@ -55,22 +55,21 @@ class Zend_XmlRpc_Value_Struct extends Zend_XmlRpc_Value_Collection
     public function getAsXML()
     {
         if (!$this->_as_xml) {   // The XML code was not calculated yet
-            $this->_as_xml = '<value>'  ."\n"
-                           . '<struct>' ."\n";
+            $dom    = new DOMDocument('1.0', 'ISO-8859-1');
+            $value  = $dom->appendChild($dom->createElement('value'));
+            $struct = $value->appendChild($dom->createElement('struct'));
 
             if (is_array($this->_value)) {
-                foreach ($this->_value as $name => $value) {
-                    /* @var $value Zend_XmlRpc_Value */
-
-                    $this->_as_xml .= '<member>'                 ."\n"
-                                    . '<name>'. $name .'</name>' ."\n"
-                                    . $value->getAsXML()         ."\n"
-                                    . '</member>'                ."\n";
+                foreach ($this->_value as $name => $val) {
+                    /* @var $val Zend_XmlRpc_Value */
+                    $member = $struct->appendChild($dom->createElement('member'));
+                    $member->appendChild($dom->createElement('name', $name));
+                    $member->appendChild($dom->importNode($val->getAsDOM(), 1));
                 }
             }
 
-            $this->_as_xml .= '</struct>' ."\n"
-                            . '</value>';
+            $this->_as_dom = $value;
+            $this->_as_xml = $this->_stripXmlDeclaration($dom);
         }
 
         return $this->_as_xml;

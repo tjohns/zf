@@ -4,19 +4,18 @@
  *
  * LICENSE
  *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
+ * This source file is subject to version 1.0 of the Zend Framework
+ * license, that is bundled with this package in the file LICENSE, and
+ * is available through the world-wide-web at the following URL:
+ * http://www.zend.com/license/framework/1_0.txt. If you did not receive
+ * a copy of the Zend Framework license and are unable to obtain it
+ * through the world-wide-web, please send a note to license@zend.com
+ * so we can mail you a copy immediately.
  *
- * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 
@@ -27,11 +26,10 @@ require_once 'Zend/XmlRpc/Value.php';
 
 
 /**
- * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 class Zend_XmlRpc_Value_String extends Zend_XmlRpc_Value_Scalar
 {
@@ -44,7 +42,9 @@ class Zend_XmlRpc_Value_String extends Zend_XmlRpc_Value_Scalar
     public function __construct($value)
     {
         $this->_type = self::XMLRPC_TYPE_STRING;
-        $this->_value = $this->_xml_entities((string)$value);    // Make sure this value is string and all XML characters are encoded
+        
+        // Make sure this value is string and all XML characters are encoded
+        $this->_value = $this->_xml_entities($value);    
     }
 
     /**
@@ -55,7 +55,7 @@ class Zend_XmlRpc_Value_String extends Zend_XmlRpc_Value_Scalar
      */
     public function getValue()
     {
-        return html_entity_decode($this->_value);
+        return html_entity_decode($this->_value, ENT_QUOTES, 'UTF-8');
     }
 
     /**
@@ -66,13 +66,7 @@ class Zend_XmlRpc_Value_String extends Zend_XmlRpc_Value_Scalar
      */
     private function _xml_entities($str)
     {
-        $chars = array();
-        $risky_chars = array('"',"'",'&','<','>');
-        foreach ($risky_chars as $char) {
-            $chars[$char] = htmlentities($char, ENT_QUOTES);
-        }
-
-        return strtr($str, $chars);
+        return htmlentities($str, ENT_QUOTES);
     }
 
 }

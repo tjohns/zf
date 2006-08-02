@@ -44,13 +44,16 @@ abstract class Zend_XmlRpc_Value_Scalar extends Zend_XmlRpc_Value
     public function getAsXML()
     {
         if (!$this->_as_xml) {   // The XML code was not calculated yet
-            $this->_as_xml = '<value><'. $this->_type .'>'
-                           . $this->_value 
-                           .'</'. $this->_type .'></value>';
+            $dom   = new DOMDocument('1.0', 'ISO-8859-1');
+            $value = $dom->appendChild($dom->createElement('value'));
+            $type  = $value->appendChild($dom->createElement($this->_type));
+            $type->appendChild($dom->createTextNode($this->_value));
+
+            $this->_as_dom = $value;
+            $this->_as_xml = $this->_stripXmlDeclaration($dom);
         }
 
         return $this->_as_xml;
     }
-
 }
 

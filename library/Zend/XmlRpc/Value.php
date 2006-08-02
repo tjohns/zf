@@ -4,21 +4,19 @@
  *
  * LICENSE
  *
- * This source file is subject to the new BSD license that is bundled
- * with this package in the file LICENSE.txt.
- * It is also available through the world-wide-web at this URL:
- * http://framework.zend.com/license/new-bsd
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to license@zend.com so we can send you a copy immediately.
+ * This source file is subject to version 1.0 of the Zend Framework
+ * license, that is bundled with this package in the file LICENSE, and
+ * is available through the world-wide-web at the following URL:
+ * http://www.zend.com/license/framework/1_0.txt. If you did not receive
+ * a copy of the Zend Framework license and are unable to obtain it
+ * through the world-wide-web, please send a note to license@zend.com
+ * so we can mail you a copy immediately.
  *
- * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Value
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-
 
 
 /** Zend_XmlRpc_Value_Exception */
@@ -65,11 +63,9 @@ require_once 'Zend/XmlRpc/Value/Struct.php';
  * Using this function, users/Zend_XmlRpc_Client object can create the Zend_XmlRpc_Value objects
  * from PHP variables, XML string or by specifing the exact XML-RPC natvie type
  *
- * @category   Zend
  * @package    Zend_XmlRpc
- * @subpackage Value
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 abstract class Zend_XmlRpc_Value
 {
@@ -91,6 +87,11 @@ abstract class Zend_XmlRpc_Value
      * XML code representation of this object (will be calculated only once)
      */
     protected $_as_xml;
+
+    /**
+     * DOMElement representation of object (will be calculated only once)
+     */
+    protected $_as_dom;
 
     /**
      * Specify that the XML-RPC native type will be auto detected from a PHP variable type
@@ -142,6 +143,24 @@ abstract class Zend_XmlRpc_Value
      */
     abstract public function getAsXML();
 
+    /**
+     * Return DOMElement representation of object
+     * 
+     * @return DOMElement
+     */
+    public function getAsDOM()
+    {
+        if (!$this->_as_dom) {
+            $this->getAsXML();
+        }
+
+        return $this->_as_dom;
+    }
+
+    protected function _stripXmlDeclaration(DOMDocument $dom)
+    {
+        return preg_replace('/<\?xml version="1.0" encoding="[^\"]*"\?>\n/u', '', $dom->saveXML());
+    }
 
     /**
      * Creates a Zend_XmlRpc_Value* object, representing a native XML-RPC value
@@ -149,7 +168,7 @@ abstract class Zend_XmlRpc_Value
      * 1. Autodetecting the native type out of a PHP variable
      *    (if $type is not set or equal to Zend_XmlRpc_Value::AUTO_DETECT_TYPE)
      * 2. By specifing the native type ($type is one of the Zend_XmlRpc_Value::XMLRPC_TYPE_* constants)
-     * 3. From a XML string or SimpleXMLElement object ($type is set to Zend_XmlRpc_Value::XML_STRING)
+     * 3. From a XML string ($type is set to Zend_XmlRpc_Value::XML_STRING)
      *
      * By default the value type is autodetected according to it's PHP type
      *
@@ -345,12 +364,12 @@ abstract class Zend_XmlRpc_Value
         return $xmlrpc_val;
     }
 
-
+    
     private function _setXML($xml)
     {
         $this->_as_xml = $xml;
     }
-
+    
 }
 
 

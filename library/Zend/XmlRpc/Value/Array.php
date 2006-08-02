@@ -55,20 +55,20 @@ class Zend_XmlRpc_Value_Array extends Zend_XmlRpc_Value_Collection
     public function getAsXML()
     {
         if (!$this->_as_xml) {   // The XML code was not calculated yet
-            $this->_as_xml = '<value>' ."\n"
-                           . '<array>' ."\n"
-                           . '<data>'  ."\n";
+            $dom   = new DOMDocument('1.0', 'ISO-8859-1');
+            $value = $dom->appendChild($dom->createElement('value'));
+            $array = $value->appendChild($dom->createElement('array'));
+            $data  = $array->appendChild($dom->createElement('data'));
 
             if (is_array($this->_value)) {
-                foreach ($this->_value as $value) {
-                    /* @var $value Zend_XmlRpc_Value */
-                    $this->_as_xml .= $value->getAsXML() ."\n";
+                foreach ($this->_value as $val) {
+                    /* @var $val Zend_XmlRpc_Value */
+                    $data->appendChild($dom->importNode($val->getAsDOM(), true));
                 }
             }
 
-            $this->_as_xml .= '</data>'."\n"
-                            . '</array>'."\n"
-                            . '</value>';
+            $this->_as_dom = $value;
+            $this->_as_xml = $this->_stripXmlDeclaration($dom);
         }
 
         return $this->_as_xml;
