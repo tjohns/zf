@@ -320,6 +320,9 @@ class Zend_XmlRpc_Client
 	protected function __getHttpClient()
 	{
 		if (!$this->_httpClient instanceof Zend_Http_Client_Abstract) {
+            iconv_set_encoding('input_encoding', 'UTF-8');
+            iconv_set_encoding('output_encoding', 'UTF-8');
+            iconv_set_encoding('internal_encoding', 'UTF-8');
 			$this->_httpClient = new Zend_Http_Client();
 		}
 
@@ -344,7 +347,7 @@ class Zend_XmlRpc_Client
         $http->setUri($this->_serverAddress);
         // Set the content-type header as text/xml
         // What if the given HTTP client already has headres ? it shouldn't override them
-        $http->setHeaders(array('Content-Type: text/xml'));
+        $http->setHeaders(array('Content-Type: text/xml; charset=iso-8859-1'));
 
         $response = $http->post($request_data);
         /* @var $response Zend_Http_Response */
@@ -357,32 +360,26 @@ class Zend_XmlRpc_Client
      * Build the XML body of an XML-RPC request
      *
      * @param string $method Name of the method we want to call
-     * @param array $params Array of Zend_XmlRpc_Value objects, parameters for the method
+     * @param array $args Array of Zend_XmlRpc_Value objects, parameters for the method
      * @return string The XML body
      */
-    protected function _buildRequest($method, $params=null)
+    protected function _buildRequest($method, $args = null)
     {
-        $data = '<?xml version="1.0"?>' ."\n"
-              . '<methodCall>'          ."\n"
-              . '<methodName>'
-              .     $method
-              . '</methodName>'         ."\n";
+        $dom = new DOMDocument('1.0', 'ISO-8859-1');
+        $mCall = $dom->appendChild($dom->createElement('methodCall'));
+        $mName = $mCall->appendChild($dom->createElement('methodName', $method));
 
-        if (is_array($params)) {
-            $data .= '<params>'         ."\n";
+        if (is_array($args)) {
+            $params = $mCall->appendChild($dom->createElement('params'));
 
-            foreach ($params as $param) {
-                /* @var $param Zend_XmlRpc_Value */
-
-                $data .= '<param>'          ."\n"
-                       .    $param->getAsXML()
-                       . '</param>'         ."\n";
+            foreach ($args as $arg) {
+                /* @var $arg Zend_XmlRpc_Value */
+                $param = $params->appendChild($dom->createElement('param'));
+                $param->appendChild($dom->importNode($arg->getAsDOM(), 1));
             }
-
-            $data .= '</params>'            ."\n";
         }
 
-        return $data . '</methodCall>'      ."\n";
+        return $dom->saveXML();
     }
 
 
@@ -398,6 +395,7 @@ class Zend_XmlRpc_Client
             // The response is empty
             throw new Zend_XmlRpc_Client_Exception('Received empty response');
         }
+
         // Using simple XML to parse the response
         try {
             $simple_xml = @new SimpleXMLElement($response);
@@ -511,8 +509,8 @@ class Zend_XmlRpc_Client
         // Reset the method signatures array
         $this->_methodSignatures = array();
 
-        $xml = "<?xml version='1.0' standalone='yes'?>\n"
-             . "<methods>\n";
+        $dom = new DOMDocument('1.0');
+        $methods = $dom->appendChild($dom->createElement('methods'));
 
         foreach ($signatures as $methodName => $signature) {
             if (!is_array($signature[0])) {
@@ -520,29 +518,25 @@ class Zend_XmlRpc_Client
                 continue;
             }
 
-            $xml .= "\t<method>\n"
-                  . "\t\t<name>$methodName</name>\n"
-                  . "\t\t<signature>\n";
+            $method = $methods->appendChild($dom->createElement('method'));
+            $method->appendChild($dom->createElement('name'), $methodName);
+            $signature = $method->appendChild($dom->createElement('signature'));
 
             // After popping the return value, the $signature[0] array is holding the method parameters
             $returnValue = array_shift($signature[0]);
 
-            $xml .= "\t\t\t<returnValue>$returnValue</returnValue>\n"
-                  . "\t\t\t<params>\n";
+            $signature->appendChild($dom->createElement('returnValue', $returnValue));
+            $params = $signature->appendChild($dom->createElement('params'));
 
             foreach ($signature[0] as $param) {
-                $xml .= "\t\t\t\t<param>$param</param>\n";
+                $params->appendChild($dom->createElement('param', $param));
             }
-
-            $xml .= "\t\t\t</params>\n"
-                  . "\t\t</signature>\n"
-                  . "\t</method>\n";
 
             $this->_methodSignatures[$methodName] = array('return_value' => $returnValue,
                                                           'params'       => $signature[0]);
         }
 
-        return $xml . "</methods>";
+        return $dom->saveXML();
     }
 
 
