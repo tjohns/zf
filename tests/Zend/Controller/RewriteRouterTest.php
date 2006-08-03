@@ -218,7 +218,8 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs/test';
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/';
-        $_SERVER['SCRIPT_NAME'] = '/';
+        $_SERVER['SCRIPT_NAME'] = '';
+        $_SERVER['PATH_INFO'] = '/index.html'; // #@$%#! This bug is awful! 
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -236,7 +237,8 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs/test';
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/archive/2006/05';
-        $_SERVER['SCRIPT_NAME'] = '/archive/2006/05';
+        $_SERVER['SCRIPT_NAME'] = '';
+        $_SERVER['PATH_INFO'] = '/archive/2006/05';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -254,6 +256,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $_SERVER['PATH_INFO'] = null;
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -271,6 +274,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $_SERVER['PATH_INFO'] = null;
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -288,6 +292,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/index.php';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $_SERVER['PATH_INFO'] = null;
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -305,6 +310,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/index.php/archive/2006/05';
         $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $_SERVER['PATH_INFO'] = '/archive/2006/05';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -322,6 +328,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/test/';
         $_SERVER['SCRIPT_NAME'] = '/test/index.php';
+        $_SERVER['PATH_INFO'] = null;
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -339,6 +346,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/test/index.php';
         $_SERVER['SCRIPT_NAME'] = '/test/index.php';
+        $_SERVER['PATH_INFO'] = null;
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -353,6 +361,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/test/archive/2006/05';
         $_SERVER['SCRIPT_NAME'] = '/test/index.php';
+        $_SERVER['PATH_INFO'] = '/archive/2006/05';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -367,6 +376,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/test/index.php/archive/2006/05';
         $_SERVER['SCRIPT_NAME'] = '/test/index.php';
+        $_SERVER['PATH_INFO'] = '/archive/2006/05';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
@@ -381,6 +391,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
         $_SERVER['REQUEST_URI'] = '/test/archive/2006/05/index.php';
         $_SERVER['SCRIPT_NAME'] = '/test/index.php';
+        $_SERVER['PATH_INFO'] = '/archive/2006/05/index.php';
 
         // Redundant to setUp
         $router = new Zend_Controller_RewriteRouter();
