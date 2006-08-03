@@ -57,10 +57,14 @@ class Zend_Locale_Format
             $treffer[0] = strtr($treffer[0],$symbols['minus'],'-');
         $treffer[0] = str_replace($symbols['group'],"",$treffer[0]);
 
-        if ($symbols['decimal'] != '.')
+        if ($symbols['decimal'] != '.') {
             $treffer[0] = str_replace($symbols['decimal'],".",$treffer[0]);
+            $treffer[0] = (float) $treffer[0];
+        } else {
+            $treffer[0] = (int) $treffer[0];
+        }
 
-        return (int) $treffer[0];
+        return $treffer[0];
     }
 
 

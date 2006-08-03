@@ -22,7 +22,7 @@
 
 /**
  * @category   Zend
- * @package    Zend_Locale 
+ * @package    Zend_Locale
  * @subpackage Data
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -31,7 +31,7 @@ class Zend_Locale_Data
 {
     /**
      * locale files
-     * 
+     *
      * @var ressource
      * @access private
      */
@@ -40,7 +40,7 @@ class Zend_Locale_Data
 
     /**
      * list of values which are collected
-     * 
+     *
      * @var array
      * @access private
      */
@@ -49,7 +49,7 @@ class Zend_Locale_Data
 
     /**
      * Read the content from locale
-     * 
+     *
      * Can be called like:
      * <ldml>
      *     <delimiter>test</delimiter>
@@ -57,7 +57,7 @@ class Zend_Locale_Data
      *     <second type='mysecond'>content2</second>
      *     <third type='mythird' />
      * </ldml>
-     * 
+     *
      * Case 1: _readFile('ar','/ldml/delimiter')             -> returns [] = test
      * Case 1: _readFile('ar','/ldml/second[@type=myone]')   -> returns [] = content
      * Case 2: _readFile('ar','/ldml/second','type')         -> returns [myone] = content; [mysecond] = content2
@@ -70,9 +70,9 @@ class Zend_Locale_Data
      * @param  string $value
      * @access private
      */
-    private static function _readFile($locale, $path, $attribute, $value) 
+    private static function _readFile($locale, $path, $attribute, $value)
     {
-        
+
         // ohne attribute - alle Werte auslesen
         // mit attribute - nur diesen Wert auslesen
         if (!empty(self::$_ldml[$locale])) {
@@ -121,9 +121,8 @@ class Zend_Locale_Data
         // needed for alias tag when referring to other locale
         if (empty(self::$_ldml[$locale])) {
             if (!file_exists(dirname(__FILE__).'/Data/'.$locale.'.xml')) {
-                require_once 'Zend/Locale/Exception.php';
-                throw new Zend_Locale_Exception('Missing locale for '.$locale);
-            } 
+                self::throwException('Missing locale file for '.$locale);
+            }
 
             self::$_ldml[$locale] = simplexml_load_file(dirname(__FILE__).'/Data/'.$locale.'.xml');
         }
@@ -139,7 +138,7 @@ class Zend_Locale_Data
                 $result = self::$_ldml[$locale]->xpath($search.'/alias');
 
                 // alias found
-                if (!empty($result)) {   
+                if (!empty($result)) {
 
                     $source = $result[0]['source'];
                     $newpath = $result[0]['path'];
@@ -147,12 +146,12 @@ class Zend_Locale_Data
                     // new path - path //ldml is to ignore
                     if ($newpath != '//ldml') {
                         // other path - parse to make real path
-                    
+
                         while (substr($newpath,0,3) == '../') {
                             $newpath = substr($newpath,3);
                             $search = substr($search,0,strrpos($search,'/'));
                         }
-                    
+
                         // truncate ../ to realpath otherwise problems with alias
                         $path = $search.'/'.$newpath;
                         while (($tok = strtok('/'))!== false)
@@ -171,7 +170,7 @@ class Zend_Locale_Data
             }
         return true;
     }
-    
+
 
     /**
      * Read the right LDML file
@@ -184,7 +183,6 @@ class Zend_Locale_Data
      */
     private static function _getFile($locale, $path, $attribute, $value)
     {
-
         $result = self::_findRoute($locale, $path, $attribute, $value);
         if ($result)
             self::_readFile($locale, $path, $attribute, $value);
@@ -231,7 +229,7 @@ class Zend_Locale_Data
     public static function getContent($locale, $path, $value)
     {
         self::$_list = array();
-        
+
         if (empty($locale))
             $locale = 'root';
 
@@ -409,7 +407,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''.$value.'\']/fields/field[@type=\''.$key.'\']/displayName','',$key);
-                } 
+                }
                 break;
 
             case 'relativedates':
@@ -426,7 +424,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile($locale, '/ldml/dates/timeZoneNames/zone[@type=\''.$key.'\']/exemplarCity','',$key);
-                } 
+                }
                 break;
 
             case 'timezonestandard':
@@ -435,7 +433,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile($locale, '/ldml/dates/timeZoneNames/zone[@type=\''.$key.'\']/long/standard','',$key);
-                } 
+                }
                 break;
 
             case 'timezonestandardshort':
@@ -444,7 +442,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile($locale, '/ldml/dates/timeZoneNames/zone[@type=\''.$key.'\']/short/standard','',$key);
-                } 
+                }
                 break;
 
             case 'timezonedaylight':
@@ -453,7 +451,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile($locale, '/ldml/dates/timeZoneNames/zone[@type=\''.$key.'\']/long/daylight','',$key);
-                } 
+                }
                 break;
 
             case 'timezonedaylightshort':
@@ -462,7 +460,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile($locale, '/ldml/dates/timeZoneNames/zone[@type=\''.$key.'\']/short/daylight','',$key);
-                } 
+                }
                 break;
 
             case 'timezoneformat':
@@ -502,7 +500,7 @@ class Zend_Locale_Data
                     foreach ($_temp as $key => $found) {
                         self::_getFile($locale, '/ldml/numbers/decimalFormats/decimalFormatLength[@type=\''.$key.'\']/decimalFormat/pattern','',$key);
                     }
-                } 
+                }
                 break;
 
             case 'scientificnumberformat':
@@ -517,7 +515,7 @@ class Zend_Locale_Data
                     foreach ($_temp as $key => $found) {
                         self::_getFile($locale, '/ldml/numbers/scientificFormats/scientificFormatLength[@type=\''.$key.'\']/scientificFormat/pattern','',$key);
                     }
-                } 
+                }
                 break;
 
             case 'percentnumberformat':
@@ -532,7 +530,7 @@ class Zend_Locale_Data
                     foreach ($_temp as $key => $found) {
                         self::_getFile($locale, '/ldml/numbers/percentFormats/percentFormatLength[@type=\''.$key.'\']/percentFormat/pattern','',$key);
                     }
-                } 
+                }
                 break;
 
             case 'currencyformat':
@@ -547,7 +545,7 @@ class Zend_Locale_Data
                     foreach ($_temp as $key => $found) {
                         self::_getFile($locale, '/ldml/numbers/currencyFormats/currencyFormatLength[@type=\''.$key.'\']/currencyFormat/pattern','',$key);
                     }
-                } 
+                }
                 self::_getFile($locale, '/ldml/numbers/currencyFormats/currencySpacing/beforeCurrency/currencyMatch','','beforMatch');
                 self::_getFile($locale, '/ldml/numbers/currencyFormats/currencySpacing/beforeCurrency/surroundingMatch','','beforSurround');
                 self::_getFile($locale, '/ldml/numbers/currencyFormats/currencySpacing/beforeCurrency/insertBetween','','beforBetween');
@@ -592,7 +590,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile('supplementalData','/supplementalData/currencyData/fractions/info[@iso4217=\''.$key.'\']','digits',$key);
-                } 
+                }
                 break;
 
             case 'currencyroundinglist':
@@ -601,7 +599,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile('supplementalData','/supplementalData/currencyData/fractions/info[@iso4217=\''.$key.'\']','rounding',$key);
-                } 
+                }
                 break;
 
             case 'currencyforregion':
@@ -614,7 +612,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile('supplementalData','/supplementalData/currencyData/region[@iso3166=\''.$key.'\']/currency','iso4217',$key);
-                } 
+                }
                 break;
 
             case 'regionforterritory':
@@ -627,7 +625,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile('supplementalData','/supplementalData/territoryContainment/group[@type=\''.$key.'\']','contains',$key);
-                } 
+                }
                 break;
 
             case 'scriptforlanguage':
@@ -640,7 +638,7 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile('supplementalData', '/supplementalData/languageData/language[@type=\''.$key.'\']','scripts',$key);
-                } 
+                }
                 break;
 
             case 'territoryforlanguage':
@@ -653,10 +651,22 @@ class Zend_Locale_Data
                 self::$_list = array();
                 foreach ($_temp as $key => $found) {
                     self::_getFile('supplementalData', '/supplementalData/languageData/language[@type=\''.$key.'\']','territories',$key);
-                } 
+                }
                 break;
-                
+
         }
         return self::$_list;
+    }
+
+
+    /**
+     * Throw an exception
+     *
+     * Note : for performance reasons, the "load" of Zend/Locale/Exception is dynamic
+     */
+    public static function throwException($message)
+    {
+        require_once('Zend/Locale/Exception.php');
+        throw new Zend_Locale_Exception($message);
     }
 }

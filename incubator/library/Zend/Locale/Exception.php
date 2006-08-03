@@ -31,5 +31,5 @@ require_once 'Zend/Exception.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Exception_Exception extends Zend_Exception
+class Zend_Locale_Exception extends Zend_Exception
 {}
