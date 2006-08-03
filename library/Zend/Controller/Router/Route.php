@@ -114,7 +114,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                         $values[$pathPart] = null;
                 } else {
                     if (is_null($values[$var])) 
-                        $values[$var] = $pathPart;
+                        $values[$var] = rawurldecode($pathPart);
                     $var = null;	
                 }
                 
@@ -129,7 +129,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 
                 if ($name !== null) {
                     // It's a variable. Setting a value
-                    $values[$name] = $pathPart;
+                    $values[$name] = rawurldecode($pathPart);
                 } else {
                     $pathStaticCount++;
                 }

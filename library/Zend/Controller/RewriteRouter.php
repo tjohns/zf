@@ -121,31 +121,27 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     
     public function getRewriteBase()
     {
+        if ($this->_rewriteBase === null) {
+            $this->_rewriteBase = $this->detectRewriteBase();
+        }
         return $this->_rewriteBase;
     }
 
     public function route(Zend_Controller_Dispatcher_Interface $dispatcher)
     {
-        /**
-         * @todo Replace with Zend_Request object
-         */
+        /** @todo Replace with Zend_Request object */
         $path = $_SERVER['REQUEST_URI'];
         if (strstr($path, '?')) {
             $path = substr($path, 0, strpos($path, '?'));
         }
 
-        if ($this->_rewriteBase === null) {
-            $this->_rewriteBase = $this->detectRewriteBase();
+        /** Remove RewriteBase */
+        $rb = $this->getRewriteBase();
+        if (strlen($rb) > 0 && strpos($path, $rb) === 0) {
+            $path = substr($path, strlen($rb));
         }
 
-        // Remove RewriteBase
-        if (strlen($this->_rewriteBase) > 0 && strpos($path, $this->_rewriteBase) === 0) {
-            $path = substr($path, strlen($this->_rewriteBase));
-        }
-
-        /**
-         * Find the matching route
-         */
+        /** Find the matching route */
         $controller = 'index';
         $action = 'noRoute';
         

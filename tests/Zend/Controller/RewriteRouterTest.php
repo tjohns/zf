@@ -151,24 +151,18 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
     */
     public function testRouteWithEncodedUrl()
     {
-        if ($this->version == 3) {
-    
-            $this->markTestSkipped('To be resolved with Zend_Http_Request');
-    
-            $this->router->addRoute('test', new Zend_Controller_Router_Route('test/:type/:something', array('controller' => 'test', 'action' => 'act')));
-    
-            $_SERVER['REQUEST_URI'] = 'test/abc%34asdf/def';
-            $token = $this->router->route($this->dispatcher);
-    
-            $this->assertSame('act', $token->getActionName());
-            $this->assertSame('test', $token->getControllerName());
-    
-            $params = $token->getParams();
-    
-            $this->assertSame('abc4asdf', $params['type']);
-            $this->assertSame('def', $params['something']);
-            
-        }
+        $this->router->addRoute('test', new Zend_Controller_Router_Route('test/:type/:something', array('controller' => 'test', 'action' => 'act')));
+
+        $_SERVER['REQUEST_URI'] = 'test/abc%34as%20df/def';
+        $token = $this->router->route($this->dispatcher);
+        
+        $this->assertSame('act', $token->getActionName());
+        $this->assertSame('test', $token->getControllerName());
+
+        $params = $token->getParams();
+
+        $this->assertSame('abc4as df', $params['type']);
+        $this->assertSame('def', $params['something']);
     }
 
     public function testDefaultRouteMatched()
