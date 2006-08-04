@@ -81,8 +81,7 @@ abstract class Zend_Measure_Abstract //implements Serializable
      * Serialize
      */
     public function serialize() {
-        $array = array('Value' => $this->_value,'Type' => $this->_type);
-        serialize($array);
+        return serialize($this);
     }
 
 
@@ -90,9 +89,7 @@ abstract class Zend_Measure_Abstract //implements Serializable
      * Unserialize
      */
     public function unserialize($serialized) {
-        $serial = unserialize($serialized);
-        $this->_value = $serial['Value'];
-        $this->_type  = $serial['Type'];
+//        $this = unserialize($serialized);
     }
 
 

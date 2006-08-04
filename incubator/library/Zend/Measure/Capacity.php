@@ -119,12 +119,10 @@ class Zend_Measure_Capacity extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Object $object )
+    public function equals( Zend_Measure_Capacity $object )
     {
         if ($object->toString() == $this->toString())
-        {
             return true;
-        }
         return false;
     }
 
