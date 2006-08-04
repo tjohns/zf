@@ -3,9 +3,6 @@ if (!defined('PHPUnit2_MAIN_METHOD')) {
     define('PHPUnit2_MAIN_METHOD', 'AllTests::main');
 }
 
-require_once 'PHPUnit2/Framework/TestSuite.php';
-require_once 'PHPUnit2/TextUI/TestRunner.php';
-
 /**
  * Read in user-defined test configuration if available; otherwise, read default test configuration
  */
@@ -14,6 +11,9 @@ if (is_readable('TestConfiguration.php')) {
 } else {
     require_once 'TestConfiguration.php.dist';
 }
+
+require_once 'PHPUnit2/Framework/TestSuite.php';
+require_once 'PHPUnit2/TextUI/TestRunner.php';
 
 /**
  * Prepend library/ to the include_path (incubator first, then regular
