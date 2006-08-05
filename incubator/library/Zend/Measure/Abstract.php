@@ -86,14 +86,6 @@ abstract class Zend_Measure_Abstract //implements Serializable
 
 
     /**
-     * Unserialize
-     */
-    public function unserialize($serialized) {
-//        $this = unserialize($serialized);
-    }
-
-
-    /**
      * Throw an exception
      *
      * Note : for performance reasons, the "load" of Zend/Measure/Exception is dynamic

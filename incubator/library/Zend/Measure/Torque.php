@@ -103,7 +103,7 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Object $object )
+    public function equals( Zend_Measure_Torque $object )
     {
         if ($object->toString() == $this->toString())
         {

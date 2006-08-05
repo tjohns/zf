@@ -211,7 +211,7 @@ class Zend_Measure_Speed extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Object $object )
+    public function equals( Zend_Measure_Speed $object )
     {
         if ($object->toString() == $this->toString())
         {
@@ -257,9 +257,6 @@ class Zend_Measure_Speed extends Zend_Measure_Abstract
                     case "/":
                         $value /= $found;
                         break;
-                    case "*":
-                        $value /= $found;
-                        break;
                     default:
                         $value *= $found;
                         break;
@@ -275,9 +272,6 @@ class Zend_Measure_Speed extends Zend_Measure_Abstract
                 switch ($key) {
                     case "/":
                         $value /= $found;
-                        break;
-                    case "*":
-                        $value *= $found;
                         break;
                     default:
                         $value *= $found;

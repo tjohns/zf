@@ -157,42 +157,10 @@ class Zend_Measure_Capacity extends Zend_Measure_Abstract
 
         // Convert to standard value
         $value = parent::getValue();
-        if (is_array(self::$_UNITS[parent::getType()][0])) {
-            foreach (self::$_UNITS[parent::getType()][0] as $key => $found) {
-                switch ($key) {
-                    case "/":
-                        $value /= $found;
-                        break;
-                    case "*":
-                        $value /= $found;
-                        break;
-                    default:
-                        $value *= $found;
-                        break;
-                }
-            }
-        } else {
-            $value = $value * (self::$_UNITS[parent::getType()][0]);
-        }
+        $value = $value * (self::$_UNITS[parent::getType()][0]);
 
         // Convert to expected value
-        if (is_array(self::$_UNITS[$type][0])) {
-            foreach (self::$_UNITS[$type][0] as $key => $found) {
-                switch ($key) {
-                    case "/":
-                        $value /= $found;
-                        break;
-                    case "*":
-                        $value *= $found;
-                        break;
-                    default:
-                        $value *= $found;
-                        break;
-                }
-            }
-        } else {
-            $value = $value * (self::$_UNITS[$type][0]);
-        }
+        $value = $value * (self::$_UNITS[$type][0]);
         parent::setValue($value);
         parent::setType($type);
     }

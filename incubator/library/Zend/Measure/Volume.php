@@ -233,7 +233,7 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Object $object )
+    public function equals( Zend_Measure_Volume $object )
     {
         if ($object->toString() == $this->toString())
         {

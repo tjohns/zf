@@ -1,0 +1,371 @@
+<?php
+/**
+ * @package    Zend_Measure
+ * @subpackage UnitTests
+ */
+
+
+/**
+ * Zend_Measure_Torque
+ */
+require_once 'Zend/Measure/Torque.php';
+
+/**
+ * PHPUnit2 test case
+ */
+require_once 'PHPUnit2/Framework/TestCase.php';
+
+
+/**
+ * @package    Zend_Measure
+ * @subpackage UnitTests
+ */
+class Zend_Measure_TorqueTest extends PHPUnit2_Framework_TestCase
+{
+
+    public function setUp()
+    {
+    }
+
+
+    /**
+     * test for Torque initialisation
+     * expected instance
+     */
+    public function testTorqueInit()
+    {
+        $value = new Zend_Measure_Torque('100',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertTrue($value instanceof Zend_Measure_Torque,'Zend_Measure_Torque Object not returned');
+    }
+
+
+    /**
+     * test for exception unknown type
+     * expected exception
+     */
+    public function testTorqueUnknownType()
+    {
+        try {
+            $value = new Zend_Measure_Torque('100','Torque::UNKNOWN','de');
+            $this->assertTrue(false,'Exception expected because of unknown type');
+        } catch (Exception $e) {
+            return true; // Test OK
+        }
+    }
+
+
+    /**
+     * test for exception unknown value
+     * expected exception
+     */
+    public function testTorqueUnknownValue()
+    {
+        try {
+            $value = new Zend_Measure_Torque('novalue',Zend_Measure_Torque::STANDARD,'de');
+            $this->assertTrue(false,'Exception expected because of empty value');
+        } catch (Exception $e) {
+            return true; // Test OK
+        }
+    }
+
+
+    /**
+     * test for exception unknown locale
+     * expected root value
+     */
+    public function testTorqueUnknownLocale()
+    {
+        try {
+            $value = new Zend_Measure_Torque('100',Zend_Measure_Torque::STANDARD,'nolocale');
+            $this->assertTrue(false,'Exception expected because of unknown locale');
+        } catch (Exception $e) {
+            return true; // Test OK
+        }
+    }
+
+
+    /**
+     * test for positive value
+     * expected integer
+     */
+    public function testTorqueValuePositive()
+    {
+        $value = new Zend_Measure_Torque('100',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(100, $value->getValue(), 'Zend_Measure_Torque value expected to be a positive integer');
+    }
+
+
+    /**
+     * test for negative value
+     * expected integer
+     */
+    public function testTorqueValueNegative()
+    {
+        $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(-100, $value->getValue(), 'Zend_Measure_Torque value expected to be a negative integer');
+    }
+
+
+    /**
+     * test for decimal value
+     * expected float
+     */
+    public function testTorqueValueDecimal()
+    {
+        $value = new Zend_Measure_Torque('-100,200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(-100.200, $value->getValue(), 'Zend_Measure_Torque value expected to be a decimal value');
+    }
+
+
+    /**
+     * test for decimal seperated value
+     * expected float
+     */
+    public function testTorqueValueDecimalSeperated()
+    {
+        $value = new Zend_Measure_Torque('-100.100,200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(-100100.200, $value->getValue(),'Zend_Measure_Torque Object not returned');
+    }
+
+
+    /**
+     * test for string with integrated value
+     * expected float
+     */
+    public function testTorqueValueString()
+    {
+        $value = new Zend_Measure_Torque('string -100.100,200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(-100100.200, $value->getValue(),'Zend_Measure_Torque Object not returned');
+    }
+
+
+    /**
+     * test for equality
+     * expected true
+     */
+    public function testTorqueEquality()
+    {
+        $value = new Zend_Measure_Torque('string -100.100,200',Zend_Measure_Torque::STANDARD,'de');
+        $newvalue = new Zend_Measure_Torque('otherstring -100.100,200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Torque Object should be equal');
+    }
+
+
+    /**
+     * test for no equality
+     * expected false
+     */
+    public function testTorqueNoEquality()
+    {
+        $value = new Zend_Measure_Torque('string -100.100,200',Zend_Measure_Torque::STANDARD,'de');
+        $newvalue = new Zend_Measure_Torque('otherstring -100,200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertFalse($value->equals($newvalue),'Zend_Measure_Torque Object should be not equal');
+    }
+
+
+    /**
+     * test for serialization
+     * expected string
+     */
+    public function testTorqueSerialize()
+    {
+        $value = new Zend_Measure_Torque('string -100.100,200',Zend_Measure_Torque::STANDARD,'de');
+        $serial = $value->serialize();
+        $this->assertTrue(!empty($serial),'Zend_Measure_Torque not serialized');
+    }
+
+
+    /**
+     * test for unserialization
+     * expected object
+     */
+    public function testTorqueUnSerialize()
+    {
+        $value = new Zend_Measure_Torque('string -100.100,200',Zend_Measure_Torque::STANDARD,'de');
+        $serial = $value->serialize();
+        $newvalue = unserialize($serial);
+        $this->assertTrue($value->equals($newvalue),'Zend_Measure_Torque not unserialized');
+    }
+
+
+    /**
+     * test for set positive value
+     * expected integer
+     */
+    public function testTorqueSetPositive()
+    {
+        $value = new Zend_Measure_Torque('100',Zend_Measure_Torque::STANDARD,'de');
+        $value->setValue('200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Torque value expected to be a positive integer');
+    }
+
+
+    /**
+     * test for set negative value
+     * expected integer
+     */
+    public function testTorqueSetNegative()
+    {
+        $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
+        $value->setValue('-200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(-200, $value->getValue(), 'Zend_Measure_Torque value expected to be a negative integer');
+    }
+
+
+    /**
+     * test for set decimal value
+     * expected float
+     */
+    public function testTorqueSetDecimal()
+    {
+        $value = new Zend_Measure_Torque('-100,200',Zend_Measure_Torque::STANDARD,'de');
+        $value->setValue('-200,200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(-200.200, $value->getValue(), 'Zend_Measure_Torque value expected to be a decimal value');
+    }
+
+
+    /**
+     * test for set decimal seperated value
+     * expected float
+     */
+    public function testTorqueSetDecimalSeperated()
+    {
+        $value = new Zend_Measure_Torque('-100.100,200',Zend_Measure_Torque::STANDARD,'de');
+        $value->setValue('-200.200,200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(-200200.200, $value->getValue(),'Zend_Measure_Torque Object not returned');
+    }
+
+
+    /**
+     * test for set string with integrated value
+     * expected float
+     */
+    public function testTorqueSetString()
+    {
+        $value = new Zend_Measure_Torque('string -100.100,200',Zend_Measure_Torque::STANDARD,'de');
+        $value->setValue('otherstring -200.200,200',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals(-200200.200, $value->getValue(),'Zend_Measure_Torque Object not returned');
+    }
+
+
+    /**
+     * test for exception unknown type
+     * expected exception
+     */
+    public function testTorqueSetUnknownType()
+    {
+        try {
+            $value = new Zend_Measure_Torque('100',Zend_Measure_Torque::STANDARD,'de');
+            $value->setValue('otherstring -200.200,200','Torque::UNKNOWN','de');
+            $this->assertTrue(false,'Exception expected because of unknown type');
+        } catch (Exception $e) {
+            return true; // Test OK
+        }
+    }
+
+
+    /**
+     * test for exception unknown value
+     * expected exception
+     */
+    public function testTorqueSetUnknownValue()
+    {
+        try {
+            $value = new Zend_Measure_Torque('100',Zend_Measure_Torque::STANDARD,'de');
+            $value->setValue('novalue',Zend_Measure_Torque::STANDARD,'de');
+            $this->assertTrue(false,'Exception expected because of empty value');
+        } catch (Exception $e) {
+            return; // Test OK
+        }
+    }
+
+
+    /**
+     * test for exception unknown locale
+     * expected exception
+     */
+    public function testTorqueSetUnknownLocale()
+    {
+        try {
+            $value = new Zend_Measure_Torque('100',Zend_Measure_Torque::STANDARD,'de');
+            $value->setValue('200',Zend_Measure_Torque::STANDARD,'nolocale');
+            $this->assertTrue(false,'Exception expected because of unknown locale');
+        } catch (Exception $e) {
+            return true; // Test OK
+        }
+    }
+
+
+    /**
+     * test setting type
+     * expected new type
+     */
+    public function testTorqueSetType()
+    {
+        $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
+        $value->setType(Zend_Measure_Torque::NEWTON_CENTIMETER);
+        $this->assertEquals($value->getType(), Zend_Measure_Torque::NEWTON_CENTIMETER, 'Zend_Measure_Torque type expected');
+    }
+
+
+    /**
+     * test setting computed type
+     * expected new type
+     */
+    public function testTorqueSetComputedType1()
+    {
+        $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
+        $value->setType(Zend_Measure_Torque::POUND_INCH);
+        $this->assertEquals($value->getType(), Zend_Measure_Torque::POUND_INCH, 'Zend_Measure_Torque type expected');
+    }
+
+
+    /**
+     * test setting computed type
+     * expected new type
+     */
+    public function testTorqueSetComputedType2()
+    {
+        $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::POUND_INCH,'de');
+        $value->setType(Zend_Measure_Torque::STANDARD);
+        $this->assertEquals($value->getType(), Zend_Measure_Torque::STANDARD, 'Zend_Measure_Torque type expected');
+    }
+
+
+    /**
+     * test setting unknown type
+     * expected new type
+     */
+    public function testTorqueSetTypeFailed()
+    {
+        try {
+            $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
+            $value->setType('Torque::UNKNOWN');
+            $this->assertTrue(false,'Exception expected because of unknown type');
+        } catch (Exception $e) {
+            return true; // OK
+        }
+    }
+
+
+    /**
+     * test toString
+     * expected string
+     */
+    public function testTorqueToString()
+    {
+        $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals($value->toString(), '-100 Nm', 'Value -100 Nm expected');
+    }
+
+
+    /**
+     * test __toString
+     * expected string
+     */
+    public function testTorque_ToString()
+    {
+        $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
+        $this->assertEquals($value->__toString(), '-100 Nm', 'Value -100 Nm expected');
+    }
+}
