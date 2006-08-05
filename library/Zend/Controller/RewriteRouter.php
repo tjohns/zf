@@ -112,10 +112,10 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     public function detectRewriteBase()
     {
         $base = '';
-        if (!isset($_SERVER['PATH_INFO'])) $base = $_SERVER['REQUEST_URI'];
+        if (empty($_SERVER['PATH_INFO'])) $base = $_SERVER['REQUEST_URI'];
         else if ($pos = strpos($_SERVER['REQUEST_URI'], $_SERVER['PATH_INFO'])) {
             $base = substr($_SERVER['REQUEST_URI'], 0, $pos);
-        };
+        }
         return rtrim($base, '/');
     }
     
