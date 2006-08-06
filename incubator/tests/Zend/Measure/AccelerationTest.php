@@ -309,7 +309,7 @@ class Zend_Measure_AccelerationTest extends PHPUnit2_Framework_TestCase
      */
     public function testAccelerationSetComputedType1()
     {
-        $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::MILE_HOUR_MINUTE,'de');
+        $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::MILE_PER_HOUR_MINUTE,'de');
         $value->setType(Zend_Measure_Acceleration::GRAV);
         $this->assertEquals($value->getType(), Zend_Measure_Acceleration::GRAV, 'Zend_Measure_Acceleration type expected');
     }
@@ -322,8 +322,8 @@ class Zend_Measure_AccelerationTest extends PHPUnit2_Framework_TestCase
     public function testAccelerationSetComputedType2()
     {
         $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::GRAV,'de');
-        $value->setType(Zend_Measure_Acceleration::MILE_HOUR_MINUTE);
-        $this->assertEquals($value->getType(), Zend_Measure_Acceleration::MILE_HOUR_MINUTE, 'Zend_Measure_Acceleration type expected');
+        $value->setType(Zend_Measure_Acceleration::MILE_PER_HOUR_MINUTE);
+        $this->assertEquals($value->getType(), Zend_Measure_Acceleration::MILE_PER_HOUR_MINUTE, 'Zend_Measure_Acceleration type expected');
     }
 
 

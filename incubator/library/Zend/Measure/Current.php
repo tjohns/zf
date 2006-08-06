@@ -47,12 +47,12 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
     const AMPERE               = 'Current::AMPERE';
     const BIOT                 = 'Current::BIOT';
     const CENTIAMPERE          = 'Current::CENTIAMPERE';
-    const COULOMB_SECOND       = 'Current::COULOMB_SECOND';
+    const COULOMB_PER_SECOND   = 'Current::COULOMB_PER_SECOND';
     const DECIAMPERE           = 'Current::DECIAMPERE';
     const DEKAAMPERE           = 'Current::DEKAAMPERE';
     const ELECTROMAGNETIC_UNIT = 'Current::ELECTROMAGNATIC_UNIT';
     const ELECTROSTATIC_UNIT   = 'Current::ELECTROSTATIC_UNIT';
-    const FRANCLIN_SECOND      = 'Current::FRANCLIN_SECOND';
+    const FRANCLIN_PER_SECOND  = 'Current::FRANCLIN_PER_SECOND';
     const GAUSSIAN             = 'Current::GAUSSIAN';
     const GIGAAMPERE           = 'Current::GIGAAMPERE';
     const GILBERT              = 'Current::GILBERT';
@@ -66,21 +66,21 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
     const SIEMENS_VOLT         = 'Current::SIEMENS_VOLT';
     const STATAMPERE           = 'Current::STATAMPERE';
     const TERAAMPERE           = 'Current::TERAAMPERE';
-    const VOLT_OHM             = 'Current::VOLT_OHM';
-    const WATT_VOLT            = 'Current::WATT_VOLT';
-    const WEBER_HENRY          = 'Current::WEBER_HENRY';
+    const VOLT_PER_OHM         = 'Current::VOLT_PER_OHM';
+    const WATT_PER_VOLT        = 'Current::WATT_PER_VOLT';
+    const WEBER_PER_HENRY      = 'Current::WEBER_PER_HENRY';
 
     private static $_UNITS = array(
         'Current::ABAMPERE'             => array(10,'abampere'),
         'Current::AMPERE'               => array(1,'A'),
         'Current::BIOT'                 => array(10,'Bi'),
         'Current::CENTIAMPERE'          => array(0.01,'cA'),
-        'Current::COULOMB_SECOND'       => array(1,'C/s'),
+        'Current::COULOMB_PER_SECOND'   => array(1,'C/s'),
         'Current::DECIAMPERE'           => array(0.1,'dA'),
         'Current::DEKAAMPERE'           => array(10,'daA'),
         'Current::ELECTROMAGNATIC_UNIT' => array(10,'current emu'),
         'Current::ELECTROSTATIC_UNIT'   => array(3.335641e-10,'current esu'),
-        'Current::FRANCLIN_SECOND'      => array(3.335641e-10,'Fr/s'),
+        'Current::FRANCLIN_PER_SECOND'  => array(3.335641e-10,'Fr/s'),
         'Current::GAUSSIAN'             => array(3.335641e-10,'G current'),
         'Current::GIGAAMPERE'           => array(1.0e+9,'GA'),
         'Current::GILBERT'              => array(0.79577472,'Gi'),
@@ -94,9 +94,9 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
         'Current::SIEMENS_VOLT'         => array(1,'SV'),
         'Current::STATAMPERE'           => array(3.335641e-10,'statampere'),
         'Current::TERAAMPERE'           => array(1.0e+12,'TA'),
-        'Current::VOLT_OHM'             => array(1,'V/Ohm'),
-        'Current::WATT_VOLT'            => array(1,'W/V'),
-        'Current::WEBER_HENRY'          => array(1,'Wb/H')
+        'Current::VOLT_PER_OHM'         => array(1,'V/Ohm'),
+        'Current::WATT_PER_VOLT'        => array(1,'W/V'),
+        'Current::WEBER_PER_HENRY'      => array(1,'Wb/H')
     );
 
     /**
@@ -123,7 +123,7 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Zend_Measure_Current $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString())
         {
@@ -166,7 +166,7 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
         $value = $value * (self::$_UNITS[parent::getType()][0]);
 
         // Convert to expected value
-        $value = $value * (self::$_UNITS[$type][0]);
+        $value = $value / (self::$_UNITS[$type][0]);
         parent::setValue($value);
         parent::setType($type);
     }

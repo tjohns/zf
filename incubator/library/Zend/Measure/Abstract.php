@@ -95,4 +95,29 @@ abstract class Zend_Measure_Abstract //implements Serializable
         require_once('Zend/Measure/Exception.php');
         throw new Zend_Measure_Exception($message);
     }
+
+
+    /**
+     * Compare if the value and type is equal
+     *
+     * @return boolean
+     */
+    abstract public function equals($object);
+
+
+    /**
+     * Returns a string representation
+     *
+     * @return string
+     */
+    abstract public function toString();
+
+
+    /**
+     * Returns a string representation
+     *
+     * @return string
+     */
+    abstract public function __toString();
+
 }

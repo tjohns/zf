@@ -41,50 +41,50 @@ require_once 'Zend/Locale/Format.php';
 class Zend_Measure_Acceleration extends Zend_Measure_Abstract
 {
     // Acceleration definitions
-    const STANDARD = 'Acceleration::METER_SQUARE_SECOND';
+    const STANDARD = 'Acceleration::METER_PER_SQUARE_SECOND';
 
-    const CENTIGAL                 = 'Acceleration::CENTIGAL';                 // Metric
-    const CENTIMETER_SQUARE_SECOND = 'Acceleration::CENTIMETER_SQUARE_SECOND'; // Metric
-    const DECIGAL                  = 'Acceleration::DECIGAL';                  // Metric
-    const DECIMETER_SQUARE_SECOND  = 'Acceleration::DECIMETER_SQUARE_SECOND';  // Metric
-    const DEKAMETER_SQUARE_SECOND  = 'Acceleration::DEKAMETER_SQUARE_SECOND';  // Metric
-    const FOOT_SQUARE_SECOND       = 'Acceleration::FOOT_SQUARE_SECOND';       // US
-    const G                        = 'Acceleration::G';                        // Gravity
-    const GAL                      = 'Acceleration::GAL';                      // Metric = 1cm/s²
-    const GALILEO                  = 'Acceleration::GALILEO';                  // Metric = 1cm/s²
-    const GRAV                     = 'Acceleration::GRAV';                     // Gravity
-    const HECTOMETER_SQUARE_SECOND = 'Acceleration::HECTOMETER_SQUARE_SECOND'; // Metric
-    const INCH_SQUARE_SECOND       = 'Acceleration::INCH_SQUARE_SECOND';       // US
-    const KILOMETER_HOUR_SECOND    = 'Acceleration::KILOMETER_HOUR_SECOND';    // Metric
-    const KILOMETER_SQUARE_SECOND  = 'Acceleration::KILOMETER_SQUARE_SECOND';  // Metric
-    const METER_SQUARE_SECOND      = 'Acceleration::METER_SQUARE_SECOND';      // Metric
-    const MILE_HOUR_MINUTE         = 'Acceleration::MILE_HOUR_MINUTE';         // US
-    const MILE_HOUR_SECOND         = 'Acceleration::MILE_HOUR_SECOND';         // US
-    const MILE_SQUARE_SECOND       = 'Acceleration::MILE_SQUARE_SECOND';       // US
-    const MILLIGAL                 = 'Acceleration::MILLIGAL';                 // Metric
-    const MILLIMETER_SQUARE_SECOND = 'Acceleration::MILLIMETER_SQUARE_SECOND'; // Metric
+    const CENTIGAL                     = 'Acceleration::CENTIGAL';                 // Metric
+    const CENTIMETER_PER_SQUARE_SECOND = 'Acceleration::CENTIMETER_PER_SQUARE_SECOND'; // Metric
+    const DECIGAL                      = 'Acceleration::DECIGAL';                  // Metric
+    const DECIMETER_PER_SQUARE_SECOND  = 'Acceleration::DECIMETER_PER_SQUARE_SECOND';  // Metric
+    const DEKAMETER_PER_SQUARE_SECOND  = 'Acceleration::DEKAMETER_PER_SQUARE_SECOND';  // Metric
+    const FOOT_PER_SQUARE_SECOND       = 'Acceleration::FOOT_PER_SQUARE_SECOND';       // US
+    const G                            = 'Acceleration::G';                        // Gravity
+    const GAL                          = 'Acceleration::GAL';                      // Metric = 1cm/s²
+    const GALILEO                      = 'Acceleration::GALILEO';                  // Metric = 1cm/s²
+    const GRAV                         = 'Acceleration::GRAV';                     // Gravity
+    const HECTOMETER_PER_SQUARE_SECOND = 'Acceleration::HECTOMETER_PER_SQUARE_SECOND'; // Metric
+    const INCH_PER_SQUARE_SECOND       = 'Acceleration::INCH_PER_SQUARE_SECOND';       // US
+    const KILOMETER_PER_HOUR_SECOND    = 'Acceleration::KILOMETER_PER_HOUR_SECOND';    // Metric
+    const KILOMETER_PER_SQUARE_SECOND  = 'Acceleration::KILOMETER_PER_SQUARE_SECOND';  // Metric
+    const METER_PER_SQUARE_SECOND      = 'Acceleration::METER_PER_SQUARE_SECOND';      // Metric
+    const MILE_PER_HOUR_MINUTE         = 'Acceleration::MILE_PER_HOUR_MINUTE';         // US
+    const MILE_PER_HOUR_SECOND         = 'Acceleration::MILE_PER_HOUR_SECOND';         // US
+    const MILE_PER_SQUARE_SECOND       = 'Acceleration::MILE_PER_SQUARE_SECOND';       // US
+    const MILLIGAL                     = 'Acceleration::MILLIGAL';                 // Metric
+    const MILLIMETER_PER_SQUARE_SECOND = 'Acceleration::MILLIMETER_PER_SQUARE_SECOND'; // Metric
 
     private static $_UNITS = array(
-        'Acceleration::CENTIGAL'                 => array(0.0001,'cgal'),
-        'Acceleration::CENTIMETER_SQUARE_SECOND' => array(0.01,'cm/s²'),
-        'Acceleration::DECIGAL'                  => array(0.001,'dgal'),
-        'Acceleration::DECIMETER_SQUARE_SECOND'  => array(0.1,'dm/s²'),
-        'Acceleration::DEKAMETER_SQUARE_SECOND'  => array(10,'dam/s²'),
-        'Acceleration::FOOT_SQUARE_SECOND'       => array(0.3048,'ft/s²'),
-        'Acceleration::G'                        => array(9.80665,'g'),
-        'Acceleration::GAL'                      => array(0.01,'gal'),
-        'Acceleration::GALILEO'                  => array(0.01,'gal'),
-        'Acceleration::GRAV'                     => array(9.80665,'g'),
-        'Acceleration::HECTOMETER_SQUARE_SECOND' => array(100,'h/s²'),
-        'Acceleration::INCH_SQUARE_SECOND'       => array(0.0254,'in/s²'),
-        'Acceleration::KILOMETER_HOUR_SECOND'    => array(array('' => 5,'/' => 18),'km/h²'),
-        'Acceleration::KILOMETER_SQUARE_SECOND'  => array(1000,'km/s²'),
-        'Acceleration::METER_SQUARE_SECOND'      => array(1,'m/s²'),
-        'Acceleration::MILE_HOUR_MINUTE'         => array(array('' => 22, '/' => 15, '*' => 0.3048, '/' => 60),'mph/m'),
-        'Acceleration::MILE_HOUR_SECOND'         => array(array('' => 22, '/' => 15, '*' => 0.3048),'mph/s'),
-        'Acceleration::MILE_SQUARE_SECOND'       => array(1609.344,'mi/s²'),
-        'Acceleration::MILLIGAL'                 => array(0.00001,'mgal/s²'),
-        'Acceleration::MILLIMETER_SQUARE_SECOND' => array(0.001,'mm/s²')
+        'Acceleration::CENTIGAL'                     => array(0.0001,'cgal'),
+        'Acceleration::CENTIMETER_PER_SQUARE_SECOND' => array(0.01,'cm/s²'),
+        'Acceleration::DECIGAL'                      => array(0.001,'dgal'),
+        'Acceleration::DECIMETER_PER_SQUARE_SECOND'  => array(0.1,'dm/s²'),
+        'Acceleration::DEKAMETER_PER_SQUARE_SECOND'  => array(10,'dam/s²'),
+        'Acceleration::FOOT_PER_SQUARE_SECOND'       => array(0.3048,'ft/s²'),
+        'Acceleration::G'                            => array(9.80665,'g'),
+        'Acceleration::GAL'                          => array(0.01,'gal'),
+        'Acceleration::GALILEO'                      => array(0.01,'gal'),
+        'Acceleration::GRAV'                         => array(9.80665,'g'),
+        'Acceleration::HECTOMETER_PER_SQUARE_SECOND' => array(100,'h/s²'),
+        'Acceleration::INCH_PER_SQUARE_SECOND'       => array(0.0254,'in/s²'),
+        'Acceleration::KILOMETER_PER_HOUR_SECOND'    => array(array('' => 5,'/' => 18),'km/h²'),
+        'Acceleration::KILOMETER_PER_SQUARE_SECOND'  => array(1000,'km/s²'),
+        'Acceleration::METER_PER_SQUARE_SECOND'      => array(1,'m/s²'),
+        'Acceleration::MILE_PER_HOUR_MINUTE'         => array(array('' => 22, '/' => 15, '*' => 0.3048, '/' => 60),'mph/m'),
+        'Acceleration::MILE_PER_HOUR_SECOND'         => array(array('' => 22, '/' => 15, '*' => 0.3048),'mph/s'),
+        'Acceleration::MILE_PER_SQUARE_SECOND'       => array(1609.344,'mi/s²'),
+        'Acceleration::MILLIGAL'                     => array(0.00001,'mgal'),
+        'Acceleration::MILLIMETER_PER_SQUARE_SECOND' => array(0.001,'mm/s²')
     );
 
     /**
@@ -111,7 +111,7 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Zend_Measure_Acceleration $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString())
         {
@@ -157,9 +157,6 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
                     case "/":
                         $value /= $found;
                         break;
-                    case "*":
-                        $value /= $found;
-                        break;
                     default:
                         $value *= $found;
                         break;
@@ -174,18 +171,15 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
             foreach (self::$_UNITS[$type][0] as $key => $found) {
                 switch ($key) {
                     case "/":
-                        $value /= $found;
-                        break;
-                    case "*":
                         $value *= $found;
                         break;
                     default:
-                        $value *= $found;
+                        $value /= $found;
                         break;
                 }
             }
         } else {
-            $value = $value * (self::$_UNITS[$type][0]);
+            $value = $value / (self::$_UNITS[$type][0]);
         }
         parent::setValue($value);
         parent::setType($type);

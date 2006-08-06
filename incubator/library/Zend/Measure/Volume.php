@@ -135,7 +135,7 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
         'Volume::BARREL_US_FEDERAL'   => array(0.1173477658,'bbl'),
         'Volume::BARREL_US_LIQUID'    => array(0.1192404717,'bbl'),
         'Volume::BARREL_US_PETROLEUM' => array(0.1589872956,'bbl'),
-        'Volume::BOARD_FOOT'          => array(array('' => 6.5411915904, '/' => 2772),''),
+        'Volume::BOARD_FOOT'          => array(array('' => 6.5411915904, '/' => 2772),'board foot'),
         'Volume::BUCKET'              => array(0.01818436,'bucket'),
         'Volume::BUCKET_US'           => array(0.018927059,'bucket'),
         'Volume::BUSHEL'              => array(0.03636872,'bu'),
@@ -200,12 +200,12 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
         'Volume::QUART_UK'            => array(0.29094976,'qt'),
         'Volume::SHOT'                => array(array('' => 0.0037854118, '/' => 128),'shot'),
         'Volume::STERE'               => array(1,'st'),
-        'Volume::TABLESPOON'          => array(0.000015,''),
+        'Volume::TABLESPOON'          => array(0.000015,'tbsp'),
         'Volume::TABLESPOON_UK'       => array(array('' => 0.00454609, '/' => 320),'tbsp'),
         'Volume::TABLESPOON_US'       => array(array('' => 0.0037854118, '/' => 256),'tbsp'),
-        'Volume::TEASPOON'            => array(0.000005,'tbsp'),
-        'Volume::TEASPOON_UK'         => array(array('' => 0.00454609, '/' => 1280),'tbsp'),
-        'Volume::TEASPOON_US'         => array(array('' => 0.0037854118, '/' => 768),'tbsp'),
+        'Volume::TEASPOON'            => array(0.000005,'tsp'),
+        'Volume::TEASPOON_UK'         => array(array('' => 0.00454609, '/' => 1280),'tsp'),
+        'Volume::TEASPOON_US'         => array(array('' => 0.0037854118, '/' => 768),'tsp'),
         'Volume::YARD'                => array(array('' => 176.6121729408, '/' => 231),'yd')
     );
 
@@ -233,7 +233,7 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Zend_Measure_Volume $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString())
         {
@@ -279,9 +279,6 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
                     case "/":
                         $value /= $found;
                         break;
-                    case "*":
-                        $value /= $found;
-                        break;
                     default:
                         $value *= $found;
                         break;
@@ -296,18 +293,15 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
             foreach (self::$_UNITS[$type][0] as $key => $found) {
                 switch ($key) {
                     case "/":
-                        $value /= $found;
-                        break;
-                    case "*":
                         $value *= $found;
                         break;
                     default:
-                        $value *= $found;
+                        $value /= $found;
                         break;
                 }
             }
         } else {
-            $value = $value * (self::$_UNITS[$type][0]);
+            $value = $value / (self::$_UNITS[$type][0]);
         }
         parent::setValue($value);
         parent::setType($type);

@@ -55,7 +55,7 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
     const GIGANEWTON      = 'Force::GIGANEWTON';
     const GRAM_FORCE      = 'Force::GRAM_FORCE';
     const HECTONEWTON     = 'Force::HECTONEWTON';
-    const JOULE_METER     = 'Force::JOULE_METER';
+    const JOULE_PER_METER = 'Force::JOULE_PER_METER';
     const KILOGRAM_FORCE  = 'Force::KILOGRAM_FORCE';
     const KILONEWTON      = 'Force::KILONEWTON';
     const KILOPOND        = 'Force::KILOPOND';
@@ -95,7 +95,7 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
         'Force::GIGANEWTON'      => array(1.0e+9,'GN'),
         'Force::GRAM_FORCE'      => array(0.00980665,'gf'),
         'Force::HECTONEWTON'     => array(100,'hN'),
-        'Force::JOULE_METER'     => array(1,'J/m'),
+        'Force::JOULE_PER_METER' => array(1,'J/m'),
         'Force::KILOGRAM_FORCE'  => array(9.80665,'kgf'),
         'Force::KILONEWTON'      => array(1000,'kN'),
         'Force::KILOPOND'        => array(9.80665,'kp'),
@@ -147,7 +147,7 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Zend_Measure_Force $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString())
         {
@@ -190,7 +190,7 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
         $value = $value * (self::$_UNITS[parent::getType()][0]);
 
         // Convert to expected value
-        $value = $value * (self::$_UNITS[$type][0]);
+        $value = $value / (self::$_UNITS[$type][0]);
         parent::setValue($value);
         parent::setType($type);
     }

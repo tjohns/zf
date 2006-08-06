@@ -45,10 +45,10 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
 
     const FOOTCANDLE              = 'Illumination::FOOTCANDLE';
     const KILOLUX                 = 'Illumination::KILOLUX';
-    const LUMEN_SQUARE_CENTIMETER = 'Illumination::LUMEN_SQUARE_CENTIMETER';
-    const LUMEN_SQUARE_FOOT       = 'Illumination::LUMEN_SQUARE_FOOT';
-    const LUMEN_SQUARE_INCH       = 'Illumination::LUMEN_SQUARE_INCH';
-    const LUMEN_SQUARE_METER      = 'Illumination::LUMEN_SQUARE_METER';
+    const LUMEN_PER_SQUARE_CENTIMETER = 'Illumination::LUMEN_PER_SQUARE_CENTIMETER';
+    const LUMEN_PER_SQUARE_FOOT   = 'Illumination::LUMEN_PER_SQUARE_FOOT';
+    const LUMEN_PER_SQUARE_INCH   = 'Illumination::LUMEN_PER_SQUARE_INCH';
+    const LUMEN_PER_SQUARE_METER  = 'Illumination::LUMEN_PER_SQUARE_METER';
     const LUX                     = 'Illumination::LUX';
     const METERCANDLE             = 'Illumination::METERCANDLE';
     const MILLIPHOT               = 'Illumination::MILLIPHOT';
@@ -58,10 +58,10 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
     private static $_UNITS = array(
         'Illumination::FOOTCANDLE'              => array(10.7639104,'fc'),
         'Illumination::KILOLUX'                 => array(1000,'klx'),
-        'Illumination::LUMEN_SQUARE_CENTIMETER' => array(10000,'lm/cm²'),
-        'Illumination::LUMEN_SQUARE_FOOT'       => array(10.7639104,'lm/ft²'),
-        'Illumination::LUMEN_SQUARE_INCH'       => array(1550.0030976,'lm/in²'),
-        'Illumination::LUMEN_SQUARE_METER'      => array(1,'lm/m²'),
+        'Illumination::LUMEN_PER_SQUARE_CENTIMETER' => array(10000,'lm/cm²'),
+        'Illumination::LUMEN_PER_SQUARE_FOOT'   => array(10.7639104,'lm/ft²'),
+        'Illumination::LUMEN_PER_SQUARE_INCH'   => array(1550.0030976,'lm/in²'),
+        'Illumination::LUMEN_PER_SQUARE_METER'  => array(1,'lm/m²'),
         'Illumination::LUX'                     => array(1,'lx'),
         'Illumination::METERCANDLE'             => array(1,'metercandle'),
         'Illumination::MILLIPHOT'               => array(10,'mph'),
@@ -93,7 +93,7 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Zend_Measure_Illumination $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString())
         {
@@ -136,7 +136,7 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
         $value = $value * (self::$_UNITS[parent::getType()][0]);
 
         // Convert to expected value
-        $value = $value * (self::$_UNITS[$type][0]);
+        $value = $value / (self::$_UNITS[$type][0]);
         parent::setValue($value);
         parent::setType($type);
     }

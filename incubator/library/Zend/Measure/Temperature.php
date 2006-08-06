@@ -81,7 +81,7 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Zend_Measure_Temperature $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString())
         {
@@ -124,7 +124,7 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
         $value = $value * (self::$_UNITS[parent::getType()][0]);
 
         // Convert to expected value
-        $value = $value * (self::$_UNITS[$type][0]);
+        $value = $value / (self::$_UNITS[$type][0]);
         parent::setValue($value);
         parent::setType($type);
     }

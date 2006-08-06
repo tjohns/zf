@@ -303,8 +303,8 @@ class Zend_Measure_PowerTest extends PHPUnit2_Framework_TestCase
     public function testPowerSetType()
     {
         $value = new Zend_Measure_Power('-100',Zend_Measure_Power::STANDARD,'de');
-        $value->setType(Zend_Measure_Power::CALORIE_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Power::CALORIE_HOUR, 'Zend_Measure_Power type expected');
+        $value->setType(Zend_Measure_Power::CALORIE_PER_HOUR);
+        $this->assertEquals($value->getType(), Zend_Measure_Power::CALORIE_PER_HOUR, 'Zend_Measure_Power type expected');
     }
 
 
@@ -314,7 +314,7 @@ class Zend_Measure_PowerTest extends PHPUnit2_Framework_TestCase
      */
     public function testPowerSetType2()
     {
-        $value = new Zend_Measure_Power('-100',Zend_Measure_Power::CALORIE_HOUR,'de');
+        $value = new Zend_Measure_Power('-100',Zend_Measure_Power::CALORIE_PER_HOUR,'de');
         $value->setType(Zend_Measure_Power::STANDARD);
         $this->assertEquals($value->getType(), Zend_Measure_Power::STANDARD, 'Zend_Measure_Power type expected');
     }
@@ -326,9 +326,9 @@ class Zend_Measure_PowerTest extends PHPUnit2_Framework_TestCase
      */
     public function testPowerSetComputedType1()
     {
-        $value = new Zend_Measure_Power('-100',Zend_Measure_Power::CALORIE_HOUR,'de');
-        $value->setType(Zend_Measure_Power::JOULE_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Power::JOULE_HOUR, 'Zend_Measure_Power type expected');
+        $value = new Zend_Measure_Power('-100',Zend_Measure_Power::CALORIE_PER_HOUR,'de');
+        $value->setType(Zend_Measure_Power::JOULE_PER_HOUR);
+        $this->assertEquals($value->getType(), Zend_Measure_Power::JOULE_PER_HOUR, 'Zend_Measure_Power type expected');
     }
 
 
@@ -338,9 +338,9 @@ class Zend_Measure_PowerTest extends PHPUnit2_Framework_TestCase
      */
     public function testPowerSetComputedType2()
     {
-        $value = new Zend_Measure_Power('-100',Zend_Measure_Power::JOULE_HOUR,'de');
-        $value->setType(Zend_Measure_Power::CALORIE_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Power::CALORIE_HOUR, 'Zend_Measure_Power type expected');
+        $value = new Zend_Measure_Power('-100',Zend_Measure_Power::JOULE_PER_HOUR,'de');
+        $value->setType(Zend_Measure_Power::CALORIE_PER_HOUR);
+        $this->assertEquals($value->getType(), Zend_Measure_Power::CALORIE_PER_HOUR, 'Zend_Measure_Power type expected');
     }
 
 

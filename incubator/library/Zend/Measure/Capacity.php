@@ -44,9 +44,9 @@ class Zend_Measure_Capacity extends Zend_Measure_Abstract
     const STANDARD = 'Capacity::FARAD';
 
     const ABFARAD              = 'Capacity::ABFARAD';
-    const AMPERE_SECOND_VOLT   = 'Capacity::AMPERE_SECOND_VOLT';
+    const AMPERE_PER_SECOND_VOLT   = 'Capacity::AMPERE_PER_SECOND_VOLT';
     const CENTIFARAD           = 'Capacity::CENTIFARAD';
-    const COULOMB_VOLT         = 'Capacity::COULOMB_VOLT';
+    const COULOMB_PER_VOLT         = 'Capacity::COULOMB_PER_VOLT';
     const DECIFARAD            = 'Capacity::DECIFARAD';
     const DEKAFARAD            = 'Capacity::DEKAFARAD';
     const ELECTROMAGNETIC_UNIT = 'Capacity::ELECTROMAGNETIC_UNIT';
@@ -64,15 +64,15 @@ class Zend_Measure_Capacity extends Zend_Measure_Abstract
     const NANOFARAD            = 'Capacity::NANOFARAD';
     const PICOFARAD            = 'Capacity::PICOFARAD';
     const PUFF                 = 'Capacity::PUFF';
-    const SECOND_OHM           = 'Capacity::SECOND_OHM';
+    const SECOND_PER_OHM       = 'Capacity::SECOND_PER_OHM';
     const STATFARAD            = 'Capacity::STATFARAD';
     const TERAFARAD            = 'Capacity::TERAFARAD';
 
     private static $_UNITS = array(
         'Capacity::ABFARAD'              => array(1.0e+9,'abfarad'),
-        'Capacity::AMPERE_SECOND_VOLT'   => array(1,'A/sV'),
+        'Capacity::AMPERE_PER_SECOND_VOLT'   => array(1,'A/sV'),
         'Capacity::CENTIFARAD'           => array(0.01,'cF'),
-        'Capacity::COULOMB_VOLT'         => array(1,'C/V'),
+        'Capacity::COULOMB_PER_VOLT'     => array(1,'C/V'),
         'Capacity::DECIFARAD'            => array(0.1,'dF'),
         'Capacity::DEKAFARAD'            => array(10,'daF'),
         'Capacity::ELECTROMAGNETIC_UNIT' => array(1.0e+9,'capacity emu'),
@@ -90,7 +90,7 @@ class Zend_Measure_Capacity extends Zend_Measure_Abstract
         'Capacity::NANOFARAD'            => array(1.0e-9,'nF'),
         'Capacity::PICOFARAD'            => array(1.0e-12,'pF'),
         'Capacity::PUFF'                 => array(1.0e-12,'pF'),
-        'Capacity::SECOND_OHM'           => array(1,'s/Ohm'),
+        'Capacity::SECOND_PER_OHM'       => array(1,'s/Ohm'),
         'Capacity::STATFARAD'            => array(1.11265e-12,'statfarad'),
         'Capacity::TERAFARAD'            => array(1.0e+12,'TF')
     );
@@ -119,7 +119,7 @@ class Zend_Measure_Capacity extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Zend_Measure_Capacity $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString())
             return true;
@@ -160,7 +160,7 @@ class Zend_Measure_Capacity extends Zend_Measure_Abstract
         $value = $value * (self::$_UNITS[parent::getType()][0]);
 
         // Convert to expected value
-        $value = $value * (self::$_UNITS[$type][0]);
+        $value = $value / (self::$_UNITS[$type][0]);
         parent::setValue($value);
         parent::setType($type);
     }

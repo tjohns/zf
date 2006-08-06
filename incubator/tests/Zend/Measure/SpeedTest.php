@@ -303,8 +303,8 @@ class Zend_Measure_SpeedTest extends PHPUnit2_Framework_TestCase
     public function testSpeedSetType()
     {
         $value = new Zend_Measure_Speed('-100',Zend_Measure_Speed::STANDARD,'de');
-        $value->setType(Zend_Measure_Speed::METER_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Speed::METER_HOUR, 'Zend_Measure_Speed type expected');
+        $value->setType(Zend_Measure_Speed::METER_PER_HOUR);
+        $this->assertEquals($value->getType(), Zend_Measure_Speed::METER_PER_HOUR, 'Zend_Measure_Speed type expected');
     }
 
 
@@ -315,8 +315,8 @@ class Zend_Measure_SpeedTest extends PHPUnit2_Framework_TestCase
     public function testSpeedSetComputedType1()
     {
         $value = new Zend_Measure_Speed('-100',Zend_Measure_Speed::STANDARD,'de');
-        $value->setType(Zend_Measure_Speed::METER_HOUR);
-        $this->assertEquals($value->getType(), Zend_Measure_Speed::METER_HOUR, 'Zend_Measure_Speed type expected');
+        $value->setType(Zend_Measure_Speed::METER_PER_HOUR);
+        $this->assertEquals($value->getType(), Zend_Measure_Speed::METER_PER_HOUR, 'Zend_Measure_Speed type expected');
     }
 
 
@@ -326,7 +326,7 @@ class Zend_Measure_SpeedTest extends PHPUnit2_Framework_TestCase
      */
     public function testSpeedSetComputedType2()
     {
-        $value = new Zend_Measure_Speed('-100',Zend_Measure_Speed::METER_HOUR,'de');
+        $value = new Zend_Measure_Speed('-100',Zend_Measure_Speed::METER_PER_HOUR,'de');
         $value->setType(Zend_Measure_Speed::STANDARD);
         $this->assertEquals($value->getType(), Zend_Measure_Speed::STANDARD, 'Zend_Measure_Speed type expected');
     }

@@ -41,19 +41,19 @@ require_once 'Zend/Locale/Format.php';
 class Zend_Measure_Lightness extends Zend_Measure_Abstract
 {
     // Lightness definitions
-    const STANDARD               = 'Lightness::CANDELA_SQUARE_METER';
+    const STANDARD               = 'Lightness::CANDELA_PER_SQUARE_METER';
 
     const APOSTILB                      = 'Lightness::APOSTILB';
     const BLONDEL                       = 'Lightness::BLONDEL';
-    const CANDELA_SQUARE_CENTIMETER     = 'Lightness::CANDELA_SQUARE_CENTIMETER';
-    const CANDELA_SQUARE_FOOT           = 'Lightness::CANDELA_SQUARE_FOOT';
-    const CANDELA_SQUARE_INCH           = 'Lightness::CANDELA_SQUARE_INCH';
-    const CANDELA_SQUARE_METER          = 'Lightness::CANDELA_SQUARE_METER';
+    const CANDELA_PER_SQUARE_CENTIMETER = 'Lightness::CANDELA_PER_SQUARE_CENTIMETER';
+    const CANDELA_PER_SQUARE_FOOT       = 'Lightness::CANDELA_PER_SQUARE_FOOT';
+    const CANDELA_PER_SQUARE_INCH       = 'Lightness::CANDELA_PER_SQUARE_INCH';
+    const CANDELA_PER_SQUARE_METER      = 'Lightness::CANDELA_PER_SQUARE_METER';
     const FOOTLAMBERT                   = 'Lightness::FOOTLAMBERT';
-    const KILOCANDELA_SQUARE_CENTIMETER = 'Lightness::KILOCANDELA_SQUARE_CENTIMETER';
-    const KILOCANDELA_SQUARE_FOOT       = 'Lightness::KILOCANDELA_SQUARE_FOOT';
-    const KILOCANDELA_SQUARE_INCH       = 'Lightness::KILOCANDELA_SQUARE_INCH';
-    const KILOCANDELA_SQUARE_METER      = 'Lightness::KILOCANDELA_SQUARE_METER';
+    const KILOCANDELA_PER_SQUARE_CENTIMETER = 'Lightness::KILOCANDELA_PER_SQUARE_CENTIMETER';
+    const KILOCANDELA_PER_SQUARE_FOOT   = 'Lightness::KILOCANDELA_PER_SQUARE_FOOT';
+    const KILOCANDELA_PER_SQUARE_INCH   = 'Lightness::KILOCANDELA_PER_SQUARE_INCH';
+    const KILOCANDELA_PER_SQUARE_METER  = 'Lightness::KILOCANDELA_PER_SQUARE_METER';
     const LAMBERT                       = 'Lightness::LAMBERT';
     const MILLIMALBERT                  = 'Lightness::MILLILAMBERT';
     const NIT                           = 'Lightness::NIT';
@@ -62,15 +62,15 @@ class Zend_Measure_Lightness extends Zend_Measure_Abstract
     private static $_UNITS = array(
         'Lightness::APOSTILB'                      => array(0.31830989,'asb'),
         'Lightness::BLONDEL'                       => array(0.31830989,'blondel'),
-        'Lightness::CANDELA_SQUARE_CENTIMETER'     => array(10000,'cd/cm²'),
-        'Lightness::CANDELA_SQUARE_FOOT'           => array(10.76391,'cd/ft²'),
-        'Lightness::CANDELA_SQUARE_INCH'           => array(1550.00304,'cd/in²'),
-        'Lightness::CANDELA_SQUARE_METER'          => array(1,'cd/m²'),
+        'Lightness::CANDELA_PER_SQUARE_CENTIMETER' => array(10000,'cd/cm²'),
+        'Lightness::CANDELA_PER_SQUARE_FOOT'       => array(10.76391,'cd/ft²'),
+        'Lightness::CANDELA_PER_SQUARE_INCH'       => array(1550.00304,'cd/in²'),
+        'Lightness::CANDELA_PER_SQUARE_METER'      => array(1,'cd/m²'),
         'Lightness::FOOTLAMBERT'                   => array(3.4262591,'ftL'),
-        'Lightness::KILOCANDELA_SQUARE_CENTIMETER' => array(10000000,'kcd/cm²'),
-        'Lightness::KILOCANDELA_SQUARE_FOOT'       => array(10763.91,'kcd/ft²'),
-        'Lightness::KILOCANDELA_SQUARE_INCH'       => array(1550003.04,'kcd/in²'),
-        'Lightness::KILOCANDELA_SQUARE_METER'      => array(1000,'kcd/m²'),
+        'Lightness::KILOCANDELA_PER_SQUARE_CENTIMETER' => array(10000000,'kcd/cm²'),
+        'Lightness::KILOCANDELA_PER_SQUARE_FOOT'   => array(10763.91,'kcd/ft²'),
+        'Lightness::KILOCANDELA_PER_SQUARE_INCH'   => array(1550003.04,'kcd/in²'),
+        'Lightness::KILOCANDELA_PER_SQUARE_METER'  => array(1000,'kcd/m²'),
         'Lightness::LAMBERT'                       => array(3183.0989,'L'),
         'Lightness::MILLILAMBERT'                  => array(3.1830989,'mL'),
         'Lightness::NIT'                           => array(1,'nt'),
@@ -101,7 +101,7 @@ class Zend_Measure_Lightness extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Zend_Measure_Lightness $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString())
         {
@@ -144,7 +144,7 @@ class Zend_Measure_Lightness extends Zend_Measure_Abstract
         $value = $value * (self::$_UNITS[parent::getType()][0]);
 
         // Convert to expected value
-        $value = $value * (self::$_UNITS[$type][0]);
+        $value = $value / (self::$_UNITS[$type][0]);
         parent::setValue($value);
         parent::setType($type);
     }

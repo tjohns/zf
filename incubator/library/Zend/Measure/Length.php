@@ -695,7 +695,7 @@ class Zend_Measure_Length extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals( Zend_Measure_Length $object )
+    public function equals($object)
     {
         if ($object->toString() == $this->toString())
         {
@@ -755,15 +755,15 @@ class Zend_Measure_Length extends Zend_Measure_Abstract
             foreach (self::$_UNITS[$type][0] as $key => $found) {
                 switch ($key) {
                     case "/":
-                        $value /= $found;
+                        $value *= $found;
                         break;
                     default:
-                        $value *= $found;
+                        $value /= $found;
                         break;
                 }
             }
         } else {
-            $value = $value * (self::$_UNITS[$type][0]);
+            $value = $value / (self::$_UNITS[$type][0]);
         }
         parent::setValue($value);
         parent::setType($type);

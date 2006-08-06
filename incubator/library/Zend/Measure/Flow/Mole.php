@@ -34,61 +34,69 @@ require_once 'Zend/Locale/Format.php';
 /**
  * @category   Zend
  * @package    Zend_Measure
- * @subpackage Zend_Measure_Torque
+ * @subpackage Zend_Measure_Flow_Mole
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Measure_Torque extends Zend_Measure_Abstract
+class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
 {
-    // Torque definitions
-    const STANDARD = 'Torque::NEWTON_METER';
+    // Mole definitions
+    const STANDARD = 'Flow_Mole::MOLE_PER_SECOND';
 
-    const DYNE_CENTIMETER     = 'Torque::DYNE_CENTIMETER';
-    const GRAM_CENTIMETER     = 'Torque::GRAM_CENTIMETER';
-    const KILOGRAM_CENTIMETER = 'Torque::KILOGRAM_CENTIMETER';
-    const KILOGRAM_METER      = 'Torque::KILOGRAM_METER';
-    const KILONEWTON_METER    = 'Torque::KILONEWTON_METER';
-    const KILOPOND_METER      = 'Torque::KILOPOND_METER';
-    const MEGANEWTON_METER    = 'Torque::MEGANEWTON_METER';
-    const MICRONEWTON_METER   = 'Torque::MICRONEWTON_METER';
-    const MILLINEWTON_METER   = 'Torque::MILLINEWTON_METER';
-    const NEWTON_CENTIMETER   = 'Torque::NEWTON_CENTIMETER';
-    const NEWTON_METER        = 'Torque::NEWTON_METER';
-    const OUNCE_FOOT          = 'Torque::OUNCE_FOOT';
-    const OUNCE_INCH          = 'Torque::OUNCE_INCH';
-    const POUND_FOOT          = 'Torque::POUND_FOOT';
-    const POUNDAL_FOOT        = 'Torque::POUNDAL_FOOT';
-    const POUND_INCH          = 'Torque::POUND_INCH';
+    const CENTIMOLE_PER_DAY    = 'Flow_Mole::CENTIMOLE_PER_DAY';
+    const CENTIMOLE_PER_HOUR   = 'Flow_Mole::CENTIMOLE_PER_HOUR';
+    const CENTIMOLE_PER_MINUTE = 'Flow_Mole::CENTIMOLE_PER_MINUTE';
+    const CENTIMOLE_PER_SECOND = 'Flow_Mole::CENTIMOLE_PER_SECOND';
+    const MEGAMOLE_PER_DAY     = 'Flow_Mole::MEGAMOLE_PER_DAY';
+    const MEGAMOLE_PER_HOUR    = 'Flow_Mole::MEGAMOLE_PER_HOUR';
+    const MEGAMOLE_PER_MINUTE  = 'Flow_Mole::MEGAMOLE_PER_MINUTE';
+    const MEGAMOLE_PER_SECOND  = 'Flow_Mole::MEGAMOLE_PER_SECOND';
+    const MICROMOLE_PER_DAY    = 'Flow_Mole::MICROMOLE_PER_DAY';
+    const MICROMOLE_PER_HOUR   = 'Flow_Mole::MICROMOLE_PER_HOUR';
+    const MICROMOLE_PER_MINUTE = 'Flow_Mole::MICROMOLE_PER_MINUTE';
+    const MICROMOLE_PER_SECOND = 'Flow_Mole::MICROMOLE_PER_SECOND';
+    const MILLIMOLE_PER_DAY    = 'Flow_Mole::MILLIMOLE_PER_DAY';
+    const MILLIMOLE_PER_HOUR   = 'Flow_Mole::MILLIMOLE_PER_HOUR';
+    const MILLIMOLE_PER_MINUTE = 'Flow_Mole::MILLIMOLE_PER_MINUTE';
+    const MILLIMOLE_PER_SECOND = 'Flow_Mole::MILLIMOLE_PER_SECOND';
+    const MOLE_PER_DAY         = 'Flow_Mole::MOLE_PER_DAY';
+    const MOLE_PER_HOUR        = 'Flow_Mole::MOLE_PER_HOUR';
+    const MOLE_PER_MINUTE      = 'Flow_Mole::MOLE_PER_MINUTE';
+    const MOLE_PER_SECOND      = 'Flow_Mole::MOLE_PER_SECOND';
 
     private static $_UNITS = array(
-        'Torque::DYNE_CENTIMETER'     => array(0.0000001,'dyncm'),
-        'Torque::GRAM_CENTIMETER'     => array(0.0000980665,'gcm'),
-        'Torque::KILOGRAM_CENTIMETER' => array(0.0980665,'kgcm'),
-        'Torque::KILOGRAM_METER'      => array(9.80665,'kgm'),
-        'Torque::KILONEWTON_METER'    => array(1000,'kNm'),
-        'Torque::KILOPOND_METER'      => array(9.80665,'kpm'),
-        'Torque::MEGANEWTON_METER'    => array(1000000,'MNm'),
-        'Torque::MICRONEWTON_METER'   => array(0.000001,'µNm'),
-        'Torque::MILLINEWTON_METER'   => array(0.001,'mNm'),
-        'Torque::NEWTON_CENTIMETER'   => array(0.01,'Ncm'),
-        'Torque::NEWTON_METER'        => array(1,'Nm'),
-        'Torque::OUNCE_FOOT'          => array(0.084738622,'ozft'),
-        'Torque::OUNCE_INCH'          => array(array('' => 0.084738622,'/' => 12),'ozin'),
-        'Torque::POUND_FOOT'          => array(array('' => 0.084738622,'*' => 16),'lbft'),
-        'Torque::POUNDAL_FOOT'        => array(0.0421401099752144,'plft'),
-        'Torque::POUND_INCH'          => array(array('' => 0.084738622,'/' => 12, '*' => 16),'lbin')
+        'Flow_Mole::CENTIMOLE_PER_DAY'    => array(array('' => 0.01, '/' => 86400),'cmol/day'),
+        'Flow_Mole::CENTIMOLE_PER_HOUR'   => array(array('' => 0.01, '/' => 3600),'cmol/h'),
+        'Flow_Mole::CENTIMOLE_PER_MINUTE' => array(array('' => 0.01, '/' => 60),'cmol/min'),
+        'Flow_Mole::CENTIMOLE_PER_SECOND' => array(0.01,'cmol/sec'),
+        'Flow_Mole::MEGAMOLE_PER_DAY'     => array(array('' => 1000000, '/' => 86400),'Mmol/day'),
+        'Flow_Mole::MEGAMOLE_PER_HOUR'    => array(array('' => 1000000, '/' => 3600),'Mmol/h'),
+        'Flow_Mole::MEGAMOLE_PER_MINUTE'  => array(array('' => 1000000, '/' => 60),'Mmol/min'),
+        'Flow_Mole::MEGAMOLE_PER_SECOND'  => array(1000000,'Mmol/sec'),
+        'Flow_Mole::MICROMOLE_PER_DAY'    => array(array('' => 0.000001, '/' => 86400),'µmol/day'),
+        'Flow_Mole::MICROMOLE_PER_HOUR'   => array(array('' => 0.000001, '/' => 3600),'µmol/h'),
+        'Flow_Mole::MICROMOLE_PER_MINUTE' => array(array('' => 0.000001, '/' => 60),'µmol/min'),
+        'Flow_Mole::MICROMOLE_PER_SECOND' => array(0.000001,'µmol/sec'),
+        'Flow_Mole::MILLIMOLE_PER_DAY'    => array(array('' => 0.001, '/' => 86400),'mmol/day'),
+        'Flow_Mole::MILLIMOLE_PER_HOUR'   => array(array('' => 0.001, '/' => 3600),'mmol/h'),
+        'Flow_Mole::MILLIMOLE_PER_MINUTE' => array(array('' => 0.001, '/' => 60),'mmol/min'),
+        'Flow_Mole::MILLIMOLE_PER_SECOND' => array(0.001,'mmol/sec'),
+        'Flow_Mole::MOLE_PER_DAY'         => array(array('' => 1, '/' => 86400),'mol/day'),
+        'Flow_Mole::MOLE_PER_HOUR'        => array(array('' => 1, '/' => 3600),'mol/h'),
+        'Flow_Mole::MOLE_PER_MINUTE'      => array(array('' => 1, '/' => 60),'mol/min'),
+        'Flow_Mole::MOLE_PER_SECOND'      => array(1,'mol/sec')
     );
 
     /**
-     * Zend_Measure_Torque provides an locale aware class for
-     * conversion and formatting of Torque values
+     * Zend_Measure_Flow_Mole provides an locale aware class for
+     * conversion and formatting of Mole values
      *
      * Zend_Measure $input can be a locale based input string
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
      * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Torque Type
+     * @param  $type   type   - OPTIONAL a Zend_Measure_Flow_Mole Type
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
@@ -117,7 +125,7 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
      * Set a new value
      *
      * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Torque Type
+     * @param  $type   type   - OPTIONAL a Zend_Measure_Flow_Mole Type
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
@@ -125,7 +133,7 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
     {
         $value = Zend_Locale_Format::getNumber($value, $locale);
         if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of torque:'.$type);
+            self::throwException('unknown type of flow-mole:'.$type);
         parent::setValue($value);
         parent::setType($type);
     }
@@ -139,7 +147,7 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of torque:'.$type);
+            self::throwException('unknown type of flow-mole:'.$type);
 
         // Convert to standard value
         $value = parent::getValue();
