@@ -34,69 +34,65 @@ require_once 'Zend/Locale/Format.php';
 /**
  * @category   Zend
  * @package    Zend_Measure
- * @subpackage Zend_Measure_Flow_Mole
+ * @subpackage Zend_Measure_Frequency
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
+class Zend_Measure_Frequency extends Zend_Measure_Abstract
 {
-    // Mole definitions
-    const STANDARD = 'Flow_Mole::MOLE_PER_SECOND';
+    // Frequency definitions
+    const STANDARD = 'Frequency::HERTZ';
 
-    const CENTIMOLE_PER_DAY    = 'Flow_Mole::CENTIMOLE_PER_DAY';
-    const CENTIMOLE_PER_HOUR   = 'Flow_Mole::CENTIMOLE_PER_HOUR';
-    const CENTIMOLE_PER_MINUTE = 'Flow_Mole::CENTIMOLE_PER_MINUTE';
-    const CENTIMOLE_PER_SECOND = 'Flow_Mole::CENTIMOLE_PER_SECOND';
-    const MEGAMOLE_PER_DAY     = 'Flow_Mole::MEGAMOLE_PER_DAY';
-    const MEGAMOLE_PER_HOUR    = 'Flow_Mole::MEGAMOLE_PER_HOUR';
-    const MEGAMOLE_PER_MINUTE  = 'Flow_Mole::MEGAMOLE_PER_MINUTE';
-    const MEGAMOLE_PER_SECOND  = 'Flow_Mole::MEGAMOLE_PER_SECOND';
-    const MICROMOLE_PER_DAY    = 'Flow_Mole::MICROMOLE_PER_DAY';
-    const MICROMOLE_PER_HOUR   = 'Flow_Mole::MICROMOLE_PER_HOUR';
-    const MICROMOLE_PER_MINUTE = 'Flow_Mole::MICROMOLE_PER_MINUTE';
-    const MICROMOLE_PER_SECOND = 'Flow_Mole::MICROMOLE_PER_SECOND';
-    const MILLIMOLE_PER_DAY    = 'Flow_Mole::MILLIMOLE_PER_DAY';
-    const MILLIMOLE_PER_HOUR   = 'Flow_Mole::MILLIMOLE_PER_HOUR';
-    const MILLIMOLE_PER_MINUTE = 'Flow_Mole::MILLIMOLE_PER_MINUTE';
-    const MILLIMOLE_PER_SECOND = 'Flow_Mole::MILLIMOLE_PER_SECOND';
-    const MOLE_PER_DAY         = 'Flow_Mole::MOLE_PER_DAY';
-    const MOLE_PER_HOUR        = 'Flow_Mole::MOLE_PER_HOUR';
-    const MOLE_PER_MINUTE      = 'Flow_Mole::MOLE_PER_MINUTE';
-    const MOLE_PER_SECOND      = 'Flow_Mole::MOLE_PER_SECOND';
+    const ONE_PER_SECOND        = 'Frequency::ONE_PER_SECOND';
+    const CYCLE_PER_SECOND      = 'Frequency::CYCLE_PER_SECOND';
+    const DEGREE_PER_HOUR       = 'Frequency::DEGREE_PER_HOUR';
+    const DEGREE_PER_MINUTE     = 'Frequency::DEGREE_PER_MINUTE';
+    const DEGREE_PER_SECOND     = 'Frequency::DEGREE_PER_SECOND';
+    const GIGAHERTZ             = 'Frequency::GIGAHERTZ';
+    const HERTZ                 = 'Frequency::HERTZ';
+    const KILOHERTZ             = 'Frequency::KILOHERTZ';
+    const MEGAHERTZ             = 'Frequency::MEGAHERTZ';
+    const MILLIHERTZ            = 'Frequency::MILLIHERTZ';
+    const RADIAN_PER_HOUR       = 'Frequency::RADIAN_PER_HOUR';
+    const RADIAN_PER_MINUTE     = 'Frequency::RADIAN_PER_MINUTE';
+    const RADIAN_PER_SECOND     = 'Frequency::RADIAN_PER_SECOND';
+    const REVOLUTION_PER_HOUR   = 'Frequency::REVOLUTION_PER_HOUR';
+    const REVOLUTION_PER_MINUTE = 'Frequency::REVOLUTION_PER_MINUTE';
+    const REVOLUTION_PER_SECOND = 'Frequency::REVOLUTION_PER_SECOND';
+    const RPM                   = 'Frequency::RPM';
+    const TERRAHERTZ            = 'Frequency::TERRAHERTZ';
 
     private static $_UNITS = array(
-        'Flow_Mole::CENTIMOLE_PER_DAY'    => array(array('' => 0.01, '/' => 86400),'cmol/day'),
-        'Flow_Mole::CENTIMOLE_PER_HOUR'   => array(array('' => 0.01, '/' => 3600),'cmol/h'),
-        'Flow_Mole::CENTIMOLE_PER_MINUTE' => array(array('' => 0.01, '/' => 60),'cmol/m'),
-        'Flow_Mole::CENTIMOLE_PER_SECOND' => array(0.01,'cmol/s'),
-        'Flow_Mole::MEGAMOLE_PER_DAY'     => array(array('' => 1000000, '/' => 86400),'Mmol/day'),
-        'Flow_Mole::MEGAMOLE_PER_HOUR'    => array(array('' => 1000000, '/' => 3600),'Mmol/h'),
-        'Flow_Mole::MEGAMOLE_PER_MINUTE'  => array(array('' => 1000000, '/' => 60),'Mmol/m'),
-        'Flow_Mole::MEGAMOLE_PER_SECOND'  => array(1000000,'Mmol/s'),
-        'Flow_Mole::MICROMOLE_PER_DAY'    => array(array('' => 0.000001, '/' => 86400),'µmol/day'),
-        'Flow_Mole::MICROMOLE_PER_HOUR'   => array(array('' => 0.000001, '/' => 3600),'µmol/h'),
-        'Flow_Mole::MICROMOLE_PER_MINUTE' => array(array('' => 0.000001, '/' => 60),'µmol/m'),
-        'Flow_Mole::MICROMOLE_PER_SECOND' => array(0.000001,'µmol/s'),
-        'Flow_Mole::MILLIMOLE_PER_DAY'    => array(array('' => 0.001, '/' => 86400),'mmol/day'),
-        'Flow_Mole::MILLIMOLE_PER_HOUR'   => array(array('' => 0.001, '/' => 3600),'mmol/h'),
-        'Flow_Mole::MILLIMOLE_PER_MINUTE' => array(array('' => 0.001, '/' => 60),'mmol/m'),
-        'Flow_Mole::MILLIMOLE_PER_SECOND' => array(0.001,'mmol/s'),
-        'Flow_Mole::MOLE_PER_DAY'         => array(array('' => 1, '/' => 86400),'mol/day'),
-        'Flow_Mole::MOLE_PER_HOUR'        => array(array('' => 1, '/' => 3600),'mol/h'),
-        'Flow_Mole::MOLE_PER_MINUTE'      => array(array('' => 1, '/' => 60),'mol/m'),
-        'Flow_Mole::MOLE_PER_SECOND'      => array(1,'mol/s')
+        'Frequency::ONE_PER_SECOND'        => array(1,'1/s'),
+        'Frequency::CYCLE_PER_SECOND'      => array(1,'cps'),
+        'Frequency::DEGREE_PER_HOUR'       => array(array('' => 1, '/' => 1296000),'°/h'),
+        'Frequency::DEGREE_PER_MINUTE'     => array(array('' => 1, '/' => 21600),'°/m'),
+        'Frequency::DEGREE_PER_SECOND'     => array(array('' => 1, '/' => 360),'°/s'),
+        'Frequency::GIGAHERTZ'             => array(1000000000,'GHz'),
+        'Frequency::HERTZ'                 => array(1,'Hz'),
+        'Frequency::KILOHERTZ'             => array(1000,'kHz'),
+        'Frequency::MEGAHERTZ'             => array(1000000,'MHz'),
+        'Frequency::MILLIHERTZ'            => array(0.001,'mHz'),
+        'Frequency::RADIAN_PER_HOUR'       => array(array('' => 1, '/' => 22619.467),'rad/h'),
+        'Frequency::RADIAN_PER_MINUTE'     => array(array('' => 1, '/' => 376.99112),'rad/m'),
+        'Frequency::RADIAN_PER_SECOND'     => array(array('' => 1, '/' => 6.2831853),'rad/s'),
+        'Frequency::REVOLUTION_PER_HOUR'   => array(array('' => 1, '/' => 3600),'rph'),
+        'Frequency::REVOLUTION_PER_MINUTE' => array(array('' => 1, '/' => 60),'rpm'),
+        'Frequency::REVOLUTION_PER_SECOND' => array(1,'rps'),
+        'Frequency::RPM'                   => array(array('' => 1, '/' => 60),'rpm'),
+        'Frequency::TERRAHERTZ'            => array(1000000000000,'THz')
     );
 
     /**
-     * Zend_Measure_Flow_Mole provides an locale aware class for
-     * conversion and formatting of Mole values
+     * Zend_Measure_Frequency provides an locale aware class for
+     * conversion and formatting of Frequency values
      *
      * Zend_Measure $input can be a locale based input string
      * or a value. $locale can be used to define that the
      * input is made in a different language than the actual one.
      *
      * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Flow_Mole Type
+     * @param  $type   type   - OPTIONAL a Zend_Measure_Frequency Type
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
@@ -125,7 +121,7 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
      * Set a new value
      *
      * @param  $value  mixed  - Value as string, integer, real or float
-     * @param  $type   type   - OPTIONAL a Zend_Measure_Flow_Mole Type
+     * @param  $type   type   - OPTIONAL a Zend_Measure_Frequency Type
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
@@ -133,7 +129,7 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
     {
         $value = Zend_Locale_Format::getNumber($value, $locale);
         if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of flow-mole:'.$type);
+            self::throwException('unknown type of frequency:'.$type);
         parent::setValue($value);
         parent::setType($type);
     }
@@ -147,7 +143,7 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of flow-mole:'.$type);
+            self::throwException('unknown type of frequency:'.$type);
 
         // Convert to standard value
         $value = parent::getValue();

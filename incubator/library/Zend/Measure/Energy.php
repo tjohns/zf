@@ -241,7 +241,7 @@ class Zend_Measure_Energy extends Zend_Measure_Abstract
         'Energy::TONNE_COAL'             => array(2.93076e+10,'T coal'),
         'Energy::TONNE_OIL'              => array(4.1868e+10,'T oil'),
         'Energy::WATTHOUR'               => array(3600,'Wh'),
-        'Energy::WATTSECOND'             => array(1,'Wsec'),
+        'Energy::WATTSECOND'             => array(1,'Ws'),
         'Energy::YOCTOJOULE'             => array(1.0e-24,'yJ'),
         'Energy::YOTTAJOULE'             => array(1.0e+24,'YJ'),
         'Energy::YOTTAWATTHOUR'          => array(3.6e+27,'YWh'),

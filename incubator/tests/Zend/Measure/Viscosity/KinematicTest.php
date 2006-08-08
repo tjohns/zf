@@ -355,7 +355,7 @@ class Zend_Measure_Viscosity_KinematicTest extends PHPUnit2_Framework_TestCase
     public function testViscosity_KinematicToString()
     {
         $value = new Zend_Measure_Viscosity_Kinematic('-100',Zend_Measure_Viscosity_Kinematic::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 m²/sec', 'Value -100 m²/sec expected');
+        $this->assertEquals($value->toString(), '-100 m²/s', 'Value -100 m²/s expected');
     }
 
 
@@ -366,6 +366,6 @@ class Zend_Measure_Viscosity_KinematicTest extends PHPUnit2_Framework_TestCase
     public function testViscosity_Kinematic_ToString()
     {
         $value = new Zend_Measure_Viscosity_Kinematic('-100',Zend_Measure_Viscosity_Kinematic::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 m²/sec', 'Value -100 m²/sec expected');
+        $this->assertEquals($value->__toString(), '-100 m²/s', 'Value -100 m²/s expected');
     }
 }

@@ -355,7 +355,7 @@ class Zend_Measure_Flow_MassTest extends PHPUnit2_Framework_TestCase
     public function testFlow_MassToString()
     {
         $value = new Zend_Measure_Flow_Mass('-100',Zend_Measure_Flow_Mass::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 kg/sec', 'Value -100 kg/sec expected');
+        $this->assertEquals($value->toString(), '-100 kg/s', 'Value -100 kg/s expected');
     }
 
 
@@ -366,6 +366,6 @@ class Zend_Measure_Flow_MassTest extends PHPUnit2_Framework_TestCase
     public function testFlow_Mass_ToString()
     {
         $value = new Zend_Measure_Flow_Mass('-100',Zend_Measure_Flow_Mass::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 kg/sec', 'Value -100 kg/sec expected');
+        $this->assertEquals($value->__toString(), '-100 kg/s', 'Value -100 kg/s expected');
     }
 }
