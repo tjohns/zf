@@ -17,6 +17,7 @@ require_once 'Zend/Measure/Viscosity/DynamicTest.php';
 require_once 'Zend/Measure/Viscosity/KinematicTest.php';
 
 require_once 'Zend/Measure/AccelerationTest.php';
+require_once 'Zend/Measure/AngleTest.php';
 require_once 'Zend/Measure/AreaTest.php';
 require_once 'Zend/Measure/CapacitanceTest.php';
 require_once 'Zend/Measure/CurrentTest.php';
@@ -28,10 +29,12 @@ require_once 'Zend/Measure/IlluminationTest.php';
 require_once 'Zend/Measure/LengthTest.php';
 require_once 'Zend/Measure/LightnessTest.php';
 require_once 'Zend/Measure/PowerTest.php';
+//require_once 'Zend/Measure/PressureTest.php';
 require_once 'Zend/Measure/SpeedTest.php';
 require_once 'Zend/Measure/TemperatureTest.php';
 require_once 'Zend/Measure/TorqueTest.php';
 require_once 'Zend/Measure/VolumeTest.php';
+//require_once 'Zend/Measure/WeightTest.php';
 
 class Zend_Measure_AllTests
 {
@@ -55,6 +58,7 @@ class Zend_Measure_AllTests
         $suite->addTestSuite('Zend_Measure_Viscosity_KinematicTest');
 
         $suite->addTestSuite('Zend_Measure_AccelerationTest');
+        $suite->addTestSuite('Zend_Measure_AngleTest');
         $suite->addTestSuite('Zend_Measure_AreaTest');
         $suite->addTestSuite('Zend_Measure_CapacitanceTest');
         $suite->addTestSuite('Zend_Measure_CurrentTest');
@@ -66,10 +70,12 @@ class Zend_Measure_AllTests
         $suite->addTestSuite('Zend_Measure_LengthTest');
         $suite->addTestSuite('Zend_Measure_LightnessTest');
         $suite->addTestSuite('Zend_Measure_PowerTest');
+//        $suite->addTestSuite('Zend_Measure_PressureTest');
         $suite->addTestSuite('Zend_Measure_SpeedTest');
         $suite->addTestSuite('Zend_Measure_TemperatureTest');
         $suite->addTestSuite('Zend_Measure_TorqueTest');
         $suite->addTestSuite('Zend_Measure_VolumeTest');
+//        $suite->addTestSuite('Zend_Measure_WeightTest');
 
         return $suite;
     }
