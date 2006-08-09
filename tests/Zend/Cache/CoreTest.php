@@ -64,6 +64,25 @@ class Zend_Cache_CoreTest extends PHPUnit2_Framework_TestCase {
         $this->fail('Zend_Cache_Exception was expected but not thrown'); 
     }
     
+    public function testConstructorBugZF306Part1()
+    {
+        try {
+            $test = new Zend_Cache_Core(array('logging' => false));
+        } catch (Zend_Cache_Exception $e) {
+            $this->fail('Zend_Cache_Exception thrown !'); 
+        }
+    }
+    
+    public function testConstructorBugZF306Part2()
+    {
+        try {
+            $test = new Zend_Cache_Core(array('logging' => true));
+        } catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown'); 
+    }
+    
     public function testSetBackendCorrectCall1()
     {
         $backend = new Zend_Cache_Backend_File(array());
