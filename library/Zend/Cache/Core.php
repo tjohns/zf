@@ -175,7 +175,7 @@ class Zend_Cache_Core
         }
         $this->_options[$name] = $value;
         if ($name=='logging') {
-            if (!class_exists('Zend_Log', false)) {
+            if ((!class_exists('Zend_Log', false)) && ($value)) {
                 Zend_Cache::throwException('logging feature is on but Zend_Log is not "loaded"');    
             }
         }
