@@ -46,11 +46,11 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
     const ACRE_FOOT           = 'Volume::ACRE_FOOT';
     const ACRE_FOOT_SURVEY    = 'Volume::ACRE_FOOT_SURVEY';
     const ACRE_INCH           = 'Volume::ACRE_INCH';
-    const BARREL_UK_WINE      = 'Volume::BARREL_UK_WINE';
+    const BARREL_WINE         = 'Volume::BARREL_WINE';
     const BARREL              = 'Volume::BARREL';
     const BARREL_US_DRY       = 'Volume::BARREL_US_DRY';
     const BARREL_US_FEDERAL   = 'Volume::BARREL_US_FEDERAL';
-    const BARREL_US_LIQUID    = 'Volume::BARREL_US_LIQUID';
+    const BARREL_US           = 'Volume::BARREL_US';
     const BARREL_US_PETROLEUM = 'Volume::BARREL_US_PETROLEUM';
     const BOARD_FOOT          = 'Volume::BOARD_FOOT';
     const BUCKET              = 'Volume::BUCKET';
@@ -110,7 +110,7 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
     const PIPE_US             = 'Volume::PIPE_US';
     const PONY                = 'Volume::PONY';
     const QUART_GERMANY       = 'Volume::QUART_GERMANY';
-    const QUART_HEBREW        = 'Volume::QUART_HEBREW';
+    const QUART_ANCIENT       = 'Volume::QUART_ANCIENT';
     const QUART               = 'Volume::QUART';
     const QUART_US_DRY        = 'Volume::QUART_US_DRY';
     const QUART_US            = 'Volume::QUART_US';
@@ -129,11 +129,11 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
         'Volume::ACRE_FOOT'           => array(1233.48185532,'ac ft'),
         'Volume::ACRE_FOOT_SURVEY'    => array(1233.489,'ac ft'),
         'Volume::ACRE_INCH'           => array(102.79015461,'ac in'),
-        'Volume::BARREL_UK_WINE'      => array(0.143201835,'bbl'),
+        'Volume::BARREL_WINE'         => array(0.143201835,'bbl'),
         'Volume::BARREL'              => array(0.16365924,'bbl'),
         'Volume::BARREL_US_DRY'       => array(array('' => 26.7098656608, '/' => 231),'bbl'),
         'Volume::BARREL_US_FEDERAL'   => array(0.1173477658,'bbl'),
-        'Volume::BARREL_US_LIQUID'    => array(0.1192404717,'bbl'),
+        'Volume::BARREL_US'           => array(0.1192404717,'bbl'),
         'Volume::BARREL_US_PETROLEUM' => array(0.1589872956,'bbl'),
         'Volume::BOARD_FOOT'          => array(array('' => 6.5411915904, '/' => 2772),'board foot'),
         'Volume::BUCKET'              => array(0.01818436,'bucket'),
@@ -193,7 +193,7 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
         'Volume::PIPE_US'             => array(0.4769618868,'pipe'),
         'Volume::PONY'                => array(array('' => 0.0037854118, '/' => 128),'pony'),
         'Volume::QUART_GERMANY'       => array(0.00114504,'qt'),
-        'Volume::QUART_HEBREW'        => array(0.00108,'qt'),
+        'Volume::QUART_ANCIENT'       => array(0.00108,'qt'),
         'Volume::QUART'               => array(array('' => 0.00454609, '/' => 4),'qt'),
         'Volume::QUART_US_DRY'        => array(array('' => 0.0044048838, '/' => 4),'qt'),
         'Volume::QUART_US'            => array(array('' => 0.0037854118, '/' => 4),'qt'),

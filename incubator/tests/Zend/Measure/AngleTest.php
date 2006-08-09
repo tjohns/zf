@@ -314,7 +314,7 @@ class Zend_Measure_AngleTest extends PHPUnit2_Framework_TestCase
      */
     public function testAngleSetComputedType1()
     {
-        $value = new Zend_Measure_Angle('-100',Zend_Measure_Angle::GRAD,'de');
+        $value = new Zend_Measure_Angle('-100',Zend_Measure_Angle::RADIAN,'de');
         $value->setType(Zend_Measure_Angle::MINUTE);
         $this->assertEquals($value->getType(), Zend_Measure_Angle::MINUTE, 'Zend_Measure_Angle type expected');
     }
@@ -327,8 +327,8 @@ class Zend_Measure_AngleTest extends PHPUnit2_Framework_TestCase
     public function testAngleSetComputedType2()
     {
         $value = new Zend_Measure_Angle('-100',Zend_Measure_Angle::MINUTE,'de');
-        $value->setType(Zend_Measure_Angle::GRAD);
-        $this->assertEquals($value->getType(), Zend_Measure_Angle::GRAD, 'Zend_Measure_Angle type expected');
+        $value->setType(Zend_Measure_Angle::RADIAN);
+        $this->assertEquals($value->getType(), Zend_Measure_Angle::RADIAN, 'Zend_Measure_Angle type expected');
     }
 
 

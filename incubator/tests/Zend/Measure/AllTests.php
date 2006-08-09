@@ -6,7 +6,7 @@ if (!defined('PHPUnit2_MAIN_METHOD')) {
 require_once 'PHPUnit2/Framework/TestSuite.php';
 require_once 'PHPUnit2/TextUI/TestRunner.php';
 
-//require_once 'Zend/Measure/Cooking/VolumeTest.php';
+require_once 'Zend/Measure/Cooking/VolumeTest.php';
 require_once 'Zend/Measure/Cooking/WeightTest.php';
 
 require_once 'Zend/Measure/Flow/MassTest.php';
@@ -28,13 +28,14 @@ require_once 'Zend/Measure/FrequencyTest.php';
 require_once 'Zend/Measure/IlluminationTest.php';
 require_once 'Zend/Measure/LengthTest.php';
 require_once 'Zend/Measure/LightnessTest.php';
+//require_once 'Zend/Measure/NumberTest.php';
 require_once 'Zend/Measure/PowerTest.php';
-//require_once 'Zend/Measure/PressureTest.php';
+require_once 'Zend/Measure/PressureTest.php';
 require_once 'Zend/Measure/SpeedTest.php';
 require_once 'Zend/Measure/TemperatureTest.php';
 require_once 'Zend/Measure/TorqueTest.php';
 require_once 'Zend/Measure/VolumeTest.php';
-//require_once 'Zend/Measure/WeightTest.php';
+require_once 'Zend/Measure/WeightTest.php';
 
 class Zend_Measure_AllTests
 {
@@ -47,7 +48,7 @@ class Zend_Measure_AllTests
     {
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend_Measure');
 
-//        $suite->addTestSuite('Zend_Measure_Cooking_VolumeTest');
+        $suite->addTestSuite('Zend_Measure_Cooking_VolumeTest');
         $suite->addTestSuite('Zend_Measure_Cooking_WeightTest');
 
         $suite->addTestSuite('Zend_Measure_Flow_MassTest');
@@ -69,13 +70,14 @@ class Zend_Measure_AllTests
         $suite->addTestSuite('Zend_Measure_IlluminationTest');
         $suite->addTestSuite('Zend_Measure_LengthTest');
         $suite->addTestSuite('Zend_Measure_LightnessTest');
+//        $suite->addTestSuite('Zend_Measure_NumberTest');
         $suite->addTestSuite('Zend_Measure_PowerTest');
-//        $suite->addTestSuite('Zend_Measure_PressureTest');
+        $suite->addTestSuite('Zend_Measure_PressureTest');
         $suite->addTestSuite('Zend_Measure_SpeedTest');
         $suite->addTestSuite('Zend_Measure_TemperatureTest');
         $suite->addTestSuite('Zend_Measure_TorqueTest');
         $suite->addTestSuite('Zend_Measure_VolumeTest');
-//        $suite->addTestSuite('Zend_Measure_WeightTest');
+        $suite->addTestSuite('Zend_Measure_WeightTest');
 
         return $suite;
     }
