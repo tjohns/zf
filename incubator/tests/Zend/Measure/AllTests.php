@@ -19,6 +19,7 @@ require_once 'Zend/Measure/Viscosity/KinematicTest.php';
 require_once 'Zend/Measure/AccelerationTest.php';
 require_once 'Zend/Measure/AngleTest.php';
 require_once 'Zend/Measure/AreaTest.php';
+require_once 'Zend/Measure/BinaryTest.php';
 require_once 'Zend/Measure/CapacitanceTest.php';
 require_once 'Zend/Measure/CurrentTest.php';
 require_once 'Zend/Measure/DensityTest.php';
@@ -61,6 +62,7 @@ class Zend_Measure_AllTests
         $suite->addTestSuite('Zend_Measure_AccelerationTest');
         $suite->addTestSuite('Zend_Measure_AngleTest');
         $suite->addTestSuite('Zend_Measure_AreaTest');
+        $suite->addTestSuite('Zend_Measure_BinaryTest');
         $suite->addTestSuite('Zend_Measure_CapacitanceTest');
         $suite->addTestSuite('Zend_Measure_CurrentTest');
         $suite->addTestSuite('Zend_Measure_DensityTest');
