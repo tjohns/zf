@@ -29,7 +29,7 @@ require_once 'Zend/Measure/FrequencyTest.php';
 require_once 'Zend/Measure/IlluminationTest.php';
 require_once 'Zend/Measure/LengthTest.php';
 require_once 'Zend/Measure/LightnessTest.php';
-//require_once 'Zend/Measure/NumberTest.php';
+require_once 'Zend/Measure/NumberTest.php';
 require_once 'Zend/Measure/PowerTest.php';
 require_once 'Zend/Measure/PressureTest.php';
 require_once 'Zend/Measure/SpeedTest.php';
@@ -72,7 +72,7 @@ class Zend_Measure_AllTests
         $suite->addTestSuite('Zend_Measure_IlluminationTest');
         $suite->addTestSuite('Zend_Measure_LengthTest');
         $suite->addTestSuite('Zend_Measure_LightnessTest');
-//        $suite->addTestSuite('Zend_Measure_NumberTest');
+        $suite->addTestSuite('Zend_Measure_NumberTest');
         $suite->addTestSuite('Zend_Measure_PowerTest');
         $suite->addTestSuite('Zend_Measure_PressureTest');
         $suite->addTestSuite('Zend_Measure_SpeedTest');
