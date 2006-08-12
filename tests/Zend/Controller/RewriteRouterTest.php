@@ -14,6 +14,8 @@ require_once 'Zend/Controller/Dispatcher/Interface.php';
 /** PHPUnit2 test case */
 require_once 'PHPUnit2/Framework/TestCase.php';
 
+require_once 'PHPUnit2/Runner/Version.php';
+
 /**
  * Mock Dispatcher
  */
