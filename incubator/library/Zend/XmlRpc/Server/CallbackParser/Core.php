@@ -80,47 +80,81 @@ abstract class Zend_XmlRpc_Server_CallbackParser_Core
      * Determines the method signature and methodHelp from a DocBlock comment.
      * Returns an associative array with the keys 'methodHelp' and 'signatures'.
      *
-     * @todo Determine how to handle OR'd parameters and return values
-     * @param string $comment DocBlock Comment
+     * @todo Determine how to handle OR'd parameters
+     * @param ReflectionFunction $function
      * @return array
      */
-    public static function getDispatchFromComment($comment) 
+    public static function getDispatchFromFunction(ReflectionFunction $function)
     {
-        if (!$comment) {
-            return array();
-        }
+        $helpText   = '';
+        $signatures = array();
 
-        // Get param types
-        $params = array();
-        if (preg_match_all('/@param ([^ ]*) /', $comment, $matches)) {
-            $params = $matches[1];
-            foreach ($params as $key => $param) {
-                $params[$key] = self::_xmlRpcType($param);
+        $docBlock   = $function->getDocComment();
+        $parameters = $function->getParameters();
+        $required   = $function->getNumberOfRequiredParameters();
+
+        if (!empty($docBlock)) {
+            // Get help text
+            if (preg_match(':/\*\*\s*\r?\n\s*\* (.*?)\r?\n\s*\*( @|/):s', $docBlock, $matches))
+            {
+                $helpText = $matches[1];
+                $helpText = preg_replace('/(^\s*\* )/m', '', $helpText);
+                $helpText = preg_replace('/\r?\n\s*\*\s*(\r?\n)*/s', "\n", $helpText);
+                $helpText = trim($helpText);
             }
-        }
 
-        // Get return type
-        $return = 'void';
-        if (preg_match('/@return ([^ ]*) /', $comment, $matches)) {
-            $return = self::_xmlRpcType(trim($matches[1]));
-        }
+            // Get return type(s)
+            $return = 'void';
+            if (preg_match('/@return ([^ ]*) /', $docBlock, $matches)) {
+                $return = self::_xmlRpcType(trim($matches[1]));
+            }
 
-        // Get help text
-        $helpText = '';
-        if (preg_match(':/\*\*\s*\r?\n\s*\* (.*?)\r?\n\s*\*( @|/):s', $comment, $matches))
-        {
-            $helpText = $matches[1];
-            $helpText = preg_replace('/(^\s*\* )/m', '', $helpText);
-            $helpText = preg_replace('/\r?\n\s*\*\s*(\r?\n)*/s', "\n", $helpText);
-            $helpText = trim($helpText);
-        }
+            if (strstr($return, '|')) {
+                $return = explode($return, '|');
+            } else {
+                $return = (array) $return;
+            }
 
-        // Create signature array
-        array_unshift($params, $return);
+
+            if (0 < $parameters) {
+                // Get param types
+                $params = array();
+                if (preg_match_all('/@param ([^ ]*) /', $docBlock, $matches)) {
+                    $params = $matches[1];
+                    foreach ($params as $key => $param) {
+                        $params[$key] = self::_xmlRpcType($param);
+                    }
+                    if (count($params) < count($parameters)) {
+                        $start = count($params);
+                        $end   = count($parameters);
+                        for ($i = $start; $i < $end; ++$i) {
+                            $params[$i] = 'mixed';
+                        }
+                    }
+                } else {
+                    if (count($parameters)) {
+                        $params = array_fill(0, count($parameters) - 1, 'mixed');
+                    }
+                }
+
+                foreach ($return as $ret) {
+                    $sig = $params;
+                    array_unshift($sig, $ret);
+                    $signatures[] = $sig;
+                }
+            }
+        } else {
+            if (count($parameters)) {
+                $signature = array_fill(0, count($parameters), 'mixed');
+            } else {
+                $signature = array('mixed');
+            }
+            $signatures[] =  $signature;
+        }
 
         return array(
             'methodHelp' => $helpText,
-            'signatures' => array($params)
+            'signatures' => $signatures
         );
     }
 
@@ -145,7 +179,7 @@ abstract class Zend_XmlRpc_Server_CallbackParser_Core
             if (($this->_isObject && $method->isPublic())
                 || (!$this->_isObject && $method->isPublic() && $method->isStatic()))
             {
-                $dispatch = self::getDispatchFromComment($method->getDocComment());
+                $dispatch = self::getDispatchFromFunction($method);
                 $methodName = $method->getName();
 
                 // Determine callback

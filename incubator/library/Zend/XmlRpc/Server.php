@@ -155,7 +155,7 @@ class Zend_XmlRpc_Server
         );
         foreach ($system as $method) {
             $reflection = new ReflectionMethod($this, $method);
-            $dispatch = Zend_XmlRpc_Server_CallbackParser_Core::getDispatchFromComment($reflection->getDocComment());
+            $dispatch = Zend_XmlRpc_Server_CallbackParser_Core::getDispatchFromFunction($reflection);
             $xmlRpcMethod = 'system.' . $method;
             $dispatch['callback'] = array($this, $method);
             $this->_methods[$xmlRpcMethod] = $dispatch;

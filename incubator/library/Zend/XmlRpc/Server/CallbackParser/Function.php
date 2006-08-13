@@ -53,9 +53,7 @@ class Zend_XmlRpc_Server_CallbackParser_Function extends Zend_XmlRpc_Server_Call
             throw Zend_XmlRpc_Server_Exception('Invalid function ' . $function, 613);
         }
 
-        $reflection = new ReflectionFunction($function);
-
-        $dispatch = self::getDispatchFromComment($reflection->getDocComment());
+        $dispatch = self::getDispatchFromFunction(new ReflectionFunction($function));
         
         // Create xmlrpc method name
         $xmlRpcMethod = empty($namespace) ? $function : $namespace . '.' . $function;
