@@ -11,6 +11,7 @@ require_once 'Zend/Date/AllTests.php';
 require_once 'Zend/Locale/AllTests.php';
 require_once 'Zend/Mail/AllTests.php';
 require_once 'Zend/Measure/AllTests.php';
+require_once 'Zend/XmlRpc/AllTests.php';
 
 class Zend_AllTests
 {
@@ -30,6 +31,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Locale_AllTests::suite());
         $suite->addTest(Zend_Mail_AllTests::suite());
         $suite->addTest(Zend_Measure_AllTests::suite());
+        $suite->addTest(Zend_XmlRpc_AllTests::suite());
 
         return $suite;
     }
