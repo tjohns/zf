@@ -380,4 +380,16 @@ class Zend_Measure_PowerTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Power('-100',Zend_Measure_Power::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 W', 'Value -100 W expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testPowerConversionList()
+    {
+        $value = new Zend_Measure_Power('-100',Zend_Measure_Power::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

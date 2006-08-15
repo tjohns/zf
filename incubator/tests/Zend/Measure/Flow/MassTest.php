@@ -368,4 +368,16 @@ class Zend_Measure_Flow_MassTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Flow_Mass('-100',Zend_Measure_Flow_Mass::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 kg/s', 'Value -100 kg/s expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testFlow_MassConversionList()
+    {
+        $value = new Zend_Measure_Flow_Mass('-100',Zend_Measure_Flow_Mass::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

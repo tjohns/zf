@@ -368,4 +368,16 @@ class Zend_Measure_BinaryTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Binary('-100',Zend_Measure_Binary::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 B', 'Value -100 B expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testBinaryConversionList()
+    {
+        $value = new Zend_Measure_Binary('-100',Zend_Measure_Binary::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

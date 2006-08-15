@@ -368,4 +368,16 @@ class Zend_Measure_TorqueTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 Nm', 'Value -100 Nm expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testTorqueConversionList()
+    {
+        $value = new Zend_Measure_Torque('-100',Zend_Measure_Torque::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

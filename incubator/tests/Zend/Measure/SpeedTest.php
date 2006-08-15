@@ -368,4 +368,16 @@ class Zend_Measure_SpeedTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Speed('-100',Zend_Measure_Speed::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 m/s', 'Value -100 m/s expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testSpeedConversionList()
+    {
+        $value = new Zend_Measure_Speed('-100',Zend_Measure_Speed::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

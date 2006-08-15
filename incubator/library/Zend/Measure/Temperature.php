@@ -41,7 +41,7 @@ require_once 'Zend/Locale/Format.php';
 class Zend_Measure_Temperature extends Zend_Measure_Abstract
 {
     // Temperature definitions
-    const STANDARD = 'Temperature::CELSIUS';
+    const STANDARD = 'Temperature::KELVIN';
 
     const CELSIUS    = 'Temperature::CELSIUS';    // Metric
     const FAHRENHEIT = 'Temperature::FAHRENHEIT'; // US
@@ -49,12 +49,12 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
     const REAUMUR    = 'Temperature::REAUMUR';    // French
     const KELVIN     = 'Temperature::KELVIN';     // Metric
 
-    private static $_UNITS = array(
-        'Temperature::CELSIUS'    => array(1,'°C'),
-        'Temperature::FAHRENHEIT' => array(33.8,'°F'),
-        'Temperature::RANKINE'    => array(493.47,'°R'),
-        'Temperature::REAUMUR'    => array(0.8,'°r'),
-        'Temperature::KELVIN'     => array(274.15,'°K')
+    public static $_UNITS = array(
+        'Temperature::CELSIUS'    => array(array('' => 1, '+' => 274.15),'°C'),
+        'Temperature::FAHRENHEIT' => array(array('' => 1, '-' => 32, '/' => 1.8, '+' => 273.15),'°F'),
+        'Temperature::RANKINE'    => array(array('' => 1, '/' => 1.8),'°R'),
+        'Temperature::REAUMUR'    => array(array('' => 1, '*' => 1.25, '+' => 273.15),'°r'),
+        'Temperature::KELVIN'     => array(1,'°K')
     );
 
     /**
@@ -121,10 +121,48 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
 
         // Convert to standard value
         $value = parent::getValue();
-        $value = $value * (self::$_UNITS[parent::getType()][0]);
+        if (is_array(self::$_UNITS[parent::getType()][0])) {
+            foreach (self::$_UNITS[parent::getType()][0] as $key => $found) {
+                switch ($key) {
+                    case "/":
+                        $value /= $found;
+                        break;
+                    case "+":
+                        $value += $found;
+                        break;
+                    case "-":
+                        $value -= $found;
+                        break;
+                    default:
+                        $value *= $found;
+                        break;
+                }
+            }
+        } else {
+          $value = $value * (self::$_UNITS[parent::getType()][0]);
+        }
 
         // Convert to expected value
-        $value = $value / (self::$_UNITS[$type][0]);
+        if (is_array(self::$_UNITS[$type][0])) {
+            foreach (self::$_UNITS[$type][0] as $key => $found) {
+                switch ($key) {
+                    case "/":
+                        $value *= $found;
+                        break;
+                    case "+":
+                        $value -= $found;
+                        break;
+                    case "-":
+                        $value += $found;
+                        break;
+                    default:
+                        $value /= $found;
+                        break;
+                }
+            }
+        } else {
+          $value = $value / (self::$_UNITS[$type][0]);
+        }
         parent::setValue($value);
         parent::setType($type);
     }
@@ -149,5 +187,14 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
     public function __toString()
     {
         return $this->toString();
+    }
+
+
+    /**
+     * Returns the conversion list
+     */
+    public function getConversionList()
+    {
+        return self::$_UNITS;
     }
 }

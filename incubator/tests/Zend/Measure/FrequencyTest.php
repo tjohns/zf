@@ -368,4 +368,16 @@ class Zend_Measure_FrequencyTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Frequency('-100',Zend_Measure_Frequency::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 Hz', 'Value -100 Hz expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testFrequencyConversionList()
+    {
+        $value = new Zend_Measure_Frequency('-100',Zend_Measure_Frequency::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

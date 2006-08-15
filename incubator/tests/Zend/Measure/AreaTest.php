@@ -368,4 +368,16 @@ class Zend_Measure_AreaTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Area('-100',Zend_Measure_Area::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 m²', 'Value -100 m² expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testAreaConversionList()
+    {
+        $value = new Zend_Measure_Area('-100',Zend_Measure_Area::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

@@ -344,4 +344,16 @@ class Zend_Measure_CurrentTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Current('-100',Zend_Measure_Current::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 A', 'Value -100 A expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testCurrentConversionList()
+    {
+        $value = new Zend_Measure_Current('-100',Zend_Measure_Current::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

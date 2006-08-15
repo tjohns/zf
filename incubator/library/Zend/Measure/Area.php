@@ -426,4 +426,13 @@ class Zend_Measure_Area extends Zend_Measure_Abstract
     {
         return $this->toString();
     }
+
+
+    /**
+     * Returns the conversion list
+     */
+    public function getConversionList()
+    {
+        return self::$_UNITS;
+    }
 }

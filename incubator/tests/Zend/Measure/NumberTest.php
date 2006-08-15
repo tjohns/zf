@@ -428,4 +428,16 @@ class Zend_Measure_NumberTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Number('-100',Zend_Measure_Number::STANDARD,'de');
         $this->assertEquals($value->__toString(), '100', 'Value 100 expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testNumberConversionList()
+    {
+        $value = new Zend_Measure_Number('-100',Zend_Measure_Number::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

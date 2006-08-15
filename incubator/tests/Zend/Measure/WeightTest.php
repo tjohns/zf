@@ -368,4 +368,16 @@ class Zend_Measure_WeightTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Weight('-100',Zend_Measure_Weight::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 kg', 'Value -100 kg expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testWeightConversionList()
+    {
+        $value = new Zend_Measure_Weight('-100',Zend_Measure_Weight::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

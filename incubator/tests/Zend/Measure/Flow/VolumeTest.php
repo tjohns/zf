@@ -368,4 +368,16 @@ class Zend_Measure_Flow_VolumeTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Flow_Volume('-100',Zend_Measure_Flow_Volume::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 m³/s', 'Value -100 m³/s expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testFlow_VolumeConversionList()
+    {
+        $value = new Zend_Measure_Flow_Volume('-100',Zend_Measure_Flow_Volume::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

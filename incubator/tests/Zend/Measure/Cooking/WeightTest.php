@@ -367,4 +367,16 @@ class Zend_Measure_Cooking_WeightTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Cooking_Weight('-100',Zend_Measure_Cooking_Weight::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 g', 'Value -100 g expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testCooking_WeightConversionList()
+    {
+        $value = new Zend_Measure_Cooking_Weight('-100',Zend_Measure_Cooking_Weight::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

@@ -344,4 +344,16 @@ class Zend_Measure_ForceTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Force('-100',Zend_Measure_Force::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 N', 'Value -100 N expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testForceConversionList()
+    {
+        $value = new Zend_Measure_Force('-100',Zend_Measure_Force::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

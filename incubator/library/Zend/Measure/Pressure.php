@@ -41,7 +41,7 @@ require_once 'Zend/Locale/Format.php';
 class Zend_Measure_Pressure extends Zend_Measure_Abstract
 {
     // Pressure definitions
-    const STANDARD = 'Pressure::NEWTON_SQUARE_METER';
+    const STANDARD = 'Pressure::NEWTON_PER_SQUARE_METER';
 
     const ATMOSPHERE            = 'Pressure::ATMOSPHERE';
     const ATMOSPHERE_TECHNICAL  = 'Pressure::ATMOSPHERE_TECHNICAL';
@@ -61,7 +61,7 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
     const DECITORR              = 'Pressure::DECITORR';
     const DEKABAR               = 'Pressure::DEKABAR';
     const DEKAPASCAL            = 'Pressure::DEKAPASCAL';
-    const DYNE_SQUARE_CENTIMETER= 'Pressure::DYNE_SQUARE_CENTIMETER';
+    const DYNE_PER_SQUARE_CENTIMETER = 'Pressure::DYNE_PER_SQUARE_CENTIMETER';
     const EXABAR                = 'Pressure::EXABAR';
     const EXAPASCAL             = 'Pressure::EXAPASCAL';
     const FEMTOBAR              = 'Pressure::FEMTOBAR';
@@ -81,18 +81,18 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
     const INCH_MERCURY_0C       = 'Pressure::INCH_MERCURY_0C';
     const INCH_WATER_4C         = 'Pressure::INCH_WATER_4C';
     const KILOBAR               = 'Pressure::KILOBAR';
-    const KILOGRAM_FORCE_SQUARE_CENTIMETER = 'Pressure::KILOGRAM_FORCE_SQUARE_CENTIMETER';
-    const KILOGRAM_FORCE_SQUARE_METER      = 'Pressure::KILOGRAM_FORCE_SQUARE_METER';
-    const KILOGRAM_FORCE_SQUARE_MILLIMETER = 'Pressure::KILOGRAM_FORCE_SQUARE_MILLIMETER';
-    const KILONEWTON_SQUARE_METER          = 'Pressure::KILONEWTON_SQUARE_METER';
-    const KILOPASCAL                       = 'Pressure::KILOPASCAL';
-    const KILOPOND_SQUARE_CENTIMETER       = 'Pressure::KILOPOND_SQUARE_CENTIMETER';
-    const KILOPOND_SQUARE_METER            = 'Pressure::KILOPOND_SQUARE_METER';
-    const KILOPOND_SQUARE_MILLIMETER       = 'Pressure::KILOPOND_SQUARE_MILLIMETER';
-    const KIP_SQUARE_FOOT       = 'Pressure::KIP_SQUARE_FOOT';
-    const KIP_SQUARE_INCH       = 'Pressure::KIP_SQUARE_INCH';
+    const KILOGRAM_FORCE_PER_SQUARE_CENTIMETER = 'Pressure::KILOGRAM_FORCE_PER_SQUARE_CENTIMETER';
+    const KILOGRAM_FORCE_PER_SQUARE_METER      = 'Pressure::KILOGRAM_FORCE_PER_SQUARE_METER';
+    const KILOGRAM_FORCE_PER_SQUARE_MILLIMETER = 'Pressure::KILOGRAM_FORCE_PER_SQUARE_MILLIMETER';
+    const KILONEWTON_PER_SQUARE_METER          = 'Pressure::KILONEWTON_PER_SQUARE_METER';
+    const KILOPASCAL            = 'Pressure::KILOPASCAL';
+    const KILOPOND_PER_SQUARE_CENTIMETER       = 'Pressure::KILOPOND_PER_SQUARE_CENTIMETER';
+    const KILOPOND_PER_SQUARE_METER            = 'Pressure::KILOPOND_PER_SQUARE_METER';
+    const KILOPOND_PER_SQUARE_MILLIMETER       = 'Pressure::KILOPOND_PER_SQUARE_MILLIMETER';
+    const KIP_PER_SQUARE_FOOT   = 'Pressure::KIP_PER_SQUARE_FOOT';
+    const KIP_PER_SQUARE_INCH   = 'Pressure::KIP_PER_SQUARE_INCH';
     const MEGABAR               = 'Pressure::MEGABAR';
-    const MEGANEWTON_SQUARE_METER = 'Pressure::MEGANEWTON_SQUARE_METER';
+    const MEGANEWTON_PER_SQUARE_METER = 'Pressure::MEGANEWTON_PER_SQUARE_METER';
     const MEGAPASCAL            = 'Pressure::MEGAPASCAL';
     const METER_AIR_0C          = 'Pressure::METER_AIR_0C';
     const METER_AIR_15C         = 'Pressure::METER_AIR_15C';
@@ -110,27 +110,27 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
     const MILLITORR             = 'Pressure::MILLITORR';
     const NANOBAR               = 'Pressure::NANOBAR';
     const NANOPASCAL            = 'Pressure::NANOPASCAL';
-    const NEWTON_SQUARE_METER   = 'Pressure::NEWTON_SQUARE_METER';
-    const NEWTON_SQUARE_MILLIMETER = 'Pressure::NEWTON_SQUARE_MILLIMETER';
-    const OUNCE_SQUARE_INCH     = 'Pressure::OUNCE_SQUARE_INCH';
+    const NEWTON_PER_SQUARE_METER   = 'Pressure::NEWTON_PER_SQUARE_METER';
+    const NEWTON_PER_SQUARE_MILLIMETER = 'Pressure::NEWTON_PER_SQUARE_MILLIMETER';
+    const OUNCE_PER_SQUARE_INCH = 'Pressure::OUNCE_PER_SQUARE_INCH';
     const PASCAL                = 'Pressure::PASCAL';
     const PETABAR               = 'Pressure::PETABAR';
     const PETAPASCAL            = 'Pressure::PETAPASCAL';
     const PICOBAR               = 'Pressure::PICOBAR';
     const PICOPASCAL            = 'Pressure::PICOPASCAL';
     const PIEZE                 = 'Pressure::PIEZE';
-    const POUND_SQUARE_FOOT     = 'Pressure::POUND_SQUARE_FOOT';
-    const POUND_SQUARE_INCH     = 'Pressure::POUND_SQUARE_INCH';
-    const POUNDAL_SQUARE_FOOT   = 'Pressure::POUNDAL_SQUARE_FOOT';
-    const STHENE_SQUARE_METER   = 'Pressure::STHENE_SQUARE_METER';
+    const POUND_PER_SQUARE_FOOT = 'Pressure::POUND_PER_SQUARE_FOOT';
+    const POUND_PER_SQUARE_INCH = 'Pressure::POUND_PER_SQUARE_INCH';
+    const POUNDAL_PER_SQUARE_FOOT   = 'Pressure::POUNDAL_PER_SQUARE_FOOT';
+    const STHENE_PER_SQUARE_METER   = 'Pressure::STHENE_PER_SQUARE_METER';
     const TECHNICAL_ATMOSPHERE  = 'Pressure::TECHNICAL_ATMOSPHERE';
     const TERABAR               = 'Pressure::TERABAR';
     const TERAPASCAL            = 'Pressure::TERAPASCAL';
-    const TON_SQUARE_FOOT       = 'Pressure::TON_SQUARE_FOOT';
-    const TON_SQUARE_FOOT_SHORT = 'Pressure::TON_SQUARE_FOOT_SHORT';
-    const TON_SQUARE_INCH       = 'Pressure::TON_SQUARE_INCH';
-    const TON_SQUARE_INCH_SHORT = 'Pressure::TON_SQUARE_INCH_SHORT';
-    const TON_SQUARE_METER      = 'Pressure::TON_SQUARE_METER';
+    const TON_PER_SQUARE_FOOT   = 'Pressure::TON_PER_SQUARE_FOOT';
+    const TON_PER_SQUARE_FOOT_SHORT = 'Pressure::TON_PER_SQUARE_FOOT_SHORT';
+    const TON_PER_SQUARE_INCH   = 'Pressure::TON_PER_SQUARE_INCH';
+    const TON_PER_SQUARE_INCH_SHORT = 'Pressure::TON_PER_SQUARE_INCH_SHORT';
+    const TON_PER_SQUARE_METER  = 'Pressure::TON_PER_SQUARE_METER';
     const TORR                  = 'Pressure::TORR';
     const WATER_COLUMN_CENTIMETER = 'Pressure::WATER_COLUMN_CENTIMETER';
     const WATER_COLUMN_INCH       = 'Pressure::WATER_COLUMN_INCH';
@@ -163,7 +163,7 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
         'Pressure::DECITORR'              => array(13.332237,'dTorr'),
         'Pressure::DEKABAR'               => array(1000000,'dab'),
         'Pressure::DEKAPASCAL'            => array(10,'daPa'),
-        'Pressure::DYNE_SQUARE_CENTIMETER'=> array(0.1,'dyn/cm²'),
+        'Pressure::DYNE_PER_SQUARE_CENTIMETER'=> array(0.1,'dyn/cm²'),
         'Pressure::EXABAR'                => array(1.0e+23,'Eb'),
         'Pressure::EXAPASCAL'             => array(1.0e+18,'EPa'),
         'Pressure::FEMTOBAR'              => array(1.0e-10,'fb'),
@@ -183,18 +183,18 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
         'Pressure::INCH_MERCURY_0C'       => array(array('' => 40636.664, '/' => 12),'in mercury (0°C)'),
         'Pressure::INCH_WATER_4C'         => array(array('' => 2989.0669, '/' => 12),'in water (4°C)'),
         'Pressure::KILOBAR'               => array(1.0e+8,'kb'),
-        'Pressure::KILOGRAM_FORCE_SQUARE_CENTIMETER' => array(98066.5,'kgf/cm²'),
-        'Pressure::KILOGRAM_FORCE_SQUARE_METER'      => array(9.80665,'kgf/m²'),
-        'Pressure::KILOGRAM_FORCE_SQUARE_MILLIMETER' => array(9806650,'kgf/mm²'),
-        'Pressure::KILONEWTON_SQUARE_METER'          => array(1000,'kN/m²'),
-        'Pressure::KILOPASCAL'                 => array(1000,'kPa'),
-        'Pressure::KILOPOND_SQUARE_CENTIMETER' => array(98066.5,'kp/cm²'),
-        'Pressure::KILOPOND_SQUARE_METER'      => array(9.80665,'kp/m²'),
-        'Pressure::KILOPOND_SQUARE_MILLIMETER' => array(9806650,'kp/mm²'),
-        'Pressure::KIP_SQUARE_FOOT'       => array(array('' => 430.92233, '/' => 0.009),'kip/ft²'),
-        'Pressure::KIP_SQUARE_INCH'       => array(array('' => 62052.81552, '/' => 0.009),'kip/in²'),
+        'Pressure::KILOGRAM_FORCE_PER_SQUARE_CENTIMETER' => array(98066.5,'kgf/cm²'),
+        'Pressure::KILOGRAM_FORCE_PER_SQUARE_METER'      => array(9.80665,'kgf/m²'),
+        'Pressure::KILOGRAM_FORCE_PER_SQUARE_MILLIMETER' => array(9806650,'kgf/mm²'),
+        'Pressure::KILONEWTON_PER_SQUARE_METER'          => array(1000,'kN/m²'),
+        'Pressure::KILOPASCAL'            => array(1000,'kPa'),
+        'Pressure::KILOPOND_PER_SQUARE_CENTIMETER' => array(98066.5,'kp/cm²'),
+        'Pressure::KILOPOND_PER_SQUARE_METER'      => array(9.80665,'kp/m²'),
+        'Pressure::KILOPOND_PER_SQUARE_MILLIMETER' => array(9806650,'kp/mm²'),
+        'Pressure::KIP_PER_SQUARE_FOOT'   => array(array('' => 430.92233, '/' => 0.009),'kip/ft²'),
+        'Pressure::KIP_PER_SQUARE_INCH'   => array(array('' => 62052.81552, '/' => 0.009),'kip/in²'),
         'Pressure::MEGABAR'               => array(1.0e+11,'Mb'),
-        'Pressure::MEGANEWTON_SQUARE_METER' => array(1000000,'MN/m²'),
+        'Pressure::MEGANEWTON_PER_SQUARE_METER' => array(1000000,'MN/m²'),
         'Pressure::MEGAPASCAL'            => array(1000000,'MPa'),
         'Pressure::METER_AIR_0C'          => array(12.677457,'m air (0°C)'),
         'Pressure::METER_AIR_15C'         => array(12.015397,'m air (15°C)'),
@@ -212,27 +212,27 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
         'Pressure::MILLITORR'             => array(0.13332237,'mTorr'),
         'Pressure::NANOBAR'               => array(0.0001,'nb'),
         'Pressure::NANOPASCAL'            => array(1.0e-9,'nPa'),
-        'Pressure::NEWTON_SQUARE_METER'   => array(1,'N/m²'),
-        'Pressure::NEWTON_SQUARE_MILLIMETER' => array(1000000,'N/mm²'),
-        'Pressure::OUNCE_SQUARE_INCH'     => array(430.92233,'oz/in²'),
+        'Pressure::NEWTON_PER_SQUARE_METER'      => array(1,'N/m²'),
+        'Pressure::NEWTON_PER_SQUARE_MILLIMETER' => array(1000000,'N/mm²'),
+        'Pressure::OUNCE_PER_SQUARE_INCH'        => array(430.92233,'oz/in²'),
         'Pressure::PASCAL'                => array(1,'Pa'),
         'Pressure::PETABAR'               => array(1.0e+20,'Pb'),
         'Pressure::PETAPASCAL'            => array(1.0e+15,'PPa'),
         'Pressure::PICOBAR'               => array(0.0000001,'pb'),
         'Pressure::PICOPASCAL'            => array(1.0e-12,'pPa'),
         'Pressure::PIEZE'                 => array(1000,'pz'),
-        'Pressure::POUND_SQUARE_FOOT'     => array(array('' => 430.92233, '/' => 9),'lb/ft²'),
-        'Pressure::POUND_SQUARE_INCH'     => array(6894.75728,'lb/in²'),
-        'Pressure::POUNDAL_SQUARE_FOOT'   => array(1.4881639,'pdl/ft²'),
-        'Pressure::STHENE_SQUARE_METER'   => array(1000,'sn/m²'),
+        'Pressure::POUND_PER_SQUARE_FOOT' => array(array('' => 430.92233, '/' => 9),'lb/ft²'),
+        'Pressure::POUND_PER_SQUARE_INCH' => array(6894.75728,'lb/in²'),
+        'Pressure::POUNDAL_PER_SQUARE_FOOT' => array(1.4881639,'pdl/ft²'),
+        'Pressure::STHENE_PER_SQUARE_METER' => array(1000,'sn/m²'),
         'Pressure::TECHNICAL_ATMOSPHERE'  => array(98066.5,'at'),
         'Pressure::TERABAR'               => array(1.0e+17,'Tb'),
         'Pressure::TERAPASCAL'            => array(1.0e+12,'TPa'),
-        'Pressure::TON_SQUARE_FOOT'       => array(array('' => 120658.2524, '/' => 1.125),'t/ft²'),
-        'Pressure::TON_SQUARE_FOOT_SHORT' => array(array('' => 430.92233, '/' => 0.0045),'t/ft²'),
-        'Pressure::TON_SQUARE_INCH'       => array(array('' => 17374788.3456, '/' => 1.125),'t/in²'),
-        'Pressure::TON_SQUARE_INCH_SHORT' => array(array('' => 62052.81552, '/' => 0.0045),'t/in²'),
-        'Pressure::TON_SQUARE_METER'      => array(9806.65,'t/m²'),
+        'Pressure::TON_PER_SQUARE_FOOT'   => array(array('' => 120658.2524, '/' => 1.125),'t/ft²'),
+        'Pressure::TON_PER_SQUARE_FOOT_SHORT' => array(array('' => 430.92233, '/' => 0.0045),'t/ft²'),
+        'Pressure::TON_PER_SQUARE_INCH'   => array(array('' => 17374788.3456, '/' => 1.125),'t/in²'),
+        'Pressure::TON_PER_SQUARE_INCH_SHORT' => array(array('' => 62052.81552, '/' => 0.0045),'t/in²'),
+        'Pressure::TON_PER_SQUARE_METER'  => array(9806.65,'t/m²'),
         'Pressure::TORR'                  => array(133.32237,'Torr'),
         'Pressure::WATER_COLUMN_CENTIMETER' => array(98.0665,'WC (cm)'),
         'Pressure::WATER_COLUMN_INCH'       => array(array('' => 2989.0669, '/' => 12),'WC (in)'),
@@ -365,5 +365,14 @@ class Zend_Measure_Pressure extends Zend_Measure_Abstract
     public function __toString()
     {
         return $this->toString();
+    }
+
+
+    /**
+     * Returns the conversion list
+     */
+    public function getConversionList()
+    {
+        return self::$_UNITS;
     }
 }

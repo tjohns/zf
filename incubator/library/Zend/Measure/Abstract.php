@@ -120,4 +120,10 @@ abstract class Zend_Measure_Abstract //implements Serializable
      */
     abstract public function __toString();
 
+
+
+    /**
+     * Returns the conversion list
+     */
+    abstract public function getConversionList();
 }

@@ -303,8 +303,8 @@ class Zend_Measure_PressureTest extends PHPUnit2_Framework_TestCase
     public function testPressureSetType()
     {
         $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::STANDARD,'de');
-        $value->setType(Zend_Measure_Pressure::TON_SQUARE_FOOT);
-        $this->assertEquals($value->getType(), Zend_Measure_Pressure::TON_SQUARE_FOOT, 'Zend_Measure_Pressure type expected');
+        $value->setType(Zend_Measure_Pressure::TON_PER_SQUARE_FOOT);
+        $this->assertEquals($value->getType(), Zend_Measure_Pressure::TON_PER_SQUARE_FOOT, 'Zend_Measure_Pressure type expected');
     }
 
 
@@ -314,7 +314,7 @@ class Zend_Measure_PressureTest extends PHPUnit2_Framework_TestCase
      */
     public function testPressureSetType2()
     {
-        $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::TON_SQUARE_FOOT,'de');
+        $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::TON_PER_SQUARE_FOOT,'de');
         $value->setType(Zend_Measure_Pressure::STANDARD);
         $this->assertEquals($value->getType(), Zend_Measure_Pressure::STANDARD, 'Zend_Measure_Pressure type expected');
     }
@@ -326,9 +326,9 @@ class Zend_Measure_PressureTest extends PHPUnit2_Framework_TestCase
      */
     public function testPressureSetComputedType1()
     {
-        $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::TON_SQUARE_FOOT,'de');
-        $value->setType(Zend_Measure_Pressure::TON_SQUARE_INCH);
-        $this->assertEquals($value->getType(), Zend_Measure_Pressure::TON_SQUARE_INCH, 'Zend_Measure_Pressure type expected');
+        $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::TON_PER_SQUARE_FOOT,'de');
+        $value->setType(Zend_Measure_Pressure::TON_PER_SQUARE_INCH);
+        $this->assertEquals($value->getType(), Zend_Measure_Pressure::TON_PER_SQUARE_INCH, 'Zend_Measure_Pressure type expected');
     }
 
 
@@ -338,9 +338,9 @@ class Zend_Measure_PressureTest extends PHPUnit2_Framework_TestCase
      */
     public function testPressureSetComputedType2()
     {
-        $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::TON_SQUARE_INCH,'de');
-        $value->setType(Zend_Measure_Pressure::TON_SQUARE_FOOT);
-        $this->assertEquals($value->getType(), Zend_Measure_Pressure::TON_SQUARE_FOOT, 'Zend_Measure_Pressure type expected');
+        $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::TON_PER_SQUARE_INCH,'de');
+        $value->setType(Zend_Measure_Pressure::TON_PER_SQUARE_FOOT);
+        $this->assertEquals($value->getType(), Zend_Measure_Pressure::TON_PER_SQUARE_FOOT, 'Zend_Measure_Pressure type expected');
     }
 
 
@@ -379,5 +379,17 @@ class Zend_Measure_PressureTest extends PHPUnit2_Framework_TestCase
     {
         $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 N/m²', 'Value -100 N/m² expected');
+    }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testPressureConversionList()
+    {
+        $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
     }
 }

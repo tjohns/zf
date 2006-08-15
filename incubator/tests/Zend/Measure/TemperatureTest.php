@@ -309,6 +309,30 @@ class Zend_Measure_TemperatureTest extends PHPUnit2_Framework_TestCase
 
 
     /**
+     * test setting type
+     * expected new type
+     */
+    public function testTemperatureSetType1()
+    {
+        $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::FAHRENHEIT,'de');
+        $value->setType(Zend_Measure_Temperature::REAUMUR);
+        $this->assertEquals($value->getType(), Zend_Measure_Temperature::REAUMUR, 'Zend_Measure_Temperature type expected');
+    }
+
+
+    /**
+     * test setting type
+     * expected new type
+     */
+    public function testTemperatureSetType2()
+    {
+        $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::REAUMUR,'de');
+        $value->setType(Zend_Measure_Temperature::FAHRENHEIT);
+        $this->assertEquals($value->getType(), Zend_Measure_Temperature::FAHRENHEIT, 'Zend_Measure_Temperature type expected');
+    }
+
+
+    /**
      * test setting unknown type
      * expected new type
      */
@@ -331,7 +355,7 @@ class Zend_Measure_TemperatureTest extends PHPUnit2_Framework_TestCase
     public function testTemperatureToString()
     {
         $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 °C', 'Value -100 °C expected');
+        $this->assertEquals($value->toString(), '-100 °K', 'Value -100 °K expected');
     }
 
 
@@ -342,6 +366,19 @@ class Zend_Measure_TemperatureTest extends PHPUnit2_Framework_TestCase
     public function testTemperature_ToString()
     {
         $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 °C', 'Value -100 °C expected');
+        $this->assertEquals($value->__toString(), '-100 °K', 'Value -100 °K expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testTemperatureConversionList()
+    {
+        $value = new Zend_Measure_Temperature('-100',Zend_Measure_Temperature::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
+
 }

@@ -368,4 +368,16 @@ class Zend_Measure_LengthTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Length('-100',Zend_Measure_Length::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 m', 'Value -100 m expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testLengthConversionList()
+    {
+        $value = new Zend_Measure_Length('-100',Zend_Measure_Length::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }

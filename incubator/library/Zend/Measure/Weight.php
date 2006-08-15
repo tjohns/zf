@@ -597,4 +597,13 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
     {
         return $this->toString();
     }
+
+
+    /**
+     * Returns the conversion list
+     */
+    public function getConversionList()
+    {
+        return self::$_UNITS;
+    }
 }

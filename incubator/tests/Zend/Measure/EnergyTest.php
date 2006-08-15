@@ -368,4 +368,16 @@ class Zend_Measure_EnergyTest extends PHPUnit2_Framework_TestCase
         $value = new Zend_Measure_Energy('-100',Zend_Measure_Energy::STANDARD,'de');
         $this->assertEquals($value->__toString(), '-100 J', 'Value -100 J expected');
     }
+
+
+    /**
+     * test getConversionList
+     * expected array
+     */
+    public function testEnergyConversionList()
+    {
+        $value = new Zend_Measure_Energy('-100',Zend_Measure_Energy::STANDARD,'de');
+        $unit  = $value->getConversionList();
+        $this->assertTrue(is_array($unit), 'Array expected');
+    }
 }
