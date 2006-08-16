@@ -109,51 +109,29 @@ class Zend_Db_Adapter_Pdo_Mssql extends Zend_Db_Adapter_Pdo_Abstract
      * @link http://lists.bestpractical.com/pipermail/rt-devel/2005-June/007339.html
      * @return string
      */
-    public function limit($sql, $count, $offset)
-    {
+     public function limit($sql, $count, $offset)
+     {
         if ($count) {
 
-            // we need the starting SELECT clause for later
-            $select = 'SELECT ';
-            if (preg_match('/^[[:space:]*SELECT[[:space:]]*DISTINCT/i', $sql, $matches) == 1) {
-                $select .= 'DISTINCT ';
+            $orderby = stristr($sql, 'ORDER BY');
+            if ($orderby !== false) {
+                $sort = (stripos($orderby, 'desc') !== false) ? 'desc' : 'asc';
+                $order = str_ireplace('ORDER BY', '', $orderby);
+                $order = trim(preg_replace('/ASC|DESC/i', '', $order));
             }
 
-            // we need the length for substr() later
-            $selectLen = strlen($select);
+            $sql = preg_replace('/^SELECT /i', 'SELECT TOP '.($count+$offset).' ', $sql);
 
-            // is there an offset?
-            if (! $offset) {
-                // no offset, it's a simple TOP count
-                return "$select TOP $count" . substr($sql, $selectLen);
+            $sql = 'SELECT * FROM (SELECT TOP '.$count.' * FROM ('.$sql.') AS inner_tbl';
+            if ($orderby !== false) {
+                $sql .= ' ORDER BY '.$order.' ';
+                $sql .= (stripos($sort, 'asc') !== false) ? 'DESC' : 'ASC';
             }
-
-            // the total of the count **and** the offset, combined.
-            // this will be used in the "internal" portion of the
-            // hacked-up statement.
-            $total = $count + $offset;
-
-            // build the "real" order for the external portion.
-            $order = implode(',', $parts['order']);
-
-            // build a "reverse" order for the internal portion.
-            $reverse = $order;
-            $reverse = str_ireplace(" ASC",  " \xFF", $reverse);
-            $reverse = str_ireplace(" DESC", " ASC",  $reverse);
-            $reverse = str_ireplace(" \xFF", " DESC", $reverse);
-
-            // create a main statement that replaces the SELECT
-            // with a SELECT TOP
-            $main = "\n$select TOP $total" . substr($sql, $selectLen) . "\n";
-
-            // build the hacked-up statement.
-            // do we really need the "as" aliases here?
-            $sql = "SELECT * FROM ("
-                 . "SELECT TOP $count * FROM ($main) AS select_limit_rev ORDER BY $reverse"
-                 . ") AS select_limit ORDER BY $order";
-
+            $sql .= ') AS outer_tbl';
+            if ($orderby !== false) {
+                $sql .= ' ORDER BY '.$order.' '.$sort;
+            }
         }
-
         return $sql;
     }
 
