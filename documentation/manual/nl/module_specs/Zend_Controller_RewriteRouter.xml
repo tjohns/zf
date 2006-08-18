@@ -75,23 +75,20 @@ $router->addRoute('user', ':controller/:action');]]></programlisting>
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.variable-defaults">
-	<title>Variable defaults</title>
+	<title>Variabele standaarden</title>
 
 	<para>
-		Every variable in the route can have a default. To provide it you have to add a third parameter to the addRoute
-		method. This third parameter is an array with keys as variable names and values as desired defaults.
+		Elke variabele in de route kan een standaard waarde hebben. Om deze in te stellen moet je een derde parameter aan de addRoute methode doorgeven. Deze derde parameter is een array met keys als variabele namen en waardes als de gewenste standaardwaarde.
 	</para>
 
 	<programlisting role="php"><![CDATA[
 $router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
 	<para>
-		What may not be clearly visible is that the above route will match URLs like 'http://example.com/archive/2005' and
-		'http://example.com/archive'. In the latter case the variable year will have a value of 2006.
+		What mogelijk niet direct zichtbaar is, is dat de bovenstaande route URL's zal matchen zoals 'http://example.com/archive/2005' en 'http://example.com/archive'. In het laatste geval zal de variabele year een waarde hebben van 2005.
 	</para>
 
 	<para>
-		In the above example we haven't set a controller so it will always result in a noRoute action of an
-		IndexController. To make it usable you have to provide a valid controller and a valid action as a default:
+		In het bovenstaande voorbeeld hebben we geen controller gezet dus zal het altijd resulteren in een noRoute action van de IndexController. Om het bruikbaar te maken dien je een valide controller en een valide action als standaard in te stellen:
 	</para>
 
 	<programlisting role="php"><![CDATA[
@@ -100,82 +97,69 @@ $router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller'
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.variable-requirements">
-	<title>Variable requirements</title>
+	<title>Variabele eisen</title>
 
 	<para>
-		One can add a fourth parameter where variable requirements can be set. These are defined as regular
-		expressions:
+		Men kan ook een vierde parameter toevoegen waar eisen aan de variabelen in kunnen worden aangegeven. Deze worden gedefinieerd als reguliere expressies:
 	</para>
 
 	<programlisting role="php"><![CDATA[
 $router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
 
 	<note>
-		Unlike Ruby on Rails, ZF RewriteRouter will match a route and use a default when a fourth parameter variable requirement is not met. So the
-		URL of 'http://example.com/archive/test' will match the above route and set the year to 2006. This functionality
-		may be altered in the future as it is being discussed at the moment of writing of this documentation.
+		In tegenstelling tot Ruby on Rails zal de ZF RewriteRouter een route matchen en de standaard waarde gebruiken wanneer niet aan een variabele eis wordt voldaan. Dus de URL 'http://example.com/archive/test' zal de bovenstaande route matchen en year op 2006 zetten. Deze functionaliteit kan in de toekomst nog worden aangepast, er worden nog discussies over gevoerd op het moment van het schrijven van deze documentatie.
 	</note>
 
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.rewritebase">
-	<title>Base URL and subdirectories</title>
+	<title>Basis URL en subdirectories</title>
 
 	<para>
-		Unlike the original Router, RewriteRouter can be used in subdirectories - it automatically detects your base URL and
-		sets it accordingly. For example: if you keep your <code>index.php</code> in a webserver subdirectory named
-		<code>/projects/myapp/index.php</code> rewrite base (base URL) will be set to <code>/projects/myapp</code>. This string will then be 
-		stripped from the beginning of the path before calculating any route matches. This frees one from the necessity of prepending it to
-		any of your routes. The route of <code>'user/:username'</code> will match URIs like
-		<code>http://localhost/projects/myapp/user/martel</code> and <code>http://example.com/user/martel</code>.
+		In tegenstelling tot de originele Router kan RewriteRouter gebruikt worden in subdirectories - het zal automatisch de basis URL herkennen en deze ook instellen. Bijvoorbeeld: Als je je <code>index.php</code> in een webserver subdirectory zet genaamd <code>/projecten/mijnapp/index.php</code> zal de 'rewrite base' (basis URL) worden ingesteld op <code>/projecten/mijnapp</code>. Deze string zal dan worden verwijderd van het begin van het pad alvorens de route matches te calculeren. Hierdoor is het niet meer nodig om de string voor al je routes te plakken. De route <code>'user/:username'</code> zal hierdoor matchen aan URIs als 
+		<code>http://localhost/projecten/mijnapp/user/martel</code> en <code>http://example.com/user/martel</code>.
 	</para>
 
 	<note>
-		Automatic rewrite base is case sensitive, so make sure your URL will match a subdirectory name in a filesystem
-		(even on Windows machines). If it doesn't you will get to noRoute action.
+		Automatische rewrite bases is hoofdletter-afhankelijk, dus zorg ervoor dat je URL exact hetzelfde is als de subdirectory naam in je bestandssysteem (zelfs op Windows machines). Wanneer dit niet zo is, zal je een noRoute action krijgen.
 	</note>
 
 	<para>
-		Should rewrite base be detected incorrectly you can override it with your own base path with the help of the
-		setRewriteBase method of the RewriteRouter class:
+		In het geval dat de rewrite basis verkeerd wordt herkend kan je het overschrijven met je eigen basis pad met behulp van de setRewriteBase methode van de RewriteRouter class:
 	</para>
 
 	<programlisting role="php"><![CDATA[
-$router->setRewriteBase('/projects/myapp');]]></programlisting>
+$router->setRewriteBase('/projecten/mijnapp');]]></programlisting>
 
 	<note>
-		This step won't be necessary in most cases and is strongly discouraged as it introduces another configuration variable
-		which would have to be altered when one moves code to another directory configuration.
+		Deze stap zal in de meeste gevallen niet noodzakelijk zijn en wordt sterk ontraden omdat het een nieuwe configuratie variabele introduceert die moet worden aangepast als de code verplaatst wordt naar een andere directory configuratie.
 	</note>
 
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.default-routes">
-	<title>Default routes</title>
+	<title>Standaard routes</title>
 
 	<para>
-		Zend_Controller_RewriteRouter is preconfigured with two default routes. The first handles  your root URL and is
-		mapped to indexAction of IndexController: so you have to provide them as outlined in the
+		Zend_Controller_RewriteRouter wordt voorgeconfigureerd met twee standaard routes. De eerste handelt je root URL af en is gekoppeld aan de indexAction van IndexController: Deze dien je aan te geven zoals omschreven in 
 		<xref linkend="zend.controller.getting-started" />
-		(see <xref linkend="zend.controller.overview.indexcontroller" />).
-		The second default route is included to provide compatibility with the first version of the router. It will match URIs in
-		the shape of <code>'controller/action'</code>.
+		(Zie <xref linkend="zend.controller.overview.indexcontroller" />).
+		De tweede standaard route is meegeleverd om compatibiliteit te leveren voor de eerste versie van de router. Het zal URIs matchen in de vorm van <code>'controller/action'</code>.
 	</para>
 
 	<para>
-		Default rules are configured as:
+		Standaard regels worden geconfigureerd op de volgende manier:
 	</para>
 
 	<programlisting role="php"><![CDATA[
-// Default route for root URL
+// Standaard route voor root URL
 $this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
 
-// Route for Router v1 compatibility
+// Route voor Router v1 compatibiliteit
 $this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
 
 	<note>
-		Though Zend_Controller_RewriteRouter is configured for backwards compatibility it will not match
-		<code>controller/action</code> URIs with additional parameters just yet.
+		Ondanks dat Zend_Controller_RewriteRouter is geconfigureerd voor achterwaardse compatibiliteit zal het op dit moment nog geen <code>controller/action</code> URIs matchen met extra parameters.
 	</note>
 
 </sect1>
