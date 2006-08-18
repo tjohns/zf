@@ -107,6 +107,10 @@
         <title>Zend_XmlRpc</title>
         &module_specs.Zend_XmlRpc;
     </chapter-->
+    <chapter id="zend.measure">
+        <title>Zend_Measure</title>
+        &module_specs.Zend_Measure;
+    </chapter>
     <!-- &ref.faq; -->
     &ref.coding_standard;
     &ref.copyrights;

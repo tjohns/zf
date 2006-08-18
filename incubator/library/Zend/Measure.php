@@ -104,7 +104,7 @@ class Zend_Measure
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function __construct($value, $type, $locale)
+    public function __construct($value, $type, $locale = 'root')
     {
         $library = substr($type,0,strpos($type,'::'));
         $sublib  = substr($type, strpos($type,'::')+2);
