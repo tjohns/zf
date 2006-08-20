@@ -1,10 +1,10 @@
 <sect1 id="zend.controller.rewriterouter.introduction">
-    <title>Introductie</title>
+    <title>Inleiding</title>
 	<para>
-		Zend_Controller_RewriteRouter is een nieuwe versie van de framework router. Routing is het process waarbij een URI wordt genomen en uit elkaar wordt gehaald om te bepalen welke controller en action van deze controller de request dient te krijgen. Deze definitie van controller, action en optionele parameters wordt verpakt in een waardenobject genaamd Zend_Controller_Dispatcher_Token, welke wordt afgehandeld door de Zend_Controller_Dispatcher. Routing gebeurt eenmalig: Wanneer de request wordt ontvangen, alvorens de eerste controller wordt aangesproken.
+		Zend_Controller_RewriteRouter is een nieuwe versie van de framework router. Routing is het process waarbij een URI wordt genomen en uit elkaar wordt gehaald om te bepalen welke controller en action van deze controller de request dient te krijgen. Deze definitie van controller, action en optionele parameters wordt verpakt in een waardenobject genaamd Zend_Controller_Dispatcher_Token, welke wordt afgehandeld door de Zend_Controller_Dispatcher. Routing gebeurt eenmalig: wanneer de request wordt ontvangen, alvorens de eerste controller wordt aangesproken.
 	</para>
 	<para>
-		Zend_Controller_RewriteRouter is ontworpen om mod_rewrite-achtige functionaliteit te ondersteunen gebruik makend van pure php structuren. Het is losjes gebaseerd op Ruby on Rails routing en vereist geen bestaande kennis van webserver URL rewriting. Het is ontworpen om te werken met een enkele mod_rewrite regel (een van de volgende):
+		Zend_Controller_RewriteRouter is ontworpen om mod_rewrite-achtige functionaliteit te ondersteunen via het gebruik van pure PHP structuren. Het is losjes gebaseerd op Ruby on Rails routing en vereist geen bestaande kennis van webserver URL rewriting. Het is ontworpen om te werken met een enkele mod_rewrite regel (een van de volgende):
 	</para>
 	<programlisting role="php"><![CDATA[
 RewriteEngine on
@@ -20,7 +20,7 @@ RewriteRule ^(.*)$ index.php/$1	]]></programlisting>
 	<title>Een router gebruiken</title>
 
 	<para>
-		Om een RewriteRouter juist te kunnen gebruiken dien je het te instantieren, een aantal routes te definieren en het in de controller te injecteren. De volgende code illustreert de procedure:
+		Om een RewriteRouter juist te kunnen gebruiken dien je het te instantiëren, een aantal routes te definiëren en het in de controller te injecteren. De volgende code illustreert de procedure:
 	</para>
 
 	<programlisting role="php"><![CDATA[
@@ -58,7 +58,7 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
 	</note>
 
 	<note>
-		De huidige implementatie staat het gebruik van alle karakters toe behalve de slash (/) in variabele identifiers maar het wordt sterk aangeraden om alleen php vriendelijke karakters te gebruiken. In toekomstige implementaties zal dit waarschijnlijk worden aangepast, wat bugs kan introduceren in je code.
+		De huidige implementatie staat het gebruik van alle karakters toe behalve de slash (/) in variabele identifiers maar het wordt sterk aangeraden om alleen PHP vriendelijke karakters te gebruiken. In toekomstige implementaties zal dit waarschijnlijk worden aangepast, wat bugs kan introduceren in je code.
 	</note>
 
 	<para>
@@ -84,11 +84,11 @@ $router->addRoute('user', ':controller/:action');]]></programlisting>
 	<programlisting role="php"><![CDATA[
 $router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
 	<para>
-		What mogelijk niet direct zichtbaar is, is dat de bovenstaande route URL's zal matchen zoals 'http://example.com/archive/2005' en 'http://example.com/archive'. In het laatste geval zal de variabele year een waarde hebben van 2005.
+		Wat mogelijk niet direct zichtbaar is, is dat de bovenstaande route URL's zal matchen zoals <code>http://example.com/archive/2005</code> en <code>http://example.com/archive</code>. In het laatste geval zal de variabele <code>year</code> een waarde hebben van 2006.
 	</para>
 
 	<para>
-		In het bovenstaande voorbeeld hebben we geen controller gezet dus zal het altijd resulteren in een noRoute action van de IndexController. Om het bruikbaar te maken dien je een valide controller en een valide action als standaard in te stellen:
+		In het bovenstaande voorbeeld hebben we geen controller gezet dus zal het altijd resulteren in een noRoute action van de IndexController. Om het bruikbaar te maken dien je een geldige controller en een geldige action als standaard in te stellen:
 	</para>
 
 	<programlisting role="php"><![CDATA[
@@ -116,7 +116,7 @@ $router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year
 	<title>Basis URL en subdirectories</title>
 
 	<para>
-		In tegenstelling tot de originele Router kan RewriteRouter gebruikt worden in subdirectories - het zal automatisch de basis URL herkennen en deze ook instellen. Bijvoorbeeld: Als je je <code>index.php</code> in een webserver subdirectory zet genaamd <code>/projecten/mijnapp/index.php</code> zal de 'rewrite base' (basis URL) worden ingesteld op <code>/projecten/mijnapp</code>. Deze string zal dan worden verwijderd van het begin van het pad alvorens de route matches te calculeren. Hierdoor is het niet meer nodig om de string voor al je routes te plakken. De route <code>'user/:username'</code> zal hierdoor matchen aan URIs als 
+		In tegenstelling tot de originele Router kan RewriteRouter gebruikt worden in subdirectories - het zal automatisch de basis URL herkennen en deze ook instellen. Bijvoorbeeld: Als je je <code>index.php</code> in een webserver subdirectory zet genaamd <code>/projecten/mijnapp/index.php</code> zal de 'rewrite base' (basis URL) worden ingesteld op <code>/projecten/mijnapp</code>. Deze string zal dan worden verwijderd van het begin van het pad alvorens de route matches te berekenen. Hierdoor is het niet meer nodig om de string voor al je routes te plakken. De route <code>'user/:username'</code> zal hierdoor matchen aan URIs als 
 		<code>http://localhost/projecten/mijnapp/user/martel</code> en <code>http://example.com/user/martel</code>.
 	</para>
 
@@ -159,7 +159,7 @@ $this->addRoute('default', '', array('controller' => 'index', 'action' => 'index
 $this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
 
 	<note>
-		Ondanks dat Zend_Controller_RewriteRouter is geconfigureerd voor achterwaardse compatibiliteit zal het op dit moment nog geen <code>controller/action</code> URIs matchen met extra parameters.
+		Ondanks het feit dat Zend_Controller_RewriteRouter is geconfigureerd voor achterwaardse compatibiliteit zal het op dit moment nog geen <code>controller/action</code> URIs matchen met extra parameters.
 	</note>
 
 </sect1>
