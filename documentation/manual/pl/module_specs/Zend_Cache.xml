@@ -738,7 +738,7 @@ $res = $cache->foobar2('1', '2');
 	                    </row>
 	                 </thead>
 	                 <tbody>
-	                 	   <row>
+	                 	 <row>
 	                          <entry><code>httpConditional</code></entry>
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
@@ -747,21 +747,43 @@ $res = $cache->foobar2('1', '2');
 	                          </entry>
 	                     </row>
 	                     <row>
-	                          <entry><code>cacheWith{Get,Post,Session,Files,Cookie}Variables</code></entry>
+	                          <entry><code>debugHeader</code></entry>
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
-	                                if true,  cache is still on even if there are some variables in the corresponding superglobal array ;
-	                                if false,  cache is off if there are some variables in the corresponding superglobal array             
+	                              if true, a debug text is added before each cached pages                 
 	                          </entry>
 	                     </row>
 	                     <row>
-	                          <entry><code>makeIdWith{Get,Post,Session,Files,Cookie}Variables</code></entry>
-	                          <entry><code>boolean</code></entry>
-	                          <entry><code>true</code></entry>
+	                     	  <entry><code>defaultOptions</code></entry>
+	                          <entry><code>array</code></entry>
+	                          <entry><code>array(...see below...)</code></entry>
 	                          <entry>
-	                                if true, we have to use the content of the corresponding superglobal array to make a cache id
-	                                if false, the cache id won't be dependent of the content of the corresponding superglobal array
+	                              an associative array of default options : 
+	                              <itemizedlist>
+	                                  <listitem><code>(boolean, true by default) cache</code> : cache is on if true</listitem>
+	                                  <listitem><code>(boolean, false by default) cacheWithGetVariables</code> : if true, cache is still on even if there are some variables in <code>$_GET</code> array</listitem>
+	                                  <listitem><code>(boolean, false by default) cacheWithPostVariables</code> : if true, cache is still on even if there are some variables in <code>$_POST</code> array</listitem>
+	                                  <listitem><code>(boolean, false by default) cacheWithSessionVariables</code> : if true, cache is still on even if there are some variables in <code>$_SESSION</code> array</listitem>
+	                                  <listitem><code>(boolean, false by default) cacheWithFilesVariables</code> : if true, cache is still on even if there are some variables in <code>$_FILES</code> array</listitem>
+	                                  <listitem><code>(boolean, false by default) cacheWithCookieVariables</code> : if true, cache is still on even if there are some variables in <code>$_COOKIE</code> array</listitem>
+									  <listitem><code>(boolean, true by default) makeIdWithGetVariables</code> : if true, the cache id will be dependent of the content of the <code>$_GET</code> array</listitem>
+	                                  <listitem><code>(boolean, true by default) makeIdWithPostVariables</code> : if true, the cache id will be dependent of the content of the <code>$_POST</code> array</listitem>
+	                                  <listitem><code>(boolean, true by default) makeIdWithSessionVariables</code> : if true, the cache id will be dependent of the content of the <code>$_SESSION</code> array</listitem>
+	                                  <listitem><code>(boolean, true by default) makeIdWithFilesVariables</code> : if true, the cache id will be dependent of the content of the <code>$_FILES</code> array</listitem>
+	                                  <listitem><code>(boolean, true by default) makeIdWithCookieVariables</code> : if true, the cache id will be dependent of the content of the <code>$_COOKIE</code> array</listitem>	                              
+	                              </itemizedlist>              
+	                          </entry>
+	                     </row>
+	                     <row>
+	                          <entry><code>regexps</code></entry>
+	                          <entry><code>array</code></entry>
+	                          <entry><code>array()</code></entry>
+	                          <entry>
+	                          	  an associative array to set options only for some REQUEST_URI, keys are (PCRE) regexps, values are 
+	                          	  associative arrays with specific options to set if the regexp matchs on $_SERVER['REQUEST_URI']
+                                  (see defaultOptions for the list of available options) ; if several regexps match the $_SERVER['REQUEST_URI'], 
+                                  only the last one will be used       
 	                          </entry>
 	                     </row>
 	                  </tbody>
@@ -777,15 +799,53 @@ $res = $cache->foobar2('1', '2');
 // [...] // require, configuration and factory
 	
 $cache->start();
-# if the cache is hit, the result is sent to the browser and the script stop here
+// if the cache is hit, the result is sent to the browser and the script stop here
 	
 // rest of the page ...
 	
-?>]]>       </programlisting>
+?>]]>           </programlisting>
 	        </para>
+	        <para>
+	        	a more complex example which shows a way to get a centralized cache management in a bootstrap file
+	        	(for using with Zend_Controller for example)
+	        	<programlisting role="php"><![CDATA[<?php
+
+// [...] you should avoid to put too much lines before the cache section 
+// [...] for example, for optimal performances, "require_once" or "Zend::loadClass" should be 
+// [...] after the cache section        	
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+   'lifeTime' => 7200,
+   'debugHeader' => true, // for debuging 
+   'regexps' => array(
+       '^/$' => array('cache' => true),         // cache the whole IndexController         
+       '^/index/' => array('cache' => true),    // cache the whole IndexController
+       '^/article/' => array('cache' => false), // we don't cache the ArticleController...
+       '^/article/view/' => array(              // ...but we cache the "view" action of 
+           'cache' => true,                     // this ArticleController
+           'cacheWithPostVariables' => true,    // and we cache even there are some variables in $_POST
+           'makeIdWithPostVariables' => true,   // (but the cache will be dependent of the $_POST array)
+       )
+   )	  
+);
+$backendOptions = array(
+    'cacheDir' => '/tmp/' 
+);
+
+// getting a Zend_Cache_Frontend_Page object
+$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+
+$cache->start();
+// if the cache is hit, the result is sent to the browser and the script stop here
+
+// [...] the end of the bootstrap file (these lines won't be executed if the cache is hit)
+	        	
+?>]]>           </programlisting>	        	
+	        </para>	        
     	</sect3>
-	</sect2>
-    
+	</sect2>   
 </sect1>
 
 <sect1 id="zend.cache.backends">
