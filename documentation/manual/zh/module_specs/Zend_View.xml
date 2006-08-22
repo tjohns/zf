@@ -87,7 +87,7 @@ echo $view->render('booklist.php');
         </programlisting>
         
         <para>            
-			注意我们使用escapte()来过滤输出。
+			注意我们使用escape()来过滤输出。
         </para>
         
     </sect2>
