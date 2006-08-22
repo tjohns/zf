@@ -18,7 +18,7 @@
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 loadFile($filename, $dirs=null, $once=false)
 
 ?>]]></programlisting>
@@ -50,7 +50,7 @@ loadFile($filename, $dirs=null, $once=false)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 loadClass($class, $dirs)
 
 ?>]]></programlisting>
@@ -77,14 +77,14 @@ loadClass($class, $dirs)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 loadInterface($interface, $dirs)
 
 ?>]]></programlisting>
 
     <para>
     The <code>Zend::loadClass()</code> method cannot be used for loading interfaces because the PHP
-    function <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink> does cannot check
+    function <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink> cannot check
     for interfaces (since PHP 5.0.2).  Use <code>Zend::loadInterface()</code> instead.
     </para>
 
@@ -102,7 +102,7 @@ loadInterface($interface, $dirs)
     <para>Returns <code>TRUE</code> if a file is readable, FALSE otherwise.</para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 isReadable($filename)
 
 ?>]]></programlisting>
@@ -124,7 +124,7 @@ isReadable($filename)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 dump($var, $label=null, $echo=true)
 
 ?>]]></programlisting>
@@ -154,7 +154,7 @@ dump($var, $label=null, $echo=true)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 register($name, $object)
 
 ?>]]></programlisting>
@@ -185,7 +185,7 @@ register($name, $object)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 registry($name=null)
 
 ?>]]></programlisting>
