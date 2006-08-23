@@ -115,19 +115,24 @@ class Zend_Cache_Backend_APC implements Zend_Cache_Backend_Interface
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
      * 
+     * WARNING $doNotTestCacheValidity=true is unsupported by the APC backend
+     * 
      * @param string $id cache id
      * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
      * @return string cached datas (or false)
      */
     public function get($id, $doNotTestCacheValidity = false) 
     {
-        return apc_fetch($id);
-        // WARNING : $doNotTestCacheValidity is not supported !!!
         if ($doNotTestCacheValidity) {
 	        if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_Memcached::get() : \$doNotTestCacheValidity=true is unsupported by the Memcached backend", Zend_Log::LEVEL_WARNING);
+                Zend_Log::log("Zend_Cache_Backend_APC::get() : \$doNotTestCacheValidity=true is unsupported by the APC backend", Zend_Log::LEVEL_WARNING);
 	        }
         }
+        $tmp = apc_fetch($id);
+        if (is_array($tmp)) {
+            return $tmp[0];
+        }
+        return false;
     }
     
     /**
@@ -138,9 +143,9 @@ class Zend_Cache_Backend_APC implements Zend_Cache_Backend_Interface
      */
     public function test($id)
     {
-        $result = apc_fetch($id);
-        if ($result) {
-            return true;
+        $tmp = apc_fetch($id);
+        if (is_array($tmp)) {
+            return $tmp[1];
         }
         return false;
     }
@@ -158,10 +163,10 @@ class Zend_Cache_Backend_APC implements Zend_Cache_Backend_Interface
      */
     public function save($data, $id, $tags = array())
     {
-        $result = apc_store($id, $data, $this->_directives['lifeTime']);
+        $result = apc_store($id, array($data, time()), $this->_directives['lifeTime']);
         if (count($tags) > 0) {
             if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_Memcached::save() : tags are unsupported by the Memcached backend", Zend_Log::LEVEL_WARNING);
+                Zend_Log::log("Zend_Cache_Backend_APC::save() : tags are unsupported by the APC backend", Zend_Log::LEVEL_WARNING);
             }
         }
         return $result;       
@@ -200,17 +205,17 @@ class Zend_Cache_Backend_APC implements Zend_Cache_Backend_Interface
         }
         if ($mode==Zend_Cache::CLEANING_MODE_OLD) {
             if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_Memcached::clean() : CLEANING_MODE_OLD is unsupported by the Memcached backend", Zend_Log::LEVEL_WARNING);
+                Zend_Log::log("Zend_Cache_Backend_APC::clean() : CLEANING_MODE_OLD is unsupported by the APC backend", Zend_Log::LEVEL_WARNING);
             }
         }
         if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
             if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_Memcached::clean() : tags are unsupported by the Memcached backend", Zend_Log::LEVEL_WARNING);
+                Zend_Log::log("Zend_Cache_Backend_APC::clean() : tags are unsupported by the APC backend", Zend_Log::LEVEL_WARNING);
             }
         }
         if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
             if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_Memcached::clean() : tags are unsupported by the Memcached backend", Zend_Log::LEVEL_WARNING);
+                Zend_Log::log("Zend_Cache_Backend_APC::clean() : tags are unsupported by the APC backend", Zend_Log::LEVEL_WARNING);
             }
         }
     }
