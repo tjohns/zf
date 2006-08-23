@@ -63,7 +63,7 @@ $profiler = $db->getProfiler();
         <itemizedlist>
             <listitem><code>getTotalNumQueries()</code> returns the total number
                 of queries that have been profiled.</listitem>
-            <listitem><code>getTotalElapsedSeconds()</code> returns the total
+            <listitem><code>getTotalElapsedSecs()</code> returns the total
                 number of seconds elapsed for all profiled queries.</listitem>
             <listitem><code>getQueryProfiles()</code> returns an array of all
                 query profiles.</listitem>
