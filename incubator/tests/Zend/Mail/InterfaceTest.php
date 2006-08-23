@@ -13,11 +13,6 @@
 require_once 'Zend/Mail/Mbox.php';
 
 /**
- * Zend_Mail_List
- */
-require_once 'Zend/Mail/List.php';
-
-/**
  * PHPUnit2 test case
  */
 require_once 'PHPUnit2/Framework/TestCase.php';
@@ -28,7 +23,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @package    Zend_Mail
  * @subpackage UnitTests
  */
-class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
+class Zend_Mail_InterfaceTest extends PHPUnit2_Framework_TestCase
 {
     protected $_mboxFile;
     
@@ -39,7 +34,7 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
 
     public function testCount()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
         
         $count = count($list);
         $this->assertEquals(5, $count);
@@ -47,21 +42,21 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
 
     public function testIsset()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
         
         $this->assertTrue(isset($list[1]));
     }
 
     public function testNotIsset()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
         
         $this->assertFalse(isset($list[10]));
     }
     
     public function testArrayGet()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
 
         $subject = $list[1]->subject;
         $this->assertEquals('Simple Message', $subject);
@@ -69,7 +64,7 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
 
     public function testArraySetFail()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
 
         try {
             $list[1] = 'test';
@@ -82,7 +77,7 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
     
     public function testIterationKey()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
 
         $pos = 1;
         foreach($list as $key => $message) {
@@ -93,7 +88,7 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
     
     public function testIterationIsMessage()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
 
         foreach($list as $key => $message) {
             $this->assertTrue($message instanceof Zend_Mail_Message, 'value in iteration is not a mail message');
@@ -102,7 +97,7 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
     
     public function testIterationRounds()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
         
         $count = 0;
         foreach($list as $key => $message) {
@@ -114,7 +109,7 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
 
     public function testIterationWithSeek()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
         
         $count = 0;
         foreach(new LimitIterator($list, 1, 3) as $key => $message) {
@@ -126,7 +121,7 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
 
     public function testIterationWithSeekCapped()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
         
         $count = 0;
         foreach(new LimitIterator($list, 3, 5) as $key => $message) {
@@ -138,7 +133,7 @@ class Zend_Mail_ListTest extends PHPUnit2_Framework_TestCase
     
     public function testFallback()
     {
-        $list = new Zend_Mail_List(new Zend_Mail_Mbox(array('filename' => $this->_mboxFile)));
+        $list = new Zend_Mail_Mbox(array('filename' => $this->_mboxFile));
 
         try {
             $result = $list->noop();

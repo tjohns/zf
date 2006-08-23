@@ -16,7 +16,7 @@ require_once 'PHPUnit2/TextUI/TestRunner.php';
 
 require_once 'Zend/Mail/MboxTest.php';
 require_once 'Zend/Mail/Pop3Test.php';
-require_once 'Zend/Mail/ListTest.php';
+require_once 'Zend/Mail/InterfaceTest.php';
 
 class Zend_Mail_AllTests
 {
@@ -29,7 +29,7 @@ class Zend_Mail_AllTests
     {
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend_Mail');
 
-        $suite->addTestSuite('Zend_Mail_ListTest');
+        $suite->addTestSuite('Zend_Mail_InterfaceTest');
         $suite->addTestSuite('Zend_Mail_MboxTest');
         if(TESTS_ZEND_MAIL_POP3_ENABLED) {
             $suite->addTestSuite('Zend_Mail_Pop3Test');
