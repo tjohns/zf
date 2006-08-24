@@ -107,7 +107,7 @@ echo $query->getQuery();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->gettotalElapsedSeconds();
+$totalTime    = $profiler->gettotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;

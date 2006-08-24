@@ -577,7 +577,7 @@ if ($this->books) {
         <?php echo $this->formSelect('country', 'be', null, $this->landen) ?>
     </label></p>
     <p><label>Zou je je graag inschrijven ?
-        <?php echo $this->formCheckbox('opt_in', 'ja', null, array('ja', 'nee') ?>
+        <?php echo $this->formCheckbox('opt_in', 'ja', null, array('ja', 'nee')) ?>
     </label></p>
 </form>]]>
         </programlisting>
