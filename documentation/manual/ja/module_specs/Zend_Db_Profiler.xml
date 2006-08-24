@@ -62,7 +62,7 @@ $profiler = $db->getProfiler();
         <itemizedlist>
             <listitem><code>getTotalNumQueries()</code> は、
                 情報を取得したクエリの総数を返します。</listitem>
-            <listitem><code>getTotalElapsedSeconds()</code> は、
+            <listitem><code>getTotalElapsedSecs()</code> は、
                 情報を取得したクエリの実行所要時間の合計を返します。</listitem>
             <listitem><code>getQueryProfiles()</code> は、
                 すべてのクエリ情報を配列で返します。</listitem>
@@ -107,7 +107,7 @@ echo $query->getQuery();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->gettotalElapsedSeconds();
+$totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;
