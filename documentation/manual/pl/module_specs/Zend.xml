@@ -18,7 +18,7 @@
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 loadFile($filename, $dirs=null, $once=false)
 
 ?>]]></programlisting>
@@ -52,7 +52,7 @@ loadFile($filename, $dirs=null, $once=false)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 loadClass($class, $dirs)
 
 ?>]]></programlisting>
@@ -82,7 +82,7 @@ loadClass($class, $dirs)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 loadInterface($interface, $dirs)
 
 ?>]]></programlisting>
@@ -111,7 +111,7 @@ loadInterface($interface, $dirs)
     wypadku zwraca FALSE.</para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 isReadable($filename)
 
 ?>]]></programlisting>
@@ -135,7 +135,7 @@ isReadable($filename)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 dump($var, $label=null, $echo=true)
 
 ?>]]></programlisting>
@@ -169,7 +169,7 @@ dump($var, $label=null, $echo=true)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 register($name, $object)
 
 ?>]]></programlisting>
@@ -202,7 +202,7 @@ register($name, $object)
     </para>
 
     <programlisting role="php"><![CDATA[<?php
-	
+
 registry($name=null)
 
 ?>]]></programlisting>

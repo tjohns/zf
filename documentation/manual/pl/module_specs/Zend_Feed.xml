@@ -294,17 +294,18 @@ if ($item->propname()) {
         <code>Zend_Feed_Atom</code> jest używany w prawie taki sam sposób jak
         <code>Zend_Feed_Rss</code>. Zapewnia taki sam dostęp do właściwości samego
         kanału i taką samą iterację po wpisach w kanale. Główną różnicą jest sama
-        struktura protokołu Atom. Atom is a successor to RSS; it is more
-        generalized protocol and it is designed to deal more easily with feeds that provide their full
-        content inside the feed, splitting RSS' <code>description</code> tag into two elements,
-        <code>summary</code> and <code>content</code>, for that purpose.
+        struktura protokołu Atom. Atom jest następcą RSS; jest bardziej uogólnionym
+        protokołem i jest zaprojektowany aby łatwiej radzić sobie z kanałami, które
+        ukazują cała swoją zawartość wewnątrz pliku RSS dzieląc standardowy tag
+        RSS <code>description</code> na dwa elementy, <code>summary</code> oraz 
+        <code>content</code>.
     </para>
 
     <example>
         <title>Podstawowe użycie kanału Atom</title>
         <para>
-            Odczytywanie kanału Atom i wyświetlenie pól <code>title</code> i <code>summary</code>
-            dla każdego z wpisów:
+            Odczytywanie kanału Atom i wyświetlenie pól <code>title</code> i 
+            <code>summary</code> dla każdego z wpisów:
         </para>
         <programlisting role="php"><![CDATA[
 <?php
@@ -320,72 +321,77 @@ foreach ($feed as $entry) {
     </example>
 
     <para>
-        In an Atom feed you can expect to find the following feed properties:
+        W kanałach Atom możesz się spodziewać następujących właściwości:
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>title</code> - The feed's title, same as RSS's channel title</para>
+                <para><code>title</code> - Tytuł kanału, taki sam jak tytuł kanału RSS.</para>
             </listitem>
             <listitem>
-                <para><code>id</code> - Every feed and entry in Atom has a unique identifier</para>
+                <para><code>id</code> - Każdy arkusz i wpis mają unikalny identyfikator.</para>
             </listitem>
             <listitem>
-                <para><code>link</code> - Feeds can have multiple links, which are distinguished by a
-                <code>type</code> attribute</para>
+                <para><code>link</code> - Arkusze mogą mieć wiele odnośników, które
+                są rozróżnianie za pomocą atrybutu <code>type</code>.</para>
                 <para>
-                    The equivalent to RSS's channel link would be <code>type="text/html"</code>. If the link
-                    is to an alternate version of the same content that's in the feed, it would have a
-                    <code>rel="alternate"</code> attribute.
+                    Odpowiednikiem odnośnika kanału RSS byłby odnośnik o typie 
+                    <code>type="text/html"</code>. Jeśli odnośnik kieruje do
+                    alternatywnej wersji zawartości arkusza, może on otrzymać
+                    atrybut <code>rel="alternate"</code>.
                 </para>
             </listitem>
             <listitem>
-                <para><code>subtitle</code> - The feed's description, equivalent to RSS' channel description
+                <para><code>subtitle</code> - Opis arkusza odpowiadający opisowi
+                kanału RSS.
                 </para>
-                <para><code>author->name()</code> - The feed author's name</para>
-                <para><code>author->email()</code> - The feed author's email address</para>
+                <para><code>author->name()</code> - Nazwa autora arkusza.</para>
+                <para><code>author->email()</code> - Adres email autora arkusza.</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        Atom entries commonly have the following properties:
+        Składniki wpisu kanału Atom:
     </para>
 
     <para>
         <itemizedlist>
             <listitem>
-                <para><code>id</code> - The entry's unique identifier</para>
+                <para><code>id</code> - Unikalny identyfikator wpisu.</para>
             </listitem>
             <listitem>
-                <para><code>title</code> - The entry's title, same as RSS item titles</para>
+                <para><code>title</code> - Tytuł wpisu, taki sam jak tytuł w RSS</para>
             </listitem>
             <listitem>
-                <para><code>link</code> - A link to another format or an alternate view of this entry</para>
+                <para><code>link</code> - Odnośnik do innego formatu lub do 
+                alternatywnej wersji wpisu.</para>
             </listitem>
             <listitem>
-                <para><code>summary</code> - A summary of this entry's content</para>
+                <para><code>summary</code> - Podsumowanie zawartości wpisu.</para>
             </listitem>
             <listitem>
-                <para><code>content</code> - The full content of the entry; can be skipped if the feed just
-                contains summaries</para>
+                <para><code>content</code> - Cała zawartość wpisu; może być pominięta
+                jeśli arkusz zawiera tylko skróty informacji.</para>
             </listitem>
             <listitem>
-                <para><code>author</code> - with <code>name</code> and <code>email</code> sub-tags like
-                feeds have</para>
+                <para><code>author</code> - z pod-tagami <code>name</code> oraz 
+                <code>email</code> jak w arkuszach RSS</para>
             </listitem>
             <listitem>
-                <para><code>published</code> - the date the entry was published, in RFC 3339 format</para>
+                <para><code>published</code> - data publikacji wpisu w formacie 
+                RFC 3339.</para>
             </listitem>
             <listitem>
-                <para><code>updated</code> - the date the entry was last updated, in RFC 3339 format</para>
+                <para><code>updated</code> - data ostatniej aktualizacji wpisu w 
+                formacie RFC 3339.</para>
             </listitem>
         </itemizedlist>
     </para>
 
     <para>
-        For more information on Atom and plenty of resources, see
+        Więcej informacji o Atom znajdziesz na stronie
         <ulink url="http://www.atomenabled.org/">http://www.atomenabled.org/</ulink>.
     </para>
 </sect1>

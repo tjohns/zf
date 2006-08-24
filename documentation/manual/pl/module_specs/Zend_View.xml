@@ -571,11 +571,11 @@ if ($this->books) {
     </label></p>
 </form>]]>
         </programlisting>
-        
+
         <para>
             Rezultat wyglądałby w ten sposób:    
         </para>
-        
+
         <programlisting role="php"><![CDATA[<form action="action.php" method="post">
     <p><label>Adres Email:
         <input type="text" name="email" value="you@example.com" size="32" />
