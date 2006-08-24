@@ -11,15 +11,13 @@
             Profielen bevatten de door de adapter uitgevoerde queries evenals de tijd die
             nodig was om de queries uit te voeren. Dit laat inspectie van de uitgevoerde 
             queries toe zonder bijkomende debug code aan de klassen toe te voegen.
-            Geavanceerd gebruik laat de developeur filteren welke queries geprofileerd worden.
+            Geavanceerd gebruik laat de ontwikkelaar filteren welke queries geprofileerd worden.
         </para>
 
         <para>
-            Activeer de profiler kan op twee wijzen gebeuren: een directieve aan de
+            Activeren van de profiler kan op twee wijzen gebeuren: een directive aan de
             adapter constructor doorgeven, of door de adapter te vragen het later te
             activeren.
-            Enable the profiler by either passing a directive to the adapter
-            constructor, or by asking the adapter to enable it later.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -30,12 +28,12 @@ $params = array (
     'username' => 'arthur',
     'password' => '******',
     'dbname'   => 'camelot',
-    'profiler' => true  // profiler activeren; naar false zetten om te desactiveren (standaard)
+    'profiler' => true  // profiler activeren; naar false zetten om te de-activeren (standaard)
 );
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 
-// profiler desactiveren:
+// profiler de-activeren:
 $db->getProfiler()->setEnabled(false);
 
 // profiler activeren:
@@ -48,7 +46,7 @@ $db->getProfiler()->setEnabled(true);
         <title>De Profiler Gebruiken</title>
 
         <para>
-            de profiler kan op eender welk moment worden aangeroepen
+            De profiler kan op eender welk moment worden aangeroepen
             via de <code>getProfiler()</code> methode van de adapter:
         </para>
 
@@ -58,7 +56,7 @@ $profiler = $db->getProfiler();
 
         <para>
             Dit geeft een objectinstantie van <code>Zend_Db_Profiler</code> terug. 
-            Met deze instantie kan de developeur je queries inspecteren via
+            Met deze instantie kan de ontwikkelaar je queries inspecteren via
             verscheidene methodes:
         </para>
 
@@ -70,7 +68,7 @@ $profiler = $db->getProfiler();
             <listitem><code>getQueryProfiles()</code> geeft een array van alle query
                 profielen weer.</listitem>
             <listitem><code>getLastQueryProfile()</code> geeft het laatste (meest recente)
-                query profiel weer, ongeacht of de query gedaan heeft (indien niet, zal
+                query profiel weer, ongeacht of de query volledig uitgevoerd is (indien niet, zal
                 de eindtijd null zijn)</listitem>
             <listitem><code>clear()</code> vaagt alle query profielen van de 
                 lijst weg.</listitem>
@@ -83,14 +81,14 @@ $profiler = $db->getProfiler();
         </para>
 
         <itemizedlist>
-            <listitem><code>getQuery()</code> geeft de SQL text van de query terug.</listitem>
+            <listitem><code>getQuery()</code> geeft de SQL tekst van de query terug.</listitem>
             <listitem><code>getElapsedSecs()</code> geeft het aantal seconden terug die de query
                 nam om uitgevoerd te worden.</listitem>
         </itemizedlist>
 
         <para>
             De informatie die <code>Zend_Db_Profiler</code> verstrekt is handig voor het profileren
-            van opstroppers in programma's en voor het debuggen van gebruikte queries. Bijvoorbeeld,
+            van opstoppers in programma's en voor het debuggen van gebruikte queries. Bijvoorbeeld,
             om de exacte laatst uitgevoerde query te zien:
         </para>
 
@@ -102,8 +100,8 @@ echo $query->getQuery();
 
         <para>
             Misschien doet een pagina er lang over om afgebeeld te worden; gebruik dan de profiler
-            om eerst het totaal aantal seconden van alle queries te bekomen, en dan de queries één
-            per één te overlopen om uit te vinden dewelke het langste liep:
+            om eerst het totaal aantal seconden van alle queries te verkrijgen, en dan de queries één
+            voor één te doorlopen om uit te vinden welke het langste duurde:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -132,7 +130,7 @@ echo "Langste query: \n" . $longestQuery . "\n";
         <title>Geavanceerd Profiler Gebruik</title>
 
         <para>
-            Bovenop query inspectie laat de profiler je ook toe de queries die worden
+            Bovenop query inspectie staat de profiler je ook toe de queries die worden
             geprofileerd te filteren. De volgende methodes kunnen op een 
             <code>Zend_Db_Profiler</code> instantie worden uitgevoerd:
         </para>
@@ -179,7 +177,7 @@ $profiler->setFilterElapsedSecs(null);
                 <listitem><code>Zend_Db_Profiler::SELECT</code>: eender welke query die bestaande
                     data opvraagt, meestal SQL SELECT.</listitem>
                 <listitem><code>Zend_Db_Profiler::TRANSACTION</code>: eender welke transactionele
-                    operatue, zoals een transactie starten, bevestigen (commit) of annuleren 
+                    operatie, zoals een transactie starten, bevestigen (commit) of annuleren 
                     (rollback).</listitem>
             </itemizedlist>
 
@@ -218,13 +216,13 @@ $profiler->setFilterQueryType(null);
             </para>
 
             <programlisting role="php"><![CDATA[<?php
-// Alleen SELECT query profielen bekomen
+// Alleen SELECT query profielen verkrijgen
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT);
 
-// Alleen SELECT, INSERT, en UPDATE query profielen bekomen
+// Alleen SELECT, INSERT, en UPDATE query profielen verkrijgen
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::SELECT | Zend_Db_Profiler::INSERT | Zend_Db_Profiler::UPDATE);
 
-// Alleen DELETE query profielen bekomen (zodat we kunnen nagaan waarom data maar blijft verwijnen)
+// Alleen DELETE query profielen verkrijgen (zodat we kunnen nagaan waarom data maar blijft verdwijnen)
 $profiles = $profiler->getQueryProfiles(Zend_Db_Profiler::DELETE);
 ?>]]></programlisting>
 
