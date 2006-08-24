@@ -62,7 +62,7 @@ $profiler = $db->getProfiler();
         <itemizedlist>
             <listitem><code>getTotalNumQueries()</code> gibt die Gesamtzeit aller aufgezeichneten 
                 Abfragen zurück.</listitem>
-            <listitem><code>getTotalElapsedSeconds()</code> gibt die gesamte Anzahl an Sekunden 
+            <listitem><code>getTotalElapsedSecs()</code> gibt die gesamte Anzahl an Sekunden 
                 für alle aufgezeichneten Abfragen zurück.</listitem>
             <listitem><code>getQueryProfiles()</code> gibt ein Array mit allen aufgezeichneten
                 Abfragen zurück.</listitem>
@@ -104,7 +104,7 @@ echo $query->getQuery();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->gettotalElapsedSeconds();
+$totalTime    = $profiler->getTotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;

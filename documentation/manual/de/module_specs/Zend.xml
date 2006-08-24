@@ -91,7 +91,7 @@ loadInterface($interface, $dirs)
     <para>
     Die <code>Zend::loadClass()</code> Methode kann nicht für das Laden von Interfaces verwendet 
     werden, weil die PHP Funktion
-     <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink> 
+    <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink> 
     nicht auf Interfaces prüfen kann (seit PHP 5.0.2). Verwende <code>Zend::loadInterface()</code> 
     stattdessen.
     </para>
