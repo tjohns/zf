@@ -182,6 +182,7 @@ class Zend_Filter
          * @todo Type-specific checks
          */
 
+        $value = self::getDigits($value);
         $length = strlen($value);
 
         if ($length < 13 || $length > 19) {
