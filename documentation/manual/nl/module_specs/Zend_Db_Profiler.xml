@@ -118,7 +118,8 @@ foreach ($profiler->getQueryProfiles() as $query) {
 }
 
 echo $queryCount . ' queries uitgevoerd in ' . $totalTime . ' seconden' . "\n";
-echo 'Gemiddelde query tijd: ' . $queryCount / $totalTime . ' seconden' . "\n";
+echo 'Gemiddelde query tijd: ' . $totalTime / $queryCount . ' seconden' . "\n";
+echo 'Queries per seconde: ' . $queryCount / $totalTime . "\n";
 echo 'Langste query tijd: ' . $longestTime . "\n";
 echo "Langste query: \n" . $longestQuery . "\n";
 ?>]]></programlisting>
