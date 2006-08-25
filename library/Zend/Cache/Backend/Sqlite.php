@@ -25,6 +25,10 @@
  */
 require_once 'Zend/Cache/Backend/Interface.php';
 
+/**
+ * Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
 
 /**
  * @package    Zend_Cache
@@ -32,7 +36,7 @@ require_once 'Zend/Cache/Backend/Interface.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface 
+class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache_Backend_Interface 
 {
     
     // ------------------
@@ -47,27 +51,10 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      * 
      * @var array available options
      */
-    private $_options = array(
+    protected $_options = array(
     	'cacheDBCompletePath' => null
     ); 
   
-    /**
-     * Frontend or Core directives
-     * 
-     * =====> (int) lifeTime :
-     * - Cache lifetime (in seconds)
-     * - If null, the cache is valid forever
-     * 
-     * =====> (int) logging :
-     * - if set to true, a logging is activated throw Zend_Log
-     * 
-     * @var array directives
-     */
-    private $_directives = array(
-        'lifeTime' => 3600,
-        'logging' => false
-    );  
-       
     /**
      * DB ressource 
      * 
@@ -87,18 +74,12 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
      */
     public function __construct($options = array())
     {      
-        if (!is_array($options)) Zend_Cache::throwException('Options parameter must be an array');
-        while (list($name, $value) = each($options)) {
-            if (!is_string($name) || !array_key_exists($name, $this->_options)) {
-                Zend_Cache::throwException("Incorrect option name : $name");
-            }
-            $this->_options[$name] = $value;
-        }
         if (!isset($options['cacheDBCompletePath'])) Zend_Cache::throwException('cacheDBCompletePath option has to set');
         $this->_db = @sqlite_open($options['cacheDBCompletePath']);
         if (!($this->_db)) {
             Zend_Cache::throwException("Impossible to open " . $options['cacheDBCompletePath'] . " cache DB file");
         }
+        parent::__construct($options);
     }
     
     /**
@@ -108,25 +89,7 @@ class Zend_Cache_Backend_Sqlite implements Zend_Cache_Backend_Interface
     {
         @sqlite_close($this->_db);
     }
-        
-    /**
-     * Set the frontend directives
-     * 
-     * @param array $directives assoc of directives
-     */
-    public function setDirectives($directives)
-    {
-        if (!is_array($directives)) Zend_Cache::throwException('Directives parameter must be an array');
-        while (list($name, $value) = each($directives)) {
-            if (!is_string($name)) {
-                Zend_Cache::throwException("Incorrect option name : $name");
-            }
-            if (array_key_exists($name, $this->_directives)) {
-                $this->_directives[$name] = $value;
-            }
-        }
-    } 
-    
+            
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
      * 

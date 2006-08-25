@@ -28,6 +28,11 @@
  */
 require_once 'Zend/Cache/Backend/Interface.php';
 
+/**
+ * Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
+
 
 /**
  * @package    Zend_Cache
@@ -35,7 +40,7 @@ require_once 'Zend/Cache/Backend/Interface.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Cache_Backend_Memcached implements Zend_Cache_Backend_Interface 
+class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Cache_Backend_Interface 
 {
     
     // ------------------
@@ -56,7 +61,7 @@ class Zend_Cache_Backend_Memcached implements Zend_Cache_Backend_Interface
      * 
      * @var array available options
      */
-    private $_options = array(
+    protected $_options = array(
         'servers' => array(array(
         	'host' => 'localhost',
             'port' => 11211,
@@ -64,23 +69,6 @@ class Zend_Cache_Backend_Memcached implements Zend_Cache_Backend_Interface
         )),
         'compression' => false
     );
-    
-    /**
-     * Frontend or Core directives
-     * 
-     * =====> (int) lifeTime :
-     * - Cache lifetime (in seconds)
-     * - If null, the cache is valid forever
-     * 
-     * =====> (int) logging :
-     * - if set to true, a logging is activated throw Zend_Log
-     * 
-     * @var array directives
-     */
-    private $_directives = array(
-        'lifeTime' => 3600,
-        'logging' => false
-    );    
      
     /**
      * Memcache object
@@ -88,6 +76,7 @@ class Zend_Cache_Backend_Memcached implements Zend_Cache_Backend_Interface
      * @var mixed memcache object
      */
     private $_memcache = null;
+    
     
     // ----------------------
     // --- Public methods ---
@@ -103,53 +92,20 @@ class Zend_Cache_Backend_Memcached implements Zend_Cache_Backend_Interface
         if (!extension_loaded('memcache')) {
             Zend_Cache::throwException('The memcache extension must be loaded for using this backend !');
         }
-        if (!is_array($options)) Zend_Cache::throwException('Options parameter must be an array');
-        while (list($name, $value) = each($options)) {
-            $this->setOption($name, $value);
+        parent::__construct($options);
+        if (isset($options['servers'])) {
+            $value= $options['servers'];
+            if (isset($value['host'])) {
+                // in this case, $value seems to be a simple associative array (one server only)
+                $value = array(0 => $value); // let's transform it into a classical array of associative arrays
+            }
+            $this->setOption('servers', $value);
         }
         $this->_memcache = new Memcache;
         foreach ($this->_options['servers'] as $server) {
             $this->_memcache->addServer($server['host'], $server['port'], $server['persistent']);
         }
     }  
-        
-    /**
-     * Set the frontend directives
-     * 
-     * @param array $directives assoc of directives
-     */
-    public function setDirectives($directives)
-    {
-        if (!is_array($directives)) Zend_Cache::throwException('Directives parameter must be an array');
-        while (list($name, $value) = each($directives)) {
-            if (!is_string($name)) {
-                Zend_Cache::throwException("Incorrect option name : $name");
-            }
-            if (array_key_exists($name, $this->_directives)) {
-                $this->_directives[$name] = $value;
-            }
-        }
-    } 
-    
-    /**
-     * Set an option
-     * 
-     * @param string $name
-     * @param mixed $value
-     */ 
-    public function setOption($name, $value)
-    {
-        if (!is_string($name) || !array_key_exists($name, $this->_options)) {
-            Zend_Cache::throwException("Incorrect option name : $name");
-        }
-        if ($name=='server') {
-            if (isset($value['host'])) {
-                // in this case, $value seems to be a simple associative array (one server only)
-                $value = array(0 => $value); // let's transform it into a classical array of associative arrays
-            }
-        }
-        $this->_options[$name] = $value;
-    }
        
     /**
      * Test if a cache is available for the given id and (if yes) return it (false else)
@@ -160,13 +116,17 @@ class Zend_Cache_Backend_Memcached implements Zend_Cache_Backend_Interface
      */
     public function get($id, $doNotTestCacheValidity = false) 
     {
-        return $this->_memcache->get($id);
         // WARNING : $doNotTestCacheValidity is not supported !!!
         if ($doNotTestCacheValidity) {
 	        if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_Memcached::get() : \$doNotTestCacheValidity=true is unsupported by the Memcached backend", Zend_Log::LEVEL_WARNING);
 	        }
         }
+        $tmp = $this->_memcache->get($id);
+        if (is_array($tmp)) {
+            return $tmp[0];
+        }
+        return false;
     }
     
     /**
@@ -177,9 +137,9 @@ class Zend_Cache_Backend_Memcached implements Zend_Cache_Backend_Interface
      */
     public function test($id)
     {
-        $result = $this->_memcache->get($id);
-        if ($result) {
-            return true;
+        $tmp = $this->_memcache->get($id);
+        if (is_array($tmp)) {
+            return $tmp[1];
         }
         return false;
     }
@@ -202,7 +162,7 @@ class Zend_Cache_Backend_Memcached implements Zend_Cache_Backend_Interface
         } else {
             $flag = 0;
         }
-        $result = $this->_memcache->set($id, $data, $flag, $this->_directives['lifeTime']);
+        $result = $this->_memcache->set($id, array($data, time()), $flag, $this->_directives['lifeTime']);
         if (count($tags) > 0) {
             if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_Memcached::save() : tags are unsupported by the Memcached backend", Zend_Log::LEVEL_WARNING);

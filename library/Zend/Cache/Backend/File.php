@@ -25,6 +25,11 @@
  */
 require_once 'Zend/Cache/Backend/Interface.php';
 
+/**
+ * Zend_Cache_Backend
+ */
+require_once 'Zend/Cache/Backend.php';
+
 
 /**
  * @package    Zend_Cache
@@ -32,7 +37,7 @@ require_once 'Zend/Cache/Backend/Interface.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface 
+class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_Backend_Interface 
 {
     
     // ------------------
@@ -75,7 +80,7 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
      * 
      * @var array available options
      */
-    private $_options = array(
+    protected $_options = array(
         'cacheDir' => '/tmp/',
         'fileLocking' => true,
         'readControl' => true,
@@ -84,22 +89,6 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
         'hashedDirectoryUmask' => 0700
     );
     
-    /**
-     * Frontend or Core directives
-     * 
-     * =====> (int) lifeTime :
-     * - Cache lifetime (in seconds)
-     * - If null, the cache is valid forever
-     * 
-     * =====> (int) logging :
-     * - if set to true, a logging is activated throw Zend_Log
-     * 
-     * @var array directives
-     */
-    private $_directives = array(
-        'lifeTime' => 3600,
-        'logging' => false
-    );    
      
     // ----------------------
     // --- Public methods ---
@@ -111,14 +100,10 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
      * @param array $options associative array of options
      */
     public function __construct($options = array())
-    {      
-        if (!is_array($options)) Zend_Cache::throwException('Options parameter must be an array');
-        while (list($name, $value) = each($options)) {
-            if ($name == 'cacheDir') { // particular case for this option
-               $this->setCacheDir($value);
-            } else {
-                $this->setOption($name, $value);
-            }
+    {   
+        parent::__construct($options);
+        if (isset($options['cacheDir'])) { // particular case for this option
+            $this->setCacheDir($options['cacheDir']);
         }
     }  
     
@@ -132,38 +117,6 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
         // add a trailing DIRECTORY_SEPARATOR if necessary 
         $value = rtrim($value, '\\/') . DIRECTORY_SEPARATOR;
         $this->setOption('cacheDir', $value);
-    }
-    
-    /**
-     * Set the frontend directives
-     * 
-     * @param array $directives assoc of directives
-     */
-    public function setDirectives($directives)
-    {
-        if (!is_array($directives)) Zend_Cache::throwException('Directives parameter must be an array');
-        while (list($name, $value) = each($directives)) {
-            if (!is_string($name)) {
-                Zend_Cache::throwException("Incorrect option name : $name");
-            }
-            if (array_key_exists($name, $this->_directives)) {
-                $this->_directives[$name] = $value;
-            }
-        }
-    } 
-    
-    /**
-     * Set an option
-     * 
-     * @param string $name
-     * @param mixed $value
-     */ 
-    public function setOption($name, $value)
-    {
-        if (!is_string($name) || !array_key_exists($name, $this->_options)) {
-            Zend_Cache::throwException("Incorrect option name : $name");
-        }
-        $this->_options[$name] = $value;
     }
        
     /**
@@ -319,6 +272,18 @@ class Zend_Cache_Backend_File implements Zend_Cache_Backend_Interface
         // We use this private method to hide the recursive stuff
         clearstatcache();
         return $this->_clean($this->_options['cacheDir'], $mode, $tags);
+    }
+    
+    /**
+     * PUBLIC METHOD FOR UNIT TESTING ONLY !
+     * 
+     * Force a cache record to expire
+     * 
+     * @param string $id cache id
+     */
+    public function ___expire($id)
+    {
+        @touch($this->_file($id), time() - 2*abs($this->_directives['lifeTime'])); 
     }
     
     // -----------------------
