@@ -17,6 +17,13 @@ require_once 'OutputFrontendTest.php';
 require_once 'FunctionFrontendTest.php';
 require_once 'ClassFrontendTest.php';
 require_once 'FileFrontendTest.php';
+require_once 'APCBackendTest.php';
+require_once 'MemcachedBackendTest.php';
+
+// Zend_Log        
+require_once 'Zend/Log.php';
+require_once 'Zend/Log/Adapter/Null.php';
+Zend_Log::registerLogger(new Zend_Log_Adapter_Null());
 
 class Zend_Cache_AllTests
 {
@@ -34,16 +41,25 @@ class Zend_Cache_AllTests
         $suite->addTestSuite('Zend_Cache_OutputFrontendTest');
         $suite->addTestSuite('Zend_Cache_FunctionFrontendTest');
         $suite->addTestSuite('Zend_Cache_ClassFrontendTest');
-        if (defined('TESTS_ZEND_CACHE_SQLITE')) {
-            if (TESTS_ZEND_CACHE_SQLITE) {
-                $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
-            }
-        } else {
-            // if not defined (partial tests only for Zend_Cache for example), we
-            // assume everything is ok
+        $suite->addTestSuite('Zend_Cache_FileFrontendTest');
+        if (!defined('TESTS_ZEND_CACHE_SQLITE_ENABLED') || (defined('TESTS_ZEND_CACHE_SQLITE_ENABLED') && TESTS_ZEND_CACHE_SQLITE_ENABLED)) {
             $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
         }
-        $suite->addTestSuite('Zend_Cache_FileFrontendTest');
+        if (!defined('TESTS_ZEND_CACHE_APC_ENABLED') || (defined('TESTS_ZEND_CACHE_APC_ENABLED') && TESTS_ZEND_CACHE_APC_ENABLED)) {
+            $suite->addTestSuite('Zend_Cache_APCBackendTest');
+        }
+        if (!defined('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') || (defined('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') && TESTS_ZEND_CACHE_MEMCACHED_ENABLED)) {
+            if (!defined('TESTS_ZEND_CACHE_MEMCACHED_HOST')) { 
+                define('TESTS_ZEND_CACHE_MEMCACHED_HOST', '127.0.0.1');
+            }
+            if (!defined('TESTS_ZEND_CACHE_MEMCACHED_PORT')) {
+                define('TESTS_ZEND_CACHE_MEMCACHED_PORT', 11211);
+            }
+            if (!defined('TESTS_ZEND_CACHE_MEMCACHED_PERSISTENT')) {
+                define('TESTS_ZEND_CACHE_MEMCACHED_PERSISTENT', true);
+            }
+            $suite->addTestSuite('Zend_Cache_MemcachedBackendTest');
+        }
         return $suite;
     }
 }
