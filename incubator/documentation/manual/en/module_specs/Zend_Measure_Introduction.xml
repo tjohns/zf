@@ -1,0 +1,50 @@
+<sect1 id="zend.measure.introduction">
+    <title>Einführung</title>
+    <para>
+        <code>Zend_Measure</code> bietet einen generellen und sehr einfachen Weg um
+        mit Maßeinheiten zu Arbeiten.
+    </para>
+    <para>
+        Mit <code>Zend_Measure</code> können Maßeinheiten in andere Maßeinheiten des selben
+        Typs konvertiert werden. Sie können addiert, substrahiert und verglichen werden.
+        Man kann aus einer beliebigen Eingabe eines Benutzers, welche dieser
+        in seiner Landessprache tätigt, die Maßeinheit automatisch extrahieren lassen.
+    </para>
+    <para>
+        Es wird natürlich eine große und völlig unterschiedlichste Anzahl von
+        Maßeinheiten unterstützt. Die meisten dieser Maßeinheiten sind physikalischer
+        Natur. Es gibt aber auch spezielle Maßeinheiten die die Numerik oder andere
+        Gebiete betreffen die nur bedingt oder gar nicht physikalisch sind.
+    </para>
+    <para>
+        Das folgende Schnellstart-Beispiel zeigt wie man Maßeinheiten automatisch konvertieren kann.
+    </para>
+    <example>
+        <title>Maßeinheiten konvertieren</title>
+        <para>
+            Um eine Maßeinheit zu konvertieren muß der Wert bekannt sein und dessen Typ.
+            Der Wert selbst kann Integer oder Float sein, oder sogar als String vorliegen.
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Measure.php';
+
+// Die Längen Klasse wird bei der Verwendung der Konstanten benötigt
+require_once 'Zend/Measure/Length.php';
+
+$unit = new Zend_Measure(100,Zend_Measure_Length::METER,'en');
+
+// In Yard umwandeln
+echo $unit->convertTo(Zend_Measure_Length::YARD);
+?>]]></programlisting>
+        <para>
+            <note>
+                Wie man sieht besteht das Beispiel aus nur 4 Codezeilen.
+                Die Handhabung ist so kompakt das man meistens mit 4 Zeilen auskommt.
+            </note>
+        </para>
+    </example>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

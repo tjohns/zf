@@ -1,0 +1,95 @@
+<sect1 id="zend.measure.output">
+    <title>Ausgabe der Maßeinheit</title>
+    <para>
+        Maßeinheiten können auf unterschiedlichste Weise wiedergegeben werden.
+    </para>
+    <para>
+        <link linkend="zend.measure.output.auto"><code>Automatische Ausgaben</code></link>
+    </para>
+    <para>
+        <link linkend="zend.measure.output.value"><code>Ausgabe des Wertes</code></link>
+    </para>
+    <para>
+        <link linkend="zend.measure.output.unit"><code>Ausgabe mit Maßeinheit</code></link>
+    </para>
+    <para>
+        <link linkend="zend.measure.output.unit"><code>Ausgabe als lokalisierter String</code></link>
+    </para>
+    <sect2 id="zend.measure.output.auto">
+        <title>Automatische Ausgaben</title>
+        <para>
+            <code>Zend_Measure</code> unterstützt automatische Stringausgabe.
+            <example>
+                <title>Austomatische Ausgabe</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+
+$mystring = "1.234.567,89 Meter";
+$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,'de');
+
+echo $unit;
+?>]]></programlisting>
+            </example>
+            <note>
+                Durch <ulink url="http://php.net/echo"><code>echo</code></ulink> oder
+                <ulink url="http://php.net/print"><code>print</code></ulink> kann die
+                Ausgabe ganz einfach erfolgen.
+            </note>
+        </para>
+    </sect2>
+    <sect2 id="zend.measure.output.value">
+        <title>Ausgabe des Wertes</title>
+        <para>
+            Der Wert der Maßeinheit kann mit <code>getValue()</code> ausgegeben werden.
+            <example>
+                <title>Wert ausgeben</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+
+$mystring = "1.234.567,89 Meter";
+$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,'de');
+
+echo $unit->getValue();
+?>]]></programlisting>
+            </example>
+        </para>
+    </sect2>
+    <sect2 id="zend.measure.output.unit">
+        <title>Ausgabe mit Maßeinheit</title>
+        <para>
+            Die aktuelle Maßeinheit gibt die Funktion <code>getType()</code> zurück.
+            <example>
+                <title>Maßeinheit ausgeben</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+Zend::loadClass(Zend_Measure_Weight);
+
+$mystring = "1.234.567,89";
+$unit = new Zend_Measure($mystring,Zend_Measure_Weight::POUND,'de');
+
+echo $unit->getType();
+?>]]></programlisting>
+            </example>
+        </para>
+    </sect2>
+    <sect2 id="zend.measure.output.localized">
+        <title>Ausgabe als lokalisierter String</title>
+        <para>
+            Die Ausgabe als String in der landeseigenen Schreibweise wäre wünschenswert.
+        </para>
+        <para>
+            Aus "1234567.8" würde dann zum Beispiel in Deutsch "1.234.567,8" werden.
+        </para>
+        <para>
+            <note>
+                Diese Funktionalität wird in einem kommenden Release angeboten.
+            </note>
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,92 @@
+<sect1 id="zend.measure.special">
+    <title>Sonderfunktionen</title>
+    <para>
+        Um die Arbeit zu erleichtern gibt diverse zusätzliche Funktionen die nachfolgend beschrieben werden.
+    </para>
+    <para>
+        <link linkend="zend.measure.special.serial"><code>Serialisierung und Deserialisierung</code></link>
+    </para>
+    <para>
+        <link linkend="zend.measure.special.typelist"><code>Liste aller Arten</code></link>
+    </para>
+    <para>
+        <link linkend="zend.measure.special.unitlist"><code>Liste aller bekannten Maßeinheiten</code></link>
+    </para>
+    <sect2 id="zend.measure.special.serial">
+        <title>Serialisierung und Deserialisierung</title>
+        <para>
+            Um Maßeinheiten für spätere Verwendung speichern zu können unterstützt
+            <code>Zend_Measure</code> die Serialisierung.
+        </para>
+        <para>
+            <example>
+                <title>Serialisierung</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+
+$unit = new Zend_Measure(100,Zend_Measure::LENGTH);
+
+$serial = $unit->serialize();
+
+// Speichern
+// oder irgendwas machen
+?>]]></programlisting>
+            </example>
+            <example>
+                <title>Deserialisierung</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+Zend::loadClass(Zend_Measure_Length);
+
+// Laden des Serialisierten Objektes
+
+$unit = unserialize($serial);
+
+echo $unit;
+?>]]></programlisting>
+            </example>
+        </para>
+    </sect2>
+    <sect2 id="zend.measure.special.typelist">
+        <title>Liste aller Arten</title>
+        <para>
+            Die Funktion <code>getAllTypes</code> gibt ein Array zurück welches alle
+            Arten von Maßeinheiten enthält.
+        </para>
+        <para>
+            Dieses könnte dazu benutzt werden um einen Benutzer auswählen zu lassen welche
+            Art von Maßeinheit (Länge, Gewicht, Fläche,...) er eingeben will.
+        </para>
+    </sect2>
+    <sect2 id="zend.measure.special.unitlist">
+        <title>Liste aller bekannten Maßeinheiten</title>
+        <para>
+            Die Funktion <code>getTypeList</code> gibt ein Array zurück welches alle
+            Maßeinheiten einer Art enthält.
+        </para>
+        <para>
+            Dieses könnte dazu benutzt werden um einen Benutzer auswählen zu lassen welche
+            Maßeinheit (Meter, Kilometer, Millimeter,...) er eingeben will.
+        </para>
+        <para>
+            <example>
+                <title>Liste aller Maßeinheiten einer Art</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+Zend::loadClass(Zend_Measure_Length);
+
+$unit = new Zend_Measure(0,Zend_Measure::LENGTH);
+
+$array = $unit->getTypeList();
+print_r($array);
+?>]]></programlisting>
+            </example>
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,43 @@
+<sect1 id="zend.measure.writing">
+    <title>Maßeinheiten im Zend Framework</title>
+    <para>
+        <code>Zend_Measure</code> unterstützt eine sehr große Anzahl verschiedenster Maßeinheiten.
+        Jede Art von Maßeinheiten ist identisch mit einer bestimmten physikalischen oder numerischen
+        Eigenschaft.
+    </para>
+    <para>
+        Die Maßeinheiten selbst haben eine einheitliche Schreibweise:
+        <code>Typ_der_Maßeinheit::NAME_DER_MAßEINHEIT</code>.
+        Jede Maßeinheit besteht aus einem Umrechnungsfaktor und der Darstellungseinheit.
+        <example>
+            <title>Die Maßeinheit <code>Meter</code></title>
+            <para>
+                Der <code>Meter</code> ist vom Typ Länge, also <code>LENGTH</code> da alle
+                Maßeinheiten in englisch notiert sind.
+                Die Maßeinheit wird also <code>Length::METER</code> geschrieben.
+                Die Darstellungseinheit ist <code>m</code>.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Measure.php';
+// Laden der Längen Klasse
+require_once 'Zend/Measure/Length.php';
+
+
+echo Zend_Measure::LENGTH;           // gibt 'Zend_Measure::LENGTH' aus
+echo Zend_Measure_Length::STANDARD;  // gibt 'Length::METER' aus
+echo Zend_Measure_Length::KILOMETER; // gibt 'Length::KILOMETER' aus
+
+$unit = new Zend_Measure(100,Zend_Measure_Length::METER,'en');
+echo $unit;
+// gibt '100 m' aus
+?>]]></programlisting>
+        </example>
+    </para>
+    <para>
+        Eine detailierte Liste findet sich im Kapitel
+        <link linkend="zend.measure.types"><code>Arten von Maßeinheiten</code></link>
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

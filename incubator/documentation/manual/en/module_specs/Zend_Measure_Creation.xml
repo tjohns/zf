@@ -1,0 +1,157 @@
+<sect1 id="zend.measure.creation">
+    <title>Erstellen der Maßeinheit</title>
+    <para>
+        Für die Erstellung der Maßeinheit können beliebige Variablentypen verwendet werden.
+    </para>
+    <para>
+        <link linkend="zend.measure.creation.number"><code>Zahlen Variablen</code></link>
+    </para>
+    <para>
+        <link linkend="zend.measure.creation.string"><code>Strings</code></link>
+    </para>
+    <para>
+        <link linkend="zend.measure.creation.localized"><code>Lokalisierte Strings</code></link>
+    </para>
+    <para>
+        <code>Zend_Measure</code> erwartet als ersten Parameter die Angabe des Originalwertes.
+        Dieser kann eine beliebige Variable oder ein String sein.
+    </para>
+    <para>
+        Der zweite Parameter definiert den Typ der Maßeinheit. Er ist genauso wie der erste Parameter
+        ein Mußwert.
+    </para>
+    <para>
+        Als optionaler dritter Parameter kann die Sprache angegeben werden.
+    </para>
+    <sect2 id="zend.measure.creation.number">
+        <title>Maßeinheit aus Variablen</title>
+        <para>
+            <example>
+                <title>Erstellung mit Integer Variablen</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+
+$integer = 1234;
+$unit = new Zend_Measure(1234,Zend_Measure::LENGTH);
+
+echo $unit;
+// gibt '1234 m' aus
+?>]]></programlisting>
+            </example>
+            <note>
+                Genauso wie Integer Typen können natürlich auch Real oder Float Typen verwendet werden.
+                Hierbei gibt es keinen Unterschied.
+            </note>
+        </para>
+        <para>
+            <note>
+                Bei der Verwendung von kleinen oder großen Float Variablen muß berücksichtigt werden, dass
+                es Ungenauigkeiten bei der Umrechnung gibt.
+            </note>
+        </para>
+    </sect2>
+    <sect2 id="zend.measure.creation.string">
+        <title>Maßeinheit aus Strings</title>
+        <para>
+            Viele Maßeinheiten können nur als String übergeben werden.
+            Hierzu zählen zum Beispiel Römische Zahlenwerte, Binäre Zahlenwerte und viele mehr.
+            <example>
+                <title>Erstellung mit Strings</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+Zend::loadClass(Zend_Measure_Number);
+
+$mystring = "10010100111010111010100001011011101010001";
+$unit = new Zend_Measure($mystring,Zend_Measure_Number::BINARY);
+
+echo $unit;
+?>]]></programlisting>
+            </example>
+            <note>
+                Alle Integer Typen können natürlich auch als String Typen angegeben werden, ohne das daraus
+                Nachteile erwachsen.
+            </note>
+        </para>
+        <para>
+            <note>
+                Wie im obigen Beispiel ersichtlich können mit <code>Zend_Measure_Number</code> beliebig
+                lange Werte verarbeitet werden. <code>Zend_Measure_Number</code> hat keine Beschränkung
+                von 16/32bit so wie zum Bespiel die PHP Funktion
+                <ulink url="http://php.net/bin2dec"><code>bin2dec()</code></ulink>.
+            </note>
+        </para>
+        <para>
+            Die Maßeinheiten können auch innerhalb eines Textes übergeben werden.
+            <example>
+                <title>Beliebiger Text</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+
+$mystring = "Mein Haus ist 125m² groß";
+$unit = new Zend_Measure($mystring,Zend_Measure::AREA);
+
+echo $unit;
+?>]]></programlisting>
+            </example>
+            <note>
+                Es wird nur die erste erkennbare Zahl für die Erstellung genommen. Wenn mehrere Nummern
+                im String sind, werden alle folgenden Nummern ignoriert.
+            </note>
+            <example>
+                <title>Beliebiger Text</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+
+$mystring = "Mein Haus ist 125m² groß und hat 5 Zimmer mit jeweils 25m²";
+$unit = new Zend_Measure($mystring,Zend_Measure::AREA);
+
+echo $unit;
+?>]]></programlisting>
+            </example>
+        </para>
+    </sect2>
+    <sect2 id="zend.measure.creation.localized">
+        <title>Maßeinheit aus lokalisierten Strings</title>
+        <para>
+            Wenn ein String in der landeseigenen Schreibweise eingegeben wird, stößt das normale
+            Parsen an seine Grenzen.
+        </para>
+        <para>
+            Die am Computer und im Englischen übliche Trennung mit "." und Gruppierung mit ","
+            findet nicht in allen Sprachen mit den selben Zeichen statt.
+        </para>
+        <para>
+            Im Deutschen würde zum Beispiel die Zahl "1,234.50" als "1.2345" interpretiert.
+        </para>
+        <para>
+            Um solche Probleme zu Handhaben bietet <code>Zend_Measure</code> die Möglichkeit
+            eine Sprache oder Region mitzugeben.
+            <example>
+                <title>Lokalisierter String</title>
+                <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass(Zend_Measure);
+
+$mystring = "1.234.567,89 Meter";
+$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,'de');
+
+echo $unit;
+?>]]></programlisting>
+            </example>
+            <note>
+                Die Region oder Sprache kann automatisch oder händisch angegeben werden.
+            </note>
+            <note>
+                Solange <code>Zend_Locale</code> noch nicht fertig ist, muß die Region oder Sprache
+                per Hand angegeben werden.
+            </note>
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
