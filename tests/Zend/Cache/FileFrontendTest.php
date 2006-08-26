@@ -150,7 +150,22 @@ class Zend_Cache_FileFrontendTest extends PHPUnit2_Framework_TestCase {
     {
         $this->assertFalse($this->_instance2->get('cache_id'));    
     }   
-
+    
+    public function testConstructorWithABadMasterFile()
+    {
+        try {
+            $instance = new Zend_Cache_Frontend_File(array('masterFile' => '/foo/bar/ljhfdjh/qhskldhqjk'));
+        } catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown'); 
+    } 
+    
+    public function testGetWithDoNotTestCacheValidity()
+    {
+        $this->assertEquals('foo', $this->_instance1->get('cache_id', true));    
+    }
+    
 }
 
 ?>

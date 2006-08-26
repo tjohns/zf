@@ -131,6 +131,26 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit2_Framework_TestCase {
         $this->assertEquals('foobar_output(param1, param2)', $data);
     }
     
+    public function testCallWithABadSyntax1()
+    {
+        try {
+            $this->_instance->call(1, array());
+        } catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown');    
+    }
+    
+    public function testCallWithABadSyntax2()
+    {
+        try {
+            $this->_instance->call('foo', 1);
+        } catch (Zend_Cache_Exception $e) {
+            return;
+        }
+        $this->fail('Zend_Cache_Exception was expected but not thrown');    
+    }
+    
 }
 
 ?>
