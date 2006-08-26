@@ -28,4 +28,3 @@ require_once 'Zend/Exception.php';
  * @license    Zend Framework License version 1.0
  */
 class Zend_Cache_Exception extends Zend_Exception {}
-
