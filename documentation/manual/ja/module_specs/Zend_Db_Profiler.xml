@@ -120,7 +120,8 @@ foreach ($profiler->getQueryProfiles() as $query) {
 }
 
 echo '全部で ' . $queryCount . ' 件のクエリが ' . $totalTime . ' 秒で実行されました' . "\n";
-echo '平均の所要時間: ' . $queryCount / $totalTime . ' 秒' . "\n";
+echo '平均の所要時間: ' . $totalTime / $queryCount . ' 秒' . "\n";
+echo '1 秒あたりのクエリ実行数: ' . $queryCount / $totalTime . "\n";
 echo '所要時間の最大値: ' . $longestTime . "\n";
 echo "一番時間のかかっているクエリ: \n" . $longestQuery . "\n";
 ?>]]></programlisting>
