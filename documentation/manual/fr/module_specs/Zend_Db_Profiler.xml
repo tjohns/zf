@@ -66,7 +66,7 @@ $profileur = $db->getProfiler();
                 requêtes profilées.
             </listitem>
             <listitem>
-                <code>getTotalElapsedSeconds()</code> retourne le nombre totale
+                <code>getTotalElapsedSecs()</code> retourne le nombre totale
                 de secondes écoulées pour chaque requête profilée.
             </listitem>
             <listitem>
