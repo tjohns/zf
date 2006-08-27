@@ -94,11 +94,11 @@ $profiler = $db->getProfiler();
 -->
             </listitem>
             <listitem>
-                <code>getTotalElapsedSeconds()</code> возвращает общее
+                <code>getTotalElapsedSecs()</code> возвращает общее
                 количество секунд, затраченное на все запросы, обработанные
                 профайлером.
 <!--
-                <code>getTotalElapsedSeconds()</code> returns the total
+                <code>getTotalElapsedSecs()</code> returns the total
                 number of seconds elapsed for all profiled queries.
 -->
             </listitem>
@@ -193,7 +193,7 @@ echo $query->getQuery();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$totalTime    = $profiler->gettotalElapsedSeconds();
+$totalTime    = $profiler->gettotalElapsedSecs();
 $queryCount   = $profiler->getTotalNumQueries();
 $longestTime  = 0;
 $longestQuery = null;
@@ -205,10 +205,11 @@ foreach ($profiler->getQueryProfiles() as $query) {
     }
 }
 
-echo 'Выполнено ' . $queryCount . ' запросов в ' . $totalTime . ' секунд' . "\n";
-echo 'Среднее время выполнения запроса: ' . $queryCount / $totalTime . ' секунд' . "\n";
-echo 'Наибольшее время выполнения запроса: ' . $longestTime . "\n";
-echo "Запрос с наибольшим временем выполнения: \n" . $longestQuery . "\n";
+echo 'Executed ' . $queryCount . ' queries in ' . $totalTime . ' seconds' . "\n";
+echo 'Average query length: ' . $totalTime / $queryCount . ' seconds' . "\n";
+echo 'Queries per second: ' . $queryCount / $totalTime . "\n";
+echo 'Longest query length: ' . $longestTime . "\n";
+echo "Longest query: \n" . $longestQuery . "\n";
 ?>]]></programlisting>
 
     </sect2>

@@ -1,682 +1,1440 @@
 <sect1 id="zend.cache.introduction">
     <title>Введение</title>
     <para>
-        <code>Zend_Cache</code> предоставляет универсальное средство для кэширования
-        данных.
+        <code>Zend_Cache</code> представляет собой универсальное средство для
+        кэширования любых данных.
+        <!-- provides a generic way to cache any data. -->
+    </para>
+    <para>
+      Кэширование в Zend Framework управляется с помощью клиентской части,
+      в то время как записи кэша сохраняются посредством адаптеров прикладной
+      части (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...)
+      с участием гибкой системы идентификаторов и тегов. С их помощью впоследствии
+      легко удалять определенные типы записей (например: "удалить все записи кэша,
+      помеченные данным тегом").
 <!--
-        <code>Zend_Cache</code> provides a generic way to cache some datas.
+      Caching in Zend Framework is operated by frontends while cache records are stored through backend adapters
+      (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...) through a flexible
+      system of IDs and tags. Using those, it is easy to delete specific types of records afterwards
+      (for example: "delete all cache records marked with a given tag").
 -->
     </para>
     <para>
-        Записи кэша хранятся в базе данных (<code>File</code>, <code>Sqlite</code>...)
-        с гибкой системой идентификаторов и тегов. Например, легко удалить
-        определенную часть кэшированных данных (все записи кэша помечаются тегами). 
+        Ядро модуля (<code>Zend_Cache_Core</code>) является гибким, универсальным
+        и конфигурируемым. Кроме этого, для особых нужд есть клиентские
+        части, наследующие от <code>Zend_Cache_Core</code>:
+        <code>Output</code>, <code>File</code>, <code>Function</code> и
+        <code>Class</code>.
 <!--
-        Cache records are stored through a backend (<code>File</code>, <code>Sqlite</code>...) with a flexible
-        system of "ids" and "tags". Then, for example, it's easy to delete a specified part of cached 
-        datas ("all cache records marked with a given tag"...).
--->
-    </para>
-    <para>
-      Ядро модуля является очень гибким и универсальным. Еще для специфических нужд
-      вы можете использовать пользовательский интерфейс
-      (<code>Output</code>, <code>Function</code>...) для наиболее подходящего
-      пути работы.
-<!--
-      The core of the module is really generic and flexible. Yet, for specific needs, you can use a
-      frontend (<code>Output</code>, <code>Function</code>...) to get a more appropriate way of running.
+        The core of the module (<code>Zend_Cache_Core</code>) is generic, flexible and configurable.
+        Yet, for your specific needs there are cache frontends that extend <code>Zend_Cache_Core</code>
+        for convinience: <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
 -->
     </para>
     <example>
         <title>
-            Первый пример с ядром Zend_Cache
-<!--
-            A first example with Zend_Cache core
--->
-        </title>
+            Получение клиентской части с помощью <code>Zend_Cache::factory()</code>
+            <!--Getting a frontend with <code>Zend_Cache::factory()</code>--></title>
         <para>
-            В первом примере мы будем непосредственно использовать ядро Zend_Cache с
-            серверной частью <code>File</code>.
+            <code>Zend_Cache::factory()</code> инстанцирует нужные объекты и
+            связывает их. В этом первом примере мы будем использовать
+            клиентскую часть <code>Core</code> с прикладной частью <code>File</code>.
 <!--
-            In this first example, we will use directly the core of Zend_Cache with the 
-            <code>File</code> backend.
+            <code>Zend_Cache::factory()</code> instantiates correct objects and ties them together.
+            In this first example, we will use <code>Core</code> frontend together with <code>File</code>
+            backend.
 -->
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-    'lifeTime' => 7200 // время жизни кэша - 2 часа
+   'lifeTime' => 7200, // время жизни кэша - 2 часа 
+   'automaticSerialization' => true
 );
 
 $backendOptions = array(
-    'cacheDir' => '/tmp/' // каталог, в котором размещаются файлы кэша
+    'cacheDir' => './tmp/' // директория, в которой размещаются файлы кэша
 );
 
-// создаем объект Zend_Cache 
+// получение объекта Zend_Cache_Core
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
-$id = 'foo'; // идентификатор того, что мы хотим закэшировать
+?>]]></programlisting>
+       </para>
+       <para>
+           Теперь, имея клиентскую часть, мы можем кэшировать любые типы данных,
+           используя сериализацию. Например, мы можем кэшировать результат из
+           очень ресурсоемкого запроса к БД. После того, как он будет закэширован,
+           не нужно будет даже подключаться к базе данных: записи извлекаются
+           из кэша и выполняется процедура, обратная сериализации.              
+<!--
+            Now that we have a frontend, we can cache any type of data (we turned on serialization). For
+            example, we can cache a result from a very expensive database query. After it is cached, there
+            is no need to even connect to the database; records are fetched from cache and unserialized.
+-->
+            <programlisting role="php"><![CDATA[<?php
 
-if (!($cache->test($id))) {
-    // кэш отсутствует
+// $cache определен в предыдущем примере
 
-    // require_once ... для большей производительности все включения производятся только если кэш отсутствует
-    // require_once ...
+// проверка, есть ли уже запись в кэше:
+if(!$result = $cache->get('myresult')) {
 
-    // формирование данных кэша
-    // пример
-    $data = '';
-    for ($i=0;$i<10000;$i++) {
-        $data = $data . $i;
-    } 
-	
-    // сохраняем результат в кэше
-    $cache->save($data);
-
+    // непопадание в кэш
+    // установка соединения с базой данных
+    
+    $db = Zend_Db::factory( [...] );
+    
+    $result = $db->fetchAll('SELECT * FROM huge_table');
+    
+    $cache->save($result, 'myresult');
+    
 } else {
-    // получение кэша
 
-    $data = $cache->get($id);
-
+    // попадание в кэш
+    echo "This one is from cache!\n\n";
+    
 }
 
-// делаем что-нибудь с данными :)
-// [...]
-?>]]>       </programlisting>
+print_r($result);
+
+?>]]></programlisting>
        </para>
     </example>
-    <note>
-        С <code>Zend_Cache_Core</code> вы можете управлять идентификатором кэша. 
+    <example>
+        <title>
+            Кэширование выходных данных с помощью прикладной части <code>Zend_Cache</code> для выходных данных
+            <!--Caching output with <code>Zend_Cache</code> output frontend-->
+        </title>
+        <para>
+            Мы помечаем участки, внутри которых хотим поместить в кэш выходные данные,
+            добавлением некоторой условной логики, окружая
+            участок методами <code>start()</code> и <code>end()</code>.
+            Это похоже на первый пример и является основной стратегией кэширования.
 <!--
-        With Zend_Cache_Core, you have to manage the "cache identifier" by yourself.
--->  
-    </note>
+            We 'mark up' sections in which we want to cache output by adding some conditional logic,
+            encapsulating the section within <code>start()</code> and <code>end()</code> methods (this
+            resembles the first example and is the core strategy for caching).
+-->
+        </para><para>
+            Внутри выводим данные как обычно -- весь вывод будет добавлен в кэш,
+            когда будет достигнут метод <code>end()</code>. При следующем запуске
+            весь участок кода будет пропущен, вместо этого извлекаются данные из кэша
+            (до тех пор, пока записи действительны).
+<!--
+            Inside, output your data as usual - all output will be cached when execution hits the <code>end()</code>
+            method. On the next run, the whole section will be skipped in favor of fetching data from cache 
+            (as long as the cache record is valid).
+-->
+            <programlisting role="php"><![CDATA[<?php
+
+$frontendOptions = array(
+   'lifeTime' => 30,                  // время жизни кэша - половина минуты
+   'automaticSerialization' => false  // это уже установлено по умолчанию
+);
+
+$backendOptions = array('cacheDir' => './tmp/');
+
+$cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
+
+// передаем уникальный идентификатор методу start()
+if(!$cache->start('mypage')) {
+    // производим вывод, как обычно:
+    
+    echo 'Hello world! ';
+    echo 'This is cached ('.time().') ';
+    
+    $cache->end(); // выходные данные сохранены и отправлены броузеру
+}
+
+echo 'This is never cached ('.time().').';
+
+?>]]>       </programlisting>
+       </para>
+       <para>
+           Обратите внимание, что мы выводим результат <code>time()</code>
+           дважды: это нечто динамическое в целях демонстрации. Попробуйте
+           запустить это и обновить страницу несколько раз. Вы заметите,
+           что первое число не изменяется, в то время как второе меняется в
+           зависимости от текущего времени. Это потому, что первое число
+           было выведено в кэшируемой части и сохранено среди других выходных данных.
+           После того, как пройдет полминуты (мы установили время жизни кэша
+           равным 30 секундам) числа снова должны стать одинаковыми, потому что
+           срок действия кэша истек; сразу после этого производится новое
+           сохранение в кэш.
+<!--
+           Notice that we output the result of <code>time()</code> twice; this is something dynamic
+           for demonstration purposes. Try running this and then refreshing several times; you will notice
+           that the first number doesn't change while second changes as time passes. That is because the first
+           number was output in the cached section and is saved among other output.
+           After half a minute (we've set lifetime to 30 seconds) the
+           numbers should match again because the cache record expired - only to be cached again. You
+           should try this in your brower or console.
+-->
+       </para>
+    </example>
+    <note><para>
+        Когда используете <code>Zend_Cache</code>, уделяйте внимание идентификатору
+        кэша (передается методам <code>save()</code> и <code>start()</code>).
+        Он должен быть уникальным для каждого ресурса, который вы кэшируете,
+        иначе не связанные записи кэша могут затирать друг друга, или, что еще
+        хуже, отображаться вместо других.
+<!--
+        When using Zend_Cache, pay attention to the important cache identifier (passed to <code>save()</code>
+        and <code>start()</code>). It must be unique for every resource you cache, otherwise unrelated
+        cache records may wipe each other or, even worse, be displayed in place of the other.
+-->
+    </para></note>
 </sect1>
 
-<sect1 id="zend.cache.factory">
-    <title>
-        Фабрика Zend_Cache 
-<!--
-        Zend_Cache factory
--->
-    </title>
+
+<sect1 id="zend.cache.theory">
+    <title>Теория кэширования<!--The theory of caching--></title>
     <para>
-      Есть только один способ создать объект <code>Zend_Cache_*</code>. Во всех
-      случаях (серверная и/или пользовательская части) вы используете фабрику
-      (factory) <code>Zend_Cache</code>. Не используйте непосредственно
-      конструкторы серверной части, это не будет работать корректно!
+        Есть три ключевых понятия в Zend_Cache. Первое -- уникальный
+        идентификатор (строка), который служит для идентификации записей кэша.
+        Второе -- это директива <code>'lifeTime'</code>, которую вы могли видеть
+        в предыдущих примерах; она определяет, в течение какого времени кэшируемый
+        ресурс считается "свежим". Третье понятие -- условное исполнение для того,
+        чтобы части вашего кода могли быть пропущены целиком, этим повышается
+        производительность. Основная функция клиентской части
+        (как, например, <code>Zend_Cache_Core::get()</code>) всегда спроектирована
+        так, чтобы возвращала <code>false</code> при отсутствии кэша, если это
+        имеет смысл для данной клиентской части. Это дает конечным
+        пользователям возможность включить части кода, которые нужно
+        закэшировать (и затем пропускать) в операторы <code>if(){ ... }</code>,
+        где условием является сам метод Zend_Cache. Но в конце этих блоков
+        вы должны сохранять то, что было сгенерировано (например, методом
+        <code>Zend_Cache_Core::save()</code>).
 <!--
-      There is only one way to build a <code>Zend_Cache_*</code> object. In all cases 
-      (backends and/or frontends), you have to use the <code>Zend_Cache</code> factory.
-      Do not use frontends constructors directly, it won't work correctly !
--->  
+        There are three key concepts in Zend_Cache. One is the unique indentifier (a string) that is used
+        to identify cache records. The second one is the <code>'lifeTime'</code> directive as seen in the
+        examples; it defines for how long the cached resource is considered 'fresh'. The third key concept
+        is conditional execution so that parts of your code can be skipped entirely, boosting performance.
+        The main frontend function (eg. <code>Zend_Cache_Core::get()</code>) is always designed to return
+        false for a cache miss if that makes sense for the nature of a frontend. That enables end-users to
+        wrap parts of the code they would like to cache (and skip) in <code>if(){ ... }</code> statements where
+        the condition is a Zend_Cache method itself. On the end if these blocks you must save what you've
+        generated, however (eg. <code>Zend_Cache_Core::save()</code>).
+-->
     </para>
-    <para>
-      Правильный способ создания экземпляра класса <code>Zend_Cache_*</code> дан
-      в следующем примере:
+    <note><para>
+        Для некоторых клиентских частей включение условного исполнения в ваш
+        код не нужно, т.к. вся логика уже реализована в них
+        (например, <code>Function</code>).
 <!--
-      The good way to build an usable instance of <code>Zend_Cache_*</code> is given
-      in the following example :
+        The conditional execution design of your generating code is not necessary in some frontends
+        (<code>Function</code>, for an example) when the whole logic is implemented inside the frontend.
 -->
-      <programlisting role="php"><![CDATA[<?php
-    
+    </para></note>
+    <note><para>
+        "Попадание в кэш" -- термин для того состояния, когда запись кэша найдена,
+        является корректной и "свежей" (в других словах, для которой
+        не закончился срок действия). Иначе происходит "непопадание в кэш".
+        Когда происходит "непопадание в кэш", вы должны сгенерировать свои данные,
+        которые помещаются в кэш. С другой стороны, если есть "попадание",
+        то прикладная часть автоматически извлечет запись из кэша.
+<!--
+        'Cache hit' is a term for a condition when a cache record is found, is valid and is 'fresh' (in other
+        words hasn't expired yet). 'Cache miss' is everything else. When a cache miss happens, you must
+        generate your data (as you would normally do) and have it cached. When you have a cache hit, on the
+        other hand, the backend automatically fetches the record from cache transparently.
+-->
+    </para></note>
+    <sect2 id="zend.cache.factory">
+        <title>Фабричный метод <code>Zend_Cache</code><!--The <code>Zend_Cache</code> factory method--></title>
+        <para>
+            Правильным способом создания используемого экземпляра
+            клиентской части <code>Zend_Cache</code> является
+            данный в следующем примере:  
+<!--
+            A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
+            in the following example :
+-->
+            <programlisting role="php"><![CDATA[<?php
+        
 # Загружаем фабрику Zend_Cache 
 require 'Zend/Cache.php'; 
 
-# Выбираем серверную часть (например, 'File', 'Sqlite'...)
+# Выбираем прикладную часть (например, 'File' или 'Sqlite'...)
 $backendName = '[...]';
 
-# Выбираем пользовательскую часть (например, 'Core', 'Output', 'Page'...)
+# Выбираем клиентскую часть (например, 'Core', 'Output', 'Page'...)
 $frontendName = '[...]';
 
-# Устанавливаем массив опций для выбранной пользовательской части
+# Устанавливаем массив опций для выбранной клиентской части
 $frontendOptions = array([...]);
 
-# Устанавливаем массив опций для выбранной серверной части
+# Устанавливаем массив опций для выбранной прикладной части
 $backendOptions = array([...]);
 
 # Создаем экземпляр 
 # (два последних аргумента являются необязательными)
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
-[...]
-
-?>]]>   </programlisting> 
-    </para> 
-    <para>
-      Далее мы будем предполагать, что переменная <code>$cache</code> установлена как
-      показано в предыдущем примере.  
+?>]]></programlisting> 
+        </para> 
+        <para>
+            В следующих примерах мы предполагаем, что переменная <code>$cache</code>
+            содержит инстанцированную, как показано в примере, клиентскую
+            часть, и что вы понимаете, как передавать параметры выбранной вами
+            прикладной части. 
 <!--
-      In next lines of this documentation, we will assume that the <code>$cache</code>
-      variable is set as shown in the previous example.
--->    
-    </para> 
+            In the following examples we will assume that the <code>$cache</code> variable holds a
+            valid, instantiated frontend as shown and that you understand how to pass parametres
+            to your chosen backends.
+-->
+        </para>
+        <note><para>
+            Всегда используйте <code>Zend_Cache::factory()</code> для получения
+            экземпляров клиентской части. Непосредственно созданные экземпляры
+            клиентских и прикладных частей будут работать не так, как ожидается.
+<!--
+            Always use <code>Zend_Cache::factory()</code> to get frontend instances. Instantiating
+            frontends and backends yourself will not work as expected.
+-->
+        </para></note>
+    </sect2>
+    
+    <sect2 id="zend.cache.tags">
+        <title>Добавление тегов к записям<!--Tagging records--></title>
+        <para>
+            Теги являются средством категоризации записей кэша. Когда вы производите
+            сохранение в кэш методом <code>save()</code>, то можете установить массив
+            тегов к данной записи. После этого вы можете удалить все записи
+            кэша, помеченные данным тегом (тегами).   
+<!--
+            Tags are a way to categorize cache records. When you save a cache with the <code>save()</code>
+            method, you can set an array of tags to apply for this record. Then you will be 
+            able to clean all cache records tagged with a given tag (or tags):
+-->
+        <programlisting role="php"><![CDATA[<?php
+             
+$cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
+            
+?>]]></programlisting></para>
+    </sect2>
+    <sect2 id="zend.cache.clean">
+        <title>Очистка кэша<!--Cleaning the cache--></title>
+        <para>
+            Для того, чтобы удалить или сделать недействительной запись с определенным
+            идентификатором, вы можете использовать метод <code>remove()</code>:
+<!--
+            To remove/invalidate in particular cache id, you can use the <code>remove()</code>
+            method :
+-->
+             <programlisting role="php"><![CDATA[<?php 
+             
+$cache->remove('idToRemove');
+            
+?>]]></programlisting>            
+        </para>
+        <para>
+            Для того, чтобы за одну операцию удалить или сделать недействительными
+            несколько записей кэша, вы можете использовать
+            метод <code>clean()</code>. Например, чтобы удалить все записи кэша:
+<!--
+            To remove/invalidate several cache ids in one operation, you can use the <code>clean()</code>
+            method. For example to remove all cache records :
+-->
+              <programlisting role="php"><![CDATA[<?php 
+
+// удаление всех записей
+$cache->clean(Zend_Cache::CLEANING_MODE_ALL);
+
+// удаление только устаревших записей
+$cache->clean(Zend_Cache::CLEANING_MODE_OLD);
+            
+?>]]>       </programlisting>
+            Если вы хотите удалить записи кэша, помеченные тегами 'tagA' и 'tagC':
+<!--
+            If you want to remove cache entries matching the tags 'tagA' and 'tagC':
+-->
+              <programlisting role="php"><![CDATA[<?php 
+             
+$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
+            
+?>]]>       </programlisting>
+        </para>
+        <para>
+            Доступные режимы очищения: <code>CLEANING_MODE_ALL</code> (удалить все),
+            <code>CLEANING_MODE_OLD</code> (удалить устаревшие),
+            <code>CLEANING_MODE_MATCHING_TAG</code> (удалить помеченные тегом)
+            и <code>CLEANING_MODE_NOT_MATCHING_TAG</code> (удалить не помеченные тегом).
+            Последние два, как ясно из названий, передаются вместе с массивом
+            тегов.
+<!--
+            Available cleaning modes are: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
+            <code>CLEANING_MODE_MATCHING_TAG</code> and <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. The
+            latter are, as their names suggest, combined with an array of tags in cleaning operations.
+-->
+        </para>
+    </sect2>
 </sect1>
 
-<sect1 id="zend.cache.core">
-    <title>Zend_Cache_Core</title>
-    <sect2 id="zend.cache.core.introduction">
-      <title>Введение</title>
-      <para>
-        <code>Zend_Cache_Core</code> является особенным, т.к. это фактически
-        ядро модуля. Все пользовательские части наследуют от этого класса. Поэтому
-        большинство методов и опций, описааных ниже, доступны и в других
-        пользовательских частях.  
+<sect1 id="zend.cache.frontends">
+    <title>Клиентские части Zend_Cache<!--Zend_Cache frontends--></title>
+    
+    <sect2 id="zend.cache.core">
+        <title>Zend_Cache_Core</title>
+        <sect3 id="zend.cache.core.introduction">
+            <title>Введение</title>
+            <para>
+                Клиентская часть <code>Zend_Cache_Core</code> является особенной,
+                так как это ядро всего модуля. Это универсальная клиентская часть и
+                она расширяется другими классами.
 <!--
-        <code>Zend_Cache_Core</code> is a special frontend because it's actually the core
-        of the module. All frontends inherit from this class. So most of methods and options
-        described below are also available for other frontends.
+                <code>Zend_Cache_Core</code> is a special frontend because it is the core
+                of the module. It is a generic cache frontend and is extended by other classes.
 -->
-      </para>
-    </sect2>
-    <sect2 id="zend.cache.core.options">
-      <title>
-          Доступные опции
+            </para>
+            <note><para>
+                Все клиентские части наследуют от класса <code>Zend_Cache_Core</code>,
+                поэтому его методы и опции, описанные ниже, должны быть доступны
+                и в других клиентских частях и не будут документироваться
+                здесь.
 <!--
-          Available options (for this frontend in Zend_Cache factory)
+                All frontends inherit from <code>Zend_Cache_Core</code> so that its methods and options
+                (described below) would also be available in other frontends, therefore they won't be
+                documented there.
 -->
-      </title>
-      <table>
-        <title>
-            Доступные опции
+            </para></note>
+        </sect3>
+        <sect3 id="zend.cache.core.options">
+            <title>Доступные опции<!--Available options--></title>
+            <para>
+                Эти опции передаются фабричному методу, как было показано в предыдущих примерах.
 <!--
-            Available options
+                These options are passed to the factory method as demonstrated in previous examples.
 -->
-        </title>
-        <tgroup cols="4">
-          <thead>
-            <row>
-              <entry>Опция</entry>
-              <entry>Тип данных</entry>
-              <entry>Значение по умолчанию</entry>
-              <entry>Описание</entry>
-            </row>
-          </thead>
-          <tbody>
-             <row>
-               <entry><code>caching</code></entry>
-               <entry><code>boolean</code></entry>
-               <entry><code>true</code></entry>
-               <entry>
-                 Включает / отключает кэширование (может быть очень полезным при
-                 отладке кэшируемых скриптов)
+            </para>
+            <table>
+                <title>Доступные опции</title>
+                <tgroup cols="4">
+                     <thead>
+                          <row>
+                            <entry>Опция</entry>
+                            <entry>Тип данных</entry>
+                            <entry>Значение по умолчанию</entry>
+                            <entry>Описание</entry>
+                        </row>
+                     </thead>
+                     <tbody>
+                          <row>
+                              <entry><code>caching</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>true</code></entry>
+                              <entry>
+                                  Включает / отключает кэширование (может быть очень полезным при
+                                  отладке кэшируемых скриптов).
+                                  <!--enable / disable caching (can be very usefull for the debug of 
+                                  cached scripts)-->                
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>lifeTime</code></entry>
+                              <entry><code>int</code></entry>
+                              <entry><code>3600</code></entry>
+                              <entry>
+                                Время жизни кэша (в секундах), если установлен в
+                                <code>null</code>, то кэш имеет бесконечное время жизни.
+                                <!--cache lifetime (in seconds), if set to <code>null</code>, the 
+                                cache is valid forever.-->       
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>logging</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                    					  Если установлен в <code>true</code>, то включается логирование посредством
+                                <code>Zend_Log</code> (но система будет работать медленнее).  
+                                <!--if set to true, logging through <code>Zend_Log</code> is activated 
+                                (but the system is slower)-->         
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>writeControl</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>true</code></entry>
+                              <entry>
+                                Включает / отключает контроль записи (кэш читается сразу после
+                                записи для выявления поврежденных записей), включение writeControl
+                                немного замедлит запись кэша, но не чтение. Этот контроль может выявить
+                                некоторые поврежденные файлы кэша, но не является совершенным.
+                                <!--Enable / disable write control (the cache is read 
+                                just after writing to detect corrupt entries), enabling writeControl
+                                will lightly slow the cache writing but not the cache reading (it 
+                                can detect some corrupt cache files but it's not a perfect control)-->        
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>automaticSerialization</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>false</code></entry>
+                              <entry>
+                                Включает / отключает автоматическую сериализацию, она может
+                                использоваться для сохранения напрямую данных, которые не являются
+                                строками (но это будет меденнее).
+                                <!--Enable / disable automatic serialization, it can be used to save directly datas
+                                which aren't strings (but it's slower)-->            
+                              </entry>
+                          </row>
+                          <row>
+                              <entry><code>automaticCleaningFactor</code></entry>
+                              <entry><code>int</code></entry>
+                              <entry><code>0</code></entry>
+                              <entry>
+                    					  Отключает / настраивает автоматический процесс очистки (сборщик мусора) :
+                    					  <code>0</code> означает, что автоматическая чистка кэша не производится,
+                                <code>1</code> означает систематическую очистку кэша,
+                                <code>x (integer) &gt; 1</code> означает, что автоматическая
+                                чистка производится случайным образом 1 раз на x записей кэша.  
+                                <!--Disable / Tune the automatic cleaning process (garbage collector):
+                                0 means no automatic cache cleaning, 1 means systematic cache cleaning
+                                and x &gt; 1 means automatic random cleaning 1 times in x write operations.-->
+                              </entry>
+                          </row>
+                      </tbody>
+                  </tgroup>
+              </table>
+        </sect3>
+        
+        <sect3 id="zend.cache.core.examples">
+            <title>Примеры</title>
+            <para>
+                Пример был дан в самом начале этого руководства.
 <!--
-                 enable / disable caching (can be very usefull for the debug of 
-                 cached scripts)
+                An example is given in the manual at the very beginning.
 -->
-                </entry>
-              </row>
-              <row>
-                <entry><code>lifeTime</code></entry>
-                <entry><code>int</code></entry>
-                <entry><code>3600</code></entry>
-                <entry>
-                  Время жизни кэша (в секундах), если установлен в
-                  <code>null</code>, то кэш имеет бесконечное время жизни.
+            </para>
+            <para>
+            	  Если вы храните в кэше только строки (с опцией <code>automaticSerialization</code>
+                возможно хранить некоторые булевы значения), вы можете использовать
+                более компактную конструкцию, похожую на:
 <!--
-        					cache lifetime (in seconds), if set to <code>null</code>, the 
-        					cache is valid forever.
--->       
-                </entry>
-              </row>
-              <row>
-                <entry><code>logging</code></entry>
-                <entry><code>boolean</code></entry>
-      					<entry><code>false</code></entry>
-      					<entry>
-      					  Если установлен в true, то включается логирование посредством
-                  <code>Zend_Log</code> (система будет работать медленнее).  
-<!--
-        					if set to true, logging through <code>Zend_Log</code> is activated 
-        					(but the system is slower)
---> 	    
-      					</entry>
-      				</row>
-      				<row>
-                <entry><code>writeControl</code></entry>
-                <entry><code>boolean</code></entry>
-                <entry><code>true</code></entry>
-      					<entry>
-                  Включает / отключает контроль записи (кэш читается сразу после
-                  записи для выявления поврежденных записей), включение writeControl
-                  немного замедлит запись кэша, но не чтение (этот контроль может выявить
-                  некоторые поврежденные файлы кэша, но не является совершенным).
-<!--
-        					Enable / disable write control (the cache is read 
-        					just after writing to detect corrupt entries), enabling writeControl
-        					will lightly slow the cache writing but not the cache reading (it 
-        					can detect some corrupt cache files but it's not a perfect control)
+                If you store only strings into cache (because with "automaticSerialization" option, it's possible
+                to store some booleans), you can use a more compact construction like:
 -->
-                </entry>
-              </row>
-              <row>
-                <entry><code>automaticSerialization</code></entry>
-                <entry><code>boolean</code></entry>
-                <entry><code>false</code></entry>
-                <entry>
-                  Включает / отключает автоматическую сериализацию, она может
-                  использоваться для сохранения напрямую данных, которые не являются
-                  строками (но это будет меденнее). 
-<!--
-        					Enable / disable automatic serialization, it can be used to save directly datas
-	        				which aren't strings (but it's slower)
--->		    
-      					</entry>
-      				</row>
-      				<row>
-      					<entry><code>automaticCleaningFactor</code></entry>
-      					<entry><code>int</code></entry>
-      					<entry><code>0</code></entry>
-      					<entry>
-      					  Отключает / настраивает автоматический процесс очистки (сборщик мусора) :
-      					  <code>0</code> означает, что автоматическая чистка кэша не производится,
-                  <code>1</code> означает систематическую очистку кэша,
-                  <code>x (integer) &gt; 1</code> означает, что автоматическая
-                  чистка производится случайным образом 1 раз на x записей кэша.  
-<!--
-        					Disable / Tune the automatic cleaning process (garbage collector) :
-        					0 means no automatic cache cleaning, 1 means systematic cache cleaning
-        					and x (integer) &gt; 1 means automatic cleaning randomly 1 times on x cache write.
--->
-      					</entry>
-      				</row>
-      			</tbody>
-      		</tgroup>
-      	</table>
-    </sect2>
-    <sect2 id="zend.cache.core.examples">
-    	<title>Примеры</title>
-    	<para>
-    	  Первый пример дан в самом начале.
-<!--
-    		A first example is given in the tutorial at the very beginning.
--->
-    	</para>
-    	<para>
-    	  Если вы храните в кэше только строки (с опцией "automaticSerialization"
-        возможно хранить некоторые булевы значения), вы можете использовать
-        более компактную конструкцию, похожую на:
-<!--
-    		If you store only strings into cache (because with "automaticSerialization" option, it's possible to store
-			some booleans), you can use a more compact construction like :
--->			
-     	    <programlisting role="php"><![CDATA[<?php  
-     	    
-// [...] // включения, конфигурирование, фабрика
+                 <programlisting role="php"><![CDATA[<?php  
+             
+// предполагается, что переменная $cache уже установлена
 
-$id = 'foo'; // идентификатор того, что мы хотим закэшировать
+$id = 'myBigLoop'; // идентификатор того, что мы хотим закэшировать
 
 if (!($data = $cache->get($id))) {
-	// кэш отсутствует
-	
-	$data = '';
-	for ($i=0;$i<10000;$i++) {
-		$data = $data . $i;
-	}
-	
+    // непопадание в кэш
+    
+    $data = '';
+    for ($i = 0; $i < 10000; $i++) {
+        $data = $data . $i;
+    }
+    
     $cache->save($data);
     
 } 
 
-// [...] делаем что-нибудь с данными (например, "echo $data;")
-     	    
+// [...] делаем что-либо с данными (отображение, передача и т.д.)
+             
 ?>]]>       </programlisting> 
-        </para>  
-        <para>
-          Если вы хотите закэшировать несколько блоков данных, то принцип будет тот же:
+            </para>  
+            <para>
+                Если вы хотите закэшировать несколько блоков или экземпляров данных,
+                то принцип будет тот же:
 <!--
-        	If you want to cache multiple blocks or datas, the idea is the same :
+                If you want to cache multiple blocks or data instances, the idea is the same:
 -->
-     	    <programlisting role="php"><![CDATA[<?php  
-     	    
-// [...] // включения, конфигурирование, фабрика
+                 <programlisting role="php"><![CDATA[<?php  
+             
+// убедитесь, что используете уникальные идентификаторы:
+$id1 = 'foo';
+$id2 = 'bar';
 
-$id1 = 'foo'; // идентификатор кэша блока 1
-$id2 = 'bar'; // идентификатор кэша блока 2
-
-// БЛОК 1
+// блок 1
 if (!($data = $cache->get($id1))) {
-	// кэш отсутствует
-	
-	$data = '';
-	for ($i=0;$i<10000;$i++) {
-		$data = $data . $i;
-	}
-	
+    // непопадание в кэш
+    
+    $data = '';
+    for ($i=0;$i<10000;$i++) {
+        $data = $data . $i;
+    }
+    
     $cache->save($data);
     
 } 
 echo($data);
 
-// НЕ КЭШИРУЕМЫЙ БЛОК
-echo('НЕ КЭШИРУЕТСЯ!');
+// эта часть не кэшируется
+echo('НЕ КЭШИРУЕТСЯ! ');
 
-// БЛОК 2
+// блок 2
 if (!($data = $cache->get($id2))) {
-	// кэш отсутствует
-	
-	$data = '';
-	for ($i=0;$i<10000;$i++) {
-		$data = $data . '!';
-	}
-	
+    // непопадание в кэш
+    
+    $data = '';
+    for ($i=0;$i<10000;$i++) {
+        $data = $data . '!';
+    }
+    
     $cache->save($data);
     
 } 
 echo($data);
 
+?>]]>       </programlisting>             
+            </para>            
+        </sect3>   
+    </sect2>
+    
+    <sect2 id="zend.cache.frontend.output">
+        <title>Zend_Cache_Frontend_Output</title>
+        <sect3 id="zend.cache.frontend.output.introduction">
+            <title>Введение</title>
+            <para>
+                <code>Zend_Cache_Frontend_Output</code> является клиентской частью,
+                собирающей выходные данные. Она использует буферизацию вывода
+                (output buffering) в PHP для сохранения всего, что выводится между
+                его методами <code>start()</code> и <code>end()</code>.
+<!--
+                <code>Zend_Cache_Frontend_Output</code> is an output-capturing frontend. It utilizes
+                output buffering in PHP to capture everything between its <code>start()</code> and
+                <code>end()</code> methods.
+-->
+            </para>
+        </sect3>
+        <sect3 id="zend.cache.frontend.output.options">
+            <title>Доступные опции</title>
+            <para>
+                Эта клиентская часть не имеет специальных опций, отличных
+                от опций <code>Zend_Cache_Core</code>.
+<!--
+             This frontend doesn't have any specific options other than those of
+                <code>Zend_Cache_Core</code>.
+-->
+            </para>
+        </sect3>
+        
+        <sect3 id="zend.cache.frontend.output.examples">
+            <title>Примеры</title>
+            <para>
+                Пример был дан в самом начале этого руководства. Здесь он с
+                небольшими изменениями:
+<!--
+                An example is given in the manual at the very beginning. Here it is with minor changes:
+-->
+                 <programlisting role="php"><![CDATA[<?php
 
-?>]]>       </programlisting>         	
-        </para>   	 	
-    </sect2>   
-    <sect2 id="zend.cache.core.idandtags">
-    	<title>Идетификатор и теги кэша<!--Cache ID and tags--></title>
-    	<para>
-    	  Идентификатором кэша является уникальный ключ, который идентифицирует
-        данную запись кэша. В некоторых пользовательских частях (Core, Output...)
-        вы имеете дело с идентификаторами кэша. Поэтому, например, будьте осторожны
-        при использовании уникальных идентификаторов для данной страницы или блока.
-<!--
-    		A "cache id" is an unique key which identifies a given cache record. In some frontends
-    		(Core, Output...), you have to deal with "cache ids" by yourself. So, for example,
-    		be carefull to use an unique id for a given page or block.
--->
-    	</para>
-    	<para>
-    	  Теги являются средством для категоризации записей кэша. Когда вы сохраняете
-    	  кэш методом <code>save()</code>, вы можете установить массив тегов для
-    	  для записи. Позже вы можете удалять все записи кэша, помеченные данным тегом...
-    	  Это очень мощный способ для управления записями кэша по группам.
-<!--
-    		"tags" are a way to categorize cache records. When you save a cache with the <code>save()</code>
-    		method, you can set an array of tags to apply for this record. Then, you will be 
-    		able to clean all cache records tagged with a given tag... It's a really powerful
-    		way to manage cache records by groups.
--->
-    	</para>
-    	<para>
-    	  Вот полный синтаксис метода <code>save()</code>:
-<!--
-    		Here is the complete syntax of the <code>save()</code> method :
--->
-    		<programlisting role="php"><![CDATA[<?php
-     	    
-    /**
-     * Сохраняет данные в кэше 
-     * 
-     * @param mixed $data данные для размещения в кэше (может иметь тип, отличный от строкового, если automaticSerialization включен)
-     * @param cache $id cache id (если не установлен, то будет использоваться последний id кэша)
-     * @param array $tags теги кэша
-     * @return boolean true, если не было ошибки
-     */
-    public function save($data, $id = null, $tags = array()) {}
-    		
+// если имеет место непопадание в кэш,
+// то начинается буферизация вывода
+if(!$cache->start('mypage')):
+
+// все выводится, как обычно
+echo 'Hello world! ';
+echo 'This is cached ('.time().') ';
+
+$cache->end(); // завершение буферизации вывода
+endif;
+
+echo 'This is never cached ('.time().').';
+
 ?>]]>       </programlisting>
-      Так, например, вы можете использовать:    	 
+            </para>
+            <para>
+                Используя эту форму, довольно легко установить кэширование вывода в
+                уже работающем проекте с незначительным рефакторингом кода или
+                совсем без него. 
 <!--
-			So for example, you can use :
+                Using this form it is fairly easy to set up output caching in your already working project
+                with little or no code refactoring.
 -->
-			<programlisting role="php"><![CDATA[<?php
-			
-// [...]
-$cache->save('данные для сохранения', 'уникальный ID', array('тег1', 'тег4', 'тег5'));
-// [...]	
-			
-?>]]>       </programlisting> 						   	
-    	</para>
+            </para>
+        </sect3>   
     </sect2>
-    <sect2 id="zend.cache.core.clean">
-    	<title>Очищение кэша</title>
-    	<para>
-    	  Чтобы удалить / сделать недействительным отдельный
-        идентификатор кэша, вы можете использовать метод <code>remove()</code>:
+    
+    <sect2 id="zend.cache.frontend.function">
+        <title>Zend_Cache_Frontend_Function</title>
+        <sect3 id="zend.cache.frontend.function.introduction">
+            <title>Введение</title>
+            <para>
+                <code>Zend_Cache_Frontend_Function</code> сохраняет в кэш
+                результаты вызова функции. Он имеет единственный основной метод
+                <code>call()</code> который принимает имя функции и параметры вызова
+                в массиве.
 <!--
-    		To remove/invalidate in particular cache id, you can use the <code>remove()</code>
-    		method :
+                <code>Zend_Cache_Frontend_Function</code> caches the results of function calls. It has
+                a single main method named <code>call()</code> which takes a function name and parameters
+                for the call in an array.
 -->
-     	    <programlisting role="php"><![CDATA[<?php 
-     	    
-// [...]
-$cache->remove('ID для удаления');
-// [...]
-    		
-?>]]>       </programlisting>    		
-    	</para>
-    	<para>
-    	  Чтобы удалить / сделать недействительными несколько идентификаторов
-    	  за одну операцию вы можете использовать метод <code>clean()</code>.
-    	  Например, для того, чтобы удалить все записи кэширования:
+            </para>
+        </sect3>
+        <sect3 id="zend.cache.frontend.function.options">
+            <title>Доступные опции</title>
+            <table>
+                <title>Доступные опции</title>
+                <tgroup cols="4">
+                     <thead>
+                          <row>
+                            <entry>Опция</entry>
+                            <entry>Тип данных</entry>
+                            <entry>Значение по умолчанию</entry>
+                            <entry>Описание</entry>
+                        </row>
+                     </thead>
+                     <tbody>
+                          <row>
+                              <entry><code>cacheByDefault</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>true</code></entry>
+                              <entry>
+                                  Если равен true, то вызовы функции по умолчанию кэшируются. 
+                                  <!--if true, function calls will be cached by default-->                
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>cachedFunctions</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry></entry>
+                              <entry>
+                                  Имена функций, которые всегда кэшируются.
+                                  <!--function names which will always be cached-->               
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>nonCachedFunctions</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry></entry>
+                              <entry>
+                                  Имена функций, которые никогда не должны кэшироваться.
+                                  <!--function names which must never be cached-->               
+                              </entry>
+                         </row>
+                      </tbody>
+                  </tgroup>
+              </table>
+        </sect3>
+        
+        <sect3 id="zend.cache.frontend.function.examples">
+            <title>Примеры</title>
+            <para>
+                Функция <code>call()</code> используется так же, как и
+                <code>call_user_func_array()</code> в PHP: 
 <!--
-    		To remove/invalidate several cache ids in one operation, you can use the <code>clean()</code>
-    		method. For example to remove all cache records :
+                Using the <code>call()</code> function is the same as using
+                <code>call_user_func_array()</code> in PHP:
 -->
-      	    <programlisting role="php"><![CDATA[<?php 
-     	    
-// [...]
-$cache->clean(Zend_Cache::CLEANING_MODE_ALL);
-// [...]
-    		
+                 <programlisting role="php"><![CDATA[<?php
+
+$cache->call('veryExpensiveFunc', $params);
+
+# $params является массивом
+# например, если нужно вызвать (с кэшированием) veryExpensiveFunc(1, 'foo', 'bar'),
+# то вы должны использовать $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
+
 ?>]]>       </programlisting>
-      Если вы хотите удалить только устаревшие записи:       		
+            </para>
+            <para>
+                <code>Zend_Cache_Frontend_Function</code> достаточно интеллектуален,
+                чтобы кэшировать как возвращаемое функцией значение, так и данные, 
+                выводимые внутри нее.
 <!--
-			If you want to remove only outdated cache records :
+                <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the
+                return value of the function and its internal output.
 -->
-      	    <programlisting role="php"><![CDATA[<?php 
-     	    
-// [...]
-$cache->clean(Zend_Cache::CLEANING_MODE_OLD);
-// [...]
-    		
-?>]]>       </programlisting>
-      Если вы хотите удалить записи кэша, соответствующие тегам 'тег1' и 'тег3': 
+            </para>
+            <note><para>
+                Вы можете передавать любые встроенные, так и определенные пользователем
+                функции, за исключением <code>array()</code>, <code>echo()</code>, <code>empty()</code>, <code>eval()</code>,
+                <code>exit()</code>, <code>isset()</code>, <code>list()</code>, <code>print()</code>
+                и <code>unset()</code>.
 <!--
-			If you want to remove cache entries matching the tags 'tag1' and 'tag3' :
--->
-      	    <programlisting role="php"><![CDATA[<?php 
-     	    
-// [...]
-$cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('тег1', 'тег3'));
-// [...]
-    		
-?>]]>       </programlisting>
-			[...]	
-    	</para>
-    </sect2>
-</sect1>
-<sect1 id="zend.cache.output">
-    <title>Zend_Cache_Output</title>
-    <para>
-    	В ПРОЦЕССЕ НАПИСАНИЯ
-    </para>
-</sect1>    
-<sect1 id="zend.cache.page">
-    <title>Zend_Cache_Page</title>
-    <para>
-    	В ПРОЦЕССЕ НАПИСАНИЯ
-    </para>
-</sect1>  
-<sect1 id="zend.cache.file">
-    <title>Zend_Cache_File</title>
-    <para>
-    	В ПРОЦЕССЕ НАПИСАНИЯ
-    </para>
-</sect1> 
-<sect1 id="zend.cache.function">
-    <title>Zend_Cache_Function</title>
-    <para>
-    	В ПРОЦЕССЕ НАПИСАНИЯ
-    </para>
-</sect1> 
-<sect1 id="zend.cache.class">
-    <title>Zend_Cache_Class</title>
-    <para>
-    	В ПРОЦЕССЕ НАПИСАНИЯ
-    </para>
-</sect1> 
-<sect1 id="zend.cache.backends">
-    <title>
-        Доступные серверные части для Zend_Cache 
-        <!--Available backends for Zend_Cache-->
-    </title>
-    <sect2 id="zend.cache.backends.file">
-    	<title>Zend_Cache_Backend_File</title>
-    	<para>
-    	  Эта серверная часть хранит записи кэша в файлах (в выбранной директории). 
-<!--
-    		This backends stores cache records into files (in a choosen directory).
+                You can pass any builtin or user defined function with the exception of
+                <code>array()</code>, <code>echo()</code>, <code>empty()</code>, <code>eval()</code>,
+                <code>exit()</code>, <code>isset()</code>, <code>list()</code>, <code>print()</code>
+                and <code>unset()</code>.
 --> 
-    	</para>
-    	<para>
-    	  Доступные опции:
+            </para></note>
+        </sect3>   
+    </sect2>
+    
+    <sect2 id="zend.cache.frontend.class">
+        <title>Zend_Cache_Frontend_Class</title>
+        <sect3 id="zend.cache.frontend.class.introduction">
+            <title>Введение</title>
+            <para>
+                <code>Zend_Cache_Frontend_Class</code> отличается от
+                <code>Zend_Cache_Frontend_Function</code> тем, что позволяет
+                кэшировать объекты и статические вызовы методов.
 <!--
-    		Available options are :
+                <code>Zend_Cache_Frontend_Class</code> is different from <code>Zend_Cache_Frontend_Function</code>
+                because it allows caching of object and static method calls.
 -->
-    	</para>  		
-	    <table>
-    		<title>Доступные опции</title>
-    		<tgroup cols="4">
-     			<thead>
-      				<row>
-       					<entry>Опция</entry>
-				        <entry>Тип данных</entry>
-				        <entry>Значение по умолчанию</entry>
-				        <entry>Описание</entry>
-				    </row>
-     			</thead>
-     			<tbody>
-      				<row>
-      					<entry><code>cacheDir</code></entry>
-      					<entry><code>string</code></entry>
-      					<entry><code>'/tmp/'</code></entry>
-      					<entry>
-      					  Директория, в которой хранятся файлы кэша
+            </para>
+        </sect3>
+        <sect3 id="zend.cache.frontend.class.options">
+            <title>Доступные опции</title>
+            <table>
+                <title>Доступные опции</title>
+                <tgroup cols="4">
+                     <thead>
+                          <row>
+                            <entry>Опция</entry>
+                            <entry>Тип данных</entry>
+                            <entry>Значение по умолчанию</entry>
+                            <entry>Описание</entry>
+                        </row>
+                     </thead>
+                     <tbody>
+                          <row>
+                              <entry><code>cachedEntity</code> (required)</entry>
+                              <entry><code>mixed</code></entry>
+                              <entry></entry>
+                              <entry>
+                                  Если установлен как имя класса, то будет
+                                  кэшироваться абстрактный класс и будут использоваться
+                                  только статические вызовы; если установлен как объект,
+                                  то будут кэшироваться методы объекта.
+                                  <!--if set to a class name, we will cache an abstract class and will use
+                                  only static calls; if set to an object, we will cache this object methods-->             
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>cacheByDefault</code></entry>
+                              <entry><code>boolean</code></entry>
+                              <entry><code>true</code></entry>
+                              <entry>
+                                  Если установлен в <code>true</code>, то вызовы
+                                  будут кэшироваться по умолчанию.
+                                  <!--if true, calls will be cached by default-->                
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>cachedMethods</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry></entry>
+                              <entry>
+                                  Имена методов, которые должны всегда кэшироваться.
+                                  <!--method names which will always be cached-->               
+                              </entry>
+                         </row>
+                         <row>
+                              <entry><code>nonCachedMethods</code></entry>
+                              <entry><code>array</code></entry>
+                              <entry></entry>
+                              <entry>
+                                  Имена методов, которые никогда не должны кэшироваться.
+                                  <!--method names which must never be cached-->               
+                              </entry>
+                         </row>
+                      </tbody>
+                  </tgroup>
+              </table>
+        </sect3>
+        
+        <sect3 id="zend.cache.frontend.class.examples">
+            <title>Примеры</title>
+            <para>
+                Кэширование статических вызовов:
 <!--
-      						Directory where to store cache files
--->	
-      					</entry>
-      				</row>
-      				<row>
-      					<entry><code>fileLocking</code></entry>
-      					<entry><code>boolean</code></entry>
-      					<entry><code>true</code></entry>
-      					<entry>
-      					  Включает / отключает блокировку файлов : может помочь избежать
-                  искажения данных кэша в плохих условиях, но это не поможет при
-                  многопоточном веб-сервере или файловой системе NFS...
-<!--
-        					Enable / disable fileLocking : Can avoid cache corruption under 
-        					bad circumstances but it doesn't help on multithread webservers 
-        					or on NFS filesystems...
+                For example, to cache static calls :
 -->
-      					</entry>
-      				</row>
-      				<row>
-      					<entry><code>readControl</code></entry>
-      					<entry><code>boolean</code></entry>
-      					<entry><code>true</code></entry>
-      					<entry>
-      					  Включает / отключает контроль чтения : если включен, то в файл
-      					  кэша добавляется контрольный ключ и этот ключ сравнивается
-                  с другим, вычисляемым после чтения.  
+                <programlisting role="php"><![CDATA[<?php
+
+class test {
+   
+    # статический метод
+    public static function foobar($param1, $param2) {
+        echo "foobar_output($param1, $param2)";
+        return "foobar_return($param1, $param2)";   
+    }
+
+}
+
+// [...]
+$frontendOptions = array(
+    'cachedEntity' => 'test' // имя класса
+);
+// [...]
+
+# кэшируемый вызов
+$res = $cache->foobar('1', '2');
+
+?>]]>           </programlisting>
+                Кэширование обычных вызовов методов
 <!--
-        					Enable / disable read control : if enabled, a control key is 
-        					embeded in the cache file and this key is compared with the 
-        					one calculated after the reading.
--->	    
-      					</entry>
-      				</row>
-      				<row>
-      					<entry><code>readControlType</code></entry>
-      					<entry><code>string</code></entry>
-      					<entry><code>'crc32'</code></entry>
-      					<entry>
-      					  Тип контроля чтения (только если readControl включен).
-      					  Возможные значения : 'md5' (лучший, но самый медленный),
-                  'crc32' (немного менее безопасный, но быстрее, лучший выбор),
-                  'strlen' для контроля толко по длине (самый быстрый).  
-<!--
-        					Type of read control (only if read control is enabled). Available values are :
-        					'md5' (best but slowest), 'crc32' (lightly less safe but faster, better choice),
-        					'strlen' for a length only test (fastest).
+                To cache classic method calls :
 -->
-        				</entry>
-      				</row>
-      				<row>
-      					<entry><code>hashedDirectoryLevel</code></entry>
-      					<entry><code>int</code></entry>
-      					<entry><code>0</code></entry>
-      					<entry>
-      					  Уровень структуры хэшированного каталога: <code>0</code>
-      					  означает "нет структуры хэшированного каталога", <code>1</code>
-      					  означает "один уровень каталога", <code>2</code> означает
-                  "два уровня"... Эта опция ускорит кэширование только если у
-                  вас тысячи файлов кэша. Только сравнение может помочь вам
-                  выбрать оптимальное для вас значение. Возможно, <code>1</code>
-                  или <code>2</code> будут лучшими значениями для начала. 
+                <programlisting role="php"><![CDATA[<?php
+
+class test {
+   
+    private $_string = 'hello !';
+      
+    public function foobar2($param1, $param2) {
+        echo($this->_string);
+        echo "foobar2_output($param1, $param2)";
+        return "foobar2_return($param1, $param2)";   
+    }
+
+}
+
+// [...]
+$frontendOptions = array(
+    'cachedEntity' => new test() // экземпляр класса
+);
+// [...]
+
+# кэшируемый вызов
+$res = $cache->foobar2('1', '2');
+
+?>]]>           </programlisting>
+            </para>
+        </sect3>   
+    </sect2>
+    
+    <sect2 id="zend.cache.frontends.file">
+        <title>Zend_Cache_Frontend_File</title>
+        <sect3 id="zend.cache.frontends.file.introduction">
+            <title>Введение</title>
+            <para>
+                <code>Zend_Cache_Frontend_File</code> является клиентской частью,
+                управляемой временем изменения "главного файла".
+                Она очень полезна для конфигурации или шаблонов.
 <!--
-        					Hashed directory structure level : 	0 means "no hashed directory 
-     						structure", 1 means "one level of directory", 2 means "two levels"... 
-     						This option can speed up the cache only when you have many thousands of 
-     						cache files. Only specific benchs can help you to choose the perfect 
-     						value for you. Maybe, 1 or 2 is a good start.
+                <code>Zend_Cache_Frontend_File</code> is a frontend driven by the 
+                modification time of a "master file". It's really interesting for examples
+                in configuration or templates issues.
 -->
-      					</entry>
-      				</row>
-      				<row>
-      					<entry><code>hashedDirectoryUmask</code></entry>
-      					<entry><code>int</code></entry>
-      					<entry><code>0700</code></entry>
-      					<entry>
-      						Маска режима создания файлов для стуктуры хэшированного каталога
+            </para>
+            <para>
+              Например, у вас есть конфигурационный файл XML, он разбирается
+              функцией, которая возвращает объект конфигурации
+              (наподобие <code>Zend_Config</code>). С помощью
+              <code>Zend_Cache_Frontend_File</code> вы можете сохранять объект
+              конфигурации в кэш (чтобы избежать разбора
+              конфигурационного файла XML каждый раз), но с сильной зависимостью
+              от "главного файла". Если конфигурационный файл XML изменяется,
+              то кэш сразу становится недействительным.
 <!--
-      						Umask for the hashed directory structure
+            	For instance, you have an XML configuration file which is parsed by a function 
+            	which returns a "config object" (like with <code>Zend_Config</code>). With
+            	<code>Zend_Cache_Frontend_File</code>, you can store the "config object" into
+            	cache (to avoid the parsing of the XML config file at each time) but with a
+            	sort of strong dependency on the "master file". So, if the XML config file
+            	is modified, the cache is immediatly invalidated.
 -->
-        				</entry>
-      				</row>
-      			</tbody>
-      		</tgroup>
-      	</table>
+            </para>
+        </sect3>
+        <sect3 id="zend.cache.frontends.file.options">
+            <title>Доступные опции</title>
+            <table>
+                <title>Доступные опции</title>
+                <tgroup cols="4">
+                     <thead>
+                          <row>
+                            <entry>Опция</entry>
+                            <entry>Тип данных</entry>
+                            <entry>Значение по умолчанию</entry>
+                            <entry>Описание</entry>
+                        </row>
+                     </thead>
+                     <tbody>
+                          <row>
+                              <entry><code>masterFile (обязательный)</code></entry>
+                              <entry><code>string</code></entry>
+                              <entry><code></code></entry>
+                              <entry>
+                                  Полные путь и имя главного файла
+                                  <!--the complete path and name of the master file-->                 
+                              </entry>
+                         </row>
+                      </tbody>
+                  </tgroup>
+              </table>
+        </sect3>   
+        <sect3 id="zend.cache.frontends.file.examples">
+            <title>Примеры</title>
+            <para>
+                Эта клиентская часть используется так же, как и
+                <code>Zend_Cache_Core</code>. Специальные примеры не нужны,
+                единственное, что надо сделать -- это определить
+                <code>masterFile</code>, когда используете фабрику.  
+<!--
+                Use of this frontend is the same than of <code>Zend_Cache_Core</code>. There
+                is no need of a specific example - the only thing to do is to 
+                define the <code>masterFile</code> when using the factory.
+-->
+            </para>
+        </sect3>
+    </sect2>
+    
+    <sect2 id="zend.cache.frontends.page">
+    	<title>Zend_Cache_Frontend_Page</title>
+    	<sect3 id="zend.cache.frontends.page.introduction">
+        	<title>Введение</title>
+        	<para>
+        	    <code>Zend_Cache_Frontend_Page</code> похожа на <code>Zend_Cache_Frontend_Output</code>,
+        	    но предназначена для кэширования целых страниц. <code>Zend_Cache_Frontend_Page</code>
+              нельзя использовать для кэширования только отдельных блоков. 
+<!--
+	            <code>Zend_Cache_Frontend_Page</code> is like <code>Zend_Cache_Frontend_Output</code>
+	            but designed for a complete page. It's impossible to use <code>Zend_Cache_Frontend_Page</code>
+	            for caching only a single block.
+-->
+	        </para>
+	        <para>
+	          С другой стороны, идентификатор кэша вычисляется автоматически
+            с использованием <code>$_SERVER['REQUEST_URI']</code> и
+            (в зависимости от опций) <code>$_GET</code>, <code>$_POST</code>,
+            <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_FILES</code>.
+            Кроме этого, вы используете только один метод для вызова
+            (<code>start()</code>), потому что <code>end()</code> вызывается
+            автоматически, когда страница заканчивается. 
+<!--
+	        	On the other hand, the "cache id" is calculated automatically with
+	        	<code>$_SERVER['REQUEST_URI']</code> and (depending on options) 
+	        	<code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_FILES</code>.
+	        	More over, you have only one method to call (<code>start()</code>) because the
+	        	<code>end()</code> call is fully automatic when the page is ended.
+-->
+	        </para>
+	        <para>
+	          На данный момент мы планируем добавить условную систему HTTP для
+	          сохранения пропускной способности (система будет отправлять
+            HTTP 304 Not Modified, если есть попадание в кэш и броузер уже имеет
+            правильную версию страницы). 
+<!--
+	        	For the moment, it's not implemented but we plan to add a HTTP conditional system
+	        	to save bandwith (the system will send a HTTP 304 Not Modified if the cache is hit
+	        	and if the browser has already the good version).
+-->
+	        </para>
+	        <note><para>
+	              Zend_Cache_Frontend_Page сейчас находится на стадии
+                "альфа", это означает, что она и в дальнейшем будет
+                совершенствоваться.
+<!--
+                Zend_Cache_Frontend_Page is really "alpha stuff" and is meant to be improved further down the road.
+-->
+	        </para></note>
+    	</sect3>
+    	<sect3 id="zend.cache.frontends.page.options">
+	        <title>Доступные опции (для этой клиентской части в фабрике Zend_Cache)<!--Available options (for this frontend in Zend_Cache factory)--></title>
+	        <table>
+	            <title>Доступные опции</title>
+	            <tgroup cols="4">
+	                 <thead>
+	                      <row>
+	                        <entry>Опция</entry>
+	                        <entry>Тип данных</entry>
+	                        <entry>Значение по умолчанию</entry>
+	                        <entry>Описание</entry>
+	                    </row>
+	                 </thead>
+	                 <tbody>
+	                 	 <row>
+	                          <entry><code>httpConditional</code></entry>
+	                          <entry><code>boolean</code></entry>
+	                          <entry><code>false</code></entry>
+	                          <entry>
+	                              Использовать условную систему HTTP (не реализовано на данный момент) 
+	                              <!--use the httpConditional system (not implemented for the moment)-->                 
+	                          </entry>
+	                     </row>
+	                     <row>
+	                          <entry><code>debugHeader</code></entry>
+	                          <entry><code>boolean</code></entry>
+	                          <entry><code>false</code></entry>
+	                          <entry>
+	                              Если установлен в <code>true</code>, то отладочный
+                                текст включается перед каждой кэшируемой страницей. 
+	                              <!--if true, a debug text is added before each cached pages-->                 
+	                          </entry>
+	                     </row>
+	                     <row>
+	                     	  <entry><code>defaultOptions</code></entry>
+	                          <entry><code>array</code></entry>
+	                          <entry><code>array(...смотрите далее...)</code></entry>
+	                          <entry>
+	                              Ассоциативный массив опций, включаемых по умолчанию
+	                              <!--an associative array of default options :--> 
+	                              <itemizedlist>
+	                                  <listitem>
+                                        (<code>boolean, true</code> по умолчанию) <code>cache</code> :
+                                        если <code>true</code>, то кэширование включено
+                                        <!--cache is on if true-->
+                                    </listitem>
+	                                  <listitem>
+                                        (<code>boolean, false</code> по умолчанию) <code>cacheWithGetVariables</code> :
+                                        если <code>true</code>, кэширование включено, даже если в массиве <code>$_GET</code> есть переменные
+                                        <!--if true, cache is still on even if there are some variables in <code>$_GET</code> array-->
+                                    </listitem>
+	                                  <listitem>
+                                        (<code>boolean, false</code> по умолчанию) <code>cacheWithPostVariables</code> :
+                                        если <code>true</code>, кэширование включено, даже если в массиве <code>$_POST</code> есть переменные
+                                        <!--if true, cache is still on even if there are some variables in <code>$_POST</code> array-->
+                                    </listitem>
+	                                  <listitem>
+                                        (<code>boolean, false</code> по умолчанию) <code>cacheWithSessionVariables</code> :
+                                        если <code>true</code>, кэширование включено, даже если в массиве <code>$_SESSION</code> есть переменные
+                                        <!--if true, cache is still on even if there are some variables in <code>$_SESSION</code> array-->
+                                    </listitem>
+	                                  <listitem>
+                                        (<code>boolean, false</code> по умолчанию) <code>cacheWithFilesVariables</code> :
+                                        если <code>true</code>, кэширование включено, даже если в массиве <code>$_FILES</code> есть переменные
+                                        <!--if true, cache is still on even if there are some variables in <code>$_FILES</code> array-->
+                                    </listitem>
+	                                  <listitem>
+                                        (<code>boolean, false</code> по умолчанию) <code>cacheWithCookieVariables</code> :
+                                        если <code>true</code>, кэширование включено, даже если в массиве <code>$_COOKIE</code> есть переменные
+                                        <!--if true, cache is still on even if there are some variables in <code>$_COOKIE</code> array-->
+                                    </listitem>
+									                  <listitem>
+                                        (<code>boolean, true</code> по умолчанию) <code>makeIdWithGetVariables</code> :
+                                        если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_GET</code>  
+                                        <!--if true, the cache id will be dependent of the content of the <code>$_GET</code> array-->
+                                    </listitem>
+	                                  <listitem>
+                                        (<code>boolean, true</code> по умолчанию) <code>makeIdWithPostVariables</code> :
+                                        если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_POST</code>  
+                                        <!--if true, the cache id will be dependent of the content of the <code>$_POST</code> array-->
+                                    </listitem>
+	                                  <listitem>
+                                        (<code>boolean, true</code> по умолчанию) <code>makeIdWithSessionVariables</code> :
+                                        если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_SESSION</code>  
+                                        <!--if true, the cache id will be dependent of the content of the <code>$_SESSION</code> array-->
+                                    </listitem>
+	                                  <listitem>
+                                        (<code>boolean, true</code> по умолчанию) <code>makeIdWithFilesVariables</code> :
+                                        если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_FILES</code>  
+                                        <!--if true, the cache id will be dependent of the content of the <code>$_FILES</code> array-->
+                                    </listitem>
+	                                  <listitem>
+                                        (<code>boolean, true</code> по умолчанию) <code>makeIdWithCookieVariables</code> :
+                                        если <code>true</code>, то идентификатор кэша будет зависеть от содержимого массива <code>$_COOKIE</code>  
+                                        <!--if true, the cache id will be dependent of the content of the <code>$_COOKIE</code> array-->
+                                    </listitem>	                              
+	                              </itemizedlist>              
+	                          </entry>
+	                     </row>
+	                     <row>
+	                          <entry><code>regexps</code></entry>
+	                          <entry><code>array</code></entry>
+	                          <entry><code>array()</code></entry>
+	                          <entry>
+	                              Ассоциативный массив для установки опций только
+                                для некоторых REQUEST_URI. Ключами этого массива
+                                являются регулярные выражения (PCRE), значениями --
+                                ассоциативные массивы со специальными опциями,
+                                которые устанавливаются, если $_SERVER['REQUEST_URI']
+                                соответствует регулярному выражению
+                                (см. defaultOptions в этом списке доступных опций).
+                                Если $_SERVER['REQUEST_URI'] соответствует нескольким
+                                регулярным выражениям, то используется только
+                                последнее из них.
+	                          	  <!--an associative array to set options only for some REQUEST_URI, keys are (PCRE) regexps, values are 
+	                          	  associative arrays with specific options to set if the regexp matchs on $_SERVER['REQUEST_URI']
+                                  (see defaultOptions for the list of available options) ; if several regexps match the $_SERVER['REQUEST_URI'], 
+                                  only the last one will be used-->       
+	                          </entry>
+	                     </row>
+	                  </tbody>
+	              </tgroup>
+	          </table>
+	    </sect3>   
+    	<sect3 id="zend.cache.frontends.page.examples">
+        	<title>Пример</title>
+	        <para>
+	            Использование <code>Zend_Cache_Frontend_Page</code> довольно простое: 
+<!--
+	            Use of Zend_Cache_Frontend_Page is really trivial :
+-->
+	            <programlisting role="php"><![CDATA[<?php
+	           
+// [...]
+	
+$cache->start();
+// если есть попадание в кэш, то результат отправляется броузеру
+// и выполнение скрипта на этом прекращается
+	
+// rest of the page ...
+	
+?>]]>           </programlisting>
+	        </para>
+	        <para>
+	          Более сложный пример, который показывает способ создания
+            централизованного управления кэшированием в загрузочном файле
+            (для использования с <code>Zend_Controller</code>, например).
+<!--
+	        	a more complex example which shows a way to get a centralized cache management in a bootstrap file
+	        	(for using with Zend_Controller for example)
+-->
+	        	<programlisting role="php"><![CDATA[<?php
+
+// [...] вы должны избегать слишком большого количества строк кода перед участком кэша 
+// [...] например, для наибольшей производительности "require_once" или "Zend::loadClass"
+// [...] должны находиться после участка кэша
+
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+   'lifeTime' => 7200,
+   'debugHeader' => true, // for debuging 
+   'regexps' => array(
+       '^/$' => array('cache' => true),         // кэширование всего IndexController;         
+       '^/index/' => array('cache' => true),    // кэширование всего IndexController;
+       '^/article/' => array('cache' => false), // не кэшируем ArticleController...
+       '^/article/view/' => array(              // ...но кэшируем действие "view" 
+           'cache' => true,                     // контроллера ArticleController;
+           'cacheWithPostVariables' => true,    // кэшируем, даже если есть переменные $_POST
+           'makeIdWithPostVariables' => true,   // (но кэш будет зависеть от массива $_POST)
+       )
+   )	  
+);
+$backendOptions = array(
+    'cacheDir' => '/tmp/' 
+);
+
+// получение объекта Zend_Cache_Frontend_Page
+$cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
+
+$cache->start();
+// если есть попадание в кэш, результат отправляется броузеру,
+// и выполнение скрипта на этом завершается
+
+// [...] конец загрузочного файла (этот код не исполняется, если есть попадание в кэш)
+	        	
+?>]]>           </programlisting>	        	
+	        </para>	        
+    	</sect3>
+	</sect2>   
+</sect1>
+
+<sect1 id="zend.cache.backends">
+    <title>Прикладные части Zend_Cache<!--Zend_Cache backends--></title>
+    
+    <sect2 id="zend.cache.backends.file">
+        <title>Zend_Cache_Backend_File</title>
+        <para>
+            Эта прикладная часть хранит записи кэша в файлах (в выбранной директории)             
+<!--
+            This backends stores cache records into files (in a choosen directory).
+--> 
+        </para>
+        <table>
+            <title>Доступные опции</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>Опция</entry>
+                        <entry>Тип данных</entry>
+                        <entry>Значение по умолчанию</entry>
+                        <entry>Описание</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>cacheDir</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'/tmp/'</code></entry>
+                          <entry>
+                  					  Директория, в которой хранятся файлы кэша
+                              <!--Directory where to store cache files-->    
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>fileLocking</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>true</code></entry>
+                          <entry>
+                					  Включает / отключает блокировку файлов. Позволяет избежать
+                            искажения данных кэша в плохих условиях, но это не поможет при
+                            многопоточном веб-сервере или файловой системе NFS...
+                            <!--Enable / disable fileLocking : Can avoid cache corruption under 
+                            bad circumstances but it doesn't help on multithread webservers 
+                            or on NFS filesystems...-->
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>readControl</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>true</code></entry>
+                          <entry>
+                					  Включает / отключает контроль чтения. Если включен, то в файл
+                					  кэша добавляется контрольный ключ и этот ключ сравнивается
+                            с другим, вычисляемым после чтения.
+                            <!--Enable / disable read control : if enabled, a control key is 
+                            embeded in the cache file and this key is compared with the 
+                            one calculated after the reading.-->        
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>readControlType</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'crc32'</code></entry>
+                          <entry>
+                					  Тип контроля чтения (только если readControl включен).
+                					  Возможные значения: 'md5' (лучший, но самый медленный),
+                            'crc32' (немного менее безопасный, но более быстрый, лучший выбор),
+                            'strlen' для контроля толко по длине (самый быстрый).  
+                            <!--Type of read control (only if read control is enabled). Available values are :
+                            'md5' (best but slowest), 'crc32' (lightly less safe but faster, better choice),
+                            'strlen' for a length only test (fastest).-->
+                        </entry>
+                      </row>
+                      <row>
+                          <entry><code>hashedDirectoryLevel</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>0</code></entry>
+                          <entry>
+                					   Уровень структуры хэшированного каталога: <code>0</code>
+                					   означает "нет структуры хэшированного каталога", <code>1</code>
+                					   -- "один уровень каталога", <code>2</code> --
+                             "два уровня"... Эта опция ускорит кэширование только если у
+                             вас тысячи файлов кэша. Только сравнение может помочь вам
+                             выбрать оптимальное для вас значение. Возможно, <code>1</code>
+                             или <code>2</code> будут лучшими значениями для начала. 
+                             <!--Hashed directory structure level :     0 means "no hashed directory 
+                             structure", 1 means "one level of directory", 2 means "two levels"... 
+                             This option can speed up the cache only when you have many thousands of 
+                             cache files. Only specific benchs can help you to choose the perfect 
+                             value for you. Maybe, 1 or 2 is a good start.-->
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>hashedDirectoryUmask</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>0700</code></entry>
+                          <entry>
+                  						Маска режима создания файлов для стуктуры хэшированного каталога.
+                              <!--Umask for the hashed directory structure-->
+                        </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
     </sect2>
     <sect2 id="zend.cache.backends.sqlite">
-    	<title>Zend_Cache_Backend_Sqlite</title>
-    	<para>
-    	  Эта серверная часть хранит записи кэша в базе данных SQLite. 
+        <title>Zend_Cache_Backend_Sqlite</title>
+        <para>
+        	  Эта серверная часть хранит записи кэша в базе данных SQLite. 
 <!--
-    		This backends stores cache records into a SQLite database.
+            This backends stores cache records into a SQLite database.
 -->
-    	</para>
-    	<para>
-    	  Доступные опции:
+        </para>
+        <table>
+            <title>Доступные опции</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>Опция</entry>
+                        <entry>Тип данных</entry>
+                        <entry>Значение по умолчанию</entry>
+                        <entry>Описание</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>cacheDBCompletePath (обязательный)</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>null</code></entry>
+                          <entry>
+                   					  Полный путь (с именем файла) к базе данных SQLite.
+                              <!--The complete path (filename included) of the SQLite database-->
+                          </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
+    </sect2>
+    <sect2 id="zend.cache.backends.memcached">
+        <title>Zend_Cache_Backend_Memcached</title>
+        <para>
+            Эта прикладная часть хранит записи кэша в серверах memcached.
+            <ulink url="http://www.danga.com/memcached/">Memcached</ulink> --
+            высокопроизводительная распределенная система кэширования объектов
+            в памяти. 
 <!--
-    		Available options are :
+            This backends stores cache records into a memcached server. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
+            is a high-performance, distributed memory object caching system. To use this backend, 
+            you need a memcached daemon and <ulink url="http://pecl.php.net/package/memcache">the memcache PECL extension</ulink>.
 -->
-    	</para>
-    	<table>
-    		<title>Доступные опции</title>
-    		<tgroup cols="4">
-     			<thead>
-      				<row>
-       					<entry>Опция</entry>
-				        <entry>Тип данных</entry>
-				        <entry>Значение по умолчанию</entry>
-				        <entry>Описание</entry>
-				    </row>
-     			</thead>
-     			<tbody>
-      				<row>
-      					<entry><code>cacheDBCompletePath (обязательный)</code></entry>
-      					<entry><code>string</code></entry>
-      					<entry><code>null</code></entry>
-      					<entry>
-      					  Полный путь (с именем файла) к базе данных SQLite.
+        </para>
+        <para>
+            Будьте осторожны: на данный момент теги для этой прикладной части
+            не поддерживаются, как и аргумент "doNotTestCacheValidity=true".    
 <!--
-      						The complete path (filename included) of the SQLite database
+        	Be careful : with this backend, "tags" are not supported for the moment as 
+        	the "doNotTestCacheValidity=true" argument.
 -->
-      					</entry>
-      				</row>
-      			</tbody>
-      		</tgroup>
-      	</table>
+        </para>
+        <table>
+            <title>Доступные опции</title>
+            <tgroup cols="4">
+                 <thead>
+                      <row>
+                        <entry>Опция</entry>
+                        <entry>Тип данных</entry>
+                        <entry>Значение по умолчанию</entry>
+                        <entry>Описание</entry>
+                    </row>
+                 </thead>
+                 <tbody>
+                      <row>
+                          <entry><code>servers</code></entry>
+                          <entry><code>array</code></entry>
+                          <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
+                          <entry>
+                              Массив серверов memcached; каждый сервер описан посредством ассоциативного массива:
+                              'host' => (string) : имя сервера memcached, 
+                              'port' => (int) : порт сервера memcached, 
+                              'persistent' => (bool) : использовать или нет постоянное соединение с этим сервером
+<!--
+                              An array of memcached servers ; each memcached server is described by an associative array :
+                              'host' => (string) : the name of the memcached server, 
+                              'port' => (int) : the port of the memcached server, 
+                              'persistent' => (bool) : use or not persistent connections to this memcached server
+-->
+                          </entry>
+                      </row>
+                      <row>
+                          <entry><code>compression</code></entry>
+                          <entry><code>boolean</code></entry>
+                          <entry><code>flase</code></entry>
+                          <entry>
+                             <code>true</code>, если вы хотите использовать компрессию на лету
+                             <!--if you want to use on-the-fly compression-->
+                          </entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
+    </sect2>
+    <sect2 id="zend.cache.backends.apc">
+        <title>Zend_Cache_Backend_APC</title>
+        <para>
+            Эта прикладная часть хранит записи кэша в совместно используемой памяти
+            с помощью расширения <ulink url="http://pecl.php.net/package/APC">APC</ulink>
+            (Alternative PHP Cache -- альтернативный PHP кэш), которое, разумеется,
+            нужно установить для использования этой прикладной части. 
+<!--
+            This backends stores cache records in shared memory through 
+            the <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) extension
+            (which is of course need for using this backend).
+-->
+        </para>
+        <para>
+            Будьте осторожны: на данный момент теги для этой прикладной части
+            не поддерживаются, как и аргумент "doNotTestCacheValidity=true".    
+<!--
+        	Be careful : with this backend, "tags" are not supported for the moment as 
+        	the "doNotTestCacheValidity=true" argument.
+-->
+        </para>
+        <para>
+            Нет специальных опций для этой клиентской части.
+<!--
+            There is no option for this backend.
+-->
+        </para>
     </sect2>
 </sect1> 
   
