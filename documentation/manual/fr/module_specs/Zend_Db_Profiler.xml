@@ -134,7 +134,8 @@ foreach ($profileur->getQueryProfiles() as $query) {
 }
 
 echo 'Executé ' . $nombreRequetes . ' requêtes en ' . $tempsTotal . ' secondes' . "\n";
-echo 'Temps moyen : ' . $nombreRequetes / $tempsTotal . ' secondes' . "\n";
+echo 'Temps moyen : ' . $tempsTotal / $nombreRequetes . ' secondes' . "\n";
+echo 'Requêtes par seconde: ' . $nombreRequetes / $tempsTotal . ' seconds' . "\n";
 echo 'Requête la plus lente : ' . $tempsLePlusLong . "\n";
 echo "Requête la plus longue : \n" . $requeteLaPlusLongue . "\n";
 ?>]]></programlisting>
