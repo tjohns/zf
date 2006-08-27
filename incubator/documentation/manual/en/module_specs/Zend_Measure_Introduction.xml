@@ -1,45 +1,42 @@
 <sect1 id="zend.measure.introduction">
-    <title>Einführung</title>
+    <title>Introduction</title>
     <para>
-        <code>Zend_Measure</code> bietet einen generellen und sehr einfachen Weg um
-        mit Maßeinheiten zu Arbeiten.
+        <code>Zend_Measure</code> provides a generic and very easy way for working with measurements.
     </para>
     <para>
-        Mit <code>Zend_Measure</code> können Maßeinheiten in andere Maßeinheiten des selben
-        Typs konvertiert werden. Sie können addiert, substrahiert und verglichen werden.
-        Man kann aus einer beliebigen Eingabe eines Benutzers, welche dieser
-        in seiner Landessprache tätigt, die Maßeinheit automatisch extrahieren lassen.
+        Using <code>Zend_Measure</code>, you can convert measurements into different units of the same type.
+        They can be added, subtracted and compared against each other.
+        From a given input made in the user's native language, the unit of measurement can be automatically extracted.
     </para>
     <para>
-        Es wird natürlich eine große und völlig unterschiedlichste Anzahl von
-        Maßeinheiten unterstützt. Die meisten dieser Maßeinheiten sind physikalischer
-        Natur. Es gibt aber auch spezielle Maßeinheiten die die Numerik oder andere
-        Gebiete betreffen die nur bedingt oder gar nicht physikalisch sind.
+        Of course a great number of completely different units of measurement is being supported. Most
+        of these units are of a physical nature, but there are also special measurements used, in numerics or
+        other areas, that are only partly physical - or not at all.
     </para>
     <para>
-        Das folgende Schnellstart-Beispiel zeigt wie man Maßeinheiten automatisch konvertieren kann.
+        The following quickstart tutorial shows how units of measurement can be automatically converted.
     </para>
     <example>
-        <title>Maßeinheiten konvertieren</title>
+        <title>Converting measurements</title>
         <para>
-            Um eine Maßeinheit zu konvertieren muß der Wert bekannt sein und dessen Typ.
-            Der Wert selbst kann Integer oder Float sein, oder sogar als String vorliegen.
+            To convert a measurement, its value and its type have to be known.
+            The value can be an integer, a float, or even a string.
         </para>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure.php';
 
-// Die Längen Klasse wird bei der Verwendung der Konstanten benötigt
+// The Length class is needed when using the constants
 require_once 'Zend/Measure/Length.php';
 
 $unit = new Zend_Measure(100,Zend_Measure_Length::METER,'en');
 
-// In Yard umwandeln
+// Convert meters to yards
 echo $unit->convertTo(Zend_Measure_Length::YARD);
 ?>]]></programlisting>
         <para>
             <note>
-                Wie man sieht besteht das Beispiel aus nur 4 Codezeilen.
-                Die Handhabung ist so kompakt das man meistens mit 4 Zeilen auskommt.
+                As you can see, the example consists of only 4 lines of code.
+                The usage of <code>Zend_Measure</code> is so compact that usually 4 lines of code is all that's needed.
             </note>
         </para>
     </example>

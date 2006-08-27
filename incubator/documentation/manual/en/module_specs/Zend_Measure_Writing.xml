@@ -6,14 +6,13 @@
         Eigenschaft.
     </para>
     <para>
-        Die Maßeinheiten selbst haben eine einheitliche Schreibweise:
+        Die Maßeinheiten selbst haben eine einheitliche Schreibweise und sind englisch notiert:
         <code>Typ_der_Maßeinheit::NAME_DER_MAßEINHEIT</code>.
         Jede Maßeinheit besteht aus einem Umrechnungsfaktor und der Darstellungseinheit.
         <example>
             <title>Die Maßeinheit <code>Meter</code></title>
             <para>
-                Der <code>Meter</code> ist vom Typ Länge, also <code>LENGTH</code> da alle
-                Maßeinheiten in englisch notiert sind.
+                Der <code>Meter</code> ist vom Typ Länge, also <code>LENGTH</code>.
                 Die Maßeinheit wird also <code>Length::METER</code> geschrieben.
                 Die Darstellungseinheit ist <code>m</code>.
             </para>
@@ -22,11 +21,6 @@ require_once 'Zend/Measure.php';
 // Laden der Längen Klasse
 require_once 'Zend/Measure/Length.php';
 
-
-echo Zend_Measure::LENGTH;           // gibt 'Zend_Measure::LENGTH' aus
-echo Zend_Measure_Length::STANDARD;  // gibt 'Length::METER' aus
-echo Zend_Measure_Length::KILOMETER; // gibt 'Length::KILOMETER' aus
-
 $unit = new Zend_Measure(100,Zend_Measure_Length::METER,'en');
 echo $unit;
 // gibt '100 m' aus
@@ -34,8 +28,55 @@ echo $unit;
         </example>
     </para>
     <para>
-        Eine detailierte Liste findet sich im Kapitel
-        <link linkend="zend.measure.types"><code>Arten von Maßeinheiten</code></link>
+        Für eine einfachere Handhabung werden in <code>Zend_Measure</code> die international
+        standardisierten Maßeinheiten mit dem Syntax <code>Zend_Measure::TYP_DER_MAßEINHEIT</code>.
+        Für Meter ist kann die Einheit also auch als <code>Zend_Measure::STANDARD</code> geschrieben
+        werden.
+        <example>
+            <title>Nochmals die Maßeinheit <code>Meter</code></title>
+            <para>
+                Da der Meter die Standardeinheit ist kann das vorige Beispiel auch
+                kürzer geschrieben werden.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Measure.php';
+
+$unit = new Zend_Measure(100,Zend_Measure::LENGTH,'en');
+echo $unit;
+// gibt '100 m' aus
+?>]]></programlisting>
+        </example>
+        Die gekürzte Schreibsweise hat unter anderem den Vorteil das die Klasse des Typs nicht
+        geladen werden muß da dies die Hauptklasse automatisch erledigt.
+    </para>
+    <para>
+        Für alle anderen Maßeinheiten muß die zugehörige Klasse geladen werden.
+    </para>
+    <para>
+        Es gibt allerdings noch eine andere Möglichkeit sich das Laden der Klasse zu ersparen.
+        Hinter jeder Konstante steht ein String der den genauen Typ definiert.
+        Er wird <code>Typ_Klasse::TYP_DER_MAßEINHEIT</code> geschrieben.
+        <example>
+            <title>Schon wieder die Maßeinheit <code>Meter</code></title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Measure.php';
+// Laden der Längen Klasse
+
+$unit = new Zend_Measure(100,'Length::METER','en');
+echo $unit;
+// gibt '100 m' aus
+
+echo Zend_Measure::LENGTH;           // gibt 'Zend_Measure::LENGTH' aus und entspriche 'Length::METER'
+echo Zend_Measure_Length::STANDARD;  // gibt 'Length::METER' aus
+echo Zend_Measure_Length::METER;     // gibt 'Length::METER' aus
+?>]]></programlisting>
+        </example>
+        Ein unbekannter String der damit auch einem unbekannten Typ entspricht
+        führt allerdings zu einer Exception die abgefangen werden muß.
+    </para>
+    <para>
+        Detailierte Informationen zu allen Maßeinheiten sind im Kapitel
+        <link linkend="zend.measure.types"><code>Arten von Maßeinheiten</code> zu finden</link>
     </para>
 </sect1>
 <!--
