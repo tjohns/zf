@@ -79,12 +79,13 @@ class Zend_Controller_RouteTest extends PHPUnit2_Framework_TestCase
     public function testStaticMatchWithWildcard()
     {
         $route = new Zend_Controller_Router_Route('news/view/*', array('controller' => 'news', 'action' => 'view'));
-        $values = $route->match('news/view/show/all/year/2000');
+        $values = $route->match('news/view/show/all/year/2000/empty');
 
         $this->assertEquals('news', $values['controller']);
         $this->assertEquals('view', $values['action']);
         $this->assertEquals('all', $values['show']);
         $this->assertEquals('2000', $values['year']);
+        $this->assertEquals(null, $values['empty']);
     }
 
     public function testVariableValues()
@@ -182,6 +183,17 @@ class Zend_Controller_RouteTest extends PHPUnit2_Framework_TestCase
         $this->assertSame('2006', $values['year']);
     }
 
+    public function testVariablesWithWildcardAndNumericKey()
+    {
+        $route = new Zend_Controller_Router_Route(':controller/:action/:next/*');
+        $values = $route->match('c/a/next/2000/show/all/sort/name');
+
+        $this->assertSame('c', $values['controller']);
+        $this->assertSame('a', $values['action']);
+        $this->assertSame('next', $values['next']);
+        $this->assertTrue(array_key_exists('2000', $values));
+    }
+
     public function testAssemble()
     {
         $route = new Zend_Controller_Router_Route('authors/:name');
@@ -255,5 +267,5 @@ class Zend_Controller_RouteTest extends PHPUnit2_Framework_TestCase
         $this->assertSame('07', $values['month']);
         $this->assertSame('author', $values['sort']);
     }
-
+    
 }

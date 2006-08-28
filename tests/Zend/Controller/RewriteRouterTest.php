@@ -396,4 +396,19 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $this->assertSame('/test', $rwBase);
     }
 
+    public function testRewriteBaseWithFakeIndexAtRoot()
+    {
+        $_SERVER['DOCUMENT_ROOT'] = '/var/www/localhost/htdocs';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/www/localhost/htdocs/test/index.php';
+        $_SERVER['REQUEST_URI'] = '/archive/2006/05/index.php';
+        $_SERVER['SCRIPT_NAME'] = '/index.php';
+        $_SERVER['PATH_INFO'] = '/archive/2006/05/index.php';
+
+        // Redundant to setUp
+        $router = new Zend_Controller_RewriteRouter();
+        $rwBase = $router->detectRewriteBase();
+
+        $this->assertSame('', $rwBase);
+    }
+
 }
