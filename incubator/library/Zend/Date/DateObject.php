@@ -416,11 +416,17 @@ class Zend_Date_DateObject {
                 case 'i':
                     $output .= (($date['minutes'] < 10) ? '0'.$date['minutes'] : $date['minutes']);
                     break;
+                case 'I':
+                    $output .= $date['minutes'];
+                    break;
                 case 'U':
                     $output .= $timestamp;
                     break;
                 case 's':
                     $output .= (($date['seconds'] < 10) ? '0'.$date['seconds'] : $date['seconds']);
+                    break;
+                case 'C':
+                    $output .= $date['seconds'];
                     break;
                 case 'a':
                     $output .= (($date['hours'] >= 12) ? 'pm' : 'am');

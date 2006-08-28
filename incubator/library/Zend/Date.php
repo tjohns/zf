@@ -35,29 +35,58 @@ class Zend_Date {
 
 
     // Class wide Date Constants
-    const YEAR    = 'Zend_Date::YEAR';    // 4 digit year
-    const YEAR_2  = 'Zend_Date::YEAR_2';  // 2 digit year, leading zeros 10 = 2010, 01 = 2001
-    const MONTH   = 'MMMM'; // full month name - locale aware - February, March 
-    const MONTH_0 = 'M0';   // 1 digit month, no leading zeros, 1 = jan, 10 = Oct
-    const MONTH_1 = 'M';    // 1 letter month name - locale aware - J, F, M, A, J, J, 
-    const MONTH_2 = 'MM';   // 2 digit month, leading zeros 01 = Jan, 10 = Oct
-    const MONTH_3 = 'MMM';  // 3 letter monthname - locale aware - Jan, Feb, Mar
-    const DAY     = 'DDDD'; // full day name - locale aware - Monday, Friday
-    const DAY_0   = 'D0';   // 1 digit day, no leading zeros
-    const DAY_1   = 'D';    // 1 letter day name - locale aware - M, T, W
-    const DAY_2   = 'DD';   // 2 letter day name - locale aware - Mo, Tu, We
-    const HOUR    = 'HH';   // 2 digit hour, leading zeros 01, 10
-    const HOUR_0  = 'H';    // 1 digit hour, no leading zero
-    const MINUTE  = 'mm';   // 2 digit minute, leading zeros
-    const MINUTE_0= 'm';    // 1 digit minute, no leading zero
-    const SECOND  = 'SS';   // 2 digit second, leading zeros
-    const SECOND_0= 'S';    // 1 digit second, no leading zero
-    const MSECOND = 'µ';    // Milliseconds
-    const ERA     = 'E';    // Era name
+    const YEAR           = 'Zend_Date::YEAR';           // 4 digit year
+    const YEAR_SHORT     = 'Zend_Date::YEAR_SHORT';     // 2 digit year, leading zeros 10 = 2010, 01 = 2001
+    const MONTH          = 'Zend_Date::MONTH';          // full month name - locale aware - February, March 
+    const MONTH_DIGIT    = 'Zend_Date::MONTH_DIGIT';    // 1 digit month, no leading zeros, 1 = jan, 10 = Oct
+    const MONTH_NARROW   = 'Zend_Date::MONTH_NARROW';   // 1 letter month name - locale aware - J, F, M, A, J, J, 
+    const MONTH_SHORT    = 'Zend_Date::MONTH_SHORT';    // 2 digit month, leading zeros 01 = Jan, 10 = Oct
+    const MONTH_NAME     = 'Zend_Date::MONTH_NAME';     // 3 letter monthname - locale aware - Jan, Feb, Mar
+    const WEEKDAY        = 'Zend_Date::WEEKDAY';        // full day name - locale aware - Monday, Friday
+    const WEEKDAY_DIGIT  = 'Zend_Date::WEEKDAY_DIGIT';  // 1 digit day, no leading zeros
+    const WEEKDAY_NARROW = 'Zend_Date::WEEKDAY_NARROW'; // 1 letter day name - locale aware - M, T, W
+    const WEEKDAY_NAME   = 'Zend_Date::WEEKDAY_NAME';   // 2 letter day name - locale aware - Mo, Tu, We
+    const DAY            = 'Zend_Date::DAY';            // 2 digit day of month - 18, 05, 31
+    const DAY_SHORT      = 'Zend_Date::DAY_SHORT';      // 1,2 digit day of month - 18, 5, 31
+    const HOUR           = 'Zend_Date::HOUR';           // 2 digit hour, leading zeros 01, 10
+    const HOUR_SHORT     = 'Zend_Date::HOUR_SHORT';     // 1 digit hour, no leading zero
+    const HOUR_AM        = 'Zend_Date::HOUR_AM';        // 2 digit hour, leading zeros 01, 10 0-11am/pm
+    const HOUR_SHORT_AM  = 'Zend_Date::HOUR_SHORT_AM';  // 1 digit hour, no leading zero, 0-11 am/pm
+    const MERIDIEM       = 'Zend_Date::HOUR';           // 2 digit hour, leading zeros 01, 10
+    const MINUTE         = 'Zend_Date::MINUTE';         // 2 digit minute, leading zeros
+    const MINUTE_SHORT   = 'Zend_Date::MINUTE_SHORT';   // 1 digit minute, no leading zero
+    const SECOND         = 'Zend_Date::SECOND';         // 2 digit second, leading zeros
+    const SECOND_SHORT   = 'Zend_Date::SECOND_SHORT';   // 1 digit second, no leading zero
+    const MSECOND        = 'Zend_Date::MSECOND';        // Milliseconds
+    const ERA            = 'Zend_Date::ERA';            // Era name
+    const ERA_SHORT      = 'Zend_Date::ERA_SHORT';      // Era short name
 
     private $_Const = array(
-        'Zend_Date::YEAR'    => 'YYYY',
-        'Zend_Date::YEAR_2'  => 'YY'
+        'Zend_Date::YEAR'           => 'yyyy',
+        'Zend_Date::YEAR_SHORT'     => 'yy',
+        'Zend_Date::MONTH'          => 'MMMM',
+        'Zend_Date::MONTH_DIGIT'    => 'Mn',
+        'Zend_Date::MONTH_NARROW'   => 'M',
+        'Zend_Date::MONTH_SHORT'    => 'MM',
+        'Zend_Date::MONTH_NAME'     => 'MMM',
+        'Zend_Date::WEEKDAY'        => 'wwww',
+        'Zend_Date::WEEKDAY_DIGIT'  => 'wn',
+        'Zend_Date::WEEKDAY_NARROW' => 'w',
+        'Zend_Date::WEEKDAY_NAME'   => 'ww',
+        'Zend_Date::DAY'            => 'dd',
+        'Zend_Date::DAY_SHORT'      => 'd',
+        'Zend_Date::HOUR'           => 'HH',
+        'Zend_Date::HOUR_SHORT'     => 'H',
+        'Zend_Date::HOUR_AM'        => 'hh',
+        'Zend_Date::HOUR_SHORT_AM'  => 'h',
+        'Zend_Date::MERIDIEM'       => 'z',
+        'Zend_Date::MINUTE'         => 'mm',
+        'Zend_Date::MINUTE_SHORT'   => 'm',
+        'Zend_Date::SECOND'         => 'ss',
+        'Zend_Date::SECOND_SHORT'   => 's',
+        'Zend_Date::MSECOND'        => 'µ',
+        'Zend_Date::ERA'            => 'EEEE',
+        'Zend_Date::ERA_SHORT'      => 'E'
     );
 
     // Predefined Date formats
@@ -149,7 +178,6 @@ class Zend_Date {
      */
     public function subTimestamp($timestamp)
     {
-//      $stamp = bcsub($this->_Date->getTimestamp(),$timestamp);
         return new Zend_Date($this->compareTimestamp($timestamp));
     }
 
@@ -162,7 +190,7 @@ class Zend_Date {
      */
     public function compareTimestamp($timestamp)
     {
-        return bcsub($this->_Date->getTimestamp() - $timestamp);
+        return bcsub($this->_Date->getTimestamp(),$timestamp);
     }
 
 
@@ -208,7 +236,7 @@ class Zend_Date {
 
 
     /**
-     * Returns a timestamp or a part of a date
+     * Returns a timestamp or a part of a date 
      * 
      * @param  $part - datepart, if empty the timestamp will be returned
      * @return mixed   timestamp or datepart 
@@ -217,49 +245,94 @@ class Zend_Date {
     {
         switch($part)
         {
-            case YEAR :
+            case Zend_Date::YEAR :
+                return $this->_Date->date('Y',$this->_Date->getTimestamp(), true);
                 break;
-            case YEAR_2 :
+            case Zend_Date::YEAR_SHORT :
+                return $this->_Date->date('y',$this->_Date->getTimestamp(), true);
                 break;
-            case MONTH :
+            case Zend_Date::MONTH :
+                // TODO: locale aware full monthname : january
                 break;
-            case MONTH_0 :
+            case Zend_Date::MONTH_DIGIT :
+                return $this->_Date->date('n',$this->_Date->getTimestamp(), true);
                 break;
-            case MONTH_1 :
+            case Zend_Date::MONTH_NARROW :
+                // TODO: locale aware month letter : j
                 break;
-            case MONTH_2 :
+            case Zend_Date::MONTH_SHORT :
+                return $this->_Date->date('m',$this->_Date->getTimestamp(), true);
                 break;
-            case MONTH_3 :
+            case Zend_Date::MONTH_NAME :
+                // TODO: locale aware short monthname : jan
                 break;
-            case DAY :
+            case Zend_Date::WEEKDAY :
+                // TODO: locale aware full weekday name : monday
                 break;
-            case DAY_0 :
+            case Zend_Date::WEEKDAY_DIGIT :
+                return $this->_Date->date('w',$this->_Date->getTimestamp(), true);
                 break;
-            case DAY_1 :
+            case Zend_Date::WEEKDAY_NARROW :
+                // TODO: locale aware weekday letter : m
                 break;
-            case DAY_2 :
+            case Zend_Date::WEEKDAY_NAME :
+                // TODO: locale aware short weekday name : Mo
                 break;
-            case HOUR :
+            case Zend_Date::DAY :
+                return $this->_Date->date('d',$this->_Date->getTimestamp(), true);
                 break;
-            case HOUR_0 :
+            case Zend_Date::DAY_SHORT :
+                return $this->_Date->date('j',$this->_Date->getTimestamp(), true);
                 break;
-            case MINUTE :
+            case Zend_Date::HOUR :
+                return $this->_Date->date('H',$this->_Date->getTimestamp(), true);
                 break;
-            case MINUTE_0 :
+            case Zend_Date::HOUR_SHORT :
+                return $this->_Date->date('G',$this->_Date->getTimestamp(), true);
                 break;
-            case SECOND :
+            case Zend_Date::HOUR_AM :
+                return $this->_Date->date('h',$this->_Date->getTimestamp(), true);
                 break;
-            case SECOND_0 :
+            case Zend_Date::HOUR_SHORT_AM :
+                return $this->_Date->date('g',$this->_Date->getTimestamp(), true);
                 break;
-            case MSECOND :
+            case Zend_Date::MERIDIEM :
+                return $this->_Date->date('a',$this->_Date->getTimestamp(), true);
                 break;
-            case ERA :
+            case Zend_Date::MINUTE :
+                return $this->_Date->date('i',$this->_Date->getTimestamp(), true);
+                break;
+            case Zend_Date::MINUTE_SHORT :
+                return $this->_Date->date('I',$this->_Date->getTimestamp(), true);
+                break;
+            case Zend_Date::SECOND :
+                return $this->_Date->date('s',$this->_Date->getTimestamp(), true);
+                break;
+            case Zend_Date::SECOND_SHORT :
+                return $this->_Date->date('C',$this->_Date->getTimestamp(), true);
+                break;
+            case Zend_Date::MSECOND :
+                break;
+            case Zend_Date::ERA :
+                // TODO: locale aware era name - beyond christus
+                break;
+            case Zend_Date::ERA_SHORT :
+                // TODO: locale aware short era name - BC
                 break;
             default :
                 return $this->_Date->getTimestamp();
                 break;
         }        
-        // TODO: return dateparts
+        // TODO: 
+        // Swatch time
+        // ISO 8601
+        // Timedifference GMT
+        // RFC 2822
+        // English Attachments th, rd, nd
+        // Count days of month
+        // actual timezonesettings 
+        // number of week ISO 8601
+        // day of year
     }
 
 
@@ -376,8 +449,7 @@ class Zend_Date {
      */
     public function cloneIt($part)
     {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
+        return new Zend_Date($this->_Date->getTimestamp());
     }
 
 
@@ -858,8 +930,7 @@ class Zend_Date {
      */
     public function isLeapYear()
     {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_Date->isLeapYear();
     }
 
 
@@ -907,8 +978,10 @@ class Zend_Date {
      */
     public function isAfter($date)
     {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
+        if ($this->get() < $date->get())
+            return true;
+
+        return false;
     }
 
 
@@ -920,8 +993,10 @@ class Zend_Date {
      */
     public function isBefor($date)
     {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
+        if ($this->get() > $date->get())
+            return true;
+
+        return false;
     }
 
 
@@ -1710,96 +1785,10 @@ class Zend_Date {
     /**
      * Returns the day of year of our Date Object
      *
-     * @param $locale string - OPTIONAL defines the locale in which the day of the week should be outputted
-     * @param $format string - OPTIONAL defines the format in which the day of the week should be outputted (1/sunday/...)
-     * @return string
+     * @return integer
      */
-    public function getDayOfYear($locale, $format)
+    public function getDayOfYear()
     {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Returns a defined calendar
-     *
-     * @param $calendar string - defines the type in which the calendar string should be outputted (Gregorian, Islamic, Hebrew,...)
-     * @param $locale string - defines the locale in which the calendar should be outputted
-     * @param $format string - defines the format in which the calendar should be outputted
-     * @return string
-     */
-    public function getCalendar($calendar, $locale, $format)
-    {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Sets a new date from calendar
-     * Alias for set($calendar,Zend_Date::CALENDARFORMAT);
-     *
-     * @param $calendar string - date to set from a calendar string
-     * @param $type string     - OPTIONAL type of calendar for parsing input (Gregorian, Islamic, Hebrew,...)
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @param $format          - OPTIONAL an rule for parsing the input
-     * @return object
-     */
-    public function setCalendar($calendar, $type, $locale, $format)
-    {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
-    }    
-
-
-    /**
-     * Adds a calendar date
-     * Alias for add($calendar,Zend_Date::CALENDARFORMAT);
-     *
-     * @param $calendar string - date to add from a calendar string
-     * @param $type string     - OPTIONAL type of calendar for parsing input (Gregorian, Islamic, Hebrew,...)
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @param $format          - OPTIONAL an rule for parsing the input
-     * @return object
-     */
-    public function addCalendar($calendar, $type, $locale, $format)
-    {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Substracts a calendar date
-     * Alias for sub($calendar,Zend_Date::CALENDARFORMAT);
-     *
-     * @param $calendar string - date to sub from a calendar string
-     * @param $type string     - OPTIONAL type of calendar for parsing input (Gregorian, Islamic, Hebrew,...)
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @param $format          - OPTIONAL an rule for parsing the input
-     * @return object
-     */
-    public function subCalendar($calendar, $type, $locale, $format)
-    {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Compares the calendar, returning the difference
-     * Alias for compare($calendar,Zend_Date::CALENDARFORMAT);
-     *
-     * @param $calendar string - date to compare from a calendar string
-     * @param $type string     - OPTIONAL type of calendar for parsing input (Gregorian, Islamic, Hebrew,...)
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @param $format          - OPTIONAL an rule for parsing the input
-     * @return object
-     */
-    public function compareCalendar($calendar, $type, $locale, $format)
-    {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_Date->date('z',$this->_Date->getTimestamp(), true);
     }
 }
