@@ -43,6 +43,13 @@ require_once 'Zend/Cache/Backend.php';
 class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Cache_Backend_Interface 
 {
     
+    // -----------------
+    // --- Constants ---
+    // -----------------
+    const DEFAULT_HOST       = '127.0.0.1';
+    const DEFAULT_PORT       = 11211;
+    const DEFAULT_PERSISTENT = true;
+    
     // ------------------
     // --- Properties ---
     // ------------------
@@ -63,9 +70,9 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      */
     protected $_options = array(
         'servers' => array(array(
-        	'host' => 'localhost',
-            'port' => 11211,
-            'persistent' => true
+        	'host' => Zend_Cache_Backend_Memcached::DEFAULT_HOST,
+            'port' => Zend_Cache_Backend_Memcached::DEFAULT_PORT,
+            'persistent' => Zend_Cache_Backend_Memcached::DEFAULT_PERSISTENT
         )),
         'compression' => false
     );
@@ -103,6 +110,12 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
         }
         $this->_memcache = new Memcache;
         foreach ($this->_options['servers'] as $server) {
+            if (!array_key_exists('persistent', $server)) {
+                $server['persistent'] = Zend_Cache_Backend_Memcached::DEFAULT_PERSISTENT;
+            }
+            if (!array_key_exists('port', $server)) {
+                $server['port'] = Zend_Cache_Backend_Memcached::DEFAULT_PORT;
+            }
             $this->_memcache->addServer($server['host'], $server['port'], $server['persistent']);
         }
     }  
