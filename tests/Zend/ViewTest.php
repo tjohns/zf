@@ -233,7 +233,7 @@ class Zend_ViewTest extends PHPUnit2_Framework_TestCase
     	
     	$view->bar = 'bar';
     	
-    	$this->assertEquals('foo bar baz', $view->render('test.phtml') );
+    	$this->assertEquals("foo bar baz\n", $view->render('test.phtml') );
     }
     
     
