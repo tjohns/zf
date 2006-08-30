@@ -26,6 +26,12 @@ require_once('Zend/Date/DateObject.php');
 
 
 /**
+ * Include needed Locale classes
+ */
+require_once('Zend/Locale/Data');
+
+
+/**
  * @category   Zend
  * @package    Zend_Date
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -58,8 +64,8 @@ class Zend_Date {
     const SECOND         = 'Zend_Date::SECOND';         // 2 digit second, leading zeros
     const SECOND_SHORT   = 'Zend_Date::SECOND_SHORT';   // 1 digit second, no leading zero
     const MSECOND        = 'Zend_Date::MSECOND';        // Milliseconds
-    const ERA            = 'Zend_Date::ERA';            // Era name
-    const ERA_SHORT      = 'Zend_Date::ERA_SHORT';      // Era short name
+    const DAY_OF_YEAR    = 'Zend_Date::DAY_OF_YEAR';    // Number of day of year
+    const MONTH_DAYS     = 'Zend_Date::MONTH_DAYS';     // Number of days this month
 
     private $_Const = array(
         'Zend_Date::YEAR'           => 'yyyy',
@@ -85,8 +91,8 @@ class Zend_Date {
         'Zend_Date::SECOND'         => 'ss',
         'Zend_Date::SECOND_SHORT'   => 's',
         'Zend_Date::MSECOND'        => 'µ',
-        'Zend_Date::ERA'            => 'EEEE',
-        'Zend_Date::ERA_SHORT'      => 'E'
+        'Zend_Date::DAY_OF_YEAR'    => 'C',
+        'Zend_Date::MONTH_DAYS'     => 't'
     );
 
     // Predefined Date formats
@@ -99,6 +105,12 @@ class Zend_Date {
      * Date Object
      */
     private $_Date;
+
+
+    /**
+     * Locale Object / Setting
+     */
+    private $_Locale = '';
 
 
     /**
@@ -119,7 +131,7 @@ class Zend_Date {
         // TODO: Is String
         // TODO: Lets Parse String Locale-Aware or Format-Parameter aware
         // TODO: New Zend_Locale_Format function getDate
-        
+        $this->_Locale = $locale;
         $this->_Date = new Zend_Date_DateObject($date);
     }
 
@@ -239,10 +251,13 @@ class Zend_Date {
      * Returns a timestamp or a part of a date 
      * 
      * @param  $part - datepart, if empty the timestamp will be returned
-     * @return mixed   timestamp or datepart 
+     * @param  $locale - OPTIONAL locale for output
+     * @return mixed   timestamp or datepart as string or integer 
      */
-    public function get($part)
+    public function get($part, $locale = false)
     {
+        if ($locale === false)
+            $locale = $this->_Locale;
         switch($part)
         {
             case Zend_Date::YEAR :
@@ -252,31 +267,37 @@ class Zend_Date {
                 return $this->_Date->date('y',$this->_Date->getTimestamp(), true);
                 break;
             case Zend_Date::MONTH :
-                // TODO: locale aware full monthname : january
+                $month = $this->_Date->date('n',$this->_Date->getTimestamp(), true);
+                return Zend_Locale_Data::getContent($locale, 'month', array('Gregorian', 'wide', $month));
                 break;
             case Zend_Date::MONTH_DIGIT :
                 return $this->_Date->date('n',$this->_Date->getTimestamp(), true);
                 break;
             case Zend_Date::MONTH_NARROW :
-                // TODO: locale aware month letter : j
+                $month = $this->_Date->date('n',$this->_Date->getTimestamp(), true);
+                return substr(Zend_Locale_Data::getContent($locale, 'month', array('Gregorian', 'abbreviated', $month)),0,1);
                 break;
             case Zend_Date::MONTH_SHORT :
                 return $this->_Date->date('m',$this->_Date->getTimestamp(), true);
                 break;
             case Zend_Date::MONTH_NAME :
-                // TODO: locale aware short monthname : jan
+                $month = $this->_Date->date('n',$this->_Date->getTimestamp(), true);
+                return Zend_Locale_Data::getContent($locale, 'month', array('Gregorian', 'abbreviated', $month));
                 break;
             case Zend_Date::WEEKDAY :
-                // TODO: locale aware full weekday name : monday
+                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), true));
+                return Zend_Locale_Data::getContent($locale, 'day', array('Gregorian', 'wide', $weekday));
                 break;
             case Zend_Date::WEEKDAY_DIGIT :
                 return $this->_Date->date('w',$this->_Date->getTimestamp(), true);
                 break;
             case Zend_Date::WEEKDAY_NARROW :
-                // TODO: locale aware weekday letter : m
+                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), true));
+                return substr(Zend_Locale_Data::getContent($locale, 'day', array('Gregorian', 'abbreviated', $weekday)),0,1);
                 break;
             case Zend_Date::WEEKDAY_NAME :
-                // TODO: locale aware short weekday name : Mo
+                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), true));
+                return Zend_Locale_Data::getContent($locale, 'day', array('Gregorian', 'abbreviated', $weekday));
                 break;
             case Zend_Date::DAY :
                 return $this->_Date->date('d',$this->_Date->getTimestamp(), true);
@@ -312,12 +333,15 @@ class Zend_Date {
                 return $this->_Date->date('C',$this->_Date->getTimestamp(), true);
                 break;
             case Zend_Date::MSECOND :
+                $actual = $this->_Date->mktime($this->get(Zend_Date::HOUR, Zend_Date::MINUTE, 
+                    Zend_Date::SECOND, Zend_Date::MONTH_DIGIT, Zend_Date::DAY, Zend_Date::YEAR, false, true));
+                return bcsub($this->_Date->getTimestamp(), $actual);
                 break;
-            case Zend_Date::ERA :
-                // TODO: locale aware era name - beyond christus
+            case Zend_Date::DAY_OF_YEAR :
+                return $this->_Date->date('z',$this->_Date->getTimestamp(), true);
                 break;
-            case Zend_Date::ERA_SHORT :
-                // TODO: locale aware short era name - BC
+            case Zend_Date::MONTH_DAYS :
+                return $this->_Date->date('t',$this->_Date->getTimestamp(), true);
                 break;
             default :
                 return $this->_Date->getTimestamp();
@@ -329,10 +353,9 @@ class Zend_Date {
         // Timedifference GMT
         // RFC 2822
         // English Attachments th, rd, nd
-        // Count days of month
         // actual timezonesettings 
         // number of week ISO 8601
-        // day of year
+        // era
     }
 
 
@@ -986,12 +1009,12 @@ class Zend_Date {
 
 
     /**
-     * Returns if the date is befor this date
+     * Returns if the date is before this date
      *
      * @param $date object     - date to compare
      * @return boolean
      */
-    public function isBefor($date)
+    public function isBefore($date)
     {
         if ($this->get() > $date->get())
             return true;
