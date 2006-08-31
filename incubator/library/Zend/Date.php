@@ -324,13 +324,13 @@ class Zend_Date {
                 return $this->_Date->date('i',$this->_Date->getTimestamp(), true);
                 break;
             case Zend_Date::MINUTE_SHORT :
-                return $this->_Date->date('I',$this->_Date->getTimestamp(), true);
+                return (int) $this->_Date->date('i',$this->_Date->getTimestamp(), true);
                 break;
             case Zend_Date::SECOND :
                 return $this->_Date->date('s',$this->_Date->getTimestamp(), true);
                 break;
             case Zend_Date::SECOND_SHORT :
-                return $this->_Date->date('C',$this->_Date->getTimestamp(), true);
+                return (int) $this->_Date->date('s',$this->_Date->getTimestamp(), true);
                 break;
             case Zend_Date::MSECOND :
                 $actual = $this->_Date->mktime($this->get(Zend_Date::HOUR, Zend_Date::MINUTE, 
