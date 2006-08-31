@@ -53,6 +53,7 @@ class Zend_Config implements Countable, Iterator
     public function __construct($array, $allowModifications = false)
     {
         $this->_allowModifications = $allowModifications;
+        $this->_data = array();
         foreach ($array as $key => $value) {
             if ($this->_isValidKeyName($key)) {
                 if (is_array($value)) {

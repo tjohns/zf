@@ -272,6 +272,21 @@ class Zend_ConfigTest extends PHPUnit2_Framework_TestCase
 
         $this->fail('An expected Zend_Config_Exception has not been raised');
     }
+    
+    public function testZF343()
+    {
+        $config_array = array(
+			'controls' => array(
+				'visible' => array(
+					'name' => 'visible',
+					'type' => 'checkbox',
+					'attribs' => array(), // empty array
+				),
+			),
+		);
+		$form_config = new Zend_Config($config_array, true);
+		$this->assertSame(array(), $form_config->controls->visible->attribs->asArray());
+    }
 
 }
 
