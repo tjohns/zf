@@ -28,7 +28,7 @@ require_once('Zend/Date/DateObject.php');
 /**
  * Include needed Locale classes
  */
-require_once('Zend/Locale/Data');
+require_once('Zend/Locale/Data.php');
 
 
 /**
@@ -39,66 +39,162 @@ require_once('Zend/Locale/Data');
  */
 class Zend_Date {
 
-
     // Class wide Date Constants
-    const YEAR           = 'Zend_Date::YEAR';           // 4 digit year
-    const YEAR_SHORT     = 'Zend_Date::YEAR_SHORT';     // 2 digit year, leading zeros 10 = 2010, 01 = 2001
-    const MONTH          = 'Zend_Date::MONTH';          // full month name - locale aware - February, March 
-    const MONTH_DIGIT    = 'Zend_Date::MONTH_DIGIT';    // 1 digit month, no leading zeros, 1 = jan, 10 = Oct
-    const MONTH_NARROW   = 'Zend_Date::MONTH_NARROW';   // 1 letter month name - locale aware - J, F, M, A, J, J, 
-    const MONTH_SHORT    = 'Zend_Date::MONTH_SHORT';    // 2 digit month, leading zeros 01 = Jan, 10 = Oct
-    const MONTH_NAME     = 'Zend_Date::MONTH_NAME';     // 3 letter monthname - locale aware - Jan, Feb, Mar
-    const WEEKDAY        = 'Zend_Date::WEEKDAY';        // full day name - locale aware - Monday, Friday
-    const WEEKDAY_DIGIT  = 'Zend_Date::WEEKDAY_DIGIT';  // 1 digit day, no leading zeros
-    const WEEKDAY_NARROW = 'Zend_Date::WEEKDAY_NARROW'; // 1 letter day name - locale aware - M, T, W
-    const WEEKDAY_NAME   = 'Zend_Date::WEEKDAY_NAME';   // 2 letter day name - locale aware - Mo, Tu, We
-    const DAY            = 'Zend_Date::DAY';            // 2 digit day of month - 18, 05, 31
-    const DAY_SHORT      = 'Zend_Date::DAY_SHORT';      // 1,2 digit day of month - 18, 5, 31
-    const HOUR           = 'Zend_Date::HOUR';           // 2 digit hour, leading zeros 01, 10
-    const HOUR_SHORT     = 'Zend_Date::HOUR_SHORT';     // 1 digit hour, no leading zero
-    const HOUR_AM        = 'Zend_Date::HOUR_AM';        // 2 digit hour, leading zeros 01, 10 0-11am/pm
-    const HOUR_SHORT_AM  = 'Zend_Date::HOUR_SHORT_AM';  // 1 digit hour, no leading zero, 0-11 am/pm
-    const MERIDIEM       = 'Zend_Date::HOUR';           // 2 digit hour, leading zeros 01, 10
-    const MINUTE         = 'Zend_Date::MINUTE';         // 2 digit minute, leading zeros
-    const MINUTE_SHORT   = 'Zend_Date::MINUTE_SHORT';   // 1 digit minute, no leading zero
-    const SECOND         = 'Zend_Date::SECOND';         // 2 digit second, leading zeros
-    const SECOND_SHORT   = 'Zend_Date::SECOND_SHORT';   // 1 digit second, no leading zero
-    const MSECOND        = 'Zend_Date::MSECOND';        // Milliseconds
-    const DAY_OF_YEAR    = 'Zend_Date::DAY_OF_YEAR';    // Number of day of year
-    const MONTH_DAYS     = 'Zend_Date::MONTH_DAYS';     // Number of days this month
+
+    // day formats
+    const DAY            = 'Zend_Date::DAY';            // d - 2 digit day of month, 01-31
+    const WEEKDAY_SHORT  = 'Zend_Date::WEEKDAY_SHORT';  // D - 3 letter day of week - locale aware, Mon-Sun
+    const DAY_SHORT      = 'Zend_Date::DAY_SHORT';      // j - 1,2 digit day of month, 1-31
+    const WEEKDAY        = 'Zend_Date::WEEKDAY';        // l - full day name - locale aware, Monday - Sunday
+    const WEEKDAY_8601   = 'Zend_Date::WEEKDAY_8601';   // N - digit weekday ISO 8601, 1-7
+    const DAY_SUFFIX     = 'Zend_Date::DAY_SUFFIX';     // S - english suffix day of month, st-th
+    const WEEKDAY_DIGIT  = 'Zend_Date::WEEKDAY_DIGIT';  // w - weekday, 0-6
+    const DAY_OF_YEAR    = 'Zend_Date::DAY_OF_YEAR';    // z - Number of day of year
+
+    const WEEKDAY_NARROW = 'Zend_Date::WEEKDAY_NARROW'; // --- 1 letter day name - locale aware, M-S
+    const WEEKDAY_NAME   = 'Zend_Date::WEEKDAY_NAME';   // --- 2 letter day name - locale aware,Mo-Su
+
+    // week formats
+    const WEEK           = 'Zend_Date::WEEK';           // W - number of week ISO8601, 1-53
+
+    // month formats
+    const MONTH          = 'Zend_Date::MONTH';          // F - full month name - locale aware, January-December 
+    const MONTH_SHORT    = 'Zend_Date::MONTH_SHORT';    // m - 2 digit month, 01-12
+    const MONTH_NAME     = 'Zend_Date::MONTH_NAME';     // M - 3 letter monthname - locale aware, Jan-Dec
+    const MONTH_DIGIT    = 'Zend_Date::MONTH_DIGIT';    // n - 1 digit month, no leading zeros, 1-12
+    const MONTH_DAYS     = 'Zend_Date::MONTH_DAYS';     // t - Number of days this month
+
+    const MONTH_NARROW   = 'Zend_Date::MONTH_NARROW';   // --- 1 letter month name - locale aware, J-D
+
+    // year formats
+    const LEAPYEAR       = 'Zend_Date::LEAPYEAR';       // L - is leapyear ?, 0-1
+    const YEAR_8601      = 'Zend_Date::YEAR_8601';      // o - number of year ISO8601
+    const YEAR           = 'Zend_Date::YEAR';           // Y - 4 digit year
+    const YEAR_SHORT     = 'Zend_Date::YEAR_SHORT';     // y - 2 digit year, leading zeros 00-99
+
+    // time formats
+    const MERIDIEM       = 'Zend_Date::MERIDIEM';       // A,a - AM/PM - locale aware, AM/PM
+    const SWATCH         = 'Zend_Date::SWATCH';         // B - Swatch Internet Time
+    const HOUR_SHORT_AM  = 'Zend_Date::HOUR_SHORT_AM';  // g - 1 digit hour, no leading zero, 1-12 am/pm
+    const HOUR_SHORT     = 'Zend_Date::HOUR_SHORT';     // G - 1 digit hour, no leading zero, 0-23
+    const HOUR_AM        = 'Zend_Date::HOUR_AM';        // h - 2 digit hour, leading zeros, 01-12 am/pm
+    const HOUR           = 'Zend_Date::HOUR';           // H - 2 digit hour, leading zeros, 00-23
+    const MINUTE         = 'Zend_Date::MINUTE';         // i - 2 digit minute, leading zeros, 00-59
+    const SECOND         = 'Zend_Date::SECOND';         // s - 2 digit second, leading zeros, 00-59
+
+    const MINUTE_SHORT   = 'Zend_Date::MINUTE_SHORT';   // --- 1 digit minute, no leading zero, 0-59
+    const SECOND_SHORT   = 'Zend_Date::SECOND_SHORT';   // --- 1 digit second, no leading zero, 0-59
+
+    // timezone formats
+    const TIMEZONE_NAME  = 'Zend_Date::TIMEZONE_NAME';  // e - timezone string
+    const DAYLIGHT       = 'Zend_Date::DAYLIGHT';       // I - is Daylight saving time ?, 0-1
+    const GMT_DIFF       = 'Zend_Date::GMT_DIFF';       // O - GMT difference, -1200 +1200
+    const GMT_DIFF_SEP   = 'Zend_Date::GMT_DIFF_SEP';   // P - seperated GMT diff, -12:00 +12:00
+    const TIMEZONE       = 'Zend_Date::TIMEZONE';       // T - timezone, EST, GMT, MDT
+    const TIMEZONE_SECS  = 'Zend_Date::TIMEZONE_SECS';  // Z - timezone offset in seconds, -43200 +43200
+
+    // date strings
+    const ISO_8601       = 'Zend_Date::ISO_8601';       // c - ISO 8601 date string 
+    const RFC_2822       = 'Zend_Date::RFC_2822';       // r - RFC 2822 date string
+    const TIMESTAMP      = 'Zend_Date::TIMESTAMP';      // U - unix timestamp
+
+    // additional formats
+    const ERA            = 'Zend_Date::ERA';            // --- name of era, locale aware,
+    const DATE_FULL      = 'Zend_Date::DATE_FULL';      // --- full date, locale aware
+    const DATE_LONG      = 'Zend_Date::DATE_LONG';      // --- long date, locale aware
+    const DATE_MEDIUM    = 'Zend_Date::DATE_MEDIUM';    // --- medium date, locale aware
+    const DATE_SHORT     = 'Zend_Date::DATE_SHORT';     // --- short date, locale aware
+    const TIME_FULL      = 'Zend_Date::TIME_FULL';      // --- full time, locale aware
+    const TIME_LONG      = 'Zend_Date::TIME_LONG';      // --- long time, locale aware
+    const TIME_MEDIUM    = 'Zend_Date::TIME_MEDIUM';    // --- medium time, locale aware
+    const TIME_SHORT     = 'Zend_Date::TIME_SHORT';     // --- short time, locale aware
+    const ATOM           = 'Zend_Date::ATOM';           // --- DATE_ATOM
+    const COOKIE         = 'Zend_Date::COOKIE';         // --- DATE_COOKIE
+    const RFC_822        = 'Zend_Date::RFC_822';        // --- DATE_RFC822
+    const RFC_850        = 'Zend_Date::RFC_850';        // --- DATE_RFC850
+    const RFC_1036       = 'Zend_Date::RFC_1036';       // --- DATE_RFC1036
+    const RFC_1123       = 'Zend_Date::RFC_1123';       // --- DATE_RFC1123
+    const RSS            = 'Zend_Date::RSS';            // --- DATE_RSS
+    const W3C            = 'Zend_Date::W3C';            // --- DATE_W3C
+
 
     private $_Const = array(
-        'Zend_Date::YEAR'           => 'yyyy',
-        'Zend_Date::YEAR_SHORT'     => 'yy',
-        'Zend_Date::MONTH'          => 'MMMM',
-        'Zend_Date::MONTH_DIGIT'    => 'Mn',
-        'Zend_Date::MONTH_NARROW'   => 'M',
-        'Zend_Date::MONTH_SHORT'    => 'MM',
-        'Zend_Date::MONTH_NAME'     => 'MMM',
-        'Zend_Date::WEEKDAY'        => 'wwww',
-        'Zend_Date::WEEKDAY_DIGIT'  => 'wn',
-        'Zend_Date::WEEKDAY_NARROW' => 'w',
-        'Zend_Date::WEEKDAY_NAME'   => 'ww',
-        'Zend_Date::DAY'            => 'dd',
-        'Zend_Date::DAY_SHORT'      => 'd',
-        'Zend_Date::HOUR'           => 'HH',
-        'Zend_Date::HOUR_SHORT'     => 'H',
-        'Zend_Date::HOUR_AM'        => 'hh',
-        'Zend_Date::HOUR_SHORT_AM'  => 'h',
-        'Zend_Date::MERIDIEM'       => 'z',
-        'Zend_Date::MINUTE'         => 'mm',
-        'Zend_Date::MINUTE_SHORT'   => 'm',
-        'Zend_Date::SECOND'         => 'ss',
-        'Zend_Date::SECOND_SHORT'   => 's',
-        'Zend_Date::MSECOND'        => 'µ',
-        'Zend_Date::DAY_OF_YEAR'    => 'C',
-        'Zend_Date::MONTH_DAYS'     => 't'
-    );
+        // day formats
+        'Zend_Date::DAY'            => 'd',
+        'Zend_Date::WEEKDAY_SHORT'  => 'D',
+        'Zend_Date::DAY_SHORT'      => 'j',
+        'Zend_Date::WEEKDAY'        => 'l',
+        'Zend_Date::WEEKDAY_8601'   => 'N',
+        'Zend_Date::DAY_SUFFIX'     => 'S',
+        'Zend_Date::WEEKDAY_DIGIT'  => 'w',
+        'Zend_Date::DAY_OF_YEAR'    => 'z',
 
-    // Predefined Date formats
-    const TIME  = 'TIME';
-    const DATE  = 'DATE';
-    const TIMESTAMP = 'TIMESTAMP';
+        'Zend_Date::WEEKDAY_NARROW' => 'xxw',
+        'Zend_Date::WEEKDAY_NAME'   => 'xxn',
+
+        // week formats
+        'Zend_Date::WEEK'           => 'W',
+
+        // month formats
+        'Zend_Date::MONTH'          => 'F', 
+        'Zend_Date::MONTH_SHORT'    => 'm',
+        'Zend_Date::MONTH_NAME'     => 'M',
+        'Zend_Date::MONTH_DIGIT'    => 'n',
+        'Zend_Date::MONTH_DAYS'     => 't',
+
+        'Zend_Date::MONTH_NARROW'   => 'xxm',
+
+        // year formats
+        'Zend_Date::LEAPYEAR'       => 'L',
+        'Zend_Date::YEAR_8601'      => 'o',
+        'Zend_Date::YEAR'           => 'Y',
+        'Zend_Date::YEAR_SHORT'     => 'y',
+
+        // time formats
+        'Zend_Date::MERIDIEM'       => 'A',
+        'Zend_Date::SWATCH'         => 'B',
+        'Zend_Date::HOUR_SHORT_AM'  => 'g',
+        'Zend_Date::HOUR_SHORT'     => 'G',
+        'Zend_Date::HOUR_AM'        => 'h',
+        'Zend_Date::HOUR'           => 'H',
+        'Zend_Date::MINUTE'         => 'i',
+        'Zend_Date::SECOND'         => 's',
+
+        'Zend_Date::MINUTE_SHORT'   => 'xxi',
+        'Zend_Date::SECOND_SHORT'   => 'xxs',
+
+        // timezone formats
+        'Zend_Date::TIMEZONE_NAME'  => 'e',
+        'Zend_Date::DAYLIGHT'       => 'I',
+        'Zend_Date::GMT_DIFF'       => 'O',
+        'Zend_Date::GMT_DIFF_SEP'   => 'P',
+        'Zend_Date::TIMEZONE'       => 'T',
+        'Zend_Date::TIMEZONE_SECS'  => 'Z',
+
+        // date strings
+        'Zend_Date::ISO_8601'       => 'c', 
+        'Zend_Date::RFC_2822'       => 'r',
+        'Zend_Date::TIMESTAMP'      => 'U',
+
+        // additional formats
+        'Zend_Date::ERA'            => 'xxe',
+        'Zend_Date::DATE_FULL'      => 'xdf',
+        'Zend_Date::DATE_LONG'      => 'xdl',
+        'Zend_Date::DATE_MEDIUM'    => 'xdm',
+        'Zend_Date::DATE_SHORT'     => 'xds',
+        'Zend_Date::TIME_FULL'      => 'xtf',
+        'Zend_Date::TIME_LONG'      => 'xtl',
+        'Zend_Date::TIME_MEDIUM'    => 'xtm',
+        'Zend_Date::TIME_SHORT'     => 'xts',
+        'Zend_Date::ATOM'           => 'xxa',
+        'Zend_Date::COOKIE'         => 'xxc',
+        'Zend_Date::RFC_822'        => 'xr2',
+        'Zend_Date::RFC_850'        => 'xr5',
+        'Zend_Date::RFC_1036'       => 'xr6',
+        'Zend_Date::RFC_1123'       => 'xr3',
+        'Zend_Date::RSS'            => 'xxr',
+        'Zend_Date::W3C'            => 'xxc'
+    );
 
 
     /**
@@ -250,112 +346,242 @@ class Zend_Date {
     /**
      * Returns a timestamp or a part of a date 
      * 
-     * @param  $part - datepart, if empty the timestamp will be returned
-     * @param  $locale - OPTIONAL locale for output
+     * @param  $part   - datepart, if empty the timestamp will be returned
+     * @param  $locale - OPTIONAL, locale for output
+     * @param  $gmt    - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return mixed   timestamp or datepart as string or integer 
      */
-    public function get($part, $locale = false)
+    public function get($part, $locale = false, $gmt = false)
     {
         if ($locale === false)
             $locale = $this->_Locale;
+
         switch($part)
         {
-            case Zend_Date::YEAR :
-                return $this->_Date->date('Y',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::YEAR_SHORT :
-                return $this->_Date->date('y',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::MONTH :
-                $month = $this->_Date->date('n',$this->_Date->getTimestamp(), true);
-                return Zend_Locale_Data::getContent($locale, 'month', array('Gregorian', 'wide', $month));
-                break;
-            case Zend_Date::MONTH_DIGIT :
-                return $this->_Date->date('n',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::MONTH_NARROW :
-                $month = $this->_Date->date('n',$this->_Date->getTimestamp(), true);
-                return substr(Zend_Locale_Data::getContent($locale, 'month', array('Gregorian', 'abbreviated', $month)),0,1);
-                break;
-            case Zend_Date::MONTH_SHORT :
-                return $this->_Date->date('m',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::MONTH_NAME :
-                $month = $this->_Date->date('n',$this->_Date->getTimestamp(), true);
-                return Zend_Locale_Data::getContent($locale, 'month', array('Gregorian', 'abbreviated', $month));
-                break;
-            case Zend_Date::WEEKDAY :
-                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), true));
-                return Zend_Locale_Data::getContent($locale, 'day', array('Gregorian', 'wide', $weekday));
-                break;
-            case Zend_Date::WEEKDAY_DIGIT :
-                return $this->_Date->date('w',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::WEEKDAY_NARROW :
-                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), true));
-                return substr(Zend_Locale_Data::getContent($locale, 'day', array('Gregorian', 'abbreviated', $weekday)),0,1);
-                break;
-            case Zend_Date::WEEKDAY_NAME :
-                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), true));
-                return Zend_Locale_Data::getContent($locale, 'day', array('Gregorian', 'abbreviated', $weekday));
-                break;
+            // day formats
             case Zend_Date::DAY :
-                return $this->_Date->date('d',$this->_Date->getTimestamp(), true);
+                return $this->_Date->date('d',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::WEEKDAY_SHORT :
+                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), $gmt));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'wide', $weekday));
+                return substr($day[$weekday],0,3);
                 break;
             case Zend_Date::DAY_SHORT :
-                return $this->_Date->date('j',$this->_Date->getTimestamp(), true);
+                return $this->_Date->date('j',$this->_Date->getTimestamp(), $gmt);
                 break;
-            case Zend_Date::HOUR :
-                return $this->_Date->date('H',$this->_Date->getTimestamp(), true);
+            case Zend_Date::WEEKDAY :
+                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), $gmt));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'wide', $weekday));
+                return $day[$weekday];
                 break;
-            case Zend_Date::HOUR_SHORT :
-                return $this->_Date->date('G',$this->_Date->getTimestamp(), true);
+            case Zend_Date::WEEKDAY_8601 :
+                return $this->_Date->date('N',$this->_Date->getTimestamp(), $gmt);
                 break;
-            case Zend_Date::HOUR_AM :
-                return $this->_Date->date('h',$this->_Date->getTimestamp(), true);
+            case Zend_Date::DAY_SUFFIX :
+                return $this->_Date->date('S',$this->_Date->getTimestamp(), $gmt);
                 break;
-            case Zend_Date::HOUR_SHORT_AM :
-                return $this->_Date->date('g',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::MERIDIEM :
-                return $this->_Date->date('a',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::MINUTE :
-                return $this->_Date->date('i',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::MINUTE_SHORT :
-                return (int) $this->_Date->date('i',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::SECOND :
-                return $this->_Date->date('s',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::SECOND_SHORT :
-                return (int) $this->_Date->date('s',$this->_Date->getTimestamp(), true);
-                break;
-            case Zend_Date::MSECOND :
-                $actual = $this->_Date->mktime($this->get(Zend_Date::HOUR, Zend_Date::MINUTE, 
-                    Zend_Date::SECOND, Zend_Date::MONTH_DIGIT, Zend_Date::DAY, Zend_Date::YEAR, false, true));
-                return bcsub($this->_Date->getTimestamp(), $actual);
+            case Zend_Date::WEEKDAY_DIGIT :
+                return $this->_Date->date('w',$this->_Date->getTimestamp(), $gmt);
                 break;
             case Zend_Date::DAY_OF_YEAR :
-                return $this->_Date->date('z',$this->_Date->getTimestamp(), true);
+                return $this->_Date->date('z',$this->_Date->getTimestamp(), $gmt);
+                break;
+
+
+            case Zend_Date::WEEKDAY_NARROW :
+                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), $gmt));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'abbreviated', $weekday));
+                return substr($day[$weekday],0,1);
+                break;
+            case Zend_Date::WEEKDAY_NAME :
+                $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), $gmt));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'abbreviated', $weekday));
+                return $day[$weekday];
+                break;
+
+
+            // week formats
+            case Zend_Date::WEEK :
+                return $this->_Date->date('W',$this->_Date->getTimestamp(), $gmt);
+                break;
+
+
+            // month formats
+            case Zend_Date::MONTH :
+                $month = $this->_Date->date('n',$this->_Date->getTimestamp(), $gmt);
+                $mon = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'wide', $month));
+                return $mon[$month];
+                break;
+            case Zend_Date::MONTH_SHORT :
+                return $this->_Date->date('m',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::MONTH_NAME :
+                $month = $this->_Date->date('n',$this->_Date->getTimestamp(), $gmt);
+                $mon = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'abbreviated', $month));
+                return $mon[$month];
+                break;
+            case Zend_Date::MONTH_DIGIT :
+                return $this->_Date->date('n',$this->_Date->getTimestamp(), $gmt);
                 break;
             case Zend_Date::MONTH_DAYS :
-                return $this->_Date->date('t',$this->_Date->getTimestamp(), true);
+                return $this->_Date->date('t',$this->_Date->getTimestamp(), $gmt);
                 break;
-            default :
+
+
+            case Zend_Date::MONTH_NARROW :
+                $month = $this->_Date->date('n',$this->_Date->getTimestamp(), $gmt);
+                $mon = Zend_Locale_Data::getContent($locale, 'month', array('gregorian', 'abbreviated', $month));
+                return substr($mon[$month],0,1);
+                break;
+
+
+            // year formats
+            case Zend_Date::LEAPYEAR :
+                return $this->_Date->date('L',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::YEAR_8601 :
+                return $this->_Date->date('o',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::YEAR :
+                return $this->_Date->date('Y',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::YEAR_SHORT :
+                return $this->_Date->date('y',$this->_Date->getTimestamp(), $gmt);
+                break;
+
+
+            // time formats
+            case Zend_Date::MERIDIEM :
+                $am = $this->_Date->date('a',$this->_Date->getTimestamp(), $gmt);
+                $amlocal = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
+                return $amlocal[$am];
+                break;
+            case Zend_Date::SWATCH :
+                return $this->_Date->date('B',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::HOUR_SHORT_AM :
+                return $this->_Date->date('g',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::HOUR_SHORT :
+                return $this->_Date->date('G',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::HOUR_AM :
+                return $this->_Date->date('h',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::HOUR :
+                return $this->_Date->date('H',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::MINUTE :
+                return $this->_Date->date('i',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::SECOND :
+                return $this->_Date->date('s',$this->_Date->getTimestamp(), $gmt);
+                break;
+
+
+            case Zend_Date::MINUTE_SHORT :
+                return (int) $this->_Date->date('i',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::SECOND_SHORT :
+                return (int) $this->_Date->date('s',$this->_Date->getTimestamp(), $gmt);
+                break;
+
+
+            // timezone formats
+            case Zend_Date::TIMEZONE_NAME :
+                // TODO: should be locale aware, but CLDR does not provide the proper information 'til now
+                return $this->_Date->date('e',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::DAYLIGHT :
+                return $this->_Date->date('I',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::GMT_DIFF :
+                return $this->_Date->date('O',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::GMT_DIFF_SEP :
+                return $this->_Date->date('P',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::TIMEZONE :
+                // TODO: timezone - date('T'); - could be locale aware
+                return $this->_Date->date('T',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::TIMEZONE_SECS :
+                return $this->_Date->date('Z',$this->_Date->getTimestamp(), $gmt);
+                break;
+
+
+            // date strings
+            case Zend_Date::ISO_8601 :
+                // TODO: timezone - date('c');
+                return $this->_Date->date('Y-m-d\TH:i:sO',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::RFC_2822 :
+                return $this->_Date->date('r',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::TIMESTAMP :
                 return $this->_Date->getTimestamp();
                 break;
+
+
+            // additional formats
+            case Zend_Date::ERA :
+                // TODO: locale aware
+                break;
+            case Zend_Date::DATE_FULL :
+                // TODO: locale aware
+                break;
+            case Zend_Date::DATE_LONG :
+                // TODO: locale aware
+                break;
+            case Zend_Date::DATE_MEDIUM :
+                // TODO: locale aware
+                break;
+            case Zend_Date::DATE_SHORT :
+                // TODO: locale aware
+                break;
+            case Zend_Date::TIME_FULL :
+                // TODO: locale aware
+                break;
+            case Zend_Date::TIME_LONG :
+                // TODO: locale aware
+                break;
+            case Zend_Date::TIME_MEDIUM :
+                // TODO: locale aware
+                break;
+            case Zend_Date::TIME_SHORT :
+                // TODO: locale aware
+                break;
+            case Zend_Date::ATOM :
+                return $this->_Date->date('Y\-m\-d\TH\:i\:sP',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::COOKIE :
+                return $this->_Date->date('l\, d\-M\-y H\:i\:s e',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::RFC_822 :
+                return $this->_Date->date('D\, d M y H\:m\:s O',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::RFC_850 :
+                return $this->_Date->date('l\, d\-M\-y H\:m\:s e',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::RFC_1036 :
+                return $this->_Date->date('D\, d M y H\:m\:s O',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::RFC_1123 :
+                return $this->_Date->date('D\, d M Y H\:m\:s O',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::RSS :
+                return $this->_Date->date('D\, d M Y H\:m\:s O',$this->_Date->getTimestamp(), $gmt);
+                break;
+            case Zend_Date::W3C :
+                return $this->_Date->date('Y\-m\-d\TH\:m\:sP',$this->_Date->getTimestamp(), $gmt);
+                break;
+
+
+            default :
+                return $this->_Date->date($part,$this->_Date->getTimestamp(), $gmt);
+                break;
         }        
-        // TODO: 
-        // Swatch time
-        // ISO 8601
-        // Timedifference GMT
-        // RFC 2822
-        // English Attachments th, rd, nd
-        // actual timezonesettings 
-        // number of week ISO 8601
-        // era
     }
 
 

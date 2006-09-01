@@ -427,6 +427,10 @@ class Zend_Locale_Data
                 }
                 break;
 
+            case 'timezone':
+                self::_getFile($locale, '/ldml/dates/timeZoneNames/zone[@type=\''.$value.'\']/exemplarCity','',$value);
+                break;
+
             case 'timezonestandard':
                 self::_getFile($locale, '/ldml/dates/timeZoneNames/zone','type');
                 $_temp = self::$_list;

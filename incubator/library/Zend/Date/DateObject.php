@@ -303,7 +303,7 @@ class Zend_Date_DateObject {
                 case 'd':  // day of month, 2 digits, with leading zero, 01 - 31
                     $output .= (($date['mday'] < 10) ? '0'.$date['mday'] : $date['mday']);
                     break;
-                case 'D':  // day of month, 3 letters, Mon - Sun
+                case 'D':  // day of week, 3 letters, Mon - Sun
                     $output .= gmdate('D', 86400*(3+$this->dayOfWeek($date['year'], $date['mon'], $date['mday'])));
                     break;
                 case 'j':  // day of month, without leading zero, 1 - 31
@@ -313,7 +313,7 @@ class Zend_Date_DateObject {
                     $output .= gmdate('l', 86400*(3+$this->dayOfWeek($date['year'], $date['mon'], $date['mday'])));
                     break;
                 case 'N':  // ISO 8601 numeric day of week, 1 - 7
-                    // TODO: add format ISO 8601 numeric day of week 1 = Monday, 7 = Sunday
+                    $output .= ($this->dayOfWeek($date['year'], $date['mon'], $date['mday']) + 1);
                     break;
                 case 'S':  // english suffix for day of month, st nd rd th
                     if (($date['mday'] % 10) == 1)
