@@ -1,10 +1,31 @@
 <sect1 id="zend.xmlrpc.introduction">
-    <title>Introduction</title>
+    <title>Введение</title>
     <para>
-        XML-RPC is a "...remote procedure calling using HTTP as the transport and XML as the encoding. XML-RPC is designed to be as simple as possible, while allowing complex data structures to be transmitted, processed and returned." (<ulink url="http://www.xmlrpc.com/">XML-RPC Home Page</ulink>).
+        XML-RPC является "... удаленным вызовом процедур с использованием
+        HTTP для передачи данных и XML для кодирования. XML-RPC разработан в расчете
+        на максимально простое использование,
+        и в то же время позволяет передавать, обрабатывать и возвращать
+        сложные структуры данных."
+        (<ulink url="http://www.xmlrpc.com/">XML-RPC Home Page</ulink>).
+<!--
+        XML-RPC is a "...remote procedure calling using HTTP as the transport and
+        XML as the encoding. XML-RPC is designed to be as simple as possible,
+        while allowing complex data structures to be transmitted, processed
+        and returned." (<ulink url="http://www.xmlrpc.com/">XML-RPC Home Page</ulink>).
+-->
     </para>
     <para>
-      The Zend Framework implementation for XML-RPC clients (and in the future for XML-RPC servers) makes the usage of XML-RPC even simpler, by trying to make XML-RPC usage as similar as possible to the PHP5 <ulink url="http://www.php.net/soap">SOAP web service extension</ulink>.
+      Реализация Zend Framework для клиентов XML-RPC (в будущем и для
+      серверов XML-RPC) делает использование XML-RPC даже еще более простым,
+      пытаясь сделать использование XML-RPC максимально похожим
+      на использование <ulink url="http://www.php.net/soap">расширения SOAP</ulink>
+      для PHP5. 
+<!--
+      The Zend Framework implementation for XML-RPC clients (and in the future
+      for XML-RPC servers) makes the usage of XML-RPC even simpler, by trying
+      to make XML-RPC usage as similar as possible to the PHP5
+      <ulink url="http://www.php.net/soap">SOAP web service extension</ulink>.
+-->
     </para>
 </sect1>
 &module_specs.Zend_XmlRpc_Client;
