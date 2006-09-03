@@ -229,7 +229,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             } 
             $firstTry = false;
             // In this case, maybe we just need to create the corresponding directory
-            @mkdir($this->_path(self::_idToFileName($id)), $this->_options['hashedDirectoryUmask'], true);     
+            @mkdir($this->_path(self::_idToFileName($id)), $this->_options['hashedDirectoryUmask'], true);    
+            @chmod($this->_options['hashedDirectoryUmask']); // see #ZF-320 (this line is required in some configurations)
         }
         if ($result) {
             foreach ($tags as $tag) {
