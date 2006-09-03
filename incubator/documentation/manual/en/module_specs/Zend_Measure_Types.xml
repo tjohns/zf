@@ -1,13 +1,13 @@
 <sect1 id="zend.measure.types">
-    <title>Arten von Maßeinheiten</title>
+    <title>Types of measurements</title>
     <sect2 id="zend.measure.types.acceleration">
         <title>Zend_Measure_Acceleration</title>
         <para>
-            <code>Zend_Measure_Acceleration</code> behandelt die physikalische Größe der Beschleunigung.
+            <code>Zend_Measure_Acceleration</code> covers the physical factor of acceleration.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Meter pro Quadrat der Sekunde (<code>m/s²</code>).
+                The standard measurement unit is meter per square second (<code>m/s²</code>).
             </note>
         </para>
         <para>
@@ -15,10 +15,10 @@
 require_once 'Zend/Measure.php';
 require_once 'Zend/Measure/Acceleration.php';
 
-// Standard Einheit definieren
+// define standard measurement unit
 $unit = new Zend_Measure(100,Zend_Measure::ACCELERATION,'en');
 
-// In km/s² konvertieren
+// convert to km/s²
 echo $unit->convertTo(Zend_Measure_Acceleration::KILOMETER_PER_SQUARE_SECOND);
 ?>]]></programlisting>
         </para>
@@ -26,11 +26,11 @@ echo $unit->convertTo(Zend_Measure_Acceleration::KILOMETER_PER_SQUARE_SECOND);
     <sect2 id="zend.measure.types.angle">
         <title>Zend_Measure_Angle</title>
         <para>
-            <code>Zend_Measure_Angle</code> behandelt Winkelmaße.
+            <code>Zend_Measure_Angle</code> covers angular dimensions.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Radiant (<code>rad</code>).
+                The standard measurement unit is radiant (<code>rad</code>).
             </note>
         </para>
         <para>
@@ -40,7 +40,7 @@ require_once 'Zend/Measure/Angle.php';
 
 $angle = new Zend_Measure(100,Zend_Measure::ANGLE,'en');
 
-// Einen zweiten Winkel addieren
+// add a second angle
 $second = new Zend_Measure(30,Zend_Measure::ANGLE,'en');
 $sum = $angle->add($second);
 
@@ -51,11 +51,11 @@ echo $sum->convertTo(Zend_Measure_Angle::DEGREE);
     <sect2 id="zend.measure.types.area">
         <title>Zend_Measure_Area</title>
         <para>
-            <code>Zend_Measure_Area</code> behandelt Flächenmaße.
+            <code>Zend_Measure_Area</code> covers square measures.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Quadratmeter (<code>m²</code>).
+                The standard measurement unit is square meter (<code>m²</code>).
             </note>
         </para>
         <para>
@@ -63,10 +63,10 @@ echo $sum->convertTo(Zend_Measure_Angle::DEGREE);
 require_once 'Zend/Measure.php';
 require_once 'Zend/Measure/Area.php';
 
-// Definition einer anderen Maßeinheit, hier Hektar
+// define another measurement... here hectare
 $area = new Zend_Measure(100,Zend_Measure_Area::HECTARE,'en');
 
-// Umwandeln in die Standardeinheit Zend_Measure_Area::SQUARE_METER
+// convert to the standard measurement unit Zend_Measure_Area::SQUARE_METER
 echo $area->convertTo(Zend_Measure_Area::STANDARD);
 ?>]]></programlisting>
         </para>
@@ -74,11 +74,11 @@ echo $area->convertTo(Zend_Measure_Area::STANDARD);
     <sect2 id="zend.measure.types.binary">
         <title>Zend_Measure_Binary</title>
         <para>
-            <code>Zend_Measure_Binary</code> behandelt Umwandlungen im Binärformat.
+            <code>Zend_Measure_Binary</code> covers binary convertions.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Byte (<code>b</code>).
+                The standard measurement unit is byte (<code>b</code>).
             </note>
         </para>
         <para>
@@ -88,46 +88,46 @@ require_once 'Zend/Measure/Binary.php';
 
 $binary = new Zend_Measure(100,Zend_Measure_Binary::MEGABYTE,'en');
 
-// Umwandeln in die Einheit Megabyte laut SI Definition
+// convert to the measurement unit megabyte as defined by SI
 echo $binary->convertTo(Zend_Measure_Binary::MEGABYTE_SI);
 ?>]]></programlisting>
         </para>
         <note>
             <para>
-                Die Bezeichnungen Kilo-, Mega-, Giga- usw... sind im normalen Sprachgebrauch auf
-                1000er also immer 10³ zu sehen.
+                The terms kilo-, mega-, giga and so on...
+                have to be seen, in the normal language use, for 1000 or 10³.
             </para>
             <para>
-                Im Binärformat der Computer hat sich aber für Kilo-, Mega-, Giga- usw. statt
-                1000 der Wert 1024 als Umrechnungsfaktor durchgesetzt.
+                In the binary format for computers the terms kilo-, mega-, giga- and so on have
+                to be seen for a convertion factor of 1024 instead of 1000.
             </para>
             <para>
-                Um Irritationen vorzubeugen wurde vor ein paar Jahren die Notation BI eingeführt.
-                Statt KiloByte also KiBiByte für Kilo-Binary-Byte.
+                To preclude confusions a few years ago the notation BI was introduced.
+                Instead of kilobyte, kibibyte for kilo-binary-byte should be used.
             </para>
             <para>
-                In der Klasse BINARY finden sich beide Schreibweisen wieder.
+                In the class BINARY both notations can be found.
             </para>
             <para>
-                KILOBYTE = 1024 - Binär Computer Umrechnung
-                KIBIBYTE = 1024 - Neue Bezeichnung
-                KILO_BINARY_BYTE = 1024 - Neue Bezeichnung im Langformat
-                KILOBYTE_SI = 1000 - SI Bezeichnung für Kilo (1000)
+                KILOBYTE = 1024 - binary conputer conversion
+                KIBIBYTE = 1024 - new notation
+                KILO_BINARY_BYTE = 1024 - new notation, long format
+                KILOBYTE_SI = 1000 - SI notation for kilo (1000)
             </para>
             <para>
-                DVDs werden z.B. nach der SI-Norm bekennzeichnet,
-                die meisten Festplatten hingegen in der Binärform.
+                DVDs for example are marked with the SI-notation, but almost all
+                harddisks are marked in computer binary notation.
             </para>
         </note>
     </sect2>
     <sect2 id="zend.measure.types.capacitance">
         <title>Zend_Measure_Capacitance</title>
         <para>
-            <code>Zend_Measure_Capacitance</code> behandelt die physikalische Größe der Kapazitäten.
+            <code>Zend_Measure_Capacitance</code> covers the physical factor of capacitance.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Farad (<code>F</code>).
+                The standard measurement unit is farad (<code>F</code>).
             </note>
         </para>
         <para>
@@ -135,10 +135,10 @@ echo $binary->convertTo(Zend_Measure_Binary::MEGABYTE_SI);
 require_once 'Zend/Measure.php';
 require_once 'Zend/Measure/Capacitance.php';
 
-// Definition der Maßeinheit als String
+// definition of the measurement as string
 $capacity = new Zend_Measure('100 Farad',Zend_Measure::CAPACITANCE,'en');
 
-// Ausgabe des Wertes
+// output value
 echo $capacity;
 ?>]]></programlisting>
         </para>
@@ -146,16 +146,16 @@ echo $capacity;
     <sect2 id="zend.measure.types.cooking.volume">
         <title>Zend_Measure_Cooking_Volume</title>
         <para>
-            <code>Zend_Measure_Cooking_Volume</code> behandelt die Volumen die beim Kochen
-            in Kochbüchern auftreten.
+            <code>Zend_Measure_Cooking_Volume</code> covers volumes which are used for cooking or written
+            in cookbooks.
         </para>
         <para>
-            Diese Klasse ist eine reduzierte Version der Klasse <code>Zend_Measure_Volume</code>,
-            behandelt aber, im Gegensatz zu dieser, nur die für das Kochen notwendigen Größen.
+            This class is a reduced version of the class <code>Zend_Measure_Volume</code>,
+            but it covers only the measurement units which are needed for cooking.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Kubikmeter (<code>m³</code>).
+                The standard measurement unit is cubic meter (<code>m³</code>).
             </note>
         </para>
         <para>
@@ -163,10 +163,10 @@ echo $capacity;
 require_once 'Zend/Measure.php';
 require_once 'Zend/Measure/Cooking/Volume.php';
 
-// Definition der Maßeinheit als erweiteter String
-$rum = new Zend_Measure('Es sind 10cl Rum notwendig',Zend_Measure_Cooking_Volume::CENTILITER,'de');
+// define the measurement unit as extended string
+$rum = new Zend_Measure('You will need 10cl rum',Zend_Measure_Cooking_Volume::CENTILITER,'de');
 
-// Ausgabe des Wertes
+// output value
 echo $rum;
 ?>]]></programlisting>
         </para>
@@ -174,16 +174,16 @@ echo $rum;
     <sect2 id="zend.measure.types.cooking.weight">
         <title>Zend_Measure_Cooking_Weight</title>
         <para>
-            <code>Zend_Measure_Cooking_Weight</code> behandelt die Gewichte die beim Kochen
-            in Kochbüchern auftreten.
+            <code>Zend_Measure_Cooking_Weight</code> covers the weights which are used for cooking or written
+            in cookbooks.
         </para>
         <para>
-            Diese Klasse ist eine reduzierte Version der Klasse <code>Zend_Measure_Weight</code>,
-            behandelt aber, im Gegensatz zu dieser, nur die für das Kochen notwendigen Größen.
+            This class is a reduced version of the class <code>Zend_Measure_Weight</code>,
+            but it covers only the measurement units which are neededfor cooking.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Gramm (<code>g</code>).
+                The standard measurement unit is gram (<code>g</code>).
             </note>
         </para>
         <para>
@@ -191,10 +191,10 @@ echo $rum;
 require_once 'Zend/Measure.php';
 require_once 'Zend/Measure/Cooking/Weight.php';
 
-// Extrahieren der Maßeinheit aus einem lokalisierten String
-$rum = new Zend_Measure('Der Kuchen benötigt 2,5g Öl',Zend_Measure_Cooking_Weight::GRAM,'de');
+// extract the measurement unit from an localized string
+$rum = new Zend_Measure('The cake needs 2,5g oil',Zend_Measure_Cooking_Weight::GRAM,'de');
 
-// Ausgabe des Wertes
+// output value
 echo $rum;
 ?>]]></programlisting>
         </para>
@@ -202,11 +202,11 @@ echo $rum;
     <sect2 id="zend.measure.types.current">
         <title>Zend_Measure_Current</title>
         <para>
-            <code>Zend_Measure_Current</code> behandelt die physikalische Größe des Stromes.
+            <code>Zend_Measure_Current</code> covers the physical factor of current.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Ampere (<code>A</code>).
+                The standard measurement unit is ampere (<code>A</code>).
             </note>
         </para>
         <para>
@@ -214,7 +214,7 @@ echo $rum;
 require_once 'Zend/Measure.php';
 require_once 'Zend/Measure/Current.php';
 
-// Extrahieren der Maßeinheit aus einem lokalisierten String mit Gruppierung der Ziffern
+// extract the measurement unit from an localized string with number grouping
 $unit = new Zend_Measure('1.200,50Ampere',Zend_Measure::CURRENT,'de');
 
 echo $unit->convertTo(Zend_Measure_Current::KILOAMPERE);
@@ -224,11 +224,11 @@ echo $unit->convertTo(Zend_Measure_Current::KILOAMPERE);
     <sect2 id="zend.measure.types.density">
         <title>Zend_Measure_Density</title>
         <para>
-            <code>Zend_Measure_Density</code> behandelt die physikalische Größe der Dichte.
+            <code>Zend_Measure_Density</code> covers the physical factor of density.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Kilogram pro Kubikmeter (<code>kg/m³</code>).
+                The standard measurement unit is kilogram per cubic meter (<code>kg/m³</code>).
             </note>
         </para>
         <para>
@@ -245,11 +245,11 @@ echo $unit;
     <sect2 id="zend.measure.types.energy">
         <title>Zend_Measure_Energy</title>
         <para>
-            <code>Zend_Measure_Energy</code> behandelt die physikalische Größe der Energie.
+            <code>Zend_Measure_Energy</code> covers the physical factor of energy.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Joule (<code>J</code>).
+                The standard measurement unit is joule (<code>J</code>).
             </note>
         </para>
         <para>
@@ -266,11 +266,11 @@ echo $unit;
     <sect2 id="zend.measure.types.force">
         <title>Zend_Measure_Force</title>
         <para>
-            <code>Zend_Measure_Force</code> behandelt die physikalische Größe der Kraft.
+            <code>Zend_Measure_Force</code> covers the physical factor of force.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Newton (<code>N</code>).
+                The standard measurement unit is newton (<code>N</code>).
             </note>
         </para>
         <para>
@@ -287,12 +287,12 @@ echo $unit;
     <sect2 id="zend.measure.types.flow.mass">
         <title>Zend_Measure_Flow_Mass</title>
         <para>
-            <code>Zend_Measure_Flow_Mass</code> behandelt die physikalische Größe der Fließgeschwindigkeit.
-            Hierbei wird das Gewicht der fließenden Masse als Bezugspunkt genommen.
+            <code>Zend_Measure_Flow_Mass</code> covers the physical factor of flow rate.
+            The weight of the flowing mass is used as reference point within this class.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Kilogramm pro Sekunde (<code>kg/s</code>).
+                The standard measurement unit is kilogram per second (<code>kg/s</code>).
             </note>
         </para>
         <para>
@@ -309,12 +309,12 @@ echo $unit;
     <sect2 id="zend.measure.types.flow.mole">
         <title>Zend_Measure_Flow_Mole</title>
         <para>
-            <code>Zend_Measure_Flow_Mole</code> behandelt die physikalische Größe der Fließgeschwindigkeit.
-            Hierbei wird die Dichte der fließenden Masse als Bezugspunkt genommen.
+            <code>Zend_Measure_Flow_Mole</code> covers the physical factor of flow rate.
+            The density of the flowing mass is used as reference point within this class.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Mole pro Sekunde (<code>mol/s</code>).
+                The standard measurement unit is mole per second (<code>mol/s</code>).
             </note>
         </para>
         <para>
@@ -331,12 +331,12 @@ echo $unit;
     <sect2 id="zend.measure.types.flow.volume">
         <title>Zend_Measure_Flow_Volume</title>
         <para>
-            <code>Zend_Measure_Flow_Volume</code> behandelt die physikalische Größe der Fließgeschwindigkeit.
-            Hierbei wird das Volumen der fließenden Masse als Bezugspunkt genommen.
+            <code>Zend_Measure_Flow_Volume</code> covers the physical factor of flow rate.
+            The volume of the flowing mass is used as reference point within this class.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Kubikmeter pro Sekunde (<code>m³/s</code>).
+                The standard measurement unit is cubic meter per second (<code>m³/s</code>).
             </note>
         </para>
         <para>
@@ -353,11 +353,11 @@ echo $unit;
     <sect2 id="zend.measure.types.frequency">
         <title>Zend_Measure_Frequency</title>
         <para>
-            <code>Zend_Measure_Frequency</code> behandelt die physikalische Größe der Frequenz.
+            <code>Zend_Measure_Frequency</code> covers the physical factor of frequency.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Hertz (<code>Hz</code>).
+                The standard measurement unit is hertz (<code>Hz</code>).
             </note>
         </para>
         <para>
@@ -374,11 +374,11 @@ echo $unit;
     <sect2 id="zend.measure.types.illumination">
         <title>Zend_Measure_Illumination</title>
         <para>
-            <code>Zend_Measure_Illumination</code> behandelt die physikalische Größe der Lichtdichte.
+            <code>Zend_Measure_Illumination</code> covers the physical factor of light density.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Lux (<code>lx</code>).
+                The standard measurement unit is lux (<code>lx</code>).
             </note>
         </para>
         <para>
@@ -395,11 +395,11 @@ echo $unit;
     <sect2 id="zend.measure.types.length">
         <title>Zend_Measure_Length</title>
         <para>
-            <code>Zend_Measure_Length</code> behandelt die physikalische Größe der Länge.
+            <code>Zend_Measure_Length</code> covers the physical factor of length.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Meter (<code>m</code>).
+                The standard measurement unit is meter (<code>m</code>).
             </note>
         </para>
         <para>
@@ -416,11 +416,11 @@ echo $unit;
     <sect2 id="zend.measure.types.lightness">
         <title>Zend_Measure_Lightness</title>
         <para>
-            <code>Zend_Measure_Lightness</code> behandelt die physikalische Größe der Lichtenergie.
+            <code>Zend_Measure_Lightness</code> covers the physical factor of light energy.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Candela pro Quadratmeter (<code>cd/m²</code>).
+                The standard measurement unit is candela per square meter (<code>cd/m²</code>).
             </note>
         </para>
         <para>
@@ -437,11 +437,11 @@ echo $unit;
     <sect2 id="zend.measure.types.number">
         <title>Zend_Measure_Number</title>
         <para>
-            <code>Zend_Measure_Number</code> kann Nummernformate umwandeln.
+            <code>Zend_Measure_Number</code> can convert between number formats.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Dezimal.
+                The standard unit is decimal.
             </note>
         </para>
         <para>
@@ -451,27 +451,25 @@ require_once 'Zend/Measure/Number.php';
 
 $binary = new Zend_Measure('10010110',Zend_Measure_Number::BINARY,'en');
 
-// Umwandeln in das Römische Format
+// convert to roman number format
 echo $binary->convertTo(Zend_Measure_Number::ROMAN);
 ?>]]></programlisting>
         </para>
         <para>
-            Die bekanntesten Nummernformate ist das Dezimalsystem.
+            The best known number format is the decimal system.
         </para>
         <para>
-            Zusätzlich wird noch das Octalsystem, das Hexadezimalsystem,
-            das Binärsystem und das Römische System sowie ein paar nicht so bekannte
-            Systeme unterstützt.
+            Additionaly this class covers the octal system, the hexadecimal system,
+            the binary system, the roman number format and a few not so familiar systems.
         </para>
         <note>
             <para>
-                Im Römischen Zahlensystem werden auch Ziffern die größer als 4000 sind
-                unterstützt. In der Realität werden diese Ziffern mit einem Querbalken
-                oberhalb der Zahl dargestellt.
+                For the roman numbersystem digits greater 4000 are supported.
+                In reality these digits are shown with a crossbeam on top of the digit.
             </para>
             <para>
-                Da der Querbalken nicht darstellbar ist, muß statt dem Querbalken ein
-                Unterstrich verwendet werden.
+                As the crossbeam can not be shown within the computer, an underline has to be used
+                instead of it.
             </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Measure.php';
@@ -480,7 +478,7 @@ require_once 'Zend/Measure/Number.php';
 $great = '_X';
 $unit = new Zend_Measure($great,Zend_Measure_Number::ROMAN,'en');
 
-// Umwandeln in das Dezimalsystem
+// convert to the decimal system
 echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
 ?>]]></programlisting>
         </note>
@@ -488,11 +486,11 @@ echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
     <sect2 id="zend.measure.types.power">
         <title>Zend_Measure_Power</title>
         <para>
-            <code>Zend_Measure_Power</code> behandelt die physikalische Größe der Leistung.
+            <code>Zend_Measure_Power</code> covers the physical factor of power.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Watt (<code>W</code>).
+                The standard measurement unit is watt (<code>W</code>).
             </note>
         </para>
         <para>
@@ -509,11 +507,11 @@ echo $unit;
     <sect2 id="zend.measure.types.pressure">
         <title>Zend_Measure_Pressure</title>
         <para>
-            <code>Zend_Measure_Pressure</code> behandelt die physikalische Größe der Drucks.
+            <code>Zend_Measure_Pressure</code> covers the physical factor of pressure.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Newton pro Quadratmeter (<code>N/m²</code>).
+                The standard measurement unit is newton per square meter (<code>N/m²</code>).
             </note>
         </para>
         <para>
@@ -530,11 +528,11 @@ echo $unit;
     <sect2 id="zend.measure.types.speed">
         <title>Zend_Measure_Speed</title>
         <para>
-            <code>Zend_Measure_Speed</code> behandelt die physikalische Größe der Geschwindigkeit.
+            <code>Zend_Measure_Speed</code> covers the physical factor of speed.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Meter pro Sekunde (<code>m/s</code>).
+                The standard measurement unit is meter per second (<code>m/s</code>).
             </note>
         </para>
         <para>
@@ -551,11 +549,11 @@ echo $unit;
     <sect2 id="zend.measure.types.temperature">
         <title>Zend_Measure_Temperature</title>
         <para>
-            <code>Zend_Measure_Temperature</code> behandelt die physikalische Größe der Temperatur.
+            <code>Zend_Measure_Temperature</code> covers the physical factor of temperature.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Kelvin (<code>K</code>).
+                The standard measurement unit is kelvin (<code>K</code>).
             </note>
         </para>
         <para>
@@ -572,11 +570,11 @@ echo $unit;
     <sect2 id="zend.measure.types.torque">
         <title>Zend_Measure_Torque</title>
         <para>
-            <code>Zend_Measure_Torque</code> behandelt die physikalische Größe der Drehkraft.
+            <code>Zend_Measure_Torque</code> covers the physical factor of torque.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Newtonmeter (<code>Nm</code>).
+                The standard measurement unit is newton meter (<code>Nm</code>).
             </note>
         </para>
         <para>
@@ -593,12 +591,12 @@ echo $unit;
     <sect2 id="zend.measure.types.viscosity.dynamic">
         <title>Zend_Measure_Viscosity_Dynamic</title>
         <para>
-            <code>Zend_Measure_Viscosity_Dynamic</code> behandelt die physikalische Größe der Zähigkeit (Viskosität).
-            Hierbei wird das Gewicht als Bezugsgröße genommen.
+            <code>Zend_Measure_Viscosity_Dynamic</code> covers the physical factor of viscosity.
+            The weight of the fluid is used as reference point within this class.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Kilogram pro Meter-Sekunde (<code>kg/ms</code>).
+                The standard measurement unit is kilogram per meter second (<code>kg/ms</code>).
             </note>
         </para>
         <para>
@@ -615,12 +613,12 @@ echo $unit;
     <sect2 id="zend.measure.types.viscosity.kinematic">
         <title>Zend_Measure_Viscosity_Kinematic</title>
         <para>
-            <code>Zend_Measure_Viscosity_Kinematic</code> behandelt die physikalische
-            Größe der Zähigkeit (Viskosität). Hierbei wird die Entfernung als Bezugsgröße genommen.
+            <code>Zend_Measure_Viscosity_Kinematic</code> covers the physical factor of viscosity.
+            The distance of the flown fluid is used as reference point within this class.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Quadratmeter pro Sekunde (<code>m²/s</code>).
+                The standard measurement unit is square meter per second (<code>m²/s</code>).
             </note>
         </para>
         <para>
@@ -637,11 +635,11 @@ echo $unit;
     <sect2 id="zend.measure.types.volume">
         <title>Zend_Measure_Volume</title>
         <para>
-            <code>Zend_Measure_Volume</code> behandelt die physikalische Größe des Volumens (Inhalt).
+            <code>Zend_Measure_Volume</code> covers the physical factor of volume (content).
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Kubikmeter (<code>m³</code>).
+                The standard measurement unit is cubic meter (<code>m³</code>).
             </note>
         </para>
         <para>
@@ -658,11 +656,11 @@ echo $unit;
     <sect2 id="zend.measure.types.weight">
         <title>Zend_Measure_Weight</title>
         <para>
-            <code>Zend_Measure_Weight</code> behandelt die physikalische Größe des Gewichts.
+            <code>Zend_Measure_Weight</code> covers the physical factor of weight.
         </para>
         <para>
             <note>
-                Die Standardeinheit ist Kilogram (<code>kg</code>).
+                The standard measurement unit is kilogram (<code>kg</code>).
             </note>
         </para>
         <para>
@@ -677,6 +675,7 @@ echo $unit;
         </para>
     </sect2>
 </sect1>
+
 <!--
 vim:se ts=4 sw=4 et:
 -->
