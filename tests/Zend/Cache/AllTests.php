@@ -19,6 +19,7 @@ require_once 'ClassFrontendTest.php';
 require_once 'FileFrontendTest.php';
 require_once 'APCBackendTest.php';
 require_once 'MemcachedBackendTest.php';
+require_once 'PageFrontendTest.php';
 
 // Zend_Log        
 require_once 'Zend/Log.php';
@@ -42,6 +43,7 @@ class Zend_Cache_AllTests
         $suite->addTestSuite('Zend_Cache_FunctionFrontendTest');
         $suite->addTestSuite('Zend_Cache_ClassFrontendTest');
         $suite->addTestSuite('Zend_Cache_FileFrontendTest');
+        $suite->addTestSuite('Zend_Cache_PageFrontendTest');
         if (!defined('TESTS_ZEND_CACHE_SQLITE_ENABLED') || (defined('TESTS_ZEND_CACHE_SQLITE_ENABLED') && TESTS_ZEND_CACHE_SQLITE_ENABLED)) {
             $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
         }

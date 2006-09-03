@@ -6,7 +6,6 @@ Priority 1 :
 
 Priority 2 :
 
-- unit testing for Page (seems to be difficult)
 - an integrated cache for Zend XMLRPC ?
 - an integrated cache for Zend_Config ?
 - improve logging feature with debug support (only warnings are implemented now)
