@@ -378,6 +378,10 @@ class Zend_Locale_Data
                 break;
 
             case 'era':
+                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''.$value[0].'\']/eras/eraAbbr/era[@type=\''.$value[1].'\']','type');
+                break;
+
+            case 'eraname':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''.$value[0].'\']/eras/eraNames/era[@type=\''.$value[1].'\']','type');
                 break;
 
