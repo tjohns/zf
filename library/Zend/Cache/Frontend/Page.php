@@ -167,9 +167,11 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
     /**
      * Start the cache
      *
+     * @param string $id (optional) a cache id (if you set a value here, maybe you have to use Output frontend instead)
+     * @param boolean $doNotDie for unit testing only !
      * @return boolean true if the cache is hit (false else)
      */
-    public function start()
+    public function start($id = false, $doNotDie = false)
     {
         $lastMatchingRegexp = null;
         foreach ($this->_specificOptions['regexps'] as $regexp => $conf) {
@@ -187,9 +189,11 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
         if (!($this->_activeOptions['cache'])) {
             return false;
         }
-        $id = $this->_makeId(); 
         if (!$id) {
-            return false;
+	        $id = $this->_makeId(); 
+	        if (!$id) {
+	            return false;
+	        }
         }
         $data = $this->get($id);
         if ($data !== false) {
@@ -197,11 +201,14 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
                 echo 'DEBUG HEADER : This is a cached page !';
             }
             echo $data;
+            if ($doNotDie) {
+                return true;
+            }
             die();
         }
         ob_start(array($this, '_flush'));
         ob_implicit_flush(false);
-        return true;
+        return false;
     }
     
     /**
