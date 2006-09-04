@@ -333,7 +333,7 @@ class Zend_Locale_Data
                 break;
 
             case 'month':
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''.$value[0].'\']/months/monthContext[@type=\'format\']/monthWidth[@type=\''.$value[1].'\']/month[@type=\''.$value[2].'\']','type');
+                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''.$value[0].'\']/months/monthContext[@type=\''.$value[1].'\']/monthWidth[@type=\''.$value[2].'\']/month[@type=\''.$value[3].'\']','type');
                 break;
 
             case 'defdayformat':
@@ -378,10 +378,6 @@ class Zend_Locale_Data
                 break;
 
             case 'era':
-                self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''.$value[0].'\']/eras/eraAbbr/era[@type=\''.$value[1].'\']','type');
-                break;
-
-            case 'eraname':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''.$value[0].'\']/eras/eraNames/era[@type=\''.$value[1].'\']','type');
                 break;
 
