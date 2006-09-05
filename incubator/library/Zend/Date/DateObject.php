@@ -132,15 +132,15 @@ class Zend_Date_DateObject {
      * @param $dst    boolean - summer/wintertime
      * @param $gmt    boolean - timezone
      */
-    public function mktime($hour, $minute, $second, $month = false, $day = false, $year = false, $dst= false, $gmt = false)
+    public function mktime($hour, $minute, $second, $month = false, $day = false, $year = false, $dst= 1, $gmt = false)
     {
         // only time - use PHP internal
         if ($month === false)
-            return $gmt ? @gmmktime($hour, $minute, $second) : @mktime($hour, $minute, $second);
+            return ($gmt) ? @gmmktime($hour, $minute, $second) : @mktime($hour, $minute, $second);
 
         // complete date but in 32bit timestamp - use PHP internal
         if ((1901 < $year) and ($year < 2038))
-            return $gmt ? @gmmktime($hour, $minute, $second, $month, $day, $year, $dst) : @mktime($hour, $minute, $second, $month, $day, $year, $dst);
+            return ($gmt) ? @gmmktime($hour, $minute, $second, $month, $day, $year, $dst) : @mktime($hour, $minute, $second, $month, $day, $year, $dst);
 
         // after here we are handling 64bit timestamps
 
