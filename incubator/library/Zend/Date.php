@@ -2128,9 +2128,8 @@ class Zend_Date {
      */
     public function addHour($hour)
     {
-        // TODO: recognise locale day names and abbreviations
-        $this->set($day, Zend_Date::DAY_SHORT, $locale, FALSE);
-        return $this;
+        // TODO: implement function
+        $this->_Date->throwException('function yet not implemented');
     }
 
 
