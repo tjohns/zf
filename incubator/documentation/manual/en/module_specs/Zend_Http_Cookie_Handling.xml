@@ -1,0 +1,13 @@
+<sect1 id="zend.http.cookie">
+    <title>Zend_Http_Cookie</title>
+
+    <sect2 id="zend.http.cookie.introduction">
+        <title>Introduction</title>
+        <para>
+            ...
+	</para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
