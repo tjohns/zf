@@ -36,7 +36,6 @@ class Zend_AllTests
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend');
 
         $suite->addTest(Zend_Cache_AllTests::suite());
-        $suite->addTestSuite('Zend_DbTest');
         $suite->addTest(Zend_Db_AllTests::suite());
         $suite->addTestSuite('Zend_ConfigTest');
         $suite->addTest(Zend_Config_AllTests::suite());
