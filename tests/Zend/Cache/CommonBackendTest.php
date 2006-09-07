@@ -1,7 +1,7 @@
 <?php
-require_once 'PHPUnit2/Util/Filter.php';
+require_once 'PHPUnit/Util/Filter.php';
 
-PHPUnit2_Util_Filter::addFileToFilter(__FILE__);
+PHPUnit_Util_Filter::addFileToFilter(__FILE__);
 
 /**
  * @package    Zend_Cache
@@ -9,15 +9,15 @@ PHPUnit2_Util_Filter::addFileToFilter(__FILE__);
  */
  
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @package    Zend_Cache
  * @subpackage UnitTests
  */
-class Zend_Cache_CommonBackendTest extends PHPUnit2_Framework_TestCase {
+class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     
     protected $_instance;
     protected $_className;

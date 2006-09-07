@@ -8,15 +8,15 @@
 /** Zend_Controller_Router_Route */
 require_once 'Zend/Controller/Router/Route.php';
 
-/** PHPUnit2 test case */
-require_once 'PHPUnit2/Framework/TestCase.php';
+/** PHPUnit test case */
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage UnitTests
  */
-class Zend_Controller_RouteTest extends PHPUnit2_Framework_TestCase
+class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
 {
 
     public function testStaticMatch()

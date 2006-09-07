@@ -12,9 +12,9 @@ require_once 'Zend/Cache/Frontend/Function.php';
 require_once 'Zend/Cache/Backend/Test.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 function foobar($param1, $param2) {
     echo "foobar_output($param1, $param2)";
@@ -25,7 +25,7 @@ function foobar($param1, $param2) {
  * @package    Zend_Cache
  * @subpackage UnitTests
  */
-class Zend_Cache_FunctionFrontendTest extends PHPUnit2_Framework_TestCase {
+class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
     
     private $_instance;
     

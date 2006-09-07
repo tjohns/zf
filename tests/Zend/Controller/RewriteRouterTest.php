@@ -11,10 +11,10 @@ require_once 'Zend/Controller/RewriteRouter.php';
 /** Zend_Controller_Dispatcher_Interface */
 require_once 'Zend/Controller/Dispatcher/Interface.php';
 
-/** PHPUnit2 test case */
-require_once 'PHPUnit2/Framework/TestCase.php';
+/** PHPUnit test case */
+require_once 'PHPUnit/Framework/TestCase.php';
 
-require_once 'PHPUnit2/Runner/Version.php';
+require_once 'PHPUnit/Runner/Version.php';
 
 /**
  * Mock Dispatcher
@@ -47,7 +47,7 @@ class Zend_Controller_Dispacher_Mock implements Zend_Controller_Dispatcher_Inter
  * @package    Zend_Controller
  * @subpackage UnitTests
  */
-class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
+class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
 {
 
     protected $router;
@@ -61,7 +61,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit2_Framework_TestCase
         $this->router->setRewriteBase('/');
         $this->dispatcher = new Zend_Controller_Dispacher_Mock();
         
-        $this->version = (version_compare(PHPUnit2_Runner_Version::id(), '3.0.0alpha11') >= 0) ? 3 : 2;
+        $this->version = (version_compare(PHPUnit_Runner_Version::id(), '3.0.0alpha11') >= 0) ? 3 : 2;
     }
 
     public function testDefaultRoute()

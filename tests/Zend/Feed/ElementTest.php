@@ -15,7 +15,7 @@ require_once 'Zend/Feed/EntryAtom.php';
  * @package    Zend_Feed
  * @subpackage UnitTests
  */
-class Zend_Feed_ElementTest extends PHPUnit2_Framework_TestCase {
+class Zend_Feed_ElementTest extends PHPUnit_Framework_TestCase {
 
     public function testIsInitialized()
     {

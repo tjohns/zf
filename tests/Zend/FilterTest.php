@@ -10,15 +10,15 @@
 require_once 'Zend/Filter.php';
 
 /**
- * PHPUnit2_Framework_TestCase
+ * PHPUnit_Framework_TestCase
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @package    Zend_Filter
  * @subpackage UnitTests
  */
-class Zend_FilterTest extends PHPUnit2_Framework_TestCase
+class Zend_FilterTest extends PHPUnit_Framework_TestCase
 {
     public function testIsAlpha()
     {

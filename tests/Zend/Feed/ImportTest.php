@@ -16,9 +16,9 @@ require_once 'Zend/Feed.php';
 require_once 'Zend/Http/Client/File.php';
 
 /**
- * PHPUnit2 Test Case
+ * PHPUnit Test Case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -26,7 +26,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @subpackage UnitTests
  *
  */
-class Zend_Feed_ImportTest extends PHPUnit2_Framework_TestCase
+class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
 {
     protected $_client;
     protected $_feedDir;

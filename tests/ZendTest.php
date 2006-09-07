@@ -11,9 +11,9 @@
 require_once 'Zend.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -22,7 +22,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @package    Zend
  * @subpackage UnitTests
  */
-class ZendTest extends PHPUnit2_Framework_TestCase
+class ZendTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Tests that a class can be loaded from a well-formed PHP file

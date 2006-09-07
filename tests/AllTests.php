@@ -1,6 +1,6 @@
 <?php
-if (!defined('PHPUnit2_MAIN_METHOD')) {
-    define('PHPUnit2_MAIN_METHOD', 'AllTests::main');
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'AllTests::main');
 }
 
 /**
@@ -12,8 +12,8 @@ if (is_readable('TestConfiguration.php')) {
     require_once 'TestConfiguration.php.dist';
 }
 
-require_once 'PHPUnit2/Framework/TestSuite.php';
-require_once 'PHPUnit2/TextUI/TestRunner.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
 
 /**
  * Prepend library/ to the include_path.  This allows the tests to run out of the box and
@@ -35,12 +35,12 @@ class AllTests
             $parameters = array('reportDirectory' => TESTS_GENERATE_REPORT_TARGET);
         }
 
-        PHPUnit2_TextUI_TestRunner::run(self::suite(), $parameters);
+        PHPUnit_TextUI_TestRunner::run(self::suite(), $parameters);
     }
 
     public static function suite()
     {
-        $suite = new PHPUnit2_Framework_TestSuite('Zend Framework');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework');
 
         $suite->addTestSuite('ZendTest');
 
@@ -50,6 +50,6 @@ class AllTests
     }
 }
 
-if (PHPUnit2_MAIN_METHOD == 'AllTests::main') {
+if (PHPUnit_MAIN_METHOD == 'AllTests::main') {
     AllTests::main();
 }

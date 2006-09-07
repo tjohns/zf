@@ -10,16 +10,16 @@
 require_once 'Zend/Db.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_Db_Adapter_Pdo_Common
  * @subpackage UnitTests
  */
-abstract class Zend_Db_Adapter_Common extends PHPUnit2_Framework_TestCase
+abstract class Zend_Db_Adapter_Common extends PHPUnit_Framework_TestCase
 {
     const TableName = 'zf_test_table';
 

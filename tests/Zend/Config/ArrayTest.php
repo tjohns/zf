@@ -13,9 +13,9 @@
 require_once 'Zend/Config/Array.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -23,7 +23,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @package    Zend_Config
  * @subpackage UnitTests
  */
-class Zend_Config_ArrayTest extends PHPUnit2_Framework_TestCase
+class Zend_Config_ArrayTest extends PHPUnit_Framework_TestCase
 {
     protected $_configFile;
 

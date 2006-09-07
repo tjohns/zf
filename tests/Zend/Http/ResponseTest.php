@@ -11,16 +11,16 @@
 require_once 'Zend/Http/Client.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_Http_Client
  * @subpackage UnitTests
  */
-class Zend_Http_Client_ResponseTest extends PHPUnit2_Framework_TestCase
+class Zend_Http_Client_ResponseTest extends PHPUnit_Framework_TestCase
 {
 	protected $_remoteEnabled = false;
 

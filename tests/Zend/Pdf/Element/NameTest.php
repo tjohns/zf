@@ -11,16 +11,16 @@
 require_once 'Zend/Pdf/Element/Name.php';
 
 /**
- * PHPUnit2 Test Case
+ * PHPUnit Test Case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_Pdf
  * @subpackage UnitTests
  */
-class Zend_Pdf_Element_NameTest extends PHPUnit2_Framework_TestCase
+class Zend_Pdf_Element_NameTest extends PHPUnit_Framework_TestCase
 {
     public function testPDFName()
     {

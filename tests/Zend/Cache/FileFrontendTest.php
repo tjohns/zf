@@ -12,15 +12,15 @@ require_once 'Zend/Cache/Frontend/File.php';
 require_once 'Zend/Cache/Backend/Test.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @package    Zend_Cache
  * @subpackage UnitTests
  */
-class Zend_Cache_FileFrontendTest extends PHPUnit2_Framework_TestCase {
+class Zend_Cache_FileFrontendTest extends PHPUnit_Framework_TestCase {
     
     private $_instance1;
     private $_instance2;

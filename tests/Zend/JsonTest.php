@@ -12,9 +12,9 @@
 require_once 'Zend/Json.php';
 
 /**
- * PHPUnit2 Test Case
+ * PHPUnit Test Case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -22,7 +22,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @subpackage UnitTests
  *
  */
-class Zend_JsonTest extends PHPUnit2_Framework_TestCase
+class Zend_JsonTest extends PHPUnit_Framework_TestCase
 {
     /**
      * test null encoding/decoding

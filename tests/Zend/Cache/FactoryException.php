@@ -1,8 +1,8 @@
 <?php
-require_once 'PHPUnit2/Extensions/ExceptionTestCase.php';
+require_once 'PHPUnit/Extensions/ExceptionTestCase.php';
 require_once 'Zend/Cache.php';
  
-class Zend_Cache_FactoryException extends PHPUnit2_Extensions_ExceptionTestCase
+class Zend_Cache_FactoryException extends PHPUnit_Extensions_ExceptionTestCase
 {
     function setUp(){
         $this->setExpectedException('Zend_Cache_Exception');

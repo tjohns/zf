@@ -20,7 +20,7 @@ require_once 'Zend/Http/Client/File.php';
  * @package    Zend_Feed
  * @subpackage UnitTests
  */
-class Zend_Feed_AtomPublishingTest extends PHPUnit2_Framework_TestCase {
+class Zend_Feed_AtomPublishingTest extends PHPUnit_Framework_TestCase {
 
     private $uri;
 

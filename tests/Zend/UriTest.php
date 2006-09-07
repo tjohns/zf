@@ -16,16 +16,16 @@ require_once 'Zend/Uri.php';
 require_once 'Zend/Uri/Http.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_Uri
  * @subpackage UnitTests
  */
-class Zend_UriTest extends PHPUnit2_Framework_TestCase
+class Zend_UriTest extends PHPUnit_Framework_TestCase
 {
     public function testSchemeEmpty()
     {

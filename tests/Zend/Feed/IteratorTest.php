@@ -15,7 +15,7 @@ require_once 'Zend/Feed.php';
  * @package Zend_Feed
  * @subpackage UnitTests
  */
-class Zend_Feed_IteratorTest extends PHPUnit2_Framework_TestCase {
+class Zend_Feed_IteratorTest extends PHPUnit_Framework_TestCase {
 
     private $feed;
     private $nsfeed;

@@ -11,15 +11,15 @@ require_once 'Zend/Pdf/Element/Object.php';
 /** Zend_Pdf_Element_Numeric */
 require_once 'Zend/Pdf/Element/Numeric.php';
 
-/** PHPUnit2 Test Case */
-require_once 'PHPUnit2/Framework/TestCase.php';
+/** PHPUnit Test Case */
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_Pdf
  * @subpackage UnitTests
  */
-class Zend_Pdf_Element_ObjectTest extends PHPUnit2_Framework_TestCase
+class Zend_Pdf_Element_ObjectTest extends PHPUnit_Framework_TestCase
 {
     public function testPDFObject()
     {

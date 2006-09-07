@@ -10,15 +10,15 @@
 require_once 'Zend/InputFilter.php';
 
 /**
- * PHPUnit2_Framework_TestCase
+ * PHPUnit_Framework_TestCase
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @package    Zend_InputFilter
  * @subpackage UnitTests
  */
-class InputFilterTest extends PHPUnit2_Framework_TestCase
+class InputFilterTest extends PHPUnit_Framework_TestCase
 {
     private $_source = array();
 

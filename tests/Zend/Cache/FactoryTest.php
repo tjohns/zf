@@ -10,15 +10,15 @@
 require_once 'Zend/Cache.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @package    Zend_Cache
  * @subpackage UnitTests
  */
-class Zend_Cache_FactoryTest extends PHPUnit2_Framework_TestCase
+class Zend_Cache_FactoryTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp()

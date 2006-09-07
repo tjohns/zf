@@ -1,6 +1,6 @@
 <?php
-if (!defined('PHPUnit2_MAIN_METHOD')) {
-    define('PHPUnit2_MAIN_METHOD', 'Zend_Feed_AllTests::main');
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'Zend_Feed_AllTests::main');
 
     /**
      * Prepend library/ to the include_path.  This allows the tests to run out of the box and
@@ -10,8 +10,8 @@ if (!defined('PHPUnit2_MAIN_METHOD')) {
                      . PATH_SEPARATOR . get_include_path());
 }
 
-require_once 'PHPUnit2/Framework/TestSuite.php';
-require_once 'PHPUnit2/TextUI/TestRunner.php';
+require_once 'PHPUnit/Framework/TestSuite.php';
+require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Feed/ArrayAccessTest.php';
 require_once 'Zend/Feed/AtomEntryOnlyTest.php';
@@ -25,12 +25,12 @@ class Zend_Feed_AllTests
 {
     public static function main()
     {
-        PHPUnit2_TextUI_TestRunner::run(self::suite());
+        PHPUnit_TextUI_TestRunner::run(self::suite());
     }
 
     public static function suite()
     {
-        $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend_Feed');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Feed');
 
         $suite->addTestSuite('Zend_Feed_ArrayAccessTest');
         $suite->addTestSuite('Zend_Feed_AtomEntryOnlyTest');
@@ -44,6 +44,6 @@ class Zend_Feed_AllTests
     }
 }
 
-if (PHPUnit2_MAIN_METHOD == 'Zend_Feed_AllTests::main') {
+if (PHPUnit_MAIN_METHOD == 'Zend_Feed_AllTests::main') {
     Zend_Feed_AllTests::main();
 }

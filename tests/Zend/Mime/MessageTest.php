@@ -11,16 +11,16 @@
 require_once 'Zend/Mime/Message.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package 	Zend_Mime
  * @subpackage  UnitTests
  */
-class Zend_Mime_MessageTest extends PHPUnit2_Framework_TestCase
+class Zend_Mime_MessageTest extends PHPUnit_Framework_TestCase
 {
 
     public function testMultiPart()

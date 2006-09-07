@@ -16,9 +16,9 @@ require_once 'Zend/Cache/Backend/APC.php';
 require_once 'CommonBackendTest.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @package    Zend_Cache

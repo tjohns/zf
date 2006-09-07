@@ -9,15 +9,15 @@
 require_once 'Zend/View.php';
 
 
-/** PHPUnit2_Framework_TestCase */
-require_once 'PHPUnit2/Framework/TestCase.php';
+/** PHPUnit_Framework_TestCase */
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_View
  * @subpackage UnitTests
  */
-class Zend_ViewTest extends PHPUnit2_Framework_TestCase
+class Zend_ViewTest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * Tests that the default script path is properly initialized
