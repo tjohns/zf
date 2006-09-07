@@ -602,7 +602,7 @@ class Zend_Date {
                 break;
             case Zend_Date::WEEKDAY_SHORT :
                 $weekday = strtolower($this->_Date->date('D',$this->_Date->getTimestamp(), $gmt));
-                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'wide', $weekday));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'abbreviated', $weekday));
                 return substr($day[$weekday],0,3);
                 break;
             case Zend_Date::DAY_SHORT :
@@ -894,8 +894,30 @@ class Zend_Date {
                 return $this;
                 break;
             case Zend_Date::WEEKDAY_SHORT :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper(substr($value,0,3)) == strtoupper($date))
+                    {
+                        $found = $cnt;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $difference = $found - $weekday;
+                    if ($difference < 0)
+                       $difference += 7;
+                    $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day + $difference, $year, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
                 break;
             case Zend_Date::DAY_SHORT :
                 if (is_object($date))
@@ -904,19 +926,61 @@ class Zend_Date {
                 return $this;
                 break;
             case Zend_Date::WEEKDAY :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $difference = $found - $weekday;
+                    if ($difference < 0)
+                       $difference += 7;
+                    $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day + $difference, $year, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
                 break;
             case Zend_Date::WEEKDAY_8601 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                if ((intval($date) > 0) and (intval($date) < 8))
+                {
+                    $difference = $date - $weekday;
+                    if ($difference < 0)
+                       $difference += 7;
+                    $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day + $difference, $year, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
                 break;
             case Zend_Date::DAY_SUFFIX :
                 return false;
                 break;
             case Zend_Date::WEEKDAY_DIGIT :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                if ((intval($date) > 0) and (intval($date) < 8))
+                {
+                    $difference = ($date + 1) - $weekday;
+                    if ($difference < 0)
+                       $difference += 7;
+                    $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day + $difference, $year, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
                 break;
             case Zend_Date::DAY_OF_YEAR :
                 if (is_object($date))
@@ -927,12 +991,56 @@ class Zend_Date {
 
 
             case Zend_Date::WEEKDAY_NARROW :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper(substr($value,0,1)) == strtoupper($date))
+                    {
+                        $found = $cnt;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $difference = $found - $weekday;
+                    if ($difference < 0)
+                       $difference += 7;
+                    $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day + $difference, $year, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
                 break;
             case Zend_Date::WEEKDAY_NAME :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $difference = $found - $weekday;
+                    if ($difference < 0)
+                       $difference += 7;
+                    $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day + $difference, $year, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
                 break;
 
 
