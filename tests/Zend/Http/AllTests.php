@@ -21,7 +21,7 @@ class Zend_Http_AllTests
         $suite = new PHPUnit2_Framework_TestSuite('Zend Framework - Zend_HttpClient');
 
         $suite->addTestSuite('Zend_Http_ClientTest');
-		$suite->addTestSuite('Zend_Http_ResponseTest');
+		$suite->addTestSuite('Zend_Http_Client_ResponseTest');
 
         return $suite;
     }
