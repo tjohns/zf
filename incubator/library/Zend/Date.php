@@ -1053,8 +1053,30 @@ class Zend_Date {
 
             // month formats
             case Zend_Date::MONTH :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
+                $cnt = 0;
+                foreach ($monthlist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Monthname found
+                if ($cnt < 12)
+                {
+                    $difference = $found - $monthnr;
+                    if ($difference < 0)
+                       $difference += 12;
+                    $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month + $difference, $day, $year, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Monthname not found
+                    return false; 
                 break;
             case Zend_Date::MONTH_SHORT :
                 if (is_object($date))
@@ -1063,8 +1085,30 @@ class Zend_Date {
                 return $this;
                 break;
             case Zend_Date::MONTH_NAME :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
+                $cnt = 0;
+                foreach ($monthlist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Monthname found
+                if ($cnt < 12)
+                {
+                    $difference = $found - $monthnr;
+                    if ($difference < 0)
+                       $difference += 12;
+                    $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month + $difference, $day, $year, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Monthname not found
+                    return false; 
                 break;
             case Zend_Date::MONTH_DIGIT :
                 if (is_object($date))
@@ -1073,21 +1117,41 @@ class Zend_Date {
                 return $this;
                 break;
             case Zend_Date::MONTH_DAYS :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
 
 
             case Zend_Date::MONTH_NARROW :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
+                $cnt = 0;
+                foreach ($monthlist as $key => $value)
+                {
+                    if (strtoupper(substr($value,0,1)) == strtoupper(substr($date,0,1)))
+                    {
+                        $found = $cnt;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Monthname found
+                if ($cnt < 12)
+                {
+                    $difference = $found - $monthnr;
+                    if ($difference < 0)
+                       $difference += 12;
+                    $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month + $difference, $day, $year, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Monthname not found
+                    return false; 
                 break;
 
 
             // year formats
             case Zend_Date::LEAPYEAR :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
             case Zend_Date::YEAR_8601 :
                 if (is_object($date))
