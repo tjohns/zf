@@ -13,16 +13,16 @@ Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Temperature');
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_Measure
  * @subpackage UnitTests
  */
-class Zend_MeasureTest extends PHPUnit2_Framework_TestCase
+class Zend_MeasureTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp()

@@ -15,9 +15,9 @@ require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Server/Fault.php';
 
 /**
- * PHPUnit2 Test Case
+ * PHPUnit Test Case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * Test case for Zend_XmlRpc_Server_Fault
@@ -25,7 +25,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @package Zend_XmlRpc
  * @subpackage UnitTests
  */
-class Zend_XmlRpc_Server_FaultTest extends PHPUnit2_Framework_TestCase 
+class Zend_XmlRpc_Server_FaultTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * Zend_XmlRpc_Server_Fault::getInstance() test

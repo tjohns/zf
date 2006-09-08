@@ -11,16 +11,16 @@
 require_once 'Zend/Locale/Format.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_Locale
  * @subpackage UnitTests
  */
-class Zend_Locale_FormatTest extends PHPUnit2_Framework_TestCase
+class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
 {
 
     public function setUp()

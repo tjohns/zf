@@ -3,16 +3,16 @@
 require_once '../YARouter.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_Controller
  * @subpackage UnitTests
  */
-class Zend_YARoute_Test extends PHPUnit2_Framework_TestCase
+class Zend_YARoute_Test extends PHPUnit_Framework_TestCase
 {
 	function testSimpleMatching()
 	{

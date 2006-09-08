@@ -10,16 +10,16 @@
 require_once 'Zend/Controller/Router/Route.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
  * @package    Zend_Controller
  * @subpackage UnitTests
  */
-class RouteTest extends PHPUnit2_Framework_TestCase
+class RouteTest extends PHPUnit_Framework_TestCase
 {
     public function testVariables()
     {

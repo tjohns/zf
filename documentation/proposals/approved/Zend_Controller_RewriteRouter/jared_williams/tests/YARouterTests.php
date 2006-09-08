@@ -3,9 +3,9 @@
 require_once '../YARouter.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 require_once 'Zend/Controller/Dispatcher/Interface.php';
 require_once 'Zend/Controller/Dispatcher/Token.php';
@@ -21,7 +21,7 @@ class Mock_Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Inte
  * @package    Zend_YARewriterRouter
  * @subpackage UnitTests
  */
-class Zend_YARouter_Test extends PHPUnit2_Framework_TestCase
+class Zend_YARouter_Test extends PHPUnit_Framework_TestCase
 {
 
 	function testSimpleRouter()

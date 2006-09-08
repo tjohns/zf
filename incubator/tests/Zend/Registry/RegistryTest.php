@@ -11,15 +11,15 @@ require_once 'Zend.php';
 require_once 'Zend/Registry.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * @package    Zend_Registry
  * @subpackage UnitTests
  */
-class Zend_Registry_RegistryTest extends PHPUnit2_Framework_TestCase
+class Zend_Registry_RegistryTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
