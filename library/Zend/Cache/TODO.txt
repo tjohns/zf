@@ -6,6 +6,4 @@ Priority 1 :
 
 Priority 2 :
 
-- an integrated cache for Zend XMLRPC ?
-- an integrated cache for Zend_Config ?
 - improve logging feature with debug support (only warnings are implemented now)
