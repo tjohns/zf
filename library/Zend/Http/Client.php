@@ -236,7 +236,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
 
 		$hdr = null;
         while (strlen($header = rtrim(fgets($socket, 8192)))) {
-            if (preg_match('|HTTP/\d.\d (\d+) (\w+)|', $header, $matches)) {
+            if (preg_match('|HTTP/\d.\d (\d+)\s?s(\w+)?|', $header, $matches)) {
                 $responseCode = (int) $matches[1];
             } else if (preg_match('|^\s|', $header)) {
                 if ($hdr !== null) {
