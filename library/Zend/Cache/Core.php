@@ -209,8 +209,7 @@ class Zend_Cache_Core
         if (!$this->_options['caching']) {
             return false;
         }
-        $this->_lastId = $id;
-        
+        $this->_lastId = $id;        
         self::_validateIdOrTag($id);
         $data = $this->_backend->get($id, $doNotTestCacheValidity);
         if ($data===false) {
@@ -283,7 +282,7 @@ class Zend_Cache_Core
             return false;
         }
         if ($this->_options['writeControl']) {
-            $data2 = $this->get($id, true, true);
+            $data2 = $this->_backend->get($id, true);
             if ($data!=$data2) {
                 if ($this->_options['logging']) {
                     Zend_Log::log('Zend_Cache_Core::save() / writeControl : written and read data do not match', Zend_Log::LEVEL_WARNING);
