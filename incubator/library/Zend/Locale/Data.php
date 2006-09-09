@@ -226,7 +226,7 @@ class Zend_Locale_Data
      * @return array of string
      * @access public
      */
-    public static function getContent($locale, $path, $value)
+    public static function getContent($locale, $path, $value = false)
     {
         self::$_list = array();
 
