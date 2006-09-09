@@ -1,8 +1,5 @@
 <?php
 
-// THIS FRONTEND STILL NEED TESTS
-// IT IS "ALPHA" STUFF
-
 /**
  * Zend Framework
  *
