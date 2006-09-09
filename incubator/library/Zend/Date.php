@@ -874,7 +874,9 @@ class Zend_Date {
      * Sets the given date as new date
      *
      * @param $date string   - date which shall be our new date object
-     * @param $part datepart - OPTIONAL datepart to set
+     * @param  $part         - datepart, if empty the timestamp will be returned
+     * @param  $locale       - OPTIONAL, locale for output
+     * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return object
      */
     public function set($date, $part, $locale = false, $gmt = false)
@@ -990,7 +992,7 @@ class Zend_Date {
                     return false; 
                 break;
             case Zend_Date::DAY_OF_YEAR :
-                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, 1, intval($part), $year, -1, $gmt));
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, 1, intval($date), $year, -1, $gmt));
                 return $this;
                 break;
 
@@ -1183,8 +1185,16 @@ class Zend_Date {
 
             // time formats
             case Zend_Date::MERIDIEM :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $meridiemlist = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
+                $meridiem = strtoupper($this->get(Zend_Date::MERIDIEM, $locale, $gmt));
+
+                if (($meridiem == strtoupper($meridiemlist['am'])) && (strtoupper($date) == strtoupper($meridiemlist['pm'])))
+                    $hour += 12;
+                else if (($meridiem == strtoupper($meridiemlist['pm'])) && (strtoupper($date) == strtoupper($meridiemlist['am'])))
+                    $hour -= 12;
+                    
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this;
                 break;
             case Zend_Date::SWATCH :
                 // TODO: implement function
@@ -1364,28 +1374,932 @@ class Zend_Date {
     /**
      * Adds a date to another date. Could add f.e. minutes, hours, days, months to a date object
      *
-     * @param $date object     - date which shall be added to our actual date object
-     * @param $part datepart   - OPTIONAL datepart to add
+     * @param  $date string  - date which shall be our new date object
+     * @param  $part         - datepart, if empty the timestamp will be returned
+     * @param  $locale       - OPTIONAL, locale for output
+     * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return object
      */
-    public function add($date, $part)
+    public function add($date, $part, $locale = false, $gmt = false)
     {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
+        if ($locale === false)
+            $locale = $this->_Locale;
+
+        // if object extract value
+        if (is_object($date))
+            $date = $date->get($part, $locale, $gmt);
+
+        // $date as object, part of foreign date as own date
+        switch($part)
+        {
+            // day formats
+            case Zend_Date::DAY :
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, intval($date), 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::WEEKDAY_SHORT :
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper(substr($value,0,3)) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, $found, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::DAY_SHORT :
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, intval($date), 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::WEEKDAY :
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, $found, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::WEEKDAY_8601 :
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                if ((intval($date) > 0) and (intval($date) < 8))
+                {
+                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, $date, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::DAY_SUFFIX :
+                return false;
+                break;
+            case Zend_Date::WEEKDAY_DIGIT :
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                if ((intval($date) > 0) and (intval($date) < 8))
+                {
+                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, $date, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::DAY_OF_YEAR :
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, $date, 0, -1, $gmt));
+                return $this;
+                break;
+
+
+            case Zend_Date::WEEKDAY_NARROW :
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper(substr($value,0,1)) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, $found, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::WEEKDAY_NAME :
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, $found, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+
+
+            // week formats
+            case Zend_Date::WEEK :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+
+
+            // month formats
+            case Zend_Date::MONTH :
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
+                $cnt = 0;
+                foreach ($monthlist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Monthname found
+                if ($cnt < 12)
+                {
+                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, $found, 0, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Monthname not found
+                    return false; 
+                break;
+            case Zend_Date::MONTH_SHORT :
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, intval($date), 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::MONTH_NAME :
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
+                $cnt = 0;
+                foreach ($monthlist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Monthname found
+                if ($cnt < 12)
+                {
+                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, $found, 0, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Monthname not found
+                    return false; 
+                break;
+            case Zend_Date::MONTH_DIGIT :
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, intval($date), 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::MONTH_DAYS :
+                return false;
+                break;
+
+
+            case Zend_Date::MONTH_NARROW :
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
+                $cnt = 0;
+                foreach ($monthlist as $key => $value)
+                {
+                    if (strtoupper(substr($value,0,1)) == strtoupper(substr($date,0,1)))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Monthname found
+                if ($cnt < 12)
+                {
+                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, $found, 0, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Monthname not found
+                    return false; 
+                break;
+
+
+            // year formats
+            case Zend_Date::LEAPYEAR :
+                return false;
+                break;
+            case Zend_Date::YEAR_8601 :
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, 0, intval($date), -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::YEAR :
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, 0, intval($date), -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::YEAR_SHORT :
+                $year = intval($date);
+                if (($year > 0) and ($year < 100))
+                {
+                    $year += 1900;
+                    if ($year < 70)
+                        $year += 100;
+                }
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, 0, $year, -1, $gmt));
+                return $this;
+                break;
+
+
+            case Zend_Date::YEAR_SHORT_8601 :
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 0, 0, intval($date), -1, $gmt));
+                return $this;
+                break;
+
+
+            // time formats
+            case Zend_Date::MERIDIEM :
+                $meridiemlist = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
+                $meridiem = strtoupper($this->get(Zend_Date::MERIDIEM, $locale, $gmt));
+
+                if (($meridiem == strtoupper($meridiemlist['am'])) && (strtoupper($date) == strtoupper($meridiemlist['pm'])))
+                    $hour = 12;
+                else if (($meridiem == strtoupper($meridiemlist['pm'])) && (strtoupper($date) == strtoupper($meridiemlist['am'])))
+                    $hour = -12;
+                    
+                $this->addTimestamp($this->_Date->mktime($hour, 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::SWATCH :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::HOUR_SHORT_AM :
+                $this->addTimestamp($this->_Date->mktime(intval($date), 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::HOUR_SHORT :
+                $this->addTimestamp($this->_Date->mktime(intval($date), 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::HOUR_AM :
+                $this->addTimestamp($this->_Date->mktime(intval($date), 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::HOUR :
+                $this->addTimestamp($this->_Date->mktime(intval($date), 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::MINUTE :
+                $this->addTimestamp($this->_Date->mktime(0, intval($date), 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::SECOND :
+                $this->addTimestamp($this->_Date->mktime(0, 0, intval($date), 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+
+
+            case Zend_Date::MINUTE_SHORT :
+                $this->addTimestamp($this->_Date->mktime(0, intval($date), 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::SECOND_SHORT :
+                $this->addTimestamp($this->_Date->mktime(0, 0, intval($date), 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+
+
+            // timezone formats
+            case Zend_Date::TIMEZONE_NAME :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DAYLIGHT :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::GMT_DIFF :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::GMT_DIFF_SEP :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIMEZONE :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIMEZONE_SECS :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+
+
+            // date strings
+            case Zend_Date::ISO_8601 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_2822 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIMESTAMP :
+                if (is_numeric($date))
+                {
+                    $this->addTimestamp($date);
+                    return $this;
+                } else
+                    return false;
+                break;
+
+
+            // additional formats
+            case Zend_Date::ERA :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::ERA_NAME :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATES :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATE_FULL :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATE_LONG :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATE_MEDIUM :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATE_SHORT :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIMES :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIME_FULL :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIME_LONG :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIME_MEDIUM :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIME_SHORT :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::ATOM :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::COOKIE :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_822 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_850 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_1036 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_1123 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RSS :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::W3C :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+
+
+            default :
+                break;
+        }
     }
 
 
     /**
      * Substracts a date from another date. Could sub f.e. minutes, hours, days from a date object
      *
-     * @param $date object     - date which shall be substracted to our actual date object
-     * @param $part datepart   - OPTIONAL datepart to substract
+     * @param  $date string  - date which shall be our new date object
+     * @param  $part         - datepart, if empty the timestamp will be returned
+     * @param  $locale       - OPTIONAL, locale for output
+     * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return object
      */
-    public function sub($date, $part)
+    public function sub($date, $part, $locale = false, $gmt = false)
     {
-        // TODO: implement function
-        $this->_Date->throwException('function yet not implemented');
+        if ($locale === false)
+            $locale = $this->_Locale;
+
+        // if object extract value
+        if (is_object($date))
+            $date = $date->get($part, $locale, $gmt);
+
+        // $date as object, part of foreign date as own date
+        switch($part)
+        {
+            // day formats
+            case Zend_Date::DAY :
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, intval($date), 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::WEEKDAY_SHORT :
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper(substr($value,0,3)) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, $found, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::DAY_SHORT :
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, intval($date), 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::WEEKDAY :
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, $found, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::WEEKDAY_8601 :
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                if ((intval($date) > 0) and (intval($date) < 8))
+                {
+                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, $date, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::DAY_SUFFIX :
+                return false;
+                break;
+            case Zend_Date::WEEKDAY_DIGIT :
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                if ((intval($date) > 0) and (intval($date) < 8))
+                {
+                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, $date, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::DAY_OF_YEAR :
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, $date, 0, -1, $gmt));
+                return $this;
+                break;
+
+
+            case Zend_Date::WEEKDAY_NARROW :
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper(substr($value,0,1)) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, $found, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+            case Zend_Date::WEEKDAY_NAME :
+                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
+                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
+                $cnt = 0;
+                foreach ($daylist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Weekday found
+                if ($cnt < 7)
+                {
+                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, $found, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Weekday not found
+                    return false; 
+                break;
+
+
+            // week formats
+            case Zend_Date::WEEK :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+
+
+            // month formats
+            case Zend_Date::MONTH :
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
+                $cnt = 0;
+                foreach ($monthlist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Monthname found
+                if ($cnt < 12)
+                {
+                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, $found, 0, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Monthname not found
+                    return false; 
+                break;
+            case Zend_Date::MONTH_SHORT :
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, intval($date), 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::MONTH_NAME :
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
+                $cnt = 0;
+                foreach ($monthlist as $key => $value)
+                {
+                    if (strtoupper($value) == strtoupper($date))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Monthname found
+                if ($cnt < 12)
+                {
+                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, $found, 0, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Monthname not found
+                    return false; 
+                break;
+            case Zend_Date::MONTH_DIGIT :
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, intval($date), 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::MONTH_DAYS :
+                return false;
+                break;
+
+
+            case Zend_Date::MONTH_NARROW :
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
+                $cnt = 0;
+                foreach ($monthlist as $key => $value)
+                {
+                    if (strtoupper(substr($value,0,1)) == strtoupper(substr($date,0,1)))
+                    {
+                        $found = $cnt + 1;
+                        break;
+                    }
+                    ++$cnt;
+                }
+                // Monthname found
+                if ($cnt < 12)
+                {
+                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, $found, 0, 0, -1, $gmt));
+                    return $this;
+                }
+                else
+                    // Monthname not found
+                    return false; 
+                break;
+
+
+            // year formats
+            case Zend_Date::LEAPYEAR :
+                return false;
+                break;
+            case Zend_Date::YEAR_8601 :
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, 0, intval($date), -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::YEAR :
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, 0, intval($date), -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::YEAR_SHORT :
+                $year = intval($date);
+                if (($year > 0) and ($year < 100))
+                {
+                    $year += 1900;
+                    if ($year < 70)
+                        $year += 100;
+                }
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, 0, $year, -1, $gmt));
+                return $this;
+                break;
+
+
+            case Zend_Date::YEAR_SHORT_8601 :
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 0, 0, intval($date), -1, $gmt));
+                return $this;
+                break;
+
+
+            // time formats
+            case Zend_Date::MERIDIEM :
+                $meridiemlist = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
+                $meridiem = strtoupper($this->get(Zend_Date::MERIDIEM, $locale, $gmt));
+
+                if (($meridiem == strtoupper($meridiemlist['am'])) && (strtoupper($date) == strtoupper($meridiemlist['pm'])))
+                    $hour = 12;
+                else if (($meridiem == strtoupper($meridiemlist['pm'])) && (strtoupper($date) == strtoupper($meridiemlist['am'])))
+                    $hour = -12;
+                    
+                $this->subTimestamp($this->_Date->mktime($hour, 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::SWATCH :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::HOUR_SHORT_AM :
+                $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::HOUR_SHORT :
+                $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::HOUR_AM :
+                $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::HOUR :
+                $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::MINUTE :
+                $this->subTimestamp($this->_Date->mktime(0, intval($date), 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::SECOND :
+                $this->subTimestamp($this->_Date->mktime(0, 0, intval($date), 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+
+
+            case Zend_Date::MINUTE_SHORT :
+                $this->subTimestamp($this->_Date->mktime(0, intval($date), 0, 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+            case Zend_Date::SECOND_SHORT :
+                $this->subTimestamp($this->_Date->mktime(0, 0, intval($date), 0, 0, 0, -1, $gmt));
+                return $this;
+                break;
+
+
+            // timezone formats
+            case Zend_Date::TIMEZONE_NAME :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DAYLIGHT :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::GMT_DIFF :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::GMT_DIFF_SEP :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIMEZONE :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIMEZONE_SECS :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+
+
+            // date strings
+            case Zend_Date::ISO_8601 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_2822 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIMESTAMP :
+                if (is_numeric($date))
+                {
+                    $this->subTimestamp($date);
+                    return $this;
+                } else
+                    return false;
+                break;
+
+
+            // additional formats
+            case Zend_Date::ERA :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::ERA_NAME :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATES :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATE_FULL :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATE_LONG :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATE_MEDIUM :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::DATE_SHORT :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIMES :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIME_FULL :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIME_LONG :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIME_MEDIUM :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::TIME_SHORT :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::ATOM :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::COOKIE :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_822 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_850 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_1036 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RFC_1123 :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::RSS :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+            case Zend_Date::W3C :
+                // TODO: implement function
+                $this->_Date->throwException('function yet not implemented');
+                break;
+
+
+            default :
+                break;
+        }
     }
 
 
