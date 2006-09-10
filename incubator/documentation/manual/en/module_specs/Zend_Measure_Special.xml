@@ -1,26 +1,25 @@
 <sect1 id="zend.measure.special">
-    <title>Sonderfunktionen</title>
+    <title>Special functions</title>
     <para>
-        Um die Arbeit zu erleichtern gibt diverse zusätzliche Funktionen die nachfolgend beschrieben werden.
+        To make your work easier, there are a few additional functions, which will be described below. 
     </para>
     <para>
-        <link linkend="zend.measure.special.serial"><code>Serialisierung und Deserialisierung</code></link>
+        <link linkend="zend.measure.special.serial"><code>Serializing and Deserializing</code></link>
     </para>
     <para>
-        <link linkend="zend.measure.special.typelist"><code>Liste aller Arten</code></link>
+        <link linkend="zend.measure.special.typelist"><code>Listing all known types</code></link>
     </para>
     <para>
-        <link linkend="zend.measure.special.unitlist"><code>Liste aller bekannten Maßeinheiten</code></link>
+        <link linkend="zend.measure.special.unitlist"><code>Listing all known units</code></link>
     </para>
     <sect2 id="zend.measure.special.serial">
-        <title>Serialisierung und Deserialisierung</title>
+        <title>Serializing and Deserializing</title>
         <para>
-            Um Maßeinheiten für spätere Verwendung speichern zu können unterstützt
-            <code>Zend_Measure</code> die Serialisierung.
+            To save measurements for later use, <code>Zend_Measure</code> supports serialization. 
         </para>
         <para>
             <example>
-                <title>Serialisierung</title>
+                <title>Serializing</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass(Zend_Measure);
@@ -29,18 +28,17 @@ $unit = new Zend_Measure(100,Zend_Measure::LENGTH);
 
 $serial = $unit->serialize();
 
-// Speichern
-// oder irgendwas machen
+// save ... or any other action
 ?>]]></programlisting>
             </example>
             <example>
-                <title>Deserialisierung</title>
+                <title>Deserializing</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass(Zend_Measure);
 Zend::loadClass(Zend_Measure_Length);
 
-// Laden des Serialisierten Objektes
+// load serialized object
 
 $unit = unserialize($serial);
 
@@ -50,29 +48,25 @@ echo $unit;
         </para>
     </sect2>
     <sect2 id="zend.measure.special.typelist">
-        <title>Liste aller Arten</title>
+        <title>Listing all known types</title>
         <para>
-            Die Funktion <code>getAllTypes</code> gibt ein Array zurück welches alle
-            Arten von Maßeinheiten enthält.
+            The function <code>getAllTypes</code> returns an array containing all types of measurement.
         </para>
         <para>
-            Dieses könnte dazu benutzt werden um einen Benutzer auswählen zu lassen welche
-            Art von Maßeinheit (Länge, Gewicht, Fläche,...) er eingeben will.
+            This could be used to let a user choose the type of measurement (length, weight, area) he wishes to input.
         </para>
     </sect2>
     <sect2 id="zend.measure.special.unitlist">
-        <title>Liste aller bekannten Maßeinheiten</title>
+        <title>Listing all known units</title>
         <para>
-            Die Funktion <code>getTypeList</code> gibt ein Array zurück welches alle
-            Maßeinheiten einer Art enthält.
+            The function <code>getTypeList</code> returns an array containing all units of measurement for a given type.
         </para>
         <para>
-            Dieses könnte dazu benutzt werden um einen Benutzer auswählen zu lassen welche
-            Maßeinheit (Meter, Kilometer, Millimeter,...) er eingeben will.
+            This could be used to let a user choose the unit of measurement (meters, kilometers, millimeters,...) for his input.
         </para>
         <para>
             <example>
-                <title>Liste aller Maßeinheiten einer Art</title>
+                <title>Listing all units for a given type</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass(Zend_Measure);

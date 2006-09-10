@@ -1,26 +1,26 @@
 <sect1 id="zend.measure.output">
-    <title>Ausgabe der Maßeinheit</title>
+    <title>Outputting measurements</title>
     <para>
-        Maßeinheiten können auf unterschiedlichste Weise wiedergegeben werden.
+        Measurements can be output in a number of different ways.
     </para>
     <para>
-        <link linkend="zend.measure.output.auto"><code>Automatische Ausgaben</code></link>
+        <link linkend="zend.measure.output.auto"><code>Automatic output</code></link>
     </para>
     <para>
-        <link linkend="zend.measure.output.value"><code>Ausgabe des Wertes</code></link>
+        <link linkend="zend.measure.output.value"><code>Outputting values</code></link>
     </para>
     <para>
-        <link linkend="zend.measure.output.unit"><code>Ausgabe mit Maßeinheit</code></link>
+        <link linkend="zend.measure.output.unit"><code>Output with unit of measurement</code></link>
     </para>
     <para>
-        <link linkend="zend.measure.output.unit"><code>Ausgabe als lokalisierter String</code></link>
+        <link linkend="zend.measure.output.unit"><code>Output as localized string</code></link>
     </para>
     <sect2 id="zend.measure.output.auto">
-        <title>Automatische Ausgaben</title>
+        <title>Automatic output</title>
         <para>
-            <code>Zend_Measure</code> unterstützt automatische Stringausgabe.
+            <code>Zend_Measure</code> supports outputting of strings automatically.
             <example>
-                <title>Austomatische Ausgabe</title>
+                <title>Automatic output</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass(Zend_Measure);
@@ -32,18 +32,17 @@ echo $unit;
 ?>]]></programlisting>
             </example>
             <note>
-                Durch <ulink url="http://php.net/echo"><code>echo</code></ulink> oder
-                <ulink url="http://php.net/print"><code>print</code></ulink> kann die
-                Ausgabe ganz einfach erfolgen.
+                Output can be achieved simply by using <ulink url="http://php.net/echo"><code>echo</code></ulink> or
+                <ulink url="http://php.net/print"><code>print</code></ulink>.
             </note>
         </para>
     </sect2>
     <sect2 id="zend.measure.output.value">
-        <title>Ausgabe des Wertes</title>
+        <title>Outputting values</title>
         <para>
-            Der Wert der Maßeinheit kann mit <code>getValue()</code> ausgegeben werden.
+            The value of a measurement can be output using <code>getValue()</code>.
             <example>
-                <title>Wert ausgeben</title>
+                <title>Output a value</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass(Zend_Measure);
@@ -57,11 +56,11 @@ echo $unit->getValue();
         </para>
     </sect2>
     <sect2 id="zend.measure.output.unit">
-        <title>Ausgabe mit Maßeinheit</title>
+        <title>Output with unit of measurement</title>
         <para>
-            Die aktuelle Maßeinheit gibt die Funktion <code>getType()</code> zurück.
+            The function <code>getType()</code> returns the current unit of measurement.
             <example>
-                <title>Maßeinheit ausgeben</title>
+                <title>Outputting units</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass(Zend_Measure);
@@ -76,16 +75,16 @@ echo $unit->getType();
         </para>
     </sect2>
     <sect2 id="zend.measure.output.localized">
-        <title>Ausgabe als lokalisierter String</title>
+        <title>Output as localized string</title>
         <para>
-            Die Ausgabe als String in der landeseigenen Schreibweise wäre wünschenswert.
+            Outputtig a string in a format common in the users' country is usually desirable.
         </para>
         <para>
-            Aus "1234567.8" würde dann zum Beispiel in Deutsch "1.234.567,8" werden.
+            For example, the measurement "1234567.8" would become "1.234.567,8" for Germany.
         </para>
         <para>
             <note>
-                Diese Funktionalität wird in einem kommenden Release angeboten.
+                This functionality will be supported in a future release.
             </note>
         </para>
     </sect2>
