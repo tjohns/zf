@@ -1,0 +1,401 @@
+    <sect1 id="zend.acl.introduction">
+      <title>Introduction</title>
+
+      <para>Zend_Acl is a class for managing privileges and access control. It
+      provides a tree-based structure to which multiple 'areas' (also known as
+      ACOs) can be added. These 'areas' within the ACL can be assigned either
+      generic or specific 'actions' (known as Contexts) that determine access
+      privileges for user-defined 'group's (Access Request Objects or AROs).
+      These actions are assigned to ACOs simply by calling allow() or
+      deny().</para>
+
+      <sect2 id="zend.acl.introduction.controller">
+        <title>ACL Structure</title>
+
+        <para>An ACL can represent any physical or virtual object you wish,
+        however for the purposes of demonstration we will create a typical
+        Content Management System ACL that can maintain several tiers of
+        groups over a wide variety of areas. To create a simple structure, we
+        construct the ACL without any parameters:</para>
+
+        <programlisting role="php">&lt;?php
+
+require_once('Zend/Acl.php');
+
+$acl = new Zend_Acl();
+
+?&gt;      </programlisting>
+      </sect2>
+
+      <sect2 id="zend.acl.introduction.acl">
+        <title>Creating an ARO registry</title>
+
+        <para>Content Management Systems will nearly always require a
+        hierarchy of permissions to determine the authoring capabilities of
+        its users. There may be a 'Guest' group to allow limited access for
+        demonstrations, a 'Staff' group for the majority of CMS users who may
+        perform day-to-day maintenance of the CMS, an 'Editor' group for those
+        responsible for publishing, reviewing, archiving and deleting, and
+        finally an 'Administrator' group whose tasks may include all of those
+        of the other groups as well as maintenance of sensitive information,
+        user management, back-end configuration data and backup/export. This
+        set of permissions can be represented in an ARO registry, allowing
+        each group to inherit privileges from 'parent' groups as well as
+        providing distinct privileges for their unique group only. The
+        permissions are expressed in Diagram 1.1</para>
+
+        <table>
+          <title>Diagram 1.1 Zend_Acl Sample ARO Permissions</title>
+
+          <tgroup cols="3">
+            <thead>
+              <row>
+                <entry>Name</entry>
+
+                <entry>Unique permissions</entry>
+
+                <entry>Inherit permissions from</entry>
+              </row>
+            </thead>
+
+            <tbody>
+              <row>
+                <entry>Guest</entry>
+
+                <entry>View</entry>
+
+                <entry>-</entry>
+              </row>
+
+              <row>
+                <entry>Staff</entry>
+
+                <entry>Edit, Submit, Revise</entry>
+
+                <entry>Guest</entry>
+              </row>
+
+              <row>
+                <entry>Editor</entry>
+
+                <entry>Publish, Archive, Delete</entry>
+
+                <entry>Staff</entry>
+              </row>
+
+              <row>
+                <entry>Administrator</entry>
+
+                <entry>(Unrestricted access)</entry>
+
+                <entry>n/a</entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+        <para>These groups can be added to the ARO registry as
+        follows:-</para>
+
+        <programlisting role="php">&lt;?php
+
+require_once('Zend/Acl.php');
+
+$acl = new Zend_Acl();
+
+// retrieve an instance of the ARO registry
+$aro = $acl-&gt;aroRegistry();
+
+$aro-&gt;add('guest');
+$aro-&gt;add('staff', $aro-&gt;guest); // alternatively you can use $aro-&gt;add('staff, 'guest');
+$aro-&gt;add('editor', $aro-&gt;staff);
+$aro-&gt;add('administrator');
+
+?&gt;</programlisting>
+
+        <para>Note how we use the "escape()" method to apply output escaping
+        to variables.</para>
+      </sect2>
+
+      <sect2>
+        <title>Defining access levels for AROs</title>
+
+        <para>Now that the ARO registry contains the groups, permissions can
+        be assigned to areas within the ACL. Zend_Acl provides an extremely
+        flexible implementation whereby ACOs need only be created for those
+        areas that require specific permissions - all subsequent areas below
+        that ACO will inherit those permissions, and 'virtual' ACOs
+        (undeclared permissions) will inherit the default permissions of the
+        ACL.</para>
+
+        <para>For example, if we grant permission to an area defined as
+        <code>$acl-&gt;newsletters</code>, then any calls to
+        <code>$acl-&gt;newsletters-&gt;archive</code> or
+        <code>$acl-&gt;newsletters-&gt;pending</code> will inherit the
+        permissions from <code>$acl-&gt;newsletters</code> even though they
+        have not been explicitly defined.</para>
+
+        <para>Subsequently, we can define a reasonably complex set of
+        permissions with the minimum of code. To apply the base permissions as
+        defined in Diagram 1.1:</para>
+
+        <programlisting role="php">&lt;?php
+
+require_once('Zend/Acl.php');
+
+$acl = new Zend_Acl();
+
+// retrieve an instance of the ARO registry
+$aro = $acl-&gt;aroRegistry();
+$aro-&gt;add('guest');
+$aro-&gt;add('staff', $aro-&gt;guest);
+$aro-&gt;add('editor', $aro-&gt;staff);
+$aro-&gt;add('administrator', $aro-&gt;editor);
+
+// deny access to all unknown AROs
+$acl-&gt;deny();
+
+// apply ARO privileges
+$acl-&gt;allow($aro-&gt;guest, 'view'); // alternatively you can use $acl-&gt;allow('guest, 'view');
+$acl-&gt;allow($aro-&gt;staff, array('edit', 'submit', 'revise')); // multiple contexts are passed as an array
+$acl-&gt;allow($aro-&gt;editor, array('publish', 'archive', 'delete'));
+$acl-&gt;allow($aro-&gt;administrator); // an administrator is not restricted to any specific context
+
+?&gt;</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Applying ACL permissions</title>
+
+        <para>These 20 lines of code will now provide a flexible ACL that can
+        be used throughout your scripts to determine if your AROs have
+        permissions to access areas within your website or application.
+        Performing queries can be as flexible as you require:-</para>
+
+        <programlisting role="php">&lt;?php
+
+// permission checks at default level
+if ($acl-&gt;valid($aro-&gt;guest, 'view')) { ...allow... }
+if (!$acl-&gt;valid($aro-&gt;staff, 'publish')) { ...deny... }
+
+// permission checks for specific areas
+if ($acl-&gt;newsletter-&gt;pending-&gt;valid($aro-&gt;guest, 'view')) { ...allow... } // allow - inherits default permissions
+if ($acl-&gt;gallery-&gt;profiles-&gt;valid($aro-&gt;staff, 'revise')) { ...allow... } // allow - inherits default permissions
+if (!$acl-&gt;config-&gt;hosts-&gt;valid($aro-&gt;editor, 'update')) { ...deny... } // deny because 'update' is not defined
+
+// check permissions from ARO perspective
+if ($aro-&gt;staff-&gt;canAccess($acl-&gt;newsletter-&gt;pending, 'view')) { ...allow... }
+
+?&gt;</programlisting>
+      </sect2>
+    </sect1>
+
+    <sect1 id="zend.acl.controllers">
+      <title>Refining ACL permissions</title>
+
+      <sect2 id="zend.acl.controllers.assign">
+        <title>Selective permissions for areas</title>
+
+        <para>The 'base' permissions for the ACL as defined in the previous
+        section show how permissions can be applied at a more general level.
+        However most sets of permissions will tend to have exceptions and
+        varying degrees of complexity. Zend_Acl allows to you accomplish these
+        refinements in a straight-forward and flexible manner.</para>
+
+        <para>For the example CMS, it has been determined that whilst the
+        'staff' group covers the needs of the vast majority of users, there is
+        a new group that requires only access to the newsletter and latest
+        news areas in the CMS. They are fairly self-sufficient and will have
+        the ability to Publish and Archive both newsletters and latest
+        news.</para>
+
+        <para>In addition, it has also been requested that the 'staff' group
+        be allowed to view news stories but not to revise latest news (as this
+        is now marketing's task). Another was for it to be made impossible for
+        anyone (administrators included) to archive any 'announcement' news
+        stories (as they only have a lifespan of 1-2 days).</para>
+
+        <para>Firstly, we need to revise the ARO registry to reflect these
+        changes. We have determined that the 'marketing' group has the same
+        permissions level as 'staff':-</para>
+
+        <programlisting role="php">$aro = $acl-&gt;aroRegistry();
+$aro-&gt;add('guest');
+$aro-&gt;add('staff', $aro-&gt;guest);
+$aro-&gt;add('editor', $aro-&gt;staff);
+$aro-&gt;add('administrator', $aro-&gt;editor);
+
+$aro-&gt;add('marketing', $aro-&gt;staff);</programlisting>
+
+        <para>Then it is simply a matter of adding this new group to the ACL
+        on the target areas:-</para>
+
+        <programlisting role="php">// deny access to all unknown AROs
+$acl-&gt;deny();
+
+// apply ARO privileges
+$acl-&gt;allow($aro-&gt;guest, 'view'); // alternatively you can use $acl-&gt;allow('guest, 'view');
+$acl-&gt;allow($aro-&gt;staff, array('edit', 'submit', 'revise')); // multiple contexts are passed as an array
+$acl-&gt;allow($aro-&gt;editor, array('publish', 'archive', 'delete'));
+$acl-&gt;allow($aro-&gt;administrator); // an administrator is not restricted to any specific context
+
+// add specific contexts to areas
+$acl-&gt;newsletter-&gt;allow($aro-&gt;marketing, array('publish', 'archive'));
+$acl-&gt;news-&gt;latest-&gt;allow($aro-&gt;marketing, array('publish', 'archive'));
+$acl-&gt;news-&gt;latest-&gt;deny($aro-&gt;staff, 'revise');
+$acl-&gt;news-&gt;announcement-&gt;deny(null, 'archive'); // Here a 'null' signifies no-specific ARO, or 'anyone'</programlisting>
+
+        <para>And you can now apply the permissions to the CMS:-</para>
+
+        <programlisting role="php">&lt;?php
+
+// permission checks for specific areas
+if (!$acl-&gt;newsletter-&gt;pending-&gt;valid($aro-&gt;staff, 'publish')) { ...deny... }
+if ($acl-&gt;newsletter-&gt;pending-&gt;valid($aro-&gt;marketing, 'publish')) { ...allow... }
+
+// check permissions from ARO perspective
+if (!$aro-&gt;staff-&gt;canAccess($acl-&gt;news-&gt;latest, 'publish')) { ...deny... }
+if ($aro-&gt;marketing-&gt;canAccess($acl-&gt;news-&gt;latest, 'publish')) { ...allow... }
+
+// prevent archives
+if (!$acl-&gt;editor-&gt;canAccess($acl-&gt;news-&gt;latest, 'archive')) { ...deny... }
+
+?&gt;</programlisting>
+      </sect2>
+
+      <sect2 id="zend.acl.controllers.render">
+        <title>Altering and removing permissions</title>
+
+        <para>To remove one or more (or all) permissions from the default ACL
+        or specific ACOs, simply substitue <methodname>allow()</methodname> or
+        <methodname>deny()</methodname> with
+        <methodname>removeAllow()</methodname> or
+        <methodname>removeDeny()</methodname>. As with all assignment methods,
+        you may provide a null value to indicate any or all groups, and
+        specify the context as null (for all or any context), a string or an
+        array of strings.</para>
+
+        <programlisting role="php">$acl-&gt;newsletter-&gt;allow($aro-&gt;marketing, array('publish', 'archive'));
+$acl-&gt;news-&gt;latest-&gt;allow($aro-&gt;marketing, array('publish'));
+$acl-&gt;news-&gt;latest-&gt;deny($aro-&gt;staff, 'revise');
+$acl-&gt;news-&gt;announcement-&gt;deny(null, 'archive'); // Here a 'null' signifies no-specific ARO, or 'anyone'
+
+// remove specific context during execution
+if ($_SESSION['someflag'] == true) { // temporarily disable rules for a non-persistent ACL
+    $acl-&gt;news-&gt;latest-&gt;removeDeny($aro-&gt;staff, 'revise');
+    $acl-&gt;newsletter-&gt;removeAllow($aro-&gt;marketing, array('publish', 'archive'));
+}</programlisting>
+
+        <para>Permissions are also added rather than set so you may
+        incrementally apply them if you wish. The exception to this are null
+        values, which will always revert the ACO to any/all rather than
+        specific contexts.</para>
+
+        <programlisting role="php">$acl-&gt;news-&gt;latest-&gt;allow($aro-&gt;marketing, 'archive');
+if ($condition) {
+    $acl-&gt;news-&gt;latest-&gt;allow($aro-&gt;marketing, 'duplicate'); // now set to 'archive' and 'duplicate' for the marketing ARO
+} elseif ($othercondition) {
+    $acl-&gt;news-&gt;latest-&gt;allow($aro-&gt;marketing, null); // Reverts to 'any/all' permissions for the marketing ARO
+}</programlisting>
+      </sect2>
+    </sect1>
+
+    <sect1 id="zend.acl.scripts">
+      <title>Administering an ACL</title>
+
+      <para>Zend_View was designed to exist as a PHP-only implementation,
+      removing the requirement for database backends and complicated
+      administration tools. To implement a simple ACL may be as simple as
+      defining an array, or using a Zend_Config object, to map to a
+      pre-defined structure and then iterate through those rules to create
+      your object. Many situations, though, will require some form of
+      interactive maintenance of the ACL, and Zend_Acl provides methods for
+      traversing the structure and for determining access rights for one,
+      several or all AROs.</para>
+
+      <para>Note that there are no backend implementations of Zend_Acl, so
+      that storage of the ACL is left as a user-defined task. As Zend_Acl's
+      requirements are extremely light, it could be simply serialised and
+      saved to a file for persistence. Or you may wish to map the ARO and ACO
+      lists back to a database table for manipulation in a 3rd-party
+      application.</para>
+
+      <sect2 id="zend.acl.scripts.escaping">
+        <title>Traversing the ACL</title>
+
+        <para>To retrieve an array of all child nodes from an ACL, you may
+        simply iterate through the <methodname>getChildren()</methodname>
+        method. For each child object returned, you may also retrieve the
+        'allow' permissions and 'deny' permissions as separate objects for
+        inspection. These are supplied as associative arrays, with the keys
+        representing the defined AROs and the values containing an array of
+        defined contexts.</para>
+
+        <programlisting role="php">&lt;?php
+
+// Retrieve default ACL permissions
+foreach($acl-&gt;getAllow() as $group =&gt; $context) {
+    echo str_repeat(' ', $indent) . "      Allow: $group = " . join(', ', $context) . "\n";
+}
+foreach($acl-&gt;getDeny() as $group =&gt; $context) {
+    echo str_repeat(' ', $indent) . "      Deny:  $group = " . join(', ', $context) . "\n";
+}
+
+// Retrieve all 1st-level nodes
+foreach($acl-&gt;getChildren() as $node) {
+
+    echo "Path: " . $node-&gt;getPath(). "\n";
+
+    foreach($node-&gt;getAllow() as $group =&gt; $context) {
+        echo str_repeat(' ', $indent) . "      Allow: $group = " . join(', ', $context) . "\n";
+    }
+
+    foreach($node-&gt;getDeny() as $group =&gt; $context) {
+        echo str_repeat(' ', $indent) . "      Deny:  $group = " . join(', ', $context) . "\n";
+    }
+}
+
+?&gt;</programlisting>
+
+        <para>You can also call <methodname>getParent()</methodname> to access
+        each node's parent to recurse back to the 'root' node of the
+        ACL.</para>
+      </sect2>
+
+      <sect2 id="zend.acl.scripts.templates">
+        <title>Retrieving an ARO-specific view</title>
+
+        <para>You may also retrieve an entire ACL or a subset of an ACL by
+        calling the getValidAco() method from an ARO. This method traverses
+        the ACL starting from the node at which the ACL is provided and
+        returns a new ACL object. A typical use for this is to provide unique
+        site-map views for each user using the CMS.</para>
+
+        <programlisting role="php">&lt;?php
+
+$unique_acl = $aro-&gt;marketing-&gt;getValidAco($acl); // provides a complete overview of the ACL with marketing privileges
+$unique_acl = $aro-&gt;marketing-&gt;getValidAco($acl-&gt;newsletter); // show ACL for only newsletter area
+
+?&gt;</programlisting>
+      </sect2>
+
+      <sect2>
+        <title>Retrieving all valid AROs for a specific ACO</title>
+
+        <para>An array of ARO instances can also be returned for each node in
+        the ACL. Rather than returning simply the defined AROs for the current
+        area, it will return a list of all AROs that have access to the area,
+        be it through specific or inherited permissions. If an optional array
+        or string identifier of an ARO is passed to this method, it will limit
+        the search for valid AROs to those specified. <programlisting
+        role="php">&lt;?php
+
+$aro_list = $acl-&gt;news-&gt;getValidAro(); // Will return an array with 'staff', 'editor', 'marketing' and 'administrator' as members
+$aro_list = $aro-&gt;news-&gt;getValidAco(array($aro-&gt;guest, $aro-&gt;staff)); // returns an array of 'staff' only
+
+?&gt;</programlisting></para>
+      </sect2>
+    </sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
