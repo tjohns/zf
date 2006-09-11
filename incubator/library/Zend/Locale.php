@@ -338,6 +338,12 @@ class Zend_Locale {
 
 
     /**
+     * Actual set Codeset 
+     */
+    private $_Codeset;
+
+
+    /**
      * Generates a locale object
      *
      * @param $locale string   - OPTIONAL locale for parsing input
@@ -402,5 +408,78 @@ class Zend_Locale {
     public function SearchLocale()
     {
         
+    }
+
+
+    /**
+     * Return an array of all accepted languages of the client
+     * Expects RFC compilant Header !!
+     * 
+     * @return array - list of accepted languages
+     */
+    public function getHTTPLanguages()
+    {
+        $httplanguages = getenv("HTTP_ACCEPT_LANGUAGE");
+
+        $languages = array();
+        if (empty($httplanguages))
+            return $languages;
+
+        $accepted = preg_split('/,\s*/', $httplanguages);
+        
+        foreach ($accepted as $accept)
+        {
+            $result = preg_match('/^([a-z]{1,8}(?:-[a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i', $accept, $match);
+            
+            if (!$result)
+                continue;
+
+            if (isset($result[2]))
+            {
+                $quality = (float) $result[2];
+            } else {
+                $quality = 1.0;
+            }
+            
+            $countrys = explode('-', $result[1]);
+            $region = $countrys[0];
+            
+            $languages[$region] = $quality;
+
+            foreach($countrys as $country)
+            {
+                $languages[$region.'-'.$country] = $quality;
+            }
+        }
+        return $languages;
+    }
+
+
+    /**
+     * Return the accepted charset of the client
+     */
+    public function getHTTPCharset()
+    {
+        $httpcharsets = getenv("HTTP_ACCEPT_CHARSET");
+
+        $charsets = array();
+        if (empty($httpcharsets))
+            return $charsets;
+
+        $accepted = preg_split('/,\s*/', $httpcharsets);
+        
+        foreach ($accepted as $accept)
+        {
+            
+            if (strpos($accept, ';'))
+            {
+                $quality = (float) strstr($accept, '=');
+            } else {
+                $quality = 1.0;
+            } 
+
+            $charsets[substr($accept, 0, strpos($accept, ';'))] = $quality;
+        }
+        return $charsets;
     }
 }

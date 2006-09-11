@@ -132,7 +132,7 @@ class Zend_Date_DateObject {
      * @param $dst    boolean - summer/wintertime
      * @param $gmt    boolean - timezone
      */
-    public function mktime($hour, $minute, $second, $month = false, $day = false, $year = false, $dst= 1, $gmt = false)
+    public function mktime($hour, $minute, $second, $month = false, $day = false, $year = false, $dst= -1, $gmt = false)
     {
         // only time - use PHP internal
         if ($month === false)
