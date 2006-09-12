@@ -28,6 +28,7 @@ require_once('Zend/Date/DateObject.php');
 /**
  * Include needed Locale classes
  */
+require_once('Zend/Locale.php');
 require_once('Zend/Locale/Data.php');
 
 
@@ -231,17 +232,18 @@ class Zend_Date {
      * @param $parameter mixed - OPTIONAL defines the input format of $date
      * @return object
      */
-    public function __construct($date, $locale = false, $parameter)
+    public function __construct($date, $locale = false, $parameter = false)
     {
         // TODO: implement function
         // TODO: Is String
         // TODO: Lets Parse String Locale-Aware or Format-Parameter aware
         // TODO: New Zend_Locale_Format function getDate
         
-        // TODO: Autorecognition of locale
-        if ($locale === false)
-            $this->_Locale = 'root';
-        $this->_Locale = $locale;
+        if (empty($locale))
+            $this->_Locale = new Zend_Locale();
+        else
+            $this->_Locale = $locale;
+
         $this->_Date = new Zend_Date_DateObject($date);
     }
 

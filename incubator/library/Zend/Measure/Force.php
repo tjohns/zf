@@ -27,6 +27,7 @@ require_once 'Zend/Measure/Abstract.php';
 /**
  * Implement Locale Data and Format class
  */
+require_once 'Zend/Locale.php';
 require_once 'Zend/Locale/Data.php';
 require_once 'Zend/Locale/Format.php';
 
@@ -123,6 +124,8 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
         'Force::ZETTANEWTON'     => array(1.0e+21,'ZN')
     );
 
+    private $_Locale;
+
     /**
      * Zend_Measure_Force provides an locale aware class for
      * conversion and formatting of force values
@@ -136,9 +139,14 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function __construct($value, $type, $locale)
+    public function __construct($value, $type, $locale = false)
     {
-        $this->setValue($value, $type, $locale);
+        if (empty($locale))
+            $this->_Locale = new Zend_Locale();
+        else
+            $this->_Locale = $locale;
+
+        $this->setValue($value, $type, $this->_Locale);
     }
 
 
@@ -165,12 +173,15 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function setValue($value, $type, $locale)
+    public function setValue($value, $type, $locale = false)
     {
+        if (empty($locale))
+            $locale = $this->_Locale;
+
         $value = Zend_Locale_Format::getNumber($value, $locale);
         if (empty(self::$_UNITS[$type]))
             self::throwException('unknown type of force:'.$type);
-        parent::setValue($value);
+        parent::setValue($value, $type, $locale);
         parent::setType($type);
     }
 
@@ -191,7 +202,7 @@ class Zend_Measure_Force extends Zend_Measure_Abstract
 
         // Convert to expected value
         $value = $value / (self::$_UNITS[$type][0]);
-        parent::setValue($value);
+        parent::setValue($value, $type, $this->_Locale);
         parent::setType($type);
     }
 

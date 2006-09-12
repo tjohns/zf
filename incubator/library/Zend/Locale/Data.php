@@ -20,6 +20,9 @@
  */
 
 
+require_once('Zend/Locale.php');
+
+
 /**
  * @category   Zend
  * @package    Zend_Locale
@@ -78,30 +81,31 @@ class Zend_Locale_Data
         if (!empty(self::$_ldml[$locale])) {
 
             $result = self::$_ldml[$locale]->xpath($path);
-            foreach ($result as &$found) {
+            if (!empty($result))
+                foreach ($result as &$found) {
 
-                if (empty($value)) {
+                    if (empty($value)) {
 
-                    if (empty($attribute)) {
-                        // Case 1
-                        self::$_list[] = (string) $found;
-                    } else if (empty(self::$_list[(string) $found[$attribute]])){
-                        // Case 2
-                        self::$_list[(string) $found[$attribute]] = (string) $found;
+                        if (empty($attribute)) {
+                            // Case 1
+                            self::$_list[] = (string) $found;
+                        } else if (empty(self::$_list[(string) $found[$attribute]])){
+                            // Case 2
+                            self::$_list[(string) $found[$attribute]] = (string) $found;
+                        }
+
+                    } else if (empty (self::$_list[$value])) {
+
+                        if (empty($attribute)) {
+                            // Case 3
+                            self::$_list[$value] = (string) $found;
+                        } else {
+                            // Case 4
+                           self::$_list[$value] = (string) $found[$attribute];
+                        }
+
                     }
-
-                } else if (empty (self::$_list[$value])) {
-
-                    if (empty($attribute)) {
-                        // Case 3
-                        self::$_list[$value] = (string) $found;
-                    } else {
-                        // Case 4
-                        self::$_list[$value] = (string) $found[$attribute];
-                    }
-
                 }
-            }
         }
     }
 
@@ -181,7 +185,7 @@ class Zend_Locale_Data
      * @param  string $value
      * @access private
      */
-    private static function _getFile($locale, $path, $attribute, $value)
+    private static function _getFile($locale, $path, $attribute, $value = false)
     {
         $result = self::_findRoute($locale, $path, $attribute, $value);
         if ($result)
@@ -229,6 +233,12 @@ class Zend_Locale_Data
     public static function getContent($locale, $path, $value = false)
     {
         self::$_list = array();
+
+        if (empty($locale))
+            $locale = new Zend_Locale();
+
+        if (is_object($locale))
+            $locale = $locale->toString();
 
         if (empty($locale))
             $locale = 'root';

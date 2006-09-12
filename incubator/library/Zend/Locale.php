@@ -424,7 +424,7 @@ class Zend_Locale {
      */
     public function __construct($locale = false)
     {
-        if (($locale == AUTOSEARCH_HTTP) or ($locale == AUTOSEARCH_ENV) or (empty($locale)))
+        if (($locale == self::AUTOSEARCH_HTTP) or ($locale == self::AUTOSEARCH_ENV) or (empty($locale)))
             $locale = $this->SearchLocale($locale);
 
         $locale = key($locale);
@@ -489,7 +489,7 @@ class Zend_Locale {
      */
     public function SearchLocale($searchorder = false)
     {
-        if ($searchorder == AUTOSEARCH_ENV)
+        if ($searchorder == self::AUTOSEARCH_ENV)
         {
             $languages = $this->getSystemLanguages();
             if (empty($languages))

@@ -19,6 +19,9 @@
  */
 
 
+require_once('Zend/Locale.php');
+
+
 /**
  * @category   Zend
  * @package    Zend_Measure
@@ -89,6 +92,7 @@ class Zend_Measure
     );
 
     private $_Measurement;
+    private $_Locale;
 
 
     /**
@@ -104,22 +108,32 @@ class Zend_Measure
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function __construct($value, $type, $locale = 'root')
+    public function __construct($value, $type, $locale = false)
     {
+        if (empty($locale))
+            $this->_Locale = new Zend_Locale();
+        else
+            $this->_Locale = $locale;
+
         $library = substr($type,0,strpos($type,'::'));
         $sublib  = substr($type, strpos($type,'::')+2);
 
         if ($library == 'Zend_Measure')
         {
-            $library = $library.'_'.key(self::$_UNIT[$type]);
+            if (!empty(self::$_UNIT[$type]))
+                $library = $library.'_'.key(self::$_UNIT[$type]);
+            else
+                $this->throwException('unknown measurement type: '.$type);
             $sublib = key(self::$_UNIT[$type]).'::'.current(self::$_UNIT[$type]);
+            if (!empty($sublib))
+                $sublib = key(self::$_UNIT[$type]).'::'.current(self::$_UNIT[$type]);
             Zend::loadClass($library);
         } else {
             $sublib = $library.'::'.$sublib;
             $library = 'Zend_Measure_'.$library;
         }
 
-        $this->_Measurement = new $library($value, $sublib, $locale);
+        $this->_Measurement = new $library($value, $sublib, $this->_Locale);
     }
 
 
@@ -162,8 +176,11 @@ class Zend_Measure
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function setValue($value, $type, $locale)
+    public function setValue($value, $type, $locale = false)
     {
+        if (empty($locale))
+            $locale = $this->_Locale;
+
         $library = substr($type,0,strpos($type,'::'));
 
         if ($library == 'Zend_Measure')
@@ -249,7 +266,7 @@ class Zend_Measure
     {
         $object->setType($this->getType());
         $value  = $this->getValue() + $object->getValue();
-        return new Zend_Measure($value,$this->getType(),'root');
+        return new Zend_Measure($value,$this->getType(),$this->_Locale);
     }
 
 
@@ -263,7 +280,7 @@ class Zend_Measure
     {
         $object->setType($this->getType());
         $value  = $this->getValue() - $object->getValue();
-        return new Zend_Measure($value,$this->getType(),'root');
+        return new Zend_Measure($value,$this->getType(),$this->_Locale);
     }
 
 
@@ -304,5 +321,17 @@ class Zend_Measure
     {
         $values = $this->_Measurement->getConversionList();
         return $values;
+    }
+
+
+    /**
+     * Throw an exception
+     *
+     * Note : for performance reasons, the "load" of Zend/Measure/Exception is dynamic
+     */
+    public static function throwException($message)
+    {
+        require_once('Zend/Measure/Exception.php');
+        throw new Zend_Measure_Exception($message);
     }
 }

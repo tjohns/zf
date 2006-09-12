@@ -53,7 +53,7 @@ abstract class Zend_Measure_Abstract //implements Serializable
     /**
      * Sets the internal value
      */
-    protected function setValue($value)
+    protected function setValue($value, $type, $locale = false)
     {
         $this->_value = $value;
     }

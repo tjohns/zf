@@ -27,6 +27,7 @@ require_once 'Zend/Measure/Abstract.php';
 /**
  * Implement Locale Data and Format class
  */
+require_once 'Zend/Locale.php';
 require_once 'Zend/Locale/Data.php';
 require_once 'Zend/Locale/Format.php';
 
@@ -87,6 +88,8 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
         'Flow_Mole::MOLE_PER_SECOND'      => array(1,'mol/s')
     );
 
+    private $_Locale;
+
     /**
      * Zend_Measure_Flow_Mole provides an locale aware class for
      * conversion and formatting of Mole values
@@ -100,9 +103,14 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function __construct($value, $type, $locale)
+    public function __construct($value, $type, $locale = false)
     {
-        $this->setValue($value, $type, $locale);
+        if (empty($locale))
+            $this->_Locale = new Zend_Locale();
+        else
+            $this->_Locale = $locale;
+
+        $this->setValue($value, $type, $this->_Locale);
     }
 
 
@@ -129,12 +137,15 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
      * @param  $locale locale - OPTIONAL a Zend_Locale Type
      * @throws Zend_Measure_Exception
      */
-    public function setValue($value, $type, $locale)
+    public function setValue($value, $type, $locale = false)
     {
+        if (empty($locale))
+            $locale = $this->_Locale;
+
         $value = Zend_Locale_Format::getNumber($value, $locale);
         if (empty(self::$_UNITS[$type]))
             self::throwException('unknown type of flow-mole:'.$type);
-        parent::setValue($value);
+        parent::setValue($value, $type, $locale);
         parent::setType($type);
     }
 
@@ -181,7 +192,7 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
         } else {
             $value = $value / (self::$_UNITS[$type][0]);
         }
-        parent::setValue($value);
+        parent::setValue($value, $type, $this->_Locale);
         parent::setType($type);
     }
 
