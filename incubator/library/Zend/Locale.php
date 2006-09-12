@@ -34,11 +34,6 @@ require_once('Zend/Locale/Data.php');
 class Zend_Locale {
 
     // Class wide Locale Constants
-    
-    // scottish iso-8859-1, windows-1252
-    // hebrew   iso-8859-8
-    // inuit    iso-8859-10
-    // lapp     iso-8859-10
     private $_LocaleData = array(
         'root'  => '',
         'aa_DJ' => '',
@@ -332,6 +327,77 @@ class Zend_Locale {
 
 
     /**
+     * 
+     */
+    private $_LocaleTranslation = array(
+        'Australia' => 'AU',
+        'Austria'   => 'AT',
+        'Belgium'   => 'BE',
+        'Brazil'    => 'BR',
+        'Canada'    => 'CA',
+        'China'     => 'CN',
+        'Czech Republic' => 'CZ',
+        'Denmark'   => 'DK',
+        'Finland'   => 'FI',
+        'France'    => 'FR',
+        'Germany'   => 'DE',
+        'Greece'    => 'GR',
+        'Hong Kong SAR' => 'HK',
+        'Hungary'   => 'HU',
+        'Iceland'   => 'IS',
+        'Ireland'   => 'IE',
+        'Italy'     => 'IT',
+        'Japan'     => 'JP',
+        'Korea'     => 'KP',
+        'Mexiko'    => 'MX',
+        'The Netherlands' => 'NL',
+        'New Zealand' => 'NZ',
+        'Norway'    => 'NO',
+        'Poland'    => 'PL',
+        'Portugal'  => 'PT',
+        'Russia'    => 'RU',
+        'Singapore' => 'SG',
+        'Slovakia'  => 'SK',
+        'Spain'     => 'ES',
+        'Sweden'    => 'SE',
+        'Taiwan'    => 'TW',
+        'Turkey'    => 'TR',
+        'United Kingdom' => 'UK',
+        'United States' => 'US',
+        
+        'Chinese'   => 'zh',
+        'Czech'     => 'cs',
+        'Danish'    => 'da',
+        'Dutch'     => 'nl',
+        'English'   => 'en',
+        'Finnish'   => 'fi',
+        'French'    => 'fr',
+        'German'    => 'de',
+        'Greek'     => 'el',
+        'Hungarian' => 'hu',
+        'Icelandic' => 'is',
+        'Italian'   => 'it',
+        'Japanese'  => 'ja',
+        'Korean'    => 'ko',
+        'Norwegian' => 'no',
+        'Polish'    => 'pl',
+        'Portuguese'=> 'pt',
+        'Russian'   => 'ru',
+        'Slovak'    => 'sk',
+        'Spanish'   => 'es',
+        'Swedish'   => 'sv',
+        'Turkish'   => 'tr'
+    );
+
+
+    /**
+     * Autosearch constants
+     */
+    const AUTOSEARCH_HTTP  = 1;
+    const AUTOSEARCH_ENV   = 2;
+
+
+    /**
      * Actual set locale 
      */
     private $_Locale;
@@ -345,14 +411,23 @@ class Zend_Locale {
 
     /**
      * Generates a locale object
+     * If no locale is given a automatic search is done
+     * Then the most probable locale will be automatically set
+     * Search order is
+     *  1. Given Locale
+     *  2. HTTP Client
+     *  3. Server Environment
+     *  4. Framework Standard
      *
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $locale string - OPTIONAL locale for parsing input
      * @return object
      */
     public function __construct($locale)
     {
-        if (empty($locale))
-            $locale = $this->SearchLocale();
+        if (($locale == AUTOSEARCH_HTTP) or ($locale == AUTOSEARCH_ENV) or (empty($locale)))
+            $locale = $this->SearchLocale($locale);
+
+        $locale = key($locale);
         if (!isset($this->_LocaleData[$locale]))
         {
             $region = substr($locale, 0, 3);
@@ -362,8 +437,9 @@ class Zend_Locale {
                 $this->_Locale = $region;
             else
                 $this->_Locale = 'root';
+        } else {
+            $this->_Locale = $locale;
         }
-        $this->_Locale = $locale;
     }
 
 
@@ -383,6 +459,7 @@ class Zend_Locale {
      */
     public function toString()
     {
+        return (string) $this->_Locale;
     }
 
 
@@ -399,23 +476,76 @@ class Zend_Locale {
 
 
     /**
-     * Search the locale automatically
-     * Searchorder is
-     * - httpRequestLanguage
-     * - Environment
-     * - Zend Config
+     * Search the locale automatically and return all used locales
+     * ordered by quality
+     * 
+     * Standard Searchorder is
+     * - getHTTPLanguages
+     * - getServerLanguages
+     * TODO: - getFrameworkLanguages
+     * 
+     * @param $searchorder  - OPTIONAL searchorder
+     * @return  locale - returns an array of all the mosta locale string
      */
-    public function SearchLocale()
+    public function SearchLocale($searchorder = false)
     {
-        
+        if ($searchorder == AUTOSEARCH_ENV)
+        {
+            $languages = $this->getSystemLanguages();
+            if (empty($languages))
+                $languages = $this->getHTTPLanguages();
+        } else {
+            $languages = $this->getHTTPLanguages();
+            if (empty($languages))
+                $languages = $this->getSystemLanguages();
+        }
+        return $languages;
     }
 
+
+    /**
+     * Expects the Systems standard locale
+     * 
+     * For Windows:
+     * f.e.: LC_COLLATE=C;LC_CTYPE=German_Austria.1252;LC_MONETARY=C
+     * would be recognised as de_AT
+     * 
+     * @return array
+     */
+    public function getSystemLanguages()
+    {
+        $language = setlocale(LC_ALL, 0);
+        $languages = explode(';', $language);
+        
+        foreach ($languages as $locale)
+        {
+            $language = substr($locale, strpos($locale, '='));
+            if ($language != '=C')
+            {
+               $language = substr($language, 1, strpos($language, '.') - 1);
+               $splitted = explode('_', $language);
+               $language = '';
+               if (!empty($this->_LocaleTranslation[$splitted[0]]))
+               {
+                   if (!empty($this->_LocaleTranslation[$splitted[1]]))
+                   {
+                       $languagearray[$this->_LocaleTranslation[$splitted[0]].'_'.$this->_LocaleTranslation[$splitted[1]]] = 1;
+                   }
+                   $languagearray[$this->_LocaleTranslation[$splitted[0]]] = 1;
+               }
+            }            
+        }
+        return $languagearray;
+    }
 
     /**
      * Return an array of all accepted languages of the client
      * Expects RFC compilant Header !!
      * 
-     * @return array - list of accepted languages
+     * The notation can be :
+     * de,en-UK-US;q=0.5,fr-FR;q=0.2
+     * 
+     * @return array - list of accepted languages including quality
      */
     public function getHTTPLanguages()
     {
@@ -426,30 +556,29 @@ class Zend_Locale {
             return $languages;
 
         $accepted = preg_split('/,\s*/', $httplanguages);
-        
+
         foreach ($accepted as $accept)
         {
             $result = preg_match('/^([a-z]{1,8}(?:-[a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i', $accept, $match);
-            
+
             if (!$result)
                 continue;
 
-            if (isset($result[2]))
+            if (isset($match[2]))
             {
-                $quality = (float) $result[2];
+                $quality = (float) $match[2];
             } else {
                 $quality = 1.0;
             }
-            
-            $countrys = explode('-', $result[1]);
-            $region = $countrys[0];
-            
-            $languages[$region] = $quality;
+
+            $countrys = explode('-', $match[1]);
+            $region = array_shift($countrys);
 
             foreach($countrys as $country)
             {
-                $languages[$region.'-'.$country] = $quality;
+                $languages[$region.'_'.strtoupper($country)] = $quality;
             }
+            $languages[$region] = $quality;
         }
         return $languages;
     }
@@ -467,10 +596,10 @@ class Zend_Locale {
             return $charsets;
 
         $accepted = preg_split('/,\s*/', $httpcharsets);
-        
+
         foreach ($accepted as $accept)
         {
-            
+
             if (strpos($accept, ';'))
             {
                 $quality = (float) strstr($accept, '=');
