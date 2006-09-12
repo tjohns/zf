@@ -422,7 +422,7 @@ class Zend_Locale {
      * @param $locale string - OPTIONAL locale for parsing input
      * @return object
      */
-    public function __construct($locale)
+    public function __construct($locale = false)
     {
         if (($locale == AUTOSEARCH_HTTP) or ($locale == AUTOSEARCH_ENV) or (empty($locale)))
             $locale = $this->SearchLocale($locale);
