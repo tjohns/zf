@@ -393,29 +393,29 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
         // Set the host header
         if (! isset($this->headers['host'])) {
             $host = $this->uri->getHost() . ($this->uri->getPort() == 80 ? '' : ':' . $this->uri->getPort());
-            $this->setHeader('host', $host);
+            $headers .= "Host: {$host}\r\n";
         }
         
         // Set the connection header
         // For now, only support closed connections
         if (! isset($this->headers['connection'])) {
-            $this->setHeader('connection', 'close');
+            $headers .= "Connection: close\r\n";
         }
         
         // Set the content-type header
         if (! isset($this->headers['content-type']) && isset($this->enctype)) {
-            $this->setHeader('content-type', $this->enctype);
+			$headers .= "Content-type: {$this->enctype}\r\n";
         }
         
         // Set the user agent header
         if (! isset($this->headers['user-agent']) && isset($this->user_agent)) {
-            $this->setHeader('user-agent', $this->user_agent);
+			$headers .= "User-agent: {$this->user_agent}\r\n";
         }
         
         // Set HTTP authentication if needed
         if (is_array($this->auth)) {
-            $this->setHeader('Authorization', 
-                self::encodeAuthHeader($this->auth['user'], $this->auth['password'], $this->auth['type']));
+        	$auth = self::encodeAuthHeader($this->auth['user'], $this->auth['password'], $this->auth['type']);
+            $headers .= "Authorization: {$auth}\r\n"; 
         }
 
         // Load cookies from cookie jar
@@ -423,16 +423,10 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
             $cookstr = $this->Cookiejar->getMatchingCookies($this->uri, 
                 true, Zend_Http_Cookiejar::COOKIE_STRING_CONCAT);
                 
-            if ($cookstr) {
-                if (isset($this->headers['cookie'])) {
-                    $this->headers['cookie'] .= "; $cookstr";
-                } else {
-                    $this->setHeader('cookie', $cookstr);
-                }
-            }
+            if ($cookstr) $headers .= "Cookie: {$cookstr}\r\n";
         }
         
-        // Compile the headers
+        // Add all other user defined headers
         foreach ($this->headers as $name => $value) {
             if (is_array($value)) {
                 foreach ($value as $subval) {
