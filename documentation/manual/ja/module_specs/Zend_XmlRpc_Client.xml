@@ -58,7 +58,7 @@ print_r( $server->system->listMethods() );
                 以下の表にしたがって XML-RPC 型に変換されます。
             </para>
             <table>
-                <title>PHP ネイティブ値から XML-RPC 型への変換</title>
+                <title>PHP と XML-RPC の間の型変換</title>
                 <tgroup cols="2">
                     <thead>
                         <row>
@@ -98,17 +98,20 @@ print_r( $server->system->listMethods() );
                     </tbody>
                 </tgroup>
             </table>
-            <programlisting role="php"><![CDATA[...
-/** このプロシージャには 2 つのパラメータが渡されます。
- *  最初のパラメータは文字列で、XML-RPC の string 型に自動的に変換されます。
- *  2 番目のパラメータは連想配列で、これは XML-RPC の構造体に変換されます。
+            <programlisting role="php"><![CDATA[<?php
+              
+/** 
+ *  このプロシージャには 2 つのパラメータが渡されます。
+ *    - 最初のパラメータは文字列で、XML-RPC の string 型に自動的に変換されます。
+ *    - 2 番目のパラメータは連想配列で、これは XML-RPC の構造体に変換されます。
  */
 
 $p1 = 'parameter 1';
 $p2 = array('name' => 'Joe', 'age' => 30);
 
 $service->serviceProcedure($p1, $p2);
-...]]>
+
+?>]]>
             </programlisting>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.xmlrpc_value'>
@@ -198,18 +201,21 @@ $service->serviceProcedure($p1, $p2);
                     </tbody>
                 </tgroup>
             </table>
-            <programlisting role="php"><![CDATA[...
-/** このプロシージャには 2 つのパラメータが渡されます。
- *  最初のパラメータは XML-RPC の base64 型で、静的関数
- *  Zend_XmlRpc_Value::getXmlRpcValue() を使用して作成します。
- *  2 番目のパラメータは XML-RPC の構造体で、これは 明示的に作成します。
+            <programlisting role="php"><![CDATA[<?php
+              
+/**
+ *  このプロシージャには 2 つのパラメータが渡されます。
+ *    - 最初のパラメータは XML-RPC の base64 型で、静的関数
+ *      Zend_XmlRpc_Value::getXmlRpcValue() を使用して作成します。
+ *    - 2 番目のパラメータは XML-RPC の構造体で、これは 明示的に作成します。
  */
 
-$p1 = ZXmlRpcValue::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
+$p1 = Zend_XmlRpc_Value::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
 $p2 = new Zend_XmlRpc_Value_Struct(array('name' => 'Joe', 'age' => 30));
 
 $service->serviceProcedure($p1, $p2);
-...]]>
+
+?>]]>
             </programlisting>
             <para>
                 <note>
@@ -284,6 +290,7 @@ $service->serviceProcedure($p1, $p2);
         <example>
             <title>型指定を使用した XML-RPC サービスのコール</title>
             <programlisting role="php"><![CDATA[<?php
+              
 /**
  * XML-RPC サーバに接続し、シグネチャファイルを保存します
  * (SOAP の WSDL ファイルと同等の XML-RPC 版になります)
@@ -299,9 +306,11 @@ file_put_contents('/tmp/xmlrpc-signatures/example.xml', $service->__getMethodsXm
    プロシージャのシグネチャに応じて適切に型変換されます。
  */
 $service->serviceProcedure($param);
+
 ?>]]>
             </programlisting>
             <programlisting role="php"><![CDATA[<?php
+              
 /**
  * 既存のシグネチャファイルを使用して XML-RPC サーバに接続します。これにより、
  * プロシージャに渡すパラメータの型が適切に変換されるようになります。
@@ -316,6 +325,7 @@ $service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc', 'namespace', 
    プロシージャのシグネチャに応じて適切に型変換されます。
  */
 $service->serviceProcedure($param);
+
 ?>]]>
             </programlisting>
         </example>
@@ -348,7 +358,8 @@ $service->serviceProcedure($param);
                 </listitem>
             </itemizedlist>
         </para>
-        <programlisting role="php"><![CDATA[...
+        <programlisting role="php"><![CDATA[<?php
+          
 $service->serviceProcedure();
 
 $response = $service->__getResponse();
@@ -359,7 +370,8 @@ $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
 
 $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_ZXMLRPC_OBJECT);
 // $response は、XML-RPC 型の返り値を表す Zend_XmlRpc_Value インスタンスです
-...]]>
+
+?>]]>
         </programlisting>
     </sect2>
 </sect1>
