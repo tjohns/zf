@@ -227,24 +227,28 @@ class Zend_Date {
      *   - ISO
      *   - Locale
      *
-     * @param $date string - OPTIONAL date string depending on $parameter
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @param $parameter mixed - OPTIONAL defines the input format of $date
+     * @param $date string   - OPTIONAL date string depending on $parameter
+     * @param $locale string - OPTIONAL locale for parsing input
+     * @param $part mixed    - OPTIONAL defines the input format of $date
      * @return object
      */
-    public function __construct($date, $locale = false, $parameter = false)
+    public function __construct($date, $part = false, $locale = false)
     {
-        // TODO: implement function
-        // TODO: Is String
-        // TODO: Lets Parse String Locale-Aware or Format-Parameter aware
-        // TODO: New Zend_Locale_Format function getDate
-        
         if (empty($locale))
             $this->_Locale = new Zend_Locale();
         else
             $this->_Locale = $locale;
 
-        $this->_Date = new Zend_Date_DateObject($date);
+        if (empty($part))
+        {
+            if (!is_numeric($date))
+                $this->throwException('no timestamp found');
+
+            $this->_Date = new Zend_Date_DateObject($date);
+        } else {
+            $this->_Date = new Zend_Date_DateObject(0);
+            $this->set($date, $part, $this->_Locale, FALSE);
+        }
     }
 
 
@@ -1199,8 +1203,13 @@ class Zend_Date {
                 return $this->getTimestamp();
                 break;
             case Zend_Date::SWATCH :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $rest = intval($date);
+                $hour = floor($rest / 3600);
+                $rest = $rest - ($hour * 3600);
+                $minute = floor($rest / 60);
+                $second = $rest - ($minute * 60); 
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::HOUR_SHORT_AM :
                 $this->setTimestamp($this->_Date->mktime(intval($date), $minute, $second, $month, $day, $year, -1, $gmt));
@@ -1240,39 +1249,55 @@ class Zend_Date {
 
             // timezone formats
             case Zend_Date::TIMEZONE_NAME :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
             case Zend_Date::DAYLIGHT :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
             case Zend_Date::GMT_DIFF :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
             case Zend_Date::GMT_DIFF_SEP :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
             case Zend_Date::TIMEZONE :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
             case Zend_Date::TIMEZONE_SECS :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
 
 
             // date strings
             case Zend_Date::ISO_8601 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $year   = substr($match[0], 0, 4);
+                $month  = substr($match[0], 5, 2);
+                $day    = substr($match[0], 8, 2);
+                $hour   = substr($match[0], 11, 2);
+                $minute = substr($match[0], 14, 2);
+                $second = substr($match[0], 17, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_2822 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $hour   = substr($match[0], 17, 2);
+                $minute = substr($match[0], 20, 2);
+                $second = substr($match[0], 23, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::TIMESTAMP :
                 if (is_numeric($date))
@@ -1286,12 +1311,10 @@ class Zend_Date {
 
             // additional formats
             case Zend_Date::ERA :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
             case Zend_Date::ERA_NAME :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
             case Zend_Date::DATES :
                 // TODO: implement function
@@ -1334,41 +1357,169 @@ class Zend_Date {
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::ATOM :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $year   = substr($match[0], 0, 4);
+                $month  = substr($match[0], 5, 2);
+                $day    = substr($match[0], 8, 2);
+                $hour   = substr($match[0], 11, 2);
+                $minute = substr($match[0], 14, 2);
+                $second = substr($match[0], 17, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::COOKIE :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
+                if (!$result)
+                    return false;
+                $match[0] = substr($match[0], strpos(' '+1));
+                
+                $day    = substr($match[0], 0, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 3, 3));
+                $year   = substr($match[0], 7, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 10, 2);
+                $minute = substr($match[0], 13, 2);
+                $second = substr($match[0], 16, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_822 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+                
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 15, 2);
+                $minute = substr($match[0], 18, 2);
+                $second = substr($match[0], 21, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_850 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
+                if (!$result)
+                    return false;
+                $match[0] = substr($match[0], strpos(' '+1));
+                
+                $day    = substr($match[0], 0, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 3, 3));
+                $year   = substr($match[0], 7, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 10, 2);
+                $minute = substr($match[0], 13, 2);
+                $second = substr($match[0], 16, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_1036 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+                
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 15, 2);
+                $minute = substr($match[0], 18, 2);
+                $second = substr($match[0], 21, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_1123 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $hour   = substr($match[0], 17, 2);
+                $minute = substr($match[0], 20, 2);
+                $second = substr($match[0], 23, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RSS :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $hour   = substr($match[0], 17, 2);
+                $minute = substr($match[0], 20, 2);
+                $second = substr($match[0], 23, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::W3C :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $year   = substr($match[0], 0, 4);
+                $month  = substr($match[0], 5, 2);
+                $day    = substr($match[0], 8, 2);
+                $hour   = substr($match[0], 11, 2);
+                $minute = substr($match[0], 14, 2);
+                $second = substr($match[0], 17, 2);
+
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
-
-
             default :
                 break;
+        }
+    }
+
+
+    /**
+     * Return digit from standard names (english)
+     * Faster implementation than locale aware searching
+     */
+    private function getDigitFromName($name)
+    {
+        switch($name)
+        {
+            case "Jan":
+                return 1;
+            case "Feb":
+                return 2;
+            case "Mar":
+                return 3;
+            case "Apr":
+                return 4;
+            case "May":
+                return 5;
+            case "Jun":
+                return 6;
+            case "Jul":
+                return 7;
+            case "Aug":
+                return 8;
+            case "Sep":
+                return 9;
+            case "Oct":
+                return 10;
+            case "Nov":
+                return 11;
+            case "Dec":
+                return 12;
         }
     }
 
