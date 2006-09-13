@@ -18,7 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
  * Zend_Uri base class
  */
@@ -29,7 +28,6 @@ require_once 'Zend/Uri.php';
  */
 require_once 'Zend/Filter.php';
 
-
 /**
  * @category   Zend
  * @package    Zend_Uri
@@ -38,8 +36,6 @@ require_once 'Zend/Filter.php';
  */
 class Zend_Uri_Http extends Zend_Uri
 {
-
-
     /**
      * URI parts are divided among these instance variables
      */
@@ -51,12 +47,10 @@ class Zend_Uri_Http extends Zend_Uri
 	protected $_query		= '';
 	protected $_fragment 	= '';
 
-
 	/**
 	 * Regular expression grammar rules for validation; values added by constructor
 	 */
 	protected $_regex = array();
-
 
 	/**
 	 * Constructor accepts a string $scheme (e.g., http, https) and a scheme-specific part of the URI
@@ -69,16 +63,11 @@ class Zend_Uri_Http extends Zend_Uri
 	 */
     protected function __construct($scheme, $schemeSpecific = '')
     {
-
-        /**
-         * Set the scheme
-         */
+        // Set the scheme
         $this->_scheme = $scheme;
 
-        /**
-         * Set up grammar rules for validation via regular expressions. These are to be used with slash-delimited
-         * regular expression strings.
-         */
+        // Set up grammar rules for validation via regular expressions. These
+        // are to be used with slash-delimited regular expression strings.
         $this->_regex['alphanum']   = '[^\W_]';
         $this->_regex['escaped']    = '(?:%[\da-fA-F]{2})';
         $this->_regex['mark']       = '[-_.!~*\'()]';
@@ -89,29 +78,20 @@ class Zend_Uri_Http extends Zend_Uri
         $this->_regex['path']       = '(?:\/' . $this->_regex['segment'] . ')+';
         $this->_regex['uric']       = '(?:' . $this->_regex['reserved'] . '|' . $this->_regex['unreserved'] . '|'
                                     . $this->_regex['escaped'] . ')';
-
-        /**
-         * If no scheme-specific part was supplied, the user intends to create
-         * a new URI with this object.  No further parsing is required.
-         */
+        // If no scheme-specific part was supplied, the user intends to create
+        // a new URI with this object.  No further parsing is required.
         if (strlen($schemeSpecific) == 0) {
             return;
         }
 
-        /**
-         * Parse the scheme-specific URI parts into the instance variables.
-         */
+        // Parse the scheme-specific URI parts into the instance variables.
         $this->_parseUri($schemeSpecific);
 
-        /**
-         * Validate the URI
-         */
+        // Validate the URI
         if (!$this->valid()) {
             throw new Zend_Uri_Exception('Invalid URI supplied');
         }
-
     }
-
 
     /**
      * Parse the scheme-specific portion of the URI and place its parts into instance variables.
@@ -122,7 +102,6 @@ class Zend_Uri_Http extends Zend_Uri
      */
     protected function _parseUri($schemeSpecific)
     {
-
         // High-level decomposition parser
         $pattern = '~^((//)([^/?#]*))([^?#]*)(\?([^#]*))?(#(.*))?$~';
         $status = @preg_match($pattern, $schemeSpecific, $matches);
@@ -161,7 +140,6 @@ class Zend_Uri_Http extends Zend_Uri
 
     }
 
-
     /**
      * Returns a URI based on current values of the instance variables. If any
      * part of the URI does not pass validation, then an exception is thrown.
@@ -181,7 +159,6 @@ class Zend_Uri_Http extends Zend_Uri
         $fragment = strlen($this->_fragment) ? "#$this->_fragment" : '';
         return "$this->_scheme://$auth$this->_host$port$this->_path$query$fragment";
     }
-
 
     /**
      * Validate the current URI from the instance variables. Returns true if and only if all
@@ -203,7 +180,6 @@ class Zend_Uri_Http extends Zend_Uri
             && $this->validateFragment();
     }
 
-
 	/**
 	 * Returns the username portion of the URL, or FALSE if none.
 	 *
@@ -213,7 +189,6 @@ class Zend_Uri_Http extends Zend_Uri
 	{
 		return strlen($this->_username) ? $this->_username : false;
 	}
-
 
 	/**
 	 * Returns true if and only if the username passes validation. If no username is passed,
@@ -228,9 +203,8 @@ class Zend_Uri_Http extends Zend_Uri
         if ($username === null) {
             $username = $this->_username;
         }
-        /**
-         * If the username is empty, then it is considered valid
-         */
+
+        // If the username is empty, then it is considered valid
         if (strlen($username) == 0) {
             return true;
         }
@@ -244,9 +218,9 @@ class Zend_Uri_Http extends Zend_Uri
         if ($status === false) {
             throw new Zend_Uri_Exception('Internal error: username validation failed');
         }
+        
         return $status == 1;
     }
-
 
     /**
      * Sets the username for the current URI, and returns the old username
@@ -265,7 +239,6 @@ class Zend_Uri_Http extends Zend_Uri
         return $oldUsername;
     }
 
-
 	/**
 	 * Returns the password portion of the URL, or FALSE if none.
 	 *
@@ -275,7 +248,6 @@ class Zend_Uri_Http extends Zend_Uri
 	{
 		return strlen($this->_password) ? $this->_password : false;
 	}
-
 
 	/**
 	 * Returns true if and only if the password passes validation. If no password is passed,
@@ -290,18 +262,17 @@ class Zend_Uri_Http extends Zend_Uri
         if ($password === null) {
             $password = $this->_password;
         }
-        /**
-         * If the password is empty, then it is considered valid
-         */
+        
+        // If the password is empty, then it is considered valid
         if (strlen($password) == 0) {
             return true;
         }
-        /**
-         * If the password is nonempty, but there is no username, then it is considered invalid
-         */
+
+        // If the password is nonempty, but there is no username, then it is considered invalid
         if (strlen($password) > 0 && strlen($this->_username) == 0) {
             return false;
         }
+        
         /**
          * Check the password against the allowed values
          *
@@ -314,7 +285,6 @@ class Zend_Uri_Http extends Zend_Uri
         }
         return $status == 1;
     }
-
 
     /**
      * Sets the password for the current URI, and returns the old password
@@ -333,7 +303,6 @@ class Zend_Uri_Http extends Zend_Uri
         return $oldPassword;
     }
 
-
 	/**
 	 * Returns the domain or host IP portion of the URL, or FALSE if none.
 	 *
@@ -343,7 +312,6 @@ class Zend_Uri_Http extends Zend_Uri
 	{
 		return strlen($this->_host) ? $this->_host : false;
 	}
-
 
 	/**
 	 * Returns true if and only if the host string passes validation. If no host is passed,
@@ -370,7 +338,6 @@ class Zend_Uri_Http extends Zend_Uri
         return Zend_Filter::isHostname($host) !== FALSE;
     }
 
-
     /**
      * Sets the host for the current URI, and returns the old host
      *
@@ -388,7 +355,6 @@ class Zend_Uri_Http extends Zend_Uri
         return $oldHost;
     }
 
-
 	/**
 	 * Returns the TCP port, or FALSE if none.
 	 *
@@ -398,7 +364,6 @@ class Zend_Uri_Http extends Zend_Uri
 	{
 		return strlen($this->_port) ? $this->_port : false;
 	}
-
 
 	/**
 	 * Returns true if and only if the TCP port string passes validation. If no port is passed,
@@ -412,19 +377,15 @@ class Zend_Uri_Http extends Zend_Uri
         if ($port === null) {
             $port = $this->_port;
         }
-        /**
-         * If the port is empty, then it is considered valid
-         */
+        
+        // If the port is empty, then it is considered valid
         if (!strlen($port)) {
             return true;
         }
 
-        /**
-         * Check the port against the allowed values
-         */
+        // Check the port against the allowed values
         return ctype_digit((string)$port) && 1 <= $port && $port <= 65535;
     }
-
 
     /**
      * Sets the port for the current URI, and returns the old port
@@ -443,7 +404,6 @@ class Zend_Uri_Http extends Zend_Uri
         return $oldPort;
     }
 
-
 	/**
 	 * Returns the path and filename portion of the URL, or FALSE if none.
 	 *
@@ -453,7 +413,6 @@ class Zend_Uri_Http extends Zend_Uri
 	{
 		return strlen($this->_path) ? $this->_path : '/';
 	}
-
 
 	/**
 	 * Returns true if and only if the path string passes validation. If no path is passed,
@@ -485,7 +444,6 @@ class Zend_Uri_Http extends Zend_Uri
         return (boolean) $status;
     }
 
-
     /**
      * Sets the path for the current URI, and returns the old path
      *
@@ -513,7 +471,6 @@ class Zend_Uri_Http extends Zend_Uri
 		return strlen($this->_query) ? $this->_query : false;
 	}
 
-
 	/**
 	 * Returns true if and only if the query string passes validation. If no query is passed,
 	 * then the query string contained in the instance variable is used.
@@ -527,12 +484,12 @@ class Zend_Uri_Http extends Zend_Uri
         if ($query === null) {
             $query = $this->_query;
         }
-        /**
-         * If query is empty, it is considered to be valid
-         */
+
+        // If query is empty, it is considered to be valid
         if (strlen($query) == 0) {
             return true;
         }
+        
         /**
          * Determine whether the query is well-formed
          *
@@ -543,90 +500,87 @@ class Zend_Uri_Http extends Zend_Uri
         if ($status === false) {
             throw new Zend_Uri_Exception('Internal error: query validation failed');
         }
-        return true;
+        
+        return $status == 1;
     }
 
     /**
-     * Sets given associative array to query string for the current URI, and returns the old query string
+     * Sets given associative array to query string for the current URI and
+     * returns the old query string
      *
-     * @param array $array
-     * @throws Zend_Uri_Exception
+     * Note: This method is deprecated. Please use setQuery() instead.
+     * 
+     * @param array $query
      * @return string
+     * @deprecated Since 0.1.5
      */
-    public function setQueryArray($array = array())
+    public function setQueryArray($query = array())
     {
-        if (is_scalar($array)) {
-            return $this->setQueryString($array);
-        }
-        if (!is_array($array)) {
-            throw new Zend_Uri_Exception('Query array is neither a scalar nor an array');
-        }
-
-        $queryVars = array();
-        foreach ($array as $key => $value) {
-            $this->_queryArrayRecurse($value, $key, $queryVars);
-        }
-        return $this->setQueryString(implode('&', $queryVars));
+    	return $this->setQuery($query);
     }
 
     /**
-     * Used by queryArray(). Goes through array recursively and compiles array content
+     * Sets the query string for the current URI, and returns the old query 
+     * string
      *
-     * @param array $array
-     * @param string $key
-     * @param array $queryVars
-     * @throws Zend_Uri_Exception
-     * @return void
-     */
-    private function _queryArrayRecurse($array = array(), $key = null, &$queryVars = array())
-    {
-        static $queryVarNames = array();
-        if (!is_null($key)) {
-            array_push($queryVarNames, urlencode($key));
-        }
-        if (is_scalar($array)) {
-            $queryVars[] = implode('', $queryVarNames) . '=' . urlencode($array);
-        } else if (is_array($array)) {
-            if (count($array)) {
-                foreach ($array as $key => $value) {
-                    array_push($queryVarNames, '[' . urlencode($key) . ']');
-                    $this->_queryArrayRecurse($value, null, $queryVars);
-                    array_pop($queryVarNames);
-                }
-            } else {
-                $queryVars[] = implode('', $queryVarNames) . '=';
-                array_pop($queryVarNames);
-            }
-        } else {
-            throw new Zend_Uri_Exception('Query array content is neither a scalar nor an array');
-        }
-        if (!is_null($key)) {
-            array_pop($queryVarNames);
-        }
-    }
-
-    /**
-     * Sets the query string for the current URI, and returns the old query string
-     *
+     * Note: This method is deprecated. Please use setQuery() instead.
+     * 
      * @param string $query
-     * @throws Zend_Uri_Exception
      * @return string
+     * @deprecated Since 0.1.5
      */
     public function setQueryString($query)
     {
-        if (!$this->validateQuery($query)) {
-            throw new Zend_Uri_Exception("Query string \"$query\" is not a valid HTTP query string");
-        }
-        $oldQuery = $this->_query;
-        $this->_query = $query;
+		return $this->setQuery($query);
+    }
+    
+    /**
+     * Set the query string for the current URI, and return the old query 
+     * string This method accepts both strings and arrays.
+     *
+     * @param string|array $query The query string or array
+     * @return string Old query string
+     */
+    public function setQuery($query)
+    {
+    	$oldQuery = $this->_query;
+        $this->_query = $this->_parseQuery($query);
         return $oldQuery;
     }
 
+    /**
+     * Parse a query string or array, validate it and return it as a query string
+     *
+     * @param string|array $query
+     * @return string
+     */
+    protected function _parseQuery($query)
+    {
+    	// If query is empty, return an empty string
+        if (empty($query)) {
+            return '';
+        }
+        
+        // If query is an array, make a string out of it
+        if (is_array($query)) {
+        	$query = http_build_query($query, '', '&');
+        } else {
+        	$query = (string) $query;
+        }
+        
+        // Make sure the query is valid, and set it
+       	if ($this->validateQuery($query)) {
+       		return $query;
+       	} else {
+       		throw new Zend_Uri_Exception("'$query' is not a valid query string");
+       	}
+        return $query;
+    }
 
 	/**
 	 * Returns the fragment portion of the URL (after #), or FALSE if none.
 	 *
-	 * @return unknown
+	 * @return string|false
 	 */
 	public function getFragment()
 	{
@@ -646,12 +600,12 @@ class Zend_Uri_Http extends Zend_Uri
         if ($fragment === null) {
             $fragment = $this->_fragment;
         }
-        /**
-         * If fragment is empty, it is considered to be valid
-         */
+
+        // If fragment is empty, it is considered to be valid
         if (strlen($fragment) == 0) {
             return true;
         }
+        
         /**
          * Determine whether the fragment is well-formed
          *
@@ -662,9 +616,9 @@ class Zend_Uri_Http extends Zend_Uri
         if ($status === false) {
             throw new Zend_Uri_Exception('Internal error: fragment validation failed');
         }
-        return true;
+        
+        return (boolean) $status;
     }
-
 
     /**
      * Sets the fragment for the current URI, and returns the old fragment
@@ -682,7 +636,4 @@ class Zend_Uri_Http extends Zend_Uri
         $this->_fragment = $fragment;
         return $oldFragment;
     }
-
-
 }
-

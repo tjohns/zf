@@ -18,7 +18,6 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
  * Zend Framework utility class
  */
@@ -48,14 +47,11 @@ require_once 'Zend/Uri/Mailto.php';
  */
 abstract class Zend_Uri
 {
-
-
 	/**
 	 * Scheme of this URI (http, ftp, etc.)
 	 * @var string
 	 */
 	protected $_scheme = '';
-
 
     /**
      * Return a string representation of this URI.
@@ -67,7 +63,6 @@ abstract class Zend_Uri
     {
         return $this->getUri();
     }
-
 
     /**
      * Convenience function, checks that a $uri string is well-formed
@@ -87,7 +82,6 @@ abstract class Zend_Uri
 
         return $uri->valid();
     }
-
 
     /**
      * Create a new Zend_Uri object for a URI.  If building a new URI, then $uri should contain
@@ -116,7 +110,6 @@ abstract class Zend_Uri
             throw new Zend_Uri_Exception('Illegal scheme supplied, only alphanumeric characters are permitted');
         }
 
-
         /**
          * Create a new Zend_Uri object for the $uri. If a subclass of Zend_Uri exists for the
          * scheme, return an instance of that class. Otherwise, a Zend_Uri_Exception is thrown.
@@ -139,6 +132,11 @@ abstract class Zend_Uri
 
     }
 
+    /**
+     * Get the URI's scheme
+     *
+     * @return string|false Scheme or false if no scheme is set.
+     */
     public function getScheme()
     {
     	if (!empty($this->_scheme)) {
@@ -148,18 +146,15 @@ abstract class Zend_Uri
     	}
     }
 
-
     /******************************************************************************
      * Abstract Methods
      *****************************************************************************/
-
 
     /**
      * Zend_Uri and its subclasses cannot be instantiated directly.
      * Use Zend_Uri::factory() to return a new Zend_Uri object.
      */
     abstract protected function __construct($scheme, $schemeSpecific = '');
-
 
     /**
      * Return a string representation of this URI.
@@ -168,13 +163,10 @@ abstract class Zend_Uri
      */
     abstract public function getUri();
 
-
     /**
      * Returns TRUE if this URI is valid, or FALSE otherwise.
      *
      * @return boolean
      */
     abstract public function valid();
-
 }
-
