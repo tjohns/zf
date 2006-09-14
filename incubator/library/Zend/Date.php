@@ -1884,12 +1884,34 @@ class Zend_Date {
 
             // date strings
             case Zend_Date::ISO_8601 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $year   = substr($match[0], 0, 4);
+                $month  = substr($match[0], 5, 2);
+                $day    = substr($match[0], 8, 2);
+                $hour   = substr($match[0], 11, 2);
+                $minute = substr($match[0], 14, 2);
+                $second = substr($match[0], 17, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_2822 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $hour   = substr($match[0], 17, 2);
+                $minute = substr($match[0], 20, 2);
+                $second = substr($match[0], 23, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::TIMESTAMP :
                 if (is_numeric($date))
@@ -1951,39 +1973,131 @@ class Zend_Date {
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::ATOM :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $year   = substr($match[0], 0, 4);
+                $month  = substr($match[0], 5, 2);
+                $day    = substr($match[0], 8, 2);
+                $hour   = substr($match[0], 11, 2);
+                $minute = substr($match[0], 14, 2);
+                $second = substr($match[0], 17, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::COOKIE :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
+                if (!$result)
+                    return false;
+                $match[0] = substr($match[0], strpos(' '+1));
+                
+                $day    = substr($match[0], 0, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 3, 3));
+                $year   = substr($match[0], 7, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 10, 2);
+                $minute = substr($match[0], 13, 2);
+                $second = substr($match[0], 16, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_822 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+                
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 15, 2);
+                $minute = substr($match[0], 18, 2);
+                $second = substr($match[0], 21, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_850 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
+                if (!$result)
+                    return false;
+                $match[0] = substr($match[0], strpos(' '+1));
+                
+                $day    = substr($match[0], 0, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 3, 3));
+                $year   = substr($match[0], 7, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 10, 2);
+                $minute = substr($match[0], 13, 2);
+                $second = substr($match[0], 16, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_1036 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+                
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 15, 2);
+                $minute = substr($match[0], 18, 2);
+                $second = substr($match[0], 21, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_1123 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $hour   = substr($match[0], 17, 2);
+                $minute = substr($match[0], 20, 2);
+                $second = substr($match[0], 23, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RSS :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $hour   = substr($match[0], 17, 2);
+                $minute = substr($match[0], 20, 2);
+                $second = substr($match[0], 23, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::W3C :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $year   = substr($match[0], 0, 4);
+                $month  = substr($match[0], 5, 2);
+                $day    = substr($match[0], 8, 2);
+                $hour   = substr($match[0], 11, 2);
+                $minute = substr($match[0], 14, 2);
+                $second = substr($match[0], 17, 2);
+
+                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
-
-
             default :
                 break;
         }
@@ -2350,12 +2464,34 @@ class Zend_Date {
 
             // date strings
             case Zend_Date::ISO_8601 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $year   = substr($match[0], 0, 4);
+                $month  = substr($match[0], 5, 2);
+                $day    = substr($match[0], 8, 2);
+                $hour   = substr($match[0], 11, 2);
+                $minute = substr($match[0], 14, 2);
+                $second = substr($match[0], 17, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_2822 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $hour   = substr($match[0], 17, 2);
+                $minute = substr($match[0], 20, 2);
+                $second = substr($match[0], 23, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::TIMESTAMP :
                 if (is_numeric($date))
@@ -2417,39 +2553,131 @@ class Zend_Date {
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::ATOM :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $year   = substr($match[0], 0, 4);
+                $month  = substr($match[0], 5, 2);
+                $day    = substr($match[0], 8, 2);
+                $hour   = substr($match[0], 11, 2);
+                $minute = substr($match[0], 14, 2);
+                $second = substr($match[0], 17, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::COOKIE :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
+                if (!$result)
+                    return false;
+                $match[0] = substr($match[0], strpos(' '+1));
+                
+                $day    = substr($match[0], 0, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 3, 3));
+                $year   = substr($match[0], 7, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 10, 2);
+                $minute = substr($match[0], 13, 2);
+                $second = substr($match[0], 16, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_822 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+                
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 15, 2);
+                $minute = substr($match[0], 18, 2);
+                $second = substr($match[0], 21, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_850 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
+                if (!$result)
+                    return false;
+                $match[0] = substr($match[0], strpos(' '+1));
+                
+                $day    = substr($match[0], 0, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 3, 3));
+                $year   = substr($match[0], 7, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 10, 2);
+                $minute = substr($match[0], 13, 2);
+                $second = substr($match[0], 16, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_1036 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+                
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $year  += 2000;
+                $hour   = substr($match[0], 15, 2);
+                $minute = substr($match[0], 18, 2);
+                $second = substr($match[0], 21, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RFC_1123 :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $hour   = substr($match[0], 17, 2);
+                $minute = substr($match[0], 20, 2);
+                $second = substr($match[0], 23, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::RSS :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $day    = substr($match[0], 5, 2);
+                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
+                $year   = substr($match[0], 12, 4);
+                $hour   = substr($match[0], 17, 2);
+                $minute = substr($match[0], 20, 2);
+                $second = substr($match[0], 23, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
             case Zend_Date::W3C :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
+                if (!$result)
+                    return false;
+
+                $year   = substr($match[0], 0, 4);
+                $month  = substr($match[0], 5, 2);
+                $day    = substr($match[0], 8, 2);
+                $hour   = substr($match[0], 11, 2);
+                $minute = substr($match[0], 14, 2);
+                $second = substr($match[0], 17, 2);
+
+                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
-
-
             default :
                 break;
         }
