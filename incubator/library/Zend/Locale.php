@@ -525,6 +525,13 @@ class Zend_Locale {
             {
                $language = substr($language, 1, strpos($language, '.') - 1);
                $splitted = explode('_', $language);
+               if (!empty($this->_LocaleData[$language]))
+               {
+                   $languagearray[$language] = 1;
+                   if (strlen($language) > 4)
+                       $languagearray[substr($language, 0, 2)] = 1;
+                   continue;
+               }
                if (!empty($this->_LocaleTranslation[$splitted[0]]))
                {
                    if (!empty($this->_LocaleTranslation[$splitted[1]]))
@@ -535,6 +542,7 @@ class Zend_Locale {
                }
             }            
         }
+print_r($languagearray);
         return $languagearray;
     }
 
