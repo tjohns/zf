@@ -516,6 +516,7 @@ class Zend_Locale {
     {
         $language = setlocale(LC_ALL, 0);
         $languages = explode(';', $language);
+        $languagearray = array();
         
         foreach ($languages as $locale)
         {
@@ -524,7 +525,6 @@ class Zend_Locale {
             {
                $language = substr($language, 1, strpos($language, '.') - 1);
                $splitted = explode('_', $language);
-               $language = '';
                if (!empty($this->_LocaleTranslation[$splitted[0]]))
                {
                    if (!empty($this->_LocaleTranslation[$splitted[1]]))
@@ -559,7 +559,7 @@ class Zend_Locale {
 
         foreach ($accepted as $accept)
         {
-            $result = preg_match('/^([a-z]{1,8}(?:-[a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i', $accept, $match);
+            $result = preg_match('/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i', $accept, $match);
 
             if (!$result)
                 continue;
@@ -574,7 +574,14 @@ class Zend_Locale {
             $countrys = explode('-', $match[1]);
             $region = array_shift($countrys);
 
+            $country2 = explode('_', $region);
+            $region = array_shift($country2);
+
             foreach($countrys as $country)
+            {
+                $languages[$region.'_'.strtoupper($country)] = $quality;
+            }
+            foreach($country2 as $country)
             {
                 $languages[$region.'_'.strtoupper($country)] = $quality;
             }
