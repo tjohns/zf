@@ -25,10 +25,6 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_MeasureTest extends PHPUnit_Framework_TestCase
 {
 
-    public function setUp()
-    {
-    }
-
 
     /**
      * test for Angle initialisation

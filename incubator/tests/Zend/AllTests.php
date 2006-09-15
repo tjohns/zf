@@ -15,6 +15,7 @@ require_once 'Zend/XmlRpc/AllTests.php';
 require_once 'Zend/Registry/AllTests.php';
 
 require_once 'Zend/MeasureTest.php';
+require_once 'Zend/LocaleTest.php';
 
 class Zend_AllTests
 {
@@ -38,6 +39,7 @@ class Zend_AllTests
         $suite->addTest(Zend_Registry_AllTests::suite());
 
         $suite->addTestSuite('Zend_MeasureTest');
+        $suite->addTestSuite('Zend_LocaleTest');
 
         return $suite;
     }

@@ -653,7 +653,8 @@ class Zend_Locale {
     public function getRegion()
     {
         $locale = explode('_', $this->_Locale);
-        return $locale[1];
+        if (isset($locale[1]))
+            return $locale[1];
     }
 
 
@@ -684,5 +685,19 @@ class Zend_Locale {
             $charsets[substr($accept, 0, strpos($accept, ';'))] = $quality;
         }
         return $charsets;
+    }
+
+
+    /**
+     * Returns true if both locales are equal
+     */
+    public function equals($object)
+    {
+        if ($object->toString() == $this->toString())
+        {
+            return true;
+        }
+        return false;
+        
     }
 }
