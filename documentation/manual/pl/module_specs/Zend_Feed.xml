@@ -397,26 +397,28 @@ foreach ($feed as $entry) {
 </sect1>
 
 <sect1 id="zend.feed.consuming-atom-single-entry">
-    <title>Consuming a Single Atom Entry</title>
+    <title>Pobieranie pojedynczego wpisu kanału Atom</title>
 
     <para>
-        Single Atom <code>&lt;entry&gt;</code> elements are also valid by themselves. Usually the URL for an
-        entry is the feed's URL followed by <code>/&lt;entryId&gt;</code>, such as
-        <code>http://atom.example.com/feed/1</code>, using the example URL we used above.
+        Pojedyncze elementy <code>&lt;entry&gt;</code> kanału Atom są same w sobie
+        poprawne. Zazwyczaj URL do pojedynczego wpisu jest adresem URL kanału
+        z dodanym identyfikatorem <code>/&lt;entryId&gt;</code> wpisu, na przykład
+        <code>http://atom.example.com/feed/1</code>, dla przykładowego URL, 
+        który był użyty wcześniej.
     </para>
 
     <para>
-        If you read a single entry, you will still have a <code>Zend_Feed_Atom</code> object, but it will
-        automatically create an "anonymous" feed to contain the entry.
+        Gdy odczytujesz pojedynczy wpis, wciąż masz obiekt <code>Zend_Feed_Atom</code>, 
+        ale automatycznie tworzy on "anonimowy" kanał zawierający ten wpis.
     </para>
 
     <example>
-        <title>Reading a Single-Entry Atom Feed</title>
+        <title>Odczytywanie pojedynczego wpisu kanału Atom</title>
         <programlisting role="php"><![CDATA[
 <?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
-echo 'The feed has: ' . $feed->count() . ' entry.';
+echo 'Kanał zawiera: ' . $feed->count() . ' wspisów.';
 
 $entry = $feed->current();
 
@@ -424,12 +426,12 @@ $entry = $feed->current();
     </example>
 
     <para>
-        Alternatively, you could instantiate the entry object directly if you know you are accessing an
-        <code>&lt;entry&gt;</code>-only document:
+        Mógłbyś też bezpośrednio utworzyć instancję obiektu wpisu jeśli
+        wiesz, że odczytujesz dokument pojedynczego wpisu <code>&lt;entry&gt;</code>:
     </para>
 
     <example>
-        <title>Using the Entry Object Directly for a Single-Entry Atom Feed</title>
+        <title>Bezpośrednie użycie obiektu wpisu dla pojedynczego wpisu kanału Atom</title>
         <programlisting role="php"><![CDATA[
 <?php
 
@@ -441,64 +443,69 @@ echo $entry->title();
 </sect1>
 
 <sect1 id="zend.feed.modifying-feed">
-    <title>Modifying Feed and Entry structures</title>
+    <title>Modyfikacja kanału oraz struktury wpisów</title>
 
     <para>
-        <code>Zend_Feed</code>'s natural syntax extends to constructing and modifying feeds and entries as well
-        as reading them. You can easily turn your new or modified objects back into well-formed XML for saving
-        to a file or sending to a server.
+        Naturalna składnia <code>Zend_Feed</code> pozwala na konstruowanie oraz 
+        modyfikowanie kanałów i wpisów tak samo jak na odczytywanie ich. Możesz
+        łatwo zamienić nowy lub zmodyfikowany obiekt spowrotem do poprawnego XML
+        aby zapisać go do pliku lub wysłać na serwer.
     </para>
 
     <example>
-        <title>Modifying an Existing Feed Entry</title>
+        <title>Modyfikacja istniejącego wpisu</title>
         <programlisting role="php"><![CDATA[
 <?php
 
 $feed = new Zend_Feed_Atom('http://atom.example.com/feed/1');
 $entry = $feed->current();
 
-$entry->title = 'This is a new title';
+$entry->title = 'To jest nowy tytuł';
 $entry->author->email = 'my_email@example.com';
 
 echo $entry->saveXML();
 
 ?>]]>   </programlisting>
         <para>
-            This will output a full (includes <code>&lt;?xml ... &gt;</code> prologue) XML representation of the
-            new entry, including any necessary XML namespaces.
+            To wyświetli pełną (dołączając prolog <code>&lt;?xml ... &gt;</code>) 
+            reprezentację XML nowego wpisu, dołączając potrzebne przestrzenie 
+            nazw XML.
         </para>
         <para>
-            Note that the above will work even if the existing entry does not already have an author tag. You can
-            use as many levels of <code>-&gt;</code> access as you like before getting to an assignment; all of the
-            intervening levels will be created for you automatically if necessary.
+            Zauważ, że powyższy przykład będzie działał nawet gdy istniejący wpis
+            nie posiada znacznika autora (author). Możesz użyć tyle ile chcesz
+            poziomów dostępu <code>-&gt;</code> zanim dokonasz przypisania; 
+            wszystkie pośrednie poziomy zostaną automatycznie utworzone gdy będzie
+            to potrzebne.
         </para>
     </example>
 
     <para>
-        If you want to use a namespace other than <code>atom:</code>, <code>rss:</code>, or <code>osrss:</code>
-        in your entry, you need to register the namespace with <code>Zend_Feed</code> using <code>
-        Zend_Feed::registerNamespace()</code>. When you are modifying an existing element, it will always
-        maintain its original namespace. When adding a new element, it will go into the default namespace if
-        you do not explicitly specify another namespace.
+        Jeśli chcesz użyć innej przestrzeni nazw niż <code>atom:</code>, <code>rss:</code>, lub 
+        <code>osrss:</code> w swoim wpisie, musisz zarejestrować przestrzeń nazw
+        w <code>Zend_Feed</code> używając metody <code>Zend_Feed::registerNamespace()</code>. 
+        Gdy modyfikujesz istniejący element, będzie on zawsze zachowywał oryginalną
+        przestrzeń nazw. Gdy dodajesz nowy element, będzie on utworzony w domyślnej
+        przestrzeni nazw jeśli nie określisz precyzyjnie innej przestrzeni.
     </para>
 
     <example>
-        <title>Creating an Atom Entry with Elements of Custom Namespaces</title>
+        <title>Tworzenie wpisu Atom z elementami własnej przestrzeni nazw</title>
         <programlisting role="php"><![CDATA[
 <?php
 
 $entry = new Zend_Feed_EntryAtom();
-// id is always assigned by the server in Atom
-$entry->title = 'my custom entry';
-$entry->author->name = 'Example Author';
+// id w Atom jest zawsze nadane przez serwer
+$entry->title = 'mój własny wpis';
+$entry->author->name = 'Przykładowy autor';
 $entry->author->email = 'me@example.com';
 
-// Now do the custom part.
+// Teraz własna część
 Zend_Feed::registerNamespace('myns', 'http://www.example.com/myns/1.0');
 
-$entry->{'myns:myelement_one'} = 'my first custom value';
-$entry->{'myns:container_elt'}->part1 = 'first nested custom part';
-$entry->{'myns:container_elt'}->part2 = 'second nested custom part';
+$entry->{'myns:myelement_one'} = 'pierwsza własna część';
+$entry->{'myns:container_elt'}->part1 = 'pierwsza zagnieżdżona część';
+$entry->{'myns:container_elt'}->part2 = 'druga zagnieżdżona część';
 
 echo $entry->saveXML();
 
@@ -507,27 +514,29 @@ echo $entry->saveXML();
 </sect1>
 
 <sect1 id="zend.feed.custom-feed">
-    <title>Custom Feed and Entry Classes</title>
+    <title>Własne klasy kanału i wpisu</title>
 
     <para>
-        Finally, you can extend the <code>Zend_Feed</code> classes if you'd like to provide your own format or
-        niceties like automatic handling of elements that should go into a custom namespace.
+        Ostatecznie możesz rozszerzyć klasę <code>Zend_Feed</code> jeśli chcesz
+        stworzyć swój własny format lub zapewnić automatyczną obsługę elementów,
+        które działają w innej przestrzeni nazw.
     </para>
 
     <para>
-        Here is an example of a custom Atom entry class that handles its own <code>myns:</code> namespace
-        entries. Note that it also makes the <code>registerNamespace()</code> call for you, so the end user
-        doesn't need to worry about namespaces at all.
+        Oto przykład własnej klasy wpisu Atom która obsługuje własną przestrzeń
+        nazw <code>myns:</code> wpisów. Zauważ, że ona także wywołuje za Ciebie 
+        metodę <code>registerNamespace()</code>, dzięki czemu użytkownik końcowy 
+        nie musi w ogóle martwić się o przestrzenie nazw.
     </para>
 
     <example>
-        <title>Extending the Atom Entry Class with Custom Namespaces</title>
+        <title>Rozszerzanie klasy wpisu Atom z własnymi przestrzeniami nazw</title>
         <programlisting role="php"><![CDATA[
 <?php
 
 /**
- * The custom entry class automatically knows the feed URI (optional) and
- * can automatically add extra namespaces.
+ * Własna klasa wpisu może automatycznie nadawać adres URI (opcjonalnie)
+ * oraz automatycznie dodawać dodatkowe przestrzenie nazw.
  */
 class MyEntry extends Zend_Feed_EntryAtom
 {
@@ -544,7 +553,7 @@ class MyEntry extends Zend_Feed_EntryAtom
     {
         switch ($var) {
             case 'myUpdated':
-                // Translate myUpdated to myns:updated.
+                // Tłumaczy myUpdated na myns:updated.
                 return parent::__get('myns:updated');
 
             default:
@@ -556,7 +565,7 @@ class MyEntry extends Zend_Feed_EntryAtom
     {
         switch ($var) {
             case 'myUpdated':
-                // Translate myUpdated to myns:updated.
+                // Tłumaczy myUpdated na myns:updated.
                 parent::__set('myns:updated', $value);
                 break;
 
@@ -569,8 +578,8 @@ class MyEntry extends Zend_Feed_EntryAtom
 
 ?>]]>   </programlisting>
         <para>
-            Then to use this class, you'd just instantiate it directly and set the <code>myUpdated</code>
-            property:
+            Teraz aby użyć tej klasy, musisz po prostu bezpośrednio utworzyć jej
+            instancję i przypisać wartość właściwości <code>myUpdated</code>:
             <programlisting role="php"><![CDATA[
 <?php
 
