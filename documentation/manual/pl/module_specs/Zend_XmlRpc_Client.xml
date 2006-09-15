@@ -55,7 +55,7 @@ print_r( $server->system->listMethods() );
                 do typu XML-RPC zgodnie z tą tabelą:
             </para>
             <table>
-                <title>Konwersja natywnych wartości PHP do typów XML-RPC</title>
+                <title>Konwersja typów PHP i XML-RPC</title>
                 <tgroup cols="2">
                     <thead>
                         <row>
@@ -95,17 +95,18 @@ print_r( $server->system->listMethods() );
                     </tbody>
                 </tgroup>
             </table>
-            <programlisting role="php"><![CDATA[...
-/** 2 parametry są przekazywane w tej procedurze
- *  Pierwszy parametr jest łańcuchem znaków więc zostanie skonwertowany do łańcucha znaków XML-RPC
- *  Drugi parametr jest tablicą asocjacyjną i będzie skonwertowany do struktury XML-RPC 
+            <programlisting role="php"><![CDATA[<?php
+/** 
+ *  2 parametry są przekazywane w tej procedurze
+ *    - Pierwszy parametr jest łańcuchem znaków więc zostanie skonwertowany do łańcucha znaków XML-RPC
+ *    - Drugi parametr jest tablicą asocjacyjną i będzie skonwertowany do struktury XML-RPC 
  */
 
 $p1 = 'parameter 1';
 $p2 = array('name' => 'Joe', 'age' => 30);
 
 $service->serviceProcedure($p1, $p2);
-...]]>
+?>]]>
             </programlisting>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.xmlrpc_value'>
@@ -196,17 +197,21 @@ $service->serviceProcedure($p1, $p2);
                     </tbody>
                 </tgroup>
             </table>
-            <programlisting role="php"><![CDATA[...
-/** 2 parametry przekazane do procedury
- *  Pierwszy parametr jest typu base64 XML-RPC  i jest tworzony przy użyciu statycznej metody Zend_XmlRpc_Value::getXmlRpcValue()
- *  Drugi parametr jest strukturą XML-RPC i jest tworzony bezpośrednio za pomocą konstruktora
+            <programlisting role="php"><![CDATA[<?php
+/** 
+ * 2 parametry przekazane do procedury
+ *    - Pierwszy parametr jest typu base64 XML-RPC  i jest tworzony przy 
+ *      użyciu statycznej metody Zend_XmlRpc_Value::getXmlRpcValue()
+ *    - Drugi parametr jest strukturą XML-RPC i jest tworzony bezpośrednio 
+ *      za pomocą konstruktora
  */
 
-$p1 = ZXmlRpcValue::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
+$p1 = Zend_XmlRpc_Value::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
 $p2 = new Zend_XmlRpc_Value_Struct(array('name' => 'Joe', 'age' => 30));
 
 $service->serviceProcedure($p1, $p2);
-...]]>
+
+?>]]>
             </programlisting>
             <para>
                 <note>
@@ -276,6 +281,7 @@ $service->serviceProcedure($p1, $p2);
         <example>
             <title>Wywołanie serwisu XML-RPC z użyciem pliku sygnatur</title>
             <programlisting role="php"><![CDATA[<?php
+
 /**
  * Łączy się z serwerem XML-RPC i zapisuje jego plik z sygnaturami (odpowiednik XML-RPC pliku SOAP WSDL)
  */
@@ -290,9 +296,11 @@ file_put_contents('/tmp/xmlrpc-signatures/example.xml', $service->__getMethodsXm
    konwertowany do odpowiedniego typu według sygnatury.
  */
 $service->serviceProcedure($param);
+
 ?>]]>
             </programlisting>
             <programlisting role="php"><![CDATA[<?php
+
 /**
  * Łączy się z serwerem XML-RPC przy użyciu istniejącego pliku sygnatury, mamy pewność,
  * że typy parametrów przekazane do procedur są odpowiednie.
@@ -307,6 +315,7 @@ $service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc', 'namespace', 
    konwertowany do odpowiedniego typu według sygnatury.
  */
 $service->serviceProcedure($param);
+
 ?>]]>
             </programlisting>
         </example>
@@ -339,7 +348,8 @@ $service->serviceProcedure($param);
                 </listitem>
             </itemizedlist>
         </para>
-        <programlisting role="php"><![CDATA[...
+        <programlisting role="php"><![CDATA[<?php
+
 $service->serviceProcedure();
 
 $response = $service->__getResponse();
@@ -350,7 +360,8 @@ $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
 
 $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_ZXMLRPC_OBJECT);
 // $response jest instancją obiektu Zend_XmlRpc_Value reprezentującą zwróconą wartość XML-RPC
-...]]>
+
+?>]]>
         </programlisting>
     </sect2>
 </sect1>
