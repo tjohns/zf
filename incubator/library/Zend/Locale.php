@@ -362,7 +362,7 @@ class Zend_Locale {
         'Sweden'    => 'SE',
         'Taiwan'    => 'TW',
         'Turkey'    => 'TR',
-        'United Kingdom' => 'UK',
+        'United Kingdom' => 'GB',
         'United States' => 'US',
         
         'Chinese'   => 'zh',
@@ -424,22 +424,7 @@ class Zend_Locale {
      */
     public function __construct($locale = false)
     {
-        if (($locale == self::AUTOSEARCH_HTTP) or ($locale == self::AUTOSEARCH_ENV) or (empty($locale)))
-            $locale = $this->SearchLocale($locale);
-
-        $locale = key($locale);
-        if (!isset($this->_LocaleData[$locale]))
-        {
-            $region = substr($locale, 0, 3);
-            if (($region[2] == '_') or ($region[2] == '-'))
-                $region = substr($region, 0, 2);
-            if (isset($this->_LocaleData[$region]))
-                $this->_Locale = $region;
-            else
-                $this->_Locale = 'root';
-        } else {
-            $this->_Locale = $locale;
-        }
+        $this->setLocale($locale);
     }
 
 
@@ -487,17 +472,17 @@ class Zend_Locale {
      * @param $searchorder  - OPTIONAL searchorder
      * @return  locale - returns an array of all the mosta locale string
      */
-    public function SearchLocale($searchorder = false)
+    public function getDefault($searchorder = false)
     {
         if ($searchorder == self::AUTOSEARCH_ENV)
         {
-            $languages = $this->getSystemLanguages();
+            $languages = $this->getEnvironment();
             if (empty($languages))
-                $languages = $this->getHTTPLanguages();
+                $languages = $this->getBrowser();
         } else {
-            $languages = $this->getHTTPLanguages();
+            $languages = $this->getBrowser();
             if (empty($languages))
-                $languages = $this->getSystemLanguages();
+                $languages = $this->getEnvironment();
         }
         return $languages;
     }
@@ -512,7 +497,7 @@ class Zend_Locale {
      * 
      * @return array
      */
-    public function getSystemLanguages()
+    public function getEnvironment()
     {
         $language = setlocale(LC_ALL, 0);
         $languages = explode(';', $language);
@@ -542,7 +527,6 @@ class Zend_Locale {
                }
             }            
         }
-print_r($languagearray);
         return $languagearray;
     }
 
@@ -555,7 +539,7 @@ print_r($languagearray);
      * 
      * @return array - list of accepted languages including quality
      */
-    public function getHTTPLanguages()
+    public function getBrowser()
     {
         $httplanguages = getenv("HTTP_ACCEPT_LANGUAGE");
 
@@ -600,7 +584,82 @@ print_r($languagearray);
 
 
     /**
+     * Return the actual set locale
+     * 
+     * @return locale 
+     */
+    public function getLocale()
+    {
+        return $this;
+    }
+
+
+    /**
+     * Sets a new locale
+     * 
+     * @param $locale locale - optional
+     */
+    public function setLocale($locale = false)
+    {
+        if (($locale == self::AUTOSEARCH_HTTP) or ($locale == self::AUTOSEARCH_ENV) or (empty($locale)))
+            $locale = $this->getDefault($locale);
+
+        if (is_array($locale))
+            $locale = key($locale);
+        if (!isset($this->_LocaleData[$locale]))
+        {
+            $region = substr($locale, 0, 3);
+            if (($region[2] == '_') or ($region[2] == '-'))
+                $region = substr($region, 0, 2);
+            if (isset($this->_LocaleData[$region]))
+                $this->_Locale = $region;
+            else
+                $this->_Locale = 'root';
+        } else {
+            $this->_Locale = $locale;
+        }
+    }
+
+
+    /**
+     * Returns a list of acceptable locales 
+     */
+    public function getList()
+    {
+        $languageE = $this->getEnvironment();
+        $languageB = $this->getBrowser();
+        return (array_merge($languageE, $languageB));
+        
+    }
+
+
+    /**
+     * Returns the language part of the locale
+     * 
+     * @return language
+     */
+    public function getLanguage()
+    {
+        $locale = explode('_', $this->_Locale);
+        return $locale[0];
+    }
+
+
+    /**
+     * Returns the region part of the locale if avaiable
+     * 
+     * @return region
+     */
+    public function getRegion()
+    {
+        $locale = explode('_', $this->_Locale);
+        return $locale[1];
+    }
+
+
+    /**
      * Return the accepted charset of the client
+     * TODO: verify working
      */
     public function getHTTPCharset()
     {
