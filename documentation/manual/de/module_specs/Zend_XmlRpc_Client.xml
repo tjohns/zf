@@ -54,11 +54,11 @@ print_r( $server->system->listMethods() );
                 umgewandelt:
             </para>
             <table>
-                <title>Konvertierung von nativen PHP Variablen in XML-RPC Typen</title>
+                <title>PHP und XML-RPC Typen Konvertierung</title>
                 <tgroup cols="2">
                     <thead>
                         <row>
-                            <entry>nativer PHP Typ</entry>
+                            <entry>Nativer PHP Typ</entry>
                             <entry>XML-RPC Typ</entry>
                         </row>
                     </thead>
@@ -94,18 +94,19 @@ print_r( $server->system->listMethods() );
                     </tbody>
                 </tgroup>
             </table>
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[<?php
+              
 /** 
- *  2 Parameter werden in dieser Prozedur übergeben
- *  Der erste Parameter ist ein String, der automatisch in den XML-RPC String Typ umgewandelt wird
- *  Der zweite Parameter ist ein assoziatives Array, das in den XML-RPC Struct Typ umgewandelt wird 
+ *  2 Parameter werden in dieser Prozedur übergeben:
+ *  - Der erste Parameter ist ein String, der automatisch in den XML-RPC String Typ umgewandelt wird
+ *  - Der zweite Parameter ist ein assoziatives Array, das in den XML-RPC Struct Typ umgewandelt wird 
  */
 
 $p1 = 'parameter 1';
 $p2 = array('name' => 'Joe', 'age' => 30);
 
 $service->serviceProcedure($p1, $p2);
-...]]>
+?>]]>
             </programlisting>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.xmlrpc_value'>
@@ -194,19 +195,21 @@ $service->serviceProcedure($p1, $p2);
                     </tbody>
                 </tgroup>
             </table>
-            <programlisting role="php"><![CDATA[...
+            <programlisting role="php"><![CDATA[<?php
+
 /** 
- *  2 Parameter werden in dieser Prozedur übergeben
- *  Der erste Parameter ist ein XML-RPC base64 Typ, der durch Verwendung der statischen Funktion
- *  Zend_XmlRpc_Value::getXmlRpcValue() erstellt wird
- *  Der zweite Parameter ist ein XML-RPC Struct, der eindeutig erstellt wird
+ *  2 Parameter werden in dieser Prozedur übergeben:
+ *  -  Der erste Parameter ist ein XML-RPC base64 Typ, der durch Verwendung der statischen 
+ *     Funktion Zend_XmlRpc_Value::getXmlRpcValue() erstellt wird
+ *  -  Der zweite Parameter ist ein XML-RPC Struct, der eindeutig erstellt wird
  */
 
-$p1 = ZXmlRpcValue::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
+$p1 = Zend_XmlRpc_Value::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
 $p2 = new Zend_XmlRpc_Value_Struct(array('name' => 'Joe', 'age' => 30));
 
 $service->serviceProcedure($p1, $p2);
-...]]>
+
+?>]]>
             </programlisting>
             <para>
                 <note>
@@ -277,6 +280,7 @@ $service->serviceProcedure($p1, $p2);
         <example>
             <title>Einen XML-RPC Dienst mit Typbestimmung aufrufen</title>
             <programlisting role="php"><![CDATA[<?php
+
 /**
  * Verbinde mit einem XML-RPC Server und speichere die Signaturendatei (das Äquivalent von 
  * XML-RPC zur SOAP WSDL Datei)
@@ -293,9 +297,11 @@ file_put_contents('/tmp/xmlrpc-signatures/example.xml', $service->__getMethodsXm
  * Typen entsprechend the Signatur der Prozedur konvertiert.
  */
 $service->serviceProcedure($param);
+
 ?>]]>
             </programlisting>
             <programlisting role="php"><![CDATA[<?php
+
 /**
  * Beim Verbinden mit einem XML-RPC Server unter Verwendung einer existierenden Signaturdatei
  * stellen wir sicher, dass die Parametertypen, die an die Prozedur übergeben werden, den 
@@ -312,6 +318,7 @@ $service = new Zend_XmlRpc_Client('http://www.example.org/xmlrpc', 'namespace', 
  * Typen entsprechend the Signatur der Prozedur konvertiert.
  */
 $service->serviceProcedure($param);
+
 ?>]]>
             </programlisting>
         </example>
@@ -345,7 +352,8 @@ $service->serviceProcedure($param);
                 </listitem>
             </itemizedlist>
         </para>
-        <programlisting role="php"><![CDATA[...
+        <programlisting role="php"><![CDATA[<?php
+
 $service->serviceProcedure();
 
 $response = $service->__getResponse();
@@ -356,7 +364,8 @@ $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_XML_STRING);
 
 $response = $service->__getResponse(ZXmlRpcClient::RESPONSE_ZXMLRPC_OBJECT);
 // $response ist eine Instanz von Zend_XmlRpc_Value, der den XML-RPC Typ des Rückgabewerts abbildet
-...]]>
+
+?>]]>
         </programlisting>
     </sect2>
 </sect1>
