@@ -1,0 +1,235 @@
+<sect1 id="zend.locale.functions">
+    <title>Functions within a locale</title>
+    <para>
+        <code>Zend_Locale</code> also provides additional informations on locales.
+        These will be described in the following sections.
+    </para>
+    <sect2 id="zend.locale.serialize">
+        <title>Serialization</title>
+        <para>
+            Of course <code>Zend_Locale</code> provides the possibility to serialize itself,
+            as all other locale-aware classes should do.
+        </para>
+        <example>
+            <title>Serialize locales</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+$serial = $locale->serialize();
+
+// and now create the original class
+$newlocale = unserialize($serial);
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.equals">
+        <title>Equality</title>
+        <para>
+            <code>Zend_Locale</code> also provides an check of equality.
+            All locale-aware classes should also provide this check.
+        </para>
+        <example>
+            <title>Check for equal locales</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+$mylocale = new Zend_Locale('en_US');
+
+// Check if locales are equal
+if ($locale->equals($mylocale)
+    print "Locales are equal";
+else
+    print "Locales differ from each other";
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.tostring">
+        <title>toString</title>
+        <para>
+            <code>Zend_Locale</code> provides also the <code>toString()</code> function for the locale.
+        </para>
+        <example>
+            <title>String output of locales</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+print $locale->toString();
+            </programlisting>
+        </example>
+        <para>
+            Of course there are ways, the <code>toString()</code> function will be called automaticaly.
+        </para>
+        <example>
+            <title>Automatic toString for locales</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+print $locale;
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getdefault">
+        <title>Default locales</title>
+        <para>
+            All default locales the framework has found, can be returned by using the function <code>getDefault()</code>.
+            They will be returned as array and include not only the locale but also a quality when avaiable.
+        </para>
+        <para>
+            There are 2 parameters... the first one defines which default should be outputted first.
+            It can be <code>BROWSER</code>, <code>SERVER</code> and <code>FRAMEWORK</code>. The second parameter
+            defines if all default locales should be returned or just the first ones.
+        </para>
+        <example>
+            <title>Get default locales</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Return all default locales
+$found = $locale->getDefault();
+print_r($found);
+
+// Return only browser locales
+$found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
+print_r($found2);
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.environment">
+        <title>Get all environment locales</title>
+        <para>
+            All set environment locales can be retrieves by using <code>getEnvironment()</code>.
+            They will be returned as array.
+        </para>
+        <example>
+            <title>Get environment locales</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Return all environment locales
+$found = $locale->getEnvironment();
+print_r($found);
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.browser">
+        <title>Get all browser locales</title>
+        <para>
+            As for environment locales, the same function can be found for browser locales.
+            <code>getBrowser()</code> will return the information as array.
+        </para>
+        <example>
+            <title>Get browser locales</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Return all browser locales
+$found = $locale->getBrowser();
+print_r($found);
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getlocale">
+        <title>Get the actual set locale</title>
+        <para>
+            The actual set locale can be retrieved with the function <code>getLocale()</code>.
+            But the locale will be returned as object. It you need a string, you should use the 
+            <code>toString()</code> function.
+        </para>
+        <example>
+            <title>getLocale</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Return all browser locales
+$found = $locale->getLocale();
+print $found->toString();
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.setlocale">
+        <title>Set a new locale</title>
+        <para>
+            A new locale can be set with the function <code>setLocale()</code>.
+            This function takes a locale string as parameter.
+            If no locale is given, the best locale will be searched automatically.
+        </para>
+        <example>
+            <title>setLocale</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Actual locale
+print $locale->toString();
+
+// new locale
+$locale->setLocale('aa_DJ');
+print $locale->toString();
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getlanguage">
+        <title>Get the actual set language</title>
+        <para>
+            With <code>getLanguage()</code> the language can be returned from the actual set locale.
+            It will be returned as string.
+        </para>
+        <example>
+            <title>getLanguage</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Actual language
+print $locale->getLanguage();
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getregion">
+        <title>Get the actual set region</title>
+        <para>
+            With <code>getRegion()</code> the region can be returned from the actual set locale.
+            It will be returned as string or, when no region is defined, as empty string.
+        </para>
+        <example>
+            <title>getRegion</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Actual region
+print $locale->getRegion();
+            </programlisting>
+        </example>
+    </sect2>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

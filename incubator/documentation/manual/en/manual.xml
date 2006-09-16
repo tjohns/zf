@@ -122,6 +122,11 @@
         &module_specs.Zend_Measure_Special;
         &module_specs.Zend_Measure_Types;
     </chapter>
+    <chapter id="zend.locale">
+        <title>Zend_Locale</title>
+        &module_specs.Zend_Locale_Introduction;
+        &module_specs.Zend_Locale_Functions;
+    </chapter>
     <!-- &ref.faq; -->
     &ref.coding_standard;
     &ref.copyrights;
