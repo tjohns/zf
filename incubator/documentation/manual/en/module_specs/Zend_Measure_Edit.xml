@@ -38,11 +38,14 @@
             <title>Convert</title>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Weight);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Weight');
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de');
 
 $mystring = "1.234.567,89";
-$unit = new Zend_Measure($mystring,Zend_Measure_Weight::POUND,'de');
+$unit = new Zend_Measure($mystring,Zend_Measure_Weight::POUND,$locale);
 
 print "Kilo:".$unit->convertTo(Zend_Measure_Weight::KILOGRAM);
 print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
@@ -59,8 +62,8 @@ print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
                 <title>Adding units</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Length);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
 
 // Define objects
 $unit = new Zend_Measure(200,Zend_Measure_Length::CENTIMETER);
@@ -92,8 +95,8 @@ echo $sum;
                 </para>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Length);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
 
 // Define objects
 $unit = new Zend_Measure(200,Zend_Measure_Length::CENTIMETER);
@@ -117,8 +120,8 @@ echo $sum;
                 <title>Different measurements</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Length);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
 
 // Define measurements
 $unit = new Zend_Measure(100,Zend_Measure_Length::CENTIMETER);
@@ -135,8 +138,8 @@ if ($unit->equals($unit2)) {
                 <title>Identical measurements</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Length);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
 
 // Define measurements
 $unit = new Zend_Measure(100,Zend_Measure_Length::CENTIMETER);
@@ -173,8 +176,8 @@ if ($unit->equals($unit2)) {
                 <title>Difference</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Length);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
 
 $unit = new Zend_Measure(100,Zend_Measure_Length::CENTIMETER);
 $unit2 = new Zend_Measure(1,Zend_Measure_Length::METER);
@@ -202,8 +205,11 @@ print "Lesser:".$unit3->compare($unit2);
                 <title>Changing a value</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Length);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de_AT');
 
 $unit = new Zend_Measure(1,Zend_Measure_Length::METER);
 
@@ -213,7 +219,7 @@ echo $unit;
 $unit->setValue(1.2,Zend_Measure_Length::KILOMETER);
 echo $unit;
 
-$unit->setValue("1.234,56",Zend_Measure_Length::MILLIMETER,'de_AT');
+$unit->setValue("1.234,56",Zend_Measure_Length::MILLIMETER,$locale);
 echo $unit;
 ?>]]></programlisting>
             </example>
@@ -233,8 +239,8 @@ echo $unit;
                 <title>Changing the type</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Length);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
 
 $unit = new Zend_Measure(1,Zend_Measure_Length::METER);
 

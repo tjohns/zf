@@ -23,10 +23,13 @@
                 <title>Automatic output</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de');
 
 $mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,'de');
+$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,$locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -45,10 +48,13 @@ echo $unit;
                 <title>Output a value</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de');
 
 $mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,'de');
+$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,$locale);
 
 echo $unit->getValue();
 ?>]]></programlisting>
@@ -63,11 +69,14 @@ echo $unit->getValue();
                 <title>Outputting units</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Weight);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Weight');
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de');
 
 $mystring = "1.234.567,89";
-$unit = new Zend_Measure($mystring,Zend_Measure_Weight::POUND,'de');
+$unit = new Zend_Measure($mystring,Zend_Measure_Weight::POUND,$locale);
 
 echo $unit->getType();
 ?>]]></programlisting>

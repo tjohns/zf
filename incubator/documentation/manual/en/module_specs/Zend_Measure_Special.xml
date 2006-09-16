@@ -22,7 +22,7 @@
                 <title>Serializing</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
+Zend::loadClass('Zend_Measure');
 
 $unit = new Zend_Measure(100,Zend_Measure::LENGTH);
 
@@ -35,8 +35,8 @@ $serial = $unit->serialize();
                 <title>Deserializing</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Length);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
 
 // load serialized object
 
@@ -69,8 +69,8 @@ echo $unit;
                 <title>Listing all units for a given type</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Length);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
 
 $unit = new Zend_Measure(0,Zend_Measure::LENGTH);
 

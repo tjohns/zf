@@ -30,7 +30,7 @@
                 <title>Creation using integer variables</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
+Zend::loadClass('Zend_Measure');
 
 $integer = 1234;
 $unit = new Zend_Measure($integer,Zend_Measure::LENGTH);
@@ -58,8 +58,8 @@ echo $unit;
                 <title>Creation using strings</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
-Zend::loadClass(Zend_Measure_Number);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Number');
 
 $mystring = "10010100111010111010100001011011101010001";
 $unit = new Zend_Measure($mystring,Zend_Measure_Number::BINARY);
@@ -84,7 +84,7 @@ echo $unit;
                 <title>Arbitrary texts</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
+Zend::loadClass('Zend_Measure');
 
 $mystring = "My house is 125m² in size";
 $unit = new Zend_Measure($mystring,Zend_Measure::AREA);
@@ -100,7 +100,7 @@ echo $unit;
                 <title>Arbitrary texts</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
+Zend::loadClass('Zend_Measure');
 
 $mystring = "My house is 125m² in size, it has 5 rooms of 25m² each.";
 $unit = new Zend_Measure($mystring,Zend_Measure::AREA);
@@ -129,10 +129,13 @@ echo $unit;
                 <title>Localized string</title>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
-Zend::loadClass(Zend_Measure);
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale('de');
 
 $mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,'de');
+$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,$locale);
 
 echo $unit;
 ?>]]></programlisting>
