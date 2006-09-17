@@ -702,6 +702,8 @@ class Zend_Locale {
 
     /**
      * Returns true if both locales are equal
+     * 
+     * @return boolean
      */
     public function equals($object)
     {
@@ -711,5 +713,127 @@ class Zend_Locale {
         }
         return false;
         
+    }
+
+
+    /**
+     * Returns an array of languages translated for the actual locale
+     * 
+     * @return array
+     */
+    public function getLanguageList()
+    {
+        return Zend_Locale_Data::getContent($this->_Locale, 'languagelist');
+    }
+
+
+    /**
+     * Returns an single language translated for the actual locale
+     * 
+     * @param  $language - string
+     * @return array
+     */
+    public function getLanguageDisplay($language)
+    {
+        $language = Zend_Locale_Data::getContent($this->_Locale, 'language', $language);
+        if (!empty($language))
+            return key($language);
+        return false;
+    }
+
+
+    /**
+     * Returns an array of scripts translated for the actual locale
+     * 
+     * @return array
+     */
+    public function getScriptList()
+    {
+        return Zend_Locale_Data::getContent($this->_Locale, 'scriptlist');
+    }
+
+
+    /**
+     * Returns an single script translated for the actual locale
+     * 
+     * @param  $script - string
+     * @return array
+     */
+    public function getScriptDisplay($script)
+    {
+        $script = Zend_Locale_Data::getContent($this->_Locale, 'script', $script);
+        if (!empty($script))
+            return key($script);
+        return false;
+    }
+
+
+    /**
+     * Returns an array of regions translated for the actual locale
+     * 
+     * @return array
+     */
+    public function getRegionList()
+    {
+        return Zend_Locale_Data::getContent($this->_Locale, 'territorylist');
+    }
+
+
+    /**
+     * Returns an single region translated for the actual locale
+     * 
+     * @param  $region - string
+     * @return array
+     */
+    public function getRegionDisplay($region)
+    {
+        $region = Zend_Locale_Data::getContent($this->_Locale, 'territory', $region);
+        if (!empty($region))
+            return key($region);
+        return false;
+    }
+
+
+    /**
+     * Returns an array of calendar names translated for the actual locale
+     * 
+     * @return array
+     */
+    public function getCalendarList()
+    {
+        return Zend_Locale_Data::getContent($this->_Locale, 'type', 'calendar');
+    }
+
+
+    /**
+     * Returns an single calendar name translated for the actual locale
+     * 
+     * @param  $calendar - string
+     * @return array
+     */
+    public function getCalendarDisplay($calendar)
+    {
+        $calendar = Zend_Locale_Data::getContent($this->_Locale, 'type', $calendar);
+        if (!empty($calendar))
+            return key($calendar);
+        return false;
+    }
+
+
+    /**
+     * Returns an array with translated yes strings
+     * 
+     * @return array
+     */
+    public function getQuestion()
+    {
+        $quest = Zend_Locale_Data::getContent($this->_Locale, 'questionstrings');
+        $yes = explode(':', $quest['yes']);
+        $no  = explode(':', $quest['no']);
+        $ret['yes'] = $yes[0];
+        $ret['yesabbr'] = $yes[1];
+        $ret['no'] = $no[0];
+        $ret['noabbr'] = $no[1];
+        return $ret;
     }
 }

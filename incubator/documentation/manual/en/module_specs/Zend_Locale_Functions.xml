@@ -228,6 +228,181 @@ print $locale->getRegion();
             </programlisting>
         </example>
     </sect2>
+    <sect2 id="zend.locale.getlanguagedisplay">
+        <title>Get an translated string of an language</title>
+        <para>
+            With <code>getLanguageDisplay()</code> the translated languagename
+            of the given language will be returned.
+        </para>
+        <example>
+            <title>getLanguageDisplay</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Language
+print $locale->getLanguageDisplay('de');
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getlanguagelist">
+        <title>Get a list of languages</title>
+        <para>
+            With <code>getLanguageList()</code> an array of all known languagenames
+            translated to the actual locale's language will be returned.
+        </para>
+        <example>
+            <title>getLanguageList</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// LanguageList
+print_r($locale->getLanguageList());
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getscriptdisplay">
+        <title>Get an translated string of an script</title>
+        <para>
+            With <code>getScriptDisplay()</code> the translated name of an script
+            of the given language will be returned.
+        </para>
+        <example>
+            <title>getScriptDisplay</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Script
+print $locale->getScriptDisplay('Latn');
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getscriptlist">
+        <title>Get a list of scripts</title>
+        <para>
+            With <code>getScriptList()</code> an array of all known scriptnames
+            translated to the actual locale's language will be returned.
+        </para>
+        <example>
+            <title>getScriptList</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// ScriptList
+print_r($locale->getScriptList());
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getregiondisplay">
+        <title>Get an translated string of an region</title>
+        <para>
+            With <code>getRegionDisplay()</code> the translated name of an region
+            of the given language will be returned.
+        </para>
+        <example>
+            <title>getRegionDisplay</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Region
+print $locale->getRegionDisplay('AT');
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getregionlist">
+        <title>Get a list of regions</title>
+        <para>
+            With <code>getRegionList()</code> an array of all known regionnames
+            translated to the actual locale's language will be returned.
+        </para>
+        <example>
+            <title>getRegionList</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// RegionList
+print_r($locale->getRegionList());
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getcalendardisplay">
+        <title>Get an translated string of an calendar</title>
+        <para>
+            With <code>getCalendarDisplay()</code> the translated name of an calendar
+            of the given language will be returned.
+        </para>
+        <example>
+            <title>getCalendarDisplay</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Calendar
+print $locale->getCalendarDisplay('chinese');
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getcalendarlist">
+        <title>Get a list of calendars</title>
+        <para>
+            With <code>getCalendarList()</code> an array of all known calendarnames
+            translated to the actual locale's language will be returned.
+        </para>
+        <example>
+            <title>getCalendarList</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// CalendarList
+print_r($locale->getCalendarList());
+            </programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.getquestion">
+        <title>Get a translation for yes and no</title>
+        <para>
+            With <code>getQuestion()</code> an array with questionstring
+            translated to the actual locale's language will be returned.
+        </para>
+        <para>
+            There will be 4 returned contents...
+            <code>YES</code> and <code>NO</code> and their abbeviated strings.
+        </para>
+        <example>
+            <title>getCalendarList</title>
+            <programlisting role="php">&lt;?php
+
+require_once('Zend/Locale.php');
+
+$locale = new Zend_Locale();
+
+// Question strings
+print_r($locale->getQuestion());
+            </programlisting>
+        </example>
+    </sect2>
 </sect1>
 
 <!--
