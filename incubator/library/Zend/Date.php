@@ -1059,8 +1059,10 @@ class Zend_Date {
 
             // week formats
             case Zend_Date::WEEK :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $week = (int) $this->get(Zend_Date::WEEK, $locale, $gmt);
+                $day = ((intval($date) - $week) * 7) + $day;
+                $this->setTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
+                return $this->getTimestamp();
                 break;
 
 
@@ -1681,8 +1683,9 @@ class Zend_Date {
 
             // week formats
             case Zend_Date::WEEK :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $week = (int) $this->get(Zend_Date::WEEK, $locale, $gmt);
+                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, ($week * 7), 0, -1, $gmt));
+                return $this->getTimestamp();
                 break;
 
 
@@ -2261,8 +2264,9 @@ class Zend_Date {
 
             // week formats
             case Zend_Date::WEEK :
-                // TODO: implement function
-                $this->_Date->throwException('function yet not implemented');
+                $week = (int) $this->get(Zend_Date::WEEK, $locale, $gmt);
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, ($week * 7), 0, -1, $gmt));
+                return $this->getTimestamp();
                 break;
 
 
