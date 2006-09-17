@@ -127,6 +127,8 @@
         &module_specs.Zend_Locale_Introduction;
         &module_specs.Zend_Locale_Functions;
     </chapter>
+    &module_specs.Zend_Locale_Appendix_Languages;
+    &module_specs.Zend_Locale_Appendix_Regions;
     <!-- &ref.faq; -->
     &ref.coding_standard;
     &ref.copyrights;
