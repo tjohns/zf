@@ -23,12 +23,3 @@
 		</currencyFormats>
 	</numbers>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-
-NumberPatterns { 
-"#,##0.###;-#,##0.###",
-"\u00A4 #,##0.00;-\u00A4 #,##0.00",
-"#,##0%",
-}
--->
-

@@ -217,12 +217,6 @@
 				<am>म.पू.</am>
 				<pm>म.नं.</pm>
 				<eras>
-					<!-- These era names look like abbreviations and not full names.
-						 eraNames>
-						 <era type="0" draft="true">ईसापूर्व.</era>
-						 <era type="1" draft="true">सन.</era>
-						 </eraNames
-					-->
 					<eraAbbr>
 						<era type="0">ईसापूर्व</era>
 						<era type="1">सन</era>
@@ -259,11 +253,3 @@
 		</messages>
 	</posix>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-jw { "\u091c\u093e\u0935\u0928\u0940\u0938\u094d" } // Use jv instead
-"\u2030",
-"\u221e",
-"\ufffd"
-}
--->
-

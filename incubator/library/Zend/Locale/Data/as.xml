@@ -76,12 +76,9 @@
 					</dayContext>
 				</days>
 				<am draft="true">পূৰ্বা</am>
-				<!-- Purbahna পূৰ্বাহ্ণ -->
 				<pm draft="true">অপ</pm>
-				<!-- Aparahna অপৰাহ্ণ -->
 			</calendar>
 		</calendars>
-		<!-- NOTE: NO ERA INFO -->
 		<timeZoneNames>
 			<zone type="Asia/Calcutta">
 				<long>
@@ -104,4 +101,3 @@
 		</currencies>
 	</numbers>
 </ldml>
-

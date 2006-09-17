@@ -521,18 +521,15 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HHmm;-HHmm</hourFormat>
-			<!-- Antarctica -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Јужни пол</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity draft="true">Киншаса</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity>Лумумбаши</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Shanghai">
 				<exemplarCity>Шангај</exemplarCity>
 			</zone>
@@ -546,7 +543,6 @@
 					<daylight>CET</daylight>
 				</short>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity>Москва</exemplarCity>
 			</zone>
@@ -559,7 +555,6 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity>Анадир</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Ужгород</exemplarCity>
 			</zone>
@@ -569,7 +564,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity>Запорожје</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Tashkent">
 				<exemplarCity>Ташкент</exemplarCity>
 			</zone>
@@ -708,4 +702,3 @@
 		</messages>
 	</posix>
 </ldml>
-

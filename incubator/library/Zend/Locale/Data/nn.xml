@@ -447,69 +447,33 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HH.mm;-HH.mm</hourFormat>
-			<!-- Antarktis -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity draft="true">Sørpolen</exemplarCity>
 			</zone>
-			<!-- Argentina
-				 Australia
-				 Brazil
-				 Canada
-				 Kongo, Den demokratiske republikken
-				 Chile
-			-->
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="true">Påskeøya</exemplarCity>
 			</zone>
-			<!-- China
-				 Ecuador
-				 Spain
-			-->
 			<zone type="Atlantic/Canary">
 				<exemplarCity draft="true">Kanariøyene</exemplarCity>
 			</zone>
-			<!-- Micronesia
-				 United Kingdom
-				 Greenland
-			-->
 			<zone type="America/Godthab">
 				<exemplarCity draft="true">Godthåb</exemplarCity>
 			</zone>
-			<!-- Indonesia
-				 Kiribati
-				 Kasakhstan
-				 Marshall Islands
-				 Mali
-				 Mongolia
-			-->
 			<zone type="Asia/Ulaanbaatar">
 				<exemplarCity draft="true">Ulan Bator</exemplarCity>
 			</zone>
-			<!-- Mexico -->
 			<zone type="America/Mexico_City">
 				<exemplarCity draft="true">Mexico by</exemplarCity>
 			</zone>
-			<!-- Malaysia
-				 New Zealand
-				 French Polynesia
-				 Portugal
-			-->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="true">Azorene</exemplarCity>
 			</zone>
 			<zone type="Europe/Lisbon">
 				<exemplarCity draft="true">Lisboa</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity draft="true">Moskva</exemplarCity>
 			</zone>
-			<!-- Svalbard and Jan Mayen
-				 Ukraine
-				 United States Minor Outlying Islands
-				 United States
-				 Usbekistan
-			-->
 			<zone type="Asia/Tashkent">
 				<exemplarCity draft="true">Tasjkent</exemplarCity>
 			</zone>
@@ -551,10 +515,3 @@
 		<reference type="R1" uri="URN:ISBN:82-03-32936-5">Vinje, Finn-Erik, Skriveregler (1994)</reference>
 	</references>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/nn.txt?only_with_tag=final-update-LDML
-
-Currency display names
-        "Latn",  // ISO 15924 Name
--->
-

@@ -644,7 +644,6 @@
 		<timeZoneNames>
 			<hourFormat>+HHmm;-HHmm</hourFormat>
 			<gmtFormat>Гриинуич{0}</gmtFormat>
-			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity draft="true">Ротера</exemplarCity>
 			</zone>
@@ -675,7 +674,6 @@
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity draft="true">Мак Мърдоу</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity draft="true">Рио Галегос</exemplarCity>
 			</zone>
@@ -709,7 +707,6 @@
 			<zone type="America/Buenos_Aires">
 				<exemplarCity draft="true">Буенос Айрес</exemplarCity>
 			</zone>
-			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity draft="true">Пърт</exemplarCity>
 			</zone>
@@ -740,7 +737,6 @@
 			<zone type="Australia/Lord_Howe">
 				<exemplarCity draft="true">Лорд Хов</exemplarCity>
 			</zone>
-			<!-- Brazil -->
 			<zone type="America/Eirunepe">
 				<exemplarCity draft="true">Ейрунепе</exemplarCity>
 			</zone>
@@ -786,7 +782,6 @@
 			<zone type="America/Noronha">
 				<exemplarCity draft="true">Норонха</exemplarCity>
 			</zone>
-			<!-- Canada -->
 			<zone type="America/Dawson">
 				<exemplarCity draft="true">Доусън</exemplarCity>
 			</zone>
@@ -872,21 +867,18 @@
 				</short>
 				<exemplarCity>Сейнт Джоунс</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity draft="true">Киншаса</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity draft="true">Лубумбаши</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="true">Великденски о-ви</exemplarCity>
 			</zone>
 			<zone type="America/Santiago">
 				<exemplarCity draft="true">Сантиаго</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity draft="true">Кашгар</exemplarCity>
 			</zone>
@@ -910,14 +902,12 @@
 			<zone type="Asia/Harbin">
 				<exemplarCity draft="true">Харбин</exemplarCity>
 			</zone>
-			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity draft="true">о-ви Галапагос</exemplarCity>
 			</zone>
 			<zone type="America/Guayaquil">
 				<exemplarCity draft="true">Гуаякил</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity draft="true">Канарски о-ви</exemplarCity>
 			</zone>
@@ -927,7 +917,6 @@
 			<zone type="Europe/Madrid">
 				<exemplarCity draft="true">Мадрид</exemplarCity>
 			</zone>
-			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity draft="true">о. Яп</exemplarCity>
 			</zone>
@@ -951,14 +940,12 @@
 				</short>
 				<exemplarCity>Париж</exemplarCity>
 			</zone>
-			<!-- United Kingdom -->
 			<zone type="Europe/Belfast">
 				<exemplarCity draft="true">Белфастt</exemplarCity>
 			</zone>
 			<zone type="Europe/London">
 				<exemplarCity draft="true">Лондон</exemplarCity>
 			</zone>
-			<!-- Greenland -->
 			<zone type="America/Thule">
 				<exemplarCity draft="true">Туле</exemplarCity>
 			</zone>
@@ -971,7 +958,6 @@
 			<zone type="America/Danmarkshavn">
 				<exemplarCity draft="true">Данмаркшавн</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity draft="true">Джакарта</exemplarCity>
 			</zone>
@@ -1006,7 +992,6 @@
 				</short>
 				<exemplarCity>Токио</exemplarCity>
 			</zone>
-			<!-- Kiribati -->
 			<zone type="Pacific/Enderbury">
 				<exemplarCity draft="true">о. Ендърбъри</exemplarCity>
 			</zone>
@@ -1016,7 +1001,6 @@
 			<zone type="Pacific/Tarawa">
 				<exemplarCity draft="true">о. Тарава</exemplarCity>
 			</zone>
-			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity draft="true">Аятау</exemplarCity>
 			</zone>
@@ -1043,21 +1027,18 @@
 				</short>
 				<exemplarCity>Казабланка</exemplarCity>
 			</zone>
-			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity draft="true">Квайджален</exemplarCity>
 			</zone>
 			<zone type="Pacific/Majuro">
 				<exemplarCity draft="true">Мажуро</exemplarCity>
 			</zone>
-			<!-- Mali -->
 			<zone type="Africa/Bamako">
 				<exemplarCity draft="true">Бамако</exemplarCity>
 			</zone>
 			<zone type="Africa/Timbuktu">
 				<exemplarCity draft="true">Тимбукту</exemplarCity>
 			</zone>
-			<!-- Mongolia -->
 			<zone type="Asia/Hovd">
 				<exemplarCity draft="true">Кобдо</exemplarCity>
 			</zone>
@@ -1067,7 +1048,6 @@
 			<zone type="Asia/Choibalsan">
 				<exemplarCity draft="true">Чойбалсан</exemplarCity>
 			</zone>
-			<!-- Mexico -->
 			<zone type="America/Tijuana">
 				<exemplarCity draft="true">Тихуана</exemplarCity>
 			</zone>
@@ -1092,21 +1072,18 @@
 			<zone type="America/Cancun">
 				<exemplarCity draft="true">Канкун</exemplarCity>
 			</zone>
-			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity draft="true">Куала Лумпур</exemplarCity>
 			</zone>
 			<zone type="Asia/Kuching">
 				<exemplarCity draft="true">Кучин</exemplarCity>
 			</zone>
-			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity draft="true">о-ви Чатам</exemplarCity>
 			</zone>
 			<zone type="Pacific/Auckland">
 				<exemplarCity draft="true">Окланд</exemplarCity>
 			</zone>
-			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity draft="true">Таити</exemplarCity>
 			</zone>
@@ -1116,7 +1093,6 @@
 			<zone type="Pacific/Gambier">
 				<exemplarCity draft="true">Гамбиер</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="true">Азорски о-ви</exemplarCity>
 			</zone>
@@ -1137,7 +1113,6 @@
 				</short>
 				<exemplarCity>Букурещ</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity draft="true">Калининград</exemplarCity>
 			</zone>
@@ -1180,14 +1155,12 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity draft="true">Анадир</exemplarCity>
 			</zone>
-			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity draft="true">Ян Майен</exemplarCity>
 			</zone>
 			<zone type="Arctic/Longyearbyen">
 				<exemplarCity draft="true">Лонгирбюен</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity draft="true">Ужгород</exemplarCity>
 			</zone>
@@ -1200,7 +1173,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity draft="true">Запорожие</exemplarCity>
 			</zone>
-			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity draft="true">о. Мидуей</exemplarCity>
 			</zone>
@@ -1210,7 +1182,6 @@
 			<zone type="Pacific/Wake">
 				<exemplarCity draft="true">о. Уейк</exemplarCity>
 			</zone>
-			<!-- United States -->
 			<zone type="America/Adak">
 				<exemplarCity draft="true">Адак</exemplarCity>
 			</zone>
@@ -1341,7 +1312,6 @@
 				</short>
 				<exemplarCity>Ню Йорк</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity draft="true">Самарканд</exemplarCity>
 			</zone>
@@ -2110,14 +2080,3 @@
 		</messages>
 	</posix>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/bg.txt?only_with_tag=final-update-LDML
-
-        SY { "\u0421\u0438\u0440\u0438\u0439\u0441\u043A\u0430 \u0410\u0440\u0430\u0431\u0441\u043A\u0430 \u0420\u0435\u043F\u0443\u0431\u043B\u0438\u043A\u0430" }    // alternate form { "\u0421\u0438\u0440\u0438\u044F" }
-Currency display names
-bg { "\u0431\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438" } // Old value
-zh_cn { "\u041A\u0438\u0442\u0430\u0439\u0441\u043A\u0438 (\u041E\u043F\u0440\u043E\u0441\u0442\u0435\u043D)" }
-zh_tw { "\u041A\u0438\u0442\u0430\u0439\u0441\u043A\u0438 (\u0422\u0440\u0430\u0434\u0438\u0446\u0438\u043E\u043D\u0435\u043D)" }
-        "Cyrl",     // Abbreviation
--->
-

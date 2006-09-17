@@ -513,7 +513,6 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HHmm;-HHmm</hourFormat>
-			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity draft="true">ሮተራ</exemplarCity>
 			</zone>
@@ -544,7 +543,6 @@
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity draft="true">ማክሙርዶ</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity draft="true">Rio_Gallegos</exemplarCity>
 			</zone>
@@ -569,7 +567,6 @@
 			<zone type="America/Buenos_Aires">
 				<exemplarCity draft="true">ቡኤኖስ-ኤይሪስ</exemplarCity>
 			</zone>
-			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity draft="true">ፕርዝ</exemplarCity>
 			</zone>
@@ -600,7 +597,6 @@
 			<zone type="Australia/Lord_Howe">
 				<exemplarCity draft="true">ሎርድ ሆዌ</exemplarCity>
 			</zone>
-			<!-- Brazil -->
 			<zone type="America/Eirunepe">
 				<exemplarCity draft="true">ኢሩኔፕ</exemplarCity>
 			</zone>
@@ -646,7 +642,6 @@
 			<zone type="America/Noronha">
 				<exemplarCity draft="true">ኖሮሃ</exemplarCity>
 			</zone>
-			<!-- Canada -->
 			<zone type="America/Dawson">
 				<exemplarCity draft="true">ዳውሰን</exemplarCity>
 			</zone>
@@ -716,21 +711,18 @@
 			<zone type="America/St_Johns">
 				<exemplarCity draft="true">ሴንት ጆንስ</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity draft="true">ኪንሻሳ</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity draft="true">ሉቡምባሺ</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="true">ኢስተር</exemplarCity>
 			</zone>
 			<zone type="America/Santiago">
 				<exemplarCity draft="true">ሳንቲያጎ</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity draft="true">ካሽጋር</exemplarCity>
 			</zone>
@@ -746,14 +738,12 @@
 			<zone type="Asia/Harbin">
 				<exemplarCity draft="true">ባርቢን</exemplarCity>
 			</zone>
-			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity draft="true">ጋላፓጎስ</exemplarCity>
 			</zone>
 			<zone type="America/Guayaquil">
 				<exemplarCity draft="true">ጓያኪል</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity draft="true">ካናሪ</exemplarCity>
 			</zone>
@@ -763,7 +753,6 @@
 			<zone type="Europe/Madrid">
 				<exemplarCity draft="true">ማርድሪድ</exemplarCity>
 			</zone>
-			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity draft="true">ያፕ</exemplarCity>
 			</zone>
@@ -776,14 +765,12 @@
 			<zone type="Pacific/Kosrae">
 				<exemplarCity draft="true">ኮስራይ</exemplarCity>
 			</zone>
-			<!-- United Kingdom -->
 			<zone type="Europe/Belfast">
 				<exemplarCity draft="true">ቤልፋስት</exemplarCity>
 			</zone>
 			<zone type="Europe/London">
 				<exemplarCity draft="true">ሎንዶን</exemplarCity>
 			</zone>
-			<!-- Greenland -->
 			<zone type="America/Thule">
 				<exemplarCity draft="true">ቱለ</exemplarCity>
 			</zone>
@@ -796,7 +783,6 @@
 			<zone type="America/Danmarkshavn">
 				<exemplarCity draft="true">ዴንማርክ</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity draft="true">ጃካርታ</exemplarCity>
 			</zone>
@@ -809,7 +795,6 @@
 			<zone type="Asia/Jayapura">
 				<exemplarCity draft="true">ጃያፑራ</exemplarCity>
 			</zone>
-			<!-- Kiribati -->
 			<zone type="Pacific/Enderbury">
 				<exemplarCity draft="true">እንደርቡርይ</exemplarCity>
 			</zone>
@@ -819,7 +804,6 @@
 			<zone type="Pacific/Tarawa">
 				<exemplarCity draft="true">ታራዋ</exemplarCity>
 			</zone>
-			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity draft="true">አክታው</exemplarCity>
 			</zone>
@@ -835,21 +819,18 @@
 			<zone type="Asia/Almaty">
 				<exemplarCity draft="true">አልማቲ</exemplarCity>
 			</zone>
-			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity draft="true">ክዋጃላይን</exemplarCity>
 			</zone>
 			<zone type="Pacific/Majuro">
 				<exemplarCity draft="true">ማጁሮ</exemplarCity>
 			</zone>
-			<!-- Mali -->
 			<zone type="Africa/Bamako">
 				<exemplarCity draft="true">ባማኮ</exemplarCity>
 			</zone>
 			<zone type="Africa/Timbuktu">
 				<exemplarCity draft="true">ቲምቡክቱ</exemplarCity>
 			</zone>
-			<!-- Mongolia -->
 			<zone type="Asia/Hovd">
 				<exemplarCity draft="true">ሆቭድ</exemplarCity>
 			</zone>
@@ -859,7 +840,6 @@
 			<zone type="Asia/Choibalsan">
 				<exemplarCity draft="true">ቾይባልሳን</exemplarCity>
 			</zone>
-			<!-- Mexico -->
 			<zone type="America/Tijuana">
 				<exemplarCity draft="true">ቲጁአና</exemplarCity>
 			</zone>
@@ -884,21 +864,18 @@
 			<zone type="America/Cancun">
 				<exemplarCity draft="true">ካንኩን</exemplarCity>
 			</zone>
-			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity draft="true">ኳላልምፑር</exemplarCity>
 			</zone>
 			<zone type="Asia/Kuching">
 				<exemplarCity draft="true">ኩቺንግ</exemplarCity>
 			</zone>
-			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity draft="true">ቻትሃም</exemplarCity>
 			</zone>
 			<zone type="Pacific/Auckland">
 				<exemplarCity draft="true">ኦክላንድ</exemplarCity>
 			</zone>
-			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity draft="true">ታሂቲ</exemplarCity>
 			</zone>
@@ -908,7 +885,6 @@
 			<zone type="Pacific/Gambier">
 				<exemplarCity draft="true">ጋምባየር</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="true">አዞረስ</exemplarCity>
 			</zone>
@@ -918,9 +894,6 @@
 			<zone type="Europe/Lisbon">
 				<exemplarCity draft="true">ሊስቦን</exemplarCity>
 			</zone>
-			<!-- Russia
-				 Svalbard and Jan Mayen
-			-->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity draft="true">ካሊኒንጋርድ</exemplarCity>
 			</zone>
@@ -963,11 +936,9 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity draft="true">አናዲር</exemplarCity>
 			</zone>
-			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity draft="true">Jan_Mayen</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity draft="true">ኡዝጎሩድ</exemplarCity>
 			</zone>
@@ -980,7 +951,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity draft="true">ዛፖሮዝሂይ</exemplarCity>
 			</zone>
-			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity draft="true">ሚድዌ</exemplarCity>
 			</zone>
@@ -990,7 +960,6 @@
 			<zone type="Pacific/Wake">
 				<exemplarCity draft="true">ዌክ</exemplarCity>
 			</zone>
-			<!-- United States -->
 			<zone type="America/Adak">
 				<exemplarCity draft="true">አዳክ</exemplarCity>
 			</zone>
@@ -1054,7 +1023,6 @@
 			<zone type="America/New_York">
 				<exemplarCity draft="true">ኒውዮርክ</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity draft="true">ሳማርካንድ</exemplarCity>
 			</zone>
@@ -1099,8 +1067,3 @@
 		</currencies>
 	</numbers>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-* Amharic language.
-* Contributed by Daniel Yacob <yacob@geez.org>, Ge'ez Frontier Foundation
--->
-

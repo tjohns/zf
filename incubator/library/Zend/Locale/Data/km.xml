@@ -169,9 +169,6 @@
 			<territory type="FM" draft="true">មិក្រូនេស៊ី</territory>
 			<territory type="FR" draft="true">បារាំង</territory>
 			<territory type="GA" draft="true">ហ្គាបុង</territory>
-			<!-- territory type="GB">អង់គ្លេស</territory
-				 This was listed as UK, which is not a valid ISO-3066 code. This is the probable translation.
-			-->
 			<territory type="GE" draft="true">ហ្សកហ្ស៉ី</territory>
 			<territory type="GH" draft="true">ហ្កាណា</territory>
 			<territory type="GM" draft="true">ហ្គាំប៊ី</territory>
@@ -182,7 +179,6 @@
 			<territory type="GW" draft="true">ហ្គីណេប៊ីសូ</territory>
 			<territory type="GY" draft="true">ហ្គីយ៉ាណា</territory>
 			<territory type="HK" draft="true">ហុងកុង</territory>
-			<!-- This is probably incomplete. It needs the SAR China -->
 			<territory type="HN" draft="true">ហុងឌួរ៉ាស់</territory>
 			<territory type="HR" draft="true">ក្រូអាស៊ី</territory>
 			<territory type="HT" draft="true">ហៃទី</territory>
@@ -437,13 +433,6 @@
 						<era type="1" draft="true">គ.ស.</era>
 					</eraAbbr>
 				</eras>
-				<!-- The following eras are incomplete
-					 eras>
-					 <eraAbbr>
-					 <era type="1">គ.ស.</era>
-					 </eraAbbr>
-					 </eras
-				-->
 				<dateFormats>
 					<dateFormatLength type="full">
 						<dateFormat>

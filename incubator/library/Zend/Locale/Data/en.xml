@@ -590,7 +590,6 @@
 		</scripts>
 		<territories>
 			<territory type="001">World</territory>
-			<!-- UN codes -->
 			<territory type="002">Africa</territory>
 			<territory type="003">North America</territory>
 			<territory type="005">South America</territory>
@@ -1187,7 +1186,6 @@
 					<daylight>BDT</daylight>
 				</short>
 			</zone>
-			<!-- Note: the following is known to be sparse, and needs to be improved in the future -->
 			<zone type="Asia/Jerusalem">
 				<long>
 					<standard>Israel Standard Time</standard>
@@ -1245,7 +1243,6 @@
 					<daylight>AKDT</daylight>
 				</short>
 			</zone>
-			<!-- Note: zones that don't use daylight time need further work -->
 			<zone type="America/Los_Angeles">
 				<long>
 					<generic>Pacific Time</generic>
@@ -2222,34 +2219,3 @@
 		</currencies>
 	</numbers>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/en.txt?only_with_tag=final-update-LDML
-
-                "M/d/yy", // Changing this will break binary compatibility.
-CS { "Serbia and Montenegro" } // TODO: if we allow this, then SP must go away
-        TL { "Timor-Leste" }    // This was called East Timor
-Last update: May 2003
-        root{ "Root"}    // The only exception to ISO-639
-        bla { "Siksika" }   // Blackfoot
-div { "Divehi" } // Use dv instead
-        el  { "Greek" } //  Modern (1453-)
-in  { "Indonesian" }  // Use id instead
-iw  { "Hebrew" }  // Use he instead
-ji  { "Yiddish" } // Use yi instead
-jw  { "Javanese" } // Use jv instead
-The range qaa-qtz is reserved for local use.
-        tlh { "Klingon" } // From the Star Trek TV/movie series
-        vo  { "Volap\u00FCk" }   // Yes the iso-639 standard uses the umlaut in the English name
-TODO: This list may be incomplete. Finish it once a formal list appears.
-http://www.unicode.org/iso15924/
-        Qaai { "Inherited" } // PUA
-Thai { "Thai" } // Just happens to be a duplicate
-        Zyyy { "Common" } // This may need to become "undetermined script"
-variants for collation (traditional may also be used for traditional chinese)
-traditional   { "Traditional Calendar" }
-each variant name that occurs in locales should be listed with %% and a display string
-PREEURO { "Pre-Euro" }   // PREEURO variant display name
-EURO    { "Euro" }         // EURO variant display name
-NY      { "Nynorsk" }      // Norwegian variant display name
--->
-

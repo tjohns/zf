@@ -495,15 +495,12 @@
 			</calendar>
 		</calendars>
 		<timeZoneNames>
-			<!-- Antarctica -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Južni pol</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>Kinšasa</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Shanghai">
 				<exemplarCity>Šangaj</exemplarCity>
 			</zone>
@@ -513,7 +510,6 @@
 					<daylight>Centralno Evropsko Vreme</daylight>
 				</long>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity>Moskva</exemplarCity>
 			</zone>
@@ -526,7 +522,6 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity>Anadir</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Užgorod</exemplarCity>
 			</zone>
@@ -536,7 +531,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity>Zaporožje</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Tashkent">
 				<exemplarCity>Taškent</exemplarCity>
 			</zone>
@@ -658,4 +652,3 @@
 		</messages>
 	</posix>
 </ldml>
-

@@ -487,22 +487,18 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HHmm;-HHmm</hourFormat>
-			<!-- Antarctica -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Južni pol</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>Kinšasa</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity>Lubumbaši</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Shanghai">
 				<exemplarCity>Šangaj</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity>Moskva</exemplarCity>
 			</zone>
@@ -515,7 +511,6 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity>Anadir</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Užgorod</exemplarCity>
 			</zone>
@@ -525,7 +520,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity>Zaporožje</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Tashkent">
 				<exemplarCity>Taškent</exemplarCity>
 			</zone>
@@ -575,16 +569,3 @@
 		</messages>
 	</posix>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/sl.txt?only_with_tag=final-update-LDML
-
-                1, // "Minimal Days in First Week" is unknown. Root value used instead
-        FK { "Falklandski (Malvinski) otoki" }    // alternate name { "Falklandski otoki" }
-        KP { "Severna Koreja" }    // alternate name { "Demokrati\u010Dna ljudska republika Koreja" }
-        KR { "Ju\u017Ena Koreja" }    // alternate name { "Republika Koreja" }
-Currency display names
-zh_cn { "Kitaj\u0161\u010Dina (poenostavljena)" }
-zh_tw { "Kitaj\u0161\u010Dina (tradicionalna)" }
-        "Latn",  // ISO 15924 Name
--->
-

@@ -514,7 +514,6 @@
 			</calendar>
 		</calendars>
 		<timeZoneNames>
-			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity draft="true">روثيرا</exemplarCity>
 			</zone>
@@ -545,7 +544,6 @@
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity draft="true">ماك موردو</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity draft="true">ريو جالييوس</exemplarCity>
 			</zone>
@@ -579,7 +577,6 @@
 			<zone type="America/Buenos_Aires">
 				<exemplarCity draft="true">بوينوس أيرس</exemplarCity>
 			</zone>
-			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity draft="true">برثا</exemplarCity>
 			</zone>
@@ -610,7 +607,6 @@
 			<zone type="Australia/Lord_Howe">
 				<exemplarCity draft="true">لورد هاو</exemplarCity>
 			</zone>
-			<!-- Brazil -->
 			<zone type="America/Eirunepe">
 				<exemplarCity draft="true">ايرونبي</exemplarCity>
 			</zone>
@@ -656,7 +652,6 @@
 			<zone type="America/Noronha">
 				<exemplarCity draft="true">نوروناه</exemplarCity>
 			</zone>
-			<!-- Canada -->
 			<zone type="America/Dawson">
 				<exemplarCity draft="true">داوسان</exemplarCity>
 			</zone>
@@ -726,21 +721,18 @@
 			<zone type="America/St_Johns">
 				<exemplarCity draft="true">عيد سانت جونس</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity draft="true">كينشاسا</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity draft="true">لومبباشا</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="true">استر</exemplarCity>
 			</zone>
 			<zone type="America/Santiago">
 				<exemplarCity draft="true">سانتيجو</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity draft="true">كاشجار</exemplarCity>
 			</zone>
@@ -756,14 +748,12 @@
 			<zone type="Asia/Harbin">
 				<exemplarCity draft="true">هاربين</exemplarCity>
 			</zone>
-			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity draft="true">جلاباجوس</exemplarCity>
 			</zone>
 			<zone type="America/Guayaquil">
 				<exemplarCity draft="true">جواياكيل</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity draft="true">كناري</exemplarCity>
 			</zone>
@@ -773,7 +763,6 @@
 			<zone type="Europe/Madrid">
 				<exemplarCity draft="true">مدريد</exemplarCity>
 			</zone>
-			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity draft="true">ياب</exemplarCity>
 			</zone>
@@ -786,14 +775,12 @@
 			<zone type="Pacific/Kosrae">
 				<exemplarCity draft="true">كوسرا</exemplarCity>
 			</zone>
-			<!-- United Kingdom -->
 			<zone type="Europe/Belfast">
 				<exemplarCity draft="true">بلفاست</exemplarCity>
 			</zone>
 			<zone type="Europe/London">
 				<exemplarCity draft="true">لندن</exemplarCity>
 			</zone>
-			<!-- Greenland -->
 			<zone type="America/Thule">
 				<exemplarCity draft="true">ثيل</exemplarCity>
 			</zone>
@@ -806,7 +793,6 @@
 			<zone type="America/Danmarkshavn">
 				<exemplarCity draft="true">دانمرك شافن</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity draft="true">جاكرتا</exemplarCity>
 			</zone>
@@ -819,7 +805,6 @@
 			<zone type="Asia/Jayapura">
 				<exemplarCity draft="true">جايابيورا</exemplarCity>
 			</zone>
-			<!-- Kiribati -->
 			<zone type="Pacific/Enderbury">
 				<exemplarCity draft="true">اندربيرج</exemplarCity>
 			</zone>
@@ -829,7 +814,6 @@
 			<zone type="Pacific/Tarawa">
 				<exemplarCity draft="true">تاراوا</exemplarCity>
 			</zone>
-			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity draft="true">أكتاو</exemplarCity>
 			</zone>
@@ -845,21 +829,18 @@
 			<zone type="Asia/Almaty">
 				<exemplarCity draft="true">ألماتي</exemplarCity>
 			</zone>
-			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity draft="true">كواجالين</exemplarCity>
 			</zone>
 			<zone type="Pacific/Majuro">
 				<exemplarCity draft="true">ماجورو</exemplarCity>
 			</zone>
-			<!-- Mali -->
 			<zone type="Africa/Bamako">
 				<exemplarCity draft="true">باماكو</exemplarCity>
 			</zone>
 			<zone type="Africa/Timbuktu">
 				<exemplarCity draft="true">تيمبيوكتو</exemplarCity>
 			</zone>
-			<!-- Mongolia -->
 			<zone type="Asia/Hovd">
 				<exemplarCity draft="true">هوفد</exemplarCity>
 			</zone>
@@ -869,7 +850,6 @@
 			<zone type="Asia/Choibalsan">
 				<exemplarCity draft="true">تشوبالسان</exemplarCity>
 			</zone>
-			<!-- Mexico -->
 			<zone type="America/Tijuana">
 				<exemplarCity draft="true">تيجوانا</exemplarCity>
 			</zone>
@@ -894,21 +874,18 @@
 			<zone type="America/Cancun">
 				<exemplarCity draft="true">كانكن</exemplarCity>
 			</zone>
-			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity draft="true">كوالالمبور</exemplarCity>
 			</zone>
 			<zone type="Asia/Kuching">
 				<exemplarCity draft="true">كيشينج</exemplarCity>
 			</zone>
-			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity draft="true">تشاثام</exemplarCity>
 			</zone>
 			<zone type="Pacific/Auckland">
 				<exemplarCity draft="true">أوكلاند</exemplarCity>
 			</zone>
-			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity draft="true">تاهيتي</exemplarCity>
 			</zone>
@@ -918,7 +895,6 @@
 			<zone type="Pacific/Gambier">
 				<exemplarCity draft="true">جامبير</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="true">أزورس</exemplarCity>
 			</zone>
@@ -928,7 +904,6 @@
 			<zone type="Europe/Lisbon">
 				<exemplarCity draft="true">ليسبون</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity draft="true">كالينجراد</exemplarCity>
 			</zone>
@@ -971,14 +946,12 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity draft="true">أندير</exemplarCity>
 			</zone>
-			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity draft="true">جان ماين</exemplarCity>
 			</zone>
 			<zone type="Arctic/Longyearbyen">
 				<exemplarCity draft="true">لونجيربن</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity draft="true">أوزجرود</exemplarCity>
 			</zone>
@@ -991,7 +964,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity draft="true">زابوروزي</exemplarCity>
 			</zone>
-			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity draft="true">ميدواي</exemplarCity>
 			</zone>
@@ -1001,7 +973,6 @@
 			<zone type="Pacific/Wake">
 				<exemplarCity draft="true">واك</exemplarCity>
 			</zone>
-			<!-- United States -->
 			<zone type="America/Adak">
 				<exemplarCity draft="true">أداك</exemplarCity>
 			</zone>
@@ -1068,7 +1039,6 @@
 			<zone type="America/New_York">
 				<exemplarCity draft="true">نيويورك</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity draft="true">سمرقند</exemplarCity>
 			</zone>
@@ -1098,11 +1068,6 @@
 				</currencyFormat>
 			</currencyFormatLength>
 		</currencyFormats>
-		<!-- Please note that the Arabic translated currency symbols include the Right to
-			 Left Marker <RLM> to position the dot properly on the boundary between
-			 Arabic
-			 and English XML tags.
-		-->
 		<currencies>
 			<currency type="AED">
 				<symbol>د.إ.‏</symbol>
@@ -1217,17 +1182,3 @@
 		</messages>
 	</posix>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/ar.txt?only_with_tag=final-update-LDML
-
-AE { "\u0627\u0644\u0625\u0645\u0627\u0631\u0627\u062A" }
-JO { "\u0627\u0644\u0623\u0631\u062F\u0646" }
-OM { "\u0633\u0644\u0637\u0646\u0629 \u0639\u0645\u0627\u0646" }
-SA { "\u0627\u0644\u0633\u0639\u0648\u062F\u064A\u0629" }
-SY { "\u0633\u0648\u0631\u064A\u0627" }
-TL { "\u062a\u064a\u0645\u0648\u0631 \u0627\u0644\u0634\u0631\u0642\u064a\u0629" }    // This was called East Timor
-Note to translator: Sometimes the hamza is optional for these translations.
-"[\u0621 \u0627-\u063A \u0641-\u064A\u0651 \u0653-\u0655 \u0670-\u06B7 \u06BA-\u06BE \u06C1 \u06C3-\u06CE \u06D0-\u06D2]"
-Civil is identical other than in calculations
--->
-

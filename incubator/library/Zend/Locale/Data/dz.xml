@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.3/ldml.dtd">
 <ldml>
-	<!-- Locale Data Format
-		 Draft: 2004-08-02
-		 By Pema geyleg <pema_geyleg@druknet.bt>
-	-->
 	<identity>
 		<version number="$Revision: 1.21 $"/>
 		<generation date="$Date: 2005/04/21 06:35:48 $"/>
@@ -303,16 +299,10 @@
 				</dateTimeFormats>
 			</calendar>
 		</calendars>
-		<!-- Bhutan also has own calendar similar to but not the same as
-			 Tibetan lunar calendar
-		-->
 		<timeZoneNames>
 			<zone type="Asia/Thimphu">
-				<!-- Bhutan does not use Daylight Saving Time -->
 				<long>
-					<!-- Bhutanese time is referred to as "BST" in Bhutan -->
 					<generic draft="true">Bhutan Standard Time</generic>
-					<!-- TODO: This data may be in the wrong script -->
 					<standard draft="true">Bhutan Standard Time</standard>
 					<daylight draft="true">Bhutan Standard Time</daylight>
 				</long>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE ldml SYSTEM "http://www.unicode.org/cldr/dtd/1.3/ldml.dtd">
 <ldml>
-	<!-- IDENTIFICATION of the locale -->
 	<identity>
 		<version number="$Revision: 1.7 $"/>
 		<generation date="$Date: 2005/05/26 17:22:30 $"/>
@@ -14,7 +13,6 @@
 			<language type="sh" draft="true">Srpski jezik</language>
 		</languages>
 	</localeDisplayNames>
-	<!-- CALENDAR INFORMATION.  Gregorian Only -->
 	<dates>
 		<calendars>
 			<calendar type="gregorian">
@@ -80,9 +78,7 @@
 			</zone>
 		</timeZoneNames>
 	</dates>
-	<!-- NUMERIC INFORMATION -->
 	<numbers>
-		<!-- MONETARY INFORMATION -->
 		<currencyFormats>
 			<currencyFormatLength>
 				<currencyFormat>
@@ -91,15 +87,10 @@
 			</currencyFormatLength>
 		</currencyFormats>
 		<currencies>
-			<!-- currency id as per ISO4217, three letter alphabetic code -->
 			<currency type="BAM">
 				<displayName draft="true">Konvertibilna Marka</displayName>
 				<symbol draft="true">KM.</symbol>
-				<!-- decimal draft="true">,</decimal
-					 group draft="true">.</group
-				-->
 			</currency>
 		</currencies>
 	</numbers>
 </ldml>
-

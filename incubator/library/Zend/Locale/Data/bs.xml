@@ -5,7 +5,6 @@
 		<version number="$Revision: 1.2 $"/>
 		<generation date="$Date: 2005/05/18 16:40:55 $"/>
 		<language type="bs"/>
-		<!-- <territory type="BA"/> -->
 	</identity>
 	<delimiters>
 		<quotationStart draft="true">‘</quotationStart>
@@ -88,7 +87,6 @@
 			<group draft="true">.</group>
 		</symbols>
 		<currencies>
-			<!-- <default type="BAM"/> -->
 			<currency type="BAM">
 				<displayName draft="true">Konvertibilna marka</displayName>
 				<symbol draft="true">KM</symbol>
@@ -96,4 +94,3 @@
 		</currencies>
 	</numbers>
 </ldml>
-

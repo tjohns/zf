@@ -738,7 +738,6 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HH:mm;-HH:mm</hourFormat>
-			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity draft="true">羅瑟拉</exemplarCity>
 			</zone>
@@ -763,7 +762,6 @@
 			<zone type="Antarctica/McMurdo">
 				<exemplarCity draft="true">麥克馬多</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity draft="true">加拉哥斯</exemplarCity>
 			</zone>
@@ -797,7 +795,6 @@
 			<zone type="America/Buenos_Aires">
 				<exemplarCity draft="true">布宜諾斯艾利斯</exemplarCity>
 			</zone>
-			<!-- Australia -->
 			<zone type="Australia/Perth">
 				<exemplarCity draft="true">伯斯</exemplarCity>
 			</zone>
@@ -825,7 +822,6 @@
 			<zone type="Australia/Lord_Howe">
 				<exemplarCity draft="true">羅豪島</exemplarCity>
 			</zone>
-			<!-- Brazil -->
 			<zone type="America/Eirunepe">
 				<exemplarCity draft="true">艾魯內佩</exemplarCity>
 			</zone>
@@ -871,7 +867,6 @@
 			<zone type="America/Noronha">
 				<exemplarCity draft="true">諾倫哈</exemplarCity>
 			</zone>
-			<!-- Canada -->
 			<zone type="America/Dawson">
 				<exemplarCity draft="true">道生河</exemplarCity>
 			</zone>
@@ -949,21 +944,18 @@
 				</long>
 				<exemplarCity>聖約翰</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity draft="true">金夏沙</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity draft="true">蘆佈巴西</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="true">復活島</exemplarCity>
 			</zone>
 			<zone type="America/Santiago">
 				<exemplarCity draft="true">聖地牙哥</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity draft="true">喀什米爾</exemplarCity>
 			</zone>
@@ -982,14 +974,12 @@
 			<zone type="Asia/Harbin">
 				<exemplarCity draft="true">哈爾濱</exemplarCity>
 			</zone>
-			<!-- Ecuador -->
 			<zone type="Pacific/Galapagos">
 				<exemplarCity draft="true">加拉巴哥群島</exemplarCity>
 			</zone>
 			<zone type="America/Guayaquil">
 				<exemplarCity draft="true">瓜亞基爾</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity draft="true">加納利</exemplarCity>
 			</zone>
@@ -999,7 +989,6 @@
 			<zone type="Europe/Madrid">
 				<exemplarCity draft="true">馬德里</exemplarCity>
 			</zone>
-			<!-- Micronesia -->
 			<zone type="Pacific/Yap">
 				<exemplarCity draft="true">雅浦島</exemplarCity>
 			</zone>
@@ -1015,14 +1004,12 @@
 					<daylight>中歐日光節約時間</daylight>
 				</long>
 			</zone>
-			<!-- United Kingdom -->
 			<zone type="Europe/Belfast">
 				<exemplarCity draft="true">貝爾費斯特</exemplarCity>
 			</zone>
 			<zone type="Europe/London">
 				<exemplarCity draft="true">倫敦</exemplarCity>
 			</zone>
-			<!-- Greenland -->
 			<zone type="America/Thule">
 				<exemplarCity draft="true">杜里</exemplarCity>
 			</zone>
@@ -1035,7 +1022,6 @@
 			<zone type="America/Danmarkshavn">
 				<exemplarCity draft="true">丹馬沙文</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity draft="true">雅加達</exemplarCity>
 			</zone>
@@ -1058,7 +1044,6 @@
 				</long>
 				<exemplarCity>東京</exemplarCity>
 			</zone>
-			<!-- Kiribati -->
 			<zone type="Pacific/Enderbury">
 				<exemplarCity draft="true">恩得伯理島</exemplarCity>
 			</zone>
@@ -1068,7 +1053,6 @@
 			<zone type="Pacific/Tarawa">
 				<exemplarCity draft="true">塔拉瓦</exemplarCity>
 			</zone>
-			<!-- Kazakhstan -->
 			<zone type="Asia/Aqtau">
 				<exemplarCity draft="true">艾克陶</exemplarCity>
 			</zone>
@@ -1091,14 +1075,12 @@
 				</long>
 				<exemplarCity>卡薩布蘭卡</exemplarCity>
 			</zone>
-			<!-- Marshall Islands -->
 			<zone type="Pacific/Kwajalein">
 				<exemplarCity draft="true">瓜加林島</exemplarCity>
 			</zone>
 			<zone type="Pacific/Majuro">
 				<exemplarCity draft="true">馬朱諾</exemplarCity>
 			</zone>
-			<!-- Mali -->
 			<zone type="Africa/Bamako">
 				<exemplarCity draft="true">巴馬科</exemplarCity>
 			</zone>
@@ -1111,7 +1093,6 @@
 			<zone type="Asia/Choibalsan">
 				<exemplarCity draft="true">卓巴爾塞</exemplarCity>
 			</zone>
-			<!-- Mexico -->
 			<zone type="America/Tijuana">
 				<exemplarCity draft="true">提華納</exemplarCity>
 			</zone>
@@ -1139,14 +1120,12 @@
 			<zone type="Asia/Kuching">
 				<exemplarCity draft="true">古晉</exemplarCity>
 			</zone>
-			<!-- New Zealand -->
 			<zone type="Pacific/Chatham">
 				<exemplarCity draft="true">查坦</exemplarCity>
 			</zone>
 			<zone type="Pacific/Auckland">
 				<exemplarCity draft="true">奧克蘭</exemplarCity>
 			</zone>
-			<!-- French Polynesia -->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity draft="true">大溪地</exemplarCity>
 			</zone>
@@ -1156,7 +1135,6 @@
 			<zone type="Pacific/Gambier">
 				<exemplarCity draft="true">岡必爾群島</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="true">亞速爾群島</exemplarCity>
 			</zone>
@@ -1169,7 +1147,6 @@
 					<daylight>東歐日光節約時間</daylight>
 				</long>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Kaliningrad">
 				<exemplarCity draft="true">加里寧格勒</exemplarCity>
 			</zone>
@@ -1206,14 +1183,12 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity draft="true">阿那底河</exemplarCity>
 			</zone>
-			<!-- Svalbard and Jan Mayen -->
 			<zone type="Atlantic/Jan_Mayen">
 				<exemplarCity draft="true">央麥恩島</exemplarCity>
 			</zone>
 			<zone type="Arctic/Longyearbyen">
 				<exemplarCity draft="true">隆意耳拜恩</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity draft="true">烏茲哥洛</exemplarCity>
 			</zone>
@@ -1226,7 +1201,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity draft="true">札波羅結</exemplarCity>
 			</zone>
-			<!-- United States Minor Outlying Islands -->
 			<zone type="Pacific/Midway">
 				<exemplarCity draft="true">中途島</exemplarCity>
 			</zone>
@@ -1236,7 +1210,6 @@
 			<zone type="Pacific/Wake">
 				<exemplarCity draft="true">威克</exemplarCity>
 			</zone>
-			<!-- United States -->
 			<zone type="America/Adak">
 				<exemplarCity draft="true">艾達克</exemplarCity>
 			</zone>
@@ -1329,7 +1302,6 @@
 				</long>
 				<exemplarCity>紐約</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity draft="true">撒馬爾罕</exemplarCity>
 			</zone>
@@ -2045,9 +2017,3 @@
 		</messages>
 	</posix>
 </ldml>
-<!-- Comments without bases
-
- Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
- Mongolia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"] 
--->
-

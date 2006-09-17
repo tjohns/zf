@@ -473,33 +473,21 @@
 			<language type="zun">zuñi</language>
 		</languages>
 		<scripts>
-			<!-- Only script codes that can be encoded with Unicode are included -->
 			<script type="Arab">arabiska</script>
 			<script type="Armn">armeniska</script>
-			<!-- script draft="true" type="Batk">batak</script -->
 			<script type="Beng">bengaliska</script>
-			<!-- script draft="true" type="Blis">blissymboler</script -->
 			<script type="Bopo">bopomofo</script>
-			<!-- script draft="true" type="Brah">brami</script -->
 			<script type="Brai">blindskrift</script>
 			<script type="Buhd">buhid</script>
 			<script type="Cans">kanadensiska stavelsetecken</script>
-			<!-- script draft="true" type="Cham">cham</script -->
 			<script type="Cher">cherokee</script>
-			<!-- script draft="true" type="Cirt">cirt</script -->
 			<script type="Copt">koptiska</script>
 			<script type="Cprt">cypriotiska</script>
 			<script type="Cyrl">kyrilliska</script>
-			<!-- script draft="true" type="Cyrs">kyrilliska (fornkyrkslavisk variant)</script -->
 			<script type="Deva">devanagari</script>
 			<script type="Dsrt">deseret</script>
-			<!-- script draft="true" type="Egyd">demotiska</script
-				 script draft="true" type="Egyh">hieratiska</script
-				 script draft="true" type="Egyp">egyptiska hieroglyfer</script
-			-->
 			<script type="Ethi">etiopiska</script>
 			<script type="Geor">georgiska</script>
-			<!-- script draft="true" type="Glag">glaglitiska</script -->
 			<script type="Goth">gotiska</script>
 			<script type="Grek">grekiska</script>
 			<script type="Gujr">gujarati</script>
@@ -511,80 +499,37 @@
 			<script type="Hant">traditionell han</script>
 			<script type="Hebr">hebreiska</script>
 			<script type="Hira">hiragana</script>
-			<!-- script draft="true" type="Hmng">pahaw mong</script -->
 			<script type="Hrkt">katakana/hiragana</script>
-			<!-- script draft="true" type="Hung">fornungerska</script
-				 script draft="true" type="Inds">indus</script
-			-->
 			<script type="Ital">fornitaliska</script>
-			<!-- script draft="true" type="Java">javanesiska</script
-				 script draft="true" type="Kali">kaya li</script
-			-->
 			<script type="Kana">katakana</script>
-			<!-- script draft="true" type="Khar">karochti</script -->
 			<script type="Khmr">khmeriskt</script>
 			<script type="Knda">kanaresiska</script>
 			<script type="Laoo">laotiska</script>
-			<!-- script draft="true" type="Latf">latinska (fraktur)</script
-				 script draft="true" type="Latg">latinska (gaeliska)</script
-			-->
 			<script type="Latn">latinskt</script>
-			<!-- script draft="true" type="Lepc">lephca</script -->
 			<script type="Limb">limbu</script>
-			<!-- script draft="true" type="Lina">linjär A</script -->
 			<script type="Linb">linear B</script>
-			<!-- script draft="true" type="Mand">mandaéiska</script
-				 script draft="true" type="Maya">mayahieroglyfer</script
-				 script draft="true" type="Mero">meriotiska</script
-			-->
 			<script type="Mlym">malayalam</script>
 			<script type="Mong">mongoliska</script>
 			<script type="Mymr">burmesiska</script>
 			<script type="Ogam">ogham</script>
-			<!-- script draft="true" type="Orkh">orkon</script -->
 			<script type="Orya">oriya</script>
 			<script type="Osma">osmanskt</script>
-			<!-- script draft="true" type="Perm">pollard</script
-				 script draft="true" type="Phag">enskilt bruk (början)</script
-				 script draft="true" type="Phnx">ärvd</script
-				 script draft="true" type="Plrd">enskilt bruk (slut)</script
-			-->
 			<script type="Qaai">ärvd</script>
-			<!-- script draft="true" type="Roro">rongorongo</script -->
 			<script type="Runr">runor</script>
-			<!-- script draft="true" type="Sara">sarati</script -->
 			<script type="Shaw">shawiska</script>
 			<script type="Sinh">singalesiska</script>
-			<!-- script draft="true" type="Sylo">syloti nagri</script -->
 			<script type="Syrc">syriska</script>
-			<!-- script draft="true" type="Syre">syriska (estrangelo)</script
-				 script draft="true" type="Syrj">syriska (väst)</script
-				 script draft="true" type="Syrn">syriska (öst)</script
-			-->
 			<script type="Tagb">tagbanwa</script>
 			<script type="Tale">tai le</script>
-			<!-- script draft="true" type="Talu">tai lue</script -->
 			<script type="Taml">tamilskt</script>
 			<script type="Telu">telugu</script>
-			<!-- script draft="true" type="Teng">tengwar</script
-				 script draft="true" type="Tfng">berbiska</script
-			-->
 			<script type="Tglg">tagalog</script>
 			<script type="Thaa">taana</script>
 			<script type="Thai">thailändska</script>
 			<script type="Tibt">tibetanska</script>
 			<script type="Ugar">ugaritiska</script>
-			<!-- script draft="true" type="Vaii">vaj</script
-				 script draft="true" type="Visp">synligt tal</script
-				 script draft="true" type="Xpeo">fornpersiska</script
-				 script draft="true" type="Xsux">sumeo-akkadiska</script
-			-->
 			<script type="Yiii">yi</script>
-			<!-- script draft="true" type="Zxxx">oskrivna språk</script -->
 			<script type="Zyyy">vanligt</script>
-			<!-- script draft="true" type="Zyyy">obestämt skript</script
-				 script draft="true" type="Zzzz">okodat skript</script
-			-->
 		</scripts>
 		<territories>
 			<territory type="001" draft="true">Världen</territory>
@@ -655,10 +600,8 @@
 			<territory type="CA">Kanada</territory>
 			<territory type="CC">Kokosöarna (Keelingöarna)</territory>
 			<territory type="CD">Demokratiska republiken Kongo</territory>
-			<!-- Rarely used colloquial name -->
 			<territory type="CF">Centralafrikanska republiken</territory>
 			<territory type="CG">Kongo</territory>
-			<!-- Rarely used colloquial name due to the CD name conflict -->
 			<territory type="CH">Schweiz</territory>
 			<territory type="CI">Elfenbenskusten</territory>
 			<territory type="CK">Cooköarna</territory>
@@ -1048,7 +991,6 @@
 			<zone type="Antarctica/DumontDUrville">
 				<exemplarCity>Dumont d'Urville</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Argentina/Rio_Gallegos">
 				<exemplarCity draft="true"> Rio Gallegos</exemplarCity>
 			</zone>
@@ -1079,7 +1021,6 @@
 				</short>
 				<exemplarCity>St. Johns</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity>Påskön</exemplarCity>
 			</zone>
@@ -1093,7 +1034,6 @@
 					<daylight>CDT</daylight>
 				</short>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity>Kanarieöarna</exemplarCity>
 			</zone>
@@ -1153,7 +1093,6 @@
 			<zone type="Asia/Choibalsan">
 				<exemplarCity>Tjoibalsan</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity>Azorerna</exemplarCity>
 			</zone>
@@ -1192,7 +1131,6 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity>Anadir</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Uzjgorod</exemplarCity>
 			</zone>
@@ -2115,72 +2053,3 @@
 		<reference type="R5">Länder och valutor</reference>
 	</references>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/sv.txt?only_with_tag=final-update-LDML
-
-        KP {"Nordkorea"}    // alternate name { "Demokratiska folkrepubliken Korea" }
-        KR {"Sydkorea"}    // alternate name { "Republiken Korea" }
-AX? \u00C5L         {"\u00C5land"}
-
-Comments without bases
-
- Marshall Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Kwajalein"]
- Mali 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
- Russia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kaliningrad"]
- Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
- Canada 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
- Micronesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Yap"]
- United States Minor Outlying Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Midway"]
- Mexico 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
- Kiribati 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
- Ecuador 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Galapagos"]
- Indonesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Jakarta"]
- United States 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
- Kazakhstan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
- Antarctica 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
- Brazil 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
- Argentina 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Argentina/Rio_Gallegos"]
- Democratic Republic of the Congo 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
- United Kingdom 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
- French Polynesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Tahiti"]
- New Zealand 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Chatham"]
- Greenland 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
- Mongolia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
- Uzbekistan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Samarkand"]
- Svalbard and Jan Mayen 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Jan_Mayen"]
- Australia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
- China 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kashgar"]
-
-Comments without bases
-
- Marshall Islands	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Kwajalein"]
- Mali	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
- Spain	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Ceuta"]
- Russia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kaliningrad"]
- Chile	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Santiago"]
- Malaysia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
- Ukraine	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kiev"]
- Canada	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
- Micronesia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Yap"]
- Mexico	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
- United States Minor Outlying Islands	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Midway"]
- Kiribati	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
- Ecuador	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Galapagos"]
- Indonesia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Jakarta"]
- United States	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
- Kazakhstan	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
- Portugal	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Madeira"]
- Brazil	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
- Antarctica	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
- Democratic Republic of the Congo	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Kinshasa"]
- United Kingdom	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
- French Polynesia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Tahiti"]
- New Zealand	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Chatham"]
- Mongolia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Hovd"]
- Greenland	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
- Svalbard and Jan Mayen	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Jan_Mayen"]
- Uzbekistan	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Samarkand"]
- Australia	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
- China	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kashgar"]
--->
-

@@ -547,7 +547,6 @@
 			</calendar>
 		</calendars>
 		<timeZoneNames>
-			<!-- Antarctica -->
 			<zone type="Antarctica/Rothera">
 				<exemplarCity draft="true">Stacja Naukowa Rothera</exemplarCity>
 			</zone>
@@ -575,36 +574,25 @@
 			<zone type="America/Argentina/ComodRivadavia">
 				<exemplarCity draft="true">Comodoro Rivadavia</exemplarCity>
 			</zone>
-			<!-- Argentina
-				 Australia
-			-->
 			<zone type="Australia/Lord_Howe">
 				<exemplarCity draft="true">Wyspa Lord Howe</exemplarCity>
 			</zone>
 			<zone type="America/St_Johns">
 				<exemplarCity draft="true">St. John's</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity draft="true">Kinszasa</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity draft="true">Lubumbaszi</exemplarCity>
 			</zone>
-			<!-- Chile -->
 			<zone type="Pacific/Easter">
 				<exemplarCity draft="true">Wschodni</exemplarCity>
 				<exemplarCity alt="proposed" draft="true">Wyspy Wielkanocne</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Kashgar">
 				<exemplarCity draft="true">Kaszgar</exemplarCity>
 			</zone>
-			<!-- Brazil
-				 Canada
-				 Chile
-				 China
-			-->
 			<zone type="Asia/Urumqi">
 				<exemplarCity draft="true">Urumczi</exemplarCity>
 			</zone>
@@ -614,7 +602,6 @@
 			<zone type="Asia/Shanghai">
 				<exemplarCity draft="true">Szanghaj</exemplarCity>
 			</zone>
-			<!-- Spain -->
 			<zone type="Atlantic/Canary">
 				<exemplarCity draft="true">Wyspy Kanaryjskie</exemplarCity>
 			</zone>
@@ -624,19 +611,9 @@
 			<zone type="Europe/London">
 				<exemplarCity draft="true">Londyn</exemplarCity>
 			</zone>
-			<!-- Indonesia -->
 			<zone type="Asia/Jakarta">
 				<exemplarCity draft="true">Dżakarta</exemplarCity>
 			</zone>
-			<!-- Ecuador
-				 Spain
-				 Micronesia
-				 United Kingdom
-				 Greenland
-				 Indonesia
-				 Kiribati
-				 Kazakhstan
-			-->
 			<zone type="Asia/Aqtau">
 				<exemplarCity draft="true">Aktau</exemplarCity>
 			</zone>
@@ -652,36 +629,21 @@
 			<zone type="Asia/Almaty">
 				<exemplarCity draft="true">Ałma Ata</exemplarCity>
 			</zone>
-			<!-- Mongolia -->
 			<zone type="Asia/Hovd">
 				<exemplarCity draft="true">Howd</exemplarCity>
 			</zone>
 			<zone type="Asia/Ulaanbaatar">
 				<exemplarCity draft="true">Ułan Bator</exemplarCity>
 			</zone>
-			<!-- Marshall Islands
-				 Mali
-				 Mongolia
-			-->
 			<zone type="Asia/Choibalsan">
 				<exemplarCity draft="true">Czojbalsan</exemplarCity>
 			</zone>
-			<!-- Mexico -->
 			<zone type="America/Mexico_City">
 				<exemplarCity draft="true">Meksyk</exemplarCity>
-				<!-- Malaysia
-					 New Zealand
-					 French Polynesia
-					 Russia
-					 Svalbard and Jan Mayen
-					 United States Minor Outlying Islands
-					 United States
-				-->
 			</zone>
 			<zone type="Asia/Kuching">
 				<exemplarCity draft="true">Kuczing</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="true">Azory</exemplarCity>
 			</zone>
@@ -718,7 +680,6 @@
 			<zone type="Asia/Kamchatka">
 				<exemplarCity draft="true">Kamczatka</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity draft="true">Użgorod</exemplarCity>
 			</zone>
@@ -734,7 +695,6 @@
 			<zone type="America/New_York">
 				<exemplarCity draft="true">Nowy Jork</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Samarkand">
 				<exemplarCity draft="true">Samarkanda</exemplarCity>
 			</zone>
@@ -1567,41 +1527,3 @@
 		</messages>
 	</posix>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/pl.txt?only_with_tag=final-update-LDML
-
-        FK { "Falklandy (Malwiny)" }    // alternate name { "Falklandy" }
-        KP { "Korea P\u00F3\u0142nocna" }    // alternate name { "Korea, Demokratyczna Republika Ludowa" }
-        KR { "Korea Po\u0142udniowa" }    // alternate name { "Korea, Republika" }
-        LY { "Libijska" }    // alternate name { "Libijska Arabska Jamahiria" }
-SY { "Syria" }    // alternate name { "Syryjska Republika Arabska" }
-zh_cn { "chi\u0144ski (uproszczony)" }
-zh_tw { "chi\u0144ski (tradycyjny)" }
-        "Latn",  // ISO 15924 Name 
-Currency display names
-
-Comments without bases
-
- Kiribati 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Enderbury"]
- Marshall Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Kwajalein"]
- Mali 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Africa/Bamako"]
- Ecuador 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Galapagos"]
- Russia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Kaliningrad"]
- United States 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Adak"]
- Kazakhstan 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Aqtau"]
- Brazil 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Eirunepe"]
- Antarctica 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Antarctica/Rothera"]
- Malaysia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Asia/Kuala_Lumpur"]
- Canada 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Dawson"]
- Micronesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Yap"]
- Argentina 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Argentina/Rio_Gallegos"]
- United States Minor Outlying Islands 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Midway"]
- Mexico 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Tijuana"]
- United Kingdom 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Europe/Belfast"]
- French Polynesia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Tahiti"]
- New Zealand 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Pacific/Chatham"]
- Greenland 	 - was on: /ldml/dates/timeZoneNames/zone[@type="America/Thule"]
- Svalbard and Jan Mayen 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Atlantic/Jan_Mayen"]
- Australia 	 - was on: /ldml/dates/timeZoneNames/zone[@type="Australia/Perth"]
--->
-

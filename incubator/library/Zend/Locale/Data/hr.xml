@@ -540,22 +540,18 @@
 		</calendars>
 		<timeZoneNames>
 			<hourFormat>+HHmm;-HHmm</hourFormat>
-			<!-- Antarctica -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity>Južni pol</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo -->
 			<zone type="Africa/Kinshasa">
 				<exemplarCity>Kinšasa</exemplarCity>
 			</zone>
 			<zone type="Africa/Lubumbashi">
 				<exemplarCity>Lubumbaši</exemplarCity>
 			</zone>
-			<!-- China -->
 			<zone type="Asia/Shanghai">
 				<exemplarCity>Šangaj</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity>Moskva</exemplarCity>
 			</zone>
@@ -568,7 +564,6 @@
 			<zone type="Asia/Anadyr">
 				<exemplarCity>Anadir</exemplarCity>
 			</zone>
-			<!-- Ukraine -->
 			<zone type="Europe/Uzhgorod">
 				<exemplarCity>Uzgorod</exemplarCity>
 			</zone>
@@ -578,7 +573,6 @@
 			<zone type="Europe/Zaporozhye">
 				<exemplarCity>Zaporožje</exemplarCity>
 			</zone>
-			<!-- Uzbekistan -->
 			<zone type="Asia/Tashkent">
 				<exemplarCity>Taškent</exemplarCity>
 			</zone>
@@ -1209,16 +1203,3 @@
 		</messages>
 	</posix>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/hr.txt?only_with_tag=final-update-LDML
-
-        KP { "Koreja, Sjeverna" } // alternate name { "Koreja, Demokratska Narodna Republika" }
-        KR { "Koreja, Ju\u017Ena" } // alternate name { "Koreja, Republika" }
-        SY { "Sirija" } // alternate name { "Sirijska Arapska Republika" }
-zh_cn { "kineski (pojednostavljeni)" }
-zh_tw { "kineski (tradicionalni)" }
-        "Latn"  // ISO 15924 Name 
-Currency display names
-                1, // "Minimal Days in First Week" is unknown. Root value used instead
--->
-

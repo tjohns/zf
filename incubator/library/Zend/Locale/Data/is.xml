@@ -882,80 +882,44 @@
 			</calendar>
 		</calendars>
 		<timeZoneNames>
-			<!-- Antarctica -->
 			<zone type="Antarctica/South_Pole">
 				<exemplarCity draft="true">Suðurpóll</exemplarCity>
 			</zone>
-			<!-- Argentina -->
 			<zone type="America/Buenos_Aires">
 				<exemplarCity draft="true">Búenos Aíres</exemplarCity>
 			</zone>
-			<!-- Australia
-				 Brazil
-				 Canada
-			-->
 			<zone type="America/Regina">
 				<exemplarCity draft="true">Regína</exemplarCity>
 			</zone>
-			<!-- Democratic Republic of the Congo
-				 Chile
-			-->
 			<zone type="America/Santiago">
 				<exemplarCity draft="true">Santíagó</exemplarCity>
 			</zone>
-			<!-- China
-				 Ecuador
-				 Spain
-			-->
 			<zone type="Atlantic/Canary">
 				<exemplarCity draft="true">Kanarí</exemplarCity>
 			</zone>
 			<zone type="Europe/Madrid">
 				<exemplarCity draft="true">Madríd</exemplarCity>
 			</zone>
-			<!-- Micronesia
-				 United Kingdom
-				 Greenland
-				 Indonesia
-				 Kiribati
-				 Kazakhstan
-				 Marshall Islands
-				 Mali
-				 Mongolia
-				 Mexico
-			-->
 			<zone type="America/Mexico_City">
 				<exemplarCity draft="true">Mexíkóborg</exemplarCity>
 			</zone>
 			<zone type="America/Cancun">
 				<exemplarCity draft="true">Kankún</exemplarCity>
 			</zone>
-			<!-- Malaysia -->
 			<zone type="Asia/Kuala_Lumpur">
 				<exemplarCity draft="true">Kúala Lúmpúr</exemplarCity>
 			</zone>
-			<!-- New Zealand
-				 French Polynesia
-			-->
 			<zone type="Pacific/Tahiti">
 				<exemplarCity draft="true">Tahítí</exemplarCity>
 			</zone>
-			<!-- Portugal -->
 			<zone type="Atlantic/Azores">
 				<exemplarCity draft="true">Asoreyjar</exemplarCity>
 			</zone>
 			<zone type="Europe/Lisbon">
 				<exemplarCity draft="true">Lissabon</exemplarCity>
 			</zone>
-			<!-- Russia -->
 			<zone type="Europe/Moscow">
 				<exemplarCity draft="true">Moskva</exemplarCity>
-				<!-- Svalbard and Jan Mayen
-					 Ukraine
-					 United States Minor Outlying Islands
-					 United States
-					 Uzbekistan
-				-->
 			</zone>
 		</timeZoneNames>
 	</dates>
@@ -1533,11 +1497,3 @@
 		</messages>
 	</posix>
 </ldml>
-<!-- Old Comments. See root.xml for more info.
-URL: http://oss.software.ibm.com/cvs/icu/icu/source/data/locales/is.txt?only_with_tag=final-update-LDML
-
-CS { "Serb\u00eda og Svartfjallaland" } // TODO: if we allow this, then SP must go away
-MM { "B\u00farma" } // Burma? Should be Myanmar?
-        "Latn",  // ISO 15924 Name
--->
-

@@ -24,7 +24,7 @@
             <info iso4217="KRW" digits="0" rounding="0"/>
             <info iso4217="KWD" digits="3" rounding="0"/>
             <info iso4217="LYD" digits="3" rounding="0"/>
-            <info iso4217="MGA" digits="0" rounding="0"/><!-- Is this right? -->
+            <info iso4217="MGA" digits="0" rounding="0"/>
             <info iso4217="MGF" digits="0" rounding="0"/>
             <info iso4217="OMR" digits="3" rounding="0"/>
             <info iso4217="PYG" digits="0" rounding="0"/>
@@ -36,40 +36,6 @@
             <info iso4217="XOF" digits="0" rounding="0"/>
             <info iso4217="XPF" digits="0" rounding="0"/>
         </fractions>
-<!--
-Note: When reading these dates, you should read them as inclusive date ranges.
-The date ranges are like date ranges that you see on tomb stones,
-but some dates are approximate. Some date ranges overlap due to
-revolts, invasions, new constitutions, and slow planned adoption of new currency.
-The length of time for these change overs vary widely. 
-Sometimes, hyperinflation will cause more than one currency to be in effect
-in one year. Dates without a "to" attribute mean that the currency is still
-in use.
-
-Dates try to use ISO-8601 style dates, and be accurate as possible.
-They are usually in one of the following formats.
-yyyy-MM-dd
-yyyy-MM
-yyyy
-
-It is also worth noting this as a part of the history of ISO-4217. This
-should be kept in mind in case anyone is claiming that an ISO code existed
-before 1978 (source: www.unece.org):
-... the International Organization for Standardization (ISO) decided in 1973 to
-develop a code for the representation of currencies and funds for use in any
-application of trade, commerce or banking. ... At its seventeenth session
-(February 1978) the Group of Experts agreed that the three-letter alphabetic
-codes for International Standard ISO 4217, "Codes for the representation of
-currencies and funds", would be suitable for use in international trade.
-
-Most of this list was derived from the following sources: 
-http://www.iso.org/iso/en/prods-services/popstds/currencycodeslist.html
-http://www.globalfindata.com/gh/index.html
-http://europa.eu.int/comm/translation/currencies/entable1.htm
-http://europa.eu.int/comm/budget/inforeuro/index.cfm?fuseaction=countries&Language=en
-http://www.unece.org/cefact/recommendations/rec09/rec09_ecetrd203.pdf
-The printed version of ISO-4217:2001
--->
         <region iso3166="830">
             <currency iso4217="GBP" from="1694-07-27"/>
         </region>
@@ -80,8 +46,7 @@ The printed version of ISO-4217:2001
             <currency iso4217="EUR" from="1999-01-01"/>
             <currency iso4217="ESP" from="1873" to="2002-02-28"/>
             <currency iso4217="FRF" from="1960-01-01" to="2002-02-17"/>
-            <currency iso4217="ADP" from="1936" to="2001-12-31"/><!-- End date from europa.eu.int. -->
-            <!-- currency iso4217="ADD" from="1873" to="2002-02-28"/ --><!-- Not listed in the 2001 list -->
+            <currency iso4217="ADP" from="1936" to="2001-12-31"/>
         </region>
         <region iso3166="AE">
             <currency iso4217="AED" from="1973-05-19"/>
@@ -89,8 +54,6 @@ The printed version of ISO-4217:2001
         <region iso3166="AF">
             <currency iso4217="AFN" from="2002-10-07"/>
             <currency iso4217="AFA" from="1927-03-14" to="2002-12-31"/>
-            <!-- Other currencies sort of existed under different Afghan governments before 2003,
-                 but they weren't registered with ISO-4217. -->
         </region>
         <region iso3166="AG">
             <currency iso4217="XCD" from="1965-10-06"/>
@@ -117,7 +80,6 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="AQ">
 	<currency iso4217="XXX"/>
-            <!-- This is Antarctica. It has no currency -->
         </region>
         <region iso3166="AR">
             <currency iso4217="ARS" from="1992-01-01"/>
@@ -138,7 +100,7 @@ The printed version of ISO-4217:2001
             <currency iso4217="AWG" from="1986-01-01"/>
             <currency iso4217="ANG" from="1940-05-10" to="1986-01-01"/>
         </region>
-        <region iso3166="AX"><!-- An autonomous and demilitarized province/islands of Finland -->
+        <region iso3166="AX">
             <currency iso4217="EUR" from="1999-01-01"/>
         </region>
         <region iso3166="AZ">
@@ -148,9 +110,7 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="BA">
             <currency iso4217="BAM" from="1995-01-01"/>
-            <!-- currency iso4217="BAN" from="1994-08-15" to="1997-07"/ --><!-- Not listed in the 2001 list -->
             <currency iso4217="BAD" from="1992-07-01" to="1997-07"/>
-            <!-- currency iso4217="YUR" from="1992-07-01" to="1993-10-01"/ --><!-- Not listed in the 2001 list -->
             <currency iso4217="YUN" from="1990-01-01" to="1992-07-01"/>
             <currency iso4217="YUD" from="1966-01-01" to="1990-01-01"/>
         </region>
@@ -194,7 +154,6 @@ The printed version of ISO-4217:2001
         <region iso3166="BO">
             <currency iso4217="BOB" from="1987-01-01"/>
             <currency iso4217="BOP" from="1963-01-01" to="1986-12-31"/>
-            <!-- currency iso4217="BOL" from="1863-06-23" to="1962-12-31"/ --><!-- Not listed in the 2001 list -->
         </region>
         <region iso3166="BR">
             <currency iso4217="BRL" from="1994-07-01"/>
@@ -202,7 +161,6 @@ The printed version of ISO-4217:2001
             <currency iso4217="BRE" from="1990-03-16" to="1993-08-01"/>
             <currency iso4217="BRN" from="1989-01-15" to="1990-03-16"/>
             <currency iso4217="BRC" from="1986-02-28" to="1989-01-15"/>
-            <!-- currency iso4217="BRZ" from="1942-11-01" to="1987-02-13"/ --><!-- Not listed in the 2001 list -->
             <currency iso4217="BRB" from="1967-02-13" to="1986-02-28"/>
         </region>
         <region iso3166="BS">
@@ -212,7 +170,7 @@ The printed version of ISO-4217:2001
             <currency iso4217="INR" from="1907"/>
             <currency iso4217="BTN" from="1974-04-16"/>
         </region>
-        <region iso3166="BV"><!-- uninhabited territory of Norway -->
+        <region iso3166="BV">
             <currency iso4217="NOK" from="1905-06-07"/>
         </region>
         <region iso3166="BW">
@@ -221,9 +179,8 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="BY">
             <currency iso4217="BYR" from="2000-01-01"/>
-            <currency iso4217="BYB" from="1994-08" to="2000-12-31"/><!-- This was a valid currency according to eu.int -->
+            <currency iso4217="BYB" from="1994-08" to="2000-12-31"/>
             <currency iso4217="RUR" from="1991-12-25" to="1994-11-08"/>
-            <!-- currency iso4217="BYL" from="1992-09-25" to="1994-08"/--><!-- Validity is unknown -->
             <currency iso4217="SUR" from="1961-01-01" to="1991-12-25"/>
         </region>
         <region iso3166="BZ">
@@ -237,13 +194,11 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="CD">
             <currency iso4217="CDF" from="1998-07"/>
-            <!-- Zaire (ZR) was renamed to Democratic Republic of Congo (CD) -->
             <currency iso4217="ZRN" from="1993-11-01" to="1998-07"/>
             <currency iso4217="ZRZ" from="1971-10-27" to="1993-11-01"/>
         </region>
         <region iso3166="CF">
             <currency iso4217="XAF" from="1993-01-01"/>
-            <!-- currency iso4217="CFF" from="1973-04-01" to="1992-12-31"/ --><!-- Validity is unknown -->
         </region>
         <region iso3166="CG">
             <currency iso4217="XAF" from="1993"/>
@@ -273,14 +228,12 @@ The printed version of ISO-4217:2001
             <currency iso4217="CRC" from="1896-10-26"/>
         </region>
         <region iso3166="CS">
-            <currency iso4217="EUR" from="2003-02-04"/><!-- Montenegro -->
-            <currency iso4217="CSD" from="2002-05-15"/><!-- Serbia -->
-            <currency iso4217="YUM" from="1994-01-24" to="2002-05-15"/><!-- Yugoslavian history. YU was renamed to CS. -->
-            <!-- currency iso4217="CSK" from="1953-06-01" to="1993-03"/ --><!-- Czechoslovakia (totally separate region with conflicting ISO code) -->
+            <currency iso4217="EUR" from="2003-02-04"/>
+            <currency iso4217="CSD" from="2002-05-15"/>
+            <currency iso4217="YUM" from="1994-01-24" to="2002-05-15"/>
         </region>
         <region iso3166="CU">
             <currency iso4217="CUP" from="1859-01-01"/>
-            <!-- currency iso4217="USD" from="1994"/ --><!-- Unofficially used -->
             <currency iso4217="USD" from="1899" to="1959"/>
         </region>
         <region iso3166="CV">
@@ -292,17 +245,11 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="CY">
             <currency iso4217="CYP" from="1914-09-10"/>
-            <!-- currency iso4217="TRL" from="1975-02-13"/ --><!-- Only part of Northern Cyprus -->
         </region>
         <region iso3166="CZ">
             <currency iso4217="CZK" from="1993-01-01"/>
-            <!-- CS was renamed to CZ -->
             <currency iso4217="CSK" from="1953-06-01" to="1993-03"/>
         </region>
-        <!-- East Germany merged with West Germany, and no longer exists as "DD". DDM was an ISO-4217 code. -->
-        <!-- region iso3166="DD">
-            <currency iso4217="DDM" from="1948-07-20" to="1990-10-02"/>
-        </region -->
         <region iso3166="DE">
             <currency iso4217="EUR" from="1999-01-01"/>
             <currency iso4217="DEM" from="1948-06-20" to="2002-02-28"/>
@@ -363,7 +310,6 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="FO">
             <currency iso4217="DKK" from="1873-5-27"/>
-            <!-- currency iso4217="FOK" from="1940"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="FR">
             <currency iso4217="EUR" from="1999-01-01"/>
@@ -387,14 +333,12 @@ The printed version of ISO-4217:2001
         <region iso3166="GF">
             <currency iso4217="EUR" from="1999-01-01"/>
             <currency iso4217="FRF" from="1960-01-01" to="2002-02-17"/>
-            <!-- currency iso4217="XNF" from="1960-01-01" to="1975-03-31"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="GH">
             <currency iso4217="GHC" from="1979-03-09"/>
         </region>
         <region iso3166="GI">
             <currency iso4217="GIP" from="1713"/>
-            <!-- currency iso4217="GBP" from="1713"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="GL">
             <currency iso4217="DKK" from="1873-05-27"/>
@@ -412,19 +356,17 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="GQ">
             <currency iso4217="XAF" from="1993-01-01"/>
-            <!-- currency iso4217="EQE" to="1989-12"/ --><!-- Deprecated code in ISO-4217:2001. Start date is unknown. -->
             <currency iso4217="GQE" from="1975-07-07" to="1986-06"/>
         </region>
         <region iso3166="GR">
             <currency iso4217="EUR" from="2001-01-01"/>
             <currency iso4217="GRD" from="1954-05-01" to="2002-02-28"/>
         </region>
-        <region iso3166="GS"><!-- UK overseas territory. No indigenous population -->
+        <region iso3166="GS">
             <currency iso4217="GBP" from="1908"/>
         </region>
         <region iso3166="GT">
             <currency iso4217="GTQ" from="1925-05-27"/>
-            <!-- currency iso4217="USD" from="2001-05-01"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="GU">
             <currency iso4217="USD" from="1944-08-21"/>
@@ -439,7 +381,7 @@ The printed version of ISO-4217:2001
         <region iso3166="HK">
             <currency iso4217="HKD" from="1895-02-02"/>
         </region>
-        <region iso3166="HM"><!-- Uninhabited territory of Australia -->
+        <region iso3166="HM">
             <currency iso4217="AUD" from="1967-02-16"/>
         </region>
         <region iso3166="HN">
@@ -453,7 +395,7 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="HT">
             <currency iso4217="HTG" from="1872-08-26"/>
-            <currency iso4217="USD" from="1915"/><!-- From date is uncertain, but it is listed in the 2001 and 2004 lists. -->
+            <currency iso4217="USD" from="1915"/>
         </region>
         <region iso3166="HU">
             <currency iso4217="HUF" from="1946-07-23"/>
@@ -473,7 +415,7 @@ The printed version of ISO-4217:2001
         <region iso3166="IN">
             <currency iso4217="INR" from="1835-08-17"/>
         </region>
-        <region iso3166="IO"><!-- UK/US overseas territories. No indigenous population -->
+        <region iso3166="IO">
             <currency iso4217="USD" from="1965-11-08"/>
             <currency iso4217="GBP" from="1965-11-08"/>
         </region>
@@ -512,11 +454,9 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="KH">
             <currency iso4217="KHR" from="1980-03-20"/>
-            <!-- 1975-05 to 1978-01 was a moneyless economy -->
         </region>
         <region iso3166="KI">
             <currency iso4217="AUD" from="1966-02-14"/>
-            <!-- currency iso4217="KID" from="1979-07-12"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="KM">
             <currency iso4217="KMF" from="1975-07-06"/>
@@ -539,9 +479,6 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="KZ">
             <currency iso4217="KZT" from="1993-11-05"/>
-            <!-- currency iso4217="KZR" from="1993-08" to="1993-11-05"/ --><!-- Not listed in the 2001 list -->
-            <!-- currency iso4217="RUR" from="1991-12-25" to="1993-08"/ -->
-            <!-- currency iso4217="SUR" from="1961-01-01" to="1991-12-25"/ -->
         </region>
         <region iso3166="LA">
             <currency iso4217="LAK" from="1979-12-10"/>
@@ -588,13 +525,9 @@ The printed version of ISO-4217:2001
         <region iso3166="MC">
             <currency iso4217="EUR" from="1999-01-01"/>
             <currency iso4217="FRF" from="1960-01-01" to="2002-02-17"/>
-            <!-- currency iso4217="MCF" from="1960-01-01" to="2002-02-17"/ --><!-- Not listed in the 2001 list -->
         </region>
         <region iso3166="MD">
             <currency iso4217="MDL" from="1993-11-29"/>
-            <!-- currency iso4217="MDC" from="1992-06" to="1993-11-29"/ --><!-- Not listed in the 2001 list -->
-            <!-- currency iso4217="MDR" from="1991-05-23" to="1992-06"/ --><!-- Not listed in the 2001 list -->
-            <!-- currency iso4217="SUR" from="1961-01-01" to="1991-05-23"/ -->
         </region>
         <region iso3166="MG">
             <currency iso4217="MGA" from="1983-11-01"/>
@@ -602,13 +535,9 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="MH">
             <currency iso4217="USD" from="1944"/>
-            <!-- currency iso4217="MHD" from="1979-05-01"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="MK">
             <currency iso4217="MKD" from="1993-05-20"/>
-            <!-- currency iso4217="MKN" from="1992-04-26" to="1993-05-20"/ --><!-- Not listed in the 2001 list -->
-            <!-- currency iso4217="YUN" from="1990" to="1992-07"/ -->
-            <!-- currency iso4217="YUD" from="1966-01-01" to="1990"/ -->
         </region>
         <region iso3166="ML">
             <currency iso4217="XOF" from="1984-06-01"/>
@@ -617,7 +546,6 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="MM">
             <currency iso4217="MMK" from="1989-06-18"/>
-            <!-- currency iso4217="MMX" from="1993"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="MN">
             <currency iso4217="MNT" from="1915-03"/>
@@ -683,7 +611,6 @@ The printed version of ISO-4217:2001
         <region iso3166="NL">
             <currency iso4217="EUR" from="1999-1-1"/>
             <currency iso4217="NLG" from="1813" to="2002-02-28"/>
-            <!-- FRG was used from 1810 to 1813 -->
         </region>
         <region iso3166="NO">
             <currency iso4217="NOK" from="1905-06-07"/>
@@ -801,7 +728,6 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="SH">
             <currency iso4217="SHP" from="1917-02-15"/>
-            <!-- currency iso4217="GBP" from="1917-02-15"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="SI">
             <currency iso4217="SIT" from="1992-10-07"/>
@@ -820,14 +746,12 @@ The printed version of ISO-4217:2001
         <region iso3166="SM">
             <currency iso4217="EUR" from="1999-01-01"/>
             <currency iso4217="ITL" from="1865-12-23" to="2001-02-28"/>
-            <!-- currency iso4217="SML" from="1865-12-23" to="2001-02-28"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="SN">
             <currency iso4217="XOF" from="1959-04-04"/>
         </region>
         <region iso3166="SO">
             <currency iso4217="SOS" from="1960-07-01"/>
-            <!-- currency iso4217="SON" from="1991"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="SR">
             <currency iso4217="SRD" from="2004-01-01"/>
@@ -837,8 +761,6 @@ The printed version of ISO-4217:2001
         <region iso3166="ST">
             <currency iso4217="STD" from="1977-09-08"/>
         </region>
-        <!-- This is no longer a valid region. It split into RU and several other regions. -->
-        <!-- region iso3166="SU">
             <currency iso4217="SUR" from="1961-01-01" to="1991-12-25"/>
         </region -->
         <region iso3166="SV">
@@ -850,20 +772,14 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="SZ">
             <currency iso4217="SZL" from="1974-09-06"/>
-            <!-- currency iso4217="ZAR" from="1961-02-14"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="TC">
             <currency iso4217="USD" from="1969-09-08"/>
-            <!-- currency iso4217="JMD" from="1969-09-08"/ --><!-- Not listed in the 2001 or 2004 list -->
-            <!-- currency iso4217="TCC" from="1969-09-08"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="TD">
             <currency iso4217="XAF" from="1993-01-01"/>
         </region>
         <region iso3166="TF">
-        <!-- Part of the Antarctic claimed by France (whose sovereignty is not recognised 
-        internationally), makes up the French Southern and Antarctic Lands (TAAF) 
-        administered from Saint-Pierre de la Réunion. No indigenous population -->
             <currency iso4217="EUR" from="1999-01-01"/>
             <currency iso4217="FRF" from="1959-01-01" to="2002-02-17"/>
         </region>
@@ -895,7 +811,6 @@ The printed version of ISO-4217:2001
         <region iso3166="TO">
             <currency iso4217="TOP" from="1966-02-14"/>
         </region>
-        <!-- TP was renamed to TL -->
         <region iso3166="TR">
             <currency iso4217="TRY" from="2005-01-01"/>
             <currency iso4217="TRL" from="1922-11-01" to="2005-12-31"/>
@@ -905,7 +820,6 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="TV">
             <currency iso4217="AUD" from="1966-02-14"/>
-            <!-- currency iso4217="TVD" from="1975-10-01"/ --><!-- Not listed in the 2001 or 2004 list -->
         </region>
         <region iso3166="TW">
             <currency iso4217="TWD" from="1949-06-15"/>
@@ -915,7 +829,6 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="UA">
             <currency iso4217="UAH" from="1996-09-02"/>
-            <!-- Period of hyperinflation -->
             <currency iso4217="UAK" from="1992-11-13" to="1993-10-17"/>
             <currency iso4217="RUR" from="1991-12-25" to="1992-11-13"/>
             <currency iso4217="SUR" from="1961-1-1" to="1991-12-25"/>
@@ -940,7 +853,6 @@ The printed version of ISO-4217:2001
         <region iso3166="VA">
             <currency iso4217="EUR" from="1999-01-01"/>
             <currency iso4217="ITL" from="1870-10-19" to="2002-02-28"/>
-            <!-- currency iso4217="VAL" from="1929" to="2002-02-28"/ --><!-- Not listed in the 2001 list -->
         </region>
         <region iso3166="VC">
             <currency iso4217="XCD" from="1965-10-06"/>
@@ -950,7 +862,6 @@ The printed version of ISO-4217:2001
         </region>
         <region iso3166="VG">
             <currency iso4217="USD" from="1833"/>
-            <!-- currency iso4217="VGD" from="1973"/ --><!-- Not listed in the 2001 or 2004 list -->
             <currency iso4217="GBP" from="1833" to="1959"/>
         </region>
         <region iso3166="VI">
@@ -976,93 +887,48 @@ The printed version of ISO-4217:2001
             <currency iso4217="FRF" from="1976-02-23" to="2002-02-17"/>
             <currency iso4217="KMF" from="1975-01-01" to="1976-02-23"/>
         </region>
-        <!-- YU was renamed to CS -->
-        <!-- region iso3166="YU" -->
-            <!-- currency iso4217="YUM" from="1994-01-24" to="2002-05-15"/ -->
-            <!-- Period of hyperinflation -->
-            <!-- currency iso4217="YUG" from="1994-01-01" to="1994-07-22"/ --><!-- Not listed in the 2001 or 2004 list -->
-            <!-- currency iso4217="YUO" from="1993-10-01" to="1993-12-31"/ --><!-- Not listed in the 2001 or 2004 list -->
-            <!-- currency iso4217="YUR" from="1992-07-01" to="1993-10-01"/ --><!-- Not listed in the 2001 or 2004 list -->
-            <!-- currency iso4217="YUN" from="1990-01-01" to="1992-07-24"/ -->
-            <!-- currency iso4217="YUD" from="1966-01-01" to="1990-01-01"/ -->
-        <!-- /region -->
         <region iso3166="ZA">
             <currency iso4217="ZAR" from="1961-02-14"/>
         </region>
         <region iso3166="ZM">
             <currency iso4217="ZMK" from="1968-01-16"/>
         </region>
-        <!-- Zaire (ZR) was renamed to Democratic Republic of Congo (CD). Look at "CD" for history. -->
         <region iso3166="ZW">
             <currency iso4217="ZWD" from="1980-04-18"/>
         </region>
-<!--
-The following are fund codes. They are not really in the form of hard currency.
-They are mainly interesting to certain parts of the financing industry, and average people won't use them.
--->
-<!--
-BOV	Bolivia Mvdol
-CLF	Unidades de Fomento
-ECV	Unidad de Valor Constante
-MXV	Mexico Unidad de Inversion
-USN	US Dollar (Next day)
-USS	US Dollar (same day)
-ZAL	South African Financial Rand (02/02/1976-02/06/1983, 09/01/1985-3/13/1995)
--->
-<!-- The following are precious metals -->
-<!--
-XAG	Silver
-XAU	Gold
-XPD	Palladium
-XPT	Platinum
--->
-<!-- The following are other various codes of limited usage. -->
-<!--
-XBA	European Composite Unit (EURCO)
-XBB	European Monetary Unit (EMU-6)
-XBC	European Unit of Account (EUA-9)
-XBD	European Unit of Account (EUA-17)
-XDR	Special Drawing Rights (International Monetary Fund)
-XEU	European Currency Unit (ECU). EUR should be used instead.
-XFO	France Gold Franc
-XFU	France UIC-Franc
-XRE	RINET Funds Code
-XTS	Code specifically reserved for testing purposes
-XXX	Code for transations where no currency is involved
--->
     </currencyData>
-	<territoryContainment> <!-- based on UN data, at http://unstats.un.org/unsd/methods/m49/m49regin.htm -->
-		<group type="001" contains="002 009 019 142 150"/> <!--World -->
-		<group type="011" contains="BF BJ CI CV GH GM GN GW LR ML MR NE NG SH SL SN TG"/> <!--Western Africa -->
-		<group type="013" contains="BZ CR GT HN MX NI PA SV"/> <!--Central America -->
-		<group type="014" contains="BI DJ ER ET KE KM MG MU MW MZ RE RW SC SO TZ UG YT ZM ZW"/> <!--Eastern Africa -->
-		<group type="142" contains="030 035 062 145"/> <!--Asia -->
-		<group type="145" contains="AE AM AZ BH CY GE IL IQ JO KW LB OM PS QA SA SY TR YE"/> <!--Western Asia -->
-		<group type="015" contains="DZ EG EH LY MA SD TN"/> <!--Northern Africa -->
-		<group type="150" contains="039 151 154 155"/> <!--Europe -->
-		<group type="151" contains="BG BY CZ HU MD PL RO RU SK UA"/> <!--Eastern Europe -->
-		<group type="154" contains="830 833 AX DK EE FI FO GB IE IS LT LV NO SE SJ"/> <!--Northern Europe -->
-		<group type="155" contains="AT BE CH DE FR LI LU MC NL"/> <!--Western Europe -->
-		<group type="017" contains="AO CD CF CG CM GA GQ ST TD"/> <!--Middle Africa -->
-		<group type="172" contains="AM AZ BY GE KG KZ MD RU TJ TM UA UZ"/> <!--Commonwealth of Independent States -->
-		<group type="018" contains="BW LS NA SZ ZA"/> <!--Southern Africa -->
-		<group type="019" contains="005 013 021 029"/> <!--Americas -->
-		<group type="002" contains="011 014 015 017 018"/> <!--Africa -->
-		<group type="021" contains="BM CA GL PM US"/> <!--Northern America -->
-		<group type="029" contains="AG AI AN AW BB BS CU DM DO GD GP HT JM KN KY LC MQ MS PR TC TT VC VG VI"/> <!--Caribbean -->
-		<group type="003" contains="013 021 029"/> <!--North America -->
-		<group type="030" contains="CN HK JP KP KR MN MO TW"/> <!--Eastern Asia -->
-		<group type="035" contains="BN ID KH LA MM MY PH SG TH TL VN"/> <!--South-eastern Asia -->
-		<group type="039" contains="AD AL BA ES GI GR HR IT MK MT PT SI SM VA CS"/> <!--Southern Europe -->
-		<group type="419" contains="005 013 029"/> <!--Latin America and the Caribbean -->
-		<group type="005" contains="AR BO BR CL CO EC FK GF GY PE PY SR UY VE"/> <!--South America -->
-		<group type="053" contains="AU NF NZ"/> <!--Australia and New Zealand -->
-		<group type="054" contains="FJ NC PG SB VU"/> <!--Melanesia -->
-		<group type="057" contains="FM GU KI MH MP NR PW"/> <!--Micronesia -->
-		<group type="061" contains="AS CK NU PF PN TK TO TV WF WS"/> <!--Polynesia -->
-		<group type="062" contains="AF BD BT IN IR KG KZ LK MV NP PK TJ TM UZ"/> <!--South-central Asia -->
-		<group type="009" contains="053 054 057 061 QO"/> <!--Oceania -->
-		<group type="QO" contains="AQ BV CC CX GS HM IO TF UM"/> <!--Outlying Oceania -->
+	<territoryContainment>
+		<group type="001" contains="002 009 019 142 150"/>
+		<group type="011" contains="BF BJ CI CV GH GM GN GW LR ML MR NE NG SH SL SN TG"/>
+		<group type="013" contains="BZ CR GT HN MX NI PA SV"/>
+		<group type="014" contains="BI DJ ER ET KE KM MG MU MW MZ RE RW SC SO TZ UG YT ZM ZW"/>
+		<group type="142" contains="030 035 062 145"/>
+		<group type="145" contains="AE AM AZ BH CY GE IL IQ JO KW LB OM PS QA SA SY TR YE"/>
+		<group type="015" contains="DZ EG EH LY MA SD TN"/>
+		<group type="150" contains="039 151 154 155"/>
+		<group type="151" contains="BG BY CZ HU MD PL RO RU SK UA"/>
+		<group type="154" contains="830 833 AX DK EE FI FO GB IE IS LT LV NO SE SJ"/>
+		<group type="155" contains="AT BE CH DE FR LI LU MC NL"/>
+		<group type="017" contains="AO CD CF CG CM GA GQ ST TD"/>
+		<group type="172" contains="AM AZ BY GE KG KZ MD RU TJ TM UA UZ"/>
+		<group type="018" contains="BW LS NA SZ ZA"/>
+		<group type="019" contains="005 013 021 029"/>
+		<group type="002" contains="011 014 015 017 018"/>
+		<group type="021" contains="BM CA GL PM US"/>
+		<group type="029" contains="AG AI AN AW BB BS CU DM DO GD GP HT JM KN KY LC MQ MS PR TC TT VC VG VI"/>
+		<group type="003" contains="013 021 029"/>
+		<group type="030" contains="CN HK JP KP KR MN MO TW"/>
+		<group type="035" contains="BN ID KH LA MM MY PH SG TH TL VN"/>
+		<group type="039" contains="AD AL BA ES GI GR HR IT MK MT PT SI SM VA CS"/>
+		<group type="419" contains="005 013 029"/>
+		<group type="005" contains="AR BO BR CL CO EC FK GF GY PE PY SR UY VE"/>
+		<group type="053" contains="AU NF NZ"/>
+		<group type="054" contains="FJ NC PG SB VU"/>
+		<group type="057" contains="FM GU KI MH MP NR PW"/>
+		<group type="061" contains="AS CK NU PF PN TK TO TV WF WS"/>
+		<group type="062" contains="AF BD BT IN IR KG KZ LK MV NP PK TJ TM UZ"/>
+		<group type="009" contains="053 054 057 061 QO"/>
+		<group type="QO" contains="AQ BV CC CX GS HM IO TF UM"/>
 	</territoryContainment>
 	<languageData>
 		<language type="ab" scripts="Cyrl" territories="GE" alt="secondary"/>
@@ -1109,7 +975,7 @@ XXX	Code for transations where no currency is involved
 		<language type="fj" scripts="Latn" territories="FJ"/>
 		<language type="fo" scripts="Latn" territories="FO"/>
 		<language type="fr" scripts="Latn" territories="BE BF BI BJ CA CD CF CG CH CI CM DJ FR GA GF GN GP GQ HT KM LU MC MG ML MQ MR MU NC NE PF PM RE RW SC SN TD TF TG VU WF YT"/>
-		<language type="fr" scripts="Latn" territories="IT US" alt="secondary"/> <!-- Italian: official in Valle d'Aosta, US: official in Louisiana -->
+		<language type="fr" scripts="Latn" territories="IT US" alt="secondary"/>
 		<language type="fy" scripts="Latn" territories="DE NL" alt="secondary"/>
 		<language type="ga" scripts="Latn" territories="IE"/>
 		<language type="ga" scripts="Latn" territories="GB" alt="secondary"/>
@@ -1251,81 +1117,81 @@ XXX	Code for transations where no currency is involved
 	</languageData>
 	<timezoneData>
 		<mapTimezones type="windows">
-			<mapZone other="Dateline" type="Etc/GMT+12"/> <!-- S (GMT-12:00) International Date Line West-->
-			<mapZone other="Samoa" type="Pacific/Apia"/> <!-- S (GMT-11:00) Midway Island, Samoa-->
-			<mapZone other="Hawaiian" type="Pacific/Honolulu"/> <!-- S (GMT-10:00) Hawaii-->
-			<mapZone other="Alaskan" type="America/Anchorage"/> <!-- D (GMT-09:00) Alaska-->
-			<mapZone other="Pacific" type="America/Los_Angeles"/> <!-- D (GMT-08:00) Pacific Time (US & Canada); Tijuana-->
-			<mapZone other="US Mountain" type="America/Phoenix"/> <!-- S (GMT-07:00) Arizona-->
-			<mapZone other="Mountain" type="America/Denver"/> <!-- D (GMT-07:00) Mountain Time (US & Canada)-->
-			<mapZone other="Mexico Standard Time 2" type="America/Chihuahua"/> <!-- D (GMT-07:00) Chihuahua, La Paz, Mazatlan-->
-			<mapZone other="Central America" type="America/Managua"/> <!-- S (GMT-06:00) Central America-->
-			<mapZone other="Canada Central" type="America/Regina"/> <!-- S (GMT-06:00) Saskatchewan-->
-			<mapZone other="Mexico" type="America/Mexico_City"/> <!-- D (GMT-06:00) Guadalajara, Mexico City, Monterrey-->
-			<mapZone other="Central" type="America/Chicago"/> <!-- D (GMT-06:00) Central Time (US & Canada)-->
-			<mapZone other="US Eastern" type="America/Indianapolis"/> <!-- S (GMT-05:00) Indiana (East)-->
-			<mapZone other="SA Pacific" type="America/Bogota"/> <!-- S (GMT-05:00) Bogota, Lima, Quito-->
-			<mapZone other="Eastern" type="America/New_York"/> <!-- D (GMT-05:00) Eastern Time (US & Canada)-->
-			<mapZone other="SA Western" type="America/Caracas"/> <!-- S (GMT-04:00) Caracas, La Paz-->
-			<mapZone other="Pacific SA" type="America/Santiago"/> <!-- D (GMT-04:00) Santiago-->
-			<mapZone other="Atlantic" type="America/Halifax"/> <!-- D (GMT-04:00) Atlantic Time (Canada)-->
-			<mapZone other="Newfoundland" type="America/St_Johns"/> <!-- D (GMT-03:30) Newfoundland-->
-			<mapZone other="SA Eastern" type="America/Buenos_Aires"/> <!-- S (GMT-03:00) Buenos Aires, Georgetown-->
-			<mapZone other="Greenland" type="America/Godthab"/> <!-- D (GMT-03:00) Greenland-->
-			<mapZone other="E. South America" type="America/Sao_Paulo"/> <!-- D (GMT-03:00) Brasilia-->
-			<mapZone other="Mid-Atlantic" type="America/Noronha"/> <!-- D (GMT-02:00) Mid-Atlantic-->
-			<mapZone other="Cape Verde" type="Atlantic/Cape_Verde"/> <!-- S (GMT-01:00) Cape Verde Is.-->
-			<mapZone other="Azores" type="Atlantic/Azores"/> <!-- D (GMT-01:00) Azores-->
-			<mapZone other="Greenwich" type="Africa/Casablanca"/> <!-- S (GMT) Casablanca, Monrovia-->
-			<mapZone other="GMT" type="Europe/London"/> <!-- D (GMT) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London-->
-			<mapZone other="W. Central Africa" type="Africa/Lagos"/> <!-- S (GMT+01:00) West Central Africa-->
-			<mapZone other="W. Europe" type="Europe/Berlin"/> <!-- D (GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna-->
-			<mapZone other="Romance" type="Europe/Paris"/> <!-- D (GMT+01:00) Brussels, Copenhagen, Madrid, Paris-->
-			<mapZone other="Central European" type="Europe/Sarajevo"/> <!-- D (GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb-->
-			<mapZone other="Central Europe" type="Europe/Belgrade"/> <!-- D (GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague-->
-			<mapZone other="South Africa" type="Africa/Johannesburg"/> <!-- S (GMT+02:00) Harare, Pretoria-->
-			<mapZone other="Israel" type="Asia/Jerusalem"/> <!-- S (GMT+02:00) Jerusalem-->
-			<mapZone other="GTB" type="Europe/Istanbul"/> <!-- D (GMT+02:00) Athens, Istanbul, Minsk-->
-			<mapZone other="FLE" type="Europe/Helsinki"/> <!-- D (GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius-->
-			<mapZone other="Egypt" type="Africa/Cairo"/> <!-- D (GMT+02:00) Cairo-->
-			<mapZone other="E. Europe" type="Europe/Bucharest"/> <!-- D (GMT+02:00) Bucharest-->
-			<mapZone other="E. Africa" type="Africa/Nairobi"/> <!-- S (GMT+03:00) Nairobi-->
-			<mapZone other="Arab" type="Asia/Riyadh"/> <!-- S (GMT+03:00) Kuwait, Riyadh-->
-			<mapZone other="Russian" type="Europe/Moscow"/> <!-- D (GMT+03:00) Moscow, St. Petersburg, Volgograd-->
-			<mapZone other="Arabic" type="Asia/Baghdad"/> <!-- D (GMT+03:00) Baghdad-->
-			<mapZone other="Iran" type="Asia/Tehran"/> <!-- D (GMT+03:30) Tehran-->
-			<mapZone other="Arabian" type="Asia/Muscat"/> <!-- S (GMT+04:00) Abu Dhabi, Muscat-->
-			<mapZone other="Caucasus" type="Asia/Tbilisi"/> <!-- D (GMT+04:00) Baku, Tbilisi, Yerevan-->
-			<mapZone other="Afghanistan" type="Asia/Kabul"/> <!-- S (GMT+04:30) Kabul-->
-			<mapZone other="West Asia" type="Asia/Karachi"/> <!-- S (GMT+05:00) Islamabad, Karachi, Tashkent-->
-			<mapZone other="Ekaterinburg" type="Asia/Yekaterinburg"/> <!-- D (GMT+05:00) Ekaterinburg-->
-			<mapZone other="India" type="Asia/Calcutta"/> <!-- S (GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi-->
-			<mapZone other="Nepal" type="Asia/Katmandu"/> <!-- S (GMT+05:45) Kathmandu-->
-			<mapZone other="Sri Lanka" type="Asia/Colombo"/> <!-- S (GMT+06:00) Sri Jayawardenepura-->
-			<mapZone other="Central Asia" type="Asia/Dhaka"/> <!-- S (GMT+06:00) Astana, Dhaka-->
-			<mapZone other="N. Central Asia" type="Asia/Novosibirsk"/> <!-- D (GMT+06:00) Almaty, Novosibirsk-->
-			<mapZone other="Myanmar" type="Asia/Rangoon"/> <!-- S (GMT+06:30) Rangoon-->
-			<mapZone other="SE Asia" type="Asia/Bangkok"/> <!-- S (GMT+07:00) Bangkok, Hanoi, Jakarta-->
-			<mapZone other="North Asia" type="Asia/Krasnoyarsk"/> <!-- D (GMT+07:00) Krasnoyarsk-->
-			<mapZone other="W. Australia" type="Australia/Perth"/> <!-- S (GMT+08:00) Perth-->
-			<mapZone other="Taipei" type="Asia/Taipei"/> <!-- S (GMT+08:00) Taipei-->
-			<mapZone other="Singapore" type="Asia/Singapore"/> <!-- S (GMT+08:00) Kuala Lumpur, Singapore-->
-			<mapZone other="China" type="Asia/Hong_Kong"/> <!-- S (GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi-->
-			<mapZone other="North Asia East" type="Asia/Irkutsk"/> <!-- D (GMT+08:00) Irkutsk, Ulaan Bataar-->
-			<mapZone other="Tokyo" type="Asia/Tokyo"/> <!-- S (GMT+09:00) Osaka, Sapporo, Tokyo-->
-			<mapZone other="Korea" type="Asia/Seoul"/> <!-- S (GMT+09:00) Seoul-->
-			<mapZone other="Yakutsk" type="Asia/Yakutsk"/> <!-- D (GMT+09:00) Yakutsk-->
-			<mapZone other="AUS Central" type="Australia/Darwin"/> <!-- S (GMT+09:30) Darwin-->
-			<mapZone other="Cen. Australia" type="Australia/Adelaide"/> <!-- D (GMT+09:30) Adelaide-->
-			<mapZone other="West Pacific" type="Pacific/Guam"/> <!-- S (GMT+10:00) Guam, Port Moresby-->
-			<mapZone other="E. Australia" type="Australia/Brisbane"/> <!-- S (GMT+10:00) Brisbane-->
-			<mapZone other="Vladivostok" type="Asia/Vladivostok"/> <!-- D (GMT+10:00) Vladivostok-->
-			<mapZone other="Tasmania" type="Australia/Hobart"/> <!-- D (GMT+10:00) Hobart-->
-			<mapZone other="AUS Eastern" type="Australia/Sydney"/> <!-- D (GMT+10:00) Canberra, Melbourne, Sydney-->
-			<mapZone other="Central Pacific" type="Asia/Magadan"/> <!-- S (GMT+11:00) Magadan, Solomon Is., New Caledonia-->
-			<mapZone other="Fiji" type="Pacific/Fiji"/> <!-- S (GMT+12:00) Fiji, Kamchatka, Marshall Is.-->
-			<mapZone other="New Zealand" type="Pacific/Auckland"/> <!-- D (GMT+12:00) Auckland, Wellington-->
-			<mapZone other="Tonga" type="Pacific/Tongatapu"/> <!-- S (GMT+13:00) Nuku'alofa-->
+			<mapZone other="Dateline" type="Etc/GMT+12"/>
+			<mapZone other="Samoa" type="Pacific/Apia"/>
+			<mapZone other="Hawaiian" type="Pacific/Honolulu"/>
+			<mapZone other="Alaskan" type="America/Anchorage"/>
+			<mapZone other="Pacific" type="America/Los_Angeles"/>
+			<mapZone other="US Mountain" type="America/Phoenix"/>
+			<mapZone other="Mountain" type="America/Denver"/>
+			<mapZone other="Mexico Standard Time 2" type="America/Chihuahua"/>
+			<mapZone other="Central America" type="America/Managua"/>
+			<mapZone other="Canada Central" type="America/Regina"/>
+			<mapZone other="Mexico" type="America/Mexico_City"/>
+			<mapZone other="Central" type="America/Chicago"/>
+			<mapZone other="US Eastern" type="America/Indianapolis"/>
+			<mapZone other="SA Pacific" type="America/Bogota"/>
+			<mapZone other="Eastern" type="America/New_York"/>
+			<mapZone other="SA Western" type="America/Caracas"/>
+			<mapZone other="Pacific SA" type="America/Santiago"/>
+			<mapZone other="Atlantic" type="America/Halifax"/>
+			<mapZone other="Newfoundland" type="America/St_Johns"/>
+			<mapZone other="SA Eastern" type="America/Buenos_Aires"/>
+			<mapZone other="Greenland" type="America/Godthab"/>
+			<mapZone other="E. South America" type="America/Sao_Paulo"/>
+			<mapZone other="Mid-Atlantic" type="America/Noronha"/>
+			<mapZone other="Cape Verde" type="Atlantic/Cape_Verde"/>
+			<mapZone other="Azores" type="Atlantic/Azores"/>
+			<mapZone other="Greenwich" type="Africa/Casablanca"/>
+			<mapZone other="GMT" type="Europe/London"/>
+			<mapZone other="W. Central Africa" type="Africa/Lagos"/>
+			<mapZone other="W. Europe" type="Europe/Berlin"/>
+			<mapZone other="Romance" type="Europe/Paris"/>
+			<mapZone other="Central European" type="Europe/Sarajevo"/>
+			<mapZone other="Central Europe" type="Europe/Belgrade"/>
+			<mapZone other="South Africa" type="Africa/Johannesburg"/>
+			<mapZone other="Israel" type="Asia/Jerusalem"/>
+			<mapZone other="GTB" type="Europe/Istanbul"/>
+			<mapZone other="FLE" type="Europe/Helsinki"/>
+			<mapZone other="Egypt" type="Africa/Cairo"/>
+			<mapZone other="E. Europe" type="Europe/Bucharest"/>
+			<mapZone other="E. Africa" type="Africa/Nairobi"/>
+			<mapZone other="Arab" type="Asia/Riyadh"/>
+			<mapZone other="Russian" type="Europe/Moscow"/>
+			<mapZone other="Arabic" type="Asia/Baghdad"/>
+			<mapZone other="Iran" type="Asia/Tehran"/>
+			<mapZone other="Arabian" type="Asia/Muscat"/>
+			<mapZone other="Caucasus" type="Asia/Tbilisi"/>
+			<mapZone other="Afghanistan" type="Asia/Kabul"/>
+			<mapZone other="West Asia" type="Asia/Karachi"/>
+			<mapZone other="Ekaterinburg" type="Asia/Yekaterinburg"/>
+			<mapZone other="India" type="Asia/Calcutta"/>
+			<mapZone other="Nepal" type="Asia/Katmandu"/>
+			<mapZone other="Sri Lanka" type="Asia/Colombo"/>
+			<mapZone other="Central Asia" type="Asia/Dhaka"/>
+			<mapZone other="N. Central Asia" type="Asia/Novosibirsk"/>
+			<mapZone other="Myanmar" type="Asia/Rangoon"/>
+			<mapZone other="SE Asia" type="Asia/Bangkok"/>
+			<mapZone other="North Asia" type="Asia/Krasnoyarsk"/>
+			<mapZone other="W. Australia" type="Australia/Perth"/>
+			<mapZone other="Taipei" type="Asia/Taipei"/>
+			<mapZone other="Singapore" type="Asia/Singapore"/>
+			<mapZone other="China" type="Asia/Hong_Kong"/>
+			<mapZone other="North Asia East" type="Asia/Irkutsk"/>
+			<mapZone other="Tokyo" type="Asia/Tokyo"/>
+			<mapZone other="Korea" type="Asia/Seoul"/>
+			<mapZone other="Yakutsk" type="Asia/Yakutsk"/>
+			<mapZone other="AUS Central" type="Australia/Darwin"/>
+			<mapZone other="Cen. Australia" type="Australia/Adelaide"/>
+			<mapZone other="West Pacific" type="Pacific/Guam"/>
+			<mapZone other="E. Australia" type="Australia/Brisbane"/>
+			<mapZone other="Vladivostok" type="Asia/Vladivostok"/>
+			<mapZone other="Tasmania" type="Australia/Hobart"/>
+			<mapZone other="AUS Eastern" type="Australia/Sydney"/>
+			<mapZone other="Central Pacific" type="Asia/Magadan"/>
+			<mapZone other="Fiji" type="Pacific/Fiji"/>
+			<mapZone other="New Zealand" type="Pacific/Auckland"/>
+			<mapZone other="Tonga" type="Pacific/Tongatapu"/>
 		</mapTimezones>
 	</timezoneData>
 	<metadata>
