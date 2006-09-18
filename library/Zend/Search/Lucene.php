@@ -145,7 +145,7 @@ class Zend_Search_Lucene
         // read version
         $segmentsFile->readLong();
 
-        // read counter
+        // read segment name counter
         $segmentsFile->readInt();
 
         $segments = $segmentsFile->readInt();
@@ -587,6 +587,24 @@ class Zend_Search_Lucene
         }
     }
 
+
+    /**
+     * Optimize index.
+     *
+     * Merges all segments into one
+     */
+    public function optimize()
+    {
+        // Commit changes if any changes have been made
+        $this->commit();
+
+        if (count($this->_segmentInfos) > 1) {
+            $this->getIndexWriter()->optimize($this->_segmentInfos);
+
+            // Commit changes, made by optimization
+            $this->commit();
+        }
+    }
 
     /*************************************************************************
     @todo UNIMPLEMENTED

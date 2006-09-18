@@ -165,11 +165,17 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
      */
     public function deleteFile($filename)
     {
+        /**
+         * @todo add support of "deletable" file
+         * "deletable" is used on Windows systems if file can't be deleted
+         * (while it is still open).
+         */
+
         if (isset($this->_fileHandlers[$filename])) {
             $this->_fileHandlers[$filename]->close();
         }
         unset($this->_fileHandlers[$filename]);
-        unlink($this->_dirPath .'/'. $filename);
+        unlink($this->_dirPath . '/' . $filename);
     }
 
 
