@@ -60,29 +60,6 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
     protected $_termDocs;
 
     /**
-     * Sizes of the indexed fields.
-     * Used for normalization factors calculation.
-     *
-     * @var array
-     */
-    protected $_fieldLengths;
-
-    /**
-     * '.fdx'  file - Stored Fields, the field index.
-     *
-     * @var Zend_Search_Lucene_Storage_File
-     */
-    protected $_fdxFile;
-
-    /**
-     * '.fdt'  file - Stored Fields, the field data.
-     *
-     * @var Zend_Search_Lucene_Storage_File
-     */
-    protected $_fdtFile;
-
-
-    /**
      * Object constructor.
      *
      * @param Zend_Search_Lucene_Storage_Directory $directory
@@ -95,10 +72,6 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
         $this->_docCount  = 0;
         $this->_termDocs       = array();
         $this->_termDictionary = array();
-        $this->_fieldLengths   = array();
-
-        $this->_fdxFile = null;
-        $this->_fdtFile = null;
     }
 
 
@@ -156,31 +129,7 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
             }
         }
 
-        if (count($storedFields) != 0) {
-            if (!isset($this->_fdxFile)) {
-                $this->_fdxFile = $this->_directory->createFile($this->_name . '.fdx');
-                $this->_fdtFile = $this->_directory->createFile($this->_name . '.fdt');
-
-                $this->_files[] = $this->_name . '.fdx';
-                $this->_files[] = $this->_name . '.fdt';
-            }
-
-            $this->_fdxFile->writeLong($this->_fdtFile->tell());
-            $this->_fdtFile->writeVInt(count($storedFields));
-            foreach ($storedFields as $field) {
-                $this->_fdtFile->writeVInt($this->_fields[$field->name]->number);
-                $fieldBits = ($field->isTokenized ? 0x01 : 0x00) |
-                             ($field->isBinary ?    0x02 : 0x00) |
-                             0x00; /* 0x04 - third bit, compressed (ZLIB) */
-                $this->_fdtFile->writeByte($fieldBits);
-                if ($field->isBinary) {
-                    $this->_fdtFile->writeVInt(strlen($field->stringValue));
-                    $this->_fdtFile->writeBytes($field->stringValue);
-                } else {
-                    $this->_fdtFile->writeString($field->stringValue);
-                }
-            }
-        }
+        $this->addStoredFields($storedFields);
 
         $this->_docCount++;
     }

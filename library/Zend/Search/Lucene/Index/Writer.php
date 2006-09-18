@@ -339,7 +339,10 @@ class Zend_Search_Lucene_Index_Writer
             $this->_segmentsToDelete[$segmentInfo->getName()] = $segmentInfo->getName();
         }
 
-        $this->_newSegments[] = $merger->merge();
+        $newSegment = $merger->merge();
+        if ($newSegment !== null) {
+            $this->_newSegments[] = $merger->merge();
+        }
     }
 
     /**

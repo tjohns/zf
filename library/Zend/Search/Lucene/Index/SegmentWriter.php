@@ -102,6 +102,28 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      */
     protected $_fields;
 
+    /**
+     * Sizes of the indexed fields.
+     * Used for normalization factors calculation.
+     *
+     * @var array
+     */
+    protected $_fieldLengths = array();
+
+    /**
+     * '.fdx'  file - Stored Fields, the field index.
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    protected $_fdxFile = null;
+
+    /**
+     * '.fdt'  file - Stored Fields, the field data.
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    protected $_fdtFile = null;
+
 
     /**
      * Object constructor.
@@ -157,9 +179,9 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      */
     public function addFieldInfo(Zend_Search_Lucene_Index_FieldInfo $fieldInfo)
     {
-        if (!isset($this->_fields[$field->name])) {
+        if (!isset($this->_fields[$fieldInfo->name])) {
             $fieldNumber = count($this->_fields);
-            $this->_fields[$field->name] =
+            $this->_fields[$fieldInfo->name] =
                                 new Zend_Search_Lucene_Index_FieldInfo($fieldInfo->name,
                                                                        $fieldInfo->isIndexed,
                                                                        $fieldNumber,
@@ -167,13 +189,45 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
 
             return $fieldNumber;
         } else {
-            $this->_fields[$field->name]->isIndexed       |= $fieldInfo->isIndexed;
-            $this->_fields[$field->name]->storeTermVector |= $fieldInfo->storeTermVector;
+            $this->_fields[$fieldInfo->name]->isIndexed       |= $fieldInfo->isIndexed;
+            $this->_fields[$fieldInfo->name]->storeTermVector |= $fieldInfo->storeTermVector;
 
-            return $this->_fields[$field->name]->number;
+            return $this->_fields[$fieldInfo->name]->number;
         }
     }
 
+
+    /**
+     * Add stored fields information
+     *
+     * @param array $storedFields array of Zend_Search_Lucene_Field objects
+     */
+    public function addStoredFields($storedFields)
+    {
+        if (!isset($this->_fdxFile)) {
+            $this->_fdxFile = $this->_directory->createFile($this->_name . '.fdx');
+            $this->_fdtFile = $this->_directory->createFile($this->_name . '.fdt');
+
+            $this->_files[] = $this->_name . '.fdx';
+            $this->_files[] = $this->_name . '.fdt';
+        }
+
+        $this->_fdxFile->writeLong($this->_fdtFile->tell());
+        $this->_fdtFile->writeVInt(count($storedFields));
+        foreach ($storedFields as $field) {
+            $this->_fdtFile->writeVInt($this->_fields[$field->name]->number);
+            $fieldBits = ($field->isTokenized ? 0x01 : 0x00) |
+                         ($field->isBinary ?    0x02 : 0x00) |
+                         0x00; /* 0x04 - third bit, compressed (ZLIB) */
+            $this->_fdtFile->writeByte($fieldBits);
+            if ($field->isBinary) {
+                $this->_fdtFile->writeVInt(strlen($field->stringValue));
+                $this->_fdtFile->writeBytes($field->stringValue);
+            } else {
+                $this->_fdtFile->writeString($field->stringValue);
+            }
+        }
+    }
 
     /**
      * Dump Field Info (.fnm) segment file

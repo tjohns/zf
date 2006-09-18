@@ -292,7 +292,7 @@ class Zend_Search_Lucene
 
         $segCount = 0;
         $nextSegmentStartId = $this->_segmentInfos[ 0 ]->count();
-        while( $nextSegmentStartId <= $id ) {
+        while ($nextSegmentStartId <= $id) {
                $segCount++;
                $nextSegmentStartId += $this->_segmentInfos[ $segCount ]->count();
         }
@@ -303,28 +303,29 @@ class Zend_Search_Lucene
         $fieldValuesPosition = $fdxFile->readLong();
 
         $fdtFile = $this->_segmentInfos[ $segCount ]->openCompoundFile('.fdt');
-        $fdtFile->seek( $fieldValuesPosition, SEEK_CUR );
+        $fdtFile->seek($fieldValuesPosition, SEEK_CUR);
         $fieldCount = $fdtFile->readVInt();
 
         $doc = new Zend_Search_Lucene_Document();
-        for( $count = 0; $count < $fieldCount; $count++ ) {
+        for ($count = 0; $count < $fieldCount; $count++) {
             $fieldNum = $fdtFile->readVInt();
             $bits = $fdtFile->readByte();
 
             $fieldInfo = $this->_segmentInfos[ $segCount ]->getField($fieldNum);
 
-            if( !($bits & 2) ) { // Text data
+            if (!($bits & 2)) { // Text data
                 $field = new Zend_Search_Lucene_Field($fieldInfo->name,
                                                       $fdtFile->readString(),
                                                       true,
                                                       $fieldInfo->isIndexed,
                                                       $bits & 1 );
-            } else {
+            } else {            // Binary data
                 $field = new Zend_Search_Lucene_Field($fieldInfo->name,
                                                       $fdtFile->readBinary(),
                                                       true,
                                                       $fieldInfo->isIndexed,
-                                                      $bits & 1 );
+                                                      $bits & 1,
+                                                      true );
             }
 
             $doc->addField($field);

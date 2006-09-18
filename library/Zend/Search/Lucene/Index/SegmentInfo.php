@@ -281,6 +281,16 @@ class Zend_Search_Lucene_Index_SegmentInfo
     }
 
     /**
+     * Returns array of FieldInfo objects.
+     *
+     * @return array
+     */
+    public function getFieldInfos()
+    {
+        return $this->_fields;
+    }
+
+    /**
      * Returns the total number of documents in this segment.
      *
      * @return integer

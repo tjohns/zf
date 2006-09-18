@@ -124,6 +124,7 @@ class Zend_Search_Lucene_Index_SegmentMerger
         }
 
         $this->_mergeFields();
+        $this->_mergeStoredFields();
 
         $this->_mergeDone = true;
 
@@ -137,10 +138,52 @@ class Zend_Search_Lucene_Index_SegmentMerger
     private function _mergeFields()
     {
         foreach ($this->_segmentInfos as $segName => $segmentInfo) {
-            $segmentFields = $segmentInfo->getFields();
+            $segmentFields = $segmentInfo->getFieldInfos();
 
             foreach ($segmentFields as $fieldInfo) {
                 $this->_fieldsMap[$segName][$fieldInfo->number] = $this->_writer->addFieldInfo($fieldInfo);
+            }
+        }
+    }
+
+    /**
+     * Merge fields information
+     */
+    private function _mergeStoredFields()
+    {
+        foreach ($this->_segmentInfos as $segName => $segmentInfo) {
+            $fdtFile = $segmentInfo->openCompoundFile('.fdt');
+
+             for ($count = 0; $count < $segmentInfo->count(); $count++) {
+                if (!$segmentInfo->isDeleted($count)) {
+                    $fieldCount = $fdtFile->readVInt();
+                    $storedFields = array();
+
+                    for ($count2 = 0; $count2 < $fieldCount; $count2++) {
+                        $fieldNum = $fdtFile->readVInt();
+                        $bits = $fdtFile->readByte();
+                        $fieldInfo = $segmentInfo->getField($fieldNum);
+
+                        if (!($bits & 2)) { // Text data
+                            $storedFields[] =
+                                     new Zend_Search_Lucene_Field($fieldInfo->name,
+                                                                  $fdtFile->readString(),
+                                                                  true,
+                                                                  $fieldInfo->isIndexed,
+                                                                  $bits & 1 );
+                        } else {            // Binary data
+                            $storedFields[] =
+                                     new Zend_Search_Lucene_Field($fieldInfo->name,
+                                                                  $fdtFile->readBinary(),
+                                                                  true,
+                                                                  $fieldInfo->isIndexed,
+                                                                  $bits & 1,
+                                                                  true);
+                        }
+                    }
+
+                    $this->_writer->addStoredFields($storedFields);
+                }
             }
         }
     }

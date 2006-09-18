@@ -26,6 +26,9 @@ require_once 'Zend/Search/Lucene/Exception.php';
 /** Zend_Search_Lucene_Index_SegmentInfo */
 require_once 'Zend/Search/Lucene/Index/SegmentInfo.php';
 
+/** Zend_Search_Lucene_Index_SegmentWriter */
+require_once 'Zend/Search/Lucene/Index/SegmentWriter.php';
+
 
 /**
  * @category   Zend
@@ -37,6 +40,21 @@ require_once 'Zend/Search/Lucene/Index/SegmentInfo.php';
 class Zend_Search_Lucene_Index_SegmentWriter_StreamWriter extends Zend_Search_Lucene_Index_SegmentWriter
 {
     /**
+     * '.fdx'  file - Stored Fields, the field index.
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    protected $_fdxFile;
+
+    /**
+     * '.fdt'  file - Stored Fields, the field data.
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    protected $_fdtFile;
+
+
+    /**
      * Object constructor.
      *
      * @param Zend_Search_Lucene_Storage_Directory $directory
@@ -47,6 +65,20 @@ class Zend_Search_Lucene_Index_SegmentWriter_StreamWriter extends Zend_Search_Lu
         parent::__construct($directory, $name);
     }
 
+
+    /**
+     * Create stored fields files and open them for write
+     */
+    public function createStoredFieldsFiles()
+    {
+        $this->_fdxFile = $this->_directory->createFile($this->_name . '.fdx');
+        $this->_fdtFile = $this->_directory->createFile($this->_name . '.fdt');
+
+        $this->_files[] = $this->_name . '.fdx';
+        $this->_files[] = $this->_name . '.fdt';
+    }
+
+
     /**
      * Close segment, write it to disk and return segment info
      *
@@ -54,6 +86,21 @@ class Zend_Search_Lucene_Index_SegmentWriter_StreamWriter extends Zend_Search_Lu
      */
     public function close()
     {
+        if ($this->_docCount == 0) {
+            return null;
+        }
+
+        $this->_dumpFNM();
+
+
+        /** @todo remove null return (used for test purposes) */
+        return null;
+
+        $this->_generateCFS();
+
+        return new Zend_Search_Lucene_Index_SegmentInfo($this->_name,
+                                                        $this->_docCount,
+                                                        $this->_directory);
     }
 }
 
