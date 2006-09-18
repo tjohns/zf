@@ -34,37 +34,44 @@
         <para>
             In dit voorbeeld gebruiken we <link linkend="zend.config.classes.ini"><code>Zend_Config_Ini</code></link>
             om configuratiedata voor een produktie environment in te laden vanuit een INI bestand:
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config(Zend_Config_Ini::load('/pad/naar/config.ini', 'productie'));
-?>]]>       </programlisting>
-            Nu is de configuratiedata voorhanden vanaf de eigenschappen van het object <code>$config</code>.
-            Veronderstel dat de configuratiedata database verbindingsparameters inhoud en dat de data in het INI
-            bestand is opgeslaan als volgt:
-            <programlisting role="ini"><![CDATA[[production]
+?>]]>   </programlisting>
+        <para>
+        Nu is de configuratiedata voorhanden vanaf de eigenschappen van het object <code>$config</code>.
+        Veronderstel dat de configuratiedata database verbindingsparameters inhoud en dat de data in het INI
+        bestand is opgeslaan als volgt:
+        </para>
+        <programlisting role="ini"><![CDATA[[production]
 database.type     = pdo_mysql
 database.host     = db.example.com
 database.username = dbuser
 database.password = secret
 database.name     = dbname]]>
-            </programlisting>
+        </programlisting>
+        <para>
             De toepassing zou dan een databaseverbinding tot stand kunnen brengen met:
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->host,
                                       $config->database->username,
                                       $config->database->password,
                                       $config->database->name);
-?>]]>       </programlisting>
+?>]]>   </programlisting>
+        <para>
             Zoals hierboven beschreven kan de configuratiedata aangesproken worden met de object eigenschappen syntax.
-       </para>
+        </para>
     </example>
     <para>
         We kunnen ook gemakkelijk <code>Zend_Config</code> aanpassen voor verschillende doeleinden. Hier verstrekt een
         uitbreidende klasse een publieke <code>dump()</code> methode om snel configuratiedata die is opgeslaan af te
         beelden:
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 class MyConfig extends Zend_Config
 {
     protected $_indent;
@@ -97,8 +104,10 @@ $config = new MyConfig(Zend_Config_Ini::load('/pad/naar/config.ini', 'productie'
 
 $config->dump();
 ?>]]>   </programlisting>
+    <para>
         Voor de configuratiedata in het voorbeeld hierboven zou dit het volgende afbeelden:
-        <programlisting role="text"><![CDATA[<pre>
+    </para>
+    <programlisting role="text"><![CDATA[<pre>
 database =>
     type => pdo_mysql
     host => db.example.com
@@ -106,8 +115,7 @@ database =>
     password => secret
     name => dbname
 </pre>]]>
-        </programlisting>
-    </para>
+    </programlisting>
 </sect1>
 <sect1 id="zend.config.classes.array">
     <title>Zend_Config_Array</title>
@@ -121,7 +129,8 @@ database =>
             <para>
                 Dit voorbeeld illustreert het basisgebruik van <code>Zend_Config_Array</code> voor het laden
                 van configuratiedata vanuit PHP arrays. Eerst moeten we PHP arrays aanmaken met configuratiedata:
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 // Productiesite configuratiedata
 $config['productie'] = array(
     'webhost' => 'www.example.com',
@@ -141,33 +150,34 @@ $config['staging']['webhost'] = 'dev.example.com';
 $config['staging']['database']['host'] = 'dev.example.com';
 $config['staging']['database']['username'] = 'devuser';
 $config['staging']['database']['password'] = 'devsecret';
-?>]]>           </programlisting>
-                <note>
-                    De array met condfiguratiedata moet <code>$config</code> worden genoemd in het ingeladen PHP script.
-                </note>
+?>]]>       </programlisting>
+            <note>
+                De array met condfiguratiedata moet <code>$config</code> worden genoemd in het ingeladen PHP script.
+            </note>
+            <para>
                 Erfenis wordt in het voorbeeld hierboven gebruikt door de waarden van de <code>productie</code> sectie
                 aan de <code>staging</code> sectie toe te schrijven. Nu is het eenvoudig om de configuratiedata
                 via <code>Zend_Config_Array</code> in te laden:
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Array.php';
 
 $config = new Zend_Config(Zend_Config_Array::load('/pad/naar/config.php', 'staging'));
 
 echo $config->database->host; // prints "dev.example.com"
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </example>
         <para>
             Het moet worden opgemerkt dat, vermits de configuratiedata onmiddellijk aan de PHP arrays worden
             toegevoegd, elke configuratiedatawaarde hetzelfde type zal hebben als dewelke in de
             <code>$config</code> array werd toegekend.
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 $config['staging']['debug']   = 'false'; // waarde is een string type
 $config['staging']['console'] = false; // waarde is een boolean type
 $config['staging']['timeout'] = 30; // waarde is een integer type
-?>]]>       </programlisting>
-        </para>
+?>]]>   </programlisting>
     </sect2>
 </sect1>
 <sect1 id="zend.config.classes.ini">
@@ -182,7 +192,8 @@ $config['staging']['timeout'] = 30; // waarde is een integer type
                 Dit voorbeeld illustreert het basisgebruik van <code>Zend_Config_Ini</code> voor het laden
                 van configuratiedata vanuit een INI bestand. Veronderstel dat we de volgende configuratiedata
                 in een <code>/pad/naar/config.ini</code> bestand hebben:
-                <programlisting role="ini"><![CDATA[; Productie site configuratiedata
+            </para>
+            <programlisting role="ini"><![CDATA[; Productie site configuratiedata
 [productie]
 webhost           = www.example.com
 database.type     = pdo_mysql
@@ -198,27 +209,28 @@ extends = productie
 database.host     = dev.example.com
 database.username = devuser
 database.password = devsecret]]>
-                </programlisting>
-                <note>
-                    Merk op dat de syntax van het INI bestand lijkt op diegene die verwacht word door
-                    de <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
-                    PHP functie, die door <code>Zend_Config_Ini</code> wordt gebruikt. Kijk deze documentatie
-                    na om op de hoogte te zijn van het specifieke gedrag van <code>Zend_Config_Ini</code>, 
-                    zoals hoe de speciale waarden <code>true</code>, <code>false</code>, <code>yes</code>, 
-                    <code>no</code>, en <code>null</code> worden vertaald.
-                </note>
+            </programlisting>
+            <note>
+                Merk op dat de syntax van het INI bestand lijkt op diegene die verwacht word door
+                de <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
+                PHP functie, die door <code>Zend_Config_Ini</code> wordt gebruikt. Kijk deze documentatie
+                na om op de hoogte te zijn van het specifieke gedrag van <code>Zend_Config_Ini</code>, 
+                zoals hoe de speciale waarden <code>true</code>, <code>false</code>, <code>yes</code>, 
+                <code>no</code>, en <code>null</code> worden vertaald.
+            </note>
+            <para>
                 Erfelijkheid word ondersteund in de INI syntax door het gebruik van het keywoord <code>extends</code>.
                 De waarde van de <code>extends</code> key moet dezelfde zijn als de naam van de sectie waarvan de verwijzende
                 sectie moet overerven. De configuratiedata wordt dan ingeladen van het INI bestand:
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
 
 $config = new Zend_Config(Zend_Config_Ini::load('/pad/naar/config.ini', 'staging'));
 
 echo $config->database->host; // prints "dev.example.com"
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </example>
     </sect2>
 </sect1>
@@ -234,7 +246,8 @@ echo $config->database->host; // prints "dev.example.com"
                 Dit voorbeeld illustreert het basisgebruik van <code>Zend_Config_Xml</code> voor het laden
                 van configuratiedata vanuit een XML bestand. Veronderstel dat we de volgende configuratiedata
                 in een <code>/pad/naar/config.xml</code> bestand hebben:
-                <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+            </para>
+            <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
 <config>
     <productie>
         <webhost>www.example.com</webhost>
@@ -253,19 +266,20 @@ echo $config->database->host; // prints "dev.example.com"
             <password>devsecret</password>
         </database>
     </staging>
-</config>]]>    </programlisting>
+</config>]]></programlisting>
+            <para>
                 Erfelijkheid word ondersteund in de XML syntax door het gebruik van het attribuut <code>extends</code>.
                 De waarde van het <code>extends</code> attribuut moet dezelfde zijn als de naam van de sectie waarvan de 
                 verwijzende sectie moet overerven. De configuratiedata wordt dan ingeladen van het XML bestand:
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Xml.php';
 
 $config = new Zend_Config(Zend_Config_Xml::load('/pad/naar/config.xml', 'staging'));
 
 echo $config->database->host; // prints "dev.example.com"
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
             <note>
                 Configuratiedatawaarden van <code>Zend_Config_Xml</code> worden altijd als strings beschouwd.
             </note>
