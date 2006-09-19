@@ -68,17 +68,18 @@ foreach ($slashdotRss as $item) {
     <para>
 		<code>Zend_Feed</code> laat ontwikkelaars toe heel gemakkelijk feeds te verkrijgen. Indien je de URI
 		van een feed kent, gebruik dan eenvoudigweg de <code>Zend_Feed::import()</code> methode:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $feed = Zend_Feed::import('http://feeds.example.com/feedName');
 
 ?>]]>   </programlisting>
-    </para>
     <para>
 		Je kan <code>Zend_Feed</code> ook gebruiken om de inhoud van een feed vanuit een bestand of een
 		PHP string variabele te verkrijgen:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 // een feed van een textbestand importeren
@@ -88,7 +89,6 @@ $feedFromFile = Zend_Feed::importFile('feed.xml');
 $feedFromPHP = Zend_Feed::importString($feedString);
 
 ?>]]></programlisting>
-    </para>
     <para>
 		In elk van de bovenstaande voorbeelden wordt een object van een klasse die <code>Zend_Feed_Abstract</code> 
 		uitbreidt teruggegeven, afhangende van de feed type. Indien een RSS feed werd verkregen via één van de
@@ -105,12 +105,14 @@ $feedFromPHP = Zend_Feed::importString($feedString);
 		Web paginas bevatten dikwijls <code>alt;link&gt;</code> afbakeningen die naar feeds met 
 		relevante informatie met betrekking tot de pagina wijzen. <code>Zend_Feed</code> laat je toe om
 		alle gereferenceerde feeds in een web pagina met één eenvoudige methode oproep te verkrijgen:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
 
 ?>]]></programlisting>
+    <para>
 		De methode <code>findFeeds()</code> stuurt een array van <code>Zend_Feed_Abstract</code> objecten
 		terug die gereferenceerd zijn door <code>&lt;link&gt;</code> afbakeningen op de news.html web
 		pagina. Afhankelijk van het type van elk van de feeds zal elke respectieve entry in de
@@ -125,12 +127,14 @@ $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
     <para>
 		Een RSS feed lezen is zo eenvoudig als het instantiëren van een <code>Zend_Feed_Rss</code> object
 		met het URI van de feed:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 
 ?>]]></programlisting>
+    <para>
 		Indien er fouten optreden bij het verkrijgen van de feed zal een <code>Zend_Feed_Exception</code>
 		opgeworpen worden.
     </para>
@@ -138,12 +142,14 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
     <para>
 		Als je eenmaal een feed object hebt, kan je toegang verkrijgen voor eender welke van de standaard RSS 
 		kanaaleigenschappen	op een direkte wijze:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->title();
 
 ?>]]></programlisting>
+    <para>
 		Merk de functiesyntax op. <code>Zend_Feed</code> gebruikt een overeenkomst om eigenschappen als
 		XML objecten te behandelen indien ze werden opgevraagd met de variabele "getter" syntax 
 		(<code>$obj->property()</code>). Dit laat het toe de volledige tekst van eender welke individuele
@@ -153,12 +159,14 @@ echo $channel->title();
     <para>
 		Indien kanaaleigenschappen attributen hebben zijn deze toegangkelijk door het gebruiken van de
 		array syntax van PHP:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->category['domain'];
 
 ?>]]></programlisting>
+    <para>
 		Vermits XML attributen geen kinderen kunnen hebben is de functiesyntax niet nodig om toegang te krijgen
 		tot attribuutwaarden.
     </para>
@@ -166,7 +174,8 @@ echo $channel->category['domain'];
     <para>
         Meestal zal je door een feed willen loopen en iets met de entries willen doen. 
         <code>Zend_Feed_Abstract</code> implementeert PHP's <code>Iterator</code> interface, dus het weergeven van alle titels van artikels in een kanaal is eenvoudig met: 
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 foreach ($channel as $item) {
@@ -174,6 +183,7 @@ foreach ($channel as $item) {
 }
 
 ?>]]></programlisting>
+    <para>
 		Indien je niet vertrouwd bent met RSS zijn hier de standaard elementen die je kan verwachten in een
 		RSS kanaal en in individuele RSS items (entries).
     </para>
@@ -253,7 +263,8 @@ foreach ($channel as $item) {
 
     <para>
 		Je kan in jouw code altijd testen of een element leeg is of niet met:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 if ($item->propname()) {
@@ -261,7 +272,6 @@ if ($item->propname()) {
 }
 
 ?>]]></programlisting>
-    </para>
 
     <para>
 		Indien je in de plaats daarvan <code>$item->propname</code> gebruikt, zal je altijd een leeg
@@ -549,14 +559,14 @@ class MyEntry extends Zend_Feed_EntryAtom
         <para>
 			Om deze klasse nu te gebruiken moet je ze gewoon direct instantiëren en de <code>myUpdated</code>
 			eigenschap zetten:
-            <programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 <?php
 
 $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';
 
 ?>]]>       </programlisting>
-        </para>
     </example>
 
 </sect1>

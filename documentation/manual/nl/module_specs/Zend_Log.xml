@@ -12,13 +12,13 @@
         <code>Zend_Log</code> klasse en alle adapter klassen die gebruikt zullen worden. Bijvoorbeeld,
 		indien een toepassing naar de console (PHP's output buffer) èn tekstbestanden gaat loggen, zouden
 		de volgende bestanden moeten worden ge-"include()":
-
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                  // Zend_Log basis klasse
 require_once 'Zend/Log/Adapter/Console.php';  // Console log adapter
 require_once 'Zend/Log/Adapter/File.php';     // Bestand log adapter
 ]]></programlisting>
-
+    <para>
         <code>Zend_Log</code> kan worden gebruikt in een vereenvoudigde vorm voor een enkele log,
 		kan geconfigureerd worden voor multilogs en kan ook gebruikt worden om interne operaties 
 		van vele Zend Framework klassen te loggen.
@@ -30,20 +30,19 @@ require_once 'Zend/Log/Adapter/File.php';     // Bestand log adapter
     <para>
 		Een logger wordt gemaakt door de <code>Zend_Log::registerLogger()</code> methode op te roepen
 		met een <code>Zend_Log_Adapter_Interface</code> instantie als argument.
-
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                // Zend_Log basis klasse
 require_once 'Zend/Log/Adapter/File.php';   // Bestand log adapter
 
 // De tekstbestand logger registreren
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
 ]]></programlisting>
-    </para>
 
     <para>
 		Berichten worden dan naar de log gezonden via <code>Zend_Log::log()</code>.
-
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 /**
  * Zend een bericht naar de log.  Een optioneel tweede argument duidt een loglevel aan.
  * Indien er geen level werd aangeduid wordt LEVEL_DEBUG aangenomen.
@@ -55,7 +54,6 @@ Zend_Log::log('Eerste logbericht.');
  */
 Zend_Log::log('Een ernstig probleem heeft zich voorgedaan.', Zend_Log::LEVEL_SEVERE);
 ]]></programlisting>
-    </para>
 </sect1>
 
 <sect1 id="zend.log.log-levels">
@@ -64,14 +62,13 @@ Zend_Log::log('Een ernstig probleem heeft zich voorgedaan.', Zend_Log::LEVEL_SEV
        <code>Zend_Log::log()</code> zal alle berichten loggen als <code>LEVEL_DEBUG</code> behalve indien een ander
 	   level werd opgegeven als optioneel tweede argument. De volgende levels zijn beschikbaar als constanten van de
 		<code>Zend_Log</code> klasse.
-
-       <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 LEVEL_DEBUG     = 1
 LEVEL_WARNING   = 4
 LEVEL_ERROR     = 8
 LEVEL_SEVERE    = 16
 ]]></programlisting>
-   </para>
 </sect1>
 
 <sect1 id="zend.log.advanced-logging">
@@ -89,8 +86,8 @@ LEVEL_SEVERE    = 16
    <para>
 		In het voorbeeld hierna worden twee loggers gemaakt: één voor de console, een andere voor een bestand.
 		Ze zullen respectievelijk <code>Console</code> en <code>File</code> worden genoemd.
-
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                 // Zend_Log basis klasse
 require_once 'Zend/Log/Adapter/File.php';    // Bestand log adapter
 require_once 'Zend/Log/Adapter/Console.php'; // Console log adapter
@@ -98,7 +95,6 @@ require_once 'Zend/Log/Adapter/Console.php'; // Console log adapter
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'File');
 Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Console');
 ]]></programlisting>
-   </para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

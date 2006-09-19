@@ -83,7 +83,7 @@
 			
 			<para>
 				<code>Zend_Controller</code> klassen worden als volgt in de bibliotheekmap opgeslaan:
-
+            </para>
     <programlisting role="php"><![CDATA[
 /library
   /Zend
@@ -92,7 +92,7 @@
       Dispatcher.php
       Router.php
 ]]></programlisting>			
-
+            <para>
 				Bij het onderklassen van <code>Zend_Controller</code> klassen is het aangeraden dat de nieuwe 
 				klassen opgeslagen worden in een gelijkaardige structuur onder jouw prefix. Dat maakt het
 				gemakkelijk om ze te vinden voor iemand gedurende dat leerprocess dat het nakijken van de
@@ -102,7 +102,7 @@
 			<para>
 				Bijvoorbeeld, een project Widget NV dat alleen een aangepaste router implementeerd zou op
 				het volgende kunnen lijken:
-				
+            </para>
 <programlisting role="php"><![CDATA[
 /library
   /Zend
@@ -111,7 +111,7 @@
       Router.php
       README.txt
 ]]></programlisting>			
-
+            <para>
 				Merk in dit voorbeeld op dat de <code>Widget/Controller/</code> map de <code>Zend/Controller/</code> weerspiegelt
 				waar dat ook maar enigzins mogelijk is. In dit geval verstrekt het een <code>Widget_Controller_Router</code>
 				klasse die een onderklasse of een vervanging is voor <code>Zend_Controller_Router</code> en die de
@@ -133,8 +133,8 @@
 		
 		<para>
 			De interface <code>Zend_Controller_Router_Interface</code> verstrekt een definitie voor één enkele methode:
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
   /**				
    * @param  Zend_Controller_Dispatcher_Interface
@@ -144,7 +144,7 @@
   public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
 
 ?>]]></programlisting>
-
+        <para>
 			Routing gebeurt slecht één enkele keer: wanneer het verzoek voor het eerst door het systeem wordt ontvangen.
 			Het doel van de router is een <code>Zend_Controller_Dispatch_Token</code> aan te maken dat een controller
 			en een actie van die controller definieert. Dit wordt dan doorgegeven aan de dispatcher. Indien het niet
@@ -177,8 +177,8 @@
 		
 		<para>
 			De <code>Zend_Controller_Dispatcher_Interface</code> interface verstrekt definities voor twee methodes:
-			
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
 /**
  * @param  Zend_Controller_Dispatcher_Token $route
@@ -187,12 +187,12 @@
 public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
-
+        <para>
 				<code>isDispatchable()</code> gaat na of een dispatch token gedispatched kan worden. Indien dat zo is geeft het
 		<code>TRUE</code> terug. Anders geeft het <code>FALSE</code> terug. In het geval van de standaard implementatie,
 		<code>Zend_Controller_Dispatcher</code>, betekent dit dat het controller bestand bestaat, dat de klasse in het 
 		bestand bestaat en dat de actiemethode in de klasse bestaat.
-		
+	    </para>	
 		<programlisting role="php"><![CDATA[<?php
 			
 /**
@@ -202,7 +202,7 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
-		
+        <para>
 		<code>dispatch()</code> is waar het echte werk wordt gedaan. Deze methode moet de actie van de controller 
 		uitvoeren. Het moet ofwel een dispatch token teruggeven of een boolean, FALSE, om aan te geven dat er geen
 		werk meer te doen is.

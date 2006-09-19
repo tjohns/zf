@@ -28,7 +28,7 @@
 
         <para>
             Beide manieren gebruiken dezelfde API methode om door de index te zoeken:
-
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -38,7 +38,7 @@ $index = new Zend_Search_Lucene('/data/my_index');
 $index->find($query);
 
 ?>]]></programlisting>
-
+        <para>
             De <code>Zend_Search_Lucene::find()</code> methode herkent automatisch het invoer type en gebruikt de query parser om het juiste Zend_Search_Lucene_Search_Query object
             van een string te maken.
         </para>
@@ -56,7 +56,7 @@ $index->find($query);
 
         <para>
             Het Zend_Search_Lucene_Search_QueryHit object bied daarnaast ook ieder veld van het gevonden Zend_Search_Lucene_Document als een eigenschap. In het volgende voorbeeld wordt een resultaat teruggegeven en heeft het document twee velden: title en author.
-
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -74,12 +74,12 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
         Het originele Zend_Search_Lucene_Document object kan ook worden teruggegeven vanuit de Zend_Search_Lucene_Search_QueryHit.
 
         Je kan geindexeerde delen van het document verkrijgen door gebruik te maken van de <code>getDocument()</code>methode van het index object en dan de <code>getFieldValue()</code> methode te gebruiken:
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -103,7 +103,7 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-
+        <para>
         De velden die beschikbaar zijn via het Zend_Search_Lucene_Document object worden besloten tijdens het indexeren. De document velden worden ofwel geindexeerd, ofwel geindexeerd en opgeslagen, in het document door de indexeringsapplicatie (bijvoorbeeld LuceneIndexCreation.jar).
         </para>
 
@@ -131,6 +131,7 @@ foreach ($hits as $hit) {
 
         <para>
             Score kan worden verkregen via de <code>score</code> eigenschap van het resultaat:
+        </para>
         <programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
 
@@ -140,7 +141,6 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
             Zend_Search_Lucene_Search_Similarity klasse wordt gebruikt om de score te berekenen. Zie <link linkend="zend.search.extending.scoring">Uitbreidbaarheid. Scoring Algoritmes</link> sectie voor details.

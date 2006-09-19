@@ -91,11 +91,13 @@ indexWriter.addDocument(doc);]]>
     
         <para>
 			LuceneIndexCreation.jar leest tekst bestanden door en maakt er een index voor aan. Gebruik:
+        </para>
         <programlisting role="java"><![CDATA[
     java -jar LuceneIndexCreation.jar [-c] [-s] <document_pad> <index_pad>
     -c   - dwing de index naar case sensitive
     -s   - inhoud in de index opslaan
     ]]></programlisting>
+       <para>
 			Dit commando leest een map <code>&lt;document_map&gt;</code> door, inclusief alle onderliggende mappen,
 			en maakt een Lucene index aan. De index is een set bestanden die in een andere map, gespecificeerd door
 			<code>&lt;index_map&gt;</code>, zullen worden opgeslagen..

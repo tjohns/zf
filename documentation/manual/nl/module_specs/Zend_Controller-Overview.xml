@@ -102,11 +102,11 @@
 		<para>
 			De router gebruikt een zeer eenvoudige mapping om de naam van de controller en de naam van de 
 			actie in de controller te determineren:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
-			</programlisting>
-			
+        </programlisting>
+        <para>
 			Merk hierboven op dat het eerste segment altijd de naam van de controller is en het tweede
 			segment altijd de naam van de actie is.
 		</para>
@@ -114,18 +114,17 @@ http://framework.zend.com/controller/action/]]>
 		<para>
 			Parameters mogen eventueel worden gedefinieerd in de URI die aan de controller wordt
 			doorgegeven. Deze nemen de vorm aan van key/waarde-paren:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/key1/value1/]]>
-			</programlisting>
-		</para>
+        </programlisting>
 
 		<para>
 			Indien er niets aanwezig is in het <code>/controller/</code> deel van de URI wordt deze
 			"<code>index</code>". Indien er niets aanwezig is in het <code>/action/</code> deel van
 			de URI, dan wordt dit ook een "<code>index</code>". Deze voorbeelden om dit te illustreren:
-
-				<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
 Controller: roadmap
 Action    : future
@@ -137,22 +136,21 @@ Action    : index
 http://framework.zend.com/
 Controller: index
 Action    : index]]>
-				</programlisting>
-			</para>
+        </programlisting>
 
-			<note>
-				Momenteel ontwikkelen we een nieuwe router met een URI herschrijvingsmotor die veel meer
-				flexibiliteit aan de router zal geven dan nu het geval is. De nieuwe router zal aanwezig zijn
-				in een preview versie in de nabije toekomst.
-			</note>
+		<note>
+			Momenteel ontwikkelen we een nieuwe router met een URI herschrijvingsmotor die veel meer
+			flexibiliteit aan de router zal geven dan nu het geval is. De nieuwe router zal aanwezig zijn
+			in een preview versie in de nabije toekomst.
+		</note>
 
-			<para>
-				De controller naam, de actienaam binnenin die controller en alle optionele parameters
-				zijn verpakt in een token, <code>Zend_Controller_Dispatcher_Token</code>. Dit token
-				wordt teruggekeerd naar <code>Zend_Controller_Front</code>, die dan in de dispatch lus
-				gaat. Eenmaal in de dispatch lus wordt het token aan de <code>Zend_Controller_Dispatcher</code>
-				gegeven.
-			</para>
+		<para>
+			De controller naam, de actienaam binnenin die controller en alle optionele parameters
+			zijn verpakt in een token, <code>Zend_Controller_Dispatcher_Token</code>. Dit token
+			wordt teruggekeerd naar <code>Zend_Controller_Front</code>, die dan in de dispatch lus
+			gaat. Eenmaal in de dispatch lus wordt het token aan de <code>Zend_Controller_Dispatcher</code>
+			gegeven.
+		</para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatch-token">

@@ -48,10 +48,12 @@ $json = Zend_Json::encode($phpNative);
     <para>
 		<code>Zend_Json</code> zal JSON objecten standaard als associatieve arrays
 		decoderen. Als je liever een object terugkrijgt, kan je dit zo opvragen:
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 // Decodeer objecten als objecten
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
-?>]]></programlisting>
+?>]]></programlisting>  
+    <para>
 		Alle zo gedecodeerde objecten worden teruggestuurd als <code>StdClass</code> 
 		objecten met eigenschappen die overeenkomen met de key/waarde-paren in de JSON
 		notatie.

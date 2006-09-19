@@ -30,11 +30,12 @@
 			aanvragen naar index.php doorstuurt. Voor ontwikkelingsdoelen is het vaak eenvoudiger om een
 			mod_rewrite regel te schrijven die alle aanvragen doorstuurt naar index.php, behalve een paar
 			bestandsextensies. Hier is een voorbeeld van zulk een bestand:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
+        <para>
 			In het voorbeeld hierboven worden alle aanvragen voor bestanden waarvan de extensie niet in de lijst staan naar
 			index.php doorgestuurd. Dit is handig voor het ontwikkelen, maar in productie zouden de regels mappen
 			moeten uitsluiten, geen bestandsextensies.
@@ -64,15 +65,15 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		<para>
 			Maak het bootstrap bestand, <code>index.php</code>, in de document root om Zend_Controller_Front te
 			bootstrappen:
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Front.php';
 
 Zend_Controller_Front::run('/pad/naar/jouw/controllers');
 
 ?>]]></programlisting>
-
+        <para>
 			Zie de volgende sectie wat betreft <code>/pad/naar/jouw/controllers</code>.
 
 			Zoals aangegeven in <code>README.txt</code> moet het Zend Framework pad in het <code>include_path</code>
@@ -101,8 +102,8 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers');
 		<para>	
 			De voorgestelde mappenstructuur bestaat uit zowel bibliotheekmappen (van Zend en elders) en
 			toepassingsmappen.
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 /application
   /models
   /views
@@ -115,7 +116,6 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers');
 /library
   /Zend
 ]]></programlisting>
-		</para>
 		
 		<note>
 			Deze sectie is nog niet compleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
@@ -129,19 +129,18 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers');
 			Elke site moet een controller genaamd <code>IndexController</code> definiëren. Dit is de
 			controller die wordt bereikt indien geen enkele controller werd gespecificeerd in de URI,
 			zoals in volgende URI:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/
 ]]></programlisting>
-		</para>
 
 		<para>
 			De <code>IndexController</code> klasse moet ondergebracht worden in een bestand genaamd
 			<code>IndexController.php</code>, en dat bestand moet in de map "controllers" worden opgeslaan.
 			De <code>IndexController</code> moet <code>Zend_Controller_Action</code> onderklassen.
 			Hier is een voorbeeld van een <code>IndexController</code>:
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Action.php';
 
@@ -160,9 +159,8 @@ class IndexController extends Zend_Controller_Action
 
 ?>]]></programlisting>
 			
-			<note>
-			Deze sectie is nog niet compleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
-			</note>			
-		</para>
+		<note>
+		  Deze sectie is nog niet compleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
+		</note>
 	</sect2>			
 </sect1>
