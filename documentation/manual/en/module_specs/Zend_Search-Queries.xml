@@ -10,15 +10,16 @@
 
         <para>
         Query string:
+        </para>
         <programlisting role="php"><![CDATA[
     $hits = $index->find('word1');]]>
         </programlisting>
-        </para>
 
         <para>or</para>
 
         <para>
         Query construction by API:
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
     $term  = new Zend_Search_Lucene_Index_Term('word1');
@@ -26,7 +27,6 @@
     $hits  = $index->find($query);
 
 ?>]]></programlisting>
-        </para>
     </sect2>
 
     <sect2 id="zend.search.queries.multiterm-query">
@@ -74,6 +74,7 @@
 
         <para>
             Query string:
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 $hits = $index->find('+word1 author:word2 -word3');
@@ -88,12 +89,12 @@ $hits = $index->find('+word1 author:word2 -word3');
             If it's omitted, then 'contents' is used.
             </listitem>
         </itemizedlist>
-        </para>
 
         <para>or</para>
 
         <para>
         Query construction by API:
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
     $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
@@ -105,7 +106,6 @@ $hits = $index->find('+word1 author:word2 -word3');
     $hits  = $index->find($query);
 
 ?>]]></programlisting>
-        </para>
 
         <para>
             The <code>$signs</code> array contains information about the term type:
@@ -172,9 +172,9 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             Zend_Search_Lucene_Search_Query_Phrase class constructor takes three optional arguments:
-        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]></programlisting>
         </para>
-
+        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase([array $terms[, array $offsets[, string $field]]]);]]></programlisting>
+        
         <para>
             <code>$terms</code> is an array of strings that contains a set of phrase terms.
             If it's omitted or equal to null, then an empty query is constructed.
@@ -195,14 +195,21 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             Thus:
+        </para>
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'));]]></programlisting>
+        <para>
             will search for the phrase 'zend framework'.
+        </para>
 
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'download'), array(0, 2));]]></programlisting>
+        <para>
             will search for the phrase 'zend ????? download' and match 'zend platform download', 'zend studio
             download', 'zend core download', 'zend framework download', and so on.
+        </para>
 
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
+        
+        <para>
             will search for the phrase 'zend framework' in a 'title' field.
         </para>
 
@@ -210,9 +217,9 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         <para>
             <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code> takes two arguments, a
             required <code>Zend_Search_Lucene_Index_Term</code> object and an optional position:
-        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
         </para>
-
+        <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
+        
         <para>
             <code>$term</code> describes the next term in a phrase. It must indicate the same field as previous terms, or an exception will be thrown.
         </para>
@@ -223,20 +230,25 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             Thus:
+        </para>
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'));
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'));]]></programlisting>
+        <para>
             will search for the phrase 'zend framework'.
+         </para>
 
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend'), 0);
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework'), 2);]]></programlisting>
+        <para>
             will search for the phrase 'zend ????? download' and match 'zend platform download', 'zend studio
             download', 'zend core download', 'zend framework download', and so on.
-
+        </para>
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase();
 $query->addTerm(new Zend_Search_Lucene_Index_Term('zend', 'title'));
 $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></programlisting>
+        <para>
             will search for the phrase 'zend framework' in a 'title' field.
         </para>
 

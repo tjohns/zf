@@ -20,14 +20,14 @@
         Usage of <code>Zend_Json</code> involves using the two public static
         methods available: <code>Zend_Json::encode()</code> and
         <code>Zend_Json::decode()</code>. 
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 // Retrieve a value:
 $phpNative = Zend_Json::decode($encodedValue);
 
 // Encode it to return to the client:
 $json = Zend_Json::encode($phpNative);
 ?>]]></programlisting>
-    </para>
 </sect1>
 
 <sect1 id="zend.json.objects">
@@ -48,10 +48,12 @@ $json = Zend_Json::encode($phpNative);
         By default, <code>Zend_Json</code> will decode JSON objects as
         associative arrays. However, if you desire an object returned, you can
         specify this:
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 // Decode objects as objects
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 ?>]]></programlisting>
+    <para>
         Any objects thus decoded are returned as <code>StdClass</code> objects
         with properties corresponding to the key/value pairs in the JSON
         notation.

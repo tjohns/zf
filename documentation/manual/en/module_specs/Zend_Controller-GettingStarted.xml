@@ -25,12 +25,12 @@
 			and must contain a mod_rewrite rule to redirect all requests to index.php.  For development purposes, it
 			is often simplest to write a mod_rewrite rule that will redirect all requests to index.php except for certain
 			file extensions.  Here is an example of such a file:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
-
+        <para>
 			In the example above, all requests not containing one of the above file extensions will be passed to index.php.
 			This is useful for development, however in production the rewrite rules should be
 			written to exclude directories instead.
@@ -58,15 +58,15 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 
 		<para>
 			Create the bootstrap file, <code>index.php</code>, in the document root to bootstrap Zend_Controller_Front:
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Front.php';
 
 Zend_Controller_Front::run('/path/to/your/controllers');
 
 ?>]]></programlisting>
-
+        <para>
 			See the next section regarding the <code>/path/to/your/controllers</code>.
 
 			As instructed in <code>README.txt</code>, the directory of the Zend Framework library must be in the
@@ -94,8 +94,8 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		<para>	
 			The suggested directory structure consists of both library directories (from Zend and elsewhere) 
 			and application directories.
-
-			<programlisting role="php"><![CDATA[
+		</para>
+        <programlisting role="php"><![CDATA[
 /application
   /models
   /views
@@ -108,7 +108,6 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 /library
   /Zend
 ]]></programlisting>
-		</para>
 		
 		<note>
 			This section is not yet complete.  It is under heavy construction and is subject to change.
@@ -121,18 +120,17 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		<para>
 			Every site must define a controller named <code>IndexController</code>.  This is the controller
 			that is reached when no controller is specified in the URI, such as in this URI:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/
 ]]></programlisting>
-		</para>
 
 		<para>
 			The <code>IndexController</code> class must be stored in a file named <code>IndexController.php</code>, and
 			this must be stored in the controllers directory.  The <code>IndexController</code> must subclass
 			<code>Zend_Controller_Action</code>.  Here is a sample <code>IndexController</code>:
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Action.php';
 
@@ -151,9 +149,8 @@ class IndexController extends Zend_Controller_Action
 
 ?>]]></programlisting>
 			
-			<note>
-				This section is not yet complete.  It is under heavy construction and is subject to change.
-			</note>			
-		</para>
+		<note>
+			This section is not yet complete.  It is under heavy construction and is subject to change.
+		</note>
 	</sect2>			
 </sect1>

@@ -189,27 +189,29 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             Tags are a way to categorize cache records. When you save a cache with the <code>save()</code>
             method, you can set an array of tags to apply for this record. Then you will be 
             able to clean all cache records tagged with a given tag (or tags):
+        </para>
         <programlisting role="php"><![CDATA[<?php
              
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             
-?>]]></programlisting></para>
+?>]]></programlisting>
     </sect2>
     <sect2 id="zend.cache.clean">
         <title>Cleaning the cache</title>
         <para>
             To remove/invalidate in particular cache id, you can use the <code>remove()</code>
             method :
-             <programlisting role="php"><![CDATA[<?php 
+        </para>
+        <programlisting role="php"><![CDATA[<?php 
              
 $cache->remove('idToRemove');
             
 ?>]]></programlisting>            
-        </para>
         <para>
             To remove/invalidate several cache ids in one operation, you can use the <code>clean()</code>
             method. For example to remove all cache records :
-              <programlisting role="php"><![CDATA[<?php 
+        </para>
+        <programlisting role="php"><![CDATA[<?php 
 
 // clean all records
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
@@ -217,14 +219,15 @@ $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 // clean only outdated
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
             
-?>]]>       </programlisting>    
+?>]]>   </programlisting>    
+        <para>
             If you want to remove cache entries matching the tags 'tagA' and 'tagC':
-              <programlisting role="php"><![CDATA[<?php 
+        </para>
+        <programlisting role="php"><![CDATA[<?php 
              
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
             
-?>]]>       </programlisting>
-        </para>
+?>]]>   </programlisting>
         <para>
             Available cleaning modes are: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
             <code>CLEANING_MODE_MATCHING_TAG</code> and <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. The
@@ -337,7 +340,8 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
             <para>
                 If you store only strings into cache (because with "automaticSerialization" option, it's possible
                 to store some booleans), you can use a more compact construction like:
-                 <programlisting role="php"><![CDATA[<?php  
+            </para>
+            <programlisting role="php"><![CDATA[<?php  
              
 // we assume you already have $cache
 
@@ -358,10 +362,10 @@ if (!($data = $cache->get($id))) {
 // [...] do something with $data (echo it, pass it on etc.)
              
 ?>]]>       </programlisting> 
-            </para>  
             <para>
                 If you want to cache multiple blocks or data instances, the idea is the same:
-                 <programlisting role="php"><![CDATA[<?php  
+            </para>
+            <programlisting role="php"><![CDATA[<?php  
              
 // make sure you use unique identifiers:
 $id1 = 'foo';
@@ -398,8 +402,7 @@ if (!($data = $cache->get($id2))) {
 } 
 echo($data);
 
-?>]]>       </programlisting>             
-            </para>            
+?>]]>       </programlisting>                        
         </sect3>   
     </sect2>
     
@@ -425,7 +428,8 @@ echo($data);
             <title>Examples</title>
             <para>
                 An example is given in the manual at the very beginning. Here it is with minor changes:
-                 <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 // if it is a cache miss, output buffering is triggered
 if(!$cache->start('mypage')):
@@ -440,7 +444,6 @@ endif;
 echo 'This is never cached ('.time().').';
 
 ?>]]>       </programlisting>
-            </para>
             <para>
                 Using this form it is fairly easy to set up output caching in your already working project
                 with little or no code refactoring.
@@ -506,7 +509,8 @@ echo 'This is never cached ('.time().').';
             <para>
                 Using the <code>call()</code> function is the same as using
                 <code>call_user_func_array()</code> in PHP:
-                 <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 $cache->call('veryExpensiveFunc', $params);
 
@@ -515,7 +519,6 @@ $cache->call('veryExpensiveFunc', $params);
 # $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
 
 ?>]]>       </programlisting>
-            </para>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the
                 return value of the function and its internal output.
@@ -594,7 +597,8 @@ $cache->call('veryExpensiveFunc', $params);
             <title>Examples</title>
             <para>
                 For example, to cache static calls :
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 class test {
    
@@ -615,9 +619,11 @@ $frontendOptions = array(
 # The cached call
 $res = $cache->foobar('1', '2');
 
-?>]]>           </programlisting>
+?>]]>       </programlisting>
+            <para>
                 To cache classic method calls :
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 class test {
    
@@ -640,8 +646,7 @@ $frontendOptions = array(
 # The cached call
 $res = $cache->foobar2('1', '2');
 
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </sect3>   
     </sect2>
     
@@ -794,7 +799,8 @@ $res = $cache->foobar2('1', '2');
         	<title>Examples</title>
 	        <para>
 	            Use of Zend_Cache_Frontend_Page is really trivial :
-	            <programlisting role="php"><![CDATA[<?php
+	        </para>
+            <programlisting role="php"><![CDATA[<?php
 	           
 // [...] // require, configuration and factory
 	
@@ -803,12 +809,12 @@ $cache->start();
 	
 // rest of the page ...
 	
-?>]]>           </programlisting>
-	        </para>
+?>]]>       </programlisting>
 	        <para>
 	        	a more complex example which shows a way to get a centralized cache management in a bootstrap file
 	        	(for using with Zend_Controller for example)
-	        	<programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 // [...] you should avoid to put too much lines before the cache section 
 // [...] for example, for optimal performances, "require_once" or "Zend::loadClass" should be 
@@ -842,8 +848,7 @@ $cache->start();
 
 // [...] the end of the bootstrap file (these lines won't be executed if the cache is hit)
 	        	
-?>]]>           </programlisting>	        	
-	        </para>	        
+?>]]>       </programlisting>
     	</sect3>
 	</sect2>   
 </sect1>

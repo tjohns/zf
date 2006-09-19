@@ -11,25 +11,23 @@
             <code>Zend_Http_Client</code> follows up to 5 HTTP redirections by default. To change this behavior, pass the
             maximum number of allowed redirections to the <code>get()</code> method.
         </note>
-        <para>
-            <example>
-                <title>Performing a Basic GET Request</title>
-                <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-    try {
-        $http = new Zend_Http_Client('http://example.org');
-        $response = $http->get();
-        if ($response->isSuccessful()) {
-            echo $response->getBody();
-        } else {
-            echo '<p>An error occurred</p>';
-        }
-    } catch (Zend_Http_Client_Exception $e) {
-        echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
+        <example>
+            <title>Performing a Basic GET Request</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
+try {
+    $http = new Zend_Http_Client('http://example.org');
+    $response = $http->get();
+    if ($response->isSuccessful()) {
+        echo $response->getBody();
+    } else {
+        echo '<p>An error occurred</p>';
     }
-    ?>]]></programlisting>
-            </example>
-        </para>
+} catch (Zend_Http_Client_Exception $e) {
+    echo '<p>An error occurred (' .$e->getMessage(). ')</p>';
+}
+?>]]></programlisting>
+        </example>
     </sect2>
     <sect2 id="zend.http.client.basic-get-requests">
         <title>Basic GET Requests with Specified HTTP Headers</title>
@@ -50,7 +48,6 @@
     $http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
     ?>]]>       </programlisting>
         </example>
-        <para />
         <example>
             <title>Sending Multiple Headers</title>
             <programlisting role="php"><![CDATA[<?php
