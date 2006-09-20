@@ -711,7 +711,7 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.files">
-                <title>Files</title>
+                <title>Classes</title>
 
                 <para>
                     Every file that contains PHP code must have a header block at the top of the file that
