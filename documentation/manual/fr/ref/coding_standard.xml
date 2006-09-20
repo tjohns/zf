@@ -661,8 +661,6 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.files">
-                <title>Fichiers</title>
-
                 <para>
                     Chaque fichier qui contient du code PHP doit avoir un bloc d'entête en haut du fichier qui contient
                     au minimum ces balise phpDocumentor :
