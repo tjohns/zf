@@ -34,12 +34,12 @@
 			特定の拡張子のファイル以外をすべて index.php
 			にリダイレクトさせるような単純なルールを設定しておけばよいでしょう。
 			例えばこのようになります。
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
-
+        <para>
 			上の例では、指定した拡張子以外のすべてのファイルに対するリクエストが
 			index.php に渡されます。開発中にはこれで十分ですが、
 			実運用環境では、リダイレクトしないディレクトリを指定するなどの記述が必要でしょう。
@@ -71,15 +71,15 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		<para>
 			Zend_Controller_Front を起動するための起動用ファイル
 			<code>index.php</code> をドキュメントルートに作成します。
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Front.php';
 
 Zend_Controller_Front::run('/path/to/your/controllers');
 
 ?>]]></programlisting>
-
+        <para>
 			<code>/path/to/your/controllers</code> の部分に関しては、次の節を参照ください。
 
 			<code>README.txt</code> に記述されているように、
@@ -112,8 +112,8 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		<para>	
 			推奨する構造は、(Zend およびその他の) ライブラリ用のディレクトリと
 			アプリケーションのディレクトリを別に分けるものです。
-
-			<programlisting role="php"><![CDATA[
+		</para>
+        <programlisting role="php"><![CDATA[
 /application
   /models
   /views
@@ -126,7 +126,6 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 /library
   /Zend
 ]]></programlisting>
-		</para>
 		
 		<note>
 			この節は未完成です。現在作成中であり、今後変わる可能性があります。
@@ -141,11 +140,10 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 			すべてのサイトで定義しなければなりません。
 			URI にコントローラが指定されなかった場合、例えば次のような
 			URI が指定された場合に、このコントローラが使用されます。
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/
 ]]></programlisting>
-		</para>
 
 		<para>
 			<code>IndexController</code> クラスは、コントローラのディレクトリにある
@@ -153,8 +151,8 @@ http://framework.zend.com/
 			<code>IndexController</code> は、<code>Zend_Controller_Action</code>
 			を継承しなければなりません。<code>IndexController</code>
 			の例は、このようになります。
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Action.php';
 
@@ -173,9 +171,8 @@ class IndexController extends Zend_Controller_Action
 
 ?>]]></programlisting>
 			
-			<note>
-				この節は未完成です。現在作成中であり、今後変わる可能性があります。
-			</note>			
-		</para>
+		<note>
+			この節は未完成です。現在作成中であり、今後変わる可能性があります。
+		</note>
 	</sect2>			
 </sect1>

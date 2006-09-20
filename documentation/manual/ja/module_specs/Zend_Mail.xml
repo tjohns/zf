@@ -14,7 +14,8 @@
             このようなメールを送信するには、PHP の
             <ulink url="http://php.net/mail"><code>mail()</code></ulink>
             関数を使用して次のようにします。
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('This is the text of the mail.');
@@ -22,8 +23,7 @@ $mail->setFrom('somebody@example.com', 'Some Sender');
 $mail->addTo('somebody_else@example.com', 'Some Recipient');
 $mail->setSubject('TestSubject');
 $mail->send();
-?>]]>       </programlisting>
-       </para>
+?>]]>   </programlisting>
     </example>
     <note>
         <code>Zend_Mail</code> でメールを送信するには、
@@ -175,7 +175,8 @@ $mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_
         <code>addAttachment()</code> の返す値を使用してその属性を変更します。
         <code>addAttachment()</code> メソッドの返す値は
         <code>Zend_Mime_Part</code> オブジェクトです。
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
@@ -187,8 +188,7 @@ $at->encoding    = Zend_Mime::ENCODING_8BIT;
 $at->filename    = 'test.gif';
 
 $mail->send();
-?>]]>   </programlisting>
-    </para>
+?>]]></programlisting>
 </sect1>
 <sect1 id="zend.mail.adding-recipients">
     <title>受信者の追加</title>

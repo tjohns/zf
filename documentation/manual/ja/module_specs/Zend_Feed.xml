@@ -70,17 +70,18 @@ foreach ($slashdotRss as $item) {
         <code>Zend_Feed</code> を使用すると、フィードの取得が非常に簡単に行えます。
         フィードの URI がわかれば、単に <code>Zend_Feed::import()</code>
         メソッドを使用すればよいのです。
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $feed = Zend_Feed::import('http://feeds.example.com/feedName');
 
-?>]]>   </programlisting>
-    </para>
+?>]]></programlisting>
     <para>
         <code>Zend_Feed</code> を使用して、ファイルや PHP
         文字列変数からフィードを読み込むこともできます。
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 // テキストファイルからフィードを読み込みます
@@ -90,7 +91,6 @@ $feedFromFile = Zend_Feed::importFile('feed.xml');
 $feedFromPHP = Zend_Feed::importString($feedString);
 
 ?>]]></programlisting>
-    </para>
     <para>
         上のすべての例では、成功した場合に返されるのは
         <code>Zend_Feed_Abstract</code> を実装したクラスのオブジェクトで、
@@ -109,12 +109,14 @@ $feedFromPHP = Zend_Feed::importString($feedString);
         <code>&lt;link&gt;</code> タグが含まれていることがあります。
         <code>Zend_Feed</code> を使用すると、
         単純にひとつのメソッドをコールするだけでこのようなフィードを取得できます。
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
 
 ?>]]></programlisting>
+    <para>
         <code>findFeeds()</code> メソッドは <code>Zend_Feed_Abstract</code>
         オブジェクトの配列を返します。その内容は、news.html の中の
         <code>&lt;link&gt;</code> が指しているものとなります。
@@ -132,12 +134,14 @@ $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
     <para>
         RSS フィードの読み込みは、フィードの URL を指定して
         <code>Zend_Feed_Rss</code> のインスタンスを作成するのと同じくらい簡単です。
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 
 ?>]]></programlisting>
+    <para>
         フィードの取得時にエラーが発生した場合は
         <code>Zend_Feed_Exception</code> がスローされます。
     </para>
@@ -145,12 +149,14 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
     <para>
         フィードオブジェクトを取得すると、標準的な RSS の "channel"
         プロパティに対して直接アクセスできるようになります。
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->title();
 
 ?>]]></programlisting>
+    <para>
         関数の構文に注意しましょう。"getter" 方式の構文 (<code>$obj->property</code>)
         をした場合は、<code>Zend_Feed</code> はプロパティを XML オブジェクトとして扱います。
         一方、メソッドの構文 (<code>$obj->property()</code>)
@@ -161,12 +167,14 @@ echo $channel->title();
     <para>
         チャネルのプロパティが属性を保持している場合、PHP
         の配列構文を使用してそれらにアクセスすることができます。
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->category['domain'];
 
 ?>]]></programlisting>
+    <para>
         XML の属性は子を持つことができないので、
         属性値へアクセスする際にメソッド構文を使用する必要はありません。
     </para>
@@ -177,7 +185,8 @@ echo $channel->category['domain'];
         <code>Zend_Feed_Abstract</code> は PHP の <code>Iterator</code>
         インターフェイスを実装しているので、
         例えばチャネル内の全記事のタイトルを表示するには単にこのようにするだけです。
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 foreach ($channel as $item) {
@@ -185,6 +194,7 @@ foreach ($channel as $item) {
 }
 
 ?>]]></programlisting>
+    <para>
         RSS にあまり詳しくない方のために、RSS チャネルおよび個々の RSS
         アイテム (エントリ) で利用できる標準的な要素をまとめます。
     </para>
@@ -265,7 +275,8 @@ foreach ($channel as $item) {
 
     <para>
         要素が空要素であるかどうかは、以下のようにして調べられます。
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 if ($item->propname()) {
@@ -273,7 +284,6 @@ if ($item->propname()) {
 }
 
 ?>]]></programlisting>
-    </para>
 
     <para>
         <code>$item->propname</code> 形式を使用した場合は、
@@ -579,14 +589,14 @@ class MyEntry extends Zend_Feed_EntryAtom
         <para>
             そしてこのクラスを使用すると、インスタンスを作成したらすぐに
             <code>myUpdated</code> プロパティを設定することができます。
-            <programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 <?php
 
 $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';
 
 ?>]]>       </programlisting>
-        </para>
     </example>
 
 </sect1>

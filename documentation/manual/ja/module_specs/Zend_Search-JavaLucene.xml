@@ -98,11 +98,13 @@ indexWriter.addDocument(doc);]]>
             LuceneIndexCreation.jar は、
             テキストファイルを読み込んでインデックスを作成します。
             使用法は以下のとおりです。
+        </para>
         <programlisting role="java"><![CDATA[
     java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
     -c   - インデックスの大文字小文字を区別します
     -s   - コンテンツをインデックスに保存します
     ]]></programlisting>
+        <para>
             このコマンドは、ディレクトリ <code>&lt;document_dir&gt;</code>
             およびそのサブディレクトリの内容を読み込んで、Lucene
             インデックスを作成します。

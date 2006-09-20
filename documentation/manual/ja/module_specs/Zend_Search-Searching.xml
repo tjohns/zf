@@ -45,6 +45,7 @@
 
         <para>
             どちらの方法を使用したとしても、インデックスを検索する API メソッドは同じです。
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -55,7 +56,7 @@ $index = new Zend_Search_Lucene('/data/my_index');
 $index->find($query);
 
 ?>]]></programlisting>
-
+        <para>
             <code>Zend_Search_Lucene::find()</code> メソッドは、
             入力の型を自動的に判別し、クエリパーサを使用して文字列から
             Zend_Search_Lucene_Search_Query オブジェクトを作成します。
@@ -91,7 +92,7 @@ $index->find($query);
             の各フィールドも公開しています。
             この例で、ヒットしたドキュメントには
             title と author の 2 つのフィールドが含まれています。
-
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -107,7 +108,6 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
         オプションで、
@@ -118,6 +118,7 @@ foreach ($hits as $hit) {
         インデックスオブジェクトの <code>getDocument()</code>
         メソッドを使用し、その <code>getFieldValue()</code>
         メソッドでフィールドの値を取得します。
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -141,7 +142,7 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-
+        <para>
         Zend_Search_Lucene_Document オブジェクトで使用可能なフィールドは、
         インデックス化の際に決まります。ドキュメントのフィールドは、
         インデックス化用アプリケーション (例えば LuceneIndexCreation.jar)
@@ -170,6 +171,7 @@ foreach ($hits as $hit) {
 
         <para>
             検索結果のスコアを取得するには <code>score</code> プロパティを使用します。
+        </para>
         <programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
 
@@ -179,7 +181,6 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
             重みを計算するために使用されるのが

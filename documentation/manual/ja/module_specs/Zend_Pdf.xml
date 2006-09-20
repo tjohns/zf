@@ -295,8 +295,7 @@ $height = $pdfPage->getHeight();]]>
         <code>Zend_Pdf_Color_GrayScale</code>、<code>Zend_Pdf_Color_RGB</code> および
         <code>Zend_Pdf_Color_CMYK</code> クラスです。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 // $grayLevel (float 型の数値)。0.0 (黒) - 1.0 (白)
 $color1 = new Zend_Pdf_Color_GrayScale($grayLevel);
 
@@ -305,8 +304,7 @@ $color2 = new Zend_Pdf_Color_RGB($r, $g, $b);
 
 // $c, $m, $y, $k (float 型の数値)。0.0 (最小の強度) - 1.0 (最大の強度)
 $color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]>
-            </programlisting>
-        </para>
+        </programlisting>
     </sect2>
 
 
@@ -318,8 +316,7 @@ $color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]>
         <para>
         基本図形のセットが <code>Zend_Pdf_Page</code> クラスで提供されています。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /**
  * x1,y1 から x2,y2 まで直線を描画します。
  *
@@ -329,10 +326,8 @@ $color3 = new Zend_Pdf_Color_CMYK($c, $m, $y, $k);]]>
  * @param float $y2
  */
 public function drawLine($x1, $y1, $x2, $y2);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 矩形を描画します。
  *
@@ -348,10 +343,8 @@ public function drawLine($x1, $y1, $x2, $y2);]]>
  * @param integer $fillType
  */
 public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 多角形を描画します。
  *
@@ -368,10 +361,8 @@ public function drawRectangle($x1, $y1, $x2, $y2, $fillType = Zend_Pdf_Page::SHA
 public function drawPolygon($x, $y,
                             $fillType = Zend_Pdf_Page::SHAPE_DRAW_FILL_AND_STROKE,
                             $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 中心が x, y で半径が radius の円を描画します。
  *
@@ -398,10 +389,8 @@ public function drawPolygon($x, $y,
  * @param mixed $param6
  */
 public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $param6 = null);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 指定した矩形に内接する楕円を描画します。
  *
@@ -422,8 +411,7 @@ public function  drawCircle($x, $y, $radius, $param4 = null, $param5 = null, $pa
  * @param mixed $param7
  */
 public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, $param7 = null);]]>
-            </programlisting>
-        </para>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.text-drawing">
@@ -435,8 +423,7 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
         現在のフォントおよびフォントサイズを使用して、描画操作が行われます
         (詳細は、以下を参照ください)。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /**
  * 指定した位置にテキストを描画します。
  *
@@ -448,8 +435,7 @@ public function drawEllipse($x1, $y1, $x2, $y2, $param5 = null, $param6 = null, 
  * @throws Zend_Pdf_Exception
  */
 public function drawText($text, $x, $y, $charEncoding = '');]]>
-            </programlisting>
-        </para>
+        </programlisting>
         <example>
             <title>ページ上への文字列の描画</title>
             <programlisting role="php"><![CDATA[<?php
@@ -491,8 +477,7 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
         現在設定されているフォントおよびフォントサイズを使用します。
         これは <code>Zend_Pdf_Page::setFont()</code> メソッドで設定できます。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /**
  * 現在のフォントを設定します。
  *
@@ -500,8 +485,7 @@ $pdfPage->drawText($unicodeString, 72, 720, 'UTF-8');
  * @param float $fontSize
  */
 public function setFont(Zend_Pdf_Font $font, $fontSize);]]>
-            </programlisting>
-        </para>
+        </programlisting>
         <para>
         PDF ドキュメントは、PostScript Type 1 フォントおよび TrueType フォントだけでなく、
         PDF 用の特別な形式である Type 3 フォントや複合フォントもサポートしています。
@@ -687,8 +671,7 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
         <code>Zend_Pdf_Page</code> クラスの drawImage() メソッドで、
         画像の描画を行います。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /**
  * ページ内の指定した位置に画像を描画します。
  *
@@ -699,8 +682,7 @@ $font = Zend_Pdf_Font::fontWithPath($someUserSelectedFontPath,
  * @param float $y2
  */
 public function drawImage(Zend_Pdf_Image $image, $x1, $y1, $x2, $y2);]]>
-            </programlisting>
-        </para>
+        </programlisting>
         <para>
         画像オブジェクトは <code>Zend_Pdf_Image</code>
         クラスを継承したクラスで表されます。
@@ -744,8 +726,7 @@ $pdfPage->drawImage($image, 100, 100, 400, 300);
         直線の描画スタイルは、線幅と線の色、そして破線のパターンで定義されます。
         これらはすべて、<code>Zend_Pdf_Page</code> クラスのメソッドで設定します。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /** 線の色を設定します。*/
 public function setLineColor(Zend_Pdf_Color $color);
 
@@ -762,8 +743,7 @@ public function setLineWidth(float $width);
  * @param array $phase
  */
 public function setLineDashingPattern($pattern, $phase = 0);]]>
-            </programlisting>
-        </para>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.fill-style">
@@ -853,16 +833,14 @@ nonzero winding number ルールに対するもうひとつのルールが even-
         描画操作を適用する前に、PDF のページを回転させることができます。
         それには <code>Zend_Pdf_Page::rotate()</code> メソッドを使用します。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /**
  * ($x, $y) を中心にし、指定した角度 (ラジアン) だけ回転します。
  *
  * @param float $angle
  */
 public function rotate($x, $y, $angle);]]>
-            </programlisting>
-        </para>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.save-restore">
@@ -877,8 +855,7 @@ public function rotate($x, $y, $angle);]]>
         <code>Zend_Pdf_Page</code>
         クラスには、これらの操作を行うための 2 つのメソッドがあります。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /**
  * このページのグラフィックの状態を保存します。
  * 現在適用されているスタイル・位置・クリップ領域および
@@ -890,8 +867,7 @@ public function saveGS();
  * 直近の saveGS() で保存されたグラフィックの状態を復元します。
  */
 public function restoreGS();]]>
-            </programlisting>
-        </para>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.clipping">
@@ -905,8 +881,7 @@ public function restoreGS();]]>
         <code>Zend_Pdf_Page</code> クラスでは、
         クリッピングに関連するいくつかのメソッドを提供しています。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /**
  * 矩形のクリップ領域を設定します。
  *
@@ -916,10 +891,8 @@ public function restoreGS();]]>
  * @param float $y2
  */
 public function clipRectangle($x1, $y1, $x2, $y2);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 多角形のクリップ領域を設定します。
  *
@@ -928,10 +901,8 @@ public function clipRectangle($x1, $y1, $x2, $y2);]]>
  * @param integer $fillMethod
  */
 public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON_ZERO_WINDING);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 円形のクリップ領域を設定します。
  *
@@ -942,10 +913,8 @@ public function clipPolygon($x, $y, $fillMethod = Zend_Pdf_Page::FILL_METHOD_NON
  * @param float $endAngle
  */
 public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 楕円のクリップ領域を設定します。
  *
@@ -963,8 +932,7 @@ public function clipCircle($x, $y, $radius, $startAngle = null, $endAngle = null
  * @param float $endAngle
  */
 public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = null);]]>
-            </programlisting>
-        </para>
+        </programlisting>
     </sect2>
 
     <sect2 id="zend.pdf.drawing.styles">
@@ -976,8 +944,7 @@ public function clipEllipse($x1, $y1, $x2, $y2, $startAngle = null, $endAngle = 
         スタイルは、グラフィックの状態に関する複数の設定を保存し、
         PDF のページに 1 回の操作でそれを適用するために使用されます。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /**
  * このページの描画操作で使用する予定のスタイルを設定します。
  *
@@ -991,55 +958,45 @@ public function setStyle(Zend_Pdf_Style $style);
  * @return Zend_Pdf_Style|null
  */
 public function getStyle();]]>
-            </programlisting>
-        </para>
+        </programlisting>
 
         <para>
         <code>Zend_Pdf_Style</code> クラスでは、
         さまざまなグラフィックの状態を設定あるいは取得するためのメソッドが提供されています。
         </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 /**
  * 線の色を設定します。
  *
  * @param Zend_Pdf_Color $color
  */
 public function setLineColor(Zend_Pdf_Color $color);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 線の色を取得します。
  *
  * @return Zend_Pdf_Color|null
  */
 public function getLineColor();]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 線の幅を設定します。
  *
  * @param float $width
  */
 public function setLineWidth($width);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 線の幅を取得します。
  *
  * @return float
  */
 public function getLineWidth();]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 破線のパターンを設定します。
  *
@@ -1047,50 +1004,40 @@ public function getLineWidth();]]>
  * @param float $phase
  */
 public function setLineDashingPattern($pattern, $phase = 0);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 破線のパターンを取得します。
  *
  * @return array
  */
 public function getLineDashingPattern();]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 破線の位相を取得します。
  *
  * @return float
  */
 public function getLineDashingPhase();]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 塗りつぶし色を設定します。
  *
  * @param Zend_Pdf_Color $color
  */
 public function setFillColor(Zend_Pdf_Color $color);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 塗りつぶし色を取得します。
  *
  * @return Zend_Pdf_Color|null
  */
 public function getFillColor();]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 現在のフォントを設定します。
  *
@@ -1098,38 +1045,31 @@ public function getFillColor();]]>
  * @param float $fontSize
  */
 public function setFont(Zend_Pdf_Resource_Font $font, $fontSize);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 現在のフォントサイズを変更します。
  *
  * @param float $fontSize
  */
 public function setFontSize($fontSize);]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 現在のフォントを取得します。
  *
  * @return Zend_Pdf_Resource_Font $font
  */
 public function getFont();]]>
-            </programlisting>
-        </para>
-        <para>
-            <programlisting role="php"><![CDATA[
+        </programlisting>
+        <programlisting role="php"><![CDATA[
 /**
  * 現在のフォントサイズを取得します。
  *
  * @return float $fontSize
  */
 public function getFontSize();]]>
-            </programlisting>
-        </para>
+        </programlisting>
     </sect2>
 
 </sect1>

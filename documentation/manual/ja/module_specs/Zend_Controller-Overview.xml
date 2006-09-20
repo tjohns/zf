@@ -110,11 +110,11 @@
 
 		<para>
 			ルータがコントローラ名とアクション名を決定する方法は、単純なものです。
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
-			</programlisting>
-
+        </programlisting>
+        <para>
 			上の例で、最初の部分が常にコントローラの名前となり、
 			2 番目の部分が常にアクションの名前となります。
 		</para>
@@ -122,19 +122,18 @@ http://framework.zend.com/controller/action/]]>
 		<para>
 			オプションで、コントローラに渡すパラメータを URI に含めることができます。
 			これは キー/値 の組み合わせの形式になります。
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/key1/value1/]]>
-			</programlisting>
-		</para>
+        </programlisting>
 
 		<para>
 			URI の <code>/controller/</code> の部分に何も存在しない場合は、
 			"<code>index</code>" と解釈されます。また URI の <code>/action/</code>
 			の部分に何も存在しない場合は、"<code>index</code>" と解釈されます。
 			以下の例を参照ください。
-
-				<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
 コントローラ: roadmap
 アクション  : future
@@ -146,23 +145,22 @@ http://framework.zend.com/roadmap/
 http://framework.zend.com/
 コントローラ: index
 アクション  : index]]>
-				</programlisting>
-			</para>
+        </programlisting>
 
-			<note>
-				現在、新しいルータを開発中です。このルータには URI の置換エンジンが含まれており、
-				現在のルータよりはるかに柔軟に使うことができます。
-				これは、ごく近い将来に予定されているプレビュー版に含まれる予定です。
-			</note>
+		<note>
+			現在、新しいルータを開発中です。このルータには URI の置換エンジンが含まれており、
+			現在のルータよりはるかに柔軟に使うことができます。
+			これは、ごく近い将来に予定されているプレビュー版に含まれる予定です。
+		</note>
 
-			<para>
-				コントローラの名前、コントローラ内のアクションの名前、
-				そしてオプションのパラメータの内容が、ひとつのトークン
-				<code>Zend_Controller_Dispatcher_Token</code> にまとめられます。
-				このトークンは <code>Zend_Controller_Front</code> に返され、
-				ディスパッチループに突入します。ディスパッチループに入ると、このトークンが
-				<code>Zend_Controller_Dispatcher</code> に渡されます。
-			</para>
+		<para>
+			コントローラの名前、コントローラ内のアクションの名前、
+			そしてオプションのパラメータの内容が、ひとつのトークン
+			<code>Zend_Controller_Dispatcher_Token</code> にまとめられます。
+			このトークンは <code>Zend_Controller_Front</code> に返され、
+			ディスパッチループに突入します。ディスパッチループに入ると、このトークンが
+			<code>Zend_Controller_Dispatcher</code> に渡されます。
+		</para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatch-token">

@@ -212,27 +212,29 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             <code>save()</code> メソッドでキャッシュを保存する際に、
             適用するタグを配列で指定することができます。これを使用すると、
             指定したタグが設定されているキャッシュレコードのみを削除するといったことが可能となります。
+        </para>
         <programlisting role="php"><![CDATA[<?php
              
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             
-?>]]></programlisting></para>
+?>]]></programlisting>
     </sect2>
     <sect2 id="zend.cache.clean">
         <title>キャッシュの削除</title>
         <para>
             特定のキャッシュ ID を削除/無効化するには、<code>remove()</code>
             メソッドを使用します。
-             <programlisting role="php"><![CDATA[<?php 
+        </para>
+        <programlisting role="php"><![CDATA[<?php 
              
 $cache->remove('削除するID');
             
 ?>]]></programlisting>            
-        </para>
         <para>
             一回の操作で複数のキャッシュ ID を削除/無効化するには、<code>clean()</code>
             メソッドを使用します。例えば、すべてのキャッシュレコードを削除するには次のようにします。
-              <programlisting role="php"><![CDATA[<?php 
+        </para>
+        <programlisting role="php"><![CDATA[<?php 
 
 // すべてのレコードを削除します
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
@@ -240,14 +242,15 @@ $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 // 有効期限切れのレコードのみ削除します
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
             
-?>]]>       </programlisting>    
+?>]]>   </programlisting>    
+        <para>
             タグ 'tagA' および 'tagC' に該当するキャッシュエントリを削除するには、このようにします。
-              <programlisting role="php"><![CDATA[<?php 
+        </para>
+        <programlisting role="php"><![CDATA[<?php 
              
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
             
-?>]]>       </programlisting>
-        </para>
+?>]]>   </programlisting>
         <para>
             削除モードとして指定可能な値は <code>CLEANING_MODE_ALL</code>、<code>CLEANING_MODE_OLD</code>、
             <code>CLEANING_MODE_MATCHING_TAG</code> および <code>CLEANING_MODE_NOT_MATCHING_TAG</code>
@@ -369,7 +372,8 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                 もしキャッシュに文字列しか保存しないのなら
                 ("automaticSerialization" オプションを使用すると boolean も保存できるので)、
                 このようにもう少しコンパクトに作成することが可能です。
-                 <programlisting role="php"><![CDATA[<?php  
+            </para>
+            <programlisting role="php"><![CDATA[<?php  
              
 // すでに $cache が存在するものとします
 
@@ -389,11 +393,11 @@ if (!($data = $cache->get($id))) {
 
 // [...] $data を用いて何かをします (echo したり、何かに渡したりなど)
              
-    ?>]]>       </programlisting> 
-            </para>  
+?>]]>       </programlisting> 
             <para>
                 複数のブロックやデータのインスタンスをキャッシュしたい場合も、考え方は同じです。
-                 <programlisting role="php"><![CDATA[<?php  
+            </para>
+            <programlisting role="php"><![CDATA[<?php  
              
 // 一意な ID を使用するようにしましょう
 $id1 = 'foo';
@@ -431,7 +435,6 @@ if (!($data = $cache->get($id2))) {
 echo($data);
 
 ?>]]>       </programlisting>             
-            </para>            
         </sect3>   
     </sect2>
     
@@ -458,7 +461,8 @@ echo($data);
             <title>例</title>
             <para>
                 このマニュアルの冒頭に示した例とほとんど同じですが、少しだけ変更を加えています。
-                 <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 // キャッシュが見つからなかった場合に、出力バッファリングが起動します
 if(!$cache->start('mypage')):
@@ -473,7 +477,6 @@ endif;
 echo 'これはキャッシュされません ('.time().')';
 
 ?>]]>       </programlisting>
-            </para>
             <para>
                 この形式を使用すると、既存のプロジェクトに簡単に出力キャッシュ処理を追加することができます。
                 コードのリファクタリングもほとんど行わずにすませられるでしょう。
@@ -539,7 +542,8 @@ echo 'これはキャッシュされません ('.time().')';
             <para>
                 <code>call()</code> 関数の使用法は、PHP の
                 <code>call_user_func_array()</code> と同じです。
-                 <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 $cache->call('veryExpensiveFunc', $params);
 
@@ -548,7 +552,6 @@ $cache->call('veryExpensiveFunc', $params);
 # $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) とします。
 
 ?>]]>       </programlisting>
-            </para>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> は、
                 関数の返り値だけでなく関数内部での出力もキャッシュします。
@@ -627,7 +630,8 @@ $cache->call('veryExpensiveFunc', $params);
             <title>例</title>
             <para>
                 例えば、スタティックメソッドのコールをキャッシュするには次のようにします。
-                 <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 class test {
    
@@ -648,9 +652,11 @@ $frontendOptions = array(
 # これはキャッシュされます
 $res = $cache->foobar('1', '2');
 
-?>]]>           </programlisting>
+?>]]>       </programlisting>
+            <para>
                 通常のメソッドのコールをキャッシュするには次のようにします。
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 class test {
    
@@ -673,8 +679,7 @@ $frontendOptions = array(
 # これはキャッシュされます
 $res = $cache->foobar2('1', '2');
 
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </sect3>   
     </sect2>
     
@@ -848,7 +853,8 @@ $res = $cache->foobar2('1', '2');
             <title>例</title>
             <para>
                 Zend_Cache_Frontend_Page の使用法は、きわめて簡単です。
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
                
 // [...] // require、設定そしてファクトリ
     
@@ -858,11 +864,11 @@ $cache->start();
 // ページの残りの部分 ...
     
 ?>]]>       </programlisting>
-            </para>
             <para>
                 もう少し複雑な例を見てみましょう。これは、起動ファイル
                 (例えば Zend_Controller など) 内でキャッシュを集中管理する方法を示したものです。
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 // [...] キャッシュセクションの前には、あまり多くの行を書かないようにしましょう。
 // [...] 例えば、処理速度を最適化するためには "require_once" や "Zend::loadClass"
@@ -896,8 +902,7 @@ $cache->start();
 
 // [...] 起動ファイルの終点 (これらの行は、キャッシュにヒットした場合は実行されません)。
                 
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </sect3>
     </sect2>
 </sect1>

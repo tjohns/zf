@@ -95,7 +95,7 @@
 			<para>
 				<code>Zend_Controller</code> クラスは、
 				ライブラリディレクトリに以下のように格納されます。
-
+            </para>
     <programlisting role="php"><![CDATA[
 /library
   /Zend
@@ -104,7 +104,7 @@
       Dispatcher.php
       Router.php
 ]]></programlisting>			
-
+            <para>
 				<code>Zend_Controller</code> クラスを継承する場合は、
 				作成したクラスを (あなたのプレフィックスのもとで)
 				同じ構造で格納することを推奨します。こうすることで、
@@ -114,7 +114,7 @@
 			<para>
 				例えば Widget, Inc. のプロジェクトがルータのみを独自に実装した場合は、
 				次のようになるでしょう。
-				
+			</para>	
 <programlisting role="php"><![CDATA[
 /library
   /Zend
@@ -123,7 +123,7 @@
       Router.php
       README.txt
 ]]></programlisting>			
-
+            <para>
 				この例では、<code>Widget/Controller/</code> ディレクトリが
 				<code>Zend/Controller/</code> ディレクトリと同じ構造になっていることに注意しましょう。
 				この場合、このファイルでは <code>Widget_Controller_Router</code>
@@ -150,8 +150,8 @@
 		<para>
 			<code>Zend_Controller_Router_Interface</code> で定義されているメソッドは
 			1 つだけです。
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
   /**				
    * @param  Zend_Controller_Dispatcher_Interface
@@ -161,7 +161,7 @@
   public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
 
 ?>]]></programlisting>
-			
+        <para>
 			ルーティングが発生するのは、システムが最初にリクエストを受け取ったときだけです。
 			ルータの役割は、<code>Zend_Controller_Dispatch_Token</code>
 			を生成してコントローラとアクションを指定することです。
@@ -201,8 +201,8 @@
 		<para>
 			<code>Zend_Controller_Dispatcher_Interface</code> では
 			2 つのメソッドが定義されています。
-			
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
 /**
  * @param  Zend_Controller_Dispatcher_Token $route
@@ -211,17 +211,17 @@
 public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
-
-		<code>isDispatchable()</code> は、
-		ディスパッチトークンが実際にディスパッチ可能かどうかを調べます。
-		ディスパッチ可能な場合に <code>TRUE</code>、それ以外の場合に
-		<code>FALSE</code> を返します。ディスパッチ可能かどうかを判断する基準は、
-		インターフェリスを実装したクラスで記述します。
-		デフォルトの実装である <code>Zend_Controller_Dispatcher</code> では、
-		コントローラのファイルが存在するかどうか、
-		そのファイルでクラスが定義されているかどうか、
-		そしてそのクラスでアクションメソッドが定義されているかどうかを調べます。
-		
+        <para>
+    		<code>isDispatchable()</code> は、
+    		ディスパッチトークンが実際にディスパッチ可能かどうかを調べます。
+    		ディスパッチ可能な場合に <code>TRUE</code>、それ以外の場合に
+    		<code>FALSE</code> を返します。ディスパッチ可能かどうかを判断する基準は、
+    		インターフェリスを実装したクラスで記述します。
+    		デフォルトの実装である <code>Zend_Controller_Dispatcher</code> では、
+    		コントローラのファイルが存在するかどうか、
+    		そのファイルでクラスが定義されているかどうか、
+    		そしてそのクラスでアクションメソッドが定義されているかどうかを調べます。
+        </para>
 		<programlisting role="php"><![CDATA[<?php
 			
 /**
@@ -231,12 +231,11 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
-		
-		<code>dispatch()</code> は、実際の処理を行うところです。
-		このメソッドは、コントローラのアクションを実行しなければなりません。
-		また、ディスパッチトークンあるいは論理型の FALSE のいずれかを返さなければなりません。
-		FALSE は、この後でやるべきことがもうないということを意味します。
-		
+		<para>
+    		<code>dispatch()</code> は、実際の処理を行うところです。
+    		このメソッドは、コントローラのアクションを実行しなければなりません。
+    		また、ディスパッチトークンあるいは論理型の FALSE のいずれかを返さなければなりません。
+    		FALSE は、この後でやるべきことがもうないということを意味します。
 		</para>
 	</sect2>
 		

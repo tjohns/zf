@@ -13,25 +13,23 @@
             HTTP リダイレクトを追いかけます。この振る舞いを変更するには、
             最大値として指定したい数値を <code>get()</code> メソッドに渡します。
         </note>
-        <para>
-            <example>
-                <title>基本的な GET リクエストの実行</title>
-                <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-    try {
-        $http = new Zend_Http_Client('http://example.org');
-        $response = $http->get();
-        if ($response->isSuccessful()) {
-            echo $response->getBody();
-        } else {
-            echo '<p>エラーが発生しました</p>';
-        }
-    } catch (Zend_Http_Client_Exception $e) {
-        echo '<p>エラーが発生しました (' .$e->getMessage(). ')</p>';
+        <example>
+            <title>基本的な GET リクエストの実行</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
+try {
+    $http = new Zend_Http_Client('http://example.org');
+    $response = $http->get();
+    if ($response->isSuccessful()) {
+        echo $response->getBody();
+    } else {
+        echo '<p>エラーが発生しました</p>';
     }
-    ?>]]></programlisting>
-            </example>
-        </para>
+} catch (Zend_Http_Client_Exception $e) {
+    echo '<p>エラーが発生しました (' .$e->getMessage(). ')</p>';
+}
+?>]]></programlisting>
+        </example>
     </sect2>
     <sect2 id="zend.http.client.basic-get-requests">
         <title>HTTP ヘッダを指定した、基本的な GET リクエスト</title>
@@ -54,7 +52,6 @@
     $http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
     ?>]]>       </programlisting>
         </example>
-        <para />
         <example>
             <title>複数のヘッダの送信</title>
             <programlisting role="php"><![CDATA[<?php

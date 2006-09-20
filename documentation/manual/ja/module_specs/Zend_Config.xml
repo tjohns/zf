@@ -39,28 +39,34 @@
             この例は、本番環境用の設定データを、
             <link linkend="zend.config.classes.ini"><code>Zend_Config_Ini</code></link>
             を使用して INI ファイルから読み込むものです。
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'production'));
-?>]]>       </programlisting>
+?>]]>   </programlisting>
+        <para>
             これで、<code>$config</code> オブジェクトのプロパティとして設定データを使用できるようになりました。
             INI ファイルの中に以下のような形式でデータベース接続パラメータが含まれているとすると、
-            <programlisting role="ini"><![CDATA[[production]
+        </para>
+        <programlisting role="ini"><![CDATA[[production]
 database.type     = pdo_mysql
 database.host     = db.example.com
 database.username = dbuser
 database.password = secret
 database.name     = dbname]]>
-            </programlisting>
+        </programlisting>
+        <para>
             アプリケーションがデータベースに接続する際には次のように記述します。
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->host,
                                       $config->database->username,
                                       $config->database->password,
                                       $config->database->name);
-?>]]>       </programlisting>
+?>]]>   </programlisting>
+        <para>
             上の例にあるように、設定データにアクセスするには
             オブジェクトのプロパティと同じ構文を使用します。
        </para>
@@ -70,7 +76,8 @@ $myApplicationObject->databaseConnect($config->database->type,
         以下に示すのは、パブリックメソッド
         <code>dump()</code> を使用できるように拡張したクラスで、
         このメソッドを使用すると、読み込んだ設定データを簡単に表示することができます。
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 class MyConfig extends Zend_Config
 {
     protected $_indent;
@@ -102,9 +109,11 @@ class MyConfig extends Zend_Config
 $config = new MyConfig(Zend_Config_Ini::load('/path/to/config.ini', 'production'));
 
 $config->dump();
-?>]]>   </programlisting>
+?>]]</programlisting>
+    <para>
         上の例の設定データの場合、このメソッドの出力は次のようになります。
-        <programlisting role="text"><![CDATA[<pre>
+    </para>
+    <programlisting role="text"><![CDATA[<pre>
 database =>
     type => pdo_mysql
     host => db.example.com
@@ -112,8 +121,7 @@ database =>
     password => secret
     name => dbname
 </pre>]]>
-        </programlisting>
-    </para>
+    </programlisting>
 </sect1>
 <sect1 id="zend.config.classes.array">
     <title>Zend_Config_Array</title>
@@ -126,7 +134,8 @@ database =>
             <para>
                 この例は、<code>Zend_Config_Array</code> で PHP の配列からデータを読み込む
                 基本的な方法を説明するものです。まずは設定データを含む PHP 配列を作る必要があります。
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 // 本番環境の設定データ
 $config['production'] = array(
     'webhost' => 'www.example.com',
@@ -146,33 +155,34 @@ $config['staging']['webhost'] = 'dev.example.com';
 $config['staging']['database']['host'] = 'dev.example.com';
 $config['staging']['database']['username'] = 'devuser';
 $config['staging']['database']['password'] = 'devsecret';
-?>]]>           </programlisting>
-                <note>
-                    設定データの配列は、PHP スクリプトに <code>$config</code>
-                    という名前で読み込まれる必要があります。
-                </note>
+?>]]>       </programlisting>
+            <note>
+                設定データの配列は、PHP スクリプトに <code>$config</code>
+                という名前で読み込まれる必要があります。
+            </note>
+            <para>
                 上の例において、<code>production</code> セクションの内容を
                 <code>staging</code> セクションに代入することによって継承がサポートされています。
                 ここまでくれば、<code>Zend_Config_Array</code> から設定データを読み込むのは簡単な話です。
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Array.php';
 
 $config = new Zend_Config(Zend_Config_Array::load('/path/to/config.php', 'staging'));
 
 echo $config->database->host; // "dev.example.com" と出力します
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </example>
         <para>
             設定データは直接 PHP の配列に追加されるので、各データの型は
             <code>$config</code> 配列を含む PHP スクリプトで指定したものと同じになることに注意しましょう。
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 $config['staging']['debug']   = 'false'; // string 型の値となります
 $config['staging']['console'] = false; // boolean 型の値となります
 $config['staging']['timeout'] = 30; // integer 型の値となります
-?>]]>       </programlisting>
-        </para>
+?>]]>   </programlisting>
     </sect2>
 </sect1>
 <sect1 id="zend.config.classes.ini">
@@ -187,7 +197,8 @@ $config['staging']['timeout'] = 30; // integer 型の値となります
                 この例は、<code>Zend_Config_Ini</code> で INI ファイルから設定データを読み込む
                 基本的な方法を説明するものです。以下のような設定データが
                 <code>/path/to/config.ini</code> にあるものとします。
-                <programlisting role="ini"><![CDATA[; 運用環境の設定データ
+            </para>
+            <programlisting role="ini"><![CDATA[; 運用環境の設定データ
 [production]
 webhost           = www.example.com
 database.type     = pdo_mysql
@@ -203,29 +214,30 @@ extends = production
 database.host     = dev.example.com
 database.username = devuser
 database.password = devsecret]]>
-                </programlisting>
-                <note>
-                    INI ファイルの構文は、PHP の
-                    <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
-                    関数が受け付ける形式と似ていることに注意しましょう。
-                    <code>Zend_Config_Ini</code> は、この関数を使用しています。
-                    <code>Zend_Config_Ini</code> 固有の挙動としては、
-                    <code>true</code>、<code>false</code>、<code>yes</code>、<code>no</code> および
-                    <code>null</code> のような特殊な値がどのように変換されるかといったものがあります。
-                    このドキュメントをよく読んでください。
-                </note>
+            </programlisting>
+            <note>
+                INI ファイルの構文は、PHP の
+                <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
+                関数が受け付ける形式と似ていることに注意しましょう。
+                <code>Zend_Config_Ini</code> は、この関数を使用しています。
+                <code>Zend_Config_Ini</code> 固有の挙動としては、
+                <code>true</code>、<code>false</code>、<code>yes</code>、<code>no</code> および
+                <code>null</code> のような特殊な値がどのように変換されるかといったものがあります。
+                このドキュメントをよく読んでください。
+            </note>
+            <para>
                 INI ファイル内で継承を行うには、キーワード <code>extends</code> を使用します。
                 そのセクションの継承元であるセクションの名前を、キー <code>extends</code>
                 の値として指定します。設定データを INI ファイルから読み込むには、次のようにします。
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
 
 $config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'staging'));
 
 echo $config->database->host; // "dev.example.com" と出力します。
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </example>
     </sect2>
 </sect1>
@@ -241,7 +253,8 @@ echo $config->database->host; // "dev.example.com" と出力します。
                 この例は、<code>Zend_Config_Xml</code> を使用して XML
                 ファイルから設定データを読み込む基本的な方法を説明するものです。
                 以下のような設定データが <code>/path/to/config.xml</code> にあるものとします。
-                <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+            </para>
+            <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
 <config>
     <production>
         <webhost>www.example.com</webhost>
@@ -260,20 +273,21 @@ echo $config->database->host; // "dev.example.com" と出力します。
             <password>devsecret</password>
         </database>
     </staging>
-</config>]]>    </programlisting>
+</config>]]></programlisting>
+            <para> 
                 XML 内で継承を行うには、<code>extends</code> 属性を使用します。
                 そのセクションの継承元であるセクションの名前を、<code>extends</code>
                 属性の値として指定します。設定データを XML ファイルから読み込むには、
                 次のようにします。
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Xml.php';
 
 $config = new Zend_Config(Zend_Config_Xml::load('/path/to/config.xml', 'staging'));
 
 echo $config->database->host; // "dev.example.com" と出力します
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
             <note>
                 <code>Zend_Config_Xml</code> から取得した設定データは、
                 常に文字列として扱われます。
