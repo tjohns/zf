@@ -32,7 +32,13 @@ class AllTests
 {
     public static function main()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $parameters = array();
+
+        if (TESTS_GENERATE_REPORT && extension_loaded('xdebug')) {
+            $parameters['reportDirectory'] = TESTS_GENERATE_REPORT_TARGET;
+        }
+
+        PHPUnit_TextUI_TestRunner::run(self::suite(), $parameters);
     }
 
     public static function suite()

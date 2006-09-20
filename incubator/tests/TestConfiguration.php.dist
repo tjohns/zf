@@ -25,3 +25,9 @@ define('TESTS_ZEND_MAIL_POP3_TLS', true);
 // wrong port should be an existing server port, invalid a non existing (each on defined host)
 define('TESTS_ZEND_MAIL_POP3_WRONG_PORT', 80);
 define('TESTS_ZEND_MAIL_POP3_INVALID_PORT', 3141);
+
+/**
+ * PHPUnit Code Coverage / Test Report
+ */
+define('TESTS_GENERATE_REPORT', false);
+define('TESTS_GENERATE_REPORT_TARGET', '/path/to/target');
