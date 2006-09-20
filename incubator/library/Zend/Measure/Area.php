@@ -342,9 +342,7 @@ class Zend_Measure_Area extends Zend_Measure_Abstract
     public function equals($object)
     {
         if ($object->toString() == $this->toString())
-        {
             return true;
-        }
         return false;
     }
 

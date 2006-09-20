@@ -708,9 +708,7 @@ class Zend_Locale {
     public function equals($object)
     {
         if ($object->toString() == $this->toString())
-        {
             return true;
-        }
         return false;
         
     }

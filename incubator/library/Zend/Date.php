@@ -1319,6 +1319,7 @@ class Zend_Date {
                 return false;
                 break;
             case Zend_Date::DATES :
+            
                 // TODO: implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
