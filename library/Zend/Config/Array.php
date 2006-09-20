@@ -21,9 +21,9 @@
 
 
 /**
- * Zend_Config_Exception
+ * Zend_Config
  */
-require_once 'Zend/Config/Exception.php';
+require_once 'Zend/Config.php';
 
 
 /**
@@ -32,18 +32,17 @@ require_once 'Zend/Config/Exception.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Config_Array
+class Zend_Config_Array extends Zend_Config
 {
     /**
-     * Load the sub-array called $section from an array called $config
-     * within $filename.
+     * Loads the sub-array having a key of $section from an array called $config
+     * within $filename for access facilitated by nested object properties.
      *
      * @param string $filename
      * @param string $section
      * @throws Zend_Config_Exception
-     * @return array
      */
-    public static function load($filename, $section)
+    public function __construct($filename, $section, $allowModifications = false)
     {
         if (empty($filename)) {
             throw new Zend_Config_Exception('Filename is not set');
@@ -64,7 +63,7 @@ class Zend_Config_Array
             throw new Zend_Config_Exception("Section '$section' is not an array");
         }
 
-        return $config[$section];
+        parent::__construct($config[$section], $allowModifications);
     }
 
 }

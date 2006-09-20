@@ -35,64 +35,64 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
 
     public function testLoadSingleSection()
     {
-        $array = Zend_Config_Ini::load($this->_iniFileConfig, 'all');
+        $config = new Zend_Config_Ini($this->_iniFileConfig, 'all');
 
-        $this->assertEquals('all', $array['hostname']);
-        $this->assertEquals('live', $array['db']['name']);
-        $this->assertEquals('multi', $array['one']['two']['three']);
-        $this->assertNull(@$array['nonexistent']); // property doesn't exist
+        $this->assertEquals('all', $config->hostname);
+        $this->assertEquals('live', $config->db->name);
+        $this->assertEquals('multi', $config->one->two->three);
+        $this->assertNull(@$config->nonexistent); // property doesn't exist
     }
 
     public function testSectionInclude()
     {
-        $array = Zend_Config_Ini::load($this->_iniFileConfig, 'staging');
+        $config = new Zend_Config_Ini($this->_iniFileConfig, 'staging');
 
-        $this->assertEquals('', $array['debug']); // only in staging
-        $this->assertEquals('thisname', $array['name']); // only in all
-        $this->assertEquals('username', $array['db']['user']); // only in all (nested version)
-        $this->assertEquals('staging', $array['hostname']); // inherited and overridden
-        $this->assertEquals('dbstaging', $array['db']['name']); // inherited and overridden
+        $this->assertEquals('', $config->debug); // only in staging
+        $this->assertEquals('thisname', $config->name); // only in all
+        $this->assertEquals('username', $config->db->user); // only in all (nested version)
+        $this->assertEquals('staging', $config->hostname); // inherited and overridden
+        $this->assertEquals('dbstaging', $config->db->name); // inherited and overridden
     }
 
     public function testTrueValues()
     {
-        $array = Zend_Config_Ini::load($this->_iniFileConfig, 'debug');
+        $config = new Zend_Config_Ini($this->_iniFileConfig, 'debug');
 
-        $this->assertType('string', $array['debug']);
-        $this->assertEquals('1', $array['debug']);
-        $this->assertType('string', $array['values']['changed']);
-        $this->assertEquals('1', $array['values']['changed']);
+        $this->assertType('string', $config->debug);
+        $this->assertEquals('1', $config->debug);
+        $this->assertType('string', $config->values->changed);
+        $this->assertEquals('1', $config->values->changed);
     }
 
     public function testEmptyValues()
     {
-        $array = Zend_Config_Ini::load($this->_iniFileConfig, 'debug');
+        $config = new Zend_Config_Ini($this->_iniFileConfig, 'debug');
 
-        $this->assertType('string', $array['special']['no']);
-        $this->assertEquals('', $array['special']['no']);
-        $this->assertType('string', $array['special']['null']);
-        $this->assertEquals('', $array['special']['null']);
-        $this->assertType('string', $array['special']['false']);
-        $this->assertEquals('', $array['special']['false']);
+        $this->assertType('string', $config->special->no);
+        $this->assertEquals('', $config->special->no);
+        $this->assertType('string', $config->special->null);
+        $this->assertEquals('', $config->special->null);
+        $this->assertType('string', $config->special->false);
+        $this->assertEquals('', $config->special->false);
     }
 
     public function testMultiDepthExtends()
     {
-        $array = Zend_Config_Ini::load($this->_iniFileConfig, 'other_staging');
+        $config = new Zend_Config_Ini($this->_iniFileConfig, 'other_staging');
 
-        $this->assertEquals('otherStaging', $array['only_in']); // only in other_staging
-        $this->assertEquals('', $array['debug']); // 1 level down: only in staging
-        $this->assertEquals('thisname', $array['name']); // 2 levels down: only in all
-        $this->assertEquals('username', $array['db']['user']); // 2 levels down: only in all (nested version)
-        $this->assertEquals('staging', $array['hostname']); // inherited from two to one and overridden
-        $this->assertEquals('dbstaging', $array['db']['name']); // inherited from two to one and overridden
-        $this->assertEquals('anotherpwd', $array['db']['pass']); // inherited from two to other_staging and overridden
+        $this->assertEquals('otherStaging', $config->only_in); // only in other_staging
+        $this->assertEquals('', $config->debug); // 1 level down: only in staging
+        $this->assertEquals('thisname', $config->name); // 2 levels down: only in all
+        $this->assertEquals('username', $config->db->user); // 2 levels down: only in all (nested version)
+        $this->assertEquals('staging', $config->hostname); // inherited from two to one and overridden
+        $this->assertEquals('dbstaging', $config->db->name); // inherited from two to one and overridden
+        $this->assertEquals('anotherpwd', $config->db->pass); // inherited from two to other_staging and overridden
     }
 
     public function testErrorNoInitialSection()
     {
         try {
-            $array = @Zend_Config_Ini::load($this->_iniFileConfig);
+            $config = @new Zend_Config_Ini($this->_iniFileConfig);
             $this->fail('An expected Zend_Config_Exception has not been raised');
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('Section is not set', $expected->getMessage());
@@ -102,7 +102,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
     public function testErrorNoExtendsSection()
     {
         try {
-            $array = Zend_Config_Ini::load($this->_iniFileConfig, 'extendserror');
+            $config = new Zend_Config_Ini($this->_iniFileConfig, 'extendserror');
             $this->fail('An expected Zend_Config_Exception has not been raised');
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('cannot be found', $expected->getMessage());
@@ -114,8 +114,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $sections = array('leadingdot', 'onedot', 'twodots', 'threedots', 'trailingdot');
         foreach ($sections as $section) {
             try {
-                $array = Zend_Config_Ini::load($this->_iniFileConfig, $section);
-                var_dump($array);
+                $config = new Zend_Config_Ini($this->_iniFileConfig, $section);
                 $this->fail('An expected Zend_Config_Exception has not been raised');
             } catch (Zend_Config_Exception $expected) {
                 $this->assertContains('Invalid key', $expected->getMessage());

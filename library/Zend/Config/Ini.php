@@ -21,9 +21,9 @@
 
 
 /**
- * Zend_Config_Exception
+ * Zend_Config
  */
-require_once 'Zend/Config/Exception.php';
+require_once 'Zend/Config.php';
 
 
 /**
@@ -32,11 +32,11 @@ require_once 'Zend/Config/Exception.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Config_Ini
+class Zend_Config_Ini extends Zend_Config
 {
     /**
-     * Load the section $section from the config file $filename into
-     * an associative array.
+     * Loads the section $section from the config file $filename for
+     * access facilitated by nested object properties.
      *
      * If any keys with $section are called "extends", then the section
      * pointed to by the "extends" is then included into the properties.
@@ -55,16 +55,16 @@ class Zend_Config_Ini
      *      extends = all
      *      hostname = staging
      *
-     * after calling $data = Zend_Config_Ini::load($file, 'staging'); then
-     *      $data['hostname'] = staging
-     *      $data['db']['connection'] = database
+     * after calling $data = new Zend_Config_Ini($file, 'staging'); then
+     *      $data->hostname === "staging"
+     *      $data->db->connection === "database"
      *
      * @param string $filename
      * @param string $section
+     * @param boolean $allowModifications
      * @throws Zend_Config_Exception
-     * @return array
      */
-    public static function load($filename, $section)
+    public function __construct($filename, $section, $allowModifications = false)
     {
         if (empty($filename)) {
             throw new Zend_Config_Exception('Filename is not set');
@@ -78,10 +78,8 @@ class Zend_Config_Ini
             throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
         }
 
-        $self = new self();
-        return $self->_processExtends($iniArray, $section);
+        parent::__construct($this->_processExtends($iniArray, $section), $allowModifications);
     }
-
 
     /**
      * Helper function to process each element in the section and handle

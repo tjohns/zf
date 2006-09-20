@@ -34,41 +34,41 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
 
     public function testLoadSingleSection()
     {
-        $array = Zend_Config_Xml::load($this->_configFile, 'all');
+        $config = new Zend_Config_Xml($this->_configFile, 'all');
 
-        $this->assertEquals('all', $array['hostname']);
-        $this->assertEquals('live', $array['db']['name']);
-        $this->assertEquals('multi', $array['one']['two']['three']);
-        $this->assertNull(@$array['nonexistent']); // property doesn't exist
+        $this->assertEquals('all', $config->hostname);
+        $this->assertEquals('live', $config->db->name);
+        $this->assertEquals('multi', $config->one->two->three);
+        $this->assertNull(@$config->nonexistent); // property doesn't exist
     }
 
     public function testSectionInclude()
     {
-        $array = Zend_Config_Xml::load($this->_configFile, 'staging');
-        $this->assertEquals('false', $array['debug']); // only in staging
-        $this->assertEquals('thisname', $array['name']); // only in all
-        $this->assertEquals('username', $array['db']['user']); // only in all (nested version)
-        $this->assertEquals('staging', $array['hostname']); // inherited and overridden
-        $this->assertEquals('dbstaging', $array['db']['name']); // inherited and overridden
+        $config = new Zend_Config_Xml($this->_configFile, 'staging');
+        $this->assertEquals('false', $config->debug); // only in staging
+        $this->assertEquals('thisname', $config->name); // only in all
+        $this->assertEquals('username', $config->db->user); // only in all (nested version)
+        $this->assertEquals('staging', $config->hostname); // inherited and overridden
+        $this->assertEquals('dbstaging', $config->db->name); // inherited and overridden
     }
 
     public function testMultiDepthExtends()
     {
-        $array = Zend_Config_Xml::load($this->_configFile, 'other_staging');
+        $config = new Zend_Config_Xml($this->_configFile, 'other_staging');
 
-        $this->assertEquals('otherStaging', $array['only_in']); // only in other_staging
-        $this->assertEquals('false', $array['debug']); // 1 level down: only in staging
-        $this->assertEquals('thisname', $array['name']); // 2 levels down: only in all
-        $this->assertEquals('username', $array['db']['user']); // 2 levels down: only in all (nested version)
-        $this->assertEquals('staging', $array['hostname']); // inherited from two to one and overridden
-        $this->assertEquals('dbstaging', $array['db']['name']); // inherited from two to one and overridden
-        $this->assertEquals('anotherpwd', $array['db']['pass']); // inherited from two to other_staging and overridden
+        $this->assertEquals('otherStaging', $config->only_in); // only in other_staging
+        $this->assertEquals('false', $config->debug); // 1 level down: only in staging
+        $this->assertEquals('thisname', $config->name); // 2 levels down: only in all
+        $this->assertEquals('username', $config->db->user); // 2 levels down: only in all (nested version)
+        $this->assertEquals('staging', $config->hostname); // inherited from two to one and overridden
+        $this->assertEquals('dbstaging', $config->db->name); // inherited from two to one and overridden
+        $this->assertEquals('anotherpwd', $config->db->pass); // inherited from two to other_staging and overridden
     }
 
     public function testErrorNoInitialSectionSet()
     {
         try {
-            $array = @Zend_Config_Xml::load($this->_configFile);
+            $config = @new Zend_Config_Xml($this->_configFile);
             $this->fail('An expected Zend_Config_Exception has not been raised');
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('Section is not set', $expected->getMessage());
@@ -79,7 +79,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
     public function testErrorNoInitialSection()
     {
         try {
-            $array = @Zend_Config_Xml::load($this->_configFile, 'notthere');
+            $config = @new Zend_Config_Xml($this->_configFile, 'notthere');
             $this->fail('An expected Zend_Config_Exception has not been raised');
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('cannot be found in', $expected->getMessage());
@@ -89,7 +89,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
     public function testErrorNoExtendsSection()
     {
         try {
-            $array = Zend_Config_Xml::load($this->_configFile, 'extendserror');
+            $config = new Zend_Config_Xml($this->_configFile, 'extendserror');
             $this->fail('An expected Zend_Config_Exception has not been raised');
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('cannot be found', $expected->getMessage());

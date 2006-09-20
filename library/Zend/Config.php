@@ -34,13 +34,30 @@ require_once 'Zend/Config/Exception.php';
  */
 class Zend_Config implements Countable, Iterator
 {
+    /**
+     * Whether in-memory modifications to configuration data are allowed
+     *
+     * @var boolean
+     */
     protected $_allowModifications;
+
+    /**
+     * Whether the iteration pointer is valid
+     *
+     * @var boolean
+     */
     protected $_iterationPointerValid;
+
+    /**
+     * Contains array of configuration data
+     *
+     * @var array
+     */
     protected $_data;
 
     /**
      * Zend_Config provides a property based interface to
-     * an array. The data are read only unless $allowModifications
+     * an array. The data are read-only unless $allowModifications
      * is set to true on construction.
      *
      * Zend_Config also implements Countable and Iterator to
@@ -52,12 +69,12 @@ class Zend_Config implements Countable, Iterator
      */
     public function __construct($array, $allowModifications = false)
     {
-        $this->_allowModifications = $allowModifications;
+        $this->_allowModifications = (boolean) $allowModifications;
         $this->_data = array();
         foreach ($array as $key => $value) {
             if ($this->_isValidKeyName($key)) {
                 if (is_array($value)) {
-                    $this->_data[$key] = new Zend_Config($value, $allowModifications);
+                    $this->_data[$key] = new Zend_Config($value, $this->_allowModifications);
                 } else {
                     $this->_data[$key] = $value;
                 }
@@ -190,7 +207,7 @@ class Zend_Config implements Countable, Iterator
      * Defined by Iterator interface
      *
      */
-    public function rewind ()
+    public function rewind()
     {
         reset($this->_data);
         $this->_iterationPointerValid = true;
@@ -201,7 +218,7 @@ class Zend_Config implements Countable, Iterator
      *
      * @return boolean
      */
-    public function valid ()
+    public function valid()
     {
         return $this->_iterationPointerValid;
     }
