@@ -53,7 +53,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testInitSearchEnv()
     {
-        $value = new Zend_Locale(Zend_Locale::AUTOSEARCH_ENV);
+        $value = new Zend_Locale(Zend_Locale::SERVER);
         $this->assertTrue($value instanceof Zend_Locale,'Zend_Locale Object not returned');
     }
 
@@ -64,7 +64,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
      */
     public function testInitSearchHTTP()
     {
-        $value = new Zend_Locale(Zend_Locale::AUTOSEARCH_HTTP);
+        $value = new Zend_Locale(Zend_Locale::BROWSER);
         $this->assertTrue($value instanceof Zend_Locale,'Zend_Locale Object not returned');
     }
 
@@ -135,7 +135,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function testDefaultBrowser()
     {
         $value = new Zend_Locale();
-        $default = $value->getDefault(Zend_Locale::AUTOSEARCH_HTTP);
+        $default = $value->getDefault(Zend_Locale::BROWSER);
         $this->assertTrue(is_array($default), 'No Default Locale found');
     }
 
@@ -147,7 +147,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     public function testDefaultEnvironment()
     {
         $value = new Zend_Locale();
-        $default = $value->getDefault(Zend_Locale::AUTOSEARCH_ENV);
+        $default = $value->getDefault(Zend_Locale::SERVER);
         $this->assertTrue(is_array($default), 'No Default Locale found');
     }
 
@@ -224,14 +224,146 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test getList
+     * test getLanguageList
      * expected true
      */
-    public function testgetList()
+    public function testgetLanguageList()
     {
         $value = new Zend_Locale();
-        $list = $value->getList();
-        $this->assertTrue(is_array($list), 'Environment Locale not found');
+        $list = $value->getLanguageList();
+        $this->assertTrue(is_array($list), 'Language List not returned');
+    }
+
+
+    /**
+     * test getLanguageDisplay
+     * expected true
+     */
+    public function testgetLanguageDisplay()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getLanguageDisplay('de');
+        $this->assertTrue(is_string($list), 'Language Display not returned');
+    }
+
+
+    /**
+     * test getLanguageDisplayFalse
+     * expected false
+     */
+    public function testgetLanguageDisplayFalse()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getLanguageDisplay('xyz');
+        $this->assertFalse(is_string($list), 'Language Display should be false');
+    }
+
+
+    /**
+     * test getScriptList
+     * expected true
+     */
+    public function testgetScriptList()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getScriptList();
+        $this->assertTrue(is_array($list), 'Script List not returned');
+    }
+
+
+    /**
+     * test getScriptDisplay
+     * expected true
+     */
+    public function testgetScriptDisplay()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getScriptDisplay('Arab');
+        $this->assertTrue(is_string($list), 'Script Display not returned');
+    }
+
+
+    /**
+     * test getScriptDisplayFalse
+     * expected false
+     */
+    public function testgetScriptDisplayFalse()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getScriptDisplay('xyz');
+        $this->assertFalse(is_string($list), 'Script Display should be false');
+    }
+
+
+    /**
+     * test getRegionList
+     * expected true
+     */
+    public function testgetRegionList()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getRegionList();
+        $this->assertTrue(is_array($list), 'Region List not returned');
+    }
+
+
+    /**
+     * test getRegionDisplay
+     * expected true
+     */
+    public function testgetRegionDisplay()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getRegionDisplay('AT');
+        $this->assertTrue(is_string($list), 'Region Display not returned');
+    }
+
+
+    /**
+     * test getRegionDisplayFalse
+     * expected false
+     */
+    public function testgetRegionDisplayFalse()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getRegionDisplay('xyz');
+        $this->assertFalse(is_string($list), 'Region Display should be false');
+    }
+
+
+    /**
+     * test getCalendarList
+     * expected true
+     */
+    public function testgetCalendarList()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getCalendarList();
+        $this->assertTrue(is_array($list), 'Calendar List not returned');
+    }
+
+
+    /**
+     * test getCalendarDisplay
+     * expected true
+     */
+    public function testgetCalendarDisplay()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getCalendarDisplay('chinese');
+        $this->assertTrue(is_string($list), 'Calendar Display not returned');
+    }
+
+
+    /**
+     * test getCalendarFalse
+     * expected false
+     */
+    public function testgetCalendarDisplayFalse()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getCalendarDisplay('xyz');
+        $this->assertFalse(is_string($list), 'Calendar Display should be false');
     }
 
 
@@ -289,5 +421,17 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $value = new Zend_Locale('de_DE');
         $serial = new Zend_Locale('de_AT');
         $this->assertFalse($value->equals($serial),'Zend_Locale equal ?');
+    }
+
+
+    /**
+     * test getQuestion
+     * expected true
+     */
+    public function testgetQuestion()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getQuestion();
+        $this->assertTrue(isset($list['yes']), 'Question not returned');
     }
 }
