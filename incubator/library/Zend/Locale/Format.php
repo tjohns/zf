@@ -30,7 +30,7 @@
 class Zend_Locale_Format
 {
     /**
-     * Returns the first found number from an string (or integer/float)
+     * Returns the first found number from an string
      * Parsing depends on given locale (grouping and decimal)
      *
      * Examples for input:
@@ -42,10 +42,218 @@ class Zend_Locale_Format
      * '(-){0,1}(\d+(\.){0,1})*(\,){0,1})\d+'
      * 
      * @param $input  - string
-     * @param $locale - locale
-     * @return integer / float
+     * @param $locale - OPTIONAL locale 
+     * @return string
      */
-    public static function getNumber($input, $locale)
+    public static function getNumber($input, $locale = false)
+    {
+        // Get correct signs for this locale
+        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
+
+        // Parse input locale aware
+        $regex = '/('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.$symbols['decimal'].'){0,1}\d+/';
+        preg_match($regex, $input, $found);
+        if (!isset($found[0]))
+            self::throwException('No value in '.$input.' found');
+        $found = $found[0];
+
+        // Change locale input to be standard number
+        if ($symbols['minus'] != "-")
+            $found = strtr($found,$symbols['minus'],'-');
+        $found = str_replace($symbols['group'],"",$found);
+
+        if ($symbols['decimal'] != '.')
+            $found = str_replace($symbols['decimal'],".",$found);
+
+        return $found;
+    }
+
+
+    /**
+     * Returns a locale formatted number
+     * 
+     * @param $value  - number to localize
+     * @param $locale - OPTIONAL locale
+     * @return string - locale formatted number
+     */
+    public static function toNumber($value, $locale = false)
+    {
+        // Todo: Implement
+        self::throwException('function not implemented');
+
+        if (!is_integer($value))
+            return self::toFloat($value, $locale);
+
+        // Get correct signs for this locale
+        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
+        $format  = Zend_Locale_Data::getContent($locale,'decimalnumberformat');
+        $format = $format['default'];
+
+        // seperate negative format pattern when avaiable 
+        if (strpos($format, ';') !== false)
+        {
+            if ($value < 0)
+                $format = substr($format, strpos($format, ';') + 1);
+            else
+                $format = substr($format, 0, strpos($format, ';'));
+        }
+
+        // set negative sign
+        if ($value < 0)
+        {
+            if (strpos($format, '-') === false)
+                $format = $symbols['minus'].$format;
+            else
+                $format = strtr($format, '-', $symbols['minus']);
+        }
+
+        // delete precision
+        $precision = substr($format, strpos($format, '.') + 1);
+        $format = $format.substr($precision, strrpos($precision, '#') + 1);
+
+        $regex = '/[#0]*,{0,}/';
+        preg_match_all($regex, $format, $found);
+
+print_r($found);
+print $format."\n<br>";
+        $seperate = substr($format,strpos($format,',')+1);
+        $seperate = strlen(substr($seperate,0,strpos($seperate, '.')));
+        
+        $length = strlen($value);
+        
+//                    <pattern>#,##0.###</pattern>
+//                    <!-- number grouping same as India (thousands, lakhs, crores, etc.) -->
+//                    <pattern draft="true">#,##,##0.###</pattern>
+
+        return (string) $format;        
+    }
+
+
+    /**
+     * Returns if a number was found
+     * 
+     * @param  $input  - localized number string
+     * @param  $locale - OPTIONAL locale
+     * @return boolean
+     */
+    public static function isNumber($input, $locale = false)
+    {
+        // Get correct signs for this locale
+        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
+
+        // Parse input locale aware
+        $regex = '/('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.$symbols['decimal'].'){0,1}\d+/';
+        preg_match($regex, $input, $found);
+
+        if (!isset($found[0]))
+            return false;
+        return true;
+    }
+
+
+    /**
+     * Returns the first found float from an string
+     * Parsing depends on given locale (grouping and decimal)
+     *
+     * Examples for input:
+     * '  2345.4356,1234' = 23455456.1234
+     * '+23,3452.123' = 233452.123
+     * ' 12343 ' = 12343
+     * '-9456km' = -9456
+     * '0' = 0
+     * '(-){0,1}(\d+(\.){0,1})*(\,){0,1})\d+'
+     * 
+     * @param $input     - string
+     * @param $locale    - OPTIONAL locale 
+     * @param $precision - OPTIONAL precision of float value
+     * @return float
+     */
+    public static function getFloat($input, $precision = false, $locale = false)
+    {
+        if (!is_int($precision) and ($locale == false))
+        {
+            $locale = $precision;
+            $precision = false;
+        }
+
+        // Get correct signs for this locale
+        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
+
+        // Parse input locale aware
+        $regex = '/('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.$symbols['decimal'].'){0,1}\d+/';
+        preg_match($regex, $input, $found);
+        if (!isset($found[0]))
+            self::throwException('No value in '.$input.' found');
+
+        // Float or Integer ?
+        $found = $found[0];
+
+        // Change locale input to be standard number
+        if ($symbols['minus'] != "-")
+            $found = strtr($found,$symbols['minus'],'-');
+        $found = str_replace($symbols['group'],"",$found);
+
+        // Do precision
+        if (strpos($found, $symbols['decimal']) !== false)
+        {
+            if ($symbols['decimal'] != '.')
+                $found = str_replace($symbols['decimal'],".",$found);
+
+            $pre = substr($found, strpos($found, '.') + 1);
+
+            if (strlen($pre) > $precision)
+                $found = substr($found, 0, strlen($found) - strlen($pre) + $precision);
+            else if (strlen($pre) < $precision)
+                $found = str_pad($found, $precision, '0');
+            else
+                $found = substr($found, 0, strpos($found, '.') - 1);
+        }
+
+        return floatval($found);
+    }
+
+
+    /**
+     * 
+     */
+    public static function toFloat()
+    {
+        // Todo: Implement
+        self::throwException('function not implemented');
+    }
+
+
+    /**
+     * Returns if a float was found
+     * Alias for isNumber()
+     * 
+     * @param  $input  - localized number string
+     * @param  $locale - OPTIONAL locale
+     * @return boolean
+     */
+    public static function isFloat($value, $locale = false)
+    {
+        return self::isNumber($value, $locale);
+    }
+
+
+    /**
+     * Returns the first found integer from an string
+     * Parsing depends on given locale (grouping and decimal)
+     *
+     * Examples for input:
+     * '  2345.4356,1234' = 23455456
+     * '+23,3452.123' = 233452
+     * ' 12343 ' = 12343
+     * '-9456km' = -9456
+     * '0' = 0
+     * '(-){0,1}(\d+(\.){0,1})*(\,){0,1})\d+'
+     * 
+     * @param $input     - string
+     * @param $locale    - OPTIONAL locale 
+     * @return float
+     */
+    public static function getInteger($input, $locale = false)
     {
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
@@ -56,102 +264,42 @@ class Zend_Locale_Format
         if (!isset($found[0]))
             self::throwException('No value in '.$input.' found');
 
+        // Float or Integer ?
+        $found = $found[0];
+
         // Change locale input to be standard number
         if ($symbols['minus'] != "-")
-            $found[0] = strtr($found[0],$symbols['minus'],'-');
-        $found[0] = str_replace($symbols['group'],"",$found[0]);
+            $found = strtr($found,$symbols['minus'],'-');
+        $found = str_replace($symbols['group'],"",$found);
 
-        if ($symbols['decimal'] != '.') {
-            $found[0] = str_replace($symbols['decimal'],".",$found[0]);
-            $found[0] = (float) $found[0];
-        } else {
-            $found[0] = (int) $found[0];
-        }
+        // Do precision
+        if (strpos($found, $symbols['decimal']) !== false)
+            $found = substr($found, 0, strpos($found, '.') - 1);
 
-        return $found[0];
-    }
-
-
-    /**
-     * Returns a locale formatted number
-     * 
-     * @param $value  - number to localize
-     * @param $locale - locale
-     * @return string - locale formatted number
-     */
-    public static function toNumber($value, $locale)
-    {
-        $this->throwException('function not implemented');
-
-        if (!is_integer($value))
-            return self::toFloat($value, $locale);
-
-        // Get correct signs for this locale
-        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
-        $format  = Zend_Locale_Data::getContent($locale,'decimalnumberformat');
-        
-        $format = $format['default'];
-        $number = '';
-        if (strpos($format, ';') !== false)
-        {
-            if ($value < 0)
-                $format = substr($format, strpos($format, ';') + 1);
-            else
-                $format = substr($format, 0, strpos($format, ';'));
-        }
-
-        if ($value < 0)
-        {
-            
-            $number = $symbols['minus'];
-        }
-
-        $seperate = substr($format,strpos($format,',')+1);
-        $seperate = strlen(substr($seperate,0,strpos($seperate, '.')));
-        
-        $length = strlen($value);
-        
-//                    <pattern>#,##0.###</pattern>
-//                    <!-- number grouping same as India (thousands, lakhs, crores, etc.) -->
-//                    <pattern draft="true">#,##,##0.###</pattern>
-
-        return (string) $number;        
+        return intval($found);
     }
 
 
     /**
      * 
      */
-    public static function isNumber()
+    public static function toInteger()
     {
-        $this->throwException('function not implemented');
+        // Todo: Implement
+        self::throwException('function not implemented');
     }
 
 
     /**
+     * Returns if a integer was found
      * 
+     * @param  $input  - localized number string
+     * @param  $locale - OPTIONAL locale
+     * @return boolean
      */
-    public static function getFloat()
+    public static function isInteger($value, $locale = false)
     {
-        
-    }
-
-
-    /**
-     * 
-     */
-    public static function toFloat()
-    {
-        
-    }
-
-
-    /**
-     * 
-     */
-    public static function isFloat()
-    {
-        
+        return self::isNumber($value, $locale);
     }
 
 
@@ -165,6 +313,7 @@ class Zend_Locale_Format
      */
     public static function getDate($date, $type, $locale)
     {
+        // Todo: Implement
         self::throwException('function not implemented');
 
         // Get correct date for this locale
@@ -189,7 +338,7 @@ print $format['pattern']."\n<br>";
         }
 
         unset($format['pattern']);
-        
+
         foreach($format as $found)
         {
             switch($found)
@@ -251,33 +400,38 @@ print_r($match);
     }
 
 
-    public function toDate()
+    public static function toDate()
     {
-        $this->throwException('function not implemented');
+        // Todo: Implement
+        self::throwException('function not implemented');
     }
 
 
-    public function isDate()
+    public static function isDate()
     {
-        $this->throwException('function not implemented');
+        // Todo: Implement
+        self::throwException('function not implemented');
     }
 
 
-    public function getTime()
+    public static function getTime()
     {
-        $this->throwException('function not implemented');
+        // Todo: Implement
+        self::throwException('function not implemented');
     }
 
 
-    public function toTime()
+    public static function toTime()
     {
-        $this->throwException('function not implemented');
+        // Todo: Implement
+        self::throwException('function not implemented');
     }
 
 
-    public function isTime()
+    public static function isTime()
     {
-        $this->throwException('function not implemented');
+        // Todo: Implement
+        self::throwException('function not implemented');
     }
 
 

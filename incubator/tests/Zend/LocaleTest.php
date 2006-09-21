@@ -153,6 +153,18 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test getDefaultFramework
+     * expected true
+     */
+    public function testDefaultFramework()
+    {
+        $value = new Zend_Locale();
+        $default = $value->getDefault(Zend_Locale::FRAMEWORK);
+        $this->assertTrue(is_array($default), 'No Default Locale found');
+    }
+
+
+    /**
      * test getEnvironment
      * expected true
      */
