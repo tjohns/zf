@@ -21,7 +21,7 @@ class AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Audioscrobbler');
 
         $suite->addTestSuite( 'Zend_Service_Audioscrobbler_ProfileTest' );
-        $suite->addTestSuite('Zend_Service_Audioscrobbler_TopartistsTest');
+        //$suite->addTestSuite('Zend_Service_Audioscrobbler_TopartistsTest');
 
         return $suite;
     }
