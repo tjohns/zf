@@ -27,13 +27,13 @@
         will log to both the console (PHP's output buffer) and text files, the following files would be
         included:
 -->
-
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                  // Базовый класс Zend_Log
 require_once 'Zend/Log/Adapter/Console.php';  // Адаптер записи в консоль
 require_once 'Zend/Log/Adapter/File.php';     // Адаптер записи в файл
 ]]></programlisting>
-
+    <para>
         <code>Zend_Log</code> может применяться для простого 
         ведения одного журнала, может быть сконфигурирован для ведения
         нескольких журналов, а также использоваться для протоколирования внутренних
@@ -55,22 +55,22 @@ require_once 'Zend/Log/Adapter/File.php';     // Адаптер записи в 
         A Logger is created by calling the <code>Zend_Log::registerLogger()</code> method with a
         <code>Zend_Log_Adapter_Interface</code> instance as an argument.
 -->
-
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                // Базовый класс Zend_Log
 require_once 'Zend/Log/Adapter/File.php';   // Адаптер для File log adapter
 
 // Register the file logger
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
 ]]></programlisting>
-    </para>
 
     <para>
         После этого сообщения отправляются в журнал с помощью <code>Zend_Log::log()</code>. 
 <!--
         Messages are then sent to the log with <code>Zend_Log::log()</code>.
 -->
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 /**
  * Отправка сообщения в журнал. Необязательный вотрой агрумент определяет уровень
  * сообщения. Если он не определен, то предполагается уровень LEVEL_DEBUG
@@ -82,7 +82,6 @@ Zend_Log::log('Первое зарегистрированное сообщен�
  */
 Zend_Log::log('Произошла серьезная ошибка.', Zend_Log::LEVEL_SEVERE);
 ]]></programlisting>
-    </para>
 </sect1>
 
 <sect1 id="zend.log.log-levels">
@@ -102,14 +101,13 @@ Zend_Log::log('Произошла серьезная ошибка.', Zend_Log::L
        is supplied as the optional second argument.  The following levels are available as constants of the
        <code>Zend_Log</code> class.
 -->
-
-       <programlisting role="php"><![CDATA[
+   </para>
+   <programlisting role="php"><![CDATA[
 LEVEL_DEBUG     = 1     // отладочный уровень
 LEVEL_WARNING   = 4     // предупреждение
 LEVEL_ERROR     = 8     // ошибка
 LEVEL_SEVERE    = 16    // серьезная ошибка
 ]]></programlisting>
-   </para>
 </sect1>
 
 <sect1 id="zend.log.advanced-logging">
@@ -148,7 +146,8 @@ LEVEL_SEVERE    = 16    // серьезная ошибка
         given the names <code>Console</code> and <code>File</code>, respectively.
 -->
 
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                 // Базовый класс Zend_Log
 require_once 'Zend/Log/Adapter/File.php';    // Адаптер для файла File log adapter
 require_once 'Zend/Log/Adapter/Console.php'; // Адаптер для консоли
@@ -156,7 +155,6 @@ require_once 'Zend/Log/Adapter/Console.php'; // Адаптер для консо
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'File');
 Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Console');
 ]]></programlisting>
-   </para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

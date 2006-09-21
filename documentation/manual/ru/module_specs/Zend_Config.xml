@@ -79,11 +79,13 @@
             In this example configuration data for a production environment are loaded from an INI file using
             <link linkend="zend.config.classes.ini"><code>Zend_Config_Ini</code></link>:
 -->
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'production'));
-?>]]>       </programlisting>
+?>]]>   </programlisting>
+        <para>
             Теперь конфигурационные данные доступны из свойств объекта <code>$config</code>.
             Предположим, что конфигурационные данные содержат параметры соединения с базой данных
             и что эти данные хранятся в файле INI в следующем виде:
@@ -92,24 +94,28 @@ $config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'producti
             configuration data include database connection parameters and that the data are stored in the INI file
             as:
 -->
-            <programlisting role="ini"><![CDATA[[production]
+        </para>
+        <programlisting role="ini"><![CDATA[[production]
 database.type     = pdo_mysql
 database.host     = db.example.com
 database.username = dbuser
 database.password = secret
 database.name     = dbname]]>
-            </programlisting>
+        </programlisting>
+        <para>
             Приложение может установить соединение с базой данных следующим образом: 
 <!--
             The application might create a connection to the database with:
 -->
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->host,
                                       $config->database->username,
                                       $config->database->password,
                                       $config->database->name);
-?>]]>       </programlisting>
+?>]]>   </programlisting>
+        <para>
             Как показано выше, конфигурационные данные доступны через синтаксис
             свойств объектов.
 <!--
@@ -127,7 +133,8 @@ $myApplicationObject->databaseConnect($config->database->type,
         <code>Zend_Config</code> easily for various purposes. Here an extending class introduces a public
         <code>dump()</code> method for quickly printing loaded configuration data:
 -->
-        <programlisting role="php"><![CDATA[<?php
+    </para> 
+    <programlisting role="php"><![CDATA[<?php
 class MyConfig extends Zend_Config
 {
     protected $_indent;
@@ -159,12 +166,14 @@ class MyConfig extends Zend_Config
 $config = new MyConfig(Zend_Config_Ini::load('/path/to/config.ini', 'production'));
 
 $config->dump();
-?>]]>   </programlisting>
+?>]]></programlisting>
+    <para>    
         Для конфигурационных данных в приведенном выше примере, это должно вывести:
 <!--
         For the configuration data in the example above, this would print:
 -->
-        <programlisting role="text"><![CDATA[<pre>
+    </para>
+    <programlisting role="text"><![CDATA[<pre>
 database =>
     type => pdo_mysql
     host => db.example.com
@@ -172,8 +181,7 @@ database =>
     password => secret
     name => dbname
 </pre>]]>
-        </programlisting>
-    </para>
+    </programlisting>
 </sect1>
 <sect1 id="zend.config.classes.array">
     <title>Zend_Config_Array</title>
@@ -199,7 +207,8 @@ database =>
                 This example illustrates a basic use of <code>Zend_Config_Array</code> for loading configuration
                 data from PHP arrays. First, we need to create PHP arrays having the configuration data:
 -->
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 // Конфигурационные данные производственного сайта
 $config['production'] = array(
     'webhost' => 'www.example.com',
@@ -219,7 +228,8 @@ $config['staging']['webhost'] = 'dev.example.com';
 $config['staging']['database']['host'] = 'dev.example.com';
 $config['staging']['database']['username'] = 'devuser';
 $config['staging']['database']['password'] = 'devsecret';
-?>]]>           </programlisting>
+?>]]>       </programlisting>
+            <para>
                 <note>
                     Массив конфигурационных данных должен иметь имя <code>$config</code>
                     в загружаемом скрипте PHP.
@@ -236,15 +246,15 @@ $config['staging']['database']['password'] = 'devsecret';
                 values to the <code>staging</code> section. Now it is a simple matter to load the configuration
                 data with <code>Zend_Config_Array</code>:
 -->
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Array.php';
 
 $config = new Zend_Config(Zend_Config_Array::load('/path/to/config.php', 'staging'));
 
 echo $config->database->host; // выводит: "dev.example.com"
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </example>
         <para>
             Заслуживает внимания то, что, поскольку конфигурационные данные добавлены
@@ -256,12 +266,12 @@ echo $config->database->host; // выводит: "dev.example.com"
             configuration data value has the same data type as given in the PHP script containing the
             <code>$config</code> array.
 -->
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 $config['staging']['debug']   = 'false'; // значение строкового типа
 $config['staging']['console'] = false; // значение булевого типа
 $config['staging']['timeout'] = 30; // значение целочисленного типа
-?>]]>       </programlisting>
-        </para>
+?>]]>   </programlisting>
     </sect2>
 </sect1>
 <sect1 id="zend.config.classes.ini">
@@ -289,7 +299,8 @@ $config['staging']['timeout'] = 30; // значение целочисленно
                 data from an INI file. Suppose we have the following configuration data in
                 <code>/path/to/config.ini</code>:
 -->
-                <programlisting role="ini"><![CDATA[; Конфигурационные данные производственного сайта
+            </para>
+            <programlisting role="ini"><![CDATA[; Конфигурационные данные производственного сайта
 [production]
 webhost           = www.example.com
 database.type     = pdo_mysql
@@ -305,7 +316,8 @@ extends = production
 database.host     = dev.example.com
 database.username = devuser
 database.password = devsecret]]>
-                </programlisting>
+            </programlisting>
+            <para>
                 <note>
                     Обратите внимание, что синтаксис файла INI походит на тот, что
                     ожидается для функции PHP
@@ -333,16 +345,16 @@ database.password = devsecret]]>
                 Inheritance is supported in the INI syntax by using the keyword <code>extends</code>.
                 The value of the <code>extends</code> key should be the name of the section from which the extending section is to inherit.
                 The configuration data are then loaded from the INI file:
--->                
-                <programlisting role="php"><![CDATA[<?php
+-->
+            </para>                
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
 
 $config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'staging'));
 
 echo $config->database->host; // выводит: "dev.example.com"
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </example>
     </sect2>
 </sect1>
@@ -371,7 +383,8 @@ echo $config->database->host; // выводит: "dev.example.com"
                 data from an XML file. Suppose we have the following configuration data in
                 <code>/path/to/config.xml</code>:
 -->
-                <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+            </para>
+            <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
 <config>
     <production>
         <webhost>www.example.com</webhost>
@@ -390,7 +403,8 @@ echo $config->database->host; // выводит: "dev.example.com"
             <password>devsecret</password>
         </database>
     </staging>
-</config>]]>    </programlisting>
+</config>]]></programlisting>
+            <para>
                 В синтаксисе XML наследование поддерживается посредством использования
                 аттрибута <code>extends</code>. Значением аттрибута <code>extends</code>
                 должно быть имя раздела, из которого наследует данный раздел.
@@ -400,15 +414,15 @@ echo $config->database->host; // выводит: "dev.example.com"
                 The value of the <code>extends</code> attribute should be the name of the section from which the extending section is to inherit.
                 The configuration data are then loaded from the XML file:
 -->
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Xml.php';
 
 $config = new Zend_Config(Zend_Config_Xml::load('/path/to/config.xml', 'staging'));
 
 echo $config->database->host; // выводит: "dev.example.com"
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
             <note>
                 Конфигурационные данные из <code>Zend_Config_Xml</code> всегда
                 интерпретируются как строки.

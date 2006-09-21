@@ -38,14 +38,14 @@
         methods available: <code>Zend_Json::encode()</code> and
         <code>Zend_Json::decode()</code>. 
 -->
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 // Получение значения:
 $phpNative = Zend_Json::decode($encodedValue);
 
 // Преобразование для возвращения клиенту:
 $json = Zend_Json::encode($phpNative);
 ?>]]></programlisting>
-    </para>
 </sect1>
 
 <sect1 id="zend.json.objects">
@@ -83,10 +83,12 @@ $json = Zend_Json::encode($phpNative);
         associative arrays. However, if you desire an object returned, you can
         specify this:
 -->
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 // Декодировать объект как объект
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 ?>]]></programlisting>
+    <para>
         Любые объекты, декодированные таким образом, возвращаются как
         объекты <code>StdClass</code> со свойствами, соответствующими парам
         ключ/значение в нотации JSON.

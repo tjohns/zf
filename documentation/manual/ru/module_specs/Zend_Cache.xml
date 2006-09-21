@@ -44,7 +44,8 @@
             In this first example, we will use <code>Core</code> frontend together with <code>File</code>
             backend.
 -->
-            <programlisting role="php"><![CDATA[<?php
+       </para>
+       <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
@@ -59,8 +60,7 @@ $backendOptions = array(
 // получение объекта Zend_Cache_Core
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
-?>]]></programlisting>
-       </para>
+?>]]>  </programlisting>
        <para>
            Теперь, имея клиентскую часть, мы можем кэшировать любые типы данных,
            используя сериализацию. Например, мы можем кэшировать результат из
@@ -72,7 +72,8 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
             example, we can cache a result from a very expensive database query. After it is cached, there
             is no need to even connect to the database; records are fetched from cache and unserialized.
 -->
-            <programlisting role="php"><![CDATA[<?php
+       </para>
+       <programlisting role="php"><![CDATA[<?php
 
 // $cache определен в предыдущем примере
 
@@ -97,8 +98,7 @@ if(!$result = $cache->get('myresult')) {
 
 print_r($result);
 
-?>]]></programlisting>
-       </para>
+?>]]>  </programlisting>
     </example>
     <example>
         <title>
@@ -125,7 +125,8 @@ print_r($result);
             method. On the next run, the whole section will be skipped in favor of fetching data from cache 
             (as long as the cache record is valid).
 -->
-            <programlisting role="php"><![CDATA[<?php
+       </para>
+       <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
    'lifeTime' => 30,                  // время жизни кэша - половина минуты
@@ -148,8 +149,7 @@ if(!$cache->start('mypage')) {
 
 echo 'This is never cached ('.time().').';
 
-?>]]>       </programlisting>
-       </para>
+?>]]>  </programlisting>
        <para>
            Обратите внимание, что мы выводим результат <code>time()</code>
            дважды: это нечто динамическое в целях демонстрации. Попробуйте
@@ -250,7 +250,8 @@ echo 'This is never cached ('.time().').';
             A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
             in the following example :
 -->
-            <programlisting role="php"><![CDATA[<?php
+        </para> 
+        <programlisting role="php"><![CDATA[<?php
         
 # Загружаем фабрику Zend_Cache 
 require 'Zend/Cache.php'; 
@@ -271,8 +272,7 @@ $backendOptions = array([...]);
 # (два последних аргумента являются необязательными)
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
-?>]]></programlisting> 
-        </para> 
+?>]]>   </programlisting> 
         <para>
             В следующих примерах мы предполагаем, что переменная <code>$cache</code>
             содержит инстанцированную, как показано в примере, клиентскую
@@ -307,11 +307,12 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             method, you can set an array of tags to apply for this record. Then you will be 
             able to clean all cache records tagged with a given tag (or tags):
 -->
+        </para>
         <programlisting role="php"><![CDATA[<?php
              
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             
-?>]]></programlisting></para>
+?>]]>   </programlisting>
     </sect2>
     <sect2 id="zend.cache.clean">
         <title>Очистка кэша<!--Cleaning the cache--></title>
@@ -322,12 +323,12 @@ $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             To remove/invalidate in particular cache id, you can use the <code>remove()</code>
             method :
 -->
-             <programlisting role="php"><![CDATA[<?php 
+        </para>
+        <programlisting role="php"><![CDATA[<?php 
              
 $cache->remove('idToRemove');
             
-?>]]></programlisting>            
-        </para>
+?>]]>   </programlisting>            
         <para>
             Для того, чтобы за одну операцию удалить или сделать недействительными
             несколько записей кэша, вы можете использовать
@@ -336,7 +337,8 @@ $cache->remove('idToRemove');
             To remove/invalidate several cache ids in one operation, you can use the <code>clean()</code>
             method. For example to remove all cache records :
 -->
-              <programlisting role="php"><![CDATA[<?php 
+        </para>
+        <programlisting role="php"><![CDATA[<?php 
 
 // удаление всех записей
 $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
@@ -344,17 +346,18 @@ $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 // удаление только устаревших записей
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
             
-?>]]>       </programlisting>
+?>]]>   </programlisting>
+        <para>
             Если вы хотите удалить записи кэша, помеченные тегами 'tagA' и 'tagC':
 <!--
             If you want to remove cache entries matching the tags 'tagA' and 'tagC':
 -->
-              <programlisting role="php"><![CDATA[<?php 
+        </para>
+        <programlisting role="php"><![CDATA[<?php 
              
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
             
-?>]]>       </programlisting>
-        </para>
+?>]]>   </programlisting>
         <para>
             Доступные режимы очищения: <code>CLEANING_MODE_ALL</code> (удалить все),
             <code>CLEANING_MODE_OLD</code> (удалить устаревшие),
@@ -515,7 +518,8 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                 If you store only strings into cache (because with "automaticSerialization" option, it's possible
                 to store some booleans), you can use a more compact construction like:
 -->
-                 <programlisting role="php"><![CDATA[<?php  
+            </para>
+            <programlisting role="php"><![CDATA[<?php  
              
 // предполагается, что переменная $cache уже установлена
 
@@ -536,14 +540,14 @@ if (!($data = $cache->get($id))) {
 // [...] делаем что-либо с данными (отображение, передача и т.д.)
              
 ?>]]>       </programlisting> 
-            </para>  
             <para>
                 Если вы хотите закэшировать несколько блоков или экземпляров данных,
                 то принцип будет тот же:
 <!--
                 If you want to cache multiple blocks or data instances, the idea is the same:
 -->
-                 <programlisting role="php"><![CDATA[<?php  
+            </para>
+            <programlisting role="php"><![CDATA[<?php  
              
 // убедитесь, что используете уникальные идентификаторы:
 $id1 = 'foo';
@@ -581,7 +585,6 @@ if (!($data = $cache->get($id2))) {
 echo($data);
 
 ?>]]>       </programlisting>             
-            </para>            
         </sect3>   
     </sect2>
     
@@ -621,7 +624,8 @@ echo($data);
 <!--
                 An example is given in the manual at the very beginning. Here it is with minor changes:
 -->
-                 <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 // если имеет место непопадание в кэш,
 // то начинается буферизация вывода
@@ -637,7 +641,6 @@ endif;
 echo 'This is never cached ('.time().').';
 
 ?>]]>       </programlisting>
-            </para>
             <para>
                 Используя эту форму, довольно легко установить кэширование вывода в
                 уже работающем проекте с незначительным рефакторингом кода или
@@ -836,7 +839,8 @@ $cache->call('veryExpensiveFunc', $params);
 <!--
                 For example, to cache static calls :
 -->
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 class test {
    
@@ -857,12 +861,14 @@ $frontendOptions = array(
 # кэшируемый вызов
 $res = $cache->foobar('1', '2');
 
-?>]]>           </programlisting>
+?>]]>       </programlisting>
+            <para>
                 Кэширование обычных вызовов методов
 <!--
                 To cache classic method calls :
 -->
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 
 class test {
    
@@ -885,8 +891,7 @@ $frontendOptions = array(
 # кэшируемый вызов
 $res = $cache->foobar2('1', '2');
 
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </sect3>   
     </sect2>
     
@@ -1147,7 +1152,8 @@ $res = $cache->foobar2('1', '2');
 <!--
 	            Use of Zend_Cache_Frontend_Page is really trivial :
 -->
-	            <programlisting role="php"><![CDATA[<?php
+          </para>
+	        <programlisting role="php"><![CDATA[<?php
 	           
 // [...]
 	
@@ -1157,8 +1163,7 @@ $cache->start();
 	
 // rest of the page ...
 	
-?>]]>           </programlisting>
-	        </para>
+?>]]>     </programlisting>
 	        <para>
 	          Более сложный пример, который показывает способ создания
             централизованного управления кэшированием в загрузочном файле
@@ -1167,7 +1172,8 @@ $cache->start();
 	        	a more complex example which shows a way to get a centralized cache management in a bootstrap file
 	        	(for using with Zend_Controller for example)
 -->
-	        	<programlisting role="php"><![CDATA[<?php
+	        </para>
+          <programlisting role="php"><![CDATA[<?php
 
 // [...] вы должны избегать слишком большого количества строк кода перед участком кэша 
 // [...] например, для наибольшей производительности "require_once" или "Zend::loadClass"
@@ -1202,8 +1208,7 @@ $cache->start();
 
 // [...] конец загрузочного файла (этот код не исполняется, если есть попадание в кэш)
 	        	
-?>]]>           </programlisting>	        	
-	        </para>	        
+?>]]>     </programlisting>	        	
     	</sect3>
 	</sect2>   
 </sect1>

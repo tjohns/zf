@@ -29,7 +29,8 @@
             A simple e-mail consists of some recipients, a subject, a body and a sender. To send such a mail using
             the PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink> function, do the following:
 -->
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('This is the text of the mail.');
@@ -37,8 +38,7 @@ $mail->setFrom('somebody@example.com', 'Some Sender');
 $mail->addTo('somebody_else@example.com', 'Some Recipient');
 $mail->setSubject('TestSubject');
 $mail->send();
-?>]]>       </programlisting>
-       </para>
+?>]]>   </programlisting>
     </example>
     <note>
         Чтобы отправить сообщение с помощью <code>Zend_Mail</code>, вы должны
@@ -302,7 +302,8 @@ $mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_
         of <code>addAttachment()</code> to modify its attributes. The <code>addAttachment()</code> method
         returns a <code>Zend_Mime_Part</code> object:
 -->
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
@@ -315,7 +316,6 @@ $at->filename    = 'test.gif';
 
 $mail->send();
 ?>]]></programlisting>
-    </para>
 </sect1>
 <sect1 id="zend.mail.adding-recipients">
     <title>

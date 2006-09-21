@@ -172,10 +172,13 @@
             The router uses a very simple mapping to determine the name of the controller and
             the name of the action within that controller:
 -->
-            <programlisting role="php"><![CDATA[
+        </para>
+        
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
-            </programlisting>
-
+        </programlisting>
+        
+        <para>
             Обратите внимание, что первый сегмент всегда является именем контроллера, а второй сегмент --
             именем действия.
 <!--
@@ -191,10 +194,11 @@ http://framework.zend.com/controller/action/]]>
             Optionally, parameters may be defined in the URI that will be passed to the controller.
             These take the form of key/value pairs:
 -->
-            <programlisting role="php"><![CDATA[
-http://framework.zend.com/controller/action/key1/value1/]]>
-            </programlisting>
         </para>
+        
+        <programlisting role="php"><![CDATA[
+http://framework.zend.com/controller/action/key1/value1/]]>
+        </programlisting>
 
         <para>
             Если ничего не размещено в части URI <code>/controller/</code>, то это будет
@@ -205,7 +209,9 @@ http://framework.zend.com/controller/action/key1/value1/]]>
             "<code>index</code>".  If nothing is present in the <code>/action/</code> part of the URI, then
             this will also become "<code>index</code>".  These examples illustrate:
 -->
-            <programlisting role="php"><![CDATA[
+        </para>
+        
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
 Controller: roadmap
 Action    : future
@@ -217,8 +223,7 @@ Action    : index
 http://framework.zend.com/
 Controller: index
 Action    : index]]>
-            </programlisting>
-        </para>
+        </programlisting>
 
         <note>
             В настоящее время мы разрабатываем новый маршрутизатор, с механизмом перезаписи URI (URI rewriting),

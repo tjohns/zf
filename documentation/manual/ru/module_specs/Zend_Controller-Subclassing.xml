@@ -151,15 +151,18 @@
 <!--
                 The <code>Zend_Controller</code> classes are stored in the library directory as follows:
 -->
-    <programlisting role="php"><![CDATA[
+            </para>
+            
+            <programlisting role="php"><![CDATA[
 /library
   /Zend
     /Controller
       Action.php
       Dispatcher.php
       Router.php
-]]></programlisting>
+]]>        </programlisting>
 
+            <para>
                 Когда создаете наследников от классов <code>Zend_Controller</code>,
                 то рекомендуется сохранять их в такой же структуре под вашим префиксом.
 <!--
@@ -175,15 +178,18 @@
 <!--
                 For example, a project from Widget, Inc. which implements only a custom router might look like this:
 -->
-<programlisting role="php"><![CDATA[
+            </para>
+            
+            <programlisting role="php"><![CDATA[
 /library
   /Zend
   /Widget
     /Controller
       Router.php
       README.txt
-]]></programlisting>
+]]>         </programlisting>
 
+            <para>
                 Обратите внимание, что в этом примере каталог
                 <code>Widget/Controller/</code> копирует каталог
                 <code>Zend/Controller/</code> везде, где это возможно. В данном
@@ -226,7 +232,8 @@
 <!--
             The interface <code>Zend_Controller_Router_Interface</code> provides a definition for only one method:
 -->
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 
   /**
    * @param  Zend_Controller_Dispatcher_Interface
@@ -235,8 +242,9 @@
    */
   public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
 
-?>]]></programlisting>
+?>]]>   </programlisting>
 
+        <para>
             Маршрутизация производится только один раз: когда запрос впервые
             получен системой. Целью маршрутизатора является генерация маркера
             <code>Zend_Controller_Dispatch_Token</code>, который
@@ -302,8 +310,8 @@
 <!--
             The interface <code>Zend_Controller_Dispatcher_Interface</code> provides definitions for two methods:
 -->
-
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 
 /**
  * @param  Zend_Controller_Dispatcher_Token $route
@@ -311,8 +319,9 @@
  */
 public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
-?>]]></programlisting>
+?>]]>   </programlisting>
 
+        <para>
             <code>isDispatchable()</code> проверяет, является ли маркер возможным
             для диспетчеризации. Если является, то возвращается <code>TRUE</code>,
             иначе <code>FALSE</code>. Определение того, что возможно для
@@ -326,8 +335,8 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
             implementing the interface.  In the case of the default implementation, <code>Zend_Controller_Dispatcher</code>, it means
             that the controller file exists, the class exists within the file, and the action method exists within the class.
 -->
-
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 
 /**
  * @param  Zend_Controller_Dispatcher_Token $route
@@ -335,8 +344,9 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
  */
 public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
-?>]]></programlisting>
+?>]]>   </programlisting>
 
+        <para>
             <code>dispatch()</code> является рабочим методом. Этот метод должен
             выполнять действие контроллера. Он должен возвращать либо маркер
             диспетчеризации, либо <code>FALSE</code>, который указывает, что
