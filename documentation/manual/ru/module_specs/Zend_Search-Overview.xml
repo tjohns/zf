@@ -1,198 +1,304 @@
 <sect1 id="zend.search.overview">
-    <title>Overview</title>
+    <title>Обзор</title>
 
     <sect2 id="zend.search.introduction">
-        <title>Introduction</title>
+        <title>Введение</title>
         <para>
+            Zend_Search_Lucene является поисковым движком общего
+            назначения для поиска по тексту, написанным полностью на PHP 5.
+            Так как он хранит индекс в файловой системе и не требует наличия
+            сервера баз данных, то дает
+            возможность реализовать поиск почти для всех веб-сайтов, работающих
+            под управлением PHP. Zend_Search_Lucene поддерживает следующие
+            возможности:  
+<!--
             Zend_Search_Lucene is a general purpose text search engine written entirely in PHP 5.
             Since it stores its index on the filesystem and does not require a database
             server, it can add search capabilities to almost any PHP-driven website.
             Zend_Search_Lucene supports the following features:
-            
+-->
             <itemizedlist>
                 <listitem>
-                    <para>Ranked searching - best results returned first</para>
+                    <para>
+                        Поиск с сортировкой -- лучшие результаты возвращаются первыми
+<!--
+                        Ranked searching - best results returned first
+-->
+                    </para>
                 </listitem>
                 <listitem>
                     <para>
+                       Множество типов запросов: фразовые запросы, групповые символы,
+                       близость слов, диапазон поиска и т.д.
+<!--
                        Many powerful query types: phrase queries, wildcard queries,
                        proximity queries, range queries and more
+-->
                         <footnote>
                            <para>
+                             Сейчас поддерживается поиск только по простым
+                             и составным запросам.
+<!--
                              Only term and multi term queries are supported at this time.
+-->
                            </para>
                         </footnote>
                     </para>
                 </listitem>
                 <listitem>
-                    <para>Search by specific field (e.g., title, author, contents)</para>
+                    <para>
+                        Поиск по определенному полю (например: заголовок, автор,
+                        содержимое)
+<!--
+                        Search by specific field (e.g., title, author, contents)
+-->
+                    </para>
                 </listitem>
             </itemizedlist>
-        
-            Zend_Search_Lucene was derived from the Apache Lucene project.  For more information on Lucene, visit
+            Zend_Search_Lucene произошел от проекта Apache Lucene.
+            За более подробной информацией см.
+<!--
+            Zend_Search_Lucene was derived from the Apache Lucene project.  For more
+            information on Lucene, visit
+-->
             <ulink url="http://lucene.apache.org/java/docs/"/>.
         </para>
     </sect2>
-    
-	<sect2 id="zend.search.index-creation.documents-and-fields">
-		<title>Document and Field Objects</title>
+
+    <sect2 id="zend.search.index-creation.documents-and-fields">
+        <title>Объекты документа и поля<!--Document and Field Objects--></title>
             <para>
+                Zend_Search_Lucene оперирует с документами как с элементарными
+                объектами для индексации. Документ делится на именованные поля,
+                содержащие контент, по которому может производиться поиск.
+<!--
                 Zend_Search_Lucene operates with documents as atomic subjects for indexing.  A document is
                 divided into named fields, and fields have content that can be searched.
+-->
             </para>
-        
+
             <para>
-                A documented is represented by the Zend_Search_Lucene_Document object, and this object contains
+                Документ представлен объектом Zend_Search_Lucene_Document,
+                этот объект содержит объекты Zend_Search_Lucene_Field, 
+                представляющие собой поля документа.
+<!--
+                A document is represented by the Zend_Search_Lucene_Document object, and this object contains
                 Zend_Search_Lucene_Field objects that represent the fields.
+-->
             </para>
-        
+
             <para>
+                Важно заметить, что любой вид информации может быть добавлен в индекс.
+                Информация специализированного применения или метаданные
+                могут храниться в полях документа и после извлекаться вместе
+                с документом в процессе поиска.
+<!--
                 It is important to note that any kind of information can be added to the index.
                 Application-specific information or metadata can be stored in the document
                 fields, and later retrieved with the document during search.
+-->
             </para>
-        
+
             <para>
-                It is the responsibility of your application to control the indexer.  
+                Ваше приложение отвественно за управление индексатором.
+                Это означает, что данные могут быть проиндексированы из
+                любых ресурсов, доступных приложению. Например, это
+                могут быть файловая система, база данных, форма HTML и т.д.   
+<!--
+                It is the responsibility of your application to control the indexer.
                 This means that data can be indexed from any source
                 that is accessible by your application.  For example, this could be the
                 filesystem, a database, an HTML form, etc.
-            </para>            
-            
-            <para>
-                <code>Zend_Search_Lucene_Field</code> class provides several static methods to create fields with
-                different characteristics:
+-->
             </para>
-        
+
+            <para>
+                Класс <code>Zend_Search_Lucene_Field</code> предоставляет
+                несколько статических методов для создания полей с различными
+                характеристиками.
+<!--
+                <code>Zend_Search_Lucene_Field</code> class provides several
+                static methods to create fields with
+                different characteristics:
+-->
+            </para>
+
             <programlisting role="php"><![CDATA[<?php
 $doc = new Zend_Search_Lucene_Document();
 
-// Field is not tokenized, but is indexed and stored within the index.
-// Stored fields can be retrived from the index.
-$doc->addField(Zend_Search_Lucene_Field::Keyword('doctype', 
+// Поле не размечается, но индексируется и сохраняется в индексе.
+// Сохраненные поля могут быть получены из индекса.
+$doc->addField(Zend_Search_Lucene_Field::Keyword('doctype',
                                                  'autogenerated'));
 
-// Field is not tokenized nor indexed, but is stored in the index.
-$doc->addField(Zend_Search_Lucene_Field::UnIndexed('created', 
+// Поле не размечается и не индексируется, но сохраняется в индексе. 
+$doc->addField(Zend_Search_Lucene_Field::UnIndexed('created',
                                                    time()));
 
-// Binary String valued Field that is not tokenized nor indexed,
-// but is stored in the index.
-$doc->addField(Zend_Search_Lucene_Field::Binary('icon', 
+// Бинарное поле, которое не размечается и не индексируется, но
+// сохраняется в индексе.
+$doc->addField(Zend_Search_Lucene_Field::Binary('icon',
                                                 $iconData));
 
-// Field is tokenized and indexed, and is stored in the index.
-$doc->addField(Zend_Search_Lucene_Field::Text('annotation', 
+// Поле размечается, индексируется и сохраняется в индексе 
+$doc->addField(Zend_Search_Lucene_Field::Text('annotation',
                                               'Document annotation text'));
 
-// Field is tokenized and indexed, but that is not stored in the index.
-$doc->addField(Zend_Search_Lucene_Field::UnStored('contents', 
+// Поле размечается и индексируется, но не сохраняется в индексе.
+$doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   'My document content'));
 
 ?>]]></programlisting>
-        
+
             <para>
-                You could give names for fields by your own choice.  A "contents" field name is used to search 
+                Вы можете давать имена полям по своему усмотрению. 
+                По умолчанию для поиска используется поле с именем "contents".
+                В поле с этим именем лучше всего помещать основные
+                данные документа. 
+<!--
+                You could give names for fields by your own choice.  A "contents" field name is used to search
                 by default.  It's good idea to place main document data into this field with this name.
+-->
             </para>
-	</sect2>
-	
-	<sect2 id="zend.search.index-creation.understanding-field-types">
-		<title>Understanding Field Types</title>
+    </sect2>
+
+    <sect2 id="zend.search.index-creation.understanding-field-types">
+        <title>Значение типов полей<!--Understanding Field Types--></title>
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>Keyword</code> fields are stored and indexed, meaning they can be searched as well as 
-                    displayed them back in search results. They are not split up into seperate 
-                    words by tokenization.  Enumerated database fields usually translate well to Keyword 
-                    fields in Zend_Search_Lucene.
+                    Поля <code>Keyword</code> сохраняются и индексируются,
+                    это означает, что можно не только производить поиск в них,
+                    но и отображать их в результатах поиска.
+                    Они не делятся на отдельные слова посредством разметки.
+                    Нумерованные поля БД обычно преобразуются в поля Keyword
+                    в Zend_Search_Lucene.
+<!--
+                    <code>Keyword</code> fields are stored and indexed, meaning that they can be searched as well
+                    as displayed in search results. They are not split up into separate words by tokenization.
+                    Enumerated database fields usually translate well to Keyword fields in Zend_Search_Lucene.
+-->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>UnIndexed</code> fields are not searchable, but they are returned with search hits.  Database 
-                    timestamps, primary keys, file system paths, and other external identifiers are good 
+                    В полях <code>UnIndexed</code> нельзя производить поиск,
+                    но они возвращаются в результатах поиска. Поля timestamp,
+                    ключевые поля, пути в файловой системе и другие
+                    внешние идентификаторы -- хорошие кандидаты для того, чтобы
+                    быть полями UnIndexed.
+<!--
+                    <code>UnIndexed</code> fields are not searchable, but they are returned with search hits.  Database
+                    timestamps, primary keys, file system paths, and other external identifiers are good
                     candidates for UnIndexed fields.
+-->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Binary</code> fields are not tokenized or indexed, but are stored for retrieval with search hits. 
+                    Поля <code>Binary</code> не размечаются и не индексируются,
+                    но сохраняются для возвращения в результатах поиска.
+                    Они могут использоваться для хранения любых данных,
+                    закодированных в виде бинарной строки -- как, например,
+                    иконки.
+<!--
+                    <code>Binary</code> fields are not tokenized or indexed, but are stored for retrieval with search hits.
                     They can be used to store any data encoded as a binary string, such as an image icon.
+-->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>Text</code> fields are stored, indexed, and tokenized. Text fields are appropriate for storing 
-                    information like subjects and titles that need to be searchable as well as returned with 
-                    search results.
+                    Поля <code>Text</code> сохраняются, индексируются и размечаются.
+                    Текстовые поля подходят для хранения такой информации,
+                    как темы и заголовки -- в них нужно не только искать, но
+                    и возвращать с результатами поиска. 
+<!--
+                    <code>Text</code> fields are stored, indexed, and tokenized.
+                    Text fields are appropriate for storing
+                    information like subjects and titles that need to be searchable
+                    as well as returned with search results.
+-->
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>UnStored</code> fields are tokenized and indexed, but not stored in the index. Large amounts of 
-                    text are best indexed using this type of field. Storing data creates a larger index on 
-                    disk, so if you need to search but not redisplay the data, use an UnStored field. 
-                    UnStored fields are practical when using a Zend_Search_Lucene index in 
-                    combination with a relational database. You can index large data fields with UnStored 
-                    fields for searching, and retrieve them from your relational database by using a seperate 
+                    Поля <code>UnStored</code> размечаются и индексируются, но
+                    не сохраняются в индексе. Тексты большого объема лучше
+                    индексировать, используя этот тип поля.
+                    Хранение таких данных создает индекс, который занимает много места
+                    на диске, поэтому если нужно искать в данных, но не выводить их, то
+                    используйте поле UnStored. Поля UnStored полезны,
+                    когда используется индекс Zend_Search_Lucene в
+                    комбинации с реляционной БД. Вы можете индексировать большие
+                    поля данных для поиска с помощью UnStored и извлекать их
+                    из реляционной БД, используя отдельные поля как
+                    идентификаторы.
+<!--
+                    <code>UnStored</code> fields are tokenized and indexed, but not stored in the index. Large amounts of
+                    text are best indexed using this type of field. Storing data creates a larger index on
+                    disk, so if you need to search but not redisplay the data, use an UnStored field.
+                    UnStored fields are practical when using a Zend_Search_Lucene index in
+                    combination with a relational database. You can index large data fields with UnStored
+                    fields for searching, and retrieve them from your relational database by using a separate
                     fields as an identifier.
-    		   </para>
+-->
+               </para>
 
                 <table>
-                    <title>Zend_Search_Lucene_Field Types</title>
+                    <title>Типы Zend_Search_Lucene_Field<!--Zend_Search_Lucene_Field Types--></title>
                     <tgroup cols="4">
                         <thead>
                             <row>
-                                <entry>Field Type</entry>
-                                <entry>Stored</entry>
-                                <entry>Indexed</entry>
-                                <entry>Tokenized</entry>
-                                <entry>Binary</entry>
+                                <entry>Тип поля</entry>
+                                <entry>Сохраняется</entry>
+                                <entry>Индексируется</entry>
+                                <entry>Размечается</entry>
+                                <entry>Бинарное</entry>
                             </row>
                         </thead>
                         <tbody>
                             <row>
                                 <entry>Keyword</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
+                                <entry>Да</entry>
+                                <entry>Да</entry>
+                                <entry>Нет</entry>
+                                <entry>Нет</entry>
                             </row>
                             <row>
                                 <entry>UnIndexed</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
+                                <entry>Да</entry>
+                                <entry>Нет</entry>
+                                <entry>Нет</entry>
+                                <entry>Нет</entry>
                             </row>
                             <row>
                                 <entry>Binary</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                                <entry>No</entry>
-                                <entry>Yes</entry>
+                                <entry>Да</entry>
+                                <entry>Нет</entry>
+                                <entry>Нет</entry>
+                                <entry>Да</entry>
                             </row>
                             <row>
                                 <entry>Text</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
+                                <entry>Да</entry>
+                                <entry>Да</entry>
+                                <entry>Да</entry>
+                                <entry>Нет</entry>
                             </row>
                             <row>
                                 <entry>UnStored</entry>
-                                <entry>No</entry>
-                                <entry>Yes</entry>
-                                <entry>Yes</entry>
-                                <entry>No</entry>
-                            </row>                        
+                                <entry>Нет</entry>
+                                <entry>Да</entry>
+                                <entry>Да</entry>
+                                <entry>Нет</entry>
+                            </row>
                         </tbody>
                     </tgroup>
                 </table>
-    	   </listitem>
-	   </itemizedlist>
-	</sect2>    
+           </listitem>
+       </itemizedlist>
+    </sect2>
 </sect1>
 
 <!--

@@ -1,47 +1,82 @@
 <sect1 id="zend.search.charset">
-	<title>Character set.</title>
+	<title>Набор символов<!--Character set.--></title>
 
 	<sect2 id="zend.search.charset.description">
-        <title>UTF-8 and single-byte character sets support.</title>
+        <title>Поддержка UTF-8 и однобайтных наборов символов<!--UTF-8 and single-byte character sets support.--></title>
 
         <para>
+            Zend_Search_Lucene рассчитан на работу с набором симвлов UTF-8.
+            Файлы индекса хранят данные unicode в "измененной кодировке UTF-8" от
+            Java. Ядро Zend_Search_Lucene полностью поддерживает его за одним исключением.
+<!--
             Zend_Search_Lucene is designed to work with UTF-8 charset. Index files store
             unicode data in Java's "modified UTF-8 encoding". Zend_Search_Lucene core
             completely supports it with one exception.
+-->
             <footnote>
                <para>
+                   Zend_Search_Lucene поддерживает только символы
+                   Basic Multilingual Plane (от 0x0000 до 0xFFFF) и не поддерживает
+                   дополнительные символы (символы, чьи коды больше 0xFFFF).
+<!--
                    Zend_Search_Lucene supports only Basic Multilingual Plane
                    (BMP) characters (from 0x0000 to 0xFFFF) and doesn't support
                    "supplementary characters" (characters whose code points are
                    greater than 0xFFFF)
+-->
                </para>
                <para>
+                   Java 2 представляет эти символыв виде пары значений
+                   символьного типа (16 бит), перое из диапазона 0xD800-0xDBFF,
+                   второе из диапазона 0xDC00-0xDFFF. Тогда они кодируются как
+                   обычные символы UTF-8 в шести байтах. Стандартное
+                   представление UTF-8 использует четыре байта для дополнительных
+                   символов.
+<!--
                    Java 2 represents these characters as a pair of char (16-bit)
                    values, the first from the high-surrogates range (0xD800-0xDBFF),
                    the second from the low-surrogates range (0xDC00-0xDFFF). Then
                    they are encoded as usual UTF-8 characters in six bytes.
                    Standard UTF-8 representation uses four bytes for supplementary
                    characters.
+-->
                </para>
             </footnote>
 
         </para>
 
         <para>
-            However, text analyzers and query parser text analyzer and query parser use
+            Тем не менее, анализатор текста и парсер запросов используют
+            <code>ctype_alpha()</code> для разметки текста и запросов.
+            <code>ctype_alpha()</code> не поддерживает UTF-8
+            и будет заменен в ближайшем будущем.  
+<!--
+            However, text analyzers and query parser use
             ctype_alpha() for tokenizing text and queries. ctype_alpha() doesn't support
             UTF-8 and needs to be replaced by something else in nearest future.
+-->
         </para>
 
         <para>
+            До этого мы настоятельно рекомендуем конвертировать данные в
+            представление ASCII
+<!--
             Before that we are strongly recomend to convert your data into ASCII
             representation
+-->
             <footnote>
                <para>
+                   Если данные могут содержать не-ascii символы или быть
+                   представлены в UTF-8.
+<!--
                    If data could contain non-ascii character or come in UTF-8.
+-->
                </para>
             </footnote>
+            (как для хранения исходных документов, так и для запросов):
+<!--
             (both for storing source documents, and for querying):
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php

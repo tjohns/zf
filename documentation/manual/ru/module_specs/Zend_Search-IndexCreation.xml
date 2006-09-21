@@ -1,93 +1,215 @@
 <sect1 id="zend.search.index-creation">
-	<title>Building Indexes</title>
+    <title>Индексация<!--Building Indexes--></title>
 
-	<sect2 id="zend.search.index-creation.creating">
-        <title>Creating a New Index</title>
+    <sect2 id="zend.search.index-creation.creating">
+        <title>Создание нового индекса<!--Creating a New Index--></title>
 
         <para>
+            Возможности по созданию и обновлению индекса
+            реализованы в модуле Zend_Search_Lucene и Java Lucene.
+            Вы можете использовать обе эти возможности.
+<!--
             Index creation and updating capabilities are implemented within Zend_Search_Lucene module and Java Lucene.
             You can use both of these capabilities.
+-->
         </para>
 
         <para>
+            Приведенный ниже листинг кода PHP, дает пример того, как
+            индексировать файл, используя программный интерфейс Zend_Search_Lucene
+            для индексирования.  
+<!--
             The PHP code listing below provides an example of how to index a file
             using Zend_Search_Lucene indexing API:
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
-// Setting the second argument to TRUE creates a new index
+// Установка второго аргумента в TRUE создает новый индекс.
 $index = new Zend_Search_Lucene('/data/my-index', true);
 
 $doc = new Zend_Search_Lucene_Document();
 
-// Store document URL to identify it in search result.
+// Сохранение URL документа для того, чтобы идентифицировать его в результатах поиска.
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
 
-// Index document content
+// Индексирование содержимого документа.
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
-// Add document to the index.
+// Добавление документа в индекс.
 $index->addDocument($doc);
 
-// Write changes to the index.
+// Запись изменений в индекс.
 $index->commit();
 ?>]]></programlisting>
 
         <para>
-            Newly added documents could be retrived from the index after commit
+            Недавно добавленные документы могут быть извлечены из индекса
+            после операции фиксации (<code>commit()</code>).
+<!--
+            Newly added documents could be retrieved from the index after commit
             operation.
+-->
         </para>
         <para>
-            <code>Zend_Search_Lucene::commit()</code> is automatically called at the and of script execution and
+            <code>Zend_Search_Lucene::commit()</code> автоматически вызывается
+            при завершении выполнения скрипта и перед любыми поисковыми запросами.  
+<!--
+            <code>Zend_Search_Lucene::commit()</code> is automatically called at the end of script execution and
             before any search request.
+-->
         </para>
         <para>
-            Each commit() call generates new index segment. So it must be requested as rarely as possible.
-            From the other side commiting large amount of documents in one step needs more memory.
+            Каждый вызов commit() генерирует новый сегмент индекса. 
+<!--
+            Each commit() call generates new index segment.
+-->
+            <footnote>
+            <para>
+            Файлы сегментов индекса Lucene по своей природе не могут обновляться.
+            Обновление сегмента требует полной реорганизации сегмента.
+            За подробностями см. форматы файлов индекса
+            (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
+            Увеличение числа сегментов ухудшает качество индекса,
+            но оптимизация индекса восстанавливает его. Оптимизация сводится к
+            объединению нескольких сегментов в один. Этот процедура также не
+            обновляет сегменты. Она создает новый большой сегмент, генерирует
+            новый список сегментов (файл 'segments.new'), который содержит новый
+            оптимизированный сегмент вместо набора старых и затем
+            переименовывает файл 'segments.new' в 'segments'.
+<!--
+            Lucene index segment files cannot be updated by their nature. A segment update needs full segment
+            reorganisation. See Lucene index file formats for details
+            (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
+            Increasing number of segments reduces quality of the index, but index optimization restores it.
+            Optimization is reduced to merging several segments into one. This process also doesn't update segments.
+            It generates new large segment, generates new segment list ('segments.new' file), which contains new
+            optimized segment instead of the set of old segments, and then renames 'segments.new' file to 'segments'.
+-->
+            </para>
+            <para>
+            Оптимизация является итеративным процессом. Очень маленькие сегменты
+            (которые, например, генерируются добавлением только одного документа)
+            объединяются в больший и так далее. Оптимизация может работать с
+            потоками сегментов и не занимает много памяти. Таким образом,
+            процесс оптимизации не отнимает много ресурсов и не блокирует индекс
+            для поиска при обновлении или объединении других сегментов.
+<!--
+            Optimization is iterative process. Very small segments (ex. which are generated by adding only one document)
+            are being merged into greater and so on. Optimization can work with a segment streams and doesn't take a lot
+            of memory. Thus optimization process doesn't take a lot of resources and doesn't lock index for searching,
+            updating or merging other segments.
+-->
+            </para>
+            </footnote>
+            Поэтому он должен запрашиваться как можно реже. С другой стороны,
+            одновременная фиксация большого количества документов требует большего
+            объема памяти.
+<!--
+            So it must be requested as rarely as possible.
+            From the other side committing large amount of documents in one step
+            needs more memory.
+-->
         </para>
         <para>
+            Среди будущих улучшений Zend_Search_Lucene планируется
+            автоматическая оптимизация управления сегментами.
+<!--
             Automatic segment management optimization is a subject of future Zend_Search_Lucene enhancements.
+-->
         </para>
     </sect2>
 
     <sect2 id="zend.search.index-creation.updating">
-        <title>Updating Index</title>
+        <title>Обновление индекса<!--Updating Index--></title>
 
         <para>
-            The same procedure is used to update existing index. The only difference is that index should be opened without
-            second parameter:
+            Та же самая процедура используется при обновлении существующего
+            индекса. Единственное отличие состоит в том, что индекс должен быть открыт без
+            второго параметра:
+<!--
+            The same procedure is used to update an existing index. The only difference is that the index should be
+            opened without the second parameter:
+-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
-// Open existing index
+// Открытие существующего индекса
 $index = new Zend_Search_Lucene('/data/my-index');
 
 $doc = new Zend_Search_Lucene_Document();
-// Store document URL to identify it in search result.
+// Сохраниение URL документа для того, чтобы идентифицировать его в результатах поиска.
 $doc->addField(Zend_Search_Lucene_Field::Text('url', $docUrl));
-// Index document content
+// Индексация содержимого документа.
 $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
-// Add document to the index.
+// Добавление документа в индекс.
 $index->addDocument($doc);
 
-// Write changes to the index.
+// Запись изменений в индекс.
 $index->commit();
-?>]]></programlisting>
+?>]]>   </programlisting>
 
         <para>
+            Каждый вызов <code>commit()</code> (явный или неявный) генерирует
+            новый сегмент индекса.
+<!--
             Each commit() call (explicit or implicit) generates new index segment.
+-->
         </para>
         <para>
+            Zend_Search_Lucene не производит автоматическое управление
+            сегментами. Поэтому вы должны сами следить за размером сегментов.
+            С одной стороны, большой сегмент является оптимальным выбором,
+            но с другой, большой сегмент требует больше памяти при его создании.
+<!--
             Zend_Search_Lucene doesn't manage segments automatically. Thus you should care about segment size.
             From the one side large segment is more optimal, but from another large segment needs more memory during creation.
+-->
         </para>
         <para>
+            Lucene Java и Luke (Lucene Index Toolbox --
+            <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+            могут использоваться для оптимизации индекса с этой версией
+            Zend_Search_Lucene.
+<!--
             Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
             can be used to optimize index with this version of Zend_Search_Lucene.
+-->
         </para>
+    </sect2>
+
+    <sect2 id="zend.search.index-creation.document-updating">
+        <title>Обновление документов<!--Updating Documents--></title>
+
+        <para>
+            Формат файлов индекса Lucene не поддерживает обновление документов.
+            Для обновления документ должен быть удален и добавлен снова. 
+<!--
+            Lucene index file format doesn't support document updating. Document should be removed and re-added to do this.
+-->
+        </para>
+
+        <para>
+            Метод <code>Zend_Search_Lucene::delete()</code> оперирует с внутренним
+            идентификатором индекса документа. Он может быть получен из результата
+            запроса ("хит") через свойство 'id': 
+<!--
+            <code>Zend_Search_Lucene::delete()</code> method operates with an internal index document id. It can be retrieved
+            from a query hit by 'id' property:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$removePath = ...;
+$hits = $index->find('path:' . $removePath);
+foreach ($hits as $hit) {
+    $index->delete($hit->id);
+}
+$index->commit();
+?>]]></programlisting>
     </sect2>
 </sect1>
 
