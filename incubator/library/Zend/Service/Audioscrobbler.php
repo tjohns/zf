@@ -133,9 +133,13 @@ class Zend_Service_Audioscrobbler
         iconv_set_encoding('input_encoding', 'UTF-8');
         iconv_set_encoding('internal_encoding', 'UTF-8');
 
-        $this->_rest = new Zend_Service_Rest();
-        $this->_rest->setUri('http://ws.audioscrobbler.com');
-    }
+        try {
+            $this->_rest = new Zend_Service_Rest();
+            $this->_rest->setUri('http://ws.audioscrobbler.com');
+        } catch (Zend_Http_Client_Exception $e) {
+            throw $e;
+        }
+   }
 
 
 	/**
@@ -264,7 +268,7 @@ class Zend_Service_Audioscrobbler
 			if ($request->isSuccessful()) {
 				$response = simplexml_load_string($request->getBody());
 				return $response;
-			} else {
+            } else {
 				if ($request->getBody() == 'No such path') {
 					throw new Zend_Service_Exception('Could not find: ' . $dir);
 				} else if ($request->getBody() == 'No user exists with this name.') {
@@ -370,16 +374,17 @@ class Zend_Service_Audioscrobbler
 	protected function _verifyRequiredParams($category,$params)
 	{
 		if(!isset($this->$category) || $this->$category=='')
-		{
+        {
 			throw new Zend_Service_Exception('Required ->set'.ucwords($category).'("'.$category.'");');
 		}
 
 		if($params!=false)
-		{
-			foreach($params as $key => $value)
-			{
-				throw new Zend_Service_Exception('Required ->set'.ucwords($key).'("'.$value.'");');
-			}
+        {
+            foreach ($params as $key => $value) {
+                if (!isset($this->$key)) {
+             	    throw new Zend_Service_Exception('Required ->set'.ucwords($key).'("'.$value.'");');
+                }
+            }
 		}
 	}
 
@@ -440,7 +445,7 @@ class Zend_Service_Audioscrobbler
 	public function userGetTopTagsForArtist()
 	{
 		$required = array('artist'=>'artist name');
-		return $this->_getInfoByUser('artisttags.xml?artist='.urlencode($this->artist),$required);
+		return $this->_getInfoByUser('artisttags.xml?artist='.$this->artist,$required);
 	}
 
 	/**
