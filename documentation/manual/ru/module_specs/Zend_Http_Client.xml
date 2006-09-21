@@ -21,12 +21,11 @@
             maximum number of allowed redirections to the <code>get()</code> method.
 -->
         </note>
-        <para>
-            <example>
-                <title>
-                    Выполнение базовых запросов GET<!-- Performing a Basic GET Request -->
-                </title>
-                <programlisting role="php"><![CDATA[<?php
+        <example>
+            <title>
+                Выполнение базовых запросов GET<!-- Performing a Basic GET Request -->
+            </title>
+            <programlisting role="php"><![CDATA[<?php
     require_once 'Zend/Http/Client.php';
     try {
         $http = new Zend_Http_Client('http://example.org');
@@ -40,8 +39,7 @@
         echo '<p>Произошла ошибка (' .$e->getMessage(). ')</p>';
     }
     ?>]]></programlisting>
-            </example>
-        </para>
+        </example>
     </sect2>
     <sect2 id="zend.http.client.basic-get-requests">
         <title>
@@ -74,9 +72,8 @@
 
     // Определение URL и одного заголовка
     $http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
-    ?>]]>       </programlisting>
+    ?>]]>   </programlisting>
         </example>
-        <para />
         <example>
             <title>
                 Передача нескольких заголовков<!-- Sending Multiple Headers -->
@@ -87,7 +84,7 @@
     // Установка URL и нескольких заголовков
     $http = new Zend_Http_Client('http://example.org',
                             array('Accept: text/html', 'Accept-Language: en-us,en;q=0.5'));
-    ?>]]>       </programlisting>
+    ?>]]>   </programlisting>
         </example>
         <para>
             Если вы хотите использовать <code>Zend_Http_Client</code> для
