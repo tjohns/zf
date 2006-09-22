@@ -34,7 +34,7 @@ require_once 'Zend/Pdf/Element/Reference/Context.php';
  */
 abstract class Zend_Pdf_Trailer
 {
-    static private $_allowedKeys = array('Size', 'Prev', 'Root', 'Encrypt', 'Info', 'ID', 'Index', 'W');
+    static private $_allowedKeys = array('Size', 'Prev', 'Root', 'Encrypt', 'Info', 'ID', 'Index', 'W', 'XRefStm');
 
     /**
      * Trailer dictionary.
@@ -52,6 +52,7 @@ abstract class Zend_Pdf_Trailer
     private function _checkDictKey($key)
     {
         if ( !in_array($key, self::$_allowedKeys) ) {
+            /** @todo Make warning (log entry) instead of an exception */
             throw new Zend_Pdf_Exception("Unknown trailer dictionary key: '$key'.");
         }
     }
