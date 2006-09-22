@@ -149,8 +149,8 @@ class Zend_Log_Adapter_Db implements Zend_Log_Adapter_Interface
 	        /**
 	         * @todo needs to be updated for new database adapters
 	         */
-	        $fieldNames[] = "`" .$this->_dbAdapter->escapeString($key). "`";
-	        $value = "'" .$this->_dbAdapter->escapeString($value). "'";
+	        $fieldNames[] = "`" .$this->_dbAdapter->quote($key). "`";
+	        $value = "'" .$this->_dbAdapter->quote($value). "'";
 	        if ($value=="''") {
 	            $value = "NULL";
 	        }
@@ -162,7 +162,7 @@ class Zend_Log_Adapter_Db implements Zend_Log_Adapter_Interface
         /**
          * @todo needs to be updated for new database adapters
          */
-	    $sql = "INSERT INTO `" .$this->_dbAdapter->escapeString($this->_tableName). "` ("
+	    $sql = "INSERT INTO `" .$this->_dbAdapter->quote($this->_tableName). "` ("
 	         . implode(', ', $fieldNames) . ') VALUES ('
 	         . implode(', ', $fields) .')';
 
