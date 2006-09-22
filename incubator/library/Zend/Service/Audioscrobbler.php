@@ -253,18 +253,18 @@ class Zend_Service_Audioscrobbler
 	/**
 	*
 	* Private method that queries REST service and returns SimpleXML response set
-	* @param string $dir directory that service lives under
 	* @param string $service name of Audioscrobbler service file we're accessing
+	* @param string $params parameters that we send to the service if needded
 	* @return SimpleXML result set
 	*/
-	private function _getInfo($dir, $service)
+	private function _getInfo($service, $params = NULL)
 	{
 		$service = (string) $service;
-		$dir = (string) $dir;
+		$params = (string) $params;
 
-		try {
-			$request = $this->_rest->restGet("/{$this->version}/{$dir}/{$service}");
-
+		try {   
+            $request = $this->_rest->restGet($service, $params);
+            
 			if ($request->isSuccessful()) {
 				$response = simplexml_load_string($request->getBody());
 				return $response;
@@ -283,111 +283,6 @@ class Zend_Service_Audioscrobbler
 		}
 	}
 
-	/**
-	* Wrapper function for _getInfo() that returns info from the User Data category
-	* @param string $service Audioscrobbler service being accessed
-	* @param array $params Required parameters, as associative array
-	* @return _getInfo() result
-	*/
-
-	protected function _getInfoByUser($service, $params=false)
-	{
-		$this->_verifyRequiredParams('user',$params);
-		$dir = 'user/'.$this->user;
-		return $this->_getInfo($dir, $service);
-	}
-
-	/**
-	* Wrapper function that calls _getInfo() for results from the Artist category
-	* @param string $service Audioscrobbler service being accessed
-	* @param array $params Required parameters, as associative array
-	* @return _getInfo() result
-	*/
-	protected function _getInfoByArtist($service, $params=false)
-	{
-		$this->_verifyRequiredParams('artist',$params);
-		$dir = 'artist/'.$this->artist;
-		return $this->_getInfo($dir, $service);
-	}
-
-	/**
-	* Wrapper function that calls _getInfo() for results from the Track category
-	* @param string $service Audioscrobbler service being accessed
-	* @param array $params Required parameters, as associative array
-	* @return _getInfo() result
-	*/
-	protected function _getInfoByTrack($service, $params=false)
-	{
-		$this->_verifyRequiredParams('track',$params);
-		$dir = 'track/'.$this->artist.'/'.$this->track;
-		return $this->_getInfo($dir, $service);
-	}
-
-	/**
-	* Wrapper function that calls _getInfo() for results from the Tag category
-	* @param string $service Audioscrobbler service being accessed
-	* @param array $params Required parameters, as associative array
-	* @return _getInfo() result
-	*/
-	protected function _getInfoByTag($service, $params=false)
-	{
-		$this->_verifyRequiredParams('tag',$params);
-		$dir = 'tag';
-		if($this->tag!='') $dir.= '/'; //because OverallTopTags has no subdir
-		$dir .= $this->tag;
-
-		return $this->_getInfo($dir, $service);
-	}
-
-	/**
-	* Wrapper function that calls _getInfo() for results from the Group category
-	* @param string $service Audioscrobbler service being accessed
-	* @param array $params Required parameters, as associative array
-	* @return _getInfo() result
-	*/
-	protected function _getInfoByGroup($service, $params=false)
-	{
-		$this->_verifyRequiredParams('group',$params);
-		$dir = 'group/'.$this->group;
-		return $this->_getInfo($dir, $service);
-	}
-
-	/**
-	* Wrapper function that calls _getInfo() for results from the Forum category
-	* @param string $service Audioscrobbler service being accessed
-	* @param array $params Required parameters, as associative array
-	* @return _getInfo() result
-	*/
-	protected function _getInfoByForum($service, $params=false)
-	{
-		$this->_verifyRequiredParams('forum',$params);
-		$dir = 'forum/'.$this->forum;
-		return $this->_getInfo($dir, $service);
-	}
-
-	/**
-	 * Ensures that calls to rest service contain all required parameters
-	 *
-	 * @param ustring $category
-	 * @param uarray $params
-	 */
-	protected function _verifyRequiredParams($category,$params)
-	{
-		if(!isset($this->$category) || $this->$category=='')
-        {
-			throw new Zend_Service_Exception('Required ->set'.ucwords($category).'("'.$category.'");');
-		}
-
-		if($params!=false)
-        {
-            foreach ($params as $key => $value) {
-                if (!isset($this->$key)) {
-             	    throw new Zend_Service_Exception('Required ->set'.ucwords($key).'("'.$value.'");');
-                }
-            }
-		}
-	}
-
 	//////////////////////////////////////////////////////////
 	///////////////////////  USER  ///////////////////////////
 	//////////////////////////////////////////////////////////
@@ -398,7 +293,8 @@ class Zend_Service_Audioscrobbler
 	*/
 	public function userGetProfileInformation()
 	{
-		return $this->_getInfoByUser('profile.xml');
+	    $service = "/{$this->version}/user/{$this->user}/profile.xml";
+		return $this->_getInfo($service);
 	}
 
 	/**
@@ -407,7 +303,8 @@ class Zend_Service_Audioscrobbler
 	*/
 	public function userGetTopArtists()
 	{
-		return $this->_getInfoByUser('topartists.xml');
+	    $service = "/{$this->version}/user/{$this->user}/topartists.xml";
+		return $this->_getInfo($service);
 	}
 
 	/**
@@ -416,7 +313,8 @@ class Zend_Service_Audioscrobbler
 	*/
 	public function userGetTopAlbums()
 	{
-		return $this->_getInfoByUser('topalbums.xml');
+	    $service = "/{$this->version}/user/{$this->user}/topalbums.xml";
+		return $this->_getInfo($service);
 	}
 
 	/**
@@ -425,7 +323,8 @@ class Zend_Service_Audioscrobbler
 	*/
 	public function userGetTopTracks()
 	{
-		return $this->_getInfoByUser('toptracks.xml');
+		$service = "/{$this->version}/user/{$this->user}/toptracks.xml";
+		return $this->_getInfo($service);
 	}
 
 	/**
@@ -434,7 +333,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetTopTags()
 	{
-		return $this->_getInfoByUser('tags.xml');
+	    $service = "/{$this->version}/user/{$this->user}/tags.xml";
+		return $this->_getInfo($service);
 	}
 
 	/**
@@ -444,8 +344,9 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetTopTagsForArtist()
 	{
-		$required = array('artist'=>'artist name');
-		return $this->_getInfoByUser('artisttags.xml?artist='.$this->artist,$required);
+	    $service = "/{$this->version}/user/{$this->user}/artisttags.xml";
+	    $params = "artist={$this->artist}";
+		return $this->_getInfo($service, $params);
 	}
 
 	/**
@@ -455,8 +356,9 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetTopTagsForAlbum()
 	{
-		$required = array('artist'=>'artist name','album'=>'album name');
-		return $this->_getInfoByUser('albumtags.xml?artist='.urlencode($this->artist).'&album='.urlencode($this->album),$required);
+		$service = "/{$this->version}/user/{$this->user}/albumtags.xml";
+		$params = "artist={$this->artist}&album={$this->album}";
+		return $this->_getInfo($service, $params);
 	}
 
 	/**

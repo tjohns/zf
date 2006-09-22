@@ -44,8 +44,8 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
 
-   }
-
+    }
+    
 	public function testGetBadProfileInfo()
 	{
 		$as = new Zend_Service_Audioscrobbler();
@@ -71,8 +71,8 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test" );
         }
-   }
-
+    }
+    
     public function testUserGetTopAlbums( )
     {
         try {
@@ -85,7 +85,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
-
+    
     public function testUserGetTopTracks( )
     {
         try {
@@ -111,13 +111,13 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [$e->getMessage()] thrown by test");
         }
     }
-
+    
     public function testUserGetTopTagsForArtist()
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
             $as->setUser('RJ');
-            $as->setArtist("Metallica");
+            $as->setArtist('Metallica');
             $response = $as->userGetTopTagsForArtist();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertEquals($response['artist'], 'Metallica');
@@ -126,4 +126,33 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");
         }
     }
+    
+    public function testBadUserGetTopTagsForArtist()
+    {
+        try {
+            $as = new Zend_Service_Audioscrobbler();
+            $response = $as->userGetTopTagsForArtist();
+        } catch (Exception $e) {
+            return;
+        }
+        
+        $this->fail("User did not set proper parameters");
+    }
+    
+    public function testUserGetTopTagsForAlbum()
+    {
+        try {
+            $as = new Zend_Service_Audioscrobbler();
+            $as->setUser("RJ");
+            $as->setArtist("Metallica");
+            $as->setAlbum("Ride The Lightning");
+            $response = $as->userGetTopTagsForAlbum();
+            $this->assertEquals($response['user'], 'RJ');
+            $this->assertEquals(strtolower($response['artist']), strtolower('Metallica'));
+            $this->assertEquals(strtolower($response['album']), strtolower('Ride The Lightning'));
+            $this->assertNotNull($response->albumtags);
+        } catch (Exception $e) {
+            $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");          }
+    }
+    
 }
