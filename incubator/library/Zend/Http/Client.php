@@ -114,10 +114,12 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * Set the number of maximum redirections to follow, 0 for none.
      *
      * @param int $redirects
+     * @return Zend_Http_Client
      */
     public function setMaxRedirects($redirects = 5)
     {
-        $this->maxRedirects = (int) $redirects; 
+        $this->maxRedirects = (int) $redirects;
+        return $this;
     }
     
     /**
@@ -125,10 +127,12 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * (See documentation for Zend_Http_Client::doStrictRedirects for details)
      *
      * @param boolean $strict
+     * @return Zend_Http_Client
      */
     public function setStrictRedirects($strict = true)
     {
         $this->doStrictRedirects = $strict;
+        return $this;
     }
     
     /**
@@ -148,6 +152,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * @param int $port 
      * @param string $user
      * @param string $password
+     * @return Zend_Http_Client
      */
     public function setProxy($host, $port = 8080, $user = null, $password = null)
     {
@@ -157,6 +162,8 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
             'user' => $user,
             'password' => $password
         );
+        
+        return $this;
     }
     
     /**
@@ -174,6 +181,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * @param string|false $user User name or false disable authentication
      * @param string $password Password
      * @param string $type Authentication type
+     * @return Zend_Http_Client
      */
     public function setAuth($user, $password = '', $type = self::AUTH_BASIC)
     {
@@ -193,6 +201,8 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                 'type' => $type
             );
         }
+        
+        return $this;
     }
 
     /**
@@ -202,6 +212,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * and responses.
      *
      * @param Zend_Http_Cookiejar|boolean $cookiejar Exisitng cookiejar object, true to create a new one, false to disable
+     * @return Zend_Http_Client
      */
     public function setCookiejar($cookiejar = true)
     {
@@ -214,6 +225,8 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
         } else {
             throw new Zend_Http_Exception('Invalid parameter type passed as Cookiejar');
         }
+        
+        return $this;
     }
     
     /**
@@ -232,6 +245,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      *
      * @param Zend_Http_Cookie|string $cookie
      * @param string|null $value If "cookie" is a string, this is the cookie value. 
+     * @return Zend_Http_Client
      */
     public function setCookie($cookie, $value = null)
     {
@@ -251,6 +265,8 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
         } else {
             parent::setCookie($cookie, $value);
         }
+        
+        return $this;
     }
     
     /**
@@ -258,12 +274,15 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * 
      * Should be used to reset the request parameters if the client is 
      * used for several concurrent requests.
+     * 
+     * @return Zend_Http_Client
      */
     public function resetParameters()
     {
         parent::resetParameters();
-        
         $this->files = array();
+        
+        return $this;
     }
     
     /**
@@ -273,7 +292,6 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      *
      * 1. $data is null (default): $filename is treated as the name if a local file which
      *    will be read and sent. Will try to guess the content type using mime_content_type().
-     *
      * 2. $data is set - $filename is sent as the file name, but $data is sent as the file
      *    contents and no file is read from the file system. In this case, you need to 
      *    manually set the content-type ($ctype) or it will default to 
@@ -282,7 +300,9 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
      * @param string $filename Name of file to upload, or name to save as
      * @param string $formname Name of form element to send as
      * @param string $data Data to send (if null, $filename is read and sent)
-     * @param string $ctype Content type to use (if $data is set and $ctype is null, will be application/octet-stream)
+     * @param string $ctype Content type to use (if $data is set and $ctype is 
+     *     null, will be application/octet-stream)
+     * @return Zend_Http_Client
      */
     public function setFileUpload($filename, $formname, $data = null, $ctype = null)
     {
@@ -298,6 +318,8 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
 
         if (is_null($ctype)) $ctype = 'application/octet-stream';
         $this->files[$formname] = array($filename, $ctype, $data);
+        
+        return $this;
     }
     
     /**
@@ -331,7 +353,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
 
                 // If we got a well formed absolute URI
                 if (Zend_Uri_Http::check($location)) {
-                    $this->setHeader('host', null);
+                    $this->setHeaders('host', null);
                     $this->setUri($location);
 
                 } else {
@@ -372,20 +394,11 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     {
         $headers = "{$this->method} {$this->uri->getPath()}";
         
-        // Get the original GET parameters from the URL
-        $query = $this->uri->getQuery();
-        
-        // Get the GET parameters that were added using the setParameterGet() method
-        if (count($this->paramsGet) > 0) {
-            if ($query) $query .= '&';
-            
-            // Flatten the GET parameters array 
-            $params = $this->_getParametersRecursive($this->paramsGet, true);
-            foreach ($params as $gp) {
-                $query .= "{$gp[0]}={$gp[1]}&";
-            }
-            $query = substr($query, 0, strlen($query) - 1);
-        }
+        // Get the original GET parameters from the URL, merge them to manually
+        // set GET parameters and set the query string
+        $uri_params = array();
+        parse_str($this->uri->getQuery(), $uri_params);
+        $query = http_build_query(array_merge($uri_params, $this->paramsGet));
         
         if ($query) $headers .= "?{$query}";
         $headers .= " HTTP/{$this->http_version}\r\n";
@@ -454,7 +467,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
         
         // If we have raw_post_data set, just use it as the body.
         if (isset($this->raw_post_data)) {
-            $this->setHeader('content-length', strlen($this->raw_post_data));
+            $this->setHeaders('content-length', strlen($this->raw_post_data));
             return $this->raw_post_data;
         }
         
@@ -469,7 +482,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                 case self::ENC_FORMDATA:
                     // Encode body as multipart/form-data
                     $boundary = '---ZENDHTTPCLIENT-' . md5(microtime());
-                    $this->setHeader('Content-type', self::ENC_FORMDATA . "; boundary={$boundary}");
+                    $this->setHeaders('Content-type', self::ENC_FORMDATA . "; boundary={$boundary}");
                     
                     // Get POST parameters and encode them
                     $params = $this->_getParametersRecursive($this->paramsPost);
@@ -488,13 +501,8 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
                 
                 case self::ENC_URLENCODED:
                     // Encode body as application/x-www-form-urlencoded
-                    $this->setHeader('Content-type', self::ENC_URLENCODED);
-                    
-                    $params = $this->_getParametersRecursive($this->paramsPost, true);
-                    foreach ($params as $pp) {
-                        $body .= "{$pp[0]}={$pp[1]}&";
-                    }
-                    $body = substr($body, 0, strlen($body) - 1);
+                    $this->setHeaders('Content-type', self::ENC_URLENCODED);
+                    $body = http_build_query($this->paramsPost);
                     break;
                 
                 default:
@@ -504,7 +512,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
             }
         }
         
-        if ($body) $this->setHeader('content-length', strlen($body));
+        if ($body) $this->setHeaders('content-length', strlen($body));
         return $body;
     }
     
@@ -578,9 +586,10 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
             
             // If $value is an array, iterate over it
             if (is_array($value)) {
+            	$name .= ($urlencode ? '%5B%5D' : '[]');
                 foreach ($value as $subval) {
                     if ($urlencode) $subval = urlencode($subval);
-                    $parameters[] = array($name . '[]', $subval);
+                    $parameters[] = array($name, $subval);
                 }
             } else {
                 if ($urlencode) $value = urlencode($value);
@@ -592,7 +601,7 @@ class Zend_Http_Client extends Zend_Http_Client_Abstract
     }
     
     /**
-     * Encode date to a multipart/form-data part suitable for a POST request.
+     * Encode data to a multipart/form-data part suitable for a POST request.
      *
      * @param string $boundary
      * @param string $name

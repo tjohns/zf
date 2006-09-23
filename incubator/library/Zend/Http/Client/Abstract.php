@@ -156,6 +156,7 @@ abstract class Zend_Http_Client_Abstract
      * Set the URI for the next request
      *
      * @param Zend_Uri_Http|string $uri
+     * @return Zend_Http_Client
      */
     public function setUri($uri)
     {
@@ -173,6 +174,8 @@ abstract class Zend_Http_Client_Abstract
         } else {
             throw new Zend_Http_Exception('Passed parameter is not a valid HTTP URI.');
         }
+        
+        return $this;
     }
     
     /**
@@ -194,19 +197,23 @@ abstract class Zend_Http_Client_Abstract
      * Set the user agent identification string
      *
      * @param string $ua
+     * @return Zend_Http_Client
      */
     public function setUserAgent($ua) {
         $this->user_agent = $ua;
+        return $this;
     }
     
     /**
      * Set the client's connection timeout in seconds, 0 for none
      *
      * @param int $timeout
+     * @return Zend_Http_Client
      */
     public function setTimeout($timeout = 10)
     {
         $this->timeout = $timeout;
+        return $this;
     }
     
     /**
@@ -217,6 +224,7 @@ abstract class Zend_Http_Client_Abstract
      * dropped. 
      *
      * @param string $method
+     * @return Zend_Http_Client
      */
     public function setMethod($method = self::METHOD_GET)
     {
@@ -231,6 +239,8 @@ abstract class Zend_Http_Client_Abstract
         }
         
         $this->method = $method;
+        
+        return $this;
     }
     
     /**
@@ -244,59 +254,76 @@ abstract class Zend_Http_Client_Abstract
     }
     
     /**
-     * Set or unset a request header field
+     * Set one or more request headers
      * 
-     * The function validates the header, and sets it. If $override is false, 
-     * and the header already exists, another value will be added to the same
-     * header.
+     * This function can be used in several ways to set the client's request
+     * headers:
+     * 1. By providing two parameters: $name as the header to set (eg. 'Host')
+     *    and $value as it's value (eg. 'www.example.com').
+     * 2. By providing a single header string as the only parameter
+     *    eg. 'Host: www.example.com'
+     * 3. By providing an array of headers as the first parameter
+     *    eg. array('host' => 'www.example.com', 'x-foo: bar'). In This case 
+     *    the function will call itself recursively for each array item.
      * 
-     * If $value is null, name is considered a string of the format 
-     * "Header: value", which will be split to get the header name
-     * and value.
+     * In all cases, the third parameter $override decides whether to overwrite
+     * the value of this header if it's already set (default), or to add another
+     * header with the same name to the list of headers (good for repeating
+     * headers like 'Cookie').
      * 
-     * If the value is still null or false after trying to split $name on 
-     * the ':' character (IE if $name does not contain ':'), the header will
-     * be unset.
-     *
-     * @param string $name Header name or entire header string
-     * @param string $value Header value or null
-     * @param boolean $override Whether to rewrite the header if it is already
-     *        set, or add another similar header
+     * @param string|array $name Header name, full header string ('Header: value')
+     *     or an array of headers
+     * @param mixed $value Header value or null
+     * @param boolean $override Whether to override header if it already exists
+     * @return Zend_Http_Client
      */
-    public function setHeader($name, $value = null, $override = true)
+    public function setHeaders($name, $value = null, $override = true)
     {
-        // Check if $name needs to be split
-        if (is_null($value) && (strpos($name, ':') > 0)) 
-            list($name, $value) = explode(':', $name, 2);
+	    // If we got an array, go recusive!
+    	if (is_array($name)) {
+    		foreach ($name as $k => $v) {
+    			if (is_string($k)) {
+                	$this->setHeaders($k, $v, $override);
+            	} else {
+                	$this->setHeaders($v, null, $override);
+            	}
+    		}
+    	} else {
+            // Check if $name needs to be split
+            if (is_null($value) && (strpos($name, ':') > 0)) 
+                list($name, $value) = explode(':', $name, 2);
             
-        // Make sure name is valid
-        if (! preg_match('/^[A-Za-z0-9-]+$/', $name)) {
-            throw new Zend_Http_Exception("{$name} is not a valid HTTP header name");
-        }
+            // Make sure name is valid
+            if (! preg_match('/^[A-Za-z0-9-]+$/', $name)) {
+                throw new Zend_Http_Exception("{$name} is not a valid HTTP header name");
+            }
         
-        // Header names are storred lowercase internally.
-        $name = strtolower($name);
+            // Header names are storred lowercase internally.
+            $name = strtolower($name);
         
-        // If $value is null or false, unset the header
-        if (is_null($value) || $value === false) {
-        	unset($this->headers[$name]);
+            // If $value is null or false, unset the header
+            if ($value === null || $value === false) {
+        	    unset($this->headers[$name]);
         	
-        // Else, set the header
-        } else {
-        	$value = trim($value);
-        	
-            // If override is set, set the header as is
-            if ($override || ! isset($this->headers[$name])) {
-                $this->headers[$name] = $value;
-            
-            // Else, if the header already exists, add a new value
+            // Else, set the header
             } else {
-                if (! is_array($this->headers[$name])) 
+        	    if (is_string($value)) $value = trim($value);
+        	
+                // If override is set, set the header as is
+                if ($override || ! isset($this->headers[$name])) {
+                    $this->headers[$name] = $value;
+            
+                // Else, if the header already exists, add a new value
+                } else {
+                    if (! is_array($this->headers[$name])) 
                         $this->headers[$name] = array($this->headers[$name]);
 
-                $this->headers[$name][] = $value;
+                    $this->headers[$name][] = $value;
+                }
             }
-        }
+    	}
+    	
+        return $this;
     }
     
     /**
@@ -323,10 +350,12 @@ abstract class Zend_Http_Client_Abstract
      * @param string $name
      * @param string $value
      * @param boolean $override Whether to overwrite the parameter's value
+     * @return Zend_Http_Client
      */    
     public function setParameterGet($name, $value, $override = true)
     {
         $this->_setParameter('GET', $name, $value, $override);
+        return $this;
     }
     
     /**
@@ -335,10 +364,12 @@ abstract class Zend_Http_Client_Abstract
      * @param string $name
      * @param string $value
      * @param boolean $override Whether to overwrite the parameter's value
+     * @return Zend_Http_Client
      */        
     public function setParameterPost($name, $value, $override = true)
     {
         $this->_setParameter('POST', $name, $value, $override);
+        return $this;
     }
     
     /**
@@ -346,6 +377,8 @@ abstract class Zend_Http_Client_Abstract
      * 
      * Should be used to reset the request parameters if the client is 
      * used for several concurrent requests.
+     * 
+     * @return Zend_Http_Client
      */
     public function resetParameters()
     {
@@ -357,6 +390,8 @@ abstract class Zend_Http_Client_Abstract
         // Clear outdated headers
         if (isset($this->headers['content-type'])) unset($this->headers['content-type']);
         if (isset($this->headers['content-length'])) unset($this->headers['content-length']);
+        
+        return $this;
     }
     
     /**
@@ -364,6 +399,8 @@ abstract class Zend_Http_Client_Abstract
      *
      * @param Zend_Http_Cookie|string $name
      * @param string|null $value If "cookie" is a string, this is the cookie value. 
+     * 
+     * @return Zend_Http_Client
      */
     public function setCookie($cookie, $value = null)
     {
@@ -380,18 +417,23 @@ abstract class Zend_Http_Client_Abstract
         if (isset($this->headers['cookie'])) {
             $this->headers['cookie'] .= "; {$cookie}={$value}";
         } else {
-            $this->setHeader('cookie', "{$cookie}={$value}");
+            $this->setHeaders('cookie', "{$cookie}={$value}");
         }
+        
+        return $this;
     }
         
     /**
      * Set the encoding type for POST data
      *
      * @param string $enctype
+     * @return Zend_Http_Client
      */
     public function setEncType($enctype = self::ENC_URLENCODED)
     {
         $this->enctype = $enctype;
+        
+        return $this;
     }
     
     /**
@@ -404,38 +446,16 @@ abstract class Zend_Http_Client_Abstract
      *
      * @param string $data
      * @param string $enctype
+     * @return Zend_Http_Client
      */
     public function setRawData($data, $enctype = null)
     {
         $this->raw_post_data = $data;
         $this->setEncType($enctype);
+        
+        return $this;
     }
     
-    /**
-     * Set the next request's headers. 
-     * 
-     * Receives an array of headers, which can be eithr an associative array of
-     * the form "Header" => "value" (eg. "Host" => "www.example.com") or a 
-     * numbered array of string, each of the format "Header: value".
-     *
-     * @param array $headers
-     */
-    public function setHeaders($headers=array()) 
-    {
-        // Make sure we got the proper data
-        if (is_array($headers)) {
-            foreach ($headers as $name => $value) {
-                if (is_string($name)) {
-                    $this->setHeader($name, $value);
-                } else {
-                    $this->setHeader($value);
-                }
-            }
-        }
-        else 
-            throw new Zend_Http_Exception("Parameter must be an array of header lines");
-    }
-
     /**
      * Get the last HTTP request as string
      * 
