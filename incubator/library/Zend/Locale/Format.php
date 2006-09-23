@@ -47,11 +47,15 @@ class Zend_Locale_Format
      */
     public static function getNumber($input, $locale = false)
     {
+        if (!is_string($input))
+            return $input;
+
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
 
         // Parse input locale aware
-        $regex = '/('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.$symbols['decimal'].'){0,1}\d+/';
+        $regex = '/('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.
+                      $symbols['decimal'].'){0,1}\d+/';
         preg_match($regex, $input, $found);
         if (!isset($found[0]))
             self::throwException('No value in '.$input.' found');
@@ -78,28 +82,31 @@ class Zend_Locale_Format
      */
     public static function toNumber($value, $locale = false)
     {
+        // Coding stopped due to fundamental UTF8 problems...
+        // we will continue when UTF8 is avaiable
+
         // Todo: Implement
         self::throwException('function not implemented');
-
-        if (!is_integer($value))
-            return self::toFloat($value, $locale);
 
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
         $format  = Zend_Locale_Data::getContent($locale,'decimalnumberformat');
         $format = $format['default'];
 
+print "\n<br>";
+print "\n<br>ORIGINAL:".$format;
+
         // seperate negative format pattern when avaiable 
         if (strpos($format, ';') !== false)
         {
-            if ($value < 0)
+            if (bccomp($value, 0) < 0)
                 $format = substr($format, strpos($format, ';') + 1);
             else
                 $format = substr($format, 0, strpos($format, ';'));
         }
 
         // set negative sign
-        if ($value < 0)
+        if (bccomp($value, 0) < 0)
         {
             if (strpos($format, '-') === false)
                 $format = $symbols['minus'].$format;
@@ -107,24 +114,58 @@ class Zend_Locale_Format
                 $format = strtr($format, '-', $symbols['minus']);
         }
 
-        // delete precision
-        $precision = substr($format, strpos($format, '.') + 1);
-        $format = $format.substr($precision, strrpos($precision, '#') + 1);
+        // get number parts
+        $endtag = substr($format, strrpos($format, '#') + 1);
+        if (strpos($value, '.') !== false)
+            $precision = substr($value, strpos($value, '.') + 1);
+        else
+            $precision = '';
 
-        $regex = '/[#0]*,{0,}/';
-        preg_match_all($regex, $format, $found);
+        // get fraction and format lengths
+        bcscale(strlen($precision));
+        $prec = bcsub($value, bcsub($value, '0', 0));
+        $number = bcsub($value, 0, 0);
+        $group = strrpos($format, ',');
+        $group2= strpos($format, ',');
+        $point = strpos($format, '.');
 
-print_r($found);
-print $format."\n<br>";
-        $seperate = substr($format,strpos($format,',')+1);
-        $seperate = strlen(substr($seperate,0,strpos($seperate, '.')));
+        // Add fraction
+        if ($prec == 0)
+            $format = substr($format, 0, $point).substr($format, strrpos($format, '#') + 1);
+        else
+            $format = substr($format, 0, $point).$symbols['decimal'].substr($prec, 2).
+                      substr($format, strrpos($format, '#') + 1);
+
+//print "\n<br>APPROVED:".$format;
+
+        // no seperation
+        if ($group == 0)
+        {
+            $format = $number.substr($format, $point + 1);
+        } else if ($group == $group2) {
+            // only 1 seperation
+            $numberlength = strlen($number);
+//print "\n<br>LENGTH:".$numberlength;
+//print "\n<br>NUMBER:".$number;
+//print "\n<br>POINT:".$point;
+//print "\n<br>GROUP:".$group;
+//print "\n<br>GROUP2:".$group2;
+//print "\n<br>X:".($point-$group - 1);
+//print "\n<br>BIS:".(strlen($number));
+            for ($x = ($point - $group - 1); $x < (strlen($number)); $x += ($point - $group - 1))
+            {
+//print "\n<br>X2:".$x;
+                 $number = substr($number, 0, $numberlength - $x).$symbols['group'].
+                           substr($number, $numberlength - $x);
+//print "\n<br>NUMBER:".$number;
+            }
+            $format = substr($format, 0, strpos($format,'#')).$number.substr($format, $point);
+        }
+//print "\n<br>REST:".$prec;
+//print "\n<br>VALUE:".$value;
+//print "\n<br>NUMBER:".$number;
         
-        $length = strlen($value);
-        
-//                    <pattern>#,##0.###</pattern>
-//                    <!-- number grouping same as India (thousands, lakhs, crores, etc.) -->
-//                    <pattern draft="true">#,##,##0.###</pattern>
-
+print "\n<br>VALUE: $value FORMAT:".$format;
         return (string) $format;        
     }
 
@@ -170,6 +211,9 @@ print $format."\n<br>";
      */
     public static function getFloat($input, $precision = false, $locale = false)
     {
+        if (!is_string($input))
+            return $input;
+
         if (!is_int($precision) and ($locale == false))
         {
             $locale = $precision;
@@ -255,6 +299,9 @@ print $format."\n<br>";
      */
     public static function getInteger($input, $locale = false)
     {
+        if (!is_string($input))
+            return $input;
+
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
 
@@ -287,6 +334,52 @@ print $format."\n<br>";
     {
         // Todo: Implement
         self::throwException('function not implemented');
+
+        if (!is_integer($value))
+            return self::toFloat($value, $locale);
+
+        // Get correct signs for this locale
+        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
+        $format  = Zend_Locale_Data::getContent($locale,'decimalnumberformat');
+        $format = $format['default'];
+
+        // seperate negative format pattern when avaiable 
+        if (strpos($format, ';') !== false)
+        {
+            if ($value < 0)
+                $format = substr($format, strpos($format, ';') + 1);
+            else
+                $format = substr($format, 0, strpos($format, ';'));
+        }
+
+        // set negative sign
+        if ($value < 0)
+        {
+            if (strpos($format, '-') === false)
+                $format = $symbols['minus'].$format;
+            else
+                $format = strtr($format, '-', $symbols['minus']);
+        }
+
+        // delete precision
+        $precision = substr($format, strpos($format, '.') + 1);
+        $format = $format.substr($precision, strrpos($precision, '#') + 1);
+
+        $regex = '/[#0]*,{0,}/';
+        preg_match_all($regex, $format, $found);
+
+print_r($found);
+print $format."\n<br>";
+        $seperate = substr($format,strpos($format,',')+1);
+        $seperate = strlen(substr($seperate,0,strpos($seperate, '.')));
+        
+        $length = strlen($value);
+        
+//                    <pattern>#,##0.###</pattern>
+//                    <!-- number grouping same as India (thousands, lakhs, crores, etc.) -->
+//                    <pattern draft="true">#,##,##0.###</pattern>
+
+        return (string) $format;        
     }
 
 
@@ -320,7 +413,7 @@ print $format."\n<br>";
         $format = Zend_Locale_Data::getContent($locale,'dateformat', array('gregorian', $type));
 print $format['pattern']."\n<br>";
         // Parse input locale aware
-//
+
         $pattern = str_split($format['pattern']);
         $last = 0;
         $step = 0;
