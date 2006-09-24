@@ -79,6 +79,11 @@ class Zend_Locale_Format
      * @param $value  - number to localize
      * @param $locale - OPTIONAL locale
      * @return string - locale formatted number
+     * 
+     * TODO: 
+     * UTF8 not handled properly... waiting for Zend_Locale_UTF8
+     * No handling of dual seperated formats as Indian for now
+     * f.e. #,##,##0.###
      */
     public static function toNumber($value, $locale = false)
     {
@@ -86,15 +91,15 @@ class Zend_Locale_Format
         // we will continue when UTF8 is avaiable
 
         // Todo: Implement
-        self::throwException('function not implemented');
+//        self::throwException('function not implemented');
 
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
         $format  = Zend_Locale_Data::getContent($locale,'decimalnumberformat');
         $format = $format['default'];
 
-print "\n<br>";
-print "\n<br>ORIGINAL:".$format;
+//print "\n<br>";
+//print "\n<br>ORIGINAL:".$format;
 
         // seperate negative format pattern when avaiable 
         if (strpos($format, ';') !== false)
@@ -105,6 +110,7 @@ print "\n<br>ORIGINAL:".$format;
                 $format = substr($format, 0, strpos($format, ';'));
         }
 
+//print "\n<br>CHOOSEN:".$format;
         // set negative sign
         if (bccomp($value, 0) < 0)
         {
@@ -114,21 +120,28 @@ print "\n<br>ORIGINAL:".$format;
                 $format = strtr($format, '-', $symbols['minus']);
         }
 
+//print "\n<br>NEGATIVE:".$format;
         // get number parts
-        $endtag = substr($format, strrpos($format, '#') + 1);
+//        $endtag = substr($format, strrpos($format, '#') + 1);
         if (strpos($value, '.') !== false)
             $precision = substr($value, strpos($value, '.') + 1);
         else
             $precision = '';
 
+//print "\n<br>PRECISION:".$precision;
         // get fraction and format lengths
         bcscale(strlen($precision));
         $prec = bcsub($value, bcsub($value, '0', 0));
+        if (strpos($prec, '-') !== false)
+            $prec = substr($prec, 1);
         $number = bcsub($value, 0, 0);
+        if (strpos($number, '-') !== false)
+            $number = substr($number, 1);
         $group = strrpos($format, ',');
         $group2= strpos($format, ',');
         $point = strpos($format, '.');
 
+//print "\n<br>PREC:".$prec;
         // Add fraction
         if ($prec == 0)
             $format = substr($format, 0, $point).substr($format, strrpos($format, '#') + 1);
@@ -141,22 +154,21 @@ print "\n<br>ORIGINAL:".$format;
         // no seperation
         if ($group == 0)
         {
-            $format = $number.substr($format, $point + 1);
+            $format = $number.substr($format, $point);
         } else if ($group == $group2) {
             // only 1 seperation
-            $numberlength = strlen($number);
-//print "\n<br>LENGTH:".$numberlength;
+            $seperation = ($point - $group - 1);
+//print "\n<br>LENGTH:".strlen($number);
 //print "\n<br>NUMBER:".$number;
 //print "\n<br>POINT:".$point;
 //print "\n<br>GROUP:".$group;
 //print "\n<br>GROUP2:".$group2;
-//print "\n<br>X:".($point-$group - 1);
-//print "\n<br>BIS:".(strlen($number));
-            for ($x = ($point - $group - 1); $x < (strlen($number)); $x += ($point - $group - 1))
+//print "\n<br>SEPERATION:".$seperation;
+            for ($x = (strlen($number) - $seperation); $x > ($group2 - 2); $x -= $seperation)
             {
 //print "\n<br>X2:".$x;
-                 $number = substr($number, 0, $numberlength - $x).$symbols['group'].
-                           substr($number, $numberlength - $x);
+                 $number = substr($number, 0, $x).$symbols['group'].
+                           substr($number, $x);
 //print "\n<br>NUMBER:".$number;
             }
             $format = substr($format, 0, strpos($format,'#')).$number.substr($format, $point);
@@ -165,7 +177,7 @@ print "\n<br>ORIGINAL:".$format;
 //print "\n<br>VALUE:".$value;
 //print "\n<br>NUMBER:".$number;
         
-print "\n<br>VALUE: $value FORMAT:".$format;
+//print "\n<br>VALUE: $value FORMAT:".$format;
         return (string) $format;        
     }
 
