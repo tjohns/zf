@@ -66,26 +66,26 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
     const MOLE_PER_SECOND      = 'Flow_Mole::MOLE_PER_SECOND';
 
     private static $_UNITS = array(
-        'Flow_Mole::CENTIMOLE_PER_DAY'    => array(array('' => 0.01, '/' => 86400),'cmol/day'),
-        'Flow_Mole::CENTIMOLE_PER_HOUR'   => array(array('' => 0.01, '/' => 3600),'cmol/h'),
-        'Flow_Mole::CENTIMOLE_PER_MINUTE' => array(array('' => 0.01, '/' => 60),'cmol/m'),
-        'Flow_Mole::CENTIMOLE_PER_SECOND' => array(0.01,'cmol/s'),
-        'Flow_Mole::MEGAMOLE_PER_DAY'     => array(array('' => 1000000, '/' => 86400),'Mmol/day'),
-        'Flow_Mole::MEGAMOLE_PER_HOUR'    => array(array('' => 1000000, '/' => 3600),'Mmol/h'),
-        'Flow_Mole::MEGAMOLE_PER_MINUTE'  => array(array('' => 1000000, '/' => 60),'Mmol/m'),
-        'Flow_Mole::MEGAMOLE_PER_SECOND'  => array(1000000,'Mmol/s'),
-        'Flow_Mole::MICROMOLE_PER_DAY'    => array(array('' => 0.000001, '/' => 86400),'µmol/day'),
-        'Flow_Mole::MICROMOLE_PER_HOUR'   => array(array('' => 0.000001, '/' => 3600),'µmol/h'),
-        'Flow_Mole::MICROMOLE_PER_MINUTE' => array(array('' => 0.000001, '/' => 60),'µmol/m'),
-        'Flow_Mole::MICROMOLE_PER_SECOND' => array(0.000001,'µmol/s'),
-        'Flow_Mole::MILLIMOLE_PER_DAY'    => array(array('' => 0.001, '/' => 86400),'mmol/day'),
-        'Flow_Mole::MILLIMOLE_PER_HOUR'   => array(array('' => 0.001, '/' => 3600),'mmol/h'),
-        'Flow_Mole::MILLIMOLE_PER_MINUTE' => array(array('' => 0.001, '/' => 60),'mmol/m'),
-        'Flow_Mole::MILLIMOLE_PER_SECOND' => array(0.001,'mmol/s'),
-        'Flow_Mole::MOLE_PER_DAY'         => array(array('' => 1, '/' => 86400),'mol/day'),
-        'Flow_Mole::MOLE_PER_HOUR'        => array(array('' => 1, '/' => 3600),'mol/h'),
-        'Flow_Mole::MOLE_PER_MINUTE'      => array(array('' => 1, '/' => 60),'mol/m'),
-        'Flow_Mole::MOLE_PER_SECOND'      => array(1,'mol/s')
+        'Flow_Mole::CENTIMOLE_PER_DAY'    => array(array('' => 0.01, '/' => 86400),     'cmol/day'),
+        'Flow_Mole::CENTIMOLE_PER_HOUR'   => array(array('' => 0.01, '/' => 3600),      'cmol/h'),
+        'Flow_Mole::CENTIMOLE_PER_MINUTE' => array(array('' => 0.01, '/' => 60),        'cmol/m'),
+        'Flow_Mole::CENTIMOLE_PER_SECOND' => array(0.01,     'cmol/s'),
+        'Flow_Mole::MEGAMOLE_PER_DAY'     => array(array('' => 1000000, '/' => 86400),  'Mmol/day'),
+        'Flow_Mole::MEGAMOLE_PER_HOUR'    => array(array('' => 1000000, '/' => 3600),   'Mmol/h'),
+        'Flow_Mole::MEGAMOLE_PER_MINUTE'  => array(array('' => 1000000, '/' => 60),     'Mmol/m'),
+        'Flow_Mole::MEGAMOLE_PER_SECOND'  => array(1000000,  'Mmol/s'),
+        'Flow_Mole::MICROMOLE_PER_DAY'    => array(array('' => 0.000001, '/' => 86400), 'µmol/day'),
+        'Flow_Mole::MICROMOLE_PER_HOUR'   => array(array('' => 0.000001, '/' => 3600),  'µmol/h'),
+        'Flow_Mole::MICROMOLE_PER_MINUTE' => array(array('' => 0.000001, '/' => 60),    'µmol/m'),
+        'Flow_Mole::MICROMOLE_PER_SECOND' => array(0.000001, 'µmol/s'),
+        'Flow_Mole::MILLIMOLE_PER_DAY'    => array(array('' => 0.001, '/' => 86400),    'mmol/day'),
+        'Flow_Mole::MILLIMOLE_PER_HOUR'   => array(array('' => 0.001, '/' => 3600),     'mmol/h'),
+        'Flow_Mole::MILLIMOLE_PER_MINUTE' => array(array('' => 0.001, '/' => 60),       'mmol/m'),
+        'Flow_Mole::MILLIMOLE_PER_SECOND' => array(0.001,    'mmol/s'),
+        'Flow_Mole::MOLE_PER_DAY'         => array(array('' => 1, '/' => 86400),        'mol/day'),
+        'Flow_Mole::MOLE_PER_HOUR'        => array(array('' => 1, '/' => 3600),         'mol/h'),
+        'Flow_Mole::MOLE_PER_MINUTE'      => array(array('' => 1, '/' => 60),           'mol/m'),
+        'Flow_Mole::MOLE_PER_SECOND'      => array(1,        'mol/s')
     );
 
     private $_Locale;
@@ -105,10 +105,11 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -117,12 +118,15 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
-    public function equals($object)
+    public function equals( $object )
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -137,32 +141,37 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of flow-mole:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of flow-mole:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
     /**
      * Set a new type, and convert the value
      *
+     * @param $type  new type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType($type)
+    public function setType( $type )
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of flow-mole:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of flow-mole:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
         if (is_array(self::$_UNITS[parent::getType()][0])) {
             foreach (self::$_UNITS[parent::getType()][0] as $key => $found) {
-                switch ($key) {
+                switch ( $key ) {
                     case "/":
                         $value /= $found;
                         break;
@@ -178,7 +187,7 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
         // Convert to expected value
         if (is_array(self::$_UNITS[$type][0])) {
             foreach (self::$_UNITS[$type][0] as $key => $found) {
-                switch ($key) {
+                switch ( $key ) {
                     case "/":
                         $value *= $found;
                         break;
@@ -190,8 +199,9 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
         } else {
             $value = $value / (self::$_UNITS[$type][0]);
         }
+
         parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
@@ -202,7 +212,7 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -219,6 +229,8 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

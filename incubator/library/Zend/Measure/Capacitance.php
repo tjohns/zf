@@ -70,30 +70,30 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
     const TERAFARAD            = 'Capacitance::TERAFARAD';
 
     private static $_UNITS = array(
-        'Capacitance::ABFARAD'              => array(1.0e+9,'abfarad'),
-        'Capacitance::AMPERE_PER_SECOND_VOLT'   => array(1,'A/sV'),
-        'Capacitance::CENTIFARAD'           => array(0.01,'cF'),
-        'Capacitance::COULOMB_PER_VOLT'     => array(1,'C/V'),
-        'Capacitance::DECIFARAD'            => array(0.1,'dF'),
-        'Capacitance::DEKAFARAD'            => array(10,'daF'),
-        'Capacitance::ELECTROMAGNETIC_UNIT' => array(1.0e+9,'capacity emu'),
-        'Capacitance::ELECTROSTATIC_UNIT'   => array(1.11265e-12,'capacity esu'),
-        'Capacitance::FARAD'                => array(1,'F'),
-        'Capacitance::FARAD_INTERNATIONAL'  => array(0.99951,'F'),
-        'Capacitance::GAUSSIAN'             => array(1.11265e-12,'G'),
-        'Capacitance::GIGAFARAD'            => array(1.0e+9,'GF'),
-        'Capacitance::HECTOFARAD'           => array(100,'hF'),
-        'Capacitance::JAR'                  => array(1.11265e-9,'jar'),
-        'Capacitance::KILOFARAD'            => array(1000,'kF'),
-        'Capacitance::MEGAFARAD'            => array(1000000,'MF'),
-        'Capacitance::MICROFARAD'           => array(0.000001,'µF'),
-        'Capacitance::MILLIFARAD'           => array(0.001,'mF'),
-        'Capacitance::NANOFARAD'            => array(1.0e-9,'nF'),
-        'Capacitance::PICOFARAD'            => array(1.0e-12,'pF'),
-        'Capacitance::PUFF'                 => array(1.0e-12,'pF'),
-        'Capacitance::SECOND_PER_OHM'       => array(1,'s/Ohm'),
-        'Capacitance::STATFARAD'            => array(1.11265e-12,'statfarad'),
-        'Capacitance::TERAFARAD'            => array(1.0e+12,'TF')
+        'Capacitance::ABFARAD'              => array(1.0e+9,      'abfarad'),
+        'Capacitance::AMPERE_PER_SECOND_VOLT' => array(1,         'A/sV'),
+        'Capacitance::CENTIFARAD'           => array(0.01,        'cF'),
+        'Capacitance::COULOMB_PER_VOLT'     => array(1,           'C/V'),
+        'Capacitance::DECIFARAD'            => array(0.1,         'dF'),
+        'Capacitance::DEKAFARAD'            => array(10,          'daF'),
+        'Capacitance::ELECTROMAGNETIC_UNIT' => array(1.0e+9,      'capacity emu'),
+        'Capacitance::ELECTROSTATIC_UNIT'   => array(1.11265e-12, 'capacity esu'),
+        'Capacitance::FARAD'                => array(1,           'F'),
+        'Capacitance::FARAD_INTERNATIONAL'  => array(0.99951,     'F'),
+        'Capacitance::GAUSSIAN'             => array(1.11265e-12, 'G'),
+        'Capacitance::GIGAFARAD'            => array(1.0e+9,      'GF'),
+        'Capacitance::HECTOFARAD'           => array(100,         'hF'),
+        'Capacitance::JAR'                  => array(1.11265e-9,  'jar'),
+        'Capacitance::KILOFARAD'            => array(1000,        'kF'),
+        'Capacitance::MEGAFARAD'            => array(1000000,     'MF'),
+        'Capacitance::MICROFARAD'           => array(0.000001,    'µF'),
+        'Capacitance::MILLIFARAD'           => array(0.001,       'mF'),
+        'Capacitance::NANOFARAD'            => array(1.0e-9,      'nF'),
+        'Capacitance::PICOFARAD'            => array(1.0e-12,     'pF'),
+        'Capacitance::PUFF'                 => array(1.0e-12,     'pF'),
+        'Capacitance::SECOND_PER_OHM'       => array(1,           's/Ohm'),
+        'Capacitance::STATFARAD'            => array(1.11265e-12, 'statfarad'),
+        'Capacitance::TERAFARAD'            => array(1.0e+12,     'TF')
     );
 
     private $_Locale;
@@ -113,10 +113,11 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -125,12 +126,15 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
-    public function equals($object)
+    public function equals( $object )
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -145,26 +149,31 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            parent::throwException('unknown type of capacity:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            parent::throwException('unknown type of capacity:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
     /**
      * Set a new type, and convert the value
      *
+     * @param $type new type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType($type)
+    public function setType( $type )
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of capacity:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of capacity:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -173,7 +182,7 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
         // Convert to expected value
         $value = $value / (self::$_UNITS[$type][0]);
         parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
@@ -184,7 +193,7 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -201,6 +210,8 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {
