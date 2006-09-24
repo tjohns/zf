@@ -22,14 +22,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**
@@ -64,24 +64,24 @@ class Zend_Measure_Frequency extends Zend_Measure_Abstract
     const TERRAHERTZ            = 'Frequency::TERRAHERTZ';
 
     private static $_UNITS = array(
-        'Frequency::ONE_PER_SECOND'        => array(1,'1/s'),
-        'Frequency::CYCLE_PER_SECOND'      => array(1,'cps'),
-        'Frequency::DEGREE_PER_HOUR'       => array(array('' => 1, '/' => 1296000),'°/h'),
-        'Frequency::DEGREE_PER_MINUTE'     => array(array('' => 1, '/' => 21600),'°/m'),
-        'Frequency::DEGREE_PER_SECOND'     => array(array('' => 1, '/' => 360),'°/s'),
-        'Frequency::GIGAHERTZ'             => array(1000000000,'GHz'),
-        'Frequency::HERTZ'                 => array(1,'Hz'),
-        'Frequency::KILOHERTZ'             => array(1000,'kHz'),
-        'Frequency::MEGAHERTZ'             => array(1000000,'MHz'),
-        'Frequency::MILLIHERTZ'            => array(0.001,'mHz'),
-        'Frequency::RADIAN_PER_HOUR'       => array(array('' => 1, '/' => 22619.467),'rad/h'),
-        'Frequency::RADIAN_PER_MINUTE'     => array(array('' => 1, '/' => 376.99112),'rad/m'),
-        'Frequency::RADIAN_PER_SECOND'     => array(array('' => 1, '/' => 6.2831853),'rad/s'),
-        'Frequency::REVOLUTION_PER_HOUR'   => array(array('' => 1, '/' => 3600),'rph'),
-        'Frequency::REVOLUTION_PER_MINUTE' => array(array('' => 1, '/' => 60),'rpm'),
-        'Frequency::REVOLUTION_PER_SECOND' => array(1,'rps'),
-        'Frequency::RPM'                   => array(array('' => 1, '/' => 60),'rpm'),
-        'Frequency::TERRAHERTZ'            => array(1000000000000,'THz')
+        'Frequency::ONE_PER_SECOND'        => array(1,             '1/s'),
+        'Frequency::CYCLE_PER_SECOND'      => array(1,             'cps'),
+        'Frequency::DEGREE_PER_HOUR'       => array(array('' => 1, '/' => 1296000), '°/h'),
+        'Frequency::DEGREE_PER_MINUTE'     => array(array('' => 1, '/' => 21600),   '°/m'),
+        'Frequency::DEGREE_PER_SECOND'     => array(array('' => 1, '/' => 360),     '°/s'),
+        'Frequency::GIGAHERTZ'             => array(1000000000,    'GHz'),
+        'Frequency::HERTZ'                 => array(1,             'Hz'),
+        'Frequency::KILOHERTZ'             => array(1000,          'kHz'),
+        'Frequency::MEGAHERTZ'             => array(1000000,       'MHz'),
+        'Frequency::MILLIHERTZ'            => array(0.001,         'mHz'),
+        'Frequency::RADIAN_PER_HOUR'       => array(array('' => 1, '/' => 22619.467), 'rad/h'),
+        'Frequency::RADIAN_PER_MINUTE'     => array(array('' => 1, '/' => 376.99112), 'rad/m'),
+        'Frequency::RADIAN_PER_SECOND'     => array(array('' => 1, '/' => 6.2831853), 'rad/s'),
+        'Frequency::REVOLUTION_PER_HOUR'   => array(array('' => 1, '/' => 3600), 'rph'),
+        'Frequency::REVOLUTION_PER_MINUTE' => array(array('' => 1, '/' => 60),   'rpm'),
+        'Frequency::REVOLUTION_PER_SECOND' => array(1,             'rps'),
+        'Frequency::RPM'                   => array(array('' => 1, '/' => 60), 'rpm'),
+        'Frequency::TERRAHERTZ'            => array(1000000000000, 'THz')
     );
 
     private $_Locale;
@@ -101,10 +101,11 @@ class Zend_Measure_Frequency extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -113,12 +114,15 @@ class Zend_Measure_Frequency extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality 
      * @return boolean
      */
-    public function equals($object)
+    public function equals( $object )
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -133,26 +137,31 @@ class Zend_Measure_Frequency extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty( $locale )) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of frequency:'.$type);
+        if (empty( self::$_UNITS[$type] )) {
+            self::throwException('unknown type of frequency:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
     /**
      * Set a new type, and convert the value
      *
+     * @param  $type new type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType($type)
+    public function setType( $type )
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of frequency:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of frequency:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -186,8 +195,9 @@ class Zend_Measure_Frequency extends Zend_Measure_Abstract
         } else {
             $value = $value / (self::$_UNITS[$type][0]);
         }
+
         parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
@@ -198,7 +208,7 @@ class Zend_Measure_Frequency extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -215,6 +225,8 @@ class Zend_Measure_Frequency extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

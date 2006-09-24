@@ -22,14 +22,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**
@@ -340,7 +340,7 @@ class Zend_Measure_Flow_Volume extends Zend_Measure_Abstract
         'Flow_Volume::KILOLITER_PER_MINUTE'        => array(array('' => 1, '/' => 60),'kl/m'),
         'Flow_Volume::KILOLITER_PER_SECOND'        => array(1,'kl/s'),
         'Flow_Volume::LAMBDA_PER_DAY'              => array(array('' => 0.000000001, '/' => 86400),'lambda/day'),
-        // TODO: Unit Symbol lower greek lambda
+        // @todo: Unit Symbol lower greek lambda
         'Flow_Volume::LAMBDA_PER_HOUR'             => array(array('' => 0.000000001, '/' => 3600),'lambda/h'),
         'Flow_Volume::LAMBDA_PER_MINUTE'           => array(array('' => 0.000000001, '/' => 60),'lambda/m'),
         'Flow_Volume::LAMBDA_PER_SECOND'           => array(0.000000001,'lambda/s'),

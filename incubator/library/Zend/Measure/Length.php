@@ -21,14 +21,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**
@@ -43,58 +43,58 @@ class Zend_Measure_Length extends Zend_Measure_Abstract
     // Length definitions
     const STANDARD = 'Length::METER';
 
-    const AGATE           = 'Length::AGATE';           // Printing
-    const ALEN_DANISH     = 'Length::ALEN_DANISH';     // Danish
-    const ALEN            = 'Length::ALEN';            // Scandinavian
-    const ALEN_SWEDISH    = 'Length::ALEN_SWEDISH';    // Swedish
-    const ANGSTROM        = 'Length::ANGSTROM';        // Atomic
-    const ARMS            = 'Length::ARMS';            // UK
-    const ARPENT_CANADIAN = 'Length::ARPENT_CANADIAN'; // French
-    const ARPENT          = 'Length::ARPENT';          // French
-    const ARSHEEN         = 'Length::ARSHEEN';         // Russian
-    const ARSHIN          = 'Length::ARSHIN';          // Iran
-    const ARSHIN_IRAQ     = 'Length::ARSHIN_IRAQ';     // Iraq
-    const ASTRONOMICAL_UNIT = 'Length::ASTRONOMICAL_UNIT'; // Astonomical
-    const ATTOMETER       = 'Length::ATTOMETER';       // Metric
-    const BAMBOO          = 'Length::BAMBOO';          // unknown
-    const BARLEYCORN      = 'Length::BARLEYCORN';      // UK
-    const BEE_SPACE       = 'Length::BEE_SPACE';       // Natural
-    const BICRON          = 'Length::BICRON';          // Metric depriciated
-    const BLOCK_US_EAST   = 'Length::BLOCK_US_EAST';   // US
-    const BLOCK_US_WEST   = 'Length::BLOCK_US_WEST';   // US
-    const BLOCK_US_SOUTH  = 'Length::BLOCK_US_SOUTH';  // US
-    const BOHR            = 'Length::BOHR';            // Atomic
-    const BRACCIO         = 'Length::BRACCIO';         // Italic
-    const BRAZA_ARGENTINA = 'Length::BRAZA_ARGENTINA'; // Argentina
-    const BRAZA           = 'Length::BRAZA';           // Spain
-    const BRAZA_US        = 'Length::BRAZA_US';        // US
-    const BUTTON          = 'Length::BUTTON';          // IT
-    const CABLE_US        = 'Length::CABLE_US';        // Nautic
-    const CABLE_UK        = 'Length::CABLE_UK';        // Nautic
-    const CALIBER         = 'Length::CALIBER';         // Technic
-    const CANA            = 'Length::CANA';            // Mediterran
-    const CAPE_FOOT       = 'Length::CAPE_FOOT';       // South Africa
-    const CAPE_INCH       = 'Length::CAPE_INCH';       // South Africa
-    const CAPE_ROOD       = 'Length::CAPE_ROOD';       // South Africa
-    const CENTIMETER      = 'Length::CENTIMETER';      // Metric
-    const CHAIN           = 'Length::CHAIN';           // UK
-    const CHAIN_ENGINEER  = 'Length::CHAIN_ENGINEER';  // US
-    const CHIH            = 'Length::CHIH';            // Chinese
-    const CHINESE_FOOT    = 'Length::CHINESE_FOOT';    // Chinese
-    const CHINESE_INCH    = 'Length::CHINESE_INCH';    // Chinese
-    const CHINESE_MILE    = 'Length::CHINESE_MILE';    // Chinese
-    const CHINESE_YARD    = 'Length::CHINESE_YARD';    // Chinese
-    const CITY_BLOCK_US_EAST  = 'Length::CITY_BLOCK_US_EAST';  // US
-    const CITY_BLOCK_US_WEST  = 'Length::CITY_BLOCK_US_WEST';  // US
-    const CITY_BLOCK_US_SOUTH = 'Length::CITY_BLOCK_US_SOUTH'; // US
-    const CLICK           = 'Length::CLICK';           // US
-    const CUADRA          = 'Length::CUADRA';          // American
-    const CUADRA_ARGENTINA= 'Length::CUADRA_ARGENTINA';// Argentina
-    const CUBIT_EGYPT     = 'Length:CUBIT_EGYPT';      // Ancient
-    const CUBIT_ROYAL     = 'Length::CUBIT_ROYAL';     // Ancient
-    const CUBIT_UK        = 'Length::CUBIT_UK';        // UK
-    const CUBIT           = 'Length::CUBIT';           // Ancient
-    const CUERDA          = 'Length::CUERDA';          // Guatemala
+    const AGATE           = 'Length::AGATE';
+    const ALEN_DANISH     = 'Length::ALEN_DANISH';
+    const ALEN            = 'Length::ALEN';
+    const ALEN_SWEDISH    = 'Length::ALEN_SWEDISH';
+    const ANGSTROM        = 'Length::ANGSTROM';
+    const ARMS            = 'Length::ARMS';
+    const ARPENT_CANADIAN = 'Length::ARPENT_CANADIAN';
+    const ARPENT          = 'Length::ARPENT';
+    const ARSHEEN         = 'Length::ARSHEEN';
+    const ARSHIN          = 'Length::ARSHIN';
+    const ARSHIN_IRAQ     = 'Length::ARSHIN_IRAQ';
+    const ASTRONOMICAL_UNIT = 'Length::ASTRONOMICAL_UNIT';
+    const ATTOMETER       = 'Length::ATTOMETER';
+    const BAMBOO          = 'Length::BAMBOO';
+    const BARLEYCORN      = 'Length::BARLEYCORN';
+    const BEE_SPACE       = 'Length::BEE_SPACE';
+    const BICRON          = 'Length::BICRON';
+    const BLOCK_US_EAST   = 'Length::BLOCK_US_EAST';
+    const BLOCK_US_WEST   = 'Length::BLOCK_US_WEST';
+    const BLOCK_US_SOUTH  = 'Length::BLOCK_US_SOUTH';
+    const BOHR            = 'Length::BOHR';
+    const BRACCIO         = 'Length::BRACCIO';
+    const BRAZA_ARGENTINA = 'Length::BRAZA_ARGENTINA';
+    const BRAZA           = 'Length::BRAZA';
+    const BRAZA_US        = 'Length::BRAZA_US';
+    const BUTTON          = 'Length::BUTTON';
+    const CABLE_US        = 'Length::CABLE_US';
+    const CABLE_UK        = 'Length::CABLE_UK';
+    const CALIBER         = 'Length::CALIBER';
+    const CANA            = 'Length::CANA';
+    const CAPE_FOOT       = 'Length::CAPE_FOOT';
+    const CAPE_INCH       = 'Length::CAPE_INCH';
+    const CAPE_ROOD       = 'Length::CAPE_ROOD';
+    const CENTIMETER      = 'Length::CENTIMETER';
+    const CHAIN           = 'Length::CHAIN';
+    const CHAIN_ENGINEER  = 'Length::CHAIN_ENGINEER';
+    const CHIH            = 'Length::CHIH';
+    const CHINESE_FOOT    = 'Length::CHINESE_FOOT';
+    const CHINESE_INCH    = 'Length::CHINESE_INCH';
+    const CHINESE_MILE    = 'Length::CHINESE_MILE';
+    const CHINESE_YARD    = 'Length::CHINESE_YARD';
+    const CITY_BLOCK_US_EAST  = 'Length::CITY_BLOCK_US_EAST';
+    const CITY_BLOCK_US_WEST  = 'Length::CITY_BLOCK_US_WEST';
+    const CITY_BLOCK_US_SOUTH = 'Length::CITY_BLOCK_US_SOUTH';
+    const CLICK           = 'Length::CLICK';
+    const CUADRA          = 'Length::CUADRA';
+    const CUADRA_ARGENTINA= 'Length::CUADRA_ARGENTINA';
+    const CUBIT_EGYPT     = 'Length:CUBIT_EGYPT';
+    const CUBIT_ROYAL     = 'Length::CUBIT_ROYAL';
+    const CUBIT_UK        = 'Length::CUBIT_UK';
+    const CUBIT           = 'Length::CUBIT';
+    const CUERDA          = 'Length::CUERDA';
     const DECIMETER       = 'Length::DECIMETER';       // Metric
     const DEKAMETER       = 'Length::DEKAMETER';       // Metric
     const DIDOT_POINT     = 'Length::DIDOT_POINT';     // Technic
@@ -362,7 +362,7 @@ class Zend_Measure_Length extends Zend_Measure_Abstract
         'Length::ALEN'            => array(0.6,'alen'),
         'Length::ALEN_SWEDISH'    => array(0.5938,'alen'),
         'Length::ANGSTROM'        => array(1.0e-10,'A'),
-        // TODO: Unit of Angstrom is UniCode 'U+212B'
+        // @todo: Unit of Angstrom is UniCode 'U+212B'
         'Length::ARMS'            => array(0.7,'arms'),
         'Length::ARPENT_CANADIAN' => array(58.47,'arpent'),
         'Length::ARPENT'          => array(58.471308,'arpent'),

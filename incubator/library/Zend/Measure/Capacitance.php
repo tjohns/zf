@@ -22,14 +22,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**

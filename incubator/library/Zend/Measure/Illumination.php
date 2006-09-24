@@ -22,14 +22,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**
@@ -57,17 +57,17 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
     const PHOT                    = 'Illumination::PHOT';
 
     private static $_UNITS = array(
-        'Illumination::FOOTCANDLE'              => array(10.7639104,'fc'),
-        'Illumination::KILOLUX'                 => array(1000,'klx'),
-        'Illumination::LUMEN_PER_SQUARE_CENTIMETER' => array(10000,'lm/cm²'),
-        'Illumination::LUMEN_PER_SQUARE_FOOT'   => array(10.7639104,'lm/ft²'),
-        'Illumination::LUMEN_PER_SQUARE_INCH'   => array(1550.0030976,'lm/in²'),
-        'Illumination::LUMEN_PER_SQUARE_METER'  => array(1,'lm/m²'),
-        'Illumination::LUX'                     => array(1,'lx'),
-        'Illumination::METERCANDLE'             => array(1,'metercandle'),
-        'Illumination::MILLIPHOT'               => array(10,'mph'),
-        'Illumination::NOX'                     => array(0.001,'nox'),
-        'Illumination::PHOT'                    => array(10000,'ph')
+        'Illumination::FOOTCANDLE'              => array(10.7639104,   'fc'),
+        'Illumination::KILOLUX'                 => array(1000,         'klx'),
+        'Illumination::LUMEN_PER_SQUARE_CENTIMETER' => array(10000,    'lm/cm²'),
+        'Illumination::LUMEN_PER_SQUARE_FOOT'   => array(10.7639104,   'lm/ft²'),
+        'Illumination::LUMEN_PER_SQUARE_INCH'   => array(1550.0030976, 'lm/in²'),
+        'Illumination::LUMEN_PER_SQUARE_METER'  => array(1,            'lm/m²'),
+        'Illumination::LUX'                     => array(1,            'lx'),
+        'Illumination::METERCANDLE'             => array(1,            'metercandle'),
+        'Illumination::MILLIPHOT'               => array(10,           'mph'),
+        'Illumination::NOX'                     => array(0.001,        'nox'),
+        'Illumination::PHOT'                    => array(10000,        'ph')
     );
 
     private $_Locale;
@@ -87,10 +87,11 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty( $locale )) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -99,12 +100,15 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
-    public function equals($object)
+    public function equals( $object )
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -119,14 +123,17 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of illumination:'.$type);
+        if (empty( self::$_UNITS[$type] )) {
+            self::throwException('unknown type of illumination:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
@@ -135,10 +142,11 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
      *
      * @throws Zend_Measure_Exception
      */
-    public function setType($type)
+    public function setType( $type )
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of illumination:'.$type);
+        if (empty( self::$_UNITS[$type] )) {
+            self::throwException('unknown type of illumination:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -147,7 +155,7 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
         // Convert to expected value
         $value = $value / (self::$_UNITS[$type][0]);
         parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
@@ -158,7 +166,7 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -175,6 +183,8 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

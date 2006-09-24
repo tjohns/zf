@@ -22,14 +22,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**
@@ -44,11 +44,11 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
     // Temperature definitions
     const STANDARD = 'Temperature::KELVIN';
 
-    const CELSIUS    = 'Temperature::CELSIUS';    // Metric
-    const FAHRENHEIT = 'Temperature::FAHRENHEIT'; // US
-    const RANKINE    = 'Temperature::RANKINE';    // UK
-    const REAUMUR    = 'Temperature::REAUMUR';    // French
-    const KELVIN     = 'Temperature::KELVIN';     // Metric
+    const CELSIUS    = 'Temperature::CELSIUS';
+    const FAHRENHEIT = 'Temperature::FAHRENHEIT';
+    const RANKINE    = 'Temperature::RANKINE';
+    const REAUMUR    = 'Temperature::REAUMUR';
+    const KELVIN     = 'Temperature::KELVIN';
 
     public static $_UNITS = array(
         'Temperature::CELSIUS'    => array(array('' => 1, '+' => 274.15),'°C'),
@@ -75,10 +75,11 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty( $locale )) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -87,12 +88,15 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param  $object  object to compare equality
      * @return boolean
      */
-    public function equals($object)
+    public function equals( $object )
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+        
         return false;
     }
 
@@ -107,32 +111,37 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of temperature:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of temperature:' . $type);
+        }
+        
         parent::setValue($value, $type, $locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
     /**
      * Set a new type, and convert the value
      *
+     * @param $type new type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType($type)
+    public function setType( $type )
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of temperature:'.$type);
+        if (empty( self::$_UNITS[$type] )) {
+            self::throwException('unknown type of temperature:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
-        if (is_array(self::$_UNITS[parent::getType()][0])) {
+        if (is_array( self::$_UNITS[parent::getType()][0] )) {
             foreach (self::$_UNITS[parent::getType()][0] as $key => $found) {
-                switch ($key) {
+                switch ( $key ) {
                     case "/":
                         $value /= $found;
                         break;
@@ -148,13 +157,13 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
                 }
             }
         } else {
-          $value = $value * (self::$_UNITS[parent::getType()][0]);
+          $value = $value * ( self::$_UNITS[parent::getType()][0] );
         }
 
         // Convert to expected value
-        if (is_array(self::$_UNITS[$type][0])) {
+        if (is_array( self::$_UNITS[$type][0] )) {
             foreach (self::$_UNITS[$type][0] as $key => $found) {
-                switch ($key) {
+                switch ( $key ) {
                     case "/":
                         $value *= $found;
                         break;
@@ -173,7 +182,7 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
           $value = $value / (self::$_UNITS[$type][0]);
         }
         parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
@@ -184,7 +193,7 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -201,6 +210,8 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

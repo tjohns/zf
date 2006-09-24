@@ -747,7 +747,7 @@ class Zend_Date {
 
             // timezone formats
             case Zend_Date::TIMEZONE_NAME :
-                // TODO: should be locale aware, but CLDR does not provide the proper information 'til now
+                // @todo should be locale aware, but CLDR does not provide the proper information 'til now
                 return $this->_Date->date('e',$this->_Date->getTimestamp(), $gmt);
                 break;
             case Zend_Date::DAYLIGHT :
@@ -760,7 +760,7 @@ class Zend_Date {
                 return $this->_Date->date('P',$this->_Date->getTimestamp(), $gmt);
                 break;
             case Zend_Date::TIMEZONE :
-                // TODO: should be locale aware, but CLDR does not provide the proper information 'til now
+                // @todo should be locale aware, but CLDR does not provide the proper information 'til now
                 return $this->_Date->date('T',$this->_Date->getTimestamp(), $gmt);
                 break;
             case Zend_Date::TIMEZONE_SECS :
@@ -1320,43 +1320,43 @@ class Zend_Date {
                 break;
             case Zend_Date::DATES :
             
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_FULL :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_LONG :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_MEDIUM :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_SHORT :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIMES :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_FULL :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_LONG :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_MEDIUM :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_SHORT :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::ATOM :
@@ -1820,7 +1820,7 @@ class Zend_Date {
                 return $this->getTimestamp();
                 break;
             case Zend_Date::SWATCH :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::HOUR_SHORT_AM :
@@ -1861,27 +1861,27 @@ class Zend_Date {
 
             // timezone formats
             case Zend_Date::TIMEZONE_NAME :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DAYLIGHT :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::GMT_DIFF :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::GMT_DIFF_SEP :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIMEZONE :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIMEZONE_SECS :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
 
@@ -1929,51 +1929,51 @@ class Zend_Date {
 
             // additional formats
             case Zend_Date::ERA :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::ERA_NAME :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATES :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_FULL :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_LONG :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_MEDIUM :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_SHORT :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIMES :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_FULL :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_LONG :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_MEDIUM :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_SHORT :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::ATOM :
@@ -2401,7 +2401,7 @@ class Zend_Date {
                 return $this->getTimestamp();
                 break;
             case Zend_Date::SWATCH :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::HOUR_SHORT_AM :
@@ -2442,27 +2442,27 @@ class Zend_Date {
 
             // timezone formats
             case Zend_Date::TIMEZONE_NAME :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DAYLIGHT :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::GMT_DIFF :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::GMT_DIFF_SEP :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIMEZONE :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIMEZONE_SECS :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
 
@@ -2510,51 +2510,51 @@ class Zend_Date {
 
             // additional formats
             case Zend_Date::ERA :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::ERA_NAME :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATES :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_FULL :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_LONG :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_MEDIUM :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::DATE_SHORT :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIMES :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_FULL :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_LONG :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_MEDIUM :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::TIME_SHORT :
-                // TODO: implement function
+                // @todo implement function
                 $this->_Date->throwException('function yet not implemented');
                 break;
             case Zend_Date::ATOM :
@@ -2692,13 +2692,13 @@ class Zend_Date {
     /**
      * Compares a date with another date. Returns a date object with the difference date
      *
+     * @todo  implement function
      * @param $date object   - date which shall be compared with our actual date object
      * @param $part datepart - OPTIONAL datepart to set
      * @return object
      */
     public function compare($date, $part)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2706,12 +2706,12 @@ class Zend_Date {
     /**
      * Returns a duplicate date object
      *
+     * @todo  clone only dateparts
      * @param $part datepart - OPTIONAL the part of date to clone
      * @return object
      */
     public function cloneIt($part)
     {
-        // TODO: clone only dateparts
         return new Zend_Date($this->getTimestamp());
     }
 
@@ -2719,12 +2719,12 @@ class Zend_Date {
     /**
      * Returns true when both date objects have equal dates set
      *
+     * @todo  equal only date parts
      * @param $date object
      * @return boolean
      */
     public function equals($date)
     {
-        // TODO: equals only dateparts
         return ($date->getTimestamp() == $this->getTimestamp);
     }
 
@@ -2732,12 +2732,12 @@ class Zend_Date {
     /**
      * Returns the maximum date or datepart for the set date object/calendar type
      *
+     * @todo  implement function
      * @param $part  datepart / string - OPTIONAL
      * @return object / datepart
      */
     public function getMaximum($part)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2745,12 +2745,12 @@ class Zend_Date {
     /**
      * Returns the minimum date or datepart for the set date object/calendar type
      *
+     * @todo  implement function
      * @param $part  datepart / string - OPTIONAL
      * @return object / datepart
      */
     public function getMinimum($part)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2758,13 +2758,13 @@ class Zend_Date {
     /**
      * Returns the first day of the week
      *
+     * @todo  implement function
      * @param $locale string   - OPTIONAL locale for parsing input
      * @param $format string   - OPTIONAL how to return the day (Number, Name, DateObject)
      * @return mixed - object / datepart / integer
      */
     public function getFirstDayOfWeek($locale, $format)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2773,11 +2773,11 @@ class Zend_Date {
      * Returns the time
      * Alias for clone(Zend_Date::TIME);
      *
+     * @todo  implement function
      * @return object
      */
     public function getTime()
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2786,6 +2786,7 @@ class Zend_Date {
      * Sets a new time
      * Alias for set($time, Zend_Date::TIME);
      *
+     * @todo  implement function
      * @param $time string     - OPTIONAL time to set, when null the actual time is set
      * @param $locale string   - OPTIONAL locale for parsing input
      * @param $format          - OPTIONAL an rule for parsing the input
@@ -2793,7 +2794,6 @@ class Zend_Date {
      */
     public function setTime($time, $locale, $format)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2802,12 +2802,12 @@ class Zend_Date {
      * Adds a time
      * Alias for add($time,Zend_Date::TIME);
      *
+     * @todo  implement function
      * @param $time object     - OPTIONAL time to add, when null the actual time is add
      * @return object
      */
     public function addTime($time)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2816,12 +2816,12 @@ class Zend_Date {
      * Substracts a time
      * Alias for sub($time,Zend_Date::TIME);
      *
+     * @todo  implement function
      * @param $time object     - OPTIONAL time to sub, when null the actual time is sub
      * @return object
      */
     public function subTime($time)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2830,12 +2830,12 @@ class Zend_Date {
      * Compares only the time, returning the difference
      * Alias for compare($time,Zend_Date::TIME);
      *
+     * @todo  implement function
      * @param $time object     - OPTIONAL time to compare, when null the actual time is used for compare
      * @return object
      */
     public function compareTime($time)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2844,11 +2844,11 @@ class Zend_Date {
      * Returns the date
      * Alias for clone(Zend_Date::DATE);
      *
+     * @todo  implement function
      * @return object
      */
     public function getDate()
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2857,6 +2857,7 @@ class Zend_Date {
      * Sets a new date
      * Alias for set($date, Zend_Date::DATE);
      *
+     * @todo  implement function
      * @param $date string     - OPTIONAL date to set, when null the actual date is set
      * @param $locale string   - OPTIONAL locale for parsing input
      * @param $format          - OPTIONAL an rule for parsing the input
@@ -2864,7 +2865,6 @@ class Zend_Date {
      */
     public function setDate($date, $locale, $format)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2873,12 +2873,12 @@ class Zend_Date {
      * Adds a date
      * Alias for add($date,Zend_Date::DATE);
      *
+     * @todo  implement function
      * @param $date object     - OPTIONAL date to add, when null the actual date is add
      * @return object
      */
     public function addDate($time)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2887,12 +2887,12 @@ class Zend_Date {
      * Substracts a date
      * Alias for sub($date,Zend_Date::DATE);
      *
+     * @todo  implement function
      * @param $date object     - OPTIONAL date to sub, when null the actual date is sub
      * @return object
      */
     public function subDate($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2901,12 +2901,12 @@ class Zend_Date {
      * Compares only the date, returning the difference date
      * Alias for compare($date,Zend_Date::DATE);
      *
+     * @todo  implement function
      * @param $date object     - OPTIONAL date to compare, when null the actual date is used for compare
      * @return object
      */
     public function compareDate($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2914,12 +2914,12 @@ class Zend_Date {
     /**
      * Returns a ISO8601 formatted date - ISO is locale-independent
      *
+     * @todo  implement function
      * @param $format - OPTIONAL an rule for formatting the output for different ISO Formats
      * @return string
      */
     public function getIso($format)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2928,13 +2928,13 @@ class Zend_Date {
      * Sets a new ISOdate
      * Alias for set($date);
      *
+     * @todo  implement function
      * @param $date string     - OPTIONAL ISOdate to set, when null the actual date is set
      * @param $format          - OPTIONAL an rule for parsing the ISOinput
      * @return object
      */
     public function setIso($date, $format)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2943,13 +2943,13 @@ class Zend_Date {
      * Adds a ISOdate
      * Alias for add($date);
      *
+     * @todo  implement function
      * @param $date string  - OPTIONAL ISOdate to add, when null the actual date is add
      * @param $format       - OPTIONAL an rule for parsing the ISOinput
      * @return object
      */
     public function addIso($date, $format)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2958,13 +2958,13 @@ class Zend_Date {
      * Substracts a ISOdate
      * Alias for sub($date);
      *
+     * @todo  implement function
      * @param $date string  - OPTIONAL ISOdate to sub, when null the actual date is sub
      * @param $format       - OPTIONAL an rule for parsing the ISOinput
      * @return object
      */
     public function subIso($date, $format)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2973,12 +2973,12 @@ class Zend_Date {
      * Compares IsoDate with date object, returning the difference date
      * Alias for compare($date);
      *
+     * @todo  implement function
      * @param $date string - OPTIONAL ISOdate to compare, when null the actual date is used for compare
      * @return object
      */
     public function compareIso($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2986,11 +2986,11 @@ class Zend_Date {
     /**
      * Returns a RFC822 formatted date - RFC822 is locale-independent
      *
+     * @todo  implement function
      * @return string
      */
     public function getArpa()
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -2999,12 +2999,12 @@ class Zend_Date {
      * Sets a new RFC822 formatted date
      * Alias for set($date);
      *
+     * @todo  implement function
      * @param $date string     - OPTIONAL RFC822 date to set, when null the actual date is set
      * @return object
      */
     public function setArpa($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3013,12 +3013,12 @@ class Zend_Date {
      * Adds a RFC822 formatted date
      * Alias for add($date);
      *
+     * @todo  implement function
      * @param $date string  - OPTIONAL RFC822 date to add, when null the actual date is add
      * @return object
      */
     public function addArpa($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3027,12 +3027,12 @@ class Zend_Date {
      * Substracts a RFC822 formatted date
      * Alias for sub($date);
      *
+     * @todo  implement function
      * @param $date string  - OPTIONAL RFC822 date to sub, when null the actual date is sub
      * @return object
      */
     public function subArpa($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3041,12 +3041,12 @@ class Zend_Date {
      * Compares a RFC822 formatted date with date object, returning the difference date
      * Alias for compare($date);
      *
+     * @todo  implement function
      * @param $date string - OPTIONAL RFC822 date to compare, when null the actual date is used for compare
      * @return object
      */
     public function compareArpa($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3054,12 +3054,12 @@ class Zend_Date {
     /**
      * Returns a UTC/GMT formatted date
      *
+     * @todo  implement function
      * @param $timezone string   - OPTIONAL locale or timezone for setting output timezone
      * @return string
      */
     public function getUtc($timezone)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3068,12 +3068,12 @@ class Zend_Date {
      * Sets a new UTC/GMT formatted date
      * Alias for set($date);
      *
+     * @todo  implement function
      * @param $date string     - OPTIONAL UTC/GMT formatted date to set, when null the actual date is set
      * @return object
      */
     public function setUtc($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3082,12 +3082,12 @@ class Zend_Date {
      * Adds a UTC/GMT formatted date
      * Alias for add($date);
      *
+     * @todo  implement function
      * @param $date string  - OPTIONAL UTC/GMT formatted date to add, when null the actual date is add
      * @return object
      */
     public function addUtc($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3096,12 +3096,12 @@ class Zend_Date {
      * Substracts a UTC/GMT formatted date
      * Alias for sub($date);
      *
+     * @todo  implement function
      * @param $date string  - OPTIONAL UTC/GMT formatted date to sub, when null the actual date is sub
      * @return object
      */
     public function subUtc($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3110,12 +3110,12 @@ class Zend_Date {
      * Compares UTC/GMT formatted date with date object, returning the difference date
      * Alias for compare($date);
      *
+     * @todo  implement function
      * @param $date string - OPTIONAL UTC/GMT date to compare, when null the actual date is used for compare
      * @return object
      */
     public function compareUtc($date)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3123,12 +3123,12 @@ class Zend_Date {
     /**
      * Returns the time of sunrise for this locale or an optional location
      *
+     * @todo  implement function
      * @param  $location array - OPTIONAL location of sunrise
      * @return object
      */
     public function getSunRise($location)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3136,12 +3136,12 @@ class Zend_Date {
     /**
      * Returns the time of sunset for this locale or an optional location
      *
+     * @todo  implement function
      * @param  $location array - OPTIONAL location of sunset
      * @return object
      */
     public function getSunSet($location)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3149,12 +3149,12 @@ class Zend_Date {
     /**
      * Returns an array with all sun-infos for a time and location
      *
+     * @todo  implement function
      * @param  $location array - location of suninfo
      * @return object
      */
     public function getSunInfo($location)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3162,12 +3162,12 @@ class Zend_Date {
     /**
      * Returns the timezone
      *
+     * @todo  implement function
      * @param $locale string   - OPTIONAL locale timezone
      * @return object
      */
     public function getTimeZone($locale)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3175,13 +3175,13 @@ class Zend_Date {
     /**
      * Sets the timezone
      *
+     * @todo  implement function
      * @param $timezone timezone - OPTIONAL timezone to set
      * @param $locale string   - OPTIONAL locale for timezone
      * @return object
      */
     public function setTimeZone($locale)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3212,11 +3212,11 @@ class Zend_Date {
     /**
      * Returns if the date is yesterdays date
      *
+     * @todo  implement function
      * @return boolean
      */
     public function isYesterday()
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3224,11 +3224,11 @@ class Zend_Date {
     /**
      * Returns if the date is tomorrows date
      *
+     * @todo  implement function
      * @return boolean
      */
     public function isTomorrow()
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3356,12 +3356,12 @@ class Zend_Date {
      * Compares only the year part, returning the difference
      * Alias for compare($year,Zend_Date::YEAR);
      *
+     * @todo  implement function
      * @param $year string/integer - OPTIONAL year to compare, when null the actual year is used for compare
      * @return string
      */
     public function compareYear($year)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3370,12 +3370,12 @@ class Zend_Date {
      * Compares only the year part, returning boolean true
      * Alias for compare($year,Zend_Date::YEAR);
      *
+     * @todo  implement function
      * @param $year string/integer - OPTIONAL year to compare, when null the actual year is used for compare
      * @return string
      */
     public function isYear($year)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3483,12 +3483,12 @@ class Zend_Date {
      * Compares only the month part, returning the difference
      * Alias for compare($month,Zend_Date::MONTH);
      *
+     * @todo  implement function
      * @param $month string/integer - OPTIONAL month to compare, when null the actual month is used for compare
      * @return string
      */
     public function compareMonth($month)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3497,12 +3497,12 @@ class Zend_Date {
      * Compares only the month part, returning boolean true
      * Alias for compare($month,Zend_Date::MONTH);
      *
+     * @todo  implement function
      * @param $month string/integer - OPTIONAL month to compare, when null the actual month is used for compare
      * @return string
      */
     public function isMonth($month)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3538,7 +3538,7 @@ class Zend_Date {
             $day = $this->_Date->date('j');
         if (is_object($day))
             $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
-        // TODO: recognise localized day names
+        // @todo recognise localized day names
         $this->set($day, Zend_Date::DAY_SHORT, $locale, FALSE);
         return $this;
     }
@@ -3548,12 +3548,12 @@ class Zend_Date {
      * Adds a day
      * Alias for add($day,Zend_Date::DAY);
      *
+     * @todo  implement function
      * @param $day object     - OPTIONAL day to add, when null the actual day is add
      * @return object
      */
     public function addDay($day)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3562,12 +3562,12 @@ class Zend_Date {
      * Substracts a day
      * Alias for sub($day,Zend_Date::DAY);
      *
+     * @todo  implement function
      * @param $day object     - OPTIONAL day to sub, when null the actual day is sub
      * @return object
      */
     public function subDay($day)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3576,12 +3576,12 @@ class Zend_Date {
      * Compares only the day part, returning the difference
      * Alias for compare($day,Zend_Date::DAY);
      *
+     * @todo  implement function
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
      * @return string
      */
     public function compareDay($day)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3590,12 +3590,12 @@ class Zend_Date {
      * Compares only the day part, returning boolean true
      * Alias for compare($day,Zend_Date::DAY);
      *
+     * @todo  implement function
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
      * @return string
      */
     public function isDay($day)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3604,11 +3604,11 @@ class Zend_Date {
      * Returns the weekday
      * Alias for clone(Zend_Date::WEEKDAY);toString();
      *
+     * @todo  implement function
      * @return string
      */
     public function getWeekday()
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3647,12 +3647,12 @@ class Zend_Date {
      * Adds a weekday
      * Alias for add($weekday,Zend_Date::WEEKDAY);
      *
+     * @todo  implement function
      * @param $weekday object     - OPTIONAL weekday to add, when null the actual weekday is add
      * @return object
      */
     public function addWeekday($weekday)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3661,12 +3661,12 @@ class Zend_Date {
      * Substracts a weekday
      * Alias for sub($weekday,Zend_Date::WEEKDAY);
      *
+     * @todo  implement function
      * @param $weekday object     - OPTIONAL weekday to sub, when null the actual weekday is sub
      * @return object
      */
     public function subWeekday($weekday)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3675,12 +3675,12 @@ class Zend_Date {
      * Compares only the weekday part, returning the difference
      * Alias for compare($weekday,Zend_Date::WEEKDAY);
      *
+     * @todo  implement function
      * @param $weekday string/integer - OPTIONAL weekday to compare, when null the actual weekday is used for compare
      * @return string
      */
     public function compareWeekday($weekday)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3689,12 +3689,12 @@ class Zend_Date {
      * Compares only the weekday part, returning boolean true
      * Alias for compare($day,Zend_Date::WEEKDAY);
      *
+     * @todo  implement function
      * @param $weekday string/integer - OPTIONAL weekday to compare, when null the actual weekday is used for compare
      * @return string
      */
     public function isWeekday($weekday)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3781,12 +3781,12 @@ class Zend_Date {
      * Compares only the day of year
      * Alias for compare($day,Zend_Date::DAY);
      *
+     * @todo  implement function
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
      * @return string
      */
     public function compareDayOfYear($day)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3795,12 +3795,12 @@ class Zend_Date {
      * Compares only the day of year, returning boolean true
      * Alias for compare($day,Zend_Date::DAY);
      *
+     * @todo  implement function
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
      * @return string
      */
     public function isDayOfYear($day)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3884,12 +3884,12 @@ class Zend_Date {
      * Compares only the hour part, returning the difference
      * Alias for compare($hour,Zend_Date::HOUR);
      *
+     * @todo  implement function
      * @param $hour string/integer - OPTIONAL hour to compare, when null the actual hour is used for compare
      * @return string
      */
     public function compareHour($hour)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3898,12 +3898,12 @@ class Zend_Date {
      * Compares only the hour part, returning boolean true
      * Alias for compare($hour,Zend_Date::HOUR);
      *
+     * @todo  implement function
      * @param $hour string/integer - OPTIONAL hour to compare, when null the actual hour is used for compare
      * @return string
      */
     public function isHour($hour)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -3987,12 +3987,12 @@ class Zend_Date {
      * Compares only the minute part, returning the difference
      * Alias for compare($minute,Zend_Date::MINUTE);
      *
+     * @todo  implement function
      * @param $minute string/integer - OPTIONAL minute to compare, when null the actual minute is used for compare
      * @return string
      */
     public function compareMinute($minute)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4001,12 +4001,12 @@ class Zend_Date {
      * Compares only the minute part, returning boolean true
      * Alias for compare($minute,Zend_Date::MINUTE);
      *
+     * @todo  implement function
      * @param $minute string/integer - OPTIONAL minute to compare, when null the actual minute is used for compare
      * @return string
      */
     public function isMinute($minute)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4089,12 +4089,12 @@ class Zend_Date {
      * Compares only the second part, returning the difference
      * Alias for compare($second,Zend_Date::SECOND);
      *
+     * @todo  implement function
      * @param $second string/integer - OPTIONAL second to compare, when null the actual second is used for compare
      * @return string
      */
     public function compareSecond($second)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4103,12 +4103,12 @@ class Zend_Date {
      * Compares only the second part, returning boolean true
      * Alias for compare($second,Zend_Date::SECOND);
      *
+     * @todo  implement function
      * @param $second string/integer - OPTIONAL second to compare, when null the actual second is used for compare
      * @return string
      */
     public function isSecond($second)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4117,11 +4117,11 @@ class Zend_Date {
      * Returns the millisecond
      * Alias for clone(Zend_Date::MILLISECOND);toString();
      *
+     * @todo  implement function
      * @return string
      */
     public function getMilliSecond()
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4130,13 +4130,13 @@ class Zend_Date {
      * Sets a new millisecond
      * Alias for set($millisecond, Zend_Date::MILLISECOND);
      *
+     * @todo  implement function
      * @param $millisecond string/integer - OPTIONAL millisecond to set, when null the actual millisecond is set
      * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
     public function setMilliSecond($millisecond, $locale = false)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4145,12 +4145,12 @@ class Zend_Date {
      * Adds a millisecond
      * Alias for add($millisecond,Zend_Date::MILLISECOND);
      *
+     * @todo  implement function
      * @param $millisecond object     - OPTIONAL millisecond to add, when null the actual millisecond is add
      * @return object
      */
     public function addMilliSecond($millisecond)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4159,12 +4159,12 @@ class Zend_Date {
      * Substracts a millisecond
      * Alias for sub($millisecond,Zend_Date::MILLISECOND);
      *
+     * @todo  implement function
      * @param $millisecond object     - OPTIONAL millisecond to sub, when null the actual millisecond is sub
      * @return object
      */
     public function subMilliSecond($millisecond)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4173,12 +4173,12 @@ class Zend_Date {
      * Compares only the millisecond part, returning the difference
      * Alias for compare($millisecond,Zend_Date::MILLISECOND);
      *
+     * @todo  implement function
      * @param $millisecond string/integer - OPTIONAL millisecond to compare, when null the actual millisecond is used for compare
      * @return string
      */
     public function compareMilliSecond($millisecond)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4187,12 +4187,12 @@ class Zend_Date {
      * Compares only the millisecond part, returning boolean true
      * Alias for compare($millisecond,Zend_Date::MILLISECOND);
      *
+     * @todo  implement function
      * @param $millisecond string/integer - OPTIONAL millisecond to compare, when null the actual millisecond is used for compare
      * @return string
      */
     public function isMilliSecond($millisecond)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4201,11 +4201,11 @@ class Zend_Date {
      * Returns the era
      * Alias for clone(Zend_Date::ERA);toString();
      *
+     * @todo  implement function
      * @return string
      */
     public function getEra()
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4214,13 +4214,13 @@ class Zend_Date {
      * Sets a new era
      * Alias for set($era, Zend_Date::ERA);
      *
+     * @todo  implement function
      * @param $era string/integer - OPTIONAL era to set, when null the actual era is set
      * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
     public function setEra($era, $locale)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4229,12 +4229,12 @@ class Zend_Date {
      * Adds a era
      * Alias for add($era,Zend_Date::ERA);
      *
+     * @todo  implement function
      * @param $era object     - OPTIONAL era to add, when null the actual era is add
      * @return object
      */
     public function addEra($era)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4243,12 +4243,12 @@ class Zend_Date {
      * Substracts a era
      * Alias for sub($era,Zend_Date::ERA);
      *
+     * @todo  implement function
      * @param $era object     - OPTIONAL era to sub, when null the actual era is sub
      * @return object
      */
     public function subEra($era)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4257,12 +4257,12 @@ class Zend_Date {
      * Compares only the era part, returning the difference
      * Alias for compare($era,Zend_Date::ERA);
      *
+     * @todo  implement function
      * @param $era string/integer - OPTIONAL era to compare, when null the actual era is used for compare
      * @return string
      */
     public function compareEra($era)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4271,12 +4271,12 @@ class Zend_Date {
      * Compares only the era part, returning boolean true
      * Alias for compare($era,Zend_Date::ERA);
      *
+     * @todo  implement function
      * @param $era string/integer - OPTIONAL era to compare, when null the actual era is used for compare
      * @return string
      */
     public function isEra($era)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4285,11 +4285,11 @@ class Zend_Date {
      * Returns the week
      * Alias for clone(Zend_Date::WEEK);toString();
      *
+     * @todo  implement function
      * @return string
      */
     public function getWeek()
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4298,13 +4298,13 @@ class Zend_Date {
      * Sets a new week
      * Alias for set($week, Zend_Date::WEEK);
      *
+     * @todo  implement function
      * @param $week string/integer - OPTIONAL week to set, when null the actual week is set
      * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
     public function setWeek($week, $locale)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4313,12 +4313,12 @@ class Zend_Date {
      * Adds a week
      * Alias for add($week,Zend_Date::WEEK);
      *
+     * @todo  implement function
      * @param $week object     - OPTIONAL week to add, when null the actual week is add
      * @return object
      */
     public function addWeek($week)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4327,12 +4327,12 @@ class Zend_Date {
      * Substracts a week
      * Alias for sub($week,Zend_Date::WEEK);
      *
+     * @todo  implement function
      * @param $week object     - OPTIONAL week to sub, when null the actual week is sub
      * @return object
      */
     public function subWeek($week)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4341,12 +4341,12 @@ class Zend_Date {
      * Compares only the week part, returning the difference
      * Alias for compare($week,Zend_Date::WEEK);
      *
+     * @todo  implement function
      * @param $week string/integer - OPTIONAL week to compare, when null the actual week is used for compare
      * @return string
      */
     public function compareWeek($week)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 
@@ -4355,12 +4355,12 @@ class Zend_Date {
      * Compares only the week part, returning boolean true
      * Alias for compare($week,Zend_Date::WEEK);
      *
+     * @todo  implement function
      * @param $week string/integer - OPTIONAL week to compare, when null the actual week is used for compare
      * @return string
      */
     public function isWeek($week)
     {
-        // TODO: implement function
         $this->_Date->throwException('function yet not implemented');
     }
 }

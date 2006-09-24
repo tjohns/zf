@@ -22,14 +22,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**
@@ -74,34 +74,34 @@ class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
     const STOKES                       = 'Viscosity_Kinematic::STOKES';
 
     private static $_UNITS = array(
-        'Viscosity_Kinematic::CENTISTOKES'                  => array(0.000001,'cSt'),
-        'Viscosity_Kinematic::LENTOR'                       => array(0.0001,'lentor'),
-        'Viscosity_Kinematic::LITER_PER_CENTIMETER_DAY'     => array(array('' => 1, '/' => 864000),'l/cm day'),
-        'Viscosity_Kinematic::LITER_PER_CENTIMETER_HOUR'    => array(array('' => 1, '/' => 36000),'l/cm h'),
-        'Viscosity_Kinematic::LITER_PER_CENTIMETER_MINUTE'  => array(array('' => 1, '/' => 600),'l/cm m'),
-        'Viscosity_Kinematic::LITER_PER_CENTIMETER_SECOND'  => array(0.1,'l/cm s'),
-        'Viscosity_Kinematic::POISE_CUBIC_CENTIMETER_PER_GRAM' => array(0.0001,'P cm³/g'),
+        'Viscosity_Kinematic::CENTISTOKES'                  => array(0.000001,        'cSt'),
+        'Viscosity_Kinematic::LENTOR'                       => array(0.0001,          'lentor'),
+        'Viscosity_Kinematic::LITER_PER_CENTIMETER_DAY'     => array(array('' => 1, '/' => 864000), 'l/cm day'),
+        'Viscosity_Kinematic::LITER_PER_CENTIMETER_HOUR'    => array(array('' => 1, '/' => 36000),  'l/cm h'),
+        'Viscosity_Kinematic::LITER_PER_CENTIMETER_MINUTE'  => array(array('' => 1, '/' => 600),    'l/cm m'),
+        'Viscosity_Kinematic::LITER_PER_CENTIMETER_SECOND'  => array(0.1,             'l/cm s'),
+        'Viscosity_Kinematic::POISE_CUBIC_CENTIMETER_PER_GRAM' => array(0.0001,       'P cm³/g'),
         'Viscosity_Kinematic::SQUARE_CENTIMETER_PER_DAY'    => array(array('' => 1, '/' => 864000000),'cm²/day'),
         'Viscosity_Kinematic::SQUARE_CENTIMETER_PER_HOUR'   => array(array('' => 1, '/' => 36000000),'cm²/h'),
         'Viscosity_Kinematic::SQUARE_CENTIMETER_PER_MINUTE' => array(array('' => 1, '/' => 600000),'cm²/m'),
-        'Viscosity_Kinematic::SQUARE_CENTIMETER_PER_SECOND' => array(0.0001,'cm²/s'),
-        'Viscosity_Kinematic::SQUARE_FOOT_PER_DAY'          => array(0.0000010752667,'ft²/day'),
-        'Viscosity_Kinematic::SQUARE_FOOT_PER_HOUR'         => array(0.0000258064,'ft²/h'),
-        'Viscosity_Kinematic::SQUARE_FOOT_PER_MINUTE'       => array(0.001548384048,'ft²/m'),
-        'Viscosity_Kinematic::SQUARE_FOOT_PER_SECOND'       => array(0.09290304,'ft²/s'),
-        'Viscosity_Kinematic::SQUARE_INCH_PER_DAY'          => array(7.4671296e-9,'in²/day'),
-        'Viscosity_Kinematic::SQUARE_INCH_PER_HOUR'         => array(0.00000017921111,'in²/h'),
-        'Viscosity_Kinematic::SQUARE_INCH_PER_MINUTE'       => array(0.000010752667,'in²/m'),
-        'Viscosity_Kinematic::SQUARE_INCH_PER_SECOND'       => array(0.00064516,'in²/s'),
-        'Viscosity_Kinematic::SQUARE_METER_PER_DAY'         => array(array('' => 1, '/' => 86400),'m²/day'),
-        'Viscosity_Kinematic::SQUARE_METER_PER_HOUR'        => array(array('' => 1, '/' => 3600),'m²/h'),
-        'Viscosity_Kinematic::SQUARE_METER_PER_MINUTE'      => array(array('' => 1, '/' => 60),'m²/m'),
-        'Viscosity_Kinematic::SQUARE_METER_PER_SECOND'      => array(1,'m²/s'),
-        'Viscosity_Kinematic::SQUARE_MILLIMETER_PER_DAY'    => array(array('' => 1, '/' => 86400000000),'mm²/day'),
-        'Viscosity_Kinematic::SQUARE_MILLIMETER_PER_HOUR'   => array(array('' => 1, '/' => 3600000000),'mm²/h'),
-        'Viscosity_Kinematic::SQUARE_MILLIMETER_PER_MINUTE' => array(array('' => 1, '/' => 60000000),'mm²/m'),
-        'Viscosity_Kinematic::SQUARE_MILLIMETER_PER_SECOND' => array(0.000001,'mm²/s'),
-        'Viscosity_Kinematic::STOKES'                       => array(0.0001,'St')
+        'Viscosity_Kinematic::SQUARE_CENTIMETER_PER_SECOND' => array(0.0001,          'cm²/s'),
+        'Viscosity_Kinematic::SQUARE_FOOT_PER_DAY'          => array(0.0000010752667, 'ft²/day'),
+        'Viscosity_Kinematic::SQUARE_FOOT_PER_HOUR'         => array(0.0000258064,    'ft²/h'),
+        'Viscosity_Kinematic::SQUARE_FOOT_PER_MINUTE'       => array(0.001548384048,  'ft²/m'),
+        'Viscosity_Kinematic::SQUARE_FOOT_PER_SECOND'       => array(0.09290304,      'ft²/s'),
+        'Viscosity_Kinematic::SQUARE_INCH_PER_DAY'          => array(7.4671296e-9,    'in²/day'),
+        'Viscosity_Kinematic::SQUARE_INCH_PER_HOUR'         => array(0.00000017921111, 'in²/h'),
+        'Viscosity_Kinematic::SQUARE_INCH_PER_MINUTE'       => array(0.000010752667,  'in²/m'),
+        'Viscosity_Kinematic::SQUARE_INCH_PER_SECOND'       => array(0.00064516,      'in²/s'),
+        'Viscosity_Kinematic::SQUARE_METER_PER_DAY'         => array(array('' => 1, '/' => 86400), 'm²/day'),
+        'Viscosity_Kinematic::SQUARE_METER_PER_HOUR'        => array(array('' => 1, '/' => 3600),  'm²/h'),
+        'Viscosity_Kinematic::SQUARE_METER_PER_MINUTE'      => array(array('' => 1, '/' => 60),    'm²/m'),
+        'Viscosity_Kinematic::SQUARE_METER_PER_SECOND'      => array(1,               'm²/s'),
+        'Viscosity_Kinematic::SQUARE_MILLIMETER_PER_DAY'    => array(array('' => 1, '/' => 86400000000), 'mm²/day'),
+        'Viscosity_Kinematic::SQUARE_MILLIMETER_PER_HOUR'   => array(array('' => 1, '/' => 3600000000),  'mm²/h'),
+        'Viscosity_Kinematic::SQUARE_MILLIMETER_PER_MINUTE' => array(array('' => 1, '/' => 60000000),    'mm²/m'),
+        'Viscosity_Kinematic::SQUARE_MILLIMETER_PER_SECOND' => array(0.000001,        'mm²/s'),
+        'Viscosity_Kinematic::STOKES'                       => array(0.0001,          'St')
     );
 
     private $_Locale;
@@ -121,10 +121,11 @@ class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -133,12 +134,15 @@ class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
-    public function equals($object)
+    public function equals( $object )
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -153,32 +157,37 @@ class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty( $locale )) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of kinematic viscosity:'.$type);
+        if (empty( self::$_UNITS[$type] )) {
+            self::throwException('unknown type of kinematic viscosity:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
     /**
      * Set a new type, and convert the value
      *
+     * @param $type  new type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType($type)
+    public function setType( $type )
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of kinematic viscosity:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of kinematic viscosity:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
         if (is_array(self::$_UNITS[parent::getType()][0])) {
             foreach (self::$_UNITS[parent::getType()][0] as $key => $found) {
-                switch ($key) {
+                switch ( $key ) {
                     case "/":
                         $value /= $found;
                         break;
@@ -206,8 +215,9 @@ class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
         } else {
             $value = $value / (self::$_UNITS[$type][0]);
         }
+
         parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
@@ -218,7 +228,7 @@ class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -235,6 +245,8 @@ class Zend_Measure_Viscosity_Kinematic extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

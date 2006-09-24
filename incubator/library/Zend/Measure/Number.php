@@ -22,14 +22,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**
@@ -56,17 +56,17 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
 
     private static $_UNITS = array(
         'Number::BINARY'           => array(2,''),
-        // Todo: Unit Sign: SUB 2
+        // @todo: Unit Sign: SUB 2
         'Number::TERNARY'          => array(3,''),
-        // Todo: Unit Sign: SUB 3
+        // @todo: Unit Sign: SUB 3
         'Number::QUINTAL'          => array(4,''),
-        // Todo: Unit Sign: SUB 4
+        // @todo: Unit Sign: SUB 4
         'Number::OCTAL'            => array(8,''),
-        // Todo: Unit Sign: SUB 8
+        // @todo: Unit Sign: SUB 8
         'Number::DECIMAL'          => array(10,''),
-        // Todo: Unit Sign SUB 10
+        // @todo: Unit Sign SUB 10
         'Number::HEXADECIMAL'      => array(16,''),
-        // Todo: Unit Sign SUB 16
+        // @todo: Unit Sign SUB 16
         'Number::ROMAN'            => array(99,'')
     );
 

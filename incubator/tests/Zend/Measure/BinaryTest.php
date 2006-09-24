@@ -85,6 +85,17 @@ class Zend_Measure_BinaryTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for exception no locale
+     * expected root value
+     */
+    public function testBinaryNoLocale()
+    {
+        $value = new Zend_Measure_Binary('100',Zend_Measure_Binary::STANDARD);
+        $this->assertTrue(is_object($value),'Object expected because of standard locale');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

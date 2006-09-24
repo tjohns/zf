@@ -468,7 +468,7 @@ class Zend_Locale {
      * Standard Searchorder is
      * - getHTTPLanguages
      * - getServerLanguages
-     * TODO: - getFrameworkLanguages
+     * @todo - getFrameworkLanguages
      * 
      * @param $searchorder  - OPTIONAL searchorder
      * @param $fastsearch   - OPTIONAL returnes the first found locale array when TRUE
@@ -478,25 +478,36 @@ class Zend_Locale {
     public function getDefault($searchorder = false, $fastsearch = false)
     {
         $languages = array();
-        if ($searchorder == self::SERVER)
-        {
+        if ($searchorder == self::SERVER) {
+
             $languages = $this->getEnvironment();
-            if (empty($languages) or !$fastsearch)
+            if (empty($languages) or !$fastsearch) {
                 $languages = array_merge($languages, $this->getFramework());
-            if (empty($languages) or !$fastsearch)
+            }
+            if (empty($languages) or !$fastsearch) {
                 $languages = array_merge($languages, $this->getBrowser());
+            }
+
         } else if ($searchorder == self::FRAMEWORK) {
+
             $languages = $this->getFramework();
-            if (empty($languages) or !$fastsearch)
+            if (empty($languages) or !$fastsearch) {
                 $languages = array_merge($languages, $this->getEnvironment());
-            if (empty($languages) or !$fastsearch)
+            }
+            if (empty($languages) or !$fastsearch) {
                 $languages = array_merge($languages, $this->getBrowser());
+            }
+
         } else {
+
             $languages = $this->getBrowser();
-            if (empty($languages) or !$fastsearch)
+            if (empty($languages) or !$fastsearch) {
                 $languages = array_merge($languages, $this->getEnvironment());
-            if (empty($languages) or !$fastsearch)
+            }
+            if (empty($languages) or !$fastsearch) {
                 $languages = array_merge($languages, $this->getFramework());
+            }
+
         }
         return $languages;
     }
@@ -519,23 +530,24 @@ class Zend_Locale {
         
         foreach ($languages as $locale)
         {
+
             $language = substr($locale, strpos($locale, '='));
-            if ($language != '=C')
-            {
+            if ($language != '=C') {
+
                $language = substr($language, 1, strpos($language, '.') - 1);
                $splitted = explode('_', $language);
-               if (!empty($this->_LocaleData[$language]))
-               {
+               if (!empty($this->_LocaleData[$language])) {
                    $languagearray[$language] = 1;
-                   if (strlen($language) > 4)
+                   if (strlen($language) > 4) {
                        $languagearray[substr($language, 0, 2)] = 1;
+                   }
                    continue;
                }
-               if (!empty($this->_LocaleTranslation[$splitted[0]]))
-               {
-                   if (!empty($this->_LocaleTranslation[$splitted[1]]))
-                   {
-                       $languagearray[$this->_LocaleTranslation[$splitted[0]].'_'.$this->_LocaleTranslation[$splitted[1]]] = 1;
+
+               if (!empty($this->_LocaleTranslation[$splitted[0]])) {
+                   if (!empty($this->_LocaleTranslation[$splitted[1]])) {
+                       $languagearray[$this->_LocaleTranslation[$splitted[0]].'_'
+                      .$this->_LocaleTranslation[$splitted[1]]] = 1;
                    }
                    $languagearray[$this->_LocaleTranslation[$splitted[0]]] = 1;
                }
@@ -558,20 +570,21 @@ class Zend_Locale {
         $httplanguages = getenv("HTTP_ACCEPT_LANGUAGE");
 
         $languages = array();
-        if (empty($httplanguages))
+        if (empty($httplanguages)) {
             return $languages;
+        }
 
         $accepted = preg_split('/,\s*/', $httplanguages);
 
-        foreach ($accepted as $accept)
-        {
-            $result = preg_match('/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i', $accept, $match);
+        foreach ($accepted as $accept) {
+            $result = preg_match('/^([a-z]{1,8}(?:[-_][a-z]{1,8})*)(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?$/i',
+                                 $accept, $match);
 
-            if (!$result)
+            if (!$result) {
                 continue;
+            }
 
-            if (isset($match[2]))
-            {
+            if (isset($match[2])) {
                 $quality = (float) $match[2];
             } else {
                 $quality = 1.0;
@@ -583,12 +596,10 @@ class Zend_Locale {
             $country2 = explode('_', $region);
             $region = array_shift($country2);
 
-            foreach($countrys as $country)
-            {
+            foreach($countrys as $country) {
                 $languages[$region.'_'.strtoupper($country)] = $quality;
             }
-            foreach($country2 as $country)
-            {
+            foreach($country2 as $country) {
                 $languages[$region.'_'.strtoupper($country)] = $quality;
             }
             $languages[$region] = $quality;
@@ -625,20 +636,25 @@ class Zend_Locale {
      */
     public function setLocale($locale = false)
     {
-        if (($locale == self::BROWSER) or ($locale == self::SERVER) or (empty($locale)))
+        if (($locale == self::BROWSER) or ($locale == self::SERVER) or (empty($locale))) {
             $locale = $this->getDefault($locale, TRUE);
+        }
 
-        if (is_array($locale))
+        if (is_array($locale)) {
             $locale = key($locale);
-        if (!isset($this->_LocaleData[$locale]))
-        {
+        }
+        
+        if (!isset($this->_LocaleData[$locale])) {
             $region = substr($locale, 0, 3);
-            if (($region[2] == '_') or ($region[2] == '-'))
+            if (($region[2] == '_') or ($region[2] == '-')) {
                 $region = substr($region, 0, 2);
-            if (isset($this->_LocaleData[$region]))
+            }
+            if (isset($this->_LocaleData[$region])) {
                 $this->_Locale = $region;
-            else
+            } else {
                 $this->_Locale = 'root';
+            }
+            
         } else {
             $this->_Locale = $locale;
         }
@@ -665,22 +681,26 @@ class Zend_Locale {
     public function getRegion()
     {
         $locale = explode('_', $this->_Locale);
-        if (isset($locale[1]))
+        if (isset($locale[1])) {
             return $locale[1];
+        }
+        
+        return false;
     }
 
 
     /**
      * Return the accepted charset of the client
-     * TODO: verify working
+     * @todo verify working
      */
     public function getHTTPCharset()
     {
         $httpcharsets = getenv("HTTP_ACCEPT_CHARSET");
 
         $charsets = array();
-        if (empty($httpcharsets))
+        if (empty($httpcharsets)) {
             return $charsets;
+        }
 
         $accepted = preg_split('/,\s*/', $httpcharsets);
 
@@ -707,8 +727,10 @@ class Zend_Locale {
      */
     public function equals($object)
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
         
     }
@@ -734,8 +756,11 @@ class Zend_Locale {
     public function getLanguageDisplay($language)
     {
         $language = Zend_Locale_Data::getContent($this->_Locale, 'language', $language);
-        if (!empty($language))
+
+        if (!empty($language)) {
             return key($language);
+        }
+
         return false;
     }
 
@@ -760,8 +785,11 @@ class Zend_Locale {
     public function getScriptDisplay($script)
     {
         $script = Zend_Locale_Data::getContent($this->_Locale, 'script', $script);
-        if (!empty($script))
+
+        if (!empty($script)) {
             return key($script);
+        }
+
         return false;
     }
 
@@ -786,8 +814,11 @@ class Zend_Locale {
     public function getRegionDisplay($region)
     {
         $region = Zend_Locale_Data::getContent($this->_Locale, 'territory', $region);
-        if (!empty($region))
+
+        if (!empty($region)) {
             return key($region);
+        }
+
         return false;
     }
 
@@ -812,8 +843,11 @@ class Zend_Locale {
     public function getCalendarDisplay($calendar)
     {
         $calendar = Zend_Locale_Data::getContent($this->_Locale, 'type', $calendar);
-        if (!empty($calendar))
+
+        if (!empty($calendar)) {
             return key($calendar);
+        }
+
         return false;
     }
 

@@ -22,7 +22,7 @@
 /**
  * Implement date class
  */
-require_once 'Zend/Date.php';
+require_once('Zend/Date.php');
 
 
 /**
@@ -37,6 +37,7 @@ class Zend_Calendar extends Zend_Date {
      * Generates the standard calendar object
      * Extends from Zend_Date and makes use of it's functions'
      *
+     * @todo implement function
      * @param $date string     - OPTIONAL date object depending on $parameter
      * @param $locale string   - OPTIONAL locale for parsing input
      * @param $parameter mixed - OPTIONAL defines the input format of $date
@@ -44,18 +45,20 @@ class Zend_Calendar extends Zend_Date {
      */
     public function __construct($date, $locale, $parameter)
     {
-        // TODO: implement function
         $this->throwException('Calendar class yet not implemented... will be done when Zend_Date is ready!');
     }
 
     /**
      * Serialization Interface
+     * 
+     * @todo implement function
      */
     public function serialize() {}
 
     /**
      * Returns a string representation of the object
      *
+     * @todo implement function
      * @param $locale string   - OPTIONAL locale for parsing input
      * @param $format - OPTIONAL an rule for formatting the output
      * @return string

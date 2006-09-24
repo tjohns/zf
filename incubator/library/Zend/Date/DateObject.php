@@ -99,7 +99,7 @@ class Zend_Date_DateObject {
           return true;
         }
 
-        $this->throwException('"'.$date.'" is no valid date');
+        $this->throwException('"' . $date . '" is no valid date');
     }
 
 
@@ -455,7 +455,7 @@ class Zend_Date_DateObject {
                 case 'P':  // difference to GMT with colon
                     $gmt = ($gmt) ? 0 : $this->_gmtDifference();
                     $gmt = sprintf('%s%04d', ($gmt <= 0) ? '+' : '-', abs($gmt)/36);
-                    $output = $output.substr($gmt,0,3).':'.substr($gmt,3);
+                    $output = $output . substr($gmt,0,3) . ':' . substr($gmt,3);
                     break;
                 case 'T':  // timezone settings
                     if ($gmt)
@@ -471,13 +471,13 @@ class Zend_Date_DateObject {
                 case 'c':  // ISO 8601 date format
                     $difference = $this->_gmtDifference();
                     $difference = sprintf('%s%04d', ($difference <= 0) ? '+' : '-', abs($difference)/36);
-                    $output.substr($gmt,0,3).':'.substr($gmt,3);
-                    $output .= $date['year'].'-'.$date['mon'].'-'.
-                               (($date['mday'] < 10) ? '0'.$date['mday'] : $date['mday']).'T'.
-                               (($date['hours'] < 10) ? '0'.$date['hours'] : $date['hours']).
-                               ':'.(($date['minutes'] < 10) ? '0'.$date['minutes'] : $date['minutes']).
-                               ':'.(($date['seconds'] < 10) ? '0'.$date['seconds'] : $date['seconds']).
-                               substr($difference,0,3).':'.substr($difference,3);
+                    $output.substr($gmt,0,3) . ':' . substr($gmt,3);
+                    $output .= $date['year'] . '-' . $date['mon'] . '-'
+                             . (($date['mday'] < 10) ? '0' . $date['mday'] : $date['mday']).'T'
+                             . (($date['hours'] < 10) ? '0' . $date['hours'] : $date['hours'])
+                             . ':'.(($date['minutes'] < 10) ? '0' . $date['minutes'] : $date['minutes'])
+                             . ':'.(($date['seconds'] < 10) ? '0' . $date['seconds'] : $date['seconds'])
+                             . substr($difference, 0, 3) . ':' . substr($difference, 3);
                     break;
                 case 'r':  // RFC 2822 date format
                     $difference = $this->_gmtDifference();

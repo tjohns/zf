@@ -22,14 +22,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**
@@ -194,7 +194,7 @@ class Zend_Measure_Energy extends Zend_Measure_Abstract
         'Energy::GIGAWATT_HOUR'          => array(3.6e+12,'GWh'),
         'Energy::GRAM_CALORIE'           => array(4.1858,'g cal'),
         'Energy::HARTREE'                => array(4.3597482e-18,'Eh'),
-        // TODO: Unitsymbol of hartree - Big E with subcased h
+        // @todo: Unitsymbol of hartree - Big E with subcased h
         'Energy::HECTOJOULE'             => array(100,'hJ'),
         'Energy::HECTOWATT_HOUR'         => array(360000,'hWh'),
         'Energy::HORSEPOWER_HOUR'        => array(2684519.5,'hph'),

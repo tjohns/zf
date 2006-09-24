@@ -22,14 +22,14 @@
 /**
  * Implement basic abstract class
  */
-require_once 'Zend/Measure/Abstract.php';
+require_once('Zend/Measure/Abstract.php');
 
 /**
  * Implement Locale Data and Format class
  */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once('Zend/Locale.php');
+require_once('Zend/Locale/Data.php');
+require_once('Zend/Locale/Format.php');
 
 
 /**
@@ -127,87 +127,87 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
     const YARD                = 'Volume::YARD';
 
     private static $_UNITS = array(
-        'Volume::ACRE_FOOT'           => array(1233.48185532,'ac ft'),
-        'Volume::ACRE_FOOT_SURVEY'    => array(1233.489,'ac ft'),
-        'Volume::ACRE_INCH'           => array(102.79015461,'ac in'),
-        'Volume::BARREL_WINE'         => array(0.143201835,'bbl'),
-        'Volume::BARREL'              => array(0.16365924,'bbl'),
-        'Volume::BARREL_US_DRY'       => array(array('' => 26.7098656608, '/' => 231),'bbl'),
-        'Volume::BARREL_US_FEDERAL'   => array(0.1173477658,'bbl'),
-        'Volume::BARREL_US'           => array(0.1192404717,'bbl'),
-        'Volume::BARREL_US_PETROLEUM' => array(0.1589872956,'bbl'),
-        'Volume::BOARD_FOOT'          => array(array('' => 6.5411915904, '/' => 2772),'board foot'),
-        'Volume::BUCKET'              => array(0.01818436,'bucket'),
-        'Volume::BUCKET_US'           => array(0.018927059,'bucket'),
-        'Volume::BUSHEL'              => array(0.03636872,'bu'),
-        'Volume::BUSHEL_US'           => array(0.03523907,'bu'),
-        'Volume::CENTILITER'          => array(0.00001,'cl'),
-        'Volume::CORD'                => array(3.624556416,'cd'),
-        'Volume::CORD_FOOT'           => array(0.453069552,'cd ft'),
-        'Volume::CUBIC_CENTIMETER'    => array(0.000001,'cm³'),
-        'Volume::CUBIC_CUBIT'         => array(0.144,'cubit³'),
-        'Volume::CUBIC_DECIMETER'     => array(0.001,'dm³'),
-        'Volume::CUBIC_DEKAMETER'     => array(1000,'dam³'),
-        'Volume::CUBIC_FOOT'          => array(array('' => 6.54119159, '/' => 231),'ft³'),
-        'Volume::CUBIC_INCH'          => array(array('' => 0.0037854118, '/' => 231),'in³'),
-        'Volume::CUBIC_KILOMETER'     => array(1.0e+9,'km³'),
-        'Volume::CUBIC_METER'         => array(1,'m³'),
-        'Volume::CUBIC_MILE'          => array(array('' => 0.0037854118, '/' => 231, '*' => 75271680, '*' => 3379200),'mi³'),
-        'Volume::CUBIC_MICROMETER'    => array(1.0e-18,'µm³'),
-        'Volume::CUBIC_MILLIMETER'    => array(1.0e-9,'mm³'),
-        'Volume::CUBIC_YARD'          => array(array('' => 0.0037854118, '/' => 231, '*' => 46656),'yd³'),
-        'Volume::CUP_CANADA'          => array(0.0002273045,'c'),
-        'Volume::CUP'                 => array(0.00025,'c'),
-        'Volume::CUP_US'              => array(array('' => 0.0037854118, '/' => 16),'c'),
-        'Volume::DECILITER'           => array(0.0001,'dl'),
-        'Volume::DEKALITER'           => array(0.001,'dal'),
-        'Volume::DRAM'                => array(array('' => 0.0037854118, '/' => 1024),'dr'),
-        'Volume::DRUM_US'             => array(0.208197649,'drum'),
-        'Volume::DRUM'                => array(0.2,'drum'),
-        'Volume::FIFTH'               => array(0.00075708236,'fifth'),
-        'Volume::GALLON'              => array(0.00454609,'gal'),
-        'Volume::GALLON_US_DRY'       => array(0.0044048838,'gal'),
-        'Volume::GALLON_US'           => array(0.0037854118,'gal'),
-        'Volume::GILL'                => array(array('' => 0.00454609, '/' => 32),'gi'),
-        'Volume::GILL_US'             => array(array('' => 0.0037854118, '/' => 32),'gi'),
-        'Volume::HECTARE_METER'       => array(10000,'ha m'),
-        'Volume::HECTOLITER'          => array(0.1,'hl'),
-        'Volume::HOGSHEAD'            => array(0.28640367,'hhd'),
-        'Volume::HOGSHEAD_US'         => array(0.2384809434,'hhd'),
-        'Volume::JIGGER'              => array(array('' => 0.0037854118, '/' => 128, '*' => 1.5),'jigger'),
-        'Volume::KILOLITER'           => array(1,'kl'),
-        'Volume::LITER'               => array(0.001,'l'),
-        'Volume::MEASURE'             => array(0.0077,'measure'),
-        'Volume::MEGALITER'           => array(1000,'Ml'),
-        'Volume::MICROLITER'          => array(1.0e-9,'µl'),
-        'Volume::MILLILITER'          => array(0.000001,'ml'),
-        'Volume::MINIM'               => array(array('' => 0.00454609, '/' => 76800),'min'),
-        'Volume::MINIM_US'            => array(array('' => 0.0037854118,'/' => 61440),'min'),
-        'Volume::OUNCE'               => array(array('' => 0.00454609, '/' => 160),'oz'),
-        'Volume::OUNCE_US'            => array(array('' => 0.0037854118, '/' => 128),'oz'),
-        'Volume::PECK'                => array(0.00909218,'pk'),
-        'Volume::PECK_US'             => array(0.0088097676,'pk'),
-        'Volume::PINT'                => array(array('' => 0.00454609, '/' => 8),'pt'),
-        'Volume::PINT_US_DRY'         => array(array('' => 0.0044048838, '/' => 8),'pt'),
-        'Volume::PINT_US'             => array(array('' => 0.0037854118, '/' => 8),'pt'),
-        'Volume::PIPE'                => array(0.49097772,'pipe'),
-        'Volume::PIPE_US'             => array(0.4769618868,'pipe'),
-        'Volume::PONY'                => array(array('' => 0.0037854118, '/' => 128),'pony'),
-        'Volume::QUART_GERMANY'       => array(0.00114504,'qt'),
-        'Volume::QUART_ANCIENT'       => array(0.00108,'qt'),
-        'Volume::QUART'               => array(array('' => 0.00454609, '/' => 4),'qt'),
-        'Volume::QUART_US_DRY'        => array(array('' => 0.0044048838, '/' => 4),'qt'),
-        'Volume::QUART_US'            => array(array('' => 0.0037854118, '/' => 4),'qt'),
-        'Volume::QUART_UK'            => array(0.29094976,'qt'),
-        'Volume::SHOT'                => array(array('' => 0.0037854118, '/' => 128),'shot'),
-        'Volume::STERE'               => array(1,'st'),
-        'Volume::TABLESPOON'          => array(0.000015,'tbsp'),
-        'Volume::TABLESPOON_UK'       => array(array('' => 0.00454609, '/' => 320),'tbsp'),
-        'Volume::TABLESPOON_US'       => array(array('' => 0.0037854118, '/' => 256),'tbsp'),
-        'Volume::TEASPOON'            => array(0.000005,'tsp'),
-        'Volume::TEASPOON_UK'         => array(array('' => 0.00454609, '/' => 1280),'tsp'),
-        'Volume::TEASPOON_US'         => array(array('' => 0.0037854118, '/' => 768),'tsp'),
-        'Volume::YARD'                => array(array('' => 176.6121729408, '/' => 231),'yd')
+        'Volume::ACRE_FOOT'           => array(1233.48185532, 'ac ft'),
+        'Volume::ACRE_FOOT_SURVEY'    => array(1233.489,      'ac ft'),
+        'Volume::ACRE_INCH'           => array(102.79015461,  'ac in'),
+        'Volume::BARREL_WINE'         => array(0.143201835,   'bbl'),
+        'Volume::BARREL'              => array(0.16365924,    'bbl'),
+        'Volume::BARREL_US_DRY'       => array(array('' => 26.7098656608, '/' => 231), 'bbl'),
+        'Volume::BARREL_US_FEDERAL'   => array(0.1173477658,  'bbl'),
+        'Volume::BARREL_US'           => array(0.1192404717,  'bbl'),
+        'Volume::BARREL_US_PETROLEUM' => array(0.1589872956,  'bbl'),
+        'Volume::BOARD_FOOT'          => array(array('' => 6.5411915904, '/' => 2772), 'board foot'),
+        'Volume::BUCKET'              => array(0.01818436,    'bucket'),
+        'Volume::BUCKET_US'           => array(0.018927059,   'bucket'),
+        'Volume::BUSHEL'              => array(0.03636872,    'bu'),
+        'Volume::BUSHEL_US'           => array(0.03523907,    'bu'),
+        'Volume::CENTILITER'          => array(0.00001,       'cl'),
+        'Volume::CORD'                => array(3.624556416,   'cd'),
+        'Volume::CORD_FOOT'           => array(0.453069552,   'cd ft'),
+        'Volume::CUBIC_CENTIMETER'    => array(0.000001,      'cm³'),
+        'Volume::CUBIC_CUBIT'         => array(0.144,         'cubit³'),
+        'Volume::CUBIC_DECIMETER'     => array(0.001,         'dm³'),
+        'Volume::CUBIC_DEKAMETER'     => array(1000,          'dam³'),
+        'Volume::CUBIC_FOOT'          => array(array('' => 6.54119159, '/' => 231),   'ft³'),
+        'Volume::CUBIC_INCH'          => array(array('' => 0.0037854118, '/' => 231), 'in³'),
+        'Volume::CUBIC_KILOMETER'     => array(1.0e+9,        'km³'),
+        'Volume::CUBIC_METER'         => array(1,             'm³'),
+        'Volume::CUBIC_MILE'          => array(array('' => 0.0037854118, '/' => 231, '*' => 75271680, '*' => 3379200), 'mi³'),
+        'Volume::CUBIC_MICROMETER'    => array(1.0e-18,       'µm³'),
+        'Volume::CUBIC_MILLIMETER'    => array(1.0e-9,        'mm³'),
+        'Volume::CUBIC_YARD'          => array(array('' => 0.0037854118, '/' => 231, '*' => 46656), 'yd³'),
+        'Volume::CUP_CANADA'          => array(0.0002273045,  'c'),
+        'Volume::CUP'                 => array(0.00025,       'c'),
+        'Volume::CUP_US'              => array(array('' => 0.0037854118, '/' => 16), 'c'),
+        'Volume::DECILITER'           => array(0.0001,        'dl'),
+        'Volume::DEKALITER'           => array(0.001,         'dal'),
+        'Volume::DRAM'                => array(array('' => 0.0037854118, '/' => 1024), 'dr'),
+        'Volume::DRUM_US'             => array(0.208197649,   'drum'),
+        'Volume::DRUM'                => array(0.2,           'drum'),
+        'Volume::FIFTH'               => array(0.00075708236, 'fifth'),
+        'Volume::GALLON'              => array(0.00454609,    'gal'),
+        'Volume::GALLON_US_DRY'       => array(0.0044048838,  'gal'),
+        'Volume::GALLON_US'           => array(0.0037854118,  'gal'),
+        'Volume::GILL'                => array(array('' => 0.00454609, '/' => 32),   'gi'),
+        'Volume::GILL_US'             => array(array('' => 0.0037854118, '/' => 32), 'gi'),
+        'Volume::HECTARE_METER'       => array(10000,         'ha m'),
+        'Volume::HECTOLITER'          => array(0.1,           'hl'),
+        'Volume::HOGSHEAD'            => array(0.28640367,    'hhd'),
+        'Volume::HOGSHEAD_US'         => array(0.2384809434,  'hhd'),
+        'Volume::JIGGER'              => array(array('' => 0.0037854118, '/' => 128, '*' => 1.5), 'jigger'),
+        'Volume::KILOLITER'           => array(1,             'kl'),
+        'Volume::LITER'               => array(0.001,         'l'),
+        'Volume::MEASURE'             => array(0.0077,        'measure'),
+        'Volume::MEGALITER'           => array(1000,          'Ml'),
+        'Volume::MICROLITER'          => array(1.0e-9,        'µl'),
+        'Volume::MILLILITER'          => array(0.000001,      'ml'),
+        'Volume::MINIM'               => array(array('' => 0.00454609, '/' => 76800),  'min'),
+        'Volume::MINIM_US'            => array(array('' => 0.0037854118,'/' => 61440), 'min'),
+        'Volume::OUNCE'               => array(array('' => 0.00454609, '/' => 160),    'oz'),
+        'Volume::OUNCE_US'            => array(array('' => 0.0037854118, '/' => 128),  'oz'),
+        'Volume::PECK'                => array(0.00909218,    'pk'),
+        'Volume::PECK_US'             => array(0.0088097676,  'pk'),
+        'Volume::PINT'                => array(array('' => 0.00454609, '/' => 8),   'pt'),
+        'Volume::PINT_US_DRY'         => array(array('' => 0.0044048838, '/' => 8), 'pt'),
+        'Volume::PINT_US'             => array(array('' => 0.0037854118, '/' => 8), 'pt'),
+        'Volume::PIPE'                => array(0.49097772,    'pipe'),
+        'Volume::PIPE_US'             => array(0.4769618868,  'pipe'),
+        'Volume::PONY'                => array(array('' => 0.0037854118, '/' => 128), 'pony'),
+        'Volume::QUART_GERMANY'       => array(0.00114504,    'qt'),
+        'Volume::QUART_ANCIENT'       => array(0.00108,       'qt'),
+        'Volume::QUART'               => array(array('' => 0.00454609, '/' => 4),   'qt'),
+        'Volume::QUART_US_DRY'        => array(array('' => 0.0044048838, '/' => 4), 'qt'),
+        'Volume::QUART_US'            => array(array('' => 0.0037854118, '/' => 4), 'qt'),
+        'Volume::QUART_UK'            => array(0.29094976,    'qt'),
+        'Volume::SHOT'                => array(array('' => 0.0037854118, '/' => 128), 'shot'),
+        'Volume::STERE'               => array(1,             'st'),
+        'Volume::TABLESPOON'          => array(0.000015,      'tbsp'),
+        'Volume::TABLESPOON_UK'       => array(array('' => 0.00454609, '/' => 320),   'tbsp'),
+        'Volume::TABLESPOON_US'       => array(array('' => 0.0037854118, '/' => 256), 'tbsp'),
+        'Volume::TEASPOON'            => array(0.000005,      'tsp'),
+        'Volume::TEASPOON_UK'         => array(array('' => 0.00454609, '/' => 1280),    'tsp'),
+        'Volume::TEASPOON_US'         => array(array('' => 0.0037854118, '/' => 768),   'tsp'),
+        'Volume::YARD'                => array(array('' => 176.6121729408, '/' => 231), 'yd')
     );
 
     private $_Locale;
@@ -227,10 +227,11 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -241,10 +242,12 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
      *
      * @return boolean
      */
-    public function equals($object)
+    public function equals( $object )
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+        
         return false;
     }
 
@@ -259,32 +262,37 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of volume:'.$type);
+        if (empty( self::$_UNITS[$type] )) {
+            self::throwException('unknown type of volume:' . $type);
+        }
+        
         parent::setValue($value, $type, $locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
     /**
      * Set a new type, and convert the value
      *
+     * @param  $type  new type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType($type)
+    public function setType( $type )
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of volume:'.$type);
+        if (empty( self::$_UNITS[$type] )) {
+            self::throwException('unknown type of volume:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
         if (is_array(self::$_UNITS[parent::getType()][0])) {
             foreach (self::$_UNITS[parent::getType()][0] as $key => $found) {
-                switch ($key) {
+                switch ( $key ) {
                     case "/":
                         $value /= $found;
                         break;
@@ -300,7 +308,7 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
         // Convert to expected value
         if (is_array(self::$_UNITS[$type][0])) {
             foreach (self::$_UNITS[$type][0] as $key => $found) {
-                switch ($key) {
+                switch ( $key ) {
                     case "/":
                         $value *= $found;
                         break;
@@ -313,7 +321,7 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
             $value = $value / (self::$_UNITS[$type][0]);
         }
         parent::setValue($value, $type, $this->_Locale);
-        parent::setType($type);
+        parent::setType( $type );
     }
 
 
@@ -324,7 +332,7 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -341,6 +349,8 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

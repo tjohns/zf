@@ -80,19 +80,11 @@ class Zend_Locale_Format
      * @param $locale - OPTIONAL locale
      * @return string - locale formatted number
      * 
-     * TODO: 
-     * UTF8 not handled properly... waiting for Zend_Locale_UTF8
-     * No handling of dual seperated formats as Indian for now
-     * f.e. #,##,##0.###
+     * @todo UTF8 not handled properly... waiting for Zend_Locale_UTF8
+     * @todo No handling of dual seperated formats as Indian for now f.e. #,##,##0.###
      */
     public static function toNumber($value, $locale = false)
     {
-        // Coding stopped due to fundamental UTF8 problems...
-        // we will continue when UTF8 is avaiable
-
-        // Todo: Implement
-//        self::throwException('function not implemented');
-
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
         $format  = Zend_Locale_Data::getContent($locale,'decimalnumberformat');
@@ -274,7 +266,7 @@ class Zend_Locale_Format
      */
     public static function toFloat()
     {
-        // Todo: Implement
+        // @todo Implement
         self::throwException('function not implemented');
     }
 
@@ -344,7 +336,7 @@ class Zend_Locale_Format
      */
     public static function toInteger()
     {
-        // Todo: Implement
+        // @todo Implement
         self::throwException('function not implemented');
 
         if (!is_integer($value))
@@ -418,7 +410,7 @@ print $format."\n<br>";
      */
     public static function getDate($date, $type, $locale)
     {
-        // Todo: Implement
+        // @todo Implement
         self::throwException('function not implemented');
 
         // Get correct date for this locale
@@ -507,35 +499,35 @@ print_r($match);
 
     public static function toDate()
     {
-        // Todo: Implement
+        // @todo Implement
         self::throwException('function not implemented');
     }
 
 
     public static function isDate()
     {
-        // Todo: Implement
+        // @todo Implement
         self::throwException('function not implemented');
     }
 
 
     public static function getTime()
     {
-        // Todo: Implement
+        // @todo Implement
         self::throwException('function not implemented');
     }
 
 
     public static function toTime()
     {
-        // Todo: Implement
+        // @todo Implement
         self::throwException('function not implemented');
     }
 
 
     public static function isTime()
     {
-        // Todo: Implement
+        // @todo Implement 
         self::throwException('function not implemented');
     }
 

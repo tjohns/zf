@@ -62,33 +62,33 @@ class Zend_Measure
 
     private static $_UNIT = array(
         'Zend_Measure::ACCELERATION'   => array('Acceleration' => 'METER_PER_SQUARE_SECOND'),
-        'Zend_Measure::ANGLE'          => array('Angle' => 'RADIAN'),
-        'Zend_Measure::AREA'           => array('Area' => 'SQUARE_METER'),
-        'Zend_Measure::BINARY'         => array('Binary' => 'BYTE'),
-        'Zend_Measure::CAPACITANCE'    => array('Capacitance' => 'FARAD'),
+        'Zend_Measure::ANGLE'          => array('Angle'        => 'RADIAN'),
+        'Zend_Measure::AREA'           => array('Area'         => 'SQUARE_METER'),
+        'Zend_Measure::BINARY'         => array('Binary'       => 'BYTE'),
+        'Zend_Measure::CAPACITANCE'    => array('Capacitance'  => 'FARAD'),
         'Zend_Measure::COOKING_VOLUME' => array('Cooking_Volume' => 'CUBIC_METER'),
         'Zend_Measure::COOKING_WEIGHT' => array('Cooking_Weight' => 'GRAM'),
-        'Zend_Measure::CURRENT'        => array('Current' => 'AMPERE'),
-        'Zend_Measure::DENSITY'        => array('Density' => 'KILOGRAM_PER_CUBIC_METER'),
-        'Zend_Measure::ENERGY'         => array('Energy' => 'JOULE'),
-        'Zend_Measure::FORCE'          => array('Force' => 'NEWTON'),
-        'Zend_Measure::FLOW_MASS'      => array('Flow_Mass' => 'KILOGRAM_PER_SECOND'),
-        'Zend_Measure::FLOW_MOLE'      => array('Flow_Mole' => 'MOLE_PER_SECOND'),
-        'Zend_Measure::FLOW_VOLUME'    => array('Flow_Volume' => 'CUBIC_METER_PER_SECOND'),
-        'Zend_Measure::FREQUENCY'      => array('Frequency' => 'HERTZ'),
+        'Zend_Measure::CURRENT'        => array('Current'      => 'AMPERE'),
+        'Zend_Measure::DENSITY'        => array('Density'      => 'KILOGRAM_PER_CUBIC_METER'),
+        'Zend_Measure::ENERGY'         => array('Energy'       => 'JOULE'),
+        'Zend_Measure::FORCE'          => array('Force'        => 'NEWTON'),
+        'Zend_Measure::FLOW_MASS'      => array('Flow_Mass'    => 'KILOGRAM_PER_SECOND'),
+        'Zend_Measure::FLOW_MOLE'      => array('Flow_Mole'    => 'MOLE_PER_SECOND'),
+        'Zend_Measure::FLOW_VOLUME'    => array('Flow_Volume'  => 'CUBIC_METER_PER_SECOND'),
+        'Zend_Measure::FREQUENCY'      => array('Frequency'    => 'HERTZ'),
         'Zend_Measure::ILLUMINATION'   => array('Illumination' => 'LUX'),
-        'Zend_Measure::LENGTH'         => array('Length' => 'METER'),
-        'Zend_Measure::LIGHTNESS'      => array('Lightness' => 'CANDELA_PER_SQUARE_METER'),
-        'Zend_Measure::NUMBER'         => array('Number' => 'DECIMAL'),
-        'Zend_Measure::POWER'          => array('Power' => 'WATT'),
-        'Zend_Measure::PRESSURE'       => array('Pressure' => 'NEWTON_PER_SQUARE_METER'),
-        'Zend_Measure::SPEED'          => array('Speed' => 'METER_PER_SECOND'),
-        'Zend_Measure::TEMPERATURE'    => array('Temperature' => 'KELVIN'),
-        'Zend_Measure::TORQUE'         => array('Torque' => 'NEWTON_METER'),
-        'Zend_Measure::VISCOSITY_DYNAMIC'   => array('Viscosity_Dynamic' => 'KILOGRAM_PER_METER_SECOND'),
+        'Zend_Measure::LENGTH'         => array('Length'       => 'METER'),
+        'Zend_Measure::LIGHTNESS'      => array('Lightness'    => 'CANDELA_PER_SQUARE_METER'),
+        'Zend_Measure::NUMBER'         => array('Number'       => 'DECIMAL'),
+        'Zend_Measure::POWER'          => array('Power'        => 'WATT'),
+        'Zend_Measure::PRESSURE'       => array('Pressure'     => 'NEWTON_PER_SQUARE_METER'),
+        'Zend_Measure::SPEED'          => array('Speed'        => 'METER_PER_SECOND'),
+        'Zend_Measure::TEMPERATURE'    => array('Temperature'  => 'KELVIN'),
+        'Zend_Measure::TORQUE'         => array('Torque'       => 'NEWTON_METER'),
+        'Zend_Measure::VISCOSITY_DYNAMIC'   => array('Viscosity_Dynamic'   => 'KILOGRAM_PER_METER_SECOND'),
         'Zend_Measure::VISCOSITY_KINEMATIC' => array('Viscosity_Kinematic' => 'SQUARE_METER_PER_SECOND'),
-        'Zend_Measure::VOLUME'         => array('Volume' => 'CUBIC_METER'),
-        'Zend_Measure::WEIGHT'         => array('Weight' => 'KILOGRAM')
+        'Zend_Measure::VOLUME'         => array('Volume'       => 'CUBIC_METER'),
+        'Zend_Measure::WEIGHT'         => array('Weight'       => 'KILOGRAM')
     );
 
     private $_Measurement;
@@ -110,27 +110,34 @@ class Zend_Measure
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty( $locale )) {
             $this->_Locale = new Zend_Locale();
-        else
-            $this->_Locale = $locale;
-
-        $library = substr($type,0,strpos($type,'::'));
-        $sublib  = substr($type, strpos($type,'::')+2);
-
-        if ($library == 'Zend_Measure')
-        {
-            if (!empty(self::$_UNIT[$type]))
-                $library = $library.'_'.key(self::$_UNIT[$type]);
-            else
-                $this->throwException('unknown measurement type: '.$type);
-            $sublib = key(self::$_UNIT[$type]).'::'.current(self::$_UNIT[$type]);
-            if (!empty($sublib))
-                $sublib = key(self::$_UNIT[$type]).'::'.current(self::$_UNIT[$type]);
-            Zend::loadClass($library);
         } else {
-            $sublib = $library.'::'.$sublib;
-            $library = 'Zend_Measure_'.$library;
+            $this->_Locale = $locale;
+        }
+
+        $library = substr($type, 0, strpos($type, '::'));
+        $sublib  = substr($type, strpos($type, '::') + 2);
+
+        if ($library == 'Zend_Measure') {
+
+            if (!empty( self::$_UNIT[$type] )) {
+                $library = $library . '_' . key(self::$_UNIT[$type]);
+            } else {
+                $this->throwException('unknown measurement type: ' . $type);
+            }
+
+            $sublib = key(self::$_UNIT[$type]) . '::' . current(self::$_UNIT[$type]);
+            if (!empty( $sublib )) {
+                $sublib = key(self::$_UNIT[$type]) . '::' . current(self::$_UNIT[$type]);
+            }
+            Zend::loadClass($library);
+
+        } else {
+
+            $sublib = $library . '::' . $sublib;
+            $library = 'Zend_Measure_' . $library;
+
         }
 
         $this->_Measurement = new $library($value, $sublib, $this->_Locale);
@@ -142,18 +149,19 @@ class Zend_Measure
      */
     public function serialize()
     {
-        return serialize($this);
+        return serialize( $this );
     }
 
 
     /**
      * Compare if the value and type is equal
      *
+     * @param  $object - object which to compare for equality   
      * @return boolean
      */
-    public function equals($object)
+    public function equals( $object )
     {
-        return $this->_Measurement->equals($object);
+        return $this->_Measurement->equals( $object );
     }
 
 
@@ -178,15 +186,15 @@ class Zend_Measure
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty( $locale )) {
             $locale = $this->_Locale;
+        }
 
-        $library = substr($type,0,strpos($type,'::'));
+        $library = substr($type, 0, strpos($type, '::'));
 
-        if ($library == 'Zend_Measure')
-        {
-            $library = $library.'_'.key(self::$_UNIT[$type]);
-            $type = key(self::$_UNIT[$type]).'::'.current(self::$_UNIT[$type]);
+        if ($library == 'Zend_Measure') {
+            $library = $library . '_' . key( self::$_UNIT[$type] );
+            $type = key(self::$_UNIT[$type]) . '::' . current( self::$_UNIT[$type] );
         }
 
         $this->_Measurement->setValue($value, $type, $locale);
@@ -207,19 +215,19 @@ class Zend_Measure
     /**
      * Set a new type, and convert the value
      *
+     * @param $type  new type to set
      * @throws Zend_Measure_Exception
      */
-    public function setType($type)
+    public function setType( $type )
     {
-        $library = substr($type,0,strpos($type,'::'));
+        $library = substr($type, 0, strpos($type, '::'));
 
-        if ($library == 'Zend_Measure')
-        {
-            $library = $library.'_'.key(self::$_UNIT[$type]);
-            $type = key(self::$_UNIT[$type]).'::'.current(self::$_UNIT[$type]);
+        if ($library == 'Zend_Measure') {
+            $library = $library . '_' . key(self::$_UNIT[$type]);
+            $type = key( self::$_UNIT[$type]) . '::' . current( self::$_UNIT[$type] );
         }
 
-        $this->_Measurement->setType($type);
+        $this->_Measurement->setType( $type );
     }
 
 
@@ -246,12 +254,12 @@ class Zend_Measure
     /**
      * Alias function for setType returning the converted unit
      *
-     * @param $type  type
-     * @return
+     * @param $type  type to convert to
+     * @return string
      */
-    public function convertTo($type)
+    public function convertTo( $type )
     {
-        $this->setType($type);
+        $this->setType( $type );
         return $this->toString();
     }
 
@@ -262,11 +270,11 @@ class Zend_Measure
      * @param $object  object of same unit type
      * @return object
      */
-    public function add($object)
+    public function add( $object )
     {
-        $object->setType($this->getType());
+        $object->setType( $this->getType() );
         $value  = $this->getValue() + $object->getValue();
-        return new Zend_Measure($value,$this->getType(),$this->_Locale);
+        return new Zend_Measure($value, $this->getType(), $this->_Locale);
     }
 
 
@@ -276,11 +284,11 @@ class Zend_Measure
      * @param $object  object of same unit type
      * @return object
      */
-    public function sub($object)
+    public function sub( $object )
     {
-        $object->setType($this->getType());
+        $object->setType( $this->getType() );
         $value  = $this->getValue() - $object->getValue();
-        return new Zend_Measure($value,$this->getType(),$this->_Locale);
+        return new Zend_Measure($value, $this->getType(), $this->_Locale);
     }
 
 
@@ -290,7 +298,7 @@ class Zend_Measure
      * @param $object  object of same unit type
      * @return object
      */
-    public function compare($object)
+    public function compare( $object )
     {
         $object->setType($this->getType());
         $value  = $this->getValue() - $object->getValue();
@@ -306,8 +314,10 @@ class Zend_Measure
      */
     public function getAllTypes()
     {
-        foreach(self::$_UNIT as $temp)
-          $types[] = key($temp);
+        foreach(self::$_UNIT as $temp) {
+          $types[] = key( $temp );
+        }
+        
         return $types;
     }
 
@@ -329,9 +339,9 @@ class Zend_Measure
      *
      * Note : for performance reasons, the "load" of Zend/Measure/Exception is dynamic
      */
-    public static function throwException($message)
+    public static function throwException( $message )
     {
         require_once('Zend/Measure/Exception.php');
-        throw new Zend_Measure_Exception($message);
+        throw new Zend_Measure_Exception( $message );
     }
 }

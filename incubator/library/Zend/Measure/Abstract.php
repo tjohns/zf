@@ -52,6 +52,10 @@ abstract class Zend_Measure_Abstract //implements Serializable
 
     /**
      * Sets the internal value
+     * 
+     * @param $value  new value to set
+     * @param $type   new type to set   - abstract
+     * @param $locale new locale to set - abstract
      */
     protected function setValue($value, $type, $locale = false)
     {
@@ -61,6 +65,8 @@ abstract class Zend_Measure_Abstract //implements Serializable
 
     /**
      * Returns the original type
+     * 
+     * @return type
      */
     public function getType()
     {
@@ -70,6 +76,8 @@ abstract class Zend_Measure_Abstract //implements Serializable
 
     /**
      * Sets the original type
+     * 
+     * @param $type  new type to set
      */
     protected function setType($type)
     {
@@ -79,6 +87,8 @@ abstract class Zend_Measure_Abstract //implements Serializable
 
     /**
      * Serialize
+     * 
+     * @return serialize
      */
     public function serialize() {
         return serialize($this);
@@ -100,6 +110,7 @@ abstract class Zend_Measure_Abstract //implements Serializable
     /**
      * Compare if the value and type is equal
      *
+     * @param  $object  object to equal with
      * @return boolean
      */
     abstract public function equals($object);
@@ -124,6 +135,8 @@ abstract class Zend_Measure_Abstract //implements Serializable
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     abstract public function getConversionList();
 }
