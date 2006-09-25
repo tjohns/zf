@@ -72,32 +72,32 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
     const WEBER_PER_HENRY      = 'Current::WEBER_PER_HENRY';
 
     private static $_UNITS = array(
-        'Current::ABAMPERE'             => array(10,'abampere'),
-        'Current::AMPERE'               => array(1,'A'),
-        'Current::BIOT'                 => array(10,'Bi'),
-        'Current::CENTIAMPERE'          => array(0.01,'cA'),
-        'Current::COULOMB_PER_SECOND'   => array(1,'C/s'),
-        'Current::DECIAMPERE'           => array(0.1,'dA'),
-        'Current::DEKAAMPERE'           => array(10,'daA'),
-        'Current::ELECTROMAGNATIC_UNIT' => array(10,'current emu'),
-        'Current::ELECTROSTATIC_UNIT'   => array(3.335641e-10,'current esu'),
-        'Current::FRANCLIN_PER_SECOND'  => array(3.335641e-10,'Fr/s'),
-        'Current::GAUSSIAN'             => array(3.335641e-10,'G current'),
-        'Current::GIGAAMPERE'           => array(1.0e+9,'GA'),
-        'Current::GILBERT'              => array(0.79577472,'Gi'),
-        'Current::HECTOAMPERE'          => array(100,'hA'),
-        'Current::KILOAMPERE'           => array(1000,'kA'),
-        'Current::MEGAAMPERE'           => array(1000000,'MA') ,
-        'Current::MICROAMPERE'          => array(0.000001,'µA'),
-        'Current::MILLIAMPERE'          => array(0.001,'mA'),
-        'Current::NANOAMPERE'           => array(1.0e-9,'nA'),
-        'Current::PICOAMPERE'           => array(1.0e-12,'pA'),
-        'Current::SIEMENS_VOLT'         => array(1,'SV'),
-        'Current::STATAMPERE'           => array(3.335641e-10,'statampere'),
-        'Current::TERAAMPERE'           => array(1.0e+12,'TA'),
-        'Current::VOLT_PER_OHM'         => array(1,'V/Ohm'),
-        'Current::WATT_PER_VOLT'        => array(1,'W/V'),
-        'Current::WEBER_PER_HENRY'      => array(1,'Wb/H')
+        'Current::ABAMPERE'             => array(10,           'abampere'),
+        'Current::AMPERE'               => array(1,            'A'),
+        'Current::BIOT'                 => array(10,           'Bi'),
+        'Current::CENTIAMPERE'          => array(0.01,         'cA'),
+        'Current::COULOMB_PER_SECOND'   => array(1,            'C/s'),
+        'Current::DECIAMPERE'           => array(0.1,          'dA'),
+        'Current::DEKAAMPERE'           => array(10,           'daA'),
+        'Current::ELECTROMAGNATIC_UNIT' => array(10,           'current emu'),
+        'Current::ELECTROSTATIC_UNIT'   => array(3.335641e-10, 'current esu'),
+        'Current::FRANCLIN_PER_SECOND'  => array(3.335641e-10, 'Fr/s'),
+        'Current::GAUSSIAN'             => array(3.335641e-10, 'G current'),
+        'Current::GIGAAMPERE'           => array(1.0e+9,       'GA'),
+        'Current::GILBERT'              => array(0.79577472,   'Gi'),
+        'Current::HECTOAMPERE'          => array(100,          'hA'),
+        'Current::KILOAMPERE'           => array(1000,         'kA'),
+        'Current::MEGAAMPERE'           => array(1000000,      'MA') ,
+        'Current::MICROAMPERE'          => array(0.000001,     'µA'),
+        'Current::MILLIAMPERE'          => array(0.001,        'mA'),
+        'Current::NANOAMPERE'           => array(1.0e-9,       'nA'),
+        'Current::PICOAMPERE'           => array(1.0e-12,      'pA'),
+        'Current::SIEMENS_VOLT'         => array(1,            'SV'),
+        'Current::STATAMPERE'           => array(3.335641e-10, 'statampere'),
+        'Current::TERAAMPERE'           => array(1.0e+12,      'TA'),
+        'Current::VOLT_PER_OHM'         => array(1,            'V/Ohm'),
+        'Current::WATT_PER_VOLT'        => array(1,            'W/V'),
+        'Current::WEBER_PER_HENRY'      => array(1,            'Wb/H')
     );
 
     private $_Locale;
@@ -117,10 +117,11 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -129,12 +130,15 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
     public function equals($object)
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -149,12 +153,15 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of current:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of current:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
         parent::setType($type);
     }
@@ -163,12 +170,14 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
+     * @param $type  new type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of current:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of current:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -188,7 +197,7 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -205,6 +214,8 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

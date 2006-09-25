@@ -61,19 +61,19 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
 
     private static $_UNITS = array(
         'Angle::RADIAN'      => array(1,'rad'),
-        'Angle::MIL'         => array(array('' => M_PI,'/' => 3200),'mil'),
-        'Angle::GRAD'        => array(array('' => M_PI,'/' => 200),'gr'),
-        'Angle::DEGREE'      => array(array('' => M_PI,'/' => 180),'°'),
-        'Angle::MINUTE'      => array(array('' => M_PI,'/' => 10800),"'"),
-        'Angle::SECOND'      => array(array('' => M_PI,'/' => 648000),'"'),
-        'Angle::POINT'       => array(array('' => M_PI,'/' => 16),'pt'),
-        'Angle::CIRCLE_16'   => array(array('' => M_PI,'/' => 8),'per 16 circle'),
-        'Angle::CIRCLE_10'   => array(array('' => M_PI,'/' => 5),'per 10 circle'),
-        'Angle::CIRCLE_8'    => array(array('' => M_PI,'/' => 4),'per 8 circle'),
-        'Angle::CIRCLE_6'    => array(array('' => M_PI,'/' => 3),'per 6 circle'),
-        'Angle::CIRCLE_4'    => array(array('' => M_PI,'/' => 2),'per 4 circle'),
-        'Angle::CIRCLE_2'    => array(M_PI,'per 2 circle'),
-        'Angle::FULL_CIRCLE' => array(array('' => M_PI,'*' => 2),'cir')
+        'Angle::MIL'         => array(array('' => M_PI,'/' => 3200),   'mil'),
+        'Angle::GRAD'        => array(array('' => M_PI,'/' => 200),    'gr'),
+        'Angle::DEGREE'      => array(array('' => M_PI,'/' => 180),    '°'),
+        'Angle::MINUTE'      => array(array('' => M_PI,'/' => 10800),  "'"),
+        'Angle::SECOND'      => array(array('' => M_PI,'/' => 648000), '"'),
+        'Angle::POINT'       => array(array('' => M_PI,'/' => 16),     'pt'),
+        'Angle::CIRCLE_16'   => array(array('' => M_PI,'/' => 8),      'per 16 circle'),
+        'Angle::CIRCLE_10'   => array(array('' => M_PI,'/' => 5),      'per 10 circle'),
+        'Angle::CIRCLE_8'    => array(array('' => M_PI,'/' => 4),      'per 8 circle'),
+        'Angle::CIRCLE_6'    => array(array('' => M_PI,'/' => 3),      'per 6 circle'),
+        'Angle::CIRCLE_4'    => array(array('' => M_PI,'/' => 2),      'per 4 circle'),
+        'Angle::CIRCLE_2'    => array(M_PI,                            'per 2 circle'),
+        'Angle::FULL_CIRCLE' => array(array('' => M_PI,'*' => 2),      'cir')
     );
 
     private $_Locale;
@@ -93,10 +93,11 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -105,12 +106,15 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
     public function equals($object)
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -125,12 +129,15 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of angle:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of angle:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
         parent::setType($type);
     }
@@ -139,12 +146,14 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
+     * @param $type  new type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of angle:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of angle:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -178,6 +187,7 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
         } else {
             $value = $value / (self::$_UNITS[$type][0]);
         }
+
         parent::setValue($value, $type, $this->_Locale);
         parent::setType($type);
     }
@@ -190,7 +200,7 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -207,6 +217,8 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

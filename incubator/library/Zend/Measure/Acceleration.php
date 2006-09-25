@@ -66,26 +66,26 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
     const MILLIMETER_PER_SQUARE_SECOND = 'Acceleration::MILLIMETER_PER_SQUARE_SECOND'; // Metric
 
     private static $_UNITS = array(
-        'Acceleration::CENTIGAL'                     => array(0.0001,'cgal'),
-        'Acceleration::CENTIMETER_PER_SQUARE_SECOND' => array(0.01,'cm/s²'),
-        'Acceleration::DECIGAL'                      => array(0.001,'dgal'),
-        'Acceleration::DECIMETER_PER_SQUARE_SECOND'  => array(0.1,'dm/s²'),
-        'Acceleration::DEKAMETER_PER_SQUARE_SECOND'  => array(10,'dam/s²'),
-        'Acceleration::FOOT_PER_SQUARE_SECOND'       => array(0.3048,'ft/s²'),
-        'Acceleration::G'                            => array(9.80665,'g'),
-        'Acceleration::GAL'                          => array(0.01,'gal'),
-        'Acceleration::GALILEO'                      => array(0.01,'gal'),
-        'Acceleration::GRAV'                         => array(9.80665,'g'),
-        'Acceleration::HECTOMETER_PER_SQUARE_SECOND' => array(100,'h/s²'),
-        'Acceleration::INCH_PER_SQUARE_SECOND'       => array(0.0254,'in/s²'),
-        'Acceleration::KILOMETER_PER_HOUR_SECOND'    => array(array('' => 5,'/' => 18),'km/h²'),
-        'Acceleration::KILOMETER_PER_SQUARE_SECOND'  => array(1000,'km/s²'),
-        'Acceleration::METER_PER_SQUARE_SECOND'      => array(1,'m/s²'),
-        'Acceleration::MILE_PER_HOUR_MINUTE'         => array(array('' => 22, '/' => 15, '*' => 0.3048, '/' => 60),'mph/m'),
-        'Acceleration::MILE_PER_HOUR_SECOND'         => array(array('' => 22, '/' => 15, '*' => 0.3048),'mph/s'),
-        'Acceleration::MILE_PER_SQUARE_SECOND'       => array(1609.344,'mi/s²'),
-        'Acceleration::MILLIGAL'                     => array(0.00001,'mgal'),
-        'Acceleration::MILLIMETER_PER_SQUARE_SECOND' => array(0.001,'mm/s²')
+        'Acceleration::CENTIGAL'                     => array(0.0001,   'cgal'),
+        'Acceleration::CENTIMETER_PER_SQUARE_SECOND' => array(0.01,     'cm/s²'),
+        'Acceleration::DECIGAL'                      => array(0.001,    'dgal'),
+        'Acceleration::DECIMETER_PER_SQUARE_SECOND'  => array(0.1,      'dm/s²'),
+        'Acceleration::DEKAMETER_PER_SQUARE_SECOND'  => array(10,       'dam/s²'),
+        'Acceleration::FOOT_PER_SQUARE_SECOND'       => array(0.3048,   'ft/s²'),
+        'Acceleration::G'                            => array(9.80665,  'g'),
+        'Acceleration::GAL'                          => array(0.01,     'gal'),
+        'Acceleration::GALILEO'                      => array(0.01,     'gal'),
+        'Acceleration::GRAV'                         => array(9.80665,  'g'),
+        'Acceleration::HECTOMETER_PER_SQUARE_SECOND' => array(100,      'h/s²'),
+        'Acceleration::INCH_PER_SQUARE_SECOND'       => array(0.0254,   'in/s²'),
+        'Acceleration::KILOMETER_PER_HOUR_SECOND'    => array(array('' => 5,'/' => 18), 'km/h²'),
+        'Acceleration::KILOMETER_PER_SQUARE_SECOND'  => array(1000,     'km/s²'),
+        'Acceleration::METER_PER_SQUARE_SECOND'      => array(1,        'm/s²'),
+        'Acceleration::MILE_PER_HOUR_MINUTE'         => array(array('' => 22, '/' => 15, '*' => 0.3048, '/' => 60), 'mph/m'),
+        'Acceleration::MILE_PER_HOUR_SECOND'         => array(array('' => 22, '/' => 15, '*' => 0.3048), 'mph/s'),
+        'Acceleration::MILE_PER_SQUARE_SECOND'       => array(1609.344, 'mi/s²'),
+        'Acceleration::MILLIGAL'                     => array(0.00001,  'mgal'),
+        'Acceleration::MILLIMETER_PER_SQUARE_SECOND' => array(0.001,    'mm/s²')
     );
 
     private $_Locale;
@@ -105,10 +105,11 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -117,12 +118,15 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
     public function equals($object)
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -137,12 +141,15 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of acceleration:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of acceleration:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
         parent::setType($type);
     }
@@ -151,12 +158,14 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
+     * @param $type  new type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of acceleration:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of acceleration:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -190,6 +199,7 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
         } else {
             $value = $value / (self::$_UNITS[$type][0]);
         }
+
         parent::setValue($value, $type, $this->_Locale);
         parent::setType($type);
     }
@@ -202,7 +212,7 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -219,6 +229,8 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

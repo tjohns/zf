@@ -56,16 +56,16 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
     const TABLESPOON_US = 'Cooking_Weight::TABLESPOON_US';
 
     private static $_UNITS = array(
-        'Cooking_Weight::HALF_STICK'    => array(array('' => 453.59237, '/' => 8),'half stk'),
-        'Cooking_Weight::STICK'         => array(array('' => 453.59237, '/' => 4),'stk'),
-        'Cooking_Weight::CUP'           => array(array('' => 453.59237, '/' => 2),'c'),
-        'Cooking_Weight::GRAM'          => array(1,'g'),
-        'Cooking_Weight::OUNCE'         => array(array('' => 453.59237, '/' => 16),'oz'),
-        'Cooking_Weight::POUND'         => array(453.59237,'lb'),
-        'Cooking_Weight::TEASPOON'      => array(array('' => 1.2503332, '' => 453.59237, '/' => 128),'tsp'),
-        'Cooking_Weight::TEASPOON_US'   => array(array('' => 453.59237, '/' => 96),'tsp'),
-        'Cooking_Weight::TABLESPOON'    => array(array('' => 1.2503332, '' => 453.59237, '/' => 32),'tbsp'),
-        'Cooking_Weight::TABLESPOON_US' => array(array('' => 453.59237, '/' => 32),'tbsp')
+        'Cooking_Weight::HALF_STICK'    => array(array('' => 453.59237, '/' => 8),                    'half stk'),
+        'Cooking_Weight::STICK'         => array(array('' => 453.59237, '/' => 4),                    'stk'),
+        'Cooking_Weight::CUP'           => array(array('' => 453.59237, '/' => 2),                    'c'),
+        'Cooking_Weight::GRAM'          => array(1,                                                   'g'),
+        'Cooking_Weight::OUNCE'         => array(array('' => 453.59237, '/' => 16),                   'oz'),
+        'Cooking_Weight::POUND'         => array(453.59237,                                           'lb'),
+        'Cooking_Weight::TEASPOON'      => array(array('' => 1.2503332, '' => 453.59237, '/' => 128), 'tsp'),
+        'Cooking_Weight::TEASPOON_US'   => array(array('' => 453.59237, '/' => 96),                   'tsp'),
+        'Cooking_Weight::TABLESPOON'    => array(array('' => 1.2503332, '' => 453.59237, '/' => 32),  'tbsp'),
+        'Cooking_Weight::TABLESPOON_US' => array(array('' => 453.59237, '/' => 32),                   'tbsp')
     );
 
     private $_Locale;
@@ -85,10 +85,11 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -97,12 +98,15 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
     public function equals($object)
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -117,12 +121,15 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of weight-cooking:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of weight-cooking:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
         parent::setType($type);
     }
@@ -135,8 +142,9 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
      */
     public function setType($type)
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of weight-cooking:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of weight-cooking:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -170,6 +178,7 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
         } else {
             $value = $value / (self::$_UNITS[$type][0]);
         }
+
         parent::setValue($value, $type, $this->_Locale);
         parent::setType($type);
     }
@@ -182,7 +191,7 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -199,6 +208,8 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

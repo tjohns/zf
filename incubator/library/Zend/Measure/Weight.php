@@ -432,51 +432,51 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
         'Weight::QUINTAL'               => array(100,            'q'),
         'Weight::QUINTAL_PORTUGUESE'    => array(58.752,         'q'),
         'Weight::QUINTAL_SPAIN'         => array(45.9,           'q'),
-        'Weight::REBAH'                 => array(0.2855,'rebah'),
-        'Weight::ROTL'                  => array(0.5,'rotl'),
-        'Weight::ROTEL'                 => array(0.5,'rotel'),
-        'Weight::ROTTLE'                => array(0.5,'rottle'),
-        'Weight::RATEL'                 => array(0.5,'ratel'),
-        'Weight::SACK'                  => array(165.10762268,'sack'),
-        'Weight::SCRUPLE'               => array(array('' => 65.31730128, '/' => 50400),'s'),
-        'Weight::SEER'                  => array(0.933105,'seer'),
-        'Weight::SEER_PAKISTAN'         => array(1,'seer'),
-        'Weight::SHEKEL'                => array(0.01142,'shekel'),
-        'Weight::SHORT_TON'             => array(907.18474,'st'),
-        'Weight::SLINCH'                => array(175.126908,'slinch'),
-        'Weight::SLUG'                  => array(14.593903,'slug'),
-        'Weight::STONE'                 => array(6.35029318,'st'),
-        'Weight::TAEL'                  => array(0.03751,'tael'),
-        'Weight::TAHIL_JAPANESE'        => array(0.03751,'tahil'),
-        'Weight::TAHIL'                 => array(0.05,'tahil'),
-        'Weight::TALENT'                => array(30,'talent'),
-        'Weight::TAN'                   => array(50,'tan'),
-        'Weight::TECHNISCHE_MASS_EINHEIT' => array(9.80665,'TME'),
-        'Weight::TERAGRAM'              => array(1.0e+9,'Tg'),
-        'Weight::TETRADRACHM'           => array(0.014,'tetradrachm'),
-        'Weight::TICAL'                 => array(0.0164,'tical'),
-        'Weight::TOD'                   => array(12.70058636,'tod'),
-        'Weight::TOLA'                  => array(0.0116638125,'tola'),
-        'Weight::TOLA_PAKISTAN'         => array(0.0125,'tola'),
-        'Weight::TON_UK'                => array(1016.0469088,'t'),
-        'Weight::TON'                   => array(1000,'t'),
-        'Weight::TON_US'                => array(907.18474,'t'),
-        'Weight::TONELADA_PORTUGUESE'   => array(793.15,'tonelada'),
-        'Weight::TONELADA'              => array(919.9,'tonelada'),
-        'Weight::TONNE'                 => array(1000,'t'),
-        'Weight::TONNEAU'               => array(979,'tonneau'),
-        'Weight::TOVAR'                 => array(128.8,'tovar'),
-        'Weight::TROY_OUNCE'            => array(array('' => 65.31730128, '/' => 2100),'troy oz'),
-        'Weight::TROY_POUND'            => array(array('' => 65.31730128, '/' => 175),'troy lb'),
-        'Weight::TRUSS'                 => array(25.40117272,'truss'),
-        'Weight::UNCIA'                 => array(0.0272875,'uncia'),
-        'Weight::UNZE'                  => array(0.03125,'unze'),
-        'Weight::VAGON'                 => array(10000,'vagon'),
-        'Weight::YOCTOGRAM'             => array(1.0e-27,'yg'),
-        'Weight::YOTTAGRAM'             => array(1.0e+21,'Yg'),
-        'Weight::ZENTNER'               => array(50,'Ztr'),
-        'Weight::ZEPTOGRAM'             => array(1.0e-24,'zg'),
-        'Weight::ZETTAGRAM'             => array(1.0e+18,'Zg')
+        'Weight::REBAH'                 => array(0.2855,         'rebah'),
+        'Weight::ROTL'                  => array(0.5,            'rotl'),
+        'Weight::ROTEL'                 => array(0.5,            'rotel'),
+        'Weight::ROTTLE'                => array(0.5,            'rottle'),
+        'Weight::RATEL'                 => array(0.5,            'ratel'),
+        'Weight::SACK'                  => array(165.10762268,   'sack'),
+        'Weight::SCRUPLE'               => array(array('' => 65.31730128, '/' => 50400), 's'),
+        'Weight::SEER'                  => array(0.933105,       'seer'),
+        'Weight::SEER_PAKISTAN'         => array(1,              'seer'),
+        'Weight::SHEKEL'                => array(0.01142,        'shekel'),
+        'Weight::SHORT_TON'             => array(907.18474,      'st'),
+        'Weight::SLINCH'                => array(175.126908,     'slinch'),
+        'Weight::SLUG'                  => array(14.593903,      'slug'),
+        'Weight::STONE'                 => array(6.35029318,     'st'),
+        'Weight::TAEL'                  => array(0.03751,        'tael'),
+        'Weight::TAHIL_JAPANESE'        => array(0.03751,        'tahil'),
+        'Weight::TAHIL'                 => array(0.05,           'tahil'),
+        'Weight::TALENT'                => array(30,             'talent'),
+        'Weight::TAN'                   => array(50,             'tan'),
+        'Weight::TECHNISCHE_MASS_EINHEIT' => array(9.80665,      'TME'),
+        'Weight::TERAGRAM'              => array(1.0e+9,         'Tg'),
+        'Weight::TETRADRACHM'           => array(0.014,          'tetradrachm'),
+        'Weight::TICAL'                 => array(0.0164,         'tical'),
+        'Weight::TOD'                   => array(12.70058636,    'tod'),
+        'Weight::TOLA'                  => array(0.0116638125,   'tola'),
+        'Weight::TOLA_PAKISTAN'         => array(0.0125,         'tola'),
+        'Weight::TON_UK'                => array(1016.0469088,   't'),
+        'Weight::TON'                   => array(1000,           't'),
+        'Weight::TON_US'                => array(907.18474,      't'),
+        'Weight::TONELADA_PORTUGUESE'   => array(793.15,         'tonelada'),
+        'Weight::TONELADA'              => array(919.9,          'tonelada'),
+        'Weight::TONNE'                 => array(1000,           't'),
+        'Weight::TONNEAU'               => array(979,            'tonneau'),
+        'Weight::TOVAR'                 => array(128.8,          'tovar'),
+        'Weight::TROY_OUNCE'            => array(array('' => 65.31730128, '/' => 2100), 'troy oz'),
+        'Weight::TROY_POUND'            => array(array('' => 65.31730128, '/' => 175),  'troy lb'),
+        'Weight::TRUSS'                 => array(25.40117272,    'truss'),
+        'Weight::UNCIA'                 => array(0.0272875,      'uncia'),
+        'Weight::UNZE'                  => array(0.03125,        'unze'),
+        'Weight::VAGON'                 => array(10000,          'vagon'),
+        'Weight::YOCTOGRAM'             => array(1.0e-27,        'yg'),
+        'Weight::YOTTAGRAM'             => array(1.0e+21,        'Yg'),
+        'Weight::ZENTNER'               => array(50,             'Ztr'),
+        'Weight::ZEPTOGRAM'             => array(1.0e-24,        'zg'),
+        'Weight::ZETTAGRAM'             => array(1.0e+18,        'Zg')
     );
 
     private $_Locale;
@@ -496,10 +496,11 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -508,12 +509,15 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
     public function equals($object)
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -528,12 +532,15 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of weight:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of weight:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
         parent::setType($type);
     }
@@ -542,12 +549,14 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
+     * @param $type  new type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of weight:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of weight:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -581,6 +590,7 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
         } else {
             $value = $value / (self::$_UNITS[$type][0]);
         }
+
         parent::setValue($value, $type, $this->_Locale);
         parent::setType($type);
     }
@@ -593,7 +603,7 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -610,6 +620,8 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {

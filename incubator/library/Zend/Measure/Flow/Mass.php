@@ -82,42 +82,42 @@ class Zend_Measure_Flow_Mass extends Zend_Measure_Abstract
     const TON_SHORT_PER_SECOND = 'Flow_Mass::TON_SHORT_PER_SECOND';
 
     private static $_UNITS = array(
-        'Flow_Mass::CENTIGRAM_PER_DAY'    => array(array('' => 0.00001, '/' => 86400),'cg/day'),
-        'Flow_Mass::CENTIGRAM_PER_HOUR'   => array(array('' => 0.00001, '/' => 3600),'cg/h'),
-        'Flow_Mass::CENTIGRAM_PER_MINUTE' => array(array('' => 0.00001, '/' => 60),'cg/m'),
-        'Flow_Mass::CENTIGRAM_PER_SECOND' => array(0.00001,'cg/s'),
-        'Flow_Mass::GRAM_PER_DAY'         => array(array('' => 0.001, '/' => 86400),'g/day'),
-        'Flow_Mass::GRAM_PER_HOUR'        => array(array('' => 0.001, '/' => 3600),'g/h'),
-        'Flow_Mass::GRAM_PER_MINUTE'      => array(array('' => 0.001, '/' => 60),'g/m'),
-        'Flow_Mass::GRAM_PER_SECOND'      => array(0.001,'g/s'),
-        'Flow_Mass::KILOGRAM_PER_DAY'     => array(array('' => 1, '/' => 86400),'kg/day'),
-        'Flow_Mass::KILOGRAM_PER_HOUR'    => array(array('' => 1, '/' => 3600),'kg/h'),
-        'Flow_Mass::KILOGRAM_PER_MINUTE'  => array(array('' => 1, '/' => 60),'kg/m'),
-        'Flow_Mass::KILOGRAM_PER_SECOND'  => array(1,'kg/s'),
-        'Flow_Mass::MILLIGRAM_PER_DAY'    => array(array('' => 0.000001, '/' => 86400),'mg/day'),
-        'Flow_Mass::MILLIGRAM_PER_HOUR'   => array(array('' => 0.000001, '/' => 3600),'mg/h'),
-        'Flow_Mass::MILLIGRAM_PER_MINUTE' => array(array('' => 0.000001, '/' => 60),'mg/m'),
-        'Flow_Mass::MILLIGRAM_PER_SECOND' => array(0.000001,'mg/s'),
-        'Flow_Mass::OUNCE_PER_DAY'        => array(array('' => 0.0283495, '/' => 86400),'oz/day'),
-        'Flow_Mass::OUNCE_PER_HOUR'       => array(array('' => 0.0283495, '/' => 3600),'oz/h'),
-        'Flow_Mass::OUNCE_PER_MINUTE'     => array(array('' => 0.0283495, '/' => 60),'oz/m'),
-        'Flow_Mass::OUNCE_PER_SECOND'     => array(0.0283495,'oz/s'),
-        'Flow_Mass::POUND_PER_DAY'        => array(array('' => 0.453592, '/' => 86400),'lb/day'),
-        'Flow_Mass::POUND_PER_HOUR'       => array(array('' => 0.453592, '/' => 3600),'lb/h'),
-        'Flow_Mass::POUND_PER_MINUTE'     => array(array('' => 0.453592, '/' => 60),'lb/m'),
-        'Flow_Mass::POUND_PER_SECOND'     => array(0.453592,'lb/s'),
-        'Flow_Mass::TON_LONG_PER_DAY'     => array(array('' => 1016.04608, '/' => 86400),'t/day'),
-        'Flow_Mass::TON_LONG_PER_HOUR'    => array(array('' => 1016.04608, '/' => 3600),'t/h'),
-        'Flow_Mass::TON_LONG_PER_MINUTE'  => array(array('' => 1016.04608, '/' => 60),'t/m'),
-        'Flow_Mass::TON_LONG_PER_SECOND'  => array(1016.04608,'t/s'),
-        'Flow_Mass::TON_PER_DAY'          => array(array('' => 1000, '/' => 86400),'t/day'),
-        'Flow_Mass::TON_PER_HOUR'         => array(array('' => 1000, '/' => 3600),'t/h'),
-        'Flow_Mass::TON_PER_MINUTE'       => array(array('' => 1000, '/' => 60),'t/m'),
-        'Flow_Mass::TON_PER_SECOND'       => array(1000,'t/s'),
-        'Flow_Mass::TON_SHORT_PER_DAY'    => array(array('' => 907.184, '/' => 86400),'t/day'),
-        'Flow_Mass::TON_SHORT_PER_HOUR'   => array(array('' => 907.184, '/' => 3600),'t/h'),
-        'Flow_Mass::TON_SHORT_PER_MINUTE' => array(array('' => 907.184, '/' => 60),'t/m'),
-        'Flow_Mass::TON_SHORT_PER_SECOND' => array(907.184,'t/s')
+        'Flow_Mass::CENTIGRAM_PER_DAY'    => array(array('' => 0.00001, '/' => 86400),    'cg/day'),
+        'Flow_Mass::CENTIGRAM_PER_HOUR'   => array(array('' => 0.00001, '/' => 3600),     'cg/h'),
+        'Flow_Mass::CENTIGRAM_PER_MINUTE' => array(array('' => 0.00001, '/' => 60),       'cg/m'),
+        'Flow_Mass::CENTIGRAM_PER_SECOND' => array(0.00001,                               'cg/s'),
+        'Flow_Mass::GRAM_PER_DAY'         => array(array('' => 0.001, '/' => 86400),      'g/day'),
+        'Flow_Mass::GRAM_PER_HOUR'        => array(array('' => 0.001, '/' => 3600),       'g/h'),
+        'Flow_Mass::GRAM_PER_MINUTE'      => array(array('' => 0.001, '/' => 60),         'g/m'),
+        'Flow_Mass::GRAM_PER_SECOND'      => array(0.001,                                 'g/s'),
+        'Flow_Mass::KILOGRAM_PER_DAY'     => array(array('' => 1, '/' => 86400),          'kg/day'),
+        'Flow_Mass::KILOGRAM_PER_HOUR'    => array(array('' => 1, '/' => 3600),           'kg/h'),
+        'Flow_Mass::KILOGRAM_PER_MINUTE'  => array(array('' => 1, '/' => 60),             'kg/m'),
+        'Flow_Mass::KILOGRAM_PER_SECOND'  => array(1,                                     'kg/s'),
+        'Flow_Mass::MILLIGRAM_PER_DAY'    => array(array('' => 0.000001, '/' => 86400),   'mg/day'),
+        'Flow_Mass::MILLIGRAM_PER_HOUR'   => array(array('' => 0.000001, '/' => 3600),    'mg/h'),
+        'Flow_Mass::MILLIGRAM_PER_MINUTE' => array(array('' => 0.000001, '/' => 60),      'mg/m'),
+        'Flow_Mass::MILLIGRAM_PER_SECOND' => array(0.000001,                              'mg/s'),
+        'Flow_Mass::OUNCE_PER_DAY'        => array(array('' => 0.0283495, '/' => 86400),  'oz/day'),
+        'Flow_Mass::OUNCE_PER_HOUR'       => array(array('' => 0.0283495, '/' => 3600),   'oz/h'),
+        'Flow_Mass::OUNCE_PER_MINUTE'     => array(array('' => 0.0283495, '/' => 60),     'oz/m'),
+        'Flow_Mass::OUNCE_PER_SECOND'     => array(0.0283495,                             'oz/s'),
+        'Flow_Mass::POUND_PER_DAY'        => array(array('' => 0.453592, '/' => 86400),   'lb/day'),
+        'Flow_Mass::POUND_PER_HOUR'       => array(array('' => 0.453592, '/' => 3600),    'lb/h'),
+        'Flow_Mass::POUND_PER_MINUTE'     => array(array('' => 0.453592, '/' => 60),      'lb/m'),
+        'Flow_Mass::POUND_PER_SECOND'     => array(0.453592,                              'lb/s'),
+        'Flow_Mass::TON_LONG_PER_DAY'     => array(array('' => 1016.04608, '/' => 86400), 't/day'),
+        'Flow_Mass::TON_LONG_PER_HOUR'    => array(array('' => 1016.04608, '/' => 3600),  't/h'),
+        'Flow_Mass::TON_LONG_PER_MINUTE'  => array(array('' => 1016.04608, '/' => 60),    't/m'),
+        'Flow_Mass::TON_LONG_PER_SECOND'  => array(1016.04608,                            't/s'),
+        'Flow_Mass::TON_PER_DAY'          => array(array('' => 1000, '/' => 86400),       't/day'),
+        'Flow_Mass::TON_PER_HOUR'         => array(array('' => 1000, '/' => 3600),        't/h'),
+        'Flow_Mass::TON_PER_MINUTE'       => array(array('' => 1000, '/' => 60),          't/m'),
+        'Flow_Mass::TON_PER_SECOND'       => array(1000,                                  't/s'),
+        'Flow_Mass::TON_SHORT_PER_DAY'    => array(array('' => 907.184, '/' => 86400),    't/day'),
+        'Flow_Mass::TON_SHORT_PER_HOUR'   => array(array('' => 907.184, '/' => 3600),     't/h'),
+        'Flow_Mass::TON_SHORT_PER_MINUTE' => array(array('' => 907.184, '/' => 60),       't/m'),
+        'Flow_Mass::TON_SHORT_PER_SECOND' => array(907.184,                               't/s')
     );
 
     private $_Locale;
@@ -137,10 +137,11 @@ class Zend_Measure_Flow_Mass extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -149,12 +150,15 @@ class Zend_Measure_Flow_Mass extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
     public function equals($object)
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -169,12 +173,15 @@ class Zend_Measure_Flow_Mass extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of flow-mass:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of flow-mass:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
         parent::setType($type);
     }
@@ -183,12 +190,14 @@ class Zend_Measure_Flow_Mass extends Zend_Measure_Abstract
     /**
      * Set a new type, and convert the value
      *
+     * @param $type  new type to set
      * @throws Zend_Measure_Exception
      */
     public function setType($type)
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of flow-mass:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of flow-mass:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -222,6 +231,7 @@ class Zend_Measure_Flow_Mass extends Zend_Measure_Abstract
         } else {
             $value = $value / (self::$_UNITS[$type][0]);
         }
+
         parent::setValue($value, $type, $this->_Locale);
         parent::setType($type);
     }
@@ -234,7 +244,7 @@ class Zend_Measure_Flow_Mass extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -251,6 +261,8 @@ class Zend_Measure_Flow_Mass extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {
