@@ -124,84 +124,84 @@ class Zend_Measure_Density extends Zend_Measure_Abstract
     const WATER                     = 'Density::WATER';
 
     private static $_UNITS = array(
-        'Density::ALUMINIUM'                 => array(2643,'aluminium'),
-        'Density::COPPER'                    => array(8906,'copper'),
-        'Density::GOLD'                      => array(19300,'gold'),
-        'Density::GRAIN_PER_CUBIC_FOOT'      => array(0.0022883519,'gr/ft³'),
-        'Density::GRAIN_PER_CUBIC_INCH'      => array(3.9542721,'gr/in³'),
-        'Density::GRAIN_PER_CUBIC_YARD'      => array(0.000084753774,'gr/yd³'),
-        'Density::GRAIN_PER_GALLON'          => array(0.014253768,'gr/gal'),
-        'Density::GRAIN_PER_GALLON_US'       => array(0.017118061,'gr/gal'),
-        'Density::GRAM_PER_CUBIC_CENTIMETER' => array(1000,'g/cm³'),
-        'Density::GRAM_PER_CUBIC_DECIMETER'  => array(1,'g/dm³'),
-        'Density::GRAM_PER_CUBIC_METER'      => array(0.001,'g/m³'),
-        'Density::GRAM_PER_LITER'            => array(1,'g/l'),
-        'Density::GRAM_PER_MILLILITER'       => array(1000,'g/ml'),
-        'Density::IRON'                      => array(7658,'iron'),
-        'Density::KILOGRAM_PER_CUBIC_CENTIMETER' => array(1000000,'kg/cm³'),
-        'Density::KILOGRAM_PER_CUBIC_DECIMETER'  => array(1000,'kg/dm³'),
-        'Density::KILOGRAM_PER_CUBIC_METER'  => array(1,'kg/m³'),
-        'Density::KILOGRAM_PER_CUBIC_MILLIMETER' => array(1000000000,'kg/l'),
-        'Density::KILOGRAM_PER_LITER'        => array(1000,'kg/ml'),
-        'Density::KILOGRAM_PER_MILLILITER'   => array(1000000,'kg/ml'),
-        'Density::LEAD'                      => array(11370,'lead'),
-        'Density::MEGAGRAM_PER_CUBIC_CENTIMETER' => array(1.0e+9,'Mg/cm³'),
-        'Density::MEGAGRAM_PER_CUBIC_DECIMETER'  => array(1000000,'Mg/dm³'),
-        'Density::MEGAGRAM_PER_CUBIC_METER'  => array(1000,'Mg/m³'),
-        'Density::MEGAGRAM_PER_LITER'        => array(1000000,'Mg/l'),
-        'Density::MEGAGRAM_PER_MILLILITER'   => array(1.0e+9,'Mg/ml'),
-        'Density::MICROGRAM_PER_CUBIC_CENTIMETER' => array(0.001,'µg/cm³'),
-        'Density::MICROGRAM_PER_CUBIC_DECIMETER'  => array(1.0e-6,'µg/dm³'),
-        'Density::MICROGRAM_PER_CUBIC_METER' => array(1.0e-9,'µg/m³'),
-        'Density::MICROGRAM_PER_LITER'       => array(1.0e-6,'µg/l'),
-        'Density::MICROGRAM_PER_MILLILITER'  => array(0.001,'µg/ml'),
-        'Density::MILLIGRAM_PER_CUBIC_CENTIMETER' => array(1,'mg/cm³'),
-        'Density::MILLIGRAM_PER_CUBIC_DECIMETER'  => array(0.001,'mg/dm³'),
-        'Density::MILLIGRAM_PER_CUBIC_METER' => array(0.000001,'mg/m³'),
-        'Density::MILLIGRAM_PER_LITER'       => array(0.001,'mg/l'),
-        'Density::MILLIGRAM_PER_MILLILITER'  => array(1,'mg/ml'),
-        'Density::OUNCE_PER_CUBIC_FOOT'      => array(1.001154,'oz/ft³'),
-        'Density::OUNCE_PER_CUBIC_FOOT_TROY' => array(1.0984089,'oz/ft³'),
-        'Density::OUNCE_PER_CUBIC_INCH'      => array(1729.994,'oz/in³'),
-        'Density::OUNCE_PER_CUBIC_INCH_TROY' => array(1898.0506,'oz/in³'),
-        'Density::OUNCE_PER_CUBIC_YARD'      => array(0.037079776,'oz/yd³'),
-        'Density::OUNCE_PER_CUBIC_YARD_TROY' => array(0.040681812,'oz/yd³'),
-        'Density::OUNCE_PER_GALLON'          => array(6.2360233,'oz/gal'),
-        'Density::OUNCE_PER_GALLON_US'       => array(7.4891517,'oz/gal'),
-        'Density::OUNCE_PER_GALLON_TROY'     => array(6.8418084,'oz/gal'),
-        'Density::OUNCE_PER_GALLON_US_TROY'  => array(8.2166693,'oz/gal'),
-        'Density::POUND_PER_CIRCULAR_MIL_FOOT' => array(2.9369291,'lb/cmil ft'),
-        'Density::POUND_PER_CUBIC_FOOT'      => array(16.018463,'lb/in³'),
-        'Density::POUND_PER_CUBIC_INCH'      => array(27679.905,'lb/in³'),
-        'Density::POUND_PER_CUBIC_YARD'      => array(0.59327642,'lb/yd³'),
-        'Density::POUND_PER_GALLON'          => array(99.776373,'lb/gal'),
-        'Density::POUND_PER_KILOGALLON'      => array(0.099776373,'lb/kgal'),
-        'Density::POUND_PER_MEGAGALLON'      => array(0.000099776373,'lb/Mgal'),
-        'Density::POUND_PER_GALLON_US'       => array(119.82643,'lb/gal'),
-        'Density::POUND_PER_KILOGALLON_US'   => array(0.11982643,'lb/kgal'),
-        'Density::POUND_PER_MEGAGALLON_US'   => array(0.00011982643,'lb/Mgal'),
-        'Density::SILVER'                    => array(10510,'silver'),
-        'Density::SLUG_PER_CUBIC_FOOT'       => array(515.37882,'slug/ft³'),
-        'Density::SLUG_PER_CUBIC_INCH'       => array(890574.6,'slug/in³'),
-        'Density::SLUG_PER_CUBIC_YARD'       => array(19.088104,'slug/yd³'),
-        'Density::SLUG_PER_GALLON'           => array(3210.2099,'slug/gal'),
-        'Density::SLUG_PER_GALLON_US'        => array(3855.3013,'slug/gal'),
-        'Density::TON_PER_CUBIC_FOOT_LONG'   => array(35881.358,'t/ft³'),
-        'Density::TON_PER_CUBIC_FOOT'        => array(32036.927,'t/ft³'),
-        'Density::TON_PER_CUBIC_INCH_LONG'   => array(6.2202987e+7,'t/in³'),
-        'Density::TON_PER_CUBIC_INCH'        => array(5.5359809e+7,'t/in³'),
-        'Density::TON_PER_CUBIC_YARD_LONG'   => array(1328.9392,'t/yd³'),
-        'Density::TON_PER_CUBIC_YARD'        => array(1186.5528,'t/yd³'),
-        'Density::TON_PER_GALLON_LONG'       => array(223499.07,'t/gal'),
-        'Density::TON_PER_GALLON_US_LONG'    => array(268411.2,'t/gal'),
-        'Density::TON_PER_GALLON'            => array(199522.75,'t/gal'),
-        'Density::TON_PER_GALLON_US'         => array(239652.85,'t/gal'),
-        'Density::TONNE_PER_CUBIC_CENTIMETER' => array(1.0e+9,'t/cm³'),
-        'Density::TONNE_PER_CUBIC_DECIMETER'  => array(1000000,'t/dm³'),
-        'Density::TONNE_PER_CUBIC_METER'     => array(1000,'t/m³'),
-        'Density::TONNE_PER_LITER'           => array(1000000,'t/l'),
-        'Density::TONNE_PER_MILLILITER'      => array(1.0e+9,'t/ml'),
-        'Density::WATER'                     => array(1000,'water')
+        'Density::ALUMINIUM'                 => array(2643,           'aluminium'),
+        'Density::COPPER'                    => array(8906,           'copper'),
+        'Density::GOLD'                      => array(19300,          'gold'),
+        'Density::GRAIN_PER_CUBIC_FOOT'      => array(0.0022883519,   'gr/ft³'),
+        'Density::GRAIN_PER_CUBIC_INCH'      => array(3.9542721,      'gr/in³'),
+        'Density::GRAIN_PER_CUBIC_YARD'      => array(0.000084753774, 'gr/yd³'),
+        'Density::GRAIN_PER_GALLON'          => array(0.014253768,    'gr/gal'),
+        'Density::GRAIN_PER_GALLON_US'       => array(0.017118061,    'gr/gal'),
+        'Density::GRAM_PER_CUBIC_CENTIMETER' => array(1000,           'g/cm³'),
+        'Density::GRAM_PER_CUBIC_DECIMETER'  => array(1,              'g/dm³'),
+        'Density::GRAM_PER_CUBIC_METER'      => array(0.001,          'g/m³'),
+        'Density::GRAM_PER_LITER'            => array(1,              'g/l'),
+        'Density::GRAM_PER_MILLILITER'       => array(1000,           'g/ml'),
+        'Density::IRON'                      => array(7658,           'iron'),
+        'Density::KILOGRAM_PER_CUBIC_CENTIMETER' => array(1000000,    'kg/cm³'),
+        'Density::KILOGRAM_PER_CUBIC_DECIMETER'  => array(1000,       'kg/dm³'),
+        'Density::KILOGRAM_PER_CUBIC_METER'  => array(1,              'kg/m³'),
+        'Density::KILOGRAM_PER_CUBIC_MILLIMETER' => array(1000000000, 'kg/l'),
+        'Density::KILOGRAM_PER_LITER'        => array(1000,           'kg/ml'),
+        'Density::KILOGRAM_PER_MILLILITER'   => array(1000000,        'kg/ml'),
+        'Density::LEAD'                      => array(11370,          'lead'),
+        'Density::MEGAGRAM_PER_CUBIC_CENTIMETER' => array(1.0e+9,     'Mg/cm³'),
+        'Density::MEGAGRAM_PER_CUBIC_DECIMETER'  => array(1000000,    'Mg/dm³'),
+        'Density::MEGAGRAM_PER_CUBIC_METER'  => array(1000,           'Mg/m³'),
+        'Density::MEGAGRAM_PER_LITER'        => array(1000000,        'Mg/l'),
+        'Density::MEGAGRAM_PER_MILLILITER'   => array(1.0e+9,         'Mg/ml'),
+        'Density::MICROGRAM_PER_CUBIC_CENTIMETER' => array(0.001,     'µg/cm³'),
+        'Density::MICROGRAM_PER_CUBIC_DECIMETER'  => array(1.0e-6,    'µg/dm³'),
+        'Density::MICROGRAM_PER_CUBIC_METER' => array(1.0e-9,         'µg/m³'),
+        'Density::MICROGRAM_PER_LITER'       => array(1.0e-6,         'µg/l'),
+        'Density::MICROGRAM_PER_MILLILITER'  => array(0.001,          'µg/ml'),
+        'Density::MILLIGRAM_PER_CUBIC_CENTIMETER' => array(1,         'mg/cm³'),
+        'Density::MILLIGRAM_PER_CUBIC_DECIMETER'  => array(0.001,     'mg/dm³'),
+        'Density::MILLIGRAM_PER_CUBIC_METER' => array(0.000001,       'mg/m³'),
+        'Density::MILLIGRAM_PER_LITER'       => array(0.001,          'mg/l'),
+        'Density::MILLIGRAM_PER_MILLILITER'  => array(1,              'mg/ml'),
+        'Density::OUNCE_PER_CUBIC_FOOT'      => array(1.001154,       'oz/ft³'),
+        'Density::OUNCE_PER_CUBIC_FOOT_TROY' => array(1.0984089,      'oz/ft³'),
+        'Density::OUNCE_PER_CUBIC_INCH'      => array(1729.994,       'oz/in³'),
+        'Density::OUNCE_PER_CUBIC_INCH_TROY' => array(1898.0506,      'oz/in³'),
+        'Density::OUNCE_PER_CUBIC_YARD'      => array(0.037079776,    'oz/yd³'),
+        'Density::OUNCE_PER_CUBIC_YARD_TROY' => array(0.040681812,    'oz/yd³'),
+        'Density::OUNCE_PER_GALLON'          => array(6.2360233,      'oz/gal'),
+        'Density::OUNCE_PER_GALLON_US'       => array(7.4891517,      'oz/gal'),
+        'Density::OUNCE_PER_GALLON_TROY'     => array(6.8418084,      'oz/gal'),
+        'Density::OUNCE_PER_GALLON_US_TROY'  => array(8.2166693,      'oz/gal'),
+        'Density::POUND_PER_CIRCULAR_MIL_FOOT' => array(2.9369291,    'lb/cmil ft'),
+        'Density::POUND_PER_CUBIC_FOOT'      => array(16.018463,      'lb/in³'),
+        'Density::POUND_PER_CUBIC_INCH'      => array(27679.905,      'lb/in³'),
+        'Density::POUND_PER_CUBIC_YARD'      => array(0.59327642,     'lb/yd³'),
+        'Density::POUND_PER_GALLON'          => array(99.776373,      'lb/gal'),
+        'Density::POUND_PER_KILOGALLON'      => array(0.099776373,    'lb/kgal'),
+        'Density::POUND_PER_MEGAGALLON'      => array(0.000099776373, 'lb/Mgal'),
+        'Density::POUND_PER_GALLON_US'       => array(119.82643,      'lb/gal'),
+        'Density::POUND_PER_KILOGALLON_US'   => array(0.11982643,     'lb/kgal'),
+        'Density::POUND_PER_MEGAGALLON_US'   => array(0.00011982643,  'lb/Mgal'),
+        'Density::SILVER'                    => array(10510,          'silver'),
+        'Density::SLUG_PER_CUBIC_FOOT'       => array(515.37882,      'slug/ft³'),
+        'Density::SLUG_PER_CUBIC_INCH'       => array(890574.6,       'slug/in³'),
+        'Density::SLUG_PER_CUBIC_YARD'       => array(19.088104,      'slug/yd³'),
+        'Density::SLUG_PER_GALLON'           => array(3210.2099,      'slug/gal'),
+        'Density::SLUG_PER_GALLON_US'        => array(3855.3013,      'slug/gal'),
+        'Density::TON_PER_CUBIC_FOOT_LONG'   => array(35881.358,      't/ft³'),
+        'Density::TON_PER_CUBIC_FOOT'        => array(32036.927,      't/ft³'),
+        'Density::TON_PER_CUBIC_INCH_LONG'   => array(6.2202987e+7,   't/in³'),
+        'Density::TON_PER_CUBIC_INCH'        => array(5.5359809e+7,   't/in³'),
+        'Density::TON_PER_CUBIC_YARD_LONG'   => array(1328.9392,      't/yd³'),
+        'Density::TON_PER_CUBIC_YARD'        => array(1186.5528,      't/yd³'),
+        'Density::TON_PER_GALLON_LONG'       => array(223499.07,      't/gal'),
+        'Density::TON_PER_GALLON_US_LONG'    => array(268411.2,       't/gal'),
+        'Density::TON_PER_GALLON'            => array(199522.75,      't/gal'),
+        'Density::TON_PER_GALLON_US'         => array(239652.85,      't/gal'),
+        'Density::TONNE_PER_CUBIC_CENTIMETER' => array(1.0e+9,        't/cm³'),
+        'Density::TONNE_PER_CUBIC_DECIMETER'  => array(1000000,       't/dm³'),
+        'Density::TONNE_PER_CUBIC_METER'     => array(1000,           't/m³'),
+        'Density::TONNE_PER_LITER'           => array(1000000,        't/l'),
+        'Density::TONNE_PER_MILLILITER'      => array(1.0e+9,         't/ml'),
+        'Density::WATER'                     => array(1000,           'water')
     );
 
     private $_Locale;
@@ -221,10 +221,11 @@ class Zend_Measure_Density extends Zend_Measure_Abstract
      */
     public function __construct($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $this->_Locale = new Zend_Locale();
-        else
+        } else {
             $this->_Locale = $locale;
+        }
 
         $this->setValue($value, $type, $this->_Locale);
     }
@@ -233,12 +234,15 @@ class Zend_Measure_Density extends Zend_Measure_Abstract
     /**
      * Compare if the value and type is equal
      *
+     * @param $object  object to compare equality
      * @return boolean
      */
     public function equals($object)
     {
-        if ($object->toString() == $this->toString())
+        if ($object->toString() == $this->toString()) {
             return true;
+        }
+
         return false;
     }
 
@@ -253,12 +257,15 @@ class Zend_Measure_Density extends Zend_Measure_Abstract
      */
     public function setValue($value, $type, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of density:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of density:' . $type);
+        }
+
         parent::setValue($value, $type, $locale);
         parent::setType($type);
     }
@@ -271,8 +278,9 @@ class Zend_Measure_Density extends Zend_Measure_Abstract
      */
     public function setType($type)
     {
-        if (empty(self::$_UNITS[$type]))
-            self::throwException('unknown type of density:'.$type);
+        if (empty(self::$_UNITS[$type])) {
+            self::throwException('unknown type of density:' . $type);
+        }
 
         // Convert to standard value
         $value = parent::getValue();
@@ -292,7 +300,7 @@ class Zend_Measure_Density extends Zend_Measure_Abstract
      */
     public function toString()
     {
-        return parent::getValue().' '.self::$_UNITS[parent::getType()][1];
+        return parent::getValue() . ' ' . self::$_UNITS[parent::getType()][1];
     }
 
 
@@ -309,6 +317,8 @@ class Zend_Measure_Density extends Zend_Measure_Abstract
 
     /**
      * Returns the conversion list
+     * 
+     * @return array
      */
     public function getConversionList()
     {
