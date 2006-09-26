@@ -1,0 +1,9 @@
+
+Zend_Db_*.xml
+- need to be updated for new naming convention
+- need section for each adapter implementation with quirks or limitations
+- need section on profiler
+
+Zend_Db_Adapter.xml
+- needs to be updated to reflect the new factory method arguments
+- needs to have notes about native adapters or PDO
