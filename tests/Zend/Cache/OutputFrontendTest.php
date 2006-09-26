@@ -53,6 +53,7 @@ class Zend_Cache_OutputFrontendTest extends PHPUnit_Framework_TestCase {
         }
         $data = ob_get_contents();
         ob_end_clean();
+        ob_implicit_flush(true);
         $this->assertEquals('foo', $data);
     }
     
@@ -66,9 +67,8 @@ class Zend_Cache_OutputFrontendTest extends PHPUnit_Framework_TestCase {
         }
         $data = ob_get_contents();
         ob_end_clean();
+        ob_implicit_flush(true);
         $this->assertEquals('foobar', $data);
     }
-
 }
-
 ?>

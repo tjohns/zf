@@ -73,6 +73,7 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
         $return = $this->_instance->call('foobar', array('param1', 'param2'));
         $data = ob_get_contents();
         ob_end_clean();
+        ob_implicit_flush(true);
         $this->assertEquals('bar', $return);
         $this->assertEquals('foo', $data);
     }
@@ -84,6 +85,7 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
         $return = $this->_instance->call('foobar', array('param3', 'param4'));
         $data = ob_get_contents();
         ob_end_clean();
+        ob_implicit_flush(true);
         $this->assertEquals('foobar_return(param3, param4)', $return);
         $this->assertEquals('foobar_output(param3, param4)', $data);
     }
@@ -97,6 +99,7 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
         $return = $this->_instance->call('foobar', array('param1', 'param2'));
         $data = ob_get_contents();
         ob_end_clean();
+        ob_implicit_flush(true);
         $this->assertEquals('foobar_return(param1, param2)', $return);
         $this->assertEquals('foobar_output(param1, param2)', $data);
     }
@@ -112,6 +115,7 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
         $return = $this->_instance->call('foobar', array('param1', 'param2'));
         $data = ob_get_contents();
         ob_end_clean();
+        ob_implicit_flush(true);
         $this->assertEquals('bar', $return);
         $this->assertEquals('foo', $data);
     }    
@@ -127,6 +131,7 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
         $return = $this->_instance->call('foobar', array('param1', 'param2'));
         $data = ob_get_contents();
         ob_end_clean();
+        ob_implicit_flush(true);
         $this->assertEquals('foobar_return(param1, param2)', $return);
         $this->assertEquals('foobar_output(param1, param2)', $data);
     }
@@ -150,7 +155,5 @@ class Zend_Cache_FunctionFrontendTest extends PHPUnit_Framework_TestCase {
         }
         $this->fail('Zend_Cache_Exception was expected but not thrown');    
     }
-    
 }
-
 ?>
