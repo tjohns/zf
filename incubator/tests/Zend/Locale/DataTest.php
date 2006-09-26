@@ -541,4 +541,147 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Data::getContent('de_AT', 'timezonestandard');
         $this->assertTrue(is_array($value), 'array expected');
     }
+
+
+    /**
+     * test for reading timezonestandardshort from locale
+     * expected array
+     */
+    public function testLDMLReadingTimeZoneStandardShort()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'timezonestandardshort');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading timezonestandard from locale
+     * expected array
+     */
+    public function testLDMLReadingTimeZoneDayLight()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'timezonedaylight');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading timezonedaylightshort from locale
+     * expected array
+     */
+    public function testLDMLReadingTimeZoneDayLightShort()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'timezonedaylightshort');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading timezoneformat from locale
+     * expected array
+     */
+    public function testLDMLReadingTimeZoneFormat()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'timezoneformat');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading decimalnumberformat from locale
+     * expected array
+     */
+    public function testLDMLReadingDecimalNumberFormat()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'decimalnumberformat');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading scientificnumberformat from locale
+     * expected array
+     */
+    public function testLDMLReadingScientificNumberFormat()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'scientificnumberformat');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading percentnumberformat from locale
+     * expected array
+     */
+    public function testLDMLReadingPercentNumberFormat()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'percentnumberformat');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading currencyformat from locale
+     * expected array
+     */
+    public function testLDMLReadingCurrencyFormat()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'currencyformat');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading currencynames from locale
+     * expected array
+     */
+    public function testLDMLReadingCurrencyNames()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'currencynames');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading currencysymbols from locale
+     * expected array
+     */
+    public function testLDMLReadingCurrencySymbols()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'currencysymbols');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading currencyfraction from locale
+     * expected array
+     */
+    public function testLDMLReadingCurrencyFraction()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'currencyfraction');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading currencydigitlist from locale
+     * expected array
+     */
+    public function testLDMLReadingCurrencyDigitList()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'currencydigitlist');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading currencyroundinglist from locale
+     * expected array
+     */
+    public function testLDMLReadingCurrencyRoundingList()
+    {
+        $value = Zend_Locale_Data::getContent('de_AT', 'currencyroundinglist');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
 }

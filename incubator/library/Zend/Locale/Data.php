@@ -545,73 +545,25 @@ class Zend_Locale_Data
                 break;
 
             case 'decimalnumberformat':
-                self::_getFile($locale, '/ldml/numbers/decimalFormats/decimalFormatLength', 'type');
-                if (empty(self::$_list[0])) {
-                    self::$_list = array();
-                    self::_getFile($locale, '/ldml/numbers/decimalFormats/decimalFormatLength/decimalFormat/pattern',
-                                            '', 'default');
-                } else {
-                    $_temp = self::$_list;
-                    self::$_list = array();
-                    self::_getFile($locale, '/ldml/numbers/decimalFormats/default', 'type', 'default');
-                    foreach ($_temp as $key => $found) {
-                        self::_getFile($locale, '/ldml/numbers/decimalFormats/decimalFormatLength[@type=\''
-                                     . $key . '\']/decimalFormat/pattern', '', $key);
-                    }
-                }
+                self::_getFile($locale, '/ldml/numbers/decimalFormats/decimalFormatLength/decimalFormat/pattern',
+                                        '', 'default');
                 break;
 
             case 'scientificnumberformat':
-                self::_getFile($locale, '/ldml/numbers/scientificFormats/scientificFormatLength', 'type');
-                if (empty(self::$_list[0])) {
-                    self::$_list = array();
-                    self::_getFile($locale, 
-                                   '/ldml/numbers/scientificFormats/scientificFormatLength/scientificFormat/pattern',
-                                   '', 'default');
-                } else {
-                    $_temp = self::$_list;
-                    self::$_list = array();
-                    self::_getFile($locale, '/ldml/numbers/scientificFormats/default', 'type', 'default');
-                    foreach ($_temp as $key => $found) {
-                        self::_getFile($locale, '/ldml/numbers/scientificFormats/scientificFormatLength[@type=\''
-                                     . $key . '\']/scientificFormat/pattern', '', $key);
-                    }
-                }
+                self::_getFile($locale, 
+                               '/ldml/numbers/scientificFormats/scientificFormatLength/scientificFormat/pattern',
+                               '', 'default');
                 break;
 
             case 'percentnumberformat':
-                self::_getFile($locale, '/ldml/numbers/percentFormats/percentFormatLength', 'type');
-                if (empty(self::$_list[0])) {
-                    self::$_list = array();
-                    self::_getFile($locale, '/ldml/numbers/percentFormats/percentFormatLength/percentFormat/pattern',
-                                            '', 'default');
-                } else {
-                    $_temp = self::$_list;
-                    self::$_list = array();
-                    self::_getFile($locale, '/ldml/numbers/percentFormats/default', 'type', 'default');
-                    foreach ($_temp as $key => $found) {
-                        self::_getFile($locale, '/ldml/numbers/percentFormats/percentFormatLength[@type=\''
-                                     . $key . '\']/percentFormat/pattern', '', $key);
-                    }
-                }
+                self::_getFile($locale, '/ldml/numbers/percentFormats/percentFormatLength/percentFormat/pattern',
+                                        '', 'default');
                 break;
 
             case 'currencyformat':
-                self::_getFile($locale, '/ldml/numbers/currencyFormats/currencyFormatLength', 'type');
-                if (empty(self::$_list[0])) {
-                    self::$_list = array();
-                    self::_getFile($locale, 
-                                   '/ldml/numbers/currencyFormats/currencyFormatLength/currencyFormat/pattern',
-                                   '', 'default');
-                } else {
-                    $_temp = self::$_list;
-                    self::$_list = array();
-                    self::_getFile($locale, '/ldml/numbers/currencyFormats/default', 'type', 'default');
-                    foreach ($_temp as $key => $found) {
-                        self::_getFile($locale, '/ldml/numbers/currencyFormats/currencyFormatLength[@type=\''
-                                     . $key . '\']/currencyFormat/pattern', '', $key);
-                    }
-                }
+                self::_getFile($locale, 
+                               '/ldml/numbers/currencyFormats/currencyFormatLength/currencyFormat/pattern',
+                               '', 'default');
                 self::_getFile($locale, 
                                '/ldml/numbers/currencyFormats/currencySpacing/beforeCurrency/currencyMatch',
                                '', 'beforMatch');
