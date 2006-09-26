@@ -85,6 +85,17 @@ class Zend_Measure_PowerTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testPowerNoLocale()
+    {
+        $value = new Zend_Measure_Power('100',Zend_Measure_Power::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Power value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

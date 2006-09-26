@@ -85,6 +85,17 @@ class Zend_Measure_Flow_MoleTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testFlow_MoleNoLocale()
+    {
+        $value = new Zend_Measure_Flow_Mole('100',Zend_Measure_Flow_Mole::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Flow_Mole value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

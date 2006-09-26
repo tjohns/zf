@@ -85,6 +85,17 @@ class Zend_Measure_FrequencyTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testFrequencyNoLocale()
+    {
+        $value = new Zend_Measure_Frequency('100',Zend_Measure_Frequency::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Frequency value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

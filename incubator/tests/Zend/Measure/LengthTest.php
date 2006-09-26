@@ -85,6 +85,17 @@ class Zend_Measure_LengthTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testLengthNoLocale()
+    {
+        $value = new Zend_Measure_Length('100',Zend_Measure_Length::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Length value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

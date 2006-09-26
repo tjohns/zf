@@ -85,6 +85,17 @@ class Zend_Measure_Flow_MassTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testFlow_MassNoLocale()
+    {
+        $value = new Zend_Measure_Flow_Mass('100',Zend_Measure_Flow_Mass::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Flow_Mass value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

@@ -85,6 +85,17 @@ class Zend_Measure_TorqueTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testTorqueNoLocale()
+    {
+        $value = new Zend_Measure_Torque('100',Zend_Measure_Torque::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Torque value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

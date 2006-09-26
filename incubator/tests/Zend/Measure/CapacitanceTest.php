@@ -85,6 +85,17 @@ class Zend_Measure_CapacitanceTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testCapacitanceNoLocale()
+    {
+        $value = new Zend_Measure_Capacitance('100',Zend_Measure_Capacitance::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Capacitance value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

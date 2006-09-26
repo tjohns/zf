@@ -85,6 +85,17 @@ class Zend_Measure_DensityTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testDensityNoLocale()
+    {
+        $value = new Zend_Measure_Density('100',Zend_Measure_Density::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Density value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

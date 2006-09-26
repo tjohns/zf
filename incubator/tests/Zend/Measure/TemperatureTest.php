@@ -85,6 +85,17 @@ class Zend_Measure_TemperatureTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testTemperatureNoLocale()
+    {
+        $value = new Zend_Measure_Temperature('100',Zend_Measure_Temperature::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Temperature value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

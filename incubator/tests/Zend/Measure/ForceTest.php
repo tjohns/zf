@@ -85,6 +85,17 @@ class Zend_Measure_ForceTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testForceNoLocale()
+    {
+        $value = new Zend_Measure_Force('100',Zend_Measure_Force::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Force value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

@@ -80,6 +80,17 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testAccelerationNoLocale()
+    {
+        $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Acceleration value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

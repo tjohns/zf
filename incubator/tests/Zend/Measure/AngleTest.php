@@ -85,6 +85,17 @@ class Zend_Measure_AngleTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testAngleNoLocale()
+    {
+        $value = new Zend_Measure_Angle('100',Zend_Measure_Angle::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Angle value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

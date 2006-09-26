@@ -85,6 +85,17 @@ class Zend_Measure_PressureTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testPressureNoLocale()
+    {
+        $value = new Zend_Measure_Pressure('100',Zend_Measure_Pressure::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Pressure value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

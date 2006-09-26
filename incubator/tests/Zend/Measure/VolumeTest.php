@@ -85,6 +85,17 @@ class Zend_Measure_VolumeTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testVolumeNoLocale()
+    {
+        $value = new Zend_Measure_Volume('100',Zend_Measure_Volume::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Volume value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

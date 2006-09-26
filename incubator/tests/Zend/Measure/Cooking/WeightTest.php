@@ -85,6 +85,17 @@ class Zend_Measure_Cooking_WeightTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testCooking_WeightNoLocale()
+    {
+        $value = new Zend_Measure_Cooking_Weight('100',Zend_Measure_Cooking_Weight::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Cooking_Weight value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */

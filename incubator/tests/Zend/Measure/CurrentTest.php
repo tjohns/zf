@@ -85,6 +85,17 @@ class Zend_Measure_CurrentTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for standard locale
+     * expected integer
+     */
+    public function testCurrentNoLocale()
+    {
+        $value = new Zend_Measure_Current('100',Zend_Measure_Current::STANDARD);
+        $this->assertEquals(100, $value->getValue(),'Zend_Measure_Current value expected');
+    }
+
+
+    /**
      * test for positive value
      * expected integer
      */
