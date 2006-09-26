@@ -37,7 +37,6 @@ h4. <xsl:value-of select="."/>
 
 <xsl:template match="para">
 <xsl:apply-templates/>
-\\
 </xsl:template>
 
 <xsl:template match="listitem">

@@ -21,17 +21,11 @@ class Conversion
     protected function processIncludes($haystack)
     {
         $path = dirname($this->filename);
-        /**
-         * todo: don't match *_Classes entities
-         **/
         preg_match_all('/&module_specs.([a-zA-Z_]*);/', $haystack, $matches);
         
         if (count($matches)) {
             for ($i = 0; $i < count($matches[0]); $i++) {
-                $filename = $matches[1][$i] . '.xml';
-                $content  = file_get_contents($path . PATH_SEPERATOR . $filename);
-                // is it nessesary to check $content for more included files?
-                $haystack = str_replace($matches[0][$i], $content, $haystack);
+                $haystack = str_replace($matches[0][$i], '', $haystack);
             }
         }
         
