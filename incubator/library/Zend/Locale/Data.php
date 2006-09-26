@@ -234,10 +234,6 @@ class Zend_Locale_Data
             $locale = $locale->toString();
         }
 
-        if (empty($locale)) {
-            $locale = 'root';
-        }
-
         switch(strtolower($path)) {
             case 'languagelist':
                 self::_getFile($locale, '/ldml/localeDisplayNames/languages/language', 'type');
@@ -345,7 +341,7 @@ class Zend_Locale_Data
             case 'monthlist':
                 self::_getFile($locale, '/ldml/dates/calendars/calendar[@type=\''
                              . $value[0] . '\']/months/monthContext[@type=\'format\']/monthWidth[@type=\''
-                              . $value[1] . '\']/month', 'type');
+                             . $value[1] . '\']/month', 'type');
                 break;
 
             case 'month':
