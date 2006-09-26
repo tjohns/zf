@@ -297,6 +297,18 @@ class Zend_Measure_Viscosity_KinematicTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for exception unknown locale
+     * expected exception
+     */
+    public function testViscosity_KinematicSetWithNoLocale()
+    {
+        $value = new Zend_Measure_Viscosity_Kinematic('100', Zend_Measure_Viscosity_Kinematic::STANDARD, 'de');
+        $value->setValue('200', Zend_Measure_Viscosity_Kinematic::STANDARD);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Viscosity_Kinematic value expected to be a positive integer');
+    }
+
+
+    /**
      * test setting type
      * expected new type
      */

@@ -297,6 +297,18 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for exception unknown locale
+     * expected exception
+     */
+    public function testNumberSetWithNoLocale()
+    {
+        $value = new Zend_Measure_Number('100', Zend_Measure_Number::STANDARD, 'de');
+        $value->setValue('200', Zend_Measure_Number::STANDARD);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Number value expected to be a positive integer');
+    }
+
+
+    /**
      * test setting type
      * expected new type
      */

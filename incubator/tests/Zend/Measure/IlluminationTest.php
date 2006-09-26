@@ -297,6 +297,18 @@ class Zend_Measure_IlluminationTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for exception unknown locale
+     * expected exception
+     */
+    public function testIlluminationSetWithNoLocale()
+    {
+        $value = new Zend_Measure_Illumination('100', Zend_Measure_Illumination::STANDARD, 'de');
+        $value->setValue('200', Zend_Measure_Illumination::STANDARD);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Illumination value expected to be a positive integer');
+    }
+
+
+    /**
      * test setting type
      * expected new type
      */

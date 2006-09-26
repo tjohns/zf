@@ -297,6 +297,18 @@ class Zend_Measure_EnergyTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for exception unknown locale
+     * expected exception
+     */
+    public function testEnergySetWithNoLocale()
+    {
+        $value = new Zend_Measure_Energy('100', Zend_Measure_Energy::STANDARD, 'de');
+        $value->setValue('200', Zend_Measure_Energy::STANDARD);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Energy value expected to be a positive integer');
+    }
+
+
+    /**
      * test setting type
      * expected new type
      */

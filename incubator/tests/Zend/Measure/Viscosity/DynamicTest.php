@@ -297,6 +297,18 @@ class Zend_Measure_Viscosity_DynamicTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for exception unknown locale
+     * expected exception
+     */
+    public function testViscosity_DynamicSetWithNoLocale()
+    {
+        $value = new Zend_Measure_Viscosity_Dynamic('100', Zend_Measure_Viscosity_Dynamic::STANDARD, 'de');
+        $value->setValue('200', Zend_Measure_Viscosity_Dynamic::STANDARD);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Viscosity_Dynamic value expected to be a positive integer');
+    }
+
+
+    /**
      * test setting type
      * expected new type
      */

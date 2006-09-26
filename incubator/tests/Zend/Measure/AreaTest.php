@@ -297,6 +297,18 @@ class Zend_Measure_AreaTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for exception unknown locale
+     * expected exception
+     */
+    public function testAreaSetWithNoLocale()
+    {
+        $value = new Zend_Measure_Area('100', Zend_Measure_Area::STANDARD, 'de');
+        $value->setValue('200', Zend_Measure_Area::STANDARD);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Area value expected to be a positive integer');
+    }
+
+
+    /**
      * test setting type
      * expected new type
      */

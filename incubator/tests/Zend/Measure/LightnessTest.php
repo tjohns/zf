@@ -297,6 +297,18 @@ class Zend_Measure_LightnessTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for exception unknown locale
+     * expected exception
+     */
+    public function testLightnessSetWithNoLocale()
+    {
+        $value = new Zend_Measure_Lightness('100', Zend_Measure_Lightness::STANDARD, 'de');
+        $value->setValue('200', Zend_Measure_Lightness::STANDARD);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Lightness value expected to be a positive integer');
+    }
+
+
+    /**
      * test setting type
      * expected new type
      */

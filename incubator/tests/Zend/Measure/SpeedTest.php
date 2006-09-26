@@ -297,6 +297,18 @@ class Zend_Measure_SpeedTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test for exception unknown locale
+     * expected exception
+     */
+    public function testSpeedSetWithNoLocale()
+    {
+        $value = new Zend_Measure_Speed('100', Zend_Measure_Speed::STANDARD, 'de');
+        $value->setValue('200', Zend_Measure_Speed::STANDARD);
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Speed value expected to be a positive integer');
+    }
+
+
+    /**
      * test setting type
      * expected new type
      */

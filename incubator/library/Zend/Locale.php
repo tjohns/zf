@@ -330,63 +330,63 @@ class Zend_Locale {
      * 
      */
     private $_LocaleTranslation = array(
-        'Australia' => 'AU',
-        'Austria'   => 'AT',
-        'Belgium'   => 'BE',
-        'Brazil'    => 'BR',
-        'Canada'    => 'CA',
-        'China'     => 'CN',
-        'Czech Republic' => 'CZ',
-        'Denmark'   => 'DK',
-        'Finland'   => 'FI',
-        'France'    => 'FR',
-        'Germany'   => 'DE',
-        'Greece'    => 'GR',
-        'Hong Kong SAR' => 'HK',
-        'Hungary'   => 'HU',
-        'Iceland'   => 'IS',
-        'Ireland'   => 'IE',
-        'Italy'     => 'IT',
-        'Japan'     => 'JP',
-        'Korea'     => 'KP',
-        'Mexiko'    => 'MX',
+        'Australia'       => 'AU',
+        'Austria'         => 'AT',
+        'Belgium'         => 'BE',
+        'Brazil'          => 'BR',
+        'Canada'          => 'CA',
+        'China'           => 'CN',
+        'Czech Republic'  => 'CZ',
+        'Denmark'         => 'DK',
+        'Finland'         => 'FI',
+        'France'          => 'FR',
+        'Germany'         => 'DE',
+        'Greece'          => 'GR',
+        'Hong Kong SAR'   => 'HK',
+        'Hungary'         => 'HU',
+        'Iceland'         => 'IS',
+        'Ireland'         => 'IE',
+        'Italy'           => 'IT',
+        'Japan'           => 'JP',
+        'Korea'           => 'KP',
+        'Mexiko'          => 'MX',
         'The Netherlands' => 'NL',
-        'New Zealand' => 'NZ',
-        'Norway'    => 'NO',
-        'Poland'    => 'PL',
-        'Portugal'  => 'PT',
-        'Russia'    => 'RU',
-        'Singapore' => 'SG',
-        'Slovakia'  => 'SK',
-        'Spain'     => 'ES',
-        'Sweden'    => 'SE',
-        'Taiwan'    => 'TW',
-        'Turkey'    => 'TR',
-        'United Kingdom' => 'GB',
-        'United States' => 'US',
+        'New Zealand'     => 'NZ',
+        'Norway'          => 'NO',
+        'Poland'          => 'PL',
+        'Portugal'        => 'PT',
+        'Russia'          => 'RU',
+        'Singapore'       => 'SG',
+        'Slovakia'        => 'SK',
+        'Spain'           => 'ES',
+        'Sweden'          => 'SE',
+        'Taiwan'          => 'TW',
+        'Turkey'          => 'TR',
+        'United Kingdom'  => 'GB',
+        'United States'   => 'US',
         
-        'Chinese'   => 'zh',
-        'Czech'     => 'cs',
-        'Danish'    => 'da',
-        'Dutch'     => 'nl',
-        'English'   => 'en',
-        'Finnish'   => 'fi',
-        'French'    => 'fr',
-        'German'    => 'de',
-        'Greek'     => 'el',
-        'Hungarian' => 'hu',
-        'Icelandic' => 'is',
-        'Italian'   => 'it',
-        'Japanese'  => 'ja',
-        'Korean'    => 'ko',
-        'Norwegian' => 'no',
-        'Polish'    => 'pl',
-        'Portuguese'=> 'pt',
-        'Russian'   => 'ru',
-        'Slovak'    => 'sk',
-        'Spanish'   => 'es',
-        'Swedish'   => 'sv',
-        'Turkish'   => 'tr'
+        'Chinese'         => 'zh',
+        'Czech'           => 'cs',
+        'Danish'          => 'da',
+        'Dutch'           => 'nl',
+        'English'         => 'en',
+        'Finnish'         => 'fi',
+        'French'          => 'fr',
+        'German'          => 'de',
+        'Greek'           => 'el',
+        'Hungarian'       => 'hu',
+        'Icelandic'       => 'is',
+        'Italian'         => 'it',
+        'Japanese'        => 'ja',
+        'Korean'          => 'ko',
+        'Norwegian'       => 'no',
+        'Polish'          => 'pl',
+        'Portuguese'      => 'pt',
+        'Russian'         => 'ru',
+        'Slovak'          => 'sk',
+        'Spanish'         => 'es',
+        'Swedish'         => 'sv',
+        'Turkish'         => 'tr'
     );
 
 
@@ -431,6 +431,8 @@ class Zend_Locale {
 
     /**
      * Serialization Interface
+     * 
+     * @return string
      */
     public function serialize()
     {
@@ -546,8 +548,8 @@ class Zend_Locale {
 
                if (!empty($this->_LocaleTranslation[$splitted[0]])) {
                    if (!empty($this->_LocaleTranslation[$splitted[1]])) {
-                       $languagearray[$this->_LocaleTranslation[$splitted[0]].'_'
-                      .$this->_LocaleTranslation[$splitted[1]]] = 1;
+                       $languagearray[$this->_LocaleTranslation[$splitted[0]] . '_'
+                     . $this->_LocaleTranslation[$splitted[1]]] = 1;
                    }
                    $languagearray[$this->_LocaleTranslation[$splitted[0]]] = 1;
                }
@@ -597,10 +599,10 @@ class Zend_Locale {
             $region = array_shift($country2);
 
             foreach($countrys as $country) {
-                $languages[$region.'_'.strtoupper($country)] = $quality;
+                $languages[$region . '_' . strtoupper($country)] = $quality;
             }
             foreach($country2 as $country) {
-                $languages[$region.'_'.strtoupper($country)] = $quality;
+                $languages[$region . '_' . strtoupper($country)] = $quality;
             }
             $languages[$region] = $quality;
         }
@@ -632,7 +634,7 @@ class Zend_Locale {
     /**
      * Sets a new locale
      * 
-     * @param $locale locale - optional
+     * @param $locale locale - optional new locale to set
      */
     public function setLocale($locale = false)
     {
@@ -862,10 +864,10 @@ class Zend_Locale {
         $quest = Zend_Locale_Data::getContent($this->_Locale, 'questionstrings');
         $yes = explode(':', $quest['yes']);
         $no  = explode(':', $quest['no']);
-        $ret['yes'] = $yes[0];
+        $ret['yes']     = $yes[0];
         $ret['yesabbr'] = $yes[1];
-        $ret['no'] = $no[0];
-        $ret['noabbr'] = $no[1];
+        $ret['no']      = $no[0];
+        $ret['noabbr']  = $no[1];
         return $ret;
     }
 }
