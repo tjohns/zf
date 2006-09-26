@@ -43,7 +43,7 @@ class AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Incubator');
 
         $suite->addTest(Zend_AllTests::suite());
 
