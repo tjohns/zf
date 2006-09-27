@@ -81,95 +81,97 @@ class Zend_Locale_Format
      * @return string - locale formatted number
      * 
      * @todo UTF8 not handled properly... waiting for Zend_Locale_UTF8
-     * @todo No handling of dual seperated formats as Indian for now f.e. #,##,##0.###
      */
     public static function toNumber($value, $locale = false)
     {
         // Get correct signs for this locale
-        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
-        $format  = Zend_Locale_Data::getContent($locale,'decimalnumberformat');
+        $symbols = Zend_Locale_Data::getContent($locale, 'numbersymbols');
+        $format  = Zend_Locale_Data::getContent($locale, 'decimalnumberformat');
         $format = $format['default'];
 
-//print "\n<br>";
-//print "\n<br>ORIGINAL:".$format;
-
         // seperate negative format pattern when avaiable 
-        if (strpos($format, ';') !== false)
-        {
-            if (bccomp($value, 0) < 0)
+        if (strpos($format, ';') !== false) {
+            if (bccomp($value, 0) < 0) {
                 $format = substr($format, strpos($format, ';') + 1);
-            else
+            } else {
                 $format = substr($format, 0, strpos($format, ';'));
+            }
         }
 
-//print "\n<br>CHOOSEN:".$format;
         // set negative sign
-        if (bccomp($value, 0) < 0)
-        {
-            if (strpos($format, '-') === false)
-                $format = $symbols['minus'].$format;
-            else
+        if (bccomp($value, 0) < 0) {
+            if (strpos($format, '-') === false) {
+                $format = $symbols['minus'] . $format;
+            } else {
                 $format = strtr($format, '-', $symbols['minus']);
+            }
         }
 
-//print "\n<br>NEGATIVE:".$format;
         // get number parts
-//        $endtag = substr($format, strrpos($format, '#') + 1);
-        if (strpos($value, '.') !== false)
+        if (strpos($value, '.') !== false) {
             $precision = substr($value, strpos($value, '.') + 1);
-        else
+        } else {
             $precision = '';
+        }
 
-//print "\n<br>PRECISION:".$precision;
         // get fraction and format lengths
         bcscale(strlen($precision));
         $prec = bcsub($value, bcsub($value, '0', 0));
-        if (strpos($prec, '-') !== false)
+        if (strpos($prec, '-') !== false) {
             $prec = substr($prec, 1);
+        }
         $number = bcsub($value, 0, 0);
-        if (strpos($number, '-') !== false)
+        if (strpos($number, '-') !== false) {
             $number = substr($number, 1);
-        $group = strrpos($format, ',');
-        $group2= strpos($format, ',');
-        $point = strpos($format, '.');
+        }
+        $group  = strrpos($format, ',');
+        $group2 = strpos ($format, ',');
+        $point  = strpos ($format, '.');
 
-//print "\n<br>PREC:".$prec;
         // Add fraction
-        if ($prec == 0)
-            $format = substr($format, 0, $point).substr($format, strrpos($format, '#') + 1);
-        else
-            $format = substr($format, 0, $point).$symbols['decimal'].substr($prec, 2).
+        if ($prec == 0) {
+            $format = substr($format, 0, $point) . substr($format, strrpos($format, '#') + 1);
+        } else {
+            $format = substr($format, 0, $point) . $symbols['decimal'] . substr($prec, 2).
                       substr($format, strrpos($format, '#') + 1);
+        }
 
-//print "\n<br>APPROVED:".$format;
+        // Add seperation
+        if ($group == 0) {
 
-        // no seperation
-        if ($group == 0)
-        {
-            $format = $number.substr($format, $point);
+            // no seperation
+            $format = $number . substr($format, $point);
+
         } else if ($group == $group2) {
+
             // only 1 seperation
             $seperation = ($point - $group - 1);
-//print "\n<br>LENGTH:".strlen($number);
-//print "\n<br>NUMBER:".$number;
-//print "\n<br>POINT:".$point;
-//print "\n<br>GROUP:".$group;
-//print "\n<br>GROUP2:".$group2;
-//print "\n<br>SEPERATION:".$seperation;
-            for ($x = (strlen($number) - $seperation); $x > ($group2 - 2); $x -= $seperation)
-            {
-//print "\n<br>X2:".$x;
-                 $number = substr($number, 0, $x).$symbols['group'].
-                           substr($number, $x);
-//print "\n<br>NUMBER:".$number;
+            for ($x = (strlen($number) - $seperation); $x > ($group2 - 2); $x -= $seperation) {
+                 $number = substr($number, 0, $x) . $symbols['group']
+                         . substr($number, $x);
             }
-            $format = substr($format, 0, strpos($format,'#')).$number.substr($format, $point);
+            $format = substr($format, 0, strpos($format, '#')) . $number . substr($format, $point);
+
+        } else {
+
+            // 2 seperations
+            if (strlen($number) > ($point - $group - 1)) { 
+                $seperation = ($point - $group - 1);
+                $number = substr($number, 0, strlen($number) - $seperation) . $symbols['group']
+                        . substr($number, strlen($number) - $seperation);
+
+                if ((strlen($number) - 1) > ($point - $group)) {
+                    $seperation2 = ($group - $group2 - 1);
+                    for ($x = (strlen($number) - $seperation - $seperation2 - 1); $x > ($group2 - 2); $x -= $seperation2) {
+                         $number = substr($number, 0, $x) . $symbols['group']
+                                 . substr($number, $x);
+                    }
+                }
+
+            }
+            $format = substr($format, 0, strpos($format, '#')) . $number . substr($format, $point);
+
         }
-//print "\n<br>REST:".$prec;
-//print "\n<br>VALUE:".$value;
-//print "\n<br>NUMBER:".$number;
-        
-//print "\n<br>VALUE: $value FORMAT:".$format;
         return (string) $format;        
     }
 
@@ -215,46 +217,50 @@ class Zend_Locale_Format
      */
     public static function getFloat($input, $precision = false, $locale = false)
     {
-        if (!is_string($input))
+        if (!is_string($input)) {
             return $input;
+        }
 
-        if (!is_int($precision) and ($locale == false))
-        {
-            $locale = $precision;
+        if (!is_int($precision) and ($locale == false)) {
+            $locale    = $precision;
             $precision = false;
         }
 
         // Get correct signs for this locale
-        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
+        $symbols = Zend_Locale_Data::getContent($locale, 'numbersymbols');
 
         // Parse input locale aware
-        $regex = '/('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.$symbols['decimal'].'){0,1}\d+/';
+        $regex = '/(' . $symbols['minus'] . '){0,1}(\d+(\\' . $symbols['group']
+               . '){0,1})*(\\' . $symbols['decimal'] . '){0,1}\d+/';
         preg_match($regex, $input, $found);
-        if (!isset($found[0]))
-            self::throwException('No value in '.$input.' found');
+        if (!isset($found[0])) {
+            self::throwException('No value in ' . $input . ' found');
+        }
 
         // Float or Integer ?
         $found = $found[0];
 
         // Change locale input to be standard number
-        if ($symbols['minus'] != "-")
-            $found = strtr($found,$symbols['minus'],'-');
-        $found = str_replace($symbols['group'],"",$found);
+        if ($symbols['minus'] != "-") {
+            $found = strtr($found, $symbols['minus'], '-');
+        }
+        $found = str_replace($symbols['group'], "", $found);
 
         // Do precision
-        if (strpos($found, $symbols['decimal']) !== false)
-        {
-            if ($symbols['decimal'] != '.')
-                $found = str_replace($symbols['decimal'],".",$found);
+        if (strpos($found, $symbols['decimal']) !== false) {
+            if ($symbols['decimal'] != '.') {
+                $found = str_replace($symbols['decimal'], ".", $found);
+            }
 
             $pre = substr($found, strpos($found, '.') + 1);
 
-            if (strlen($pre) > $precision)
+            if (strlen($pre) > $precision) {
                 $found = substr($found, 0, strlen($found) - strlen($pre) + $precision);
-            else if (strlen($pre) < $precision)
+            } else if (strlen($pre) < $precision) {
                 $found = str_pad($found, $precision, '0');
-            else
+            } else {
                 $found = substr($found, 0, strpos($found, '.') - 1);
+            }
         }
 
         return floatval($found);
@@ -262,12 +268,107 @@ class Zend_Locale_Format
 
 
     /**
+     * Returns a locale formatted integer number
      * 
+     * @param $value  - number to localize
+     * @param $locale - OPTIONAL locale
+     * @return string - locale formatted number
+     * 
+     * @todo UTF8 not handled properly... waiting for Zend_Locale_UTF8
      */
-    public static function toFloat()
+    public static function toFloat($value, $precision, $locale = false)
     {
-        // @todo Implement
-        self::throwException('function not implemented');
+        // Get correct signs for this locale
+        $symbols = Zend_Locale_Data::getContent($locale, 'numbersymbols');
+        $format  = Zend_Locale_Data::getContent($locale, 'decimalnumberformat');
+        $format = $format['default'];
+
+        // seperate negative format pattern when avaiable 
+        if (strpos($format, ';') !== false) {
+            if (bccomp($value, 0) < 0) {
+                $format = substr($format, strpos($format, ';') + 1);
+            } else {
+                $format = substr($format, 0, strpos($format, ';'));
+            }
+        }
+
+        // set negative sign
+        if (bccomp($value, 0) < 0) {
+            if (strpos($format, '-') === false) {
+                $format = $symbols['minus'] . $format;
+            } else {
+                $format = strtr($format, '-', $symbols['minus']);
+            }
+        }
+
+        // get number parts
+        if ($precision < 0) {
+            if (strpos($value, '.') !== false) {
+                $precision = substr($value, strpos($value, '.') + 1);
+            } else {
+                $precision = '';
+            }
+        }
+
+        // get fraction and format lengths
+        bcscale(strlen($precision));
+        $prec = bcsub($value, bcsub($value, '0', 0));
+        if (strpos($prec, '-') !== false) {
+            $prec = substr($prec, 1);
+        }
+        $number = bcsub($value, 0, 0);
+        if (strpos($number, '-') !== false) {
+            $number = substr($number, 1);
+        }
+        $group  = strrpos($format, ',');
+        $group2 = strpos ($format, ',');
+        $point  = strpos ($format, '.');
+
+        // Add fraction
+        if ($prec == 0) {
+            $format = substr($format, 0, $point) . substr($format, strrpos($format, '#') + 1);
+        } else {
+            $format = substr($format, 0, $point) . $symbols['decimal'] . substr($prec, 2).
+                      substr($format, strrpos($format, '#') + 1);
+        }
+
+        // Add seperation
+        if ($group == 0) {
+
+            // no seperation
+            $format = $number . substr($format, $point);
+
+        } else if ($group == $group2) {
+
+            // only 1 seperation
+            $seperation = ($point - $group - 1);
+            for ($x = (strlen($number) - $seperation); $x > ($group2 - 2); $x -= $seperation) {
+                 $number = substr($number, 0, $x) . $symbols['group']
+                         . substr($number, $x);
+            }
+            $format = substr($format, 0, strpos($format, '#')) . $number . substr($format, $point);
+
+        } else {
+
+            // 2 seperations
+            if (strlen($number) > ($point - $group - 1)) { 
+                $seperation = ($point - $group - 1);
+                $number = substr($number, 0, strlen($number) - $seperation) . $symbols['group']
+                        . substr($number, strlen($number) - $seperation);
+
+                if ((strlen($number) - 1) > ($point - $group)) {
+                    $seperation2 = ($group - $group2 - 1);
+                    for ($x = (strlen($number) - $seperation - $seperation2 - 1); $x > ($group2 - 2); $x -= $seperation2) {
+                         $number = substr($number, 0, $x) . $symbols['group']
+                                 . substr($number, $x);
+                    }
+                }
+
+            }
+            $format = substr($format, 0, strpos($format, '#')) . $number . substr($format, $point);
+
+        }
+        return (string) $format;        
     }
 
 
@@ -303,86 +404,119 @@ class Zend_Locale_Format
      */
     public static function getInteger($input, $locale = false)
     {
-        if (!is_string($input))
+        if (!is_string($input)) {
             return $input;
+        }
 
         // Get correct signs for this locale
-        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
+        $symbols = Zend_Locale_Data::getContent($locale, 'numbersymbols');
 
         // Parse input locale aware
-        $regex = '/('.$symbols['minus'].'){0,1}(\d+(\\'.$symbols['group'].'){0,1})*(\\'.$symbols['decimal'].'){0,1}\d+/';
+        $regex = '/(' . $symbols['minus'] . '){0,1}(\d+(\\' . $symbols['group']
+               . '){0,1})*(\\' . $symbols['decimal'] . '){0,1}\d+/';
         preg_match($regex, $input, $found);
-        if (!isset($found[0]))
-            self::throwException('No value in '.$input.' found');
+        if (!isset($found[0])) {
+            self::throwException('No value in ' . $input . ' found');
+        }
 
         // Float or Integer ?
         $found = $found[0];
 
         // Change locale input to be standard number
-        if ($symbols['minus'] != "-")
-            $found = strtr($found,$symbols['minus'],'-');
-        $found = str_replace($symbols['group'],"",$found);
+        if ($symbols['minus'] != "-") {
+            $found = strtr($found, $symbols['minus'], '-');
+        }
+        $found = str_replace($symbols['group'], "", $found);
 
         // Do precision
-        if (strpos($found, $symbols['decimal']) !== false)
+        if (strpos($found, $symbols['decimal']) !== false) {
             $found = substr($found, 0, strpos($found, '.') - 1);
+        }
 
         return intval($found);
     }
 
 
     /**
+     * Returns a locale formatted number
      * 
+     * @param $value  - number to localize
+     * @param $locale - OPTIONAL locale
+     * @return string - locale formatted number
+     * 
+     * @todo UTF8 not handled properly... waiting for Zend_Locale_UTF8
      */
-    public static function toInteger()
+    public static function toInteger($value, $locale = false)
     {
-        // @todo Implement
-        self::throwException('function not implemented');
-
-        if (!is_integer($value))
-            return self::toFloat($value, $locale);
-
         // Get correct signs for this locale
-        $symbols = Zend_Locale_Data::getContent($locale,'numbersymbols');
-        $format  = Zend_Locale_Data::getContent($locale,'decimalnumberformat');
+        $symbols = Zend_Locale_Data::getContent($locale, 'numbersymbols');
+        $format  = Zend_Locale_Data::getContent($locale, 'decimalnumberformat');
         $format = $format['default'];
 
         // seperate negative format pattern when avaiable 
-        if (strpos($format, ';') !== false)
-        {
-            if ($value < 0)
+        if (strpos($format, ';') !== false) {
+            if (bccomp($value, 0) < 0) {
                 $format = substr($format, strpos($format, ';') + 1);
-            else
+            } else {
                 $format = substr($format, 0, strpos($format, ';'));
+            }
         }
 
         // set negative sign
-        if ($value < 0)
-        {
-            if (strpos($format, '-') === false)
-                $format = $symbols['minus'].$format;
-            else
+        if (bccomp($value, 0) < 0) {
+            if (strpos($format, '-') === false) {
+                $format = $symbols['minus'] . $format;
+            } else {
                 $format = strtr($format, '-', $symbols['minus']);
+            }
         }
 
-        // delete precision
-        $precision = substr($format, strpos($format, '.') + 1);
-        $format = $format.substr($precision, strrpos($precision, '#') + 1);
+        // get integer part
+        $number = bcsub($value, 0, 0);
+        if (strpos($number, '-') !== false) {
+            $number = substr($number, 1);
+        }
+        $group  = strrpos($format, ',');
+        $group2 = strpos ($format, ',');
+        $point  = strpos ($format, '.');
+        $format = substr($format, 0, $point) . substr($format, strrpos($format, '#') + 1);
 
-        $regex = '/[#0]*,{0,}/';
-        preg_match_all($regex, $format, $found);
+        // Add seperation
+        if ($group == 0) {
 
-print_r($found);
-print $format."\n<br>";
-        $seperate = substr($format,strpos($format,',')+1);
-        $seperate = strlen(substr($seperate,0,strpos($seperate, '.')));
-        
-        $length = strlen($value);
-        
-//                    <pattern>#,##0.###</pattern>
-//                    <!-- number grouping same as India (thousands, lakhs, crores, etc.) -->
-//                    <pattern draft="true">#,##,##0.###</pattern>
+            // no seperation
+            $format = $number . substr($format, $point);
 
+        } else if ($group == $group2) {
+
+            // only 1 seperation
+            $seperation = ($point - $group - 1);
+            for ($x = (strlen($number) - $seperation); $x > ($group2 - 2); $x -= $seperation) {
+                 $number = substr($number, 0, $x) . $symbols['group']
+                         . substr($number, $x);
+            }
+            $format = substr($format, 0, strpos($format, '#')) . $number . substr($format, $point);
+
+        } else {
+
+            // 2 seperations
+            if (strlen($number) > ($point - $group - 1)) { 
+                $seperation = ($point - $group - 1);
+                $number = substr($number, 0, strlen($number) - $seperation) . $symbols['group']
+                        . substr($number, strlen($number) - $seperation);
+
+                if ((strlen($number) - 1) > ($point - $group)) {
+                    $seperation2 = ($group - $group2 - 1);
+                    for ($x = (strlen($number) - $seperation - $seperation2 - 1); $x > ($group2 - 2); $x -= $seperation2) {
+                         $number = substr($number, 0, $x) . $symbols['group']
+                                 . substr($number, $x);
+                    }
+                }
+
+            }
+            $format = substr($format, 0, strpos($format, '#')) . $number . substr($format, $point);
+
+        }
         return (string) $format;        
     }
 
