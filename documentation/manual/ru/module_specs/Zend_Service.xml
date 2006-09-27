@@ -1,19 +1,39 @@
 <sect1 id="zend.service.introduction">
-    <title>Introduction</title>
+    <title>Введение</title>
     <para>
-        <code>Zend_Service</code> is an abstract class which serves as a foundation for web service
-        implementations (e.g. XML-RPC).
+        <code>Zend_Service</code> является абстрактным классом, который используется
+        в качестве основы для использования веб-сервисов (например, XML-RPC).
+<!--
+        <code>Zend_Service</code> is an abstract class which serves as
+        a foundation for web service implementations (e.g. XML-RPC).
+-->
     </para>
     <para>
+        <code>Zend_Service</code> предлагает поддержку через
+        <link linkend="zend.service.rest"><code>Zend_Service_Rest</code></link>
+        для любых веб-сервисов, основанных на REST.  
+<!--
         <code>Zend_Service</code> offers support for any REST-based web service through
-        <link linkend="zend.service.rest"><code>Zend_Service_Rest</code></link>.
+-->        
+        .
     </para>
     <para>
-        In addition to being able to extend the <code>Zend_Service</code> and use <code>Zend_Service_Rest</code> for
+        Кроме возможности расширения класса <code>Zend_Service</code>
+        и использования <code>Zend_Service_Rest</code> для веб-сервисов, основанных на REST,
+        Zend предоставляет поддержку популярных веб-сервисов, таких, как
+        <link linkend="zend.service.amazon">Amazon</link>,
+        <link linkend="zend.service.flickr">Flickr</link> и
+        <link linkend="zend.service.yahoo">Yahoo!</link>. В ближайшее время
+        список поддерживаемых веб-сервисов может расшириться.
+<!--
+        In addition to being able to extend the <code>Zend_Service</code> and
+        use <code>Zend_Service_Rest</code> for
         REST-based web services, Zend also provides support for popular web services such as
         <link linkend="zend.service.amazon">Amazon</link>,
         <link linkend="zend.service.flickr">Flickr</link>, and
-        <link linkend="zend.service.yahoo">Yahoo!</link>. More may be added in the near future.
+        <link linkend="zend.service.yahoo">Yahoo!</link>. More may be added
+        in the near future.
+-->
     </para>
 </sect1>
 &module_specs.Zend_Service_Rest;

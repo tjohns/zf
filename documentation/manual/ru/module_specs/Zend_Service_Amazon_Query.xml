@@ -1,22 +1,45 @@
 <sect2 id="zend.service.amazon.query">
-    <title>Using the Alternative Query API</title>
+    <title>Использование альтернативного API запросов<!--Using the Alternative Query API--></title>
     <sect3 id="zend.service.amazon.query.introduction">
-        <title>Introduction</title>
+        <title>Введение</title>
         <para>
-            <code>Zend_Service_Amazon_Query</code> provides an alternative API for using the Amazon Web Service.
-            The alternative API uses the Fluent Interface pattern. That is, all calls can be made using chained method
+            <code>Zend_Service_Amazon_Query</code> предоставляет альтернативный API
+            для использования веб-сервиса Amazon.
+            Альтернативный API использует паттерн проектирования Fluent Interface.
+            Это означает, что все вызовы могут производиться по "цепочке"
+            (т.е. <code>$obj->method()->method2($arg)</code>).
+<!--
+            <code>Zend_Service_Amazon_Query</code> provides an alternative API for
+            using the Amazon Web Service.
+            The alternative API uses the Fluent Interface pattern. That is,
+            all calls can be made using chained method
             calls. (e.g., <code>$obj->method()->method2($arg)</code>)
+-->
         </para>
         <para>
-            The <code>Zend_Service_Amazon_Query</code> API uses overloading to easily set up an item search and then
-            allows you to search based upon the criteria specified. Each of the options is provided as a method call,
+            API <code>Zend_Service_Amazon_Query</code> использует
+            перегрузку для легкой настройки поиска и дает возможность
+            поиска по определенным критериям. Каждая из опций доступна
+            через вызов метода и каждый аргумент метода соответствует
+            значению опции:
+<!--
+            The <code>Zend_Service_Amazon_Query</code> API uses overloading
+            to easily set up an item search and then
+            allows you to search based upon the criteria specified. Each of
+            the options is provided as a method call,
             and each method's argument corresponds to the named option's value:
+-->
         </para>
         <example>
-            <title>Search Amazon Using the Alternative Query API</title>
+            <title><!--Search Amazon Using the Alternative Query API--></title>
             <para>
-                In this example, the alternative query API is used as a fluent interface to specify options and their
+                В данном примере используется альтернативный API запросов
+                для указания опций и их значений:
+<!--
+                In this example, the alternative query API is used as a fluent
+                interface to specify options and their
                 respective values:
+-->
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
@@ -28,12 +51,21 @@ foreach ($results as $result) {
 }
 ?>]]>       </programlisting>
             <para>
+                Этот код устанавливает опции <code>Category</code> в "Books"
+                и <code>Keywords</code> в "PHP".
+<!--
                 This sets the option <code>Category</code> to "Books" and <code>Keywords</code> to "PHP".
+-->
             </para>
             <para>
+                За более подробной информацией про доступные опции обратитесь к 
+                <ulink
+                    url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">соответствующей документации Amazon</ulink>.
+<!--
                 For more information on the available options, please refer to the
                 <ulink
                     url="http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>.
+-->
             </para>
         </example>
     </sect3>
