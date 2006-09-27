@@ -17,8 +17,8 @@ while($dir->valid()) {
     if((!$dir->isDot()) && (substr($dir->getFilename(), -3) == 'xml')) {
         array_push($pages, $dir->getPathname());
     }
-   
-   $dir->next();
+    
+    $dir->next();
 }
 
 asort($pages);
