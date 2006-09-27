@@ -659,7 +659,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
      */
     public function testLDMLReadingCurrencyFraction()
     {
-        $value = Zend_Locale_Data::getContent('de_AT', 'currencyfraction');
+        $value = Zend_Locale_Data::getContent('', 'currencyfraction', 'JPY');
         $this->assertTrue(is_array($value), 'array expected');
     }
 
@@ -670,7 +670,7 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
      */
     public function testLDMLReadingCurrencyDigitList()
     {
-        $value = Zend_Locale_Data::getContent('de_AT', 'currencydigitlist');
+        $value = Zend_Locale_Data::getContent('', 'currencydigitlist', 'JPY');
         $this->assertTrue(is_array($value), 'array expected');
     }
 
@@ -681,7 +681,117 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
      */
     public function testLDMLReadingCurrencyRoundingList()
     {
-        $value = Zend_Locale_Data::getContent('de_AT', 'currencyroundinglist');
+        $value = Zend_Locale_Data::getContent('', 'currencyroundinglist', 'JPY');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading currencyforregion from locale
+     * expected array
+     */
+    public function testLDMLReadingCurrencyForRegion()
+    {
+        $value = Zend_Locale_Data::getContent('', 'currencyforregion', '830');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading currencyforregionlist from locale
+     * expected array
+     */
+    public function testLDMLReadingCurrencyForRegionList()
+    {
+        $value = Zend_Locale_Data::getContent('', 'currencyforregionlist');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading regionforterritory from locale
+     * expected array
+     */
+    public function testLDMLReadingRegionForTerritory()
+    {
+        $value = Zend_Locale_Data::getContent('', 'regionforterritory', '001');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading regionforterritorylist from locale
+     * expected array
+     */
+    public function testLDMLReadingRegionForTerritoryList()
+    {
+        $value = Zend_Locale_Data::getContent('', 'regionforterritorylist');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading scriptforlanguage from locale
+     * expected array
+     */
+    public function testLDMLReadingScriptForLanguage()
+    {
+        $value = Zend_Locale_Data::getContent('', 'scriptforlanguage', 'az');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading scriptforlanguagelist from locale
+     * expected array
+     */
+    public function testLDMLReadingScriptForLanguageList()
+    {
+        $value = Zend_Locale_Data::getContent('', 'scriptforlanguagelist');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading territoryforlanguage from locale
+     * expected array
+     */
+    public function testLDMLReadingTerritoryForLanguage()
+    {
+        $value = Zend_Locale_Data::getContent('', 'territoryforlanguage', 'az');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for reading territoryforlanguagelist from locale
+     * expected array
+     */
+    public function testLDMLReadingTerritoryForLanguageList()
+    {
+        $value = Zend_Locale_Data::getContent('', 'territoryforlanguagelist');
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for alias in LDML
+     * expected array
+     */
+    public function testLDMLReadingAlias()
+    {
+        $value = Zend_Locale_Data::getContent('ar', 'month', array('islamic', 'format', 'abbreviated', '1'));
+        $this->assertTrue(is_array($value), 'array expected');
+    }
+
+
+    /**
+     * test for rerouting in LDML
+     * expected array
+     */
+    public function testLDMLReadingReRouting()
+    {
+        $value = Zend_Locale_Data::getContent('az_AZ', 'language', 'az');
         $this->assertTrue(is_array($value), 'array expected');
     }
 }

@@ -761,8 +761,6 @@
         <region iso3166="ST">
             <currency iso4217="STD" from="1977-09-08"/>
         </region>
-            <currency iso4217="SUR" from="1961-01-01" to="1991-12-25"/>
-        </region -->
         <region iso3166="SV">
             <currency iso4217="SVC" from="1919-11-11"/>
             <currency iso4217="USD" from="2001-01-01"/>
