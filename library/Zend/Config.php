@@ -42,11 +42,11 @@ class Zend_Config implements Countable, Iterator
     protected $_allowModifications;
 
     /**
-     * Whether the iteration pointer is valid
+     * Iteration index
      *
-     * @var boolean
+     * @var integer
      */
-    protected $_iterationPointerValid;
+    protected $_index;
 
     /**
      * Contains array of configuration data
@@ -70,6 +70,7 @@ class Zend_Config implements Countable, Iterator
     public function __construct($array, $allowModifications = false)
     {
         $this->_allowModifications = (boolean) $allowModifications;
+        $this->_index = 0;
         $this->_data = array();
         foreach ($array as $key => $value) {
             if ($this->_isValidKeyName($key)) {
@@ -196,11 +197,8 @@ class Zend_Config implements Countable, Iterator
      */
     public function next()
     {
-        if (next($this->_data) === false) {
-            $this->_iterationPointerValid = false;
-        } else {
-            $this->_iterationPointerValid = true;
-        }
+        next($this->_data);
+        $this->_index++;
     }
 
     /**
@@ -210,7 +208,7 @@ class Zend_Config implements Countable, Iterator
     public function rewind()
     {
         reset($this->_data);
-        $this->_iterationPointerValid = true;
+        $this->_index = 0;
     }
 
     /**
@@ -220,7 +218,7 @@ class Zend_Config implements Countable, Iterator
      */
     public function valid()
     {
-        return $this->_iterationPointerValid;
+        return $this->_index < count($this->_data);
     }
 
 }

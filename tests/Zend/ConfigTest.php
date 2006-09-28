@@ -272,7 +272,7 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
 
         $this->fail('An expected Zend_Config_Exception has not been raised');
     }
-    
+
     public function testZF343()
     {
         $config_array = array(
@@ -286,6 +286,28 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
 		);
 		$form_config = new Zend_Config($config_array, true);
 		$this->assertSame(array(), $form_config->controls->visible->attribs->asArray());
+    }
+
+    public function testZF402()
+    {
+        $configArray = array(
+            'data1'  => 'someValue',
+            'data2'  => 'someValue',
+            'false1' => false,
+            'data3'  => 'someValue'
+            );
+        $config = new Zend_Config($configArray);
+        $this->assertTrue(count($config) === count($configArray));
+        $count = 0;
+        foreach ($config as $key => $value) {
+            if ($key === 'false1') {
+                $this->assertTrue($value === false);
+            } else {
+                $this->assertTrue($value === 'someValue');
+            }
+            $count++;
+        }
+        $this->assertTrue($count === 4);
     }
 
 }
