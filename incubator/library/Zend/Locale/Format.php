@@ -674,7 +674,7 @@ print_r($match);
     public static function throwException($message)
     {
         // For performance reasons, we use this dynamic inclusion
-        require_once('Zend/Locale/Exception.php');
+        require_once 'Zend/Locale/Exception.php';
         throw new Zend_Locale_Exception($message);
     }
 }

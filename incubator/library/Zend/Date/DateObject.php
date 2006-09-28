@@ -806,7 +806,7 @@ class Zend_Date_DateObject {
      */
     public static function throwException($message)
     {
-        require_once('Zend/Date/Exception.php');
+        require_once 'Zend/Date/Exception.php';
         throw new Zend_Date_Exception($message);
     }
 }

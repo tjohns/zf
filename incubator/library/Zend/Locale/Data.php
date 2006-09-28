@@ -20,7 +20,7 @@
  */
 
 
-require_once('Zend/Locale.php');
+require_once 'Zend/Locale.php';
 
 
 /**
@@ -711,7 +711,7 @@ class Zend_Locale_Data
      */
     public static function throwException($message)
     {
-        require_once('Zend/Locale/Exception.php');
+        require_once 'Zend/Locale/Exception.php';
         throw new Zend_Locale_Exception($message);
     }
 }

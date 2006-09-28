@@ -102,7 +102,7 @@ abstract class Zend_Measure_Abstract //implements Serializable
      */
     public static function throwException($message)
     {
-        require_once('Zend/Measure/Exception.php');
+        require_once 'Zend/Measure/Exception.php';
         throw new Zend_Measure_Exception($message);
     }
 

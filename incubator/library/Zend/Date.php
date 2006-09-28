@@ -22,14 +22,14 @@
 /**
  * Include needed Date classes
  */
-require_once('Zend/Date/DateObject.php');
+require_once 'Zend/Date/DateObject.php';
 
 
 /**
  * Include needed Locale classes
  */
-require_once('Zend/Locale.php');
-require_once('Zend/Locale/Data.php');
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Data.php';
 
 
 /**

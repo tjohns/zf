@@ -19,7 +19,7 @@
  */
 
 
-require_once('Zend/Locale.php');
+require_once 'Zend/Locale.php';
 
 
 /**
@@ -342,7 +342,7 @@ class Zend_Measure
      */
     public static function throwException($message)
     {
-        require_once('Zend/Measure/Exception.php');
+        require_once 'Zend/Measure/Exception.php';
         throw new Zend_Measure_Exception($message);
     }
 }
