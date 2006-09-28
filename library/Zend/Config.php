@@ -47,6 +47,13 @@ class Zend_Config implements Countable, Iterator
      * @var integer
      */
     protected $_index;
+    
+    /**
+     * Number of elements in configuration data
+     *
+     * @var integer
+     */
+    protected $_count;
 
     /**
      * Contains array of configuration data
@@ -83,6 +90,7 @@ class Zend_Config implements Countable, Iterator
                 throw new Zend_Config_Exception("Invalid key: '$key'");
             }
         }
+        $this->_count = count($this->_data);
     }
 
     /**
@@ -127,6 +135,7 @@ class Zend_Config implements Countable, Iterator
             } else {
                 $this->_data[$name] = $value;
             }
+            $this->_count = count($this->_data);
         } else {
             throw new Zend_Config_Exception('Zend_Config is read only');
         }
@@ -218,7 +227,7 @@ class Zend_Config implements Countable, Iterator
      */
     public function valid()
     {
-        return $this->_index < count($this->_data);
+        return $this->_index < $this->_count;
     }
 
 }
