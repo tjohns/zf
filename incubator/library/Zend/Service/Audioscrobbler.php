@@ -171,7 +171,7 @@ class Zend_Service_Audioscrobbler
 
 	/**
 	* Sets the album to grab data about
-	* @param strubg
+	* @param string
 	*/
 	public function setAlbum($album)
 	{
@@ -367,18 +367,20 @@ class Zend_Service_Audioscrobbler
 	 *
 	 */
 	public function userGetTopTagsForTrack()
-	{
-		$required = array('artist'=>'artist name','track'=>'track name');
-		return $this->_getInfoByUser('tracktags.xml?artist='.urlencode($this->artist).'&track='.urlencode($this->track),$required);
-	}
+    {
+        $service = "/{$this->version}/user/{$this->user}/tracktags.xml";
+        $params = "artist={$this->artist}&track={$this->track}";
+        return $this->_getInfo($service, $params);
+    }
 
 	/**
 	 * Utility function that retrieves this user's list of friends
 	 * @return SimpleXML object containing result set
 	 */
 	public function userGetFriends()
-	{
-		return $this->_getInfoByUser('friends.xml');
+    {
+        $service = "/$this->version/user/$this->user/friends.xml"; 
+		return $this->_getInfo($service);
 	}
 
 	/**
@@ -387,8 +389,9 @@ class Zend_Service_Audioscrobbler
 	 *
 	 */
 	public function userGetNeighbours()
-	{
-		return $this->_getInfoByUser('neighbours.xml');
+    {
+        $service = "/{$this->version}/user/{$this->user}/neighbours.xml";
+		return $this->_getInfo($service);
 	}
 
 	/**
@@ -398,7 +401,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetRecentTracks()
 	{
-		return $this->_getInfoByUser('recenttracks.xml');
+		$service = "/{$this->version}/user/{$this->user}/friends.xml";
+        return $this->_getInfo($service);
 	}
 
 	/**
@@ -408,7 +412,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetRecentBannedTracks()
 	{
-		return $this->_getInfoByUser('recentbannedtracks.xml');
+		$service = "/{$this->version}/user/{$this->user}/recentbannedtracks.xml";
+        return $this->_getInfo($service);
 	}
 
 	/**
@@ -418,18 +423,9 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetRecentLovedTracks()
 	{
-		return $this->_getInfoByUser('recentlovedtracks.xml');
-	}
-
-	/**
-	 * Utility function that returns recent journal entries by this user
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function userGetRecentJournals()
-	{
-		return $this->_getInfoByUser('journals.rss');
-	}
+        $service = "/{$this->version}/user/{$this->user}/recentlovedtracks.xml";
+        return $this->_getInfo($service);
+    }
 
 	/**
 	 * Utility function that returns a list of dates of available weekly charts for a this user
@@ -438,73 +434,75 @@ class Zend_Service_Audioscrobbler
 	 *
 	 */
 	public function userGetWeeklyChartList()
+    {
+        $service = "/{$this->version}/user/{$this->user}/weeklychartlist.xml";
+        return $this->_getInfo($service);
+    }
+
+
+	/**
+	 * Utility function that returns weekly album chart data for this user
+	 * @return SimpleXML object containing result set
+	 *
+	 * @param integer $from optional UNIX timestamp for start of date range
+	 * @param integer $to optional UNIX timestamp for end of date range
+	 */
+	public function userGetWeeklyAlbumChart($from = NULL, $to = NULL)
 	{
-		return $this->_getInfoByUser('weeklychartlist.xml');
+        $params = "";
+        
+        if ($from != NULL && $to != NULL) {
+            $from = (int)$from;
+            $to = (int)$to;
+            $params = "from={$from}&to={$to}";
+        }
+        
+        $service = "/{$this->version}/user/{$this->user}/weeklyalbumchart.xml";
+		return $this->_getInfo($service, $params);
 	}
 
 	/**
-	 * Utility function that returns the most recent weekly artist chart for this user
+	 * Utility function that returns weekly album chart data for this user
 	 * @return SimpleXML object containing result set
 	 *
+	 * @param integer $from optional UNIX timestamp for start of date range
+	 * @param integer $to optional UNIX timestamp for end of date range
 	 */
-	public function userGetRecentWeeklyArtistChart()
+	public function userGetWeeklyArtistChart($from = NULL, $to = NULL)
 	{
-		return $this->_getInfoByUser('weeklyartistchart.xml');
+        $params = "";
+        
+        if ($from != NULL && $to != NULL) {
+            $from = (int)$from;
+            $to = (int)$to;
+            $params = "from={$from}&to={$to}";
+        }
+        
+        $service = "/{$this->version}/user/{$this->user}/weeklyartistchart.xml";
+		return $this->_getInfo($service, $params);
 	}
 
 	/**
-	 * Utility function that returns the most recent weekly album chart for this user
+	 * Utility function that returns weekly track chart data for this user
 	 * @return SimpleXML object containing result set
 	 *
+	 * @param integer $from optional UNIX timestamp for start of date range
+	 * @param integer $to optional UNIX timestamp for end of date range
 	 */
-	public function userGetRecentWeeklyAlbumChart()
+	public function userGetWeeklyTrackChart($from = NULL, $to = NULL)
 	{
-		return $this->_getInfoByUser('weeklyalbumchart.xml');
+        $params = "";
+        
+        if ($from != NULL && $to != NULL) {
+            $from = (int)$from;
+            $to = (int)$to;
+            $params = "from={$from}&to={$to}";
+        }
+        
+        $service = "/{$this->version}/user/{$this->user}/weeklytrackchart.xml";
+		return $this->_getInfo($service, $params);
 	}
 
-	/**
-	 * Utility function that returns the most recent weekly track chart for this user
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function userGetRecentWeeklyTrackChart()
-	{
-		return $this->_getInfoByUser('weeklytrackchart.xml');
-	}
-
-	/**
-	 * Utility function that returns this user's weekly artist chart for a specific date range
-	 * Use userGetWeeklyChartList() to get a list of valid dates
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function userGetPreviousWeeklyArtistChart()
-	{
-		$required = array('FromDate'=>'1114965332','ToDate'=>'1115570132');
-		return $this->_getInfoByUser('weeklyartistchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
-	}
-
-	/**
-	 * Utility function that returns this user's weekly album chart for a specific date range
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function userGetPreviousWeeklyAlbumChart()
-	{
-		$required = array('FromDate'=>'1114965332','ToDate'=>'1115570132');
-		return $this->_getInfoByUser('weeklyalbumchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
-	}
-
-	/**
-	 * Utility function that returns this user's weekly album chart for specific date range
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function userGetPreviousWeeklyTrackChart()
-	{
-		$required = array('FromDate'=>'1114965332', 'ToDate'=>'1115570132');
-		return $this->_getInfoByUser('weeklytrackchart.xml?from='.$this->from_date.'&to='.$this->to_date. $required);
-	}
 
 	//////////////////////////////////////////////////////////
 	///////////////////////  ARTIST  /////////////////////////
