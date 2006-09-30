@@ -40,12 +40,13 @@ class Zend_Mail_Transport_Imap
      * Public constructor
      *
      * @param string $host  hostname of IP address of IMAP server, if given connect() is called
-     * @param int    $port  port of IMAP server, default is 143
+     * @param int    $port  port of IMAP server, default is 143 (993 for ssl)
+     * @param bool   $ssl   use ssl?
      */
-    function __construct($host = '', $port = null) 
+    function __construct($host = '', $port = null, $ssl = false) 
     {
         if($host) {
-            $this->connect($host, $port);
+            $this->connect($host, $port, $ssl);
         } 
     }
 
@@ -61,15 +62,21 @@ class Zend_Mail_Transport_Imap
      * Open connection to POP3 server
      *
      * @param  string $host  hostname of IP address of POP3 server
-     * @param  int    $port  of POP3 server, default is 110 (995 for ssl)
+     * @param  int    $port  of IMAP server, default is 143 (993 for ssl)
+     * @param  string $ssl   use 'SSL' or 'TLS'
      * @throws Zend_Mail_Transport_Exception
      * @return string welcome message
      */
-    public function connect($host, $port = null) 
+    public function connect($host, $port = null, $ssl = false) 
     {
-        if(is_null($port)) {
-            $port = 143;
+        if ($ssl == 'SSL') {
+            $host = 'ssl://' . $host;
         }
+
+        if(is_null($port)) {
+            $port = $ssl === 'SSL' ? 993 : 143;
+        }
+        
         $this->_socket = @fsockopen($host, $port);
         if(!$this->_socket) {
             throw new Zend_Mail_Transport_Exception('cannot connect to host');
@@ -77,6 +84,14 @@ class Zend_Mail_Transport_Imap
 
         if(!$this->readLine()) {
             throw new Zend_Mail_Transport_Exception('host doesn\'t allow connection');          
+        }
+        
+        if($ssl === 'TLS') {
+            $result = $this->requestAndResponse('STARTTLS');
+            $result = $result && stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+            if(!$result) {
+                throw new Zend_Mail_Transport_Exception('cannot enable TLS');
+            }
         }
     }
     

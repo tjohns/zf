@@ -56,7 +56,7 @@ class Zend_Mail_Transport_Pop3
     public function __construct($host = '', $port = null, $ssl = false) 
     {
         if ($host) {
-            $this->connect($host, $port);
+            $this->connect($host, $port, $ssl);
         }
     }
     
