@@ -244,7 +244,7 @@ class Zend_Locale_Format
         if ($symbols['minus'] != "-") {
             $found = strtr($found, $symbols['minus'], '-');
         }
-        $found = str_replace($symbols['group'], "", $found);
+        $found = str_replace($symbols['group'], '', $found);
 
         // Do precision
         if (strpos($found, $symbols['decimal']) !== false) {
@@ -254,10 +254,12 @@ class Zend_Locale_Format
 
             $pre = substr($found, strpos($found, '.') + 1);
 
-            if (strlen($pre) > $precision) {
+            if ($precision == false) {
+                $precision = strlen($pre);
+            }
+
+            if (strlen($pre) >= $precision) {
                 $found = substr($found, 0, strlen($found) - strlen($pre) + $precision);
-            } else if (strlen($pre) < $precision) {
-                $found = str_pad($found, $precision, '0');
             } else {
                 $found = substr($found, 0, strpos($found, '.') - 1);
             }
@@ -549,9 +551,8 @@ class Zend_Locale_Format
 
         // Get correct date for this locale
         $format = Zend_Locale_Data::getContent($locale,'dateformat', array('gregorian', $type));
-print $format['pattern']."\n<br>";
-        // Parse input locale aware
 
+        // Parse input locale aware
         $pattern = str_split($format['pattern']);
         $last = 0;
         $step = 0;
