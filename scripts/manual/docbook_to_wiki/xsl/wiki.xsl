@@ -3,8 +3,15 @@
 <xsl:output method="html"/>    
 
 <xsl:template match="chapter">
+{section}
+{column:width=200}
+{pageTree:root=Home}
+{column}
+{column}
 {toc:style=none|indent=25px}
 <xsl:apply-templates/>
+{column}
+{section}
 </xsl:template>
 
 <xsl:template match="sect1/title">
@@ -29,9 +36,9 @@ h4. <xsl:value-of select="."/>
 
 <xsl:template match="note">
 
-{note}
+{tip:icon=false}
 <xsl:value-of select="."/>
-{note}
+{tip}
 
 </xsl:template>
 
@@ -40,11 +47,11 @@ h4. <xsl:value-of select="."/>
 </xsl:template>
 
 <xsl:template match="listitem">
-* <xsl:value-of select="."/>
+* <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="tip">
-{tip}
+{tip:title=Info}
 <xsl:value-of select="."/>
 {tip}
 </xsl:template>
@@ -63,6 +70,6 @@ h4. <xsl:value-of select="."/>
 <xsl:template match="thead/row/entry">||<xsl:value-of select="."/></xsl:template>
 <xsl:template match="tbody/row/entry">|<xsl:value-of select="."/></xsl:template>
 
-<xsl:template match="para/code">_<xsl:value-of select="."/>_</xsl:template>
+<xsl:template match="para/code">{{<xsl:value-of select="."/>}}</xsl:template>
    
 </xsl:stylesheet>
