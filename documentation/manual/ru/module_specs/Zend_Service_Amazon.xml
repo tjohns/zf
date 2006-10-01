@@ -5,7 +5,7 @@
         <para>
             <code>Zend_Service_Amazon</code> является простым API
             для использования веб-сервиса Amazon. <code>Zend_Service_Amazon</code>
-            имеет два API: более традиционный, который похож на
+            имеет два API: традиционный, который похож на
             собственный интерфейс Amazon, и более простой "API запросов",
             который позволяет легко строить даже сложные поисковые запросы.
 <!--
@@ -61,7 +61,7 @@
         <para>
             Для того, чтобы использовать <code>Zend_Service_Amazon</code>, необходимо
             иметь ключ разработчика к API Amazon.
-            Для того, чтобы получить ключ и более детальную информацию, обращайтесь к сайту
+            Чтобы получить ключ и более подробную информацию, обратитесь к сайту
             <ulink url="http://www.amazon.com/gp/aws/landing.html">веб-сервисы Amazon</ulink>.
 <!--
             In order to use <code>Zend_Service_Amazon</code>, you should already have
@@ -70,9 +70,8 @@
 -->
         </para>
         <note>
-            Ваш ключ разработчика к API Amazon связан с вашим идентификатором в Amazon,
+            Ваш ключ разработчика к API Amazon связан с вашим аккаунтом в Amazon,
             поэтому позаботьтесь о том, чтобы хранить ваш ключ в безопасности. 
-            
 <!--
             Your Amazon developer API key is linked to your Amazon identity, so
             take appropriate measures to keep your API key private.
@@ -82,7 +81,7 @@
             <title>Поиск с использованием традиционного API<!--Search Amazon Using the Traditional API--></title>
             <para>
                 В данном примере мы ищем книги по PHP на Amazon и выводим результат
-                в цикле. 
+                в цикле.
 <!--
                 In this example, we search for PHP books at Amazon
                 and loop through the results, printing them.
@@ -154,7 +153,7 @@ $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
         <title>Поиск товара по его коду ASIN<!--Looking up a Specific Amazon Item by ASIN--></title>
         <para>
             Метод <code>itemLookup()</code> дает возможность извлекать
-            поределенный товар Amazon, если известен его код ASIN.
+            определенный товар Amazon, если известен его код ASIN.
 <!--
             The <code>itemLookup()</code> method provides the ability to fetch
             a particular Amazon item when the ASIN is known.
@@ -205,8 +204,8 @@ foreach($response as $r) {
 ?>]]>       </programlisting>
         </example>
         <para>
-            Метод <code>itemSearch()</code> принимает единственный параметр
-            в виде массива для управлениями опциями поиска.
+            Метод <code>itemSearch()</code> принимает массива для управлениями опциями поиска
+            в качестве единственного параметра.
             За более подробной информацией,
             включающей список доступных опций, см.
             <ulink url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">соответствующую документацию Amazon</ulink>.
@@ -218,7 +217,7 @@ foreach($response as $r) {
         </para>
         <tip>
             Класс <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link>
-            удобен в использовании и является "оберкой" для этого метода.
+            "оберткой" для этого метода, более удобной в использовании.
 <!--
             The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> class
             is an easy to use wrapper around this method.

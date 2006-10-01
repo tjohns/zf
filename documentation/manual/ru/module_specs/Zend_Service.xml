@@ -15,10 +15,9 @@
 <!--
         <code>Zend_Service</code> offers support for any REST-based web service through
 -->        
-        .
     </para>
     <para>
-        Кроме возможности расширения класса <code>Zend_Service</code>
+        Кроме возможности наследования от класса <code>Zend_Service</code>
         и использования <code>Zend_Service_Rest</code> для веб-сервисов, основанных на REST,
         Zend предоставляет поддержку популярных веб-сервисов, таких, как
         <link linkend="zend.service.amazon">Amazon</link>,

@@ -1,7 +1,7 @@
 <sect2 id="zend.service.amazon.classes">
     <title>Классы Zend_Service_Amazon</title>
     <para>
-        Следующие классы возвращаются методами
+        Все следующие классы возвращаются методами
         <link linkend="zend.service.amazon.itemlookup"><code>Zend_Service_Amazon::itemLookup()</code></link>
         и
         <link linkend="zend.service.amazon.itemsearch"><code>Zend_Service_Amazon::itemSearch()</code></link>:

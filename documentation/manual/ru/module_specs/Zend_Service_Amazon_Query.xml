@@ -31,7 +31,7 @@
 -->
         </para>
         <example>
-            <title><!--Search Amazon Using the Alternative Query API--></title>
+            <title>Поиск через Amazon с использованием альтернативного API запросов<!--Search Amazon Using the Alternative Query API--></title>
             <para>
                 В данном примере используется альтернативный API запросов
                 для указания опций и их значений:
