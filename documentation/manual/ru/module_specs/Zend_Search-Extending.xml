@@ -82,14 +82,14 @@ $index->addDocument($doc);
         </para>
 
         <para>
-            Здесь приведен пример созданного пользователем анализатора, котрорый
+            Здесь приведен пример пользовательского анализатора, котрорый
             принимает слова с цифрами как элементы:
 <!--
             Here is an example of a custom Analyzer, which takes words with digits as terms:
 -->
 
             <example>
-                <title><!--Custom text Analyzer.--></title>
+                <title>Собственный анализатор текста<!--Custom text Analyzer.--></title>
                 <programlisting role="php"><![CDATA[<?php
 /** Это созданный пользователем текстовый анализатор, который интерпретирует слова с цифрами как один элемент. */
 

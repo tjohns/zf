@@ -20,7 +20,7 @@
 -->
         </para>
         <example>
-            <title><!--A basic XML-RPC request--></title>
+            <title>Основной запрос XML-RPC<!--A basic XML-RPC request--></title>
             <programlisting role="php"><![CDATA[<?php
 
 /**
