@@ -1,25 +1,32 @@
 <sect1 id="zend.cache.introduction">
-    <title>Introduction</title>
+    <title>مقدمة</title>
     <para>
-        <code>Zend_Cache</code> provides a generic way to cache any data.
+        <code>Zend_Cache</code> يوفر إمكانية عمل cache للبيانات.
     </para>
-    <para>
-      Caching in Zend Framework is operated by frontends while cache records are stored through backend adapters
-      (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...) through a flexible
-      system of IDs and tags. Using those, it is easy to delete specific types of records afterwards
-      (for example: "delete all cache records marked with a given tag").
+      <para>
+          عملية الـ caching فى إطار عمل Zend يتم إدارتها من خلال الـ frontend فى حين ان سجلات الـ cache يتم حفظها 
+           و استرجاعها عن طريق backend adapters مثل (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...) 
+          و يستخدم ايضا IDs و tags. بهذه الطريقة يكن من السهل حذف مجموعات محددة من السجلات بعد ذلك.
+          على سبيل المثال ("حذف كل سجلات الـ cache المعرفة بـ tag معين")
+          
+      
     </para>
+    
     <para>
-        The core of the module (<code>Zend_Cache_Core</code>) is generic, flexible and configurable.
-        Yet, for your specific needs there are cache frontends that extend <code>Zend_Cache_Core</code>
-        for convinience: <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
+        جوهر الـ module هو (<code>Zend_Cache_Core</code>) و هو يمثل المرونة و الشمولية و قابلية تعديل الخصائص (configurable).
+        حتى الأن يوجد cache frontends تمتد عن <code>Zend_Cache_Core</code> و التى ستخدم احتياجاتك.
+        و هى : <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
+        
+      
     </para>
     <example>
-        <title>Getting a frontend with <code>Zend_Cache::factory()</code></title>
+        <title>إنشاء frontend بواسطة <code>()Zend_Cache::factory</code></title>
+
         <para>
-            <code>Zend_Cache::factory()</code> instantiates correct objects and ties them together.
-            In this first example, we will use <code>Core</code> frontend together with <code>File</code>
-            backend.
+            <code>()Zend_Cache::factory</code> ينشئ الـ objects المتوافقة معا و التى 
+            ستحتاجها لإتمام عملك. فى هذا المثال, سنستخدم frontend و هو <code>Core</code> 
+            و سنستخدم ايضا backend  وهو <code>File</code>.
+        
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
@@ -38,6 +45,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 ?>]]></programlisting>
        </para>
        <para>
+            
             Now that we have a frontend, we can cache any type of data (we turned on serialization). For
             example, we can cache a result from a very expensive database query. After it is cached, there
             is no need to even connect to the database; records are fetched from cache and unserialized.

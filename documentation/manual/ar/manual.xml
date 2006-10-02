@@ -7,9 +7,17 @@
 ]>
 <book id="manual" lang="ar">
     <bookinfo>
+<<<<<<< .mine
+        <title>دليل المبرمج</title>
+=======
         <title>الدليل المرجعى للمبرمج</title>
+>>>>>>> .r1147
         <subtitle>Zend Framework</subtitle>
+<<<<<<< .mine
+        <edition>دليل مبرجى إطار عمل Zend</edition>
+=======
         <edition>الدليل المرجعى للمبرمجين لإطار عمل Zend</edition>
+>>>>>>> .r1147
         <pubdate><?dbtimestamp format="Y-m-d"?></pubdate>
         <copyright>
             <year>2005-<?dbtimestamp format="Y"?></year>
