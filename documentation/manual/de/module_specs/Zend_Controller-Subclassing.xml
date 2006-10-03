@@ -94,6 +94,7 @@
 			<para>
 				Die <code>Zend_Controller</code> Klassen sind im Bibliotheksverzeichnis wie folgt
 				abgelegt::
+			</para>
 
     <programlisting role="php"><![CDATA[
 /library
@@ -104,6 +105,7 @@
       Router.php
 ]]></programlisting>			
 				
+			<para>
 				Wenn du die <code>Zend_Controller</code> erweiterst, wird empfohlen, dass die neuen
 				Klassen in der gleichen Struktur unterhalb deines Präfix abgelegt werde. Dies macht 
 				es einfacher, sie zu finden, wenn sich jemand in dem Lernprozess befindet, bei dem 
@@ -113,6 +115,7 @@
 			<para>
 			    Zum Beispiel könnte ein Projekt von Widget, Inc., das nur einen kundenspezifischen
 			    Router implementiert, so aussehen:
+			</para>
 				
 <programlisting role="php"><![CDATA[
 /library
@@ -123,6 +126,7 @@
       README.txt
 ]]></programlisting>			
 				
+			<para>
 				Beachte an diesem Beispiel, dass das <code>Widget/Controller/</code> Verzeichnis 
 				das <code>Zend/Controller/</code> Verzeichnis widerspiegelt, wo immer es möglich 
 				ist. In diesem Fall wird die Klasse <code>Widget_Controller_Router</code> 
@@ -148,6 +152,7 @@
 		<para>
 			Das Interface <code>Zend_Controller_Router_Interface</code> stellt die Definition
 			für eine einzige Methode bereit:
+		</para>
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -160,6 +165,7 @@
 
 ?>]]></programlisting>
 			
+		<para>
 			Das Routing findet nur einmal statt, wenn die Anfrage das erste Mal vom System erhalten
 			wird. Der Zweck des Routers ist es, einen <code>Zend_Controller_Dispatch_Token</code> 
 			zu generieren, der den aufzurufenden Controller und die Aktion dieses Controllers
@@ -197,6 +203,7 @@
 		<para>
 		    Das Interface <code>Zend_Controller_Dispatcher_Interface</code> stellt Definitionen
 		    für zwei Methoden bereit:
+		</para>
 			
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -208,13 +215,15 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 
-		<code>isDispatchable()</code> prüft, ob ein Dispatcher Token ausführbar ist. Falls ja, wird
-		<code>TRUE</code> zurückgegeben, andernfalls wird <code>FALSE</code> zurückgegeben. Die
-		Definition, was ausführbar ist, bleibt der Klasse vorbehalten, die das Interface 
-		implementiert. Im Falle des vorgegebenen Implementation vom 
-		<code>Zend_Controller_Dispatcher</code> bedeutet dies, dass die Controller Datei existiert,
-		die Klasse in der Datei vorhanden ist und die Aktionsmethode innerhalb dieser Klasse 
-		vorhanden ist.
+		<para>
+			<code>isDispatchable()</code> prüft, ob ein Dispatcher Token ausführbar ist. Falls ja, wird
+			<code>TRUE</code> zurückgegeben, andernfalls wird <code>FALSE</code> zurückgegeben. Die
+			Definition, was ausführbar ist, bleibt der Klasse vorbehalten, die das Interface 
+			implementiert. Im Falle des vorgegebenen Implementation vom 
+			<code>Zend_Controller_Dispatcher</code> bedeutet dies, dass die Controller Datei existiert,
+			die Klasse in der Datei vorhanden ist und die Aktionsmethode innerhalb dieser Klasse 
+			vorhanden ist.
+		</para>
 		
 		<programlisting role="php"><![CDATA[<?php
 			
@@ -226,10 +235,10 @@ public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 		
-		In <code>dispatch()</code> wird die Arbeit erledigt. Diese Methode muß die Aktion des
-		Controllers ausführen. Sie muss entweder einen Dispatch Token oder den den booleschen Wert 
-		<code>FALSE</code> zurückgeben, um aufzuzeigen, dass keine weitere Arbeit zu erledigen ist.
-		
+		<para>
+			In <code>dispatch()</code> wird die Arbeit erledigt. Diese Methode muß die Aktion des
+			Controllers ausführen. Sie muss entweder einen Dispatch Token oder den den booleschen Wert 
+			<code>FALSE</code> zurückgeben, um aufzuzeigen, dass keine weitere Arbeit zu erledigen ist.
 		</para>
 	</sect2>
 		

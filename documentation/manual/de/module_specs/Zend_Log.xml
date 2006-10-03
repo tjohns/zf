@@ -13,6 +13,7 @@
         Adapterklasse, die verwendet werden soll, mittels <ulink url="http://php.net/include">include()</ulink>.
         Wenn eine Anwendung zum Beispiel sowohl in die Konsole (den Ausgabepuffer von PHP) als auch
         an Textdateien protokollieren soll, würden folgende Dateien inkludiert werden:
+    </para>
 
         <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                  // Zend_Log Basisklasse
@@ -20,6 +21,7 @@ require_once 'Zend/Log/Adapter/Console.php';  // Protokolladapter für die Konso
 require_once 'Zend/Log/Adapter/File.php';     // Protokolladapter für Dateien
 ]]></programlisting>
 
+    <para>
         <code>Zend_Log</code> kann für ein einzelnes Log auch in vereinfachter Weise, für mehrfache 
         Protokolle und auch für das interne Protokollieren von Abläufen in vielen Zend Framework 
         Klassen verwendet werden. 
@@ -31,6 +33,7 @@ require_once 'Zend/Log/Adapter/File.php';     // Protokolladapter für Dateien
     <para>
         Ein Protokoll wird durch den Aufruf der <code>Zend_Log::registerLogger()</code> Methode mit
         einer <code>Zend_Log_Adapter_Interface</code> Instanz als Argument erstellt.
+    </para>
 
         <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                // Zend_Log Basisklasse
@@ -39,10 +42,10 @@ require_once 'Zend/Log/Adapter/File.php';   // Protokolladapter für Dateien
 // Dateiprotokoll registrieren
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
 ]]></programlisting>
-    </para>
 
     <para>
         Nachrichten werden an das Protokoll dann mit <code>Zend_Log::log()</code> gesendet. 
+    </para>
 
         <programlisting role="php"><![CDATA[
 /**
@@ -56,7 +59,6 @@ Zend_Log::log('Erste Protokollnachricht.');
  */
 Zend_Log::log('Ein schwerer Fehler ist aufgetreten.', Zend_Log::LEVEL_SEVERE);
 ]]></programlisting>
-    </para>
 </sect1>
 
 <sect1 id="zend.log.log-levels">
@@ -65,6 +67,7 @@ Zend_Log::log('Ein schwerer Fehler ist aufgetreten.', Zend_Log::LEVEL_SEVERE);
        <code>Zend_Log::log()</code> protokolliert alle Nachrichten als <code>LEVEL_DEBUG</code>,
        wenn keine andere Stufe als optionales zweites Argument übergeben wird. Die folgenden Stufen
        sind als Konstanten der <code>Zend_Log</code> Klasse verfügbar. 
+   </para>
 
        <programlisting role="php"><![CDATA[
 LEVEL_DEBUG     = 1
@@ -72,7 +75,6 @@ LEVEL_WARNING   = 4
 LEVEL_ERROR     = 8
 LEVEL_SEVERE    = 16
 ]]></programlisting>
-   </para>
 </sect1>
 
 <sect1 id="zend.log.advanced-logging">
@@ -91,6 +93,7 @@ LEVEL_SEVERE    = 16
    <para>
         Im Beispiel unten werden zwei Protokolle erstellt: eines für die Konsole und eines für eine
         Datei. Sie erhalten die entsprechenden Namen <code>Konsole</code> und <code>Datei</code>.
+   </para>
 
         <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                 // Zend_Log Basisklasse
@@ -100,7 +103,6 @@ require_once 'Zend/Log/Adapter/Console.php'; // Protokolladapter für Dateien
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'Datei');
 Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Konsole');
 ]]></programlisting>
-   </para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

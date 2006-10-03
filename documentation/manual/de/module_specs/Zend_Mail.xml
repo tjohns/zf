@@ -14,6 +14,7 @@
             einem Versender. Um solch eine Mail mit Hilfe der 
             <ulink url="http://php.net/mail"><code>mail()</code></ulink> PHP Funktion zu versenden,
             musst Du folgendes tun:
+       </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
@@ -23,7 +24,6 @@ $mail->addTo('somebody_else@example.com', 'Ein Empfänger');
 $mail->setSubject('TestBetreff');
 $mail->send();
 ?>]]>       </programlisting>
-       </para>
     </example>
     <note>
         Um eine E-Mail mit <code>Zend_Mail</code> zu versenden, musst du mindestens einen Empfänger,
@@ -171,6 +171,7 @@ $mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_
         du zurückgegebenen Wert von <code>addAttachment()</code> verwenden, um die Attributes zu
         verändern. Die <code>addAttachment()</code> Methode gibt ein <code>Zend_Mime_Part</code>
         Objekt zurück:
+    </para>
         <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
@@ -184,7 +185,6 @@ $at->filename    = 'test.gif';
 
 $mail->send();
 ?>]]>   </programlisting>
-    </para>
 </sect1>
 <sect1 id="zend.mail.adding-recipients">
     <title>Empfänger hinzufügen</title>

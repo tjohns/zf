@@ -34,14 +34,17 @@
         <para>
             In diesem Beispiel werden Konfigurationsdaten für eine Produktionsumgebung mittels 
             <link linkend="zend.config.classes.ini"><code>Zend_Config_Ini</code></link> aus einer INI-Datei geladen:
+       </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'production'));
 ?>]]>       </programlisting>
+        <para>
             Nun sind die Konfigurationsdaten in Form von Eigenschaften des <code>$config</code> Objektes verfügbar.
             Angenommen, die Konfigurationsdaten beinhalten Parameter für eine Datenbankverbindung welche in einer
             INI-Datei wiefolgt gespeichert wurden:
+       </para>
             <programlisting role="ini"><![CDATA[[production]
 database.type     = pdo_mysql
 database.host     = db.example.com
@@ -49,7 +52,9 @@ database.username = dbuser
 database.password = secret
 database.name     = dbname]]>
             </programlisting>
+        <para>
             Die Anwendung könnte nun damit eine Verbindung zur Datenbank realisieren:
+       </para>
             <programlisting role="php"><![CDATA[<?php
 $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->host,
@@ -57,6 +62,7 @@ $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->password,
                                       $config->database->name);
 ?>]]>       </programlisting>
+        <para>
             Wie oben gezeigt, sind die Konfigurationsdaten mit Hilfe der Syntax für Objekteigenschaften abrufbar.
        </para>
     </example>
@@ -64,6 +70,7 @@ $myApplicationObject->databaseConnect($config->database->type,
         Wir können <code>Zend_Config</code> auch sehr einfach für die vielfältigsten Zwecke erweitern. Hier 
         stellt eine ableitende Klasse die öffentliche Methode <code>dump()</code> zum schnellen Ausgeben von geladenen 
         Konfigurationsdaten zur Verfügung:
+    </para>
         <programlisting role="php"><![CDATA[<?php
 class MyConfig extends Zend_Config
 {
@@ -97,7 +104,9 @@ $config = new MyConfig(Zend_Config_Ini::load('/path/to/config.ini', 'production'
 
 $config->dump();
 ?>]]>   </programlisting>
+    <para>
         Für die Konfigurationsdaten im obigen Beispiel würde Folgendes ausgegeben werden:
+    </para>
         <programlisting role="text"><![CDATA[<pre>
 database =>
     type => pdo_mysql
@@ -107,7 +116,6 @@ database =>
     name => dbname
 </pre>]]>
         </programlisting>
-    </para>
 </sect1>
 <sect1 id="zend.config.classes.array">
     <title>Zend_Config_Array</title>
@@ -122,6 +130,7 @@ database =>
                 Dieses Beispiel zeigt die einfache Nutzung von <code>Zend_Config_Array</code> für das Laden von
                 Konfigurationsdaten aus einem PHP-Array. Zuerst wird ein PHP-Array erstellt welches die 
                 Konfigurationsdaten enthält:
+            </para>
                 <programlisting role="php"><![CDATA[<?php
 // Konfigurationsdaten für Produktionsseite
 $config['production'] = array(
@@ -146,8 +155,10 @@ $config['staging']['database']['password'] = 'devsecret';
                 <note>
                     Das zu ladende Array mit den Konfigurationsdaten muß <code>$config</code> genannt werden.
                 </note>
+            <para>
                 Im obigen Beispeil sieht man, wie durch Vererbung Werte des <code>production</code> Abschnitts dem <code>staging</code>
                 Abschnitt zugewiesen werden. Damit ist es nun leicht Konfigurationsdaten per <code>Zend_Config_Array</code> zu laden:
+            </para>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Array.php';
@@ -156,17 +167,16 @@ $config = new Zend_Config(Zend_Config_Array::load('/path/to/config.php', 'stagin
 
 echo $config->database->host; // gibt "dev.example.com" aus
 ?>]]>           </programlisting>
-            </para>
         </example>
         <para>
             Zu beachten ist, dass alle Werte der Konfigurationsdaten den selben Datentyp wie das im PHP Skript enthaltene
             <code>$config</code> Array besitzen, weil diese direkt einem PHP-Array hinzugefügt werden.
+        </para>
             <programlisting role="php"><![CDATA[<?php
 $config['staging']['debug']   = 'false'; // Der Wert ist vom Typ String
 $config['staging']['console'] = false;   // Der Wert ist vom Typ Boolean
 $config['staging']['timeout'] = 30;      // Der wert ist vom Typ Integer
 ?>]]>       </programlisting>
-        </para>
     </sect2>
 </sect1>
 <sect1 id="zend.config.classes.ini">
@@ -181,6 +191,7 @@ $config['staging']['timeout'] = 30;      // Der wert ist vom Typ Integer
                 Dieses Beispiel zeigt die einfache Nutzung von <code>Zend_Config_Ini</code> um
                 Konfigurationsdaten aus einer INI-Datei zu laden. Angenommen die Konfigurationsdaten befinden sich in 
                 <code>/path/to/config.ini</code>:
+            </para>
                 <programlisting role="ini"><![CDATA[; Konfigurationsdaten für Produktionsseite
 [production]
 webhost           = www.example.com
@@ -206,9 +217,11 @@ database.password = devsecret]]>
                     speziellen Werte von <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code> und
                     <code>null</code> übersetzt werden.
                 </note>
+            <para>
                 Vererbung wird in der INI-Syntax durch Verwendung des Schlüsselwortes <code>extends</code> unterstützt. 
                 Der Wert von <code>extends</code> sollte dem Namen des Abschnitts entsprechen, von dem geerbt werden soll. 
                 Die Konfgurationsdaten werden anschließend aus der INI-Datei geladen:
+            </para>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
@@ -217,7 +230,6 @@ $config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'staging'
 
 echo $config->database->host; // gibt "dev.example.com" aus
 ?>]]>           </programlisting>
-            </para>
         </example>
     </sect2>
 </sect1>
@@ -233,6 +245,7 @@ echo $config->database->host; // gibt "dev.example.com" aus
                 Dieses Beispiel zeigt die einfache Nutzung von <code>Zend_Config_Xml</code> um
                 Konfigurationsdaten aus einer XML-Datei zu laden. Angenommen die Konfigurationsdaten befinden sich in 
                 <code>/path/to/config.xml</code>:
+            </para>
                 <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
 <config>
     <production>
@@ -253,9 +266,11 @@ echo $config->database->host; // gibt "dev.example.com" aus
         </database>
     </staging>
 </config>]]>    </programlisting>
+            <para>
                 Vererbung wird in der XML-Syntax durch die Verwendung des <code>extends</code> Attributs ermöglicht. 
                 Der Wert des <code>extends</code> Attributs sollte dem Namen des Abschnitts entsprechen, von dem geerbt werden soll. 
                 Die Konfigurationsdaten werden anschließend aus der XML-Datei geladen:
+            </para>
                 <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Xml.php';
@@ -264,7 +279,6 @@ $config = new Zend_Config(Zend_Config_Xml::load('/path/to/config.xml', 'staging'
 
 echo $config->database->host; // gibt "dev.example.com" aus
 ?>]]>           </programlisting>
-            </para>
             <note>
                 Werte der Konfigurationsdaten von <code>Zend_Config_Xml</code> werden immer als Strings behandelt.
             </note>

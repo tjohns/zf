@@ -92,11 +92,13 @@ indexWriter.addDocument(doc);]]>
     
         <para>
             LuceneIndexCreation.jar verwendet Textdateien und erstellt daraus den Index. Verwendung:
+        </para>
         <programlisting role="java"><![CDATA[
     java -jar LuceneIndexCreation.jar [-c] [-s] <document_dir> <index_dir>
     -c   - erzwinge Index mit Groß- und Kleinschreibung
     -s   - lege Inhalte im Index ab
     ]]></programlisting>
+        <para>
             Dieses Kommando verwendet das Verzeichnis <code>&lt;document_dir&gt;</code>, inklusive
             aller Unterverzeichnisse, und erstellt einen Lucene Index. Der Index besteht aus einem
             Satz von Dateien, die in einem separaten Verzeichnis abgelegt werden, dass durch 

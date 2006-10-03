@@ -46,6 +46,7 @@
         <para>
             Beide Arten verwenden die selbe Methode der Programmierschnittstelle (API), um den Index
             zu durchsuchen:
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -57,6 +58,7 @@ $index->find($query);
 
 ?>]]></programlisting>
 
+        <para>
             Die <code>Zend_Search_Lucene::find()</code> Methode ermittelt den Eingabetyp automatisch
             und verwendet den Query Parser, um ein entsprechendes Zend_Search_Lucene_Search_Query 
             Objekt aus dem String zu erstellen.
@@ -89,6 +91,7 @@ $index->find($query);
             Zend_Search_Lucene_Document, das gefunden wurde, als Eigenschaft des Treffers. In 
             diesem Beispiel, wird ein Treffer zurückgegeben und das entsprechende Dokument hat
             zwei Felder: Titel und Autor.
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -105,7 +108,6 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
             Optional kann das originale Zend_Search_Lucene_Document Objekt vom 
@@ -114,6 +116,8 @@ foreach ($hits as $hit) {
             Du kannst indizierte Teile des Dokuments durch Verwendung der <code>getDocument()</code>
             Methode des Indexobjektes zurückerhalten und diese dann durch die 
             <code>getFieldValue()</code> Methode abfragen:
+        </para>
+
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -137,6 +141,7 @@ foreach ($hits as $hit) {
 
 ?>]]></programlisting>
         
+        <para>
             Die Felder, die in einem Zend_Search_Lucene_Document Objekt verfügbar sind, werden beim
             Indizieren festgelegt. Die Dokumentenfelder werden durch die Indizieranwendung 
             (z.B. LuceneIndexCreation.jar) im Dokument entweder nur indiziert oder indiziert und 
@@ -169,6 +174,7 @@ foreach ($hits as $hit) {
 
         <para>
             Der Punktwert kann über die <code>score</code> Eigenschaft des Treffers ermittelt werden:
+        </para>
         <programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
 
@@ -178,7 +184,6 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
             Die Zend_Search_Lucene_Search_Similarity Klasse wird verwendet, um den Punktwert zu 

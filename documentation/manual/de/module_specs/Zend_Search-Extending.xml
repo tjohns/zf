@@ -254,6 +254,7 @@ Zend_Search_Lucene_Search_Similarity::setDefault($mySimilarity);
 
         <para>
         <code>Zend_Search_Lucene_Storage_Directory</code> Methoden:
+        </para>
 
         <programlisting><![CDATA[<?php
 
@@ -342,7 +343,6 @@ abstract function getFileObject($filename);
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
             Die <code>getFileObject($filename)</code> Methode der 
@@ -360,6 +360,7 @@ abstract function getFileObject($filename);
         <para>
             Nur zwei Methoden der <code>Zend_Search_Lucene_Storage_File</code> Klasse müssen in 
             deiner Implementation überladen werden:
+        </para>
 
         <programlisting><![CDATA[<?php
 
@@ -396,7 +397,6 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
 }
 
 ?>]]></programlisting>
-        </para>
 
 	</sect2>
 </sect1>

@@ -21,6 +21,7 @@
             <code>Zend_Cache::factory()</code> instanziiert korrekte Objekte und fügt sie zusammen.
             In diesem ersten Beispiel wird das <code>Core</code> Frontend zusammen mit dem 
             <code>File</code> Backend verwendet.
+        </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
@@ -37,12 +38,13 @@ $backendOptions = array(
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 ?>]]></programlisting>
-       </para>
+       
        <para>
             Jetzt, da wir ein Frontend haben, kann jeder Typ von Daten gecached werden (Serialisierung ist
             eingeschaltet). Zum Beispiel können Ergebnisse von sehr umfangreichen Datenbankabfragen
             gecached werden. Nach dem Cachen ist es sogar gar nicht nicht mehr notwendig, eine Verbindung
             zur Datenbank zu machen; Datensätze werden vom Cache genommen und deserialisiert.
+        </para>
             <programlisting role="php"><![CDATA[<?php
 
 // $cache initialisiert im vorhergehenden Beispiel
@@ -68,7 +70,7 @@ if(!$result = $cache->get('myresult')) {
 print_r($result);
 
 ?>]]></programlisting>
-       </para>
+       
     </example>
     <example>
         <title>Cache Ausgabe mit dem <code>Zend_Cache</code> Frontend</title>
@@ -81,6 +83,7 @@ print_r($result);
             Darin muß die Ausgabe der Daten wie immer geschehen - jede Ausgabe wird gecached, wenn die Ausführung auf
             die <code>end()</code> Methode trifft. Bei der nächsten Ausführung wird der komplette Abschnitt
             übersprungen, dafür werden die Daten vom Cache geholt (solange der Cache Datensatz gültig ist).
+       </para>
             <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
@@ -105,7 +108,6 @@ if(!$cache->start('mypage')) {
 echo 'Das wird nie gecached ('.time().').';
 
 ?>]]>       </programlisting>
-       </para>
        <para>
            Zu beachten ist das das Ergebnis von <code>time()</code> zweimal ausgegeben wird; das ist
            etwas dynamisches für Demonstrationszwecke. Beim Versuch dieses auszuführen und mehrfach zu 
@@ -157,6 +159,7 @@ echo 'Das wird nie gecached ('.time().').';
         <para>
             Ein guter Weg, um eine verwendbare Instanz eines <code>Zend_Cache</code> Frontends zu erstellen, wird im
             folgenden Beispiel gegeben:
+        </para> 
             <programlisting role="php"><![CDATA[<?php
         
 # Wir "laden" die Zend_Cache Factory 
@@ -179,7 +182,6 @@ $backendOptions = array([...]);
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
 ?>]]></programlisting> 
-        </para> 
         <para>
             In den folgenden Beispielen wird angenommen, dass die <code>$cache</code> Variable ein
             gültiges, initiiertes Frontend wie gezeigt enthält und dass verstanden wird, wie 
@@ -199,25 +201,27 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
             Methode abgespeichert werden soll, kann ein Array mit Markierungen für diesen Datensatz angelegt werden.
             Dann besteht die Möglichkeit, alle markierten Cache Datensätze mit einer bestimmten Markierung (oder
             Markierungen), zu löschen:
+        </para>
         <programlisting role="php"><![CDATA[<?php
              
 $cache->save($huge_data, 'myUniqueID', array('tagA', 'tagB', 'tagC'));
             
-?>]]></programlisting></para>
+?>]]></programlisting>
     </sect2>
     <sect2 id="zend.cache.clean">
         <title>Löschen des Caches</title>
         <para>
             Um eine bestimmte Cache ID zu entfernen/annullieren, kann die <code>remove()</code> Methode benutzt werden:
+        </para>
              <programlisting role="php"><![CDATA[<?php 
              
 $cache->remove('idToRemove');
             
 ?>]]></programlisting>            
-        </para>
         <para>
             Um mehrere Cache IDs mit einer Operation zu entfernen/annulieren, kann die <code>clean()</code> Methode
             benutzt werden. Zum Beispiel um alle Cache Datensätze zu entfernen :
+        </para>
               <programlisting role="php"><![CDATA[<?php 
 
 // Löschen aller Datensätze
@@ -227,13 +231,14 @@ $cache->clean(Zend_Cache::CLEANING_MODE_ALL);
 $cache->clean(Zend_Cache::CLEANING_MODE_OLD);
             
 ?>]]>       </programlisting>    
+        <para>
             Um Cache Einträge zu löschen, die zu den Tags 'tagA' und 'tagC' passen :
+        </para>
               <programlisting role="php"><![CDATA[<?php 
              
 $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
             
 ?>]]>       </programlisting>
-        </para>
         <para>
             Mögliche Löschmodi sind: <code>CLEANING_MODE_ALL</code>, <code>CLEANING_MODE_OLD</code>,
             <code>CLEANING_MODE_MATCHING_TAG</code> und <code>CLEANING_MODE_NOT_MATCHING_TAG</code>. 
@@ -349,6 +354,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
             <para>
                 Wenn nur Strings in den Cache gespeichert werden (denn mit der "automaticSerialization" Option
                 wäre es möglich Booleans zu speichern), kann ein kompakterer Weg wie folgt gewählt werden:
+            </para>  
                  <programlisting role="php"><![CDATA[<?php  
              
 // Es wird angenommen das $cache existiert
@@ -370,10 +376,10 @@ if (!($data = $cache->get($id))) {
 // [...] Irgendwas mit $data machen (ausgeben, verarbeiten, usw.)
              
 ?>]]>       </programlisting> 
-            </para>  
             <para>
                 Wenn mehrere Blöcke von Daten oder Daten Instanzen gecached werden sollen, ist die 
                 Idee dahinter die gleiche:
+            </para>            
                  <programlisting role="php"><![CDATA[<?php  
              
 // Sicherstellen, dass eindeutige Identifizierer verwendet werden:
@@ -412,7 +418,6 @@ if (!($data = $cache->get($id2))) {
 echo($data);
 
 ?>]]>       </programlisting>             
-            </para>            
         </sect3>   
     </sect2>
     
@@ -438,6 +443,7 @@ echo($data);
             <title>Beispiele</title>
             <para>
                 Ein Beispiel wird ganz am Anfang des Handbuches gegeben. Hier ist es mit kleinen Änderungen:
+            </para>
                  <programlisting role="php"><![CDATA[<?php
 
 // Wenn es ein Cache Miss ist, wird das puffern der Ausgabe ausgelöst
@@ -453,7 +459,6 @@ endif;
 echo 'Hier wird nie gecached ('.time().').';
 
 ?>]]>       </programlisting>
-            </para>
             <para>
                 Die Verwendung dieser Form ist ziemlich einfach, um Ausgabe caching in einem bereits bestehenden
                 Projekt, mit nur wenig oder gar keinen Codeänderungen, zu erhalten.
@@ -519,6 +524,7 @@ echo 'Hier wird nie gecached ('.time().').';
             <para>
                 Die Verwendung der <code>call()</code> Funktion ist die gleiche, wie die von
                 <code>call_user_func_array()</code> in PHP:
+            </para>
                  <programlisting role="php"><![CDATA[<?php
 
 $cache->call('veryExpensiveFunc', $params);
@@ -528,7 +534,6 @@ $cache->call('veryExpensiveFunc', $params);
 # $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar')) benutzt
 
 ?>]]>       </programlisting>
-            </para>
             <para>
                 <code>Zend_Cache_Frontend_Function</code> ist elegant genug, um beides zu cachen, den
                 Rückgabewert der Funktion und deren interne Ausgabe.
@@ -608,6 +613,7 @@ $cache->call('veryExpensiveFunc', $params);
             <title>Beispiele</title>
             <para>
                 zum Beispiel, um einen statischen Aufruf zu cachen:
+            </para>
                 <programlisting role="php"><![CDATA[<?php
 
 class test {
@@ -630,7 +636,9 @@ $frontendOptions = array(
 $res = $cache->foobar('1', '2');
 
 ?>]]>           </programlisting>
+            <para>
                 Um klassische Methodenaufrufe zu cachen :
+            </para>
                 <programlisting role="php"><![CDATA[<?php
 
 class test {
@@ -655,7 +663,6 @@ $frontendOptions = array(
 $res = $cache->foobar2('1', '2');
 
 ?>]]>           </programlisting>
-            </para>
         </sect3>   
     </sect2>
     
@@ -809,6 +816,7 @@ $res = $cache->foobar2('1', '2');
         	<title>Beispiele</title>
 	        <para>
 	            Die Verwendung von Zend_Cache_Frontend_Page ist wirklich trivial :
+	        </para>
 	            <programlisting role="php"><![CDATA[<?php
 	           
 // [...] // Benötigt, Konfiguration und Factory
@@ -819,11 +827,11 @@ $cache->start();
 // Rest der Seite ...
 	
 ?>]]>           </programlisting>
-	        </para>
 	        <para>
 	        	Ein etwas komplexeres Beispiel, welches einen Weg zeigt, um ein zentralisiertes
 	        	Cache Management in einer Bootstrap Datei zu erhalten (um es z.B. mit Zend_Controller´
 	        	zu verwenden)
+	        </para>	        
 	        	<programlisting role="php"><![CDATA[<?php
 
 // [...] du solltest es vermeiden, zu viele Zeilen vor dem Cache Bereich zu setzen
@@ -860,7 +868,6 @@ $cache->start();
 // [...] das Ende der Bootstrap Datei (diese Zeilen werden nicht ausgeführt, wenn der Cache ausgegeben wurde)
 	        	
 ?>]]>           </programlisting>	        	
-	        </para>	        
     	</sect3>
 	</sect2>
     

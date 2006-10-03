@@ -19,6 +19,7 @@
         Die Verwendung von <code>Zend_Json</code> bedingt den Gebrauch der beiden öffentlich 
         verfügbaren,  statischen Methoden <code>Zend_Json::encode()</code> und 
         <code>Zend_Json::decode()</code>. 
+    </para>
         <programlisting role="php"><![CDATA[<?php
 // Empfange einen Wert
 $phpNative = Zend_Json::decode($encodedValue);
@@ -26,7 +27,6 @@ $phpNative = Zend_Json::decode($encodedValue);
 // Kodiere ihn für die Rückgabe an den Client:
 $json = Zend_Json::encode($phpNative);
 ?>]]></programlisting>
-    </para>
 </sect1>
 
 <sect1 id="zend.json.objects">
@@ -46,10 +46,12 @@ $json = Zend_Json::encode($phpNative);
         Standardmäßig wird <code>Zend_Json</code> die JSON Objekte als assoziative Arrays 
         dekodieren. Wenn du allerdings wünscht, dass ein Objekt zurück gegeben wird, kannst du dies
         angeben:
+    </para>
         <programlisting role="php"><![CDATA[<?php
 // Dekodiere Objekte als Objekte
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 ?>]]></programlisting>
+    <para>
         Jedes dekodierte Objekte wird als <code>StdClass</code> Objekt mit Eigenschaften 
         entsprechend der Schlüssel/Wert Paare der JSON Notation zuürckgegeben.
     </para>

@@ -109,11 +109,13 @@
 		<para>
 		    Der Router verwendet eine sehr einfache Zuordnung, um den Namen des Controllers und
 		    den Namen der Aktion innerhalb dieses Controllers zu ermitteln.
+		</para>
 			
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
 			</programlisting>
 
+		<para>
 			Beachte im obigen Beispiel, dass das erste Segment immer den Namen des Controllers und 
 			das zweite Segment immer den Name der Aktion enthält. 
 		</para>
@@ -121,16 +123,17 @@ http://framework.zend.com/controller/action/]]>
 		<para>
 		    Optional können in der URI auch Parameter definiert werden, die an den Controller
 		    übergeben werden. Diese haben die Form eines Schlüssel/Wert Paares:
+		</para>
 			
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/key1/value1/]]>
 			</programlisting>
-		</para>
 
 		<para>
 		    Wenn im <code>/controller/</code> Teil der URI nichts enthalten ist, wird dieser Teil zu
 		    "<code>index</code>". Wenn im <code>/action/</code> Teil der URI nichts enthalten ist,
 		    wird dieser Teil ebenfalls zu <code>index</code>. Diese Beispiele erläutern dies:
+		</para>
 
 				<programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
@@ -145,7 +148,6 @@ http://framework.zend.com/
 Controller: index
 Action    : index]]>
 				</programlisting>
-			</para>
 
 			<note>
 			    Wir entwickeln momentan einen neuen Router mit einer Engine für das URI Rewriting,

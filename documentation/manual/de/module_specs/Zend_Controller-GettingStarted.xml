@@ -31,12 +31,14 @@
             index.php Datei umzuleiten. Für Entwicklungszwecke ist es oft am einfachsten, eine 
             Regel für mod_rewrite zu schreiben, welche alle Anfragen auf index.php umleitet mit 
             Ausnahme von bestimmten Dateiendungen. Hier ist ein Beispiel einer solchen Datei:
+		</para>
 
 			<programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
 
+		<para>
 			Im obigen Beispiel werden alle Anfragen, die keine der genannten Dateiendungen 
 			enthalten, an index.php weitergeleitet. Dies ist nützlich für die Entwicklung, 
 			allerdings sollten diese Regeln in der Produktionsumgebung so geändert werden, dass 
@@ -69,6 +71,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		<para>
 		    Erstelle eine Ladedatei <code>index.php</code> im Hauptverzeichnis, um 
 		    Zend_Controller_Front zu laden:
+		</para>
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -78,6 +81,7 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 
 ?>]]></programlisting>
 
+		<para>
 			Siehe den nächsten Abschnitt bezüglich der Pfadangaben <code>/path/to/your/controllers</code>.
             
             Wie in der <code>README.txt</code> Datei angewiesen, sollte das Verzeichnis der Zend 
@@ -110,6 +114,7 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		<para>
 		    Die vorgeschlagene Verzeichnisstruktur besteht aus dem Verzeichnis für Bibliotheken
 		    (von Zend oder anderen) und dem Verzeichnis für die Applikation. 
+		</para>
 
 			<programlisting role="php"><![CDATA[
 /application
@@ -124,7 +129,6 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 /library
   /Zend
 ]]></programlisting>
-		</para>
 		
 		<note>
 		    Dieser Abschnitt ist noch nicht fertig. Er ist in Bearbeitung und unterliegt laufenden 
@@ -139,11 +143,11 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		    Jede Website muss einen Controller mit Namen <code>IndexController</code> definieren.
 		    Dies ist der Controller, der aufgerufen wird, wenn kein Controller in der URI 
 		    angegeben ist, wie z.B. in dieser URI:
+		</para>
 
 			<programlisting role="php"><![CDATA[
 http://framework.zend.com/
 ]]></programlisting>
-		</para>
 
 		<para>
 		    Die <code>IndexController</code> Klasse muss in einer Datei mit dem Namen 
@@ -151,6 +155,7 @@ http://framework.zend.com/
 		    Verzeichnis abgelegt werden. Der <code>IndexController</code> muss 
 		    <code>Zend_Controller_Action</code> erweitern. Hier ist ein Beispiel für einen 
 		    <code>IndexController</code>:
+		</para>
 
 			<programlisting role="php"><![CDATA[<?php
 				
@@ -175,6 +180,5 @@ class IndexController extends Zend_Controller_Action
 		    Dieser Abschnitt ist noch nicht fertig. Er ist in Bearbeitung und unterliegt laufenden 
 		    Änderungen.
 			</note>			
-		</para>
 	</sect2>			
 </sect1>
