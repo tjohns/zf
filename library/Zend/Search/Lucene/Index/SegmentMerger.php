@@ -125,6 +125,7 @@ class Zend_Search_Lucene_Index_SegmentMerger
 
         $this->_mergeFields();
         $this->_mergeStoredFields();
+        $this->_mergeTerms();
 
         $this->_mergeDone = true;
 
@@ -195,10 +196,10 @@ class Zend_Search_Lucene_Index_SegmentMerger
     private function _mergeTerms()
     {
         foreach ($this->_segmentInfos as $segName => $segmentInfo) {
-            $segmentFields = $segmentInfo->getFields();
+            $segmentInfo->reset();
 
-            foreach ($segmentFields as $fieldInfo) {
-                $this->_fieldsMap[$segName][$fieldInfo->number] = $this->_writer->addFieldInfo($fieldInfo);
+            while (($term = $segmentInfo->nextTerm()) !== null) {
+//                echo $segmentInfo->getName() . '  ' . $term->field . ':' . $term->text . "\n";
             }
         }
     }

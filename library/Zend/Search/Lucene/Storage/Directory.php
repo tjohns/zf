@@ -111,10 +111,16 @@ abstract class Zend_Search_Lucene_Storage_Directory
     /**
      * Returns a Zend_Search_Lucene_Storage_File object for a given $filename in the directory.
      *
+     * If $shareHandler option is true, then file handler can be shared between File Object
+     * requests. It speed-ups performance, but makes problems with file position.
+     * Shared handler are good for short atomic requests.
+     * Non-shared handlers are useful for stream file reading (especial for compound files).
+     *
      * @param string $filename
+     * @param boolean $shareHandler
      * @return Zend_Search_Lucene_Storage_File
      */
-    abstract public function getFileObject($filename);
+    abstract public function getFileObject($filename, $shareHandler = true);
 
 }
 

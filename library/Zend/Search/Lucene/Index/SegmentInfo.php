@@ -122,6 +122,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      */
     private $_deletedDirty = false;
 
+
     /**
      * Zend_Search_Lucene_Index_SegmentInfo constructor needs Segmentname,
      * Documents count and Directory as a parameter.
@@ -212,16 +213,17 @@ class Zend_Search_Lucene_Index_SegmentInfo
      * Opens index file stoted within compound index file
      *
      * @param string $extension
+     * @param boolean $shareHandler
      * @throws Zend_Search_Lucene_Exception
      * @return Zend_Search_Lucene_Storage_File
      */
-    public function openCompoundFile($extension)
+    public function openCompoundFile($extension, $shareHandler = true)
     {
         $filename = $this->_name . $extension;
 
         // Try to open common file first
         if ($this->_directory->fileExists($filename)) {
-            return $this->_directory->getFileObject($filename);
+            return $this->_directory->getFileObject($filename, $shareHandler);
         }
 
         if( !isset($this->_segFiles[$filename]) ) {
@@ -580,6 +582,107 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $delFile->writeBytes($delBytes);
 
         $this->_deletedDirty = false;
+    }
+
+
+
+    /**
+     * Term Dictionary File object for stream like terms reading
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    private $_tisFile = null;
+
+    /**
+     * Number of terms in term stream
+     *
+     * @var integer
+     */
+    private $_termCount = 0;
+
+    /**
+     * Segment skip interval
+     *
+     * @var integer
+     */
+    private $_skipInterval;
+
+    /**
+     * Last TermInfo in a terms stream
+     *
+     * @var Zend_Search_Lucene_Index_TermInfo
+     */
+    private $_lastTermInfo;
+
+    /**
+     * Last Term in a terms stream
+     *
+     * @var Zend_Search_Lucene_Index_Term
+     */
+    private $_lastTerm;
+
+    /**
+     * Reset terms stream
+     *
+     * @throws Zend_Search_Lucene_Exception
+     */
+    public function reset()
+    {
+        if ($this->_tisFile !== null) {
+            unset($this->_tisFile);
+        }
+
+        $this->_tisFile = $this->openCompoundFile('.tis', false);
+        $tiVersion = $this->_tisFile->readInt();
+        if ($tiVersion != (int)0xFFFFFFFE) {
+            throw new Zend_Search_Lucene_Exception('Wrong TermInfoFile file format');
+        }
+
+        $this->_termCount    = $this->_tisFile->readLong();
+                               $this->_tisFile->readInt();  // Read Index interval
+        $this->_skipInterval = $this->_tisFile->readInt();  // Read skip interval
+
+        $this->_lastTerm     = new Zend_Search_Lucene_Index_Term('', -1);
+        $this->_lastTermInfo = new Zend_Search_Lucene_Index_TermInfo(0, 0, 0, 0);
+    }
+
+    /**
+     * Scans terms dictionary and returns term info
+     *
+     * @param Zend_Search_Lucene_Index_Term $term
+     * @return Zend_Search_Lucene_Index_Term|null
+     */
+    public function nextTerm()
+    {
+        if ($this->_tisFile === null) {
+            throw new Zend_Search_Lucene_Exception('reset() must be applied at first.');
+        }
+
+        if ($this->_termCount == 0) {
+            return null;
+        }
+
+        $termPrefixLength = $this->_tisFile->readVInt();
+        $termSuffix       = $this->_tisFile->readString();
+        $termFieldNum     = $this->_tisFile->readVInt();
+        $termValue        = substr($this->_lastTerm->text, 0, $termPrefixLength) . $termSuffix;
+
+        $this->_lastTerm = new Zend_Search_Lucene_Index_Term($termValue, $termFieldNum);
+
+        $docFreq     = $this->_tisFile->readVInt();
+        $freqPointer = $this->_lastTermInfo->freqPointer + $this->_tisFile->readVInt();
+        $proxPointer = $this->_lastTermInfo->proxPointer + $this->_tisFile->readVInt();
+        if ($docFreq >= $this->_skipInterval) {
+            $skipOffset = $this->_tisFile->readVInt();
+        } else {
+            $skipOffset = 0;
+        }
+
+        $this->_lastTermInfo = new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipOffset);
+
+        $this->_termCount--;
+
+        return $this->_lastTerm;
     }
 }
 
