@@ -113,7 +113,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
             $fileObject->close();
         }
 
-        unset($this->_fileHandlers);
+        $this->_fileHandlers = array();
     }
 
 
