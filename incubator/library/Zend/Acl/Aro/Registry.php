@@ -17,7 +17,13 @@
  * @package    Zend_Acl
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
+
+
+/**
+ * Zend_Acl_Aro
+ */
+require_once 'Zend/Acl/Aro.php';
 
 
 /**
@@ -33,26 +39,27 @@ class Zend_Acl_Aro_Registry
      * @var array
      */
     protected $_aro;
-    
+
     /**
      * Parent Aco
      * @var Zend_Acl
      */
     protected $_aco;
-    
+
     /**
      * Registry instance
-     * @var array
+     * @var Zend_Acl_Aro_Registry
      */
-    static protected $_instance;
-    
+    static protected $_instance = null;
+
     /**
-     * Instance of Zend_Acl_Aro_Registry 
-     * @param Zend_Acl_Aro $group
+     * Returns Singleton instance of Zend_Acl_Aro_Registry
+     *
+     * @return Zend_Acl_Aro_Registry
      */
     static public function getInstance()
     {
-        if (is_null(self::$_instance)) {
+        if (self::$_instance === null) {
             self::$_instance = new self;
         }
         return self::$_instance;
@@ -79,7 +86,7 @@ class Zend_Acl_Aro_Registry
     }
 
     /**
-     * Add unique ARO to registry 
+     * Add unique ARO to registry
      *
      * @param Zend_Acl_Aro $aro
      * @return Zend_Acl_Aro_Registry for fluent interface
@@ -95,7 +102,7 @@ class Zend_Acl_Aro_Registry
     }
 
     /**
-     * Remove ARO from registry 
+     * Remove ARO from registry
      *
      * @param Zend_Acl_Aro $aro
      * @return boolean
@@ -116,7 +123,7 @@ class Zend_Acl_Aro_Registry
                 $aco->removeAro($aro, $aco);
             }
         }
-        
+
         foreach($children as $aro) {
             unset($this->_aro[$aro]);
         }
@@ -125,7 +132,7 @@ class Zend_Acl_Aro_Registry
     }
 
     /**
-     * FInd group in registry 
+     * FInd group in registry
      *
      * If the named group does not exist, the default ARO is returned
      *
@@ -146,7 +153,7 @@ class Zend_Acl_Aro_Registry
     }
 
     /**
-     * Return registry as an array of ARO objects 
+     * Return registry as an array of ARO objects
      *
      * @return array
      */
