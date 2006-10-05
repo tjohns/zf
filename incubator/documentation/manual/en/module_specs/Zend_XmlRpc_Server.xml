@@ -1,0 +1,95 @@
+<sect1 id="zend.xmlrpc.server.introduction">
+    <title>Introduction</title>
+    <para>Zend_XmlRpc_Server is intended as a fully-featured XML-RPC server,
+        following <ulink url="http://www.xmlrpc.com/spec">the specifications
+        outlined at www.xmlrpc.com</ulink>. Additionally, it implements the
+        system.multicall() method, allowing boxcarring of requests.
+    </para>
+
+    <sect2 id="zend.xmlrpc.server.introduction.structure">
+        <title>XMLRPC Server Structure</title>
+
+        <para>Zend_XmlRpc_Server is composed of a variety of components, ranging
+            from the server itself to request, response, and fault objects.</para>
+
+        <para>To bootstrap Zend_XmlRpc_Server, the developer must attach one or
+            more classes or functions to the server, via the
+            <code>setClass()</code> and <code>addFunction()</code> methods.</para>
+
+        <para>Once done, you may either pass a <code>Zend_XmlRpc_Request</code>
+            object to <code>Zend_XmlRpc_Server::handle()</code>, or it will
+            instantiate a <code>Zend_XmlRpc_Request_Http</code> object if none
+            is provided -- thus grabbing the request from
+            <code>php://input</code>.
+
+        <para><code>Zend_XmlRpc_Server::handle()</code> then attempts to
+            dispatch to the appropriate handler based on the method
+            requested. It then returns either a
+            <code>Zend_XmlRpc_Response</code>-based object or a
+            <code>Zend_XmlRpc_Server_Fault</code>object. These objects both have
+            <code>__toString()</code> methods that create valid XMLRPC XML
+            responses, allowing them to be directly echoed.</para>
+    </sect2>
+
+    <sect2 id="zend.xmlrpc.server.introduction.usage">
+        <title>XMLRPC Server Basic Usage</title>
+        <para>
+            An example of the most basic use case:
+        </para>
+
+        <programlisting role="php">&lt;?php
+require_once 'Zend/XmlRpc/Server.php';
+require_once 'My/Service/Class.php';
+
+$server = new Zend_XmlRpc_Server();
+$server-&gt;setClass('My_Service_Class');
+echo $server->handle();
+?&gt;      </programlisting>
+    </sect2>
+
+</sect1>
+
+<sect1 id="zend.xmlrpc.server.namespaces">
+    <title>Utilizing Namespaces</title>
+    <para>
+        TODO: detail namespacing.
+    </para>
+</sect1>
+
+<sect1 id="zend.xmlrpc.server.request">
+    <title>Building Custom Requests</title>
+    <para>
+        TODO: detail request usage and design.
+    </para>
+</sect1>
+
+<sect1 id="zend.xmlrpc.server.response">
+    <title>Building Custom Responses</title>
+    <para>
+        TODO: detail response usage and design.
+    </para>
+</sect1>
+
+<sect1 id="zend.xmlrpc.server.fault">
+    <title>Handling Exceptions via Faults</title>
+    <para>
+        TODO: detail exception/fault handling and design.
+    </para>
+</sect1>
+
+<sect1 id="zend.xmlrpc.server.caching">
+    <title>Caching Server Definitions Between Requests</title>
+    <para>
+        TODO: detail why server caching is useful, and how to do it.
+    </para>
+</sect1>
+
+<sect1 id="zend.xmlrpc.server.use">
+    <title>Advanced Usage Examples</title>
+    <para>
+        TODO: provide some advanced usage examples
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
