@@ -36,7 +36,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
 		    $response = $as->userGetProfileInformation();
             $this->assertNotNull($response);
             return;
@@ -49,7 +49,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
 	public function testGetBadProfileInfo()
 	{
 		$as = new Zend_Service_Audioscrobbler();
-		$as->setUser('kljadsfjllkj');
+		$as->set('user', 'kljadsfjllkj');
 		
 		try {
 			$response = $as->userGetProfileInformation();
@@ -64,7 +64,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetTopArtists();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->artist);
@@ -77,7 +77,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetTopAlbums();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->album);
@@ -90,7 +90,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetTopTracks();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->track );
@@ -103,7 +103,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetTopTags();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->tag);
@@ -116,8 +116,8 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
-            $as->setArtist('Metallica');
+            $as->set('user', 'RJ');
+            $as->set('artist', 'Metallica');
             $response = $as->userGetTopTagsForArtist();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertEquals($response['artist'], 'Metallica');
@@ -143,9 +143,9 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser("RJ");
-            $as->setArtist("Metallica");
-            $as->setAlbum("Ride The Lightning");
+            $as->set('user', 'RJ');
+            $as->set('artist', 'Metallica');
+            $as->set('album', 'Ride The Lightning');
             $response = $as->userGetTopTagsForAlbum();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertEquals(strtolower($response['artist']), strtolower('Metallica'));
@@ -159,9 +159,9 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
-            $as->setArtist('Metallica');
-            $as->setTrack('Nothing Else Matters');
+            $as->set('user', 'RJ');
+			$as->set('artist', 'Metallica');
+			$as->set('track', 'Nothing Else Matters');
             $response = $as->userGetTopTagsForTrack();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertEquals($response['artist'], 'Metallica');
@@ -176,7 +176,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetFriends();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->friends);
@@ -190,7 +190,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetNeighbours();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->user);
@@ -204,7 +204,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetRecentTracks();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->recenttracks);
@@ -218,7 +218,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetRecentBannedTracks();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->recentbannedtracks);
@@ -232,7 +232,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetRecentLovedTracks( );
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->recentlovedtracks);
@@ -246,7 +246,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetWeeklyChartList();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->weeklychartlist);
@@ -261,7 +261,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetWeeklyArtistChart();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->weeklyartistchart);
@@ -275,7 +275,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $response = $as->userGetWeeklyAlbumChart();
             $this->assertEquals($response['user'], 'RJ');
             $this->assertNotNull($response->weeklyalbumchart);
@@ -290,7 +290,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $from = 1114965332;
             $to = 1115570132;
             $response = $as->userGetWeeklyArtistChart($from, $to);
@@ -308,7 +308,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $from = 1114965332;
             $to = 1115570132;
             $response = $as->userGetWeeklyAlbumChart($from, $to);
@@ -327,7 +327,7 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->setUser('RJ');
+            $as->set('user', 'RJ');
             $from = 1114965332;
             $to = 1115570132;
             $response = $as->userGetWeeklyTrackChart($from, $to);

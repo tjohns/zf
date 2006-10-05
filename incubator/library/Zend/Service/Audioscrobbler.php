@@ -46,77 +46,13 @@ class Zend_Service_Audioscrobbler
      */
     protected $_rest;
 
-    /**
-     * AudioScrobbler web service version to access
-     *
-     * @var float
-     */
-    public $version;
-
-    /**
-     *  Last.fm username
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     *  Artist name
-     *
-     * @var string
-     */
-    public $artist;
-
-    /**
-     *  Album name
-     *
-     * @var string
-     */
-    public $album;
-
-    /**
-     *  Track name
-     *
-     * @var string
-     */
-    public $track;
-
-    /**
-     *  Tag name
-     *
-     * @var string
-     */
-    public $tag;
-
-    /**
-     *  Group name
-     *
-     * @var string
-     */
-    public $group;
-
-    /**
-     *  Forum id
-     *
-     * @var string
-     */
-    public $forum;
-
-    /**
-     *  From date timestamp
-     *
-     * @var string
-     */
-    public $from_date;
-
-    /**
-     *  To date timestamp
-     *
-     * @var string
-     */
-    public $to_date;
-
-
+	/**
+	 * Array that contains parameters being used by the webservice
+	 * @var array
+	 */
+	protected $params;
+	
+	
 	//////////////////////////////////////////////////////////
 	///////////////////  CORE METHODS  ///////////////////////
 	//////////////////////////////////////////////////////////
@@ -127,7 +63,7 @@ class Zend_Service_Audioscrobbler
      */
     public function __construct()
     {
-    	$this->version = '1.0';
+    	$this->set('version', '1.0');
 
         iconv_set_encoding('output_encoding', 'UTF-8');
         iconv_set_encoding('input_encoding', 'UTF-8');
@@ -141,115 +77,32 @@ class Zend_Service_Audioscrobbler
         }
    }
 
-
 	/**
-	* Sets the Audioscrobbler web service version
-	* @param float
+	* Generic get action for a particular field
+	* @param string $key object to be retrieved
 	*/
-    public function setVersion($version)
-    {
-    	$this->version = (float) trim($version);
-    }
-
-	/**
-	* Sets the Audioscrobbler username to grab data about
-	* @param string
-	*/
-    public function setUser($user)
-    {
-    	$this->user = urlencode(trim($user));
-    }
-
-	/**
-	* Sets the artist to grab data about
-	* @param string
-	*/
-	public function setArtist($artist)
+	
+	public function get($field)
 	{
-		$this->artist = urlencode(trim($artist));
-	}
-
-	/**
-	* Sets the album to grab data about
-	* @param string
-	*/
-	public function setAlbum($album)
-	{
-		$this->album = urlencode(trim($album));
-	}
-
-	/**
-	* Sets the track name to grab data about
-	* @param string
-	*/
-	public function setTrack($track)
-	{
-		$this->track = urlencode(trim($track));
-	}
-
-	/**
-	* Sets the lower timestamp boundary for data retrieval
-	* @param date
-	*/
-	public function setFromDate($date)
-	{
-		$this->from_date = $this->_setDate($date);
-	}
-
-	/**
-	* Sets the upper timestamp boundary for data retrieval
-	* @param date
-	*/
-	public function setToDate($date)
-	{
-		$this->to_date = $this->_setDate($date);
-	}
-
-	/**
-	* When given a date or timestamp, always returns a timestamp
-	* @return timestamp
-	*/
-	private function _setDate($date)
-	{
-		$date = trim($date);
-
-		if(strchr($date,'-') || strchr($date,'/') || strchr($date,'\\') || strchr($date,' '))
-		{
-			return strtotime($date);
-		}
-		else
-		{
-			return $date;
+		if (array_key_exists($field, $this->params)) {
+			return $this->params[$field];
+		} else {
+			return FALSE;
 		}
 	}
 
 	/**
-	* Sets the tag to grab data about
-	* @param string
-	*/
-	public function setTag($tag)
+	 * Generic set action for a field in the parameters being used
+	 *
+	 * @param string $field field to set
+	 * @param string $val value to set in the field
+	 */
+	
+	public function set($field, $value)
 	{
-		$this->tag = urlencode(trim($tag));
+		$this->params[$field] = urlencode($value);
 	}
-
-	/**
-	* Sets the name of the forum to grab data about
-	* @param string
-	*/
-	public function setForum($forum)
-	{
-		$this->forum = (int) trim($forum);
-	}
-
-	/**
-	* Sets the group to grab data about
-	* @param string
-	*/
-	public function setGroup($group)
-	{
-		$this->group = urlencode(trim($group));
-	}
-
+	
 	/**
 	*
 	* Private method that queries REST service and returns SimpleXML response set
@@ -257,7 +110,7 @@ class Zend_Service_Audioscrobbler
 	* @param string $params parameters that we send to the service if needded
 	* @return SimpleXML result set
 	*/
-	private function _getInfo($service, $params = NULL)
+	private function getInfo($service, $params = NULL)
 	{
 		$service = (string) $service;
 		$params = (string) $params;
@@ -293,8 +146,8 @@ class Zend_Service_Audioscrobbler
 	*/
 	public function userGetProfileInformation()
 	{
-	    $service = "/{$this->version}/user/{$this->user}/profile.xml";
-		return $this->_getInfo($service);
+	    $service = "/{$this->get('version')}/user/{$this->get('user')}/profile.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -303,8 +156,8 @@ class Zend_Service_Audioscrobbler
 	*/
 	public function userGetTopArtists()
 	{
-	    $service = "/{$this->version}/user/{$this->user}/topartists.xml";
-		return $this->_getInfo($service);
+	    $service = "/{$this->get('version')}/user/{$this->get('user')}/topartists.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -313,8 +166,8 @@ class Zend_Service_Audioscrobbler
 	*/
 	public function userGetTopAlbums()
 	{
-	    $service = "/{$this->version}/user/{$this->user}/topalbums.xml";
-		return $this->_getInfo($service);
+	    $service = "/{$this->get('version')}/user/{$this->get('user')}/topalbums.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -323,8 +176,8 @@ class Zend_Service_Audioscrobbler
 	*/
 	public function userGetTopTracks()
 	{
-		$service = "/{$this->version}/user/{$this->user}/toptracks.xml";
-		return $this->_getInfo($service);
+		$service = "/{$this->get('version')}/user/{$this->get('user')}/toptracks.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -333,8 +186,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetTopTags()
 	{
-	    $service = "/{$this->version}/user/{$this->user}/tags.xml";
-		return $this->_getInfo($service);
+	    $service = "/{$this->get('version')}/user/{$this->get('user')}/tags.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -344,9 +197,9 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetTopTagsForArtist()
 	{
-	    $service = "/{$this->version}/user/{$this->user}/artisttags.xml";
-	    $params = "artist={$this->artist}";
-		return $this->_getInfo($service, $params);
+	    $service = "/{$this->get('version')}/user/{$this->get('user')}/artisttags.xml";
+	    $params = "artist={$this->get('artist')}";
+		return $this->getInfo($service, $params);
 	}
 
 	/**
@@ -356,9 +209,9 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetTopTagsForAlbum()
 	{
-		$service = "/{$this->version}/user/{$this->user}/albumtags.xml";
-		$params = "artist={$this->artist}&album={$this->album}";
-		return $this->_getInfo($service, $params);
+		$service = "/{$this->get('version')}/user/{$this->get('user')}/albumtags.xml";
+		$params = "artist={$this->get('artist')}&album={$this->get('album')}";
+		return $this->getInfo($service, $params);
 	}
 
 	/**
@@ -368,9 +221,9 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetTopTagsForTrack()
     {
-        $service = "/{$this->version}/user/{$this->user}/tracktags.xml";
-        $params = "artist={$this->artist}&track={$this->track}";
-        return $this->_getInfo($service, $params);
+        $service = "/{$this->get('version')}/user/{$this->get('user')}/tracktags.xml";
+        $params = "artist={$this->get('artist')}&track={$this->get('track')}";
+        return $this->getInfo($service, $params);
     }
 
 	/**
@@ -379,8 +232,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetFriends()
     {
-        $service = "/$this->version/user/$this->user/friends.xml"; 
-		return $this->_getInfo($service);
+        $service = "/{$this->get('version')}/user/{$this->get('user')}/friends.xml"; 
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -390,8 +243,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetNeighbours()
     {
-        $service = "/{$this->version}/user/{$this->user}/neighbours.xml";
-		return $this->_getInfo($service);
+        $service = "/{$this->get('version')}/user/{$this->get('user')}/neighbours.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -401,8 +254,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetRecentTracks()
 	{
-		$service = "/{$this->version}/user/{$this->user}/friends.xml";
-        return $this->_getInfo($service);
+		$service = "/{$this->get('version')}/user/{$this->get('user')}/friends.xml";
+        return $this->getInfo($service);
 	}
 
 	/**
@@ -412,8 +265,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetRecentBannedTracks()
 	{
-		$service = "/{$this->version}/user/{$this->user}/recentbannedtracks.xml";
-        return $this->_getInfo($service);
+		$service = "/{$this->get('version')}/user/{$this->get('user')}/recentbannedtracks.xml";
+        return $this->getInfo($service);
 	}
 
 	/**
@@ -423,8 +276,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetRecentLovedTracks()
 	{
-        $service = "/{$this->version}/user/{$this->user}/recentlovedtracks.xml";
-        return $this->_getInfo($service);
+        $service = "/{$this->get('version')}/user/{$this->get('user')}/recentlovedtracks.xml";
+        return $this->getInfo($service);
     }
 
 	/**
@@ -435,8 +288,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function userGetWeeklyChartList()
     {
-        $service = "/{$this->version}/user/{$this->user}/weeklychartlist.xml";
-        return $this->_getInfo($service);
+        $service = "/{$this->get('version')}/user/{$this->get('user')}/weeklychartlist.xml";
+        return $this->getInfo($service);
     }
 
 
@@ -457,12 +310,12 @@ class Zend_Service_Audioscrobbler
             $params = "from={$from}&to={$to}";
         }
         
-        $service = "/{$this->version}/user/{$this->user}/weeklyalbumchart.xml";
-		return $this->_getInfo($service, $params);
+        $service = "/{$this->get('version')}/user/{$this->get('user')}/weeklyalbumchart.xml";
+		return $this->getInfo($service, $params);
 	}
 
 	/**
-	 * Utility function that returns weekly album chart data for this user
+	 * Utility function that returns weekly artist chart data for this user
 	 * @return SimpleXML object containing result set
 	 *
 	 * @param integer $from optional UNIX timestamp for start of date range
@@ -478,8 +331,8 @@ class Zend_Service_Audioscrobbler
             $params = "from={$from}&to={$to}";
         }
         
-        $service = "/{$this->version}/user/{$this->user}/weeklyartistchart.xml";
-		return $this->_getInfo($service, $params);
+        $service = "/{$this->get('version')}/user/{$this->get('user')}/weeklyartistchart.xml";
+		return $this->getInfo($service, $params);
 	}
 
 	/**
@@ -499,8 +352,8 @@ class Zend_Service_Audioscrobbler
             $params = "from={$from}&to={$to}";
         }
         
-        $service = "/{$this->version}/user/{$this->user}/weeklytrackchart.xml";
-		return $this->_getInfo($service, $params);
+        $service = "/{$this->get('version')}/user/{$this->get('user')}/weeklytrackchart.xml";
+		return $this->getInfo($service, $params);
 	}
 
 
@@ -521,7 +374,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetRelatedArtists()
 	{
-		return $this->_getInfoByArtist('similar.xml');
+		return $this->getInfoByArtist('similar.xml');
 	}
 
 	/**
@@ -531,7 +384,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetTopFans()
 	{
-		return $this->_getInfoByArtist('fans.xml');
+		return $this->getInfoByArtist('fans.xml');
 	}
 
 	/**
@@ -541,7 +394,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetTopTracks()
 	{
-		return $this->_getInfoByArtist('toptracks.xml');
+		return $this->getInfoByArtist('toptracks.xml');
 	}
 
 	/**
@@ -551,7 +404,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetTopAlbums()
 	{
-		return $this->_getInfoByArtist('topalbums.xml');
+		return $this->getInfoByArtist('topalbums.xml');
 	}
 
 	/**
@@ -561,7 +414,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetTopTags()
 	{
-		return $this->_getInfoByArtist('toptags.xml');
+		return $this->getInfoByArtist('toptags.xml');
 	}
 
 	//////////////////////////////////////////////////////////
@@ -575,7 +428,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function trackGetTopFans()
 	{
-		return $this->_getInfoByTrack('fans.xml');
+		return $this->getInfoByTrack('fans.xml');
 	}
 
 	/**
@@ -585,7 +438,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function trackGetTopTags()
 	{
-		return $this->_getInfoByTrack('toptags.xml');
+		return $this->getInfoByTrack('toptags.xml');
 	}
 
 	//////////////////////////////////////////////////////////
@@ -603,7 +456,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function tagGetOverallTopTags()
 	{
-		return $this->_getInfoByTag('toptags.xml');
+		return $this->getInfoByTag('toptags.xml');
 	}
 
 	/**
@@ -613,7 +466,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function tagGetTopArtists()
 	{
-		return $this->_getInfoByTag('topartists.xml');
+		return $this->getInfoByTag('topartists.xml');
 	}
 
 	/**
@@ -623,7 +476,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function tagGetTopAlbums()
 	{
-		return $this->_getInfoByTag('topalbums.xml');
+		return $this->getInfoByTag('topalbums.xml');
 	}
 	/**
 	 * Utility function that returns a list of tracks to which this tag was most applied
@@ -632,7 +485,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function tagGetTopTracks()
 	{
-		return $this->_getInfoByTag('toptracks.xml');
+		return $this->getInfoByTag('toptracks.xml');
 	}
 
 	//////////////////////////////////////////////////////////
@@ -651,7 +504,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function groupGetRecentJournals()
 	{
-		return $this->_getInfoByGroup('journals.rss');
+		return $this->getInfoByGroup('journals.rss');
 	}
 
 	/**
@@ -661,7 +514,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function groupGetWeeklyChart()
 	{
-		return $this->_getInfoByGroup('weeklychartlist.xml');
+		return $this->getInfoByGroup('weeklychartlist.xml');
 	}
 
 	/**
@@ -671,7 +524,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function groupGetRecentWeeklyArtistChart()
 	{
-		return $this->_getInfoByGroup('weeklyartistchart.xml');
+		return $this->getInfoByGroup('weeklyartistchart.xml');
 	}
 
 	/**
@@ -681,7 +534,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function groupGetRecentWeeklyAlbumChart()
 	{
-		return $this->_getInfoByGroup('weeklyalbumchart.xml');
+		return $this->getInfoByGroup('weeklyalbumchart.xml');
 	}
 
 	/**
@@ -691,7 +544,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function groupGetRecentWeeklyTrackChart()
 	{
-		return $this->_getInfoByGroup('weeklytrackchart.xml');
+		return $this->getInfoByGroup('weeklytrackchart.xml');
 	}
 
 	/**
@@ -703,7 +556,7 @@ class Zend_Service_Audioscrobbler
 	public function groupGetPreviousWeeklyArtistChart()
 	{
 		$required = array('FromDate'=>'1114965332','ToDate'=>'1115570132');
-		return $this->_getInfoByGroup('weeklyartistchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
+		return $this->getInfoByGroup('weeklyartistchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
 	}
 
 	/**
@@ -715,7 +568,7 @@ class Zend_Service_Audioscrobbler
 	public function groupGetPreviousWeeklyAlbumChart()
 	{
 		$required = array('FromDate'=>'1114965332','ToDate'=>'1115570132');
-		return $this->_getInfoByGroup('weeklyalbumchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
+		return $this->getInfoByGroup('weeklyalbumchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
 	}
 
 	/**
@@ -727,7 +580,7 @@ class Zend_Service_Audioscrobbler
 	public function groupGetPreviousWeeklyTrackChart()
 	{
 		$required = array('FromDate'=>'1114965332','ToDate'=>'1115570132');
-		return $this->_getInfoByGroup('weeklytrackchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
+		return $this->getInfoByGroup('weeklytrackchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
 	}
 
 	//////////////////////////////////////////////////////////
@@ -741,7 +594,7 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function forumGetRecentPosts()
 	{
-		return $this->_getInfoByForum('posts.rss');
+		return $this->getInfoByForum('posts.rss');
 	}
 
 }
