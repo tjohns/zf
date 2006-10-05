@@ -12,50 +12,28 @@
  * through the world-wide-web, please send a note to license@zend.com
  * so we can mail you a copy immediately.
  *
- * @package    Zend_XmlRpc
+ * @package    Zend_Rest
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
-/**
- * Exceptions
- */
-require_once 'Zend/XmlRpc/Server/Exception.php';
 
 /**
- * Core methods
+ * Zend_Rest_Exception
  */
-require_once 'Zend/XmlRpc/Server/CallbackParser/Core.php';
+require_once 'Zend/Rest/Exception.php';
+
 
 /**
- * Zend_XmlRpc_Server_CallbackParser_Class : Return XMLRPC method signature 
- * based on a class definition
- * 
- * @package Zend_XmlRpc
+ * Zend_Rest_Server_Exception
+ *
+ * @package    Zend_Rest
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_XmlRpc_Server_CallbackParser_Class extends Zend_XmlRpc_Server_CallbackParser_Core
+class Zend_Rest_Server_Exception extends Zend_Rest_Exception
 {
-    /**
-     * Static methods only
-     * @var boolean 
-     */
-    protected $_isObject = false;
-
-    /**
-     * Examine a class definition to create XMLRPC method signatures
-     *
-     * @param string $class Class name
-     * @param string $namespace
-     * @return array
-     * @throws Zend_XmlRpc_Server_Exception
-     */
-    public function parse($class, $namespace = '', $argv = false) 
-    {
-        return $this->_parseClass($class, $namespace);
-    }
 }
 

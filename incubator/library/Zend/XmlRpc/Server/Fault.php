@@ -19,7 +19,13 @@
  */
 
 /**
- * XMLRPC Faults
+ * Zend_XmlRpc_Fault
+ */
+require_once 'Zend/XmlRpc/Fault.php';
+
+
+/**
+ * XMLRPC Server Faults
  *
  * Encapsulates an exception for use as an XMLRPC fault response. Valid 
  * exception classes that may be used for generating the fault code and fault 
@@ -30,7 +36,7 @@
  * particular fault cases; this is done via {@link attachObserver()}. Observers 
  * need only implement a static 'observe' method.
  *
- * To allow method chaining, you may only use the {@link getInstance()} factory 
+ * To allow method chaining, you may use the {@link getInstance()} factory 
  * to instantiate a Zend_XmlRpc_Server_Fault.
  *
  * @package    Zend_XmlRpc
@@ -38,7 +44,7 @@
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_XmlRpc_Server_Fault
+class Zend_XmlRpc_Server_Fault extends Zend_XmlRpc_Fault
 {
     /**
      * @var Exception
@@ -46,21 +52,9 @@ class Zend_XmlRpc_Server_Fault
     protected $_exception;
 
     /**
-     * Fault code
-     * @var int 
-     */
-    protected $_faultCode;
-
-    /**
      * @var array Array of exception classes that may define xmlrpc faults
      */
     protected static $_faultExceptionClasses = array('Zend_XmlRpc_Server_Exception' => true);
-
-    /**
-     * Fault message
-     * @var string 
-     */
-    protected $_faultString;
 
     /**
      * @var array Array of fault observers
@@ -73,19 +67,19 @@ class Zend_XmlRpc_Server_Fault
      * @param Exception $e 
      * @return Zend_XmlRpc_Server_Fault
      */
-    private function __construct(Exception $e)
+    public function __construct(Exception $e)
     {
-        $this->_exception   = $e;
-        $this->_faultCode   = 404;
-        $this->_faultString = 'Unknown error';
+        $this->_exception = $e;
+        $code             = 404;
+        $message          = 'Unknown error';
+        $exceptionClass   = get_class($e);
 
-        $exceptionClass = get_class($e);
-        if (isset(self::$_faultExceptionClasses[$exceptionClass])
-            && ($e instanceof Exception)) 
-        {
-            $this->_faultCode   = $e->getCode();
-            $this->_faultString = $e->getMessage();
+        if (isset(self::$_faultExceptionClasses[$exceptionClass])) {
+            $code    = $e->getCode();
+            $message = $e->getMessage();
         }
+
+        parent::__construct($code, $message);
 
         // Notify exception observers, if present
         if (!empty(self::$_observers)) {
@@ -186,50 +180,5 @@ class Zend_XmlRpc_Server_Fault
 
         unset(self::$_observers[$class]);
         return true;
-    }
-
-
-    /**
-     * Return fault code
-     * 
-     * @return int
-     */
-    public function getCode()
-    {
-        return $this->_faultCode;
-    }
-
-    /**
-     * Retrieve fault message
-     * 
-     * @access public
-     * @return string
-     */
-    public function getMessage()
-    {
-        return $this->_faultString;
-    }
-
-    /**
-     * Serialize fault to XML
-     * 
-     * @return string
-     */
-    public function __toString()
-    {
-        // Create fault value
-        $faultStruct = array(
-            'faultCode'   => $this->_faultCode,
-            'faultString' => $this->_faultString
-        );
-        $value = Zend_XmlRpc_Value::getXmlRpcValue($faultStruct);
-
-        // Build response XML
-        $dom  = new DOMDocument('1.0', 'ISO-8859-1');
-        $r    = $dom->appendChild($dom->createElement('methodResponse'));
-        $f    = $r->appendChild($dom->createElement('fault'));
-        $f->appendChild($dom->importNode($value->getAsDOM(), true));
-
-        return $dom->saveXML();
     }
 }

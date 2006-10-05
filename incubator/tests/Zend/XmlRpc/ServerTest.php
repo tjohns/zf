@@ -1,26 +1,16 @@
 <?php
-/**
- * @package Zend_XmlRpc
- * @subpackage UnitTests
- */
-
-/**
- * Zend_XmlRpc_Server
- */
 require_once 'Zend/XmlRpc/Server.php';
+require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit2/Framework/IncompleteTestError.php';
 
 /**
- * PHPUnit Test Case
- */
-require_once 'PHPUnit/Framework/TestCase.php';
-
-/**
- * Test cases for Zend_XmlRpc_Server
+ * Test case for Zend_XmlRpc_Server
  *
  * @package Zend_XmlRpc
  * @subpackage UnitTests
+ * @version $Id: $
  */
-class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase 
+class Zend_XmlRpc_ServerTest extends PHPUnit2_Framework_TestCase 
 {
     /**
      * Zend_XmlRpc_Server object
@@ -45,37 +35,88 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * addFunction() test
+     * __construct() test
+     *
+     * Call as method call 
+     *
+     * Returns: void 
      */
-    public function testAddFunction()
+    public function test__construct()
     {
-        $this->_server->addFunction('zxrs_func1', 'func1');
-        $methods = $this->_server->getCallbacks();
-        $this->assertTrue(isset($methods['func1.zxrs_func1']));
-        $this->assertTrue(isset($methods['func1.zxrs_func1']['function']));
-        $this->assertEquals('zxrs_func1', $methods['func1.zxrs_func1']['function']);
-        $this->assertTrue(isset($methods['func1.zxrs_func1']['methodHelp']));
-        $this->assertContains('XMLRPC function 1', $methods['func1.zxrs_func1']['methodHelp']);
+        $this->assertTrue($this->_server instanceof Zend_XmlRpc_Server);
     }
 
     /**
-     * loadArray() test
+     * addFunction() test
+     *
+     * Call as method call 
+     *
+     * Expects:
+     * - function: 
+     * - namespace: Optional; has default; 
+     * 
+     * Returns: void 
      */
-    public function testLoadArray()
+    public function testAddFunction()
     {
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
-        $methods= $this->_server->getCallbacks();
+        try {
+            $this->_server->addFunction('Zend_XmlRpc_Server_testFunction', 'zsr');
+        } catch (Exception $e) {
+            $this->fail('Attachment should have worked');
+        }
+
+        $methods = $this->_server->listMethods();
+        $this->assertTrue(in_array('zsr.Zend_XmlRpc_Server_testFunction', $methods));
+
+        try {
+            $this->_server->addFunction('nosuchfunction');
+            $this->fail('nosuchfunction() should not exist and should throw an exception');
+        } catch (Exception $e) {
+            // do nothing
+        }
 
         $server = new Zend_XmlRpc_Server();
         try {
-            $server->loadArray($methods);
+            $server->addFunction(
+                array(
+                    'Zend_XmlRpc_Server_testFunction',
+                    'Zend_XmlRpc_Server_testFunction2',
+                ),
+                'zsr'
+            );
         } catch (Exception $e) {
-            $this->fail('Failed loading table from array: ' . $e->getMessage());
+            $this->fail('Error attaching array of functions: ' . $e->getMessage());
+        }
+        $methods = $server->listMethods();
+        $this->assertTrue(in_array('zsr.Zend_XmlRpc_Server_testFunction', $methods));
+        $this->assertTrue(in_array('zsr.Zend_XmlRpc_Server_testFunction2', $methods));
+    }
+
+    /**
+     * get/loadFunctions() test
+     */
+    public function testFunctions()
+    {
+        try {
+            $this->_server->addFunction(
+                array(
+                    'Zend_XmlRpc_Server_testFunction',
+                    'Zend_XmlRpc_Server_testFunction2',
+                ),
+                'zsr'
+            );
+        } catch (Exception $e) {
+            $this->fail('Error attaching functions: ' . $e->getMessage());
         }
 
-        $received = $server->getCallbacks();
-        $diff = array_diff($methods, $received);
-        $this->assertTrue(empty($diff), var_export($diff, 1));
+        $expected = $this->_server->listMethods();
+
+        $functions = $this->_server->getFunctions();
+        $server = new Zend_XmlRpc_Server();
+        $server->loadFunctions($functions);
+        $actual = $server->listMethods();
+
+        $this->assertSame($expected, $actual);
     }
 
     /**
@@ -83,34 +124,12 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
      */
     public function testSetClass()
     {
-        $need = array(
-            'domain1.getVars',
-            'domain1.staticCall',
-            'domain1.withVars',
-            'domain1.staticVars'
-        );
-        $static = array(
-            'domain1.staticCall',
-            'domain1.staticVars'
-        );
-
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
-        $methods = $this->_server->getCallbacks();
-        foreach ($need as $method) {
-            $this->assertTrue(isset($methods[$method]));
-            if (in_array($method, $static)) {
-                $this->assertTrue(isset($methods[$method]['static']));
-            } else {
-                $this->assertTrue(isset($methods[$method]['method']));
-            }
-        }
-
-        $this->_server->setClass('zxrs_test_methods', 'domain2', false);
-        $methods = $this->_server->getCallbacks();
-        $this->assertFalse(isset($methods['domain2.getVars']));
-        $this->assertFalse(isset($methods['domain2.withVars']));
-        $this->assertTrue(isset($methods['domain2.staticCall']));
-        $this->assertTrue(isset($methods['domain2.staticVars']));
+        $this->_server->setClass('Zend_XmlRpc_Server_testClass', 'test');
+        $methods = $this->_server->listMethods();
+        $this->assertTrue(in_array('test.test1', $methods));
+        $this->assertTrue(in_array('test.test2', $methods));
+        $this->assertFalse(in_array('test._test3', $methods));
+        $this->assertFalse(in_array('test.__construct', $methods));
     }
 
     /**
@@ -118,416 +137,221 @@ class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase
      */
     public function testFault()
     {
-        $fault = $this->_server->fault('Testing errors', 700);
+        $fault = $this->_server->fault('This is a fault', 411);
         $this->assertTrue($fault instanceof Zend_XmlRpc_Server_Fault);
-        $this->assertEquals('Testing errors', $fault->getMessage());
-        $this->assertEquals(700, $fault->getCode());
+        $this->assertEquals(411, $fault->getCode());
+        $this->assertEquals('This is a fault', $fault->getMessage());
 
-        $e = new zxrs1_exception('Testing errors', 700);
-        $fault = $this->_server->fault($e);
+        $fault = $this->_server->fault(new Zend_XmlRpc_Server_Exception('Exception fault', 511));
         $this->assertTrue($fault instanceof Zend_XmlRpc_Server_Fault);
-        $this->assertEquals('Unknown error', $fault->getMessage());
-        $this->assertEquals(404, $fault->getCode());
-
-        Zend_XmlRpc_Server_Fault::attachFaultException('zxrs1_exception');
-        $fault = $this->_server->fault($e);
-        $this->assertTrue($fault instanceof Zend_XmlRpc_Server_Fault);
-        $this->assertEquals('Testing errors', $fault->getMessage());
-        $this->assertEquals(700, $fault->getCode());
-        Zend_XmlRpc_Server_Fault::detachFaultException('zxrs1_exception');
+        $this->assertEquals(511, $fault->getCode());
+        $this->assertEquals('Exception fault', $fault->getMessage());
     }
 
     /**
      * handle() test
+     *
+     * Call as method call 
+     *
+     * Expects:
+     * - request: Optional; 
+     * 
+     * Returns: Zend_XmlRpc_Response|Zend_XmlRpc_Fault 
      */
     public function testHandle()
     {
-        $request =<<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<methodCall>
-    <methodName>domain1.staticCall</methodName>
-</methodCall>
-XML;
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
+        $request = new Zend_XmlRpc_Request();
+        $request->setMethod('system.listMethods');
         $response = $this->_server->handle($request);
 
-        $this->assertContains('<string>statically</string>', $response);
+        $this->assertTrue($response instanceof Zend_XmlRpc_Response);
+        $return = $response->getReturnValue();
+        $this->assertTrue(is_array($return));
+        $this->assertTrue(in_array('system.multicall', $return));
     }
 
     /**
-     * Test handle()
+     * setResponseClass() test
      *
-     * test what happens with an invalid method
-     */
-    public function testHandle2()
-    {
-        $request =<<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<methodCall>
-    <methodName>bogusMethod</methodName>
-</methodCall>
-XML;
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
-        $response = $this->_server->handle($request);
-
-        $this->assertContains('<fault>', $response);
-        $this->assertContains('<int>404</int>', $response);
-    }
-
-    /**
-     * Test handle()
-     * 
-     * Test what happens when calling an object instance method when vars have 
-     * been set.
-     */
-    public function testHandle3()
-    {
-        $request =<<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<methodCall>
-    <methodName>domain1.getVars</methodName>
-</methodCall>
-XML;
-        $this->_server->setClass('zxrs_test_methods', 'domain1', true, 'PHP Hypertext Preprocessor', 'Open Source', 'Zend');
-        $response = $this->_server->handle($request);
-
-        $this->assertContains('<string>PHP Hypertext Preprocessor</string>', $response);
-        $this->assertContains('<string>Open Source</string>', $response);
-        $this->assertContains('<string>Zend</string>', $response);
-    }
-
-    /**
-     * Test handle()
+     * Call as method call 
      *
-     * Test passing arguments to a method
+     * Expects:
+     * - class: 
      * 
-     * @access public
-     * @return void
+     * Returns: boolean 
      */
-    public function testHandle4()
+    public function testSetResponseClass()
     {
-        $request =<<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<methodCall>
-    <methodName>domain1.withVars</methodName>
-    <params>
-        <param>
-            <value><string>This is the Title</string></value>
-        </param>
-        <param><value><array>
-            <data>
-                <value><string>First arg</string></value>
-                <value><string>Second arg</string></value>
-                <value><string>Third arg</string></value>
-            </data>
-        </array></value></param>
-    </params>
-</methodCall>
-XML;
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
+        $this->_server->setResponseClass('Zend_XmlRpc_Server_testResponse');
+        $request = new Zend_XmlRpc_Request();
+        $request->setMethod('system.listMethods');
         $response = $this->_server->handle($request);
 
-        $this->assertContains('<string>This is the Title', $response);
-        $this->assertContains('First arg', $response);
-        $this->assertContains('Second arg', $response);
-        $this->assertContains('Third arg', $response);
-        $this->assertContains('</string>', $response);
-    }
-
-    /**
-     * getCallbacks() test
-     */
-    public function testGetCallbacks()
-    {
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
-        $methods = $this->_server->getCallbacks();
-        $need = array(
-            'system.listMethods',
-            'system.methodHelp',
-            'system.methodSignature',
-            'system.multicall',
-            'domain1.getVars',
-            'domain1.staticCall',
-            'domain1.withVars',
-            'domain1.staticVars'
-        );
-
-        $diff = array_diff($need, array_keys($methods));
-        $this->assertTrue(empty($diff));
-    }
-
-    /**
-     * getLastRequestXML() test
-     */
-    public function testGetLastRequestXML()
-    {
-        $request =<<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<methodCall>
-    <methodName>domain1.staticCall</methodName>
-</methodCall>
-XML;
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
-        $response = $this->_server->handle($request);
-
-        $this->assertEquals($request, $this->_server->getLastRequestXML());
-    }
-
-    /**
-     * getLastResponseXML() test
-     */
-    public function testGetLastResponseXML()
-    {
-        $request =<<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<methodCall>
-    <methodName>domain1.staticCall</methodName>
-</methodCall>
-XML;
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
-        $response = $this->_server->handle($request);
-
-        $this->assertSame($response, $this->_server->getLastResponseXML());
-    }
-
-    /**
-     * getLastResponse() test
-     */
-    public function testGetLastResponse()
-    {
-        $request =<<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<methodCall>
-    <methodName>domain1.staticCall</methodName>
-</methodCall>
-XML;
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
-        $response = $this->_server->handle($request);
-
-        $this->assertEquals('statically', $this->_server->getLastResponse());
-    }
-
-    /**
-     * getLastRequest() test
-     */
-    public function testGetLastRequest()
-    {
-        $request =<<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<methodCall>
-    <methodName>domain1.withVars</methodName>
-    <params>
-        <param>
-            <value><string>This is the Title</string></value>
-        </param>
-        <param><value><array>
-            <data>
-                <value><string>First arg</string></value>
-                <value><string>Second arg</string></value>
-                <value><string>Third arg</string></value>
-            </data>
-        </array></value></param>
-    </params>
-</methodCall>
-XML;
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
-        $response = $this->_server->handle($request);
-
-        $params = array(
-            'This is the Title',
-            array('First arg', 'Second arg', 'Third arg')
-        );
-
-        $lastRequest = $this->_server->getLastRequest();
-        $this->assertSame('domain1.withVars', $lastRequest['methodName']);
-        $this->assertSame($params, $lastRequest['params']);
+        $this->assertTrue($response instanceof Zend_XmlRpc_Response);
+        $this->assertTrue($response instanceof Zend_XmlRpc_Server_testResponse);
     }
 
     /**
      * listMethods() test
+     *
+     * Call as method call 
+     *
+     * Returns: array 
      */
     public function testListMethods()
     {
-        $expected = array(
-            'system.listMethods',
-            'system.methodHelp',
-            'system.methodSignature',
-            'system.multicall'
-        );
-
-        $actual = $this->_server->listMethods();
-        $this->assertEquals($expected, $actual, var_export($actual, 1));
+        $methods = $this->_server->listMethods();
+        $this->assertTrue(is_array($methods));
+        $this->assertTrue(in_array('system.listMethods', $methods));
+        $this->assertTrue(in_array('system.methodHelp', $methods));
+        $this->assertTrue(in_array('system.methodSignature', $methods));
+        $this->assertTrue(in_array('system.multicall', $methods));
     }
 
     /**
      * methodHelp() test
+     *
+     * Call as method call 
+     *
+     * Expects:
+     * - method: 
+     * 
+     * Returns: string 
      */
     public function testMethodHelp()
     {
-        $methodHelp = $this->_server->methodHelp('system.methodHelp');
-        $this->assertContains('Display help message for an XMLRPC method', $methodHelp);
+        $help = $this->_server->methodHelp('system.listMethods');
+        $this->assertContains('all available XMLRPC methods', $help);
     }
 
     /**
      * methodSignature() test
+     *
+     * Call as method call 
+     *
+     * Expects:
+     * - method: 
+     * 
+     * Returns: array 
      */
     public function testMethodSignature()
     {
         $sig = $this->_server->methodSignature('system.methodSignature');
-        $expected = array(array('array', 'string'));
-        $this->assertEquals($expected, $sig);
+        $this->assertTrue(is_array($sig));
+        $this->assertEquals(1, count($sig), var_export($sig, 1));
     }
 
     /**
      * multicall() test
      *
-     * @todo Determine how to parse response into constituent array
+     * Call as method call 
+     *
+     * Expects:
+     * - methods: 
+     * 
+     * Returns: array 
      */
     public function testMulticall()
     {
-        $request =<<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<methodCall>
-    <methodName>system.multicall</methodName>
-    <params>
-        <param><value><array><data>
-            <value><struct>
-                <member>
-                    <name>methodName</name>
-                    <value><string>domain1.staticCall</string></value>
-                </member>
-                <member>
-                    <name>params</name>
-                    <value><array><data></data></array></value>
-                </member>
-            </struct></value>
-            <value><struct>
-                <member>
-                    <name>methodName</name>
-                    <value><string>domain1.staticVars</string></value>
-                </member>
-                <member>
-                    <name>params</name>
-                    <value><array><data>
-                        <value><string>Title String</string></value>
-                        <value><array><data>
-                            <value><string>First arg</string></value>
-                            <value><string>Second arg</string></value>
-                            <value><string>Third arg</string></value>
-                        </data></array></value>
-                    </data></array></value>
-                </member>
-            </struct></value>
-            <value><struct>
-                <member>
-                    <name>methodName</name>
-                    <value><string>bogus</string></value>
-                </member>
-                <member>
-                    <name>params</name>
-                    <value><array><data></data></array></value>
-                </member>
-            </struct></value>
-        </data></array></value></param>
-    </params>
-</methodCall>
-XML;
-        $this->_server->setClass('zxrs_test_methods', 'domain1');
+        $struct = array(
+            array(
+                'methodName' => 'system.listMethods',
+                'params' => array()
+            ),
+            array(
+                'methodName' => 'system.methodHelp',
+                'params' => array('system.multicall')
+            )
+        );
+        $request = new Zend_XmlRpc_Request();
+        $request->setMethod('system.multicall');
+        $request->addParam($struct);
         $response = $this->_server->handle($request);
 
-        $this->assertContains('statically', $response);
-        $this->assertContains('Second arg', $response);
-        $this->assertContains('faultString', $response);
+        $returns = $response->getReturnValue();
+        $this->assertTrue(is_array($returns));
+        $this->assertEquals(2, count($returns));
+        $this->assertTrue(is_array($returns[0]), var_export($returns[0], 1));
+        $this->assertTrue(is_string($returns[1]), var_export($returns[1], 1));
     }
 }
 
 /**
- * XMLRPC function 1
+ * Zend_XmlRpc_Server_testFunction 
+ *
+ * Function for use with xmlrpc server unit tests
  * 
- * @param string $string 
- * @param struct $struct 
+ * @param array $var1 
+ * @param string $var2 
  * @return string
  */
-function zxrs_func1($string, $struct)
+function Zend_XmlRpc_Server_testFunction($var1, $var2 = 'optional')
 {
-    $return = $string. "\n";
-    foreach ($struct as $key => $value) {
-        $return .= "$key: $value\n";
-    }
-
-    return $return;
+    return $var2 . ': ' . implode(',', (array) $var1);
 }
 
 /**
- * Sample exception class for testing faults
+ * Zend_XmlRpc_Server_testFunction2
+ *
+ * Function for use with xmlrpc server unit tests
+ * 
+ * @return string
  */
-class zxrs1_exception extends Exception {}
-
-/**
- * Sample exception class for testing faults
- */
-class zxrs2_exception extends Exception {}
-
-/**
- * Class for testing attaching class methods
- */
-class zxrs_test_methods
+function Zend_XmlRpc_Server_testFunction2()
 {
-    protected $_vars;
+    return 'function2';
+}
 
-    public function __construct($vars = false)
-    {
-        $this->_vars = $vars;
-    }
 
+class Zend_XmlRpc_Server_testClass
+{
     /**
-     * Retrieve internal vars
+     * Constructor
      * 
-     * @return false|array
+     * @return void
      */
-    public function getVars()
+    public function __construct()
     {
-        return $this->_vars;
     }
 
     /**
-     * Try a static method
-     * 
-     * @return string
-     */
-    public static function staticCall()
-    {
-        return 'statically';
-    }
-
-    /**
-     * Public method with vars
+     * Test1 
+     *
+     * Returns 'String: ' . $string
      * 
      * @param string $string 
+     * @return string
+     */
+    public function test1($string)
+    {
+        return 'String: ' . (string) $string;
+    }
+
+    /**
+     * Test2 
+     *
+     * Returns imploded array
+     * 
      * @param array $array 
      * @return string
      */
-    public function withVars($string, $array)
+    public static function test2($array)
     {
-        $return = $string . "\n";
-        foreach ($array as $string) {
-            $return .= $string . "\n";
-        }
-
-        return $return;
+        return implode('; ', (array) $array);
     }
 
     /**
-     * Static method with vars
+     * Test3 
+     *
+     * Should not be available...
      * 
-     * @param string $string 
-     * @param array $array 
-     * @return array
+     * @return void
      */
-    public static function staticVars($string, $array)
+    protected function _test3()
     {
-        array_unshift($array, $string);
-        return $array;
     }
 }
 
+class Zend_XmlRpc_Server_testResponse extends Zend_XmlRpc_Response
+{
+}

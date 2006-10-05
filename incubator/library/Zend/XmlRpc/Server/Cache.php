@@ -55,10 +55,10 @@ class Zend_XmlRpc_Server_Cache
         }
 
         // Remove system.* methods
-        $methods = $server->getCallbacks();
-        foreach (array_keys($methods) as $method) {
-            if (in_array($method, Zend_XmlRpc_Server::$systemMethods)) {
-                unset($methods[$method]);
+        $methods = $server->getFunctions();
+        foreach ($methods as $name => $method) {
+            if ($method->system) {
+                unset($methods[$name]);
             }
         }
 
@@ -116,7 +116,7 @@ class Zend_XmlRpc_Server_Cache
 
         $dispatchArray = @unserialize($dispatch);
 
-        $server->loadArray($dispatchArray);
+        $server->loadFunctions($dispatchArray);
 
         return true;
     }
