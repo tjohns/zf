@@ -20,7 +20,7 @@
             object to <code>Zend_XmlRpc_Server::handle()</code>, or it will
             instantiate a <code>Zend_XmlRpc_Request_Http</code> object if none
             is provided -- thus grabbing the request from
-            <code>php://input</code>.
+            <code>php://input</code>.</para>
 
         <para><code>Zend_XmlRpc_Server::handle()</code> then attempts to
             dispatch to the appropriate handler based on the method
