@@ -133,8 +133,10 @@ class Zend_Config_Ini extends Zend_Config
             if (strlen($pieces[0]) && strlen($pieces[1])) {
                 if (!isset($config[$pieces[0]])) {
                     $config[$pieces[0]] = array();
+                } elseif ( !is_array($config[$pieces[0]])) {
+                    throw new Zend_Config_Exception("Cannot create sub-key for '{$pieces[0]}' as key already exists");
                 }
-                $config[$pieces[0]] = $this->_processLevelsInKey($config[$pieces[0]], $pieces[1], $value);
+                $config[$pieces[0]] = $this->_processKey($config[$pieces[0]], $pieces[1], $value);
             } else {
                 throw new Zend_Config_Exception("Invalid key '$key'");
             }
@@ -144,33 +146,4 @@ class Zend_Config_Ini extends Zend_Config
         return $config;
     }
 
-
-    /**
-     * Helper function to handle the "dot" namespace syntax in the key.
-     * Uses "." as the separator.
-     *
-     * @param array $parent
-     * @param string $key
-     * @param string $value
-     * @return array
-     */
-    protected function _processLevelsInKey($parent, $key, $value)
-    {
-        if (strpos($key, '.')) {
-            $pieces = explode('.', $key, 2);
-            if (strlen($pieces[0]) && strlen($pieces[1])) {
-                if (!isset($parent[$pieces[0]])) {
-                    $parent[$pieces[0]] = array();
-                } else if (!is_array($parent[$pieces[0]])) {
-                    throw new Zend_Config_Exception("Cannot create sub-key for '{$pieces[0]}' as key already exists");
-                }
-                $parent[$pieces[0]] = $this->_processLevelsInKey($parent[$pieces[0]], $pieces[1], $value);
-            } else {
-                $parent->$key = $value;
-            }
-        } else if (strlen($key)) {
-            $parent[$key] = $value;
-        }
-        return $parent;
-    }
 }

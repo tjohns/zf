@@ -121,5 +121,15 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
             }
         }
     }
+    
+    public function testZF426()
+    {
+        try {
+            $config = new Zend_Config_Ini($this->_iniFileConfig, 'zf426');
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('Cannot create sub-key for', $expected->getMessage());
+        }        
+    }
 
 }
