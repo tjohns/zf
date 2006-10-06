@@ -52,6 +52,9 @@ require_once 'Zend/Search/Lucene/Search/QueryHit.php';
 /** Zend_Search_Lucene_Search_Similarity */
 require_once 'Zend/Search/Lucene/Search/Similarity.php';
 
+/** Zend_Search_Lucene_Index_SegmentInfoPriorityQueue */
+require_once 'Zend/Search/Lucene/Index/SegmentInfoPriorityQueue.php';
+
 
 /**
  * @category   Zend
@@ -607,22 +610,46 @@ class Zend_Search_Lucene
         }
     }
 
-    /*************************************************************************
-    @todo UNIMPLEMENTED
-    *************************************************************************/
 
     /**
      * Returns an array of all terms in this index.
      *
-     * @todo Implementation
      * @return array
      */
     public function terms()
     {
-        return array();
+        $result = array();
+
+        $segmentInfoQueue = new Zend_Search_Lucene_Index_SegmentInfoPriorityQueue();
+
+        foreach ($this->_segmentInfos as $segName => $segmentInfo) {
+            $segmentInfo->reset();
+            $segmentInfoQueue->put($segmentInfo);
+        }
+
+        while (($segmentInfo = $segmentInfoQueue->pop()) !== null) {
+            if ($segmentInfoQueue->top() !== null &&
+                $segmentInfoQueue->top()->currentTerm()->key() !=
+                            $segmentInfo->currentTerm()->key()) {
+                // We got new term
+                $result[] = $segmentInfo->currentTerm();
+            }
+
+            $segmentInfo->nextTerm();
+            // check, if segment dictionary is finished
+            if ($segmentInfo->currentTerm() !== null) {
+                // Put segment back into the priority queue
+                $segmentInfoQueue->put($segmentInfo);
+            }
+        }
+
+        return $result;
     }
 
 
+    /*************************************************************************
+    @todo UNIMPLEMENTED
+    *************************************************************************/
     /**
      * Undeletes all documents currently marked as deleted in this index.
      *

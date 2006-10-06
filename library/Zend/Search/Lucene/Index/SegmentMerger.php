@@ -29,6 +29,9 @@ require_once 'Zend/Search/Lucene/Index/SegmentInfo.php';
 /** Zend_Search_Lucene_Index_SegmentWriter */
 require_once 'Zend/Search/Lucene/Index/SegmentWriter.php';
 
+/** Zend_Search_Lucene_Index_SegmentInfoPriorityQueue */
+require_once 'Zend/Search/Lucene/Index/SegmentInfoPriorityQueue.php';
+
 
 /**
  * @category   Zend
@@ -195,11 +198,26 @@ class Zend_Search_Lucene_Index_SegmentMerger
      */
     private function _mergeTerms()
     {
+        $segmentInfoQueue = new Zend_Search_Lucene_Index_SegmentInfoPriorityQueue();
+
         foreach ($this->_segmentInfos as $segName => $segmentInfo) {
             $segmentInfo->reset();
+            $segmentInfoQueue->put($segmentInfo);
+        }
 
-            while (($term = $segmentInfo->nextTerm()) !== null) {
-//                echo $segmentInfo->getName() . '  ' . $term->field . ':' . $term->text . "\n";
+        while (($segmentInfo = $segmentInfoQueue->pop()) !== null) {
+            if ($segmentInfoQueue->top() !== null &&
+                $segmentInfoQueue->top()->currentTerm()->key() !=
+                            $segmentInfo->currentTerm()->key()) {
+                // We got new term
+//                echo $segmentInfo->currentTerm()->field . ':' . $segmentInfo->currentTerm()->text . "\n";
+            }
+
+            $segmentInfo->nextTerm();
+            // check, if segment dictionary is finished
+            if ($segmentInfo->currentTerm() !== null) {
+                // Put segment back into the priority queue
+                $segmentInfoQueue->put($segmentInfo);
             }
         }
     }

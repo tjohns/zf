@@ -622,14 +622,15 @@ class Zend_Search_Lucene_Index_SegmentInfo
     private $_lastTerm;
 
     /**
-     * Reset terms stream
+     * Reset terms stream and returns first term
      *
      * @throws Zend_Search_Lucene_Exception
+     * @return Zend_Search_Lucene_Index_Term|null
      */
     public function reset()
     {
         if ($this->_tisFile !== null) {
-            unset($this->_tisFile);
+            $this->_tisFile = null;
         }
 
         $this->_tisFile = $this->openCompoundFile('.tis', false);
@@ -644,21 +645,22 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
         $this->_lastTerm     = new Zend_Search_Lucene_Index_Term('', -1);
         $this->_lastTermInfo = new Zend_Search_Lucene_Index_TermInfo(0, 0, 0, 0);
+
+        return $this->nextTerm();
     }
 
+
     /**
-     * Scans terms dictionary and returns term info
+     * Scans terms dictionary and returns next term
      *
-     * @param Zend_Search_Lucene_Index_Term $term
      * @return Zend_Search_Lucene_Index_Term|null
      */
     public function nextTerm()
     {
-        if ($this->_tisFile === null) {
-            throw new Zend_Search_Lucene_Exception('reset() must be applied at first.');
-        }
+        if ($this->_tisFile === null  ||  $this->_termCount == 0) {
+            $this->_lastTerm     = null;
+            $this->_lastTermInfo = null;
 
-        if ($this->_termCount == 0) {
             return null;
         }
 
@@ -667,7 +669,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $termFieldNum     = $this->_tisFile->readVInt();
         $termValue        = substr($this->_lastTerm->text, 0, $termPrefixLength) . $termSuffix;
 
-        $this->_lastTerm = new Zend_Search_Lucene_Index_Term($termValue, $termFieldNum);
+        $this->_lastTerm = new Zend_Search_Lucene_Index_Term($termValue, $this->_fields[$termFieldNum]->name);
 
         $docFreq     = $this->_tisFile->readVInt();
         $freqPointer = $this->_lastTermInfo->freqPointer + $this->_tisFile->readVInt();
@@ -681,8 +683,24 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $this->_lastTermInfo = new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipOffset);
 
         $this->_termCount--;
+        if ($this->_termCount == 0) {
+            $this->_tisFile = null;
+        }
 
         return $this->_lastTerm;
     }
+
+
+    /**
+     * Returns term in current position
+     *
+     * @param Zend_Search_Lucene_Index_Term $term
+     * @return Zend_Search_Lucene_Index_Term|null
+     */
+    public function currentTerm()
+    {
+        return $this->_lastTerm;
+    }
+
 }
 

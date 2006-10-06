@@ -20,55 +20,34 @@
  */
 
 
+/** Zend_Search_Lucene_Exception */
+require_once 'Zend/Search/Lucene/Exception.php';
+
+/** Zend_Search_Lucene */
+require_once 'Zend/Search/Lucene/PriorityQueue.php';
+
+
 /**
- * A Term represents a word from text.  This is the unit of search.  It is
- * composed of two elements, the text of the word, as a string, and the name of
- * the field that the text occured in, an interned string.
- *
- * Note that terms may represent more than words from text fields, but also
- * things like dates, email addresses, urls, etc.
- *
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Index
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Index_Term
+class Zend_Search_Lucene_Index_SegmentInfoPriorityQueue extends Zend_Search_Lucene_PriorityQueue
 {
     /**
-     * Field name or field number (depending from context)
+     * Compare elements
      *
-     * @var mixed
-     */
-    public $field;
-
-    /**
-     * Term value
+     * Returns true, if $el1 is less than $el2; else otherwise
      *
-     * @var string
+     * @param mixed $segmentInfo1
+     * @param mixed $segmentInfo2
+     * @return boolean
      */
-    public $text;
-
-
-    /**
-     * Object constructor
-     */
-    public function __construct( $text, $field = 'contents' )
+    protected function _less($segmentInfo1, $segmentInfo2)
     {
-        $this->field = $field;
-        $this->text = $text;
+        return strcmp($segmentInfo1->currentTerm()->key(), $segmentInfo2->currentTerm()->key()) < 0;
     }
 
-
-    /**
-     * Returns term key
-     *
-     * @return string
-     */
-    public function key()
-    {
-        return $this->field . chr(0) . $this->text;
-    }
 }
-
