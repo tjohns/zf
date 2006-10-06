@@ -50,6 +50,8 @@ $index = new Zend_Search_Lucene('index', true);
 // Uncomment next line if you want to have case sensitive index
 // ZSearchAnalyzer::setDefault(new ZSearchTextAnalyzer());
 
+setlocale(LC_CTYPE, 'en_US.ISO8859-1');
+
 $indexSourceDir = 'IndexSource';
 $dir = opendir($indexSourceDir);
 while ($file = readdir($dir)) {
