@@ -38,11 +38,11 @@
         An ACL can represent any set of physical or virtual objects that you wish. For the purposes of demonstration, however, we will create a basic Content Management System ACL that maintains several tiers of groups over a wide variety of areas. To create a new ACL object, we instantiate the ACL with no parameters:
         </para>
 
-        <programlisting role="php">&lt;?php
+        <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Acl.php';
 
-$acl = new Zend_Acl();</programlisting>
+$acl = new Zend_Acl();]]></programlisting>
 
     </sect2>
 
@@ -93,29 +93,29 @@ $acl = new Zend_Acl();</programlisting>
         These groups can be added to the ARO registry as follows:
         </para>
 
-        <programlisting role="php">&lt;?php
+        <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
 
 // Retrieve an instance of the ARO registry
-$aro = $acl-&gt;aroRegistry();
+$aro = $acl->aroRegistry();
 
 // Add groups to the ARO registry
 
 // Guest does not inherit access controls
-$aro-&gt;add('guest');
+$aro->add('guest');
 
 // Staff inherits from guest
-$aro-&gt;add('staff', $aro-&gt;guest);
-// alternatively, $aro-&gt;add('staff', 'guest');
+$aro->add('staff', $aro->guest);
+// alternatively, $aro->add('staff', 'guest');
 
 // Editor inherits from staff
-$aro-&gt;add('editor', $aro-&gt;staff);
+$aro->add('editor', $aro->staff);
 
 // Administrator does not inherit access controls
-$aro-&gt;add('administrator');</programlisting>
+$aro->add('administrator');]]></programlisting>
 
     </sect2>
 
@@ -128,42 +128,42 @@ $aro-&gt;add('administrator');</programlisting>
         </para>
 
         <para>
-        For example, if we assign access controls to <code>$acl-&gt;newsletters</code>, then descendant ACOs such as <code>$acl-&gt;newsletters-&gt;archive</code> and <code>$acl-&gt;newsletters-&gt;pending</code> inherit access controls from the parent ACO, <code>$acl-&gt;newsletters</code>, despite that they have not been specifically defined for either child ACO.
+        For example, if we assign access controls to <code><![CDATA[$acl->newsletters]]></code>, then descendant ACOs such as <code><![CDATA[$acl->newsletters->archive]]></code> and <code><![CDATA[$acl->newsletters->pending]]></code> inherit access controls from the parent ACO, <code><![CDATA[$acl->newsletters]]></code>, despite that they have not been specifically defined for either child ACO.
         </para>
 
         <para>
         Consequently, we can define a reasonably complex set of permissions with a minimum amount of code. To apply the base permissions as defined above:
         </para>
 
-        <programlisting role="php">&lt;?php
+        <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
 
-$aro = $acl-&gt;aroRegistry();
+$aro = $acl->aroRegistry();
 
-$aro-&gt;add('guest');
-$aro-&gt;add('staff', $aro-&gt;guest);
-$aro-&gt;add('editor', $aro-&gt;staff);
-$aro-&gt;add('administrator', $aro-&gt;editor);
+$aro->add('guest');
+$aro->add('staff', $aro->guest);
+$aro->add('editor', $aro->staff);
+$aro->add('administrator', $aro->editor);
 
 // Whitelist implementation; ACL denies access by default
-$acl-&gt;deny();
+$acl->deny();
 
 // Guest may only view content
-$acl-&gt;allow($aro-&gt;guest, 'view');
-// alternatively, $acl-&gt;allow('guest, 'view');
+$acl->allow($aro->guest, 'view');
+// alternatively, $acl->allow('guest, 'view');
 
 // Staff inherits view privilege from guest, but also needs additional privileges
-$acl-&gt;allow($aro-&gt;staff, array('edit', 'submit', 'revise'));
+$acl->allow($aro->staff, array('edit', 'submit', 'revise'));
 
 // Editor inherits view, edit, submit, and revise privileges from staff,
 // but also needs additional privileges
-$acl-&gt;allow($aro-&gt;editor, array('publish', 'archive', 'delete'));
+$acl->allow($aro->editor, array('publish', 'archive', 'delete'));
 
 // Administrator inherits nothing, but is allowed all privileges
-$acl-&gt;allow($aro-&gt;administrator);</programlisting>
+$acl->allow($aro->administrator);]]></programlisting>
 
     </sect2>
 
@@ -175,31 +175,31 @@ $acl-&gt;allow($aro-&gt;administrator);</programlisting>
         We now have a flexible ACL that can be used to determine whether requesters have permission to access areas and perform functions throughout the web application. Performing queries can be as flexible as you require:
         </para>
 
-        <programlisting role="php">&lt;?php
+        <programlisting role="php"><![CDATA[<?php
 
 // Querying the ACL at the root ACO
 
-echo $acl-&gt;valid($aro-&gt;guest, 'view') ?
+echo $acl->valid($aro->guest, 'view') ?
      "allowed" : "denied"; // allowed
 
-echo $acl-&gt;valid($aro-&gt;staff, 'publish') ?
+echo $acl->valid($aro->staff, 'publish') ?
      "allowed" : "denied"; // denied
 
 // Permission checks on more specific ACOs
 
-echo $acl-&gt;newsletter-&gt;pending-&gt;valid($aro-&gt;guest, 'view') ?
+echo $acl->newsletter->pending->valid($aro->guest, 'view') ?
      "allowed" : "denied"; // allowed
 
-echo $acl-&gt;gallery-&gt;profiles-&gt;valid($aro-&gt;staff, 'revise') ?
+echo $acl->gallery->profiles->valid($aro->staff, 'revise') ?
      "allowed" : "denied"; // allowed because of inheritance
 
-echo $acl-&gt;config-&gt;hosts-&gt;valid($aro-&gt;editor, 'update') ?
+echo $acl->config->hosts->valid($aro->editor, 'update') ?
      "allowed" : "denied"; // denied because 'update' is undefined
 
 // Querying permissions from the perspective of an ARO
 
-echo $aro-&gt;staff-&gt;canAccess($acl-&gt;newsletter-&gt;pending, 'view') ?
-     "allowed" : "denied"; // allowed</programlisting>
+echo $aro->staff->canAccess($acl->newsletter->pending, 'view') ?
+     "allowed" : "denied"; // allowed]]></programlisting>
 
     </sect2>
 
@@ -229,43 +229,43 @@ echo $aro-&gt;staff-&gt;canAccess($acl-&gt;newsletter-&gt;pending, 'view') ?
         First we revise the ARO registry to reflect these changes. We have determined that the 'marketing' group has the same basic permissions as 'staff', so we define 'marketing' in such a way that it inherits permissions from 'staff':
         </para>
 
-        <programlisting role="php">// The new marketing group inherits permissions from staff
-$aro-&gt;add('marketing', $aro-&gt;staff);</programlisting>
+        <programlisting role="php"><![CDATA[// The new marketing group inherits permissions from staff
+$aro->add('marketing', $aro->staff);]]></programlisting>
 
         <para>
         Then it is simply a matter of adding permissions to this new group on the target areas within the ACL:
         </para>
 
-        <programlisting role="php">// Marketing must be able to publish and archive newsletters
-$acl-&gt;newsletter-&gt;allow($aro-&gt;marketing, array('publish', 'archive'));
+        <programlisting role="php"><![CDATA[// Marketing must be able to publish and archive newsletters
+$acl->newsletter->allow($aro->marketing, array('publish', 'archive'));
 
 // It also needs to be able to publish and archive the latest news
-$acl-&gt;news-&gt;latest-&gt;allow($aro-&gt;marketing, array('publish', 'archive'));
+$acl->news->latest->allow($aro->marketing, array('publish', 'archive'));
 
 // Staff and marketing (by inheritance), are denied permission to revise the latest news
-$acl-&gt;news-&gt;latest-&gt;deny($aro-&gt;staff, 'revise');
+$acl->news->latest->deny($aro->staff, 'revise');
 
 // Everyone (including administrators) are denied permission to archive news announcements
-$acl-&gt;news-&gt;announcement-&gt;deny(null, 'archive');</programlisting>
+$acl->news->announcement->deny(null, 'archive');]]></programlisting>
 
         <para>
         We can now query the ACL with respect to the latest changes:
         </para>
 
-        <programlisting role="php">echo $acl-&gt;newsletter-&gt;pending-&gt;valid($aro-&gt;staff, 'publish') ?
+        <programlisting role="php"><![CDATA[echo $acl->newsletter->pending->valid($aro->staff, 'publish') ?
      "allowed" : "denied"; // denied
 
-echo $acl-&gt;newsletter-&gt;pending-&gt;valid($aro-&gt;marketing, 'publish') ?
+echo $acl->newsletter->pending->valid($aro->marketing, 'publish') ?
      "allowed" : "denied"; // allowed
 
-echo $aro-&gt;staff-&gt;canAccess($acl-&gt;news-&gt;latest, 'publish') ?
+echo $aro->staff->canAccess($acl->news->latest, 'publish') ?
      "allowed" : "denied"; // denied
 
-echo $aro-&gt;marketing-&gt;canAccess($acl-&gt;news-&gt;latest, 'publish') ?
+echo $aro->marketing->canAccess($acl->news->latest, 'publish') ?
      "allowed" : "denied"; // allowed
 
-echo $aro-&gt;editor-&gt;canAccess($acl-&gt;news-&gt;announcement, 'archive') ?
-     "allowed" : "denied"; // denied</programlisting>
+echo $aro->editor->canAccess($acl->news->announcement, 'archive') ?
+     "allowed" : "denied"; // denied]]></programlisting>
 
     </sect2>
 
@@ -277,18 +277,18 @@ echo $aro-&gt;editor-&gt;canAccess($acl-&gt;news-&gt;announcement, 'archive') ?
         To remove one or more access rules from the ACL, simply use the available <code>removeAllow()</code> or <code>removeDeny()</code> methods. As with <code>allow()</code> and <code>deny()</code>, you may provide a <code>null</code> value to indicate application to all AROs, and the context may also be <code>null</code>, indicating all contexts, or a string or an array of strings, where the strings indicate the specific contexts to which the removal applies:
         </para>
 
-        <programlisting role="php">// Remove the denial of revising latest news to staff (and marketing, by inheritance)
-$acl-&gt;news-&gt;latest-&gt;removeDeny($aro-&gt;staff, 'revise');
+        <programlisting role="php"><![CDATA[// Remove the denial of revising latest news to staff (and marketing, by inheritance)
+$acl->news->latest->removeDeny($aro->staff, 'revise');
 
 // Remove the allowance of publishing and archiving newsletters to marketing
-$acl-&gt;newsletter-&gt;removeAllow($aro-&gt;marketing, array('publish', 'archive'));</programlisting>
+$acl->newsletter->removeAllow($aro->marketing, array('publish', 'archive'));]]></programlisting>
 
         <para>
         Permissions may be modified incrementally as indicated above, but <code>null</code> values will override such incremental changes:
         </para>
 
-        <programlisting role="php">// Allow marketing all permissions upon the latest news
-$acl-&gt;news-&gt;latest-&gt;allow($aro-&gt;marketing, null);</programlisting>
+        <programlisting role="php"><![CDATA[// Allow marketing all permissions upon the latest news
+$acl->news->latest->allow($aro->marketing, null);]]></programlisting>
 
     </sect2>
 
@@ -320,30 +320,30 @@ $acl-&gt;news-&gt;latest-&gt;allow($aro-&gt;marketing, null);</programlisting>
         To retrieve an array of all child nodes of an ACO, you may simply iterate through the results of the <code>getChildren()</code> method. For each child object returned, you may also retrieve the 'allow' and 'deny' permissions as separate objects for inspection. These are returned as associative arrays, with the keys representing the defined AROs and the values containing an array of defined contexts:
         </para>
 
-        <programlisting role="php">// Retrieve default ACL permissions from the root ACO
-foreach ($acl-&gt;getAllow() as $aro =&gt; $permissions) {
+        <programlisting role="php"><![CDATA[// Retrieve default ACL permissions from the root ACO
+foreach ($acl->getAllow() as $aro => $permissions) {
     echo "Allow: $aro = " . join(', ', $permissions) . "\n";
 }
-foreach ($acl-&gt;getDeny() as $aro =&gt; $permissions) {
+foreach ($acl->getDeny() as $aro => $permissions) {
     echo "Deny:  $aro = " . join(', ', $permissions) . "\n";
 }
 
 // Retrieve all 1st-level children ACOs and list permissions specific to each child ACO
 echo "\n";
-foreach ($acl-&gt;getChildren() as $aco) {
+foreach ($acl->getChildren() as $aco) {
 
-    echo "Path: " . $aco-&gt;getPath(). "\n";
+    echo "Path: " . $aco->getPath(). "\n";
 
-    foreach ($aco-&gt;getAllow() as $aro =&gt; $permissions) {
+    foreach ($aco->getAllow() as $aro => $permissions) {
         echo "Allow: $aro = " . join(', ', $permissions) . "\n";
     }
 
-    foreach ($aco-&gt;getDeny() as $aro =&gt; $permissions) {
+    foreach ($aco->getDeny() as $aro => $permissions) {
         echo "Deny:  $aro = " . join(', ', $permissions) . "\n";
     }
 
     echo "\n";
-}</programlisting>
+}]]></programlisting>
 
         <para>
         You can also call <code>getParent()</code> to access each ACO's parent for traversing up to the root of the ACL.
@@ -359,11 +359,11 @@ foreach ($acl-&gt;getChildren() as $aco) {
         You may also retrieve an inclusive subset of an ACL by calling the <code>getValidAco()</code> method upon an ARO. This method traverses the ACL starting from the provided ACO and returns a new Zend_ACL object. This feature limits the amount of data in the returned ACL to that which pertains to the ARO in question.
         </para>
 
-        <programlisting role="php">// Fetch the ACL as it pertains to the marketing ARO from the root
-$aclMarketing = $aro-&gt;marketing-&gt;getValidAco($acl);
+        <programlisting role="php"><![CDATA[// Fetch the ACL as it pertains to the marketing ARO from the root
+$aclMarketing = $aro->marketing->getValidAco($acl);
 
 // Same as above, but limiting the view to the newsletter and its descendants
-$aclMarketingNewsletter = $aro-&gt;marketing-&gt;getValidAco($acl-&gt;newsletter);</programlisting>
+$aclMarketingNewsletter = $aro->marketing->getValidAco($acl->newsletter);]]></programlisting>
 
     </sect2>
 
@@ -375,11 +375,11 @@ $aclMarketingNewsletter = $aro-&gt;marketing-&gt;getValidAco($acl-&gt;newsletter
         An array of ARO instances can also be returned for each ACO node in the ACL. The <code>getValidAro()</code> method available for ACOs returns a list of all AROs that have access to the ACO, whether through specific or inherited permissions. To limit the search to particular AROs, simply supply either a single ARO identifier or an array of ARO identifiers.
         </para>
 
-        <programlisting role="php">// Returns array of 'staff', 'editor', 'marketing', and 'administrator'
-$aroList = $acl-&gt;news-&gt;getValidAro();
+        <programlisting role="php"><![CDATA[// Returns array of 'staff', 'editor', 'marketing', and 'administrator'
+$aroList = $acl->news->getValidAro();
 
 // Returns array containing only 'staff'
-$aroList = $aro-&gt;news-&gt;getValidAro(array($aro-&gt;guest, $aro-&gt;staff));</programlisting>
+$aroList = $aro->news->getValidAro(array($aro->guest, $aro->staff));]]></programlisting>
 
     </sect2>
 
