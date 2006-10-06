@@ -184,24 +184,6 @@ class Zend_Acl
     }
 
     /**
-     * Assert validity of container
-     *
-     * Convenience method to providing exception handling for ACLs
-     * Parameters are identical to valid()
-     *
-     * @throws Zend_Acl_Exception
-     * @return true
-     */
-    public function assertValid()
-    {
-        $args = func_get_args();
-        if (!call_user_func_array(array($this, 'valid'), $args)) {
-            throw new Zend_Acl_Exception('access to container denied');
-        }
-        return true;
-    }
-
-    /**
      * Returns the ACL's parent object
      *
      * @return Zend_Acl|null
@@ -214,7 +196,7 @@ class Zend_Acl
     /**
      * Returns the ACL's child nodes
      *
-     * @return Zend_Acl|null
+     * @return array
      */
     public function getChildren()
     {
@@ -566,4 +548,5 @@ class Zend_Acl
     {
         return is_null($this->_parent);
     }
+
 }
