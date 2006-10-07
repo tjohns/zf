@@ -20,6 +20,9 @@
  */
 
 
+//require_once 'Zend/Locale/UTF8.php';
+
+
 /**
  * @category   Zend
  * @package    Zend_Locale
@@ -146,12 +149,12 @@ class Zend_Locale_Format
 
             // only 1 seperation
             $seperation = ($point - $group - 1);
-            for ($x = (strlen($number) - $seperation); $x > ($group2 - 2); $x -= $seperation) {
-                 $number = substr($number, 0, $x) . $symbols['group']
-                         . substr($number, $x);
+            for ($x = strlen($number); $x > $group2; $x -= $seperation) {
+                 $number = substr($number, 0, $x - $seperation) . $symbols['group']
+                         . substr($number, $x - $seperation);
             }
             $format = substr($format, 0, strpos($format, '#')) . $number . substr($format, $point);
-
+            
         } else {
 
             // 2 seperations
@@ -162,9 +165,10 @@ class Zend_Locale_Format
 
                 if ((strlen($number) - 1) > ($point - $group)) {
                     $seperation2 = ($group - $group2 - 1);
-                    for ($x = (strlen($number) - $seperation - $seperation2 - 1); $x > ($group2 - 2); $x -= $seperation2) {
-                         $number = substr($number, 0, $x) . $symbols['group']
-                                 . substr($number, $x);
+                    
+                    for ($x = strlen($number) - $seperation2 - 2; $x > $seperation2; $x -= $seperation2) {
+                         $number = substr($number, 0, $x - $seperation2) . $symbols['group']
+                                 . substr($number, $x - $seperation2);
                     }
                 }
 
@@ -253,18 +257,15 @@ class Zend_Locale_Format
             }
 
             $pre = substr($found, strpos($found, '.') + 1);
-
             if ($precision == false) {
                 $precision = strlen($pre);
             }
 
             if (strlen($pre) >= $precision) {
                 $found = substr($found, 0, strlen($found) - strlen($pre) + $precision);
-            } else {
-                $found = substr($found, 0, strpos($found, '.') - 1);
             }
         }
-
+        
         return floatval($found);
     }
 
@@ -440,7 +441,7 @@ class Zend_Locale_Format
 
 
     /**
-     * Returns a locale formatted number
+     * Returns a localized number
      * 
      * @param $value  - number to localize
      * @param $locale - OPTIONAL locale
@@ -537,7 +538,9 @@ class Zend_Locale_Format
 
 
     /**
-     * Returns the normalized date from an locale date
+     * Returns an array with the normalized date from an locale date
+     * a input of 10.01.2006 for locale 'de' would return
+     * array ('day' => 10, 'month' => 1, 'year' => 2006)
      *
      * @param $date   - string : date string
      * @param $type   - string : type of date (full, long, short...)
@@ -549,8 +552,13 @@ class Zend_Locale_Format
         // @todo Implement
         self::throwException('function not implemented');
 
+        if ($type == 'default') {
+            $type = Zend_Locale_Date::getContent($locale, 'defdateformat', 'gregorian');
+            $type = $type['pattern'];
+        }
+
         // Get correct date for this locale
-        $format = Zend_Locale_Data::getContent($locale,'dateformat', array('gregorian', $type));
+        $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $type));
 
         // Parse input locale aware
         $pattern = str_split($format['pattern']);
@@ -632,13 +640,6 @@ print_r($match);
     }
 
 
-    public static function toDate()
-    {
-        // @todo Implement
-        self::throwException('function not implemented');
-    }
-
-
     public static function isDate()
     {
         // @todo Implement
@@ -647,13 +648,6 @@ print_r($match);
 
 
     public static function getTime()
-    {
-        // @todo Implement
-        self::throwException('function not implemented');
-    }
-
-
-    public static function toTime()
     {
         // @todo Implement
         self::throwException('function not implemented');
