@@ -341,7 +341,7 @@ class Zend_Search_Lucene_Index_Writer
 
         $newSegment = $merger->merge();
         if ($newSegment !== null) {
-            $this->_newSegments[] = $merger->merge();
+            $this->_newSegments[] = $newSegment;
         }
     }
 

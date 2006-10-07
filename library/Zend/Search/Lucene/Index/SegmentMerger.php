@@ -54,7 +54,7 @@ class Zend_Search_Lucene_Index_SegmentMerger
      *
      * @var integer
      */
-    private $_docCount = 0;
+    private $_docCount;
 
     /**
      * A set of segments to be merged
@@ -117,6 +117,7 @@ class Zend_Search_Lucene_Index_SegmentMerger
     public function merge()
     {
         if ($this->_mergeDone) {
+            return ;
             throw new Zend_Search_Lucene_Exception('Merge is already done.');
         }
 
@@ -155,11 +156,15 @@ class Zend_Search_Lucene_Index_SegmentMerger
      */
     private function _mergeStoredFields()
     {
+        $this->_docCount = 0;
+
         foreach ($this->_segmentInfos as $segName => $segmentInfo) {
             $fdtFile = $segmentInfo->openCompoundFile('.fdt');
 
-             for ($count = 0; $count < $segmentInfo->count(); $count++) {
+            for ($count = 0; $count < $segmentInfo->count(); $count++) {
                 if (!$segmentInfo->isDeleted($count)) {
+                    $this->_docCount++;
+
                     $fieldCount = $fdtFile->readVInt();
                     $storedFields = array();
 
@@ -200,17 +205,27 @@ class Zend_Search_Lucene_Index_SegmentMerger
     {
         $segmentInfoQueue = new Zend_Search_Lucene_Index_SegmentInfoPriorityQueue();
 
+        $segmentStartId = 0;
         foreach ($this->_segmentInfos as $segName => $segmentInfo) {
-            $segmentInfo->reset();
+            $segmentStartId = $segmentInfo->reset($segmentStartId, true);
             $segmentInfoQueue->put($segmentInfo);
         }
 
+        $this->_writer->initializeDictionaryFiles();
+
+        $termDocs = array();
         while (($segmentInfo = $segmentInfoQueue->pop()) !== null) {
-            if ($segmentInfoQueue->top() !== null &&
+            // Merge positions array
+            $termDocs += $segmentInfo->currentTermPositions();
+
+            if ($segmentInfoQueue->top() === null ||
                 $segmentInfoQueue->top()->currentTerm()->key() !=
                             $segmentInfo->currentTerm()->key()) {
                 // We got new term
-//                echo $segmentInfo->currentTerm()->field . ':' . $segmentInfo->currentTerm()->text . "\n";
+                ksort($termDocs, SORT_NUMERIC);
+
+                $this->_writer->addTerm($segmentInfo->currentTerm(), $termDocs);
+                $termDocs = array();
             }
 
             $segmentInfo->nextTerm();
@@ -220,5 +235,7 @@ class Zend_Search_Lucene_Index_SegmentMerger
                 $segmentInfoQueue->put($segmentInfo);
             }
         }
+
+        $this->_writer->closeDictionaryFiles();
     }
 }

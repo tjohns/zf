@@ -58,7 +58,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
 
         $this->_fileHandle = @fopen($filename, $mode);
 
-        if ($this->_fileHandle===false) {
+        if ($this->_fileHandle === false) {
             ini_set('track_errors', $trackErrors);
             throw new Zend_Search_Lucene_Exception($php_errormsg);
         }

@@ -40,21 +40,6 @@ require_once 'Zend/Search/Lucene/Index/SegmentWriter.php';
 class Zend_Search_Lucene_Index_SegmentWriter_StreamWriter extends Zend_Search_Lucene_Index_SegmentWriter
 {
     /**
-     * '.fdx'  file - Stored Fields, the field index.
-     *
-     * @var Zend_Search_Lucene_Storage_File
-     */
-    protected $_fdxFile;
-
-    /**
-     * '.fdt'  file - Stored Fields, the field data.
-     *
-     * @var Zend_Search_Lucene_Storage_File
-     */
-    protected $_fdtFile;
-
-
-    /**
      * Object constructor.
      *
      * @param Zend_Search_Lucene_Storage_Directory $directory
@@ -91,11 +76,6 @@ class Zend_Search_Lucene_Index_SegmentWriter_StreamWriter extends Zend_Search_Lu
         }
 
         $this->_dumpFNM();
-
-
-        /** @todo remove null return (used for test purposes) */
-        return null;
-
         $this->_generateCFS();
 
         return new Zend_Search_Lucene_Index_SegmentInfo($this->_name,

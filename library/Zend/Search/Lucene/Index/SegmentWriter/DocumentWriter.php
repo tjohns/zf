@@ -37,13 +37,6 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
 class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_Lucene_Index_SegmentWriter
 {
     /**
-     * Number of docs in a segment
-     *
-     * @var integer
-     */
-    protected $_docCount;
-
-    /**
      * Term Dictionary
      * Array of the Zend_Search_Lucene_Index_Term objects
      * Corresponding Zend_Search_Lucene_Index_TermInfo object stored in the $_termDictionaryInfos
@@ -69,7 +62,6 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
     {
         parent::__construct($directory, $name);
 
-        $this->_docCount  = 0;
         $this->_termDocs       = array();
         $this->_termDictionary = array();
     }
@@ -130,8 +122,6 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
         }
 
         $this->addStoredFields($storedFields);
-
-        $this->_docCount++;
     }
 
 
@@ -140,95 +130,15 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
      */
     protected function _dumpDictionary()
     {
-        $termKeys = array_keys($this->_termDictionary);
-        sort($termKeys, SORT_STRING);
+        ksort($this->_termDictionary, SORT_STRING);
 
-        $tisFile = $this->_directory->createFile($this->_name . '.tis');
-        $tisFile->writeInt((int)0xFFFFFFFE);
-        $tisFile->writeLong(count($termKeys));
-        $tisFile->writeInt(self::$indexInterval);
-        $tisFile->writeInt(self::$skipInterval);
+        $this->initializeDictionaryFiles();
 
-        $tiiFile = $this->_directory->createFile($this->_name . '.tii');
-        $tiiFile->writeInt((int)0xFFFFFFFE);
-        $tiiFile->writeLong(ceil((count($termKeys) + 2)/self::$indexInterval));
-        $tiiFile->writeInt(self::$indexInterval);
-        $tiiFile->writeInt(self::$skipInterval);
-
-        /** Dump dictionary header */
-        $tiiFile->writeVInt(0);                    // preffix length
-        $tiiFile->writeString('');                 // suffix
-        $tiiFile->writeInt((int)0xFFFFFFFF);       // field number
-        $tiiFile->writeByte((int)0x0F);
-        $tiiFile->writeVInt(0);                    // DocFreq
-        $tiiFile->writeVInt(0);                    // FreqDelta
-        $tiiFile->writeVInt(0);                    // ProxDelta
-        $tiiFile->writeVInt(20);                   // IndexDelta
-
-        $frqFile = $this->_directory->createFile($this->_name . '.frq');
-        $prxFile = $this->_directory->createFile($this->_name . '.prx');
-
-        $termCount = 1;
-
-        $prevTerm     = null;
-        $prevTermInfo = null;
-        $prevIndexTerm     = null;
-        $prevIndexTermInfo = null;
-        $prevIndexPosition = 20;
-
-        foreach ($termKeys as $termId) {
-            $freqPointer = $frqFile->tell();
-            $proxPointer = $prxFile->tell();
-
-            $prevDoc = 0;
-            foreach ($this->_termDocs[$termId] as $docId => $termPositions) {
-                $docDelta = ($docId - $prevDoc)*2;
-                $prevDoc = $docId;
-                if (count($termPositions) > 1) {
-                    $frqFile->writeVInt($docDelta);
-                    $frqFile->writeVInt(count($termPositions));
-                } else {
-                    $frqFile->writeVInt($docDelta + 1);
-                }
-
-                $prevPosition = 0;
-                foreach ($termPositions as $position) {
-                    $prxFile->writeVInt($position - $prevPosition);
-                    $prevPosition = $position;
-                }
-            }
-
-            if (count($this->_termDocs[$termId]) >= self::$skipInterval) {
-                /**
-                 * @todo Write Skip Data to a freq file.
-                 * It's not used now, but make index more optimal
-                 */
-                $skipOffset = $frqFile->tell() - $freqPointer;
-            } else {
-                $skipOffset = 0;
-            }
-
-            $term = new Zend_Search_Lucene_Index_Term($this->_termDictionary[$termId]->text,
-                                                      $this->_fields[$this->_termDictionary[$termId]->field]->number);
-            $termInfo = new Zend_Search_Lucene_Index_TermInfo(count($this->_termDocs[$termId]),
-                                            $freqPointer, $proxPointer, $skipOffset);
-
-            $this->_dumpTermDictEntry($tisFile, $prevTerm, $term, $prevTermInfo, $termInfo);
-
-            if ($termCount % self::$indexInterval == 0) {
-                $this->_dumpTermDictEntry($tiiFile, $prevIndexTerm, $term, $prevIndexTermInfo, $termInfo);
-
-                $indexPosition = $tisFile->tell();
-                $tiiFile->writeVInt($indexPosition - $prevIndexPosition);
-                $prevIndexPosition = $indexPosition;
-            }
-            $termCount++;
+        foreach ($this->_termDictionary as $termId => $term) {
+            $this->addTerm($term, $this->_termDocs[$termId]);
         }
 
-        $this->_files[] = $this->_name . '.tis';
-        $this->_files[] = $this->_name . '.tii';
-        $this->_files[] = $this->_name . '.frq';
-        $this->_files[] = $this->_name . '.prx';
+        $this->closeDictionaryFiles();
     }
 
 

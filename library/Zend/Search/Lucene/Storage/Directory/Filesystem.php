@@ -275,7 +275,7 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
         $fullFilename = $this->_dirPath . '/' . $filename;
 
         if (!$shareHandler) {
-            new Zend_Search_Lucene_Storage_File_Filesystem($fullFilename);
+            return new Zend_Search_Lucene_Storage_File_Filesystem($fullFilename);
         }
 
         if (isset( $this->_fileHandlers[$filename] )) {

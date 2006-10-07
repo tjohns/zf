@@ -231,7 +231,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
                                        . $filename . ' file.' );
         }
 
-        $file = $this->_directory->getFileObject( $this->_name.".cfs" );
+        $file = $this->_directory->getFileObject($this->_name . '.cfs', $shareHandler);
         $file->seek($this->_segFiles[$filename]);
         return $file;
     }
@@ -594,6 +594,35 @@ class Zend_Search_Lucene_Index_SegmentInfo
     private $_tisFile = null;
 
     /**
+     * Frequencies File object for stream like terms reading
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    private $_frqFile = null;
+
+    /**
+     * Offset of the .frq file in the compound file
+     *
+     * @var integer
+     */
+    private $_frqFileOffset;
+
+    /**
+     * Positions File object for stream like terms reading
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    private $_prxFile = null;
+
+    /**
+     * Offset of the .prx file in the compound file
+     *
+     * @var integer
+     */
+    private $_prxFileOffset;
+
+
+    /**
      * Number of terms in term stream
      *
      * @var integer
@@ -612,22 +641,47 @@ class Zend_Search_Lucene_Index_SegmentInfo
      *
      * @var Zend_Search_Lucene_Index_TermInfo
      */
-    private $_lastTermInfo;
+    private $_lastTermInfo = null;
 
     /**
      * Last Term in a terms stream
      *
      * @var Zend_Search_Lucene_Index_Term
      */
-    private $_lastTerm;
+    private $_lastTerm = null;
 
     /**
-     * Reset terms stream and returns first term
+     * Map of the document IDs
+     * Used to get new docID after removing deleted documents.
+     * It's not very effective from memory usage point of view,
+     * but much more faster, then other methods
      *
-     * @throws Zend_Search_Lucene_Exception
-     * @return Zend_Search_Lucene_Index_Term|null
+     * @var array|null
      */
-    public function reset()
+    private $_docMap = null;
+
+    /**
+     * An array of all term positions in the documents.
+     * Array structure: array( docId => array( pos1, pos2, ...), ...)
+     *
+     * @var array
+     */
+    private $_lastTermPositions;
+
+    /**
+     * Reset terms stream
+     *
+     * $startId - id for the fist document
+     * $compact - remove deleted documents
+     *
+     * Returns start document id for the next segment
+     *
+     * @param integer $startId
+     * @param boolean $compact
+     * @throws Zend_Search_Lucene_Exception
+     * @return integer
+     */
+    public function reset($startId = 0, $compact = false)
     {
         if ($this->_tisFile !== null) {
             $this->_tisFile = null;
@@ -643,10 +697,30 @@ class Zend_Search_Lucene_Index_SegmentInfo
                                $this->_tisFile->readInt();  // Read Index interval
         $this->_skipInterval = $this->_tisFile->readInt();  // Read skip interval
 
+        if ($this->_frqFile !== null) {
+            $this->_frqFile = null;
+        }
+        $this->_frqFile = $this->openCompoundFile('.frq', false);
+        $this->_frqFileOffset = $this->_frqFile->tell();
+
+        if ($this->_prxFile !== null) {
+            $this->_prxFile = null;
+        }
+        $this->_prxFile = $this->openCompoundFile('.prx', false);
+        $this->_prxFileOffset = $this->_prxFile->tell();
+
         $this->_lastTerm     = new Zend_Search_Lucene_Index_Term('', -1);
         $this->_lastTermInfo = new Zend_Search_Lucene_Index_TermInfo(0, 0, 0, 0);
 
-        return $this->nextTerm();
+        $this->_docMap = array();
+        for ($count = 0; $count < $this->_docCount; $count++) {
+            if (!$this->isDeleted($count)) {
+                $this->_docMap[$count] = $startId + ($compact ? count($this->_docMap) : $count);
+            }
+        }
+
+        $this->nextTerm();
+        return $startId + ($compact ? count($this->_docMap) : $this->_docCount);
     }
 
 
@@ -682,9 +756,42 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
         $this->_lastTermInfo = new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipOffset);
 
+
+        $this->_lastTermPositions = array();
+
+        $this->_frqFile->seek($this->_lastTermInfo->freqPointer + $this->_frqFileOffset, SEEK_SET);
+        $freqs = array();   $docId = 0;
+        for( $count = 0; $count < $this->_lastTermInfo->docFreq; $count++ ) {
+            $docDelta = $this->_frqFile->readVInt();
+            if( $docDelta % 2 == 1 ) {
+                $docId += ($docDelta-1)/2;
+                $freqs[ $docId ] = 1;
+            } else {
+                $docId += $docDelta/2;
+                $freqs[ $docId ] = $this->_frqFile->readVInt();
+            }
+        }
+
+        $this->_prxFile->seek($this->_lastTermInfo->proxPointer + $this->_prxFileOffset, SEEK_SET);
+        foreach ($freqs as $docId => $freq) {
+            $termPosition = 0;  $positions = array();
+
+            for ($count = 0; $count < $freq; $count++ ) {
+                $termPosition += $this->_prxFile->readVInt();
+                $positions[] = $termPosition;
+            }
+
+            if (isset($this->_docMap[$docId])) {
+                $this->_lastTermPositions[$this->_docMap[$docId]] = $positions;
+            }
+        }
+
+
         $this->_termCount--;
         if ($this->_termCount == 0) {
             $this->_tisFile = null;
+            $this->_frqFile = null;
+            $this->_prxFile = null;
         }
 
         return $this->_lastTerm;
@@ -702,5 +809,16 @@ class Zend_Search_Lucene_Index_SegmentInfo
         return $this->_lastTerm;
     }
 
+
+    /**
+     * Returns an array of all term positions in the documents.
+     * Return array structure: array( docId => array( pos1, pos2, ...), ...)
+     *
+     * @return array
+     */
+    public function currentTermPositions()
+    {
+        return $this->_lastTermPositions;
+    }
 }
 

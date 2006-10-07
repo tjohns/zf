@@ -136,9 +136,10 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
         $this->_directory = $directory;
         $this->_name      = $name;
 
-        $this->_fields         = array();
-        $this->_files          = array();
-        $this->_norms          = array();
+        $this->_fields    = array();
+        $this->_files     = array();
+        $this->_norms     = array();
+        $this->_docCount  = 0;
     }
 
 
@@ -227,6 +228,8 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
                 $this->_fdtFile->writeString($field->stringValue);
             }
         }
+
+        $this->_docCount++;
     }
 
     /**
@@ -265,6 +268,194 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
         }
 
         $this->_files[] = $this->_name . '.fnm';
+    }
+
+
+
+    /**
+     * Term Dictionary file
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    private $_tisFile = null;
+
+    /**
+     * Term Dictionary index file
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    private $_tiiFile = null;
+
+    /**
+     * Frequencies file
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    private $_frqFile = null;
+
+    /**
+     * Positions file
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    private $_prxFile = null;
+
+    /**
+     * Number of written terms
+     *
+     * @var integer
+     */
+    private $_termCount;
+
+
+    /**
+     * Last saved term
+     *
+     * @var Zend_Search_Lucene_Index_Term
+     */
+    private $_prevTerm;
+
+    /**
+     * Last saved term info
+     *
+     * @var Zend_Search_Lucene_Index_TermInfo
+     */
+    private $_prevTermInfo;
+
+    /**
+     * Last saved index term
+     *
+     * @var Zend_Search_Lucene_Index_Term
+     */
+    private $_prevIndexTerm;
+
+    /**
+     * Last saved index term info
+     *
+     * @var Zend_Search_Lucene_Index_TermInfo
+     */
+    private $_prevIndexTermInfo;
+
+    /**
+     * Last term dictionary file position
+     *
+     * @var integer
+     */
+    private $_lastIndexPosition;
+
+    /**
+     * Create dicrionary, frequency and positions files and write necessary headers
+     */
+    public function initializeDictionaryFiles()
+    {
+        $this->_tisFile = $this->_directory->createFile($this->_name . '.tis');
+        $this->_tisFile->writeInt((int)0xFFFFFFFE);
+        $this->_tisFile->writeLong(0 /* dummy data for terms count */);
+        $this->_tisFile->writeInt(self::$indexInterval);
+        $this->_tisFile->writeInt(self::$skipInterval);
+
+        $this->_tiiFile = $this->_directory->createFile($this->_name . '.tii');
+        $this->_tiiFile->writeInt((int)0xFFFFFFFE);
+        $this->_tiiFile->writeLong(0 /* dummy data for terms count */);
+        $this->_tiiFile->writeInt(self::$indexInterval);
+        $this->_tiiFile->writeInt(self::$skipInterval);
+
+        /** Dump dictionary header */
+        $this->_tiiFile->writeVInt(0);                    // preffix length
+        $this->_tiiFile->writeString('');                 // suffix
+        $this->_tiiFile->writeInt((int)0xFFFFFFFF);       // field number
+        $this->_tiiFile->writeByte((int)0x0F);
+        $this->_tiiFile->writeVInt(0);                    // DocFreq
+        $this->_tiiFile->writeVInt(0);                    // FreqDelta
+        $this->_tiiFile->writeVInt(0);                    // ProxDelta
+        $this->_tiiFile->writeVInt(20);                   // IndexDelta
+
+        $this->_frqFile = $this->_directory->createFile($this->_name . '.frq');
+        $this->_prxFile = $this->_directory->createFile($this->_name . '.prx');
+
+        $this->_files[] = $this->_name . '.tis';
+        $this->_files[] = $this->_name . '.tii';
+        $this->_files[] = $this->_name . '.frq';
+        $this->_files[] = $this->_name . '.prx';
+
+        $this->_prevTerm          = null;
+        $this->_prevTermInfo      = null;
+        $this->_prevIndexTerm     = null;
+        $this->_prevIndexTermInfo = null;
+        $this->_lastIndexPosition = 20;
+        $this->_termCount         = 0;
+
+    }
+
+    /**
+     * Add term
+     *
+     * Term positions is an array( docId => array(pos1, pos2, pos3, ...), ... )
+     *
+     * @param Zend_Search_Lucene_Index_Term $term
+     * @param array $termDocs
+     */
+    public function addTerm($termEntry, $termDocs)
+    {
+        $freqPointer = $this->_frqFile->tell();
+        $proxPointer = $this->_prxFile->tell();
+
+        $prevDoc = 0;
+        foreach ($termDocs as $docId => $termPositions) {
+            $docDelta = ($docId - $prevDoc)*2;
+            $prevDoc = $docId;
+            if (count($termPositions) > 1) {
+                $this->_frqFile->writeVInt($docDelta);
+                $this->_frqFile->writeVInt(count($termPositions));
+            } else {
+                $this->_frqFile->writeVInt($docDelta + 1);
+            }
+
+            $prevPosition = 0;
+            foreach ($termPositions as $position) {
+                $this->_prxFile->writeVInt($position - $prevPosition);
+                $prevPosition = $position;
+            }
+        }
+
+        if (count($termDocs) >= self::$skipInterval) {
+            /**
+             * @todo Write Skip Data to a freq file.
+             * It's not used now, but make index more optimal
+             */
+            $skipOffset = $this->_frqFile->tell() - $freqPointer;
+        } else {
+            $skipOffset = 0;
+        }
+
+        $term = new Zend_Search_Lucene_Index_Term($termEntry->text,
+                                                  $this->_fields[$termEntry->field]->number);
+        $termInfo = new Zend_Search_Lucene_Index_TermInfo(count($termDocs),
+                                                          $freqPointer, $proxPointer, $skipOffset);
+
+        $this->_dumpTermDictEntry($this->_tisFile, $this->_prevTerm, $term, $this->_prevTermInfo, $termInfo);
+
+        if (($this->_termCount + 1) % self::$indexInterval == 0) {
+            $this->_dumpTermDictEntry($this->_tiiFile, $this->_prevIndexTerm, $term, $this->_prevIndexTermInfo, $termInfo);
+
+            $indexPosition = $this->_tisFile->tell();
+            $this->_tiiFile->writeVInt($indexPosition - $this->_lastIndexPosition);
+            $this->_lastIndexPosition = $indexPosition;
+
+        }
+        $this->_termCount++;
+    }
+
+    /**
+     * Close dictionary
+     */
+    public function closeDictionaryFiles()
+    {
+        $this->_tisFile->seek(4);
+        $this->_tisFile->writeLong($this->_termCount);
+
+        $this->_tiiFile->seek(4);
+        $this->_tiiFile->writeLong(ceil(($this->_termCount + 2)/self::$indexInterval));
     }
 
 
