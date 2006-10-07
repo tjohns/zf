@@ -12,7 +12,7 @@
         </para>
         <example>
             <title>Serialize locales</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -21,7 +21,7 @@ $serial = $locale->serialize();
 
 // and now create the original class
 $newlocale = unserialize($serial);
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.equals">
@@ -32,7 +32,7 @@ $newlocale = unserialize($serial);
         </para>
         <example>
             <title>Check for equal locales</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -44,7 +44,7 @@ if ($locale->equals($mylocale)
     print "Locales are equal";
 else
     print "Locales differ from each other";
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.tostring">
@@ -54,26 +54,26 @@ else
         </para>
         <example>
             <title>String output of locales</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
 $locale = new Zend_Locale();
 print $locale->toString();
-            </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             Of course there are ways, the <code>toString()</code> function will be called automaticaly.
         </para>
         <example>
             <title>Automatic toString for locales</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
 $locale = new Zend_Locale();
 print $locale;
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getdefault">
@@ -89,7 +89,7 @@ print $locale;
         </para>
         <example>
             <title>Get default locales</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -102,7 +102,7 @@ print_r($found);
 // Return only browser locales
 $found2 = $locale->getDefault(Zend_Locale::BROWSER,TRUE);
 print_r($found2);
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.environment">
@@ -113,7 +113,7 @@ print_r($found2);
         </para>
         <example>
             <title>Get environment locales</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -123,7 +123,7 @@ $locale = new Zend_Locale();
 $found = $locale->getEnvironment();
 print_r($found);
             </programlisting>
-        </example>
+?>]]></example>
     </sect2>
     <sect2 id="zend.locale.browser">
         <title>Get all browser locales</title>
@@ -133,7 +133,7 @@ print_r($found);
         </para>
         <example>
             <title>Get browser locales</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -142,7 +142,7 @@ $locale = new Zend_Locale();
 // Return all browser locales
 $found = $locale->getBrowser();
 print_r($found);
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getlocale">
@@ -154,7 +154,7 @@ print_r($found);
         </para>
         <example>
             <title>getLocale</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -163,7 +163,7 @@ $locale = new Zend_Locale();
 // Return all browser locales
 $found = $locale->getLocale();
 print $found->toString();
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.setlocale">
@@ -175,7 +175,7 @@ print $found->toString();
         </para>
         <example>
             <title>setLocale</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -187,7 +187,7 @@ print $locale->toString();
 // new locale
 $locale->setLocale('aa_DJ');
 print $locale->toString();
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getlanguage">
@@ -198,7 +198,7 @@ print $locale->toString();
         </para>
         <example>
             <title>getLanguage</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -206,7 +206,7 @@ $locale = new Zend_Locale();
 
 // Actual language
 print $locale->getLanguage();
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getregion">
@@ -217,7 +217,7 @@ print $locale->getLanguage();
         </para>
         <example>
             <title>getRegion</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -225,7 +225,7 @@ $locale = new Zend_Locale();
 
 // Actual region
 print $locale->getRegion();
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getlanguagedisplay">
@@ -236,7 +236,7 @@ print $locale->getRegion();
         </para>
         <example>
             <title>getLanguageDisplay</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -244,7 +244,7 @@ $locale = new Zend_Locale();
 
 // Language
 print $locale->getLanguageDisplay('de');
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getlanguagelist">
@@ -255,7 +255,7 @@ print $locale->getLanguageDisplay('de');
         </para>
         <example>
             <title>getLanguageList</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -263,7 +263,7 @@ $locale = new Zend_Locale();
 
 // LanguageList
 print_r($locale->getLanguageList());
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getscriptdisplay">
@@ -274,7 +274,7 @@ print_r($locale->getLanguageList());
         </para>
         <example>
             <title>getScriptDisplay</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -282,7 +282,7 @@ $locale = new Zend_Locale();
 
 // Script
 print $locale->getScriptDisplay('Latn');
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getscriptlist">
@@ -293,7 +293,7 @@ print $locale->getScriptDisplay('Latn');
         </para>
         <example>
             <title>getScriptList</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -301,7 +301,7 @@ $locale = new Zend_Locale();
 
 // ScriptList
 print_r($locale->getScriptList());
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getregiondisplay">
@@ -312,7 +312,7 @@ print_r($locale->getScriptList());
         </para>
         <example>
             <title>getRegionDisplay</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -320,7 +320,7 @@ $locale = new Zend_Locale();
 
 // Region
 print $locale->getRegionDisplay('AT');
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getregionlist">
@@ -331,7 +331,7 @@ print $locale->getRegionDisplay('AT');
         </para>
         <example>
             <title>getRegionList</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -339,7 +339,7 @@ $locale = new Zend_Locale();
 
 // RegionList
 print_r($locale->getRegionList());
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getcalendardisplay">
@@ -350,7 +350,7 @@ print_r($locale->getRegionList());
         </para>
         <example>
             <title>getCalendarDisplay</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -358,7 +358,7 @@ $locale = new Zend_Locale();
 
 // Calendar
 print $locale->getCalendarDisplay('chinese');
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getcalendarlist">
@@ -369,7 +369,7 @@ print $locale->getCalendarDisplay('chinese');
         </para>
         <example>
             <title>getCalendarList</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -377,7 +377,7 @@ $locale = new Zend_Locale();
 
 // CalendarList
 print_r($locale->getCalendarList());
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.getquestion">
@@ -392,7 +392,7 @@ print_r($locale->getCalendarList());
         </para>
         <example>
             <title>getCalendarList</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
@@ -400,7 +400,7 @@ $locale = new Zend_Locale();
 
 // Question strings
 print_r($locale->getQuestion());
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
 </sect1>

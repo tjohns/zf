@@ -105,12 +105,12 @@
         </para>
         <example>
             <title>Defining a locale</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
 $locale = new Zend_Locale();
-            </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             <code>Zend_Locale</code> itself is able to detect the proper locale for a user.
@@ -166,12 +166,12 @@ $locale = new Zend_Locale();
         </para>
         <example>
             <title>Search Environment Locale</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
 $locale = new Zend_Locale(Zend_Locale::SERVER);
-            </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             <code>FRAMEWORK</code> changes the automatic to search in the order :
@@ -195,12 +195,12 @@ $locale = new Zend_Locale(Zend_Locale::SERVER);
         </para>
         <example>
             <title>Search Framework Locale</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
 $locale = new Zend_Locale(Zend_Locale::FRAMEWORK);
-            </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             <code>BROWSER</code> changes the automatic to search in the order :
@@ -224,12 +224,12 @@ $locale = new Zend_Locale(Zend_Locale::FRAMEWORK);
         </para>
         <example>
             <title>Search Browser Locale</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
 $locale = new Zend_Locale(Zend_Locale::BROWSER);
-            </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.locale.handdefinition">
@@ -239,12 +239,12 @@ $locale = new Zend_Locale(Zend_Locale::BROWSER);
         </para>
         <example>
             <title>Define locales per hand</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 
 $locale = new Zend_Locale('de_DE');
-            </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             The only thing to know is how locale's work...
@@ -279,13 +279,13 @@ $locale = new Zend_Locale('de_DE');
         </para>
         <example>
             <title>Autodefinition with locale aware classes</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 require_once('Zend/Date.php');
 
 $date = new Zend_Date('2006',Zend_Date::YEAR);
-            </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             Here the locale aware <code>Zend_Date</code> class makes use of the 
@@ -296,7 +296,7 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
         </para>
         <example>
             <title>Use locale autosearch for more than one classes</title>
-            <programlisting role="php">&lt;?php
+            <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
 require_once('Zend/Date.php');
@@ -305,7 +305,7 @@ require_once('Zend/Measure.php');
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006',Zend_Date::YEAR, $locale);
 $temp = new Zend_Measure('100,10',Zend_Measure::TEMPERATURE, $locale);
-            </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             This way the second locale-aware class has not to search once more the standard locale,
