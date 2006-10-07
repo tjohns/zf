@@ -122,8 +122,8 @@ $locale = new Zend_Locale();
 // Return all environment locales
 $found = $locale->getEnvironment();
 print_r($found);
-            </programlisting>
-?>]]></example>
+?>]]></programlisting>
+        </example>
     </sect2>
     <sect2 id="zend.locale.browser">
         <title>Get all browser locales</title>
