@@ -76,6 +76,8 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
     public function addDocument(Zend_Search_Lucene_Document $document)
     {
         $storedFields = array();
+        $docNorms     = array();
+        $similarity   = Zend_Search_Lucene_Search_Similarity::getDefault();
 
         foreach ($document->getFieldNames() as $fieldName) {
             $field = $document->getField($fieldName);
@@ -95,7 +97,8 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
                     $tokenList = array();
                     $tokenList[] = new Zend_Search_Lucene_Analysis_Token($field->stringValue, 0, strlen($field->stringValue));
                 }
-                $this->_fieldLengths[$field->name][$this->_docCount] = count($tokenList);
+                $docNorms[$field->name] = chr($similarity->encodeNorm( $similarity->lengthNorm($field->name,
+                                                                                               count($tokenList)) ));
 
                 $position = 0;
                 foreach ($tokenList as $token) {
@@ -118,6 +121,24 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
 
             if ($field->isStored) {
                 $storedFields[] = $field;
+            }
+        }
+
+
+        foreach ($this->_fields as $fieldName => $field) {
+            if (!$field->isIndexed) {
+                continue;
+            }
+
+            if (!isset($this->_norms[$fieldName])) {
+                $this->_norms[$fieldName] = str_repeat(chr($similarity->encodeNorm( $similarity->lengthNorm($fieldName, 0) )),
+                                                       $this->_docCount);
+            }
+
+            if (isset($docNorms[$fieldName])){
+                $this->_norms[$fieldName] .= $docNorms[$fieldName];
+            } else {
+                $this->_norms[$fieldName] .= chr($similarity->encodeNorm( $similarity->lengthNorm($fieldName, 0) ));
             }
         }
 

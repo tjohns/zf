@@ -470,6 +470,17 @@ class Zend_Search_Lucene_Index_SegmentInfo
     }
 
     /**
+     * Load normalizatin factors from an index file
+     *
+     * @param integer $fieldNum
+     */
+    private function _loadNorm($fieldNum)
+    {
+        $fFile = $this->openCompoundFile('.f' . $fieldNum);
+        $this->_norms[$fieldNum] = $fFile->readBytes($this->_docCount);
+    }
+
+    /**
      * Returns normalization factor for specified documents
      *
      * @param integer $id
@@ -484,12 +495,35 @@ class Zend_Search_Lucene_Index_SegmentInfo
             return null;
         }
 
-        if ( !isset( $this->_norms[$fieldNum] )) {
-            $fFile = $this->openCompoundFile('.f' . $fieldNum);
-            $this->_norms[$fieldNum] = $fFile->readBytes($this->_docCount);
+        if (!isset($this->_norms[$fieldNum])) {
+            $this->_loadNorm($fieldNum);
         }
 
         return Zend_Search_Lucene_Search_Similarity::decodeNorm( ord($this->_norms[$fieldNum]{$id}) );
+    }
+
+    /**
+     * Returns norm vector, encoded in a byte string
+     *
+     * @param string $fieldName
+     * @return string
+     */
+    public function normVector($fieldName)
+    {
+        $fieldNum = $this->getFieldNum($fieldName);
+
+        if ( !($this->_fields[$fieldNum]->isIndexed) ) {
+            $similarity = Zend_Search_Lucene_Search_Similarity::getDefault();
+
+            return str_repeat(chr($similarity->encodeNorm( $similarity->lengthNorm($fieldName, 0) )),
+                              $this->_docCount);
+        }
+
+        if (!isset($this->_norms[$fieldNum])) {
+            $this->_loadNorm($fieldNum);
+        }
+
+        return $this->_norms[$fieldNum];
     }
 
 

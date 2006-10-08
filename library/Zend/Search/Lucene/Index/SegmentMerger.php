@@ -128,6 +128,7 @@ class Zend_Search_Lucene_Index_SegmentMerger
         }
 
         $this->_mergeFields();
+        $this->_mergeNorms();
         $this->_mergeStoredFields();
         $this->_mergeTerms();
 
@@ -143,10 +144,34 @@ class Zend_Search_Lucene_Index_SegmentMerger
     private function _mergeFields()
     {
         foreach ($this->_segmentInfos as $segName => $segmentInfo) {
-            $segmentFields = $segmentInfo->getFieldInfos();
-
-            foreach ($segmentFields as $fieldInfo) {
+            foreach ($segmentInfo->getFieldInfos() as $fieldInfo) {
                 $this->_fieldsMap[$segName][$fieldInfo->number] = $this->_writer->addFieldInfo($fieldInfo);
+            }
+        }
+    }
+
+    /**
+     * Merge field's normalization factors
+     */
+    private function _mergeNorms()
+    {
+        foreach ($this->_writer->getFieldInfos() as $fieldInfo) {
+            if ($fieldInfo->isIndexed) {
+                foreach ($this->_segmentInfos as $segName => $segmentInfo) {
+                    if ($segmentInfo->hasDeletions()) {
+                        $srcNorm = $segmentInfo->normVector($fieldInfo->name);
+                        $norm    = '';
+                        $docs    = $segmentInfo->count();
+                        for ($count = 0; $count < $docs; $count++) {
+                            if (!$segmentInfo->isDeleted($count)) {
+                                $norm .= $srcNorm[$count];
+                            }
+                        }
+                        $this->_writer->addNorm($fieldInfo->name, $norm);
+                    } else {
+                        $this->_writer->addNorm($fieldInfo->name, $segmentInfo->normVector($fieldInfo->name));
+                    }
+                }
             }
         }
     }

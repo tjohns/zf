@@ -71,7 +71,7 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      *
      * @var integer
      */
-    protected $_docCount;
+    protected $_docCount = 0;
 
     /**
      * Segment name
@@ -93,22 +93,27 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      *
      * @var unknown_type
      */
-    protected $_files;
+    protected $_files = array();
 
     /**
      * Segment fields. Array of Zend_Search_Lucene_Index_FieldInfo objects for this segment
      *
      * @var array
      */
-    protected $_fields;
+    protected $_fields = array();
 
     /**
-     * Sizes of the indexed fields.
-     * Used for normalization factors calculation.
+     * Normalization factors.
+     * An array fieldName => normVector
+     * normVector is a binary string.
+     * Each byte corresponds to an indexed document in a segment and
+     * encodes normalization factor (float value, encoded by
+     * Zend_Search_Lucene_Search_Similarity::encodeNorm())
      *
      * @var array
      */
-    protected $_fieldLengths = array();
+    protected $_norms = array();
+
 
     /**
      * '.fdx'  file - Stored Fields, the field index.
@@ -135,11 +140,6 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
     {
         $this->_directory = $directory;
         $this->_name      = $name;
-
-        $this->_fields    = array();
-        $this->_files     = array();
-        $this->_norms     = array();
-        $this->_docCount  = 0;
     }
 
 
@@ -197,6 +197,15 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
         }
     }
 
+    /**
+     * Returns array of FieldInfo objects.
+     *
+     * @return array
+     */
+    public function getFieldInfos()
+    {
+        return $this->_fields;
+    }
 
     /**
      * Add stored fields information
@@ -249,20 +258,9 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
                                );
 
             if ($field->isIndexed) {
-                $fieldNum   = $this->_fields[$field->name]->number;
-                $fieldName  = $field->name;
-                $similarity = Zend_Search_Lucene_Search_Similarity::getDefault();
-                $norm       = '';
-
-                for ($count = 0; $count < $this->_docCount; $count++) {
-                    $numTokens = isset($this->_fieldLengths[$fieldName][$count]) ?
-                                      $this->_fieldLengths[$fieldName][$count] : 0;
-                    $norm .= chr($similarity->encodeNorm($similarity->lengthNorm($fieldName, $numTokens)));
-                }
-
-                $normFileName = $this->_name . '.f' . $fieldNum;
+                $normFileName = $this->_name . '.f' . $field->number;
                 $fFile = $this->_directory->createFile($normFileName);
-                $fFile->writeBytes($norm);
+                $fFile->writeBytes($this->_norms[$field->name]);
                 $this->_files[] = $normFileName;
             }
         }
@@ -544,8 +542,13 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
             $cfsFile->seek($dataOffset);
 
             $dataFile = $this->_directory->getFileObject($fileName);
-            $data = $dataFile->readBytes($this->_directory->fileLength($fileName));
-            $cfsFile->writeBytes($data);
+
+            $byteCount = $this->_directory->fileLength($fileName);
+            while ($byteCount > 0) {
+                $data = $dataFile->readBytes(min($byteCount, 131072 /*128Kb*/));
+                $byteCount -= strlen($data);
+                $cfsFile->writeBytes($data);
+            }
 
             $this->_directory->deleteFile($fileName);
         }

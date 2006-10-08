@@ -63,6 +63,14 @@ class Zend_Search_Lucene_Index_SegmentWriter_StreamWriter extends Zend_Search_Lu
         $this->_files[] = $this->_name . '.fdt';
     }
 
+    public function addNorm($fieldName, $normVector)
+    {
+        if (isset($this->_norms[$fieldName])) {
+            $this->_norms[$fieldName] .= $normVector;
+        } else {
+            $this->_norms[$fieldName] = $normVector;
+        }
+    }
 
     /**
      * Close segment, write it to disk and return segment info

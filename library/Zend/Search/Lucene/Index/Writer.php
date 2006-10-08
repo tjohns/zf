@@ -222,7 +222,7 @@ class Zend_Search_Lucene_Index_Writer
             $segName = $segmentsFile->readString();
             $segSize = $segmentsFile->readInt();
 
-            if (!key_exists($segName, $this->_segmentsToDelete)) {
+            if (!array_key_exists($segName, $this->_segmentsToDelete)) {
                 $newSegmentFile->writeString($segName);
                 $newSegmentFile->writeInt($segSize);
             }
@@ -276,6 +276,7 @@ class Zend_Search_Lucene_Index_Writer
                     }
             }
         }
+        $this->_segmentsToDelete = array();
 
         return $result;
     }
@@ -293,32 +294,6 @@ class Zend_Search_Lucene_Index_Writer
          * @todo implementation
          */
     }
-
-
-    /**
-     * Returns the number of documents currently in this index.
-     *
-     * @return integer
-     */
-    public function docCount($readers)
-    {
-        /**
-         * @todo implementation
-         */
-    }
-
-
-    /**
-     * Flushes all changes to an index and closes all associated files.
-     *
-     */
-    public function close()
-    {
-        /**
-         * @todo implementation
-         */
-    }
-
 
     /**
      * Merges all segments together into a single segment, optimizing
@@ -341,7 +316,7 @@ class Zend_Search_Lucene_Index_Writer
 
         $newSegment = $merger->merge();
         if ($newSegment !== null) {
-            $this->_newSegments[] = $newSegment;
+            $this->_newSegments[$newSegment->getName()] = $newSegment;
         }
     }
 
