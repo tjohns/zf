@@ -49,7 +49,7 @@ interface Zend_Server_Interface
      * @param int $code 
      * @return mixed
      */
-    public function fault($fault, $code = 404);
+    public function fault($fault = null, $code = 404);
 
     /**
      * Handle a request
