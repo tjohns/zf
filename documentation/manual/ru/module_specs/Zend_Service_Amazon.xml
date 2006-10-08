@@ -179,6 +179,16 @@ $item = $amazon->itemLookup('B0000A432X');
             <ulink url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevant Amazon documentation</ulink>.
 -->
         </para>
+        <note>
+            Для того, чтобы получать информацию о изображениях для результатов поиска,
+            необходимо установить опцию <code>ResponseGroup</code> равной
+            <code>Medium</code> или <code>Large</code>.
+<!--
+            To retrieve images information for your search results, you must
+            set <code>ResponseGroup</code> option to <code>Medium</code> or
+            <code>Large</code>.
+-->
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
         <title>Поиск товара Amazon<!--Performing Amazon Item Searches--></title>
