@@ -374,7 +374,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetRelatedArtists()
 	{
-		return $this->getInfoByArtist('similar.xml');
+		$service = "/{$this->get('version')}/artist/{$this->get('artist')}/similar.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -384,7 +385,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetTopFans()
 	{
-		return $this->getInfoByArtist('fans.xml');
+		$service = "/{$this->get('version')}/artist/{$this->get('artist')}/fans.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -394,7 +396,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetTopTracks()
 	{
-		return $this->getInfoByArtist('toptracks.xml');
+		$service = "/{$this->get('version')}/artist/{$this->get('artist')}/toptracks.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -404,7 +407,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetTopAlbums()
 	{
-		return $this->getInfoByArtist('topalbums.xml');
+		$service = "/{$this->get('version')}/artist/{$this->get('artist')}/topalbums.xml";
+		return $this->getInfo($service);
 	}
 
 	/**
@@ -414,7 +418,8 @@ class Zend_Service_Audioscrobbler
 	 */
 	public function artistGetTopTags()
 	{
-		return $this->getInfoByArtist('toptags.xml');
+		$service = "/{$this->get('version')}/artist/{$this->get('artist')}/toptags.xml";
+		return $this->getInfo($service);
 	}
 
 	//////////////////////////////////////////////////////////

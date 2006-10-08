@@ -7,7 +7,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'ProfileTest.php';
-require_once 'TopartistsTest.php';
+require_once 'ArtistTest.php';
 
 class AllTests
 {
@@ -20,7 +20,8 @@ class AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Service_Audioscrobbler');
 
-        $suite->addTestSuite( 'Zend_Service_Audioscrobbler_ProfileTest' );
+        $suite->addTestSuite('Zend_Service_Audioscrobbler_ProfileTest');
+		$suite->addTestSuite('Zend_Service_Audioscrobbler_ArtistTest');
         //$suite->addTestSuite('Zend_Service_Audioscrobbler_TopartistsTest');
 
         return $suite;
