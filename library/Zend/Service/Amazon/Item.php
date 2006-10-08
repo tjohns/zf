@@ -73,7 +73,11 @@ class Zend_Service_Amazon_Item
         if ($result->length >= 1) {
             foreach ($result as $v) {
                 if (isset($this->{$v->parentNode->tagName})) {
-                    $this->{$v->parentNode->tagName} = array($this->{$v->parentNode->tagName}, (string) $v->data);
+                    if (is_array($this->{$v->parentNode->tagName})) {
+						array_push($this->{$v->parentNode->tagName}, (string) $v->data);
+					} else {
+						$this->{$v->parentNode->tagName} = array($this->{$v->parentNode->tagName}, (string) $v->data);
+					}
                 } else {
                     $this->{$v->parentNode->tagName} = (string) $v->data;
                 }
