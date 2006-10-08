@@ -72,6 +72,17 @@ class Zend_Service_Amazon_ResultSet implements SeekableIterator
 		$result = $this->_xpath->query('//az:TotalResults/text()');
 		return (int) $result->item(0)->data;
     }
+    
+    /**
+     * Total Number of pages returned
+     *
+     * @return int Total number of pages returned
+     */
+    public function totalPages()
+    {
+		$result = $this->_xpath->query('//az:TotalPages/text()');
+		return (int) $result->item(0)->data;
+    }
 
     /**
      * Implement SeekableIterator::current
