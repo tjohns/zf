@@ -902,7 +902,7 @@ class Zend_Service_Amazon
      * @param array $options Query Options
      * @see http://www.amazon.com/gp/aws/sdk/main.html/102-9041115-9057709?s=AWSEcommerceService&v=2005-10-05&p=ApiReference/ItemLookupOperation
      * @throws Zend_Service_Exception
-     * @return Zend_Service_Amazon_Item|null
+     * @return Zend_Service_Amazon_Item|Zend_Service_Amazon_ResultSet|null
      */
     public function itemLookup($asin, $options = null)
     {
@@ -930,6 +930,8 @@ class Zend_Service_Amazon
 
         if ($items->length == 1) {
           return new Zend_Service_Amazon_Item($items->item(0));
+        } elseif ($items->length > 1) {
+        	return new Zend_Service_Amazon_ResultSet($items);
         }
 
         return null;
