@@ -2665,42 +2665,50 @@ class Zend_Date {
                 $meridiemlist = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
                 $meridiem = strtoupper($this->get(Zend_Date::MERIDIEM, $locale, $gmt));
 
-                if (($meridiem == strtoupper($meridiemlist['am'])) && (strtoupper($date) == strtoupper($meridiemlist['pm'])))
+                if (($meridiem == strtoupper($meridiemlist['am'])) && (strtoupper($date) == strtoupper($meridiemlist['pm']))) {
                     $hour = 12;
-                else if (($meridiem == strtoupper($meridiemlist['pm'])) && (strtoupper($date) == strtoupper($meridiemlist['am'])))
+                } else if (($meridiem == strtoupper($meridiemlist['pm'])) && (strtoupper($date) == strtoupper($meridiemlist['am']))) {
                     $hour = -12;
-                    
+                }
+
                 $this->subTimestamp($this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::SWATCH :
-                $rest = intval($date);
-                $hour = floor($rest / 3600);
-                $rest = $rest - ($hour * 3600);
+                $rest   = intval($date);
+                $hour   = floor($rest / 3600);
+                $rest   = $rest - ($hour * 3600);
                 $minute = floor($rest / 60);
                 $second = $rest - ($minute * 60); 
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
                 break;
+
             case Zend_Date::HOUR_SHORT_AM :
                 $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::HOUR_SHORT :
                 $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::HOUR_AM :
                 $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::HOUR :
                 $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::MINUTE :
                 $this->subTimestamp($this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::SECOND :
                 $this->subTimestamp($this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt));
                 return $this->getTimestamp();
@@ -2711,6 +2719,7 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::SECOND_SHORT :
                 $this->subTimestamp($this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt));
                 return $this->getTimestamp();
@@ -2721,6 +2730,7 @@ class Zend_Date {
             case Zend_Date::TIMEZONE_NAME :
                 return false;
                 break;
+
             case Zend_Date::DAYLIGHT :
                 return false;
                 break;
@@ -2741,8 +2751,9 @@ class Zend_Date {
             // date strings
             case Zend_Date::ISO_8601 :
                 $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
 
                 $year   = substr($match[0], 0, 4);
                 $month  = substr($match[0], 5, 2);
@@ -2754,10 +2765,12 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::RFC_2822 :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
 
                 $day    = substr($match[0], 5, 2);
                 $month  = $this->getDigitFromName(substr($match[0], 8, 3));
@@ -2769,69 +2782,101 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::TIMESTAMP :
-                if (is_numeric($date))
-                {
+                if (is_numeric($date)) {
                     $this->subTimestamp($date);
                     return $this->getTimestamp();
-                } else
+                } else {
                     return false;
+                }
                 break;
 
 
             // additional formats
             case Zend_Date::ERA :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
+
             case Zend_Date::ERA_NAME :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                return false;
                 break;
+
             case Zend_Date::DATES :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getDate($date, 'default', $locale);
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                                                         $parsed['day'], $parsed['year'], -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::DATE_FULL :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getDate($date, 'full', $locale);
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                                                         $parsed['day'], $parsed['year'], -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::DATE_LONG :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getDate($date, 'long', $locale);
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                                                         $parsed['day'], $parsed['year'], -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::DATE_MEDIUM :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getDate($date, 'medium', $locale);
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                                                         $parsed['day'], $parsed['year'], -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::DATE_SHORT :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getDate($date, 'short', $locale);
+                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                                                         $parsed['day'], $parsed['year'], -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::TIMES :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getTime($date, 'default', $locale);
+                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                                                         1, 1, 0, -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::TIME_FULL :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getTime($date, 'full', $locale);
+                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                                                         1, 1, 0, -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::TIME_LONG :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getTime($date, 'long', $locale);
+                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                                                         1, 1, 0, -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::TIME_MEDIUM :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getTime($date, 'medium', $locale);
+                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                                                         1, 1, 0, -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::TIME_SHORT :
-                // @todo implement function
-                $this->_Date->throwException('function yet not implemented');
+                $parsed = Zend_Locale_Format::getTime($date, 'short', $locale);
+                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                                                         1, 1, 0, -1, $gmt));
+                return $this->getTimestamp();
                 break;
+
             case Zend_Date::ATOM :
                 $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
 
                 $year   = substr($match[0], 0, 4);
                 $month  = substr($match[0], 5, 2);
@@ -2843,10 +2888,12 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::COOKIE :
                 $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
                 $match[0] = substr($match[0], strpos(' '+1));
                 
                 $day    = substr($match[0], 0, 2);
@@ -2860,10 +2907,12 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::RFC_822 :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
                 
                 $day    = substr($match[0], 5, 2);
                 $month  = $this->getDigitFromName(substr($match[0], 8, 3));
@@ -2876,10 +2925,12 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::RFC_850 :
                 $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
                 $match[0] = substr($match[0], strpos(' '+1));
                 
                 $day    = substr($match[0], 0, 2);
@@ -2893,10 +2944,12 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::RFC_1036 :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
                 
                 $day    = substr($match[0], 5, 2);
                 $month  = $this->getDigitFromName(substr($match[0], 8, 3));
@@ -2909,10 +2962,12 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::RFC_1123 :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
 
                 $day    = substr($match[0], 5, 2);
                 $month  = $this->getDigitFromName(substr($match[0], 8, 3));
@@ -2924,10 +2979,12 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::RSS :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
 
                 $day    = substr($match[0], 5, 2);
                 $month  = $this->getDigitFromName(substr($match[0], 8, 3));
@@ -2939,10 +2996,12 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             case Zend_Date::W3C :
                 $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
-                if (!$result)
+                if (!$result) {
                     return false;
+                }
 
                 $year   = substr($match[0], 0, 4);
                 $month  = substr($match[0], 5, 2);
@@ -2954,6 +3013,7 @@ class Zend_Date {
                 $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 return $this->getTimestamp();
                 break;
+
             default :
                 break;
         }
@@ -3515,8 +3575,9 @@ class Zend_Date {
      */
     public function isAfter($date)
     {
-        if ($this->get() < $date->get())
+        if ($this->get() < $date->get()) {
             return true;
+        }
 
         return false;
     }
@@ -3530,8 +3591,9 @@ class Zend_Date {
      */
     public function isBefore($date)
     {
-        if ($this->get() > $date->get())
+        if ($this->get() > $date->get()) {
             return true;
+        }
 
         return false;
     }
@@ -3557,8 +3619,9 @@ class Zend_Date {
      */
     public function getYear($locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
         $year = $this->get(Zend_Date::YEAR, $locale, FALSE);
         return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, 1, $year, $locale, FALSE), $locale);
     }
@@ -3574,12 +3637,15 @@ class Zend_Date {
      */
     public function setYear($year = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($year))
+        }
+        if (empty($year)) {
             $year = $this->_Date->date('Y');
-        if (is_object($year))
+        }
+        if (is_object($year)) {
             $year = $year->get(Zend_Date::YEAR, $locale, FALSE);
+        }
         $this->set($year, Zend_Date::YEAR, $locale, FALSE);
         return $this;
     }
@@ -3595,12 +3661,15 @@ class Zend_Date {
      */
     public function addYear($year = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($year))
+        }
+        if (empty($year)) {
             $year = $this->_Date->date('Y');
-        if (is_object($year))
+        }
+        if (is_object($year)) {
             $year = $year->get(Zend_Date::YEAR, $locale, FALSE);
+        }
         $this->add($year, Zend_Date::YEAR, $locale, FALSE);
         return $this;
     }
@@ -3615,12 +3684,15 @@ class Zend_Date {
      */
     public function subYear($year = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($year))
+        }
+        if (empty($year)) {
             $year = $this->_Date->date('Y');
-        if (is_object($year))
+        }
+        if (is_object($year)) {
             $year = $year->get(Zend_Date::YEAR, $locale, FALSE);
+        }
         $this->sub($year, Zend_Date::YEAR, $locale, FALSE);
         return $this;
     }
@@ -3662,8 +3734,9 @@ class Zend_Date {
      */
     public function getMonth($locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
         $month = $this->get(Zend_Date::MONTH_DIGIT, $locale, FALSE);
         return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, 1, 0, $locale, FALSE), $locale);
     }
@@ -3679,20 +3752,25 @@ class Zend_Date {
      */
     public function setMonth($month = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($month))
+        }
+        if (empty($month)) {
             $month = $this->_Date->date('n');
-        if (is_object($month))
+        }
+        if (is_object($month)) {
             $month = $month->get(Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        if (is_numeric($month))
+        }
+
+        if (is_numeric($month)) {
             $this->set($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        else if (strlen($month) == 1)
+        } else if (strlen($month) == 1) {
             $this->set($month, Zend_Date::MONTH_NARROW, $locale, FALSE);
-        else if (strlen($month) == 3)
+        } else if (strlen($month) == 3) {
             $this->set($month, Zend_Date::MONTH_NAME, $locale, FALSE);
-        else
+        } else {
             $this->set($month, Zend_Date::MONTH, $locale, FALSE);
+        }
         return $this;
     }
 
@@ -3707,20 +3785,25 @@ class Zend_Date {
      */
     public function addMonth($month = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($month))
+        }
+        if (empty($month)) {
             $month = $this->_Date->date('n');
-        if (is_object($month))
+        }
+
+        if (is_object($month)) {
             $this->add($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        if (is_numeric($month))
+        }
+        if (is_numeric($month)) {
             $this->add($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        else if (strlen($month) == 1)
+        } else if (strlen($month) == 1) {
             $this->add($month, Zend_Date::MONTH_NARROW, $locale, FALSE);
-        else if (strlen($month) == 3)
+        } else if (strlen($month) == 3) {
             $this->add($month, Zend_Date::MONTH_NAME, $locale, FALSE);
-        else
+        } else {
             $this->add($month, Zend_Date::MONTH, $locale, FALSE);
+        }
         return $this;
     }
 
@@ -3735,20 +3818,25 @@ class Zend_Date {
      */
     public function subMonth($month = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($month))
+        }
+        if (empty($month)) {
             $month = $this->_Date->date('n');
-        if (is_object($month))
+        }
+
+        if (is_object($month)) {
             $this->sub($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        if (is_numeric($month))
+        }
+        if (is_numeric($month)) {
             $this->sub($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        else if (strlen($month) == 1)
+        } else if (strlen($month) == 1) {
             $this->sub($month, Zend_Date::MONTH_NARROW, $locale, FALSE);
-        else if (strlen($month) == 3)
+        } else if (strlen($month) == 3) {
             $this->sub($month, Zend_Date::MONTH_NAME, $locale, FALSE);
-        else
+        } else {
             $this->sub($month, Zend_Date::MONTH, $locale, FALSE);
+        }
         return $this;
     }
 
@@ -3789,8 +3877,9 @@ class Zend_Date {
      */
     public function getDay($locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
         $day = $this->get(Zend_Date::DAY_SHORT, $locale, FALSE);
         return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, $day, 0, $locale, false), $locale);
     }
@@ -3806,12 +3895,15 @@ class Zend_Date {
      */
     public function setDay($day = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($day))
+        }
+        if (empty($day)) {
             $day = $this->_Date->date('j');
-        if (is_object($day))
+        }
+        if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
+        }
         // @todo recognise localized day names
         $this->set($day, Zend_Date::DAY_SHORT, $locale, FALSE);
         return $this;
@@ -3897,22 +3989,27 @@ class Zend_Date {
      */
     public function setWeekday($weekday = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($weekday))
+        }
+        if (empty($weekday)) {
             $weekday = $this->_Date->date('w');
-        if (is_object($weekday))
+        }
+        if (is_object($weekday)) {
             $weekday = $month->get(Zend_Date::WEEKDAY_DIGIT, $locale, FALSE);
-        if (is_numeric($weekday))
+        }
+
+        if (is_numeric($weekday)) {
             $this->set($weekday, Zend_Date::WEEKDAY_DIGIT, $locale, FALSE);
-        else if (strlen($weekday) == 1)
+        } else if (strlen($weekday) == 1) {
             $this->set($weekday, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
-        else if (strlen($weekday) == 2)
+        } else if (strlen($weekday) == 2) {
             $this->set($weekday, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
-        else if (strlen($weekday) == 3)
+        } else if (strlen($weekday) == 3) {
             $this->set($weekday, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
-        else
+        } else {
             $this->set($weekday, Zend_Date::WEEKDAY, $locale, FALSE);
+        }
         return $this;
     }
 
@@ -3981,8 +4078,9 @@ class Zend_Date {
      */
     public function getDayOfYear($locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
         $day = $day->get(Zend_Date::DAY_OF_YEAR, $locale, FALSE);
         return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, $day, 0, $locale, FALSE), $locale);
     }
@@ -3998,12 +4096,15 @@ class Zend_Date {
      */
     public function setDayOfYear($day = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($day))
+        }
+        if (empty($day)) {
             $day = $this->_Date->date('z');
-        if (is_object($day))
+        }
+        if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_OF_YEAR, $locale, FALSE);
+        }
         $this->set($day, Zend_Date::DAY_OF_YEAR, $locale, FALSE);
         return $this;
     }
@@ -4019,12 +4120,15 @@ class Zend_Date {
      */
     public function addDayOfYear($day = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($day))
+        }
+        if (empty($day)) {
             $day = $this->_Date->date('z');
-        if (is_object($day))
+        }
+        if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_OF_YEAR, $locale, FALSE);
+        }
         $this->add($day, Zend_Date::DAY_OF_YEAR, $locale, FALSE);
         return $this;
     }
@@ -4040,12 +4144,15 @@ class Zend_Date {
      */
     public function subDayOfYear($day = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($day))
+        }
+        if (empty($day)) {
             $day = $this->_Date->date('z');
-        if (is_object($day))
+        }
+        if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_OF_YEAR, $locale, FALSE);
+        }
         $this->sub($day, Zend_Date::DAY_OF_YEAR, $locale, FALSE);
         return $this;
     }
@@ -4087,8 +4194,9 @@ class Zend_Date {
      */
     public function getHour($locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
         $hour = $hour->get(Zend_Date::HOUR_SHORT, $locale, FALSE);
         return new Zend_Date($this->_Date->mktime($hour, 0, 0, 1, 1, 0, $locale, FALSE), $locale);
     }
@@ -4103,12 +4211,15 @@ class Zend_Date {
      */
     public function setHour($hour = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($hour))
+        }
+        if (empty($hour)) {
             $hour = $this->_Date->date('G');
-        if (is_object($hour))
+        }
+        if (is_object($hour)) {
             $hour = $hour->get(Zend_Date::HOUR_SHORT, $locale, FALSE);
+        }
         $this->set($hour, Zend_Date::HOUR_SHORT, $locale, FALSE);
         return $this;
     }
@@ -4123,12 +4234,15 @@ class Zend_Date {
      */
     public function addHour($hour = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($hour))
+        }
+        if (empty($hour)) {
             $hour = $this->_Date->date('G');
-        if (is_object($hour))
+        }
+        if (is_object($hour)) {
             $hour = $hour->get(Zend_Date::HOUR_SHORT, $locale, FALSE);
+        }
         $this->add($hour, Zend_Date::HOUR_SHORT, $locale, FALSE);
         return $this;
     }
@@ -4143,12 +4257,15 @@ class Zend_Date {
      */
     public function subHour($hour = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($hour))
+        }
+        if (empty($hour)) {
             $hour = $this->_Date->date('G');
-        if (is_object($hour))
+        }
+        if (is_object($hour)) {
             $hour = $hour->get(Zend_Date::HOUR_SHORT, $locale, FALSE);
+        }
         $this->sub($hour, Zend_Date::HOUR_SHORT, $locale, FALSE);
         return $this;
     }
@@ -4190,8 +4307,9 @@ class Zend_Date {
      */
     public function getMinute($locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
         $minute = $minute->get(Zend_Date::MINUTE_SHORT, $locale, FALSE);
         return new Zend_Date($this->_Date->mktime(0, $minute, 0, 1, 1, 0, $locale, FALSE), $locale);
     }
@@ -4206,12 +4324,15 @@ class Zend_Date {
      */
     public function setMinute($minute = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($minute))
+        }
+        if (empty($minute)) {
             $minute = $this->_Date->date('i');
-        if (is_object($minute))
+        }
+        if (is_object($minute)) {
             $minute = $minute->get(Zend_Date::MINUTE_SHORT, $locale, FALSE);
+        }
         $this->set($minute, Zend_Date::MINUTE_SHORT, $locale, FALSE);
         return $this;
     }
@@ -4226,12 +4347,15 @@ class Zend_Date {
      */
     public function addMinute($minute = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($minute))
+        }
+        if (empty($minute)) {
             $minute = $this->_Date->date('i');
-        if (is_object($minute))
+        }
+        if (is_object($minute)) {
             $minute = $minute->get(Zend_Date::MINUTE_SHORT, $locale, FALSE);
+        }
         $this->add($minute, Zend_Date::MINUTE_SHORT, $locale, FALSE);
         return $this;
     }
@@ -4246,12 +4370,15 @@ class Zend_Date {
      */
     public function subMinute($minute = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($minute))
+        }
+        if (empty($minute)) {
             $minute = $this->_Date->date('i');
-        if (is_object($minute))
+        }
+        if (is_object($minute)) {
             $minute = $minute->get(Zend_Date::MINUTE_SHORT, $locale, FALSE);
+        }
         $this->sub($minute, Zend_Date::MINUTE_SHORT, $locale, FALSE);
         return $this;
     }
@@ -4293,8 +4420,10 @@ class Zend_Date {
      */
     public function getSecond($locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
+        }
+
         $second = $second->get(Zend_Date::MINUTE_SHORT, $locale, FALSE);
         return new Zend_Date($this->_Date->mktime(0, 0, $second, 1, 1, 0, $locale, FALSE), $locale);
     }
@@ -4309,12 +4438,15 @@ class Zend_Date {
      */
     public function setSecond($second = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($second))
+        }
+        if (empty($second)) {
             $second = $this->_Date->date('s');
-        if (is_object($second))
+        }
+        if (is_object($second)) {
             $second = $second->get(Zend_Date::SECOND_SHORT, $locale, FALSE);
+        }
         $this->set($second, Zend_Date::SECOND_SHORT, $locale, FALSE);
         return $this;
     }
@@ -4328,12 +4460,15 @@ class Zend_Date {
      */
     public function addSecond($second = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($second))
+        }
+        if (empty($second)) {
             $second = $this->_Date->date('s');
-        if (is_object($second))
+        }
+        if (is_object($second)) {
             $second = $second->get(Zend_Date::SECOND_SHORT, $locale, FALSE);
+        }
         $this->add($second, Zend_Date::SECOND_SHORT, $locale, FALSE);
         return $this;
     }
@@ -4348,12 +4483,15 @@ class Zend_Date {
      */
     public function subSecond($second = false, $locale = false)
     {
-        if (empty($locale))
+        if (empty($locale)) {
             $locale = $this->_Locale;
-        if (empty($second))
+        }
+        if (empty($second)) {
             $second = $this->_Date->date('s');
-        if (is_object($second))
+        }
+        if (is_object($second)) {
             $second = $second->get(Zend_Date::SECOND_SHORT, $locale, FALSE);
+        }
         $this->sub($second, Zend_Date::SECOND_SHORT, $locale, FALSE);
         return $this;
     }
@@ -4466,90 +4604,6 @@ class Zend_Date {
      * @return string
      */
     public function isMilliSecond($millisecond)
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Returns the era
-     * Alias for clone(Zend_Date::ERA);toString();
-     *
-     * @todo  implement function
-     * @return string
-     */
-    public function getEra()
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Sets a new era
-     * Alias for set($era, Zend_Date::ERA);
-     *
-     * @todo  implement function
-     * @param $era string/integer - OPTIONAL era to set, when null the actual era is set
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @return object
-     */
-    public function setEra($era, $locale)
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Adds a era
-     * Alias for add($era,Zend_Date::ERA);
-     *
-     * @todo  implement function
-     * @param $era object     - OPTIONAL era to add, when null the actual era is add
-     * @return object
-     */
-    public function addEra($era)
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Substracts a era
-     * Alias for sub($era,Zend_Date::ERA);
-     *
-     * @todo  implement function
-     * @param $era object     - OPTIONAL era to sub, when null the actual era is sub
-     * @return object
-     */
-    public function subEra($era)
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Compares only the era part, returning the difference
-     * Alias for compare($era,Zend_Date::ERA);
-     *
-     * @todo  implement function
-     * @param $era string/integer - OPTIONAL era to compare, when null the actual era is used for compare
-     * @return string
-     */
-    public function compareEra($era)
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Compares only the era part, returning boolean true
-     * Alias for compare($era,Zend_Date::ERA);
-     *
-     * @todo  implement function
-     * @param $era string/integer - OPTIONAL era to compare, when null the actual era is used for compare
-     * @return string
-     */
-    public function isEra($era)
     {
         $this->_Date->throwException('function yet not implemented');
     }
