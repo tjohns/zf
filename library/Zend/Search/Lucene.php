@@ -106,6 +106,7 @@ class Zend_Search_Lucene
      */
     private $_hasChanges = false;
 
+
     /**
      * Opens the index.
      *
@@ -129,13 +130,13 @@ class Zend_Search_Lucene
             $this->_closeDirOnExit = true;
         }
 
+        $this->_segmentInfos = array();
+
         if ($create) {
-            $this->_writer = new Zend_Search_Lucene_Index_Writer($this->_directory, true);
+            $this->_writer = new Zend_Search_Lucene_Index_Writer($this->_directory, $this->_segmentInfos, true);
         } else {
             $this->_writer = null;
         }
-
-        $this->_segmentInfos = array();
 
         $segmentsFile = $this->_directory->getFileObject('segments');
 
@@ -161,7 +162,7 @@ class Zend_Search_Lucene
             $segSize = $segmentsFile->readInt();
             $this->_docCount += $segSize;
 
-            $this->_segmentInfos[$count] =
+            $this->_segmentInfos[] =
                                 new Zend_Search_Lucene_Index_SegmentInfo($segName,
                                                                          $segSize,
                                                                          $this->_directory);
@@ -189,7 +190,7 @@ class Zend_Search_Lucene
     public function getIndexWriter()
     {
         if (!$this->_writer instanceof Zend_Search_Lucene_Index_Writer) {
-            $this->_writer = new Zend_Search_Lucene_Index_Writer($this->_directory);
+            $this->_writer = new Zend_Search_Lucene_Index_Writer($this->_directory, $this->_segmentInfos);
         }
 
         return $this->_writer;
@@ -217,6 +218,113 @@ class Zend_Search_Lucene
         return $this->_docCount;
     }
 
+    /**
+     * Retrieve index maxBufferedDocs option
+     *
+     * maxBufferedDocs is a minimal number of documents required before
+     * the buffered in-memory documents are written into a new Segment
+     *
+     * Default value is 10
+     *
+     * @return integer
+     */
+    public function getMaxBufferedDocs()
+    {
+        return $this->getIndexWriter()->maxBufferedDocs;
+    }
+
+    /**
+     * Set index maxBufferedDocs option
+     *
+     * maxBufferedDocs is a minimal number of documents required before
+     * the buffered in-memory documents are written into a new Segment
+     *
+     * Default value is 10
+     *
+     * @param integer $maxBufferedDocs
+     */
+    public function setMaxBufferedDocs($maxBufferedDocs)
+    {
+        $this->getIndexWriter()->maxBufferedDocs = $maxBufferedDocs;
+    }
+
+    /**
+     * Retrieve index maxMergeDocs option
+     *
+     * maxMergeDocs is a largest number of documents ever merged by addDocument().
+     * Small values (e.g., less than 10,000) are best for interactive indexing,
+     * as this limits the length of pauses while indexing to a few seconds.
+     * Larger values are best for batched indexing and speedier searches.
+     *
+     * Default value is PHP_INT_MAX
+     *
+     * @return integer
+     */
+    public function getMaxMergeDocs()
+    {
+        return $this->getIndexWriter()->maxMergeDocs;
+    }
+
+    /**
+     * Set index maxMergeDocs option
+     *
+     * maxMergeDocs is a largest number of documents ever merged by addDocument().
+     * Small values (e.g., less than 10,000) are best for interactive indexing,
+     * as this limits the length of pauses while indexing to a few seconds.
+     * Larger values are best for batched indexing and speedier searches.
+     *
+     * Default value is PHP_INT_MAX
+     *
+     * @param integer $maxMergeDocs
+     */
+    public function setMaxMergeDocs($maxMergeDocs)
+    {
+        $this->getIndexWriter()->maxMergeDocs = $maxMergeDocs;
+    }
+
+    /**
+     * Retrieve index mergeFactor option
+     *
+     * mergeFactor determines how often segment indices are merged by addDocument().
+     * With smaller values, less RAM is used while indexing,
+     * and searches on unoptimized indices are faster,
+     * but indexing speed is slower.
+     * With larger values, more RAM is used during indexing,
+     * and while searches on unoptimized indices are slower,
+     * indexing is faster.
+     * Thus larger values (> 10) are best for batch index creation,
+     * and smaller values (< 10) for indices that are interactively maintained.
+     *
+     * Default value is PHP_INT_MAX
+     *
+     * @return integer
+     */
+    public function getMergeFactor()
+    {
+        return $this->getIndexWriter()->mergeFactor;
+    }
+
+    /**
+     * Set index mergeFactor option
+     *
+     * mergeFactor determines how often segment indices are merged by addDocument().
+     * With smaller values, less RAM is used while indexing,
+     * and searches on unoptimized indices are faster,
+     * but indexing speed is slower.
+     * With larger values, more RAM is used during indexing,
+     * and while searches on unoptimized indices are slower,
+     * indexing is faster.
+     * Thus larger values (> 10) are best for batch index creation,
+     * and smaller values (< 10) for indices that are interactively maintained.
+     *
+     * Default value is 10
+     *
+     * @param integer $maxMergeDocs
+     */
+    public function setMergeFactor($mergeFactor)
+    {
+        $this->getIndexWriter()->mergeFactor = $mergeFactor;
+    }
 
     /**
      * Performs a query against the index and returns an array
@@ -293,19 +401,20 @@ class Zend_Search_Lucene
             throw new Zend_Search_Lucene_Exception('Document id is out of the range.');
         }
 
-        $segCount = 0;
-        $nextSegmentStartId = $this->_segmentInfos[ 0 ]->count();
-        while ($nextSegmentStartId <= $id) {
-               $segCount++;
-               $nextSegmentStartId += $this->_segmentInfos[ $segCount ]->count();
-        }
-        $segmentStartId = $nextSegmentStartId - $this->_segmentInfos[ $segCount ]->count();
+        $segmentStartId = 0;
+        foreach ($this->_segmentInfos as $segmentInfo) {
+            if ($segmentStartId + $segmentInfo->count() > $id) {
+                break;
+            }
 
-        $fdxFile = $this->_segmentInfos[ $segCount ]->openCompoundFile('.fdx');
+            $segmentStartId += $segmentInfo->count();
+        }
+
+        $fdxFile = $segmentInfo->openCompoundFile('.fdx');
         $fdxFile->seek( ($id-$segmentStartId)*8, SEEK_CUR );
         $fieldValuesPosition = $fdxFile->readLong();
 
-        $fdtFile = $this->_segmentInfos[ $segCount ]->openCompoundFile('.fdt');
+        $fdtFile = $segmentInfo->openCompoundFile('.fdt');
         $fdtFile->seek($fieldValuesPosition, SEEK_CUR);
         $fieldCount = $fdtFile->readVInt();
 
@@ -314,7 +423,7 @@ class Zend_Search_Lucene
             $fieldNum = $fdtFile->readVInt();
             $bits = $fdtFile->readByte();
 
-            $fieldInfo = $this->_segmentInfos[ $segCount ]->getField($fieldNum);
+            $fieldInfo = $segmentInfo->getField($fieldNum);
 
             if (!($bits & 2)) { // Text data
                 $field = new Zend_Search_Lucene_Field($fieldInfo->name,
@@ -532,15 +641,17 @@ class Zend_Search_Lucene
         }
 
         $segCount = 0;
-        $nextSegmentStartId = $this->_segmentInfos[ 0 ]->count();
-        while( $nextSegmentStartId <= $id ) {
-               $segCount++;
-               $nextSegmentStartId += $this->_segmentInfos[ $segCount ]->count();
+        $segmentStartId = 0;
+        foreach ($this->_segmentInfos as $segmentInfo) {
+            if ($segmentStartId + $segmentInfo->count() > $id) {
+                break;
+            }
+
+            $segmentStartId += $segmentInfo->count();
         }
+        $segmentInfo->delete($id - $segmentStartId);
 
         $this->_hasChanges = true;
-        $segmentStartId = $nextSegmentStartId - $this->_segmentInfos[ $segCount ]->count();
-        $this->_segmentInfos[ $segCount ]->delete($id - $segmentStartId);
     }
 
 
@@ -552,18 +663,26 @@ class Zend_Search_Lucene
      */
     public function addDocument(Zend_Search_Lucene_Document $document)
     {
-        if (!$this->_writer instanceof Zend_Search_Lucene_Index_Writer) {
-            $this->_writer = new Zend_Search_Lucene_Index_Writer($this->_directory);
-        }
-
-        $this->_writer->addDocument($document);
+        $this->getIndexWriter()->addDocument($document);
+        $this->_docCount++;
     }
 
 
     /**
+     * Update document counter
+     */
+    private function _updateDocCount()
+    {
+        $this->_docCount = 0;
+        foreach ($this->_segmentInfos as $segInfo) {
+            $this->_docCount += $segInfo->count();
+        }
+    }
+
+    /**
      * Commit changes resulting from delete() or undeleteAll() operations.
      *
-     * @todo delete() and undeleteAll processing.
+     * @todo undeleteAll processing.
      */
     public function commit()
     {
@@ -576,18 +695,9 @@ class Zend_Search_Lucene
         }
 
         if ($this->_writer !== null) {
-            foreach ($this->_writer->commit() as $segmentName => $segmentInfo) {
-                if ($segmentInfo !== null) {
-                    $this->_segmentInfos[] = $segmentInfo;
-                    $this->_docCount += $segmentInfo->count();
-                } else {
-                    foreach ($this->_segmentInfos as $segId => $segInfo) {
-                        if ($segInfo->getName() == $segmentName) {
-                            unset($this->_segmentInfos[$segId]);
-                        }
-                    }
-                }
-            }
+            $this->_writer->commit();
+
+            $this->_updateDocCount();
         }
     }
 
@@ -602,11 +712,9 @@ class Zend_Search_Lucene
         // Commit changes if any changes have been made
         $this->commit();
 
-        if (count($this->_segmentInfos) > 1) {
-            $this->getIndexWriter()->optimize($this->_segmentInfos);
-
-            // Commit changes, made by optimization
-            $this->commit();
+        if (count($this->_segmentInfos) > 1 || $this->hasDeletions()) {
+            $this->getIndexWriter()->optimize();
+            $this->_updateDocCount();
         }
     }
 

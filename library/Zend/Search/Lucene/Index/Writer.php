@@ -41,13 +41,53 @@ require_once 'Zend/Search/Lucene/Index/SegmentMerger.php';
 class Zend_Search_Lucene_Index_Writer
 {
     /**
-     * @todo Implement segment merger
-     * @todo Implement mergeFactor, minMergeDocs, maxMergeDocs usage.
      * @todo Implement Analyzer substitution
      * @todo Implement Zend_Search_Lucene_Storage_DirectoryRAM and Zend_Search_Lucene_Storage_FileRAM to use it for
      *       temporary index files
      * @todo Directory lock processing
      */
+
+    /**
+     * Number of documents required before the buffered in-memory
+     * documents are written into a new Segment
+     *
+     * Default value is 10
+     *
+     * @var integer
+     */
+    public $maxBufferedDocs = 10;
+
+    /**
+     * Largest number of documents ever merged by addDocument().
+     * Small values (e.g., less than 10,000) are best for interactive indexing,
+     * as this limits the length of pauses while indexing to a few seconds.
+     * Larger values are best for batched indexing and speedier searches.
+     *
+     * Default value is PHP_INT_MAX
+     *
+     * @var integer
+     */
+    public $maxMergeDocs = PHP_INT_MAX;
+
+    /**
+     * Determines how often segment indices are merged by addDocument().
+     *
+     * With smaller values, less RAM is used while indexing,
+     * and searches on unoptimized indices are faster,
+     * but indexing speed is slower.
+     *
+     * With larger values, more RAM is used during indexing,
+     * and while searches on unoptimized indices are slower,
+     * indexing is faster.
+     *
+     * Thus larger values (> 10) are best for batch index creation,
+     * and smaller values (< 10) for indices that are interactively maintained.
+     *
+     * Default value is 10
+     *
+     * @var integer
+     */
+    public $mergeFactor = 10;
 
     /**
      * File system adapter.
@@ -63,30 +103,6 @@ class Zend_Search_Lucene_Index_Writer
      * @var integer
      */
     private $_versionUpdate = 0;
-
-    /**
-     * Determines how often segment indices
-     * are merged by addDocument().
-     *
-     * @var integer
-     */
-    public $mergeFactor;
-
-    /**
-     * Determines the minimal number of documents required before
-     * the buffered in-memory documents are merging and a new Segment
-     * is created.
-     *
-     * @var integer
-     */
-    public $minMergeDocs;
-
-    /**
-     * Determines the largest number of documents ever merged by addDocument().
-     *
-     * @var integer
-     */
-    public $maxMergeDocs;
 
     /**
      * List of the segments, created by index writer
@@ -109,6 +125,15 @@ class Zend_Search_Lucene_Index_Writer
      * @var Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter
      */
     private $_currentSegment = null;
+
+    /**
+     * Array of Zend_Search_Lucene_Index_SegmentInfo objects for this index.
+     *
+     * It's a reference to the corresponding Zend_Search_Lucene::$_segmentInfos array
+     *
+     * @var array Zend_Search_Lucene_Index_SegmentInfo
+     */
+    private $_segmentInfos;
 
     /**
      * List of indexfiles extensions
@@ -137,11 +162,13 @@ class Zend_Search_Lucene_Index_Writer
      * index or overwrite the existing one.
      *
      * @param Zend_Search_Lucene_Storage_Directory $directory
+     * @param array $segmentInfos
      * @param boolean $create
      */
-    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, $create = false)
+    public function __construct(Zend_Search_Lucene_Storage_Directory $directory, &$segmentInfos, $create = false)
     {
-        $this->_directory = $directory;
+        $this->_directory    = $directory;
+        $this->_segmentInfos = &$segmentInfos;
 
         if ($create) {
             foreach ($this->_directory->fileList() as $file) {
@@ -185,10 +212,78 @@ class Zend_Search_Lucene_Index_Writer
                 new Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter($this->_directory, $this->_newSegmentName());
         }
         $this->_currentSegment->addDocument($document);
+
+        if ($this->_currentSegment->count() >= $this->maxBufferedDocs) {
+            $this->commit();
+        }
+
         $this->_versionUpdate++;
+
+        $this->_maybeMergeSegments();
     }
 
 
+    private function _maybeMergeSegments()
+    {
+        $segmentSizes = array();
+        foreach ($this->_segmentInfos as $segId => $segmentInfo) {
+            $segmentSizes[$segId] = $segmentInfo->count();
+        }
+
+        $mergePool   = array();
+        $poolSize    = 0;
+        $sizeToMerge = $this->maxBufferedDocs;
+        asort($segmentSizes, SORT_NUMERIC);
+        foreach ($segmentSizes as $segId => $size) {
+            // Check, if segment comes into a new merging block
+            while ($size >= $sizeToMerge) {
+                // Merge previous block if it's large enough
+                if ($poolSize >= $sizeToMerge) {
+                    $this->_mergeSegments($mergePool);
+                }
+                $mergePool   = array();
+                $poolSize    = 0;
+
+                $sizeToMerge *= $this->mergeFactor;
+
+                if ($sizeToMerge > $this->maxMergeDocs) {
+                    return;
+                }
+            }
+
+            $mergePool[] = $this->_segmentInfos[$segId];
+            $poolSize += $size;
+        }
+
+        if ($poolSize >= $sizeToMerge) {
+            $this->_mergeSegments($mergePool);
+        }
+    }
+
+    /**
+     * Merge specified segments
+     *
+     * $segments is an array of SegmentInfo objects
+     *
+     * @param array $segments
+     */
+    private function _mergeSegments($segments)
+    {
+        $newName = $this->_newSegmentName();
+        $merger = new Zend_Search_Lucene_Index_SegmentMerger($this->_directory,
+                                                             $newName);
+        foreach ($segments as $segmentInfo) {
+            $merger->addSource($segmentInfo);
+            $this->_segmentsToDelete[$segmentInfo->getName()] = $segmentInfo->getName();
+        }
+
+        $newSegment = $merger->merge();
+        if ($newSegment !== null) {
+            $this->_newSegments[$newSegment->getName()] = $newSegment;
+        }
+
+        $this->commit();
+    }
 
     /**
      * Update segments file by adding current segment to a list
@@ -231,38 +326,19 @@ class Zend_Search_Lucene_Index_Writer
         foreach ($this->_newSegments as $segmentName => $segmentInfo) {
             $newSegmentFile->writeString($segmentName);
             $newSegmentFile->writeInt($segmentInfo->count());
+
+            $this->_segmentInfos[] = $segmentInfo;
         }
-
-        $this->_directory->renameFile('segments.new', 'segments');
-    }
-
-
-    /**
-     * Commit current changes
-     * returns array of new segments
-     *
-     * @return array
-     */
-    public function commit()
-    {
-        if ($this->_currentSegment !== null) {
-            $newSegment = $this->_currentSegment->close();
-            if ($newSegment !== null) {
-                $this->_newSegments[$newSegment->getName()] = $newSegment;
-            }
-            $this->_currentSegment = null;
-        }
-
-        if (count($this->_newSegments)      != 0 ||
-            count($this->_segmentsToDelete) != 0) {
-            $this->_updateSegments();
-        }
-
-        $result = $this->_newSegments;
         $this->_newSegments = array();
 
         $fileList = $this->_directory->fileList();
         foreach ($this->_segmentsToDelete as $nameToDelete) {
+            foreach ($this->_segmentInfos as $segId => $segInfo) {
+                if ($segInfo->getName() == $nameToDelete) {
+                    unset($this->_segmentInfos[$segId]);
+                }
+            }
+
             foreach (self::$_indexExtensions as $ext) {
                 if ($this->_directory->fileExists($nameToDelete . $ext)) {
                     $this->_directory->deleteFile($nameToDelete . $ext);
@@ -278,7 +354,27 @@ class Zend_Search_Lucene_Index_Writer
         }
         $this->_segmentsToDelete = array();
 
-        return $result;
+        $this->_directory->renameFile('segments.new', 'segments');
+    }
+
+
+    /**
+     * Commit current changes
+     */
+    public function commit()
+    {
+        if ($this->_currentSegment !== null) {
+            $newSegment = $this->_currentSegment->close();
+            if ($newSegment !== null) {
+                $this->_newSegments[$newSegment->getName()] = $newSegment;
+            }
+            $this->_currentSegment = null;
+        }
+
+        if (count($this->_newSegments)      != 0 ||
+            count($this->_segmentsToDelete) != 0) {
+            $this->_updateSegments();
+        }
     }
 
 
@@ -300,24 +396,11 @@ class Zend_Search_Lucene_Index_Writer
      * an index for search.
      * Input is an array of Zend_Search_Lucene_Index_SegmentInfo objects
      *
-     * @param array $segmentInfos
      * @throws Zend_Search_Lucene_Exception
      */
-    public function optimize($segmentInfos)
+    public function optimize()
     {
-        $newName = $this->_newSegmentName();
-        $merger = new Zend_Search_Lucene_Index_SegmentMerger($this->_directory,
-                                                             $newName);
-
-        foreach ($segmentInfos as $segmentInfo) {
-            $merger->addSource($segmentInfo);
-            $this->_segmentsToDelete[$segmentInfo->getName()] = $segmentInfo->getName();
-        }
-
-        $newSegment = $merger->merge();
-        if ($newSegment !== null) {
-            $this->_newSegments[$newSegment->getName()] = $newSegment;
-        }
+        $this->_mergeSegments($this->_segmentInfos);
     }
 
     /**

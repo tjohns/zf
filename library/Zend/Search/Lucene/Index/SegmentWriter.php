@@ -242,6 +242,16 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
     }
 
     /**
+     * Returns the total number of documents in this segment.
+     *
+     * @return integer
+     */
+    public function count()
+    {
+        return $this->_docCount;
+    }
+
+    /**
      * Dump Field Info (.fnm) segment file
      */
     protected function _dumpFNM()
