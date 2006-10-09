@@ -76,4 +76,10 @@ div.revinfo {
 
 p {
     text-align: right;
+    direction:right;
+}
+
+pre {
+    text-align: left;
+    direction:left;
 }
