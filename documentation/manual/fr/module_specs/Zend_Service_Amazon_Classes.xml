@@ -185,7 +185,7 @@
                     <tbody>
                         <row>
                             <entry>Url</entry>
-                            <entry>string</entry>
+                            <entry>Zend Uri</entry>
                             <entry>Url distante de l'image</entry>
                         </row>
                         <row>
