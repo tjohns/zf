@@ -108,6 +108,11 @@ $item = $amazon->itemLookup('B0000A432X');
             la documentation Amazon correspondante.
             </ulink>.
         </para>
+        <note>
+           Pour récupérer les informations d'images pour vos résultats de recherche,
+           vous devez définir l'option <code>ResponseGroup</code> à <code>Medium</code>
+           ou <code>Large</code>.
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
         <title>Lancer des recherches de produits sur Amazon</title>
