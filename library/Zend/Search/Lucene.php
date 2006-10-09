@@ -295,7 +295,7 @@ class Zend_Search_Lucene
      * Thus larger values (> 10) are best for batch index creation,
      * and smaller values (< 10) for indices that are interactively maintained.
      *
-     * Default value is PHP_INT_MAX
+     * Default value is 10
      *
      * @return integer
      */
