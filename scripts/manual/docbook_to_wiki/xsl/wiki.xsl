@@ -3,15 +3,11 @@
 <xsl:output method="html"/>    
 
 <xsl:template match="chapter">
-{section}
-{column:width=200}
-{pageTree:root=Home}
-{column}
-{column}
-{toc:style=none|indent=25px}
+{zone-template-instance:ZFDOCDEV:manual-template}
+{zone-data:content}
 <xsl:apply-templates/>
-{column}
-{section}
+{zone-data}
+{zone-template-instance}
 </xsl:template>
 
 <xsl:template match="sect1/title">
@@ -71,5 +67,7 @@ h4. <xsl:value-of select="."/>
 <xsl:template match="tbody/row/entry">|<xsl:value-of select="."/></xsl:template>
 
 <xsl:template match="para/code">{{<xsl:value-of select="."/>}}</xsl:template>
+
+<xsl:template match="ulink">[<xsl:value-of select="."/>|<xsl:value-of select="@url"/>]</xsl:template>
    
 </xsl:stylesheet>
