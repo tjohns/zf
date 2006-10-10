@@ -1,11 +1,23 @@
-<sect1 id="zend.http.cookie">
-    <title>Zend_Http_Cookie</title>
+<sect1 id="zend.http.cookies">
+    <title>Zend_Http Cookie Handling</title>
 
-    <sect2 id="zend.http.cookie.introduction">
+    <sect2 id="zend.http.cookies.introduction">
         <title>Introduction</title>
         <para>
             ...
-	</para>
+	    </para>
+    </sect2>
+    <sect2 id="zend.http.cookies.cookie">
+        <title>The Zend_Http_Cookie Class</title>
+        <para>
+            ...
+	    </para>
+    </sect2>
+    <sect2 id="zend.http.cookies.cookiejar">
+        <title>The Zend_Http_Cookiejar Class</title>
+        <para>
+            ...
+	    </para>
     </sect2>
 </sect1>
 <!--

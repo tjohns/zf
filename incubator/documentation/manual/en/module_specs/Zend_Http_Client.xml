@@ -24,14 +24,14 @@
 <![CDATA[<?php
     require_once 'Zend/Http/Client.php';
 
-    $http = new Zend_Http_Client('http://example.org', array(
+    $client = new Zend_Http_Client('http://example.org', array(
         'Accept-encoding' => 'gzip,deflate',
         'X-Powered-by'    => 'Zend Framework'));
         
     // This is actually exactly the same:
-    $http = new Zend_Http_Client();
-    $http->setUri('http://example.org');
-    $http->setHeaders(array(
+    $client = new Zend_Http_Client();
+    $client->setUri('http://example.org');
+    $client->setHeaders(array(
         'Accept-encoding' => 'gzip,deflate',
         'X-Powered-by'    => 'Zend Framework');
 
@@ -50,8 +50,8 @@
 <![CDATA[<?php
     require_once 'Zend/Http/Client.php';
 
-    $http = new Zend_Http_Client('http://example.org');
-    $response = $http->request();
+    $client = new Zend_Http_Client('http://example.org');
+    $response = $client->request();
 ?>]]></programlisting>
             </example>
             The request() method takes one optional parameter - the request method.
@@ -74,129 +74,354 @@
                 <programlisting role="php">
 <![CDATA[<?php
     // Preforming a POST request
-    $response = $http->request('POST');
+    $response = $client->request('POST');
     
     // Yet another way of preforming a POST request
-    $http->setMethod(Zend_Http_Client::REQUEST_POST);
-    $response = $http->request();
+    $client->setMethod(Zend_Http_Client::REQUEST_POST);
+    $response = $client->request();
 ?>]]></programlisting>            
             </example>
         </para>
-<!--        <para>
-            When using <code>Zend_Http_Client</code> on a single URL, in most cases you can supply the URL and
-            relevant headers to the <emphasis>constructor</emphasis>, as in the following examples:
-        </para>
-        <example>
-            <title>Creating a Basic Zend_Http_Client</title>
-            <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-
-    // Specify the URL and a single header
-    $http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
-    ?>]]>       </programlisting>
-        </example>
-        <para />
-        <example>
-            <title>Sending Multiple Headers</title>
-            <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-
-    // Specify the URL and multiple headers
-    $http = new Zend_Http_Client('http://example.org',
-                            array('Accept: text/html', 'Accept-Language: en-us,en;q=0.5'));
-    ?>]]>       </programlisting>
-        </example>
+    </sect2>
+    
+    <sect2 id="zend.http.client.redirections">
+        <title>HTTP Redirections</title>
         <para>
-            If you wish to use <code>Zend_Http_Client</code> to send requests to <emphasis>multiple</emphasis> URLs,
-            see <xref linkend="zend.http.client.requesting-multiple-domains" />
+            By default, Zend_Http_Client automatically handles HTTP redirections,
+            and will follow up to 5 redirections. This can be changed using the
+            setMaxRedirects() method:
+            <example>
+                <title>Changing the Number of Maximum Redirections</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Setting the HTTP client to redirect 99 times maximum:
+    $client->setMaxRedirects(99);
+    
+    // Setting the client to not follow redirections
+    $client->setMaxRedirects(0);
+?>]]></programlisting>
+            </example>
+        </para>
+        <para>
+            According to the HTTP/1.1 RFC, HTTP 301 and 302 responses should be
+            treated by the client by resending the same request to the 
+            specified location - using the same request method. However, most 
+            clients to not implement this and always use a GET request when 
+            redirecting. By default, Zend_Http_Client does the same - when 
+            redirecting on a 301 or 302 response, all GET and POST parameters
+            are reset, and a GET request is sent to the new location. This 
+            behavior can be changed by calling the setStrictRedirects() method:
+            <example>
+                <title>Forcing RFC 2616 Strict Redirections on 301 and 302 Responses</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Strict Redirections
+    $client->setStrictRedirects();
+    
+    // Non-strict Redirections
+    $client->setStrictRedirects(false);
+?>]]></programlisting>
+            </example>
+        </para>
+        <para>
+            You can always get the number of redirections done after sending a 
+            request using the getLastRedirectionsCount() method.
         </para>
     </sect2>
-    <sect2 id="zend.http.client.requesting-multiple-domains">
-        <title>Requesting Multiple Domains</title>
+    
+    <sect2 id="zend.http.client.parameters">
+        <title>Adding GET and POST parameters </title>
         <para>
-            <code>Zend_Http_Client</code> supports sending requests to multiple domains by setting the URL to query
-            using <code>Zend_Http_Client::setUri()</code>.
+            Adding GET parameters to an HTTP request is quite simple, and can 
+            be done either by specifying them as part of the URL, or by using
+            the setParameterGet() method. 
+            This method takes the GET parameter's name as it's first parameter,
+            and the GET parameter's value as it's second parameter. A third
+            optional parameter is the boolean override paremeter. When set to 
+            true (which is the default), if the GET parameter was already 
+            defined, it's value will be overwritten. If override is false and 
+            a parameter with the same name was already defined, another value
+            will be added to it, practically forming an array of values.
+            <example>
+                <title>Setting GET Parameters</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Setting a get parameter using the setParameterGet method
+    $client->setParameterGet('knight', 'lancelot');
+
+    // This is equivalent to setting such URL:
+    $client->setUri('http://example.com/index.php?knight=lancelot');
+    
+    // Adding another value of 'tim' to the request
+    $client->setParameterGet('knight', 'robin', false);
+    
+    // This would produce a request similar to this:
+    $client->setUri('http://example.com/index.php?knight[]=lancelot&knight[]=robin');
+?>]]></programlisting>
+            </example>
         </para>
-        <note>
-            <para>A great use for this is when querying multiple RSS feeds.</para>
-        </note>
-        <example>
-            <title>Requesting Multiple Domains</title>
-            <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-
-    // Instantiate our client object
-    $http = new Zend_Http_Client();
-
-    // Set the URI to Slashdot's main feed
-    $http->setUri('http://rss.slashdot.org/Slashdot/slashdot');
-
-    // Retrieve the feed
-    $slashdot = $http->get();
-
-    // Now get the BBC news feed
-    $http->setUri('http://newsrss.bbc.co.uk/rss/newsonline_world_edition/technology/rss.xml');
-
-    // Retrieve the feed
-    $bbc = $http->get();
-    ?>]]>   </programlisting>
-        </example>
+        <para>
+            While GET parameters can be sent with every request method, POST
+            parameters are only sent in the body of POST requests. Adding POST
+            parameters to a request is very similar to adding GET parameters. 
+            The setParameterPost() method, just like setParameterGet(), accepts
+            3 parameters: The parameters name, value and an optional override
+            flag.
+            <example>
+                <title>Setting POST Parameters</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Setting a POST parameter
+    $client->setParameterPost('language', 'fr');
+    
+    // Setting another POST value for the same parameter
+    $client->setParameterPost('language', 'es', false);
+?>]]></programlisting>
+            </example>
+            Note that when sending POST requests, you can set both GET and 
+            POST parameters. On the other hand, while setting POST parameters
+            for a non-POST request will not trigger and error, it is useless. 
+            Unless the request is a POST request, POST parameters are simply 
+            ignored.
+        </para>
     </sect2>
-    <sect2 id="zend.http.client.settimeout">
-        <title>Changing the HTTP Timeout</title>
+
+    <sect2 id="zend.http.client.cookies">
+        <title>Adding Cookies and Using Cookie Persistance</title>
         <para>
-            <code>Zend_Http_Client::setTimeout()</code> allows you to set the timeout for the HTTP connection in
-            seconds.
+        	Zend_Http_Client provides an easy interface for adding cookies
+        	to your request, so that no direct header modification is 
+        	required. This is done using the setCookie() method. This method
+        	can be used in several ways:
+        	<example>
+                <title>Setting Cookies Using setCookie()</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Easy and simple: by providing a cookie name and cookie value
+    $client->setCookie('flavour', 'chocolate chips');
+    
+    // By directly providing a raw cookie string (name=value)
+    // Note that the value must be already URL encoded
+    $client->setCookie('flavour=chocolate%20chips');
+    
+    // By providing a Zend_Http_Cookie object
+    $cookie = Zend_Http_Cookie::factory('flavour=chocolate%20chips');
+    $client->setCookie($cookie);
+?>]]></programlisting>
+            </example>
+        	For more information about Cookie objects, see
+        	<xref linkend="zend.http.cookies.cookie" />.
         </para>
-        <note>
-            <para>The default timeout is 10 seconds.</para>
-        </note>
+        <para>
+            Zend_Http_Client also provides the means for cookie stickeyness -
+            that is having the client internally store all sent and recieved
+            cookies, and resend them automatically on subsequest requests. This
+            is usefull, for example when you need to log in to a remote site 
+            first and recieve and authentication or session ID cookie before 
+            sending further requests.
+            <example>
+                <title>Enabling Cookie Stickeyness</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // To turn cookie stickeyness on, set a CookieJar 
+    $client->setCookiejar();
+    
+    // First request: log in and start a session
+    $client->setUri('http://example.com/login.php');
+    $client->addParameterPost('user', 'h4x0r');
+    $client->addParameterPost('password', '1337');
+    $client->request('POST');
+    
+    // The Cookiejar automatically stores the cookies set
+    // in the response, like a session ID cookie.
+    
+    // Now we can send our next request - the stored cookies
+    // will be automatically sent.
+    $client->setUri('http://example.com/read_member_news.php');
+    $client->request('GET');
+?>]]></programlisting>
+            </example>
+            For more information about using Cookiejar objects, see
+        	<xref linkend="zend.http.cookies.cookiejar" />.
+        </para>
     </sect2>
-    <sect2 id="zend.http.client.setheaders">
-        <title>Setting HTTP Headers Dynamically</title>
+    
+    <sect2 id="zend.http.client.custom_headers">
+        <title>Setting Custom Request Headers</title>
         <para>
-            Using <code>Zend_Http_Client::setHeaders()</code> you supply an <emphasis>array</emphasis> of
-            headers.
+            Setting custom headers can be done both during the object's 
+            construction by adding an array of headers as the constructor's 
+            second parameter (see <xref linkend="zend.http.client.introduction" />) 
+            or by using the setHeaders() method.
         </para>
-        <important>
-            <para>
-                Headers must follow the format:
-                <option><code>Header: value</code></option>
-            </para>
-        </important>
+        <para>
+            The setHeaders() method is quite diverse and can be used in several
+            ways, as the following example shows:
+            <example>
+                <title>Setting A Single Custom Request Header</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Setting a single header, overwriting any previous value
+    $client->setHeaders('Host', 'www.example.com');
+    
+    // Another way of doing the exact same thing
+    $client->setHeaders('Host: www.example.com');
+    
+    // Setting a single header without overwriting other headers
+    $client->setHeaders('Cookie', 'ham=good; spam=bad;', false);
+    
+    // Another way of doing the exact same thing
+    $client->setHeaders('Cookie: ham=good; spam=bad;', null, false);
+?>]]></programlisting>
+            </example>
+            The third optional parameter is the boolean overwrite parameter. 
+            If set to true (default), an existing header with the same name 
+            will be overwritten. If set to false, another header with the same
+            name will be set. This is useful for setting headers that can
+            appear more than one in single request - such as the Cookie header.
+        </para>
+        <para>
+            setHeader() can also be easily used to set multiple headers in one
+            call, by providing an array of headers as the first parameter:
+            <example>
+                <title>Setting Multiple Custom Request Headers</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Setting a single header, overwriting any previous value
+    $client->setHeaders(array(
+        'Host' => 'www.example.com',
+        'Accept-encoding', 'gzip,deflate',
+        'X-Powered-By' => 'Zend Framework'));
+    
+    // The array can also contain full array strings:
+    $client->setHeaders(array(
+        'Host: www.example.com',
+        'Accept-encoding: gzip,deflate',
+        'X-Powered-By: Zend Framework'));
+    
+    // You can use the third overwrite parameter here as well:
+    $client->setHeaders(array(
+        'Host' => 'www.example.com',
+        'Accept-encoding', 'gzip,deflate',
+        'X-Powered-By' => 'Zend Framework'), null, false);
+?>]]></programlisting>
+            </example>
+        </para>
     </sect2>
-    <sect2 id="zend.http.client.making-other-requests">
-        <title>Making HTTP POST, PUT, and DELETE Requests</title>
+    
+    <sect2 id="zend.http.client.file_uploads">
+        <title>File Uploads</title>
         <para>
-            Performing HTTP POST, PUT, and DELETE requests are facilitated in <code>Zend_Http_Client</code> by three
-            methods: <code>post()</code>, <code>put()</code>, and <code>delete()</code>, respectively. The
-            <code>post()</code> and <code>put()</code> methods each take a single string parameter, <code>$data</code>,
-            into which should be placed a string with the data properly encoded, as in the following:
-            <emphasis><code>name=value&amp;foo=bar</code></emphasis>. The <code>delete()</code> method has no
-            parameters.
+            You can upload files through HTTP using the setFileUpload method. 
+            This method takes a filename as the first parameter, a form name 
+            as the second parameter, and data as a third optional parameter. 
+            If the third data parameter is null, the first file name parameter
+            is considered to be a real file on disk, and Zend_Http_Client will
+            try to read this file and upload it. If the data parameter is not
+            null, the first file name parameter will be sent as the file name,
+            but no actual file needs to exist on the disk.
+            The second form name parameter is always required, and is equivalent
+            to the "name" attribute of an &gt;input&lt; tag, if the file was to
+            be uploaded through an HTML form.
+            A fourth optional parameter provides the file's content-type. If
+            not specified, and Zend_Http_Client reads the file from the disk,
+            the mime_content_type function will be used to guess the file's 
+            content type, if it is available. In any case, the default MIME
+            type will be application/octet-stream.
+            <example>
+                <title>Using setFileUpload to Upload Files</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Uploading arbitrary data as a file
+    $text = 'this is some plain text';
+    $client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
+    
+    // Uploading an existing file 
+    $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
+    
+    // Send the files
+    $client->submit('POST');
+?>]]></programlisting>
+            </example>
+            In the first example, the $text variable is uploaded and will be
+            available as $_FILES['upload'] on the server side. In the second
+            example, the existing file /tmp/Backup.tar.gz is uploaded to the 
+            server and will be available as $_FILES['bufile']. The content type
+            will be guesses automatically if possible - and if not, the content
+            type will be set to 'application/octet-stream'. 
+            <note>
+                When uploading files, the HTTP request's content-type is 
+                automatically set to multipart/form-data. Keep in mind that
+                you must send a POST or PUT request in order to upload files. 
+                Most servers will ignore the requests body on other request
+                methods.
+            </note>
         </para>
-        <example>
-            <title>Sending POST data with Zend_Http_Client</title>
-            <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-
-    // Instantiate our client object
-    $http = new Zend_Http_Client();
-
-    // Set the URI to a POST data processor
-    $http->setUri('http://example.org/post/processor');
-
-    // Save specific GET variables as HTTP POST data
-    $postData = 'foo=' . urlencode($_GET['foo']) . '&bar=' . urlencode($_GET['bar']);
-
-    // Make the HTTP POST request and save the HTTP response
-    $httpResponse = $http->post($postData);
-    ?>]]>   </programlisting>
-            <para>
-                Making a PUT request is the same as in the example above for making a POST request; just substitute the
-                <code>put()</code> method for <code>post()</code>.
-            </para>
-        </example> -->
+    </sect2>
+    <sect2 id="zend.http.client.raw_post_data">
+        <title>Sending Raw POST Data</title>
+        <para>
+            You can use a Zend_Http_Client to send raw POST data using the
+            setRawData() method. This method takes two parameters: the first
+            is the data to send in the request's body. The second optional
+            parameter is the content-type of the data. While this parameter is
+            optional, you should usually set it before sending the request - 
+            either using setRawData(), or with another method: setEncType().
+            <example>
+                <title>Sending Raw POST Data</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    $xml = '<book>' . 
+           '  <title>Islands in the Stream</title>' . 
+           '  <author>Ernest Hemingway</author>' . 
+           '  <year>1970</year>' . 
+           '</book>';
+           
+    $client->setRawData($xml, 'text/xml')->request('POST');
+    
+    // Another way to do the same thing:
+    $client->setRawData($xml)->setEncType('text/xml')->request('POST');
+?>]]></programlisting>
+            </example>
+            The data should be available on the serverside through PHP's 
+            $HTTP_RAW_POST_DATA variable or through the php://input stream.
+            <note>
+                Setting raw POST data for a request will override any POST
+                paratemers or file uploads. You should not try to use both on
+                the same request. Keep in mind that most servers will ignore 
+                the request's body unless you send a POST request.
+            </note>
+        </para>
+    </sect2>
+    
+    <sect2 id="zend.http.client.http_authentication">
+        <title>HTTP Authentication</title>
+        <para>
+            Currently, Zend_Http_Client only supports basic HTTP authentication.
+            This feature is utilized using the setAuth() method. The method 
+            takes 3 parameters: The user name, the password and an optional
+            authentication type parameter. As mentioned, currently only basic
+            authentication is supported (digest authentication support is
+            planned).
+            <example>
+                <title>Setting HTTP Authentication User and Password</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Using basic authentication
+    $client->setAuth('shahar', 'myPassword!', Zend_Http_Client::AUTH_BASIC);
+    
+    // Since basic auth is default, you can just do this:
+    $client->setAuth('shahar', 'myPassword!');
+?>]]></programlisting>
+            </example>
+        </para>
+    </sect2>
+    
+    <sect2 id="zend.http.client.multiple_requests">
+        <title>Sending Multiple Requests With the Same Client</title>
+        <para>
+            TBA
+        </para>        
     </sect2>
 </sect1>
 <!--
