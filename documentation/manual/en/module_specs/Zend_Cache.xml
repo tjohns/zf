@@ -20,6 +20,7 @@
             <code>Zend_Cache::factory()</code> instantiates correct objects and ties them together.
             In this first example, we will use <code>Core</code> frontend together with <code>File</code>
             backend.
+        </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
@@ -36,11 +37,11 @@ $backendOptions = array(
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 ?>]]></programlisting>
-       </para>
        <para>
             Now that we have a frontend, we can cache any type of data (we turned on serialization). For
             example, we can cache a result from a very expensive database query. After it is cached, there
             is no need to even connect to the database; records are fetched from cache and unserialized.
+        </para>
             <programlisting role="php"><![CDATA[<?php
 
 // $cache initialized in previous example
@@ -66,7 +67,6 @@ if(!$result = $cache->get('myresult')) {
 print_r($result);
 
 ?>]]></programlisting>
-       </para>
     </example>
     <example>
         <title>Caching output with <code>Zend_Cache</code> output frontend</title>
@@ -78,6 +78,7 @@ print_r($result);
             Inside, output your data as usual - all output will be cached when execution hits the <code>end()</code>
             method. On the next run, the whole section will be skipped in favor of fetching data from cache 
             (as long as the cache record is valid).
+        </para>
             <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
@@ -102,7 +103,6 @@ if(!$cache->start('mypage')) {
 echo 'This is never cached ('.time().').';
 
 ?>]]>       </programlisting>
-       </para>
        <para>
            Notice that we output the result of <code>time()</code> twice; this is something dynamic
            for demonstration purposes. Try running this and then refreshing several times; you will notice
@@ -149,6 +149,7 @@ echo 'This is never cached ('.time().').';
         <para>
             A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
             in the following example :
+        </para>
             <programlisting role="php"><![CDATA[<?php
         
 # We "load" the Zend_Cache factory 
@@ -171,7 +172,6 @@ $backendOptions = array([...]);
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
 ?>]]></programlisting> 
-        </para> 
         <para>
             In the following examples we will assume that the <code>$cache</code> variable holds a
             valid, instantiated frontend as shown and that you understand how to pass parametres
