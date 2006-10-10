@@ -124,9 +124,13 @@ $hits = $index->find('+mot1 auteur:mot2 -mot3');
         </para>
 
         <para>
-            Les requêtes de phrases sont très flexible et permettent de chercher des phrases exactes, comme des morceau de phrases. 
-            Les phrases exactes peuvent aussi contennir des espaces ou des termes au même endroits. 
-            (Elles peuvent être générées par Analyser pour différentes utilisation. Ex. un term peut être duppliqué pour améliorer le
+            Les requêtes de phrases sont très flexible et permettent de chercher des phrases exactes, 
+            comme des morceau de phrases. 
+        </para>
+        <para>
+            Les phrases exactes peuvent aussi contenir des espaces ou des termes au même endroits. 
+            (Elles peuvent être générées par Analyser pour différentes utilisation.
+            Ex. un terme peut être duppliqué pour améliorer le
             poid du terme, ou plusieurs synonymes peuvent-être placé en première position).
             Conformément à cela, les requêtes de phrase peuvent être construitent exclusivement par l'API maintenant :
         </para>
