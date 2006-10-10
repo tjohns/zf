@@ -114,7 +114,7 @@ foreach ($hits as $hit) {
         Zend_Search_Lucene_Search_QueryHit から元の Zend_Search_Lucene_Document
         を取得することができます。
 
-        インデックス化されているドキュメントを取得するには、
+        保存されたドキュメントを取得するには、
         インデックスオブジェクトの <code>getDocument()</code>
         メソッドを使用し、その <code>getFieldValue()</code>
         メソッドでフィールドの値を取得します。

@@ -16,7 +16,6 @@
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 // 2 番目の引数を TRUE にすると、新しいインデックスを作成します。
 $index = new Zend_Search_Lucene('/data/my-index', true);
 
@@ -30,52 +29,11 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // ドキュメントをインデックスに追加します。
 $index->addDocument($doc);
-
-// 変更内容をインデックスに書き込みます。
-$index->commit();
 ?>]]></programlisting>
 
         <para>
-            新しく追加されたドキュメントをコミットすると、
-            インデックスから取得できるようになります。
-        </para>
-        <para>
-            <code>Zend_Search_Lucene::commit()</code> は、
-            スクリプトの実行終了時およびすべての検索リクエストの前に
-            自動的にコールされます。
-        </para>
-        <para>
-            commit() をコールするたびに、新しいインデックスセグメントが作成されます。
-            <footnote>
-            <para>
-            既存の Lucene インデックスセグメントを更新することは、その性質上できません。
-            セグメントを更新するには、改めてセグメント全体を構成しなおす必要があります。
-            Lucene インデックスファイルの形式についての詳細は、以下を参照ください
-            (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>)。
-            セグメントの数が増えると、インデックスの質が低下します。
-            しかし、インデックスの最適化を行うことで、これを防ぐことができます。
-            最適化により、複数のセグメントをひとつにまとめます。
-            この処理についても、セグメントを更新するわけではありません。
-            新しい大きなセグメントを作成し、新しいセグメントリスト ('segments.new'
-            というファイル) を作成した後に、最適化後の新しいセグメントをリストに含めます。
-            もとの複数のセグメントはリストに含めません。そして、最後に 'segments.new'
-            ファイルの名前を 'segments' に変更するのです。
-            </para>
-            <para>
-            最適化は段階的に進められます。まず最も小さなセグメント (例: 文書をひとつだけ追加した際に作成されたセグメントなど)
-            が大きめのセグメントに統合され、さらにそれが別のセグメントに統合され、... といった具合です。
-            最適化はセグメントストリームを使用して進められるので、それほど多くのメモリを消費しません。
-            また、最適化の際に多くのリソースを消費することもありませんし、インデックスにロックをかけることもありません。
-            最適化の処理中にインデックスの検索や更新、他のセグメントとの統合を行うことも可能です。
-            </para>
-            </footnote>
-            そのため、コール回数は必要最小限にしなければなりません。
-            ただ、大量のドキュメントを一度にコミットすると、
-            メモリの消費量が多くなるという一面もあります。
-        </para>
-        <para>
-            Zend_Search_Lucene の機能を拡張して、
-            将来はセグメント管理の自動最適化を行えるようにする予定です。
+            新しく追加されたドキュメントは、
+            すぐにインデックスから取得できるようになります。
         </para>
     </sect2>
 
@@ -88,7 +46,6 @@ $index->commit();
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 // 既存のインデックスをオープンします。
 $index = new Zend_Search_Lucene('/data/my-index');
 
@@ -100,26 +57,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // ドキュメントをインデックスに追加します。
 $index->addDocument($doc);
-
-// 変更内容をインデックスに書き込みます。
-$index->commit();
 ?>]]></programlisting>
-
-        <para>
-            commit() を (明示的あるいは暗黙的に) コールするたびに、
-            新しいインデックスセグメントが作成されます。
-        </para>
-        <para>
-            Zend_Search_Lucene は、自動的にはセグメント管理を行いません。そのため、
-            セグメントの大きさには十分注意する必要があります。
-            セグメントを大きくするとよい結果が得られるでしょうが、
-            その反面大きなセグメントの作成時には大量のメモリを必要とします。
-        </para>
-        <para>
-            このバージョンの Zend_Search_Lucene で作成したインデックスを最適化するには、
-            Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-            が使用可能です。
-        </para>
     </sect2>
 
     <sect2 id="zend.search.index-creation.document-updating">
@@ -142,8 +80,112 @@ $hits = $index->find('path:' . $removePath);
 foreach ($hits as $hit) {
     $index->delete($hit->id);
 }
-$index->commit();
 ?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.search.index-creation.optimization">
+        <title>インデックスの最適化</title>
+
+        <para>
+            Lucene のインデックスは、セグメントから構成されます。
+            各セグメントはデータの一部分を表し、それぞれ完全に独立しています。
+        </para>
+        <para>
+            Lucene インデックスセグメントのファイルは、その性質上更新することはできません。
+            セグメントを更新するには、セグメント全体を再構成する必要があります
+            (Lucene インデックスファイルのフォーマットについての詳細は、
+            <ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>
+            を参照ください)。このことより、新しいドキュメントをインデックスに追加する際には、
+            新しいセグメントを作成することになります。
+        </para>
+        <para>
+            セグメントの数が増えるとインデックスの効率が下がります。
+            しかし、インデックスの最適化によってこれを修復することができます。
+            最適化により、複数のセグメントに分かれているデータがひとつにまとめられます。
+            この処理も、セグメントを更新することはありません。まず大きなセグメントを新しく作成し、
+            これまでいくつものセグメントに分かれていたデータをひとまとめにしてそこに格納し、
+            その後でセグメント一覧 ('segments' ファイル) を更新します。
+        </para>
+
+        <para>
+            インデックス全体の最適化を行うには、<code>Zend_Search_Lucene::optimize()</code>
+            をコールします。これは、すべてのインデックスセグメントを新しいひとつのセグメントにまとめます。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+// 既存のインデックスをオープンします
+$index = new Zend_Search_Lucene('/data/my-index');
+
+// インデックスを最適化します
+$index->optimize();
+?>]]></programlisting>
+
+        <para>
+            自動的なインデックス最適化により、インデックスの一貫性を保ちます。
+        </para>
+        <para>
+            自動的な最適化は、いくつかのインデックスオプションにもとづいて段階的に進められます。
+            まず非常に小さなセグメントが少し大きめのセグメントに統合され、
+            さらにそれがもう少し大きな別のセグメントに統合され、... といった具合です。
+        </para>
+
+        <sect3 id="zend.search.index-creation.optimization.maxbuffereddocs">
+            <title>自動最適化オプション <emphasis>MaxBufferedDocs</emphasis></title>
+            <para>
+                <emphasis>MaxBufferedDocs</emphasis> は、メモリ内に溜め込まれたドキュメントを
+                新しいセグメントに書き出す際の最小ドキュメント数です。
+            </para>
+            <para>
+                <emphasis>MaxBufferedDocs</emphasis> の値の取得や設定は、<code>$index->getMaxBufferedDocs()</code>
+                あるいは <code>$index->setMaxBufferedDocs($maxBufferedDocs)</code> のコールによって行います。
+            </para>
+            <para>
+                デフォルト値は 10 です。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.search.index-creation.optimization.maxmergedocs">
+            <title>自動最適化オプション <emphasis>MaxMergeDocs</emphasis></title>
+            <para>
+                <emphasis>MaxMergeDocs</emphasis> は、addDocument()
+                によってまとめられる最大のドキュメント数です。小さな値
+                (例えば 10.000 未満) は、対話的にインデックスを作成していく際に有効です。
+                これにより、インデックス化の際の処理の中断時間を数秒に抑えられます。
+                大きな値は、バッチ処理の際に有効です。これにより、検索をより高速に行えるようになります。
+            </para>
+            <para>
+                <emphasis>MaxMergeDocs</emphasis> の値の取得や設定は、<code>$index->getMaxMergeDocs()</code>
+                あるいは <code>$index->setMaxMergeDocs($maxMergeDocs)</code> のコールによって行います。
+            </para>
+            <para>
+                デフォルト値は PHP_INT_MAX です。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.search.index-creation.optimization.mergefactor">
+            <title>自動最適化オプション <emphasis>MergeFactor</emphasis></title>
+            <para>
+                <emphasis>MergeFactor</emphasis> は、addDocument() でセグメントをまとめる頻度を指定します。
+                小さな値を指定すると、インデックス作成の際に使用する RAM の量を抑えられます。
+                また最適化されていないインデックスへの検索が高速になります。しかし、
+                インデックス作成の速度は遅くなります。大きな値を指定すると、インデックス作成の際の
+                RAM の使用量が多くなります。また最適化されていないインデックスへの検索速度が落ちます。
+                しかしインデックスの作成は高速に行えます。大きな値 (&gt; 10)
+                はバッチ的なインデックス作成の際に有効で、小さな値 (&lt; 10)
+                は対話的なインデックス保守の際に有効です。
+            </para>
+            <para>
+                <emphasis>MergeFactor</emphasis> の値の取得や設定は、<code>$index->getMergeFactor()</code>
+                あるいは <code>$index->setMergeFactor($mergeFactor)</code> のコールによって行います。
+            </para>
+            <para>
+                デフォルト値は 10 です。
+            </para>
+        </sect3>
+
+        <para>
+            Lucene Java および Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+            を使用してインデックスを最適化することもできます。
+        </para>
     </sect2>
 </sect1>
 
