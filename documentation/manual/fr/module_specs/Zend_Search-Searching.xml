@@ -107,8 +107,8 @@ foreach ($hits as $hit) {
           Optionnellement, l'objet Zend_Search_Lucene_Document orginial peut-être retourné à partir de
           Zend_Search_Lucene_Search_QueryHit.
           
-          Vous pouvez retrouver les parties indexée du document en utilisant la méthode <code>getDocument()</code>
-          de l'objet index, et ainsi les récupérer par la méthode <code>getFieldValue()</code> :
+          Vous pouvez retrouver les parties stockées du document en utilisant la méthode <code>getDocument()</code>
+          de l'objet index, et ensuite les récupérer par la méthode <code>getFieldValue()</code> :
         <programlisting role="php"><![CDATA[<?php
 
     require_once('Zend/Search/Lucene.php');
