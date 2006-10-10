@@ -94,7 +94,7 @@ class Zend_Json_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 		if (isset($request['method'])) {
 			$this->_method = $request['method'];
 			if (isset($this->_functions[$this->_method])) {
-				if ($this->_functions[$this->_method]->isPublic()) {
+				if ($this->_functions[$this->_method] instanceof Zend_Server_Reflection_Function || $this->_functions[$this->_method] instanceof Zend_Server_Reflection_Method && $this->_functions[$this->_method]->isPublic()) {
 					$request_keys = array_keys($request);
 					array_walk($request_keys, array(__CLASS__, "lowerCase"));
 					$request = array_combine($request_keys, $request);
@@ -119,11 +119,11 @@ class Zend_Json_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 						throw new Zend_Json_Server_Exception('Invalid Method Call to ' .$method. '. Requires ' .sizeof($func_args). ', ' .sizeof($calling_args). ' given.', 400);
 					}
 					
-					if ($this->_functions[$this->_method]->getCallbackType() == 'method') {
+					if ($this->_functions[$this->_method] instanceof Zend_Server_Reflection_Method) {
 						// Get class
 		                $class = $this->_functions[$this->_method]->getDeclaringClass()->getName();
 		
-		                if ('static' == $this->_functions[$this->_method]->isStatic()) {
+		                if ($this->_functions[$this->_method]->isStatic()) {
 		                    // for some reason, invokeArgs() does not work the same as 
 		                    // invoke(), and expects the first argument to be an object. 
 		                    // So, using a callback if the method is static.
@@ -132,27 +132,34 @@ class Zend_Json_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 		
 		                // Object methods
 		                try {
-		                    $object = $this->_functions[$this->_method]->getDeclaringClass()->newInstanceArgs($this->_args);
+		                	if ($this->_functions[$this->_method]->getDeclaringClass()->getConstructor()) {
+		                    	$object = $this->_functions[$this->_method]->getDeclaringClass()->newInstanceArgs($this->_args);
+		                	} else {
+		                    	$object = $this->_functions[$this->_method]->getDeclaringClass()->newInstance();
+		                	}
 		                } catch (Exception $e) {
-		                    throw new Zend_Json_Server_Exception('Error instantiating class ' . $class . ' to invoke method ' . $this->_reflection[$this->_method]->getName(), 500);
+		                    throw new Zend_Json_Server_Exception('Error instantiating class ' . $class . ' to invoke method ' . $this->_functions[$this->_method]->getName(), 500);
 		                }
 		                
 		                $result = $this->_functions[$this->_method]->invokeArgs($object, $calling_args);
 					} else {
-						$result = $this->_functions[$this->_method]->invokeArgs($args);
+						$result = call_user_func_array($this->_functions[$this->_method]->getName(), $calling_args); //$result = $this->_functions[$this->_method]->invokeArgs($calling_args);
 					}
 	                
-					header("Content-Type: application/json");
-					if (is_bool($result)) {
-						$result = array('status' => $result);
+					if (!headers_sent()) {
+						header("Content-Type: application/json");
 					}
-					$json = Zend_Json::encode($result);
-					echo $json;
+					
+					if (is_array($result) || is_object($result)) {
+						echo $this->_handleStruct($result);
+					} else {
+						echo $this->_handleScalar($result);
+					}
 				} else {
-					throw new Zend_Json_Server_Exception("Unknown Method.", 404);
+					throw new Zend_Json_Server_Exception("Unknown Method '$this->_method'.", 400);
 				}
 			} else {
-				throw new Zend_Json_Server_Exception("Unknown Method.", 404);
+				throw new Zend_Json_Server_Exception("Unknown Method '$this->_method'.", 400);
 			}
 		} else {
 			throw new Zend_Json_Server_Exception("No Method Specified.", 404);
@@ -160,7 +167,7 @@ class Zend_Json_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 	}
 	
 	/**
-	 * Imeplement Zend_Server_Interface::setClass()
+	 * Implement Zend_Server_Interface::setClass()
 	 *
 	 * @param string $classname Class name
 	 * @param string $namespace Class namespace (unused)
@@ -169,9 +176,25 @@ class Zend_Json_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 	public function setClass($classname, $namespace = '', $argv = array())
 	{
 		$this->_args = $argv;
-		foreach ($this->_reflection->reflectClass($classname, $argv) as $method) {
+		foreach ($this->_reflection->reflectClass($classname, $argv)->getMethods() as $method) {
 			$this->_functions[$method->getName()] = $method;
 		}
+	}
+	
+	private function _handleStruct($result)
+	{
+		if (is_object($result) && !isset($result->status)) {
+			$result->status = 'success';
+		} elseif (is_array($result) && !isset($result['status'])) {
+			$result['status'] = 'success';
+		}
+		
+		return Zend_Json::encode($result);
+	}
+	
+	private function _handleScalar($result)
+	{
+		return Zend_Json::encode($result);
 	}
 	
 	/**
@@ -188,7 +211,7 @@ class Zend_Json_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 			$function = $this->_method;
 		}
 		
-		if ($function instanceof Zend_Server_Reflection_Method && $function->getCallbackType() == 'method') {
+		if ($function instanceof Zend_Server_Reflection_Method) {
 			$class = $function->getDeclaringClass()->getName();
 		} else {
 			$class = false;
@@ -214,14 +237,16 @@ class Zend_Json_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 			$error['code'] = $code;
 		}
 		
-		header("Content-Type: application/json");
-		if (is_null($code)) {
-			header("HTTP/1.0 400 Bad Request");
-		} else {
-			if ($code == 404) {
-				header("HTTP/1.0 $code File Not Found");
+		if (!headers_sent()) {
+			header("Content-Type: application/json");
+			if (is_null($code)) {
+				header("HTTP/1.0 400 Bad Request");
 			} else {
-				header("HTTP/1.0 $code Bad Request");
+				if ($code == 404) {
+					header("HTTP/1.0 $code File Not Found");
+				} else {
+					header("HTTP/1.0 $code Bad Request");
+				}
 			}
 		}
 		$json = Zend_Json::encode($error);
@@ -243,7 +268,7 @@ class Zend_Json_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 		}
 		
 		foreach ($function as $func) {
-			if (is_callable($func) && !in_array($func, self::$$magic_methods)) {
+			if (is_callable($func) && !in_array($func, self::$magic_methods)) {
 				$this->_functions[$func] = $this->_reflection->reflectFunction($func);
 			} else {
 				throw new Zend_Json_Server_Exception("Invalid Method Added to Service.");
