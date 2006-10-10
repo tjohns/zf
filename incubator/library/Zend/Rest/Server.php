@@ -118,7 +118,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 						// Get class
 		                $class = $this->_functions[$this->_method]->getDeclaringClass()->getName();
 		
-		                if ('static' == $this->_functions[$this->_method]->isStatic()) {
+		                if ($this->_functions[$this->_method]->isStatic()) {
 		                    // for some reason, invokeArgs() does not work the same as 
 		                    // invoke(), and expects the first argument to be an object. 
 		                    // So, using a callback if the method is static.
@@ -127,7 +127,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 		
 		                // Object methods
 		                try {
-		                	if ($this->_functions[$this->_method]->getDeclaringClass()->hasMethod('__construct')) {
+		                	if ($this->_functions[$this->_method]->getDeclaringClass()->getConstructor()) {
 		                    	$object = $this->_functions[$this->_method]->getDeclaringClass()->newInstanceArgs($this->_args);
 		                	} else {
 		                		$object = $this->_functions[$this->_method]->getDeclaringClass()->newInstance();
@@ -155,7 +155,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 					} elseif (is_array($result) || is_object($result)) {
 						echo $this->_handleStruct($result);
 					} else {
-						echo $this->_handleSimple($result);
+						echo $this->_handleScalar($result);
 					}
 				} else {
 					throw new Zend_Rest_Server_Exception("Unknown Method '$this->_method'.", 404);
@@ -169,7 +169,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 	}
 	
 	/**
-	 * Imeplement Zend_Server_Interface::setClass()
+	 * Implement Zend_Server_Interface::setClass()
 	 *
 	 * @param string $classname Class name
 	 * @param string $namespace Class namespace (unused)
@@ -207,7 +207,12 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 			$xml = "<$method generator='zend'>";
 		}
 		
+		$has_status = false;
+		
 		foreach ($struct as $key => $value) {
+			if ($key == 'status') {
+				$has_status = true;
+			}
 			if ($value === false) {
 				$value = 0;
 			} elseif ($value === true) {
@@ -219,7 +224,10 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 			}
 			$xml .= "<$key>$value</$key>";
 		}
-		$xml .= "<status>success</status>";
+		
+		if (!$has_status) {
+			$xml .= "<status>success</status>";
+		}
 		$xml .= "</$method>";
 		
 		if ($class) {
@@ -234,7 +242,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 	 * @param string|int|boolean $value Result value
 	 * @return string XML Response
 	 */
-	private function _handleSimple($value)
+	private function _handleScalar($value)
 	{
 		$function = $this->_functions[$this->_method];
 		if ($function instanceof Zend_Server_Reflection_Method) {
@@ -252,12 +260,6 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 			$xml = "<$method generator='zend' version='1.0'>";
 		}
 		
-		if ($value === false) {
-			$status = 'failure';
-		} else {
-			$status = 'success';
-		}
-		
 		if ($value == false) {
 			$value = 0;
 		} elseif ($value === true) {
@@ -266,7 +268,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 		
 		$xml .= "<response>$value</response>";
 
-		$xml .= "<status>$status</status>";
+		$xml .= "<status>success</status>";
 
 		$xml .= "</$method>";
 		
@@ -290,7 +292,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 			$function = $this->_method;
 		}
 		
-		if ($function instanceof Zend_Server_Reflection_Method && $function->getCallbackType() == 'method') {
+		if ($function instanceof Zend_Server_Reflection_Method) {
 			$class = $function->getDeclaringClass()->getName();
 		} else {
 			$class = false;
