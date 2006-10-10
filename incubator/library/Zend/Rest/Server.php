@@ -158,10 +158,10 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 						echo $this->_handleSimple($result);
 					}
 				} else {
-					throw new Zend_Rest_Server_Exception("Unknown Method.", 404);
+					throw new Zend_Rest_Server_Exception("Unknown Method '$this->_method'.", 404);
 				}
 			} else {
-				throw new Zend_Rest_Server_Exception("Unknown Method.", 404);
+				throw new Zend_Rest_Server_Exception("Unknown Method '$this->_method'.", 404);
 			}
 		} else {
 			throw new Zend_Rest_Server_Exception("No Method Specified.", 404);
@@ -195,7 +195,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 		if ($function instanceof Zend_Server_Reflection_Method) {
 			$class = $function->getDeclaringClass()->getName();
 		} else {
-			$class == false;
+			$class = false;
 		}
 		
 		$method = $function->getName();
@@ -208,6 +208,15 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 		}
 		
 		foreach ($struct as $key => $value) {
+			if ($value === false) {
+				$value = 0;
+			} elseif ($value === true) {
+				$value = 1;
+			}
+			
+			if (ctype_digit((string) $key)) {
+				$key = 'key_' . $key;
+			}
 			$xml .= "<$key>$value</$key>";
 		}
 		$xml .= "<status>success</status>";
@@ -243,6 +252,12 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 			$xml = "<$method generator='zend' version='1.0'>";
 		}
 		
+		if ($value === false) {
+			$status = 'failure';
+		} else {
+			$status = 'success';
+		}
+		
 		if ($value == false) {
 			$value = 0;
 		} elseif ($value === true) {
@@ -251,7 +266,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 		
 		$xml .= "<response>$value</response>";
 
-		$xml .= "<status>success</status>";
+		$xml .= "<status>$status</status>";
 
 		$xml .= "</$method>";
 		
