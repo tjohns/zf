@@ -339,7 +339,7 @@ abstract class Zend_Server_Reflection_Function_Abstract
             return call_user_func_array(array($this->_reflection, $method), $args);
         }
 
-        throw new Zend_Server_Reflection_Exception('Invalid reflection method');
+        throw new Zend_Server_Reflection_Exception('Invalid reflection method ("' .$method. '")');
     }
 
     /**
