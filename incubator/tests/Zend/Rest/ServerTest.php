@@ -123,9 +123,62 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
 		ob_start();
 		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc3'));
 		$result = ob_get_clean();
-		$this->assertEquals("<Zend_Rest_Server_TestFunc3 generator='zend' version='1.0'><response>0</response><status>success</status></Zend_Rest_Server_TestFunc3>", $result, "Bas Response");
+		$this->assertEquals("<Zend_Rest_Server_TestFunc3 generator='zend' version='1.0'><response>0</response><status>failure</status></Zend_Rest_Server_TestFunc3>", $result, "Bas Response");
+	}
+	
+	function testHandleReturnTrue()
+	{
+		$server = new Zend_Rest_Server();
+		$server->addFunction('Zend_Rest_Server_TestFunc4');
+		ob_start();
+		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc4'));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_TestFunc4 generator='zend' version='1.0'><response>1</response><status>success</status></Zend_Rest_Server_TestFunc4>", $result, "Bas Response");
+	}
+	
+		
+	function testHandleReturnInteger()
+	{
+		$server = new Zend_Rest_Server();
+		$server->addFunction('Zend_Rest_Server_TestFunc5');
+		ob_start();
+		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc5'));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_TestFunc5 generator='zend' version='1.0'><response>123</response><status>success</status></Zend_Rest_Server_TestFunc5>", $result, "Bas Response");
+	}
+	
+	function testHandleReturnString()
+	{
+		$server = new Zend_Rest_Server();
+		$server->addFunction('Zend_Rest_Server_TestFunc6');
+		ob_start();
+		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc6'));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_TestFunc6 generator='zend' version='1.0'><response>string</response><status>success</status></Zend_Rest_Server_TestFunc6>", $result, "Bas Response");
+	}
+	
+	function testHandleReturnArray()
+	{
+		$server = new Zend_Rest_Server();
+		$server->addFunction('Zend_Rest_Server_TestFunc7');
+		ob_start();
+		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc7'));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_TestFunc7 generator='zend'><foo>bar</foo><baz>1</baz><key_1>0</key_1><bat>123</bat><status>success</status></Zend_Rest_Server_TestFunc7>", $result, "Bas Response");
+	}
+	
+	function testHandleReturnObject()
+	{
+		$server = new Zend_Rest_Server();
+		$server->addFunction('Zend_Rest_Server_TestFunc8');
+		ob_start();
+		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc8'));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_TestFunc8 generator='zend'><foo>bar</foo><baz>1</baz><bat>123</bat><qux>0</qux><status>success</status></Zend_Rest_Server_TestFunc8>", $result, "Bas Response");
 	}
 }
+
+/* Test Functions */
 
 /**
  * Test Function
