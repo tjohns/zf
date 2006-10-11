@@ -27,6 +27,16 @@ define('TESTS_ZEND_MAIL_POP3_WRONG_PORT', 80);
 define('TESTS_ZEND_MAIL_POP3_INVALID_PORT', 3141);
 
 /**
+ * Zend_Mail_Maildir test
+ *
+ * Before enabling this test you have to unpack messages.tar in Zend/Mail/_files/test.maildir/cur/
+ * and remove the tar for this test to work. That's because the messages files have a colon in the
+ * filename and that's a forbidden character on Windows.
+ */
+define('TESTS_ZEND_MAIL_MAILDIR_ENABLED', false);
+
+
+/**
  * PHPUnit Code Coverage / Test Report
  */
 define('TESTS_GENERATE_REPORT', false);
