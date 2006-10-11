@@ -113,7 +113,7 @@ foreach ($hits as $hit) {
             Optional kann das originale Zend_Search_Lucene_Document Objekt vom 
             Zend_Search_Lucene_Search_QueryHit Objekt zurückgegeben werden.
             
-            Du kannst indizierte Teile des Dokuments durch Verwendung der <code>getDocument()</code>
+            Du kannst gespeicherte Teile des Dokuments durch Verwendung der <code>getDocument()</code>
             Methode des Indexobjektes zurückerhalten und diese dann durch die 
             <code>getFieldValue()</code> Methode abfragen:
         </para>

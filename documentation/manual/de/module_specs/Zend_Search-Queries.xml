@@ -128,12 +128,15 @@ $hits = $index->find('+word1 author:word2 -word3');
 
         <para>
             Phrasenabfragen sind sehr flexibel und erlauben es, sowohl nach einer exakten Phrase als
-            auch nach ungenauen Phrasen zu suchen. Genaue Phrasen können auch Lücken oder 
-            mehrere Begriffe an der selben Stelle enthalten. Diese können mit Hilfe das Analysators 
-            für verschiedene Zwecke generiert werden, z.B. kann ein Begriff verdoppelt werden, um 
-            das Gewicht des Begriffs zu erhöhen oder verschiedene Synonyme können an einer Stelle 
-            platziert werden. Dem entsprechend können Phrasenabfragen nur mit Hilfe der 
-            Programmierschnittstelle (API) erstellt werden. 
+            auch nach ungenauen Phrasen zu suchen. 
+        </para>
+            
+        <para>
+            Phrasen können auch Lücken oder mehrere Begriffe an der selben Stelle enthalten. Diese 
+            können mit Hilfe das Analysators für verschiedene Zwecke generiert werden, z.B. kann ein 
+            Begriff verdoppelt werden, um das Gewicht des Begriffs zu erhöhen oder verschiedene 
+            Synonyme können an einer Stelle platziert werden. Dem entsprechend können Phrasenabfragen 
+            nur mit Hilfe der Programmierschnittstelle (API) erstellt werden. 
         </para>
 
         <programlisting role="php"><![CDATA[<?php

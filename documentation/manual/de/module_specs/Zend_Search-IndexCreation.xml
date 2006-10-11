@@ -30,49 +30,10 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Füge das Dokument dem Index hinzu 
 $index->addDocument($doc);
-
-// Schreibe die Änderungen in den Index.
-$index->commit();
 ?>]]></programlisting>
 
         <para>
-            Neu hinzugefügte Dokumente können nach der Übergabe aus dem Index zurückgeholt werden.
-        </para>
-        <para>
-            <code>Zend_Search_Lucene::commit()</code> wird automatisch am Ende der Skriptausführung 
-            vor jeder Suchanfrage aufgerufen.
-        </para>
-        <para>
-            Jeder commit() Aufruf erstellt ein neues Indexsegment. 
-            <footnote>
-            <para>
-                Lucene Indexsegment Dateien können aufgrund ihrer Eigenschaft nicht aktualisiert 
-                werden. Eine Segmentaktualisierung benötigt einen Neuaufbau des kompletten Segments.
-                Beachte die Indexdateiformate von Lucene für weitere Einzelheiten 
-                (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
-                Eine steigende Anzahl von Segmenten vermindert die Qualität des Index, aber die 
-                Indexoptimierung stellt diese wieder her. Die Optimierung ist darauf beschränkt,
-                mehrere Segmente in ein einziges zusammenzufassen. Dieser Prozess aktualisiert die
-                Segmente zude nicht. Es erstellt ein neues großes Segment, erstellt eine neue
-                Segmentliste ('segments.new' Datei), welche das neue optimierte Segment anstelle 
-                der alten Segmente enthält, und benennt dann die 'segments.new' Datei in 'segments'
-                um. 
-            </para>
-            <para>
-                Die Optimierung ist ein sich wiederholender Prozess. Sehr kleine Segmente (die 
-                beim Hinzufügen eines einzelnen Dokuments entstehen) werden in größere Segmente
-                zusammengefasst und so weiter. Die Optimierung kann mit einer Kette von Dokumenten
-                arbeiten und verbraucht nicht viel Speicher. Dadurch verbraucht der 
-                Optimierungsprozess nicht viele Ressourcen und sperrt den Index nicht für das 
-                Suchen, Aktualisieren und Zusammenfassen anderer Segmente.
-            </para>
-            </footnote>
-            Also muß er so selten wie möglich aufgerufen werden. Auf der anderen Seite verbraucht
-            die Verarbeitung sehr vieler Dokumente in einem Schritt auch mehr Speicher..
-        </para>
-        <para>
-            Die automatische Optimierung von Segmenten ist ein Thema für zukünftige 
-            Weiterentwicklungen von Zend_Search_Lucene.
+            Neu hinzugefügte Dokumente können sofort aus einem Index zurückgeholt werden.
         </para>
     </sect2>
 
@@ -100,23 +61,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', $docContent));
 
 // Füge das Dokument dem Index hinzu 
 $index->addDocument($doc);
-
-// Schreibe die Änderungen in den Index.
-$index->commit();
 ?>]]></programlisting>
-
-        <para>
-            Jeder Aufruf von commit() (explizit oder implizit) erstellt ein neues Indexsegment.
-        </para>
-        <para>
-            Zend_Search_Lucene kann Segmente nicht automatisch verwalten. Deshalb solltest du dich
-            um die Segmentgröße kümmer. Auf der einen Seite sind große Segmente optimaler, auf der
-            anderen Seite verbrauchen große Segmente beim Erstellen mehr Speicher.
-        </para>
-        <para>
-            Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-            können für die Indexoptimierung dieser Zend_Search_Lucene Version verwendet werden.  
-        </para>
     </sect2>
     <sect2 id="zend.search.index-creation.document-updating">
         <title>Dokumente aktualisieren</title>
@@ -139,8 +84,105 @@ $hits = $index->find('path:' . $removePath);
 foreach ($hits as $hit) {
     $index->delete($hit->id);
 }
-$index->commit();
 ?>]]></programlisting>
+    </sect2>
+    <sect2 id="zend.search.index-creation.optimization">
+        <title>Indexoptimierung</title>
+
+        <para>
+            Ein Lucene Index bestehtis aus Segmenten. Jedes Segment ist ein komplett unabhängiger Datensatz.
+        </para>
+        <para>
+            Lucene Indexsegmentdateien können aufgrund ihrer Natur nicht aktualisiert werden. Eine Segmentaktualisierung
+            benötigt eine komplette Reorganisation der Segmente. Siehe auch die Lucene Indexdateiformate für weitere
+            Details
+            (<ulink url="http://lucene.apache.org/java/docs/fileformats.html">http://lucene.apache.org/java/docs/fileformats.html</ulink>).
+            Deshalb werden neue Dokumente durch Erstellen neuer Segmente zum Index hinzugefügt.
+        </para>
+        <para>
+            Eine steigende Anzahl an Segmente verringert die Qualität des Index, aber die Indexoptimierung stellt
+            diese wieder her. Die Optimierung beschränkt sich darauf, mehrere Segmente zu einem zusammen zu fassen.
+            Dieser Prozess aktualisiert die Segmente ebenfalls nicht. Er erstellt neue große Segmente, welche ein
+            neues optimiertes Segment anstatt einen Satz alte Segmente enthalten, und aktualisiert die Segmentenliste
+            ('segments' Datei).
+        </para>
+
+        <para>
+            Eine komplette Indexoptimierung kann durch einen Aufruf von <code>Zend_Search_Lucene::optimize()</code>
+            gestartet werden. Sie fügt alle Segmente in ein größeres zusammen.
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+// Öffne bestehenden Index
+$index = new Zend_Search_Lucene('/data/my-index');
+
+// Optimiere Index
+$index->optimize();
+?>]]></programlisting>
+
+        <para>
+            Die automatische Indexoptimierung wird durchgeführt, um einen Index konsistens zu halten.
+        </para>
+        <para>
+            Die automatische Indexoptimierung ist ein schrittweise Prozess, der durch verschiedene Indexoptionen gesteuert 
+            wird. Sie fasst sehr kleine Segmente in größere zusammen und fasst die größeren Segmente dann in noch größere
+            zusammen und so weiter.
+        </para>
+
+        <sect3 id="zend.search.index-creation.optimization.maxbuffereddocs">
+            <title><emphasis>MaxBufferedDocs</emphasis> Option für automatische Optimierung</title>
+            <para>
+                <emphasis>MaxBufferedDocs</emphasis> ist die minimale Anzahl an Dokumenten, die erforderlich ist, damit
+                die im Hauptspeicher zwischen gespeicherten Dokumente in ein neues Segment geschrieben werden.
+            </para>
+            <para>
+                <emphasis>MaxBufferedDocs</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von 
+                <code>$index->getMaxBufferedDocs()</code> oder <code>$index->setMaxBufferedDocs($maxBufferedDocs)</code>.
+            </para>
+            <para>
+                Standardwert is 10.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.search.index-creation.optimization.maxmergedocs">
+            <title><emphasis>MaxMergeDocs</emphasis> Option für automatische Optimierung</title>
+            <para>
+                <emphasis>MaxMergeDocs</emphasis> ist die höchste Anzahl an Dokumenten, die jemals mit addDocument()
+                zusammengefasst werden kann. Kleine Werte (z.B. unter 10.000) sind für die interaktive Indizierung am 
+                besten, da dies die Pausen für das Indizieren auf wenige Sekunden begrenzen. Größere Werte sind am besten
+                für Stapelverarbeitung oder schnellere Suchabfragen.
+            </para>
+            <para>
+                <emphasis>MaxMergeDocs</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von
+                 <code>$index->getMaxMergeDocs()</code> oder <code>$index->setMaxMergeDocs($maxMergeDocs)</code>.
+            </para>
+            <para>
+                Standardwert ist PHP_INT_MAX.
+            </para>
+        </sect3>
+
+        <sect3 id="zend.search.index-creation.optimization.mergefactor">
+            <title><emphasis>MergeFactor</emphasis> Option für automatische Optimierung</title>
+            <para>
+                <emphasis>MergeFactor</emphasis> legt fest, wie oft Segmentenindixes durch addDocument() zusammengefasst
+                werden sollen. Bei kleineren Werten wird beim Indizieren weniger RAM verbraucht und Suchabfragen auf 
+                nicht optimierte Indizes sind schneller, aber die Indizierungsgeschwindigkeit ist langsamer. Bei größeren
+                Werten, wird mehr beim Indizieren RAM verbraucht und während Suchabfragen auf nicht optimierte Indizes langsamer
+                sind, ist das Indizieren schneller. Deshalb sind größere Werte (&gt; 10)  am besten für Stapelverarbeitung
+                und kleinere Werte (&lt; 10)  sind besser für Indizes, die interaktiv gepflegt werden.
+            </para>
+            <para>
+                <emphasis>MergeFactor</emphasis> kann abgefragt bzw. gesetzt werden durch Aufrufe von 
+                <code>$index->getMergeFactor()</code> oder <code>$index->setMergeFactor($mergeFactor)</code>.
+            </para>
+            <para>
+                Standardwert ist 10.
+            </para>
+        </sect3>
+
+        <para>
+            Lucene Java und Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+            können auch für die Optimierung eines Index verwendet werden.
+        </para>
     </sect2>
 </sect1>
 
