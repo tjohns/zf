@@ -28,6 +28,7 @@ require_once 'Zend/XmlRpc/Exception.php';
 /**
  * Zend_XmlRpc_Server_Exception
  *
+ * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)

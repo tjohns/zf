@@ -112,6 +112,7 @@ require_once 'Zend/Server/Reflection/Method.php';
  * echo $response;
  * </code>
  *
+ * @category Zend
  * @package    Zend_XmlRpc
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)

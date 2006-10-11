@@ -26,7 +26,8 @@ require_once 'Zend/XmlRpc/Server.php';
 /**
  * Zend_XmlRpc_Server_Cache: cache Zend_XmlRpc_Server dispatch tables
  * 
- * @package Zend_XmlRpc
+ * @category Zend
+ * @package  Zend_XmlRpc
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0

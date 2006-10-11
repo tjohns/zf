@@ -38,6 +38,7 @@ require_once 'Zend/XmlRpc/Exception.php';
  * To allow method chaining, you may only use the {@link getInstance()} factory 
  * to instantiate a Zend_XmlRpc_Server_Fault.
  *
+ * @category   Zend
  * @package    Zend_XmlRpc
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
