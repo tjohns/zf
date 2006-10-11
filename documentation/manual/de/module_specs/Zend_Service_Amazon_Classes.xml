@@ -194,7 +194,7 @@
                     <tbody>
                         <row>
                             <entry>Url</entry>
-                            <entry>string</entry>
+                            <entry>Zend_Uri</entry>
                             <entry>Entfernte URL für das Bild</entry>
                         </row>
                         <row>

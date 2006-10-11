@@ -108,6 +108,9 @@ $item = $amazon->itemLookup('B0000A432X');
             sehen Sie bitte in die <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevante Amazon Dokumentation</ulink>.
         </para>
+        <note>
+        	Um Bildinformationen für deine Suchergebnisse zu erhalten, musst du die <code>ResponseGroup</code> Pption auf <code>Medium</code> oder <code>Large</code> setzen.
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
         <title>Suchen nach Teilen bei Amazon</title>
