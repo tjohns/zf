@@ -19,7 +19,6 @@
         <para>
         Перед тем, как выбрать использование парсера запросов,
         пожалуйста, учтите следующее:
-        
 <!--
         Before choosing to use the provided Query Parser, please consider
         the following:
@@ -40,8 +39,8 @@
 -->
                 </listitem>
                 <listitem>
-                    Неразмеченные поля лучше добавлять непосредственно в запросы,
-                    а не через парсер запросов. Если значения полей программно
+                    Не разбитые на лексемы поля лучше добавлять непосредственно
+                    в запросы, а не через парсер запросов. Если значения полей программно
                     генерируются приложением, то должны быть отдельные элементы
                     запроса для этого поля. Анализатор, используемый
                     парсером запросов, предназначен для преобразования
@@ -64,7 +63,7 @@
                     через программный интерфейс для запросов. Поля с ограниченным
                     набором значений, которые могут отображаться в виде выпадающего
                     списка, лучше не добавлять в строку запроса, которая
-                    последовательно парсится, а как элемент запроса.
+                    парсится, а как элемент запроса.
 <!--
                     In a query form, fields which are general text should use the query parser.
                     All others, such as date ranges, keywords, etc. are better added directly
@@ -107,7 +106,7 @@ $index->find($query);
         </para>
 
         <para>
-            Важно заметить, что <code>find()</code> является чувствительным к регистру.
+            Важно отметить, что <code>find()</code> является чувствительным к регистру.
             По умолчанию LuceneIndexCreation.jar приводит все документы к нижнему регистру.
             Это может быть отключено через командную строку (наберите
             LuceneIndexCreation.jar без аргументов для получения справки).
@@ -134,8 +133,8 @@ $index->find($query);
             Результаты поиска являются массивом объектов Zend_Search_Lucene_Search_QueryHit.
             Каждый из них имеет два свойства: <code>$hit->document</code>
             является номером документа в индексе, и <code>$hit->score</code>,
-            который является числом "очков" в результате поиска. Результат
-            упорядочен по количеству очков (наибольшие идут первыми). 
+            который является рангом результата поиска. Результаты
+            упорядочены по рангу (результаты с наивысшим рангом идут первыми). 
 <!--
             The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
             two properties: <code>$hit->document</code> is a document number within
@@ -177,14 +176,14 @@ foreach ($hits as $hit) {
         <para>
         При необходимости исходный объект Zend_Search_Lucene_Document (документ)
         может быть получен из Zend_Search_Lucene_Search_QueryHit.
-        Вы можете извлечь проиндексированные части документа, используя
-        метод <code>getDocument()</code> объекта индекса, и затем получить их
-        через метод <code>getFieldValue()</code>. 
+        Вы можете извлечь сохраненные в индексе части документа, используя метод
+        getDocument() объекта индекса, и затем получить их через метод
+        getFieldValue().
 <!--
         Optionally, the original Zend_Search_Lucene_Document object can be returned from the
         Zend_Search_Lucene_Search_QueryHit.
 
-        You can retrieve indexed parts of the document by using the <code>getDocument()</code>
+        You can retrieve stored parts of the document by using the <code>getDocument()</code>
         method of the index object and then get them by
         <code>getFieldValue()</code> method:
 -->
@@ -217,7 +216,7 @@ foreach ($hits as $hit) {
         <para>
         Поля, доступные через объект Zend_Search_Lucene_Document, определяются во время
         индексирования. Поля документа либо только индексируются, либо индексируются и
-        сохраняются индесирующим приложением (например, LuceneIndexCreation.jar).
+        сохраняются в индексе индесирующим приложением (например, LuceneIndexCreation.jar).
 <!--
         The fields available from the Zend_Search_Lucene_Document object are determined at
         the time of indexing.  The document fields are either indexed, or
@@ -239,12 +238,11 @@ foreach ($hits as $hit) {
 
 
 	<sect2 id="zend.search.searching.results-scoring">
-		<title>Подсчет количества очков<!--Results Scoring--></title>
+		<title>Ранжирование результата<!--Results Scoring--></title>
         <para>
-            Zend_Search_Lucene использует тот же самый алгоритм подсчета
-            количества очков, что и Java Lucene. Результаты поиска
-            упорядочиваются по количеству очков. "Хиты" с бОльшим количеством
-            очков идут первыми.
+            Zend_Search_Lucene использует тот же самый алгоритм ранжирования,
+            что и Java Lucene. Результаты поиска упорядочиваются по рангу
+            (релевантности). "Хиты" с наибольшим рангом идут первыми.
 <!--
             Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
             Saerch results are ordered by score. Hits with greater score come first.
@@ -252,7 +250,7 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-            Разное количество очков означает, что один документ больше
+            Различные ранги результатов означают, что один документ больше
             соответствует запросу, чем другой.
 <!--
             Different score means, that one document matches the query more then another.
@@ -261,14 +259,15 @@ foreach ($hits as $hit) {
 
         <para>
             Приблизительно говоря, документы, в которых искомый элемент или фраза
-            встречаются чаще, будут иметь большее количество очков.
+            встречаются чаще, будут иметь более высокий ранг.
 <!--
             Roughly speaking, search hits, which contain searched term or phrase more frequently, have greater score.
 -->
         </para>
 
         <para>
-            Количество очков может быть получено через свойство <code>score</code>: 
+            Число, соответствующее рангу, может быть получено через
+            свойство <code>score</code>: 
 <!--
             Score can be retrived by <code>score</code> property of hit:
 -->
@@ -285,9 +284,9 @@ foreach ($hits as $hit) {
 ?>]]>   </programlisting>
 
         <para>
-            Для подсчета очков используется класс Zend_Search_Lucene_Search_Similarity.
+            Для вычисления ранга используется класс Zend_Search_Lucene_Search_Similarity.
             За подробностями см. раздел
-            <link linkend="zend.search.extending.scoring">Extensibility. Scoring Algorithms</link>. 
+            <link linkend="zend.search.extending.scoring">Расширяемость. Алгоритмы ранжирования</link>. 
 <!--
             Zend_Search_Lucene_Search_Similarity class is used to calculate score.
             See <link linkend="zend.search.extending.scoring">Extensibility. Scoring Algorithms</link> section for details.

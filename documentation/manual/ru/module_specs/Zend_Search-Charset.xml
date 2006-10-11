@@ -1,12 +1,12 @@
 <sect1 id="zend.search.charset">
-	<title>Набор символов<!--Character set.--></title>
+	<title>Кодировки<!--Character set.--></title>
 
 	<sect2 id="zend.search.charset.description">
         <title>Поддержка UTF-8 и однобайтных наборов символов<!--UTF-8 and single-byte character sets support.--></title>
 
         <para>
-            Zend_Search_Lucene рассчитан на работу с набором симвлов UTF-8.
-            Файлы индекса хранят данные unicode в "измененной кодировке UTF-8" от
+            Zend_Search_Lucene рассчитан на работу с текстами в кодировке UTF-8.
+            Файлы индекса хранят данные unicode в кодировке Modified UTF-8 от
             Java. Ядро Zend_Search_Lucene полностью поддерживает его за одним исключением.
 <!--
             Zend_Search_Lucene is designed to work with UTF-8 charset. Index files store
@@ -47,9 +47,9 @@
 
         <para>
             Тем не менее, анализатор текста и парсер запросов используют
-            <code>ctype_alpha()</code> для разметки текста и запросов.
+            <code>ctype_alpha()</code> для разбиения текста и запросов на лексемы.
             <code>ctype_alpha()</code> не поддерживает UTF-8
-            и будет заменен в ближайшем будущем.  
+            и будет заменен в ближайшем будущем.
 <!--
             However, text analyzers and query parser use
             ctype_alpha() for tokenizing text and queries. ctype_alpha() doesn't support

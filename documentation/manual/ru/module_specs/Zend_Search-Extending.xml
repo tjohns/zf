@@ -5,7 +5,7 @@
         <title>Анализ текста<!--Text Analysis--></title>
         <para>
             Класс <code>Zend_Search_Lucene_Analysis_Analyzer</code> используется
-            индексатором для разметки текстовых полей документа.
+            индексатором для разбиения текстовых полей документа на лексемы.
 <!--
             <code>Zend_Search_Lucene_Analysis_Analyzer</code> class is used by indexer to tokenize document
             text fields.
@@ -99,7 +99,7 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
     /**
-     * Разметка текста
+     * Разбиение текста на лексемы
      * Returns array of Zend_Search_Lucene_Analysis_Token objects
      *
      * @param string $data
@@ -149,9 +149,9 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </sect2>
 
     <sect2 id="zend.search.extending.scoring">
-        <title>Алгоритм подсчета очков<!--Scoring Algorithms--></title>
+        <title>Алгоритмы ранжирования<!--Scoring Algorithms--></title>
         <para>
-            Количество очков запроса <literal>q</literal> для документа
+            Ранг <literal>q</literal> документа
             <literal>d</literal> определяется следующим образом:
 <!--
             The score of query <literal>q</literal> for document <literal>d</literal>
@@ -166,7 +166,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
         <para>
             tf(t in d) - <code>Zend_Search_Lucene_Search_Similarity::tf($freq)</code>
-            - множитель очков, основанный на том, насколько часто встречается
+            - коэффициент ранга, основанный на том, насколько часто встречается
             элемент или фраза в документе. 
 <!--
             tf(t in d) - <code>Zend_Search_Lucene_Search_Similarity::tf($freq)</code>
@@ -176,7 +176,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
         <para>
             idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code>
-            - множитель очков для простого элемента применительно к определенному
+            - коэффициент ранга для простого элемента применительно к определенному
             индексу. 
 <!--
             idf(t) - <code>Zend_Search_Lucene_Search_SimilaritySimilarity::tf($term, $reader)</code>
@@ -196,7 +196,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             общего количества элементов, содержащихся в поле. Это значение
             хранится внутри индекса. Эти значения вместе с коэффициентом усиления поля
             хранятся в индексе, результатом их умножения является
-            количество очков для каждого поля. 
+            ранг для каждого поля. 
 <!--
             lengthNorm($term) - the normalization value for a field given the total
             number of terms contained in a field. This value is stored within the index.
@@ -207,7 +207,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         <para>
             Совпадения в длинных полях менее точны, поэтому реализации этого метода
             обычно возвращают тем меньшие значения, чем
-            больше число меток, и тем большие значения, чем меньше число меток.
+            больше число лексем, и тем большие значения, чем меньше число лексем.
 <!--
             Matches in longer fields are less precise, so implementations of this method
             usually return smaller values when numTokens is large, and larger values when numTokens is small.
@@ -216,7 +216,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 
         <para>
             сoord(q,d) - <code>Zend_Search_Lucene_Search_Similarity::coord($overlap, $maxOverlap)</code>
-            - множитель очков, основанный на относительной доле всех элементов запроса,
+            - коэффициент ранга, основанный на относительной доле всех элементов запроса,
             найденных в документе.
 <!--
             coord(q,d) - <code>Zend_Search_Lucene_Search_Similarity::coord($overlap, $maxOverlap)</code> - a
@@ -249,8 +249,8 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </para>
 
         <para>
-            Это не влияет на сортировку, цель нормализации состоит в том, чтобы
-            сделать соизмеримым количество очков от различных запросов.
+            Это не влияет на ранжирование, цель нормализации состоит в том, чтобы
+            сделать соизмеримыми ранги, полученные при различных запросах.
 <!--
             This does not affect ranking, but rather just attempts to make scores from different
             queries comparable.
@@ -258,7 +258,7 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
         </para>
 
         <para>
-            Алгоритм подсчета очков может быть изменен определение своего
+            Алгоритм ранжирования может быть изменен через определение своего
             собственного класса. Для этого надо создать потомка класса
             Zend_Search_Lucene_Search_Similarity, как показано ниже, затем
             использовать метод
@@ -499,7 +499,7 @@ class MyFile extends Zend_Search_Lucene_Storage_File {
      * SEEK_SET - Устанавливает позицию равной смещению в байтах.
      * SEEK_CUR - Устанавливает позицию равной текущей позиции плюс смещение.
      * SEEK_END - Устанавливает позицию равной концу файла плюс смещение.
-     * (Для перемещения позиции впереди вы должны передать отрицательное значение смещения)
+     * (Для перемещения позиции относительно конца файла вы должны передать отрицательное значение смещения)
      * В случае успеха возвращает 0; иначе -1
      *
      * @param integer $offset
