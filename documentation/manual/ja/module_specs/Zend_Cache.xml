@@ -24,6 +24,7 @@
             <code>Zend_Cache::factory()</code> は、適切なオブジェクトを作成してそれらを互いに結び付けます。
             この最初の例では、フロントエンドに <code>Core</code>、バックエンドに <code>File</code>
             を使用します。
+        </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
@@ -40,13 +41,13 @@ $backendOptions = array(
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 ?>]]></programlisting>
-       </para>
        <para>
             これでフロントエンドが得られました。あらゆる種類のデータを保存することができます
             (そのために、シリアライズを有効にしました)。例えば、非常に時間がかかるデータベースクエリの結果を
             キャッシュすることが可能です。いったんキャッシュしてしまえば、
             あとはデータベースに接続する必要さえありません。キャッシュから取得したレコードを
             アンシリアライズしてデータを取得すればよいのです。
+       </para>
             <programlisting role="php"><![CDATA[<?php
 
 // $cache は先ほどの例で作成したものです
@@ -72,7 +73,6 @@ if(!$result = $cache->get('myresult')) {
 print_r($result);
 
 ?>]]></programlisting>
-       </para>
     </example>
     <example>
         <title><code>Zend_Cache</code> 出力フロントエンドによる出力のキャッシュ</title>
@@ -85,6 +85,7 @@ print_r($result);
             メソッドに到達するまでずっとキャッシュされます。次回の実行時には、
             このセクションが読み飛ばされ、その代わりにキャッシュから取得したデータが使用されます
             (キャッシュレコードが有効なものである限ります)。
+       </para>
             <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
@@ -109,7 +110,6 @@ if(!$cache->start('mypage')) {
 echo 'これはキャッシュされません ('.time().').';
 
 ?>]]>       </programlisting>
-       </para>
        <para>
            <code>time()</code> の結果を二度出力していることに注目しましょう。
            動作説明のため、何らかの動的な出力がほしかったのです。これを実行し、
@@ -170,6 +170,7 @@ echo 'これはキャッシュされません ('.time().').';
         <para>
             使用可能な <code>Zend_Cache</code> フロントエンドのインスタンスを作成する方法を、
             以下の例で示します。
+        </para>
             <programlisting role="php"><![CDATA[<?php
         
 # Zend_Cache ファクトリを読み込みます
@@ -192,8 +193,7 @@ $backendOptions = array([...]);
 $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $backendOptions);
 
 ?>]]></programlisting> 
-        </para> 
-        <para>
+         <para>
             これ以降のドキュメントでは、<code>$cache</code>
             の中身が有効なフロントエンドになっているものとします。また、
             選択したバックエンドにパラメータを渡す方法は理解できているものとします。
