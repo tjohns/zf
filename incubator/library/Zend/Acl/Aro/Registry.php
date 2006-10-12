@@ -38,7 +38,7 @@ class Zend_Acl_Aro_Registry
      * ARO registry
      * @var array
      */
-    protected $_aro;
+    protected $_aro = array();
 
     /**
      * Parent Aco
