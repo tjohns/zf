@@ -107,10 +107,6 @@
     <chapter id="zend.view">
         <title>Zend_View</title>
         &module_specs.Zend_View;
-    </chapter>
-    <chapter id="zend.xmlrpc">
-        <title>Zend_XmlRpc</title>
-        &module_specs.Zend_XmlRpc;
     </chapter-->
     <chapter id="zend.measure">
         <title>Zend_Measure</title>
@@ -126,6 +122,10 @@
         <title>Zend_Locale</title>
         &module_specs.Zend_Locale_Introduction;
         &module_specs.Zend_Locale_Functions;
+    </chapter>
+    <chapter id="zend.xmlrpc">
+        <title>Zend_XmlRpc</title>
+        &module_specs.Zend_XmlRpc;
     </chapter>
     &module_specs.Zend_Locale_Appendix_Languages;
     &module_specs.Zend_Locale_Appendix_Regions;
