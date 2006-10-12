@@ -14,13 +14,13 @@
         oraz wszystkie klasy adapterów które będą używane. Na przykład gdy aplikacja
         będzie rejestrowała do konsoli (domyślny bufor PHP) oraz do plików tekstowych,
         następujące pliki powinny być dołączone:
-
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                  // Podstawowa klasa Zend_Log
 require_once 'Zend/Log/Adapter/Console.php';  // Adapter rejestrowania do konsoli
 require_once 'Zend/Log/Adapter/File.php';     // Adapter rejestrowania do pliku
 ]]></programlisting>
-
+    <para>
         Klasa <code>Zend_Log</code> może być używana w uproszczonej formie dla pojedynczego
         dziennika, może być skonfigurowana dla wielu dzienników, może być także używana
         do rejestrowania wewnętrznych operacji wielu klas Zend Framework.
@@ -32,20 +32,19 @@ require_once 'Zend/Log/Adapter/File.php';     // Adapter rejestrowania do pliku
     <para>
         Rejestrator jest tworzony poprzez wywołanie metody <code>Zend_Log::registerLogger()</code> 
         z argumentem w postaci instancji klasy <code>Zend_Log_Adapter_Interface</code>.
-
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                // Podstawowa klasa Zend_Log
 require_once 'Zend/Log/Adapter/File.php';   // Adapter rejestrowania do pliku
 
 // Utwórz rejestrator
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
 ]]></programlisting>
-    </para>
 
     <para>
         Wiadomości są wysyłane do dziennika za pomocą metody <code>Zend_Log::log()</code>.
-
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 /**
  * Wysyła wiadomośc do dziennika.  Opcjonalny drugi argument określa priorytet wiadomości.
  * Jeśli priorytet nie zostanie podany, zostanie przyjęty domyślny LEVEL_DEBUG.
@@ -57,7 +56,6 @@ Zend_Log::log('Pierwsza wiadomość.');
  */
 Zend_Log::log('Wystąpił poważny błąd.', Zend_Log::LEVEL_SEVERE);
 ]]></programlisting>
-    </para>
 </sect1>
 
 <sect1 id="zend.log.log-levels">
@@ -67,14 +65,13 @@ Zend_Log::log('Wystąpił poważny błąd.', Zend_Log::LEVEL_SEVERE);
        im priorytet  <code>LEVEL_DEBUG</code> dopóki inny priorytet nie zostanie
        podany jako drugi, opcjonalny argument. Następujące priorytety są dostępne jako
        stałe w klasie <code>Zend_Log</code>:
-
-       <programlisting role="php"><![CDATA[
+   </para>
+   <programlisting role="php"><![CDATA[
 LEVEL_DEBUG     = 1
 LEVEL_WARNING   = 4
 LEVEL_ERROR     = 8
 LEVEL_SEVERE    = 16
 ]]></programlisting>
-   </para>
 </sect1>
 
 <sect1 id="zend.log.advanced-logging">
@@ -94,8 +91,8 @@ LEVEL_SEVERE    = 16
         W poniższym przykładzie tworzone są dwa rejestratory: jeden dla konsoli
         i jeden dla pliku. Zostaną one nazwane odpowiednio <code>Konsola</code> 
         oraz <code>Plik</code>.
-
-        <programlisting role="php"><![CDATA[
+   </para>
+   <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                 // Podstawowa klasa Zend_Log
 require_once 'Zend/Log/Adapter/File.php';    // Adapter rejestrowania do pliku
 require_once 'Zend/Log/Adapter/Console.php'; // Adapter rejestrowania do konsoli
@@ -103,7 +100,6 @@ require_once 'Zend/Log/Adapter/Console.php'; // Adapter rejestrowania do konsoli
 Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'Plik');
 Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Konsola');
 ]]></programlisting>
-   </para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

@@ -36,29 +36,35 @@
         <para>
             W tym przykładzie dane konfiguracyjne aplikacji rozbudowywanej są ładowane z pliku 
             INI za pomocą <link linkend="zend.config.classes.ini"><code>Zend_Config_Ini</code></link>:
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
 $config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'production'));
-?>]]>       </programlisting>
+?>]]>   </programlisting>
+        <para>
             Teraz dane konfiguracyjne są dostępne jako właściwości obiektu <code>$config</code>.
             Załóżmy, że dane konfiguracyjne zawierają parametry połączenia z bazą danych
             i umieszczone są one w pliku INI w takiej postaci:
-            <programlisting role="ini"><![CDATA[[production]
+        </para>
+        <programlisting role="ini"><![CDATA[[production]
 database.type     = pdo_mysql
 database.host     = db.example.com
 database.username = dbuser
 database.password = secret
 database.name     = dbname]]>
-            </programlisting>
+        </programlisting>
+        <para>
             Aplikacja może utworzyć połączenie w taki sposób:
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 $myApplicationObject->databaseConnect($config->database->type,
                                       $config->database->host,
                                       $config->database->username,
                                       $config->database->password,
                                       $config->database->name);
-?>]]>       </programlisting>
+?>]]>   </programlisting>
+        <para>
             Jak pokazano wyżej, dane konfiguracyjne dostępne są jako właściwości obiektu.            
        </para>
     </example>
@@ -66,7 +72,8 @@ $myApplicationObject->databaseConnect($config->database->type,
         Możemy także w prosty sposób rozwinąć klasę <code>Zend_Config</code>. W tym
         przypadku klasa pochodna definiuje metodę <code>dump()</code> umożliwiającą 
         szybkie wyświetlenie załadowanych danych konfiguracyjnych:
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 class MyConfig extends Zend_Config
 {
     protected $_indent;
@@ -98,9 +105,11 @@ class MyConfig extends Zend_Config
 $config = new MyConfig(Zend_Config_Ini::load('/path/to/config.ini', 'production'));
 
 $config->dump();
-?>]]>   </programlisting>
+?>]]></programlisting>
+     <para>
         Dla danych z powyższego przykładu zostałoby wyświetlone:
-        <programlisting role="text"><![CDATA[<pre>
+     </para>
+     <programlisting role="text"><![CDATA[<pre>
 database =>
     type => pdo_mysql
     host => db.example.com
@@ -108,8 +117,7 @@ database =>
     password => secret
     name => dbname
 </pre>]]>
-        </programlisting>
-    </para>
+     </programlisting>
 </sect1>
 <sect1 id="zend.config.classes.array">
     <title>Zend_Config_Array</title>
@@ -124,7 +132,8 @@ database =>
                 Ten przykład pokazuje proste użycie klasy <code>Zend_Config_Array</code> 
                 do ładowania danych konfiguracyjnych z tablic PHP. Wpierw tworzymy
                 tablice PHP zawierające dane konfiguracyjne:
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 // Podstawowe dane konfiguracyjne
 $config['production'] = array(
     'webhost' => 'www.example.com',
@@ -144,35 +153,36 @@ $config['staging']['webhost'] = 'dev.example.com';
 $config['staging']['database']['host'] = 'dev.example.com';
 $config['staging']['database']['username'] = 'devuser';
 $config['staging']['database']['password'] = 'devsecret';
-?>]]>           </programlisting>
-                <note>
-                    Tablica zawierająca dane konfiguracyjne znajdująca się w załadowanym
-                    skrypcie powinna nazywać się <code>$config</code>.
-                </note>
+?>]]>       </programlisting>
+            <note>
+                Tablica zawierająca dane konfiguracyjne znajdująca się w załadowanym
+                skrypcie powinna nazywać się <code>$config</code>.
+            </note>
+            <para>
                 Dziedzieczenie w powyższym przykładzie jest obsługiwane przez
                 przypisanie wartości sekcji <code>production</code> do sekcji 
                 <code>staging</code>. Teraz prostą sprawą jest załadowanie danych 
                 konfiguracyjnych za pomocą <code>Zend_Config_Array</code>:
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Array.php';
 
 $config = new Zend_Config(Zend_Config_Array::load('/path/to/config.php', 'staging'));
 
 echo $config->database->host; // wyświetla "dev.example.com"
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </example>
         <para>
             Ten sposób jest godny uwagi, ponieważ dane konfiguracyjne są bezpośrednio
             przechowywane w tablicach PHP, a każda wartość danych konfiguracyjnych 
             ma ten sam typ jak w tablicy <code>$config</code> z pliku konfiguracyjnego.
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 $config['staging']['debug']   = 'false'; // wartośc jest łańcuchem znaków
 $config['staging']['console'] = false; // wartość jest zmienną logiczną
 $config['staging']['timeout'] = 30; // wartość jest liczbą całkowitą
-?>]]>       </programlisting>
-        </para>
+?>]]>   </programlisting>
     </sect2>
 </sect1>
 <sect1 id="zend.config.classes.ini">
@@ -188,7 +198,8 @@ $config['staging']['timeout'] = 30; // wartość jest liczbą całkowitą
                 Ten przykład pokazuje proste użycie klasy <code>Zend_Config_Ini</code> 
                 do ładowania danych konfiguracyjnych z plików INI. Załóżmy, że mamy
                 następujące dane konfiguracyjne w pliku <code>/path/to/config.ini</code>:
-                <programlisting role="ini"><![CDATA[; Podstawowe dane konfiguracyjne
+            </para>
+            <programlisting role="ini"><![CDATA[; Podstawowe dane konfiguracyjne
 [production]
 webhost           = www.example.com
 database.type     = pdo_mysql
@@ -204,27 +215,28 @@ extends = production
 database.host     = dev.example.com
 database.username = devuser
 database.password = devsecret]]>
-                </programlisting>
-                <note>
-                    Zauważ, że składnia pliku INI jest podobna do tej wymaganej przez funkcję PHP
-                    <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>, 
-                    której używa <code>Zend_Config_Ini</code>. Proszę przejrzeć jej dokumentację 
-                    aby znać specyfikę działania klasy <code>Zend_Config_Ini</code>, na przykład
-                    w kwestii traktowania specjalnych wartości takich jak <code>true</code>, 
-                    <code>false</code>, <code>yes</code>, <code>no</code>, oraz <code>null</code>.
-                </note>
+            </programlisting>
+            <note>
+                Zauważ, że składnia pliku INI jest podobna do tej wymaganej przez funkcję PHP
+                <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>, 
+                której używa <code>Zend_Config_Ini</code>. Proszę przejrzeć jej dokumentację 
+                aby znać specyfikę działania klasy <code>Zend_Config_Ini</code>, na przykład
+                w kwestii traktowania specjalnych wartości takich jak <code>true</code>, 
+                <code>false</code>, <code>yes</code>, <code>no</code>, oraz <code>null</code>.
+            </note>
+            <para>
                 Dziedziczenie jest obsługiwane w składni pliku INI przez użycie słowa <code>extends</code>. 
                 Wartością klucza <code>extends</code> powinna być nazwa sekcji z której ma dziedziczyć
                 nowa sekcja. Dane konfiguracyjne są wtedy ładowane z pliku INI w taki sposób:
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Ini.php';
 
 $config = new Zend_Config(Zend_Config_Ini::load('/path/to/config.ini', 'staging'));
 
 echo $config->database->host; // wyświetla "dev.example.com"
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
         </example>
     </sect2>
 </sect1>
@@ -241,7 +253,8 @@ echo $config->database->host; // wyświetla "dev.example.com"
                 Ten przykład pokazuje proste użycie klasy <code>Zend_Config_Xml</code> 
                 do ładowania danych konfiguracyjnych z plików XML. Załóżmy, że mamy
                 następujące dane konfiguracyjne w pliku <code>/path/to/config.xml</code>:
-                <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
+            </para>
+            <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
 <config>
     <production>
         <webhost>www.example.com</webhost>
@@ -260,20 +273,21 @@ echo $config->database->host; // wyświetla "dev.example.com"
             <password>devsecret</password>
         </database>
     </staging>
-</config>]]>    </programlisting>
+</config>]]></programlisting>
+            <para>
                 Dziedziczenie jest obsługiwane w składni pliku XML przez użycie 
                 atrybutu <code>extends</code>. Wartością klucza <code>extends</code> 
                 powinna być nazwa sekcji z której ma dziedziczyć nowa sekcja. Dane 
                 konfiguracyjne są wtedy ładowane z pliku XML w taki sposób:
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config.php';
 require_once 'Zend/Config/Xml.php';
 
 $config = new Zend_Config(Zend_Config_Xml::load('/path/to/config.xml', 'staging'));
 
 echo $config->database->host; // wyświetla "dev.example.com"
-?>]]>           </programlisting>
-            </para>
+?>]]>       </programlisting>
             <note>
                 Wartości danych konfiguracyjnych z <code>Zend_Config_Xml</code>
                 są zawsze traktowane jako łańcuchy znaków.

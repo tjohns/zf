@@ -100,12 +100,12 @@
 
 		<para>
 			Router używa bardzo prostego mapowania nazwy kontrolera i nazwy akcji z tego kontrolera:
+        </para>
 
-
-			<programlisting role="php"><![CDATA[
+		<programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
-			</programlisting>
-
+		</programlisting>
+        <para>
 			Pamiętaj, że powyżej pierwsza część adresu jest nazwą kontrolera, a druga
 			część jest zawsze nazwą akcji.
 		</para>
@@ -113,19 +113,18 @@ http://framework.zend.com/controller/action/]]>
 		<para>
 		    Opcjonalnie w adresie URI mogą być zdefiniowane parametry które zostaną
 		    przekazane do kontrolera. Przyjmują one postać par klucz/wartość:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+	    <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/key1/value1/]]>
-			</programlisting>
-		</para>
+		</programlisting>
 
 		<para>
 			Jeśli pierwsza część adresu URI (<code>/controller/</code>) jest pusta, 
 			zostanie przyjęta nazwa domyślnego kontrolera czyli "<code>index</code>". 
 			Jeśli pusta jest część <code>/action/</code>, zostanie przyjęta nazwa
 			akcji domyślnej czyli "<code>index</code>". Oto przykłady:
-
-				<programlisting role="php"><![CDATA[
+        </para>
+	    <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
 Kontroler: roadmap
 Akcja    : future
@@ -137,21 +136,20 @@ Akcja    : index
 http://framework.zend.com/
 Kontroler: index
 Akcja    : index]]>
-				</programlisting>
-			</para>
+	    </programlisting>
 
-			<note>
-			    Obecnie pracujemy nad nowym routerem z silnikiem przepisywania adresów URI,
-			    który da o wiele szersze możliwosci niż te obecnie dostępne w routerze.
-				Będzie to dostępne w niedalekiej przyszłości.
-			</note>
+		<note>
+			Obecnie pracujemy nad nowym routerem z silnikiem przepisywania adresów URI,
+	        który da o wiele szersze możliwosci niż te obecnie dostępne w routerze.
+			Będzie to dostępne w niedalekiej przyszłości.
+		</note>
 
-			<para>
-			    Nazwa kontrolera, nazwa akcji z tego kontrolera oraz opcjonalne parametry są pakowane
-			    do tokena <code>Zend_Controller_Dispatcher_Token</code>. Ten token jest przekazywany
-			    do obiektu <code>Zend_Controller_Front</code>, który rozpocznie pętlę uruchamiania 
-			    kontrolerów. Gdy pętla trwa, token jest przekazywany do obiektu <code>Zend_Controller_Dispatcher</code>.
-			</para>
+		<para>
+		    Nazwa kontrolera, nazwa akcji z tego kontrolera oraz opcjonalne parametry są pakowane
+		    do tokena <code>Zend_Controller_Dispatcher_Token</code>. Ten token jest przekazywany
+			do obiektu <code>Zend_Controller_Front</code>, który rozpocznie pętlę uruchamiania 
+		    kontrolerów. Gdy pętla trwa, token jest przekazywany do obiektu <code>Zend_Controller_Dispatcher</code>.
+		</para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatch-token">

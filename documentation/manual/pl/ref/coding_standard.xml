@@ -233,7 +233,7 @@ widgetFactory()]]></programlisting>
 
             <para>
                 For class member variables that are declared with the "private" or "protected" construct,
-                the first character of the function name must be a single underscore. This is the only
+                the first character of the variable name must be a single underscore. This is the only
                 acceptable usage of an underscore in a function name. Member variables declared "public"
                 may never start with an underscore.
             </para>
@@ -264,6 +264,12 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
+                To enhance readablity, words in constant names must be separated by underscore characters. For 
+                example, <code>EMBED_SUPPRESS_EMBED_EXCEPTION</code> is permitted but
+                <code>EMBED_SUPPRESSEMBEDEXCEPTION</code> is not.
+            </para>
+
+            <para>
                 Constants must be defined as class members by using the "const" construct. Defining constants
                 in the global scope with "define" is permitted but discouraged.
             </para>
@@ -286,7 +292,8 @@ widgetFactory()]]></programlisting>
             </para>
 
             <para>
-                Short tags are never allowed.
+                Short tags are never allowed.  For files containing only PHP code, the
+                closing tag must always be omitted (See <xref linkend="coding-standard.php-file-formatting.general" />).
             </para>
         </sect2>
 
@@ -430,7 +437,7 @@ $sampleArray = array('firstKey'  => 'firstValue',
                 </para><para>
                     Only one class is permitted per PHP file.
                 </para><para>
-                    Placing additional code in a class file is permitted but discouraged. In these files, two blank lines must separate the class any additional PHP code in the file.
+                    Placing additional code in a class file is permitted but discouraged. In these files, two blank lines must separate the class from any additional PHP code in the file.
                 </para><para>
                     This is an example of an acceptable class declaration:
 
@@ -704,7 +711,7 @@ switch ($numPeople) {
             </sect3>
 
             <sect3 id="coding-standards.inline-documentation.files">
-                <title>Files</title>
+                <title>Classes</title>
 
                 <para>
                     Every file that contains PHP code must have a header block at the top of the file that

@@ -85,7 +85,7 @@
 			
 			<para>
 				Klasa <code>Zend_Controller</code> jest przechowywana w taki sposób:
-
+            </para>
     <programlisting role="php"><![CDATA[
 /library
   /Zend
@@ -94,7 +94,7 @@
       Dispatcher.php
       Router.php
 ]]></programlisting>			
-
+            <para>
 				Kiedy rozszerzasz klasy <code>Zend_Controller</code>, zalecane jest aby
 				nowa klasa była przechowywana w identyczny sposób z uwzględnieniem własnego
 				prefiksu. To spowoduje że będą one łatwe do znalezienia i zrozumienia 
@@ -104,7 +104,7 @@
 			<para>
 			    Na przykład struktura projektu firmy Widget Inc., który implementuje jedynie 
 			    własny router mogłaby wyglądać w ten sposób:
-				
+		    </para>
 <programlisting role="php"><![CDATA[
 /library
   /Zend
@@ -113,7 +113,7 @@
       Router.php
       README.txt
 ]]></programlisting>			
-
+            <para>
                 Pamiętaj, że w tym przykładzie <code>Widget/Controller/</code> ma taką samą strukturę
                 jak <code>Zend/Controller/</code> kiedy tylko jest to możliwe. W tym przypadku definiuje 
                 on klasę <code>Widget_Controller_Router</code>, która może być klasa rozszerzającą lub
@@ -136,8 +136,8 @@
 		
 		<para>
 			Interfejs <code>Zend_Controller_Router_Interface</code> definiuje jedynie jedną metodę:
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+	    <programlisting role="php"><![CDATA[<?php
 				
   /**				
    * @param  Zend_Controller_Dispatcher_Interface
@@ -147,7 +147,7 @@
   public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
 
 ?>]]></programlisting>
-			
+	    <para>		
 			Proces routingu ma miejsce tylko raz: wtedy gdy system po raz pierwszy otrzymuje żądanie.
 			Celem routera jest wygenerowanie obiektu <code>Zend_Controller_Dispatch_Token</code> który
 			określa kontroler oraz akcję z tego kontrolera. To jest przekazywane do dispatchera. Jeśli
@@ -182,8 +182,8 @@
 		
 		<para>
 			Interfejs <code>Zend_Controller_Dispatcher_Interface</code> dostarcza definicje dwóch metod:
-			
-			<programlisting role="php"><![CDATA[<?php
+	    </para>
+	    <programlisting role="php"><![CDATA[<?php
 				
 /**
  * @param  Zend_Controller_Dispatcher_Token $route
@@ -192,7 +192,7 @@
 public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
-
+     <para>
 		Metoda <code>isDispatchable()</code> sprawdza czy jest możliwe uruchomienie akcji
 		z tokena. Jeśli jest to możliwe, zwraca ona wartość <code>TRUE</code>. W przeciwnym
 		wypadku zwraca wartość <code>FALSE</code>. Decyzja o tym czy jest możliwe
@@ -200,8 +200,8 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 		W domyślnej implementacji klasy <code>Zend_Controller_Dispatcher</code> oznacza to
 		sprawdzenie, czy plik kontrolera istnieje, czy klasa istnieje w tym pliku
 		oraz czy wewnątrz klasy istnieje żądana akcja.
-		
-		<programlisting role="php"><![CDATA[<?php
+	 </para>
+	 <programlisting role="php"><![CDATA[<?php
 			
 /**
  * @param  Zend_Controller_Dispatcher_Token $route
@@ -210,11 +210,10 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
-		
+	    <para>	
 		<code>dispatch()</code> jest metodą, która wykonuje całą pracę. Ta metoda 
 		musi uruchomić akcję kontrolera. Musi zwrócić kolejny token lub wartość 
 		logiczną FALSE aby określić czy są jeszcze jakieś akcje do uruchomienia.
-		
 		</para>
 	</sect2>
 		

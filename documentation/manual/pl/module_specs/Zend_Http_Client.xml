@@ -13,25 +13,23 @@
             HTTP. Aby zmienić te zachowanie, przekaż maksymalną ilość dozwolonych
             przekierowań jako parametr do metody <code>get()</code>.
         </note>
-        <para>
-            <example>
-                <title>Wykonanie prostego żądania GET</title>
-                <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend/Http/Client.php';
-    try {
-        $http = new Zend_Http_Client('http://example.org');
-        $response = $http->get();
-        if ($response->isSuccessful()) {
-            echo $response->getBody();
-        } else {
-            echo '<p>Wystąpił błąd</p>';
-        }
-    } catch (Zend_Http_Client_Exception $e) {
-        echo '<p>Wystąpił błąd (' .$e->getMessage(). ')</p>';
+        <example>
+            <title>Wykonanie prostego żądania GET</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Http/Client.php';
+try {
+    $http = new Zend_Http_Client('http://example.org');
+    $response = $http->get();
+    if ($response->isSuccessful()) {
+        echo $response->getBody();
+    } else {
+        echo '<p>Wystąpił błąd</p>';
     }
-    ?>]]></programlisting>
-            </example>
-        </para>
+} catch (Zend_Http_Client_Exception $e) {
+    echo '<p>Wystąpił błąd (' .$e->getMessage(). ')</p>';
+}
+?>]]></programlisting>
+        </example>
     </sect2>
     <sect2 id="zend.http.client.basic-get-requests">
         <title>Proste żądanie GET z określonymi nagłówkami HTTP</title>
@@ -53,7 +51,6 @@
     $http = new Zend_Http_Client('http://example.org', 'Accept: text/html');
     ?>]]>       </programlisting>
         </example>
-        <para />
         <example>
             <title>Wysyłanie wielu nagłówków</title>
             <programlisting role="php"><![CDATA[<?php

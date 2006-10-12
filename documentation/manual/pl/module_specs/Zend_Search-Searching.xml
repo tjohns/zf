@@ -43,6 +43,7 @@
 
         <para>
             Both ways use the same API method to search through the index:
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -53,7 +54,7 @@ $index = new Zend_Search_Lucene('/data/my_index');
 $index->find($query);
 
 ?>]]></programlisting>
-
+        <para>
             The <code>Zend_Search_Lucene::find()</code> method determines input type automatically and
             uses query parser to construct appropriate Zend_Search_Lucene_Search_Query object
             from a string.
@@ -83,7 +84,7 @@ $index->find($query);
             The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found by
             the hit as a property of the hit.  In this example, a hit is returned and
             the corresponding document has two fields: title and author.
-
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -99,15 +100,15 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
         Optionally, the original Zend_Search_Lucene_Document object can be returned from the
         Zend_Search_Lucene_Search_QueryHit.
 
-        You can retrieve indexed parts of the document by using the <code>getDocument()</code>
+        You can retrieve stored parts of the document by using the <code>getDocument()</code>
         method of the index object and then get them by
         <code>getFieldValue()</code> method:
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -131,7 +132,7 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-
+        <para>
         The fields available from the Zend_Search_Lucene_Document object are determined at
         the time of indexing.  The document fields are either indexed, or
         index and stored, in the document by the indexing application
@@ -161,6 +162,7 @@ foreach ($hits as $hit) {
 
         <para>
             A scores can be retrieved by accessing the <code>score</code> property of a hit:
+        </para>
         <programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
 
@@ -170,7 +172,6 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
             Zend_Search_Lucene_Search_Similarity class is used to calculate score.

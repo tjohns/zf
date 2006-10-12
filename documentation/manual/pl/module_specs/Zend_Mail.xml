@@ -13,7 +13,8 @@
             Prosty e-mail składa się z odbiorców, z tematu, treści i z nadawcy. Aby wysłać taki 
             e-mail używając funkcji PHP <ulink url="http://php.net/mail"><code>mail()</code></ulink> 
             możesz zrobić to w ten sposób:
-            <programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
 $mail->setBodyText('Treść wiadomości e-mail.');
@@ -21,8 +22,7 @@ $mail->setFrom('somebody@example.com', 'Nadawca');
 $mail->addTo('somebody_else@example.com', 'Odbiorca');
 $mail->setSubject('Testowy Temat');
 $mail->send();
-?>]]>       </programlisting>
-       </para>
+?>]]>   </programlisting>
     </example>
     <note>
         Aby wysłać e-mail za pomocą <code>Zend_Mail</code> musisz określić chociaż
@@ -170,7 +170,8 @@ $mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_
         załącznika możesz użyć wartości zwróconej przez <code>addAttachment()</code>
         aby zmodyfikować jej atrybuty. Metoda <code>addAttachment()</code> zwraca 
         obiekt <code>Zend_Mime_Part</code>:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 require_once 'Zend/Mail.php';
 $mail = new Zend_Mail();
@@ -183,7 +184,6 @@ $at->filename    = 'test.gif';
 
 $mail->send();
 ?>]]></programlisting> 
-    </para>
 </sect1>
 <sect1 id="zend.mail.adding-recipients">
     <title>Dodawanie odbiorców</title>

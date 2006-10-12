@@ -26,12 +26,12 @@
 			przez serwer Apache i musi zawierać reguły mod_rewrite aby przekierować wszystkie żądania do pliku index.php.
 			Najprostszym rozwiązaniem jest napisanie reguły mod_rewrite, która przekieruje wszystkie żądania do pliku
 			index.php z wyjątkiem żądań do plików o wybranych rozszerzeniach. Oto przykład takiego pliku:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
-
+        <para>
 			W powyższym przykładzie wszystkie żądania do plików o rozszerzeniach innych niż
 			wymienione zostaną przekazane do pliku ładującego index.php. Jest to użyteczne podczas
 			tworzenia aplikacji, jednak potem reguły powinny wyłączać konkretne katalogi.
@@ -61,15 +61,15 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		<para>
 			Utwórz plik ładujący o nazwie <code>index.php</code> w głównym katalogu serwera www aby
 			załadować klasę Zend_Controller_Front:
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+	    <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Front.php';
 
 Zend_Controller_Front::run('/sciezka/do/kontrolerow');
 
 ?>]]></programlisting>
-
+        <para>
 			Przeczytaj następna sekcję odnośnie do <code>/path/to/your/controllers</code>.
 
 			Jak napisano w pliku <code>README.txt</code>, ścieżka do katalogu zawierającego bibliotekę Zend Framework 
@@ -100,8 +100,8 @@ Zend_Controller_Front::run('/sciezka/do/kontrolerow');
 		<para>	
 		    Zalecena struktura katalogów dotyczy zarówno bibliotek (Zend oraz wszystkich innych)
 		    jak i struktury katalogów samej aplikacji.
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 /application
   /models
   /views
@@ -114,7 +114,6 @@ Zend_Controller_Front::run('/sciezka/do/kontrolerow');
 /library
   /Zend
 ]]></programlisting>
-		</para>
 		
 		<note>
 			Ta sekcja nie jest jeszcze gotowa.
@@ -127,18 +126,17 @@ Zend_Controller_Front::run('/sciezka/do/kontrolerow');
 		<para>
 		    Każda witryna musi mieć zdefiniowany kontroler o nazwie <code>IndexController</code>. Jest to kontroler
 		    który jest wywoływany kiedy w adresie URL nie ma określonego kontrolera, np. w takim adresie:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+	    <programlisting role="php"><![CDATA[
 http://framework.zend.com/
 ]]></programlisting>
-		</para>
 
 		<para>
 			Klasa <code>IndexController</code> musi być umieszczona w pliku <code>IndexController.php</code>, a
 			plik musi być umieszczony w katalogu kontrolerów. Klasa <code>IndexController</code> musi rozszerzać
 			klasę <code>Zend_Controller_Action</code>. Oto przykład klasy <code>IndexController</code>:
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+	    <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Action.php';
 
@@ -157,9 +155,9 @@ class IndexController extends Zend_Controller_Action
 
 ?>]]></programlisting>
 			
-			<note>
-				Ta sekcja nie jest jeszcze gotowa.
-			</note>			
-		</para>
+		<note>
+			Ta sekcja nie jest jeszcze gotowa.
+        </note>			
+
 	</sect2>			
 </sect1>

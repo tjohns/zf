@@ -20,14 +20,14 @@
         Użycie <code>Zend_Json</code> sprowadza się do dwóch dostępnych 
         statycznych metod: <code>Zend_Json::encode()</code> oraz
         <code>Zend_Json::decode()</code>. 
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 // Odkoduj wartość:
 $phpNative = Zend_Json::decode($encodedValue);
 
 // Zakoduj wartość:
 $json = Zend_Json::encode($phpNative);
 ?>]]></programlisting>
-    </para>
 </sect1>
 
 <sect1 id="zend.json.objects">
@@ -47,10 +47,12 @@ $json = Zend_Json::encode($phpNative);
         Domyślnie <code>Zend_Json</code> odkoduje obiekty JSON jako tablice
         asocjacyjne. Jednak jeśli chcesz odebrać obiekt, możesz to określić
         w ten sposób:
-        <programlisting role="php"><![CDATA[<?php
+    </para>
+    <programlisting role="php"><![CDATA[<?php
 // Odkoduj obiekty jako obiekty
 $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 ?>]]></programlisting>
+    <para>
         Wszystkie dekodowane obiekty są zwracane jako obiekty klasy 
         <code>StdClass</code> z właściwościami odpowiadającymi parom
         klucz/wartość z obiektu JSON.

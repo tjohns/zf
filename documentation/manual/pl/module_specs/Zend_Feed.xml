@@ -73,17 +73,19 @@ foreach ($slashdotRss as $item) {
         <code>Zend_Feed</code> pozwala programistom bardzo łatwo odbierać wiadomości
         z kanałów informacyjnych. Jeśli znasz adres URI kanału, w prosty sposób
         użyj metody <code>Zend_Feed::import()</code>:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $feed = Zend_Feed::import('http://feeds.example.com/feedName');
 
 ?>]]>   </programlisting>
-    </para>
+
     <para>
         Możesz także użyć <code>Zend_Feed</code> do pobrania zawartości kanału
         z pliku lub z łańcucha znaków PHP:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 // importowanie kanału z pliku tekstowego
@@ -93,7 +95,6 @@ $feedFromFile = Zend_Feed::importFile('feed.xml');
 $feedFromPHP = Zend_Feed::importString($feedString);
 
 ?>]]></programlisting>
-    </para>
     <para>
         We wszystkich powyższych przykładach w razie powodzenia operacji zwracany
         jest obiekt klasy rozszerzającej <code>Zend_Feed_Abstract</code>, zależenie
@@ -113,12 +114,14 @@ $feedFromPHP = Zend_Feed::importString($feedString);
         odwołują się do kanałów informacyjnych odpowiadających danej stronie.
         <code>Zend_Feed</code> pozwala odebrać wszystkie kanały informacyjne 
         do których odwołuje się dana strona za pomocą wywołania prostej metody:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
 
 ?>]]></programlisting>
+    <para>
         Tutaj metoda <code>findFeeds()</code> zwraca tablicę obiektów <code>Zend_Feed_Abstract</code>
         do których na stronie news.html są odniesienia w postaci <code>&lt;link&gt;</code>. Zależenie
         od typu każdego z kanałów, każdy z wpisów w tablicy <code>$feedArray</code> może być
@@ -133,12 +136,14 @@ $feedArray = Zend_Feed::findFeeds('http://www.example.com/news.html');
     <para>
         Odczytywanie kanału RSS jest tak proste jak utworzenie obiektu <code>Zend_Feed_Rss</code> z adresem
         URL kanału przekazanym do konstruktora:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 
 ?>]]></programlisting>
+    <para>
         Jeśli wystąpi jakiś błąd podczas obróbki danych pochodzących z kanału, 
         zostanie wyrzucony wyjątek <code>Zend_Feed_Exception</code>.
     </para>
@@ -146,12 +151,14 @@ $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
     <para>
         Kiedy już masz obiekt kanału informacyjnego, możesz łatwo uzyskać dostęp
         do standardowych właściwości kanału RSS bezpośrednio na obiekcie:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->title();
 
 ?>]]></programlisting>
+    <para>
         Zwróć uwagę na składnie funkcji. <code>Zend_Feed</code> używa konwencji 
         traktującej właściwości jak obiekt XML gdy próbujemy uzyskać do nich dostęp
         za pomocą składni "getter" (<code>$obj->property</code>) i jako łańcuch
@@ -163,12 +170,14 @@ echo $channel->title();
     <para>
         Jeśli właściwości kanału mają atrybuty, są one dostępne przy użyciu składni
         tablic PHP:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->category['domain'];
 
 ?>]]></programlisting>
+    <para>
         Since XML attributes cannot have children, method syntax is not necessary for accessing attribute
         values.
     </para>
@@ -178,7 +187,8 @@ echo $channel->category['domain'];
         z jego wpisami. Klasa <code>Zend_Feed_Abstract</code> implementuje wbudowany
         w PHP interfejs <code>Iterator</code>, więc wyświetlenie wszystkich tytułów
         artykułów z kanału jest bardzo proste:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 foreach ($channel as $item) {
@@ -186,6 +196,7 @@ foreach ($channel as $item) {
 }
 
 ?>]]></programlisting>
+    <para>
         Jeśli nie jesteś obeznany z RSS, poniżej znajdziesz opis podstawowych
         składników, które możesz znaleść w kanale RSS i w jego indywidualnych
         elementach (wpisach).
@@ -265,7 +276,8 @@ foreach ($channel as $item) {
 
     <para>
         W twoim kodzie zawsze możesz sprawdzić czy element nie jest pusty za pomocą:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 if ($item->propname()) {
@@ -273,7 +285,6 @@ if ($item->propname()) {
 }
 
 ?>]]></programlisting>
-    </para>
 
     <para>
         Jeśli zamiast tego użyjesz <code>$item->propname</code>, zawsze dostaniesz
@@ -580,14 +591,14 @@ class MyEntry extends Zend_Feed_EntryAtom
         <para>
             Teraz aby użyć tej klasy, musisz po prostu bezpośrednio utworzyć jej
             instancję i przypisać wartość właściwości <code>myUpdated</code>:
-            <programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 <?php
 
 $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';
 
-?>]]>       </programlisting>
-        </para>
+?>]]>   </programlisting>
     </example>
 
 </sect1>

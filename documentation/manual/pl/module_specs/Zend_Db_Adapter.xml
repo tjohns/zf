@@ -4,21 +4,21 @@
 
     <sect2 id="zend.db.adapter.introduction">
 
-        <title>Introduction</title>
+        <title>Wprowadzenie</title>
 
         <para>
-            <code>Zend_Db_Adapter</code> is the database API abstraction layer for the Zend Framework.
-            Based on PDO, you can use <code>Zend_Db_Adapter</code> to connect to and work with any
-            of the supported SQL database systems using the same API.  These
-            include Microsoft SQL Server, MySQL, PostgreSQL, SQLite, and others.
+            <code>Zend_Db_Adapter</code> jest uniwersalnym interfejsem dostępu 
+            do baz danych dla Zend Framework. Bazuje on na PDO. Używając interfejsu
+            <code>Zend_Db_Adapter</code> możesz połączyć się z dowolnym wspieranym
+            systemem bazodanowym używając tego samego API. Wspierane systemy to
+            między innymi Microsoft SQL Server, MySQL, PostgreSQL, SQLite, i inne.
         </para>
 
-        <para>To create an instance of <code>Zend_Db_Adapter</code> for your
-        particular database backend, you need to call
-        <code>Zend_Db::factory()</code> with the name of the adapter and an
-        array of parameters describing the connection. For example, to connect
-        to a MySQL database called "camelot" on the local host as a user named
-        "malory":</para>
+        <para>Aby utworzyć instancję interfejsu <code>Zend_Db_Adapter</code> dla
+        określonego systemu bazodanowego, musisz wywołać metodę <code>Zend_Db::factory()</code> 
+        przekazując jej nazwę systemu bazodanowego oraz tablicę parametrów potrzebnych 
+        do połączenia. Na przykład, aby połączyć się z bazą MySQL nazwaną "camelot" 
+        znajdującą się pod adresem lokalnym, jako użytkownik "malory" możesz zrobić tak:</para>
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -34,7 +34,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
 ?>]]></programlisting>
 
         <para>
-            Similarly, to connect to an SQLite database called "camelot.sq3":
+            Podobnie, aby połączyć się z bazą SQLite nazwaną "camelot.sq3":
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -48,9 +48,9 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
 ?>]]></programlisting>
 
         <para>
-            Similarly, to connect to an SQLite2 database called "camelot.sq2":
-            For a memory-based sqlite database, do not specify a dsnprefix,
-            and use a dbname called ":memory:".
+            Podobnie, aby połączyć się z bazą danych SQLite2 o nazwie "camelot.sq2":
+            Dla bazy sqlite opartej na pamięci nie określaj prefiksu dsn i użyj bazy
+            danych o nazwie ":memory:".
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -65,24 +65,23 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
 ?>]]></programlisting>
 
         <para>
-            Either way, you will be able to use the exact same API to
-            query the database.
+            W każdym z tych przypadków będziesz mógł używać takiego samego API
+            aby tworzyć zapytania do bazy.
         </para>
     </sect2>
 
     <sect2 id="zend.db.adapter.quoting">
 
-        <title>Quoting Against SQL Injection</title>
+        <title>Zapobieganie atakom SQL Injection</title>
 
         <para>
-            You should always quote values that are to be used in an
-            SQL statement; this is to help prevent SQL injection attacks.
-            <code>Zend_Db_Adapter</code> provides two methods (via the underlying PDO object)
-            to help you manually quote values.
+            Powinieneś zawsze cytować wartości, które będą użyte w wyrażeniu SQL;
+            zapobiega to atakom SQL Injection. <code>Zend_Db_Adapter</code> zapewnia
+            dwie metody (poprzez obiekt PDO) aby pomóc Ci manualnie cytować wartości.
         </para>
 
         <para>
-            The first of these is the <code>quote()</code> method.  It will quote a
+            Pierwsza z nich to metoda <code>quote()</code>.  It will quote a
             scalar value appropriately for your database adapter; if you
             attempt to quote an array, it will return a comma-separated
             string of the array values, each properly quoted (this is
@@ -128,19 +127,19 @@ $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
 
     <sect2 id="zend.db.adapter.queries">
 
-        <title>Direct Queries</title>
+        <title>Bezpośrednie zapytania</title>
 
         <para>
-            Once you have a <code>Zend_Db_Adapter</code> instance, you can execute queries
-            directly in SQL.  <code>Zend_Db_Adapter</code> passes these queries to the
-            underlying PDO object, which prepares and executes them, and
-            then passes back a PDOStatement object for you to manipulate
-            the results (if any).
+            Gdy posiadasz instancję <code>Zend_Db_Adapter</code>, możesz wykonywać
+            zapytania bezpośrednio jako SQL. <code>Zend_Db_Adapter</code> przekazuje
+            te zapytania do obiektu PDO, który je przygotowuje i wykonuje, a następnie
+            zwraca Ci obiekt PDOStatement abyś mógł manipulować danymi wynikowymi 
+            (jeśli jekieś są).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then query the database
+// tworzymy obiekt $db, a następnie ...query... bazę
 // with a properly-quoted SQL statement.
 $sql = $db->quoteInto(
     'SELECT * FROM example WHERE date > ?',
@@ -198,20 +197,21 @@ $rows = $stmt->fetchAll();
 
     <sect2 id="zend.db.adapter.transactions">
 
-        <title>Transactions</title>
+        <title>Transakcje</title>
 
         <para>
-            By default, PDO (and thus <code>Zend_Db_Adapter</code>) are in "auto-commit" mode.
-            This means that all queries are committed as they are executed.
-            If you wish to execute within a transaction, simply call the
-            <code>beginTransaction()</code> method, then either <code>commit()</code> or <code>rollBack()</code>
-            your changes.  <code>Zend_Db_Adapter</code> returns to auto-commit mode until
-            you call <code>beginTransaction()</code> again.
+            Domyślnie, PDO (a więc i <code>Zend_Db_Adapter</code>) działają w trybie
+            "auto-commit". Oznacza to, że wszystkie zapytania są realizowane natychmiast
+            po ich wykonaniu. Jeśli chcesz je wykonać wewnątrz transakcji, w prosty sposób
+            wywołak metodę <code>beginTransaction()</code>, a następnie <code>commit()</code>
+            aby zrealizować zapytania lub <code>rollBack()</code> aby je cofnąć.
+            <code>Zend_Db_Adapter</code> wraca wtedy do trybu "auto-commit" dopóki
+            znów nie wywołasz metody <code>beginTransaction()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then start a transaction.
+// utwórz obiekt $db, a następnie rozpocznij transakcję
 $db->beginTransaction();
 
 // attempt a query.
@@ -230,7 +230,7 @@ try {
 
     <sect2 id="zend.db.adapter.insert">
 
-        <title>Inserting Rows</title>
+        <title>Wstawianie wierszy</title>
 
         <para>
             As a convenience, you may use the <code>insert()</code> method to create
@@ -240,11 +240,11 @@ try {
         </para>
 
         <para>
-            The return value is <emphasis>not</emphasis> the last inserted ID, as the table
-            may not have an auto-incremented column; instead, the return value
-            is the number of rows affected (usually 1).  If you want the
-            ID of the last inserted record, call the <code>lastInsertId()</code> method after the
-            insert.
+            Zwracana wartość <emphasis>nie</emphasis> jest ostatnio wstawionym 
+            numerem ID, ponieważ tabela nie musi posiadać automatycznie inkrementowanej
+            kolumny;  zwracana wartość jest liczbą wstawionych wierszy (najczęściej 1). 
+            Jeśli chcesz otrzymać wartość ID ostatnio wstawionego rekordu, wywołaj 
+            metodę <code>lastInsertId()</code> po wstawieniu rekordu.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -255,18 +255,18 @@ try {
 //     VALUES ("King", "Arthur", "blue");
 //
 
-// create a $db object, and then...
-// the row data to be inserted in column => value format
+// tworzymy obiekt $db, a następnie...
+// dane do wstawienia w postaci nazwa_kolumny => wartość
 $row = array (
     'noble_title'    => 'King',
     'first_name'     => 'Arthur',
     'favorite_color' => 'blue',
 );
 
-// the table into which the row should be inserted
+// nazwa tabeli do której ma być wstawiony wiersz
 $table = 'round_table';
 
-// insert the row and get the row ID
+// wstawiamy wiersz i pobieramy jego ID
 $rows_affected = $db->insert($table, $row);
 $last_insert_id = $db->lastInsertId();
 
@@ -275,7 +275,7 @@ $last_insert_id = $db->lastInsertId();
 
     <sect2 id="zend.db.adapter.update">
 
-        <title>Updating Rows</title>
+        <title>Aktualizowanie wierszy</title>
 
         <para>
             As a convenience, you may use the <code>update()</code> method to create
@@ -298,19 +298,19 @@ $last_insert_id = $db->lastInsertId();
 //     WHERE first_name = "Robin";
 //
 
-// create a $db object, and then...
-// the new values to set in the update, in column => value format.
+// tworzymy obiekt $db, a następnie...
+// dane do aktualizowania w postaci nazwa_kolumny => wartość
 $set = array (
     'favorite_color' => 'yellow',
 );
 
-// the table to update
+// nazwa tabeli w której ma być aktualizowany wiersz
 $table = 'round_table';
 
-// the WHERE clause
+// warunek WHERE
 $where = $db->quoteInto('first_name = ?', 'Robin');
 
-// update the table and get the number of rows affected
+// uaktualniamy tabelę i pobieramy liczbę uaktualnionych wierszy
 $rows_affected = $db->update($table, $set, $where);
 
 ?>]]></programlisting>
@@ -318,7 +318,7 @@ $rows_affected = $db->update($table, $set, $where);
 
     <sect2 id="zend.db.adapter.delete">
 
-        <title>Deleting Rows</title>
+        <title>Usuwanie wierszy</title>
 
         <para>
             As a convenience, you may use the <code>delete()</code> method to create
@@ -334,14 +334,14 @@ $rows_affected = $db->update($table, $set, $where);
 //     WHERE first_name = "Patsy";
 //
 
-// create a $db object, and then...
-// the table to delete from
+// tworzymy obiekt $db, a następnie...
+// nazwa tabeli z której usuwamy wiersz
 $table = 'round_table';
 
-// the WHERE clause
+// warunek WHERE
 $where = $db->quoteInto('first_name = ?', 'Patsy');
 
-// update the table and get the number of rows affected
+// usuwamy wiersz i pobieramy liczbę usuniętych wierszy
 $rows_affected = $db->delete($table, $where);
 
 ?>]]></programlisting>
@@ -349,7 +349,7 @@ $rows_affected = $db->delete($table, $where);
 
     <sect2 id="zend.db.adapter.fetch">
 
-        <title>Fetching Rows</title>
+        <title>Pobieranie wierszy</title>
 
         <para>
             Although you may query the database directly with the <code>query()</code>
@@ -372,41 +372,41 @@ $rows_affected = $db->delete($table, $where);
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then...
+// tworzymy obiekt $db, a następnie...
 
-// fetch all columns of all rows as a sequential array
+// pobieramy wszystkie kolumny wszystkich wierszy jako sekwencyjną tablicę
 $result = $db->fetchAll(
     "SELECT * FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch all columns of all rows as an associative array;
-// the first column is used as the array key.
+// pobieramy wszystkie kolumny wszystkich wierszy jako tablicę
+// asocjacyjną; pierwsza kolumna jest używana jako klucz tablicy
 $result = $db->fetchAssoc(
     "SELECT * FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch the first column of all rows returned
+// pobieramy pierwszą kolumnę wszystkich zwróconych wierszy
 $result = $db->fetchCol(
     "SELECT first_name FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch only the first value
+// pobieramy tylko pierwszą zwróconą wartość
 $result = $db->fetchOne(
     "SELECT COUNT(*) FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch a series of key-value pairs; the first column is
-// the array key, the second column is the array value
+// pobieramy serię par klucz-wartość; pierwsza kolumna jest
+// kluczem tablicy, a druga jest wartością
 $result = $db->fetchPairs(
     "SELECT first_name, favorite_color FROM round_table WHERE noble_title = :title",
     array('title' => 'Sir')
 );
 
-// fetch only the first row returned
+// pobieramy tylko pierwszy zwrócony wiersz
 $result = $db->fetchRow(
     "SELECT * FROM round_table WHERE first_name = :name",
     array('name' => 'Lancelot')
