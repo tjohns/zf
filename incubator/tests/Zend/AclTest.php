@@ -26,6 +26,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_AclTest extends PHPUnit_Framework_TestCase
 {
     protected $_acl;
+    protected $_acl2;
 
     public function testCMSExample()
     {
@@ -193,6 +194,15 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
         self::assertTrue($this->_acl->news->latest->valid('marketing', 'publish'));
         self::assertTrue($this->_acl->news->latest->valid('marketing', 'edit'));
         self::assertTrue($this->_acl->news->latest->valid('marketing'));
+
+        // Create second Zend_Acl instance
+        $this->_acl2 = new Zend_Acl();
+
+        // Fetch a new ARO registry
+        $aro2 = $this->_acl2->aroRegistry();
+
+        // Ensure registries are unique instances
+        self::assertTrue($aro !== $aro2);
 
     }
 

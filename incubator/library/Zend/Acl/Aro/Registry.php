@@ -53,26 +53,13 @@ class Zend_Acl_Aro_Registry
     static protected $_instance = null;
 
     /**
-     * Returns Singleton instance of Zend_Acl_Aro_Registry
-     *
-     * @return Zend_Acl_Aro_Registry
-     */
-    static public function getInstance()
-    {
-        if (self::$_instance === null) {
-            self::$_instance = new self;
-        }
-        return self::$_instance;
-    }
-
-    /**
      * Class constructor
      *
      * @return void
      */
     public function __construct()
     {
-        $this->add(new Zend_Acl_Aro('_default'));
+        $this->add('_default');
     }
 
     /**
@@ -94,7 +81,11 @@ class Zend_Acl_Aro_Registry
     public function add($aro, $inherit = null)
     {
         if (!($aro instanceof Zend_Acl_Aro)) {
-            $aro = new Zend_Acl_Aro($aro, $inherit);
+            $aro = new Zend_Acl_Aro($this, $aro, $inherit);
+        }
+
+        if (array_key_exists($aro->getId(), $this->_aro)) {
+            throw new Zend_Acl_Exception('aro ' . $aro->getId() . ' already registered');
         }
 
         $this->_aro[$aro->getId()] = $aro;

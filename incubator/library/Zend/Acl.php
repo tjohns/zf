@@ -86,6 +86,12 @@ class Zend_Acl
     protected $_perm;
 
     /**
+     * ARO registry for this ARO.
+     * @var Zend_Acl
+     */
+    protected $_registry;
+
+    /**
      * Parent ACO.
      * @var Zend_Acl
      */
@@ -152,7 +158,13 @@ class Zend_Acl
      */
     public function aroRegistry()
     {
-        return Zend_Acl_Aro_Registry::getInstance($this);
+        if (!$this->_isRoot()) {
+            return $this->getParent()->aroRegistry();
+        }
+        if (!($this->_registry instanceof Zend_Acl_Aro_Registry)) {
+            $this->_registry = new Zend_Acl_Aro_Registry;
+        }
+        return $this->_registry;
     }
 
     /**

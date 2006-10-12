@@ -35,6 +35,12 @@ class Zend_Acl_Aro
     protected $_id;
 
     /**
+     * Reference to parent ARO registry
+     * @var Zend_Acl_Aro_Registry
+     */
+    protected $_registry;
+
+    /**
      * Collection of parents
      * @var array
      */
@@ -51,9 +57,10 @@ class Zend_Acl_Aro
      * @param mixed $inherit
      * @return void
      */
-    public function __construct($id, $inherit = null)
+    public function __construct(Zend_Acl_Aro_Registry $registry, $id, $inherit = null)
     {
         $this->_id = $id;
+        $this->_registry = $registry;
         $this->_addParent($this);
 
         if (!is_null($inherit)) {
@@ -64,7 +71,7 @@ class Zend_Acl_Aro
             foreach ($inherit as $parent) {
     
                 if (!($parent instanceof self)) {
-                    $parent = Zend_Acl_Aro_Registry::getInstance()->find($parent);
+                    $parent = $this->_registry->find($parent);
                 }
     
                 foreach($parent->getParent() as $aro) {
@@ -84,6 +91,16 @@ class Zend_Acl_Aro
     public function getId()
     {
         return $this->_id;
+    }
+
+    /**
+     * Retrieves ARO registry
+     *
+     * @return Zend_Acl_Aro_Registry
+     */
+    public function getRegistry()
+    {
+        return $this->_registry;
     }
 
     /**
@@ -148,7 +165,7 @@ class Zend_Acl_Aro
     protected function _addParent($parent)
     {
         if (!($parent instanceof self)) {
-            $parent = Zend_Acl_Aro_Registry::getInstance()->find($parent);
+            $parent = $this->_registry->find($parent);
         }
 
         if (!in_array($parent->getId(), $this->_parent)) {
