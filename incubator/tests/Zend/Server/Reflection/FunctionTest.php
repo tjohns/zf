@@ -75,11 +75,28 @@ class Zend_Server_Reflection_FunctionTest extends PHPUnit2_Framework_TestCase
         $prototypes = $r->getPrototypes();
         $this->assertTrue(is_array($prototypes));
         $this->assertTrue(0 < count($prototypes));
+        $this->assertEquals(8, count($prototypes));
 
         foreach ($prototypes as $p) {
             $this->assertTrue($p instanceof Zend_Server_Reflection_Prototype);
         }
     }
+
+    public function testGetPrototypes2()
+    {
+        $function = new ReflectionFunction('Zend_Server_Reflection_FunctionTest_function2');
+        $r = new Zend_Server_Reflection_Function($function);
+
+        $prototypes = $r->getPrototypes();
+        $this->assertTrue(is_array($prototypes));
+        $this->assertTrue(0 < count($prototypes));
+        $this->assertEquals(1, count($prototypes));
+
+        foreach ($prototypes as $p) {
+            $this->assertTrue($p instanceof Zend_Server_Reflection_Prototype);
+        }
+    }
+
 
     public function testGetInvokeArguments()
     {
@@ -121,3 +138,14 @@ class Zend_Server_Reflection_FunctionTest extends PHPUnit2_Framework_TestCase
 function Zend_Server_Reflection_FunctionTest_function($var1, $var2, $var3 = null)
 {
 }
+
+/**
+ * Zend_Server_Reflection_FunctionTest_function2
+ *
+ * Test function for reflection unit tests; test what happens when no return 
+ * value or params specified in docblock.
+ */
+function Zend_Server_Reflection_FunctionTest_function2()
+{
+}
+
