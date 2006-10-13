@@ -29,6 +29,12 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text.php';
 /** Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/Text/CaseInsensitive.php';
 
+/** Zend_Search_Lucene_Analysis_Analyzer_Common_Text */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/TextNum.php';
+
+/** Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive */
+require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/TextNum/CaseInsensitive.php';
+
 
 
 /**
