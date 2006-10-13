@@ -61,11 +61,13 @@ class Zend_Soap_Wsdl {
         
         $message->setAttribute('name', $name);
         
-        foreach ($parts as $name => $type) {
-            $part = $this->dom->createElement('part');
-            $part->setAttribute('name', $name);
-            $part->setAttribute('type', $type);
-            $message->appendChild($part);
+        if (sizeof($parts) > 0) {
+	        foreach ($parts as $name => $type) {
+    	        $part = $this->dom->createElement('part');
+        	    $part->setAttribute('name', $name);
+            	$part->setAttribute('type', $type);
+            	$message->appendChild($part);
+        	}
         }
         
         $this->wsdl->appendChild($message);
@@ -226,7 +228,7 @@ class Zend_Soap_Wsdl {
      * @return boolean
      */
 
-    public function addSoapOperation(&$operation, $soap_action)
+    public function addSoapOperation(&$binding, $soap_action)
     {
     	if ($soap_action instanceof Zend_Uri_Http) {
     		$soap_action = $soap_action->getUri();
@@ -234,7 +236,7 @@ class Zend_Soap_Wsdl {
         $soap_operation = $this->dom->createElement('soap:operation');
         $soap_operation->setAttribute('soapAction', $soap_action);
         
-        $operation->appendChild($soap_operation);
+        $binding->insertBefore($soap_operation, $binding->firstChild);
         
         return $soap_operation;
     }
