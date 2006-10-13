@@ -46,28 +46,31 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
         $binding = $wsdl->addBinding($class . 'Binding', 'tns:' .$class. 'Port');
         
         $wsdl->addSoapBinding($binding, 'rpc');
-        $wsdl->addService($class . 'Service', 'tns:' . $class . 'Port', 'tns:' . $class . 'Binding', $uri);
-		foreach ($this->_reflection->reflectClass($class) as $method) {
+        $wsdl->addService($class . 'Service', $class . 'Port', 'tns:' . $class . 'Binding', $uri);
+		foreach ($this->_reflection->reflectClass($class)->getMethods() as $method) {
 			foreach ($method->getPrototypes() as $prototype) {
+				$args = array();
 				foreach ($prototype->getParameters() as $param) {
-					$args[$param->name] = self::getType($param->type);
+					$args[$param->getName()] = self::getType($param->getType());
 				}
 				$message = $wsdl->addMessage($method->getName() . 'Request', $args);
 				$desc = $method->getDescription();
 				if (strlen($desc) > 0) {
-					$wsdl->addDocumentation($message, $desc);
+					//$wsdl->addDocumentation($message, $desc);
 				}
-				$message = $wsdl->addMessage($method->getName() . 'Response', array($method->getName() . 'Return' => self::getType($prototype->getReturnType())));
+				if ($prototype->getReturnType() != "void") {
+					$message = $wsdl->addMessage($method->getName() . 'Response', array($method->getName() . 'Return' => self::getType($prototype->getReturnType())));
+				}
 				 /* <wsdl:portType>'s */
            		$portOperation = $wsdl->addPortOperation($port, $method->getName(), 'tns:' .$method->getName(). 'Request', 'tns:' .$method->getName(). 'Response');
 	            if (strlen($desc) > 0) {
-	                $wsdl->addDocumentation($portOperation, $desc);
+	                //$wsdl->addDocumentation($portOperation, $desc);
 	            }
            		/* </wsdl:portType>'s */
             
 	            /* <wsdl:binding>'s */
 	            $operation = $wsdl->addBindingOperation($binding, $method->getName(),  array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"), array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"));
-	            $wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
+	            $wsdl->addSoapOperation($binding, $uri->getUri() . '#' .$method->getName());
 	            /* </wsdl:binding>'s */
 	            
 	            $this->_functions[] = $method->getName();
@@ -102,35 +105,36 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
 	        $binding = $wsdl->addBinding($name . 'Binding', 'tns:' .$name. 'Port');
 	        
 	        $wsdl->addSoapBinding($binding, 'rpc');
-	        $wsdl->addService($name . 'Service', 'tns:' . $name . 'Port', 'tns:' . $name . 'Binding', $uri);
+	        $wsdl->addService($name . 'Service', $name . 'Port', 'tns:' . $name . 'Binding', $uri);
     	} else {
     		$wsdl = $this->_wsdl;
     	}
     	
     	foreach ($function as $func) {
-			foreach ($this->_reflection->reflectFunction($func) as $method) {
-				foreach ($method->getPrototypes() as $prototype) {
-					foreach ($prototype->getParameters() as $param) {
-						$args[$param->name] = self::getType($param->type);
-					}
-					$message = $wsdl->addMessage($method->getName() . 'Request', $args);
-					$desc = $method->getDescription();
-					if (strlen($desc) > 0) {
-						$wsdl->addDocumentation($message, $desc);
-					}
-					$message = $wsdl->addMessage($method->getName() . 'Response', array($method->getName() . 'Return' => self::getType($prototype->getReturnType())));
-					/* <wsdl:portType>'s */
-					$portOperation = $wsdl->addPortOperation($port, $method->getName(), 'tns:' .$method->getName(). 'Request', 'tns:' .$method->getName(). 'Response');
-					if (strlen($desc) > 0) {
-						$wsdl->addDocumentation($portOperation, $desc);
-					}
-					/* </wsdl:portType>'s */
-		
-					/* <wsdl:binding>'s */
-					$operation = $wsdl->addBindingOperation($binding, $method->getName(),  array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"), array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"));
-					$wsdl->addSoapOperation($operation, $uri->getUri() . '#' .$method->getName());
-					/* </wsdl:binding>'s */
+    		$method = $this->_reflection->reflectFunction($func);
+			foreach ($method->getPrototypes() as $prototype) {
+				foreach ($prototype->getParameters() as $param) {
+					$args[$param->getName()] = self::getType($param->getType());
 				}
+				$message = $wsdl->addMessage($method->getName() . 'Request', $args);
+				$desc = $method->getDescription();
+				if (strlen($desc) > 0) {
+					//$wsdl->addDocumentation($message, $desc);
+				}
+				if ($prototype->getReturnType() != "void") {
+					$message = $wsdl->addMessage($method->getName() . 'Response', array($method->getName() . 'Return' => self::getType($prototype->getReturnType())));
+				}
+				 /* <wsdl:portType>'s */
+           		$portOperation = $wsdl->addPortOperation($port, $method->getName(), 'tns:' .$method->getName(). 'Request', 'tns:' .$method->getName(). 'Response');
+	            if (strlen($desc) > 0) {
+	                //$wsdl->addDocumentation($portOperation, $desc);
+	            }
+           		/* </wsdl:portType>'s */
+            
+	            /* <wsdl:binding>'s */
+	            $operation = $wsdl->addBindingOperation($binding, $method->getName(),  array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"), array('use' => 'encoded', 'encodingStyle' => "http://schemas.xmlsoap.org/soap/encoding/"));
+	            $wsdl->addSoapOperation($binding, $uri->getUri() . '#' .$method->getName());
+	            /* </wsdl:binding>'s */
 			
 				$this->_functions[] = $method->getName();
 			}
@@ -145,7 +149,7 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
      * @param string $fault
      * @param string|int $code
      */
-    public function fault($fault, $code = 404)
+    public function fault($fault = null, $code = null)
     {
     	
     }
@@ -157,7 +161,9 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
      */
     public function handle($request = false)
     {
-    	header('Content-Type: text/xml');
+    	if (!headers_sent()) {
+    		header('Content-Type: text/xml');
+    	}
     	$this->_wsdl->dump();
     }
     
