@@ -19,7 +19,7 @@
 
     <programlisting role="php"><![CDATA[<?php
 	
-loadFile($filename, $dirs=null, $once=false)
+Zend::loadFile($filename, $dirs=null, $once=false)
 
 ?>]]></programlisting>
 
@@ -55,7 +55,7 @@ loadFile($filename, $dirs=null, $once=false)
 
     <programlisting role="php"><![CDATA[<?php
 	
-loadClass($class, $dirs)
+Zend::loadClass($class, $dirs)
 
 ?>]]></programlisting>
 
@@ -84,7 +84,7 @@ loadClass($class, $dirs)
 
     <programlisting role="php"><![CDATA[<?php
 	
-loadInterface($interface, $dirs)
+Zend::loadInterface($interface, $dirs)
 
 ?>]]></programlisting>
 
@@ -114,7 +114,7 @@ loadInterface($interface, $dirs)
 
     <programlisting role="php"><![CDATA[<?php
 	
-isReadable($filename)
+Zend::isReadable($filename)
 
 ?>]]></programlisting>
 
@@ -138,7 +138,7 @@ isReadable($filename)
 
     <programlisting role="php"><![CDATA[<?php
 	
-dump($var, $label=null, $echo=true)
+Zend::dump($var, $label=null, $echo=true)
 
 ?>]]></programlisting>
 
@@ -170,7 +170,7 @@ dump($var, $label=null, $echo=true)
 
     <programlisting role="php"><![CDATA[<?php
 	
-register($name, $object)
+Zend::register($name, $object)
 
 ?>]]></programlisting>
 
@@ -204,7 +204,7 @@ register($name, $object)
 
     <programlisting role="php"><![CDATA[<?php
 	
-registry($name=null)
+Zend::registry($name=null)
 
 ?>]]></programlisting>
 
