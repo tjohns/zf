@@ -122,7 +122,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 		                    // for some reason, invokeArgs() does not work the same as 
 		                    // invoke(), and expects the first argument to be an object. 
 		                    // So, using a callback if the method is static.
-		                    $result = call_user_func_array(array($class, $this->_functions[$this->_method]->getFunctionName()), $calling_args);
+		                    $result = call_user_func_array(array($class, $this->_functions[$this->_method]->getName()), $calling_args);
 		                }
 		
 		                // Object methods
