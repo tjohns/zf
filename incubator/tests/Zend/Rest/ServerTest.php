@@ -116,6 +116,46 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals("<Zend_Rest_Server_Test generator='zend' version='1.0'><testFunc3><response>Hello Davey, How are you today</response><status>success</status></testFunc3></Zend_Rest_Server_Test>", $result, "Bad Result");
 	}
 	
+	function testHandleStaticNoArgs()
+	{
+		$server = new Zend_Rest_Server();
+		$server->setClass('Zend_Rest_Server_Test');
+		ob_start();
+		$server->handle(array('method' => 'testFunc4'));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_Test generator='zend' version='1.0'><testFunc4><response>Hello World</response><status>success</status></testFunc4></Zend_Rest_Server_Test>", $result, "Bad Result");
+	}
+	
+	function testHandleAnonymousArgStatic()
+	{
+		$server = new Zend_Rest_Server();
+		$server->setClass('Zend_Rest_Server_Test');
+		ob_start();
+		$server->handle(array('method' => 'testFunc5', 'arg1' => "Davey"));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_Test generator='zend' version='1.0'><testFunc5><response>Hello Davey</response><status>success</status></testFunc5></Zend_Rest_Server_Test>", $result, "Bad Result");
+	}
+	
+	function testHandleNamedArgStatic()
+	{
+		$server = new Zend_Rest_Server();
+		$server->setClass('Zend_Rest_Server_Test');
+		ob_start();
+		$server->handle(array('method' => 'testFunc6', 'who' => "Davey", 'when' => 'today'));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_Test generator='zend' version='1.0'><testFunc6><response>Hello Davey, How are you today</response><status>success</status></testFunc6></Zend_Rest_Server_Test>", $result, "Bad Result");
+	}
+	
+	function testHandleMultipleAnonymousArgs()
+	{
+		$server = new Zend_Rest_Server();
+		$server->addFunction('Zend_Rest_Server_TestFunc9');
+		ob_start();
+		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc9', 'arg1' => "Hello", 'arg2' => "Davey"));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_TestFunc9 generator='zend' version='1.0'><response>Hello Davey</response><status>success</status></Zend_Rest_Server_TestFunc9>", $result, 'Bad Result');
+	}
+	
 	function testHandleReturnFalse()
 	{
 		$server = new Zend_Rest_Server();
@@ -123,7 +163,7 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
 		ob_start();
 		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc3'));
 		$result = ob_get_clean();
-		$this->assertEquals("<Zend_Rest_Server_TestFunc3 generator='zend' version='1.0'><response>0</response><status>failure</status></Zend_Rest_Server_TestFunc3>", $result, "Bas Response");
+		$this->assertEquals("<Zend_Rest_Server_TestFunc3 generator='zend' version='1.0'><response>0</response><status>success</status></Zend_Rest_Server_TestFunc3>", $result, "Bas Response");
 	}
 	
 	function testHandleReturnTrue()
@@ -261,6 +301,18 @@ function Zend_Rest_Server_TestFunc8()
 }
 
 /**
+ * Multiple Args
+ * 
+ * @param string $foo
+ * @param string $bar
+ * @return string
+ */
+function Zend_Rest_Server_TestFunc9($foo, $bar)
+{
+	return "$foo $bar";
+}
+
+/**
  * Test Class
  */
 class Zend_Rest_Server_Test {
@@ -289,6 +341,35 @@ class Zend_Rest_Server_Test {
 	 * @param int $when Some Arg2
 	 */
 	function testFunc3($who, $when)
+	{
+		return "Hello $who, How are you $when";
+	}
+	
+	/**
+	 * Test Function 4
+	 */
+	static function testFunc4()
+	{
+		return "Hello World";
+	}
+	
+	/**
+	 * Test Function 5
+	 * 
+	 * @param string $who Some Arg
+	 */
+	static function testFunc5($who)
+	{
+		return "Hello $who";
+	}
+	
+	/**
+	 * Test Function 6
+	 * 
+	 * @param string $who Some Arg
+	 * @param int $when Some Arg2
+	 */
+	static function testFunc6($who, $when)
 	{
 		return "Hello $who, How are you $when";
 	}
