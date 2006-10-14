@@ -89,6 +89,7 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
     {
     	static $port;
     	static $operation;
+    	static $binding;
     	
     	if (!is_array($function)) {
     		$function = (array) $function;
@@ -96,7 +97,7 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
     	
     	$uri = Zend_Uri::factory('http://'  .$_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME']);
 
-    	if ((!$this->_wsdl instanceof Zend_Soap_Wsdl)) {
+    	if (!($this->_wsdl instanceof Zend_Soap_Wsdl)) {
 	    	$parts = explode('.', basename($_SERVER['SCRIPT_NAME']));
 	    	$name = $parts[0];
 	    	$wsdl = new Zend_Soap_Wsdl($name, $uri);
@@ -113,6 +114,7 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
     	foreach ($function as $func) {
     		$method = $this->_reflection->reflectFunction($func);
 			foreach ($method->getPrototypes() as $prototype) {
+				$args = array();
 				foreach ($prototype->getParameters() as $param) {
 					$args[$param->getName()] = self::getType($param->getType());
 				}
@@ -137,6 +139,9 @@ class Zend_Soap_AutoDiscover extends Zend_Server_Abstract implements Zend_Server
 	            /* </wsdl:binding>'s */
 			
 				$this->_functions[] = $method->getName();
+				
+				// We will only add one prototype
+				break;
 			}
     	}
 		$this->_wsdl = $wsdl;
