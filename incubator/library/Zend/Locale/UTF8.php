@@ -20,14 +20,12 @@
  */
 
 require_once 'Zend/Locale/UTF8/Exception.php';
-
 /**
  * @category Zend
  * @package Zend_Locale
  * @subpackage UTF8
  * @copyright Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license http://framework.zend.com/license/new-bsd     New BSD License
- * @see http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt
  */
 class Zend_Locale_UTF8
 {
@@ -42,15 +40,15 @@ class Zend_Locale_UTF8
 	 * @access private
 	 * @staticvar integer
 	 */
-	private static $_current 	= null;
+	protected static $_current 	= null;
 	
 	/**
 	 * Contains instances of the UTF-8 libraries. (PHP5 and PHP6)
 	 *
-	 * @access private
+	 * @access protected
 	 * @staticvar array
 	 */
-	private static $_libraries 	= array();
+	protected static $_libraries 	= array();
 	
 	/**
 	 * If called without parameter getLibrary() returns the current library,
@@ -62,7 +60,7 @@ class Zend_Locale_UTF8
 	 * @return Zend_Locale_UTF8_Interface
 	 * @throws Zend_Locale_UTF8_Exception
 	 */
-	public static function &getLibrary( $version = self::CURRENT )
+	public static function getLibrary( $version = self::CURRENT )
 	{
 		$_version = self::PHP5;
 		
@@ -166,11 +164,11 @@ class Zend_Locale_UTF8
 	 * Determines which Version of PHP is used.
 	 *
 	 * @todo implement function
-	 * @access private
+	 * @access protected
 	 * @static 
 	 * @return integer
 	 */
-	private static function _determineVersion()
+	protected static function _determineVersion()
 	{
 		return self::PHP5;
 	}

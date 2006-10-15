@@ -25,7 +25,6 @@
  * @subpackage UTF8
  * @copyright Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license http://framework.zend.com/license/new-bsd     New BSD License
- * @see http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt
  */
 interface Zend_Locale_UTF8_Interface {
 	

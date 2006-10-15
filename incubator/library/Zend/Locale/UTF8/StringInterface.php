@@ -25,7 +25,6 @@
  * @subpackage UTF8
  * @copyright Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license http://framework.zend.com/license/new-bsd     New BSD License
- * @see http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt
  */
 
 interface Zend_Locale_UTF8_StringInterface {
@@ -44,6 +43,7 @@ interface Zend_Locale_UTF8_StringInterface {
 	 * @access public
 	 * @param integer $index
 	 * @return string
+	 * @throws Zend_Locale_UTF8_Exception
 	 */
 	public function charAt( $index );
 	
@@ -53,8 +53,22 @@ interface Zend_Locale_UTF8_StringInterface {
 	 * @access public
 	 * @param integer $index
 	 * @return integer
+	 * @throws Zend_Locale_UTF8_Exception
 	 */
 	public function codePointAt( $index );
+
+	/**
+	 * Concatenates the specified string to the end of this string.
+	 * 
+	 * If the length of the argument string is 0, then this String object is returned.
+	 * Otherwise, a new String object is created, representing a character sequence that
+	 * is the concatenation of the character sequence represented by this String object
+	 * and the character sequence represented by the argument string.
+	 *
+	 * @access public
+	 * @param mixed $string
+	 */
+	public function concat( $string );
 	
 	/**
 	 * Returns true if and only if this string contains the specified sequence of char values.
@@ -65,6 +79,15 @@ interface Zend_Locale_UTF8_StringInterface {
 	public function contains( $string );
 	
 	/**
+	 * Compares this string to another one.
+	 *
+	 * @access public
+	 * @param mixed $string
+	 * @return boolean
+	 */
+	public function equals( $string );
+	
+	/**
 	 * Returns the index within this string of the first occurrence of the specified string.
 	 *
 	 * @access public
@@ -72,6 +95,15 @@ interface Zend_Locale_UTF8_StringInterface {
 	 * @return integer
 	 */
 	public function indexOf( $string );
+		
+	/**
+	 * Returns the index within this string of the last occurrence of the specified string.
+	 *
+	 * @access public
+	 * @param mixed $string
+	 * @return integer
+	 */
+	public function lastIndexOf( $string );
 	
 	/**
 	 * Returns the length of this string.
@@ -80,6 +112,21 @@ interface Zend_Locale_UTF8_StringInterface {
 	 * @return integer
 	 */
 	public function length();
+	
+	/**
+	 * Returns a new string that is a substring of this string.
+	 * 
+	 * The substring begins at the specified beginIndex and extends to the
+	 * character at index endIndex - 1.
+	 * Thus the length of the substring is endIndex-beginIndex.
+	 * 
+	 * If called without $endIndex substring() returns a new string from $beginIndex
+	 * to the end of the string
+	 *
+	 * @param integer $beginIndex
+	 * @param integer $endIndex
+	 */
+	public function substring($beginIndex, $endIndex=null);
 	
 	/**
 	 * Converts all of the characters in this String to upper case.

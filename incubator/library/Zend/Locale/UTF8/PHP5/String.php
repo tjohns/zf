@@ -64,18 +64,21 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	 *
 	 * @access public
 	 * @param mixed $string
+	 * @throws Zend_Locale_UTF8_Exception
 	 */
 	public function __construct( $string )
 	{
 		if ( is_array($string) ) {
 			$this->sequence = $string;
 			$this->string	= $this->__toString();
-		} elseif ( is_object($string) && $string instanceof Zend_Locale_UTF8_PHP5_String ) {
+		} elseif ( $string instanceof Zend_Locale_UTF8_PHP5_String ) {
 			$this->sequence = $string->getSequence();
 			$this->string	= $string->__toString();
-		} else {
+		} elseif ( is_string($string) || is_int($string) || is_float($string) ) {
 			$this->sequence = $this->_decode($string);
 			$this->string	= $string;
+		} else {
+			throw new Zend_Locale_UTF8_Exception(gettype($string).' is not supported by Zend_Locale_UTF8_PHP5_String.');
 		}
 	}
 	
@@ -102,6 +105,7 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	 * @access public
 	 * @param integer $index
 	 * @return string
+	 * @throws Zend_Locale_UTF8_Exception
 	 */
 	public function charAt( $index )
 	{
@@ -117,6 +121,7 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	 * @access public
 	 * @param integer $index
 	 * @return integer
+	 * @throws Zend_Locale_UTF8_Exception
 	 */
 	public function codePointAt( $index )
 	{
@@ -124,6 +129,33 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 			return $this->sequence[$index];
 			
 		throw new Zend_Locale_UTF8_Exception( 'Illegal offset('.$index.').' );
+	}
+	
+	/**
+	 * Concatenates the specified string to the end of this string.
+	 * 
+	 * If the length of the argument string is 0, then this String object is returned.
+	 * Otherwise, a new String object is created, representing a character sequence that
+	 * is the concatenation of the character sequence represented by this String object
+	 * and the character sequence represented by the argument string.
+	 *
+	 * @access public
+	 * @param mixed $string
+	 */
+	public function concat( $string )
+	{		
+		if ( !($string instanceof Zend_Locale_UTF8_PHP5_String) )
+			$string = new Zend_Locale_UTF8_PHP5_String($string);
+
+		if ( $string->length() < 1 )
+			return $this;
+			
+		return new Zend_Locale_UTF8_PHP5_String( 
+			array_merge(
+				$this->getSequence(),
+				$string->getSequence()
+			)
+		);
 	}
 	
 	/**
@@ -138,6 +170,24 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 			return 1;
 			
 		return 0;
+	}
+	
+	/**
+	 * Compares this string to another one.
+	 *
+	 * @access public
+	 * @param mixed $string
+	 * @return boolean
+	 */
+	public function equals( $string )
+	{
+		if ( !($string instanceof Zend_Locale_UTF8_PHP5_String) )
+			$string = new Zend_Locale_UTF8_PHP5_String($string);
+		
+		if ( $this->sequence === $string->getSequence() )
+			return true;
+			
+		return false;
 	}
 	
 	/**
@@ -161,9 +211,21 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	 */
 	public function indexOf( $string )
 	{
-		if ( !is_object($string) || !($string instanceof Zend_Locale_UTF8_PHP5_String) ) {
+		return $this->_indexOf($string);
+	}
+	
+	
+	/**
+	 * Returns the index within this string of the last occurrence of the specified string.
+	 *
+	 * @access public
+	 * @param mixed $string
+	 * @return integer
+	 */
+	public function lastIndexOf( $string )
+	{
+		if ( !($string instanceof Zend_Locale_UTF8_PHP5_String) )
 			$string = new Zend_Locale_UTF8_PHP5_String($string);
-		}
 				
 		$length 	= $string->length();
 		$ownLength	= $this->length();
@@ -175,7 +237,7 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 			//search for a single character
 			$char 	= $string->codePointAt(0);
 
-			for ( $i=0; $i < $ownLength; $i++ ) {
+			for ( $i = $ownLength-1; $i >= 0; $i-- ) {
 				if ( $char === $this->sequence[$i] )
 					return $i;
 			}
@@ -185,18 +247,18 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 			//search for a string
 			$char 	= $string->codePointAt(0);
 			
-			for ( $i=0; $i < $ownLength; $i++ ) {
+			for ( $i = $ownLength-1; $i >= 0; $i-- ) {
 				
 				if ( $char === $this->sequence[$i] ) {
 					//first character matches
-					for ( $j=1; $j < $length; $j++ ) {
+					for ( $j = $length-1; $j >= 0; $j-- ) {
 						
 						$nextCode = $string->codePointAt($j);
 						
 						if ( $nextCode !== $this->sequence[$j+$i] )
 							break;
 						
-						if ( $j >= $length-1 )
+						if ( $j < 1 )
 							return $i;
 					}
 				}
@@ -216,6 +278,75 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	public function length()
 	{
 		return count( $this->sequence );
+	}
+	
+	/**
+	 * Replace all occurrences of the search string with the replacement string
+	 *
+	 * @access public
+	 * @param mixed $needle
+	 * @param mixed $replacement
+	 * @return Zend_Locale_UTF8_PHP5_String
+	 */
+	public function replace( $needle, $replacement )
+	{
+		$i = 0;
+		
+		if ( !($needle instanceof Zend_Locale_UTF8_PHP5_String) )
+			$needle = new Zend_Locale_UTF8_PHP5_String($needle);
+			
+		if ( !($replacement instanceof Zend_Locale_UTF8_PHP5_String) )
+			$replacement = new Zend_Locale_UTF8_PHP5_String($replacement);
+			
+		$sequence = $this->getSequence();
+		
+		while ( ($index = $this->_indexOf($needle, $i)) >= 0 ) {
+			$sequence = array_merge(
+				array_slice($sequence, 0, $index),
+				$replacement->getSequence(),
+				array_slice($sequence, $index+$needle->length()+1)
+			);
+			$i = $index + $needle->length();
+		}
+		
+		return new Zend_Locale_UTF8_PHP5_String($sequence);
+	}
+	
+	/**
+	 * Returns a new string that is a substring of this string.
+	 * 
+	 * The substring begins at the specified beginIndex and extends to the
+	 * character at index endIndex - 1.
+	 * Thus the length of the substring is endIndex-beginIndex.
+	 * 
+	 * If called without $endIndex substring() returns a new string from $beginIndex
+	 * to the end of the string
+	 *
+	 * @param integer $beginIndex
+	 * @param integer $endIndex
+	 */
+	public function substring($beginIndex, $endIndex=null)
+	{
+		if ( $beginIndex > 0 && $beginIndex >= $this->length() )
+			throw new Zend_Locale_UTF8_Exception('$beginIndex('.$beginIndex.') is out of bounds.');
+			
+		if ( $endIndex > 0 && $endIndex >= $this->length() )
+			throw new Zend_Locale_UTF8_Exception('$endIndex('.$endIndex.') is out of bounds.');
+		
+		if ( is_null($endIndex) )
+			return new Zend_Locale_UTF8_PHP5_String(
+				array_slice(
+					$this->getSequence(),
+					$beginIndex
+				)
+			);
+		return new Zend_Locale_UTF8_PHP5_String(
+			array_slice(
+				$this->getSequence(),
+				$beginIndex,
+				($endIndex >= 0) ? $endIndex-$beginIndex : $endIndex
+			)
+		);
 	}
 	
 	/**
@@ -258,11 +389,11 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	/**
 	 * Returns the character of a URF-8 character code.
 	 *
-	 * @access private
+	 * @access protected
 	 * @param int $char
 	 * @return string
 	 */
-	private function _chr( $char )
+	protected function _chr( $char )
 	{
 		if ($char > 0) {
 			if ( $char < 0x0080 )
@@ -295,13 +426,13 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	 * Returns the UTF-8 code of a character.
 	 *
 	 * @see http://en.wikipedia.org/wiki/UTF-8#Description
-	 * @access private
+	 * @access protected
 	 * @param string $string
 	 * @param integer $bytes
 	 * @param integer $position
 	 * @return integer
 	 */
-	private function _ord( &$string, $bytes = null, $pos=0 )
+	protected function _ord( &$string, $bytes = null, $pos=0 )
 	{
 		if ( is_null($bytes) )
 			$bytes = $this->_characterBytes($string);
@@ -343,12 +474,13 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	/**
 	 * Returns the UTF-8 code sequence as an array for any given $string.
 	 *
-	 * @access private
-	 * @param string $string
+	 * @access protected
+	 * @param string|integer $string
 	 * @return array
 	 */
-	private function _decode( $string ) {
+	protected function _decode( $string ) {
 		
+		$string		= (string) $string;
 		$length		= strlen($string);
 		$sequence	= array();
 
@@ -373,11 +505,11 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	 * Returns the number of bytes of the $position-th character.
 	 *
 	 * @see http://en.wikipedia.org/wiki/UTF-8#Description
-	 * @access private
+	 * @access protected
 	 * @param string $string
 	 * @param integer $position
 	 */
-	private function _characterBytes( &$string, $position = 0 ) {
+	protected function _characterBytes( &$string, $position = 0 ) {
 		$char 		= $string[$position];
 		$charVal 	= ord($char);
 		
@@ -399,18 +531,65 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 			
 		return false;
 	}
-			
+				
 	/**
 	 * Init Zend_Locale_UTF8_PHP5_CaseFolding which is needed for upper and lower case funtions
 	 * 
-	 * @access private
+	 * @access protected
 	 */
-	private function _initCaseFoldingTable()
+	protected function _initCaseFoldingTable()
 	{
 		if ( is_null(self::$_caseFoldingTable) ) {
 			require_once 'Zend/Locale/UTF8/PHP5/CaseFolding.php';
 			self::$_caseFoldingTable	= new Zend_Locale_UTF8_PHP5_CaseFolding();
 		}
+	}
+	
+	protected function _indexOf( &$string, $start=0 )
+	{
+		if ( !($string instanceof Zend_Locale_UTF8_PHP5_String) )
+			$string = new Zend_Locale_UTF8_PHP5_String($string);
+				
+		$length 	= $string->length();
+		$ownLength	= $this->length();
+		
+		if ( $length < 1 || $length > $ownLength - $start )
+			return -1;
+			
+		if ( $length === 1  ) {
+			//search for a single character
+			$char 	= $string->codePointAt(0);
+
+			for ( $i=$start; $i < $ownLength; $i++ ) {
+				if ( $char === $this->sequence[$i] )
+					return $i;
+			}
+			
+		} else {
+			
+			//search for a string
+			$char 	= $string->codePointAt(0);
+			
+			for ( $i=$start; $i < $ownLength; $i++ ) {
+				
+				if ( $char === $this->sequence[$i] ) {
+					//first character matches
+					for ( $j=1; $j < $length; $j++ ) {
+						
+						$nextCode = $string->codePointAt($j);
+						
+						if ( $nextCode !== $this->sequence[$j+$i] )
+							break;
+						
+						if ( $j >= $length-1 )
+							return $i;
+					}
+				}
+			}
+		}
+		
+		
+		return -1;
 	}
 	
 }
