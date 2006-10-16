@@ -105,7 +105,7 @@ foreach ($hits as $hit) {
         Optionally, the original Zend_Search_Lucene_Document object can be returned from the
         Zend_Search_Lucene_Search_QueryHit.
 
-        You can retrieve indexed parts of the document by using the <code>getDocument()</code>
+        You can retrieve stored parts of the document by using the <code>getDocument()</code>
         method of the index object and then get them by
         <code>getFieldValue()</code> method:
         </para>

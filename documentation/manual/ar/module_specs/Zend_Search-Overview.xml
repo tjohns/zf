@@ -19,7 +19,7 @@
                        proximity queries, range queries and more
                         <footnote>
                            <para>
-                             Only term and multi term queries are supported at this time.
+                             Only term, multi term and phrase queries are supported at this time.
                            </para>
                         </footnote>
                     </para>

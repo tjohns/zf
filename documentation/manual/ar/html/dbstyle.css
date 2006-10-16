@@ -1,5 +1,7 @@
 body {
-	font-family: Tahoma, Arial, sans-serif;
+	font-family:  Times New Roman, Arial , verdana,  sans-serif;
+    direction:rtl;
+    text-align:right;
 }
 
 h1, h2, h3, h4, h5 {
@@ -76,10 +78,10 @@ div.revinfo {
 
 p {
     text-align: right;
-    direction:right;
+    direction:rtl;
 }
 
 pre {
     text-align: left;
-    direction:left;
+    direction:ltr;
 }
