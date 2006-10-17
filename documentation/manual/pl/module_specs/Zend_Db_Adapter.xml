@@ -81,46 +81,47 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
         </para>
 
         <para>
-            Pierwsza z nich to metoda <code>quote()</code>.  It will quote a
-            scalar value appropriately for your database adapter; if you
-            attempt to quote an array, it will return a comma-separated
-            string of the array values, each properly quoted (this is
-            useful for functions that take a list parameter).
+            Pierwsza z nich to metoda <code>quote()</code>. Zacytuje ona wartość
+            skalarną odpowiednio dla twojego adaptera bazy danych; jeśli spróbujesz
+            cytować tablicę, metoda zwróci łańcuch znaków zawierający wartości
+            elementów tablicy oddzielone przecinkami. Każda wartość zostanie
+            odpowiednio zacytowana. (Jest to użyteczne dla funkcji przyjmujących
+            parametr w postaci listy).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 
-// create a $db object, assuming Mysql as the adapter.
+// tworzymy obiekt $db, zakładając, że adapter to Mysql
 
-// quote a scalar
+// cytujemy łańcuch znaków
 $value = $db->quote('St John"s Wort');
-// $value is now '"St John\"s Wort"' (note the surrounding quotes)
+// $value ma teraz wartość '"St John\"s Wort"' (zwróć uwagę na otaczające ją cudzysłowy)
 
-// quote an array
+// cytujemy tablicę
 $value = $db->quote(array('a', 'b', 'c');
-// $value is now '"a", "b", "c"' (a comma-separated string)
+// $value ma teraz wartość '"a", "b", "c"' (elementy tablicy oddzielone przecinkami)
 
 ?>]]></programlisting>
 
         <para>
-            The second is the <code>quoteInto()</code> method.  You provide a base
-            string with a question-mark placeholder, and then one scalar
-            or array to quote into it.  This is useful for constructing
-            queries and clauses as-you-go.  Scalars and arrays work just
-            as in the <code>quote()</code> method.
+            Druga metoda to <code>quoteInto()</code>. Przekazujesz do niej podstawowy
+            łańcuch znaków ze znacznikiem w postaci znaku zapytania, a następnie
+            jedną wartość skalarną lub tablicę która ma być wstawiona. Jest to
+            użyteczne przy tworzeniu zapytań i warunków po kolei. Wartości 
+            skalarne i tablice działają tak samo jak w metodzie <code>quote()</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, assuming Mysql as the adapter.
+// tworzymy obiekt $db, zakładając, że adapter to Mysql
 
-// quote a scalar into a WHERE clause
+// cytujemy łańcuch znaków dla warunku WHERE
 $where = $db->quoteInto('id = ?', 1);
-// $where is now 'id = "1"' (note the surrounding quotes)
+// $where ma teraz wartość 'id = "1"' (zwróć uwagę na otaczające ją cudzysłowy)
 
-// quote an array into a WHERE clause
+// cytujemy tablicę dla warunku WHERE
 $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
-// $where is now 'id IN("1", "2", "3")' (a comma-separated string)
+// $where ma teraz wartość 'id IN("1", "2", "3")' (elementy tablicy oddzielone przecinkami)
 
 ?>]]></programlisting>
     </sect2>
@@ -139,57 +140,57 @@ $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
 
         <programlisting role="php"><![CDATA[<?php
 	
-// tworzymy obiekt $db, a następnie ...query... bazę
-// with a properly-quoted SQL statement.
+// tworzymy obiekt $db, a następnie wykonujemy
+// odpowiednio zacytowane zapytanie SQL.
 $sql = $db->quoteInto(
     'SELECT * FROM example WHERE date > ?',
     '2006-01-01'
 );
 $result = $db->query($sql);
 
-// use the PDOStatement $result to fetch all rows as an array
+// używamy PDOStatement aby pobrać wszystkie wiersze w postaci tablicy
 $rows = $result->fetchAll();
 
 ?>]]></programlisting>
 
         <para>
-            You may bind data into your query automatically.  This means
-            you can set multiple named placeholders in the query, and
-            then pass an array of data that is substituted for those
-            placeholders.  The substituted values are automatically
-            quoted for you, providing greater security against SQL
-            injection attacks.
+            Możesz dołączać dane do zapytania automatycznie. Oznacza to, że 
+            możesz użyć dowolną ilość nazwanych znaczników w zapytaniu, a następnie
+            przekazać tablicę danych które odpowiadają tym znacznikom. Odpowiadające
+            wartości są automtycznie cytowane, lepiej zabezpieczając przed
+            atakami SQL injection.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then query the database.
-// this time, use placeholder binding.
+// tworzymy obiekt $db, a następnie wykonujemy zapytanie
+// tym razem używając podmieniania znaczników
 $result = $db->query(
     'SELECT * FROM example WHERE date > :placeholder',
     array('placeholder' => '2006-01-01')
 );
 
-// use the PDOStatement $result to fetch all rows as an array
+// używamy PDOStatement aby pobrać wszystkie wiersze w postaci tablicy
 $rows = $result->fetchAll();
 
 ?>]]></programlisting>
 
         <para>
-            Optionally, you may wish to prepare and bind data to SQL statements
-            manually.  To do so, use the <code>prepare()</code> method to get a prepared
-            <code>PDOStatement</code> that you can manipulate directly.
+            Opcjonalnie możesz przygotować i dołączyć dane do zapytań SQL ręcznie.
+            Aby to zrobić użyj metody <code>prepare()</code> aby otrzymać 
+            przygotowane zapytanie <code>PDOStatement</code>, przy którym możesz 
+            bezpośrednio manipulować.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// create a $db object, and then query the database.
-// this time, prepare a PDOStatement for manual binding.
+// tworzymy obiekt $db, a następnie wykonujemy zapytanie
+// tym razem przygotowujemy PDOStatement do ręcznego dołączania.
 $stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
 $stmt->bindValue('placeholder', '2006-01-01');
 $stmt->execute();
 
-// use the PDOStatement to fetch all rows as an array
+// używamy PDOStatement aby pobrać wszystkie wiersze w postaci tablicy
 $rows = $stmt->fetchAll();
 
 ?>]]></programlisting>
@@ -214,9 +215,9 @@ $rows = $stmt->fetchAll();
 // utwórz obiekt $db, a następnie rozpocznij transakcję
 $db->beginTransaction();
 
-// attempt a query.
-// if it succeeds, commit the changes;
-// if it fails, roll back.
+// próbujemy wykonać zapytanie
+// jeśli uda się, zatwierdzamy zapytanie;
+// jeśli nie uda się, cofamy zapytanie.
 try {
     $db->query(...);
     $db->commit();
@@ -233,10 +234,10 @@ try {
         <title>Wstawianie wierszy</title>
 
         <para>
-            As a convenience, you may use the <code>insert()</code> method to create
-            an INSERT statement for you and bind data to be inserted into it.
-            (The bound data is quoted for you automatically to help prevent
-            SQL injection attacks.)
+            Dla wygody możesz użyć metody <code>insert()</code>, która utworzy
+            zapytanie INSERT oraz dołączy do niego dane, które mają wstawione.
+            (Dołączone dane zostaną automatycznie zacytowane aby pomóc zapobiegać
+            atakom SQL injection.)
         </para>
 
         <para>
@@ -278,16 +279,16 @@ $last_insert_id = $db->lastInsertId();
         <title>Aktualizowanie wierszy</title>
 
         <para>
-            As a convenience, you may use the <code>update()</code> method to create
-            an UPDATE statement for you and bind data to be updated into it.
-            (The bound data is quoted for you automatically to help prevent
-            SQL injection attacks.)
+            Dla wygody możesz użyć metody <code>update()</code>, która utworzy
+            zapytanie UPDATE oraz dołączy do niego dane które mają być uaktualnione.
+            (Dołączone dane zostaną automatycznie zacytowane aby pomóc zapobiegać
+            atakom SQL injection.)
         </para>
 
         <para>
-            You may provide an optional WHERE clause
-            to tell which rows to update.  (Note that the WHERE clause is not
-            a bound parameter, so you need to quote values in it yourself.)
+            Możesz przekazać do metody opcjonalny warunek WHERE aby określić, 
+            które wiersze chcesz usunąć. (Zauważ, że warunek WHERE nie jest 
+            dołączanym parametrem, więc musisz sam zacytować jego wartości.)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -321,10 +322,11 @@ $rows_affected = $db->update($table, $set, $where);
         <title>Usuwanie wierszy</title>
 
         <para>
-            As a convenience, you may use the <code>delete()</code> method to create
-            a DELETE statement for you; you may provide an optional WHERE clause
-            to tell which rows to delete.  (Note that the WHERE clause is not
-            a bound parameter, so you need to quote values in it yourself.)
+            Dla wygody możesz użyć metody <code>delete()</code>, która utworzy
+            zapytanie DELETE; możesz przekazać do metody opcjonalny warunek 
+            WHERE aby określić, które wiersze chcesz usunąć. (Zauważ, że 
+            warunek WHERE nie jest dołączanym parametrem, więc musisz sam 
+            zacytować jego wartości.)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -352,13 +354,13 @@ $rows_affected = $db->delete($table, $where);
         <title>Pobieranie wierszy</title>
 
         <para>
-            Although you may query the database directly with the <code>query()</code>
-            method, frequently all you need to do is select rows and get
-            the results.  The <code>fetch*()</code> series of methods does this for you.
-            For each of the <code>fetch*()</code> methods, you pass an SQL SELECT
-            statement; if you use named placeholders in the statement, you
-            may also pass an array of bind values to be quoted and replaced
-            into the statement for you.  The <code>fetch*()</code> methods are:
+            Chociaż możesz wykonać zapytanie bezpośrednio za pomocą metody 
+            <code>query()</code>, często wszystko czego potrzebujesz to wybrać
+            wiersze i pobrać wyniki. Seria metod <code>fetch*()</code> robi to
+            dla ciebie. Do każdej z metod <code>fetch*()</code>, przekazujesz 
+            zapytanie SQL SELECT; jeśli użyjesz nazwanych znaczników w zapytaniu, 
+            możesz przekazać tablicę wartości, które mają być zacytowane i 
+            zamienione w zapytaniu. Metody <code>fetch*()</code> to:
         </para>
 
         <itemizedlist>

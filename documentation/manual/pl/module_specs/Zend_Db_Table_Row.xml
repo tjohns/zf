@@ -4,29 +4,29 @@
 
     <sect2 id="zend.db.table.row.introduction">
 
-        <title>Introduction</title>
+        <title>Wprowadzenie</title>
 
         <para>
-            Zend_Db_Table_Row is a row data gateway for the Zend Framework.  In
-            general, you do not instantiate Zend_Db_Table_Row by itself; instead,
-            you get a Zend_Db_Table_Row back as a return result from Zend_Db_Table::find()
-            or Zend_Db_Table::fetchRow().  Once you have a Zend_Db_Table_Row, you can
-            edit the record values (represented as class properties) and then
-            save() the changes back to the originating table.
+            Zend_Db_Table_Row jest klasą obsługi wiersza danych dla Zend Framework. 
+            W zasadzie nie tworzysz sam instancji Zend_Db_Table_Row; otrzymujesz
+            obiekt Zend_Db_Table_Row jako wartość zwracaną przez metodę Zend_Db_Table::find()
+            lub Zend_Db_Table::fetchRow(). Kiedy masz instancję Zend_Db_Table_Row, 
+            możesz edytować wartości rekordu (reprezentowane jako właściwości klasy) 
+            i następnie zapisać zmiany za pomocą metody save() spowrotem w tabeli.
         </para>
 
     </sect2>
 
     <sect2 id="zend.db.table.row.fetch">
 
-        <title>Fetching a Row</title>
+        <title>Pobieranie wiersza</title>
 
         <para>
-            The first thing to do is instantiate a Zend_Db_Table class.
+            Pierwsza rzecz do zrobienia to utworzenie instancji klasy Zend_Db_Table.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// set up an adapter
+// przygotujmy adapter
 require_once 'Zend/Db.php';
 $params = array (
     'host'     => '127.0.0.1',
@@ -37,33 +37,33 @@ $params = array (
 
 $db = Zend_Db::factory('PDO_MYSQL', $params);
 
-// set the default adapter for all Zend_Db_Table objects
+// ustawmy domyślny adapter dla wszystkich obiektów Zend_Db_Table
 require_once 'Zend/Db/Table.php';
 Zend_Db_Table::setDefaultAdapter($db);
 
-// connect to a table in the database
+// połączmy się z tabelą w bazie danych
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 ?>]]>
         </programlisting>
 
         <para>
-            Next, retrieve one record from the database using
-            Zend_Db_Table::find() with a single key, or by using
-            Zend_Db_Table::fetchRow().  The returned result will be a
-            Zend_Db_Table_Row object where each property in the object is a
-            "camelCaps" name mapped to an "underscore_words" column name
-            from the table.  E.g., "first_name" in the table will become
-            "firstName" in the object properties.
+            Następnie pobieramy jeden rekord z bazy danych używając metody
+            Zend_Db_Table::find() z pojedynczym kluczem, lub używając metody
+            Zend_Db_Table::fetchRow(). Zwrócony rezultat będzie obiektem 
+            Zend_Db_Table_Row gdzie każda właściwość obiektu jest nazwą w postaci
+            "camelCaps" zmapowaną na nazwy kolumn "underscore_words" z tabeli.  
+            Np., nazwa kolumny "first_name" z tabeli stanie się nazwą "firstName" 
+            właściwości obiektu.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// fetch a record from the table as a Zend_Db_Table_Row object
+// pobierzmy rekord z tabeli jako obiekt Zend_Db_Table_Row
 $row = $table->fetchRow('first_name = "Robin"');
 
 //
-// $row is now a Zend_Db_Table_Row object with public properties
-// that map to table columns:
+// $row jest teraz obiektem Zend_Db_Table_Row z publicznymi właściwościami
+// które odpowiadają kolumnom tabeli:
 //
 // $row->id = '3'
 // $row->nobleTitle = 'Sir'
@@ -78,54 +78,54 @@ $row = $table->fetchRow('first_name = "Robin"');
 
     <sect2 id="zend.db.table.row.modify">
 
-        <title>Modifying Values</title>
+        <title>Modyfikowanie wartości</title>
 
         <para>
-            Modifying row values is very easy: just work with the object properties
-            the way you would with any other object.  Then you can save() the row back
-            to the table when you are done.
+            Modyfikowanie wartości jest bardzo proste: po prostu używaj wartości
+            obiektu w taki sam sposób jak w każdym innym obiekcie. Wtedy możesz
+            użyć metody save() aby zapisać zmiany w wierszu tabeli.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
+// połączmy się z tabelą w bazie danych
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// fetch a record from the table as a Zend_Db_Table_Row object
+// pobierzmy rekord z tabeli jako obiekt Zend_Db_Table_Row
 $row = $table->fetchRow('first_name = "Robin"');
 
 //
-// $row is now a Zend_Db_Table_Row object() with public properties
-// that map to table columns:
+// $row jest teraz obiektem Zend_Db_Table_Row z publicznymi właściwościami
+// które odpowiadają kolumnom tabeli:
 //
 // $row->id = '3'
 // $row->nobleTitle = 'Sir'
 // $row->firstName = 'Robin'
 // $row->favoriteColor = 'yellow'
 //
-// change the favorite color and save back to the table.
+// zmieniamy ulubiony kolor i zapisujemy zmiany w tabeli.
 $row->favoriteColor = 'blue';'
 $row->save();
 ?>]]>
         </programlisting>
 
         <para>
-            However, you are not allowed to change primary key values; if you
-            do so, Zend_Db_Table_Row will throw an exception.
+            Jakkolwiek, nie możesz zmienić wartości klucza podstawowego; jeśli
+            spróbujesz, Zend_Db_Table_Row wyrzuci wyjątek.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// connect to a table in the database
+// połączmy się z tabelą w bazie danych
 class RoundTable extends Zend_Db_Table {}
 $table = new RoundTable();
 
-// fetch a record from the table as a Zend_Db_Table_Row object
+// pobierzmy rekord z tabeli jako obiekt Zend_Db_Table_Row
 $row = $table->fetchRow('first_name = "Robin"');
 
-// can we change the primary key "id"?
+// czy możemy zmienić klucz podstawowy "id"?
 try {
     $row->id = 5;
-    echo "We should not see this message, as an exception was thrown.";
+    echo "Nie powinniśmy zobaczyć tej wiadomości, ponieważ powinien być wyrzucony wyjątek.";
 } catch (Zend_Db_Table_RowException $e) {
     echo $e->getMessage();
 }
