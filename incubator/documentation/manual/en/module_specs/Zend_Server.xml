@@ -1,0 +1,20 @@
+<sect1 id="zend.server.introduction">
+    <title>Introduction</title>
+    <para>
+        The Zend_Server family of classes provides functionality for the various
+        server classes, including Zend_XmlRpc_Server, Zend_Rest_Server,
+        and Zend_Soap_Wsdl. Zend_Server_Interface provides an interface that
+        mimics PHP 5's SoapServer class; all server classes should implement this
+        interface in order to provide a standard API.
+        from this 
+    </para>
+    <para>
+        The Zend_Server_Reflection tree provides a standard mechanism for
+        performing function and class introspection for use as callbacks with
+        the server classes.
+    </para>
+</sect1>
+&module_specs.Zend_Server_Reflection;
+<!--
+vim:se ts=4 sw=4 et:
+-->

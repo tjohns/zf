@@ -127,6 +127,10 @@
         <title>Zend_XmlRpc</title>
         &module_specs.Zend_XmlRpc;
     </chapter>
+    <chapter id="zend.server">
+        <title>Zend_Server</title>
+        &module_specs.Zend_Server;
+    </chapter>
     &module_specs.Zend_Locale_Appendix_Languages;
     &module_specs.Zend_Locale_Appendix_Regions;
     <!-- &ref.faq; -->
