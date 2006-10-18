@@ -57,16 +57,31 @@ class Zend_Config_Xml extends Zend_Config
         if (empty($filename)) {
             throw new Zend_Config_Exception('Filename is not set');
         }
-        if (empty($section)) {
-            throw new Zend_Config_Exception('Section is not set');
-        }
 
         $config = simplexml_load_file($filename);
-        if (!isset($config->$section)) {
-            throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
+        
+        if (is_null($section)) {
+            $s = array();
+            foreach($config as $name=>$sec) {
+		        $s[$name] = $this->_processExtends($config, $name);
+            }
+            parent::__construct($s, $allowModifications);
+        } elseif (is_array($section)) {
+            $s = array();
+            foreach($section as $sec) {
+		        if (!isset($config->$sec)) {
+		            throw new Zend_Config_Exception("Section '$sec' cannot be found in $filename");
+		        }
+		        $s = array_merge($this->_processExtends($config, $sec), $s);
+		        
+            }
+            parent::__construct($s, $allowModifications);
+        } else {
+	        if (!isset($config->$section)) {
+	            throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
+	        }
+	        parent::__construct($this->_processExtends($config, $section), $allowModifications);
         }
-
-        parent::__construct($this->_processExtends($config, $section), $allowModifications);
     }
 
 

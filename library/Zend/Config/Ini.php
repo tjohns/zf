@@ -69,9 +69,6 @@ class Zend_Config_Ini extends Zend_Config
         if (empty($filename)) {
             throw new Zend_Config_Exception('Filename is not set');
         }
-        if (empty($section)) {
-            throw new Zend_Config_Exception('Section is not set');
-        }
 
         $iniArray = parse_ini_file($filename, true);
         $preProcessedArray = array();
@@ -95,11 +92,28 @@ class Zend_Config_Ini extends Zend_Config
             }
         }
 
-        if (!isset($preProcessedArray[$section])) {
-            throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
+        if (is_null($section)) {
+            $s = array();
+            foreach($preProcessedArray as $name=>$sec) {
+		        $s[$name] = $this->_processExtends($preProcessedArray, $name);
+            }
+            parent::__construct($s, $allowModifications);
+        } elseif (is_array($section)) {
+            $s = array();
+            foreach($section as $sec) {
+		        if (!isset($preProcessedArray[$sec])) {
+		            throw new Zend_Config_Exception("Section '$sec' cannot be found in $filename");
+		        }
+		        $s = array_merge($this->_processExtends($preProcessedArray, $sec), $s);
+		        
+            }
+            parent::__construct($s, $allowModifications);
+        } else {
+	        if (!isset($preProcessedArray[$section])) {
+	            throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
+	        }
+	        parent::__construct($this->_processExtends($preProcessedArray, $section), $allowModifications);
         }
-        
-        parent::__construct($this->_processExtends($preProcessedArray, $section), $allowModifications);
     }
 
     /**

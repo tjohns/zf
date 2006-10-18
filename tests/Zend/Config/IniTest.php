@@ -26,11 +26,12 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
 {
     protected $_iniFileConfig;
-    protected $_iniFileNested;
+    protected $_iniFileAllSectionsConfig;
 
     public function setUp()
     {
         $this->_iniFileConfig = dirname(__FILE__) . '/_files/config.ini';
+        $this->_iniFileAllSectionsConfig = dirname(__FILE__) . '/_files/allsections.ini';
     }
 
     public function testLoadSingleSection()
@@ -89,16 +90,6 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('anotherpwd', $config->db->pass); // inherited from two to other_staging and overridden
     }
 
-    public function testErrorNoInitialSection()
-    {
-        try {
-            $config = @new Zend_Config_Ini($this->_iniFileConfig);
-            $this->fail('An expected Zend_Config_Exception has not been raised');
-        } catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Section is not set', $expected->getMessage());
-        }
-    }
-
     public function testErrorNoExtendsSection()
     {
         try {
@@ -130,6 +121,22 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('Cannot create sub-key for', $expected->getMessage());
         }        
+    }
+
+    public function testZF413_MultiSections()
+    {
+        $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, array('staging','other_staging'));
+        
+        $this->assertEquals('otherStaging', $config->only_in); 
+        $this->assertEquals('staging', $config->hostname); 
+
+    }
+        
+    public function testZF413_AllSections()
+    {
+        $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, null);
+        $this->assertEquals('otherStaging', $config->other_staging->only_in); 
+        $this->assertEquals('staging', $config->staging->hostname); 
     }
 
 }

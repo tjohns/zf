@@ -26,10 +26,12 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
 {
     protected $_configFile;
+    protected $_iniFileAllSectionsConfig;
 
     public function setUp()
     {
         $this->_configFile = dirname(__FILE__) . '/_files/config.xml';
+        $this->_iniFileAllSectionsConfig = dirname(__FILE__) . '/_files/allsections.xml';
     }
 
     public function testLoadSingleSection()
@@ -64,18 +66,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('dbstaging', $config->db->name); // inherited from two to one and overridden
         $this->assertEquals('anotherpwd', $config->db->pass); // inherited from two to other_staging and overridden
     }
-
-    public function testErrorNoInitialSectionSet()
-    {
-        try {
-            $config = @new Zend_Config_Xml($this->_configFile);
-            $this->fail('An expected Zend_Config_Exception has not been raised');
-        } catch (Zend_Config_Exception $expected) {
-            $this->assertContains('Section is not set', $expected->getMessage());
-        }
-    }
-
-
+    
     public function testErrorNoInitialSection()
     {
         try {
@@ -85,7 +76,7 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
             $this->assertContains('cannot be found in', $expected->getMessage());
         }
     }
-
+    
     public function testErrorNoExtendsSection()
     {
         try {
@@ -95,5 +86,19 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
             $this->assertContains('cannot be found', $expected->getMessage());
         }
     }
-
+    
+    public function testZF413_MultiSections()
+    {
+        $config = new Zend_Config_Xml($this->_iniFileAllSectionsConfig, array('staging','other_staging'));
+        
+        $this->assertEquals('otherStaging', $config->only_in); 
+        $this->assertEquals('staging', $config->hostname); 
+    }
+    
+    public function testZF413_AllSections()
+    {
+        $config = new Zend_Config_Xml($this->_iniFileAllSectionsConfig, null);
+        $this->assertEquals('otherStaging', $config->other_staging->only_in); 
+        $this->assertEquals('staging', $config->staging->hostname); 
+    }
 }
