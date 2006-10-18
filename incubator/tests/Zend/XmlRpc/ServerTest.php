@@ -1,7 +1,6 @@
 <?php
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'PHPUnit2/Framework/TestCase.php';
-require_once 'PHPUnit2/Framework/IncompleteTestError.php';
 
 /**
  * Test case for Zend_XmlRpc_Server
@@ -171,6 +170,19 @@ class Zend_XmlRpc_ServerTest extends PHPUnit2_Framework_TestCase
     }
 
     /**
+     * Test that only calling methods using a valid parameter signature works
+     */
+    public function testHandle2()
+    {
+        $request = new Zend_XmlRpc_Request();
+        $request->setMethod('system.methodHelp');
+        $response = $this->_server->handle($request);
+
+        $this->assertTrue($response instanceof Zend_XmlRpc_Fault);
+        $this->assertEquals(623, $response->getCode());
+    }
+
+    /**
      * setResponseClass() test
      *
      * Call as method call 
@@ -268,6 +280,7 @@ class Zend_XmlRpc_ServerTest extends PHPUnit2_Framework_TestCase
         $request->addParam($struct);
         $response = $this->_server->handle($request);
 
+        $this->assertTrue($response instanceof Zend_XmlRpc_Response, $response->__toString());
         $returns = $response->getReturnValue();
         $this->assertTrue(is_array($returns));
         $this->assertEquals(2, count($returns));

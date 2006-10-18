@@ -74,6 +74,7 @@ class Zend_XmlRpc_Fault
         620 => 'Method does not exist',
         621 => 'Error instantiating class to invoke method',
         622 => 'Method missing implementation',
+        623 => 'Calling parameters do not match signature',
 
         // 630 - 639 request errors
         630 => 'Unable to read request',

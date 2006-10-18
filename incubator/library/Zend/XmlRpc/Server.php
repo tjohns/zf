@@ -112,7 +112,7 @@ require_once 'Zend/Server/Reflection/Method.php';
  * echo $response;
  * </code>
  *
- * @category Zend
+ * @category   Zend
  * @package    Zend_XmlRpc
  * @subpackage Server
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -137,6 +137,35 @@ class Zend_XmlRpc_Server
      * @var array 
      */
     protected $_table = array();
+
+    /**
+     * PHP types => XML-RPC types
+     * @var array
+     */
+    protected $_typeMap = array(
+        'i4'               => 'i4',
+        'int'              => 'int',
+        'integer'          => 'int',
+        'double'           => 'double',
+        'float'            => 'double',
+        'real'             => 'double',
+        'boolean'          => 'boolean',
+        'bool'             => 'boolean',
+        'true'             => 'boolean',
+        'false'            => 'boolean',
+        'string'           => 'string',
+        'str'              => 'string',
+        'base64'           => 'base64',
+        'dateTime.iso8601' => 'dateTime.iso8601',
+        'date'             => 'dateTime.iso8601',
+        'time'             => 'dateTime.iso8601',
+        'time'             => 'dateTime.iso8601',
+        'array'            => 'array',
+        'struct'           => 'struct',
+        'null'             => 'void',
+        'void'             => 'void',
+        'mixed'            => 'struct'
+    );
 
     /**
      * Constructor
@@ -169,6 +198,26 @@ class Zend_XmlRpc_Server
     }
 
     /**
+     * Map PHP parameter types to XML-RPC types
+     * 
+     * @param Zend_Server_Reflection_Function_Abstract $method 
+     * @return void
+     */
+    protected function _fixTypes(Zend_Server_Reflection_Function_Abstract $method)
+    {
+        foreach ($method->getPrototypes() as $prototype) {
+            foreach ($prototype->getParameters() as $param) {
+                $pType = $param->getType();
+                if (isset($this->_typeMap[$pType])) {
+                    $param->setType($this->_typeMap[$pType]);
+                } else {
+                    $param->setType('void');
+                }
+            }
+        }
+    }
+
+    /**
      * Re/Build the dispatch table
      *
      * The dispatch table consists of a an array of method name => 
@@ -190,6 +239,8 @@ class Zend_XmlRpc_Server
                     throw new Zend_XmlRpc_Server_Exception('Duplicate method registered: ' . $name);
                 }
                 $table[$name] = $dispatchable;
+                $this->_fixTypes($dispatchable);
+
                 continue;
             }
 
@@ -203,6 +254,7 @@ class Zend_XmlRpc_Server
                         throw new Zend_XmlRpc_Server_Exception('Duplicate method registered: ' . $name);
                     }
                     $table[$name] = $method;
+                    $this->_fixTypes($method);
                     continue;
                 }
             }
@@ -350,11 +402,11 @@ class Zend_XmlRpc_Server
     /**
      * Handle an xmlrpc call (actual work)
      *
-     * @todo use fault() for the fault response...
-     * @todo Determine how to get current signature being invoked, and use the 
-     * return type from the signature to hint the return value type
      * @param Zend_XmlRpc_Request $request
-     * @return Zend_XmlRpc_Response|Zend_XmlRpc_Fault
+     * @return Zend_XmlRpc_Response
+     * @throws Zend_XmlRpcServer_Exception|Exception 
+     * Zend_XmlRpcServer_Exceptions are thrown for internal errors; otherwise, 
+     * any other exception may be thrown by the callback
      */
     protected function _handle(Zend_XmlRpc_Request $request) 
     {
@@ -370,6 +422,29 @@ class Zend_XmlRpc_Server
         $argv     = $info->getInvokeArguments();
         if (0 < count($argv)) {
             $params = array_merge($params, $argv);
+        }
+
+        // Check calling parameters against signatures
+        $matched    = false;
+        $sigCalled  = array();
+        foreach ($params as $param) {
+            $value = Zend_XmlRpc_Value::getXmlRpcValue($param);
+            $sigCalled[] = $value->getType();
+        }
+        $signatures = $info->getPrototypes();
+        foreach ($signatures as $signature) {
+            $sigParams = $signature->getParameters();
+            $tmpParams = array();
+            foreach ($sigParams as $param) {
+                $tmpParams[] = $param->getType();
+            }
+            if ($sigCalled === $tmpParams) {
+                $matched = true;
+                break;
+            }
+        }
+        if (!$matched) {
+            throw new Zend_XmlRpc_Server_Exception('Calling parameters do not match signature', 623);
         }
 
         if ($info instanceof Zend_Server_Reflection_Function) {
@@ -540,7 +615,7 @@ class Zend_XmlRpc_Server
      * struct with a fault response.
      *
      * @see http://www.xmlrpc.com/discuss/msgReader$1208
-     * @param array
+     * @param array $methods
      * @return array
      */
     public function multicall($methods) 
