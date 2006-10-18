@@ -74,11 +74,32 @@ class Zend_Config_Ini extends Zend_Config
         }
 
         $iniArray = parse_ini_file($filename, true);
-        if (!isset($iniArray[$section])) {
-            throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
+        $preProcessedArray = array();
+        foreach($iniArray as $key=>$data)
+        {
+            $bits = explode(':', $key);
+            $numberOfBits = count($bits);
+            $thisSection = trim($bits[0]);
+            switch (count($bits)) {
+                case 1:
+                    $preProcessedArray[$thisSection] = $data;
+                    break;
+                
+                case 2:
+                    $extendedSection = trim($bits[1]);
+                    $preProcessedArray[$thisSection] = array_merge(array(';extends'=>$extendedSection), $data);
+                    break;
+                    
+                default:
+                    throw new Zend_Config_Exception("Section '$thisSection' cannot be extended more than once in $filename");
+            }
         }
 
-        parent::__construct($this->_processExtends($iniArray, $section), $allowModifications);
+        if (!isset($preProcessedArray[$section])) {
+            throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
+        }
+        
+        parent::__construct($this->_processExtends($preProcessedArray, $section), $allowModifications);
     }
 
     /**
@@ -97,14 +118,9 @@ class Zend_Config_Ini extends Zend_Config
         $thisSection = $iniArray[$section];
 
         foreach ($thisSection as $key => $value) {
-            if (strtolower($key) == 'extends') {
+            if (strtolower($key) == ';extends') {
                 if (isset($iniArray[$value])) {
-                    foreach ($iniArray[$value] as $k => $v) {
-                        if (strtolower($k) == 'extends') {
-                            $config = $this->_processExtends($iniArray, $v, $config);
-                        }
-                        $config = $this->_processKey($config, $k, $v);
-                    }
+                    $config = $this->_processExtends($iniArray, $value, $config);
                 } else {
                     throw new Zend_Config_Exception("Section '$section' cannot be found");
                 }
