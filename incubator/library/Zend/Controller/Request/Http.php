@@ -31,6 +31,18 @@ class Zend_Controller_Request_Http extends Zend_Http_Request implements Zend_Con
     protected $_actionName = null;
 
     /**
+     * Controller key
+     * @var string 
+     */
+    protected $_controllerKey = 'controller';
+
+    /**
+     * Action key
+     * @var string 
+     */
+    protected $_actionKey = 'noRoute';
+
+    /**
      * Dispatch status of request
      * @var boolean 
      */
@@ -97,5 +109,47 @@ class Zend_Controller_Request_Http extends Zend_Http_Request implements Zend_Con
     public function isDispatched()
     {
         return $this->_dispatched;
+    }
+
+    /**
+     * Retrieve the key that specifies the controller parameter
+     * 
+     * @return string
+     */
+    public function getControllerKey()
+    {
+        return $this->_controllerKey;
+    }
+
+    /**
+     * Set the key that specifies the controller parameter
+     * 
+     * @param string
+     * @return void
+     */
+    public function setControllerKey($key)
+    {
+        $this->_controllerKey = (string) $key;
+    }
+
+    /**
+     * Retrieve the key that specifies the action parameter
+     * 
+     * @return string
+     */
+    public function getActionKey()
+    {
+        return $this->_actionKey;
+    }
+
+    /**
+     * Set the key that specifies the action parameter
+     * 
+     * @param string
+     * @return void
+     */
+    public function setActionKey($key)
+    {
+        $this->_actionKey = (string) $key;
     }
 }

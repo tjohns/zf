@@ -61,6 +61,29 @@ interface Zend_Controller_Dispatcher_Interface
      */
 	public function isDispatchable(Zend_Controller_Request_Interface $request);
 
+    /**
+     * Add a parameter with which to instantiate an Action Controller
+     * 
+     * @param mixed $param 
+     * @return void
+     */
+    public function addParam($param);
+
+    /**
+     * Set an array of a parameters to pass to the Action Controller constructor
+     * 
+     * @param array $params 
+     * @return void
+     */
+    public function setParams(array $params);
+
+    /**
+     * Retrieve the parameters to pass to the Action Controller constructor
+     * 
+     * @return array
+     */
+    public function getParams();
+
 	/**
      * Dispatches a request object to a controller/action.  If the action
      * requests a forward to another action, a new request will be returned.

@@ -48,6 +48,25 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      */
     protected $_directory = null;
 
+    /**
+     * Array of invocation parameters to use when instantiating action 
+     * controllers
+     * @var array 
+     */
+    protected $_invokeParams = array();
+
+    /**
+     * Constructor
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        if (0 < func_num_args()) {
+            $argv = func_get_args();
+            $this->setParams($argv);
+        }
+    }
 
     /**
      * Formats a string into a controller name.  This is used to take a raw
@@ -75,7 +94,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      */
 	public function formatActionName($unformatted)
 	{
-	    $formatted = $this->_formatName($unformatted);
+        $formatted = $this->_formatName($unformatted);
 	    return strtolower(substr($formatted, 0, 1)) . substr($formatted, 1) . 'Action';
 	}
 
@@ -115,28 +134,63 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 
 
     /**
-     * Returns TRUE if the Zend_Controller_Dispatcher_Token object can be dispatched to a controller.
+     * Returns TRUE if the Zend_Controller_Request_Interface object can be dispatched to a controller.
      * This only verifies that the Zend_Controller_Action can be dispatched and does not
      * guarantee that the action will be accepted by the Zend_Controller_Action.
      *
-     * @param Zend_Controller_Dispatcher_Token $action
+     * @param Zend_Controller_Request_Interface $action
      * @return unknown
      */
-	public function isDispatchable(Zend_Controller_Dispatcher_Token $action)
+	public function isDispatchable(Zend_Controller_Request_Interface $request)
 	{
-        return $this->_dispatch($action, false);
+        if ($request->isDispatched()) {
+            return false;
+        }
+
+        return $this->_dispatch($request, false);
 	}
 
+    /**
+     * Add a parameter to use when instantiating an action controller
+     * 
+     * @param mixed $param 
+     * @return void
+     */
+    public function addParam($param)
+    {
+        array_push($this->_invokeParams, $param);
+    }
+
+    /**
+     * Set parameters to pass to action controller constructors
+     * 
+     * @param array $params 
+     * @return void
+     */
+    public function setParams(array $params)
+    {
+        $this->_invokeParams = $params;
+    }
+
+    /**
+     * Retrieve action controller instantiation parameters
+     * 
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->_invokeParams;
+    }
 
 	/**
 	 * Dispatch to a controller/action
 	 *
-	 * @param Zend_Controller_Dispatcher_Token $action
-	 * @return boolean|Zend_Controller_Dispatcher_Token
+	 * @param Zend_Controller_Request_Interface $action
+	 * @return boolean
 	 */
-	public function dispatch(Zend_Controller_Dispatcher_Token $action)
+	public function dispatch(Zend_Controller_Request_Interface $request)
 	{
-	    return $this->_dispatch($action, true);
+	    return $this->_dispatch($request);
 	}
 
 
@@ -150,17 +204,19 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 	 * instantiate the controller and call its action.  Calling the action
 	 * is done by passing a Zend_Controller_Dispatcher_Token to the controller's constructor.
 	 *
-	 * @param Zend_Controller_Dispatcher_Token $action
+	 * @param Zend_Controller_Request_Interface $request
 	 * @param boolean $performDispatch
-	 * @return boolean|Zend_Controller_Dispatcher_Token
+	 * @return void
 	 */
-	protected function _dispatch(Zend_Controller_Dispatcher_Token $action, $performDispatch)
+	protected function _dispatch(Zend_Controller_Reqeust_Interface $request, $performDispatch = true)
 	{
+        // Controller directory check
 	    if ($this->_directory === null) {
-	        throw new Zend_Controller_Dispatcher_Exception('Controller directory never set.  Use setControllerDirectory() first.');
+	        throw new Zend_Controller_Dispatcher_Exception('Controller directory never set.  Use setControllerDirectory() first');
 	    }
 
-	    $className  = $this->formatControllerName($action->getControllerName());
+        // Get controller class name
+	    $className  = $this->formatControllerName($request->getControllerName());
 
 	    /**
 	     * If $performDispatch is FALSE, only determine if the controller file
@@ -170,27 +226,41 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 	        return Zend::isReadable($this->_directory . DIRECTORY_SEPARATOR . $className . '.php');
 	    }
 
+        // Load the class file
         Zend::loadClass($className, $this->_directory);
 
-        $controller = new $className();
-        if (!$controller instanceof Zend_Controller_Action) {
-           throw new Zend_Controller_Dispatcher_Exception("Controller \"$className\" is not an instance of Zend_Controller_Action.");
+        // Perform reflection on the class and verify it's a controller
+        $reflection = ReflectionClass($className);
+        if (!$reflection->isSubclassOf(new ReflectionClass('Zend_Controller_Action'))) {
+           throw new Zend_Controller_Dispatcher_Exception("Controller \"$className\" is not an instance of Zend_Controller_Action");
         }
-            
-        /**
-         * Dispatch
-         *
-         * Call the action of the Zend_Controller_Action.  It will return either null or a
-         * new Zend_Controller_Dispatcher_Token object.  If a Zend_Controller_Dispatcher_Token object is returned, this will be returned
-         * back to ZFrontController, which will call $this again to forward to
-         * another action.
-         */
-        $nextAction = $controller->run($this, $action);
 
-        // Destroy the page controller instance
+        // Get any instance arguments and instantiate a controller object
+        $args = $this->getParams();
+        array_unshift($args, $request);
+        $controller = $reflection->newInstanceArgs($args);
+
+        // Determine the action name; default to noRoute if none specified in 
+        // the request object, or __call() if the method does not exist
+        $invokeArgs = array();
+        if (null !== ($action = $request->getActionName())) {
+            $action = $this->formatActionName($request->getActionName());
+        } else {
+            $action = $this->formatActionName('noRoute');
+        }
+
+        if (!$reflection->hasMethod($action)) {
+            array_push($invokeArgs, $action);
+            $action == '__call';
+        }
+        $method = $reflection->getMethod($action);
+
+        // Dispatch the method call
+        $method->invokeArgs($controller, $invokeArgs);
+
+        // Destroy the page controller instance and reflection objects
         $controller = null;
-
-        // Return either null (finished) or a Zend_Controller_Dispatcher_Token object (forward to another action).
-        return $nextAction;
+        $reflection = null;
+        $method     = null;
 	}
 }

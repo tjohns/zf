@@ -42,4 +42,27 @@ interface Zend_Controller_Router_Interface
      * @return Zend_Controller_Request_Interface|boolean
      */
     public function route(Zend_Controller_Request_Interface $dispatcher);
+
+    /**
+     * Add a parameter with which to instantiate any helper objects
+     * 
+     * @param mixed $param 
+     * @return void
+     */
+    public function addParam($param);
+
+    /**
+     * Set an array of a parameters to pass to helper object constructors
+     * 
+     * @param array $params 
+     * @return void
+     */
+    public function setParams(array $params);
+
+    /**
+     * Retrieve the parameters to pass to helper object constructors
+     * 
+     * @return array
+     */
+    public function getParams();
 }

@@ -57,6 +57,36 @@ interface Zend_Controller_Request_Interface
     public function setActionName($value);
 
     /**
+     * Retrieve the controller key
+     * 
+     * @return string
+     */
+    public function getControllerKey();
+
+    /**
+     * Set the controller key
+     * 
+     * @param string $key 
+     * @return void
+     */
+    public function setControllerKey($key);
+
+    /**
+     * Retrieve the action key
+     * 
+     * @return string
+     */
+    public function getActionKey();
+
+    /**
+     * Set the action key 
+     * 
+     * @param string $key 
+     * @return void
+     */
+    public function setActionKey($key);
+
+    /**
      * Get an action parameter
      * 
      * @param string $key 
