@@ -1,6 +1,6 @@
 <?php
 require_once 'Zend/XmlRpc/Server.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 /**
  * Test case for Zend_XmlRpc_Server
@@ -9,7 +9,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @subpackage UnitTests
  * @version $Id: $
  */
-class Zend_XmlRpc_ServerTest extends PHPUnit2_Framework_TestCase 
+class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * Zend_XmlRpc_Server object

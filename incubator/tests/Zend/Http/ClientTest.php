@@ -20,7 +20,7 @@
 require_once 'Zend/Http/Client.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 

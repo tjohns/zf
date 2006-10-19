@@ -1,9 +1,9 @@
 <?php
 require_once 'Zend/Http/Request.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
-require_once 'PHPUnit2/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
-class Zend_Http_RequestTest extends PHPUnit2_Framework_TestCase 
+class Zend_Http_RequestTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * @var Zend_Http_Request
@@ -68,17 +68,17 @@ class Zend_Http_RequestTest extends PHPUnit2_Framework_TestCase
  
     public function testGetAlias()
     {
-        throw new PHPUnit2_Framework_IncompleteTestError('not implemented');
+        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
     }
  
     public function testSetAlias()
     {
-        throw new PHPUnit2_Framework_IncompleteTestError('not implemented');
+        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
     }
  
     public function testGetAliases()
     {
-        throw new PHPUnit2_Framework_IncompleteTestError('not implemented');
+        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
     }
  
     public function testGetRequestUri()
@@ -96,27 +96,27 @@ class Zend_Http_RequestTest extends PHPUnit2_Framework_TestCase
  
     public function testGetBaseUrl()
     {
-        throw new PHPUnit2_Framework_IncompleteTestError('not implemented');
+        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
     }
  
     public function testSetBaseUrl()
     {
-        throw new PHPUnit2_Framework_IncompleteTestError('not implemented');
+        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
     }
  
     public function testGetBasePath()
     {
-        throw new PHPUnit2_Framework_IncompleteTestError('not implemented');
+        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
     }
  
     public function testSetBasePath()
     {
-        throw new PHPUnit2_Framework_IncompleteTestError('not implemented');
+        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
     }
  
     public function testGetCookie()
     {
-        throw new PHPUnit2_Framework_IncompleteTestError('not implemented');
+        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
     }
  
     public function testGetServer()

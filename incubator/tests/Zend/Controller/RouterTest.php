@@ -1,7 +1,7 @@
 <?php
 require_once 'Zend/Controller/Router.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
-require_once 'PHPUnit2/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 require_once 'Zend/Controller/Request/Interface.php';
 
@@ -62,7 +62,7 @@ class Zend_Controller_RouterTest_Request implements Zend_Controller_Request_Inte
 
 }
 
-class Zend_Controller_RouterTest extends PHPUnit2_Framework_TestCase 
+class Zend_Controller_RouterTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * testRoute 

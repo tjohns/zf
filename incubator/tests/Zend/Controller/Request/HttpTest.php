@@ -1,9 +1,9 @@
 <?php
 require_once 'Zend/Controller/Request/Http.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
-require_once 'PHPUnit2/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
-class Zend_Controller_Request_HttpTest extends PHPUnit2_Framework_TestCase 
+class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * @var Zend_Http_Request

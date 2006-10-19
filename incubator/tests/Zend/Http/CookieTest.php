@@ -12,9 +12,9 @@
 require_once 'Zend/Http/Cookie.php';
 
 /**
- * PHPUnit2 test case
+ * PHPUnit test case
  */
-require_once 'PHPUnit2/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/TestCase.php';
 
 
 /**
@@ -22,7 +22,7 @@ require_once 'PHPUnit2/Framework/TestCase.php';
  * @package    Zend_Http
  * @subpackage UnitTests
  */
-class Zend_Http_CookieTest extends PHPUnit2_Framework_TestCase
+class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
 {
 	protected $invalidNameChars = "=,; \t\r\n\013\014";
 	

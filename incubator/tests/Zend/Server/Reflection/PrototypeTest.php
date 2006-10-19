@@ -1,7 +1,7 @@
 <?php
 require_once 'Zend/Server/Reflection/Prototype.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
-require_once 'PHPUnit2/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 require_once 'Zend/Server/Reflection.php';
 require_once 'Zend/Server/Reflection/Parameter.php';
@@ -14,7 +14,7 @@ require_once 'Zend/Server/Reflection/ReturnValue.php';
  * @subpackage UnitTests
  * @version $Id$
  */
-class Zend_Server_Reflection_PrototypeTest extends PHPUnit2_Framework_TestCase 
+class Zend_Server_Reflection_PrototypeTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * Zend_Server_Reflection_Prototype object

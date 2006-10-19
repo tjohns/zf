@@ -1,7 +1,7 @@
 <?php
 require_once 'Zend/Server/Reflection/Node.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
-require_once 'PHPUnit2/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 /**
  * Test case for Zend_Server_Reflection_Node
@@ -9,7 +9,7 @@ require_once 'PHPUnit2/Framework/IncompleteTestError.php';
  * @package ortus
  * @version $Id$
  */
-class Zend_Server_Reflection_NodeTest extends PHPUnit2_Framework_TestCase 
+class Zend_Server_Reflection_NodeTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * __construct() test

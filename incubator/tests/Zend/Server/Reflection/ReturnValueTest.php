@@ -1,7 +1,7 @@
 <?php
 require_once 'Zend/Server/Reflection/ReturnValue.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
-require_once 'PHPUnit2/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 /**
  * Test case for Zend_Server_Reflection_ReturnValue
@@ -10,7 +10,7 @@ require_once 'PHPUnit2/Framework/IncompleteTestError.php';
  * @subpackage UnitTests
  * @version $Id$
  */
-class Zend_Server_Reflection_ReturnValueTest extends PHPUnit2_Framework_TestCase 
+class Zend_Server_Reflection_ReturnValueTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * __construct() test

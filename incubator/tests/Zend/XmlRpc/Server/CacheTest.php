@@ -1,8 +1,8 @@
 <?php
 require_once 'Zend/XmlRpc/Server.php';
 require_once 'Zend/XmlRpc/Server/Cache.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
-require_once 'PHPUnit2/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 /**
  * Test case for Zend_XmlRpc_Server_Cache
@@ -11,7 +11,7 @@ require_once 'PHPUnit2/Framework/IncompleteTestError.php';
  * @subpackage UnitTests
  * @version $Id: $
  */
-class Zend_XmlRpc_Server_CacheTest extends PHPUnit2_Framework_TestCase 
+class Zend_XmlRpc_Server_CacheTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * Zend_XmlRpc_Server object
@@ -53,7 +53,7 @@ class Zend_XmlRpc_Server_CacheTest extends PHPUnit2_Framework_TestCase
     {
         // Remove this line once the test has been written
         if (!is_writeable('./')) {
-            throw new PHPUnit2_Framework_IncompleteTestError('Directory not writeable');
+            throw new PHPUnit_Framework_IncompleteTestError('Directory not writeable');
         }
 
         $this->assertTrue(Zend_XmlRpc_Server_Cache::save($this->_file, $this->_server));
@@ -72,7 +72,7 @@ class Zend_XmlRpc_Server_CacheTest extends PHPUnit2_Framework_TestCase
     {
         // Remove this line once the test has been written
         if (!is_writeable('./')) {
-            throw new PHPUnit2_Framework_IncompleteTestError('Directory not writeable');
+            throw new PHPUnit_Framework_IncompleteTestError('Directory not writeable');
         }
 
         $this->assertTrue(Zend_XmlRpc_Server_Cache::save($this->_file, $this->_server));

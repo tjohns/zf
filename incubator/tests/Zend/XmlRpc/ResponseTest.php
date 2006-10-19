@@ -1,7 +1,7 @@
 <?php
 require_once 'Zend/XmlRpc/Response.php';
-require_once 'PHPUnit2/Framework/TestCase.php';
-require_once 'PHPUnit2/Framework/IncompleteTestError.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 /**
  * Test case for Zend_XmlRpc_Response
@@ -10,7 +10,7 @@ require_once 'PHPUnit2/Framework/IncompleteTestError.php';
  * @subpackage UnitTests
  * @version $Id$
  */
-class Zend_XmlRpc_ResponseTest extends PHPUnit2_Framework_TestCase 
+class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase 
 {
     /**
      * Zend_XmlRpc_Response object
