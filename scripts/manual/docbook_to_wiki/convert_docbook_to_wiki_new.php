@@ -13,6 +13,7 @@ $file = file_get_contents($dir . 'manual.xml');
 $file = preg_replace_callback('/(&module_specs.)(.+)(;)/', 'processChapters', $file);
 $sxml = @simplexml_load_string($file);
 $soap = new SoapClient($confluenceWsdl);
+$ver  = 0.1;
 
 $token = $soap->login($confluenceUser, $confluencePass);
 
@@ -36,7 +37,7 @@ foreach ($chapters as $key => $chapter)
     $xsl = new DOMDocument();
     
     $xml->loadXML($mytmp);
-    $xsl->load('wiki.xsl');
+    $xsl->load('xsl/wiki.xsl');
     
     $proc = new XSLTProcessor;
     $proc->importStyleSheet($xsl);
@@ -44,21 +45,26 @@ foreach ($chapters as $key => $chapter)
     $temp = html_entity_decode($proc->transformToXML($xml));
     $temp = preg_replace('/^(\\s*)(\\|\\|[^\\r\\n]+?)(\\s+)(\\|[^\\|]+)/', "\\2||\r\n\\4", $temp);
     $temp = preg_replace('/^(\\s*)\\|([^|]+.+?)(\\s*)$/m', '|\\2|', $temp);
-        
-    $page = new stdClass;
-    $page->id          = false;
-    $page->permissions = true;
-    $page->parentId    = false;
-    $page->current     = true;
-    $page->homePage    = false;
-    $page->version     = false;
-    $page->space       = $confluenceSpace;
-    $page->title       = $chapter->title;
-    $page->content     = $temp;
-    $page->parentId    = $homePage->id;
+    
+    if ($page = $soap->getPage($token, $confluenceSpace, $chapter->title)) {
+        $page->version = $page->version + 0.1;
+        $page->title   = $chapter->title;
+        $page->content = $temp;
+    } else {
+        $page = new stdClass;
+        $page->id          = false;
+        $page->permissions = false;
+        $page->parentId    = false;
+        $page->current     = false;
+        $page->homePage    = false;
+        $page->version     = $ver;
+        $page->space       = $confluenceSpace;
+        $page->title       = $chapter->title;
+        $page->content     = $temp;
+        $page->parentId    = $homePage->id;
+    }
     
     $soap->storePage($token, $page);
-    
     $parentPage = $soap->getPage($token, $confluenceSpace, $chapter->title);
     
     for ($i = 1; $i < count($chapter->sect1); $i++) {
@@ -72,9 +78,7 @@ foreach ($chapters as $key => $chapter)
         
         $parent   = implode('.', $parent);
         $filename = $chapter->sect1[$i]->title;
-        
-        echo "NEW PAGE WITH PARENT:  $parent \n";
-        
+                
         $mytmp = $chapter->sect1[$i]->asXML();
         $mytmp = cleanup($mytmp);
         
@@ -82,7 +86,7 @@ foreach ($chapters as $key => $chapter)
         $xsl = new DOMDocument();
         
         $xml->loadXML($mytmp);
-        $xsl->load('wiki.xsl');
+        $xsl->load('xsl/wiki.xsl');
         
         $proc = new XSLTProcessor;
         $proc->importStyleSheet($xsl);
@@ -94,17 +98,23 @@ foreach ($chapters as $key => $chapter)
         $title = str_replace('::', ' - ', $chapter->sect1[$i]->title);
         $title = str_replace(':', ' ', $chapter->sect1[$i]->title);
         
-        $page = new stdClass;
-        $page->id          = false;
-        $page->permissions = true;
-        $page->parentId    = false;
-        $page->current     = true;
-        $page->homePage    = false;
-        $page->version     = false;
-        $page->space       = $confluenceSpace;
-        $page->title       = $title;
-        $page->content     = $temp;
-        $page->parentId    = $parentPage->id;
+        if ($page = $soap->getPage($token, $confluenceSpace, $title)) {
+            $page->version = $page->version + 0.1;
+            $page->title   = $title;
+            $page->content = $temp;
+        } else {
+            $page = new stdClass;
+            $page->id          = false;
+            $page->permissions = false;
+            $page->parentId    = false;
+            $page->current     = false;
+            $page->homePage    = false;
+            $page->version     = false;
+            $page->space       = $confluenceSpace;
+            $page->title       = $title;
+            $page->content     = $temp;
+            $page->parentId    = $parentPage->id;
+        }
         
         $soap->storePage($token, $page);
     }

@@ -53,7 +53,7 @@ h4. <xsl:value-of select="."/>
 </xsl:template>
 
 <xsl:template match="programlisting">
-{code}
+{code:<xsl:value-of select="@role"/>}
 <xsl:value-of select="."/>
 {code}
 </xsl:template>
