@@ -22,6 +22,9 @@
 /** Zend_Controller_Action_Exception */
 require_once 'Zend/Controller/Action/Exception.php';
 
+/** Zend_Controller_Request_Interface */
+require_once 'Zend/Controller/Request/Interface.php';
+
 
 /**
  * @category   Zend
@@ -32,28 +35,21 @@ require_once 'Zend/Controller/Action/Exception.php';
 abstract class Zend_Controller_Action
 {
     /**
-     * Zend_Controller_Dispatcher_Token object wrapping this controller/action call.
-     * @var Zend_Controller_Dispatcher_Token
+     * Zend_Controller_Request_Interface object wrapping the request environment
+     * @var Zend_Controller_Request_Interface
      */
-    protected $_action = null;
+    protected $_request = null;
 
     /**
-     * Parameters, copied from Zend_Controller_Dispatcher_Token object
-     * @var array
+     * Array of arguments provided to the constructor, minus the 
+     * {@link $_reqeuest Request object}.
+     * @var array 
      */
-    private $_params = null;
+    protected $_invokeArgs = array();
 
     /**
-     * Zend_Controller_Dispatcher_Token object wrapping the controller/action for the next
-     * call.  This is set by Zend_Controller_Action::_forward().
-     * @var Zend_Controller_Dispatcher_Token
-     */
-    private $_nextAction = null;
-
-
-    /**
-     * Any controller extending Zend_Controller_Action must provide an index()
-     * method.  The index() method is the default action for the controller
+     * Any controller extending Zend_Controller_Action must provide a noRouteAction()
+     * method.  The noRouteAction() method is the default action for the controller
      * when no action is specified.
      *
      * This only handles a controller which has been called with no action
@@ -63,15 +59,109 @@ abstract class Zend_Controller_Action
      * the controller class must provide a __call() method or an exception
      * will be thrown.
      */
-    abstract public function indexAction();
+    abstract public function noRouteAction();
 
 
     /**
      * Class constructor
+     *
+     * Marked final to ensure that the request object is provided to the 
+     * constructor. However, additional construction actions can be invoked in 
+     * {@link init()}, and all additional arguments passed to the constructor 
+     * will be passed as arguments to init().
+     *
+     * @param Zend_Controller_Request_Interface
+     * @return void
      */
-    public function __construct()
-    {}
+    final public function __construct(Zend_Controller_Request_Interface $request)
+    {
+        $this->_request = $request;
 
+        if (1 < func_num_args()) {
+            $argv = func_get_args();
+            array_shift($argv);       // strip request
+            $this->_invokeArgs = $argv;
+        }
+
+        $reflection = new ReflectionObject($this);
+        $init = $reflection->getMethod('init');
+        $init->invokeArgs($this, $this->_invokeArgs);
+    }
+
+    /**
+     * Initialize object
+     *
+     * Called from {@link __construct()} with all arguments passed to the 
+     * constructor, minus the request object. Use for custom object 
+     * initialization.
+     * 
+     * @return void
+     */
+    public function init()
+    {
+    }
+
+    /**
+     * Return the Request object
+     * 
+     * @return Zend_Controller_Request_Interface
+     */
+    public function getRequest()
+    {
+        return $this->_request;
+    }
+
+    /**
+     * Set the Request object
+     * 
+     * @param Zend_Controller_Request_Interface $request 
+     * @return void
+     */
+    public function setRequest(Zend_Controller_Request_Interface $request)
+    {
+        $this->_request = $request;
+    }
+
+    /**
+     * Return the array of constructor arguments (minus the Request object)
+     * 
+     * @return array
+     */
+    public function getInvokeArgs()
+    {
+        return $this->_invokeArgs;
+    }
+
+    /**
+     * Pre-dispatch routines
+     *
+     * Called before action method. If using class with 
+     * {@link Zend_Controller_Front}, it may modify the 
+     * {@link $_request Request object} and reset its dispatched flag in order 
+     * to skip processing the current action.
+     * 
+     * @return void
+     */
+    public function preDispatch()
+    {
+    }
+
+    /**
+     * Post-dispatch routines
+     *
+     * Called after action method execution. If using class with 
+     * {@link Zend_Controller_Front}, it may modify the 
+     * {@link $_request Request object} and reset its dispatched flag in order 
+     * to process an additional action.
+     *
+     * Common usages for postDispatch() include rendering content in a sitewide 
+     * template, link url correction, setting headers, etc.
+     * 
+     * @return void
+     */
+    public function postDispatch()
+    {
+    }
 
     /**
      * Proxy for undefined methods.  Default behavior is to throw an
@@ -84,83 +174,77 @@ abstract class Zend_Controller_Action
     public function __call($methodName, $args)
     {
         if (empty($methodName)) {
-            $msg = 'No action specified and no default action has been defined in __call() for '.get_class($this);
+            $msg = 'No action specified and no default action has been defined in __call() for '
+                 . get_class($this);
         } else {
-            $msg = get_class($this).'::'.$methodName.'() does not exist and was not trapped in __call().';
+            $msg = get_class($this) . '::' . $methodName
+                 .'() does not exist and was not trapped in __call()';
         }
 
         throw new Zend_Controller_Action_Exception($msg);
     }
 
-
     /**
      * Initialize the class instance variables and then call the action.
      *
-     * @param Zend_Controller_Dispatcher_Token $action
+     * Not used in the Action Controller implementation, but left for usage in 
+     * Page Controller implementations. Dispatches a method based on the 
+     * request; if no $request is provided, a Zend_Controller_Http_Request is 
+     * instantiated.
+     *
+     * {@link preDispatch()} is called prior to the action, 
+     * {@link postDispatch()} is called following it.
+     *
+     * @param Zend_Controller_Request_Interface $request
      */
-    final public function run(Zend_Controller_Dispatcher_Interface $dispatcher,
-                              Zend_Controller_Dispatcher_Token    $action)
+    public function run(Zend_Controller_Request_Interface $request = null)
     {
-        $this->_action     = $action;
-        $this->_params     = $action->getParams();
-
-        if (!strlen( $action->getActionName() )) {
-            $action->setActionName('index');
+        if (null === $request) {
+            require_once 'Zend/Controller/Request/Http.php';
+            $request = new Zend_Controller_Request_Http();
         }
 
-        $methodName = $dispatcher->formatActionName($action->getActionName());
-
-        if (!method_exists($this, $methodName)) {
-            $this->__call($methodName, array());
-        } else {
-            $method = new ReflectionMethod($this, $methodName);
-            if ($method->isPublic() && !$method->isStatic()) {
-                $this->{$methodName}();
-            } else {
-                throw new Zend_Controller_Action_Exception('Illegal action called.');
-            }
+        $this->preDispatch();
+        $action = $request->getActionName();
+        if (null === $action) {
+            $action = 'noRoute';
         }
-
-        $nextAction = $this->_nextAction;
-        $this->_nextAction = null;
-        return $nextAction;
+        $action = $action . 'Action';
+        $this->{$action}();
+        $this->postDispatch();
     }
 
-
     /**
-     * Gets a parameter that was passed to this controller.  If the
-     * parameter does not exist, FALSE will be return.
+     * Gets a parameter from the {@link $_request Request object}.  If the
+     * parameter does not exist, NULL will be return.
      *
      * If the parameter does not exist and $default is set, then
-     * $default will be returned instead of FALSE.
+     * $default will be returned instead of NULL.
      *
      * @param string $paramName
-     * @param string $default
+     * @param mixed $default
      * @return boolean
      */
-    final protected function _getParam($paramName, $default=null)
+    final protected function _getParam($paramName, $default = null)
     {
-        if (array_key_exists($paramName, $this->_params)) {
-            return $this->_params[$paramName];
+        $value = $this->_request->getParam($paramName);
+        if ((null == $value) && (null !== $default)) {
+            $value = $default;
         }
 
-        if ($default===null) {
-            return false;
-        } else {
-            return $default;
-        }
+        return $value;
     }
 
 
     /**
-     * Return all parameters that were passed to the controller
+     * Return all parameters in the {@link $_request Request object}
      * as an associative array.
      *
      * @return array
      */
     final protected function _getAllParams()
     {
-        return $this->_params;
+        return $this->_request->getParams();
     }
 
 
@@ -169,15 +253,19 @@ abstract class Zend_Controller_Action
      *
      * It is important to supply the unformatted names, i.e. "article"
      * rather than "ArticleController".  The dispatcher will do the
-     * appropriate formatting when the Zend_Controller_Dispatcher_Token item is received.
+     * appropriate formatting when the request is received.
      *
      * @param string $controllerName
      * @param string $actionName
      * @param array $params
+     * @return void
      */
     final protected function _forward($controllerName, $actionName, $params=array())
     {
-        $this->_nextAction = new Zend_Controller_Dispatcher_Token($controllerName, $actionName, $params);
+        $this->_request->setControllerName($controllerName);
+        $this->_request->setActionName($actionName);
+        $this->_request->setParams($params);
+        $this->_request->setDispatched(false);
     }
 
 
