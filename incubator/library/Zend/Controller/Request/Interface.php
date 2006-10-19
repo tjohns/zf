@@ -87,4 +87,19 @@ interface Zend_Controller_Request_Interface
      * @return void
      */
     public function setParams($array);
+
+    /**
+     * Set flag indicating whether or not request has been dispatched
+     * 
+     * @param boolean $flag 
+     * @return void
+     */
+    public function setDispatched($flag = true);
+
+    /**
+     * Determine if the request has been dispatched
+     * 
+     * @return boolean
+     */
+    public function isDispatched();
 }
