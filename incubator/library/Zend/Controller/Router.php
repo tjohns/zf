@@ -26,8 +26,8 @@ require_once 'Zend/Controller/Router/Interface.php';
 /** Zend_Controller_Router_Exception */
 require_once 'Zend/Controller/Router/Exception.php';
 
-/** Zend_Controller_Request_Interface */
-require_once 'Zend/Controller/Request/Interface.php';
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
 /** Zend_Controller_Request_Http */
 require_once 'Zend/Controller/Request/Http.php';
@@ -100,10 +100,10 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
     /**
      * Route a request
      * 
-     * @param Zend_Controller_Request_Interface $request 
+     * @param Zend_Controller_Request_Abstract $request 
      * @return void
      */
-    public function route(Zend_Controller_Request_Interface $request)
+    public function route(Zend_Controller_Request_Abstract $request)
     {
         if (!$request instanceof Zend_Controller_Request_Http) {
             throw new Zend_Controller_Router_Exception('Zend_Controller_Router requires a Zend_Controller_Request_Http-based request object');

@@ -28,6 +28,11 @@ require_once 'Zend/Controller/Router/Interface.php';
 /** Zend_Controller_Plugin_Broker */
 require_once 'Zend/Controller/Plugin/Broker.php';
 
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
+
+/** Zend_Controller_Response_Interface */
+require_once 'Zend/Controller/Response/Interface.php';
 
 /**
  * @category   Zend
@@ -44,8 +49,8 @@ class Zend_Controller_Front
     static private $_instance = null;
     
     /**
-     * Instance of Zend_Controller_Request_Interface
-     * @var Zend_Controller_Request_Interface
+     * Instance of Zend_Controller_Request_Abstract
+     * @var Zend_Controller_Request_Abstract
      */
     private $_request = null;
 
@@ -144,7 +149,7 @@ class Zend_Controller_Front
      *
      * If a class name is provided, it will instantiate it
      * 
-     * @param string|Zend_Controller_Request_Interface $request
+     * @param string|Zend_Controller_Request_Abstract $request
      * @return void
      * @throws Zend_Controller_Front_Exception if invalid request class
      */
@@ -154,7 +159,7 @@ class Zend_Controller_Front
             Zend::loadClass($request);
             $request = new $request();
         }
-        if (!$request instanceof Zend_Controller_Request_Interface) {
+        if (!$request instanceof Zend_Controller_Request_Abstract) {
             throw new Zend_Controller_Front_Exception('Invalid request class');
         }
 
@@ -164,7 +169,7 @@ class Zend_Controller_Front
 	/**
 	 * Return the request object.
 	 *
-	 * @return null|Zend_Controller_Request_Interface
+	 * @return null|Zend_Controller_Request_Abstract
 	 */
 	public function getRequest()
 	{
@@ -332,10 +337,10 @@ class Zend_Controller_Front
 	/**
 	 * Dispatch an HTTP request to a controller/action.
      *
-     * @param Zend_Controller_Request_Interface|null $request
+     * @param Zend_Controller_Request_Abstract|null $request
      * @return string|Zend_Controller_Response_Interface
 	 */
-	public function dispatch(Zend_Controller_Request_Interface $request = null)
+	public function dispatch(Zend_Controller_Request_Abstract $request = null)
 	{
         /**
          * Instantiate default request object (HTTP version) if none provided

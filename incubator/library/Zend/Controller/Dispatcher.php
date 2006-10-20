@@ -29,8 +29,8 @@ require_once 'Zend/Controller/Dispatcher/Interface.php';
 /** Zend_Controller_Dispatcher_Exception */
 require_once 'Zend/Controller/Dispatcher/Exception.php';
 
-/** Zend_Controller_Request_Interface */
-require_once 'Zend/Controller/Request/Interface.php';
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
 /** Zend_Controller_Response_Interface */
 require_once 'Zend/Controller/Response/Interface.php';
@@ -146,14 +146,14 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 
 
     /**
-     * Returns TRUE if the Zend_Controller_Request_Interface object can be dispatched to a controller.
+     * Returns TRUE if the Zend_Controller_Request_Abstract object can be dispatched to a controller.
      * This only verifies that the Zend_Controller_Action can be dispatched and does not
      * guarantee that the action will be accepted by the Zend_Controller_Action.
      *
-     * @param Zend_Controller_Request_Interface $action
+     * @param Zend_Controller_Request_Abstract $action
      * @return unknown
      */
-	public function isDispatchable(Zend_Controller_Request_Interface $request)
+	public function isDispatchable(Zend_Controller_Request_Abstract $request)
 	{
         if ($request->isDispatched()) {
             return false;
@@ -218,10 +218,10 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 	/**
 	 * Dispatch to a controller/action
 	 *
-	 * @param Zend_Controller_Request_Interface $action
+	 * @param Zend_Controller_Request_Abstract $action
 	 * @return boolean
 	 */
-	public function dispatch(Zend_Controller_Request_Interface $request)
+	public function dispatch(Zend_Controller_Request_Abstract $request)
 	{
 	    return $this->_dispatch($request);
 	}
@@ -237,11 +237,11 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 	 * instantiate the controller and call its action.  Calling the action
 	 * is done by passing a Zend_Controller_Dispatcher_Token to the controller's constructor.
 	 *
-	 * @param Zend_Controller_Request_Interface $request
+	 * @param Zend_Controller_Request_Abstract $request
 	 * @param boolean $performDispatch
 	 * @return void
 	 */
-	protected function _dispatch(Zend_Controller_Reqeust_Interface $request, $performDispatch = true)
+	protected function _dispatch(Zend_Controller_Request_Abstract $request, $performDispatch = true)
 	{
         // Controller directory check
 	    if ($this->_directory === null) {

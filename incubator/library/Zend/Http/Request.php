@@ -104,6 +104,81 @@ class Zend_Http_Request implements Zend_Request_Interface
                 return null;
         }
     } 
+
+    /**
+     * Alias to __get
+     * 
+     * @param string $key 
+     * @return mixed
+     */
+    public function get($key)
+    {
+        return $this->__get($key);
+    }
+
+    /**
+     * Set values
+     *
+     * In order to follow {@link __get()}, which operates on a number of 
+     * superglobals, setting values through overloading is not allowed and will 
+     * raise an exception. Use setParam() instead.
+     * 
+     * @param string $key 
+     * @param mixed $value 
+     * @return void
+     * @throws Zend_Http_Exception
+     */
+    public function __set($key, $value)
+    {
+        throw new Zend_Http_Exception('Setting values in superglobals not allowed; please use setParam()');
+    }
+
+    /**
+     * Alias to __set()
+     * 
+     * @param string $key 
+     * @param mixed $value 
+     * @return unknown
+     */
+    public function set($key, $value)
+    {
+        return $this->__set($key, $value);
+    }
+
+    /**
+     * Check to see if a property is set
+     * 
+     * @param string $key 
+     * @return boolean
+     */
+    public function __isset($key)
+    {
+        switch (true) {
+            case isset($_GET[$key]):
+                return true;
+            case isset($_POST[$key]):
+                return true;
+            case isset($_COOKIE[$key]):
+                return true;
+            case isset($_SERVER[$key]):
+                return true;
+            case isset($_ENV[$key]):
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Alias to __isset()
+     * 
+     * @param string $key 
+     * @return boolean
+     */
+    public function has($key)
+    {
+        return $this->__isset($key);
+    }
      
     /**
      * Retrieve a member of the $_GET superglobal

@@ -3,8 +3,8 @@
 /** Zend_Http_Request */
 require_once 'Zend/Http/Request.php';
 
-/** Zend_Controller_Request_Interface */
-require_once 'Zend/Controller/Request/Interface.php';
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
 /**
  * Zend_Controller_Request_Http
@@ -12,144 +12,76 @@ require_once 'Zend/Controller/Request/Interface.php';
  * HTTP request object for use with Zend_Controller family.
  *
  * @uses Zend_Http_Request
- * @uses Zend_Controller_Request_Interface
+ * @uses Zend_Controller_Request_Abstract
  * @package Zend_Controller
  * @subpackage Request
  */
-class Zend_Controller_Request_Http extends Zend_Http_Request implements Zend_Controller_Request_Interface
+class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 {
     /**
-     * Current controller
-     * @var string 
+     * Zend_Http_Request object
+     * @var Zend_Http_Request 
      */
-    protected $_controllerName = null;
+    protected $_httpRequest = null;
 
     /**
-     * Current action
-     * @var string 
+     * ReflectionObject version of $_httpRequest
+     * @var ReflectionObject
      */
-    protected $_actionName = null;
+    protected $_httpRequestReflection;
 
     /**
-     * Controller key
-     * @var string 
-     */
-    protected $_controllerKey = 'controller';
-
-    /**
-     * Action key
-     * @var string 
-     */
-    protected $_actionKey = 'noRoute';
-
-    /**
-     * Dispatch status of request
-     * @var boolean 
-     */
-    protected $_dispatched = false;
-
-    /**
-     * Get current controller
+     * Constructor
+     *
+     * Instantiates a Zend_Http_Request and assigns it to {@link $_httpRequest}
      * 
-     * @return string
-     */
-    public function getControllerName()
-    {
-        return $this->_controllerName;
-    }
- 
-    /**
-     * Set controller
-     * 
-     * @param string $controller 
+     * @param null|string|Zend_Uri $uri 
      * @return void
      */
-    public function setControllerName($controller)
+    public function __construct($uri = null)
     {
-        $this->_controllerName = (string) $controller;
+        $this->_httpRequest = new Zend_Http_Request($uri);
     }
 
     /**
-     * Get current action
+     * Overload and proxy to Zend_Http_Request object
      * 
-     * @return string
+     * @param string $key 
+     * @return mixed
      */
-    public function getActionName()
+    public function __get($key)
     {
-        return $this->_actionName;
+        return $this->_httpRequest->__get($key);
     }
- 
+
     /**
-     * Set action
+     * Overload and proxy to Zend_Http_Request object
      * 
-     * @param string $action 
+     * @param string $key 
+     * @param mixed $value
      * @return void
      */
-    public function setActionName($action)
+    public function __set($key, $value)
     {
-        $this->_actionName = (string) $action;
-    }
- 
-    /**
-     * Set dispatched flag for current action
-     * 
-     * @param boolean $flag 
-     * @return void
-     */
-    public function setDispatched($flag = true)
-    {
-        $this->_dispatched = $flag ? true : false;
-    }
- 
-    /**
-     * Determine dispatch status of current action
-     * 
-     * @return boolean
-     */
-    public function isDispatched()
-    {
-        return $this->_dispatched;
+        return $this->_httpRequest->__set($key, $value);
     }
 
     /**
-     * Retrieve the key that specifies the controller parameter
+     * Overload and proxy to Zend_Http_Request object
      * 
-     * @return string
+     * @param string $methodName
+     * @param array $args
+     * @return mixed
      */
-    public function getControllerKey()
+    public function __call($methodName, $args)
     {
-        return $this->_controllerKey;
-    }
+        if (method_exists($this->_httpRequest, $methodName)) {
+            if (!isset($this->_httpRequestReflection)) {
+                $this->_httpRequestReflection = new ReflectionObject($this->_httpRequest);
+            }
+            return $this->_httpRequestReflection->getMethod($methodName)->invokeArgs($this->_httpRequest, $args);
+        }
 
-    /**
-     * Set the key that specifies the controller parameter
-     * 
-     * @param string
-     * @return void
-     */
-    public function setControllerKey($key)
-    {
-        $this->_controllerKey = (string) $key;
-    }
-
-    /**
-     * Retrieve the key that specifies the action parameter
-     * 
-     * @return string
-     */
-    public function getActionKey()
-    {
-        return $this->_actionKey;
-    }
-
-    /**
-     * Set the key that specifies the action parameter
-     * 
-     * @param string
-     * @return void
-     */
-    public function setActionKey($key)
-    {
-        $this->_actionKey = (string) $key;
+        throw new Zend_Controller_Request_Exception('Method "' . $methodName . '" does not exist');
     }
 }

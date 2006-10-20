@@ -22,8 +22,8 @@
 /** Zend_Controller_Router_Exception */
 require_once 'Zend/Controller/Router/Exception.php';
 
-/** Zend_Controller_Request_Interface */
-require_once 'Zend/Controller/Request/Interface.php';
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
 /**
  * @package    Zend_Controller
@@ -37,11 +37,11 @@ interface Zend_Controller_Router_Interface
      * Processes a request and sets its controller and action.  If
      * no route was possible, an exception is thrown.
      *
-	 * @param  Zend_Controller_Request_Interface
+	 * @param  Zend_Controller_Request_Abstract
      * @throws Zend_Controller_Router_Exception
-     * @return Zend_Controller_Request_Interface|boolean
+     * @return Zend_Controller_Request_Abstract|boolean
      */
-    public function route(Zend_Controller_Request_Interface $dispatcher);
+    public function route(Zend_Controller_Request_Abstract $dispatcher);
 
     /**
      * Add a parameter with which to instantiate any helper objects

@@ -24,14 +24,53 @@
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Controller_Request_Interface
+abstract class Zend_Controller_Request_Abstract
 {
+    /**
+     * Has the action been dispatched?
+     * @var boolean 
+     */
+    protected $_dispatched = false;
+
+    /**
+     * Controller name
+     * @var string 
+     */
+    protected $_controllerName  = 'index';
+
+    /**
+     * Action name
+     * @var string 
+     */
+    protected $_actionName = 'noRoute';
+
+    /**
+     * Controller key for retrieving controller from params
+     * @var string 
+     */
+    protected $_controllerKey = 'controller';
+
+    /**
+     * Action key for retrieving action from params
+     * @var string 
+     */
+    protected $_actionKey = 'action';
+
+    /**
+     * Request parameters
+     * @var array 
+     */
+    protected $_params = array();
+
     /**
      * Retrieve the controller name
      * 
      * @return string
      */
-    public function getControllerName();
+    public function getControllerName()
+    {
+        return $this->_controllerName;
+    }
 
     /**
      * Set the controller name to use
@@ -39,14 +78,20 @@ interface Zend_Controller_Request_Interface
      * @param string $value 
      * @return void
      */
-    public function setControllerName($value);
+    public function setControllerName($value)
+    {
+        $this->_controllerName = (string) $value;
+    }
 
     /**
      * Retrieve the action name
      * 
      * @return string
      */
-    public function getActionName();
+    public function getActionName()
+    {
+        return $this->_actionName;
+    }
 
     /**
      * Set the action name 
@@ -54,14 +99,20 @@ interface Zend_Controller_Request_Interface
      * @param string $value 
      * @return void
      */
-    public function setActionName($value);
+    public function setActionName($value)
+    {
+        $this->_actionName = (string) $value;
+    }
 
     /**
      * Retrieve the controller key
      * 
      * @return string
      */
-    public function getControllerKey();
+    public function getControllerKey() 
+    {
+        return $this->_controllerKey;
+    }
 
     /**
      * Set the controller key
@@ -69,14 +120,20 @@ interface Zend_Controller_Request_Interface
      * @param string $key 
      * @return void
      */
-    public function setControllerKey($key);
+    public function setControllerKey($key)
+    {
+        $this->_controllerKey = (string) $key;
+    }
 
     /**
      * Retrieve the action key
      * 
      * @return string
      */
-    public function getActionKey();
+    public function getActionKey()
+    {
+        return $this->_actionKey;
+    }
 
     /**
      * Set the action key 
@@ -84,7 +141,10 @@ interface Zend_Controller_Request_Interface
      * @param string $key 
      * @return void
      */
-    public function setActionKey($key);
+    public function setActionKey($key)
+    {
+        $this->_actionKey = (string) $key;
+    }
 
     /**
      * Get an action parameter
@@ -92,7 +152,15 @@ interface Zend_Controller_Request_Interface
      * @param string $key 
      * @return mixed
      */
-    public function getParam($key);
+    public function getParam($key)
+    {
+        $key = (string) $key;
+        if (isset($this->_params[$key])) {
+            return $this->_params[$key];
+        }
+
+        return null;
+    }
 
     /**
      * Set an action parameter
@@ -101,14 +169,21 @@ interface Zend_Controller_Request_Interface
      * @param mixed $value 
      * @return void
      */
-    public function setParam($key, $value);
+    public function setParam($key, $value)
+    {
+        $key = (string) $key;
+        $this->_params[$key] = $value;
+    }
 
     /**
      * Get all action parameters
      * 
      * @return array
      */
-    public function getParams();
+     public function getParams()
+     {
+         return $this->_params;
+     }
 
     /**
      * Set action parameters en masse; does not overwrite
@@ -116,7 +191,10 @@ interface Zend_Controller_Request_Interface
      * @param array $array 
      * @return void
      */
-    public function setParams($array);
+    public function setParams(array $array)
+    {
+        $this->_params = $this->_params + (array) $array;
+    }
 
     /**
      * Set flag indicating whether or not request has been dispatched
@@ -124,12 +202,18 @@ interface Zend_Controller_Request_Interface
      * @param boolean $flag 
      * @return void
      */
-    public function setDispatched($flag = true);
+    public function setDispatched($flag = true)
+    {
+        $this->_dispatched = $flag ? true : false;
+    }
 
     /**
      * Determine if the request has been dispatched
      * 
      * @return boolean
      */
-    public function isDispatched();
+    public function isDispatched()
+    {
+        return $this->_dispatched;
+    }
 }

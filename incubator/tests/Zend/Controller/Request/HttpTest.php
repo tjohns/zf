@@ -56,7 +56,7 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $this->_request->getActionName());
     }
  
-    public function testSetGetParam($key)
+    public function testSetGetParam()
     {
         $this->_request->setParam('foo', 'bar');
         $this->assertEquals('bar', $this->_request->getParam('foo'));

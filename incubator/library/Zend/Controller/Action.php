@@ -22,8 +22,8 @@
 /** Zend_Controller_Action_Exception */
 require_once 'Zend/Controller/Action/Exception.php';
 
-/** Zend_Controller_Request_Interface */
-require_once 'Zend/Controller/Request/Interface.php';
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
 /** Zend_Controller_Response_Interface */
 require_once 'Zend/Controller/Response/Interface.php';
@@ -38,8 +38,8 @@ require_once 'Zend/Controller/Response/Interface.php';
 abstract class Zend_Controller_Action
 {
     /**
-     * Zend_Controller_Request_Interface object wrapping the request environment
-     * @var Zend_Controller_Request_Interface
+     * Zend_Controller_Request_Abstract object wrapping the request environment
+     * @var Zend_Controller_Request_Abstract
      */
     protected $_request = null;
 
@@ -79,10 +79,10 @@ abstract class Zend_Controller_Action
      * {@link init()}, and all additional arguments passed to the constructor 
      * will be passed as arguments to init().
      *
-     * @param Zend_Controller_Request_Interface
+     * @param Zend_Controller_Request_Abstract
      * @return void
      */
-    final public function __construct(Zend_Controller_Request_Interface $request)
+    final public function __construct(Zend_Controller_Request_Abstract $request)
     {
         $this->_request = $request;
 
@@ -124,7 +124,7 @@ abstract class Zend_Controller_Action
     /**
      * Return the Request object
      * 
-     * @return Zend_Controller_Request_Interface
+     * @return Zend_Controller_Request_Abstract
      */
     public function getRequest()
     {
@@ -134,10 +134,10 @@ abstract class Zend_Controller_Action
     /**
      * Set the Request object
      * 
-     * @param Zend_Controller_Request_Interface $request 
+     * @param Zend_Controller_Request_Abstract $request 
      * @return void
      */
-    public function setRequest(Zend_Controller_Request_Interface $request)
+    public function setRequest(Zend_Controller_Request_Abstract $request)
     {
         $this->_request = $request;
     }
@@ -236,9 +236,9 @@ abstract class Zend_Controller_Action
      * {@link preDispatch()} is called prior to the action, 
      * {@link postDispatch()} is called following it.
      *
-     * @param Zend_Controller_Request_Interface $request
+     * @param Zend_Controller_Request_Abstract $request
      */
-    public function run(Zend_Controller_Request_Interface $request = null)
+    public function run(Zend_Controller_Request_Abstract $request = null)
     {
         if (null === $request) {
             require_once 'Zend/Controller/Request/Http.php';
