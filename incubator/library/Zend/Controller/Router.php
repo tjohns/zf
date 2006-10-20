@@ -29,6 +29,9 @@ require_once 'Zend/Controller/Router/Exception.php';
 /** Zend_Controller_Request_Interface */
 require_once 'Zend/Controller/Request/Interface.php';
 
+/** Zend_Controller_Request_Http */
+require_once 'Zend/Controller/Request/Http.php';
+
 
 /**
  * Simple first implementation of a router, to be replaced
@@ -102,6 +105,10 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
      */
     public function route(Zend_Controller_Request_Interface $request)
     {
+        if (!$request instanceof Zend_Controller_Request_Http) {
+            throw new Zend_Controller_Router_Exception('Zend_Controller_Router requires a Zend_Controller_Request_Http-based request object');
+        }
+
         $pathInfo = '';
         $pathSegs = array();
         if ($request instanceof Zend_Controller_Request_Http) {
@@ -113,11 +120,8 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
         if (null === $request->getControllerName()) {
             $controllerKey = $request->getControllerKey();
             $controller    = $request->getParam($key);
-            if ((null === $controller) 
-                && ($request instanceof Zend_Controller_Request_Http))
-            {
-                // If HTTP request, attempt to get from path_info
-                // Controller is first item in path_info
+            if (null === $controller) {
+                // Attempt to get from path_info; controller is first item
                 $pathInfo = $request->getPathInfo();
                 $pathSegs = explode('/', $pathInfo);
                 if (isset($pathSegs[0])) {
@@ -137,11 +141,8 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
             // get action from action parameter, if available
             $actionKey = $request->getActionKey();
             $action    = $request->getParam($key);
-            if ((null === $action) 
-                && ($request instanceof Zend_Controller_Request_Http))
-            {
-                // If HTTP request, attempt to get from path_info
-                // Action is second item in path_info
+            if (null === $action) {
+                // Attempt to get from path_info; action is second item
                 if (isset($pathSegs[1])) {
                     $action = $pathSegs[1];
                 }
@@ -171,6 +172,7 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
                 $params[$pathSegs[$i]] = isset($pathSegs[$i+1]) ? $pathSegs[$i+1] : null;
             }
         }
+        $request->setParams($params);
 
         return $request;
     }
