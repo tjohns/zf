@@ -1,7 +1,6 @@
 <?php
 require_once 'Zend/Controller/Request/Http.php';
 require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase 
 {

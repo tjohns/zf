@@ -1,7 +1,6 @@
 <?php
 require_once 'Zend/Controller/Router.php';
 require_once 'PHPUnit/Framework/TestCase.php';
-require_once 'PHPUnit/Framework/IncompleteTestError.php';
 
 require_once 'Zend/Controller/Request/Http.php';
 
