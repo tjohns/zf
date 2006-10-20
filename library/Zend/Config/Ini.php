@@ -72,7 +72,7 @@ class Zend_Config_Ini extends Zend_Config
 
         $iniArray = parse_ini_file($filename, true);
         $preProcessedArray = array();
-        foreach($iniArray as $key=>$data)
+        foreach ($iniArray as $key => $data)
         {
             $bits = explode(':', $key);
             $numberOfBits = count($bits);
@@ -81,31 +81,31 @@ class Zend_Config_Ini extends Zend_Config
                 case 1:
                     $preProcessedArray[$thisSection] = $data;
                     break;
-                
+
                 case 2:
                     $extendedSection = trim($bits[1]);
                     $preProcessedArray[$thisSection] = array_merge(array(';extends'=>$extendedSection), $data);
                     break;
-                    
+
                 default:
                     throw new Zend_Config_Exception("Section '$thisSection' cannot be extended more than once in $filename");
             }
         }
 
-        if (is_null($section)) {
+        if (null === $section) {
             $s = array();
-            foreach($preProcessedArray as $name=>$sec) {
+            foreach ($preProcessedArray as $name => $sec) {
 		        $s[$name] = $this->_processExtends($preProcessedArray, $name);
             }
             parent::__construct($s, $allowModifications);
         } elseif (is_array($section)) {
             $s = array();
-            foreach($section as $sec) {
+            foreach ($section as $sec) {
 		        if (!isset($preProcessedArray[$sec])) {
 		            throw new Zend_Config_Exception("Section '$sec' cannot be found in $filename");
 		        }
 		        $s = array_merge($this->_processExtends($preProcessedArray, $sec), $s);
-		        
+
             }
             parent::__construct($s, $allowModifications);
         } else {
@@ -163,7 +163,7 @@ class Zend_Config_Ini extends Zend_Config
             if (strlen($pieces[0]) && strlen($pieces[1])) {
                 if (!isset($config[$pieces[0]])) {
                     $config[$pieces[0]] = array();
-                } elseif ( !is_array($config[$pieces[0]])) {
+                } elseif (!is_array($config[$pieces[0]])) {
                     throw new Zend_Config_Exception("Cannot create sub-key for '{$pieces[0]}' as key already exists");
                 }
                 $config[$pieces[0]] = $this->_processKey($config[$pieces[0]], $pieces[1], $value);

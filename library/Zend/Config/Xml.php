@@ -59,21 +59,21 @@ class Zend_Config_Xml extends Zend_Config
         }
 
         $config = simplexml_load_file($filename);
-        
-        if (is_null($section)) {
+
+        if (null === $section) {
             $s = array();
-            foreach($config as $name=>$sec) {
+            foreach ($config as $name => $sec) {
 		        $s[$name] = $this->_processExtends($config, $name);
             }
             parent::__construct($s, $allowModifications);
         } elseif (is_array($section)) {
             $s = array();
-            foreach($section as $sec) {
+            foreach ($section as $sec) {
 		        if (!isset($config->$sec)) {
 		            throw new Zend_Config_Exception("Section '$sec' cannot be found in $filename");
 		        }
 		        $s = array_merge($this->_processExtends($config, $sec), $s);
-		        
+
             }
             parent::__construct($s, $allowModifications);
         } else {
