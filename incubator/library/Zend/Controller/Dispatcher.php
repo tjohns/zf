@@ -29,6 +29,12 @@ require_once 'Zend/Controller/Dispatcher/Interface.php';
 /** Zend_Controller_Dispatcher_Exception */
 require_once 'Zend/Controller/Dispatcher/Exception.php';
 
+/** Zend_Controller_Request_Interface */
+require_once 'Zend/Controller/Request/Interface.php';
+
+/** Zend_Controller_Response_Interface */
+require_once 'Zend/Controller/Response/Interface.php';
+
 /** Zend_Controller_Action */
 require_once 'Zend/Controller/Action.php';
 
@@ -54,6 +60,12 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * @var array 
      */
     protected $_invokeParams = array();
+
+    /**
+     * Response object to pass to action controllers, if any
+     * @var Zend_Controller_Response_Interface|null 
+     */
+    protected $_response = null;
 
     /**
      * Constructor
@@ -182,6 +194,27 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         return $this->_invokeParams;
     }
 
+    /**
+     * Set response object to pass to action controllers
+     * 
+     * @param Zend_Controller_Response_Interface|null $response 
+     * @return void
+     */
+    public function setResponse(Zend_Controller_Response_Interface $response = null)
+    {
+        $this->_response = $response;
+    }
+
+    /**
+     * Return the registered response object
+     * 
+     * @return Zend_Controller_Response_Interface|null
+     */
+    public function getResponse()
+    {
+        return $this->_response;
+    }
+
 	/**
 	 * Dispatch to a controller/action
 	 *
@@ -237,7 +270,15 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 
         // Get any instance arguments and instantiate a controller object
         $args = $this->getParams();
+
+        // Prepend response object, if available
+        if (null !== ($response = $this->getResponse())) {
+            array_unshift($args, $response);
+        }
+
+        // prepend request object
         array_unshift($args, $request);
+
         $controller = $reflection->newInstanceArgs($args);
 
         // Determine the action name; default to noRoute if none specified in 

@@ -24,6 +24,11 @@
 require_once 'Zend/Controller/Request/Interface.php';
 
 /**
+ * Zend_Controller_Response_Interface
+ */
+require_once 'Zend/Controller/Response/Interface.php';
+
+/**
  * @package    Zend_Controller
  * @subpackage Dispatcher
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -83,6 +88,21 @@ interface Zend_Controller_Dispatcher_Interface
      * @return array
      */
     public function getParams();
+
+    /**
+     * Set the response object to use, if any
+     * 
+     * @param Zend_Controller_Response_Interface|null $response 
+     * @return void
+     */
+    public function setResponse(Zend_Controller_Response_Interface $response = null);
+
+    /**
+     * Retrieve the response object, if any
+     * 
+     * @return Zend_Controller_Response_Interface|null
+     */
+    public function getResponse();
 
 	/**
      * Dispatches a request object to a controller/action.  If the action

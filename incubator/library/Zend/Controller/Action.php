@@ -25,6 +25,9 @@ require_once 'Zend/Controller/Action/Exception.php';
 /** Zend_Controller_Request_Interface */
 require_once 'Zend/Controller/Request/Interface.php';
 
+/** Zend_Controller_Response_Interface */
+require_once 'Zend/Controller/Response/Interface.php';
+
 
 /**
  * @category   Zend
@@ -41,8 +44,14 @@ abstract class Zend_Controller_Action
     protected $_request = null;
 
     /**
+     * Zend_Controller_Response_Interface object wrapping the response 
+     * @var Zend_Controller_Response_Interface
+     */
+    protected $_response = null;
+
+    /**
      * Array of arguments provided to the constructor, minus the 
-     * {@link $_reqeuest Request object}.
+     * {@link $_request Request object}.
      * @var array 
      */
     protected $_invokeArgs = array();
@@ -80,6 +89,17 @@ abstract class Zend_Controller_Action
         if (1 < func_num_args()) {
             $argv = func_get_args();
             array_shift($argv);       // strip request
+
+            // Determine if we have a response object
+            if (0 < count($argv)) {
+                $response = $argv[0];
+                if ($response instanceof Zend_Controller_Response_Interface) {
+                    array_shift($argv);
+                    $this->_response = $response;
+                }
+            }
+
+            // Set invocation arguments
             $this->_invokeArgs = $argv;
         }
 
@@ -120,6 +140,27 @@ abstract class Zend_Controller_Action
     public function setRequest(Zend_Controller_Request_Interface $request)
     {
         $this->_request = $request;
+    }
+
+    /**
+     * Return the Response object
+     * 
+     * @return Zend_Controller_Response_Interface
+     */
+    public function getResponse()
+    {
+        return $this->_response;
+    }
+
+    /**
+     * Set the Response object
+     * 
+     * @param Zend_Controller_Response_Interface $response 
+     * @return void
+     */
+    public function setResponse(Zend_Controller_Response_Interface $response)
+    {
+        $this->_response = $response;
     }
 
     /**
