@@ -98,11 +98,12 @@ foreach ($chapters as $key => $chapter)
         $title = str_replace('::', ' - ', $chapter->sect1[$i]->title);
         $title = str_replace(':', ' ', $chapter->sect1[$i]->title);
         
-        if ($page = $soap->getPage($token, $confluenceSpace, $title)) {
+        try {
+            $page = $soap->getPage($token, $confluenceSpace, $title);
             $page->version = $page->version + 0.1;
             $page->title   = $title;
             $page->content = $temp;
-        } else {
+        } catch (Exception $e)  {
             $page = new stdClass;
             $page->id          = false;
             $page->permissions = false;

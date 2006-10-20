@@ -6,6 +6,8 @@ function processChapters($matches)
     
     $filename = $matches[2] . '.xml';
     $content  = file_get_contents($path . $filename);
+    $content  = preg_replace_callback('/(&module_specs.)(.+)(;)/', 'processChapters', $content);
+    
     $sxml     = @simplexml_load_string($content);
     
     return $content;
