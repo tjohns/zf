@@ -60,7 +60,7 @@ class Zend_Locale_UTF8
 	 * @return Zend_Locale_UTF8_Interface
 	 * @throws Zend_Locale_UTF8_Exception
 	 */
-	public static function getLibrary( $version = self::CURRENT )
+	public static function &getLibrary( $version = self::CURRENT )
 	{
 		$_version = self::PHP5;
 		
@@ -157,7 +157,7 @@ class Zend_Locale_UTF8
 	 */
 	public static function string ( $string )
 	{
-		return self::getLibrary()->string( &$string );
+		return self::getLibrary()->string( $string );
 	}
 	
 	/**
