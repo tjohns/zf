@@ -48,9 +48,14 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
 
     const BINARY      = 'Number::BINARY';
     const TERNARY     = 'Number::TERNARY';
-    const QUINTAL     = 'Number::QUINTAL';
+    const QUATERNARY  = 'Number::QUATERNARY';
+    const QUINARY     = 'Number::QUINARY';
+    const SENARY      = 'Number::SENARY';
+    const SEPTENARY   = 'Number::SEPTENARY';
     const OCTAL       = 'Number::OCTAL';
+    const NONARY      = 'Number::NONARY';
     const DECIMAL     = 'Number::DECIMAL';
+    const DUODECIMAL  = 'Number::DUODECIMAL';
     const HEXADECIMAL = 'Number::HEXADECIMAL';
     const ROMAN       = 'Number::ROMAN';
 
@@ -59,12 +64,22 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
         // @todo: Unit Sign: SUB 2
         'Number::TERNARY'     => array(3,  ''),
         // @todo: Unit Sign: SUB 3
-        'Number::QUINTAL'     => array(4,  ''),
+        'Number::QUATERNARY'  => array(4,  ''),
         // @todo: Unit Sign: SUB 4
+        'Number::QUINARY'     => array(5,  ''),
+        // @todo: Unit Sign: SUB 5
+        'Number::SENARY'      => array(6,  ''),
+        // @todo: Unit Sign: SUB 6
+        'Number::SEPTENARY'   => array(7,  ''),
+        // @todo: Unit Sign: SUB 7
         'Number::OCTAL'       => array(8,  ''),
         // @todo: Unit Sign: SUB 8
+        'Number::NONARY'      => array(9,  ''),
+        // @todo: Unit Sign: SUB 9
         'Number::DECIMAL'     => array(10, ''),
         // @todo: Unit Sign SUB 10
+        'Number::DUODECIMAL'  => array(12, ''),
+        // @todo: Unit Sign SUB 16
         'Number::HEXADECIMAL' => array(16, ''),
         // @todo: Unit Sign SUB 16
         'Number::ROMAN'       => array(99, '')
@@ -193,12 +208,32 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                 preg_match('/[012]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
-            case 'Number::QUINTAL' :
+            case 'Number::QUATERNARY' :
                 preg_match('/[0123]+/', $value, $ergebnis);
+                $value = $ergebnis[0];
+                break;
+            case 'Number::QUINARY' :
+                preg_match('/[01234]+/', $value, $ergebnis);
+                $value = $ergebnis[0];
+                break;
+            case 'Number::SENARY' :
+                preg_match('/[012345]+/', $value, $ergebnis);
+                $value = $ergebnis[0];
+                break;
+            case 'Number::SEPTENARY' :
+                preg_match('/[0123456]+/', $value, $ergebnis);
                 $value = $ergebnis[0];
                 break;
             case 'Number::OCTAL' :
                 preg_match('/[01234567]+/', $value, $ergebnis);
+                $value = $ergebnis[0];
+                break;
+            case 'Number::NONARY' :
+                preg_match('/[012345678]+/', $value, $ergebnis);
+                $value = $ergebnis[0];
+                break;
+            case 'Number::DUODECIMAL' :
+                preg_match('/[0123456789AB]+/', strtoupper( $value ), $ergebnis);
                 $value = $ergebnis[0];
                 break;
             case 'Number::HEXADECIMAL' :
