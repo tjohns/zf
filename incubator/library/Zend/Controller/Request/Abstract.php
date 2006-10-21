@@ -76,11 +76,12 @@ abstract class Zend_Controller_Request_Abstract
      * Set the controller name to use
      * 
      * @param string $value 
-     * @return void
+     * @return self
      */
     public function setControllerName($value)
     {
         $this->_controllerName = (string) $value;
+        return $this;
     }
 
     /**
@@ -97,11 +98,12 @@ abstract class Zend_Controller_Request_Abstract
      * Set the action name 
      * 
      * @param string $value 
-     * @return void
+     * @return self
      */
     public function setActionName($value)
     {
         $this->_actionName = (string) $value;
+        return $this;
     }
 
     /**
@@ -118,11 +120,12 @@ abstract class Zend_Controller_Request_Abstract
      * Set the controller key
      * 
      * @param string $key 
-     * @return void
+     * @return self
      */
     public function setControllerKey($key)
     {
         $this->_controllerKey = (string) $key;
+        return $this;
     }
 
     /**
@@ -139,11 +142,12 @@ abstract class Zend_Controller_Request_Abstract
      * Set the action key 
      * 
      * @param string $key 
-     * @return void
+     * @return self
      */
     public function setActionKey($key)
     {
         $this->_actionKey = (string) $key;
+        return $this;
     }
 
     /**
@@ -167,12 +171,13 @@ abstract class Zend_Controller_Request_Abstract
      * 
      * @param string $key 
      * @param mixed $value 
-     * @return void
+     * @return self
      */
     public function setParam($key, $value)
     {
         $key = (string) $key;
         $this->_params[$key] = $value;
+        return $this;
     }
 
     /**
@@ -189,22 +194,24 @@ abstract class Zend_Controller_Request_Abstract
      * Set action parameters en masse; does not overwrite
      * 
      * @param array $array 
-     * @return void
+     * @return self
      */
     public function setParams(array $array)
     {
         $this->_params = $this->_params + (array) $array;
+        return $this;
     }
 
     /**
      * Set flag indicating whether or not request has been dispatched
      * 
      * @param boolean $flag 
-     * @return void
+     * @return self
      */
     public function setDispatched($flag = true)
     {
         $this->_dispatched = $flag ? true : false;
+        return $this;
     }
 
     /**

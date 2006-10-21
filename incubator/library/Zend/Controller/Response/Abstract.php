@@ -30,7 +30,7 @@ abstract class Zend_Controller_Response_Abstract
      * @param string $name 
      * @param string $value 
      * @param boolean $replace 
-     * @return void
+     * @return self
      */
     public function setHeader($name, $value, $replace = false)
     {
@@ -49,6 +49,8 @@ abstract class Zend_Controller_Response_Abstract
             'name'  => $name,
             'value' => $value
         );
+
+        return $this;
     }
 
     /**
@@ -67,22 +69,24 @@ abstract class Zend_Controller_Response_Abstract
      * If body content already defined, this will replace it.
      * 
      * @param string $content 
-     * @return void
+     * @return self
      */
     public function setBody($content)
     {
         $this->_body = (string) $content;
+        return $this;
     }
 
     /**
      * Append content to the body content
      * 
      * @param string $content 
-     * @return void
+     * @return self
      */
     public function appendBody($content)
     {
         $this->_body .= (string) $content;
+        return $this;
     }
 
     /**

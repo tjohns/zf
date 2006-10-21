@@ -303,10 +303,10 @@ abstract class Zend_Controller_Action
      */
     final protected function _forward($controllerName, $actionName, $params=array())
     {
-        $this->_request->setControllerName($controllerName);
-        $this->_request->setActionName($actionName);
-        $this->_request->setParams($params);
-        $this->_request->setDispatched(false);
+        $this->_request->setControllerName($controllerName)
+                       ->setActionName($actionName)
+                       ->setParams($params)
+                       ->setDispatched(false);
     }
 
 
