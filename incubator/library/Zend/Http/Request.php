@@ -25,7 +25,7 @@ class Zend_Http_Request implements Zend_Request_Interface
      * Base URL of request
      * @var string
      */
-    protected $_baseUrl; 
+    protected $_baseUrl = null; 
 
     /**
      * Base path of request
@@ -67,7 +67,13 @@ class Zend_Http_Request implements Zend_Request_Interface
                 $uri = Zend_Uri::factory($uri);
             } 
             if ($uri->valid()) {
-                $this->setRequestUri($uri->getUri());
+                $path = $uri->getPath();
+                $query = $uri->getQuery();
+                if (!empty($query)) {
+                    $path .= '?' . $query;
+                }
+
+                $this->setRequestUri($path);
             }
         }
     }
@@ -257,9 +263,36 @@ class Zend_Http_Request implements Zend_Request_Interface
             } else { 
                 return false; 
             } 
-        } 
+        } elseif (!is_string($requestUri)) {
+            return false;
+        } else {
+            // Set GET items, if available
+            $_GET = array();
+            if (false !== ($pos = strpos($requestUri, '?'))) {
+                $query = substr($requestUri, $pos + 1);
+
+                // strip off anchor fragment
+                if (false !== ($pos = strpos($query, '#'))) {
+                    $query = substr($query, 0, $pos);
+                }
+
+                // Normalize ampersands
+                $query = str_replace('&amp;', '&', $query);
+
+                // Get key => value pairs and set $_GET
+                $pairs = explode('&', $query);
+                foreach ($pairs as $pair) {
+                    $item = explode('=', $pair, 2);
+                    if (!isset($item[1])) {
+                        $item[1] = null;
+                    }
+                    $_GET[$item[0]] = urldecode($item[1]);
+                }
+            }
+        }
          
         $this->_requestUri = $requestUri; 
+        $this->setPathInfo();
     } 
      
     /**
@@ -280,9 +313,9 @@ class Zend_Http_Request implements Zend_Request_Interface
     /**
      * Set the base URL of the request; i.e., the segment leading to the script name
      *
-     * If no $baseUrl is provided, attempts to determine the base URL from the 
-     * environment, using SCRIPT_FILENAME, SCRIPT_NAME, PHP_SELF, and
-     * ORIG_SCRIPT_NAMEin its determination.
+     * If a boolean true $baseUrl is provided, attempts to determine the base 
+     * URL from the environment, using SCRIPT_FILENAME, SCRIPT_NAME, PHP_SELF, 
+     * and ORIG_SCRIPT_NAME in its determination.
      * 
      * @param mixed $baseUrl 
      * @return void|false Returns false if no $baseUrl provided and unable to 
@@ -290,7 +323,11 @@ class Zend_Http_Request implements Zend_Request_Interface
      */
     public function setBaseUrl($baseUrl = null) 
     { 
-        if ($baseUrl === null) { 
+        if ((null === $baseUrl) || ((true !== $baseUrl) && !is_string($baseUrl))) {
+            return;
+        }
+
+        if ($baseUrl === true) { 
             $filename = basename($_SERVER['SCRIPT_FILENAME']); 
              
             if (basename($_SERVER['SCRIPT_NAME']) === $filename) { 
@@ -384,9 +421,7 @@ class Zend_Http_Request implements Zend_Request_Interface
     public function setPathInfo($pathInfo = null) 
     { 
         if ($pathInfo === null) { 
-            if (($baseUrl = $this->getBaseUrl()) === null) { 
-                return false; 
-            } 
+            $baseUrl = $this->getBaseUrl();
              
             if (($requestUri = $this->getRequestUri()) === null) { 
                 return false; 
@@ -397,13 +432,17 @@ class Zend_Http_Request implements Zend_Request_Interface
                 $requestUri = substr($requestUri, 0, $pos); 
             } 
              
-            if (($pathInfo = substr($requestUri, strlen($baseUrl))) === false) { 
+            if ((null !== $baseUrl)
+                && (false === ($pathInfo = substr($requestUri, strlen($baseUrl))))) 
+            { 
                 // If substr() returns false then PATH_INFO is set to an empty string 
                 $pathInfo = ''; 
-            } 
+            } else {
+                $pathInfo = $requestUri;
+            }
         } 
          
-        $this->_pathInfo = $pathInfo; 
+        $this->_pathInfo = (string) $pathInfo; 
     } 
  
     /**
@@ -535,4 +574,28 @@ class Zend_Http_Request implements Zend_Request_Interface
     { 
         return $this->_aliases; 
     } 
+
+    /**
+     * Return the method by which the request was made
+     * 
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->getServer('REQUEST_METHOD');
+    }
+
+    /**
+     * Was the request made by POST?
+     * 
+     * @return boolean
+     */
+    public function isPost()
+    {
+        if ('POST' == $this->getMethod()) {
+            return true;
+        }
+
+        return false;
+    }
 }

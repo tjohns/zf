@@ -40,24 +40,19 @@ class Zend_Http_RequestTest extends PHPUnit_Framework_TestCase
  
     public function testGetQuery()
     {
-        $this->assertEquals('var1=val1&var2=val2', $this->_request->getQuery());
+        $this->assertEquals('val1', $this->_request->getQuery('var1'));
     }
  
-    public function testSetQuery()
+
+    public function testGetPost()
     {
-        $this->_request->setQuery('var1=val2&var2=val3&var3=val1');
-        $this->assertEquals('var1=val2&var2=val3&var3=val1', $this->_request->getQuery());
-    }
- 
-    public function testSetGetPost()
-    {
-        $this->_request->setPost('post1=val1&post2=val2');
-        $this->assertEquals('post1=val1&post2=val2', $this->_request->getPost());
+        $_POST['post1'] = 'val1';
+        $this->assertEquals('val1', $this->_request->getPost('post1'));
     }
  
     public function testGetPathInfo()
     {
-        $this->assertEquals('/news/3', $this->_request->getPathInfo());
+        $this->assertEquals('/news/3', $this->_request->getPathInfo(), var_export($this->_request->getBaseUrl(), 1));
     }
  
     public function testSetPathInfo()
@@ -66,24 +61,22 @@ class Zend_Http_RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/archives/past/4', $this->_request->getPathInfo());
     }
  
-    public function testGetAlias()
+    public function testGetSetAlias()
     {
-        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
-    }
- 
-    public function testSetAlias()
-    {
-        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
+        $this->_request->setAlias('controller', 'var1');
+        $this->assertEquals('var1', $this->_request->getAlias('controller'));
     }
  
     public function testGetAliases()
     {
-        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
+        $this->_request->setAlias('controller', 'var1');
+        $this->_request->setAlias('action', 'var2');
+        $this->assertSame(array('controller' => 'var1', 'action' => 'var2'), $this->_request->getAliases());
     }
  
     public function testGetRequestUri()
     {
-        $this->assertEquals('/news/3?var1=val1&var2=val2', $this->getRequestUri());
+        $this->assertEquals('/news/3?var1=val1&var2=val2', $this->_request->getRequestUri());
     }
  
     public function testSetRequestUri()
@@ -91,27 +84,25 @@ class Zend_Http_RequestTest extends PHPUnit_Framework_TestCase
         $this->_request->setRequestUri('/archives/past/4?set=this&unset=that');
         $this->assertEquals('/archives/past/4?set=this&unset=that', $this->_request->getRequestUri());
         $this->assertEquals('/archives/past/4', $this->_request->getPathInfo());
-        $this->assertEquals('set=this&unset=that', $this->_request->getQuery());
+        $this->assertEquals('this', $this->_request->getQuery('set'));
+        $this->assertEquals('that', $this->_request->getQuery('unset'));
     }
  
     public function testGetBaseUrl()
     {
-        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
+        $this->assertSame(null, $this->_request->getBaseUrl());
     }
  
     public function testSetBaseUrl()
     {
-        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
+        $this->_request->setBaseUrl('/news');
+        $this->assertEquals('/news', $this->_request->getBaseUrl());
     }
  
-    public function testGetBasePath()
+    public function testGetSetBasePath()
     {
-        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
-    }
- 
-    public function testSetBasePath()
-    {
-        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
+        $this->_request->setBasePath('/news');
+        $this->assertEquals('/news', $this->_request->getBasePath());
     }
  
     public function testGetCookie()
@@ -121,11 +112,11 @@ class Zend_Http_RequestTest extends PHPUnit_Framework_TestCase
  
     public function testGetServer()
     {
-        $this->assertEquals($_SERVER, $this->_request->getServer());
+        $this->assertEquals($_SERVER['REQUEST_METHOD'], $this->_request->getServer('REQUEST_METHOD'));
     }
  
     public function testGetEnv()
     {
-        $this->assertEquals($_ENV, $this->_request->getEnv());
+        $this->assertEquals($_ENV['PATH'], $this->_request->getEnv('PATH'));
     }
 }
