@@ -8,8 +8,10 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 // error_reporting(E_ALL);
 
-require_once 'RouterTest.php';
+require_once 'ActionTest.php';
 require_once 'Request/HttpTest.php';
+require_once 'Response/HttpTest.php';
+require_once 'RouterTest.php';
 
 class Zend_Controller_AllTests
 {
@@ -22,8 +24,10 @@ class Zend_Controller_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Controller');
 
-        $suite->addTestSuite('Zend_Controller_RouterTest');
+        $suite->addTestSuite('Zend_Controller_ActionTest');
         $suite->addTestSuite('Zend_Controller_Request_HttpTest');
+        $suite->addTestSuite('Zend_Controller_Response_HttpTest');
+        $suite->addTestSuite('Zend_Controller_RouterTest');
 
         return $suite;
     }

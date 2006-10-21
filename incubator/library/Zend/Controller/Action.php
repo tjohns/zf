@@ -226,63 +226,55 @@ abstract class Zend_Controller_Action
     }
 
     /**
-     * Initialize the class instance variables and then call the action.
+     * Call the action specified in the request object, and return a response
      *
      * Not used in the Action Controller implementation, but left for usage in 
      * Page Controller implementations. Dispatches a method based on the 
-     * request; if no $request is provided, a Zend_Controller_Http_Request is 
-     * instantiated. 
+     * request.
      *
-     * A controller object is instantiated using the request and response 
-     * objects passed to the method (each default to the HTTP versions if none 
-     * passed); if you wish to pass additional values to the constructor, pass 
-     * additional arguments.
-     *
-     * Returns a Zend_Controller_Response_Abstract object.
+     * Returns a Zend_Controller_Response_Abstract object, instantiating one 
+     * prior to execution if none exists in the controller.
      *
      * {@link preDispatch()} is called prior to the action, 
      * {@link postDispatch()} is called following it.
      *
-     * @param null|Zend_Controller_Request_Abstract $request
-     * @param null|Zend_Controller_Response_Abstract $response
+     * @param null|Zend_Controller_Request_Abstract $request Optional request 
+     * object to use
+     * @param null|Zend_Controller_Response_Abstract $response Optional response 
+     * object to use
+     * @return Zend_Controller_Response_Abstract
      */
-    public static function run(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
+    public function run(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
     {
-        // Instantiate request if none provided
-        if (null === $request) {
-            require_once 'Zend/Controller/Request/Http.php';
-            $request = new Zend_Controller_Request_Http();
+        if (null !== $request) {
+            $this->setRequest($request);
         }
 
-        if (null === $response) {
+        if (null !== $response) {
+            $this->setResponse($response);
+        }
+
+        /**
+         * Initialize a response object if none currently set
+         */
+        if (null === $this->getResponse()) {
             require_once 'Zend/Controller/Response/Http.php';
-            $response = new Zend_Controller_Response_Http();
+            $this->setResponse(new Zend_Controller_Response_Http());
         }
 
-        if (2 < func_num_args()) {
-            $argv = func_get_args();
-            array_shift($argv);
-            array_shift($argv);
-        }
-        array_shift($argv, $response);
-        array_shift($argv, $request);
+        $this->preDispatch();
 
-        $reflection = new ReflectionClass(self);
-        $controller = $reflection->newInstanceArgs($argv);
-
-        $controller->preDispatch();
-
-        $action = $request->getActionName();
+        $action = $this->getRequest()->getActionName();
         if (null === $action) {
             $action = 'noRoute';
         }
         $action = $action . 'Action';
 
-        $reflection->getMethod($action)->invoke($controller);
+        $this->{$action}();
 
-        $controller->postDispatch();
+        $this->postDispatch();
 
-        return $response;
+        return $this->getResponse();
     }
 
     /**
