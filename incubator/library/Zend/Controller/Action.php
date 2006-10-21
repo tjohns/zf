@@ -231,28 +231,58 @@ abstract class Zend_Controller_Action
      * Not used in the Action Controller implementation, but left for usage in 
      * Page Controller implementations. Dispatches a method based on the 
      * request; if no $request is provided, a Zend_Controller_Http_Request is 
-     * instantiated.
+     * instantiated. 
+     *
+     * A controller object is instantiated using the request and response 
+     * objects passed to the method (each default to the HTTP versions if none 
+     * passed); if you wish to pass additional values to the constructor, pass 
+     * additional arguments.
+     *
+     * Returns a Zend_Controller_Response_Abstract object.
      *
      * {@link preDispatch()} is called prior to the action, 
      * {@link postDispatch()} is called following it.
      *
-     * @param Zend_Controller_Request_Abstract $request
+     * @param null|Zend_Controller_Request_Abstract $request
+     * @param null|Zend_Controller_Response_Abstract $response
      */
-    public function run(Zend_Controller_Request_Abstract $request = null)
+    public static function run(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
     {
+        // Instantiate request if none provided
         if (null === $request) {
             require_once 'Zend/Controller/Request/Http.php';
             $request = new Zend_Controller_Request_Http();
         }
 
-        $this->preDispatch();
+        if (null === $response) {
+            require_once 'Zend/Controller/Response/Http.php';
+            $response = new Zend_Controller_Response_Http();
+        }
+
+        if (2 < func_num_args()) {
+            $argv = func_get_args();
+            array_shift($argv);
+            array_shift($argv);
+        }
+        array_shift($argv, $response);
+        array_shift($argv, $request);
+
+        $reflection = new ReflectionClass(self);
+        $controller = $reflection->newInstanceArgs($argv);
+
+        $controller->preDispatch();
+
         $action = $request->getActionName();
         if (null === $action) {
             $action = 'noRoute';
         }
         $action = $action . 'Action';
-        $this->{$action}();
-        $this->postDispatch();
+
+        $reflection->getMethod($action)->invoke($controller);
+
+        $controller->postDispatch();
+
+        return $response;
     }
 
     /**
