@@ -1384,30 +1384,15 @@ class Zend_Date {
 
 
             // timezone formats
+            // break intentionally omitted
             case Zend_Date::TIMEZONE_NAME :
-                return false;
-                break;
-
             case Zend_Date::DAYLIGHT :
-                return false;
-                break;
-
             case Zend_Date::GMT_DIFF :
-                return false;
-                break;
-
             case Zend_Date::GMT_DIFF_SEP :
-                return false;
-                break;
-
             case Zend_Date::TIMEZONE :
-                return false;
-                break;
-
             case Zend_Date::TIMEZONE_SECS :
                 return false;
                 break;
-
 
             // date strings
             case Zend_Date::ISO_8601 :
@@ -1455,10 +1440,8 @@ class Zend_Date {
 
 
             // additional formats
+            // break intentionally omitted
             case Zend_Date::ERA :
-                return false;
-                break;
-
             case Zend_Date::ERA_NAME :
                 return false;
                 break;
@@ -2077,26 +2060,12 @@ class Zend_Date {
 
 
             // timezone formats
+            // break intentionally omitted
             case Zend_Date::TIMEZONE_NAME :
-                return false;
-                break;
-
             case Zend_Date::DAYLIGHT :
-                return false;
-                break;
-
             case Zend_Date::GMT_DIFF :
-                return false;
-                break;
-
             case Zend_Date::GMT_DIFF_SEP :
-                return false;
-                break;
-
             case Zend_Date::TIMEZONE :
-                return false;
-                break;
-
             case Zend_Date::TIMEZONE_SECS :
                 return false;
                 break;
@@ -2147,10 +2116,8 @@ class Zend_Date {
 
 
             // additional formats
+            // break intentionally omitted
             case Zend_Date::ERA :
-                return false;
-                break;
-
             case Zend_Date::ERA_NAME :
                 return false;
                 break;
@@ -2727,26 +2694,13 @@ class Zend_Date {
 
 
             // timezone formats
+            // break intentionally omitted
             case Zend_Date::TIMEZONE_NAME :
-                return false;
-                break;
-
             case Zend_Date::DAYLIGHT :
-                return false;
-                break;
             case Zend_Date::GMT_DIFF :
-                return false;
-                break;
             case Zend_Date::GMT_DIFF_SEP :
-                return false;
-                break;
             case Zend_Date::TIMEZONE :
-                return false;
-                break;
             case Zend_Date::TIMEZONE_SECS :
-                return false;
-                break;
-
 
             // date strings
             case Zend_Date::ISO_8601 :
@@ -2794,10 +2748,8 @@ class Zend_Date {
 
 
             // additional formats
+            // break intentionally omitted
             case Zend_Date::ERA :
-                return false;
-                break;
-
             case Zend_Date::ERA_NAME :
                 return false;
                 break;
@@ -3281,12 +3233,10 @@ class Zend_Date {
                 return false;
                 break;
 
+            // break intentionally omitted
             case Zend_Date::YEAR_8601 :
-                return bcsub($this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt), 
-                             $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
-                break;
-
             case Zend_Date::YEAR :
+            case Zend_Date::YEAR_SHORT_8601 :
                 return bcsub($this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt), 
                              $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
                 break;
@@ -3301,12 +3251,6 @@ class Zend_Date {
                 }
                 return bcsub($this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt), 
                              $this->_Date->mktime(0, 0, 0, 1, 1, $years, -1, $gmt));
-                break;
-
-
-            case Zend_Date::YEAR_SHORT_8601 :
-                return bcsub($this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt), 
-                             $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
                 break;
 
 
@@ -3380,26 +3324,12 @@ class Zend_Date {
 
 
             // timezone formats
+            // break intentionally omitted
             case Zend_Date::TIMEZONE_NAME :
-                return false;
-                break;
-
             case Zend_Date::DAYLIGHT :
-                return false;
-                break;
-
             case Zend_Date::GMT_DIFF :
-                return false;
-                break;
-
             case Zend_Date::GMT_DIFF_SEP :
-                return false;
-                break;
-
             case Zend_Date::TIMEZONE :
-                return false;
-                break;
-
             case Zend_Date::TIMEZONE_SECS :
                 return false;
                 break;
@@ -3450,10 +3380,8 @@ class Zend_Date {
 
 
             // additional formats
+            // break intentionally omitted
             case Zend_Date::ERA :
-                return false;
-                break;
-
             case Zend_Date::ERA_NAME :
                 return false;
                 break;
@@ -3671,7 +3599,6 @@ class Zend_Date {
     /**
      * Returns a duplicate date object
      *
-     * @todo  clone only dateparts
      * @param $part datepart - OPTIONAL the part of date to clone
      * @return object
      */
@@ -3696,45 +3623,21 @@ class Zend_Date {
         switch($part) {
 
             // day formats
+            // break intentionally omitted
             case Zend_Date::DAY :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, intval($day),  0, -1, $gmt));
-                break;
-
             case Zend_Date::WEEKDAY_SHORT :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, intval($day),  0, -1, $gmt));
-                break;
-
             case Zend_Date::DAY_SHORT :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, intval($day),  0, -1, $gmt));
-                break;
-
             case Zend_Date::WEEKDAY :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, intval($day),  0, -1, $gmt));
-                break;
-
             case Zend_Date::WEEKDAY_8601 :
+            case Zend_Date::WEEKDAY_DIGIT :
+            case Zend_Date::WEEKDAY_NARROW :
+            case Zend_Date::WEEKDAY_NAME :
+            case Zend_Date::DAY_OF_YEAR :
                 return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, intval($day),  0, -1, $gmt));
                 break;
 
             case Zend_Date::DAY_SUFFIX :
                 return false;
-                break;
-
-            case Zend_Date::WEEKDAY_DIGIT :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, intval($day),  0, -1, $gmt));
-                break;
-
-            case Zend_Date::DAY_OF_YEAR :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, $day,  0, -1, $gmt));
-                break;
-
-
-            case Zend_Date::WEEKDAY_NARROW :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, intval($day),  0, -1, $gmt));
-                break;
-
-            case Zend_Date::WEEKDAY_NAME :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, intval($day),  0, -1, $gmt));
                 break;
 
 
@@ -3745,19 +3648,12 @@ class Zend_Date {
 
 
             // month formats
+            // break intentionally omitted
             case Zend_Date::MONTH :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, 1,  0, -1, $gmt));
-                break;
-
             case Zend_Date::MONTH_SHORT :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, 1,  0, -1, $gmt));
-                break;
-
             case Zend_Date::MONTH_NAME :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, 1,  0, -1, $gmt));
-                break;
-
             case Zend_Date::MONTH_DIGIT :
+            case Zend_Date::MONTH_NARROW :
                 return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, 1,  0, -1, $gmt));
                 break;
 
@@ -3766,36 +3662,27 @@ class Zend_Date {
                 break;
 
 
-            case Zend_Date::MONTH_NARROW :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, 1,  0, -1, $gmt));
-                break;
-
-
             // year formats
             case Zend_Date::LEAPYEAR :
                 return false;
                 break;
 
+            // break intentionally omitted
             case Zend_Date::YEAR_8601 :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, 1,  $year, -1, $gmt));
-                break;
-
             case Zend_Date::YEAR :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, 1,  $year, -1, $gmt));
-                break;
-
             case Zend_Date::YEAR_SHORT :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, 1,  $year, -1, $gmt));
-                break;
-
-
             case Zend_Date::YEAR_SHORT_8601 :
                 return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, 1,  $year, -1, $gmt));
                 break;
 
 
             // time formats
+            // break intentionally omitted
             case Zend_Date::MERIDIEM :
+            case Zend_Date::HOUR_SHORT_AM :
+            case Zend_Date::HOUR_SHORT :
+            case Zend_Date::HOUR_AM :
+            case Zend_Date::HOUR :
                 return new Zend_Date($this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
                 break;
 
@@ -3803,157 +3690,73 @@ class Zend_Date {
                 return new Zend_Date($this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
                 break;
 
-            case Zend_Date::HOUR_SHORT_AM :
-                return new Zend_Date($this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
-                break;
-
-            case Zend_Date::HOUR_SHORT :
-                return new Zend_Date($this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
-                break;
-
-            case Zend_Date::HOUR_AM :
-                return new Zend_Date($this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
-                break;
-
-            case Zend_Date::HOUR :
-                return new Zend_Date($this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
-                break;
-
+            // break intentionally omitted
             case Zend_Date::MINUTE :
-                return new Zend_Date($this->_Date->mktime(0, $minute, 0, 1, 1, 0, -1, $gmt));
-                break;
-
-            case Zend_Date::SECOND :
-                return new Zend_Date($this->_Date->mktime(0, 0, $second, 1, 1, 0, -1, $gmt));
-                break;
-
-
             case Zend_Date::MINUTE_SHORT :
                 return new Zend_Date($this->_Date->mktime(0, $minute, 0, 1, 1, 0, -1, $gmt));
                 break;
 
+            // break intentionally omitted
+            case Zend_Date::SECOND :
             case Zend_Date::SECOND_SHORT :
                 return new Zend_Date($this->_Date->mktime(0, 0, $second, 1, 1, 0, -1, $gmt));
                 break;
 
 
             // timezone formats
+            // break intentionally omitted
             case Zend_Date::TIMEZONE_NAME :
-                return false;
-                break;
-
             case Zend_Date::DAYLIGHT :
-                return false;
-                break;
-
             case Zend_Date::GMT_DIFF :
-                return false;
-                break;
-
             case Zend_Date::GMT_DIFF_SEP :
-                return false;
-                break;
-
             case Zend_Date::TIMEZONE :
-                return false;
-                break;
-
             case Zend_Date::TIMEZONE_SECS :
                 return false;
                 break;
 
 
             // date strings
+            // break intentionally omitted
             case Zend_Date::ISO_8601 :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::RFC_2822 :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::TIMESTAMP :
                 return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
 
             // additional formats
+            // break intentionally omitted
             case Zend_Date::ERA :
-                return false;
-                break;
-
             case Zend_Date::ERA_NAME :
                 return false;
                 break;
 
+            // break intentionally omitted
             case Zend_Date::DATES :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::DATE_FULL :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::DATE_LONG :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::DATE_MEDIUM :
-                return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::DATE_SHORT :
                 return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, $day, $year, -1, $gmt));
                 break;
 
+            // break intentionally omitted
             case Zend_Date::TIMES :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
-                break;
-
             case Zend_Date::TIME_FULL :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
-                break;
-
             case Zend_Date::TIME_LONG :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
-                break;
-
             case Zend_Date::TIME_MEDIUM :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
-                break;
-
             case Zend_Date::TIME_SHORT :
                 return new Zend_Date($this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
                 break;
 
+            // break intentionally omitted
             case Zend_Date::ATOM :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::COOKIE :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::RFC_822 :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::RFC_850 :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::RFC_1036 :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::RFC_1123 :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::RSS :
-                return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                break;
-
             case Zend_Date::W3C :
                 return new Zend_Date($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
@@ -3968,13 +3771,23 @@ class Zend_Date {
     /**
      * Returns true when both date objects have equal dates set
      *
-     * @todo  equal only date parts
      * @param $date object
      * @return boolean
      */
-    public function equals($date)
+    public function equals($date, $part = '')
     {
-        return ($date->getTimestamp() == $this->getTimestamp);
+        $locale = $this->_Locale;
+
+        // if object extract value
+        if (is_object($date)) {
+            $date = $date->get($part, $locale, $gmt);
+        }
+
+        if (empty($part)) {
+            return ($date->getTimestamp() == $this->getTimestamp);
+        }
+
+        return ($date == $date->get($part));
     }
 
 
