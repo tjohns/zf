@@ -31,8 +31,8 @@ require_once 'Zend/Controller/Plugin/Broker.php';
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
-/** Zend_Controller_Response_Interface */
-require_once 'Zend/Controller/Response/Interface.php';
+/** Zend_Controller_Response_Abstract */
+require_once 'Zend/Controller/Response/Abstract.php';
 
 /**
  * @category   Zend
@@ -67,8 +67,8 @@ class Zend_Controller_Front
     private $_dispatcher = null;
 
     /**
-     * Instance of Zend_Controller_Response_Interface
-     * @var Zend_Controller_Response_Interface
+     * Instance of Zend_Controller_Response_Abstract
+     * @var Zend_Controller_Response_Abstract
      */
     private $_response = null;
 
@@ -252,7 +252,7 @@ class Zend_Controller_Front
      *
      * If a class name is provided, instantiates a response object.
      * 
-     * @param string|Zend_Controller_Response_Interface $response 
+     * @param string|Zend_Controller_Response_Abstract $response 
      * @return void
      * @throws Zend_Controller_Front_Exception if invalid response class
      */
@@ -262,7 +262,7 @@ class Zend_Controller_Front
             Zend::loadClass($response);
             $response = new $response();
         }
-        if (!$response instanceof Zend_Controller_Response_Interface) {
+        if (!$response instanceof Zend_Controller_Response_Abstract) {
             throw new Zend_Controller_Front_Exception('Invalid response class');
         }
 
@@ -272,7 +272,7 @@ class Zend_Controller_Front
 	/**
 	 * Return the response object.
 	 *
-	 * @return null|Zend_Controller_Response_Interface
+	 * @return null|Zend_Controller_Response_Abstract
 	 */
 	public function getResponse()
 	{
@@ -338,7 +338,7 @@ class Zend_Controller_Front
 	 * Dispatch an HTTP request to a controller/action.
      *
      * @param Zend_Controller_Request_Abstract|null $request
-     * @return string|Zend_Controller_Response_Interface
+     * @return string|Zend_Controller_Response_Abstract
 	 */
 	public function dispatch(Zend_Controller_Request_Abstract $request = null)
 	{

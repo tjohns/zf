@@ -24,9 +24,9 @@
 require_once 'Zend/Controller/Request/Abstract.php';
 
 /**
- * Zend_Controller_Response_Interface
+ * Zend_Controller_Response_Abstract
  */
-require_once 'Zend/Controller/Response/Interface.php';
+require_once 'Zend/Controller/Response/Abstract.php';
 
 /**
  * @package    Zend_Controller
@@ -92,15 +92,15 @@ interface Zend_Controller_Dispatcher_Interface
     /**
      * Set the response object to use, if any
      * 
-     * @param Zend_Controller_Response_Interface|null $response 
+     * @param Zend_Controller_Response_Abstract|null $response 
      * @return void
      */
-    public function setResponse(Zend_Controller_Response_Interface $response = null);
+    public function setResponse(Zend_Controller_Response_Abstract $response = null);
 
     /**
      * Retrieve the response object, if any
      * 
-     * @return Zend_Controller_Response_Interface|null
+     * @return Zend_Controller_Response_Abstract|null
      */
     public function getResponse();
 

@@ -32,8 +32,8 @@ require_once 'Zend/Controller/Dispatcher/Exception.php';
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
-/** Zend_Controller_Response_Interface */
-require_once 'Zend/Controller/Response/Interface.php';
+/** Zend_Controller_Response_Abstract */
+require_once 'Zend/Controller/Response/Abstract.php';
 
 /** Zend_Controller_Action */
 require_once 'Zend/Controller/Action.php';
@@ -63,7 +63,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 
     /**
      * Response object to pass to action controllers, if any
-     * @var Zend_Controller_Response_Interface|null 
+     * @var Zend_Controller_Response_Abstract|null 
      */
     protected $_response = null;
 
@@ -197,10 +197,10 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     /**
      * Set response object to pass to action controllers
      * 
-     * @param Zend_Controller_Response_Interface|null $response 
+     * @param Zend_Controller_Response_Abstract|null $response 
      * @return void
      */
-    public function setResponse(Zend_Controller_Response_Interface $response = null)
+    public function setResponse(Zend_Controller_Response_Abstract $response = null)
     {
         $this->_response = $response;
     }
@@ -208,7 +208,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     /**
      * Return the registered response object
      * 
-     * @return Zend_Controller_Response_Interface|null
+     * @return Zend_Controller_Response_Abstract|null
      */
     public function getResponse()
     {

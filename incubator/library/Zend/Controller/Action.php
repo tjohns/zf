@@ -25,8 +25,8 @@ require_once 'Zend/Controller/Action/Exception.php';
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
-/** Zend_Controller_Response_Interface */
-require_once 'Zend/Controller/Response/Interface.php';
+/** Zend_Controller_Response_Abstract */
+require_once 'Zend/Controller/Response/Abstract.php';
 
 
 /**
@@ -44,8 +44,8 @@ abstract class Zend_Controller_Action
     protected $_request = null;
 
     /**
-     * Zend_Controller_Response_Interface object wrapping the response 
-     * @var Zend_Controller_Response_Interface
+     * Zend_Controller_Response_Abstract object wrapping the response 
+     * @var Zend_Controller_Response_Abstract
      */
     protected $_response = null;
 
@@ -93,7 +93,7 @@ abstract class Zend_Controller_Action
             // Determine if we have a response object
             if (0 < count($argv)) {
                 $response = $argv[0];
-                if ($response instanceof Zend_Controller_Response_Interface) {
+                if ($response instanceof Zend_Controller_Response_Abstract) {
                     array_shift($argv);
                     $this->_response = $response;
                 }
@@ -145,7 +145,7 @@ abstract class Zend_Controller_Action
     /**
      * Return the Response object
      * 
-     * @return Zend_Controller_Response_Interface
+     * @return Zend_Controller_Response_Abstract
      */
     public function getResponse()
     {
@@ -155,10 +155,10 @@ abstract class Zend_Controller_Action
     /**
      * Set the Response object
      * 
-     * @param Zend_Controller_Response_Interface $response 
+     * @param Zend_Controller_Response_Abstract $response 
      * @return void
      */
-    public function setResponse(Zend_Controller_Response_Interface $response)
+    public function setResponse(Zend_Controller_Response_Abstract $response)
     {
         $this->_response = $response;
     }
