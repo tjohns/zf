@@ -42,15 +42,10 @@ class Zend_Controller_Response_Http implements Zend_Controller_Response_Interfac
         $value = (string) $value;
 
         if ($replace) {
-            $set = false;
             foreach ($this->_headers as $key => $header) {
                 if ($name == $header['name']) {
-                    $this->_headers[$key]['value'] = $value;
-                    $set = true;
+                    unset($this->_headers[$key]);
                 }
-            }
-            if ($set) {
-                return;
             }
         }
 
