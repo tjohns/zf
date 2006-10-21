@@ -3792,7 +3792,7 @@ class Zend_Date {
 
 
     /**
-     * Returns the maximum date or datepart for the set date object/calendar type
+     * Returns the maximum date or datepart for the set date object
      *
      * @todo  implement function
      * @param $part  datepart / string - OPTIONAL
@@ -4433,13 +4433,15 @@ class Zend_Date {
      * Compares only the year part, returning the difference
      * Alias for compare($year,Zend_Date::YEAR);
      *
-     * @todo  implement function
      * @param $year string/integer - OPTIONAL year to compare, when null the actual year is used for compare
      * @return string
      */
-    public function compareYear($year)
+    public function compareYear($year = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if ($year === false) {
+            $year = date("Y");
+        }
+        return $this->compare($year, Zend_Date::YEAR);
     }
 
 
@@ -4893,13 +4895,15 @@ class Zend_Date {
      * Compares only the day of year
      * Alias for compare($day,Zend_Date::DAY);
      *
-     * @todo  implement function
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
      * @return string
      */
-    public function compareDayOfYear($day)
+    public function compareDayOfYear($day = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if ($day === false) {
+            $day = date("z");
+        }
+        return $this->compare($day, Zend_Date::DAY_OF_YEAR);
     }
 
 
@@ -5006,13 +5010,15 @@ class Zend_Date {
      * Compares only the hour part, returning the difference
      * Alias for compare($hour,Zend_Date::HOUR);
      *
-     * @todo  implement function
      * @param $hour string/integer - OPTIONAL hour to compare, when null the actual hour is used for compare
      * @return string
      */
-    public function compareHour($hour)
+    public function compareHour($hour = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if ($hour === false) {
+            $hour = date("G");
+        }
+        return $this->compare($hour, Zend_Date::HOUR);
     }
 
 
@@ -5119,13 +5125,15 @@ class Zend_Date {
      * Compares only the minute part, returning the difference
      * Alias for compare($minute,Zend_Date::MINUTE);
      *
-     * @todo  implement function
      * @param $minute string/integer - OPTIONAL minute to compare, when null the actual minute is used for compare
      * @return string
      */
-    public function compareMinute($minute)
+    public function compareMinute($minute = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if ($minute === false) {
+            $minute = date("i");
+        }
+        return $this->compare($minute, Zend_Date::MINUTE);
     }
 
 
@@ -5232,13 +5240,15 @@ class Zend_Date {
      * Compares only the second part, returning the difference
      * Alias for compare($second,Zend_Date::SECOND);
      *
-     * @todo  implement function
      * @param $second string/integer - OPTIONAL second to compare, when null the actual second is used for compare
      * @return string
      */
-    public function compareSecond($second)
+    public function compareSecond($second = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if ($second === false) {
+            $second = date("s");
+        }
+        return $this->compare($second, Zend_Date::SECOND);
     }
 
 
