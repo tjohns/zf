@@ -20,9 +20,6 @@
  */
 
 
-//require_once 'Zend/Locale/UTF8.php';
-
-
 /**
  * @category   Zend
  * @package    Zend_Locale
@@ -91,89 +88,90 @@ class Zend_Locale_Format
         $symbols = Zend_Locale_Data::getContent($locale, 'numbersymbols');
         $format  = Zend_Locale_Data::getContent($locale, 'decimalnumberformat');
         $format = $format['default'];
-
+        iconv_set_encoding('internal_encoding', 'UTF-8');
+        
         // seperate negative format pattern when avaiable 
-        if (strpos($format, ';') !== false) {
+        if (iconv_strpos($format, ';') !== false) {
             if (bccomp($value, 0) < 0) {
-                $format = substr($format, strpos($format, ';') + 1);
+                $format = iconv_substr($format, iconv_strpos($format, ';') + 1);
             } else {
-                $format = substr($format, 0, strpos($format, ';'));
+                $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
             }
         }
-
+        
         // set negative sign
         if (bccomp($value, 0) < 0) {
-            if (strpos($format, '-') === false) {
+            if (iconv_strpos($format, '-') === false) {
                 $format = $symbols['minus'] . $format;
             } else {
-                $format = strtr($format, '-', $symbols['minus']);
+                $format = str_replace('-', $symbols['minus'], $format);
             }
         }
-
+        
         // get number parts
-        if (strpos($value, '.') !== false) {
-            $precision = substr($value, strpos($value, '.') + 1);
+        if (iconv_strpos($value, '.') !== false) {
+            $precision = iconv_substr($value, iconv_strpos($value, '.') + 1);
         } else {
             $precision = '';
         }
 
         // get fraction and format lengths
-        bcscale(strlen($precision));
+        bcscale(iconv_strlen($precision));
         $prec = bcsub($value, bcsub($value, '0', 0));
-        if (strpos($prec, '-') !== false) {
-            $prec = substr($prec, 1);
+        if (iconv_strpos($prec, '-') !== false) {
+            $prec = iconv_substr($prec, 1);
         }
         $number = bcsub($value, 0, 0);
-        if (strpos($number, '-') !== false) {
+        if (iconv_strpos($number, '-') !== false) {
             $number = substr($number, 1);
         }
-        $group  = strrpos($format, ',');
-        $group2 = strpos ($format, ',');
-        $point  = strpos ($format, '.');
+        $group  = iconv_strrpos($format, ',');
+        $group2 = iconv_strpos ($format, ',');
+        $point  = iconv_strpos ($format, '.');
 
         // Add fraction
         if ($prec == 0) {
-            $format = substr($format, 0, $point) . substr($format, strrpos($format, '#') + 1);
+            $format = iconv_substr($format, 0, $point) . iconv_substr($format, iconv_strrpos($format, '#') + 1);
         } else {
-            $format = substr($format, 0, $point) . $symbols['decimal'] . substr($prec, 2).
-                      substr($format, strrpos($format, '#') + 1);
+            $format = iconv_substr($format, 0, $point) . $symbols['decimal'] . iconv_substr($prec, 2).
+                      iconv_substr($format, iconv_strrpos($format, '#') + 1);
         }
-
+        
         // Add seperation
         if ($group == 0) {
 
             // no seperation
-            $format = $number . substr($format, $point);
+            $format = $number . iconv_substr($format, $point);
 
         } else if ($group == $group2) {
 
             // only 1 seperation
             $seperation = ($point - $group - 1);
-            for ($x = strlen($number); $x > $group2; $x -= $seperation) {
-                 $number = substr($number, 0, $x - $seperation) . $symbols['group']
-                         . substr($number, $x - $seperation);
+            for ($x = iconv_strlen($number); $x > $group2; $x -= $seperation) {
+                 $number = iconv_substr($number, 0, $x - $seperation) . $symbols['group']
+                         . iconv_substr($number, $x - $seperation);
             }
-            $format = substr($format, 0, strpos($format, '#')) . $number . substr($format, $point);
+            $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
             
         } else {
 
             // 2 seperations
-            if (strlen($number) > ($point - $group - 1)) { 
+            if (iconv_strlen($number) > ($point - $group - 1)) { 
                 $seperation = ($point - $group - 1);
-                $number = substr($number, 0, strlen($number) - $seperation) . $symbols['group']
-                        . substr($number, strlen($number) - $seperation);
+                $number = iconv_substr($number, 0, iconv_strlen($number) - $seperation) . $symbols['group']
+                        . iconv_substr($number, iconv_strlen($number) - $seperation);
 
-                if ((strlen($number) - 1) > ($point - $group)) {
+                if ((iconv_strlen($number) - 1) > ($point - $group)) {
                     $seperation2 = ($group - $group2 - 1);
                     
-                    for ($x = strlen($number) - $seperation2 - 2; $x > $seperation2; $x -= $seperation2) {
-                         $number = substr($number, 0, $x - $seperation2) . $symbols['group']
-                                 . substr($number, $x - $seperation2);
+                    for ($x = iconv_strlen($number) - $seperation2 - 2; $x > $seperation2; $x -= $seperation2) {
+                         $number = iconv_substr($number, 0, $x - $seperation2) . $symbols['group']
+                                 . iconv_substr($number, $x - $seperation2);
                     }
                 }
 
             }
-            $format = substr($format, 0, strpos($format, '#')) . $number . substr($format, $point);
+            $format = iconv_substr($format, 0, iconv_strpos($format, '#')) . $number . iconv_substr($format, $point);
 
         }
         return (string) $format;        

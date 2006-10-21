@@ -315,7 +315,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
     public function testRegionWithoutSeperatedPositive()
     {
         $value = Zend_Locale_Format::toNumber(1234567.12345, 'ar_QA');
-        $this->assertEquals($value, '1234567&0x6b06;12345', "value 1234567&0x6b06;12345 expected");
+        $this->assertEquals($value, '1234567٫12345', "value 1234567٫12345 expected");
     }
 
 
@@ -326,7 +326,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
     public function testRegionWithoutSeperatedNegative()
     {
         $value = Zend_Locale_Format::toNumber(-1234567.12345, 'ar_QA');
-        $this->assertEquals($value, '-1234567&0x6b06;12345', "value -1234567&0x6b06;12345 expected");
+        $this->assertEquals($value, '1234567٫12345-', "value 1234567٫12345- expected");
     }
 
 

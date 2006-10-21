@@ -279,7 +279,7 @@ class Zend_Locale_UTF8_PHP5_String implements Zend_Locale_UTF8_StringInterface
 	{
 		return count( $this->sequence );
 	}
-	
+
 	/**
 	 * Replace all occurrences of the search string with the replacement string
 	 *

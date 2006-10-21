@@ -380,14 +380,74 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test setting roman type
+     * test setting quaternary type
      * expected new type
      */
-    public function testNumberSetFromQuintal()
+    public function testNumberSetFromQuaternary()
     {
-        $value = new Zend_Measure_Number('1032302',Zend_Measure_Number::QUINTAL,'de');
-        $value->setType(Zend_Measure_Number::TERNARY);
-        $this->assertEquals($value->getType(), Zend_Measure_Number::TERNARY, 'Zend_Measure_Number type expected');
+        $value = new Zend_Measure_Number('1032402',Zend_Measure_Number::QUATERNARY,'de');
+        $value->setType(Zend_Measure_Number::QUINARY);
+        $this->assertEquals($value->getType(), Zend_Measure_Number::QUINARY, 'Zend_Measure_Number type expected');
+    }
+
+
+    /**
+     * test setting quinary type
+     * expected new type
+     */
+    public function testNumberSetFromQuinary()
+    {
+        $value = new Zend_Measure_Number('1052402',Zend_Measure_Number::QUINARY,'de');
+        $value->setType(Zend_Measure_Number::QUATERNARY);
+        $this->assertEquals($value->getType(), Zend_Measure_Number::QUATERNARY, 'Zend_Measure_Number type expected');
+    }
+
+
+    /**
+     * test setting senary type
+     * expected new type
+     */
+    public function testNumberSetFromSenary()
+    {
+        $value = new Zend_Measure_Number('1632402',Zend_Measure_Number::SENARY,'de');
+        $value->setType(Zend_Measure_Number::SEPTENARY);
+        $this->assertEquals($value->getType(), Zend_Measure_Number::SEPTENARY, 'Zend_Measure_Number type expected');
+    }
+
+
+    /**
+     * test setting septenary type
+     * expected new type
+     */
+    public function testNumberSetFromSeptenary()
+    {
+        $value = new Zend_Measure_Number('1632702', Zend_Measure_Number::SEPTENARY, 'de');
+        $value->setType(Zend_Measure_Number::SENARY);
+        $this->assertEquals($value->getType(), Zend_Measure_Number::SENARY, 'Zend_Measure_Number type expected');
+    }
+
+
+    /**
+     * test setting nonary type
+     * expected new type
+     */
+    public function testNumberSetFromNonary()
+    {
+        $value = new Zend_Measure_Number('1832402',Zend_Measure_Number::NONARY,'de');
+        $value->setType(Zend_Measure_Number::SEPTENARY);
+        $this->assertEquals($value->getType(), Zend_Measure_Number::SEPTENARY, 'Zend_Measure_Number type expected');
+    }
+
+
+    /**
+     * test setting duodecimal type
+     * expected new type
+     */
+    public function testNumberSetFromDuoDecimal()
+    {
+        $value = new Zend_Measure_Number('1632402',Zend_Measure_Number::DUODECIMAL,'de');
+        $value->setType(Zend_Measure_Number::SEPTENARY);
+        $this->assertEquals($value->getType(), Zend_Measure_Number::SEPTENARY, 'Zend_Measure_Number type expected');
     }
 
 
