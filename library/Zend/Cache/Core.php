@@ -353,7 +353,7 @@ class Zend_Cache_Core
             Zend_Cache::throwException('Invalid id or tag : must be a string');
         }
         if (substr($string, 0, 9) == 'internal_') {
-            Zend_Cache::throwException('"interval_*" ids or tags are reserved');
+            Zend_Cache::throwException('"internal_*" ids or tags are reserved');
         }
         if (!preg_match('~^[\w]+$~', $string)) {
             Zend_Cache::throwException('Invalid id or tag : must use only [a-zA-A0-9_]');
