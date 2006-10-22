@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework
  *
@@ -14,19 +15,28 @@
  *
  * @category   Zend
  * @package    Zend_Http
- * @subpackage Client
+ * @subpackage Client_Adapter
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Exception.php';
+require_once 'Zend/Uri/Http.php';
+require_once 'Zend/Http/Client/Adapter/Interface.php';
+require_once 'Zend/Http/Client/Adapter/Exception.php';
 
 /**
+ * A sockets based (fsockopen) adapter class for Zend_Http_Client. Can be used
+ * on almost every PHP environment, and does not require any special extensions.
+ *
  * @category   Zend
  * @package    Zend_Http
- * @subpackage Client
+ * @subpackage Client_Adapter
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Http_Exception extends Zend_Exception
-{}
+
+/**
+ * NOT YET IMPLEMENTED
+ */
+class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interface 
+{ }

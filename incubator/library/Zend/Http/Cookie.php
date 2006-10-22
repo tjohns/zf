@@ -38,6 +38,7 @@ require_once "Zend/Http/Exception.php";
  * @package     Zend_Http
  * @copyright   Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
  * @license     http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
+ * @todo        replace asString() with __toString()
  */
 class Zend_Http_Cookie 
 {    

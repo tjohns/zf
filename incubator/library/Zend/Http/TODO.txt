@@ -3,6 +3,12 @@ General
 - Write unit tests
 - Write documentation
 
+Zend_Http_Client_Adapter
+---------------------------------------------------------
+- Socket: Implement keep-alive connections
+- Write the Curl adapter
+- Write the PSocket (persistant sockets) adapter (?)
+
 Zend_Http_Client
 ---------------------------------------------------------
 - Implement digest HTTP authentication

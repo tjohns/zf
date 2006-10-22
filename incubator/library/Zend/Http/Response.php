@@ -31,6 +31,9 @@ require_once 'Zend/Http/Exception.php';
  * @subpackage Response
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @todo       add __toString()
+ * @todo       remove the pass by reference on extractor methods
+ * @todo       clean up!
  */
 class Zend_Http_Response
 {

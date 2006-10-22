@@ -14,19 +14,19 @@
  *
  * @category   Zend
  * @package    Zend_Http
- * @subpackage Client
+ * @subpackage Client_Adapter
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Exception.php';
+require_once 'Zend/Http/Client/Exception.php';
 
 /**
  * @category   Zend
  * @package    Zend_Http
- * @subpackage Client
+ * @subpackage Client_Adapter
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Http_Exception extends Zend_Exception
+class Zend_Http_Client_Adapter_Exception extends Zend_Http_Client_Exception
 {}
