@@ -49,10 +49,19 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      * =====> (string) cacheDBCompletePath :
      * - the complete path (filename included) of the SQLITE database
      * 
+     * ====> (int) automaticVacuumFactor :
+     * - Disable / Tune the automatic vacuum process
+     * - The automatic vacuum process defragment the database file (and make it smaller)
+     *   when a clean() or delete() is called
+     *     0               => no automatic vacuum 
+     *     1               => systematic vacuum (when delete() or clean() methods are called)
+     *     x (integer) > 1 => automatic vacuum randomly 1 times on x clean() or delete()
+     * 
      * @var array available options
      */
     protected $_options = array(
-    	'cacheDBCompletePath' => null
+    	'cacheDBCompletePath' => null,
+        'automaticVacuumFactor' => 0
     ); 
   
     /**
@@ -182,6 +191,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
         $result1 = @sqlite_fetch_single($res);
         $result2 = @sqlite_query($this->_db, "DELETE FROM cache WHERE id='$id'");
         $result3 = @sqlite_query($this->_db, "DELETE FROM tag WHERE id='$id'"); 
+        $this->_automaticVacuum();
         return ($result1 && $result2 && $result3);       
     }
     
@@ -201,6 +211,131 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      * @return boolean true if no problem
      */
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array()) 
+    {
+        $return = $this->_clean($mode, $tags);
+        $this->_automaticVacuum();
+        return $return;
+    }
+    
+    /**
+     * PUBLIC METHOD FOR UNIT TESTING ONLY !
+     * 
+     * Force a cache record to expire
+     * 
+     * @param string $id cache id
+     */
+    public function ___expire($id)
+    {
+        $time = time() - 1;
+        @sqlite_query($this->_db, "UPDATE cache SET lastModified=$time, expire=$time WHERE id='$id'");
+    }
+    
+    /**
+     * PUBLIC METHOD FOR UNIT TESTING ONLY !
+     * 
+     * Unlink the database file
+     */
+    public function ___dropDatabaseFile()
+    {
+        @sqlite_close($this->_db);
+        @unlink($this->_options['cacheDBCompletePath']);
+    }
+    
+    // -----------------------
+    // --- Private methods ---
+    // -----------------------
+    
+    /**
+     * Deal with the automatic vacuum process
+     */
+    private function _automaticVacuum() 
+    {
+        if ($this->_options['automaticVacuumFactor'] > 0) {
+            $rand = rand(1, $this->_options['automaticVacuumFactor']);
+            if ($rand == 1) {
+                @sqlite_query($this->_db, 'VACUUM');
+            }
+        }
+    }
+    
+    /**
+     * Register a cache id with the given tag
+     * 
+     * @param string $id cache id
+     * @param string $tag tag
+     * @return boolean true if no problem
+     */
+    private function _registerTag($id, $tag) {
+        $res = @sqlite_query($this->_db, "DELETE FROM TAG WHERE tag='$tag' AND id='$id'");
+        $res = @sqlite_query($this->_db, "INSERT INTO tag (name, id) VALUES ('$tag', '$id')");
+        if (!$res) {        
+	        if ($this->_directives['logging']) {
+	            Zend_Log::log("Zend_Cache_Backend_Sqlite::_registerTag() : impossible to register tag=$tag on id=$id", Zend_Log::LEVEL_WARNING);
+	        }
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Build the database structure
+     */
+    private function _buildStructure()
+    {
+        @sqlite_query($this->_db, 'DROP INDEX tag_id_index');
+        @sqlite_query($this->_db, 'DROP INDEX tag_name_index');
+        @sqlite_query($this->_db, 'DROP INDEX cache_id_expire_index');
+        @sqlite_query($this->_db, 'DROP TABLE version');
+        @sqlite_query($this->_db, 'DROP TABLE cache');
+        @sqlite_query($this->_db, 'DROP TABLE tag');
+        @sqlite_query($this->_db, 'CREATE TABLE version (num INTEGER PRIMARY KEY)');
+        @sqlite_query($this->_db, 'CREATE TABLE cache (id TEXT PRIMARY KEY, content BLOB, lastModified INTEGER, expire INTEGER)');
+        @sqlite_query($this->_db, 'CREATE TABLE tag (name TEXT, id TEXT)');  
+        @sqlite_query($this->_db, 'CREATE INDEX tag_id_index ON tag(id)');
+        @sqlite_query($this->_db, 'CREATE INDEX tag_name_index ON tag(name)');
+        @sqlite_query($this->_db, 'CREATE INDEX cache_id_expire_index ON cache(id, expire)');
+        @sqlite_query($this->_db, 'INSERT INTO version (num) VALUES (1)');        
+    }
+    
+    /**
+     * Check if the database structure is ok (with the good version)
+     * 
+     * @return boolean true if ok
+     */
+    private function _checkStructureVersion()
+    {       
+        $result = @sqlite_query($this->_db, "SELECT num FROM version");
+        if (!$result) return false;
+        $row = @sqlite_fetch_array($result);
+        if (!$row) {
+            return false;
+        }
+        if (((int) $row['num']) != 1) {
+            // old cache structure
+            if ($this->_directives['logging']) {
+                Zend_Log::log('Zend_Cache_Backend_Sqlite::_checkStructureVersion() : old cache structure version detected => the cache is going to be dropped', Zend_Log::LEVEL_WARNING);
+	        }
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Clean some cache records
+     *
+     * Available modes are :
+     * Zend_Cache::CLEANING_MODE_ALL (default)    => remove all cache entries ($tags is not used)
+     * Zend_Cache::CLEANING_MODE_OLD              => remove too old cache entries ($tags is not used) 
+     * Zend_Cache::CLEANING_MODE_MATCHING_TAG     => remove cache entries matching all given tags 
+     *                                               ($tags can be an array of strings or a single string) 
+     * Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG => remove cache entries not {matching one of the given tags}
+     *                                               ($tags can be an array of strings or a single string)      
+     * 
+     * @param string $mode clean mode
+     * @param tags array $tags array of tags
+     * @return boolean true if no problem
+     */
+    private function _clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array()) 
     {
         if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
             $res1 = @sqlite_query($this->_db, 'DELETE FROM cache');
@@ -263,96 +398,6 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
             return $result;         
         }     
         return false;
-    }
-    
-    /**
-     * PUBLIC METHOD FOR UNIT TESTING ONLY !
-     * 
-     * Force a cache record to expire
-     * 
-     * @param string $id cache id
-     */
-    public function ___expire($id)
-    {
-        $time = time() - 1;
-        @sqlite_query($this->_db, "UPDATE cache SET lastModified=$time, expire=$time WHERE id='$id'");
-    }
-    
-    /**
-     * PUBLIC METHOD FOR UNIT TESTING ONLY !
-     * 
-     * Unlink the database file
-     */
-    public function ___dropDatabaseFile()
-    {
-        @sqlite_close($this->_db);
-        @unlink($this->_options['cacheDBCompletePath']);
-    }
-    
-    // -----------------------
-    // --- Private methods ---
-    // -----------------------
-    
-    /**
-     * Register a cache id with the given tag
-     * 
-     * @param string $id cache id
-     * @param string $tag tag
-     * @return boolean true if no problem
-     */
-    private function _registerTag($id, $tag) {
-        $res = @sqlite_query($this->_db, "DELETE FROM TAG WHERE tag='$tag' AND id='$id'");
-        $res = @sqlite_query($this->_db, "INSERT INTO tag (name, id) VALUES ('$tag', '$id')");
-        if (!$res) {        
-	        if ($this->_directives['logging']) {
-	            Zend_Log::log("Zend_Cache_Backend_Sqlite::_registerTag() : impossible to register tag=$tag on id=$id", Zend_Log::LEVEL_WARNING);
-	        }
-            return false;
-        }
-        return true;
-    }
-    
-    /**
-     * Build the database structure
-     */
-    private function _buildStructure()
-    {
-        @sqlite_query($this->_db, 'DROP INDEX tag_id_index');
-        @sqlite_query($this->_db, 'DROP INDEX tag_name_index');
-        @sqlite_query($this->_db, 'DROP INDEX cache_id_expire_index');
-        @sqlite_query($this->_db, 'DROP TABLE version');
-        @sqlite_query($this->_db, 'DROP TABLE cache');
-        @sqlite_query($this->_db, 'DROP TABLE tag');
-        @sqlite_query($this->_db, 'CREATE TABLE version (num INTEGER PRIMARY KEY)');
-        @sqlite_query($this->_db, 'CREATE TABLE cache (id TEXT PRIMARY KEY, content BLOB, lastModified INTEGER, expire INTEGER)');
-        @sqlite_query($this->_db, 'CREATE TABLE tag (name TEXT, id TEXT)');  
-        @sqlite_query($this->_db, 'CREATE INDEX tag_id_index ON tag(id)');
-        @sqlite_query($this->_db, 'CREATE INDEX tag_name_index ON tag(name)');
-        @sqlite_query($this->_db, 'CREATE INDEX cache_id_expire_index ON cache(id, expire)');
-        @sqlite_query($this->_db, 'INSERT INTO version (num) VALUES (1)');        
-    }
-    
-    /**
-     * Check if the database structure is ok (with the good version)
-     * 
-     * @return boolean true if ok
-     */
-    private function _checkStructureVersion()
-    {       
-        $result = @sqlite_query($this->_db, "SELECT num FROM version");
-        if (!$result) return false;
-        $row = @sqlite_fetch_array($result);
-        if (!$row) {
-            return false;
-        }
-        if (((int) $row['num']) != 1) {
-            // old cache structure
-            if ($this->_directives['logging']) {
-                Zend_Log::log('Zend_Cache_Backend_Sqlite::_checkStructureVersion() : old cache structure version detected => the cache is going to be dropped', Zend_Log::LEVEL_WARNING);
-	        }
-            return false;
-        }
-        return true;
     }
     
 }

@@ -69,6 +69,31 @@ class Zend_Cache_sqliteBackendTest extends Zend_Cache_CommonBackendTest {
         $this->fail('Zend_Cache_Exception was expected but not thrown');
     }
     
+    public function testCleanModeAllWithVacuum()
+    {
+        $this->_instance = new Zend_Cache_Backend_Sqlite(array(
+        	'cacheDBCompletePath' => $this->_cacheDir . 'cache.db',
+            'automaticVacuumFactor' => 1
+        ));
+        parent::setUp();    
+        $this->assertTrue($this->_instance->clean('all'));
+        $this->assertFalse($this->_instance->test('bar'));
+        $this->assertFalse($this->_instance->test('bar2'));
+    }
+    
+    public function testRemoveCorrectCallWithVacuum()
+    {   
+        $this->_instance = new Zend_Cache_Backend_Sqlite(array(
+        	'cacheDBCompletePath' => $this->_cacheDir . 'cache.db',
+            'automaticVacuumFactor' => 1
+        ));
+        parent::setUp();  
+        $this->assertTrue($this->_instance->remove('bar'));
+        $this->assertFalse($this->_instance->test('bar')); 
+        $this->assertFalse($this->_instance->remove('barbar'));
+        $this->assertFalse($this->_instance->test('barbar'));        
+    }
+    
 }
 
 ?>
