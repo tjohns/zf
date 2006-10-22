@@ -1,30 +1,30 @@
 <sect1 id="zend.cache.introduction">
     <title>Введение</title>
     <para>
-        <code>Zend_Cache</code> представляет собой универсальное средство для
-        кэширования любых данных.
+        <code>Zend_Cache</code> предназначен для кэширования любых данных.
         <!-- provides a generic way to cache any data. -->
     </para>
     <para>
-      Кэширование в Zend Framework управляется с помощью клиентской части,
-      в то время как записи кэша сохраняются посредством адаптеров прикладной
-      части (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...)
-      с участием гибкой системы идентификаторов и тегов. С их помощью впоследствии
-      легко удалять определенные типы записей (например: "удалить все записи кэша,
-      помеченные данным тегом").
+      Управление кэшированием в Zend Framework производится через фронтэнды
+      (интерфейсные части), записи кэша сохраняются через бэкэнды
+      (адаптеры <code>File</code>, <code>Sqlite</code>, <code>Memcache</code> и др.),
+      с использованием гибкой системы идентификаторов и тегов, благодаря которым
+      можно потом легко удалять определенные типы записей (например:
+      "удалить все записи кэша, помеченные данным тегом").
 <!--
-      Caching in Zend Framework is operated by frontends while cache records are stored through backend adapters
-      (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...) through a flexible
-      system of IDs and tags. Using those, it is easy to delete specific types of records afterwards
-      (for example: "delete all cache records marked with a given tag").
+      Caching in Zend Framework is operated by frontends while cache
+      records are stored through backend adapters (<code>File</code>,
+      <code>Sqlite</code>, <code>Memcache</code>...) through a flexible
+      system of IDs and tags. Using those, it is easy to delete specific
+      types of records afterwards (for example: "delete all cache
+      records marked with a given tag").
 -->
     </para>
     <para>
         Ядро модуля (<code>Zend_Cache_Core</code>) является гибким, универсальным
-        и конфигурируемым. Кроме этого, для особых нужд есть клиентские
-        части, наследующие от <code>Zend_Cache_Core</code>:
-        <code>Output</code>, <code>File</code>, <code>Function</code> и
-        <code>Class</code>.
+        и конфигурируемым. Кроме этого, для особых нужд есть фронтэнды, расширяющие
+        <code>Zend_Cache_Core</code>: <code>Output</code>, <code>File</code>,
+        <code>Function</code> и <code>Class</code>.
 <!--
         The core of the module (<code>Zend_Cache_Core</code>) is generic, flexible and configurable.
         Yet, for your specific needs there are cache frontends that extend <code>Zend_Cache_Core</code>
@@ -33,12 +33,12 @@
     </para>
     <example>
         <title>
-            Получение клиентской части с помощью <code>Zend_Cache::factory()</code>
+            Получение фронтэнда с помощью <code>Zend_Cache::factory()</code>
             <!--Getting a frontend with <code>Zend_Cache::factory()</code>--></title>
         <para>
             <code>Zend_Cache::factory()</code> инстанцирует нужные объекты и
             связывает их. В этом первом примере мы будем использовать
-            клиентскую часть <code>Core</code> с прикладной частью <code>File</code>.
+            фронтэнд <code>Core</code> с бэкэндом <code>File</code>.
 <!--
             <code>Zend_Cache::factory()</code> instantiates correct objects and ties them together.
             In this first example, we will use <code>Core</code> frontend together with <code>File</code>
@@ -62,11 +62,11 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 ?>]]>  </programlisting>
        <para>
-           Теперь, имея клиентскую часть, мы можем кэшировать любые типы данных,
-           используя сериализацию. Например, мы можем кэшировать результат из
-           очень ресурсоемкого запроса к БД. После того, как он будет закэширован,
-           не нужно будет даже подключаться к базе данных: записи извлекаются
-           из кэша и выполняется процедура, обратная сериализации.              
+           Теперь, имея фронтэнд, мы можем кэшировать любые типы данных,
+           используя сериализацию. Например, мы можем кэшировать результат 
+           очень ресурсоемкого запроса к БД. После его добавления
+           в кэш не нужно будет даже подключаться к базе данных: записи
+           извлекаются из кэша и выполняется процедура, обратная сериализации.              
 <!--
             Now that we have a frontend, we can cache any type of data (we turned on serialization). For
             example, we can cache a result from a very expensive database query. After it is cached, there
@@ -80,7 +80,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 // проверка, есть ли уже запись в кэше:
 if(!$result = $cache->get('myresult')) {
 
-    // непопадание в кэш
+    // промах кэша
     // установка соединения с базой данных
     
     $db = Zend_Db::factory( [...] );
@@ -102,14 +102,14 @@ print_r($result);
     </example>
     <example>
         <title>
-            Кэширование выходных данных с помощью прикладной части <code>Zend_Cache</code> для выходных данных
+            Кэширование выходных данных с помощью фронтэнда <code>Zend_Cache</code>
             <!--Caching output with <code>Zend_Cache</code> output frontend-->
         </title>
         <para>
-            Мы помечаем участки, внутри которых хотим поместить в кэш выходные данные,
-            добавлением некоторой условной логики, окружая
-            участок методами <code>start()</code> и <code>end()</code>.
-            Это похоже на первый пример и является основной стратегией кэширования.
+            Мы размечаем участки, внутри которых хотим поместить в кэш выходные данные,
+            добавлением условной логики, окружая участок методами <code>start()</code>
+            и <code>end()</code>. Этот пример похож на первый и является
+            основной стратегией кэширования.
 <!--
             We 'mark up' sections in which we want to cache output by adding some conditional logic,
             encapsulating the section within <code>start()</code> and <code>end()</code> methods (this
@@ -130,7 +130,7 @@ print_r($result);
 
 $frontendOptions = array(
    'lifeTime' => 30,                  // время жизни кэша - половина минуты
-   'automaticSerialization' => false  // это уже установлено по умолчанию
+   'automaticSerialization' => false  // уже установлено по умолчанию
 );
 
 $backendOptions = array('cacheDir' => './tmp/');
@@ -152,14 +152,14 @@ echo 'This is never cached ('.time().').';
 ?>]]>  </programlisting>
        <para>
            Обратите внимание, что мы выводим результат <code>time()</code>
-           дважды: это нечто динамическое в целях демонстрации. Попробуйте
+           дважды: это демонстрация на примере динамических данных. Попробуйте
            запустить это и обновить страницу несколько раз. Вы заметите,
            что первое число не изменяется, в то время как второе меняется в
            зависимости от текущего времени. Это потому, что первое число
            было выведено в кэшируемой части и сохранено среди других выходных данных.
            После того, как пройдет полминуты (мы установили время жизни кэша
            равным 30 секундам) числа снова должны стать одинаковыми, потому что
-           срок действия кэша истек; сразу после этого производится новое
+           срок действия кэша истек, сразу после этого производится новое
            сохранение в кэш.
 <!--
            Notice that we output the result of <code>time()</code> twice; this is something dynamic
@@ -194,14 +194,14 @@ echo 'This is never cached ('.time().').';
         идентификатор (строка), который служит для идентификации записей кэша.
         Второе -- это директива <code>'lifeTime'</code>, которую вы могли видеть
         в предыдущих примерах; она определяет, в течение какого времени кэшируемый
-        ресурс считается "свежим". Третье понятие -- условное исполнение для того,
-        чтобы части вашего кода могли быть пропущены целиком, этим повышается
-        производительность. Основная функция клиентской части
-        (как, например, <code>Zend_Cache_Core::get()</code>) всегда спроектирована
-        так, чтобы возвращала <code>false</code> при отсутствии кэша, если это
-        имеет смысл для данной клиентской части. Это дает конечным
-        пользователям возможность включить части кода, которые нужно
-        закэшировать (и затем пропускать) в операторы <code>if(){ ... }</code>,
+        ресурс считается "свежим". Третье понятие -- условное исполнение, используемое
+        для того, чтобы части вашего кода могли быть пропущены целиком, этим повышается
+        производительность. Основной метод фронтэнда
+        (например, <code>Zend_Cache_Core::get()</code>) всегда спроектирован так, чтобы
+        должен возвращать <code>false</code> при промахе кэша, если это
+        имеет смысл для данного фронэнда. Это дает конечным
+        пользователям возможность включать части кода, которые нужно
+        кэшировать (и затем пропускать) в операторы <code>if(){ ... }</code>,
         где условием является сам метод Zend_Cache. Но в конце этих блоков
         вы должны сохранять то, что было сгенерировано (например, методом
         <code>Zend_Cache_Core::save()</code>).
@@ -218,8 +218,8 @@ echo 'This is never cached ('.time().').';
 -->
     </para>
     <note><para>
-        Для некоторых клиентских частей включение условного исполнения в ваш
-        код не нужно, т.к. вся логика уже реализована в них
+        Для некоторых фронтэндов включение условного исполнения в
+        код не нужно, так как вся логика уже реализована в них
         (например, <code>Function</code>).
 <!--
         The conditional execution design of your generating code is not necessary in some frontends
@@ -229,10 +229,10 @@ echo 'This is never cached ('.time().').';
     <note><para>
         "Попадание в кэш" -- термин для того состояния, когда запись кэша найдена,
         является корректной и "свежей" (в других словах, для которой
-        не закончился срок действия). Иначе происходит "непопадание в кэш".
-        Когда происходит "непопадание в кэш", вы должны сгенерировать свои данные,
+        не закончился срок действия). Иначе имеет место "промах кэша".
+        Когда происходит "промах кэша", вы должны сгенерировать свои данные,
         которые помещаются в кэш. С другой стороны, если есть "попадание",
-        то прикладная часть автоматически извлечет запись из кэша.
+        то бэкэнд автоматически извлечет запись из кэша.
 <!--
         'Cache hit' is a term for a condition when a cache record is found, is valid and is 'fresh' (in other
         words hasn't expired yet). 'Cache miss' is everything else. When a cache miss happens, you must
@@ -243,9 +243,9 @@ echo 'This is never cached ('.time().').';
     <sect2 id="zend.cache.factory">
         <title>Фабричный метод <code>Zend_Cache</code><!--The <code>Zend_Cache</code> factory method--></title>
         <para>
-            Правильным способом создания используемого экземпляра
-            клиентской части <code>Zend_Cache</code> является
-            данный в следующем примере:  
+            Корректным способом создания рабочего экземпляра
+            фронтэнда <code>Zend_Cache</code> является код показанный в
+            следующем примере:  
 <!--
             A good way to build a usable instance of a <code>Zend_Cache</code> Frontend is given
             in the following example :
@@ -256,16 +256,16 @@ echo 'This is never cached ('.time().').';
 # Загружаем фабрику Zend_Cache 
 require 'Zend/Cache.php'; 
 
-# Выбираем прикладную часть (например, 'File' или 'Sqlite'...)
+# Выбираем бэкэнд (например, 'File' или 'Sqlite'...)
 $backendName = '[...]';
 
-# Выбираем клиентскую часть (например, 'Core', 'Output', 'Page'...)
+# Выбираем фронтэнд (например, 'Core', 'Output', 'Page'...)
 $frontendName = '[...]';
 
-# Устанавливаем массив опций для выбранной клиентской части
+# Устанавливаем массив опций для выбранного фронтэнда
 $frontendOptions = array([...]);
 
-# Устанавливаем массив опций для выбранной прикладной части
+# Устанавливаем массив опций для выбранного бэкэнда
 $backendOptions = array([...]);
 
 # Создаем экземпляр 
@@ -275,9 +275,9 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
 ?>]]>   </programlisting> 
         <para>
             В следующих примерах мы предполагаем, что переменная <code>$cache</code>
-            содержит инстанцированную, как показано в примере, клиентскую
-            часть, и что вы понимаете, как передавать параметры выбранной вами
-            прикладной части. 
+            содержит инстанцированный, как показано в примере, фронтэнд,
+            и что вы понимаете, как передавать параметры выбранному вами
+            бэкэнду. 
 <!--
             In the following examples we will assume that the <code>$cache</code> variable holds a
             valid, instantiated frontend as shown and that you understand how to pass parametres
@@ -286,8 +286,8 @@ $cache = Zend_Cache::factory($frontendName, $backendName, $frontendOptions, $bac
         </para>
         <note><para>
             Всегда используйте <code>Zend_Cache::factory()</code> для получения
-            экземпляров клиентской части. Непосредственно созданные экземпляры
-            клиентских и прикладных частей будут работать не так, как ожидается.
+            экземпляров фронтэнда. Непосредственно созданные экземпляры
+            фронтэндов и бэкэндов будут работать не так, как ожидается.
 <!--
             Always use <code>Zend_Cache::factory()</code> to get frontend instances. Instantiating
             frontends and backends yourself will not work as expected.
@@ -375,26 +375,25 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
 </sect1>
 
 <sect1 id="zend.cache.frontends">
-    <title>Клиентские части Zend_Cache<!--Zend_Cache frontends--></title>
+    <title>Фронтэнды Zend_Cache<!--Zend_Cache frontends--></title>
     
     <sect2 id="zend.cache.core">
         <title>Zend_Cache_Core</title>
         <sect3 id="zend.cache.core.introduction">
             <title>Введение</title>
             <para>
-                Клиентская часть <code>Zend_Cache_Core</code> является особенной,
-                так как это ядро всего модуля. Это универсальная клиентская часть и
-                она расширяется другими классами.
+                Фронтэнд <code>Zend_Cache_Core</code> является особым,
+                так как это ядро всего модуля. Это фронтэнд общего назначения и
+                он расширяется другими классами.
 <!--
                 <code>Zend_Cache_Core</code> is a special frontend because it is the core
                 of the module. It is a generic cache frontend and is extended by other classes.
 -->
             </para>
             <note><para>
-                Все клиентские части наследуют от класса <code>Zend_Cache_Core</code>,
+                Все фронтэнды наследуют от класса <code>Zend_Cache_Core</code>,
                 поэтому его методы и опции, описанные ниже, должны быть доступны
-                и в других клиентских частях и не будут документироваться
-                здесь.
+                в других фронтэндах и не будут описываться далее.
 <!--
                 All frontends inherit from <code>Zend_Cache_Core</code> so that its methods and options
                 (described below) would also be available in other frontends, therefore they won't be
@@ -449,7 +448,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                    					  Если установлен в <code>true</code>, то включается логирование посредством
+                    					  Если установлен в <code>true</code>, то включается логирование через
                                 <code>Zend_Log</code> (но система будет работать медленнее).  
                                 <!--if set to true, logging through <code>Zend_Log</code> is activated 
                                 (but the system is slower)-->         
@@ -505,7 +504,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
         <sect3 id="zend.cache.core.examples">
             <title>Примеры</title>
             <para>
-                Пример был дан в самом начале этого руководства.
+                Пример был дан в самом начале данного раздела руководства.
 <!--
                 An example is given in the manual at the very beginning.
 -->
@@ -526,7 +525,7 @@ $cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('tagA', 'tagC'));
 $id = 'myBigLoop'; // идентификатор того, что мы хотим закэшировать
 
 if (!($data = $cache->get($id))) {
-    // непопадание в кэш
+    // промах кэша
     
     $data = '';
     for ($i = 0; $i < 10000; $i++) {
@@ -555,7 +554,7 @@ $id2 = 'bar';
 
 // блок 1
 if (!($data = $cache->get($id1))) {
-    // непопадание в кэш
+    // промах кэша
     
     $data = '';
     for ($i=0;$i<10000;$i++) {
@@ -572,7 +571,7 @@ echo('НЕ КЭШИРУЕТСЯ! ');
 
 // блок 2
 if (!($data = $cache->get($id2))) {
-    // непопадание в кэш
+    // промах кэша
     
     $data = '';
     for ($i=0;$i<10000;$i++) {
@@ -593,8 +592,8 @@ echo($data);
         <sect3 id="zend.cache.frontend.output.introduction">
             <title>Введение</title>
             <para>
-                <code>Zend_Cache_Frontend_Output</code> является клиентской частью,
-                собирающей выходные данные. Она использует буферизацию вывода
+                <code>Zend_Cache_Frontend_Output</code> является фронтэндом,
+                собирающим выходные данные. Он использует буферизацию вывода
                 (output buffering) в PHP для сохранения всего, что выводится между
                 его методами <code>start()</code> и <code>end()</code>.
 <!--
@@ -607,7 +606,7 @@ echo($data);
         <sect3 id="zend.cache.frontend.output.options">
             <title>Доступные опции</title>
             <para>
-                Эта клиентская часть не имеет специальных опций, отличных
+                Этот фронтэнд не имеет специальных опций, отличных
                 от опций <code>Zend_Cache_Core</code>.
 <!--
              This frontend doesn't have any specific options other than those of
@@ -619,7 +618,7 @@ echo($data);
         <sect3 id="zend.cache.frontend.output.examples">
             <title>Примеры</title>
             <para>
-                Пример был дан в самом начале этого руководства. Здесь он с
+                Пример был дан в самом начале данного раздела руководства. Здесь он с
                 небольшими изменениями:
 <!--
                 An example is given in the manual at the very beginning. Here it is with minor changes:
@@ -627,7 +626,7 @@ echo($data);
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-// если имеет место непопадание в кэш,
+// если имеет место промах кэша,
 // то начинается буферизация вывода
 if(!$cache->start('mypage')):
 
@@ -863,7 +862,7 @@ $res = $cache->foobar('1', '2');
 
 ?>]]>       </programlisting>
             <para>
-                Кэширование обычных вызовов методов
+                Кэширование обычных вызовов методов:
 <!--
                 To cache classic method calls :
 -->
@@ -900,9 +899,9 @@ $res = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.file.introduction">
             <title>Введение</title>
             <para>
-                <code>Zend_Cache_Frontend_File</code> является клиентской частью,
-                управляемой временем изменения "главного файла".
-                Она очень полезна для конфигурации или шаблонов.
+                <code>Zend_Cache_Frontend_File</code> является фронтэндом,
+                который управляется временем изменения "главного файла".
+                Он очень полезен для конфигурации или шаблонов.
 <!--
                 <code>Zend_Cache_Frontend_File</code> is a frontend driven by the 
                 modification time of a "master file". It's really interesting for examples
@@ -910,12 +909,12 @@ $res = $cache->foobar2('1', '2');
 -->
             </para>
             <para>
-              Например, у вас есть конфигурационный файл XML, он разбирается
+              Например, у вас есть конфигурационный файл XML, он парсится
               функцией, которая возвращает объект конфигурации
               (наподобие <code>Zend_Config</code>). С помощью
               <code>Zend_Cache_Frontend_File</code> вы можете сохранять объект
-              конфигурации в кэш (чтобы избежать разбора
-              конфигурационного файла XML каждый раз), но с сильной зависимостью
+              конфигурации в кэш (чтобы избежать повторного парсинга
+              конфигурационного файла XML), но с сильной зависимостью
               от "главного файла". Если конфигурационный файл XML изменяется,
               то кэш сразу становится недействительным.
 <!--
@@ -958,10 +957,10 @@ $res = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.file.examples">
             <title>Примеры</title>
             <para>
-                Эта клиентская часть используется так же, как и
+                Этот фронтэнд используется так же, как и
                 <code>Zend_Cache_Core</code>. Специальные примеры не нужны,
                 единственное, что надо сделать -- это определить
-                <code>masterFile</code>, когда используете фабрику.  
+                <code>masterFile</code> при использовании фабричного метода.  
 <!--
                 Use of this frontend is the same than of <code>Zend_Cache_Core</code>. There
                 is no need of a specific example - the only thing to do is to 
@@ -978,7 +977,7 @@ $res = $cache->foobar2('1', '2');
         	<para>
         	    <code>Zend_Cache_Frontend_Page</code> похожа на <code>Zend_Cache_Frontend_Output</code>,
         	    но предназначена для кэширования целых страниц. <code>Zend_Cache_Frontend_Page</code>
-              нельзя использовать для кэширования только отдельных блоков. 
+              нельзя использовать для кэширования отдельных блоков. 
 <!--
 	            <code>Zend_Cache_Frontend_Page</code> is like <code>Zend_Cache_Frontend_Output</code>
 	            but designed for a complete page. It's impossible to use <code>Zend_Cache_Frontend_Page</code>
@@ -1022,7 +1021,7 @@ $res = $cache->foobar2('1', '2');
 	        </para></note>
     	</sect3>
     	<sect3 id="zend.cache.frontends.page.options">
-	        <title>Доступные опции (для этой клиентской части в фабрике Zend_Cache)<!--Available options (for this frontend in Zend_Cache factory)--></title>
+	        <title>Доступные опции (для этого фронтэнда части в фабрике Zend_Cache)<!--Available options (for this frontend in Zend_Cache factory)--></title>
 	        <table>
 	            <title>Доступные опции</title>
 	            <tgroup cols="4">
@@ -1214,12 +1213,12 @@ $cache->start();
 </sect1>
 
 <sect1 id="zend.cache.backends">
-    <title>Прикладные части Zend_Cache<!--Zend_Cache backends--></title>
+    <title>Бэкэнды Zend_Cache<!--Zend_Cache backends--></title>
     
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
-            Эта прикладная часть хранит записи кэша в файлах (в выбранной директории)             
+            Этот бэкэнд хранит записи кэша в файлах (в выбранной директории)             
 <!--
             This backends stores cache records into files (in a choosen directory).
 --> 
@@ -1320,7 +1319,7 @@ $cache->start();
     <sect2 id="zend.cache.backends.sqlite">
         <title>Zend_Cache_Backend_Sqlite</title>
         <para>
-        	  Эта серверная часть хранит записи кэша в базе данных SQLite. 
+        	  Этот бэкэнд хранит записи кэша в базе данных SQLite. 
 <!--
             This backends stores cache records into a SQLite database.
 -->
@@ -1353,8 +1352,8 @@ $cache->start();
     <sect2 id="zend.cache.backends.memcached">
         <title>Zend_Cache_Backend_Memcached</title>
         <para>
-            Эта прикладная часть хранит записи кэша в серверах memcached.
-            <ulink url="http://www.danga.com/memcached/">Memcached</ulink> --
+            Этот бэкэнд хранит записи кэша в серверах memcached.
+            <ulink url="http://www.danga.com/memcached/">memcached</ulink> --
             высокопроизводительная распределенная система кэширования объектов
             в памяти. 
 <!--
@@ -1364,7 +1363,7 @@ $cache->start();
 -->
         </para>
         <para>
-            Будьте осторожны: на данный момент теги для этой прикладной части
+            Будьте осторожны: на данный момент теги для этого бэкэнда
             не поддерживаются, как и аргумент "doNotTestCacheValidity=true".    
 <!--
         	Be careful : with this backend, "tags" are not supported for the moment as 
@@ -1416,10 +1415,10 @@ $cache->start();
     <sect2 id="zend.cache.backends.apc">
         <title>Zend_Cache_Backend_APC</title>
         <para>
-            Эта прикладная часть хранит записи кэша в совместно используемой памяти
-            с помощью расширения <ulink url="http://pecl.php.net/package/APC">APC</ulink>
-            (Alternative PHP Cache -- альтернативный PHP кэш), которое, разумеется,
-            нужно установить для использования этой прикладной части. 
+            Этот бэкэнд хранит записи кэша в совместно используемой памяти
+            через расширение <ulink url="http://pecl.php.net/package/APC">APC</ulink>
+            (Alternative PHP Cache -- альтернативный кэш PHP), которое
+            необходимо установить перед тем, как использовать этот бэкэнд. 
 <!--
             This backends stores cache records in shared memory through 
             the <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) extension
@@ -1427,7 +1426,7 @@ $cache->start();
 -->
         </para>
         <para>
-            Будьте осторожны: на данный момент теги для этой прикладной части
+            Будьте осторожны: на данный момент теги для этого бэкэнда
             не поддерживаются, как и аргумент "doNotTestCacheValidity=true".    
 <!--
         	Be careful : with this backend, "tags" are not supported for the moment as 
@@ -1435,7 +1434,7 @@ $cache->start();
 -->
         </para>
         <para>
-            Нет специальных опций для этой клиентской части.
+            Нет специальных опций для этого фронтэнда.
 <!--
             There is no option for this backend.
 -->
