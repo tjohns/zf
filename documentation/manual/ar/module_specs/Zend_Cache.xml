@@ -131,7 +131,7 @@ echo 'This is never cached ('.time().').';
 
 
 <sect1 id="zend.cache.theory">
-    <title>نظرية الـ caching </title>
+    <title>مفهوم الـ caching </title>
     <para>
         هناك ثلاث مفاهيم رئيسية فى Zend_Cache. الأول هو المعرف المميز و هو عيارة عن string 
 و الذى يستخدم لتعريف البيانات المسجلة فى الـ cache. 
