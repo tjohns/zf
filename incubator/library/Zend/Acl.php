@@ -248,11 +248,11 @@ class Zend_Acl
     {
         $valid = array();
 
-        if (is_null($aro)) {
+        if (null === $aro) {
             $aro = $this->aroRegistry()->toArray();
         }
 
-        foreach($this->_parseAro($aro) as $member) {
+        foreach ($this->_parseAro($aro) as $member) {
             if ($this->valid($member, $context)) {
                 $valid[$member->getId()] = $member;
             }
@@ -358,8 +358,8 @@ class Zend_Acl
      */
     public function remove($path = null)
     {
-        if (is_null($path)) {
-            if (!is_null($parent = $this->getParent())) {
+        if (null === $path) {
+            if (null !== ($parent = $this->getParent())) {
                 return $parent->remove($this->getPath());
             } else {
                 throw new Zend_Acl_Exception('cannot remove root node');
@@ -386,7 +386,7 @@ class Zend_Acl
         $root = $this->_findPath($this, $path);
 
         $aro = $this->_parseAro($aro);
-        foreach($this->getChildren() as $aco) {
+        foreach ($this->getChildren() as $aco) {
             $aco->removeAro($aro, $context);
         }
 
@@ -455,7 +455,7 @@ class Zend_Acl
             if (!is_array($path)) {
                 $path = array($path);
             }
-            foreach($path as $container) {
+            foreach ($path as $container) {
                 $this->_createPath($container)->_getPermission()->setValues($acl, $value, $aro, $mode);
             }
         }
@@ -470,7 +470,7 @@ class Zend_Acl
      */
     protected function _getPermission()
     {
-        if (is_null($this->_perm)) {
+        if (null === $this->_perm) {
             $this->_perm = new Zend_Acl_Permission;
         }
         return $this->_perm;
@@ -487,7 +487,7 @@ class Zend_Acl
         if (!is_array($id)) {
             $id = array($id);
         }
-        foreach($id as $member) {
+        foreach ($id as $member) {
             if (!($member instanceof Zend_Acl_Aro)) {
                 $member = $this->aroRegistry()->find($member);
             }
@@ -508,9 +508,9 @@ class Zend_Acl
     protected function _createPath($path)
     {
         $root = $this;
-        if (!is_null($path) && $path !== '_default') {
+        if (null !== $path && $path !== '_default') {
             $path = explode(Zend_Acl::PATH_DELIMITER, $path);
-            foreach($path as $key) {
+            foreach ($path as $key) {
                 $root->{$key} = $this->$key;
                 $root = $root->{$key};
             }
@@ -538,13 +538,13 @@ class Zend_Acl
      */
     protected function _findPath(Zend_Acl $root, $path)
     {
-        if (!is_null($path)) {
+        if (null !== $path) {
             // cascade down to retrieve final path
             if (!is_array($path)) {
                 $delimiter = self::PATH_DELIMITER;
                 $path = explode($delimiter, trim("{$path}", $delimiter));
             }
-            foreach($path as $container) {
+            foreach ($path as $container) {
                 $root = $root->{$container};
             }
         }
@@ -558,7 +558,7 @@ class Zend_Acl
      */
     protected function _isRoot()
     {
-        return is_null($this->_parent);
+        return null === $this->_parent;
     }
 
 }

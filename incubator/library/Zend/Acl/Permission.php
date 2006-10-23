@@ -17,7 +17,7 @@
  * @package    Zend_Acl
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 
 
 /**
@@ -34,7 +34,7 @@ class Zend_Acl_Permission
      */
     protected $_context = array('allow' => array(),
                                 'deny' => array());
-                                
+
     /**
      * Returns a score for the selected permission
      *
@@ -57,10 +57,10 @@ class Zend_Acl_Permission
             // do any parents match the existing aros?
             $parent = array_intersect($aro->getParent(), $defined);
 
-            foreach($parent as $id) {
+            foreach ($parent as $id) {
                 // first array member will have the highest inheritance
                 $factor = $this->_getFactor($aro, $id);
-                
+
                 if (in_array($context, $acl[$id])) {
                     // is there an explicit match for the context?
                     $score = 4 * $factor;
@@ -98,8 +98,8 @@ class Zend_Acl_Permission
      * $mode is provided as either set, add or remove
      *
      * If $values contains the magic value Zend_Acl::ACO_CATCHALL then all
-     * nominated aros will provide an explicit match for the permission type. 
-     * Otherwise, as each context is set, the opposite is checked for to ensure 
+     * nominated aros will provide an explicit match for the permission type.
+     * Otherwise, as each context is set, the opposite is checked for to ensure
      * no deadlocks for permissions
      *
      * E.g. If 'admin' is provided for 'allow', then 'admin' will be removed
@@ -118,17 +118,17 @@ class Zend_Acl_Permission
 
         if ($value == array(Zend_Acl::ACO_CATCHALL)) {
             if ($mode == Zend_Acl::MODE_ADD) {
-                $mode = Zend_Acl::MODE_SET;        
+                $mode = Zend_Acl::MODE_SET;
             } elseif ($mode == Zend_Acl::MODE_REMOVE) {
                 $mode = Zend_Acl::MODE_SET;
                 $value = array();
             }
         }
 
-        foreach($aro as $member) {
-        
+        foreach ($aro as $member) {
+
             $id = $member->getId();
-        
+
             switch($mode) {
                 case Zend_Acl::MODE_UNSET:
                     if (isset($this->_context[$type][$id])) {
@@ -171,8 +171,8 @@ class Zend_Acl_Permission
     /**
      * Parses context value
      *
-     * Ensures that the magic Zend_Acl::ACO_CATCHALL value is returned as a 
-     * single array (as it overrides all other explicit contexts) if exists. 
+     * Ensures that the magic Zend_Acl::ACO_CATCHALL value is returned as a
+     * single array (as it overrides all other explicit contexts) if exists.
      * Otherwise cast the value(s) as an array for storage.
      *
      * @return string
@@ -180,7 +180,7 @@ class Zend_Acl_Permission
     protected function _getContext($value)
     {
         if (!is_array($value)) {
-            if (is_null($value)) {
+            if (null === $value) {
                 $value = Zend_Acl::ACO_CATCHALL;
             }
             $value = array($value);

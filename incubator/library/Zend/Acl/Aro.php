@@ -17,7 +17,7 @@
  * @package    Zend_Acl
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 
 
 /**
@@ -63,18 +63,18 @@ class Zend_Acl_Aro
         $this->_registry = $registry;
         $this->_addParent($this);
 
-        if (!is_null($inherit)) {
+        if (null !== $inherit) {
             if (!is_array($inherit)) {
                 $inherit = array($inherit);
             }
-            
+
             foreach ($inherit as $parent) {
-    
+
                 if (!($parent instanceof self)) {
                     $parent = $this->_registry->find($parent);
                 }
-    
-                foreach($parent->getParent() as $aro) {
+
+                foreach ($parent->getParent() as $aro) {
                     $this->_addParent($aro);
                 }
                 $this->_addParent($parent);
@@ -146,10 +146,10 @@ class Zend_Acl_Aro
     {
         return $this->_getValidAco(clone $aco, $context);
     }
-    
+
     protected function _getValidAco(Zend_Acl $aco, $context)
     {
-        foreach($aco->getChildren() as $node) {
+        foreach ($aco->getChildren() as $node) {
             if (!$this->canAccess($node, $context)) {
                 $aco->remove($node->getPath());
             }
@@ -171,7 +171,7 @@ class Zend_Acl_Aro
         if (!in_array($parent->getId(), $this->_parent)) {
             array_push($this->_parent, $parent->getId());
         }
-        
+
         return $parent;
     }
 }
