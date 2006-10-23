@@ -144,6 +144,16 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $this->_directory = rtrim($dir, '/\\');
     }
 
+    /**
+     * Return the currently set directory for Zend_Controller_Action class 
+     * lookup
+     * 
+     * @return string
+     */
+    public function getControllerDirectory()
+    {
+        return $this->_directory;
+    }
 
     /**
      * Returns TRUE if the Zend_Controller_Request_Abstract object can be dispatched to a controller.
@@ -263,7 +273,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         Zend::loadClass($className, $this->_directory);
 
         // Perform reflection on the class and verify it's a controller
-        $reflection = ReflectionClass($className);
+        $reflection = new ReflectionClass($className);
         if (!$reflection->isSubclassOf(new ReflectionClass('Zend_Controller_Action'))) {
            throw new Zend_Controller_Dispatcher_Exception("Controller \"$className\" is not an instance of Zend_Controller_Action");
         }
@@ -297,7 +307,13 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $method = $reflection->getMethod($action);
 
         // Dispatch the method call
-        $method->invokeArgs($controller, $invokeArgs);
+        $request->setDispatched(true);
+        $controller->preDispatch();
+        if ($request->isDispatched()) {
+            // preDispatch() didn't change the action, so we can continue
+            $method->invokeArgs($controller, $invokeArgs);
+            $controller->postDispatch();
+        }
 
         // Destroy the page controller instance and reflection objects
         $controller = null;
