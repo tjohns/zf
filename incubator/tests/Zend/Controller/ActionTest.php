@@ -75,6 +75,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
     {
         $response = $this->_controller->run();
         $this->assertContains('In the index action', $response->getBody());
+        $this->assertNotContains('Prerun ran', $this->_controller->getResponse()->getBody());
     }
 
     public function testRun2()
@@ -93,6 +94,7 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->_controller->getRequest()->setActionName('foo');
         $response = $this->_controller->run();
         $this->assertContains('In the foo action', $response->getBody());
+        $this->assertNotContains('Prerun ran', $this->_controller->getResponse()->getBody());
     }
 }
 
