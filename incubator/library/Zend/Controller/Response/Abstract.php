@@ -64,6 +64,18 @@ abstract class Zend_Controller_Response_Abstract
     }
 
     /**
+     * Clear headers
+     * 
+     * @return self
+     */
+    public function clearHeaders()
+    {
+        $this->_headers = array();
+
+        return $this;
+    }
+
+    /**
      * Set body content
      *
      * If body content already defined, this will replace it.

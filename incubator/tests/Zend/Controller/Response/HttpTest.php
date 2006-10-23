@@ -44,6 +44,17 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $count);
     }
 
+    public function testClearHeaders()
+    {
+        $this->_response->setHeader('Content-Type', 'text/xml');
+        $headers = $this->_response->getHeaders();
+        $this->assertEquals(1, count($headers));
+
+        $this->_response->clearHeaders();
+        $headers = $this->_response->getHeaders();
+        $this->assertEquals(0, count($headers));
+    }
+
     public function testSetBody()
     {
         $expected = 'content for the response body';
