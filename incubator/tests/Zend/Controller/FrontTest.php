@@ -157,4 +157,20 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertContains('postDispatch called', $body);
     }
 
+    /**
+     * Test that extra arguments get passed
+     */
+    public function testDispatch5()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('index');
+        $request->setActionName('args');
+        $this->_controller->setResponse(new Zend_Controller_Response_Cli());
+        $this->_controller->addParam('foo');
+        $this->_controller->addParam('bar');
+        $response = $this->_controller->dispatch($request);
+
+        $body = $response->getBody();
+        $this->assertContains('foo; bar', $body);
+    }
 }

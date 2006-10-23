@@ -17,4 +17,9 @@ class IndexController extends Zend_Controller_Action
     {
         $this->_response->appendBody("Prefix action called\n");
     }
+
+    public function argsAction()
+    {
+        $this->_response->appendBody('Args action called with params ' . implode('; ', $this->getInvokeArgs()) . "\n");
+    }
 }

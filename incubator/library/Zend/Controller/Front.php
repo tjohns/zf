@@ -143,6 +143,20 @@ class Zend_Controller_Front
 	}
 
     /**
+     * Convenience method, passthru to Zend_Controller_Dispatcher::getControllerDirectory()
+     * 
+     * @return string
+     */
+    public function getControllerDirectory()
+    {
+        $dispatcher = $this->getDispatcher();
+        if (!method_exists($dispatcher, 'getControllerDirectory')) {
+           throw new Zend_Controller_Front_Exception('Custom dispatcher does not support setting controller directory');
+        }
+	   return $dispatcher->getControllerDirectory();
+    }
+
+    /**
      * Set request class/object
      *
 	 * Set the request object.  The request holds the request environment.
@@ -381,6 +395,7 @@ class Zend_Controller_Front
 
             $dispatcher = $this->getDispatcher();
             $dispatcher->setResponse($response);
+            $dispatcher->setParams($this->getParams());
 
             /**
              *  Attempt to dispatch the controller/action. If the $request 
