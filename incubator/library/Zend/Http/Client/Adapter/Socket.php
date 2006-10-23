@@ -130,8 +130,10 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
 		// Make sure we're properly connected
 		if (! $this->socket) 
 			throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are not connected");
-			
-		if ($this->connected_to[0] != $uri->getHost() || $this->connected_to[1] != $uri->getPort())
+		
+		$host = $uri->getHost();
+        	$host = (strtolower($uri->getScheme()) == 'https' ? 'ssl://' . $host : $host);
+		if ($this->connected_to[0] != $host || $this->connected_to[1] != $uri->getPort())
 		    throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are connected to the wrong host");
 		
 		// Build request headers
