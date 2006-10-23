@@ -118,6 +118,10 @@
         &module_specs.Zend_Measure_Special;
         &module_specs.Zend_Measure_Types;
     </chapter>
+    <chapter id="zend.rest">
+        <title>Zend_Rest</title>
+        &module_specs.Zend_Rest;
+    </chapter>
     <chapter id="zend.locale">
         <title>Zend_Locale</title>
         &module_specs.Zend_Locale_Introduction;
