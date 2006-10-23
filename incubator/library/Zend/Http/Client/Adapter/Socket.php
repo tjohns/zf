@@ -137,7 +137,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
 		    throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are connected to the wrong host");
 		
 		// Build request headers
-		$request = "{$method} {$uri->__toString()} HTTP/{$http_ver}}\r\n";
+		$request = "{$method} {$uri->__toString()} HTTP/{$http_ver}\r\n";
 		foreach ($headers as $k => $v) {
 			if (is_string($k)) $v = ucfirst($k) . ": $v";
 			$request .= "$v\r\n";
