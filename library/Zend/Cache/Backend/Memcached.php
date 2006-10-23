@@ -207,7 +207,7 @@ class Zend_Cache_Backend_Memcached extends Zend_Cache_Backend implements Zend_Ca
      * @param tags array $tags array of tags
      * @return boolean true if no problem
      */
-    public function clean($mode = 'all', $tags = array()) 
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array()) 
     {
         if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
             return $this->_memcache->flush();

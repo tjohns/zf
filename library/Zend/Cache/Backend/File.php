@@ -268,7 +268,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      * @param tags array $tags array of tags
      * @return boolean true if no problem
      */
-    public function clean($mode = 'all', $tags = array()) 
+    public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array()) 
     {
         // We use this private method to hide the recursive stuff
         clearstatcache();
