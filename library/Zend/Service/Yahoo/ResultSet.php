@@ -24,7 +24,7 @@
  * @todo Discussed this with Chuck and other Zenders.  Why was SeekableIterator
  *       implemented here?  Does seek() gain us anything in this context?  Why
  *       not use just Iterator or ArrayAccess + Iterator?
- * 
+ *
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Yahoo
@@ -56,18 +56,18 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator {
      * @var int  $totalResultsAvailable the total number of results available
      */
     public $totalResultsAvailable;
-    
+
     /*
      * @var int $totalResultsReturned the number of results in this result set
      */
     public $totalResultsReturned;
-    
+
     /*
      * @var int $firstResultPosition the offset in the total result set of this search set
      */
     public $firstResultPosition;
 
-    
+
     /**
      * Parse the search response and retrieve the results for iteration
      *
@@ -86,7 +86,7 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator {
     	$this->_results = $this->_xpath->query("//yh:Result");
     }
 
-    
+
     /**
      * Total Number of results returned
      *
@@ -97,7 +97,7 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator {
 		return (int) $this->totalResultsReturned;
     }
 
-    
+
     /**
      * Implement SeekableIterator::current
      *
@@ -109,7 +109,7 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator {
     	//return new Zend_Service_Yahoo_Result($this->_results->item($this->_currentItem));
     }
 
-    
+
     /**
      * Implement SeekableIterator::key
      *
@@ -120,7 +120,7 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator {
     	return $this->_currentItem;
     }
 
-    
+
     /**
      * Implement SeekableIterator::next
      */
@@ -129,7 +129,7 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator {
     	$this->_currentItem += 1;
     }
 
-    
+
     /**
      * Implement SeekableIterator::rewind
      *
@@ -141,7 +141,7 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator {
     	return true;
     }
 
-    
+
     /**
      * Implement SeekableIterator::sek
      *
@@ -160,7 +160,7 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator {
     	}
     }
 
-    
+
     /**
      * Implement SeekableIterator::valid
      *
@@ -169,9 +169,9 @@ class Zend_Service_Yahoo_ResultSet implements SeekableIterator {
      */
     public function valid($item = null)
     {
-    	if (is_null($item) && $this->_currentItem < $this->_results->length) {
+    	if (null === $item && $this->_currentItem < $this->_results->length) {
     		return true;
-    	} elseif (!is_null($item) && $item <= $this->_results->length) {
+    	} elseif (null !== $item && $item <= $this->_results->length) {
     		return true;
     	} else {
     		return false;
