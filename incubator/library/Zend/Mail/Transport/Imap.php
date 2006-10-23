@@ -73,7 +73,7 @@ class Zend_Mail_Transport_Imap
             $host = 'ssl://' . $host;
         }
 
-        if(is_null($port)) {
+        if($port === null) {
             $port = $ssl === 'SSL' ? 993 : 143;
         }
         
@@ -387,5 +387,5 @@ class Zend_Mail_Transport_Imap
     public function examine($box = 'INBOX') 
     {
         return $this->examineOrSelect('EXAMINE', $box);
-    }   
+    }
 }

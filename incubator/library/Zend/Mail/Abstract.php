@@ -278,7 +278,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
       */
      public function valid() 
      {
-        if(is_null($this->_iterationMax)) {
+        if($this->_iterationMax === null) {
           $this->_iterationMax = $this->countMessages();        
         }
         return $this->_iterationPos && $this->_iterationPos <= $this->_iterationMax;
@@ -293,7 +293,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
       */
      public function seek($pos)
      {
-        if(is_null($this->_iterationMax)) {
+        if($this->_iterationMax === null) {
           $this->_iterationMax = $this->countMessages();        
         }
 

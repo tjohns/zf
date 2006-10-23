@@ -85,7 +85,7 @@ class Zend_Mail_Transport_Pop3
             $host = 'ssl://' . $host;
         }
         
-        if (is_null($port)) {
+        if ($port === null) {
             $port = $ssl == 'SSL' ? 995 : 110;
         }
     
