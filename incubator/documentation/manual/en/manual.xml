@@ -38,14 +38,15 @@
         <title>Zend_Acl</title>
         &module_specs.Zend_Acl;
     </chapter>
-    <!--chapter id="zend.controller">
+    <chapter id="zend.controller">
         <title>Zend_Controller</title>
         &module_specs.Zend_Controller-Overview;
         &module_specs.Zend_Controller-GettingStarted;
         &module_specs.Zend_Controller-Subclassing;
+        &module_specs.Zend_Controller-ProvidedSubclasses;
         &module_specs.Zend_Controller-Plugins;
     </chapter>
-    <chapter id="zend.db">
+    <!--chapter id="zend.db">
         <title>Zend_Db</title>
         &module_specs.Zend_Db_Adapter;
         &module_specs.Zend_Db_Select;
