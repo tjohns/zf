@@ -99,12 +99,12 @@
         &module_specs.Zend_Search-Charset;
         &module_specs.Zend_Search-Extending;
         &module_specs.Zend_Search-JavaLucene;
-    </chapter>
+    </chapter> -->
     <chapter id="zend.service">
         <title>Zend_Service</title>
-        &module_specs.Zend_Service;
+        &module_specs.Zend_Service_Delicious;
     </chapter>
-    <chapter id="zend.view">
+<!--    <chapter id="zend.view">
         <title>Zend_View</title>
         &module_specs.Zend_View;
     </chapter-->
