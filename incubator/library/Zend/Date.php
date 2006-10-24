@@ -1721,6 +1721,59 @@ class Zend_Date {
      */
     public function add($date, $part, $locale = false, $gmt = false)
     {
+        $this->_calculate('add', $date, $part, $locale, $gmt);
+    }
+
+
+    /**
+     * Substracts a date from another date. Could sub f.e. minutes, hours, days from a date object
+     *
+     * @param  $date string  - date which shall be our new date object
+     * @param  $part         - datepart, if empty the timestamp will be returned
+     * @param  $locale       - OPTIONAL, locale for output
+     * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
+     * @return timestamp
+     */
+    public function sub($date, $part, $locale = false, $gmt = false)
+    {
+        $this->_calculate('sub', $date, $part, $locale, $gmt);
+    }
+
+
+    /**
+     * Calculates the date or object
+     *
+     * @param  $calc string  - calculation to make
+     * @param  $date string  - date which shall be our new date object
+     * @return timestamp
+     */
+    private function _assign($calc, $date)
+    {
+        switch ($calc) {
+            case 'add' :
+                $this->addTimestamp($date);
+                return $this->getTimestamp();
+                break;
+            case 'sub' :
+                $this->subTimestamp($date);
+                return $this->getTimestamp();
+                break;
+        }
+    }
+
+
+    /**
+     * Calculates the date or object
+     *
+     * @param  $calc string  - calculation to make
+     * @param  $date string  - date which shall be our new date object
+     * @param  $part         - datepart, if empty the timestamp will be returned
+     * @param  $locale       - OPTIONAL, locale for output
+     * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
+     * @return timestamp
+     */
+    private function _calculate($calc, $date, $part, $locale = false, $gmt = false)
+    {
         if ($locale === false) {
             $locale = $this->_Locale;
         }
@@ -1735,8 +1788,7 @@ class Zend_Date {
 
             // day formats
             case Zend_Date::DAY :
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, intval($date), 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 0, -1, $gmt));
                 break;
 
             case Zend_Date::WEEKDAY_SHORT :
@@ -1754,8 +1806,7 @@ class Zend_Date {
 
                 // Weekday found
                 if ($cnt < 7) {
-                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
                 }
 
                 // Weekday not found
@@ -1763,8 +1814,7 @@ class Zend_Date {
                 break;
 
             case Zend_Date::DAY_SHORT :
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, intval($date), 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 0, -1, $gmt));
                 break;
 
             case Zend_Date::WEEKDAY :
@@ -1782,8 +1832,7 @@ class Zend_Date {
 
                 // Weekday found
                 if ($cnt < 7) {
-                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
                 }
 
                 // Weekday not found
@@ -1793,8 +1842,7 @@ class Zend_Date {
             case Zend_Date::WEEKDAY_8601 :
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
                 if ((intval($date) > 0) and (intval($date) < 8)) {
-                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, $date, 0, -1, $gmt));
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $date, 0, -1, $gmt));
                 }
 
                 // Weekday not found
@@ -1808,8 +1856,7 @@ class Zend_Date {
             case Zend_Date::WEEKDAY_DIGIT :
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
                 if ((intval($date) > 0) and (intval($date) < 8)) {
-                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, $date, 0, -1, $gmt));
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $date, 0, -1, $gmt));
                 }
 
                 // Weekday not found
@@ -1817,8 +1864,7 @@ class Zend_Date {
                 break;
 
             case Zend_Date::DAY_OF_YEAR :
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, $date, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $date, 0, -1, $gmt));
                 break;
 
             case Zend_Date::WEEKDAY_NARROW :
@@ -1835,8 +1881,7 @@ class Zend_Date {
 
                 // Weekday found
                 if ($cnt < 7) {
-                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
                 }
 
                 // Weekday not found
@@ -1857,8 +1902,7 @@ class Zend_Date {
 
                 // Weekday found
                 if ($cnt < 7) {
-                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
                 }
 
                 // Weekday not found
@@ -1869,8 +1913,7 @@ class Zend_Date {
             // week formats
             case Zend_Date::WEEK :
                 $week = (int) $this->get(Zend_Date::WEEK, $locale, $gmt);
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, ($week * 7), 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, ($week * 7), 0, -1, $gmt));
                 break;
 
 
@@ -1889,8 +1932,7 @@ class Zend_Date {
 
                 // Monthname found
                 if ($cnt < 12) {
-                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, $found, 1, 0, -1, $gmt));
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $found, 1, 0, -1, $gmt));
                 }
 
                 // Monthname not found
@@ -1898,8 +1940,7 @@ class Zend_Date {
                 break;
 
             case Zend_Date::MONTH_SHORT :
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, intval($date), 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, intval($date), 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::MONTH_NAME :
@@ -1916,8 +1957,7 @@ class Zend_Date {
 
                 // Monthname found
                 if ($cnt < 12) {
-                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, $found, 1, 0, -1, $gmt));
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $found, 1, 0, -1, $gmt));
                 }
 
                 // Monthname not found
@@ -1925,8 +1965,7 @@ class Zend_Date {
                 break;
 
             case Zend_Date::MONTH_DIGIT :
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, intval($date), 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, intval($date), 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::MONTH_DAYS :
@@ -1948,8 +1987,7 @@ class Zend_Date {
 
                 // Monthname found
                 if ($cnt < 12) {
-                    $this->addTimestamp($this->_Date->mktime(0, 0, 0, $found, 1, 0, -1, $gmt));
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $found, 1, 0, -1, $gmt));
                 }
 
                 // Monthname not found
@@ -1963,13 +2001,11 @@ class Zend_Date {
                 break;
 
             case Zend_Date::YEAR_8601 :
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
                 break;
 
             case Zend_Date::YEAR :
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
                 break;
 
             case Zend_Date::YEAR_SHORT :
@@ -1980,14 +2016,12 @@ class Zend_Date {
                         $year += 100;
                     }
                 }
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt));
                 break;
 
 
             case Zend_Date::YEAR_SHORT_8601 :
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
                 break;
 
 
@@ -2004,8 +2038,7 @@ class Zend_Date {
                     $hour = -12;
                 }
                     
-                $this->addTimestamp($this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::SWATCH :
@@ -2014,48 +2047,40 @@ class Zend_Date {
                 $rest = $rest - ($hour * 3600);
                 $minute = floor($rest / 60);
                 $second = $rest - ($minute * 60); 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::HOUR_SHORT_AM :
-                $this->addTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::HOUR_SHORT :
-                $this->addTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::HOUR_AM :
-                $this->addTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::HOUR :
-                $this->addTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::MINUTE :
-                $this->addTimestamp($this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::SECOND :
-                $this->addTimestamp($this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt));
                 break;
 
 
             case Zend_Date::MINUTE_SHORT :
-                $this->addTimestamp($this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt));
                 break;
 
             case Zend_Date::SECOND_SHORT :
-                $this->addTimestamp($this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt));
                 break;
 
 
@@ -2085,8 +2110,7 @@ class Zend_Date {
                 $minute = substr($match[0], 14, 2);
                 $second = substr($match[0], 17, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             case Zend_Date::RFC_2822 :
@@ -2102,14 +2126,12 @@ class Zend_Date {
                 $minute = substr($match[0], 20, 2);
                 $second = substr($match[0], 23, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             case Zend_Date::TIMESTAMP :
                 if (is_numeric($date)) {
-                    $this->addTimestamp($date);
-                    return $this->getTimestamp();
+                    return $this->_assign($calc, $date);
                 }
                 return false;
                 break;
@@ -2124,72 +2146,62 @@ class Zend_Date {
 
             case Zend_Date::DATES :
                 $parsed = Zend_Locale_Format::getDate($date, 'default', $locale);
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $parsed['month'], 
                                                          $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::DATE_FULL :
                 $parsed = Zend_Locale_Format::getDate($date, 'full', $locale);
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $parsed['month'], 
                                                          $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::DATE_LONG :
                 $parsed = Zend_Locale_Format::getDate($date, 'long', $locale);
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $parsed['month'], 
                                                          $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::DATE_MEDIUM :
                 $parsed = Zend_Locale_Format::getDate($date, 'medium', $locale);
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $parsed['month'], 
                                                          $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::DATE_SHORT :
                 $parsed = Zend_Locale_Format::getDate($date, 'short', $locale);
-                $this->addTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $parsed['month'], 
                                                          $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::TIMES :
                 $parsed = Zend_Locale_Format::getTime($date, 'default', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                return $this->_assign($calc, $this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                                          1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::TIME_FULL :
                 $parsed = Zend_Locale_Format::getTime($date, 'full', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                return $this->_assign($calc, $this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                                          1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::TIME_LONG :
                 $parsed = Zend_Locale_Format::getTime($date, 'long', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                return $this->_assign($calc, $this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                                          1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::TIME_MEDIUM :
                 $parsed = Zend_Locale_Format::getTime($date, 'medium', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                return $this->_assign($calc, $this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                                          1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::TIME_SHORT :
                 $parsed = Zend_Locale_Format::getTime($date, 'short', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
+                return $this->_assign($calc, $this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                                          1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
                 break;
 
             case Zend_Date::ATOM :
@@ -2205,8 +2217,7 @@ class Zend_Date {
                 $minute = substr($match[0], 14, 2);
                 $second = substr($match[0], 17, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             case Zend_Date::COOKIE :
@@ -2224,8 +2235,7 @@ class Zend_Date {
                 $minute = substr($match[0], 13, 2);
                 $second = substr($match[0], 16, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             case Zend_Date::RFC_822 :
@@ -2242,8 +2252,7 @@ class Zend_Date {
                 $minute = substr($match[0], 18, 2);
                 $second = substr($match[0], 21, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             case Zend_Date::RFC_850 :
@@ -2262,8 +2271,7 @@ class Zend_Date {
                 $minute = substr($match[0], 13, 2);
                 $second = substr($match[0], 16, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             case Zend_Date::RFC_1036 :
@@ -2280,8 +2288,7 @@ class Zend_Date {
                 $minute = substr($match[0], 18, 2);
                 $second = substr($match[0], 21, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             case Zend_Date::RFC_1123 :
@@ -2297,8 +2304,7 @@ class Zend_Date {
                 $minute = substr($match[0], 20, 2);
                 $second = substr($match[0], 23, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             case Zend_Date::RSS :
@@ -2314,8 +2320,7 @@ class Zend_Date {
                 $minute = substr($match[0], 20, 2);
                 $second = substr($match[0], 23, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             case Zend_Date::W3C :
@@ -2331,639 +2336,7 @@ class Zend_Date {
                 $minute = substr($match[0], 14, 2);
                 $second = substr($match[0], 17, 2);
 
-                $this->addTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            default :
-                break;
-        }
-    }
-
-
-    /**
-     * Substracts a date from another date. Could sub f.e. minutes, hours, days from a date object
-     *
-     * @param  $date string  - date which shall be our new date object
-     * @param  $part         - datepart, if empty the timestamp will be returned
-     * @param  $locale       - OPTIONAL, locale for output
-     * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
-     * @return timestamp
-     */
-    public function sub($date, $part, $locale = false, $gmt = false)
-    {
-        if ($locale === false) {
-            $locale = $this->_Locale;
-        }
-
-        // if object extract value
-        if (is_object($date)) {
-            $date = $date->get($part, $locale, $gmt);
-        }
-
-        // $date as object, part of foreign date as own date
-        switch($part) {
-
-            // day formats
-            case Zend_Date::DAY :
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, intval($date), 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::WEEKDAY_SHORT :
-                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
-                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
-                $cnt = 0;
-
-                foreach ($daylist as $key => $value) {
-                    if (strtoupper(substr($value, 0, 3)) == strtoupper($date)) {
-                        $found = $cnt + 1;
-                        break;
-                    }
-                    ++$cnt;
-                }
-
-                // Weekday found
-                if ($cnt < 7) {
-                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
-                    return $this->getTimestamp();
-                }
-
-                // Weekday not found
-                return false; 
-                break;
-
-            case Zend_Date::DAY_SHORT :
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, intval($date), 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::WEEKDAY :
-                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
-                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
-                $cnt = 0;
-
-                foreach ($daylist as $key => $value) {
-                    if (strtoupper($value) == strtoupper($date)) {
-                        $found = $cnt + 1;
-                        break;
-                    }
-                    ++$cnt;
-                }
-
-                // Weekday found
-                if ($cnt < 7) {
-                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
-                    return $this->getTimestamp();
-                }
-
-                // Weekday not found
-                return false; 
-                break;
-
-            case Zend_Date::WEEKDAY_8601 :
-                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
-                if ((intval($date) > 0) and (intval($date) < 8)) {
-                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, $date, 0, -1, $gmt));
-                    return $this;
-                }
-
-                // Weekday not found
-                return false; 
-                break;
-
-            case Zend_Date::DAY_SUFFIX :
-                return false;
-                break;
-
-            case Zend_Date::WEEKDAY_DIGIT :
-                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
-                if ((intval($date) > 0) and (intval($date) < 8)) {
-                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, $date, 0, -1, $gmt));
-                    return $this->getTimestamp();
-                }
-
-                // Weekday not found
-                return false; 
-                break;
-
-            case Zend_Date::DAY_OF_YEAR :
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, $date, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-
-            case Zend_Date::WEEKDAY_NARROW :
-                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
-                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
-                $cnt = 0;
-                foreach ($daylist as $key => $value) {
-                    if (strtoupper(substr($value, 0, 1)) == strtoupper($date)) {
-                        $found = $cnt + 1;
-                        break;
-                    }
-                    ++$cnt;
-                }
-
-                // Weekday found
-                if ($cnt < 7) {
-                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
-                    return $this->getTimestamp();
-                }
-
-                // Weekday not found
-                return false; 
-                break;
-
-            case Zend_Date::WEEKDAY_NAME :
-                $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'abbreviated'));
-                $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $locale, $gmt);
-                $cnt = 0;
-
-                foreach ($daylist as $key => $value) {
-                    if (strtoupper($value) == strtoupper($date)) {
-                        $found = $cnt + 1;
-                        break;
-                    }
-                    ++$cnt;
-                }
-
-                // Weekday found
-                if ($cnt < 7) {
-                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, $found, 0, -1, $gmt));
-                    return $this->getTimestamp();
-                }
-
-                // Weekday not found
-                return false; 
-                break;
-
-
-            // week formats
-            case Zend_Date::WEEK :
-                $week = (int) $this->get(Zend_Date::WEEK, $locale, $gmt);
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, ($week * 7), 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-
-            // month formats
-            case Zend_Date::MONTH :
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
-                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
-                $cnt = 0;
-
-                foreach ($monthlist as $key => $value) {
-                    if (strtoupper($value) == strtoupper($date)) {
-                        $found = $cnt + 1;
-                        break;
-                    }
-                    ++$cnt;
-                }
-
-                // Monthname found
-                if ($cnt < 12) {
-                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, $found, 1, 0, -1, $gmt));
-                    return $this->getTimestamp();
-                }
-
-                // Monthname not found
-                return false; 
-                break;
-
-            case Zend_Date::MONTH_SHORT :
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, intval($date), 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::MONTH_NAME :
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
-                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
-                $cnt = 0;
-
-                foreach ($monthlist as $key => $value) {
-                    if (strtoupper($value) == strtoupper($date)) {
-                        $found = $cnt + 1;
-                        break;
-                    }
-                    ++$cnt;
-                }
-
-                // Monthname found
-                if ($cnt < 12) {
-                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, $found, 1, 0, -1, $gmt));
-                    return $this->getTimestamp();
-                }
-
-                // Monthname not found
-                return false; 
-                break;
-
-            case Zend_Date::MONTH_DIGIT :
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, intval($date), 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::MONTH_DAYS :
-                return false;
-                break;
-
-
-            case Zend_Date::MONTH_NARROW :
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
-                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt)) - 1;
-                $cnt = 0;
-
-                foreach ($monthlist as $key => $value) {
-                    if (strtoupper(substr($value, 0, 1)) == strtoupper(substr($date, 0, 1))) {
-                        $found = $cnt + 1;
-                        break;
-                    }
-                    ++$cnt;
-                }
-
-                // Monthname found
-                if ($cnt < 12) {
-                    $this->subTimestamp($this->_Date->mktime(0, 0, 0, $found, 1, 0, -1, $gmt));
-                    return $this->getTimestamp();
-                }
-
-                // Monthname not found
-                return false; 
-                break;
-
-
-            // year formats
-            case Zend_Date::LEAPYEAR :
-                return false;
-                break;
-
-            case Zend_Date::YEAR_8601 :
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::YEAR :
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::YEAR_SHORT :
-                $year = intval($date);
-                if (($year > 0) and ($year < 100))
-                {
-                    $year += 1900;
-                    if ($year < 70)
-                        $year += 100;
-                }
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-
-            case Zend_Date::YEAR_SHORT_8601 :
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-
-            // time formats
-            case Zend_Date::MERIDIEM :
-                $meridiemlist = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
-                $meridiem = strtoupper($this->get(Zend_Date::MERIDIEM, $locale, $gmt));
-
-                if (($meridiem == strtoupper($meridiemlist['am'])) && (strtoupper($date) == strtoupper($meridiemlist['pm']))) {
-                    $hour = 12;
-                } else if (($meridiem == strtoupper($meridiemlist['pm'])) && (strtoupper($date) == strtoupper($meridiemlist['am']))) {
-                    $hour = -12;
-                }
-
-                $this->subTimestamp($this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::SWATCH :
-                $rest   = intval($date);
-                $hour   = floor($rest / 3600);
-                $rest   = $rest - ($hour * 3600);
-                $minute = floor($rest / 60);
-                $second = $rest - ($minute * 60); 
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
-                break;
-
-            case Zend_Date::HOUR_SHORT_AM :
-                $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::HOUR_SHORT :
-                $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::HOUR_AM :
-                $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::HOUR :
-                $this->subTimestamp($this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::MINUTE :
-                $this->subTimestamp($this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::SECOND :
-                $this->subTimestamp($this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-
-            case Zend_Date::MINUTE_SHORT :
-                $this->subTimestamp($this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::SECOND_SHORT :
-                $this->subTimestamp($this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-
-            // timezone formats
-            // break intentionally omitted
-            case Zend_Date::TIMEZONE_NAME :
-            case Zend_Date::DAYLIGHT :
-            case Zend_Date::GMT_DIFF :
-            case Zend_Date::GMT_DIFF_SEP :
-            case Zend_Date::TIMEZONE :
-            case Zend_Date::TIMEZONE_SECS :
-
-            // date strings
-            case Zend_Date::ISO_8601 :
-                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-
-                $year   = substr($match[0], 0, 4);
-                $month  = substr($match[0], 5, 2);
-                $day    = substr($match[0], 8, 2);
-                $hour   = substr($match[0], 11, 2);
-                $minute = substr($match[0], 14, 2);
-                $second = substr($match[0], 17, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::RFC_2822 :
-                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-
-                $day    = substr($match[0], 5, 2);
-                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
-                $year   = substr($match[0], 12, 4);
-                $hour   = substr($match[0], 17, 2);
-                $minute = substr($match[0], 20, 2);
-                $second = substr($match[0], 23, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::TIMESTAMP :
-                if (is_numeric($date)) {
-                    $this->subTimestamp($date);
-                    return $this->getTimestamp();
-                } else {
-                    return false;
-                }
-                break;
-
-
-            // additional formats
-            // break intentionally omitted
-            case Zend_Date::ERA :
-            case Zend_Date::ERA_NAME :
-                return false;
-                break;
-
-            case Zend_Date::DATES :
-                $parsed = Zend_Locale_Format::getDate($date, 'default', $locale);
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
-                                                         $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::DATE_FULL :
-                $parsed = Zend_Locale_Format::getDate($date, 'full', $locale);
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
-                                                         $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::DATE_LONG :
-                $parsed = Zend_Locale_Format::getDate($date, 'long', $locale);
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
-                                                         $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::DATE_MEDIUM :
-                $parsed = Zend_Locale_Format::getDate($date, 'medium', $locale);
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
-                                                         $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::DATE_SHORT :
-                $parsed = Zend_Locale_Format::getDate($date, 'short', $locale);
-                $this->subTimestamp($this->_Date->mktime(0, 0, 0, $parsed['month'], 
-                                                         $parsed['day'], $parsed['year'], -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::TIMES :
-                $parsed = Zend_Locale_Format::getTime($date, 'default', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
-                                                         1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::TIME_FULL :
-                $parsed = Zend_Locale_Format::getTime($date, 'full', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
-                                                         1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::TIME_LONG :
-                $parsed = Zend_Locale_Format::getTime($date, 'long', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
-                                                         1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::TIME_MEDIUM :
-                $parsed = Zend_Locale_Format::getTime($date, 'medium', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
-                                                         1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::TIME_SHORT :
-                $parsed = Zend_Locale_Format::getTime($date, 'short', $locale);
-                $this->addTimestamp($this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
-                                                         1, 1, 0, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::ATOM :
-                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-
-                $year   = substr($match[0], 0, 4);
-                $month  = substr($match[0], 5, 2);
-                $day    = substr($match[0], 8, 2);
-                $hour   = substr($match[0], 11, 2);
-                $minute = substr($match[0], 14, 2);
-                $second = substr($match[0], 17, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::COOKIE :
-                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-                $match[0] = substr($match[0], strpos(' '+1));
-                
-                $day    = substr($match[0], 0, 2);
-                $month  = $this->getDigitFromName(substr($match[0], 3, 3));
-                $year   = substr($match[0], 7, 4);
-                $year  += 2000;
-                $hour   = substr($match[0], 10, 2);
-                $minute = substr($match[0], 13, 2);
-                $second = substr($match[0], 16, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::RFC_822 :
-                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-                
-                $day    = substr($match[0], 5, 2);
-                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
-                $year   = substr($match[0], 12, 4);
-                $year  += 2000;
-                $hour   = substr($match[0], 15, 2);
-                $minute = substr($match[0], 18, 2);
-                $second = substr($match[0], 21, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::RFC_850 :
-                $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-                $match[0] = substr($match[0], strpos(' '+1));
-                
-                $day    = substr($match[0], 0, 2);
-                $month  = $this->getDigitFromName(substr($match[0], 3, 3));
-                $year   = substr($match[0], 7, 4);
-                $year  += 2000;
-                $hour   = substr($match[0], 10, 2);
-                $minute = substr($match[0], 13, 2);
-                $second = substr($match[0], 16, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::RFC_1036 :
-                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-                
-                $day    = substr($match[0], 5, 2);
-                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
-                $year   = substr($match[0], 12, 4);
-                $year  += 2000;
-                $hour   = substr($match[0], 15, 2);
-                $minute = substr($match[0], 18, 2);
-                $second = substr($match[0], 21, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::RFC_1123 :
-                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-
-                $day    = substr($match[0], 5, 2);
-                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
-                $year   = substr($match[0], 12, 4);
-                $hour   = substr($match[0], 17, 2);
-                $minute = substr($match[0], 20, 2);
-                $second = substr($match[0], 23, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::RSS :
-                $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-
-                $day    = substr($match[0], 5, 2);
-                $month  = $this->getDigitFromName(substr($match[0], 8, 3));
-                $year   = substr($match[0], 12, 4);
-                $hour   = substr($match[0], 17, 2);
-                $minute = substr($match[0], 20, 2);
-                $second = substr($match[0], 23, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
-                break;
-
-            case Zend_Date::W3C :
-                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
-                if (!$result) {
-                    return false;
-                }
-
-                $year   = substr($match[0], 0, 4);
-                $month  = substr($match[0], 5, 2);
-                $day    = substr($match[0], 8, 2);
-                $hour   = substr($match[0], 11, 2);
-                $minute = substr($match[0], 14, 2);
-                $second = substr($match[0], 17, 2);
-
-                $this->subTimestamp($this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
-                return $this->getTimestamp();
+                return $this->_assign($calc, $this->_Date->mktime($hour, $minute, $second, $month, $day, $year, -1, $gmt));
                 break;
 
             default :
