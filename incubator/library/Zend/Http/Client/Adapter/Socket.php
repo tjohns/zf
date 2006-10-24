@@ -64,8 +64,12 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
      */
     public function __construct() 
     {
-        if (! isset($parameters['timeout'])) $parameters['timeout'] = 10;
-        $this->parameters = $parameters;
+        if (! is_array($config))
+            throw new Zend_Http_Client_Adapter_Exception('$config expects an array, ' . gettype($config) . ' recieved.');
+        if (! isset($config['timeout'])) $config['timeout'] = 10;
+        foreach ($config as $k => $v) {
+            $this->config[strtolower($k)] = $v;
+        }
     }
     
     /**
