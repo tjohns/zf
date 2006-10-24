@@ -1,0 +1,59 @@
+For 0.2:
+* End user documentation
+  * Move RewriteRouter documentation *into* controller docs (see below for
+    placement)
+  * Overview
+    * Intro
+    * Request (new)
+    * Routing (modify)
+    * Dispatching (modify)
+    * Response (new)
+  * Getting Started
+    * Intro
+    * Server Configuration (modify - note rewrite is not necessary)
+    * Bootstrap file (modify)
+      * Basic, non-routing configuration
+      * Adding a request, router, dispatcher, and/or response object
+      * Adding extra parameters to pass into the various objects
+    * Directory structure
+    * IndexController (modify)
+      * Index controller not necessary due to setDefaultController(), but recommended
+  * Subclassing 
+    * Introduction (modify)
+      * add request/response objects into the mix
+    * Conventions
+    * Request Interface (new)
+    * Router Interface (modify)
+      * Have it follow current code
+      * Rewrite to use request terminology
+    * Dispatcher Interface (modify)
+      * Have it follow current code
+      * Rewrite to use request terminology
+      * Rewrite to use response terminology
+    * Zend_Controller_Action (new)
+      * explain init()
+      * explain getInvokeArgs()
+      * explain pre/postDispatch()
+      * explain run() method
+    * Response Abstract (new)
+  * Provided subclasses (new)
+    * HTTP Request
+    * Router
+    * RewriteRouter
+    * Dispatcher
+    * HTTP Response
+    * CLI Response
+  * Plugins (new)
+* Code
+  * Modify RewriteRouter to use request object (martel)
+  * Modify Zend_Controller_Front::run() to use a default router?
+* Tests
+  * Request -- cookie test
+  * Plugin Broker
+  * RewriteRouter-related tests (martel)
+* Miscellaneous
+  * Page/class-level docblocks
+
+Post 0.2 Items:
+- Detect recursion in Controller_Front
+- Exception handling inside Controller_Front
