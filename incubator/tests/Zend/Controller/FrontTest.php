@@ -80,6 +80,22 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array('foo', 'bar'), $this->_controller->getParams());
     }
 
+    public function testSetGetDefaultController()
+    {
+        $this->assertEquals('index', $this->_controller->getDefaultController());
+
+        $this->_controller->setDefaultController('foo');
+        $this->assertEquals('foo', $this->_controller->getDefaultController());
+    }
+
+    public function testSetGetDefaultAction()
+    {
+        $this->assertEquals('index', $this->_controller->getDefaultAction());
+
+        $this->_controller->setDefaultAction('bar');
+        $this->assertEquals('bar', $this->_controller->getDefaultAction());
+    }
+
     /**
      * Test default action on valid controller
      */

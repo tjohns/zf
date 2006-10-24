@@ -59,6 +59,22 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($response === $this->_dispatcher->getResponse());
     }
 
+    public function testSetGetDefaultController()
+    {
+        $this->assertEquals('index', $this->_dispatcher->getDefaultController());
+
+        $this->_dispatcher->setDefaultController('foo');
+        $this->assertEquals('foo', $this->_dispatcher->getDefaultController());
+    }
+
+    public function testSetGetDefaultAction()
+    {
+        $this->assertEquals('index', $this->_dispatcher->getDefaultAction());
+
+        $this->_dispatcher->setDefaultAction('bar');
+        $this->assertEquals('bar', $this->_dispatcher->getDefaultAction());
+    }
+
     /**
      * Test default action on valid controller
      */

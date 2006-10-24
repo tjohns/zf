@@ -141,6 +141,52 @@ class Zend_Controller_Front
     }
 
     /**
+     * Set the default controller (unformatted string)
+     * 
+     * @param string $controller 
+     * @return self
+     */
+    public function setDefaultController($controller)
+    {
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setDefaultController($controller);
+        return $this;
+    }
+
+    /**
+     * Retrieve the default controller (unformatted string)
+     * 
+     * @return string
+     */
+    public function getDefaultController()
+    {
+        return $this->getDispatcher()->getDefaultController();
+    }
+
+    /**
+     * Set the default action (unformatted string)
+     * 
+     * @param string $action 
+     * @return self
+     */
+    public function setDefaultAction($action)
+    {
+        $dispatcher = $this->getDispatcher();
+        $dispatcher->setDefaultAction($action);
+        return $this;
+    }
+
+    /**
+     * Retrieve the default action (unformatted string)
+     * 
+     * @return string
+     */
+    public function getDefaultAction()
+    {
+        return $this->getDispatcher()->getDefaultAction();
+    }
+
+    /**
      * Set request class/object
      *
 	 * Set the request object.  The request holds the request environment.
