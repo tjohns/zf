@@ -7,7 +7,6 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Config/IniTest.php';
-require_once 'Zend/Config/ArrayTest.php';
 require_once 'Zend/Config/XmlTest.php';
 
 class Zend_Config_AllTests
@@ -21,7 +20,6 @@ class Zend_Config_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Config');
 
-        $suite->addTestSuite('Zend_Config_ArrayTest');
         $suite->addTestSuite('Zend_Config_IniTest');
         $suite->addTestSuite('Zend_Config_XmlTest');
 
