@@ -4266,20 +4266,6 @@ class Zend_Date {
      */
     public function isToday()
     {
-        $today = $this->_Date->date('dmY');
-        $day   = $this->_Date->date('dmY',$this->_Date->getTimestamp());
-        return ($today == $day);
-    }
-
-
-    /**
-     * Returns if the date is yesterdays date
-     *
-     * @todo  implement function
-     * @return boolean
-     */
-    public function isYesterday()
-    {
         $today = $this->_Date->date('Ymd');
         $day   = $this->_Date->date('Ymd',$this->_Date->getTimestamp());
         return ($today == $day);
@@ -4287,14 +4273,28 @@ class Zend_Date {
 
 
     /**
+     * Returns if the date is yesterdays date
+     *
+     * @return boolean
+     */
+    public function isYesterday()
+    {
+        $today = $this->_Date->date('Ymd');
+        $day   = $this->_Date->date('Ymd',$this->_Date->getTimestamp());
+        return (($today - $day) == 1);
+    }
+
+
+    /**
      * Returns if the date is tomorrows date
      *
-     * @todo  implement function
      * @return boolean
      */
     public function isTomorrow()
     {
-        $this->_Date->throwException('function yet not implemented');
+        $today = $this->_Date->date('Ymd');
+        $day   = $this->_Date->date('Ymd',$this->_Date->getTimestamp());
+        return (($today - $day) == -1);
     }
 
 
@@ -4449,13 +4449,12 @@ class Zend_Date {
      * Compares only the year part, returning boolean true
      * Alias for compare($year,Zend_Date::YEAR);
      *
-     * @todo  implement function
      * @param $year string/integer - OPTIONAL year to compare, when null the actual year is used for compare
-     * @return string
+     * @return boolean
      */
-    public function isYear($year)
+    public function isYear($year = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareYear($year) == 0);
     }
 
 
@@ -4592,13 +4591,12 @@ class Zend_Date {
      * Compares only the month part, returning boolean true
      * Alias for compare($month,Zend_Date::MONTH);
      *
-     * @todo  implement function
      * @param $month string/integer - OPTIONAL month to compare, when null the actual month is used for compare
      * @return string
      */
-    public function isMonth($month)
+    public function isMonth($month = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareMonth($month) == 0);
     }
 
 
@@ -4689,13 +4687,12 @@ class Zend_Date {
      * Compares only the day part, returning boolean true
      * Alias for compare($day,Zend_Date::DAY);
      *
-     * @todo  implement function
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
      * @return string
      */
-    public function isDay($day)
+    public function isDay($day = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareDay($day) == 0);
     }
 
 
@@ -4793,13 +4790,12 @@ class Zend_Date {
      * Compares only the weekday part, returning boolean true
      * Alias for compare($day,Zend_Date::WEEKDAY);
      *
-     * @todo  implement function
      * @param $weekday string/integer - OPTIONAL weekday to compare, when null the actual weekday is used for compare
      * @return string
      */
-    public function isWeekday($weekday)
+    public function isWeekday($weekday = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareWeekday($weekday) == 0);
     }
 
 
@@ -4911,13 +4907,12 @@ class Zend_Date {
      * Compares only the day of year, returning boolean true
      * Alias for compare($day,Zend_Date::DAY);
      *
-     * @todo  implement function
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
      * @return string
      */
-    public function isDayOfYear($day)
+    public function isDayOfYear($day = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareDayOfYear($day) == 0);
     }
 
 
@@ -5026,13 +5021,12 @@ class Zend_Date {
      * Compares only the hour part, returning boolean true
      * Alias for compare($hour,Zend_Date::HOUR);
      *
-     * @todo  implement function
      * @param $hour string/integer - OPTIONAL hour to compare, when null the actual hour is used for compare
      * @return string
      */
-    public function isHour($hour)
+    public function isHour($hour = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareHour($hour) == 0);
     }
 
 
@@ -5141,13 +5135,12 @@ class Zend_Date {
      * Compares only the minute part, returning boolean true
      * Alias for compare($minute,Zend_Date::MINUTE);
      *
-     * @todo  implement function
      * @param $minute string/integer - OPTIONAL minute to compare, when null the actual minute is used for compare
      * @return string
      */
-    public function isMinute($minute)
+    public function isMinute($minute = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareMinute($minute) == 0);
     }
 
 
@@ -5256,13 +5249,12 @@ class Zend_Date {
      * Compares only the second part, returning boolean true
      * Alias for compare($second,Zend_Date::SECOND);
      *
-     * @todo  implement function
      * @param $second string/integer - OPTIONAL second to compare, when null the actual second is used for compare
      * @return string
      */
-    public function isSecond($second)
+    public function isSecond($second = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareSecond($second) == 0);
     }
 
 
