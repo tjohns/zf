@@ -36,13 +36,13 @@ abstract class Zend_Controller_Request_Abstract
      * Controller name
      * @var string 
      */
-    protected $_controllerName  = 'index';
+    protected $_controllerName = null;
 
     /**
      * Action name
      * @var string 
      */
-    protected $_actionName = 'noRoute';
+    protected $_actionName = null;
 
     /**
      * Controller key for retrieving controller from params

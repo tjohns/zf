@@ -104,6 +104,36 @@ interface Zend_Controller_Dispatcher_Interface
      */
     public function getResponse();
 
+    /**
+     * Set default controller name (minus formatting)
+     * 
+     * @param string $controller 
+     * @return self
+     */
+    public function setDefaultController($controller);
+
+    /**
+     * Retrieve the default controller name (minus formatting)
+     * 
+     * @return string
+     */
+    public function getDefaultController();
+
+    /**
+     * Set default action name (minus formatting)
+     * 
+     * @param string $action 
+     * @return self
+     */
+    public function setDefaultAction($action);
+
+    /**
+     * Retrieve the default action name (minus formatting)
+     * 
+     * @return string
+     */
+    public function getDefaultAction();
+
 	/**
      * Dispatches a request object to a controller/action.  If the action
      * requests a forward to another action, a new request will be returned.

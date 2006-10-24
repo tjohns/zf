@@ -49,6 +49,18 @@ require_once 'Zend/Controller/Action.php';
 class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 {
     /**
+     * Default action name; defaults to 'index'
+     * @var string 
+     */
+    protected $_defaultAction = 'index';
+
+    /**
+     * Default controller name; defaults to 'index'
+     * @var string 
+     */
+    protected $_defaultController = 'index';
+
+    /**
      * Directory where Zend_Controller_Action files are stored.
      * @var string
      */
@@ -134,6 +146,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Sets the directory where the Zend_Controller_Action class files are stored.
      *
      * @param string $dir
+     * @return self
      */
     public function setControllerDirectory($dir)
     {
@@ -142,6 +155,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         }
 
         $this->_directory = rtrim($dir, '/\\');
+        return $this;
     }
 
     /**
@@ -176,22 +190,24 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Add a parameter to use when instantiating an action controller
      * 
      * @param mixed $param 
-     * @return void
+     * @return self
      */
     public function addParam($param)
     {
         array_push($this->_invokeParams, $param);
+        return $this;
     }
 
     /**
      * Set parameters to pass to action controller constructors
      * 
      * @param array $params 
-     * @return void
+     * @return self
      */
     public function setParams(array $params)
     {
         $this->_invokeParams = $params;
+        return $this;
     }
 
     /**
@@ -208,11 +224,12 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Set response object to pass to action controllers
      * 
      * @param Zend_Controller_Response_Abstract|null $response 
-     * @return void
+     * @return self
      */
     public function setResponse(Zend_Controller_Response_Abstract $response = null)
     {
         $this->_response = $response;
+        return $this;
     }
 
     /**
@@ -223,6 +240,48 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     public function getResponse()
     {
         return $this->_response;
+    }
+
+    /**
+     * Set the default controller (minus any formatting)
+     * 
+     * @param string $controller 
+     * @return self
+     */
+    public function setDefaultController($controller)
+    {
+        $this->_defaultController = (string) $controller;
+    }
+
+    /**
+     * Retrive the default controller name (minus formatting)
+     * 
+     * @return string
+     */
+    public function getDefaultController()
+    {
+        return $this->_defaultController;
+    }
+
+    /**
+     * Set the default action (minus any formatting)
+     * 
+     * @param string $action 
+     * @return self
+     */
+    public function setDefaultAction($action)
+    {
+        $this->_defaultAction = (string) $action;
+    }
+
+    /**
+     * Retrive the default action name (minus formatting)
+     * 
+     * @return string
+     */
+    public function getDefaultAction()
+    {
+        return $this->_defaultAction;
     }
 
 	/**
@@ -253,60 +312,115 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 	 */
 	protected function _dispatch(Zend_Controller_Request_Abstract $request, $performDispatch = true)
 	{
-        // Controller directory check
+        /**
+         * Controller directory check
+         */
 	    if ($this->_directory === null) {
 	        throw new Zend_Controller_Dispatcher_Exception('Controller directory never set.  Use setControllerDirectory() first');
 	    }
 
-        // Get controller class name
-	    $className  = $this->formatControllerName($request->getControllerName());
+        /**
+         * Get controller name
+         *
+         * Try request first; if not found, try pulling from request parameter; 
+         * if still not found, fallback to default
+         */
+        $controllerName = $request->getControllerName();
+        if (empty($controllerName)) {
+            $controllerName = $request->getParam($request->getControllerKey());
+            if (empty($controllerName)) {
+                $controllerName = $this->getDefaultController();
+            }
+        }
+	    $className = $this->formatControllerName($controllerName);
+
+        /**
+         * Determine if controller is dispatchable
+         */
+        $dispatchable = Zend::isReadable($this->_directory . DIRECTORY_SEPARATOR . $className . '.php');
 
 	    /**
 	     * If $performDispatch is FALSE, only determine if the controller file
 	     * can be accessed.
 	     */
 	    if (!$performDispatch) {
-	        return Zend::isReadable($this->_directory . DIRECTORY_SEPARATOR . $className . '.php');
+	        return $dispatchable;
 	    }
 
-        // Load the class file
+        /**
+         * If not dispatchable, get the default controller; if this is already 
+         * the default controller, throw an exception
+         */
+        if (!$dispatchable) {
+            if ($controllerName == $this->getDefaultController()) {
+                throw new Zend_Controller_Dispatcher_Exception('Default controller class not defined');
+            }
+            $className = $this->formatControllerName($this->getDefaultController());
+        }
+
+        /**
+         * Load the controller class file
+         */
         Zend::loadClass($className, $this->_directory);
 
-        // Perform reflection on the class and verify it's a controller
+        /**
+         * Perform reflection on the class and verify it's a controller
+         */
         $reflection = new ReflectionClass($className);
         if (!$reflection->isSubclassOf(new ReflectionClass('Zend_Controller_Action'))) {
            throw new Zend_Controller_Dispatcher_Exception("Controller \"$className\" is not an instance of Zend_Controller_Action");
         }
 
-        // Get any instance arguments and instantiate a controller object
-        $args = $this->getParams();
+        /**
+         * Get any instance arguments and instantiate a controller object
+         */
+        $argv = $this->getParams();
 
-        // Prepend response object, if available
+        /**
+         * Prepend response object, if available, to arguments
+         */
         if (null !== ($response = $this->getResponse())) {
-            array_unshift($args, $response);
+            array_unshift($argv, $response);
         }
 
-        // prepend request object
-        array_unshift($args, $request);
+        /**
+         * Prepend request object to arguments
+         */
+        array_unshift($argv, $request);
 
-        $controller = $reflection->newInstanceArgs($args);
+        /**
+         * Instantiate controller with arguments
+         */
+        $controller = $reflection->newInstanceArgs($argv);
 
-        // Determine the action name; default to noRoute if none specified in 
-        // the request object, or __call() if the method does not exist
+        /**
+         * Determine the action name
+         *
+         * First attempt to retrieve from request; then from request params 
+         * using action key; default to default action
+         */
+        $action = $request->getActionName();
+        if (empty($action)) {
+            $action = $request->getParam($request->getActionKey());
+            if (empty($action)) {
+                $action = $this->getDefaultAction();
+            }
+        }
+        $action     = $this->formatActionName($action);
         $invokeArgs = array();
-        if (null !== ($action = $request->getActionName())) {
-            $action = $this->formatActionName($request->getActionName());
-        } else {
-            $action = $this->formatActionName('noRoute');
-        }
 
+        /**
+         * If method does not exist, default to __call()
+         */
         if (!$reflection->hasMethod($action)) {
-            array_push($invokeArgs, $action);
-            $action == '__call';
+            $invokeArgs = array($action, array());
+            $action = '__call';
         }
         $method = $reflection->getMethod($action);
 
-        // Dispatch the method call
+        /**
+         * Dispatch the method call
+         */
         $request->setDispatched(true);
         $controller->preDispatch();
         if ($request->isDispatched()) {

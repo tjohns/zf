@@ -109,50 +109,18 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
             throw new Zend_Controller_Router_Exception('Zend_Controller_Router requires a Zend_Controller_Request_Http-based request object');
         }
 
-        $pathInfo = '';
-        $pathSegs = array();
-        if ($request instanceof Zend_Controller_Request_Http) {
-            $pathInfo = $request->getPathInfo();
-            $pathSegs = explode('/', $pathInfo);
+        $pathInfo = $request->getPathInfo();
+        $pathSegs = explode('/', trim($pathInfo, '/'));
+
+        /**
+         * Get controller from request
+         * Attempt to get from path_info; controller is first item
+         */
+        if (isset($pathSegs[0])) {
+            $request->setControllerName(array_shift($pathSegs));
         }
-
-        // Get controller from request
-        if (null === $request->getControllerName()) {
-            $controllerKey = $request->getControllerKey();
-            $controller    = $request->getParam($key);
-            if (null === $controller) {
-                // Attempt to get from path_info; controller is first item
-                $pathInfo = $request->getPathInfo();
-                $pathSegs = explode('/', $pathInfo);
-                if (isset($pathSegs[0])) {
-                    $controller = $pathSegs[0];
-                }
-            } elseif (null === $controller) {
-                // Default: 'index' controller
-                $controller = 'index';
-            }
-
-            // Set request controller
-            $request->setControllerName($controller);
-        }
-
-        // Get action from request
-        if (null === $request->getActionName()) {
-            // get action from action parameter, if available
-            $actionKey = $request->getActionKey();
-            $action    = $request->getParam($key);
-            if (null === $action) {
-                // Attempt to get from path_info; action is second item
-                if (isset($pathSegs[1])) {
-                    $action = $pathSegs[1];
-                }
-            } elseif (null === $action) {
-                // Default: 'noRoute' action
-                $action = 'noRoute';
-            }
-
-            // Set request action
-            $request->setActionName($action);
+        if (isset($pathSegs[0])) {
+            $request->setActionName(array_shift($pathSegs));
         }
 
         /**
@@ -167,8 +135,9 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
          * }
          */
         $params = array();
-        if (2 < count($pathSegs)) {
-            for ($i=2; $i < sizeof($pathSegs); $i = $i+2) {
+        $segs = count($pathSegs);
+        if (0 < $segs) {
+            for ($i = 0; $i < $segs; $i = $i + 2) {
                 $params[$pathSegs[$i]] = isset($pathSegs[$i+1]) ? $pathSegs[$i+1] : null;
             }
         }

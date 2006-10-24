@@ -81,7 +81,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test noRoute on valid controller
+     * Test default action on valid controller
      */
     public function testDispatch()
     {
@@ -90,7 +90,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->_controller->setResponse(new Zend_Controller_Response_Cli());
         $response = $this->_controller->dispatch($request);
 
-        $this->assertContains('No Route action called', $response->getBody());
+        $this->assertContains('Index action called', $response->getBody());
     }
 
     /**

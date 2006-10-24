@@ -57,21 +57,6 @@ abstract class Zend_Controller_Action
     protected $_invokeArgs = array();
 
     /**
-     * Any controller extending Zend_Controller_Action must provide a noRouteAction()
-     * method.  The noRouteAction() method is the default action for the controller
-     * when no action is specified.
-     *
-     * This only handles a controller which has been called with no action
-     * specified in the URI.
-     *
-     * For handling nonexistant actions in controllers (bad action part of URI),
-     * the controller class must provide a __call() method or an exception
-     * will be thrown.
-     */
-    abstract public function noRouteAction();
-
-
-    /**
      * Class constructor
      *
      * Marked final to ensure that the request object is provided to the 
@@ -207,7 +192,8 @@ abstract class Zend_Controller_Action
     /**
      * Proxy for undefined methods.  Default behavior is to throw an
      * exception on undefined methods, however this function can be
-     * overrided to implement magic (dynamic) actions.
+     * overridden to implement magic (dynamic) actions, or provide run-time 
+     * dispatching.
      *
      * @param string $methodName
      * @param array $args

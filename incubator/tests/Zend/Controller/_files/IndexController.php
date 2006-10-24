@@ -3,11 +3,6 @@ require_once 'Zend/Controller/Action.php';
 
 class IndexController extends Zend_Controller_Action
 {
-    public function noRouteAction()
-    {
-        $this->_response->appendBody("No Route action called\n");
-    }
-
     public function indexAction()
     {
         $this->_response->appendBody("Index action called\n");

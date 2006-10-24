@@ -60,7 +60,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test noRoute on valid controller
+     * Test default action on valid controller
      */
     public function testDispatch()
     {
@@ -69,7 +69,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->_dispatcher->setResponse(new Zend_Controller_Response_Cli());
         $this->_dispatcher->dispatch($request);
 
-        $this->assertContains('No Route action called', $this->_dispatcher->getResponse()->getBody());
+        $this->assertContains('Index action called', $this->_dispatcher->getResponse()->getBody());
     }
 
     /**
@@ -94,6 +94,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
         $request->setActionName('foo');
+        $this->_dispatcher->setResponse(new Zend_Controller_Response_Cli());
 
         try {
             $this->_dispatcher->dispatch($request);
@@ -110,6 +111,7 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('baz');
+        $this->_dispatcher->setResponse(new Zend_Controller_Response_Cli());
 
         try {
             $this->_dispatcher->dispatch($request);

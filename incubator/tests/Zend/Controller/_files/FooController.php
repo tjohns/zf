@@ -13,11 +13,6 @@ class FooController extends Zend_Controller_Action
         $this->_response->appendBody("postDispatch called\n");
     }
 
-    public function noRouteAction()
-    {
-        $this->_response->appendBody("No Route action called\n");
-    }
-
     public function barAction()
     {
         $this->_response->appendBody("Bar action called\n");

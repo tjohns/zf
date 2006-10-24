@@ -352,41 +352,45 @@ class Zend_Controller_Front
 	 * Dispatch an HTTP request to a controller/action.
      *
      * @param Zend_Controller_Request_Abstract|null $request
+     * @param Zend_Controller_Response_Abstract|null $response
      * @return string|Zend_Controller_Response_Abstract
 	 */
-	public function dispatch(Zend_Controller_Request_Abstract $request = null)
+	public function dispatch(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
 	{
         /**
          * Instantiate default request object (HTTP version) if none provided
          */
-        if (null === $request) {
+        if ((null === $request) && (null === ($request = $this->getRequest()))) {
             Zend::loadClass('Zend_Controller_Request_Http');
             $request = new Zend_Controller_Request_Http();
         }
 
         /**
-         * Retrieve response object, if any
+         * Instantiate default response object (HTTP version) if none provided
          */
-        $response = $this->getResponse();
+        if ((null === $response) && (null === ($response = $this->getResponse()))) {
+            Zend::loadClass('Zend_Controller_Response_Http');
+            $response = new Zend_Controller_Response_Http();
+        }
 
+        // Begin dispatch
 	    try {
             /**
-             * Notify plugins of router startup
+             * Route request to controller/action, if a router is provided
              */
-            $this->_plugins->routeStartup($request);
-
-    	    /**
-    	     * If a router is defined, use it to route the $request
-    	     * made, an exception is thrown.
-    	     */
             if (null !== ($router = $this->getRouter())) {
-                $router->route($request);
-            }
+                /**
+                * Notify plugins of router startup
+                */
+                $this->_plugins->routeStartup($request);
 
-            /**
-             * Notify plugins of router completion
-             */
-            $action = $this->_plugins->routeShutdown($request);
+                $router->route($request);
+
+                /**
+                * Notify plugins of router completion
+                */
+                $this->_plugins->routeShutdown($request);
+            }
 
             /**
              * Notify plugins of dispatch loop startup
@@ -438,10 +442,6 @@ class Zend_Controller_Front
             throw $e;
 	    }
 
-        if (null !== $response) {
-            return $response;
-        }
-
-        return '';
+        return $response;
 	}
 }
