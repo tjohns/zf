@@ -47,7 +47,7 @@ class Zend_Config implements Countable, Iterator
      * @var integer
      */
     protected $_index;
-    
+
     /**
      * Number of elements in configuration data
      *
@@ -149,7 +149,7 @@ class Zend_Config implements Countable, Iterator
     public function asArray()
     {
         $array = array();
-        foreach ($this->_data as $key=>$value) {
+        foreach ($this->_data as $key => $value) {
             if (is_object($value)) {
                 $array[$key] = $value->asArray();
             } else {
@@ -177,7 +177,7 @@ class Zend_Config implements Countable, Iterator
      */
     public function count()
     {
-        return count($this->_data);
+        return $this->_count;
     }
 
     /**
