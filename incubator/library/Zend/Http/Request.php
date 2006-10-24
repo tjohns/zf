@@ -25,25 +25,25 @@ class Zend_Http_Request implements Zend_Request_Interface
      * Base URL of request
      * @var string
      */
-    protected $_baseUrl = null; 
+    protected $_baseUrl = ''; 
 
     /**
      * Base path of request
      * @var string
      */
-    protected $_basePath; 
+    protected $_basePath = ''; 
 
     /**
      * PATH_INFO
      * @var string
      */
-    protected $_pathInfo; 
+    protected $_pathInfo = ''; 
 
     /**
      * Instance parameters
      * @var array
      */
-    protected $_params  = array(); 
+    protected $_params = array(); 
 
     /**
      * Alias keys for request parameters
@@ -323,11 +323,11 @@ class Zend_Http_Request implements Zend_Request_Interface
      */
     public function setBaseUrl($baseUrl = null) 
     { 
-        if ((null === $baseUrl) || ((true !== $baseUrl) && !is_string($baseUrl))) {
-            return;
+        if ((null !== $baseUrl) && !is_string($baseUrl)) {
+            return false;
         }
 
-        if ($baseUrl === true) { 
+        if ($baseUrl === null) { 
             $filename = basename($_SERVER['SCRIPT_FILENAME']); 
              
             if (basename($_SERVER['SCRIPT_NAME']) === $filename) { 
@@ -353,6 +353,7 @@ class Zend_Http_Request implements Zend_Request_Interface
         } 
          
         $this->_baseUrl = rtrim($baseUrl, '/'); 
+        $this->setPathInfo();
     } 
  
     /**
@@ -423,7 +424,7 @@ class Zend_Http_Request implements Zend_Request_Interface
         if ($pathInfo === null) { 
             $baseUrl = $this->getBaseUrl();
              
-            if (($requestUri = $this->getRequestUri()) === null) { 
+            if (null === ($requestUri = $this->getRequestUri())) { 
                 return false; 
             } 
              
@@ -437,7 +438,7 @@ class Zend_Http_Request implements Zend_Request_Interface
             { 
                 // If substr() returns false then PATH_INFO is set to an empty string 
                 $pathInfo = ''; 
-            } else {
+            } elseif (null === $baseUrl) {
                 $pathInfo = $requestUri;
             }
         } 

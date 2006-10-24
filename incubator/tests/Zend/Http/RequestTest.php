@@ -60,6 +60,21 @@ class Zend_Http_RequestTest extends PHPUnit_Framework_TestCase
         $this->_request->setPathInfo('/archives/past/4');
         $this->assertEquals('/archives/past/4', $this->_request->getPathInfo());
     }
+
+    public function testPathInfoNeedingBaseUrl()
+    {
+        $request = new Zend_Http_Request('http://localhost/test/index.php/ctrl-name/act-name');
+        $this->assertEquals('/test/index.php/ctrl-name/act-name', $request->getRequestUri());
+        $request->setBaseUrl('/test/index.php');
+        $this->assertEquals('/test/index.php', $request->getBaseUrl());
+
+        $requestUri = $request->getRequestUri();
+        $baseUrl    = $request->getBaseUrl();
+        $pathInfo   = substr($requestUri, strlen($baseUrl));
+        $this->assertTrue($pathInfo ? true : false);
+
+        $this->assertEquals('/ctrl-name/act-name', $request->getPathInfo(), "Expected $pathInfo;");
+    }
  
     public function testGetSetAlias()
     {
@@ -90,7 +105,7 @@ class Zend_Http_RequestTest extends PHPUnit_Framework_TestCase
  
     public function testGetBaseUrl()
     {
-        $this->assertSame(null, $this->_request->getBaseUrl());
+        $this->assertSame('', $this->_request->getBaseUrl());
     }
  
     public function testSetBaseUrl()
