@@ -238,7 +238,7 @@ class Zend_Http_Cookiejar
      */
     public function deleteExpiredCookies($time = null)
     {
-        if (is_null($time)) $time = time();
+        if ($time === null) $time = time();
         $cookies = $this->_flattenCookiesArray($this->cookies, self::COOKIE_OBJECT);
         
         foreach ($cookies as $cookie) {

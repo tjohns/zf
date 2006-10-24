@@ -95,7 +95,7 @@ class Zend_Http_Response
     public function __construct($code, $headers, $body = null, $version = '1.1', $message = null)
     {
         // Make sure the response code is valid and set it
-        if (is_null(self::responseCodeAsText($code)))
+        if (self::responseCodeAsText($code) === null)
             throw new Zend_Http_Exception("{$code} is not a valid HTTP response code");
 
         $this->code = $code;
@@ -490,7 +490,7 @@ class Zend_Http_Response
                     $headers[$h_name] = $h_value;
                     $last_header = &$headers[$h_name];
                 }
-            } elseif (preg_match("|^\s+(\S+)$|", $line, $m) && ! is_null($last_header)) {
+            } elseif (preg_match("|^\s+(\S+)$|", $line, $m) && $last_header !== null) {
                 $last_header .= $m[1];
             }
         }

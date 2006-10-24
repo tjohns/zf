@@ -108,7 +108,7 @@ class Zend_Http_Cookie
             throw new Zend_Http_Exception('Cookies must have a domain');
 
         $this->value = (string) $value;
-        $this->expires = (is_null($expires) ? null : (int) $expires);
+        $this->expires = ($expires === null ? null : (int) $expires);
         $this->path = ($path ? $path : '/');
         $this->secure = $secure;
     }
@@ -183,7 +183,7 @@ class Zend_Http_Cookie
      */
     public function isExpired($now = null)
     {
-        if (is_null($now)) $now = time();
+        if ($now === null) $now = time();
         if (is_int($this->expires) && $this->expires < $now) {
             return true;
         } else {
@@ -198,37 +198,37 @@ class Zend_Http_Cookie
      */
     public function isSessionCookie()
     {
-        return (is_null($this->expires));
+        return ($this->expires === null);
     }
     
     /**
-	 * Get the cookie as a string, suitable for sending as a "Cookie" header in an 
-	 * HTTP request
-	 *
-	 * @return string
-	 */
-	public function asString()
-	{
-		return "{$this->name}={$this->value}; ";
-	}
-	
-	/**
-	 * Checks whether the cookie should be sent on not in a specific scenario
-	 *
-	 * @param string|Zend_Uri_Http $uri URI to check against (secure, domain, path)
-	 * @param boolean $matchSessionCookies Whether to send session cookies
-	 * @param int $now Override the current time when checking for expiry time
-	 * @return boolean
-	 */
-	public function match($uri, $matchSessionCookies = true, $now = null)
-	{
-		if (is_string ($uri)) {
+     * Get the cookie as a string, suitable for sending as a "Cookie" header in an 
+     * HTTP request
+     *
+     * @return string
+     */
+    public function asString()
+    {
+        return "{$this->name}={$this->value}; ";
+    }
+    
+    /**
+     * Checks whether the cookie should be sent on not in a specific scenario
+     *
+     * @param string|Zend_Uri_Http $uri URI to check against (secure, domain, path)
+     * @param boolean $matchSessionCookies Whether to send session cookies
+     * @param int $now Override the current time when checking for expiry time
+     * @return boolean
+     */
+    public function match($uri, $matchSessionCookies = true, $now = null)
+    {
+        if (is_string ($uri)) {
             $uri = Zend_Uri_Http::factory($uri);
         }
         
         // Make sure we have a valid Zend_Uri_Http object
         if (! ($uri->valid() && ($uri->getScheme() == 'http' || $uri->getScheme() =='https')))
-        	throw new Zend_Http_Exception('Passed URI is not a valid HTTP or HTTPS URI');
+            throw new Zend_Http_Exception('Passed URI is not a valid HTTP or HTTPS URI');
         
         // Check that the cookie is secure (if required) and not expired
         if ($this->isSecure() && $uri->getScheme() != 'https') return false;
@@ -243,8 +243,8 @@ class Zend_Http_Cookie
         if (! preg_match("/^{$path_preg}/", $uri->getPath())) return false;
         
         // If we didn't die until now, return true.
-		return true;
-	}
+        return true;
+    }
     
     /**
      * Generate a new Cookie object from a cookie string 
