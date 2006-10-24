@@ -19,17 +19,17 @@
  */ 
 
 
-/** Zend_Controller_Dispatcher_Interface */
-require_once 'Zend/Controller/Dispatcher/Interface.php';
-
-/** Zend_Controller_Router_Interface */
-require_once 'Zend/Controller/Router/Interface.php';
-
 /** Zend_Controller_Plugin_Broker */
 require_once 'Zend/Controller/Plugin/Broker.php';
 
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
+
+/** Zend_Controller_Router_Interface */
+require_once 'Zend/Controller/Router/Interface.php';
+
+/** Zend_Controller_Dispatcher_Interface */
+require_once 'Zend/Controller/Dispatcher/Interface.php';
 
 /** Zend_Controller_Response_Abstract */
 require_once 'Zend/Controller/Response/Abstract.php';
@@ -43,11 +43,11 @@ require_once 'Zend/Controller/Response/Abstract.php';
 class Zend_Controller_Front
 {
     /**
-     * Instance of Zend_Controller_Front
-     * @var Zend_Controller_Front
+     * Instance of Zend_Controller_Plugin_Broker
+     * @var Zend_Controller_Plugin_Broker
      */
-    static private $_instance = null;
-    
+    private $_plugins = null;
+
     /**
      * Instance of Zend_Controller_Request_Abstract
      * @var Zend_Controller_Request_Abstract
@@ -73,12 +73,6 @@ class Zend_Controller_Front
     private $_response = null;
 
     /**
-     * Instance of Zend_Controller_Plugin_Broker
-     * @var Zend_Controller_Plugin_Broker
-     */
-    private $_plugins = null;
-
-    /**
      * Array of invocation parameters to use when instantiating action 
      * controllers
      * @var array 
@@ -86,33 +80,23 @@ class Zend_Controller_Front
     protected $_invokeParams = array();
 
 	/**
-	 * Singleton pattern
+	 * Constructor
 	 *
 	 * Instantiate the plugin broker.
 	 */
-	private function __construct()
+	public function __construct()
 	{
 	    $this->_plugins = new Zend_Controller_Plugin_Broker();
 	}
 
 	/**
-	 * Singleton pattern
-	 */
-	private function __clone()
-	{}
-
-	/**
-	 * Return one and only one instance of the Zend_Controller_Front object
+	 * Return an instance of Zend_Controller_Front
 	 *
 	 * @return Zend_Controller_Front
 	 */
 	static public function getInstance()
 	{
-        if (!self::$_instance instanceof self) {
-           self::$_instance = new self();
-        }
-
-        return self::$_instance;
+        return new self();
 	}
 
 	/**
@@ -384,6 +368,7 @@ class Zend_Controller_Front
                 */
                 $this->_plugins->routeStartup($request);
 
+                $router->setParams($this->getParams());
                 $router->route($request);
 
                 /**
@@ -398,8 +383,8 @@ class Zend_Controller_Front
             $this->_plugins->dispatchLoopStartup($request);
 
             $dispatcher = $this->getDispatcher();
-            $dispatcher->setResponse($response);
             $dispatcher->setParams($this->getParams());
+            $dispatcher->setResponse($response);
 
             /**
              *  Attempt to dispatch the controller/action. If the $request 
