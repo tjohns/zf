@@ -124,8 +124,8 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 
     public function addConfig(Zend_Config $config, $section) 
     {
-        if (is_null($config->{$section})) {
-            throw new Exception("No route configuration in section '{$section}'");
+        if ($config->{$section} === null) {
+            throw new Zend_Controller_Router_Exception("No route configuration in section '{$section}'");
         }
         foreach ($config->{$section} as $name => $info) {
             $reqs = (isset($info->reqs)) ? $info->reqs->asArray() : null;
