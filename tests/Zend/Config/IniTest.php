@@ -139,4 +139,19 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('staging', $config->staging->hostname); 
     }
 
+    public function testZF414()
+    {
+        $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, null);
+        $this->assertEquals(null, $config->getSectionName()); 
+        $this->assertEquals(true, $config->areAllSectionsLoaded()); 
+                
+        $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, 'all');
+        $this->assertEquals('all', $config->getSectionName()); 
+        $this->assertEquals(false, $config->areAllSectionsLoaded()); 
+        
+        $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, array('staging','other_staging'));
+        $this->assertEquals(array('staging','other_staging'), $config->getSectionName()); 
+        $this->assertEquals(false, $config->areAllSectionsLoaded()); 
+    }
+
 }

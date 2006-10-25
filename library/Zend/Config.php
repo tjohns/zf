@@ -61,6 +61,14 @@ class Zend_Config implements Countable, Iterator
      * @var array
      */
     protected $_data;
+    
+    
+     /**
+     * Contains which config file sections were loaded
+     *
+     * @var mixed
+     */
+     protected $_loadedSection;
 
     /**
      * Zend_Config provides a property based interface to
@@ -77,6 +85,7 @@ class Zend_Config implements Countable, Iterator
     public function __construct($array, $allowModifications = false)
     {
         $this->_allowModifications = (boolean) $allowModifications;
+        $this->_loadedSection = null;
         $this->_index = 0;
         $this->_data = array();
         foreach ($array as $key => $value) {
@@ -228,6 +237,17 @@ class Zend_Config implements Countable, Iterator
     public function valid()
     {
         return $this->_index < $this->_count;
+    }
+    
+    
+    public function getSectionName()
+    {
+        return $this->_loadedSection;
+    }
+
+    public function areAllSectionsLoaded() 
+    {
+        return ($this->_loadedSection === null);
     }
 
 }

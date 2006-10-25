@@ -114,6 +114,8 @@ class Zend_Config_Ini extends Zend_Config
 	        }
 	        parent::__construct($this->_processExtends($preProcessedArray, $section), $allowModifications);
         }
+        
+        $this->_loadedSection = $section;
     }
 
     /**

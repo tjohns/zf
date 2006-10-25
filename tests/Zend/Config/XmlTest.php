@@ -101,4 +101,19 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('otherStaging', $config->other_staging->only_in); 
         $this->assertEquals('staging', $config->staging->hostname); 
     }
+    
+    public function testZF414()
+    {
+        $config = new Zend_Config_Xml($this->_iniFileAllSectionsConfig, null);
+        $this->assertEquals(null, $config->getSectionName()); 
+        $this->assertEquals(true, $config->areAllSectionsLoaded()); 
+                
+        $config = new Zend_Config_Xml($this->_iniFileAllSectionsConfig, 'all');
+        $this->assertEquals('all', $config->getSectionName()); 
+        $this->assertEquals(false, $config->areAllSectionsLoaded()); 
+        
+        $config = new Zend_Config_Xml($this->_iniFileAllSectionsConfig, array('staging','other_staging'));
+        $this->assertEquals(array('staging','other_staging'), $config->getSectionName()); 
+        $this->assertEquals(false, $config->areAllSectionsLoaded()); 
+    }
 }

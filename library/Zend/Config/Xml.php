@@ -82,6 +82,8 @@ class Zend_Config_Xml extends Zend_Config
 	        }
 	        parent::__construct($this->_processExtends($config, $section), $allowModifications);
         }
+        
+        $this->_loadedSection = $section;
     }
 
 
