@@ -39,18 +39,17 @@ For 0.2:
   * Provided subclasses (new)
     * HTTP Request
     * Router
-    * RewriteRouter
+    * RewriteRouter (done)
     * Dispatcher
     * HTTP Response
     * CLI Response
   * Plugins (new)
 * Code
-  * Modify RewriteRouter to use request object (martel)
   * Modify Zend_Controller_Front::run() to use a default router?
+  * Slight path_info problem to correct
 * Tests
   * Request -- cookie test
   * Plugin Broker
-  * RewriteRouter-related tests (martel)
 * Miscellaneous
   * Page/class-level docblocks
 
