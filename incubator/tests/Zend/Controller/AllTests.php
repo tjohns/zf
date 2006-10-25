@@ -1,6 +1,11 @@
 <?php
 if (!defined('PHPUnit_MAIN_METHOD')) {
+    
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_AllTests::main');
+
+    set_include_path(dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'library' . PATH_SEPARATOR
+                 . dirname(dirname(dirname(dirname(dirname(__FILE__))))) . DIRECTORY_SEPARATOR . 'library' . PATH_SEPARATOR
+                 . get_include_path());
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
@@ -14,6 +19,9 @@ require_once 'FrontTest.php';
 require_once 'Request/HttpTest.php';
 require_once 'Response/HttpTest.php';
 require_once 'RouterTest.php';
+require_once 'RouteTest.php';
+require_once 'RewriteRouterTest.php';
+
 
 class Zend_Controller_AllTests
 {
@@ -32,6 +40,8 @@ class Zend_Controller_AllTests
         $suite->addTestSuite('Zend_Controller_Request_HttpTest');
         $suite->addTestSuite('Zend_Controller_Response_HttpTest');
         $suite->addTestSuite('Zend_Controller_RouterTest');
+        $suite->addTestSuite('Zend_Controller_RouteTest');
+        $suite->addTestSuite('Zend_Controller_RewriteRouterTest');
 
         return $suite;
     }
