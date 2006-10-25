@@ -58,18 +58,11 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
     protected $config = array();
     
     /**
-     * Adapter constructor, gets an array of parameters.
+     * Adapter constructor, currently empty. Config is set using setConfig()
      *
-     * @param array $parameters 
      */
     public function __construct() 
     {
-        if (! is_array($config))
-            throw new Zend_Http_Client_Adapter_Exception('$config expects an array, ' . gettype($config) . ' recieved.');
-        if (! isset($config['timeout'])) $config['timeout'] = 10;
-        foreach ($config as $k => $v) {
-            $this->config[strtolower($k)] = $v;
-        }
     }
     
     /**
@@ -139,8 +132,8 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
             $host = (strtolower($uri->getScheme()) == 'https' ? 'ssl://' . $host : $host);
         if ($this->connected_to[0] != $host || $this->connected_to[1] != $uri->getPort())
             throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are connected to the wrong host");
-        
-        // Build request headers
+
+            // Build request headers
         $request = "{$method} {$uri->__toString()} HTTP/{$http_ver}\r\n";
         foreach ($headers as $k => $v) {
             if (is_string($k)) $v = ucfirst($k) . ": $v";
