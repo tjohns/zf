@@ -161,16 +161,11 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
      */
     public function testDispatch4()
     {
-        $fh = fopen('/tmp/dispatch4.log', 'w');
-
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('foo');
         $request->setActionName('bar');
-        fwrite($fh, 'Controller: ' . $request->getControllerName() . '; action: ' . $request->getActionName() . "\n");
         $this->_controller->setResponse(new Zend_Controller_Response_Cli());
         $response = $this->_controller->dispatch($request);
-        fwrite($fh, 'Post dispatch: Controller: ' . $request->getControllerName() . '; action: ' . $request->getActionName() . "\n");
-        fclose($fh);
 
         $body = $response->getBody();
         $this->assertContains('Bar action called', $body);
