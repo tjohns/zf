@@ -74,7 +74,7 @@ interface Zend_Request_Interface
      * @param string $key 
      * @return boolean
      */
-    public function has();
+    public function has($key);
 
     /**
      * Either alias for __get(), or provides ability to maintain separate 
@@ -108,5 +108,5 @@ interface Zend_Request_Interface
      * @param array $params 
      * @return void
      */
-    public function setParams($params);
+    public function setParams(array $params);
 }

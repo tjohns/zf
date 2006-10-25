@@ -3,6 +3,9 @@
 /** Zend_Request_Interface */ 
 require_once 'Zend/Request/Interface.php'; 
 
+/** Zend_Http_Exception */ 
+require_once 'Zend/Http/Exception.php'; 
+
 /** Zend_Uri */ 
 require_once 'Zend/Uri.php'; 
  
