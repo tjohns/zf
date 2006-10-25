@@ -27,11 +27,13 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
 {
     protected $_iniFileConfig;
     protected $_iniFileAllSectionsConfig;
+    protected $_iniFileCircularConfig;
 
     public function setUp()
     {
         $this->_iniFileConfig = dirname(__FILE__) . '/_files/config.ini';
         $this->_iniFileAllSectionsConfig = dirname(__FILE__) . '/_files/allsections.ini';
+        $this->_iniFileCircularConfig = dirname(__FILE__) . '/_files/circular.ini';
     }
 
     public function testLoadSingleSection()
@@ -112,7 +114,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
             }
         }
     }
-    
+
     public function testZF426()
     {
         try {
@@ -120,38 +122,48 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
             $this->fail('An expected Zend_Config_Exception has not been raised');
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('Cannot create sub-key for', $expected->getMessage());
-        }        
+        }
     }
 
     public function testZF413_MultiSections()
     {
         $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, array('staging','other_staging'));
-        
-        $this->assertEquals('otherStaging', $config->only_in); 
-        $this->assertEquals('staging', $config->hostname); 
+
+        $this->assertEquals('otherStaging', $config->only_in);
+        $this->assertEquals('staging', $config->hostname);
 
     }
-        
+
     public function testZF413_AllSections()
     {
         $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, null);
-        $this->assertEquals('otherStaging', $config->other_staging->only_in); 
-        $this->assertEquals('staging', $config->staging->hostname); 
+        $this->assertEquals('otherStaging', $config->other_staging->only_in);
+        $this->assertEquals('staging', $config->staging->hostname);
     }
 
     public function testZF414()
     {
         $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, null);
-        $this->assertEquals(null, $config->getSectionName()); 
-        $this->assertEquals(true, $config->areAllSectionsLoaded()); 
-                
+        $this->assertEquals(null, $config->getSectionName());
+        $this->assertEquals(true, $config->areAllSectionsLoaded());
+
         $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, 'all');
-        $this->assertEquals('all', $config->getSectionName()); 
-        $this->assertEquals(false, $config->areAllSectionsLoaded()); 
-        
+        $this->assertEquals('all', $config->getSectionName());
+        $this->assertEquals(false, $config->areAllSectionsLoaded());
+
         $config = new Zend_Config_Ini($this->_iniFileAllSectionsConfig, array('staging','other_staging'));
-        $this->assertEquals(array('staging','other_staging'), $config->getSectionName()); 
-        $this->assertEquals(false, $config->areAllSectionsLoaded()); 
+        $this->assertEquals(array('staging','other_staging'), $config->getSectionName());
+        $this->assertEquals(false, $config->areAllSectionsLoaded());
+    }
+
+    public function testZF415()
+    {
+        try {
+            $config = new Zend_Config_Ini($this->_iniFileCircularConfig, null);
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('circular inheritance', $expected->getMessage());
+        }
     }
 
 }

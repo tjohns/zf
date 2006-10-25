@@ -60,7 +60,7 @@ class Zend_Config_Ini extends Zend_Config
      *      $data->db->connection === "database"
      *
      * @param string $filename
-     * @param string $section
+     * @param mixed $section
      * @param boolean $allowModifications
      * @throws Zend_Config_Exception
      */
@@ -88,33 +88,33 @@ class Zend_Config_Ini extends Zend_Config
                     break;
 
                 default:
-                    throw new Zend_Config_Exception("Section '$thisSection' cannot be extended more than once in $filename");
+                    throw new Zend_Config_Exception("Section '$thisSection' may not extend multiple sections in $filename");
             }
         }
 
         if (null === $section) {
-            $s = array();
-            foreach ($preProcessedArray as $name => $sec) {
-		        $s[$name] = $this->_processExtends($preProcessedArray, $name);
+            $dataArray = array();
+            foreach ($preProcessedArray as $sectionName => $sectionData) {
+		        $dataArray[$sectionName] = $this->_processExtends($preProcessedArray, $sectionName);
             }
-            parent::__construct($s, $allowModifications);
+            parent::__construct($dataArray, $allowModifications);
         } elseif (is_array($section)) {
-            $s = array();
-            foreach ($section as $sec) {
-		        if (!isset($preProcessedArray[$sec])) {
-		            throw new Zend_Config_Exception("Section '$sec' cannot be found in $filename");
+            $dataArray = array();
+            foreach ($section as $sectionName) {
+		        if (!isset($preProcessedArray[$sectionName])) {
+		            throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $filename");
 		        }
-		        $s = array_merge($this->_processExtends($preProcessedArray, $sec), $s);
+		        $dataArray = array_merge($this->_processExtends($preProcessedArray, $sectionName), $dataArray);
 
             }
-            parent::__construct($s, $allowModifications);
+            parent::__construct($dataArray, $allowModifications);
         } else {
 	        if (!isset($preProcessedArray[$section])) {
 	            throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
 	        }
 	        parent::__construct($this->_processExtends($preProcessedArray, $section), $allowModifications);
         }
-        
+
         $this->_loadedSection = $section;
     }
 
@@ -136,6 +136,7 @@ class Zend_Config_Ini extends Zend_Config
         foreach ($thisSection as $key => $value) {
             if (strtolower($key) == ';extends') {
                 if (isset($iniArray[$value])) {
+                    $this->_assertValidExtend($section, $value);
                     $config = $this->_processExtends($iniArray, $value, $config);
                 } else {
                     throw new Zend_Config_Exception("Section '$section' cannot be found");

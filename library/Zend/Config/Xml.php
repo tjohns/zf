@@ -48,7 +48,7 @@ class Zend_Config_Xml extends Zend_Config
      * name in the sections that have been included via "extends".
      *
      * @param string $filename
-     * @param string $section
+     * @param mixed $section
      * @param boolean $allowModifications
      * @throws Zend_Config_Exception
      */
@@ -61,28 +61,27 @@ class Zend_Config_Xml extends Zend_Config
         $config = simplexml_load_file($filename);
 
         if (null === $section) {
-            $s = array();
-            foreach ($config as $name => $sec) {
-		        $s[$name] = $this->_processExtends($config, $name);
+            $dataArray = array();
+            foreach ($config as $sectionName => $sectionData) {
+		        $dataArray[$sectionName] = $this->_processExtends($config, $sectionName);
             }
-            parent::__construct($s, $allowModifications);
+            parent::__construct($dataArray, $allowModifications);
         } elseif (is_array($section)) {
-            $s = array();
-            foreach ($section as $sec) {
-		        if (!isset($config->$sec)) {
-		            throw new Zend_Config_Exception("Section '$sec' cannot be found in $filename");
+            $dataArray = array();
+            foreach ($section as $sectionName) {
+		        if (!isset($config->$sectionName)) {
+		            throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $filename");
 		        }
-		        $s = array_merge($this->_processExtends($config, $sec), $s);
-
+		        $dataArray = array_merge($this->_processExtends($config, $sectionName), $dataArray);
             }
-            parent::__construct($s, $allowModifications);
+            parent::__construct($dataArray, $allowModifications);
         } else {
 	        if (!isset($config->$section)) {
 	            throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
 	        }
 	        parent::__construct($this->_processExtends($config, $section), $allowModifications);
         }
-        
+
         $this->_loadedSection = $section;
     }
 
@@ -106,7 +105,9 @@ class Zend_Config_Xml extends Zend_Config
         $thisSection = $element->$section;
 
         if (isset($thisSection['extends'])) {
-            $config = $this->_processExtends($element, (string) $thisSection['extends'], $config);
+            $extendedSection = (string) $thisSection['extends'];
+            $this->_assertValidExtend($section, $extendedSection);
+            $config = $this->_processExtends($element, $extendedSection, $config);
         }
 
         $config = $this->_arrayMergeRecursive($config, $this->_toArray($thisSection));
@@ -157,4 +158,5 @@ class Zend_Config_Xml extends Zend_Config
         }
         return $array1;
     }
+
 }
