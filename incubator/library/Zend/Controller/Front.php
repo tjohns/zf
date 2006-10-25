@@ -106,8 +106,10 @@ class Zend_Controller_Front
 	 */
     static public function run($controllerDirectory)
 	{
+        require_once 'Zend/Controller/Router.php';
 		echo self::getInstance()
             ->setControllerDirectory($controllerDirectory)
+            ->setRouter(new Zend_Controller_Router())
             ->dispatch();
 	}
 
@@ -383,7 +385,7 @@ class Zend_Controller_Front
      *
      * @param Zend_Controller_Request_Abstract|null $request
      * @param Zend_Controller_Response_Abstract|null $response
-     * @return string|Zend_Controller_Response_Abstract
+     * @return Zend_Controller_Response_Abstract
 	 */
 	public function dispatch(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
 	{
