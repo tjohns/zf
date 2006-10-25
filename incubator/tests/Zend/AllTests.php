@@ -32,6 +32,7 @@ class Zend_AllTests
 
         // place other tests here for incubator suite
 
+        $suite->addTestSuite('Zend_AclTest');
         $suite->addTest(Zend_Controller_AllTests::suite());
         $suite->addTest(Zend_Currency_AllTests::suite());
         $suite->addTest(Zend_Date_AllTests::suite());
