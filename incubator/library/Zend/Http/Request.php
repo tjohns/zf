@@ -340,10 +340,27 @@ class Zend_Http_Request implements Zend_Request_Interface
             } elseif (isset($_SERVER['ORIG_SCRIPT_NAME']) && basename($_SERVER['ORIG_SCRIPT_NAME']) === $filename) { 
                 $baseUrl = $_SERVER['ORIG_SCRIPT_NAME']; // 1and1 shared hosting compatibility 
             } else { 
-                return false; 
+                // Backtrack up the script_filename to find the portion matching 
+                // php_self
+                $path    = $_SERVER['PHP_SELF'];
+                if (false !== ($pos = strpos($path, '?'))) {
+                    $path = (substr($path, 0, $pos));
+                }
+                $segs    = explode('/', trim($filename, '/'));
+                $index   = $count($segs) - 1;
+                $baseUrl = ' ';
+                do {
+                    $last = $segs[$index];
+                    $baseUrl = '/' . $last . $baseUrl;
+                    --$index;
+                } while ((-1 < $index) && (false !== ($pos = strpos($path, $last))) && (0 != $pos));
+
+                if ('' == $baseUrl) {
+                    return false; 
+                }
             } 
              
-            if (($requestUri = $this->getRequestUri()) === null) { 
+            if (null === ($requestUri = $this->getRequestUri())) { 
                 return false; 
             } 
              
