@@ -23,7 +23,7 @@
 /** Zend_Controller_Plugin_Abstract */
 require_once 'Zend/Controller/Plugin/Abstract.php';
 
-/** Zend_Controller_Request_Abstract */
+/** Zend_Controller_Dispatcher_Token */
 require_once 'Zend/Controller/Dispatcher/Token.php';
 
 
@@ -38,9 +38,9 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
 {
 
     /**
-     * Array of instance of objects implementing Zend_Controller_Plugin_Interface
+     * Array of instance of objects extending Zend_Controller_Plugin_Abstract
      *
-     * @var Zend_Controller_Plugin_Interface
+     * @var array
      */
     protected $_plugins = array();
 
@@ -48,10 +48,10 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     /**
      * Register a plugin.
      *
-     * @param Zend_Controller_Plugin_Interface $plugin
+     * @param Zend_Controller_Plugin_Abstract $plugin
      * @return Zend_Controller_Plugin_Broker
      */
-    public function registerPlugin(Zend_Controller_Plugin_Interface $plugin)
+    public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin)
     {
         if (false !== array_search($plugin, $this->_plugins, true)) {
             throw new Zend_Controller_Exception('Plugin already registered.');
@@ -64,10 +64,10 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     /**
      * Unregister a plugin.
      *
-     * @param Zend_Controller_Plugin_Interface $plugin
+     * @param Zend_Controller_Plugin_Abstract $plugin
      * @return Zend_Controller_Plugin_Broker
      */
-    public function unregisterPlugin(Zend_Controller_Plugin_Interface $plugin)
+    public function unregisterPlugin(Zend_Controller_Plugin_Abstract $plugin)
     {
         $key = array_search($plugin, $this->_plugins, true);
         if (false === $key) {
@@ -96,73 +96,69 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
 	 * Called before Zend_Controller_Front exits its iterations over
 	 * the route set.
 	 *
-	 * @param  Zend_Controller_Request_Abstract|boolean $request
-	 * @return Zend_Controller_Request_Abstract|boolean
+	 * @param  Zend_Controller_Request_Abstract $request
+	 * @return void
 	 */
 	public function routeShutdown($request)
 	{
 	    foreach ($this->_plugins as $plugin) {
 	        $request = $plugin->routeShutdown($request);
 	    }
-	    return $request;
 	}
 
 
 	/**
 	 * Called before Zend_Controller_Front enters its dispatch loop.
      *
-     * During the dispatch loop, Zend_Controller_Front keeps a 
-     * Zend_Controller_Request_Abstract object, and uses 
+     * During the dispatch loop, Zend_Controller_Front keeps a
+     * Zend_Controller_Request_Abstract object, and uses
      * Zend_Controller_Dispatcher to dispatch the
      * Zend_Controller_Request_Abstract object to controllers/actions.
 	 *
-	 * @param  Zend_Controller_Request_Abstract|boolean $request
-	 * @return Zend_Controller_Request_Abstract|boolean
+	 * @param  Zend_Controller_Request_Abstract $request
+	 * @return void
 	 */
 	public function dispatchLoopStartup($request)
 	{
 	    foreach ($this->_plugins as $plugin) {
 	        $request = $plugin->dispatchLoopStartup($request);
 	    }
-	    return $request;
 	}
 
 
 	/**
 	 * Called before an action is dispatched by Zend_Controller_Dispatcher.
 	 *
-	 * @param  Zend_Controller_Request_Abstract|boolean $request
-	 * @return Zend_Controller_Request_Abstract|boolean
+	 * @param  Zend_Controller_Request_Abstract $request
+	 * @return void
 	 */
 	public function preDispatch($request)
 	{
 	    foreach ($this->_plugins as $plugin) {
 	        $request = $plugin->preDispatch($request);
 	    }
-	    return $request;
 	}
 
 
 	/**
 	 * Called after an action is dispatched by Zend_Controller_Dispatcher.
 	 *
-	 * @param  Zend_Controller_Request_Abstract|boolean $request
-	 * @return Zend_Controller_Request_Abstract|boolean
+	 * @param  Zend_Controller_Request_Abstract $request
+	 * @return void
 	 */
 	public function postDispatch($request)
 	{
 	    foreach ($this->_plugins as $plugin) {
 	        $request = $plugin->postDispatch($request);
 	    }
-	    return $request;
 	}
 
 
 	/**
 	 * Called before Zend_Controller_Front exits its dispatch loop.
 	 *
-	 * @param  Zend_Controller_Request_Abstract|boolean $request
-	 * @return Zend_Controller_Request_Abstract|boolean
+	 * @param  Zend_Controller_Request_Abstract $request
+	 * @return void
 	 */
 	public function dispatchLoopShutdown()
 	{

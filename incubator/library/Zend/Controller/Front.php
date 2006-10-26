@@ -16,7 +16,7 @@
  * @package    Zend_Controller
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 
 
 /** Zend_Controller_Plugin_Broker */
@@ -73,9 +73,9 @@ class Zend_Controller_Front
     private $_response = null;
 
     /**
-     * Array of invocation parameters to use when instantiating action 
+     * Array of invocation parameters to use when instantiating action
      * controllers
-     * @var array 
+     * @var array
      */
     protected $_invokeParams = array();
 
@@ -130,7 +130,7 @@ class Zend_Controller_Front
 
     /**
      * Convenience method, passthru to Zend_Controller_Dispatcher::getControllerDirectory()
-     * 
+     *
      * @return string
      */
     public function getControllerDirectory()
@@ -144,8 +144,8 @@ class Zend_Controller_Front
 
     /**
      * Set the default controller (unformatted string)
-     * 
-     * @param string $controller 
+     *
+     * @param string $controller
      * @return self
      */
     public function setDefaultController($controller)
@@ -157,7 +157,7 @@ class Zend_Controller_Front
 
     /**
      * Retrieve the default controller (unformatted string)
-     * 
+     *
      * @return string
      */
     public function getDefaultController()
@@ -167,8 +167,8 @@ class Zend_Controller_Front
 
     /**
      * Set the default action (unformatted string)
-     * 
-     * @param string $action 
+     *
+     * @param string $action
      * @return self
      */
     public function setDefaultAction($action)
@@ -180,7 +180,7 @@ class Zend_Controller_Front
 
     /**
      * Retrieve the default action (unformatted string)
-     * 
+     *
      * @return string
      */
     public function getDefaultAction()
@@ -194,7 +194,7 @@ class Zend_Controller_Front
 	 * Set the request object.  The request holds the request environment.
      *
      * If a class name is provided, it will instantiate it
-     * 
+     *
      * @param string|Zend_Controller_Request_Abstract $request
      * @return void
      * @throws Zend_Controller_Front_Exception if invalid request class
@@ -228,10 +228,10 @@ class Zend_Controller_Front
 	 * Set the router object.  The router is responsible for mapping
 	 * the request to a controller and action.
      *
-     * If a class name is provided, instantiates router with any parameters 
+     * If a class name is provided, instantiates router with any parameters
      * registered via {@link addParam()} or {@link setParams()}.
-     * 
-     * @param string|Zend_Controller_Router_Interface $router 
+     *
+     * @param string|Zend_Controller_Router_Interface $router
      * @return void
      * @throws Zend_Controller_Front_Exception if invalid router class
      */
@@ -293,12 +293,12 @@ class Zend_Controller_Front
     /**
      * Set response class/object
      *
-	 * Set the response object.  The response is a container for action 
+	 * Set the response object.  The response is a container for action
      * responses and headers. Usage is optional.
      *
      * If a class name is provided, instantiates a response object.
-     * 
-     * @param string|Zend_Controller_Response_Abstract $response 
+     *
+     * @param string|Zend_Controller_Response_Abstract $response
      * @return void
      * @throws Zend_Controller_Front_Exception if invalid response class
      */
@@ -327,8 +327,8 @@ class Zend_Controller_Front
 
     /**
      * Add a parameter to use when instantiating an action controller
-     * 
-     * @param mixed $param 
+     *
+     * @param mixed $param
      * @return void
      */
     public function addParam($param)
@@ -338,8 +338,8 @@ class Zend_Controller_Front
 
     /**
      * Set parameters to pass to action controller constructors
-     * 
-     * @param array $params 
+     *
+     * @param array $params
      * @return void
      */
     public function setParams(array $params)
@@ -349,7 +349,7 @@ class Zend_Controller_Front
 
     /**
      * Retrieve action controller instantiation parameters
-     * 
+     *
      * @return array
      */
     public function getParams()
@@ -360,10 +360,10 @@ class Zend_Controller_Front
 	/**
 	 * Register a plugin.
 	 *
-	 * @param Zend_Controller_Plugin_Interface $plugin
+	 * @param Zend_Controller_Plugin_Abstract $plugin
 	 * @return Zend_Controller_Front
 	 */
-	public function registerPlugin(Zend_Controller_Plugin_Interface $plugin)
+	public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin)
 	{
 	    $this->_plugins->registerPlugin($plugin);
 	    return $this;
@@ -372,9 +372,10 @@ class Zend_Controller_Front
 	/**
 	 * Unregister a plugin.
 	 *
+	 * @param Zend_Controller_Plugin_Abstract $plugin
 	 * @return Zend_Controller_Front
 	 */
-    public function unregisterPlugin(Zend_Controller_Plugin_Interface $plugin)
+    public function unregisterPlugin(Zend_Controller_Plugin_Abstract $plugin)
     {
         $this->_plugins->unregisterPlugin($plugin);
         return $this;
@@ -434,34 +435,34 @@ class Zend_Controller_Front
             $dispatcher->setParams($this->getParams());
 
             /**
-             *  Attempt to dispatch the controller/action. If the $request 
-             *  indicates that it needs to be dispatched, move to the next 
+             *  Attempt to dispatch the controller/action. If the $request
+             *  indicates that it needs to be dispatched, move to the next
              *  action in the request.
              */
-            do { 
-                $request->setDispatched(true); 
-            
+            do {
+                $request->setDispatched(true);
+
                 /**
                  * Notify plugins of dispatch startup
                  */
-                $this->_plugins->preDispatch($request); 
-            
+                $this->_plugins->preDispatch($request);
+
                 /**
                  * Skip requested action if preDispatch() has reset it
                  */
-                if (!$request->isDispatched()) { 
-                    continue; 
-                } 
-            
+                if (!$request->isDispatched()) {
+                    continue;
+                }
+
                 /**
                  * Dispatch request
                  */
-                $dispatcher->dispatch($request, $response); 
-            
+                $dispatcher->dispatch($request, $response);
+
                 /**
                  * Notify plugins of dispatch completion
                  */
-                $this->_plugins->postDispatch($request); 
+                $this->_plugins->postDispatch($request);
             } while (!$request->isDispatched());
 
 

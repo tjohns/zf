@@ -17,7 +17,7 @@
  * @subpackage Plugins
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 
 
 /** Zend_Controller_Plugin_Interface */
@@ -31,7 +31,7 @@ require_once 'Zend/Controller/Plugin/Interface.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Controller_Plugin_Abstract implements Zend_Controller_Plugin_Interface
+abstract class Zend_Controller_Plugin_Abstract
 {
 	/**
 	 * Called before Zend_Controller_Front begins evaluating the
@@ -47,56 +47,48 @@ abstract class Zend_Controller_Plugin_Abstract implements Zend_Controller_Plugin
 	 *
 	 * Called after Zend_Controller_Front exits from the router.
 	 *
-	 * @param  Zend_Controller_Request_Abstract|boolean $request
-	 * @return Zend_Controller_Request_Abstract
+	 * @param  Zend_Controller_Request_Abstract $request
+	 * @return void
 	 */
 	public function routeShutdown($request)
-	{
-	    return $request;
-	}
+	{}
 
 	/**
 	 * Called before Zend_Controller_Front enters its dispatch loop.
 	 *
-	 * @param  Zend_Controller_Request_Abstract|boolean $request
-	 * @return Zend_Controller_Request_Abstract
+	 * @param  Zend_Controller_Request_Abstract $request
+	 * @return void
 	 */
 	public function dispatchLoopStartup($request)
-	{
-	    return $request;
-	}
+	{}
 
 	/**
 	 * Called before an action is dispatched by Zend_Controller_Dispatcher.
 	 *
-	 * This callback allows for proxy or filter behavior.  By altering the 
-     * request and resetting its dispatched flag (via 
+	 * This callback allows for proxy or filter behavior.  By altering the
+     * request and resetting its dispatched flag (via
      * {@link Zend_Controller_Request_Abstract::setDispatched() setDispatched(false)}),
      * the current action may be skipped.
 	 *
-	 * @param  Zend_Controller_Request_Abstract|boolean $request
-	 * @return Zend_Controller_Request_Abstract
+	 * @param  Zend_Controller_Request_Abstract $request
+	 * @return void
 	 */
 	public function preDispatch($request)
-	{
-	    return $request;
-	}
+	{}
 
 	/**
 	 * Called after an action is dispatched by Zend_Controller_Dispatcher.
 	 *
-     * This callback allows for proxy or filter behavior. By altering the 
-     * request and resetting its dispatched flag (via 
+     * This callback allows for proxy or filter behavior. By altering the
+     * request and resetting its dispatched flag (via
      * {@link Zend_Controller_Request_Abstract::setDispatched() setDispatched(false)}),
      * a new action may be specified for dispatching.
 	 *
-	 * @param  Zend_Controller_Request_Abstract|boolean $request
-	 * @return Zend_Controller_Request_Abstract
+	 * @param  Zend_Controller_Request_Abstract $request
+	 * @return void
 	 */
 	public function postDispatch($request)
-	{
-	    return $request;
-	}
+	{}
 
 	/**
 	 * Called before Zend_Controller_Front exits its dispatch loop.
