@@ -90,7 +90,7 @@ class Zend_Controller_Front
 	}
 
 	/**
-	 * Convenience feature, calls getInstance()->setControllerDirectory()->dispatch()
+	 * Convenience feature, calls setControllerDirectory()->setRouter()->dispatch()
 	 *
 	 * @param string $controllerDirectory
 	 */
