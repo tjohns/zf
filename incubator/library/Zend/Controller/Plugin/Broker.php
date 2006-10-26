@@ -102,7 +102,7 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
 	public function routeShutdown($request)
 	{
 	    foreach ($this->_plugins as $plugin) {
-	        $request = $plugin->routeShutdown($request);
+	        $plugin->routeShutdown($request);
 	    }
 	}
 
@@ -121,7 +121,7 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
 	public function dispatchLoopStartup($request)
 	{
 	    foreach ($this->_plugins as $plugin) {
-	        $request = $plugin->dispatchLoopStartup($request);
+	        $plugin->dispatchLoopStartup($request);
 	    }
 	}
 
@@ -135,7 +135,7 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
 	public function preDispatch($request)
 	{
 	    foreach ($this->_plugins as $plugin) {
-	        $request = $plugin->preDispatch($request);
+	        $plugin->preDispatch($request);
 	    }
 	}
 
@@ -149,7 +149,7 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
 	public function postDispatch($request)
 	{
 	    foreach ($this->_plugins as $plugin) {
-	        $request = $plugin->postDispatch($request);
+	        $plugin->postDispatch($request);
 	    }
 	}
 
@@ -163,7 +163,7 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
 	public function dispatchLoopShutdown()
 	{
 	   foreach ($this->_plugins as $plugin) {
-	       $request = $plugin->dispatchLoopShutdown();
+	       $plugin->dispatchLoopShutdown();
 	   }
 	}
 }
