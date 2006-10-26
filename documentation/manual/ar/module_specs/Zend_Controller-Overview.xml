@@ -1,122 +1,125 @@
 <sect1 id="zend.controller.overview">
-	<title>Overview</title>
+	<title>نظرة عامة</title>
 
 	<sect2 id="zend.controller.overview.introduction">
-		<title>Introduction</title>
+		<title>مقدمة</title>
 		<para>
-			<code>Zend_Controller</code> provides the foundation for building a website based
-			on the Model-View-Controller (MVC) pattern.
+        	يوفر <code>Zend_Controller</code> البنية اللازمة لإنشاء مواقع تعتمد على النمط ( MVC)
+            او Model-View-Controller. 
 		</para>
 
 		<para>
-			The <code>Zend_Controller</code> system is designed to be lightweight, modular,
-			and extensible.  It is a minimalist design to permit flexibility and some freedom to users
-			while providing enough structure so that systems built around <code>Zend_Controller</code> share
-			some common conventions and similar code layout.
+            نظام  <code>Zend_Controller</code> تم تصميمه ليكن خفيف و بسيط و قابل للتمدد و ان يكن modular. 
+            إنه نظام مصغر الى اقصى حد معقول ليوفر المرونة و الحرية لمن يستخدمه, فى حين انه يوفر كل البنية الازمة , ولهذا 
+            السبب يتشارك اجزاء النظام المبنى بـ <code>Zend_Controller</code> فى هيئة تنظيم الكود و المصطلحات.
 		</para>
 
 		<para>
-			The <code>Zend_Controller</code> workflow is implemented by several components.  While
-			it is not necessary to completely understand the underpinnings of all of these components
-			to use the system, having a working knowledge of the process is helpful.
+             <code>Zend_Controller</code>  يعتمد على على عدة components اخرى, فى حين انه لا يشترط عليك ان 
+            تكن مدرك ما يحدث خلف كواليس هذه الـ components لتتمكن من استخدام النظام, إلا ان بعض المعرفة يعملية تدفق 
+            العمليات ستكن مساعدة جدا لك.
 
 			<itemizedlist>
 				<listitem>
 					<para>
 						<code>Zend_Controller_Front</code>
-						orchestrates the entire workflow of the <code>Zend_Controller</code> system.  It
-						is an interpretation of the FrontController pattern.  <code>Zend_Controller_Front</code>
-						processes all requests received by the server and is ultimately responsible for
-						delegating requests to ActionControllers (<code>Zend_Controller_Action</code>).
+                        يقود و يتحكم فى تدفق العمليات داخل نظام <code>Zend_Controller</code> , و هو تطبيقنا للنمط المسمى 
+                        FrontController , و يقوم ايضا <code>Zend_Controller_Front</code> بإستلام و معالجة كل الطلبات المستلمة 
+                        من قبل السيرفر , وهو مسئول بالكامل عن نقل هذه الطلبات إلى الـ ActionControllers اى 
+                        (<code>Zend_Controller_Action</code>). 
 					</para>
 				</listitem>
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Router</code> is the router.  Routing is
-						the process of taking a URI endpoint and decomposing it to
-						determine which controller, and action of that controller, should receive
-						the request.  This definition of controller, action, and optional parameters,
-						is packaged into a value object called <code>Zend_Controller_Dispatcher_Token</code>.
-						This is then processed by <code>Zend_Controller_Dispatcher</code>.  Routing occurs
-						only once: when the request is initially received and before the first controller is dispatched.
+                        <code>Zend_Controller_Router</code> هو الموجه(router) . التوجيه او الـ routing هو عملية استلام URI 
+                        ثم تقسيم مكوناته إلى اجزاء لمعرفة أى Controller و أى Action فى هذا الـ Controller يجب ان يستقبل الطلب. 
+                        يتم تجميع التعريفات الخاصة بالـ Controller و الـ Action و اى متغيرات اخرى ممررة , و توضع فى object يسمى 
+                        <code>Zend_Controller_Dispatcher_Token</code>. و تحدث عملية التحويل مرة واحدة فقط و ذلك بمجرد 
+                        إستلام الطلب و قبل تشغيل اول Controller .
 					</para>
 				</listitem>
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Dispatcher</code> is the dispatcher.  Dispatching is
-						the process of taking the <code>Zend_Controller_Dispatcher_Token</code>, finding
-						the appropriate controller file, instantiating a controller class in that file
-						(must implement <code>Zend_Controller_Action</code>), and finally running the action method in
-						that controller object.  Unlike routing, which occurs only once, dispatching occurs
-						in a loop.  <code>Zend_Controller_Dispatcher</code> is repeatedly called by
-						<code>Zend_Controller_Front</code> until all actions have been dispatched sequentially.
+                        <code>Zend_Controller_Dispatcher</code> هو المنفذ "Dispatcher". عملية التنفيذ هى عملية اخذ 
+                        <code>Zend_Controller_Dispatcher_Token</code> ثم إيجاد ملف الـ controller المحدد, ثم إنشاء instance 
+                        جديد من الـ class الخاص بهذا الـ controller (يجب ان يرث من <code>Zend_Controller_Action</code>) . 
+                        و اخر خطوة هى إستدعاء الـ method الخاص بهذا الـ action من الـ object الخاص بالـ controller . 
+                        على عكس عملية التوجيه "الـ routing" و التى تحدث مرة واحدة , تحدث عملية التنفيذ "dispatching" بشكل متكرر. 
+                        يتم إستدعاء <code>Zend_Controller_Dispatcher</code> بشكل متكرر من قبل 
+                        <code>Zend_Controller_Front</code> إلى ان يتم تنفيذ كل الـ actions و ذلك بتسلسل منطقى.
 					</para>
 				</listitem>
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Action</code> is the base controller component.  Each
-						controller is a single class that extends the <code>Zend_Controller_Action class</code>,
-						and this class has action methods.
+                        <code>Zend_Controller_Action</code> هو العنصر الأساسى فى تكوين controller . كل controller هو 
+                        عبارة عن class يرث من <code>Zend_Controller_Action</code> , و هذا الـ class يحتوى على methods 
+                        تعمل كـ actions .
 					</para>
 				</listitem>
 			</itemizedlist>
 
-			The workflow of <code>Zend_Controller</code> is relatively simple.  A request is received by
-			<code>Zend_Controller_Front</code>, which in turn calls <code>Zend_Controller_Router</code> to determine which
-			controller (and action in that controller) to dispatch.  <code>Zend_Controller_Router</code> decomposes the URI
-			into a <code>Zend_Controller_Dispatcher_Token</code> object that describes where to dispatch.
-			<code>Zend_Controller_Front</code> then enters a dispatch loop.  It calls <code>Zend_Controller_Dispatcher</code>,
-			passing it the token, to dispatch to the actual controller and action.  After the controller has finished,
-			control returns to <code>Zend_Controller_Front</code>.  If the controller has indicated that another controller
-			should be dispatched by returning a new token, the loop continues and another dispatch is performed.
-			Otherwise, the process ends.
+            كيفية عمل <code>Zend_Controller</code> تعتبر بسيطة نسبياً . حيث يتم إستلام طلب "request" عن 
+            طريق <code>Zend_Controller_Front</code>, و الذى بدوره يستدعى 
+            <code>Zend_Controller_Router</code> ليعرف أى Controller (و أى action فى هذا الـ controller ) سيتم 
+            تنفيذه . 
+            
+            ثم يقوم <code>Zend_Controller_Router</code> بتقسيم الـ URI إلى اجزاء صغيرة و يضعها فى object من 
+            <code>Zend_Controller_Dispatcher_Token</code> و الذى بدوره يصف اين ستتم عملية التنفيذ . 
+            بعدها يقوم <code>Zend_Controller_Front</code> بتشغيل عملية تنفيذ متكرر "dispatch loop". 
+
+            حيث يقوم بإستدعاء <code>Zend_Controller_Dispatcher</code> و تمرير الـ Token إليه , ليقوم بتنفيذ 
+            الـ controller و الـ action المحددين. و بعد إنتهاء الـ controller من عمله , يعود التحكم إلى 
+            <code>Zend_Controller_Front</code> .
+
+
+            إذا قام الـ controller بتوضيح انه يجب تنفيذ controller اخر و ذلك عن طريق إرجاعه لـ token جديد , 
+            سيتم إستكمال الدورة التنفيذية و سيتم تنفيذ الـ controller الجديد , و ذلك إلى ان تنتهى العملية .
 		</para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.routing-process">
-		<title>Route Process</title>
+		<title> عملية التحويل - routing</title>
 
 		<para>
-			Before your first controller can be built, you need to understand how the routing
-			process works as it is implemented in <code>Zend_Controller_Router</code>.  Remember that the
-			workflow is divided into routing, which occurs only once, and dispatching, which
-			occurs thereafter in a loop.
+            قبل أن تتمكن من إنشاء اول controller بنفسك, يجب ان تفهم كيف تعمل عملية التوجيه "routing" كما هى مطبقة فى 
+            <code>Zend_Controller_Router</code>. تذكر أن كيفية العمل مقسمة الى عمليه توجيه و التى تحدث مرة واحدة , 
+            و عملية تنفيذ "dispatching" و التى تحدث بعدها فى حلقة تكرارية.
 		</para>
 
 		<para>
-			<code>Zend_Controller_Front</code> calls <code>Zend_Controller_Router</code> to map a URI
-			to a controller -- and an action within that controller.  <code>Zend_Controller_Router</code>
-			takes the URI and decomposes it into a value object, <code>Zend_Controller_Dispatcher_Token</code>,
-			which will be passed to the dispatcher (<code>Zend_Controller_Dispatcher</code>).
+            يقوم <code>Zend_Controller_Front</code> بإستدعاء <code>Zend_Controller_Router</code> 
+            ليقوم بترجمة محتوى الـ URI و يستخرج اسم الـ controller و اسم الـ action فى هذا الـ controller . 
+            يقوم <code>Zend_Controller_Router</code> بأخذ الـ URI و تقسيمه إلى اجزاء و يضعها فى object يقوم بحفظ 
+            هذه القيم و يسمى <code>Zend_Controller_Dispatcher_Token</code> و الذى سيتم تمريره إلى المنفذ 
+            "الـ dispatcher" و هو (<code>Zend_Controller_Dispatcher</code>).
 		</para>
 
 		<para>
-			The router uses a very simple mapping to determine the name of the controller and
-			the name of the action within that controller:
+            يقوم المحول "الـ router" بعملية بسيطة ليتعرف على اسم الـ controller و اسم الـ action التابع لهذا الـ controller :
+
         </para>
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
         </programlisting>
         <para>
-			Notice above that the first segment is always the name of the controller and the
-			second segment is always the name of the action.
+            لاحظ بالأعلى ان اول قسم دائما هو اسم الـ controller و أن القسم التانى دائما يحمل أسم الـ action.
 		</para>
 
 		<para>
-			Optionally, parameters may be defined in the URI that will be passed to the controller.
-			These take the form of key/value pairs:
+            اختيارياً, يمكنك تمرير قيم فى الـ URI و التى سيتم تمريرها بعدها الى الـ controller , و هذا يكون على شكل زوج من 
+            key/value  : 
         </para>
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/key1/value1/]]>
         </programlisting>
 
 		<para>
-			If nothing is present in the <code>/controller/</code> part of the URI, then this will become
-			"<code>index</code>".  If nothing is present in the <code>/action/</code> part of the URI, then
-			this will also become "<code>index</code>".  These examples illustrate:
+            إذا لم يتم تمرير قيمة فى مكان الـ <code>/controller/</code> فى الـ URI, سيتم اعتبار أن قيمته هى 
+            "<code>index</code>". و إذا لم يتم تمرير قيمة فى مكان الـ <code>/action/</code> فى الـ URI , سيتم 
+            اعتبار ان قيمته هى "<code>index</code>" ايضاً. هذا المثال يوضح أكثر :
         </para>
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
@@ -133,16 +136,15 @@ Action    : index]]>
         </programlisting>
 
 		<note>
-			We are currently developing a new router with a URI rewriting engine that will give
-			much more flexible capabilities than are presently available in the router.
-			This will be included in a preview release in the very near future.
+            نحن نقوم حالياً بتطوير محول "router" جديد يحتوى على محرك اعادة كتابة للـ URI , و الذى سيعطى امكانيات 
+            أكثر مرونة من الموجودة فى المحول الحالى. و هذا سيكون متوافر بإصدار تجريبى فى القريب العاجل .
 		</note>
 
 		<para>
-			The controller name, the action name within that controller, and any optional parameters
-			are packaged into a token, <code>Zend_Controller_Dispatcher_Token</code>.  This token
-			is returned to <code>Zend_Controller_Front</code>, which will then enter the dispatch loop.
-			Once in the dispatch loop, the token will be passed to <code>Zend_Controller_Dispatcher</code>.
+            اسم الـ controller و اسم الـ action التابع له و أى قيم ختيارية اخرى ممررة يتم تجميعها فى token او "موصِف" 
+            يسمى <code>Zend_Controller_Dispatcher_Token</code>. يتم إرجاع هذا الـ token إلى 
+            <code>Zend_Controller_Front</code> و الذى بعدها سيقوم بالدخول فى مرحلة التنفيذ , بمجرد الدخول فى 
+            عملية التنفيذ "dispatching" , سيتم تمرير الـ token إلى <code>Zend_Controller_Dispatcher</code> . 
 		</para>
 	</sect2>
 
@@ -150,32 +152,34 @@ Action    : index]]>
 		<title>Dispatch Token</title>
 
 		<para>
-			The dispatch token is a simple value object that is passed between <code>Zend_Controller_Front</code>
-			and classes that implement the router and dispatcher interfaces.  It packages a definition of a controller,
-			an action, and parameters to be passed to the action.
+            Token التنفيذ أو "Dispatch Token" عبارة عن كائن قيم أو "value object" يتم تمريره بين 
+            <code>Zend_Controller_Front</code> و الـ calsses التى تطبق الـ interfaces الخاصة بالمحول "router" 
+            و المنفذ "dispatcher" . و يحوى تعريف لأسم الـ controller و أسم الـ action و القيم التى سيتم تمريرها إلى الـ action.
 		</para>
 
 		<itemizedlist>
 			<listitem><para>
-				The controller name is accessed by <code>getControllerName()</code> and <code>setControllerName()</code>.
+                يتم الوصول إلى اسم الـ controller بإستخدام <code>()getControllerName</code> و 
+                <code>()setControllerName</code> . 
 			</para></listitem>
 			<listitem><para>
-				The name of the action to call within that controller is accessed by <code>getActionName()</code> and <code>setActionName()</code>.
+                اسم الـ action الذى سيتم إستدعائه من الـ controller يمكن الوصول إليه بإستخدام 
+                <code>()getActionName</code> و <code>()setActionName</code>.
 			</para></listitem>
 			<listitem><para>
-				Parameters to be passed to that action are an associative array of key/value pairs that are accessed by <code>getParams()</code>
-				and <code>setParams()</code>.
+                القيم التى ستمرر إلى الـ action عبارة عن associative array تتكون من زوج من key/value و الذى يمكن الوصول 
+                إليهم بإستخدام <code>()getParams</code> و <code>()setParams</code> .
 			</para></listitem>
 		</itemizedlist>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatching">
-		<title>Dispatch Process</title>
+		<title>عملية التنفيذ - dispatching</title>
 
 		<para>
-			Dispatching is the process of taking a token, <code>Zend_Controller_Dispatcher_Token</code>, extracting
-			the information contained in it: a controller name, an action name, and option parameters,
-			and then instantiating a controller and calling an action of that controller.
+            عملية التنفيذ هى عملية أخذ token أو <code>Zend_Controller_Dispatcher_Token</code> , 
+            ثم إستخراج المعلومات الموجودة به : أسم الـ controller و أسم الـ action و القيم الإختيارية الممررة , 
+            و بعدها يتم إنشاء instance جديد من الـ controller ثم إستدعاء الـ action من هذا الـ controller.
 		</para>
 	</sect2>
 </sect1>

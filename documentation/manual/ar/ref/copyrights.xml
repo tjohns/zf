@@ -1,13 +1,13 @@
 <appendix id="copyrights">
-    <title>Copyright Information</title>
+    <title>معلومات حقوق الملكية</title>
 
     <para>
         The following copyrights are applicable to portions of the Zend Framework.
     </para>
 
     <para>
-        Copyright &copy; 2005-<?dbtimestamp format="Y"?> Zend Technologies Inc.
-        (<ulink url="http://www.zend.com" />)
+        حقوق الملكية &copy; 2005-<?dbtimestamp format="Y"?> Zend Technologies Inc.
+        (<ulink url="http://www.zend.com" />) 
     </para>
 
 </appendix>

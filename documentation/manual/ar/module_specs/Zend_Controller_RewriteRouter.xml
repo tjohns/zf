@@ -1,16 +1,18 @@
 <sect1 id="zend.controller.rewriterouter.introduction">
-    <title>Introduction</title>
+    <title>مقدمة</title>
 	<para>
-		Zend_Controller_RewriteRouter is a new version of the framework router. Routing is the process of taking a URI
-		endpoint and decomposing it to determine which controller and action of that controller, should receive the
-		request. This definition of controller, action and optional parameters is packaged into a value object called
-		Zend_Controller_Dispatcher_Token which is then processed by Zend_Controller_Dispatcher. Routing occurs only once:
-		when the request is initially received and before the first controller is dispatched.
+        Zend_Controller_RewriteRouter هو نوع جديد من الموجه "router" الخاص بإطار العمل. 
+        عملية التوجيه أو الـ routing هى أخذ URI و تقسيمه الى قطع اصغر لمعرفة أى controller و action تابع له سيتم تمرير 
+        الطلب إليهم . 
+        تعريف أسم الـ controller و الـ action و القيم الإختيارية يتم تجميعه و وضعه فى كائن قيم أو "value object" يسمى 
+        Zend_Controller_Dispatcher_Token و الذى سيتم معالجته لاحقا بواسطة Zend_Controller_Dispatcher. 
+        عملية التوجيه "routing" تحدث مرة واحدة : بمجرد إستلام الطلب و قبل تنفيذ اول controller.
 	</para>
 	<para>
-		Zend_Controller_RewriteRouter is designed to allow for mod_rewrite like functionality using pure php
-		structures. It is very loosely based on Ruby on Rails routing and does not require any prior knowledge of
-		webserver URL rewriting. It is designed to work with a single mod_rewrite rule (one of):
+        تم تصميم Zend_Controller_RewriteRouter ليسمح بأداء مماثل لـ mod_rewrite بإستخدام هيكلة PHP فقط.
+        و هو يعتمد على فكرة الـ routing المنفذة فى Ruby on Rails و هذا لا يستلزم أى معرفة مسبقة بالـ URL rewriting من 
+        خلال الـ webserver. 
+        لقد تم تصميمه ليعمل مع أمر mod_rewrite واحد (واحد من التاليين) :
 	</para>
 	<programlisting role="php"><![CDATA[
 RewriteEngine on
@@ -23,11 +25,11 @@ RewriteRule ^(.*)$ index.php/$1	]]></programlisting>
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.usage">
-	<title>Using a router</title>
+	<title>إستخدام معرفات التحويل - routes</title>
 
 	<para>
-		To properly use the RewriteRouter you have to instantiate it, add some user defined routes and inject it into the
-		controller. The following code illustrates the procedure:
+        لتستخدم RewriteRouter يجب ان تنشئ instance جديدة منه , ثم تنشئ معرف تحويل,
+        ثم تقوم بحقن هذا الموجه "route" فى الـ controller . المثال التالى يوضح كيفية عمل هذا :
 	</para>
 
 	<programlisting role="php"><![CDATA[
@@ -43,31 +45,34 @@ $ctrl->setRouter($router);]]></programlisting>
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.basic">
-	<title>Basic Routes</title>
+	<title>اساسيات عملية التحويل</title>
 
 	<para>
-		The heart of the RewriteRouter is the definition of user defined routes. Routes are created by calling the addRoute method of
-		RewriteRouter:
+        قلب الـ RewriteRouter هو إنشاء معرفات تحويل "routes" من قِبل المستخدم, يتم إنشاء الـ routes عن طريق إستدعاء 
+        الـ method المسمى addRoute الخاص بـ RewriteRouter :
 	</para>
 
 	<programlisting role="php"><![CDATA[
 $router->addRoute('user', 'user/:username');]]></programlisting>
 
 	<para>
-		The first parameter is the name of the route. It is redundant at the moment of writing but will be used in the future in
-		a URL view helper to allow for easy URL generation in your views. Should you need to make use of a previously
-		configured named route, you can retrieve it with the getRoute method of the RewriteRouter.
+        البراميتر الأول هو إسم الـ route , فى وقت كتابة هذه الكلمات لا يوجد إستخدام لهذا الأسم , و لكن فى المستقبل سيتم 
+        إستخدامه فى اداة "URL view helper"  مساعدة لإنشاء URLs بسهولة فى الـ view . 
+        إن كنت تحتاج إلى إستخدام routes قد قمت بتسجيلها مسبقاً, يمكنك إستعادتها عن طريق الـ method المسمى getRoute 
+        الموجود فى RewriteRouter.
 	</para>
 
 	<para>
-		The second parameter is a route that will be matched to a URL - for example, the above route will match
-		<code>http://example.com/user/martel</code>. The colon in a route marks a URL variable which will be accessible
-		through a Zend_Controller_Action::_getParam method. In our example a parameter named username will be set to a value of
-		'martel'.
+        البراميتر الثانى عبارة عن route "معرف تحويل" و الذى سيتم مطابقته بالـ URL - على سبيل المثال, 
+        الـ route المذكور بالأعلى سيتوافق مع <code>http://example.com/user/martel</code>.
+        النقطة المزدوجة ":" فى الـ route توضح ان هذا متغير URL و الذى يمكن الوصول إليه من خلال الـ method المسمى 
+        Zend_Controller_Action::_getParam . 
+        فى مثالنا هذا , باراميتر يأسم username سيتم إنشائه بالقيمة 'martel'.
 	</para>
 
 	<note>
-		Routes are matched in reverse order so make sure your most generic routes are defined first.
+        يتم تنفيذ عملية اختبار المطابقة للـ routes بترتيب عكسى , لذلك تأكد من أن الـ routes الأكثر عمومية (فرصة مطابقتها اكبر)
+         تم تعريفها اولاً.
 	</note>
 
 	<note>
