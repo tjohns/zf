@@ -90,16 +90,6 @@ class Zend_Controller_Front
 	}
 
 	/**
-	 * Return an instance of Zend_Controller_Front
-	 *
-	 * @return Zend_Controller_Front
-	 */
-	static public function getInstance()
-	{
-        return new self();
-	}
-
-	/**
 	 * Convenience feature, calls getInstance()->setControllerDirectory()->dispatch()
 	 *
 	 * @param string $controllerDirectory
@@ -107,7 +97,8 @@ class Zend_Controller_Front
     static public function run($controllerDirectory)
 	{
         require_once 'Zend/Controller/Router.php';
-		echo self::getInstance()
+        $frontController = new self();
+		echo $frontController
             ->setControllerDirectory($controllerDirectory)
             ->setRouter(new Zend_Controller_Router())
             ->dispatch();

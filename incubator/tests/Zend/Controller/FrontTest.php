@@ -7,13 +7,13 @@ require_once 'Zend/Controller/Response/Cli.php';
 require_once 'Zend/Controller/Dispatcher.php';
 require_once 'Zend/Controller/Router.php';
 
-class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase 
+class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
 {
     protected $_controller;
 
     public function setUp()
     {
-        $this->_controller = Zend_Controller_Front::getInstance();
+        $this->_controller = new Zend_Controller_Front();
         $this->_controller->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
     }
 
