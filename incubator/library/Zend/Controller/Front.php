@@ -432,7 +432,6 @@ class Zend_Controller_Front
 
             $dispatcher = $this->getDispatcher();
             $dispatcher->setParams($this->getParams());
-            $dispatcher->setResponse($response);
 
             /**
              *  Attempt to dispatch the controller/action. If the $request 
@@ -457,7 +456,7 @@ class Zend_Controller_Front
                 /**
                  * Dispatch request
                  */
-                $dispatcher->dispatch($request); 
+                $dispatcher->dispatch($request, $response); 
             
                 /**
                  * Notify plugins of dispatch completion

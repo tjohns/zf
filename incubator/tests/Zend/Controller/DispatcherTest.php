@@ -82,8 +82,8 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
-        $this->_dispatcher->setResponse(new Zend_Controller_Response_Cli());
-        $this->_dispatcher->dispatch($request);
+        $response = new Zend_Controller_Response_Cli();
+        $this->_dispatcher->dispatch($request, $response);
 
         $this->assertContains('Index action called', $this->_dispatcher->getResponse()->getBody());
     }
@@ -96,8 +96,8 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
         $request->setActionName('index');
-        $this->_dispatcher->setResponse(new Zend_Controller_Response_Cli());
-        $this->_dispatcher->dispatch($request);
+        $response = new Zend_Controller_Response_Cli();
+        $this->_dispatcher->dispatch($request, $response);
 
         $this->assertContains('Index action called', $this->_dispatcher->getResponse()->getBody());
     }
@@ -110,10 +110,10 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('index');
         $request->setActionName('foo');
-        $this->_dispatcher->setResponse(new Zend_Controller_Response_Cli());
+        $response = new Zend_Controller_Response_Cli();
 
         try {
-            $this->_dispatcher->dispatch($request);
+            $this->_dispatcher->dispatch($request, $response);
             $this->fail('Exception should be raised by __call');
         } catch (Exception $e) {
             // success
@@ -127,10 +127,10 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
     {
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('baz');
-        $this->_dispatcher->setResponse(new Zend_Controller_Response_Cli());
+        $response = new Zend_Controller_Response_Cli();
 
         try {
-            $this->_dispatcher->dispatch($request);
+            $this->_dispatcher->dispatch($request, $response);
             $this->fail('Exception should be raised; no such controller');
         } catch (Exception $e) {
             // success
@@ -145,8 +145,8 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $request = new Zend_Controller_Request_Http();
         $request->setControllerName('foo');
         $request->setActionName('bar');
-        $this->_dispatcher->setResponse(new Zend_Controller_Response_Cli());
-        $this->_dispatcher->dispatch($request);
+        $response = new Zend_Controller_Response_Cli();
+        $this->_dispatcher->dispatch($request, $response);
 
         $body = $this->_dispatcher->getResponse()->getBody();
         $this->assertContains('Bar action called', $body);

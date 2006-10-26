@@ -139,7 +139,8 @@ interface Zend_Controller_Dispatcher_Interface
      * requests a forward to another action, a new request will be returned.
 	 *
 	 * @param  Zend_Controller_Request_Abstract $request
+	 * @param  Zend_Controller_Response_Abstract $response
 	 * @return Zend_Controller_Request_Abstract|boolean
 	 */
-	public function dispatch(Zend_Controller_Request_Abstract $request);
+	public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response);
 }

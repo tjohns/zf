@@ -64,25 +64,19 @@ abstract class Zend_Controller_Action
      * {@link init()}, and all additional arguments passed to the constructor 
      * will be passed as arguments to init().
      *
-     * @param Zend_Controller_Request_Abstract
+     * @param Zend_Controller_Request_Abstract $request
+     * @param Zend_Controller_Response_Abstract $response
      * @return void
      */
-    final public function __construct(Zend_Controller_Request_Abstract $request)
+    final public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response)
     {
-        $this->_request = $request;
+        $this->_request  = $request;
+        $this->_response = $response;
 
         if (1 < func_num_args()) {
             $argv = func_get_args();
             array_shift($argv);       // strip request
-
-            // Determine if we have a response object
-            if (0 < count($argv)) {
-                $response = $argv[0];
-                if ($response instanceof Zend_Controller_Response_Abstract) {
-                    array_shift($argv);
-                    $this->_response = $response;
-                }
-            }
+            array_shift($argv);       // strip response
 
             // Set invocation arguments
             $this->_invokeArgs = $argv;
@@ -238,14 +232,6 @@ abstract class Zend_Controller_Action
 
         if (null !== $response) {
             $this->setResponse($response);
-        }
-
-        /**
-         * Initialize a response object if none currently set
-         */
-        if (null === $this->getResponse()) {
-            require_once 'Zend/Controller/Response/Http.php';
-            $this->setResponse(new Zend_Controller_Response_Http());
         }
 
         $this->preDispatch();

@@ -287,11 +287,13 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 	/**
 	 * Dispatch to a controller/action
 	 *
-	 * @param Zend_Controller_Request_Abstract $action
+	 * @param Zend_Controller_Request_Abstract $request
+	 * @param Zend_Controller_Response_Abstract $response
 	 * @return boolean
 	 */
-	public function dispatch(Zend_Controller_Request_Abstract $request)
+	public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response)
 	{
+        $this->setResponse($response);
 	    return $this->_dispatch($request);
 	}
 
@@ -377,11 +379,9 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $argv = $this->getParams();
 
         /**
-         * Prepend response object, if available, to arguments
+         * Prepend response object to arguments
          */
-        if (null !== ($response = $this->getResponse())) {
-            array_unshift($argv, $response);
-        }
+        array_unshift($argv, $this->getResponse());
 
         /**
          * Prepend request object to arguments
