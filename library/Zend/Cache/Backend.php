@@ -90,6 +90,12 @@ class Zend_Cache_Backend
             if (array_key_exists($name, $this->_directives)) {
                 $this->_directives[$name] = $value;
             }
+            // specific test for the logging directive
+            if ($name == 'logging') {
+                if ((!class_exists('Zend_Log', false)) && ($value)) {
+                    Zend_Cache::throwException('logging feature is on but Zend_Log is not "loaded"');
+                }
+            }
         }
     } 
     
