@@ -117,10 +117,12 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
          * Attempt to get from path_info; controller is first item
          */
         if (isset($pathSegs[0])) {
-            $request->setControllerName(array_shift($pathSegs));
+            $controller = array_shift($pathSegs);
+            $request->setControllerName(urldecode($controller));
         }
         if (isset($pathSegs[0])) {
-            $request->setActionName(array_shift($pathSegs));
+            $action = array_shift($pathSegs);
+            $request->setActionName(urldecode($action));
         }
 
         /**
@@ -138,7 +140,9 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
         $segs = count($pathSegs);
         if (0 < $segs) {
             for ($i = 0; $i < $segs; $i = $i + 2) {
-                $params[$pathSegs[$i]] = isset($pathSegs[$i+1]) ? $pathSegs[$i+1] : null;
+                $key = urldecode($pathSegs[$i]);
+                $value = isset($pathSegs[$i+1]) ? urldecode($pathSegs[$i+1]) : null;
+                $params[$key] = $value;
             }
         }
         $request->setParams($params);
