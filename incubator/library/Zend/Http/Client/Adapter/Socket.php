@@ -102,7 +102,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
                 $this->close();
         
         // Do the actual connection
-        $this->socket = @fsockopen($host, $port, $errno, $errstr, (int) $this->parameters['timeout']);
+        $this->socket = @fsockopen($host, $port, $errno, $errstr, (int) $this->config['timeout']);
         if (! $this->socket) {
             $this->close();
             throw new Zend_Http_Client_Adapter_Exception('Unable to Connect to ' . 
