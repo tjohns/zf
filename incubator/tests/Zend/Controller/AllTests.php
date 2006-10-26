@@ -1,6 +1,6 @@
 <?php
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    
+
     define('PHPUnit_MAIN_METHOD', 'Zend_Controller_AllTests::main');
 
     set_include_path(dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR . 'library' . PATH_SEPARATOR
@@ -16,6 +16,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'ActionTest.php';
 require_once 'DispatcherTest.php';
 require_once 'FrontTest.php';
+require_once 'Plugin/BrokerTest.php';
 require_once 'Request/HttpTest.php';
 require_once 'Response/HttpTest.php';
 require_once 'RouterTest.php';
@@ -37,6 +38,7 @@ class Zend_Controller_AllTests
         $suite->addTestSuite('Zend_Controller_ActionTest');
         $suite->addTestSuite('Zend_Controller_DispatcherTest');
         $suite->addTestSuite('Zend_Controller_FrontTest');
+        $suite->addTestSuite('Zend_Controller_Plugin_BrokerTest');
         $suite->addTestSuite('Zend_Controller_Request_HttpTest');
         $suite->addTestSuite('Zend_Controller_Response_HttpTest');
         $suite->addTestSuite('Zend_Controller_RouterTest');
