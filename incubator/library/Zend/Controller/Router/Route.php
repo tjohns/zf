@@ -120,7 +120,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 foreach(array_chunk($parts, 2) as $part) {
                     list($var, $value) = $part;
                     if (!array_key_exists($var, $unique)) {
-                        $this->_params[$var] = rawurldecode($value);
+                        $this->_params[$var] = urldecode($value);
                         $unique[$var] = true;
                     }
                 }
@@ -137,7 +137,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             
             if ($name !== null) {
                 // It's a variable. Setting a value
-                $this->_params[$name] = rawurldecode($pathPart);
+                $this->_params[$name] = urldecode($pathPart);
                 $unique[$name] = true;
             } else {
                 $pathStaticCount++;
