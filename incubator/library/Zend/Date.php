@@ -1967,13 +1967,11 @@ class Zend_Date {
     /**
      * Returns a ISO8601 formatted date - ISO is locale-independent
      *
-     * @todo  implement function
-     * @param $format - OPTIONAL an rule for formatting the output for different ISO Formats
      * @return string
      */
-    public function getIso($format)
+    public function getIso()
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->get(Zend_Date::ISO8601);
     }
 
 
@@ -1981,14 +1979,15 @@ class Zend_Date {
      * Sets a new ISOdate
      * Alias for set($date);
      *
-     * @todo  implement function
      * @param $date string     - OPTIONAL ISOdate to set, when null the actual date is set
-     * @param $format          - OPTIONAL an rule for parsing the ISOinput
      * @return object
      */
-    public function setIso($date, $format)
+    public function setIso($date = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($date)) {
+            $date = $this->_Date->date('c');
+        }
+        return $this->set($date, Zend_Date::ISO8601);
     }
 
 
@@ -1996,14 +1995,15 @@ class Zend_Date {
      * Adds a ISOdate
      * Alias for add($date);
      *
-     * @todo  implement function
      * @param $date string  - OPTIONAL ISOdate to add, when null the actual date is add
-     * @param $format       - OPTIONAL an rule for parsing the ISOinput
      * @return object
      */
-    public function addIso($date, $format)
+    public function addIso($date = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($date)) {
+            $date = $this->_Date->date('c');
+        }
+        return $this->add($date, Zend_Date::ISO8601);
     }
 
 
@@ -2011,14 +2011,15 @@ class Zend_Date {
      * Substracts a ISOdate
      * Alias for sub($date);
      *
-     * @todo  implement function
      * @param $date string  - OPTIONAL ISOdate to sub, when null the actual date is sub
-     * @param $format       - OPTIONAL an rule for parsing the ISOinput
      * @return object
      */
-    public function subIso($date, $format)
+    public function subIso($date = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($date)) {
+            $date = $this->_Date->date('c');
+        }
+        return $this->sub($date, Zend_Date::ISO_8601);
     }
 
 
@@ -2026,25 +2027,26 @@ class Zend_Date {
      * Compares IsoDate with date object, returning the difference date
      * Alias for compare($date);
      *
-     * @todo  implement function
      * @param $date string - OPTIONAL ISOdate to compare, when null the actual date is used for compare
      * @return object
      */
-    public function compareIso($date)
+    public function compareIso($date = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($date)) {
+            $date = $this->_Date->date('c');
+        }
+        return $this->compare($date, Zend_Date::ISO_8601);
     }
 
 
     /**
      * Returns a RFC822 formatted date - RFC822 is locale-independent
      *
-     * @todo  implement function
      * @return string
      */
     public function getArpa()
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->get(Zend_Date::RFC822);
     }
 
 
@@ -2052,13 +2054,15 @@ class Zend_Date {
      * Sets a new RFC822 formatted date
      * Alias for set($date);
      *
-     * @todo  implement function
      * @param $date string     - OPTIONAL RFC822 date to set, when null the actual date is set
      * @return object
      */
     public function setArpa($date)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($date)) {
+            $date = $this->_Date->date('D\, d M y H\:m\:s O');
+        }
+        return $this->set($date, Zend_Date::RFC822);
     }
 
 
@@ -2066,13 +2070,15 @@ class Zend_Date {
      * Adds a RFC822 formatted date
      * Alias for add($date);
      *
-     * @todo  implement function
      * @param $date string  - OPTIONAL RFC822 date to add, when null the actual date is add
      * @return object
      */
     public function addArpa($date)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($date)) {
+            $date = $this->_Date->date('D\, d M y H\:m\:s O');
+        }
+        return $this->add($date, Zend_Date::RFC822);
     }
 
 
@@ -2086,7 +2092,10 @@ class Zend_Date {
      */
     public function subArpa($date)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($date)) {
+            $date = $this->_Date->date('D\, d M y H\:m\:s O');
+        }
+        return $this->sub($date, Zend_Date::RFC822);
     }
 
 
@@ -2094,13 +2103,15 @@ class Zend_Date {
      * Compares a RFC822 formatted date with date object, returning the difference date
      * Alias for compare($date);
      *
-     * @todo  implement function
      * @param $date string - OPTIONAL RFC822 date to compare, when null the actual date is used for compare
      * @return object
      */
     public function compareArpa($date)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($date)) {
+            $date = $this->_Date->date('D\, d M y H\:m\:s O');
+        }
+        return $this->compare($date, Zend_Date::RFC822);
     }
 
 
