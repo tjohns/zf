@@ -42,7 +42,7 @@ abstract class Zend_Search_Lucene_Search_Query
      *
      * @var Zend_Search_Lucene_Search_Weight
      */
-    protected $_weight;
+    protected $_weight = null;
 
 
     /**
@@ -82,19 +82,33 @@ abstract class Zend_Search_Lucene_Search_Query
      * @param Zend_Search_Lucene $reader
      * @return Zend_Search_Lucene_Search_Weight
      */
-    abstract protected function _createWeight($reader);
+    abstract public function createWeight($reader);
 
     /**
-     * Constructs an initializes a Weight for a query.
+     * Constructs an initializes a Weight for a _top-level_query_.
      *
      * @param Zend_Search_Lucene $reader
      */
     protected function _initWeight($reader)
     {
-        $this->_weight = $this->_createWeight($reader);
+        // Check, that it's a top-level query and query weight is not initialized yet.
+        if ($this->_weight !== null) {
+            return $this->_weight;
+        }
+
+        $this->createWeight($reader);
         $sum = $this->_weight->sumOfSquaredWeights();
         $queryNorm = $reader->getSimilarity()->queryNorm($sum);
         $this->_weight->normalize($queryNorm);
     }
 
+    /**
+     * Reset query, so it can be reused within other queries or
+     * with other indeces
+     */
+    public function reset()
+    {
+        $this->_weight = null;
+    }
 }
+

@@ -212,9 +212,10 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
      * @param Zend_Search_Lucene $reader
      * @return Zend_Search_Lucene_Search_Weight
      */
-    protected function _createWeight($reader)
+    public function createWeight($reader)
     {
-        return new Zend_Search_Lucene_Search_Weight_Phrase($this, $reader);
+        $this->_weight = new Zend_Search_Lucene_Search_Weight_Phrase($this, $reader);
+        return $this->_weight;
     }
 
 
@@ -397,20 +398,13 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
             $this->_initWeight($reader);
         }
 
-        if ( (extension_loaded('bitset')) ?
-                bitset_in($this->_resVector, $docId) :
-                isset($this->_resVector[$docId])  ) {
+        if (extension_loaded('bitset') ?  bitset_in($this->_resVector, $docId) : isset($this->_resVector[$docId])) {
             if ($this->_slop == 0) {
                 $freq = $this->_exactPhraseFreq($docId);
             } else {
                 $freq = $this->_sloppyPhraseFreq($docId, $reader);
             }
 
-/*
-            return $reader->getSimilarity()->tf($freq) *
-                   $this->_weight->getValue() *
-                   $reader->norm($docId, reset($this->_terms)->field);
-*/
             if ($freq != 0) {
                 $tf = $reader->getSimilarity()->tf($freq);
                 $weight = $this->_weight->getValue();
@@ -418,6 +412,9 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
 
                 return $tf*$weight*$norm;
             }
+
+            // Included in result, but culculated freq is sero
+            return 0;
         } else {
             return 0;
         }

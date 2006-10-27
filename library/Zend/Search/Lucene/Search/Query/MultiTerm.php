@@ -56,7 +56,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * @var array
      */
 
-    private $_signs = array();
+    private $_signs;
 
     /**
      * Result vector.
@@ -107,9 +107,6 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      */
     public function __construct($terms = null, $signs = null)
     {
-        /**
-         * @todo Check contents of $terms and $signs before adding them.
-         */
         if (is_array($terms)) {
             $this->_terms = $terms;
 
@@ -139,25 +136,17 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * @param  boolean|null $sign
      * @return void
      */
-    public function addTerm(Zend_Search_Lucene_Index_Term $term, $sign=null) {
-        $this->_terms[] = $term;
-
-        /**
-         * @todo This is not good.  Sometimes $this->_signs is an array, sometimes
-         * it is null, even when there are terms.  It will be changed so that
-         * it is always an array.
-         */
-        if ($this->_signs === null) {
-            if ($sign !== null) {
-                $this->_signs = array();
-                foreach ($this->_terms as $term) {
+    public function addTerm(Zend_Search_Lucene_Index_Term $term, $sign = null) {
+        if ($sign !== null || $this->_signs !== null) {       // Skip, if all terms are optional
+            if ($this->_signs === null) {                     // Check, If all previous terms are optional
+                foreach ($this->_terms as $prevTerm) {
                     $this->_signs[] = null;
                 }
-                $this->_signs[] = $sign;
             }
-        } else {
             $this->_signs[] = $sign;
         }
+
+        $this->_terms[] = $term;
     }
 
 
@@ -201,9 +190,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * @param Zend_Search_Lucene $reader
      * @return Zend_Search_Lucene_Search_Weight
      */
-    protected function _createWeight($reader)
+    public function createWeight($reader)
     {
-        return new Zend_Search_Lucene_Search_Weight_MultiTerm($this, $reader);
+        $this->_weight = new Zend_Search_Lucene_Search_Weight_MultiTerm($this, $reader);
+        return $this->_weight;
     }
 
 

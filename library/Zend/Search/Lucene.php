@@ -363,6 +363,8 @@ class Zend_Search_Lucene
         }
         array_multisort($scores, SORT_DESC, SORT_REGULAR, $hits);
 
+        $query->reset();
+
         return $hits;
     }
 

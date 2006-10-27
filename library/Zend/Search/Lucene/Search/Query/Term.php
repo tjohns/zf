@@ -89,9 +89,10 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
      * @param Zend_Search_Lucene $reader
      * @return Zend_Search_Lucene_Search_Weight
      */
-    protected function _createWeight($reader)
+    public function createWeight($reader)
     {
-        return new Zend_Search_Lucene_Search_Weight_Term($this->_term, $this, $reader);
+        $this->_weight = new Zend_Search_Lucene_Search_Weight_Term($this->_term, $this, $reader);
+        return $this->_weight;
     }
 
     /**
@@ -124,5 +125,6 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
             return 0;
         }
     }
+
 }
 

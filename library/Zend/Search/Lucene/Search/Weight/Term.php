@@ -55,26 +55,11 @@ class Zend_Search_Lucene_Search_Weight_Term extends Zend_Search_Lucene_Search_We
     private $_query;
 
     /**
-     * Weight value
-     *
-     * @var float
-     */
-    private $_value;
-
-    /**
      * Score factor
      *
      * @var float
      */
     private $_idf;
-
-    /**
-     * Normalization factor
-     *
-     * @var float
-     */
-    private $_queryNorm;
-
 
     /**
      * Query weight
@@ -95,17 +80,6 @@ class Zend_Search_Lucene_Search_Weight_Term extends Zend_Search_Lucene_Search_We
         $this->_term   = $term;
         $this->_query  = $query;
         $this->_reader = $reader;
-    }
-
-
-    /**
-     * The weight for this query
-     *
-     * @return float
-     */
-    public function getValue()
-    {
-        return $this->_value;
     }
 
 

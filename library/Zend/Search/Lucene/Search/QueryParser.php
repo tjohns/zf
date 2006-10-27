@@ -32,6 +32,9 @@ require_once 'Zend/Search/Lucene/Search/Query/Term.php';
 /** Zend_Search_Lucene_Search_Query_MultiTerm */
 require_once 'Zend/Search/Lucene/Search/Query/MultiTerm.php';
 
+/** Zend_Search_Lucene_Search_Query_Boolean */
+require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';
+
 /** Zend_Search_Lucene_Search_Query_Phrase */
 require_once 'Zend/Search/Lucene/Search/Query/Phrase.php';
 

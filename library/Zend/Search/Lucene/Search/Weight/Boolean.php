@@ -31,7 +31,7 @@ require_once 'Zend/Search/Lucene/Search/Weight.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Search_Weight_MultiTerm extends Zend_Search_Lucene_Search_Weight
+class Zend_Search_Lucene_Search_Weight_Boolean extends Zend_Search_Lucene_Search_Weight
 {
     /**
      * IndexReader.
@@ -43,13 +43,13 @@ class Zend_Search_Lucene_Search_Weight_MultiTerm extends Zend_Search_Lucene_Sear
     /**
      * The query that this concerns.
      *
-     * @var Zend_Search_Lucene_Search_Query_MultiTerm
+     * @var Zend_Search_Lucene_Search_Query_Boolean
      */
     private $_query;
 
     /**
-     * Query terms weights
-     * Array of Zend_Search_Lucene_Search_Weight_Term
+     * Queries weights
+     * Array of Zend_Search_Lucene_Search_Weight
      *
      * @var array
      */
@@ -57,11 +57,11 @@ class Zend_Search_Lucene_Search_Weight_MultiTerm extends Zend_Search_Lucene_Sear
 
 
     /**
-     * Zend_Search_Lucene_Search_Weight_MultiTerm constructor
+     * Zend_Search_Lucene_Search_Weight_Boolean constructor
      * query - the query that this concerns.
      * reader - index reader
      *
-     * @param Zend_Search_Lucene_Search_Query_MultiTerm $query
+     * @param Zend_Search_Lucene_Search_Query_Boolean $query
      * @param Zend_Search_Lucene $reader
      */
     public function __construct($query, $reader)
@@ -72,10 +72,9 @@ class Zend_Search_Lucene_Search_Weight_MultiTerm extends Zend_Search_Lucene_Sear
 
         $signs = $query->getSigns();
 
-        foreach ($query->getTerms() as $num => $term) {
+        foreach ($query->getSubqueries() as $num => $subquery) {
             if ($signs === null || $signs[$num] === null || $signs[$num]) {
-                $this->_weights[$num] = new Zend_Search_Lucene_Search_Weight_Term($term, $query, $reader);
-                $query->setWeight($num, $this->_weights[$num]);
+                $this->_weights[$num] = $subquery->createWeight($reader);
             }
         }
     }
