@@ -35,6 +35,13 @@ final class Zend_Session_Core
     protected static $_instance;
 
     /**
+     * The Singleton enforcer
+     *
+     * @var bool
+     */
+    protected static $_singleton = false;
+    
+    /**
      * Private list of php's ini values for ext/session
      * null values will default to the php.ini value, otherwise
      * the value below will overwrite the default ini value, unless
@@ -220,6 +227,7 @@ final class Zend_Session_Core
         }
         
         if (self::$_instance === null) {
+            self::$_singleton = true;
             self::$_instance = new self();
         }
         
@@ -643,7 +651,11 @@ final class Zend_Session_Core
     public function __construct()
     {
         if (self::$_strict === true && self::$_session_started === false) {
-            throw new Zend_Session_Exception("You must start the session with Zend_Session_Core::start() when session options are set to strict.");
+            throw new Zend_Session_Exception('You must start the session with Zend_Session_Core::start() when session options are set to strict.');
+        }
+        
+        if (self::$_instance !== null || self::$_singleton === false) {
+            throw new Zend_Session_Exception('Zend_Session_Core should be initialized through Zend_Session_Core::getInstance() only.');
         }
         
         if (self::$_session_started === false) {
@@ -651,6 +663,17 @@ final class Zend_Session_Core
         }
         
         return;
+    }
+    
+    
+    /**
+     * Clone overriding - make sure that a developer cannot clone the core instance
+     *
+     * @throws Zend_Session_Exception
+     */
+    public function __clone()
+    {
+        throw new Zend_Session_Exception('Cloning the Zend_Session_Core object is not allowed as this is implemented as a singleton pattern.');
     }
     
     
