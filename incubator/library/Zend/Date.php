@@ -811,7 +811,6 @@ class Zend_Date {
 
             // timezone formats
             case Zend_Date::TIMEZONE_NAME :
-                // @todo should be locale aware, but CLDR does not provide the proper information 'til now
                 return $this->_Date->date('e', $this->_Date->getTimestamp(), $gmt);
                 break;
 
@@ -828,7 +827,6 @@ class Zend_Date {
                 break;
 
             case Zend_Date::TIMEZONE :
-                // @todo should be locale aware, but CLDR does not provide the proper information 'til now
                 return $this->_Date->date('T', $this->_Date->getTimestamp(), $gmt);
                 break;
 
@@ -2086,7 +2084,6 @@ class Zend_Date {
      * Substracts a RFC822 formatted date
      * Alias for sub($date);
      *
-     * @todo  implement function
      * @param $date string  - OPTIONAL RFC822 date to sub, when null the actual date is sub
      * @return object
      */
@@ -2579,13 +2576,31 @@ class Zend_Date {
      * Compares only the month part, returning the difference
      * Alias for compare($month,Zend_Date::MONTH);
      *
-     * @todo  implement function
      * @param $month string/integer - OPTIONAL month to compare, when null the actual month is used for compare
      * @return string
      */
-    public function compareMonth($month)
+    public function compareMonth($month = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+        if (empty($month)) {
+            $month = $this->_Date->date('n');
+        }
+
+        if (is_object($month)) {
+            $this->compare($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
+        }
+        if (is_numeric($month)) {
+            $this->compare($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
+        } else if (strlen($month) == 1) {
+            $this->compare($month, Zend_Date::MONTH_NARROW, $locale, FALSE);
+        } else if (strlen($month) == 3) {
+            $this->compare($month, Zend_Date::MONTH_NAME, $locale, FALSE);
+        } else {
+            $this->compare($month, Zend_Date::MONTH, $locale, FALSE);
+        }
+        return $this;
     }
 
 
@@ -2637,8 +2652,17 @@ class Zend_Date {
         if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
         }
-        // @todo recognise localized day names
-        $this->set($day, Zend_Date::DAY_SHORT, $locale, FALSE);
+        if (is_numeric($day)) {
+            $this->set($day, Zend_Date::DAY_SHORT, $locale, FALSE);
+        } else if (strlen($day) == 1) {
+            $this->set($day, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
+        } else if (strlen($day) == 2) {
+            $this->set($day, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
+        } else if (strlen($day) == 3) {
+            $this->set($day, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
+        } else {
+            $this->set($day, Zend_Date::WEEKDAY, $locale, FALSE);
+        }
         return $this;
     }
 
@@ -2647,13 +2671,33 @@ class Zend_Date {
      * Adds a day
      * Alias for add($day,Zend_Date::DAY);
      *
-     * @todo  implement function
      * @param $day object     - OPTIONAL day to add, when null the actual day is add
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function addDay($day)
+    public function addDay($day = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+        if (empty($day)) {
+            $day = $this->_Date->date('j');
+        }
+        if (is_object($day)) {
+            $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
+        }
+        if (is_numeric($day)) {
+            $this->add($day, Zend_Date::DAY_SHORT, $locale, FALSE);
+        } else if (strlen($day) == 1) {
+            $this->add($day, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
+        } else if (strlen($day) == 2) {
+            $this->add($day, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
+        } else if (strlen($day) == 3) {
+            $this->add($day, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
+        } else {
+            $this->add($day, Zend_Date::WEEKDAY, $locale, FALSE);
+        }
+        return $this;
     }
 
 
@@ -2661,13 +2705,33 @@ class Zend_Date {
      * Substracts a day
      * Alias for sub($day,Zend_Date::DAY);
      *
-     * @todo  implement function
      * @param $day object     - OPTIONAL day to sub, when null the actual day is sub
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function subDay($day)
+    public function subDay($day = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+        if (empty($day)) {
+            $day = $this->_Date->date('j');
+        }
+        if (is_object($day)) {
+            $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
+        }
+        if (is_numeric($day)) {
+            $this->sub($day, Zend_Date::DAY_SHORT, $locale, FALSE);
+        } else if (strlen($day) == 1) {
+            $this->sub($day, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
+        } else if (strlen($day) == 2) {
+            $this->sub($day, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
+        } else if (strlen($day) == 3) {
+            $this->sub($day, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
+        } else {
+            $this->sub($day, Zend_Date::WEEKDAY, $locale, FALSE);
+        }
+        return $this;
     }
 
 
@@ -2677,11 +2741,32 @@ class Zend_Date {
      *
      * @todo  implement function
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return string
      */
-    public function compareDay($day)
+    public function compareDay($day = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+        if (empty($day)) {
+            $day = $this->_Date->date('j');
+        }
+        if (is_object($day)) {
+            $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
+        }
+        if (is_numeric($day)) {
+            $this->compare($day, Zend_Date::DAY_SHORT, $locale, FALSE);
+        } else if (strlen($day) == 1) {
+            $this->compare($day, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
+        } else if (strlen($day) == 2) {
+            $this->compare($day, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
+        } else if (strlen($day) == 3) {
+            $this->compare($day, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
+        } else {
+            $this->compare($day, Zend_Date::WEEKDAY, $locale, FALSE);
+        }
+        return $this;
     }
 
 
