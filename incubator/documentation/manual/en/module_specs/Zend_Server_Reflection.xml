@@ -28,13 +28,31 @@
 require_once 'Zend/Server/Reflection.php';
 $class    = Zend_Server_Reflection::reflectClass('My_Class');
 $function = Zend_Server_Reflection::reflectFunction('my_function');
+
+// Get prototypes
+$prototypes = $reflection->getPrototypes();
+
+// Get prototype return type
+$prototype->getReturnType();
+
+// Get prototype parameters
+$prototype->getParameters();
+
+// Get parameter type
+$parameter->getType();
+
+// Get namespace for a class, function, or method.
+// Namespaces may be set at instantiation time (second argument), or using
+// setNamespace()
+$reflection->getNamespace();
 ]]></programlisting>
 
         <para>
-            reflectFunction returns a Zend_Server_Reflection_Function object;
-            reflectClass returns a Zend_Server_Reflection_Class object. Please
-            refer to the API documentation to know what methods are available to
-            each.
+            <code>reflectFunction()</code> returns a
+            <code>Zend_Server_Reflection_Function</code> object;
+            <code>reflectClass</code> returns a
+            <code>Zend_Server_Reflection_Class</code> object. Please refer to
+            the API documentation to know what methods are available to each.
         </para>
     </sect2>
 </sect1>
