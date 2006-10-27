@@ -1,7 +1,5 @@
 For 0.2:
 * End user documentation
-  * Move RewriteRouter documentation *into* controller docs (see below for
-    placement)
   * Overview
     * Intro
     * Request (new)
