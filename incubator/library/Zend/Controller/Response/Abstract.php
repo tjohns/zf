@@ -30,12 +30,6 @@
 abstract class Zend_Controller_Response_Abstract
 {
     /**
-     * Array of headers. Each header is an array with keys 'name' and 'value'
-     * @var array
-     */
-    protected $_headers = array();
-
-    /**
      * Body content
      * @var string
      */
@@ -48,58 +42,10 @@ abstract class Zend_Controller_Response_Abstract
     protected $_exception = null;
 
     /**
-     * Set a header
-     *
-     * If $replace is true, replaces any headers already defined with that
-     * $name.
-     *
-     * @param string $name
-     * @param string $value
-     * @param boolean $replace
-     * @return self
+     * Whether or not to render exceptions; off by default
+     * @var boolean 
      */
-    public function setHeader($name, $value, $replace = false)
-    {
-        $name  = (string) $name;
-        $value = (string) $value;
-
-        if ($replace) {
-            foreach ($this->_headers as $key => $header) {
-                if ($name == $header['name']) {
-                    unset($this->_headers[$key]);
-                }
-            }
-        }
-
-        $this->_headers[] = array(
-            'name'  => $name,
-            'value' => $value
-        );
-
-        return $this;
-    }
-
-    /**
-     * Return array of headers; see {@link $_headers} for format
-     *
-     * @return array
-     */
-    public function getHeaders()
-    {
-        return $this->_headers;
-    }
-
-    /**
-     * Clear headers
-     *
-     * @return self
-     */
-    public function clearHeaders()
-    {
-        $this->_headers = array();
-
-        return $this;
-    }
+    protected $_renderExceptions = false;
 
     /**
      * Set body content
@@ -170,6 +116,24 @@ abstract class Zend_Controller_Response_Abstract
     }
 
     /**
+     * Whether or not to render exceptions (off by default)
+     *
+     * If called with no arguments or a null argument, returns the value of the 
+     * flag; otherwise, sets it and returns the current value.
+     * 
+     * @param boolean $flag Optional
+     * @return boolean
+     */
+    public function renderExceptions($flag = null)
+    {
+        if (null !== $flag) {
+            $this->_renderExceptions = $flag ? true : false;
+        }
+
+        return $this->_renderExceptions;
+    }
+
+    /**
      * Magic __toString functionality
      *
      * Sends all headers prior to returning the string
@@ -178,13 +142,7 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function __toString()
     {
-        if (!headers_sent()) {
-            foreach ($this->_headers as $header) {
-                header($header['name'] . ': ' . $header['value']);
-            }
-        }
-
-        if ($this->isException()) {
+        if ($this->isException() && $this->renderExceptions()) {
             return $this->getException()->getTraceAsString();
         }
 

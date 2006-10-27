@@ -34,4 +34,86 @@ require_once 'Zend/Controller/Response/Abstract.php';
  */
 class Zend_Controller_Response_Http extends Zend_Controller_Response_Abstract
 {
+    /**
+     * Array of headers. Each header is an array with keys 'name' and 'value'
+     * @var array
+     */
+    protected $_headers = array();
+
+    /**
+     * Set a header
+     *
+     * If $replace is true, replaces any headers already defined with that
+     * $name.
+     *
+     * @param string $name
+     * @param string $value
+     * @param boolean $replace
+     * @return self
+     */
+    public function setHeader($name, $value, $replace = false)
+    {
+        $name  = (string) $name;
+        $value = (string) $value;
+
+        if ($replace) {
+            foreach ($this->_headers as $key => $header) {
+                if ($name == $header['name']) {
+                    unset($this->_headers[$key]);
+                }
+            }
+        }
+
+        $this->_headers[] = array(
+            'name'  => $name,
+            'value' => $value
+        );
+
+        return $this;
+    }
+
+    /**
+     * Return array of headers; see {@link $_headers} for format
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->_headers;
+    }
+
+    /**
+     * Clear headers
+     *
+     * @return self
+     */
+    public function clearHeaders()
+    {
+        $this->_headers = array();
+
+        return $this;
+    }
+
+    /**
+     * Magic __toString functionality
+     *
+     * Sends all headers prior to returning the string
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        if (!headers_sent()) {
+            foreach ($this->_headers as $header) {
+                header($header['name'] . ': ' . $header['value']);
+            }
+        }
+
+        if ($this->isException() && $this->renderExceptions()) {
+            return $this->getException()->getTraceAsString();
+        }
+
+
+        return $this->_body;
+    }
 }
