@@ -26,58 +26,47 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
     {
         $controller = new Zend_Controller_Front();
         $controller->setControllerDirectory(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files');
-        $request = new Zend_Controller_Request_Http('http://framework.zend.com');
+        $request = new Zend_Controller_Request_Http('http://framework.zend.com/empty');
         $controller->setResponse(new Zend_Controller_Response_Cli());
         $controller->setRouter(new Zend_Controller_Router());
         $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
         $controller->registerPlugin($plugin);
         $response = $controller->dispatch($request);
-        $this->assertTrue($plugin->getObj()->body === '123456');
+        $this->assertEquals('123456', $response->getBody());
+        $this->assertEquals('123456', $plugin->getResponse()->getBody());
     }
 
 }
 
 class Zend_Controller_Plugin_BrokerTest_TestPlugin extends Zend_Controller_Plugin_Abstract
 {
-    protected $_obj;
-
-    public function __construct()
-    {
-        $this->_obj = new stdClass();
-    }
-
-    public function getObj()
-    {
-        return $this->_obj;
-    }
-
     public function routeStartup()
     {
-        $this->_obj->body .= '1';
+        $this->getResponse()->appendBody('1');
     }
 
     public function routeShutdown($request)
     {
-        $this->_obj->body .= '2';
+        $this->getResponse()->appendBody('2');
     }
 
     public function dispatchLoopStartup($request)
     {
-        $this->_obj->body .= '3';
+        $this->getResponse()->appendBody('3');
     }
 
     public function preDispatch($request)
     {
-        $this->_obj->body .= '4';
+        $this->getResponse()->appendBody('4');
     }
 
     public function postDispatch($request)
     {
-        $this->_obj->body .= '5';
+        $this->getResponse()->appendBody('5');
     }
 
     public function dispatchLoopShutdown()
     {
-        $this->_obj->body .= '6';
+        $this->getResponse()->appendBody('6');
     }
 }
