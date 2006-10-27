@@ -5,18 +5,18 @@ For 0.2:
   * Overview
     * Intro
     * Request (new)
-    * Routing (modify)
-    * Dispatching (modify)
-    * Response (new)
+    * Routing (done)
+    * Dispatching (done)
+    * Response (done)
   * Getting Started
     * Intro
-    * Server Configuration (modify - note rewrite is not necessary)
-    * Bootstrap file (modify)
+    * Server Configuration (done)
+    * Bootstrap file (done)
       * Basic, non-routing configuration
       * Adding a request, router, dispatcher, and/or response object
       * Adding extra parameters to pass into the various objects
     * Directory structure
-    * IndexController (modify)
+    * IndexController (done)
       * Index controller not necessary due to setDefaultController(), but recommended
   * Subclassing 
     * Introduction (modify)

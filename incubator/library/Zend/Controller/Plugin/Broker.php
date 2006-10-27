@@ -60,6 +60,62 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
         return $this;
     }
 
+    /**
+     * Set request object, and register with each plugin
+     * 
+     * @param Zend_Controller_Request_Abstract $request 
+     * @return self
+     */
+    public function setRequest(Zend_Controller_Request_Abstract $request) 
+    {
+        $this->_request = $request;
+
+	    foreach ($this->_plugins as $plugin) {
+	        $plugin->setRequest($request);
+	    }
+
+        return $this;
+    }
+
+    /**
+     * Get request object
+     * 
+     * @return Zend_Controller_Request_Abstract $request 
+     */
+    public function getRequest() 
+    {
+        return $this->_request;
+    }
+
+    /**
+     * Set response object
+     * 
+     * @param Zend_Controller_Response_Abstract $response 
+     * @return self
+     */
+    public function setResponse(Zend_Controller_Response_Abstract $response) 
+    {
+        $this->_response = $response;
+
+	    foreach ($this->_plugins as $plugin) {
+	        $plugin->setResponse($response);
+	    }
+
+
+        return $this;
+    }
+
+    /**
+     * Get response object
+     * 
+     * @return Zend_Controller_Response_Abstract $response 
+     */
+    public function getResponse() 
+    {
+        return $this->_response;
+    }
+
+
 
     /**
      * Unregister a plugin.

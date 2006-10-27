@@ -206,4 +206,20 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($params['var1']));
         $this->assertEquals('baz', $params['var1']);
     }
+
+    /**
+     * Test without router, using GET params
+     */
+    public function testDispatch7()
+    {
+        $request = new Zend_Controller_Request_Http('http://framework.zend.com/index.php?controller=foo&action=bar');
+        /** for some reason, setting $_GET in the class doesn't take in a CLI environment */
+        $_GET = array('controller' => 'foo', 'action' => 'bar');
+
+        $response = new Zend_Controller_Response_Cli();
+        $response = $this->_controller->dispatch($request, $response);
+
+        $body = $response->getBody();
+        $this->assertContains('Bar action called', $body);
+    }
 }

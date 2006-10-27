@@ -19,10 +19,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
-/** Zend_Controller_Plugin_Interface */
-require_once 'Zend/Controller/Plugin/Interface.php';
-
+/** Zend_Controller_Response_Abstract */
+require_once 'Zend/Controller/Response/Abstract.php';
 
 /**
  * @category   Zend
@@ -33,6 +34,60 @@ require_once 'Zend/Controller/Plugin/Interface.php';
  */
 abstract class Zend_Controller_Plugin_Abstract
 {
+    /**
+     * @var Zend_Controller_Request_Abstract
+     */
+    protected $_request;
+
+    /**
+     * @var Zend_Controller_Response_Abstract
+     */
+    protected $_response;
+
+    /**
+     * Set request object
+     * 
+     * @param Zend_Controller_Request_Abstract $request 
+     * @return self
+     */
+    public function setRequest(Zend_Controller_Request_Abstract $request) 
+    {
+        $this->_request = $request;
+        return $this;
+    }
+
+    /**
+     * Get request object
+     * 
+     * @return Zend_Controller_Request_Abstract $request 
+     */
+    public function getRequest() 
+    {
+        return $this->_request;
+    }
+
+    /**
+     * Set response object
+     * 
+     * @param Zend_Controller_Response_Abstract $response 
+     * @return self
+     */
+    public function setResponse(Zend_Controller_Response_Abstract $response) 
+    {
+        $this->_response = $response;
+        return $this;
+    }
+
+    /**
+     * Get response object
+     * 
+     * @return Zend_Controller_Response_Abstract $response 
+     */
+    public function getResponse() 
+    {
+        return $this->_response;
+    }
+
 	/**
 	 * Called before Zend_Controller_Front begins evaluating the
 	 * request against its routes.

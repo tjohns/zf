@@ -397,6 +397,13 @@ class Zend_Controller_Front
             $response = new Zend_Controller_Response_Http();
         }
 
+        /**
+         * Register request and response objects with plugin broker
+         */
+        $this->_plugins
+            ->setRequest($request)
+            ->setResponse($response);
+
         // Begin dispatch
 	    try {
             /**

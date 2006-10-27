@@ -329,10 +329,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          */
         $controllerName = $request->getControllerName();
         if (empty($controllerName)) {
-            $controllerName = $request->getParam($request->getControllerKey());
-            if (empty($controllerName)) {
-                $controllerName = $this->getDefaultController();
-            }
+            $controllerName = $this->getDefaultController();
         }
 	    $className = $this->formatControllerName($controllerName);
 
@@ -401,10 +398,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          */
         $action = $request->getActionName();
         if (empty($action)) {
-            $action = $request->getParam($request->getActionKey());
-            if (empty($action)) {
-                $action = $this->getDefaultAction();
-            }
+            $action = $this->getDefaultAction();
         }
         $action     = $this->formatActionName($action);
         $invokeArgs = array();

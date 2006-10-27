@@ -70,7 +70,7 @@ class Zend_Http_Request implements Zend_Request_Interface
                 $uri = Zend_Uri::factory($uri);
             } 
             if ($uri->valid()) {
-                $path = $uri->getPath();
+                $path  = $uri->getPath();
                 $query = $uri->getQuery();
                 if (!empty($query)) {
                     $path .= '?' . $query;
@@ -285,6 +285,8 @@ class Zend_Http_Request implements Zend_Request_Interface
                 // Get key => value pairs and set $_GET
                 $pairs = explode('&', $query);
                 foreach ($pairs as $pair) {
+                    // list() would be better, but throws a notice if there 
+                    // aren't the same number of elements
                     $item = explode('=', $pair, 2);
                     if (!isset($item[1])) {
                         $item[1] = null;
