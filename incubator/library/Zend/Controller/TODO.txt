@@ -16,7 +16,7 @@ For 0.2:
     * Directory structure
     * IndexController (done)
       * Index controller not necessary due to setDefaultController(), but recommended
-  * Subclassing 
+  * Subclassing
     * Introduction (modify)
       * add request/response objects into the mix
     * Conventions
@@ -41,7 +41,7 @@ For 0.2:
     * Dispatcher
     * HTTP Response
     * CLI Response
-  * Plugins (new)
+  * Plugins (done)
 * Miscellaneous
   * Page/class-level docblocks
 

@@ -108,6 +108,7 @@ class Zend_Controller_Front
 	 * Convenience method, passthru to Zend_Controller_Dispatcher::setControllerDirectory()
 	 *
 	 * @param string $directory
+	 * @return self
 	 */
 	public function setControllerDirectory($directory)
 	{
@@ -187,8 +188,8 @@ class Zend_Controller_Front
      * If a class name is provided, it will instantiate it
      *
      * @param string|Zend_Controller_Request_Abstract $request
-     * @return void
      * @throws Zend_Controller_Front_Exception if invalid request class
+     * @return self
      */
     public function setRequest($request)
     {
@@ -201,6 +202,8 @@ class Zend_Controller_Front
         }
 
         $this->_request = $request;
+
+        return $this;
     }
 
 	/**
@@ -223,8 +226,8 @@ class Zend_Controller_Front
      * registered via {@link addParam()} or {@link setParams()}.
      *
      * @param string|Zend_Controller_Router_Interface $router
-     * @return void
      * @throws Zend_Controller_Front_Exception if invalid router class
+     * @return self
      */
     public function setRouter($router)
     {
@@ -238,6 +241,8 @@ class Zend_Controller_Front
         }
 
         $this->_router = $router;
+
+        return $this;
     }
 
 	/**
@@ -256,7 +261,7 @@ class Zend_Controller_Front
 	 * call the action method of the controller.
 	 *
 	 * @param Zend_Controller_Dispatcher_Interface $dispatcher
-	 * @return Zend_Controller_Front
+	 * @return self
 	 */
 	public function setDispatcher(Zend_Controller_Dispatcher_Interface $dispatcher)
 	{
@@ -290,8 +295,8 @@ class Zend_Controller_Front
      * If a class name is provided, instantiates a response object.
      *
      * @param string|Zend_Controller_Response_Abstract $response
-     * @return void
      * @throws Zend_Controller_Front_Exception if invalid response class
+     * @return self
      */
     public function setResponse($response)
     {
@@ -304,6 +309,8 @@ class Zend_Controller_Front
         }
 
         $this->_response = $response;
+
+        return $this;
     }
 
 	/**
@@ -331,11 +338,12 @@ class Zend_Controller_Front
      * Set parameters to pass to action controller constructors
      *
      * @param array $params
-     * @return void
+     * @return self
      */
     public function setParams(array $params)
     {
         $this->_invokeParams = $params;
+        return $this;
     }
 
     /**
@@ -352,7 +360,7 @@ class Zend_Controller_Front
 	 * Register a plugin.
 	 *
 	 * @param Zend_Controller_Plugin_Abstract $plugin
-	 * @return Zend_Controller_Front
+	 * @return self
 	 */
 	public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin)
 	{
@@ -364,7 +372,7 @@ class Zend_Controller_Front
 	 * Unregister a plugin.
 	 *
 	 * @param Zend_Controller_Plugin_Abstract $plugin
-	 * @return Zend_Controller_Front
+	 * @return self
 	 */
     public function unregisterPlugin(Zend_Controller_Plugin_Abstract $plugin)
     {
