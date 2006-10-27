@@ -1,5 +1,25 @@
 <?php
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Controller
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+
+
+/**
  * Zend_Controller_Response_Abstract
  *
  * Base class for Zend_Controller responses
@@ -24,12 +44,12 @@ abstract class Zend_Controller_Response_Abstract
     /**
      * Set a header
      *
-     * If $replace is true, replaces any headers already defined with that 
+     * If $replace is true, replaces any headers already defined with that
      * $name.
-     * 
-     * @param string $name 
-     * @param string $value 
-     * @param boolean $replace 
+     *
+     * @param string $name
+     * @param string $value
+     * @param boolean $replace
      * @return self
      */
     public function setHeader($name, $value, $replace = false)
@@ -55,7 +75,7 @@ abstract class Zend_Controller_Response_Abstract
 
     /**
      * Return array of headers; see {@link $_headers} for format
-     * 
+     *
      * @return array
      */
     public function getHeaders()
@@ -65,7 +85,7 @@ abstract class Zend_Controller_Response_Abstract
 
     /**
      * Clear headers
-     * 
+     *
      * @return self
      */
     public function clearHeaders()
@@ -79,8 +99,8 @@ abstract class Zend_Controller_Response_Abstract
      * Set body content
      *
      * If body content already defined, this will replace it.
-     * 
-     * @param string $content 
+     *
+     * @param string $content
      * @return self
      */
     public function setBody($content)
@@ -91,8 +111,8 @@ abstract class Zend_Controller_Response_Abstract
 
     /**
      * Append content to the body content
-     * 
-     * @param string $content 
+     *
+     * @param string $content
      * @return self
      */
     public function appendBody($content)
@@ -103,7 +123,7 @@ abstract class Zend_Controller_Response_Abstract
 
     /**
      * Return the body content
-     * 
+     *
      * @return string
      */
     public function getBody()
@@ -115,7 +135,7 @@ abstract class Zend_Controller_Response_Abstract
      * Magic __toString functionality
      *
      * Sends all headers prior to returning the string
-     * 
+     *
      * @return string
      */
     public function __toString()

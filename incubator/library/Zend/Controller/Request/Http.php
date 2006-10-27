@@ -1,10 +1,30 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Controller
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+
 
 /** Zend_Http_Request */
 require_once 'Zend/Http/Request.php';
 
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
+
 
 /**
  * Zend_Controller_Request_Http
@@ -20,7 +40,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 {
     /**
      * Zend_Http_Request object
-     * @var Zend_Http_Request 
+     * @var Zend_Http_Request
      */
     protected $_httpRequest = null;
 
@@ -34,8 +54,8 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * Constructor
      *
      * Instantiates a Zend_Http_Request and assigns it to {@link $_httpRequest}
-     * 
-     * @param null|string|Zend_Uri $uri 
+     *
+     * @param null|string|Zend_Uri $uri
      * @return void
      */
     public function __construct($uri = null)
@@ -45,8 +65,8 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
     /**
      * Overload and proxy to Zend_Http_Request object
-     * 
-     * @param string $key 
+     *
+     * @param string $key
      * @return mixed
      */
     public function __get($key)
@@ -56,8 +76,8 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
     /**
      * Overload and proxy to Zend_Http_Request object
-     * 
-     * @param string $key 
+     *
+     * @param string $key
      * @param mixed $value
      * @return void
      */
@@ -68,7 +88,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
     /**
      * Overload and proxy to Zend_Http_Request object
-     * 
+     *
      * @param string $methodName
      * @param array $args
      * @return mixed
