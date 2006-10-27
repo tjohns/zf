@@ -122,7 +122,8 @@ class Zend_Http_RequestTest extends PHPUnit_Framework_TestCase
  
     public function testGetCookie()
     {
-        throw new PHPUnit_Framework_IncompleteTestError('not implemented');
+        $_COOKIE['foo'] = 'bar';
+        $this->assertSame('bar', $this->_request->getCookie('foo'));
     }
  
     public function testGetServer()
