@@ -46,16 +46,22 @@ class Zend_Service_Delicious_SimplePost
      */
     protected $_tags = array();
 
+    /**
+     * Constructor
+     *
+     * @param array $post Post data
+     * @return Zend_Service_Delicio
+     */
     public function __construct($post)
     {
         if (!isset($post['u']) || !isset($post['d'])) {
-            throw new Zend_Service_Delicious_Exception('Exception');
+            throw new Zend_Service_Delicious_Exception('Title and URL not set.');
         }
 
         $this->_url   = $post['u'];
         $this->_title = $post['d'];
 
-        if (isset($post['u'])) {
+        if (isset($post['t'])) {
             $this->_tags = $post['t'];
         }
         if (isset($post['n'])) {

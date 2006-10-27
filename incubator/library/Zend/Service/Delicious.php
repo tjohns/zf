@@ -103,9 +103,7 @@ class Zend_Service_Delicious
      */
     public function __construct($uname = null, $pass = null)
     {
-        $this->_http = new Zend_Http_Client(null, array(
-        		'adapter'			=> 'Zend_Http_Client_Adapter_Socket'
-        ));
+        $this->_http = new Zend_Http_Client();
         $this->setAuth($uname, $pass);
     }
     /**
