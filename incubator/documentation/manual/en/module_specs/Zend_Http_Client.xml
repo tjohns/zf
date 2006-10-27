@@ -14,10 +14,9 @@
         </para>
         <para>
             The class constructor optionally accepts a URL as it's first parameter
-            (can be either a string or a Zend_Uri_Http object - see 
-            <xref linkend="zend.uri.http" />), and an array of additional HTTP 
-            headers to be sent as it's second parameter. Both can be left out, 
-            and set later using the setUri() and setHeaders() methods.
+            (can be either a string or a Zend_Uri_Http object), and an optional 
+            array of configuration parameters. Both can be left out, 
+            and set later using the setUri() and setConfig() methods.
             <example>
                 <title>Instantiating a Zend_Http_Client object</title>
                 <programlisting role="php">
@@ -25,18 +24,77 @@
     require_once 'Zend/Http/Client.php';
 
     $client = new Zend_Http_Client('http://example.org', array(
-        'Accept-encoding' => 'gzip,deflate',
-        'X-Powered-by'    => 'Zend Framework'));
+        'maxredirects' => 0,
+        'timeout'      => 30));
         
     // This is actually exactly the same:
     $client = new Zend_Http_Client();
     $client->setUri('http://example.org');
-    $client->setHeaders(array(
-        'Accept-encoding' => 'gzip,deflate',
-        'X-Powered-by'    => 'Zend Framework');
+    $client->setConfig(array(
+        'maxredirects' => 0,
+        'timeout'      => 30));
 
 ?>]]></programlisting>
             </example>
+        </para>
+    </sect2>
+    <sect2 id="zend.http.client.configuration">
+        <title>Configuration Parameters</title>
+        <para>
+            The constructor and setConfig() method accept an associative array 
+            of configuration parameters. Setting these parameters is optional, 
+            as they all have default values.
+            <table>
+                <title>Zend_Http_Client configuration parameters</title>
+                <tgroup cols="3">
+                    <thead>
+                        <row>
+                            <entry>Parameter</entry>
+                            <entry>Description</entry>
+                            <entry>Expected Values</entry>
+                            <entry>Default Value</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>maxredirects</entry>
+                            <entry>Maximum number of redirections to follow (0 = none)</entry>
+                            <entry>integer</entry>
+                            <entry>5</entry>
+                        </row>
+                        <row>
+                            <entry>strictredirects</entry>
+                            <entry>Whether to strictly follow the RFC when redirecting (see <xref linkend="zend.http.client.redirections" />)</entry>
+                            <entry>boolean</entry>
+                            <entry>false</entry>
+                        </row>
+                        <row>
+                            <entry>useragent</entry>
+                            <entry>User agent identifier string (sent in request headers)</entry>
+                            <entry>string</entry>
+                            <entry>'Zend_Http_Client'</entry>
+                        </row>
+                        <row>
+                            <entry>timeout</entry>
+                            <entry>Connection timeout (seconds)</entry>
+                            <entry>integer</entry>
+                            <entry>10</entry>
+                        </row>
+                        <row>
+                            <entry>httpversion</entry>
+                            <entry>HTTP protocol version</entry>
+                            <entry>float (1.1 or 1.0)</entry>
+                            <entry>1.1</entry>
+                        </row>
+                        <row>
+                            <entry>adapter</entry>
+                            <entry>Connection adapter class to use (see <xref linkend="zend.http.client.adapters" />)</entry>
+                            <entry>string</entry>
+                            <entry>'Zend_Http_Client_Adapter_Socket'</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
         </para>
     </sect2>
     <sect2 id="zend.http.client.basic-requests">
@@ -63,7 +121,7 @@
               </para>
             </footnote>. 
             For convinience, these are all defined as class constants:
-            Zend_Http_Request::METHOD_GET, Zend_Http_Request::METHOD_POST and so on.
+            Zend_Http_Request::GET, Zend_Http_Request::POST and so on.
         </para>
         <para>
             If no method is specified, the method set by the last setMethod()
@@ -77,58 +135,13 @@
     $response = $client->request('POST');
     
     // Yet another way of preforming a POST request
-    $client->setMethod(Zend_Http_Client::REQUEST_POST);
+    $client->setMethod(Zend_Http_Client::POST);
     $response = $client->request();
 ?>]]></programlisting>            
             </example>
         </para>
     </sect2>
-    
-    <sect2 id="zend.http.client.redirections">
-        <title>HTTP Redirections</title>
-        <para>
-            By default, Zend_Http_Client automatically handles HTTP redirections,
-            and will follow up to 5 redirections. This can be changed using the
-            setMaxRedirects() method:
-            <example>
-                <title>Changing the Number of Maximum Redirections</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // Setting the HTTP client to redirect 99 times maximum:
-    $client->setMaxRedirects(99);
-    
-    // Setting the client to not follow redirections
-    $client->setMaxRedirects(0);
-?>]]></programlisting>
-            </example>
-        </para>
-        <para>
-            According to the HTTP/1.1 RFC, HTTP 301 and 302 responses should be
-            treated by the client by resending the same request to the 
-            specified location - using the same request method. However, most 
-            clients to not implement this and always use a GET request when 
-            redirecting. By default, Zend_Http_Client does the same - when 
-            redirecting on a 301 or 302 response, all GET and POST parameters
-            are reset, and a GET request is sent to the new location. This 
-            behavior can be changed by calling the setStrictRedirects() method:
-            <example>
-                <title>Forcing RFC 2616 Strict Redirections on 301 and 302 Responses</title>
-                <programlisting role="php">
-<![CDATA[<?php
-    // Strict Redirections
-    $client->setStrictRedirects();
-    
-    // Non-strict Redirections
-    $client->setStrictRedirects(false);
-?>]]></programlisting>
-            </example>
-        </para>
-        <para>
-            You can always get the number of redirections done after sending a 
-            request using the getLastRedirectionsCount() method.
-        </para>
-    </sect2>
-    
+        
     <sect2 id="zend.http.client.parameters">
         <title>Adding GET and POST parameters </title>
         <para>
@@ -186,6 +199,41 @@
         </para>
     </sect2>
 
+    <sect2 id="zend.http.client.redirections">
+        <title>HTTP Redirections</title>
+        <para>
+            By default, Zend_Http_Client automatically handles HTTP redirections,
+            and will follow up to 5 redirections. This can be changed by setting 
+            the 'maxredirects' configuration parameter. 
+        </para>
+        <para>
+            According to the HTTP/1.1 RFC, HTTP 301 and 302 responses should be
+            treated by the client by resending the same request to the 
+            specified location - using the same request method. However, most 
+            clients to not implement this and always use a GET request when 
+            redirecting. By default, Zend_Http_Client does the same - when 
+            redirecting on a 301 or 302 response, all GET and POST parameters
+            are reset, and a GET request is sent to the new location. This 
+            behavior can be changed by setting the 'strictredirects' configuration
+            parameter to boolean TRUE:
+            <example>
+                <title>Forcing RFC 2616 Strict Redirections on 301 and 302 Responses</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Strict Redirections
+    $client->setConfig(array('strictredirects' => true)
+    
+    // Non-strict Redirections
+    $client->setConfig(array('strictredirects' => false)
+?>]]></programlisting>
+            </example>
+        </para>
+        <para>
+            You can always get the number of redirections done after sending a 
+            request using the getRedirectionsCount() method.
+        </para>
+    </sect2>
+    
     <sect2 id="zend.http.client.cookies">
         <title>Adding Cookies and Using Cookie Persistance</title>
         <para>
@@ -249,14 +297,9 @@
     <sect2 id="zend.http.client.custom_headers">
         <title>Setting Custom Request Headers</title>
         <para>
-            Setting custom headers can be done both during the object's 
-            construction by adding an array of headers as the constructor's 
-            second parameter (see <xref linkend="zend.http.client.introduction" />) 
-            or by using the setHeaders() method.
-        </para>
-        <para>
-            The setHeaders() method is quite diverse and can be used in several
-            ways, as the following example shows:
+            Setting custom headers can be done by using the setHeaders() method.
+            This method is quite diverse and can be used in several ways, as 
+            the following example shows:
             <example>
                 <title>Setting A Single Custom Request Header</title>
                 <programlisting role="php">
@@ -287,7 +330,7 @@
                 <title>Setting Multiple Custom Request Headers</title>
                 <programlisting role="php">
 <![CDATA[<?php
-    // Setting a single header, overwriting any previous value
+    // Setting multiple headers, overwriting any previous value
     $client->setHeaders(array(
         'Host' => 'www.example.com',
         'Accept-encoding', 'gzip,deflate',
@@ -422,6 +465,13 @@
         <para>
             TBA
         </para>        
+    </sect2>
+    
+    <sect2 id="zend.http.client.adapters">
+        <title>Connection Adapters</title>
+        <para>
+            TBA
+        </para>
     </sect2>
 </sect1>
 <!--
