@@ -469,8 +469,7 @@ class Zend_Controller_Front
              */
             $this->_plugins->dispatchLoopShutdown();
 	    } catch (Exception $e) {
-	        // @todo exception processing
-            throw $e;
+            $response->setException($e);
 	    }
 
         return $response;

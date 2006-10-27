@@ -47,4 +47,3 @@ For 0.2:
 
 Post 0.2 Items:
 - Detect recursion in Controller_Front
-- Exception handling inside Controller_Front

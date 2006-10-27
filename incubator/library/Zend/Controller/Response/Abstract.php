@@ -42,6 +42,12 @@ abstract class Zend_Controller_Response_Abstract
     protected $_body = '';
 
     /**
+     * Exception
+     * @var Exception
+     */
+    protected $_exception = null;
+
+    /**
      * Set a header
      *
      * If $replace is true, replaces any headers already defined with that
@@ -132,6 +138,38 @@ abstract class Zend_Controller_Response_Abstract
     }
 
     /**
+     * Register an exception with the response
+     * 
+     * @param Exception $e 
+     * @return self
+     */
+    public function setException(Exception $e)
+    {
+        $this->_exception = $e;
+        return $this;
+    }
+
+    /**
+     * Retrieve the exception object, if set
+     * 
+     * @return null|Exception
+     */
+    public function getException()
+    {
+        return $this->_exception;
+    }
+
+    /**
+     * Has an exception been registered with the response?
+     * 
+     * @return boolean
+     */
+    public function isException()
+    {
+        return $this->_exception instanceof Exception;
+    }
+
+    /**
      * Magic __toString functionality
      *
      * Sends all headers prior to returning the string
@@ -144,6 +182,10 @@ abstract class Zend_Controller_Response_Abstract
             foreach ($this->_headers as $header) {
                 header($header['name'] . ': ' . $header['value']);
             }
+        }
+
+        if ($this->isException()) {
+            return $this->getException()->getTraceAsString();
         }
 
         return $this->_body;
