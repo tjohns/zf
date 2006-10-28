@@ -114,11 +114,12 @@ abstract class Zend_Controller_Action
      * Set the Request object
      * 
      * @param Zend_Controller_Request_Abstract $request 
-     * @return void
+     * @return self
      */
     public function setRequest(Zend_Controller_Request_Abstract $request)
     {
         $this->_request = $request;
+        return $this;
     }
 
     /**
@@ -135,11 +136,12 @@ abstract class Zend_Controller_Action
      * Set the Response object
      * 
      * @param Zend_Controller_Response_Abstract $response 
-     * @return void
+     * @return self
      */
     public function setResponse(Zend_Controller_Response_Abstract $response)
     {
         $this->_response = $response;
+        return $this;
     }
 
     /**
