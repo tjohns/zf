@@ -2,7 +2,7 @@ For 0.2:
 * End user documentation
   * Overview
     * Intro
-    * Request (new)
+    * Request (done)
     * Routing (done)
     * Dispatching (done)
     * Response (done)
@@ -17,23 +17,23 @@ For 0.2:
     * IndexController (done)
       * Index controller not necessary due to setDefaultController(), but recommended
   * Subclassing
-    * Introduction (modify)
+    * Introduction (done)
       * add request/response objects into the mix
     * Conventions
-    * Request Interface (new)
-    * Router Interface (modify)
+    * Request Abstract (done)
+    * Router Interface (done)
       * Have it follow current code
       * Rewrite to use request terminology
-    * Dispatcher Interface (modify)
+    * Dispatcher Interface (done)
       * Have it follow current code
       * Rewrite to use request terminology
       * Rewrite to use response terminology
-    * Zend_Controller_Action (new)
+    * Zend_Controller_Action (done)
       * explain init()
       * explain getInvokeArgs()
       * explain pre/postDispatch()
       * explain run() method
-    * Response Abstract (new)
+    * Response Abstract (done)
   * Provided subclasses (new)
     * HTTP Request
     * Router
@@ -43,7 +43,7 @@ For 0.2:
     * CLI Response
   * Plugins (done)
 * Miscellaneous
-  * Page/class-level docblocks
+  * Page/class-level docblocks (done)
 
 Post 0.2 Items:
 - Detect recursion in Controller_Front
