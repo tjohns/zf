@@ -84,6 +84,7 @@ class Zend_Date {
     const HOUR           = 'Zend_Date::HOUR';           // H - 2 digit hour, leading zeros, 00-23
     const MINUTE         = 'Zend_Date::MINUTE';         // i - 2 digit minute, leading zeros, 00-59
     const SECOND         = 'Zend_Date::SECOND';         // s - 2 digit second, leading zeros, 00-59
+    const MILLISECOND    = 'Zend_Date::MILLISECOND';    // --- milliseconds
 
     const MINUTE_SHORT   = 'Zend_Date::MINUTE_SHORT';   // --- 1 digit minute, no leading zero, 0-59
     const SECOND_SHORT   = 'Zend_Date::SECOND_SHORT';   // --- 1 digit second, no leading zero, 0-59
@@ -123,6 +124,7 @@ class Zend_Date {
     const RSS            = 'Zend_Date::RSS';            // --- DATE_RSS
     const W3C            = 'Zend_Date::W3C';            // --- DATE_W3C
 
+    private $_Fractional = 0;
 
     private $_Const = array(
         // day formats
@@ -167,6 +169,7 @@ class Zend_Date {
         'Zend_Date::HOUR'           => 'H',
         'Zend_Date::MINUTE'         => 'i',
         'Zend_Date::SECOND'         => 's',
+        'Zend_Date::MILLISECOND'    => 'xms',
 
         'Zend_Date::MINUTE_SHORT'   => 'xxi',
         'Zend_Date::SECOND_SHORT'   => 'xxs',
@@ -331,12 +334,12 @@ class Zend_Date {
      * Supported format tokens are
      * G - era, y - year, Y - ISO year, M - month, w - week of year, D - day of year, d - day of month
      * E - day of week, e - number of weekday, h - hour 1-12, H - hour 0-23, m - minute, s - second
-     * A - milliseconds of day, z - timezone, Z - timezone offset
+     * A - milliseconds of day, z - timezone, Z - timezone offset, S - fractional second
      * 
      * Not supported tokens are
      * u - extended year, Q - quarter, q - quarter, L - stand alone month, W - week of month
      * F - day of week of month, g - modified julian, c - stand alone weekday, k - hour 0-11, K - hour 1-24
-     * S - fractional second, v - wall zone
+     * v - wall zone
      * 
      * @param  $locale  locale  - OPTIONAL locale for parsing input
      * @param  $format  string  - OPTIONAL an rule for formatting the output
@@ -541,6 +544,9 @@ class Zend_Date {
                 case 's' :
                     $output[$i] = $this->get(Zend_Date::SECOND_SHORT, $locale, $gmt);
                     break;
+
+                case 'S' :
+                    $output[$i] = $this->get(Zend_Date::MILLISECOND, $locale, $gmt);
 
 
                 // zone
@@ -806,6 +812,10 @@ class Zend_Date {
 
             case Zend_Date::SECOND_SHORT :
                 return (int) $this->_Date->date('s', $this->_Date->getTimestamp(), $gmt);
+                break;
+
+            case Zend_Date::MILLISECOND :
+                return (int) $this->getFractional();
                 break;
 
 
@@ -1462,6 +1472,20 @@ class Zend_Date {
                                              $this->_Date->mktime(0, 0, $second,       1, 1, 0, -1, $gmt));
                 break;
 
+            case Zend_Date::MILLISECOND :
+                switch($calc) {
+                    case 'set' :
+                        return $this->setMillisecond(intval($date));
+                        break;
+                    case 'add' :
+                        return $this->addMillisecond(intval($date));
+                        break;
+                    case 'sub' :
+                        return $this->subMillisecond(intval($date));
+                        break;
+                }
+                return $this->compareMillisecond(intval($date));
+                break;
 
             case Zend_Date::MINUTE_SHORT :
                 return $this->_assign($calc, $this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt),
@@ -3070,7 +3094,7 @@ class Zend_Date {
             $locale = $this->_Locale;
         }
 
-        $second = $second->get(Zend_Date::MINUTE_SHORT, $locale, FALSE);
+        $second = $second->get(Zend_Date::SECOND_SHORT, $locale, FALSE);
         return new Zend_Date($this->_Date->mktime(0, 0, $second, 1, 1, 0, $locale, FALSE), $locale);
     }
 
@@ -3155,7 +3179,7 @@ class Zend_Date {
      * Compares only the second part, returning boolean true
      * @param $second object  - OPTIONAL second to compare, when null the actual second is compared
      * @param $locale locale  - OPTIONAL locale for parsing input
-     * @return string
+     * @return boolean
      */
     public function isSecond($second = false, $locale = false)
     {
@@ -3164,86 +3188,97 @@ class Zend_Date {
 
 
     /**
-     * Returns the millisecond
-     * Alias for clone(Zend_Date::MILLISECOND);toString();
+     * Returns the milliseconds
      *
-     * @todo  implement function
-     * @return string
+     * @return integer
      */
     public function getMilliSecond()
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_Fractional;
     }
 
 
     /**
      * Sets a new millisecond
-     * Alias for set($millisecond, Zend_Date::MILLISECOND);
      *
-     * @todo  implement function
-     * @param $millisecond string/integer - OPTIONAL millisecond to set, when null the actual millisecond is set
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @return object
+     * @param $milli integer - OPTIONAL millisecond to set, when null the actual millisecond is set
+     * @return integer
      */
-    public function setMilliSecond($millisecond, $locale = false)
+    public function setMilliSecond($milli = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if ($milli === false) {
+            $milli = 0;
+        }
+        $this->_Fractional = intval($milli);
+        return $this->_Fractional;
     }
 
 
     /**
      * Adds a millisecond
-     * Alias for add($millisecond,Zend_Date::MILLISECOND);
      *
-     * @todo  implement function
-     * @param $millisecond object     - OPTIONAL millisecond to add, when null the actual millisecond is add
-     * @return object
+     * @param $milli object - OPTIONAL millisecond to add, when null the actual millisecond is add
+     * @return integer
      */
-    public function addMilliSecond($millisecond)
+    public function addMilliSecond($milli = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if ($milli === false) {
+            $milli = 0;
+        }
+        $this->_Fractional += intval($milli);
+        if ($this->_Fractional > 1000) {
+            $this->addSecond(1);
+            $this->_Fractional -= 1000;
+        }
+        return $this->_Fractional;
     }
 
 
     /**
      * Substracts a millisecond
-     * Alias for sub($millisecond,Zend_Date::MILLISECOND);
      *
-     * @todo  implement function
-     * @param $millisecond object     - OPTIONAL millisecond to sub, when null the actual millisecond is sub
-     * @return object
+     * @param $milli object - OPTIONAL millisecond to sub, when null the actual millisecond is sub
+     * @return integer
      */
-    public function subMilliSecond($millisecond)
+    public function subMilliSecond($milli = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if ($milli === false) {
+            $milli = 0;
+        }
+        $this->_Fractional -= intval($milli);
+        if ($this->_Fractional < 0) {
+            $this->subSecond(1);
+            $this->_Fractional += 1000;
+        }
+        return $this->_Fractional;
     }
 
 
     /**
      * Compares only the millisecond part, returning the difference
-     * Alias for compare($millisecond,Zend_Date::MILLISECOND);
      *
-     * @todo  implement function
-     * @param $millisecond string/integer - OPTIONAL millisecond to compare, when null the actual millisecond is used for compare
-     * @return string
+     * @param $milli integer - OPTIONAL millisecond to compare, when null the actual millisecond is used for compare
+     * @return integer
      */
-    public function compareMilliSecond($millisecond)
+    public function compareMilliSecond($milli = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if ($milli === false) {
+            $milli = 0;
+        }
+        $comp = $this->_Fractional - intval($milli);
+        return $comp;
     }
 
 
     /**
      * Compares only the millisecond part, returning boolean true
-     * Alias for compare($millisecond,Zend_Date::MILLISECOND);
      *
-     * @todo  implement function
-     * @param $millisecond string/integer - OPTIONAL millisecond to compare, when null the actual millisecond is used for compare
+     * @param $milli integer - OPTIONAL millisecond to compare, when null the actual millisecond is used for compare
      * @return string
      */
-    public function isMilliSecond($millisecond)
+    public function isMilliSecond($milli = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareMilliSecond($milli) == 0);
     }
 
 
