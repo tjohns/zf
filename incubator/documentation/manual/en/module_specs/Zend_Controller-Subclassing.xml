@@ -350,6 +350,191 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
         </para>
     </sect2>
 
+    <sect2 id="zend.controller.action">
+        <title>Action Controller</title>
+
+        <para>
+            The Action Controller handles the various actions of an application.
+            This abstract class provides the following methods:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * @return void
+     */
+    public function init();
+
+    /**
+     * @return Zend_Controller_Request_Abstract
+     */
+    public function getRequest();
+
+    /**
+     * @param Zend_Controller_Request_Abstract $request 
+     * @return self
+     */
+    public function setRequest(Zend_Controller_Request_Abstract $request);
+
+    /**
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function getResponse();
+
+    /**
+     * @param Zend_Controller_Response_Abstract $response 
+     * @return self
+     */
+    public function setResponse(Zend_Controller_Response_Abstract $response);
+
+    /**
+     * @return array
+     */
+    public function getInvokeArgs();
+
+    public function preDispatch();
+
+    public function postDispatch();
+
+    /**
+     * @param string $methodName
+     * @param array $args
+     */
+    public function __call($methodName, $args);
+
+    /**
+     * @param null|Zend_Controller_Request_Abstract $request Optional request 
+     * object to use
+     * @param null|Zend_Controller_Response_Abstract $response Optional response 
+     * object to use
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function run(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null);
+]]></programlisting>
+
+        <para>
+            The constructor is final, to ensure that therequest and response
+            object are available at object instantiation, and that they are
+            registered with the object. While it only specifies two arguments,
+            any parameter registered in the Front Controller using
+            <code>addParam()</code> or <code>setParams()</code> will be passed,
+            in order, following these arguments. They are then registered in the
+            object and passed to <code>init()</code>. A developer may override
+            the <code>init()</code> method to provide further
+            initialization-time actions.
+        </para>
+
+        <para>
+            When an action is dispatched, processing may be performed before and
+            after the action using the <code>preDispatch()</code> and
+            <code>postDispatch()</code> methods, respectively. By default, they
+            are empty and do nothing.
+        </para>
+
+        <para>
+            The <code>__call()</code> method will handle any unregistered
+            actions in the class. By default, it throws an exception if the
+            action is not defined. This should only ever occur if the default
+            action method is not defined.
+        </para>
+
+        <para>
+            The default naming convention for action methods is lowercaseAction,
+            where 'lowercase' specifies the name of the action, and 'Action'
+            specifies that the method is an action method. Thus,
+            <code>http://framework.zend.com/foo/bar</code> will call
+            <code>FooController::barAction()</code>.
+        </para>
+
+        <para>
+            Action controllers may also be used as Page Controllers. Most
+            typical usage would be as follows:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$controller = new FooController(
+    new Zend_Controller_Request_Abstract(),
+    new Zend_Controller_Response_Abstract()
+);
+$controller->run();
+]]></programlisting>
+        
+        <note>
+            We recommend using the Front Controller/Action Controller
+            combination instead of the Page Controller paradigm to encourage
+            writing applications that will inter-operate.
+        </note>
+    </sect2>
+    
+    <sect2 id="zend.controller.response.abstract">
+        <title>Response Object</title>
+
+        <para>
+            The Response Object collects content and headers from the various
+            actions called and returns them to the client. It has the following
+            methods:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * @param string $content
+     * @return self
+     */
+    public function setBody($content);
+
+    /**
+     * @param string $content
+     * @return self
+     */
+    public function appendBody($content);
+
+    /**
+     * @return string
+     */
+    public function getBody();
+
+    /**
+     * @param Exception $e 
+     * @return self
+     */
+    public function setException(Exception $e);
+
+    /**
+     * @return null|Exception
+     */
+    public function getException();
+
+    /**
+     * @return boolean
+     */
+    public function isException();
+
+    /**
+     * @param boolean $flag
+     * @return boolean
+     */
+    public function renderExceptions($flag = null);
+
+    /**
+     * @return string
+     */
+    public function __toString();
+]]></programlisting>
+
+        <para>
+            <code>setBody()</code> will replace all body content; we encourage using
+            <code>appendBody()</code> instead. <code>__toString()</code> should
+            render any content.
+        </para>
+
+        <para>
+            The response object is also where action controller exceptions are
+            finally caught and registered. <code>isException()</code> should
+            return a boolean indicating whether or not this has occurred.
+            <code>renderExceptions()</code> should be used to indicate whether
+            <code>__toString()</code> will render exception output if an
+            exception was trapped.
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
