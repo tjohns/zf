@@ -3,21 +3,22 @@
 
     <sect2 id="zend.controller.providedsubclasses.introduction">
         <title>Introduction</title>
+
         <para>
+            Zend Framework provides several alternatives to the default classes
+            provided, including alternate request objects, routers, and response
+            objects.
         </para>
     </sect2>
 
-    <sect2 id="zend.controller.providedsubclasses.requesthttp">
+    <sect2 id="zend.controller.providedsubclasses.request.http">
         <title>Zend_Controller_Request_Http</title>
 
         <para>
-        </para>
-    </sect2>
-
-    <sect2 id="zend.controller.providedsubclasses.router">
-        <title>Zend_Controller_Router</title>
-
-        <para>
+            <code>Zend_Controller_Request_Http</code> provides a request object
+            for use in an HTTP environment. In addition to extending
+            <code>Zend_Controller_Request_Abstract</code>, it proxies to a
+            <code>Zend_Http_Request</code> object
         </para>
     </sect2>
 
@@ -241,7 +242,7 @@ $router->setRewriteBase('/projects/myapp');]]></programlisting>
                 routes. The first handles  your root URL and is mapped to
                 indexAction of IndexController: so you have to provide them as
                 outlined in the <xref linkend="zend.controller.getting-started" />
-                (see <xref linkend="zend.controller.overview.indexcontroller" />).
+                (see <xref linkend="zend.controller.overview.defaultcontroller" />).
                 The second default route is included to provide compatibility with
                 the first version of the router. It will match URIs in the shape
                 of <code>'controller/action'</code>.
@@ -266,24 +267,33 @@ $this->addRoute('compat', ':controller/:action', array('controller' => 'index', 
 
         </sect3>    </sect2>
 
-    <sect2 id="zend.controller.providedsubclasses.dispatcher">
-        <title>Zend_Controller_Dispatcher</title>
-
-        <para>
-        </para>
-    </sect2>
-
-    <sect2 id="zend.controller.providedsubclasses.responsehttp">
+    <sect2 id="zend.controller.providedsubclasses.response.http">
         <title>Zend_Controller_Response_Http</title>
 
         <para>
+            <code>Zend_Controller_Response_Http</code> is a response object
+            suitable for use in an HTTP environment. It contains methods for
+            setting, retrieving, and clearing headers, and the
+            <code>__toString()</code> method sends all headers at once before
+            returning the response content.
+        </para>
+
+        <para>
+            <code>setHeader()</code> takes two arguments, a header type and the
+            header value. A third, optional parameter, if passed and true, will
+            force the new header to replace any other headers registered with
+            that type.
         </para>
     </sect2>
 
-    <sect2 id="zend.controller.providedsubclasses.responsecli">
+    <sect2 id="zend.controller.providedsubclasses.response.cli">
         <title>Zend_Controller_Response_Cli</title>
 
         <para>
+            <code>Zend_Controller_Response_Cli</code> is a response object
+            suitable for use in an CLI environment. It has no methods for
+            handling headers, and simply returns all body content when
+            <code>__toString()</code> is invoked.
         </para>
     </sect2>
 </sect1>
