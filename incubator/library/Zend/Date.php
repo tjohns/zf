@@ -1822,7 +1822,6 @@ class Zend_Date {
 
     /**
      * Returns the time
-     * Alias for clone(Zend_Date::TIME);
      *
      * @todo  implement function
      * @return object
@@ -1835,7 +1834,6 @@ class Zend_Date {
 
     /**
      * Sets a new time
-     * Alias for set($time, Zend_Date::TIME);
      *
      * @todo  implement function
      * @param $time string     - OPTIONAL time to set, when null the actual time is set
@@ -1851,7 +1849,6 @@ class Zend_Date {
 
     /**
      * Adds a time
-     * Alias for add($time,Zend_Date::TIME);
      *
      * @todo  implement function
      * @param $time object     - OPTIONAL time to add, when null the actual time is add
@@ -1865,7 +1862,6 @@ class Zend_Date {
 
     /**
      * Substracts a time
-     * Alias for sub($time,Zend_Date::TIME);
      *
      * @todo  implement function
      * @param $time object     - OPTIONAL time to sub, when null the actual time is sub
@@ -1879,7 +1875,6 @@ class Zend_Date {
 
     /**
      * Compares only the time, returning the difference
-     * Alias for compare($time,Zend_Date::TIME);
      *
      * @todo  implement function
      * @param $time object     - OPTIONAL time to compare, when null the actual time is used for compare
@@ -1893,7 +1888,6 @@ class Zend_Date {
 
     /**
      * Returns the date
-     * Alias for clone(Zend_Date::DATE);
      *
      * @todo  implement function
      * @return object
@@ -1906,7 +1900,6 @@ class Zend_Date {
 
     /**
      * Sets a new date
-     * Alias for set($date, Zend_Date::DATE);
      *
      * @todo  implement function
      * @param $date string     - OPTIONAL date to set, when null the actual date is set
@@ -1922,7 +1915,6 @@ class Zend_Date {
 
     /**
      * Adds a date
-     * Alias for add($date,Zend_Date::DATE);
      *
      * @todo  implement function
      * @param $date object     - OPTIONAL date to add, when null the actual date is add
@@ -1936,7 +1928,6 @@ class Zend_Date {
 
     /**
      * Substracts a date
-     * Alias for sub($date,Zend_Date::DATE);
      *
      * @todo  implement function
      * @param $date object     - OPTIONAL date to sub, when null the actual date is sub
@@ -1950,7 +1941,6 @@ class Zend_Date {
 
     /**
      * Compares only the date, returning the difference date
-     * Alias for compare($date,Zend_Date::DATE);
      *
      * @todo  implement function
      * @param $date object     - OPTIONAL date to compare, when null the actual date is used for compare
@@ -1975,7 +1965,6 @@ class Zend_Date {
 
     /**
      * Sets a new ISOdate
-     * Alias for set($date);
      *
      * @param $date string     - OPTIONAL ISOdate to set, when null the actual date is set
      * @return object
@@ -1991,7 +1980,6 @@ class Zend_Date {
 
     /**
      * Adds a ISOdate
-     * Alias for add($date);
      *
      * @param $date string  - OPTIONAL ISOdate to add, when null the actual date is add
      * @return object
@@ -2007,7 +1995,6 @@ class Zend_Date {
 
     /**
      * Substracts a ISOdate
-     * Alias for sub($date);
      *
      * @param $date string  - OPTIONAL ISOdate to sub, when null the actual date is sub
      * @return object
@@ -2023,7 +2010,6 @@ class Zend_Date {
 
     /**
      * Compares IsoDate with date object, returning the difference date
-     * Alias for compare($date);
      *
      * @param $date string - OPTIONAL ISOdate to compare, when null the actual date is used for compare
      * @return object
@@ -2050,7 +2036,6 @@ class Zend_Date {
 
     /**
      * Sets a new RFC822 formatted date
-     * Alias for set($date);
      *
      * @param $date string     - OPTIONAL RFC822 date to set, when null the actual date is set
      * @return object
@@ -2066,7 +2051,6 @@ class Zend_Date {
 
     /**
      * Adds a RFC822 formatted date
-     * Alias for add($date);
      *
      * @param $date string  - OPTIONAL RFC822 date to add, when null the actual date is add
      * @return object
@@ -2082,7 +2066,6 @@ class Zend_Date {
 
     /**
      * Substracts a RFC822 formatted date
-     * Alias for sub($date);
      *
      * @param $date string  - OPTIONAL RFC822 date to sub, when null the actual date is sub
      * @return object
@@ -2098,7 +2081,6 @@ class Zend_Date {
 
     /**
      * Compares a RFC822 formatted date with date object, returning the difference date
-     * Alias for compare($date);
      *
      * @param $date string - OPTIONAL RFC822 date to compare, when null the actual date is used for compare
      * @return object
@@ -2109,75 +2091,6 @@ class Zend_Date {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
         }
         return $this->compare($date, Zend_Date::RFC822);
-    }
-
-
-    /**
-     * Returns a UTC/GMT formatted date
-     *
-     * @todo  implement function
-     * @param $timezone string   - OPTIONAL locale or timezone for setting output timezone
-     * @return string
-     */
-    public function getUtc($timezone)
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Sets a new UTC/GMT formatted date
-     * Alias for set($date);
-     *
-     * @todo  implement function
-     * @param $date string     - OPTIONAL UTC/GMT formatted date to set, when null the actual date is set
-     * @return object
-     */
-    public function setUtc($date)
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Adds a UTC/GMT formatted date
-     * Alias for add($date);
-     *
-     * @todo  implement function
-     * @param $date string  - OPTIONAL UTC/GMT formatted date to add, when null the actual date is add
-     * @return object
-     */
-    public function addUtc($date)
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Substracts a UTC/GMT formatted date
-     * Alias for sub($date);
-     *
-     * @todo  implement function
-     * @param $date string  - OPTIONAL UTC/GMT formatted date to sub, when null the actual date is sub
-     * @return object
-     */
-    public function subUtc($date)
-    {
-        $this->_Date->throwException('function yet not implemented');
-    }
-
-
-    /**
-     * Compares UTC/GMT formatted date with date object, returning the difference date
-     * Alias for compare($date);
-     *
-     * @todo  implement function
-     * @param $date string - OPTIONAL UTC/GMT date to compare, when null the actual date is used for compare
-     * @return object
-     */
-    public function compareUtc($date)
-    {
-        $this->_Date->throwException('function yet not implemented');
     }
 
 
@@ -2341,8 +2254,26 @@ class Zend_Date {
 
 
     /**
+     * Calculate date details
+     */
+    private function _calcdetail($date, $type, $locale, $calculation)
+    {
+        switch($calculation) {
+            case 'set' :
+                return $this->set($date, $type, $locale, FALSE);
+                break;
+            case 'add' :
+                return $this->add($date, $type, $locale, FALSE);
+                break;
+            case 'sub' :
+                return $this->sub($date, $type, $locale, FALSE);
+                break;
+        }
+        return $this->compare($date, $type, $locale, FALSE);
+    }
+
+    /**
      * Returns the year
-     * Alias for get(Zend_Date::YEAR)
      *
      * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
@@ -2356,102 +2287,90 @@ class Zend_Date {
         return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, 1, $year, $locale, FALSE), $locale);
     }
 
-
     /**
-     * Sets a new year
-     * Alias for set($year, Zend_Date::YEAR);
+     * Returns the calculated year
      *
-     * @param $year string/integer - OPTIONAL year to set, when null the actual year is set
-     * @param $locale locale   - OPTIONAL locale for parsing input
+     * @param $year string    - OPTIONAL year to calculate, when null the actual year is calculated
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
      * @return object
      */
-    public function setYear($year = false, $locale = false)
+    private function _year($year, $locale, $calculation)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
+
         if (empty($year)) {
             $year = $this->_Date->date('Y');
-        }
-        if (is_object($year)) {
+        } else if (is_object($year)) {
             $year = $year->get(Zend_Date::YEAR, $locale, FALSE);
         }
-        $this->set($year, Zend_Date::YEAR, $locale, FALSE);
-        return $this;
+
+        return $this->_calcdetail($year, Zend_Date::YEAR, $locale, $calculation);
+    }
+    
+
+    /**
+     * Sets a new year
+     *
+     * @param $year object    - OPTIONAL year to set, when null the actual year is set
+     * @param $locale locale  - OPTIONAL locale for parsing input
+     * @return object
+     */
+    public function setYear($year = false, $locale = false)
+    {
+        return $this->_year($year, $locale, 'set');
     }
 
 
     /**
      * Adds a year
-     * Alias for add($year,Zend_Date::YEAR);
      *
-     * @param $year object     - OPTIONAL year to add, when null the actual year is add
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $year object    - OPTIONAL year to add, when null the actual year is add
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
     public function addYear($year = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($year)) {
-            $year = $this->_Date->date('Y');
-        }
-        if (is_object($year)) {
-            $year = $year->get(Zend_Date::YEAR, $locale, FALSE);
-        }
-        $this->add($year, Zend_Date::YEAR, $locale, FALSE);
-        return $this;
+        return $this->_year($year, $locale, 'set');
     }
 
 
     /**
      * Substracts a year
-     * Alias for sub($year,Zend_Date::YEAR);
      *
-     * @param $year object     - OPTIONAL year to sub, when null the actual year is sub
+     * @param $year object    - OPTIONAL year to sub, when null the actual year is sub
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
     public function subYear($year = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($year)) {
-            $year = $this->_Date->date('Y');
-        }
-        if (is_object($year)) {
-            $year = $year->get(Zend_Date::YEAR, $locale, FALSE);
-        }
-        $this->sub($year, Zend_Date::YEAR, $locale, FALSE);
-        return $this;
+        return $this->_year($year, $locale, 'sub');
     }
 
 
     /**
      * Compares only the year part, returning the difference
-     * Alias for compare($year,Zend_Date::YEAR);
      *
-     * @param $year string/integer - OPTIONAL year to compare, when null the actual year is used for compare
+     * @param $year object    - OPTIONAL year to compare, when null the actual year is compared
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function compareYear($year = false)
+    public function compareYear($year = false, $locale = false)
     {
-        if ($year === false) {
-            $year = date("Y");
-        }
-        return $this->compare($year, Zend_Date::YEAR);
+        return $this->_year($year, $locale, 'compare');
     }
 
 
     /**
      * Compares only the year part, returning boolean true
-     * Alias for compare($year,Zend_Date::YEAR);
      *
-     * @param $year string/integer - OPTIONAL year to compare, when null the actual year is used for compare
+     * @param $year object    - OPTIONAL year to compare, when null the actual year is compared
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return boolean
      */
-    public function isYear($year = false)
+    public function isYear($year = false, $locale = false)
     {
         return ($this->compareYear($year) == 0);
     }
@@ -2474,146 +2393,107 @@ class Zend_Date {
 
 
     /**
-     * Sets a new month
-     * Alias for set($month, Zend_Date::MONTH);
+     * Returns the calculated month
      *
-     * @param $month string/integer - OPTIONAL month to set, when null the actual month is set
+     * @param $month string    - OPTIONAL month to calculate, when null the actual month is calculated
      * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
      * @return object
      */
-    public function setMonth($month = false, $locale = false)
+    private function _month($month, $locale, $calculation)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
+
         if (empty($month)) {
             $month = $this->_Date->date('n');
-        }
-        if (is_object($month)) {
+        } else if (is_object($month)) {
             $month = $month->get(Zend_Date::MONTH_DIGIT, $locale, FALSE);
         }
 
         if (is_numeric($month)) {
-            $this->set($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        } else if (strlen($month) == 1) {
-            $this->set($month, Zend_Date::MONTH_NARROW, $locale, FALSE);
-        } else if (strlen($month) == 3) {
-            $this->set($month, Zend_Date::MONTH_NAME, $locale, FALSE);
+            $type = Zend_Date::MONTH_DIGIT;
         } else {
-            $this->set($month, Zend_Date::MONTH, $locale, FALSE);
+            switch (strlen($month)) {
+                case 1 :
+                   $type = Zend_Date::MONTH_NARROW;
+                    break;
+                case 3:
+                    $type = Zend_Date::MONTH_NAME;
+                    break;
+                default:
+                    $type = Zend_Date::MONTH;
+                    break;
+            }
         }
-        return $this;
+        return $this->_calcdetail($month, $type, $locale, $calculation);
+    }
+    
+
+    /**
+     * Sets a new month
+     *
+     * @param $month object   - OPTIONAL month to set, when null the actual month is set
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @return object
+     */
+    public function setMonth($month = false, $locale = false)
+    {
+        return $this->_month($month, $locale, 'set');
     }
 
 
     /**
      * Adds a month
-     * Alias for add($month,Zend_Date::MONTH);
      *
-     * @param $month object     - OPTIONAL month to add, when null the actual month is add
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $month object   - OPTIONAL month to add, when null the actual month is add
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
     public function addMonth($month = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($month)) {
-            $month = $this->_Date->date('n');
-        }
-
-        if (is_object($month)) {
-            $this->add($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        }
-        if (is_numeric($month)) {
-            $this->add($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        } else if (strlen($month) == 1) {
-            $this->add($month, Zend_Date::MONTH_NARROW, $locale, FALSE);
-        } else if (strlen($month) == 3) {
-            $this->add($month, Zend_Date::MONTH_NAME, $locale, FALSE);
-        } else {
-            $this->add($month, Zend_Date::MONTH, $locale, FALSE);
-        }
-        return $this;
+        return $this->_month($month, $locale, 'add');
     }
 
 
     /**
      * Substracts a month
-     * Alias for sub($month,Zend_Date::MONTH);
      *
-     * @param $month object     - OPTIONAL month to sub, when null the actual month is sub
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $month object   - OPTIONAL month to sub, when null the actual month is sub
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
     public function subMonth($month = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($month)) {
-            $month = $this->_Date->date('n');
-        }
-
-        if (is_object($month)) {
-            $this->sub($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        }
-        if (is_numeric($month)) {
-            $this->sub($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        } else if (strlen($month) == 1) {
-            $this->sub($month, Zend_Date::MONTH_NARROW, $locale, FALSE);
-        } else if (strlen($month) == 3) {
-            $this->sub($month, Zend_Date::MONTH_NAME, $locale, FALSE);
-        } else {
-            $this->sub($month, Zend_Date::MONTH, $locale, FALSE);
-        }
-        return $this;
+        return $this->_month($month, $locale, 'sub');
     }
 
 
     /**
      * Compares only the month part, returning the difference
-     * Alias for compare($month,Zend_Date::MONTH);
      *
-     * @param $month string/integer - OPTIONAL month to compare, when null the actual month is used for compare
-     * @return string
+     * @param $month object   - OPTIONAL month to compare, when null the actual month is compared
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @return object
+     *      * @return string
      */
-    public function compareMonth($month = false)
+    public function compareMonth($month = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($month)) {
-            $month = $this->_Date->date('n');
-        }
-
-        if (is_object($month)) {
-            $this->compare($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        }
-        if (is_numeric($month)) {
-            $this->compare($month, Zend_Date::MONTH_DIGIT, $locale, FALSE);
-        } else if (strlen($month) == 1) {
-            $this->compare($month, Zend_Date::MONTH_NARROW, $locale, FALSE);
-        } else if (strlen($month) == 3) {
-            $this->compare($month, Zend_Date::MONTH_NAME, $locale, FALSE);
-        } else {
-            $this->compare($month, Zend_Date::MONTH, $locale, FALSE);
-        }
-        return $this;
+        return $this->_month($month, $locale, 'compare');
     }
 
 
     /**
      * Compares only the month part, returning boolean true
-     * Alias for compare($month,Zend_Date::MONTH);
      *
-     * @param $month string/integer - OPTIONAL month to compare, when null the actual month is used for compare
-     * @return string
+     * @param $month object   - OPTIONAL month to compare, when null the actual month is compared
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @return boolean
      */
-    public function isMonth($month = false)
+    public function isMonth($month = false, $locale = false)
     {
-        return ($this->compareMonth($month) == 0);
+        return ($this->compareMonth($month, $locale) == 0);
     }
 
 
@@ -2634,255 +2514,232 @@ class Zend_Date {
 
 
     /**
-     * Sets a new day
-     * Alias for set($day, Zend_Date::DAY);
+     * Returns the calculated day
      *
-     * @param $day string/integer - OPTIONAL day to set, when null the actual day is set
+     * @param $day string      - OPTIONAL day to calculate, when null the actual day is calculate
      * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
      * @return object
      */
-    public function setDay($day = false, $locale = false)
+    private function _day($day, $locale, $calculation)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
+
         if (empty($day)) {
             $day = $this->_Date->date('j');
-        }
-        if (is_object($day)) {
+        } else if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
         }
+
         if (is_numeric($day)) {
-            $this->set($day, Zend_Date::DAY_SHORT, $locale, FALSE);
-        } else if (strlen($day) == 1) {
-            $this->set($day, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
-        } else if (strlen($day) == 2) {
-            $this->set($day, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
-        } else if (strlen($day) == 3) {
-            $this->set($day, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
+            $type = Zend_Date::DAY_SHORT;
         } else {
-            $this->set($day, Zend_Date::WEEKDAY, $locale, FALSE);
+            switch (strlen($day)) {
+                case 1 :
+                   $type = Zend_Date::WEEKDAY_NARROW;
+                    break;
+                case 2:
+                    $type = Zend_Date::WEEKDAY_NAME;
+                    break;
+                case 3:
+                    $type = Zend_Date::WEEKDAY_SHORT;
+                    break;
+                default:
+                    $type = Zend_Date::WEEKDAY;
+                    break;
+            }
         }
-        return $this;
+        return $this->_calcdetail($day, $type, $locale, $calculation);
+    }
+
+    /**
+     * Sets a new day
+     *
+     * @param $day object     - OPTIONAL day to set, when null the actual day is set
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @return object
+     */
+    public function setDay($day = false, $locale = false)
+    {
+        return $this->_day($day, $locale, 'set');
     }
 
 
     /**
      * Adds a day
-     * Alias for add($day,Zend_Date::DAY);
      *
      * @param $day object     - OPTIONAL day to add, when null the actual day is add
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
     public function addDay($day = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($day)) {
-            $day = $this->_Date->date('j');
-        }
-        if (is_object($day)) {
-            $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
-        }
-        if (is_numeric($day)) {
-            $this->add($day, Zend_Date::DAY_SHORT, $locale, FALSE);
-        } else if (strlen($day) == 1) {
-            $this->add($day, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
-        } else if (strlen($day) == 2) {
-            $this->add($day, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
-        } else if (strlen($day) == 3) {
-            $this->add($day, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
-        } else {
-            $this->add($day, Zend_Date::WEEKDAY, $locale, FALSE);
-        }
-        return $this;
+        return $this->_day($day, $locale, 'add');
     }
 
 
     /**
      * Substracts a day
-     * Alias for sub($day,Zend_Date::DAY);
      *
      * @param $day object     - OPTIONAL day to sub, when null the actual day is sub
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
     public function subDay($day = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($day)) {
-            $day = $this->_Date->date('j');
-        }
-        if (is_object($day)) {
-            $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
-        }
-        if (is_numeric($day)) {
-            $this->sub($day, Zend_Date::DAY_SHORT, $locale, FALSE);
-        } else if (strlen($day) == 1) {
-            $this->sub($day, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
-        } else if (strlen($day) == 2) {
-            $this->sub($day, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
-        } else if (strlen($day) == 3) {
-            $this->sub($day, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
-        } else {
-            $this->sub($day, Zend_Date::WEEKDAY, $locale, FALSE);
-        }
-        return $this;
+        return $this->_day($day, $locale, 'sub');
     }
 
 
     /**
      * Compares only the day part, returning the difference
-     * Alias for compare($day,Zend_Date::DAY);
      *
-     * @todo  implement function
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
      * @param $locale string   - OPTIONAL locale for parsing input
      * @return string
      */
     public function compareDay($day = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($day)) {
-            $day = $this->_Date->date('j');
-        }
-        if (is_object($day)) {
-            $day = $day->get(Zend_Date::DAY_SHORT, $locale, FALSE);
-        }
-        if (is_numeric($day)) {
-            $this->compare($day, Zend_Date::DAY_SHORT, $locale, FALSE);
-        } else if (strlen($day) == 1) {
-            $this->compare($day, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
-        } else if (strlen($day) == 2) {
-            $this->compare($day, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
-        } else if (strlen($day) == 3) {
-            $this->compare($day, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
-        } else {
-            $this->compare($day, Zend_Date::WEEKDAY, $locale, FALSE);
-        }
-        return $this;
+        return $this->_day($day, $locale, 'compare');
     }
 
 
     /**
      * Compares only the day part, returning boolean true
-     * Alias for compare($day,Zend_Date::DAY);
      *
      * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
-     * @return string
+     * @param $locale string   - OPTIONAL locale for parsing input
+     * @return boolean
      */
-    public function isDay($day = false)
+    public function isDay($day = false, $locale = false)
     {
-        return ($this->compareDay($day) == 0);
+        return ($this->compareDay($day, $locale) == 0);
     }
 
 
     /**
      * Returns the weekday
-     * Alias for clone(Zend_Date::WEEKDAY);toString();
      *
-     * @todo  implement function
-     * @return string
+     * @param $locale string   - OPTIONAL locale for parsing input
+     * @return object
      */
-    public function getWeekday()
+    public function getWeekday($locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+        $day = $this->get(Zend_Date::DAY_SHORT, $locale, FALSE);
+        return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, $day, 0, $locale, false), $locale);
+    }
+
+
+    /**
+     * Returns the calculated weekday
+     *
+     * @param $weekday string  - OPTIONAL weekday to calculate, when null the actual weekday is calculate
+     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
+     * @return object
+     */
+    private function _weekday($weekday, $locale, $calculation)
+    {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
+        if (empty($weekday)) {
+            $weekday = $this->_Date->date('w');
+        } else if (is_object($weekday)) {
+            $weekday = $weekday->get(Zend_Date::WEEKDAY_DIGIT, $locale, FALSE);
+        }
+
+        if (is_numeric($weekday)) {
+            $type = Zend_Date::WEEKDAY_DIGIT;
+        } else {
+            switch(strlen($weekday)) {
+                case 1:
+                   $type = Zend_Date::WEEKDAY_NARROW;
+                    break;
+                case 2:
+                    $type = Zend_Date::WEEKDAY_NAME;
+                    break;
+                case 3:
+                    $type = Zend_Date::WEEKDAY_SHORT;
+                    break;
+                default:
+                    $type = Zend_Date::WEEKDAY;
+                    break;
+            }
+        }
+        
+        return $this->_calcdetail($weekday, $type, $locale, $calculation);
     }
 
 
     /**
      * Sets a new weekday
-     * Alias for set($weekday, Zend_Date::WEEKDAY);
      *
-     * @param $weekday string/integer - OPTIONAL weekday to set, when null the actual weekday is set
+     * @param $weekday string  - OPTIONAL weekday to set, when null the actual weekday is set
      * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
     public function setWeekday($weekday = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($weekday)) {
-            $weekday = $this->_Date->date('w');
-        }
-        if (is_object($weekday)) {
-            $weekday = $month->get(Zend_Date::WEEKDAY_DIGIT, $locale, FALSE);
-        }
-
-        if (is_numeric($weekday)) {
-            $this->set($weekday, Zend_Date::WEEKDAY_DIGIT, $locale, FALSE);
-        } else if (strlen($weekday) == 1) {
-            $this->set($weekday, Zend_Date::WEEKDAY_NARROW, $locale, FALSE);
-        } else if (strlen($weekday) == 2) {
-            $this->set($weekday, Zend_Date::WEEKDAY_NAME, $locale, FALSE);
-        } else if (strlen($weekday) == 3) {
-            $this->set($weekday, Zend_Date::WEEKDAY_SHORT, $locale, FALSE);
-        } else {
-            $this->set($weekday, Zend_Date::WEEKDAY, $locale, FALSE);
-        }
-        return $this;
+        return $this->_weekday($weekday, $locale, 'set');
     }
 
 
     /**
      * Adds a weekday
-     * Alias for add($weekday,Zend_Date::WEEKDAY);
      *
-     * @todo  implement function
-     * @param $weekday object     - OPTIONAL weekday to add, when null the actual weekday is add
+     * @param $weekday object  - OPTIONAL weekday to add, when null the actual weekday is add
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function addWeekday($weekday)
+    public function addWeekday($weekday = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_weekday($weekday, $locale, 'add');
     }
 
 
     /**
      * Substracts a weekday
-     * Alias for sub($weekday,Zend_Date::WEEKDAY);
      *
-     * @todo  implement function
-     * @param $weekday object     - OPTIONAL weekday to sub, when null the actual weekday is sub
+     * @param $weekday object  - OPTIONAL weekday to sub, when null the actual weekday is sub
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function subWeekday($weekday)
+    public function subWeekday($weekday = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_weekday($weekday, $locale, 'sub');
     }
 
 
     /**
      * Compares only the weekday part, returning the difference
-     * Alias for compare($weekday,Zend_Date::WEEKDAY);
      *
-     * @todo  implement function
-     * @param $weekday string/integer - OPTIONAL weekday to compare, when null the actual weekday is used for compare
+     * @param $weekday object  - OPTIONAL weekday to compare, when null the actual weekday is compared
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return string
      */
-    public function compareWeekday($weekday)
+    public function compareWeekday($weekday = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_weekday($weekday, $locale, 'compare');
     }
 
 
     /**
      * Compares only the weekday part, returning boolean true
-     * Alias for compare($day,Zend_Date::WEEKDAY);
      *
-     * @param $weekday string/integer - OPTIONAL weekday to compare, when null the actual weekday is used for compare
-     * @return string
+     * @param $weekday object  - OPTIONAL weekday to compare, when null the actual weekday is compared
+     * @param $locale string   - OPTIONAL locale for parsing input
+     * @return boolean
      */
-    public function isWeekday($weekday = false)
+    public function isWeekday($weekday = false, $locale = false)
     {
-        return ($this->compareWeekday($weekday) == 0);
+        return ($this->compareWeekday($weekday, $locale) == 0);
     }
 
 
@@ -2903,103 +2760,91 @@ class Zend_Date {
 
 
     /**
-     * Sets a new day of year
-     * Alias for set($day, Zend_Date::DAY);
+     * Returns the calculated dayofyear
      *
-     * @param $day string/integer - OPTIONAL day to set, when null the actual day is set
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $day string     - OPTIONAL dayofyear to calculate, when null the actual dayofyear is calculated
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
      * @return object
      */
-    public function setDayOfYear($day = false, $locale = false)
+    private function _dayOfYear($day, $locale, $calculation)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
+
         if (empty($day)) {
             $day = $this->_Date->date('z');
-        }
-        if (is_object($day)) {
+        } else if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_OF_YEAR, $locale, FALSE);
         }
-        $this->set($day, Zend_Date::DAY_OF_YEAR, $locale, FALSE);
-        return $this;
+
+        return $this->_calcdetail($day, Zend_Date::DAY_OF_YEAR, $locale, $calculation);
+    }
+
+
+    /**
+     * Sets a new day of year
+     *
+     * @param $day object     - OPTIONAL day to set, when null the actual day is set
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @return object
+     */
+    public function setDayOfYear($day = false, $locale = false)
+    {
+        return $this->_dayOfYear($day, $locale, 'set');
     }
 
 
     /**
      * Adds a day of year
-     * Alias for add($day,Zend_Date::DAY);
      *
      * @param $day object     - OPTIONAL day to add, when null the actual day is add
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
     public function addDayOfYear($day = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($day)) {
-            $day = $this->_Date->date('z');
-        }
-        if (is_object($day)) {
-            $day = $day->get(Zend_Date::DAY_OF_YEAR, $locale, FALSE);
-        }
-        $this->add($day, Zend_Date::DAY_OF_YEAR, $locale, FALSE);
-        return $this;
+        return $this->_dayOfYear($day, $locale, 'add');
     }
 
 
     /**
      * Substracts a day of year
-     * Alias for sub($day,Zend_Date::DAY);
      *
      * @param $day object     - OPTIONAL day to sub, when null the actual day is sub
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
     public function subDayOfYear($day = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($day)) {
-            $day = $this->_Date->date('z');
-        }
-        if (is_object($day)) {
-            $day = $day->get(Zend_Date::DAY_OF_YEAR, $locale, FALSE);
-        }
-        $this->sub($day, Zend_Date::DAY_OF_YEAR, $locale, FALSE);
-        return $this;
+        return $this->_dayOfYear($day, $locale, 'sub');
     }
 
 
     /**
      * Compares only the day of year
-     * Alias for compare($day,Zend_Date::DAY);
      *
-     * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
+     * @param $day object     - OPTIONAL day to compare, when null the actual day is compared
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function compareDayOfYear($day = false)
+    public function compareDayOfYear($day = false, $locale = false)
     {
-        if ($day === false) {
-            $day = date("z");
-        }
-        return $this->compare($day, Zend_Date::DAY_OF_YEAR);
+        return $this->_dayOfYear($day, $locale, 'compare');
     }
 
 
     /**
      * Compares only the day of year, returning boolean true
-     * Alias for compare($day,Zend_Date::DAY);
      *
-     * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
-     * @return string
+     * @param $day object     - OPTIONAL day to compare, when null the actual day is compared
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @return boolean
      */
-    public function isDayOfYear($day = false)
+    public function isDayOfYear($day = false, $locale = false)
     {
-        return ($this->compareDayOfYear($day) == 0);
+        return ($this->compareDayOfYear($day, $locale) == 0);
     }
 
 
@@ -3020,100 +2865,91 @@ class Zend_Date {
 
 
     /**
-     * Sets a new hour
+     * Returns the calculated hour
      *
-     * @param $hour string/integer - OPTIONAL hour to set, when null the actual hour is set
-     * @param $locale locale   - OPTIONAL locale for parsing input
+     * @param $hour string    - OPTIONAL hour to calculate, when null the actual hour is calculated
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
      * @return object
      */
-    public function setHour($hour = false, $locale = false)
+    private function _hour($hour, $locale, $calculation)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
+
         if (empty($hour)) {
             $hour = $this->_Date->date('G');
-        }
-        if (is_object($hour)) {
+        } else if (is_object($hour)) {
             $hour = $hour->get(Zend_Date::HOUR_SHORT, $locale, FALSE);
         }
-        $this->set($hour, Zend_Date::HOUR_SHORT, $locale, FALSE);
-        return $this;
+
+        return $this->_calcdetail($hour, Zend_Date::HOUR_SHORT, $locale, $calculation);
+    }
+
+
+    /**
+     * Sets a new hour
+     *
+     * @param $hour object    - OPTIONAL hour to set, when null the actual hour is set
+     * @param $locale locale  - OPTIONAL locale for parsing input
+     * @return object
+     */
+    public function setHour($hour = false, $locale = false)
+    {
+        return $this->_hour($hour, $locale, 'set');
     }
 
 
     /**
      * Adds a hour
      *
-     * @param $hour object     - OPTIONAL hour to add, when null the actual hour is add
-     * @param $locale locale   - OPTIONAL locale for parsing input
+     * @param $hour object    - OPTIONAL hour to add, when null the actual hour is add
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return object
      */
     public function addHour($hour = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($hour)) {
-            $hour = $this->_Date->date('G');
-        }
-        if (is_object($hour)) {
-            $hour = $hour->get(Zend_Date::HOUR_SHORT, $locale, FALSE);
-        }
-        $this->add($hour, Zend_Date::HOUR_SHORT, $locale, FALSE);
-        return $this;
+        return $this->_hour($hour, $locale, 'add');
     }
 
 
     /**
      * Substracts a hour
      *
-     * @param $hour object     - OPTIONAL hour to sub, when null the actual hour is sub
-     * @param $locale locale   - OPTIONAL locale for parsing input
+     * @param $hour object    - OPTIONAL hour to sub, when null the actual hour is sub
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return object
      */
     public function subHour($hour = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($hour)) {
-            $hour = $this->_Date->date('G');
-        }
-        if (is_object($hour)) {
-            $hour = $hour->get(Zend_Date::HOUR_SHORT, $locale, FALSE);
-        }
-        $this->sub($hour, Zend_Date::HOUR_SHORT, $locale, FALSE);
-        return $this;
+        return $this->_hour($hour, $locale, 'sub');
     }
 
 
     /**
      * Compares only the hour part, returning the difference
-     * Alias for compare($hour,Zend_Date::HOUR);
      *
-     * @param $hour string/integer - OPTIONAL hour to compare, when null the actual hour is used for compare
+     * @param $hour object    - OPTIONAL hour to compare, when null the actual hour is compare
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function compareHour($hour = false)
+    public function compareHour($hour = false, $locale = false)
     {
-        if ($hour === false) {
-            $hour = date("G");
-        }
-        return $this->compare($hour, Zend_Date::HOUR);
+        return $this->_hour($hour, $locale, 'compare');
     }
 
 
     /**
      * Compares only the hour part, returning boolean true
-     * Alias for compare($hour,Zend_Date::HOUR);
      *
-     * @param $hour string/integer - OPTIONAL hour to compare, when null the actual hour is used for compare
-     * @return string
+     * @param $hour object    - OPTIONAL hour to compare, when null the actual hour is compare
+     * @param $locale locale  - OPTIONAL locale for parsing input
+     * @return boolean
      */
-    public function isHour($hour = false)
+    public function isHour($hour = false, $locale = false)
     {
-        return ($this->compareHour($hour) == 0);
+        return ($this->compareHour($hour, $locale) == 0);
     }
 
 
@@ -3134,100 +2970,91 @@ class Zend_Date {
 
 
     /**
-     * Sets a new minute
+     * Returns the calculated minute
      *
-     * @param $minute string/integer - OPTIONAL minute to set, when null the actual minute is set
-     * @param $locale locale   - OPTIONAL locale for parsing input
+     * @param $minute string    - OPTIONAL minute to calculate, when null the actual minute is calculated
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
      * @return object
      */
-    public function setMinute($minute = false, $locale = false)
+    private function _minute($minute, $locale, $calculation)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
+
         if (empty($minute)) {
             $minute = $this->_Date->date('i');
-        }
-        if (is_object($minute)) {
+        } else if (is_object($minute)) {
             $minute = $minute->get(Zend_Date::MINUTE_SHORT, $locale, FALSE);
         }
-        $this->set($minute, Zend_Date::MINUTE_SHORT, $locale, FALSE);
-        return $this;
+
+        return $this->_calcdetail($minute, Zend_Date::MINUTE_SHORT, $locale, $calculation);
+    }
+
+
+    /**
+     * Sets a new minute
+     *
+     * @param $minute object  - OPTIONAL minute to set, when null the actual minute is set
+     * @param $locale locale  - OPTIONAL locale for parsing input
+     * @return object
+     */
+    public function setMinute($minute = false, $locale = false)
+    {
+        return $this->_minute($minute, $locale, 'set');
     }
 
 
     /**
      * Adds a minute
      *
-     * @param $minute object   - OPTIONAL minute to add, when null the actual minute is add
-     * @param $locale locale   - OPTIONAL locale for parsing input
+     * @param $minute object  - OPTIONAL minute to add, when null the actual minute is add
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return object
      */
     public function addMinute($minute = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($minute)) {
-            $minute = $this->_Date->date('i');
-        }
-        if (is_object($minute)) {
-            $minute = $minute->get(Zend_Date::MINUTE_SHORT, $locale, FALSE);
-        }
-        $this->add($minute, Zend_Date::MINUTE_SHORT, $locale, FALSE);
-        return $this;
+        return $this->_minute($minute, $locale, 'add');
     }
 
 
     /**
      * Substracts a minute
      *
-     * @param $minute object   - OPTIONAL minute to sub, when null the actual minute is sub
-     * @param $locale locale   - OPTIONAL locale for parsing input
+     * @param $minute object  - OPTIONAL minute to sub, when null the actual minute is sub
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return object
      */
     public function subMinute($minute = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($minute)) {
-            $minute = $this->_Date->date('i');
-        }
-        if (is_object($minute)) {
-            $minute = $minute->get(Zend_Date::MINUTE_SHORT, $locale, FALSE);
-        }
-        $this->sub($minute, Zend_Date::MINUTE_SHORT, $locale, FALSE);
-        return $this;
+        return $this->_minute($minute, $locale, 'add');
     }
 
 
     /**
      * Compares only the minute part, returning the difference
-     * Alias for compare($minute,Zend_Date::MINUTE);
      *
-     * @param $minute string/integer - OPTIONAL minute to compare, when null the actual minute is used for compare
+     * @param $minute object  - OPTIONAL minute to compare, when null the actual minute is compared
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function compareMinute($minute = false)
+    public function compareMinute($minute = false, $locale = false)
     {
-        if ($minute === false) {
-            $minute = date("i");
-        }
-        return $this->compare($minute, Zend_Date::MINUTE);
+        return $this->_minute($minute, $locale, '´compare');
     }
 
 
     /**
      * Compares only the minute part, returning boolean true
-     * Alias for compare($minute,Zend_Date::MINUTE);
      *
-     * @param $minute string/integer - OPTIONAL minute to compare, when null the actual minute is used for compare
-     * @return string
+     * @param $minute object  - OPTIONAL minute to compare, when null the actual minute is compared
+     * @param $locale locale  - OPTIONAL locale for parsing input
+     * @return boolean
      */
-    public function isMinute($minute = false)
+    public function isMinute($minute = false, $locale = false)
     {
-        return ($this->compareMinute($minute) == 0);
+        return ($this->compareMinute($minute, $locale) == 0);
     }
 
 
@@ -3249,99 +3076,90 @@ class Zend_Date {
 
 
     /**
-     * Sets a new second
+     * Returns the calculated second
      *
-     * @param $second string/integer - OPTIONAL second to set, when null the actual second is set
-     * @param $locale locale   - OPTIONAL locale for parsing input
+     * @param $second string  - OPTIONAL second to calculate, when null the actual second is calculated
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
      * @return object
      */
-    public function setSecond($second = false, $locale = false)
+    private function _second($second, $locale, $calculation)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
+
         if (empty($second)) {
             $second = $this->_Date->date('s');
-        }
-        if (is_object($second)) {
+        } else if (is_object($second)) {
             $second = $second->get(Zend_Date::SECOND_SHORT, $locale, FALSE);
         }
-        $this->set($second, Zend_Date::SECOND_SHORT, $locale, FALSE);
-        return $this;
+
+        return $this->_calcdetail($second, Zend_Date::SECOND_SHORT, $locale, $calculation);
+    }
+
+
+    /**
+     * Sets a new second
+     *
+     * @param $second object  - OPTIONAL second to set, when null the actual second is set
+     * @param $locale locale  - OPTIONAL locale for parsing input
+     * @return object
+     */
+    public function setSecond($second = false, $locale = false)
+    {
+        return $this->_second($second, $locale, 'set');
     }
 
 
     /**
      * Adds a second
      *
-     * @param $second object     - OPTIONAL second to add, when null the actual second is add
+     * @param $second object  - OPTIONAL second to add, when null the actual second is add
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return object
      */
     public function addSecond($second = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($second)) {
-            $second = $this->_Date->date('s');
-        }
-        if (is_object($second)) {
-            $second = $second->get(Zend_Date::SECOND_SHORT, $locale, FALSE);
-        }
-        $this->add($second, Zend_Date::SECOND_SHORT, $locale, FALSE);
-        return $this;
+        return $this->_second($second, $locale, 'add');
     }
 
 
     /**
      * Substracts a second
-     * Alias for sub($second,Zend_Date::SECOND);
      *
-     * @param $second object     - OPTIONAL second to sub, when null the actual second is sub
+     * @param $second object  - OPTIONAL second to sub, when null the actual second is sub'ed
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return object
      */
     public function subSecond($second = false, $locale = false)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        if (empty($second)) {
-            $second = $this->_Date->date('s');
-        }
-        if (is_object($second)) {
-            $second = $second->get(Zend_Date::SECOND_SHORT, $locale, FALSE);
-        }
-        $this->sub($second, Zend_Date::SECOND_SHORT, $locale, FALSE);
-        return $this;
+        return $this->_second($second, $locale, 'sub');
     }
 
 
     /**
      * Compares only the second part, returning the difference
-     * Alias for compare($second,Zend_Date::SECOND);
      *
-     * @param $second string/integer - OPTIONAL second to compare, when null the actual second is used for compare
+     * @param $second object  - OPTIONAL second to compare, when null the actual second is compared
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function compareSecond($second = false)
+    public function compareSecond($second = false, $locale = false)
     {
-        if ($second === false) {
-            $second = date("s");
-        }
-        return $this->compare($second, Zend_Date::SECOND);
+        return $this->_second($second, $locale, 'compare');
     }
 
 
     /**
      * Compares only the second part, returning boolean true
-     * Alias for compare($second,Zend_Date::SECOND);
-     *
-     * @param $second string/integer - OPTIONAL second to compare, when null the actual second is used for compare
+     * @param $second object  - OPTIONAL second to compare, when null the actual second is compared
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function isSecond($second = false)
+    public function isSecond($second = false, $locale = false)
     {
-        return ($this->compareSecond($second) == 0);
+        return ($this->compareSecond($second, $locale) == 0);
     }
 
 
