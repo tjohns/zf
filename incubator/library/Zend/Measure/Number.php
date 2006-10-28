@@ -60,28 +60,17 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
     const ROMAN       = 'Number::ROMAN';
 
     private static $_UNITS = array(
-        'Number::BINARY'      => array(2,  ''),
-        // @todo: Unit Sign: SUB 2
-        'Number::TERNARY'     => array(3,  ''),
-        // @todo: Unit Sign: SUB 3
-        'Number::QUATERNARY'  => array(4,  ''),
-        // @todo: Unit Sign: SUB 4
-        'Number::QUINARY'     => array(5,  ''),
-        // @todo: Unit Sign: SUB 5
-        'Number::SENARY'      => array(6,  ''),
-        // @todo: Unit Sign: SUB 6
-        'Number::SEPTENARY'   => array(7,  ''),
-        // @todo: Unit Sign: SUB 7
-        'Number::OCTAL'       => array(8,  ''),
-        // @todo: Unit Sign: SUB 8
-        'Number::NONARY'      => array(9,  ''),
-        // @todo: Unit Sign: SUB 9
-        'Number::DECIMAL'     => array(10, ''),
-        // @todo: Unit Sign SUB 10
-        'Number::DUODECIMAL'  => array(12, ''),
-        // @todo: Unit Sign SUB 16
-        'Number::HEXADECIMAL' => array(16, ''),
-        // @todo: Unit Sign SUB 16
+        'Number::BINARY'      => array(2,  '⑵'),
+        'Number::TERNARY'     => array(3,  '⑶'),
+        'Number::QUATERNARY'  => array(4,  '⑷'),
+        'Number::QUINARY'     => array(5,  '⑸'),
+        'Number::SENARY'      => array(6,  '⑹'),
+        'Number::SEPTENARY'   => array(7,  '⑺'),
+        'Number::OCTAL'       => array(8,  '⑻'),
+        'Number::NONARY'      => array(9,  '⑼'),
+        'Number::DECIMAL'     => array(10, '⑽'),
+        'Number::DUODECIMAL'  => array(12, '⑿'),
+        'Number::HEXADECIMAL' => array(16, '⒃'),
         'Number::ROMAN'       => array(99, '')
     );
 

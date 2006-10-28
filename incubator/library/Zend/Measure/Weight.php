@@ -311,8 +311,7 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
         'Weight::DRAM'                  => array(array('' => 0.45359237, '/' => 256), 'dr'),
         'Weight::DRAM_APOTHECARIES'     => array(0.0038879346,   'dr'),
         'Weight::DYNE'                  => array(1.0197162e-6,   'dyn'),
-        'Weight::ELECTRON'              => array(9.109382e-31,   'me'),
-        // @todo: Unit Sign Electron is small m with sub e
+        'Weight::ELECTRON'              => array(9.109382e-31,   'eâˆ’'),
         'Weight::ELECTRONVOLT'          => array(1.782662e-36,   'eV'),
         'Weight::ETTO'                  => array(0.1,            'hg'),
         'Weight::EXAGRAM'               => array(1.0e+15,        'Eg'),
@@ -383,7 +382,7 @@ class Zend_Measure_Weight extends Zend_Measure_Abstract
         'Weight::MERCANTILE_POUND'      => array(0.46655,        'lb merc'),
         'Weight::METRIC_TON'            => array(1000,           't'),
         'Weight::MIC'                   => array(1.0e-9,         'mic'),
-        'Weight::MICROGRAM'             => array(1.0e-9,         'µg'),
+        'Weight::MICROGRAM'             => array(1.0e-9,         'ï¿½g'),
         'Weight::MILLIDALTON'           => array(1.6605402e-30,  'mD'),
         'Weight::MILLIER'               => array(1000,           'millier'),
         'Weight::MILLIGRAM'             => array(0.000001,       'mg'),
