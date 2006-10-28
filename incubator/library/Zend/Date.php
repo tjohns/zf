@@ -3284,84 +3284,106 @@ class Zend_Date {
 
     /**
      * Returns the week
-     * Alias for clone(Zend_Date::WEEK);toString();
      *
-     * @todo  implement function
+     * @param $locale locale  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function getWeek()
+    public function getWeek($locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
+        $week = $week->get(Zend_Date::WEEK, $locale, FALSE);
+        return $week;
+    }
+
+
+    /**
+     * Returns the calculated week
+     *
+     * @param $week string    - OPTIONAL week to calculate, when null the actual week is calculated
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
+     * @return object
+     */
+    private function _week($week, $locale, $calculation)
+    {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
+        if (empty($week)) {
+            $week = $this->_Date->date('W');
+        } else if (is_object($week)) {
+            $week = $week->get(Zend_Date::WEEK, $locale, FALSE);
+        }
+
+        return $this->_calcdetail($week, Zend_Date::WEEK, $locale, $calculation);
     }
 
 
     /**
      * Sets a new week
-     * Alias for set($week, Zend_Date::WEEK);
      *
-     * @todo  implement function
-     * @param $week string/integer - OPTIONAL week to set, when null the actual week is set
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $week object    - OPTIONAL week to set, when null the actual week is set
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
-    public function setWeek($week, $locale)
+    public function setWeek($week = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_week($week, $locale, 'set');
     }
 
 
     /**
      * Adds a week
-     * Alias for add($week,Zend_Date::WEEK);
      *
-     * @todo  implement function
-     * @param $week object     - OPTIONAL week to add, when null the actual week is add
+     * @param $week object    - OPTIONAL week to add, when null the actual week is add
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
-    public function addWeek($week)
+    public function addWeek($week = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_week($week, $locale, 'add');
     }
 
 
     /**
      * Substracts a week
-     * Alias for sub($week,Zend_Date::WEEK);
      *
-     * @todo  implement function
-     * @param $week object     - OPTIONAL week to sub, when null the actual week is sub
+     * @param $week object    - OPTIONAL week to sub, when null the actual week is sub
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
-    public function subWeek($week)
+    public function subWeek($week = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_week($week, $locale, 'sub');
     }
 
 
     /**
      * Compares only the week part, returning the difference
-     * Alias for compare($week,Zend_Date::WEEK);
      *
-     * @todo  implement function
-     * @param $week string/integer - OPTIONAL week to compare, when null the actual week is used for compare
+     * @param $week object    - OPTIONAL week to compare, when null the actual week is compare
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function compareWeek($week)
+    public function compareWeek($week = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_week($week, $locale, 'compare');
     }
 
 
     /**
      * Compares only the week part, returning boolean true
-     * Alias for compare($week,Zend_Date::WEEK);
      *
-     * @todo  implement function
-     * @param $week string/integer - OPTIONAL week to compare, when null the actual week is used for compare
+     * @param $week object    - OPTIONAL week to compare, when null the actual week is compare
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function isWeek($week)
+    public function isWeek($week = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareWeek($week) == 0);
     }
 }
