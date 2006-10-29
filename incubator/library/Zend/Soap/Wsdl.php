@@ -322,11 +322,7 @@ class Zend_Soap_Wsdl {
 
     public function toXML()
     {
-    	if (function_exists('tidy_repair_string')) {
-        	return tidy_repair_string($this->dom->saveXML(), array('indent' => 1, 'input-xml' => 1, 'output-xml' => 1));
-    	} else {
-    		return $this->dom->saveXML();
-    	}
+   		return $this->dom->saveXML();
     }
     
     /**
