@@ -22,6 +22,10 @@
  */
 require_once 'Zend/Mail/Transport/Exception.php';
  
+// WARNING: This is still experimental. The unit test passes, but the parsing is currently
+// not the best and some methods don't really work yet. If you want to test this class ...
+// ... you've been warned. Please don't report bugs yet, as they might vanish after the
+// parsing changes.
  
 /**
  * @package    Zend_Mail
@@ -110,12 +114,16 @@ class Zend_Mail_Transport_Imap
         $stack = array();
         
         $line = fgets($this->_socket);
+        if($line === false) {
+            throw new Zend_Mail_Transport_Exception('cannot read - connection closed?');            
+        }
+
         //  remove <NL>
         $line = rtrim($line) . ' ';
         
         // seperate tage from line
         list($tag, $line) = explode(' ', $line, 2);
-        
+
         /*
             We start to decode the response here. The unterstood tokens are:
                 literal
@@ -130,7 +138,6 @@ class Zend_Mail_Transport_Imap
         */
         while(($pos = strpos($line, ' ')) !== false) {
             $token = substr($line, 0, $pos);
-//          var_dump(__METHOD__, '------', $token, $stack, $tokens, '------');
             if($token[0] == '(') {
                 array_push($stack, $tokens);
                 $tokens = array();
@@ -138,14 +145,15 @@ class Zend_Mail_Transport_Imap
             }
             if($token[0] == '{') {
                 $endPos = strpos($token, '}');
-                $chars = substr($token, 1, $endPos);
+                $chars = substr($token, 1, $endPos - 1);                
                 if(is_numeric($chars)) {
                     $token = '';
                     while(strlen($token) < $chars) {
                         $token .= fgets($this->_socket);
                     }
                     $tokens[] = $token;
-                    break;
+                    $line = trim(fgets($this->_socket)) . ' ';
+                    continue;
                 }
             }
             if($token[0] == '"') {
@@ -156,7 +164,7 @@ class Zend_Mail_Transport_Imap
                 }
             }
             if($stack && substr($token, -1) == ')') {
-                $tokens[] = substr($token, 0, -1);
+                $tokens[] = rtrim($token, ')');
                 $token = $tokens;
                 $tokens = array_pop($stack);
             }
@@ -169,9 +177,6 @@ class Zend_Mail_Transport_Imap
             $tokens[] = $child;
         }
         
-//      var_dump(__METHOD__, '------', '***', $stack, $tokens, '------');
-//      var_dump(__METHOD__, $wantedTag, $tag, $tokens);
-
         // if tag is wanted tag we might be at the end of a multiline response
         return $tag == $wantedTag;
     }
@@ -189,7 +194,6 @@ class Zend_Mail_Transport_Imap
         $lines = array();
         while(!$this->readLine($tokens, $tag)) {
             if($filter) {
-//              var_dump(__METHOD__, $tokens, $filter);
                 if(is_array($filter)) {
                     if(!in_array($tokens[0], $filter)) {
                         continue;
@@ -235,7 +239,6 @@ class Zend_Mail_Transport_Imap
             if(is_array($token)) {
                 fputs($this->_socket, ' ' . $token[0] . "\r\n");
                 if(!$this->readLine($response, '+') || $response[0] != 'OK') {
-//                  var_dump(__METHOD__, $response);
                     throw new Zend_Mail_Transport_Exception('cannot send literal string');
                 }
                 fputs($this->_socket, $token[1]);
@@ -271,7 +274,7 @@ class Zend_Mail_Transport_Imap
     public function escapeString($string) 
     {
         if(func_num_args() < 2) {
-            if(strpos($string, "\n")) {
+            if(strpos($string, "\n") !== false) {
                 return array('{' . strlen($string) . '}', $string);
             } else {
                 return '"' . str_replace(array('\\', '"'), array('\\\\', '\\"'), $string) . '"';
@@ -282,6 +285,20 @@ class Zend_Mail_Transport_Imap
             $result[] = $this->escapeString($string);
         }
         return $result;
+    }
+    
+    public function escapeList($list)
+    {
+        $result = array();
+        foreach($list as $k => $v) {
+            if(!is_array($v)) {
+//              $result[] = $this->escapeString($v);
+                $result[] = $v;
+                continue;
+            }
+            $result[] = $this->escapeList($v);
+        }
+        return '(' . implode(' ', $result) . ')';
     }
     
     /**
@@ -303,7 +320,17 @@ class Zend_Mail_Transport_Imap
      */
     public function logout() 
     {
-        return $this->requestAndResponse('LOGOUT') && fclose($this->_socket);
+        $result = false;
+        if($this->_socket) {
+            try {
+                $result = $this->requestAndResponse('LOGOUT');
+            } catch (Zend_Mail_Transport_Exception $e) {
+                // ignoring exception
+            }
+            fclose($this->_socket);
+            $this->_socket = null;
+        }
+        return $result;
     }
     
     
@@ -387,5 +414,52 @@ class Zend_Mail_Transport_Imap
     public function examine($box = 'INBOX') 
     {
         return $this->examineOrSelect('EXAMINE', $box);
+    }
+    
+    public function fetch($items, $from, $to = null) 
+    {
+        if($to === null) {
+            $set = (int)$from;
+        } else if(is_array($from)) {
+            $set = implode(',', $from);
+        } else if($to === INF) {
+            $set = (int)$from . ':*';
+        } else {
+            $set = (int)$from . ':' . (int)$to;
+        }
+        
+        $items = (array)$items;
+        $itemList = $this->escapeList($items);
+        
+        $this->sendRequest('FETCH', array($set, $itemList), $tag);
+        
+        $result = array();
+        while(!$this->readLine($tokens, $tag)) {
+            if($tokens[1] != 'FETCH') {
+                continue;
+            }
+            if($to === null && $tokens[0] != $from) {
+                continue;
+            }
+            if(count($items) == 1) {
+                $data = next($tokens[2]);
+            } else {
+                $data = array();
+                while(key($tokens[2]) !== null) {
+                    $data[current($tokens[2])] = next($tokens[2]);
+                    next($tokens[2]);
+                }
+            }
+            if($to === null && $tokens[0] == $from) {
+                return $data;
+            }
+            $result[$tokens[0]] = $data;
+        }
+        
+        if($to === null) {
+            throw new Zend_Mail_Transport_Exception('the single id was not found in response');
+        }
+        
+        return $result;
     }
 }

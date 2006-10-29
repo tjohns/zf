@@ -17,6 +17,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Mail/MboxTest.php';
 require_once 'Zend/Mail/MaildirTest.php';
 require_once 'Zend/Mail/Pop3Test.php';
+require_once 'Zend/Mail/ImapTest.php';
 require_once 'Zend/Mail/InterfaceTest.php';
 
 class Zend_Mail_AllTests
@@ -34,6 +35,9 @@ class Zend_Mail_AllTests
         $suite->addTestSuite('Zend_Mail_MboxTest');
         if(TESTS_ZEND_MAIL_POP3_ENABLED) {
             $suite->addTestSuite('Zend_Mail_Pop3Test');
+        }
+        if(TESTS_ZEND_MAIL_IMAP_ENABLED) {
+            $suite->addTestSuite('Zend_Mail_ImapTest');
         }
         if(TESTS_ZEND_MAIL_MAILDIR_ENABLED) {
             if(file_exists(dirname(__FILE__) . '/_files/test.maildir/cur/messages.tar')) {
