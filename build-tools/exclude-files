@@ -1,3 +1,6 @@
+build-tools/
+documentation/
+incubator/documentation/
 demos/Currency/
 demos/Date/
 demos/Measure/
