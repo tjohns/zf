@@ -2119,68 +2119,131 @@ class Zend_Date {
 
 
     /**
-     * Returns the time of sunrise for this locale or an optional location
-     *
-     * @todo  implement function
-     * @param  $location array - OPTIONAL location of sunrise
-     * @return object
+     * Check if location is supported
+     * 
+     * @param $location array - locations array
+     * @return $horizon float
      */
-    public function getSunRise($location)
+    private function _checkLocation($location)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (!is_set($location['longitude']) or !is_set($location['latitude'])) {
+            $this->throwException("Location must include 'longitude' and 'latitude'.");
+        }
+        if (($location['longitude'] > 180) or ($location['longitude'] < -180)) {
+            $this->throwException('Longitude must be between -180 and 180');
+        }
+        if (($location['latitude'] > 90) or ($location['latitude'] < -90)) {
+            $this->throwException('Latitude must be between -90 and 90');
+        }
+
+        if (!is_set($location['horizon'])){
+            $location['horizon'] = 'effective';
+        }
+
+        switch ($location['horizon']) {
+            case 'civil' :
+                return -0.104528;
+                break;
+            case 'nautic' :
+                return -0.207912;
+                break;
+            case 'astonomic' :
+                return -0.309017;
+                break;
+            default :
+                return -0.0145439;
+                break;
+        }
     }
 
 
     /**
-     * Returns the time of sunset for this locale or an optional location
+     * Returns the time of sunrise for this date and a given location
      *
-     * @todo  implement function
-     * @param  $location array - OPTIONAL location of sunset
+     * @param  $location array - location of sunrise
+     * @return object
+     */
+    public function getSunRise($location)
+    {
+        $horizon = $this->_checkLocation($location);
+        return new Zend_Date($this->_Date->calcSun($location, $horizon, true));
+    }
+
+
+    /**
+     * Returns the time of sunset for this date and a given location
+     *
+     * @param  $location array - location of sunset
      * @return object
      */
     public function getSunSet($location)
     {
-        $this->_Date->throwException('function yet not implemented');
+        $horizon = $this->_checkLocation($location);
+        return new Zend_Date($this->_Date->calcSun($location, $horizon, false));
     }
 
 
     /**
      * Returns an array with all sun-infos for a time and location
      *
-     * @todo  implement function
      * @param  $location array - location of suninfo
-     * @return object
+     * @return array
      */
     public function getSunInfo($location)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (is_set($location['horizon'])) {
+            $horizon = $this->_checkLocation($location);
+            $suninfo = array(
+                'sunrise' => $this->_Date->calcSun($location, $horizon, true),
+                'sunset'  => $this->_Date->calcSun($location, $horizon, false)
+            );
+            return $suninfo;
+        }
+        
+        $suninfo = array();
+        for ($i = 0; $i < 4; ++$i) {
+            switch ($i) {
+                case 0 :
+                    $location['horizon'] = 'effective';
+                    break;
+                case 1 :
+                    $location['horizon'] = 'civil';
+                    break;
+                case 2 :
+                    $location['horizon'] = 'nautic';
+                    break;
+                case 3 :
+                    $location['horizon'] = 'astronomic';
+                    break;
+            }
+            $horizon = $this->_checkLocation($location);
+            $suninfo['sunrise'][$location['horizon']] = $this->_Date->calcSun($location, $horizon, true);
+            $suninfo['sunset'][$location['horizon']]  = $this->_Date->calcSun($location, $horizon, false);
+        }
+        return $suninfo;
     }
 
 
     /**
      * Returns the timezone
      *
-     * @todo  implement function
-     * @param $locale string   - OPTIONAL locale timezone
-     * @return object
+     * @return string
      */
-    public function getTimeZone($locale)
+    public function getTimeZone()
     {
-        $this->_Date->throwException('function yet not implemented');
+        return date_default_timezone_get();
     }
 
 
     /**
      * Sets the timezone
      *
-     * @todo  implement function
-     * @param $timezone timezone - OPTIONAL timezone to set
-     * @param $locale string   - OPTIONAL locale for timezone
-     * @return object
+     * @param $timezone string - timezone to set
+     * @return boolean
      */
-    public function setTimeZone($locale)
+    public function setTimeZone($timezone)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return date_default_timezone_set($timezone);
     }
 
 

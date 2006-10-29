@@ -800,6 +800,123 @@ class Zend_Date_DateObject {
 
 
     /**
+     * Sets the value a to be in the range of [0, $b]
+     * 
+     * @param float $a - value to correct
+     * @param float $b - maximum range to set
+     */
+    private function _range($a, $b) {
+        while ($a < 0) {
+            $a += $b;
+        }
+        while ($a >= $b) {
+            $a -= $b;
+        }
+        return $a;
+    }
+
+
+    /**
+     * Calculates the sunrise or sunset based on a location
+     * 
+     * @param array $location - Location for calculation MUST include 'latitude', 'longitude', 'horizon'
+     * @param bool $rise      - true: sunrise, false: sunset
+     * @return mixed  - false: midnight sun, integer: 
+     */
+    public function calcSun($location, $horizon, $rise = true)
+    {
+        // timestamp within 32bit
+        if (abs($this->_unixtimestamp) <= 0x7FFFFFFF) {
+            if ($rise === true) {
+                return date_sunrise($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
+                                     $location['longitude'], $horizon, $this->_gmtDifference());
+            }
+            return date_sunrise($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
+                                 $location['longitude'], $horizon, $this->_gmtDifference());
+        }
+
+        // self calculation - timestamp bigger than 32bit
+        // fix circle values
+        $quarterCircle      = 0.5 * M_PI;
+        $halfCircle         =       M_PI;
+        $threeQuarterCircle = 1.5 * M_PI;
+        $fullCircle         = 2   * M_PI;
+
+        // radiant conversion for coordinates
+        $radLatitude  = $location['latitude']   * $halfCircle / 180;
+        $radLongitude = $location['longitude']  * $halfCircle / 180;
+
+        // get solar coordinates
+        $tmpRise       = $rise ? $quarterCircle : $threeQuarterCircle;
+        $radDay        = $this->date('z',$this->_unixtimestamp) + ($tmpRise - $radLongitude) / $fullCircle;
+
+        // solar anomoly and longitude
+        $solAnomoly    = $radDay * 0.017202 - 0.0574039;
+        $solLongitude  = $solAnomoly + 0.0334405 * sin($solAnomoly);
+        $solLongitude += 4.93289 + 3.49066E-4 * sin(2 * $solAnomoly);
+
+        // get quadrant
+        $solLongitude = $this->_range($solLongitude, $fullCircle);
+
+        if (($solLongitude / $quarterCircle) - intval($solLongitude / $quarterCircle) == 0) {
+            $solLongitude += 4.84814E-6;
+        }
+
+        // solar ascension
+        $solAscension = sin($solLongitude) / cos($solLongitude);
+        $solAscension = atan2(0.91746 * $solAscension, 1);
+
+        // adjust quadrant
+        if ($solLongitude > $threeQuarterCircle) {
+            $solAscension += $fullCircle;
+        } else if ($solLongitude > $quarterCircle) {
+            $solAscension += $halfCircle;
+        }
+
+        // solar declination
+        $solDeclination  = 0.39782 * sin($solLongitude);
+        $solDeclination /=  sqrt(-$solDeclination * $solDeclination + 1);
+        $solDeclination  = atan2($solDeclination, 1);
+
+        $solHorizon = $horizon - sin($solDeclination) * sin($radLatitude);
+        $solHorizon /= cos($solDeclination) * cos($radLatitude);
+
+        // midnight sun, always night
+        if (abs($solHorizon) > 1) {
+            return false;
+        }
+
+        $solHorizon /= sqrt(-$solHorizon * $solHorizon + 1);
+        $solHorizon  = $quarterCircle - atan2($solHorizon, 1);
+
+        if ($rise) {
+            $solHorizon = $fullCircle - $solHorizon;
+        }
+
+        // time calculation
+        $localTime     = $solHorizon + $solAscension - 0.0172028 * $radDay - 1.73364;
+        $universalTime = $localTime - $radLongitude;
+
+        // determinate quadrant
+        $universalTime = $this->_range($universalTime, $fullCircle);
+
+        // radiant to hours
+        $universalTime *= 24 / $fullCircle;
+
+        // convert to time
+        $hour = intval($universalTime);
+        $universalTime    = ($universalTime - $hour) * 60;
+        $min  = intval($universalTime);
+        $universalTime    = ($universalTime - $min) * 60;
+        $sec  = intval($universalTime);
+
+        return $this->mktime($hour, $min, $sec, $this->date('m', $this->_unixtimestamp),
+                             $this->date('j', $this->_unixtimestamp), $this->date('Y', $this->_unixtimestamp),
+                             -1, true);
+    }
+
+
+    /**
      * Throw an exception
      *
      * Note : for performance reasons, the "load" of Zend/Date/Exception is dynamic
