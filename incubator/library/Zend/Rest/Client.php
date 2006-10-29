@@ -23,7 +23,7 @@
 /**
  * Zend_Service_Abstract
  */
-require_once 'Zend/WebService/Client/Abstract.php';
+require_once 'Zend/Service/Abstract.php';
 
 /**
  * Zend_Rest_Client_Result
@@ -47,7 +47,7 @@ require_once 'Zend/Uri.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Rest_Client extends Zend_WebService_Client_Abstract
+class Zend_Rest_Client extends Zend_Service_Abstract
 {
     /**
      * Zend_Uri of this web service
@@ -202,44 +202,4 @@ class Zend_Rest_Client extends Zend_WebService_Client_Abstract
 		}
 	}
 }
-
-$key = "5f0155b7ee032a68f82befdc12416b1e";
-$flickr_key = '381e601d332ab5ce9c25939570cb5c4b';
-
-$client = new Zend_Rest_Client('http://localhost/zendframework/tests/Zend/Services/test.php');
-$result =  $client->returnArray()->get();
-if ($result->getStatus()) {
-	echo $result->foo;
-}
-
-$result = $client->sayHello('Davey', 'Day')->get();
-if ($result->getStatus()) {
-	echo $result;
-}
-
-$result = $client->returnBadStatus()->post();
-if ($result->getStatus()) {
-	var_dump($result);
-} else {
-	echo $result;
-}
-
-$result = $client->someUnknownFunction()->get();
-if ($result->getStatus()) {
-	var_dump($result);
-} else {
-	echo $result;
-}
-
-/*echo "<br />";
-
-$client = new Zend_Rest_Client('http://api.flickr.com/services/rest/');
-echo $client->method('flickr.test.echo')->name('Davey Shafik')->api_key($flickr_key)->get()->name;
-
-echo "<br />";
-
-$technorati = new Zend_Rest_Client('http://api.technorati.com/bloginfo');
-$technorati->key($key);
-$technorati->url('http://pixelated-dreams.com');
-$result = $technorati->get();
-echo $result->firstname .' '. $result->lastname;*/
+?>

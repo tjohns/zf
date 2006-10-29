@@ -171,6 +171,22 @@ class Zend_Rest_Client_Result implements IteratorAggregate, ArrayAccess {
 		}
 	}
 	
+	public function isError()
+	{
+		$status = $this->getStatus();
+		if ($status) {
+			return false;
+		}
+	}
+	
+	public function isSuccess()
+	{
+		$status = $this->getStatus();
+		if ($status) {
+			return true;
+		}
+	}
+	
 	/**
 	 * toString overload
 	 *

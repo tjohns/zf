@@ -72,7 +72,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 	 */
 	public function __construct()
 	{
-		//set_exception_handler(array($this, "fault"));
+		set_exception_handler(array($this, "fault"));
 		$this->_reflection = new Zend_Server_Reflection();
 	}
 
@@ -298,7 +298,7 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 			$class = false;
 		}
 		
-		if ($function instanceof Zend_Server_Reflection_Method) {
+		if ($function instanceof Zend_Server_Reflection_Function_Abstract) {
 			$method = $function->getName();
 		} else {
 			$method = $function;
