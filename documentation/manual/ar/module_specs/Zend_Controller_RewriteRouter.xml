@@ -76,46 +76,46 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
 	</note>
 
 	<note>
-		For now the current implementation allows for use of any characters except a slash (/) as a variable identifier but
-		it is strongly recommended that one uses only php variable friendly characters. In future the implementation will probably be
-		altered and this may introduce bugs to your code.
+        فى الوقت الحالى , مسموح إستخدام أى حروف ما عدا (/) فى أسماء البراميترات, لكن ينصح بشدة أن تستخدم الحروف 
+        المسموح إستخدامها فى اسماء متغيرات PHP العادية, لأنه ربما تحدث تغييرات فى المستقبل فى طريقة العمل و بالتالى 
+        سيترتب هذا على اخطاء فى الكود الخاص بك.
 	</note>
 
 	<para>
-		There are two special variables which can be used in your routes - 'controller' and 'action'. These special
-		variables will be used to find a controller and/or an action chosen in the URL. The 'action' variable 
-		must always be defined either in the route or as a default parameter. The 'controller' variable will default 
-		to the IndexController if it is not defined.
+        هناك اثنان من المتغيرات الخاصة التى يمكنك إستخدامها فى الـ routes خاصتك - 'controller' و 'action', 
+        هذه المتغيرات الخاصة ستستخدم لإيجاد controller و/ أو action يتم تحديده فى الـ URL. 
+        المتغير الخاص 'action' يجب ان يتم تحديد قيمته سواء فى الـ route او كقيمة أساسية لبراميتر, 
+        و المتغير الخاص 'controller'  إن لم يتم تعريفه مسبقا فسيتم اعتبار قيمته هى 'IndexController'.
 	</para>
 
 	<programlisting role="php"><![CDATA[
 $router->addRoute('user', ':controller/:action');]]></programlisting>
 
 	<para>
-		If you point your browser to 'http://example.com/news/latest' with this route defined the
-		Zend_Controller_Dispatcher will invoke the latestAction of your NewsController.
+        إن قمت بتجربة الوصول الى 'http://example.com/news/latest' من خلال متصفحك , فسيقوم 
+        Zend_Controller_Dispatcher بإستدعاء latestAction من الـ NewsController خاصتك.
 	</para>
 
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.variable-defaults">
-	<title>Variable defaults</title>
+	<title>القيم الأساسية للمتغيرات</title>
 
 	<para>
-		Every variable in the route can have a default. To provide it you have to add a third parameter to the addRoute
-		method. This third parameter is an array with keys as variable names and values as desired defaults.
+من الممكن وضع قيمة أساسية لكل متغير فى الـ route , و لتقوم بهذا يجب ان تمرر براميتر ثالث إلى addRoute , 
+هذا البراميتر الثالث عبارة عن array تتكون من kyes على انها اسماء متغيرات , و values على انها قيم اساسية.
 	</para>
 
 	<programlisting role="php"><![CDATA[
 $router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
 	<para>
-		What may not be clearly visible is that the above route will match URLs like 'http://example.com/archive/2005' and
-		'http://example.com/archive'. In the latter case the variable year will have a value of 2006.
+        الـ route الموضح فى الأعلى سيطابق URLs على الشكل 'http://example.com/archive/2005' و على الشكل 
+        'http://example.com/archive', و لاحظ أن فى الحالة الثانية سيحمل المتغير year القيمة 2006.
 	</para>
 
 	<para>
-		In the above example we haven't set a controller so it will always result in a noRoute action of an
-		IndexController. To make it usable you have to provide a valid controller and a valid action as a default:
+        لاحظ أيضا أن فى المثال السابق لم نضع قيمة للـ controller و بالتالى سيتسبب هذا فى إستدعاء action يسمى noRoute 
+        من IndexController , و لنتفادى هذا يجب أن نوفر قيمة أساسية للـ action و للـ controller :
 	</para>
 
 	<programlisting role="php"><![CDATA[
@@ -124,70 +124,74 @@ $router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller'
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.variable-requirements">
-	<title>Variable requirements</title>
+	<title>متطلبات المتغيرات</title>
 
 	<para>
-		One can add a fourth parameter where variable requirements can be set. These are defined as regular
-		expressions:
+        يمكننا تمرير براميتر رابع إلى addRout حيث سنضع شروط يجب ان تنطبق على المتغيرات, 
+        و هذه الشروط ستوضع على هيئة regular expressions :
 	</para>
 
 	<programlisting role="php"><![CDATA[
 $router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
 
 	<note>
-		Unlike Ruby on Rails, ZF RewriteRouter will match a route and use a default when a fourth parameter variable requirement is not met. So the
-		URL of 'http://example.com/archive/test' will match the above route and set the year to 2006. This functionality
-		may be altered in the future as it is being discussed at the moment of writing of this documentation.
+        على عكس Ruby on Rails, يقوم الـ RewriteRouter الخاص بـ ZF بمقارنة الـ URL الممرر مع الـ route ثم 
+        سيقوم بإستخدام القيم الأساسية الموجودة لديه فى حالة أن المتطلبات الممررة فى البراميتر الرابع لم يتم إستيفائها, 
+        لذلك 'http://example.com/archive/test' عندما سيتم مقارنته مع الـ route سيتم وضع قيمة المتغير year إلى 2006, 
+        هذا السلوك قد يتغير مستقبلا لأنه يتم مناقشة هذه الخاصية فى الوقت الذى تكتب فيه هذه الكلمات.
 	</note>
 
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.rewritebase">
-	<title>Base URL and subdirectories</title>
+	<title>الـ URL الأساسى و المجلدات الفرعية</title>
 
 	<para>
-		Unlike the original Router, RewriteRouter can be used in subdirectories - it automatically detects your base URL and
-		sets it accordingly. For example: if you keep your <code>index.php</code> in a webserver subdirectory named
-		<code>/projects/myapp/index.php</code> rewrite base (base URL) will be set to <code>/projects/myapp</code>. This string will then be 
-		stripped from the beginning of the path before calculating any route matches. This frees one from the necessity of prepending it to
-		any of your routes. The route of <code>'user/:username'</code> will match URIs like
-		<code>http://localhost/projects/myapp/user/martel</code> and <code>http://example.com/user/martel</code>.
+على عكس الـ router السابق, RewriteRouter يمكن إستخدامه فى المجلدات الفرعية, حيث سيقوم تلقائياً بمعرفة 
+الـ URL ألأساسى الذى سيتم إستخدامه. على سبيل المثال , إن كنت تضع ملف index.php خاصتك فى مجلد فرعى 
+على webserver بهذا المسار <code>projects/myapp/index.php/</code>, سيتم وضع قيمة الـ URL الأساسى 
+ليكون <code>projects/myapp/</code>, هذا المسار سيتم تجاهله لاحقاً من بداية المسار عند حدوث عملية مقارنة 
+بالـ route , و هذا يريحك من عملية إضافة هذا المسار إلى الـ routes خاصتك, فإذا كان لديك route مثل 
+<code>'user/:username'</code> , فسيتوافق مع URLs مثل 
+<code>http://localhost/projects/myapp/user/martel</code> و 
+<code>http://example.com/user/martel</code>.
 	</para>
 
 	<note>
-		Automatic rewrite base is case sensitive, so make sure your URL will match a subdirectory name in a filesystem
-		(even on Windows machines). If it doesn't you will get to noRoute action.
+        عملية توقع قيمة الـ URL الأساسى تعتبر حساسة لحالة الحروف, لذلك تأكد من أن الـ URL سيتطابق مع أسم 
+        مجلد فرعى لديك (حتى على أنظمة windows). إذا لم تتطابق سيستدعى الـ action المسمى noRoute.
 	</note>
 
 	<para>
-		Should rewrite base be detected incorrectly you can override it with your own base path with the help of the
-		setRewriteBase method of the RewriteRouter class:
+        إن لم يتم توقع الـ URL الأساسى بشكل صحيح , فيمكنك وضع القيمة الصحيحة التى تراها بإستخدام الـ method المسمى 
+        setRewriteBase فى RewriteRouter :
 	</para>
 
 	<programlisting role="php"><![CDATA[
 $router->setRewriteBase('/projects/myapp');]]></programlisting>
 
 	<note>
-		This step won't be necessary in most cases and is strongly discouraged as it introduces another configuration variable
-		which would have to be altered when one moves code to another directory configuration.
+        هذه الخطوة لن تحتاج إليها فى اغلب الحالات , و ينصح بعدم إستخدامها إلا فى الضرورة القصوى لأن هذا سيترتب 
+        عليه مشاكل عند نقل برنامجك من مكان إلى أخر و ستحتاج تغير القيمة هذه من جديد .
 	</note>
 
 </sect1>
 
 <sect1 id="zend.controller.rewriterouter.default-routes">
-	<title>Default routes</title>
+	<title>الـ routes الأساسية</title>
 
 	<para>
-		Zend_Controller_RewriteRouter is preconfigured with two default routes. The first handles  your root URL and is
-		mapped to indexAction of IndexController: so you have to provide them as outlined in the
+        تم تجهيز Zend_Controller_RewriteRouter بإثنان من الـ routes الأساسية, 
+        الأول يقوم بإدارة الـ URL الرئيسى حيث يشير إلى indexAction و IndexController : لذلك يجب عليك توفيرهما 
+        كما هو موضح فى 
 		<xref linkend="zend.controller.getting-started" />
-		(see <xref linkend="zend.controller.overview.indexcontroller" />).
-		The second default route is included to provide compatibility with the first version of the router. It will match URIs in
-		the shape of <code>'controller/action'</code>.
+		(أنظر <xref linkend="zend.controller.overview.indexcontroller" />).
+        الـ route الأساسى الثانى تم إيجاده ليوفر توافق مع النسخة الأولى من الـ router "الموجه" , حيث سيقبل URIs على الشكل 
+        <code>'controller/action'</code>.
 	</para>
 
 	<para>
-		Default rules are configured as:
+		و بهذا الشكل تم تجهيز الـ routes الأساسية:
 	</para>
 
 	<programlisting role="php"><![CDATA[
@@ -198,8 +202,8 @@ $this->addRoute('default', '', array('controller' => 'index', 'action' => 'index
 $this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
 
 	<note>
-		Though Zend_Controller_RewriteRouter is configured for backwards compatibility it will not match
-		<code>controller/action</code> URIs with additional parameters just yet.
+بالرغم من ان Zend_Controller_RewriteRouter تم تجهيزه ليتوافق مع النسخة الأولى منه , و لكنه لن يتمكن 
+من التطابق مع URIs على الشكل <code>controller/action</code> مع بارمترات إضافية إلى الأن.
 	</note>
 
 </sect1>
