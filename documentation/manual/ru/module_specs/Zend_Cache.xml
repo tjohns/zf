@@ -985,7 +985,7 @@ $res = $cache->foobar2('1', '2');
 -->
 	        </para>
 	        <para>
-	          С другой стороны, идентификатор кэша вычисляется автоматически
+	          Идентификатор кэша вычисляется автоматически
             с использованием <code>$_SERVER['REQUEST_URI']</code> и
             (в зависимости от опций) <code>$_GET</code>, <code>$_POST</code>,
             <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_FILES</code>.
