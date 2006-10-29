@@ -5,27 +5,27 @@
 SVN=/usr/bin/svn
 SVN_USER=
 SVN_PASS=
-ZF_TAG=1415
+ZF_TAG=1416
 
 ZF_SVN_URL=http://framework.zend.com/svn/framework/trunk/
 ZF_PRODUCT_NAME=ZendFramework
 ZF_PRODUCTNAME=ZendFramework
 ZF_VERSION=0.2.0
 ZF_PRODUCT=$(ZF_PRODUCTNAME)-$(ZF_VERSION)
-ZF_EXPORT_DIR=./$(ZF_PRODUCT)-export-$(SVN_TAG)
+ZF_EXPORT_DIR=./$(ZF_PRODUCT)-export-$(ZF_TAG)
 STAGE_HOME=stage
 ZF_STAGE_DIR=$(STAGE_HOME)/$(ZF_PRODUCT)
 
-ZIP=/usr/bin/zip
+ZIP=zip
 ZF_ZIPBALL=$(ZF_PRODUCT).zip
-TAR=/usr/bin/tar
+TAR=tar
 ZF_TARBALL=$(ZF_PRODUCT).tar.gz
 
 # for Windows:
-PHPDOC=php 'C:\php\phpdoc'
+# PHPDOC=php 'C:\php\phpdoc'
 
 # for non-Windows:
-# PHPDOC=php '/usr/local/bin/phpdoc'
+PHPDOC=php '/usr/local/bin/phpdoc'
 
 .PHONY: clean
 
@@ -50,7 +50,7 @@ stage-files:
 
 checkout:
 	@echo "== EXPORTING SVN FILES =="
-	$(SVN) export -r $(SVN_TAG) --quiet --force --config-dir /tmp $(ZF_SVN_URL) $(ZF_EXPORT_DIR)
+	$(SVN) export -r $(ZF_TAG) --quiet --force --config-dir /tmp $(ZF_SVN_URL) $(ZF_EXPORT_DIR)
 
 stage-docs: build-docbook build-phpdoc
 	@echo "== STAGING END-USER DOCUMENTATION (CORE) =="
