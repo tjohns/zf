@@ -5,7 +5,7 @@
 SVN=/usr/bin/svn
 SVN_USER=
 SVN_PASS=
-ZF_TAG=HEAD
+ZF_TAG=1415
 
 ZF_SVN_URL=http://framework.zend.com/svn/framework/trunk/
 ZF_PRODUCT_NAME=ZendFramework

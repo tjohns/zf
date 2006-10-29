@@ -1,6 +1,24 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 0.2.0 / 29-Oct-2006=
+- New MVC implementation
+- New HTTP request and response objects make it easy to automate unit
+  testing for web apps without a web server, and also make it possible
+  to use MVC for command-line and PHP-GTK application development
+- Enhanced pure PHP Lucene-compatible search engine component, performs
+  index optimization and auto-optimization.  Boolean queries through the API.
+- New Mysqli DB adapter
+- New JSON server
+- New REST client and server
+- New XmlRpc client and server
+- New Acl component
+- New Session component
+- New Web Services clients for Delicious and Audioscrobbler
+- New Registry component
+- For detailed list of bugs fixed, see the changelog in the issue tracker
+  at http://framework.zend.com/issues
+
 =RELEASE 0.1.5 / 10-Jul-2006=
 - release notes can be found in the issue tracker at http://framework.zend.com/issues under the project changelog.
 
