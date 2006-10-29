@@ -65,11 +65,14 @@
     </chapter> -->
     <chapter id="zend.http">
         <title>Zend_Http</title>
+        <!--
         &module_specs.Zend_Http_Client;
+        -->
         &module_specs.Zend_Http_Response;
-    &module_specs.Zend_Http_Cookie_Handling;
+        &module_specs.Zend_Http_Cookie_Handling;
     </chapter>
-<!--    <chapter id="zend.json">
+    <!--
+    <chapter id="zend.json">
         <title>Zend_Json</title>
         &module_specs.Zend_Json;
     </chapter>
@@ -100,15 +103,19 @@
         &module_specs.Zend_Search-Charset;
         &module_specs.Zend_Search-Extending;
         &module_specs.Zend_Search-JavaLucene;
-    </chapter> -->
+    </chapter>
+    -->
     <chapter id="zend.service">
         <title>Zend_Service</title>
         &module_specs.Zend_Service_Delicious;
     </chapter>
-<!--    <chapter id="zend.view">
+    <!--
+    <chapter id="zend.view">
         <title>Zend_View</title>
         &module_specs.Zend_View;
-    </chapter-->
+    </chapter>
+    -->
+    <!--
     <chapter id="zend.measure">
         <title>Zend_Measure</title>
         &module_specs.Zend_Measure_Introduction;
@@ -119,15 +126,18 @@
         &module_specs.Zend_Measure_Special;
         &module_specs.Zend_Measure_Types;
     </chapter>
+    -->
     <chapter id="zend.rest">
         <title>Zend_Rest</title>
         &module_specs.Zend_Rest;
     </chapter>
+    <!--
     <chapter id="zend.locale">
         <title>Zend_Locale</title>
         &module_specs.Zend_Locale_Introduction;
         &module_specs.Zend_Locale_Functions;
     </chapter>
+    -->
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
         &module_specs.Zend_XmlRpc;
@@ -136,8 +146,10 @@
         <title>Zend_Server</title>
         &module_specs.Zend_Server;
     </chapter>
+    <!--
     &module_specs.Zend_Locale_Appendix_Languages;
     &module_specs.Zend_Locale_Appendix_Regions;
+    -->
     <!-- &ref.faq; -->
     &ref.coding_standard;
     &ref.copyrights;

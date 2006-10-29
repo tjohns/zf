@@ -19,8 +19,9 @@ clean:
 pdf:	entities.ent
 
 entities.ent:	./build/mkentities.sh $(DOCS)
-	./build/mkentities.sh $(DOCS) > .ent
-	if [ ! -f entities.ent ] || [ ! cmp entities.ent .ent ]; then mv .ent entities.ent ; fi
+	sh ./build/mkentities.sh $(DOCS) > .ent
+	[ -s .ent ] && mv .ent entities.ent
+	-rm -f .ent
 
 # Build the docs in HTML format
 
