@@ -55,11 +55,11 @@ checkout:
 stage-docs: build-docbook build-phpdoc
 	@echo "== STAGING END-USER DOCUMENTATION (CORE) =="
 	for lang in $(ZF_EXPORT_DIR)/documentation/manual/*/ ; \
-		do rsync --archive --delete $$lang/html $(ZF_STAGE_DIR)/documentation/end-user/core/`basename $$lang` ; \
+		do rsync --archive --delete $$lang/html/ $(ZF_STAGE_DIR)/documentation/end-user/core/`basename $$lang` ; \
 	done
 	@echo "== STAGING END-USER DOCUMENTATION (INCUBATOR) =="
 	-for lang in $(ZF_EXPORT_DIR)/incubator/documentation/manual/*/ ; \
-		do rsync --archive --delete $$lang/html $(ZF_STAGE_DIR)/documentation/end-user/incubator/`basename $$lang` ; \
+		do rsync --archive --delete $$lang/html/ $(ZF_STAGE_DIR)/documentation/end-user/incubator/`basename $$lang` ; \
 	done
 
 build-docbook: 
