@@ -831,7 +831,7 @@ class Zend_Date_DateObject {
                 return date_sunrise($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
                                      $location['longitude'], $horizon, $this->_gmtDifference());
             }
-            return date_sunrise($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
+            return date_sunset($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
                                  $location['longitude'], $horizon, $this->_gmtDifference());
         }
 
