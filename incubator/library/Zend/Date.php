@@ -1983,7 +1983,7 @@ class Zend_Date {
      */
     public function getIso()
     {
-        return $this->get(Zend_Date::ISO8601);
+        return $this->get(Zend_Date::ISO_8601);
     }
 
 
@@ -1998,7 +1998,7 @@ class Zend_Date {
         if (empty($date)) {
             $date = $this->_Date->date('c');
         }
-        return $this->set($date, Zend_Date::ISO8601);
+        return $this->set($date, Zend_Date::ISO_8601);
     }
 
 
@@ -2013,7 +2013,7 @@ class Zend_Date {
         if (empty($date)) {
             $date = $this->_Date->date('c');
         }
-        return $this->add($date, Zend_Date::ISO8601);
+        return $this->add($date, Zend_Date::ISO_8601);
     }
 
 

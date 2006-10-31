@@ -1092,4 +1092,158 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Format::getInteger('1.234.567,12345', 'de_AT');
         $this->assertEquals($value, 1234567, "value 1234567 expected");
     }
+
+
+    /**
+     * test to standard locale
+     * expected string
+     */
+    public function testIntegerStandardToNull()
+    {
+        $value = Zend_Locale_Format::toInteger(0);
+        $this->assertEquals($value, '0', "string 0 expected");
+    }
+
+
+    /**
+     * test to language locale
+     * expected string
+     */
+    public function testIntegerLanguageToNull()
+    {
+        $value = Zend_Locale_Format::toInteger(0, 'de');
+        $this->assertEquals($value, '0', "string 0 expected");
+    }
+
+
+    /**
+     * test to region locale
+     * expected string
+     */
+    public function testIntegerRegionToNull()
+    {
+        $value = Zend_Locale_Format::toInteger(0, 'de_AT');
+        $this->assertEquals($value, '0', "string 0 expected");
+    }
+
+
+    /**
+     * test negative integer region locale
+     * expected string
+     */
+    public function testIntegerRegionToNegativeInt()
+    {
+        $value = Zend_Locale_Format::toInteger(-1234567, 'de_AT');
+        $this->assertEquals($value, '-1.234.567', "string -1.234.567 expected");
+    }
+
+
+    /**
+     * test positive integer region locale
+     * expected string
+     */
+    public function testIntegerRegionToPositiveInt()
+    {
+        $value = Zend_Locale_Format::toInteger(1234567, 'de_AT');
+        $this->assertEquals($value, '1.234.567', "string 1.234.567 expected");
+    }
+
+
+    /**
+     * test region locale with seperation
+     * expected string
+     */
+    public function testIntegerRegionToSeperatedNull()
+    {
+        $value = Zend_Locale_Format::toInteger(0.1234567, 'de_AT');
+        $this->assertEquals($value, '0', "string 0 expected");
+    }
+
+
+    /**
+     * test negative seperation region locale
+     * expected string
+     */
+    public function testIntegerRegionToSeperatedNegative()
+    {
+        $value = Zend_Locale_Format::toInteger(-1234567.12345, 'de_AT');
+        $this->assertEquals($value, '-1.234.567', "string -1.234.567 expected");
+    }
+
+
+    /**
+     * test positive seperation language locale
+     * expected string
+     */
+    public function testIntegerRegionToSeperatedPositive()
+    {
+        $value = Zend_Locale_Format::toInteger(1234567.12345, 'de_AT');
+        $this->assertEquals($value, '1.234.567', "value 1.234.567 expected");
+    }
+
+
+    /**
+     * test without seperation language locale
+     * expected string
+     */
+    public function testIntegerRegionWithoutSeperatedPositive()
+    {
+        $value = Zend_Locale_Format::toInteger(1234567.12345, 'ar_QA');
+        $this->assertEquals($value, '1234567', "value 1234567 expected");
+    }
+
+
+    /**
+     * test without seperation language locale
+     * expected string
+     */
+    public function testIntegerRegionWithoutSeperatedNegative()
+    {
+        $value = Zend_Locale_Format::toInteger(-1234567.12345, 'ar_QA');
+        $this->assertEquals($value, '1234567-', "value 1234567- expected");
+    }
+
+
+    /**
+     * test with two seperation language locale
+     * expected string
+     */
+    public function testIntegerRegionWithTwoSeperatedPositive()
+    {
+        $value = Zend_Locale_Format::toInteger(1234567.12345, 'dz_BT');
+        $this->assertEquals($value, '12,34,567', "value 12,34,567 expected");
+    }
+
+
+    /**
+     * test with two seperation language locale
+     * expected string
+     */
+    public function testIntegerRegionWithTwoSeperatedNegative()
+    {
+        $value = Zend_Locale_Format::toInteger(-1234567.12345, 'mk_MK');
+        $this->assertEquals($value, '-(1.234.567)', "value -(1.234.567) expected");
+    }
+
+
+    /**
+     * test if isNumber
+     * expected boolean
+     */
+    public function testIsInteger()
+    {
+        $value = Zend_Locale_Format::isInteger('-1.234.567,12345', 'de_AT');
+        $this->assertEquals($value, TRUE, "TRUE expected");
+    }
+
+
+    /**
+     * test if isNumberFailed
+     * expected boolean
+     */
+    public function testIsIntegerFailed()
+    {
+        $value = Zend_Locale_Format::isInteger('textwithoutnumber', 'de_AT');
+        $this->assertEquals($value, FALSE, "FALSE expected");
+    }
 }
