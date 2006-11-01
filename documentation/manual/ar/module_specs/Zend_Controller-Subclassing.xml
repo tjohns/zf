@@ -2,82 +2,82 @@
 	<title>Subclassing</title>
 	
 	<sect2 id="zend.controller.subclassing.introduction">
-		<title>Introduction</title>
+		<title>مقدمة</title>
 		<para>
-			The <code>Zend_Controller</code> system was built with extensibility in mind, either
-			by subclassing the existing classes or writing new classes that implement 
-			the interfaces <code>Zend_Controller_Router_Interface</code> and <code>Zend_Controller_Dispatcher_Interface</code>.
-		</para>
+                تم بناء <code>Zend_Controller</code> و فى اعتبارنا ان يكون قابل للتمدد بسهولة, سواء عن طريق إن شاء 
+                subclasses ترث من الـ class الموجودة او إنشاء classes جديدة تعتمد على الـ interfaces المسمى 
+                <code>Zend_Controller_Router_Interface</code> و 
+                <code>Zend_Controller_Dispatcher_Interface</code>.
+        </para>
 		
 		<para>
-			Possible reasons for implementing a new router or dispatcher might be:
+        الأسباب الممكنة لإنشاء router 'موجه' أو dispatcher 'منفذ' جديد , من الممكن أن تكون :
+
 			
 			<itemizedlist>
 				<listitem>
 					<para>
-						The existing URI routing system is not suitable in some way, such as integrating
-						into an existing website that uses its own conventions for routing that do not
-						mesh with the routing mechanism provided with the Zend Framework.
+                        احيانا يكن نظام التوجيه "routing" الحالى غير مناسب فى بعض الحالات, مثل أن يتم إستخدامه فى موقع ما يستخدم 
+                        أسلوب أخر لأعادة التوجيه "routing" لا يتوافق مع ميكانيكية عمل الموجه الذى يوفره إطار عمل Zend.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						You need to implement routing for something completely different.  The <code>Zend_Controller_Router</code>
-						class only deals with URIs.  It's possible and likely that you might want to use the MVC
-						pattern for developing another type of program, such as a console application.  In the case of
-						a console application, a custom router could process command line arguments to determine
-						the route.
+                        ربما تريد أن تطبق عملية التوجيه "routing" بشكل او بطريقة مختلفة تماماً , 
+                        كما قرأت , <code>Zend_Controller_Router</code> يتعامل فقط مع الـ URIs, لكن من المحتمل أنك ستود إستخدام الـ 
+                        MVC pattern لتطوير نوع أخر من البرامج , مثل تطبيقات الـ console , ففى هذه الحالة ستحتاج الى router خاص 
+                        يقوم بمعالجة مدخلات الـ command line ليتعرف على الـ route المطلوب .
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						The mechanism provided by <code>Zend_Controller_Dispatcher</code> is not suitable.  The default configuration
-						assumes a convention that controllers are classes and actions are methods of those classes.
-						However, there are many other strategies for doing this.  One example would be where controllers
-						are directories and actions are files within those directories.
+                        و ربما تكن الألية التى يوفرها <code>Zend_Controller_Dispatcher</code> غير متناسبة مع احتياجك , 
+                        الإعدادات الأساسية تعتبر أن الـ controllers عبارة عن classes و أن الـ actions عبارة عن methods فى هذه الـ classes , 
+                        لكن هناك استراتيجيات اخرى يمكن اعتمادها لتنفذ نفس الأداء , على سبيل المثال يمكن اعتبار الـ controllers عبارة عن 
+                        مجلدات "directories" و الـ actions عبارة عن ملفات داخل هذه المجلدات.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						You wish to provide additional capabilities that will be inherited by all of your controllers.
-						For example, <code>Zend_Controller_Action</code> does not integrate with <code>Zend_View</code> by default.  
-						However, you could extend your own controller to do this, and using it would not require modifying the
-						supplied <code>Zend_Controller_Router</code> or <code>Zend_Controller_Dispatcher</code>.
+                        و ربما تود أن توفر امكانيات و خصائص اضافية يمكن أن ترثها كل الـ controllers لديك , 
+                        على سبيل المثال , الأعدادات الأساسية لا توفر امكانية  أن يتكامل <code>Zend_Controller_Action</code> فى
+                         عمله تلقائياً مع <code>Zend_View</code> , لكن يمكنك أن تنشئ الـ controller الخاص بك الذى يوفر هذه الأمكانية,
+                        و ذلك عن طريق الوراثة من <code>Zend_Controller_Action</code> ,  
+                        و إستخدامه لن يحتاج إلى أى تعديلات على <code>Zend_Controller_Router</code> أو 
+                        <code>Zend_Controller_Dispatcher</code>.
 					</para>
 				</listitem>
 			</itemizedlist>
 				
-			Please be careful when overriding significant parts of the system, particularly the dispatcher.  One of
-			the advantages of <code>Zend_Controller</code> is that it establishes common conventions for building applications.  If
-			too much of this default behavior is changed, some of these advantages are lost.  However, there are many
-			different needs and one solution can't fit them all, so the freedom is provided if needed.
+            يرجى أن تكن حريص عند محاولة تغيير أجزاء من النظام , تحديداً المنفذ "dispatcher". 
+            إحدى ميزات <code>Zend_Controller</code> هى أنه يوفر الأمكانيات الأساسية لبناء التطبيقات , لكن ربما إذا تم تغيير 
+            جزء كبير من سلوكه الأساسى , ستضيع بعض ميزاته المتوافرة فى حالته الطبيعية. لكن بالطبع هناك احتياجات و حالات مختلفة 
+            و لا يمكن أن يقوم حل واحد بتوفير كل هذه الأحتياجات , فلذلك تتوافر لديك الحرية التامة للتعديل إذا احتجتها.
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.subclassing.conventions">
-		<title>Conventions</title>
+		<title>التعريفات</title>
 		
 		<para>
-			When subclassing any of the Zend_Controller classes, you are strongly encouraged to follow these
-			conventions for naming or storing files.  Doing so will ensure that another programmer who is familiar
-			with the Zend Framework will be able to understand your project easily.
+            عند إنشائك لـ subclasses من اى من الـ classes المتوفرة فى Zend_Controller , يفضل أن تستخدم الأساليب التالية لتعريف 
+            الـ classes او اسماء الملفات , اتباعك لهذه الأساليب فى التعريف سيسهل لأى مبرمج أخر يستخدم ZF أن يفهم كيفية عمل مشروعك .
 		</para>
 		
 		<sect3 id="zend.controller.subclassing.prefix">
 			<title>Prefix</title>
 				
 			<para>
-				Classes included with the Zend Framework follow a convention where every class is prefixed by
-				"Zend_".  This is the prefix.  We recommend that you name all of your classes in the same way,
-				e.g. if your company name is Widget, Inc., the prefix might be "Widget_".  
-			</para>
+                كل الـ classes المتوفرة داخل ZF تتبع نفس الأسلوب فى التعريف حيث أن كل class يوجد فى بداية اسمه النص "_Zend" , 
+                هذا هو ما يسمى الـ prefix , لذلك ننصح أن تقوم بتسمية كل الـ classes التى تنشئها بنفس الأسلوب, على سبيل المثال أن كان 
+                إسم الشركة التى تعمل بها هو "Widget" , فيمكنك أن تضع الـ prefix الخاص بأسماء ال classes خاصتك ليكون "_Widget". 			</para>
 		</sect3>
 		
 		<sect3 id="zend.controller.directory.layout">
-			<title>Directory Layout</title>
+			<title>بنية المجلدات</title>
 			
 			<para>
-				The <code>Zend_Controller</code> classes are stored in the library directory as follows:
+                كل الـ classes الخاصة بـ <code>Zend_Controller</code> يتم حفظها فى المجلد library كما يلى : 
             </para>
     <programlisting role="php"><![CDATA[
 /library
@@ -88,13 +88,14 @@
       Router.php
 ]]></programlisting>			
             <para>
-				When subclassing <code>Zend_Controller</code> classes, it is recommended that the new classes
-				be stored in an identical structure under your prefix.  This will make them easy to find for
-				someone during that learning process of reviewing the code for your project.  
+                عند القيام بإنشاء subclasses من الـ classes الخاصة بـ <code>Zend_Controller</code> , ينصح 
+                أن يتم وضع الـ classes الجديدة فى مجلدات لها بنية معرفة تحت اسم الـ prefix الذى تستخدمه , 
+                هذا سيسهل ايجاد هذه الـ classes من قبل أى مبرمج يعمل على مشروعك . 
 			</para>
 			
 			<para>
-				For example, a project from Widget, Inc. which implements only a custom router might look like this:
+                على سبيل المثال, إن قامت شركة اسمها widget بإنشاء نسختها المعدلة من الموجه "router" ,
+                 أن تكن بنية المجلدات بهذا الشكل .
 			</para>	
 <programlisting role="php"><![CDATA[
 /library
@@ -105,17 +106,19 @@
       README.txt
 ]]></programlisting>			
             <para>
-				Notice in this example that the <code>Widget/Controller/</code> directory mirrors the <code>Zend/Controller/</code>
-				directory wherever possible.  In this case, it provides the class <code>Widget_Controller_Router</code>,
-				which would be either a subclass or replacement for <code>Zend_Controller_Router</code> implementing
-				<code>Zend_Controller_Router_Interface</code>.
+                لاحظ أن فى هذا المثال المجلد <code>/Widget/Controller</code> يأتى على نفس هيئة 
+                <code>/Zend/Controller</code> و هذا الأسلوب يمكنك أن تتبعه إن امكن . فى هذا المثال 
+                يوجد <code>Widget_Controller_Router</code> و الذى من الممكن أن يكن subclass او بديل 
+                لـ <code>Zend_Controller_Router</code> و ذلك بتطبيقه للـ interface المسمى 
+                <code>Zend_Controller_Router_Interface</code>.
+
 			</para>
 			
 			<para>
-				Also, notice in the example above that a <code>README.txt</code> file has been placed in <code>Widget/Controller/</code>.
-				Zend strongly encourages you to document your projects through supplying separate tests and
-				documentation for customers.  However, we encourage you to also place a simple <code>README.txt</code> file
-				right in the directory to briefly explain your changes and how they work.
+                أيضاً, لاحظ فى المثال السابق أن الملف <code>README.txt</code> تم وضعه فى المجلد 
+                <code>/Widget/Controller</code> , تنصح ZF أن يتم توفير مستندات توثيقية "documentations" للمشاريع 
+                التى تقوم بها إلى جانب اختبارات "tests" للبرنامج عند تقديمه لعميلك, لكن ننصح ايضا ان تضع 
+                ملف <code>README.txt</code> فى المجلد لتوضيح تغييراتك الجديدة على الـ classes و كيف سيتم التعامل معها .
 			</para>
 		</sect3>
 	</sect2>
@@ -124,7 +127,8 @@
 		<title>Router Interface</title>
 		
 		<para>
-			The interface <code>Zend_Controller_Router_Interface</code> provides a definition for only one method:
+            الـ interface المسمى <code>Zend_Controller_Router_Interface</code> 
+            يوفر تعريف لـ method واحد فقط : 
         </para>
         <programlisting role="php"><![CDATA[<?php
 				
@@ -137,17 +141,17 @@
 
 ?>]]></programlisting>
         <para>
-			Routing only occurs once: when the request is first received into the system.  The purpose of the
-			router is to generate a <code>Zend_Controller_Dispatch_Token</code> that specifies a controller and action of
-			that controller.  This is then passed to the dispatcher.  If it is not possible to map a route to 
-			a dispatch token (nonsenical route) then a boolean, <code>FALSE</code>, should be returned.
+            عملية التوجيه "routing" تحدث مرة واحدة , و ذلك بمجرد استلام النظام للطلب , 
+            و يتواجد الـ router لينتج <code>Zend_Controller_Dispatch_Token</code> و الذى 
+            يحدد الـ controller و الـ action التابع لهذا الـ controller , و هذا يتم تمريره لاحقا الى المنفذ "dispatcher", و فى حالة 
+            أنه إذا لم يتم التعرف على بيانات الـ route (ربما نتج عن عملية تحويل غير منطقية ) سيتم ارجاع القيمة FALSE .
 		</para>
 		
 		<para>
-			Some routers may process dynamic elements and need a way to determine if the dispatch token generated
-			is actually dispatchable before returning it.  For this reason, the router receives the object handle 
-			of the dispatcher as the sole argument to its <code>route()</code> method.  The dispatcher provides a method,
-			<code>isDispatchable()</code>, for this testing.
+            بعض الموجهات "routers" تقوم بمعاجلة الطلبات و تحب ان تتأكد من أن الـ token الذى قامت بإنشائه قابل للتنفيذ قبل 
+            أن تقوم بإرجاعه , و لهذا السبب يقوم الـ router بإستقبال الـ object handle الخاص بالـ dispatcher 
+            كالبراميتر الأساسى للـ method المسمى <code>()route</code>, 
+            و يقوم الـ dispatcher بتوفير method يسمى <code>()isDispatchable</code> للقيام بهذا الأختبار.
 		</para>
 	</sect2>
 	
@@ -155,19 +159,20 @@
 		<title>Dispatcher Interface</title>
 		
 		<para>
-			<code>Zend_Controller_Front</code> will first call the router to receive the first dispatch token, which it will
-			pass to the dispatcher.  The dispatcher will dispatch the action (instantiate the controller, call
-			its action) and then return with either a boolean, FALSE, or another dispatch token.  
+        سيقوم <code>Zend_Controller_Front</code> بإستدعاء الـ router ليستقبل أول dispatch token , 
+        و الذى سيتم تمريره إلى الـ dispatcher . سيقوم الـ dispatcher بتنفيذ الـ action (عن طريق إنشاء instance من 
+        الـ controller ثم إستدعاء الـ action منه ) , ثم سيقوم بإرجاع اما القيمة FALSE أو dispatch token جديد. 
 		</para>
 		
 		<para>
-			<code>Zend_Controller_Front</code> repeatedly calls the dispatcher until a dispatch token is not returned from
-			it.  This is known as the dispatch loop.  It allows for actions to be processed sequentially
-			until all work has been done.
+            يقوم <code>Zend_Controller_Front</code> يإستدعاء الـ dispatcher بشكل متكرر و ذلك إلى أن 
+            لا يتم إرجاع dispatch token جديد من الـ dispatcher , و هذا ما يسمى بحلقة التنفيذ او dispatch loop , 
+            و هذا الأسلوب يسمح بتنفيذ الـ actions بتسلسل منطقى إلى ان ينتهى كل العمل .
 		</para>
 		
 		<para>
-			The interface <code>Zend_Controller_Dispatcher_Interface</code> provides definitions for two methods:
+        الـ interface المسمى <code>Zend_Controller_Dispatcher_Interface</code> 
+        يوفر تعريف لإثنين من الـ methods :
         </para>
         <programlisting role="php"><![CDATA[<?php
 				
@@ -179,10 +184,13 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
         <para>
-    		<code>isDispatchable()</code> checks if a dispatch token is dispatchable.  If it is, it returns <code>TRUE</code>.  
-    		Otherwise, it returns <code>FALSE</code>.  The definition of what is dispatchable is left to the class 
-    		implementing the interface.  In the case of the default implementation, <code>Zend_Controller_Dispatcher</code>, it means
-    		that the controller file exists, the class exists within the file, and the action method exists within the class.
+            يقوم <code>()isDispatchable</code> بالتأكد من ان الـ dispatch token الممرر إليه قابل للتنفيذ.
+            و يرجع TRUE إن كان قابل , أو يرجع FALSE إن كان غير قابل للتنفيذ, 
+            أما تعريف المعنى المقصود من أن هذا الـ dispatch token قابل للتنفيذ ام لا, متروكة للمبرمج الذى سيستخدم الـ interface , 
+            و فى تطبيقنا الأساسى الذى اعتمدناه فى <code>Zend_Controller_Dispatcher</code> 
+             كانت القابلية للتنفيذ هى ان يكون الملف الذى يحتوى الـ controller موجود , و أن يكون 
+            الـ class الخاص بهذا الـ controller موجود فى الملف , و أن الـ method الذى يحمل نفس اسم الـ action 
+            موجود داخل هذا الـ class .
         </para>
 		<programlisting role="php"><![CDATA[<?php
 			
@@ -194,8 +202,9 @@ public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
 		<para>
-    		<code>dispatch()</code> is where the work gets done.  This method must execute the action of the controller.
-    		It must return either a dispatch token or a boolean, FALSE, to indicate that there is no more work to do.
+        <code>()dispatch</code> هو من يقوم بالتفيذ , هذا الـ method يجب أن ينفذ الـ action الخاص بالـ controller , 
+        و يجب أن يرجع إما dispatch token جديد ليتم تنفيذه ايضا , أو القيمة FALSE 
+        ليعرف انه لا يوجد عمل أخر يجب تنفيذه.
 		</para>
 	</sect2>
 		
