@@ -1,0 +1,93 @@
+<sect1 id="zend.acl.advanced">
+
+    <title>Advanced Use</title>
+
+    <sect2 id="zend.acl.advanced.storing">
+
+        <title>Storing ACL Data for Persistence</title>
+
+        <para>
+        Zend_Acl was designed in such a way that it does not require any particular backend technology such as a database or cache server for storage of the ACL data. Its complete PHP implementation enables customized administration tools to be built upon Zend_Acl with relative ease and flexibility. Many situations require some form of interactive maintenance of the ACL, and Zend_Acl provides methods for traversing the structure and for determining the access controls with respect to AROs or ACOs.
+        </para>
+
+        <para>
+        Storage of ACL data is therefore left as a task for the developer, since use cases are expected to vary widely for various situations. Because Zend_Acl is serializable, ACL objects may be serialized with PHP's <ulink url="http://php.net/serialize"><code>serialize()</code></ulink> function, and the results may be stored anywhere the developer should desire, such as a file, database, or caching mechanism.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.acl.advanced.traversing">
+
+        <title>Traversing the ACL</title>
+
+        <para>
+        To retrieve an array of all child nodes of an ACO, you may simply iterate through the results of the <code>getChildren()</code> method. For each child object returned, you may also retrieve the 'allow' and 'deny' permissions as separate objects for inspection. These are returned as associative arrays, with the keys representing the defined AROs and the values containing an array of defined contexts:
+        </para>
+
+        <programlisting role="php"><![CDATA[// Retrieve default ACL permissions from the root ACO
+foreach ($acl->getAllow() as $aro => $permissions) {
+    echo "Allow: $aro = " . join(', ', $permissions) . "\n";
+}
+foreach ($acl->getDeny() as $aro => $permissions) {
+    echo "Deny:  $aro = " . join(', ', $permissions) . "\n";
+}
+
+// Retrieve all 1st-level children ACOs and list permissions specific to each child ACO
+echo "\n";
+foreach ($acl->getChildren() as $aco) {
+
+    echo "Path: " . $aco->getPath(). "\n";
+
+    foreach ($aco->getAllow() as $aro => $permissions) {
+        echo "Allow: $aro = " . join(', ', $permissions) . "\n";
+    }
+
+    foreach ($aco->getDeny() as $aro => $permissions) {
+        echo "Deny:  $aro = " . join(', ', $permissions) . "\n";
+    }
+
+    echo "\n";
+}]]></programlisting>
+
+        <para>
+        You can also call <code>getParent()</code> to access each ACO's parent for traversing up to the root of the ACL.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.acl.advanced.view_from_aro">
+
+        <title>Retrieving an ARO-Specific View of the ACL</title>
+
+        <para>
+        You may also retrieve an inclusive subset of an ACL by calling the <code>getValidAco()</code> method upon an ARO. This method traverses the ACL starting from the provided ACO and returns a new Zend_ACL object. This feature limits the amount of data in the returned ACL to that which pertains to the ARO in question.
+        </para>
+
+        <programlisting role="php"><![CDATA[// Fetch the ACL as it pertains to the marketing ARO from the root
+$aclMarketing = $aro->marketing->getValidAco($acl);
+
+// Same as above, but limiting the view to the newsletter and its descendants
+$aclMarketingNewsletter = $aro->marketing->getValidAco($acl->newsletter);]]></programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.acl.advanced.permitted_aros">
+
+        <title>Retrieving all AROs Having Access to an ACO</title>
+
+        <para>
+        An array of ARO instances can also be returned for each ACO node in the ACL. The <code>getValidAro()</code> method available for ACOs returns a list of all AROs that have access to the ACO, whether through specific or inherited permissions. To limit the search to particular AROs, simply supply either a single ARO identifier or an array of ARO identifiers.
+        </para>
+
+        <programlisting role="php"><![CDATA[// Returns array of 'staff', 'editor', 'marketing', and 'administrator'
+$aroList = $acl->news->getValidAro();
+
+// Returns array containing only 'staff'
+$aroList = $aro->news->getValidAro(array($aro->guest, $aro->staff));]]></programlisting>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

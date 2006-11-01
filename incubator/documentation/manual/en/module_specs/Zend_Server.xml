@@ -17,7 +17,6 @@
         and <code>loadFunctions()</code> methods.
     </para>
 </sect1>
-&module_specs.Zend_Server_Reflection;
 <!--
 vim:se ts=4 sw=4 et:
 -->
