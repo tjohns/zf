@@ -413,7 +413,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return int
      */
-    static public function extractCode(&$response_str)
+    static public function extractCode($response_str)
     {
         preg_match("|^HTTP/[\d\.x]+ (\d+)|", $response_str, $m);
 
@@ -430,7 +430,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return string
      */
-    static public function extractMessage(&$response_str)
+    static public function extractMessage($response_str)
     {
         preg_match("|^HTTP/[\d\.x]+ \d+ (.+)$|", $response_str, $m);
 
@@ -447,7 +447,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return string
      */
-    static public function extractVersion(&$response_str)
+    static public function extractVersion($response_str)
     {
         preg_match("|^HTTP/([\d\.x]+) \d+|", $response_str, $m);
 
@@ -464,7 +464,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return array
      */
-    static public function extractHeaders(&$response_str)
+    static public function extractHeaders($response_str)
     {
         $headers = array();
         $lines = explode("\n", $response_str);
@@ -504,7 +504,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return string
      */
-    static public function extractBody(&$response_str)
+    static public function extractBody($response_str)
     {
         list(, $body) = preg_split('/^\r?$/m', $response_str, 2);
         $body = ltrim($body);

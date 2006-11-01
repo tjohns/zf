@@ -79,9 +79,9 @@ class Zend_Http_Client
      * @var unknown_type
      */
     protected $config = array(
-        'maxredirects'        => 5,
+        'maxredirects'       => 5,
         'strictredirects'    => false,
-        'useragent'            => 'Zend_Http_Client/0.1.5',
+        'useragent'          => 'Zend_Http_Client',
         'timeout'            => 10,
         'adapter'            => 'Zend_Http_Client_Adapter_Socket',
         'httpversion'        => self::HTTP_1 
