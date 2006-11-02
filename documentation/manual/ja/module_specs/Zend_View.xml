@@ -221,12 +221,12 @@ echo $view->render('someView.php');
         <title>ビュースクリプトのパス</title>
         
         <para>
-            デフォルトでは、Zend_View
-            はビュースクリプトがコントローラスクリプトと同じディレクトリにあることを想定しています。
+            デフォルトでは、Zend_View は、
+            ビュースクリプトが呼び出し元スクリプトからの相対パス上にあることを想定しています。
             例えばコントローラスクリプトが "/path/to/app/controllers"
             にあった場合に、そこで $view->render('someView.php')
             をコールすると、Zend_View は
-            "/path/to/app/controllers/someVire.php" を探します。
+            "/path/to/app/controllers/someView.php" を探します。
         </para>
         
         <para>
