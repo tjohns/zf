@@ -163,7 +163,7 @@ class Zend_Json_Encoder
             foreach ($array as $key => $value) {
                 $key = (string) $key;
         		$tmpArray[] = $this->_encodeString($key)
-        		            . ' : '
+        		            . ':'
                             . $this->_encodeValue($value);
             }
             $result .= implode(', ', $tmpArray);
@@ -175,7 +175,7 @@ class Zend_Json_Encoder
             for ($i = 0; $i < $length; $i++) {
                 $tmpArray[] = $this->_encodeValue($array[$i]);
             }
-            $result .= implode(', ', $tmpArray);
+            $result .= implode(',', $tmpArray);
             $result .= ']';
         }
 
@@ -196,7 +196,7 @@ class Zend_Json_Encoder
     {
         $result = 'null';
 
-    	if (is_numeric($value)) {
+    	if (is_int($value) || is_float($value)) {
     	    $result = (string)$value;
         } elseif (is_string($value)) {
             $result = $this->_encodeString($value);
