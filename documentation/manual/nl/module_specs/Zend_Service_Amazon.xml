@@ -107,6 +107,9 @@ $item = $amazon->itemLookup('B0000A432X');
 			Voor alle details, inclusief een lijst van beschikbare opties, zie de
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevante Amazon documentatie</ulink>.
+		<note>
+			Om informatie over de beelden te verkrijgen voor je zoekresultaten, moet je de optie <code>ResponseGroup</code> tot <code>Medium</code> of <code>Large</code> zetten.
+		</note>
         </para>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
@@ -140,6 +143,3 @@ foreach($response as $r) {
     &module_specs.Zend_Service_Amazon_Query;
     &module_specs.Zend_Service_Amazon_Classes;
 </sect1>
-<!--
-vim:se ts=4 sw=4 et:
--->
