@@ -110,14 +110,14 @@ class Zend_Json_Encoder
     	$props = '';
     	foreach (get_object_vars($value) as $name => $propValue) {
     	    if (isset($propValue)) {
-        		$props .= ', '
+        		$props .= ','
                         . $this->_encodeValue($name)
-        		        . ' : '
+        		        . ':'
                         . $this->_encodeValue($propValue);
     	    }
     	}
 
-    	return '{' . '"__className": "' . get_class($value) . '"'
+    	return '{"__className":"' . get_class($value) . '"'
                 . $props . '}';
     }
 
@@ -166,7 +166,7 @@ class Zend_Json_Encoder
         		            . ':'
                             . $this->_encodeValue($value);
             }
-            $result .= implode(', ', $tmpArray);
+            $result .= implode(',', $tmpArray);
             $result .= '}';
         } else {
             // Indexed array
@@ -267,7 +267,7 @@ class Zend_Json_Encoder
     static private function _encodeMethods(ReflectionClass $cls)
     {
     	$methods = $cls->getMethods();
-    	$result = 'methods : {';
+    	$result = 'methods:{';
 
         $started = false;
         foreach ($methods as $method) {
@@ -276,27 +276,27 @@ class Zend_Json_Encoder
     	    }
 
     	    if ($started) {
-        		$result .= ", ";
+        		$result .= ',';
     	    }
             $started = true;
 
-    	    $result .= " " .$method->getName(). ': function(';
+    	    $result .= '' . $method->getName(). ':function(';
 
     	    if ('__construct' != $method->getName()) {
         		$parameters  = $method->getParameters();
                 $paramCount  = count($parameters);
                 $argsStarted = false;
 
-        		$argNames = "var argNames = [";
+        		$argNames = "var argNames=[";
                 foreach ($parameters as $param) {
         		    if ($argsStarted) {
-            			$result .= ', ';
+            			$result .= ',';
         		    }
 
         		    $result .= $param->getName();
 
         		    if ($argsStarted) {
-            			$argNames .= ', ';
+            			$argNames .= ',';
         		    }
 
         		    $argNames .= '"' . $param->getName() . '"';
@@ -305,14 +305,14 @@ class Zend_Json_Encoder
         		}
         		$argNames .= "];";
 
-        		$result .= ") {"
+        		$result .= "){"
         		         . $argNames
-            		     . "var result = ZAjaxEngine.invokeRemoteMethod("
+            		     . 'var result = ZAjaxEngine.invokeRemoteMethod('
             		     . "this, '" . $method->getName()
-                         . "', argNames, arguments);"
-                		 . "return(result);}";
+                         . "',argNames,arguments);"
+                		 . 'return(result);}';
     	    } else {
-        		$result .= ") {}";
+        		$result .= "){}";
     	    }
     	}
 
@@ -332,7 +332,7 @@ class Zend_Json_Encoder
     {
     	$properties = $cls->getProperties();
     	$propValues = get_class_vars($cls->getName());
-    	$result = "variables : {";
+    	$result = "variables:{";
     	$cnt = 0;
 
         $tmpArray = array();
@@ -369,9 +369,9 @@ class Zend_Json_Encoder
     	    throw new Zend_Json_Exception("$className must be instantiable");
     	}
 
-    	return "Class.create('$package$className', {"
-    	        . self::_encodeConstants($cls)    .", "
-    	        . self::_encodeMethods($cls)      .", "
+    	return "Class.create('$package$className',{"
+    	        . self::_encodeConstants($cls)    .","
+    	        . self::_encodeMethods($cls)      .","
     	        . self::_encodeVariables($cls)    .'});';
     }
 
