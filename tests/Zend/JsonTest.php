@@ -279,4 +279,15 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 			$this->assertEquals($value, Zend_Json::decode($encoded));
 		}
 	}
+
+    /**
+     * Test that version numbers such as 4.10 are encoded and decoded properly; 
+     * See ZF-377
+     */
+    public function testEncodeReleaseNumber()
+    {
+        $value = '4.10';
+
+        $this->_testEncodeDecode(array($value));
+    }
 }
