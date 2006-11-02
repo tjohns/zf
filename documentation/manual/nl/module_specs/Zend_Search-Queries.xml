@@ -124,7 +124,7 @@ $hits = $index->find('+word1 author:word2 -word3');
 
         <para>
             Phrase Queries zijn erg flexibel en staan toe om te zoeken op zowel exacte als 'slordige' zinnen. 
-            Exacte zinnen kunnen ook gaten of termen bevatten op bepaalde plaatsen. (Dit kan door de Analyser worden aangemaakt voor verschillende doeleinden. Voorbeeld: Een term kan gedupliceerd worden om een bepaalde term extra gewicht te geven of verschillende synoniemen kunnen op een plek worden geplaatst).
+            Zinnen kunnen ook gaten of termen bevatten op bepaalde plaatsen. (Dit kan door de Analyser worden aangemaakt voor verschillende doeleinden. Voorbeeld: Een term kan gedupliceerd worden om een bepaalde term extra gewicht te geven of verschillende synoniemen kunnen op een plek worden geplaatst).
             De volgende phrase queries kunnen alleen door de API worden aangemaakt:
         </para>
 
@@ -276,7 +276,3 @@ $hits2 = $index->find($query);
 
 	</sect2>
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->
