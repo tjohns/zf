@@ -8,10 +8,6 @@
         </para>
 
         <para>
-        ## VERT: Both of a search method can be used for multi term queries. ##
-        </para>
-
-        <para>
         Query string:
         </para>
         <programlisting role="php"><![CDATA[
@@ -44,7 +40,8 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                    noodzakelijk betekent dat documenten waar de term niet in voorkomt, niet in het resultaat terugkomen;
+                    noodzakelijk betekent dat documenten waar de term niet in voorkomt, niet in het resultaat 
+                    terugkomen;
                     </para>
                 </listitem>
                 <listitem>
@@ -54,18 +51,22 @@
                 </listitem>
                 <listitem>
                     <para>
-                    geen van beiden betekent dat de term niet verboden is voor documenten, maar de term ook niet noodzakelijk is. Een document moet in dit geval minimaal een term bevatten om in het resultaat terug te komen.
+                    geen van beiden betekent dat de term niet verboden is voor documenten, maar de term ook niet 
+                    noodzakelijk is. Een document moet in dit geval minimaal een term bevatten om in het resultaat 
+                    terug te komen.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
 
         <para>
-            Dit betekent dat wanneer een optionele term aan een query wordt toegevoerd met noodzakelijke termen, de documenten in het resultaat hetzelfde blijven, maar documenten waarin de optionele term gevonden word bovenaan de result set komen te staan.
+            Dit betekent dat wanneer een optionele term aan een query wordt toegevoerd met noodzakelijke termen, 
+            de documenten in het resultaat hetzelfde blijven, maar documenten waarin de optionele term gevonden word 
+            bovenaan de result set komen te staan.
         </para>
 
         <para>
-        ## VERT: Both of a search method can be used for multi term queries. ##
+        Beide zoekmethodes kunnen worden gebruikt voor multiterm zoekopdrachten.
         </para>
 
         <para>
@@ -124,7 +125,9 @@ $hits = $index->find('+word1 author:word2 -word3');
 
         <para>
             Phrase Queries zijn erg flexibel en staan toe om te zoeken op zowel exacte als 'slordige' zinnen. 
-            Zinnen kunnen ook gaten of termen bevatten op bepaalde plaatsen. (Dit kan door de Analyser worden aangemaakt voor verschillende doeleinden. Voorbeeld: Een term kan gedupliceerd worden om een bepaalde term extra gewicht te geven of verschillende synoniemen kunnen op een plek worden geplaatst).
+            Zinnen kunnen ook gaten of termen bevatten op bepaalde plaatsen. (Dit kan door de Analyser worden 
+            aangemaakt voor verschillende doeleinden. Voorbeeld: Een term kan gedupliceerd worden om een bepaalde 
+            term extra gewicht te geven of verschillende synoniemen kunnen op een plek worden geplaatst).
             De volgende phrase queries kunnen alleen door de API worden aangemaakt:
         </para>
 
@@ -182,7 +185,8 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         <para>
             <code>$field</code> is een string, welke aangeeft welk document veld doorzocht moet worden.
             Wanneer het niet wordt meegegeven of null is, dan wordt het standaard veld doorzicht.
-            Deze versie van Zend_Search_Lucene behandelt het 'contents' veld als standaard, maar het plan is dit aan te passen tot "ieder veld" in volgende versies.
+            Deze versie van Zend_Search_Lucene behandelt het 'contents' veld als standaard, maar het plan is dit aan 
+            te passen tot "ieder veld" in volgende versies.
         </para>
 
         <para>
@@ -212,7 +216,8 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         <programlisting role="php"><![CDATA[Zend_Search_Lucene_Search_Query_Phrase::addTerm(Zend_Search_Lucene_Index_Term $term[, integer $position]);]]></programlisting>
 
         <para>
-            <code>$term</code> omschrijft de volgende term binnen de uitdrukking. Het moet hetzelfde veld als eerdere termen omschrijven.
+            <code>$term</code> omschrijft de volgende term binnen de uitdrukking. Het moet hetzelfde veld als eerdere 
+            termen omschrijven.
             Anders wordt er een exceptie opgeworpen.
         </para>
 
@@ -247,13 +252,18 @@ $query->addTerm(new Zend_Search_Lucene_Index_Term('framework', 'title'));]]></pr
 
 
         <para>
-            Slop factor zet het aantal woorden dat is toegestaan binnen een query uitdrukking. Wanneer deze nul is, wordt er op een exacte uitdrukking gezocht. Voor hogere waardes werkt het als een WITHIN of NEAR operator.
+            Slop factor zet het aantal woorden dat is toegestaan binnen een query uitdrukking. Wanneer deze nul is, 
+            wordt er op een exacte uitdrukking gezocht. Voor hogere waardes werkt het als een WITHIN of NEAR operator.
         </para>
         <para>
-            De 'slop' is eigenlijk een ## VERT: edit-distance ##, waar de eenheden corresponderen met wijzigingen in positie van termen in de query uitdrukking. Voorbeeld: om de volgorde van twee woorden aan te passen is twee wijzigingen (de eerste wijzigingen zet beide termen op dezelfde positie), om toe te staan uitdrukkingen te herschikken dient 'slop' minstens twee te zijn.
+            De 'slop' is eigenlijk een editie-afstand, waar de eenheden overeenkomen met wijzigingen in de
+            positie van termen in de query uitdrukking. Voorbeeld: om de volgorde van twee woorden aan te passen is 
+            twee wijzigingen (de eerste wijzigingen zet beide termen op dezelfde positie), om het herschikken
+            van uitdrukkingen toe te staan dient 'slop' minstens twee te zijn.
         </para>
         <para>
-            Exactere ## VERT: matches ## krijgen een hogere score dan slordigere ## VERT: matches ##, dus zoekresultaten worden geordend op exactheid. 'Slop' staat standaard op nul, waardoor exacte ## VERT: matches ## noodzakelijk zijn.
+            Exactere overeenkomsten krijgen een hogere score dan slordigere overeenkomsten, dus zoekresultaten worden 
+            geordend op exactheid. 'Slop' staat standaard op nul, waardoor exacte overeenkomsten noodzakelijk zijn.
         </para>
         <para>
             Slop factor kan na het aanmaken van een query worden aangegeven: 
