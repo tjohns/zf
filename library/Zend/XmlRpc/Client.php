@@ -368,7 +368,7 @@ class Zend_XmlRpc_Client
      */
     protected function _buildRequest($method, $args = null)
     {
-        $dom = new DOMDocument('1.0', 'ISO-8859-1');
+        $dom = new DOMDocument('1.0', 'UTF-8');
         $mCall = $dom->appendChild($dom->createElement('methodCall'));
         $mName = $mCall->appendChild($dom->createElement('methodName', $method));
 
