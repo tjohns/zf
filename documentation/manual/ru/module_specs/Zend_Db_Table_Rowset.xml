@@ -10,7 +10,7 @@
             <code>Zend_Db_Table_Rowset</code> является итератором для
             наборов объектов <code>Zend_Db_Table_Row</code>. Обычно
             вы не создаете экземпляр <code>Zend_Db_Table_Rowset</code> непосредственно,
-            вместо этого получаете <code>Zend_Db_Table_Rowset</code> как возращаемый
+            вместо этого получаете <code>Zend_Db_Table_Rowset</code> как возвращаемый
             результат вызова методов <code>Zend_Db_Table::find()</code>
             или <code>fetchAll()</code>. После этого вы можете производить итерацию набора
             объектов<code>Zend_Db_Table_Row</code> и изменять их по своему желанию.
