@@ -221,10 +221,10 @@ echo $view->render('eenView.php');
         <title>View Script Paden</title>
         
         <para>
-			Standaard verwacht Zend_View dat je view scripts in dezelfde map
-			zijn als het controller script. Bijvoorbeeld, als je controller
-			script in "/map/naar/toepassing/controllers" en het roept
-			$view->render('eenView.php') op zal Zend_View naar
+			Standaard verwacht Zend_View dat je view scripts relatief zijn
+			tenoverstaan van het aanroepende script. Bijvoorbeeld, als je controller
+			script zich in "/map/naar/toepassing/controllers" bevindt en het roept
+			$view->render('eenView.php') op, zal Zend_View naar
 			"/map/naar/toepassing/controllers/eenView.php" zoeken.
         </para>
         
