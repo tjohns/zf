@@ -482,10 +482,8 @@ abstract class Zend_View_Abstract
         
         // only look for "$Name.php"
         $file = ucfirst($name) . '.php';
-
-        require_once 'Zend.php';
         foreach ($this->_path[$type] as $dir) {
-            if (Zend::isReadable($dir. $file)) {
+            if (is_readable($dir. $file)) {
                 include $dir . $file;
                 
                 if (! class_exists($class, false)) {
