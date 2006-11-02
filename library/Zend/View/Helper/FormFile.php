@@ -61,12 +61,12 @@ class Zend_View_Helper_FormFile extends Zend_View_Helper_FormElement {
         // build the element
         if ($disable) {
             // disabled
-            $xhtml = $this->_hidden($name, $value) . htmlspecialchars($value);
+            $xhtml = $this->_hidden($name, $value) . htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
         } else {
             // enabled
             $xhtml = '<input type="file"'
-                   . ' name="' . htmlspecialchars($name) . '"'
-                   . ' value="' . htmlspecialchars($value) . '"'
+                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
+                   . ' value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"'
                    . $this->_htmlAttribs($attribs) . ' />';
         }
         

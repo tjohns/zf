@@ -59,11 +59,11 @@ class Zend_View_Helper_FormReset extends Zend_View_Helper_FormElement {
         
         // always enabled
         $xhtml = '<input type="reset"'
-               . ' name="' . htmlspecialchars($name) . '"';
+               . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"';
         
         // add a value if one is given
         if (! empty($value)) {
-            $xhtml .= ' value="' . htmlspecialchars($value) . '"';
+            $xhtml .= ' value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"';
         }
         
         // add attributes, close, and return

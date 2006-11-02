@@ -71,14 +71,14 @@ class Zend_View_Helper_FormImage extends Zend_View_Helper_FormElement {
         if ($disable) {
             // disabled, just an image tag
             $xhtml = '<image'
-                   . ' alt="' . htmlspecialchars($name) . '"'
-                   . ' src="' . htmlspecialchars($value) . '"'
+                   . ' alt="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
+                   . ' src="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"'
                    . $this->_htmlAttribs($attribs) . ' />';
         } else {
             // enabled
             $xhtml = '<input type="image"'
-                   . ' name="' . htmlspecialchars($name) . '"'
-                   . ' src="' . htmlspecialchars($value) . '"'
+                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
+                   . ' src="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"'
                    . $this->_htmlAttribs($attribs) . ' />';
         }
         

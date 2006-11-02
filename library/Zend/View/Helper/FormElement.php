@@ -45,11 +45,11 @@ abstract class Zend_View_Helper_FormElement {
     {
         $xhtml = '';
         foreach ((array) $attribs as $key => $val) {
-            $key = htmlspecialchars($key);
+            $key = htmlspecialchars($key, ENT_COMPAT, 'UTF-8');
             if (is_array($val)) {
                 $val = implode(' ', $val);
             }
-            $val = htmlspecialchars($val);
+            $val = htmlspecialchars($val, ENT_COMPAT, 'UTF-8');
             $xhtml .= " $key=\"$val\"";
         }
         return $xhtml;
@@ -147,8 +147,8 @@ abstract class Zend_View_Helper_FormElement {
     protected function _hidden($name, $value = null, $attribs = null)
     {
         return '<input type="hidden"'
-             . ' name="' . htmlspecialchars($name) . '"'
-             . ' value="' . htmlspecialchars($value) . '"'
+             . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
+             . ' value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"'
              . $this->_htmlAttribs($attribs) . ' />';
     }
 }

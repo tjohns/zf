@@ -95,7 +95,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
                     // add the hidden value
                     $opt = $this->_hidden($name, $opt_value);
                     // add the display label
-                    $opt .= htmlspecialchars($opt_label);
+                    $opt .= htmlspecialchars($opt_label, ENT_COMPAT, 'UTF-8');
                     // add to the list
                     $list[] = $opt;
                 }
@@ -107,7 +107,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
             // enabled.
             // the surrounding select element first.
             $xhtml = '<select'
-                   . ' name="' . htmlspecialchars($name) . '"'
+                   . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
                    . $this->_htmlAttribs($attribs)
                    . ">\n\t";
             
@@ -117,8 +117,8 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
             
                 // option value and label
                 $opt = '<option'
-                     . ' value="' . htmlspecialchars($opt_value) . '"'
-                     . ' label="' . htmlspecialchars($opt_label) . '"';
+                     . ' value="' . htmlspecialchars($opt_value, ENT_COMPAT, 'UTF-8') . '"'
+                     . ' label="' . htmlspecialchars($opt_label, ENT_COMPAT, 'UTF-8') . '"';
                      
                 // selected?
                 if (in_array($opt_value, $value)) {
@@ -126,7 +126,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
                 }
                 
                 // close and add
-                $opt .= '>' . htmlspecialchars($opt_label) . "</option>";
+                $opt .= '>' . htmlspecialchars($opt_label, ENT_COMPAT, 'UTF-8') . "</option>";
                 $list[] = $opt;
             }
             

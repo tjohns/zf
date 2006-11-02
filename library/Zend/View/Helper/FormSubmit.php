@@ -59,11 +59,11 @@ class Zend_View_Helper_FormSubmit extends Zend_View_Helper_FormElement {
         
         // ignore disable/enable, always show the button.
         $xhtml = '<input type="submit"'
-               . ' name="' . htmlspecialchars($name) . '"';
+               . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"';
         
         // add a value if one is given
         if (! empty($value)) {
-            $xhtml .= ' value="' . htmlspecialchars($value) . '"';
+            $xhtml .= ' value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"';
         }
         
         // add attributes, close, and return

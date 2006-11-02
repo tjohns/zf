@@ -112,8 +112,8 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement {
                 $radio = '<label'
                        . $this->_htmlAttribs($label_attribs) . '>'
                        . '<input type="radio"'
-                       . ' name="' . htmlspecialchars($name) . '"'
-                       . ' value="' . htmlspecialchars($opt_value) . '"';
+                       . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
+                       . ' value="' . htmlspecialchars($opt_value, ENT_COMPAT, 'UTF-8') . '"';
                 
                 // is it checked?
                 if ($opt_value == $value) {
@@ -123,7 +123,7 @@ class Zend_View_Helper_FormRadio extends Zend_View_Helper_FormElement {
                 // add attribs, end the radio, end the label
                 $radio .= $this->_htmlAttribs($attribs) .
                           ' />' .
-                          htmlspecialchars($opt_label) .
+                          htmlspecialchars($opt_label, ENT_COMPAT, 'UTF-8') .
                           '</label>';
                 
                 // add to the array of radio buttons

@@ -372,11 +372,18 @@ abstract class Zend_View_Abstract
     /**
      * Escapes a value for output in a view script.
      *
+     * If escaping mechanism is one of htmlspecialchars or htmlentities, UTF-8 
+     * encoding is assumed for escaping purposes.
+     *
      * @param mixed $var The output to escape.
      * @return mixed The escaped value.
      */
     public function escape($var)
     {
+        if (in_array($this->_escape, array('htmlspecialchars', 'htmlentities'))) {
+            return call_user_func($this->_escape, $var, ENT_COMPAT, 'UTF-8');
+        }
+
         return call_user_func($this->_escape, $var);
     }
 
