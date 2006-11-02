@@ -290,4 +290,19 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
         $this->_testEncodeDecode(array($value));
     }
+
+    /**
+     * Tests that spaces/linebreaks prior to a closing right bracket don't throw 
+     * exceptions. See ZF-283.
+     */
+    public function testEarlyLineBreak()
+    {
+        $expected = array('data' => array(1, 2, 3, 4));
+
+        $json = '{"data":[1,2,3,4' . "\n]}";
+        $this->assertEquals($expected, Zend_Json::decode($json));
+
+        $json = '{"data":[1,2,3,4 ]}';
+        $this->assertEquals($expected, Zend_Json::decode($json));
+    }
 }
