@@ -78,7 +78,7 @@ foreach ($hits as $hit) {
         <para>
         Het originele Zend_Search_Lucene_Document object kan ook worden teruggegeven vanuit de Zend_Search_Lucene_Search_QueryHit.
 
-        Je kan geindexeerde delen van het document verkrijgen door gebruik te maken van de <code>getDocument()</code>methode van het index object en dan de <code>getFieldValue()</code> methode te gebruiken:
+        Je kan opgeslagen delen van het document verkrijgen door gebruik te maken van de <code>getDocument()</code>methode van het index object en dan de <code>getFieldValue()</code> methode te gebruiken:
         </para>
         <programlisting role="php"><![CDATA[<?php
 
@@ -149,7 +149,3 @@ foreach ($hits as $hit) {
 	</sect2>
 
 </sect1>
-
-<!--
-vim:se ts=4 sw=4 et:
--->
