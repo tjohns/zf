@@ -347,7 +347,10 @@ class Zend_XmlRpc_Client
         $http->setUri($this->_serverAddress);
         // Set the content-type header as text/xml
         // What if the given HTTP client already has headres ? it shouldn't override them
-        $http->setHeaders(array('Content-Type: text/xml; charset=iso-8859-1'));
+        $http->setHeaders(array(
+            'Content-Type: text/xml; charset=utf-8',
+            'User-Agent: Zend_XmlRpc_Client'
+        ));
 
         $response = $http->post($request_data);
         /* @var $response Zend_Http_Response */
