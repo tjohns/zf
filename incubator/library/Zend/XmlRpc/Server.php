@@ -121,10 +121,22 @@ require_once 'Zend/Server/Reflection/Method.php';
 class Zend_XmlRpc_Server
 {
     /**
+     * Character encoding
+     * @var string 
+     */
+    protected $_encoding = 'UTF-8';
+
+    /**
      * Array of dispatchables
      * @var array
      */
     protected $_methods = array();
+
+    /**
+     * Request processed
+     * @var null|Zend_XmlRpc_Request 
+     */
+    protected $_request = null;
 
     /**
      * Class to use for responses; defaults to {@link Zend_XmlRpc_Response_Http}
@@ -170,15 +182,12 @@ class Zend_XmlRpc_Server
     /**
      * Constructor
      *
-     * Sets encoding to UTF-8 and creates system.* methods.
+     * Creates system.* methods.
      *
      * @return void
      */
     public function __construct()
     {
-        // Set internal encoding to UTF-8
-        iconv_set_encoding('internal_encoding', 'UTF-8');
-
         // Setup system.* methods
         $system = array(
             'listMethods',
@@ -261,6 +270,28 @@ class Zend_XmlRpc_Server
         }
 
         $this->_table = $table;
+    }
+
+    /**
+     * Set encoding
+     * 
+     * @param string $encoding 
+     * @return self
+     */
+    public function setEncoding($encoding)
+    {
+        $this->_encoding = $encoding;
+        return $this;
+    }
+
+    /**
+     * Retrieve current encoding
+     * 
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->_encoding;
     }
 
     /**
@@ -383,6 +414,39 @@ class Zend_XmlRpc_Server
     }
 
     /**
+     * Set the request object
+     * 
+     * @param string|Zend_XmlRpc_Request $request 
+     * @return self
+     * @throws Zend_XmlRpc_Server_Exception on invalid request class or object
+     */
+    public function setRequest($request)
+    {
+        if (is_string($request) && class_exists($request)) {
+            $request = new $request();
+            if (!$request instanceof Zend_XmlRpc_Request) {
+                throw new Zend_XmlRpc_Server_Exception('Invalid request class');
+            }
+            $request->setEncoding($this->getEncoding());
+        } elseif (!$request instanceof Zend_XmlRpc_Request) {
+            throw new Zend_XmlRpc_Server_Exception('Invalid request object');
+        }
+
+        $this->_request = $request;
+        return $this;
+    }
+
+    /**
+     * Return currently registered request object
+     * 
+     * @return null|Zend_XmlRpc_Request
+     */
+    public function getRequest()
+    {
+        return $this->_request;
+    }
+
+    /**
      * Raise an xmlrpc server fault
      * 
      * @param string|Exception $fault 
@@ -488,10 +552,13 @@ class Zend_XmlRpc_Server
     public function handle(Zend_XmlRpc_Request $request = null) 
     {
         // Get request
-        if (null === $request) {
+        if ((null === $request) && (null === ($request = $this->getRequest()))) {
             require_once 'Zend/XmlRpc/Request/Http.php';
             $request = new Zend_XmlRpc_Request_Http();
+            $request->setEncoding($this->getEncoding());
         }
+
+        $this->setRequest($request);
 
         if ($request->isFault()) {
             $response = $request->getFault();
@@ -502,6 +569,9 @@ class Zend_XmlRpc_Server
                 $response = $this->fault($e);
             }
         }
+
+        // Set output encoding
+        $response->setEncoding($this->getEncoding());
 
         return $response;
     }

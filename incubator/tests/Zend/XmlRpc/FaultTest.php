@@ -155,4 +155,14 @@ class Zend_XmlRpc_FaultTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(2, $count, $xml);
     }
+
+    /**
+     * Test encoding settings
+     */
+    public function testSetGetEncoding()
+    {
+        $this->assertEquals('UTF-8', $this->_fault->getEncoding());
+        $this->_fault->setEncoding('ISO-8859-1');
+        $this->assertEquals('ISO-8859-1', $this->_fault->getEncoding());
+    }
 }

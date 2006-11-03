@@ -52,6 +52,12 @@ class Zend_XmlRpc_Fault
     protected $_code;
 
     /**
+     * Fault character encoding
+     * @var string 
+     */
+    protected $_encoding = 'UTF-8';
+
+    /**
      * Fault message
      * @var string 
      */
@@ -117,11 +123,12 @@ class Zend_XmlRpc_Fault
      * Set the fault code
      * 
      * @param int $code 
-     * @return void
+     * @return self
      */
     public function setCode($code)
     {
         $this->_code = (int) $code;
+        return $this;
     }
 
     /**
@@ -138,11 +145,12 @@ class Zend_XmlRpc_Fault
      * Retrieve fault message
      * 
      * @param string
-     * @return void
+     * @return self
      */
     public function setMessage($message)
     {
         $this->_message = (string) $message;
+        return $this;
     }
 
     /**
@@ -153,6 +161,28 @@ class Zend_XmlRpc_Fault
     public function getMessage()
     {
         return $this->_message;
+    }
+
+    /**
+     * Set encoding to use in fault response
+     * 
+     * @param string $encoding 
+     * @return self
+     */
+    public function setEncoding($encoding)
+    {
+        $this->_encoding = $encoding;
+        return $this;
+    }
+
+    /**
+     * Retrieve current fault encoding
+     * 
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->_encoding;
     }
 
     /**
@@ -170,8 +200,8 @@ class Zend_XmlRpc_Fault
             throw new Zend_XmlRpc_Exception('Invalid XML provided to fault');
         }
 
-        // cast to UTF-8
-        $fault = iconv('', 'UTF-8', $fault);
+        // cast to default encoding
+        $fault = iconv('', $this->getEncoding(), $fault);
 
         try {
             $xml = @new SimpleXMLElement($fault);
@@ -256,7 +286,7 @@ class Zend_XmlRpc_Fault
             'faultString' => $this->getMessage()
         );
         $value = Zend_XmlRpc_Value::getXmlRpcValue($faultStruct);
-        $valueDOM = new DOMDocument('1.0', 'UTF-8');
+        $valueDOM = new DOMDocument('1.0', $this->getEncoding());
         $valueDOM->loadXML($value->getAsXML());
 
         // Build response XML

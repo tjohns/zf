@@ -119,5 +119,13 @@ class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('return value', (string) $sx->params->param->value->string);
     }
 
-
+    /**
+     * Test encoding settings
+     */
+    public function testSetGetEncoding()
+    {
+        $this->assertEquals('UTF-8', $this->_response->getEncoding());
+        $this->_fault->setEncoding('ISO-8859-1');
+        $this->assertEquals('ISO-8859-1', $this->_response->getEncoding());
+    }
 }

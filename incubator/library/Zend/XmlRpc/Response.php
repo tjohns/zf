@@ -54,6 +54,12 @@ class Zend_XmlRpc_Response
     protected $_type;
 
     /**
+     * Response character encoding
+     * @var string 
+     */
+    protected $_encoding = 'UTF-8';
+
+    /**
      * Fault, if response is a fault response
      * @var null|Zend_XmlRpc_Fault 
      */
@@ -72,6 +78,28 @@ class Zend_XmlRpc_Response
     public function __construct($return = null, $type = null)
     {
         $this->setReturnValue($return, $type);
+    }
+
+    /**
+     * Set encoding to use in response
+     * 
+     * @param string $encoding 
+     * @return self
+     */
+    public function setEncoding($encoding)
+    {
+        $this->_encoding = $encoding;
+        return $this;
+    }
+
+    /**
+     * Retrieve current response encoding
+     * 
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->_encoding;
     }
 
     /**
@@ -133,23 +161,26 @@ class Zend_XmlRpc_Response
     {
         if (!is_string($response)) {
             $this->_fault = new Zend_XmlRpc_Fault(650);
+            $this->_fault->setEncoding($this->getEncoding());
             return false;
         }
 
-        // cast to UTF-8
-        $response = iconv('', 'UTF-8', $response);
+        // cast to default encoding
+        $response = iconv('', $this->getEncoding(), $response);
 
         try {
             $xml = @new SimpleXMLElement($response);
         } catch (Exception $e) {
             // Not valid XML
             $this->_fault = new Zend_XmlRpc_Fault(651);
+            $this->_fault->setEncoding($this->getEncoding());
             return false;
         } 
 
         if (!empty($xml->fault)) {
             // fault response
             $this->_fault = new Zend_XmlRpc_Fault();
+            $this->_fault->setEncoding($this->getEncoding());
             $this->_fault->loadXml($response);
             return false;
         }
@@ -157,6 +188,7 @@ class Zend_XmlRpc_Response
         if (empty($xml->params)) {
             // Invalid response
             $this->_fault = new Zend_XmlRpc_Fault(652);
+            $this->_fault->setEncoding($this->getEncoding());
             return false;
         }
 
@@ -166,6 +198,7 @@ class Zend_XmlRpc_Response
             $value = Zend_XmlRpc_Value::getXmlRpcValue(trim($valueXml), Zend_XmlRpc_Value::XML_STRING);
         } catch (Zend_XmlRpc_Value_Exception $e) {
             $this->_fault = new Zend_XmlRpc_Fault(653);
+            $this->_fault->setEncoding($this->getEncoding());
             return false;
         }
 
@@ -181,10 +214,10 @@ class Zend_XmlRpc_Response
     public function __toString()
     {
         $value = $this->_getXmlRpcReturn();
-        $valueDOM = new DOMDocument('1.0', 'UTF-8');
+        $valueDOM = new DOMDocument('1.0', $this->getEncoding());
         $valueDOM->loadXML($value->getAsXML());
 
-        $dom      = new DOMDocument('1.0', 'UTF-8');
+        $dom      = new DOMDocument('1.0', $this->getEncoding());
         $response = $dom->appendChild($dom->createElement('methodResponse'));
         $params   = $response->appendChild($dom->createElement('params'));
         $param    = $params->appendChild($dom->createElement('param'));
