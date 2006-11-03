@@ -326,6 +326,23 @@ Action    : index]]>
             controller and/or action in the request and resetting the dispatched
             flag, the developer may define a chain of requests to perform.
         </para>
+
+        <para>
+            The action controller method that controlls such dispatching is
+            <code>_forward()</code>; call this method from any of the
+            pre/postDispatch() or action methods, providing a controller,
+            action, and optionally any additional parameters you may wish to
+            send to the new action:
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+public function myAction()
+{
+    // do some processing...
+    // forward to another action, FooController::barAction():
+    $this->_forward('foo', 'bar', array('baz' => 'bogus'));
+}
+]]></programlisting>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.response">
