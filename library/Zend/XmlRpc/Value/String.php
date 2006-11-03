@@ -66,7 +66,7 @@ class Zend_XmlRpc_Value_String extends Zend_XmlRpc_Value_Scalar
      */
     private function _xml_entities($str)
     {
-        return htmlentities($str, ENT_QUOTES);
+        return htmlentities($str, ENT_QUOTES, 'UTF-8');
     }
 
 }
