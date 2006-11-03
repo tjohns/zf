@@ -93,6 +93,7 @@ class Zend_Controller_Front
 	 * Convenience feature, calls setControllerDirectory()->setRouter()->dispatch()
 	 *
 	 * @param string $controllerDirectory
+     * @return void;
 	 */
     static public function run($controllerDirectory)
 	{
