@@ -55,6 +55,13 @@ define('TESTS_ZEND_MAIL_MAILDIR_ENABLED', false);
 
 
 /**
+ * Zend_Rest_Client test
+ *
+ * Before enabling these tests, you must get relevant API keys
+ */
+define('TESTS_ZEND_REST_CLIENT_FLICKR_APIKEY', false);
+
+/**
  * PHPUnit Code Coverage / Test Report
  */
 define('TESTS_GENERATE_REPORT', false);
