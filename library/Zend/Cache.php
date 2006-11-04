@@ -40,7 +40,7 @@ abstract class Zend_Cache
      * 
      * @var array $availableBackends array of backends name (string)
      */
-    static public $availableBackends = array('File', 'Sqlite', 'Memcached', 'APC');
+    static public $availableBackends = array('File', 'Sqlite', 'Memcached', 'Apc');
     
     /**
      * Consts for clean() method
@@ -62,8 +62,8 @@ abstract class Zend_Cache
     {
         
         // because lowercase will fail
-        $frontend = @ucfirst($frontend);
-        $backend = @ucfirst($backend);
+        $frontend = @ucfirst(strtolower($frontend));
+        $backend = @ucfirst(strtolower($backend));
         
         if (!in_array($frontend, Zend_Cache::$availableFrontends)) {
             Zend_Cache::throwException("Incorrect frontend ($frontend)");

@@ -17,7 +17,7 @@ require_once 'OutputFrontendTest.php';
 require_once 'FunctionFrontendTest.php';
 require_once 'ClassFrontendTest.php';
 require_once 'FileFrontendTest.php';
-require_once 'APCBackendTest.php';
+require_once 'ApcBackendTest.php';
 require_once 'MemcachedBackendTest.php';
 require_once 'PageFrontendTest.php';
 
@@ -48,7 +48,7 @@ class Zend_Cache_AllTests
             $suite->addTestSuite('Zend_Cache_SqliteBackendTest');
         }
         if (!defined('TESTS_ZEND_CACHE_APC_ENABLED') || (defined('TESTS_ZEND_CACHE_APC_ENABLED') && TESTS_ZEND_CACHE_APC_ENABLED)) {
-            $suite->addTestSuite('Zend_Cache_APCBackendTest');
+            $suite->addTestSuite('Zend_Cache_ApcBackendTest');
         }
         if (!defined('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') || (defined('TESTS_ZEND_CACHE_MEMCACHED_ENABLED') && TESTS_ZEND_CACHE_MEMCACHED_ENABLED)) {
             if (!defined('TESTS_ZEND_CACHE_MEMCACHED_HOST')) { 
