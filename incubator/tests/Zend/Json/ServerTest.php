@@ -216,6 +216,19 @@ class Zend_Json_ServerTest extends PHPUnit_Framework_TestCase
 		$result = ob_get_clean();
 		$this->assertEquals('{"__className": "stdClass", "foo" : "bar", "baz" : true, "bat" : 123, "qux" : false, "status" : "success"}', $result, "Bas Response");
 	}
+	
+	function testHandleException()
+	{
+		$server = new Zend_Json_Server();
+		$server->addFunction('Zend_Json_Server_TestFunc10');
+		ob_start();
+		$server->handle(array('method' => 'Zend_Json_Server_TestFunc10'));
+		ob_end_clean();
+		ob_start();
+		$server->fault(new Exception('An error occurred.', 404));
+		$result = ob_get_clean();
+		$this->assertEquals('{"msg" : "An error occurred.", "code" : 404}', $result, "Bad Response");
+	}
 }
 
 /* Test Functions */
@@ -311,6 +324,15 @@ function Zend_Json_Server_TestFunc9($foo, $bar)
 {
 	return "$foo $bar";
 }
+
+/**
+ * Exception Test
+ */
+function Zend_Json_Server_TestFunc10()
+{
+	// do nothing
+}
+
 
 /**
  * Test Class
