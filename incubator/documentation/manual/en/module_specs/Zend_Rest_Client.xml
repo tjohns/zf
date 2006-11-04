@@ -122,16 +122,29 @@ echo $result->firstname .' '. $result->lastname;
 			<programlisting role="php"><![CDATA[<?php
 	$client = new Zend_Rest_Client('http://example.org/rest');
 
-	$client->arg1('value1');
+	$client->arg('value1');
 	$client->arg2('value2');
 	$client->get();
 
 	// or
 
-	$client->arg1('value1')->arg2('value2')->get();
+	$client->arg('value1')->arg2('value2')->get();
 	?>]]>
 			</programlisting>
 		</example>
+		<para>
+			Both of the methods in the example above, will result in the following get args: <code>?method=arg&amp;arg1=value1&amp;arg=value1&amp;arg2=value2</code>
+		</para>
+		<para>
+			You will notice that the first call of <code>$client->arg('value1');</code> resulted in both <code>method=arg&amp;arg1=value1</code> and <code>arg=value1</code>,
+			this is so that <code>Zend_Rest_Server</code> can understand the request properly, rather than requiring pre-existing knowledge of the service.
+		</para>
+		<para>
+			<warning>
+				Any REST service that is strict about the arguments it recieves will likely fail using <code>Zend_Rest_Client</code>, because of the behavior described
+				above, this is not a common practice and should not cause problems.
+			</warning>
+		</para>
 	</sect2>
 </sect1>
 <!--
