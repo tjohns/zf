@@ -112,6 +112,27 @@ echo $result->firstname .' '. $result->lastname;
             </note>
         </para>
     </sect2>
+	<sect2 id="zend.rest.client.args">
+		<title>Request Arguments</title>
+		<para>
+			Unless you are making a request to a <code>Zend_Rest_Server</code> based service, chances are you will need to send multiple arguments with your request. This is done by calling a method with the name of the argument, passing in the value as the first (and only) argument. Each of these method calls returns the object itself, allowing for chaining, or "fluent" usage. The first call, or if you pass in more than one argument is always assumed to the method when calling a <code>Zend_Rest_Server</code> service.
+		</para>
+		<example>
+			<title>Setting Request Arguments</title>
+			<programlisting role="php"><![CDATA[<?php
+	$client = new Zend_Rest_Client('http://example.org/rest');
+
+	$client->arg1('value1');
+	$client->arg2('value2');
+	$client->get();
+
+	// or
+
+	$client->arg1('value1')->arg2('value2')->get();
+	?>]]>
+			</programlisting>
+		</example>
+	</sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
