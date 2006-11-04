@@ -1512,7 +1512,7 @@ class Zend_Date {
 
             // date strings
             case Zend_Date::ISO_8601 :
-                $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}/', $date, $match);
+                $result = preg_match('/\d{4}-\d{2}-\d{2}[T\s]{1}\d{2}:\d{2}:\d{2}/', $date, $match);
                 if (!$result) {
                     return false;
                 }
