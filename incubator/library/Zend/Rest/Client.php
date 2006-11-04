@@ -124,7 +124,6 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	   return self::getHttpClient()->get();
 	}
 
-
 	/**
 	 * Performs an HTTP POST request to $path.
 	 *
@@ -138,7 +137,6 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	   return self::getHttpClient()->post($data);
 	}
 
-
 	/**
 	 * Performs an HTTP PUT request to $path.
 	 *
@@ -151,7 +149,6 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	   $this->_prepareRest($path);
 	   return self::getHttpClient()->put($data);
 	}
-
 
 	/**
 	 * Performs an HTTP DELETE request to $path.
