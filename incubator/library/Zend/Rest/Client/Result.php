@@ -176,6 +176,8 @@ class Zend_Rest_Client_Result implements IteratorAggregate, ArrayAccess {
 		$status = $this->getStatus();
 		if ($status) {
 			return false;
+		} else {
+			return true;
 		}
 	}
 	
@@ -184,6 +186,8 @@ class Zend_Rest_Client_Result implements IteratorAggregate, ArrayAccess {
 		$status = $this->getStatus();
 		if ($status) {
 			return true;
+		} else {
+			return false;
 		}
 	}
 	
