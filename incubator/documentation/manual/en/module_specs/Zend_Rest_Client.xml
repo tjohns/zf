@@ -120,16 +120,16 @@ echo $result->firstname .' '. $result->lastname;
 		<example>
 			<title>Setting Request Arguments</title>
 			<programlisting role="php"><![CDATA[<?php
-	$client = new Zend_Rest_Client('http://example.org/rest');
+$client = new Zend_Rest_Client('http://example.org/rest');
 
-	$client->arg('value1');
-	$client->arg2('value2');
-	$client->get();
+$client->arg('value1');
+$client->arg2('value2');
+$client->get();
 
-	// or
+// or
 
-	$client->arg('value1')->arg2('value2')->get();
-	?>]]>
+$client->arg('value1')->arg2('value2')->get();
+?>]]>
 			</programlisting>
 		</example>
 		<para>
