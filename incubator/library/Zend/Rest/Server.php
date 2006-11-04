@@ -260,13 +260,17 @@ class Zend_Rest_Server extends Zend_Server_Abstract implements Zend_Server_Inter
 			$xml = "<$method generator='zend' version='1.0'>";
 		}
 		
-		if ($value == false) {
+		if ($value === false) {
 			$value = 0;
 		} elseif ($value === true) {
 			$value = 1;
 		}
 		
-		$xml .= "<response>$value</response>";
+		if (isset($value)) {
+			$xml .= "<response>$value</response>";
+		} else {
+			$xml .= "<response />";
+		}
 
 		$xml .= "<status>success</status>";
 
