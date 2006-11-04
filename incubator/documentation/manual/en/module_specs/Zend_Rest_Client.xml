@@ -18,9 +18,7 @@ require_once 'Zend/Rest/Client.php';
 $client = new Zend_Rest_Client('http://framework.zend.com/rest');
 
 echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"
-
-?>]]>
-            </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             <note>
@@ -47,8 +45,7 @@ $result = $client->sayHello('Davey', 'Day')->get();
 if ($result->isSuccess()) {
     echo $result; // "Hello Davey, Good Day"
 }
-?>]]>
-            </programlisting>
+?>]]></programlisting>
         </example>
         <para>
             In the example above, you can see that we use the request result as an object, to call <code>isSuccess()</code>, and then
@@ -129,8 +126,7 @@ $client->get();
 // or
 
 $client->arg('value1')->arg2('value2')->get();
-?>]]>
-			</programlisting>
+?>]]></programlisting>
 		</example>
 		<para>
 			Both of the methods in the example above, will result in the following get args: <code>?method=arg&amp;arg1=value1&amp;arg=value1&amp;arg2=value2</code>
