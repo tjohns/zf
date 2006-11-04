@@ -563,7 +563,16 @@ class Zend_Uri_Http extends Zend_Uri
         
         // If query is an array, make a string out of it
         if (is_array($query)) {
-        	$query = http_build_query($query, '', '&');
+        	// fails on PHP < 5.1.2
+        	$query_str = @http_build_query($query, '', '&');
+        	// If it failed, try calling with only 2 args
+        	if (!$query_str) {
+        		$query_str = http_build_query($query, '');
+        	}
+        	// Just in case they use &amp; in their php.ini, replace it with &
+       		$query_str = str_replace("&amp;", "&", $query_str);
+       		
+        	$query = $query_str;
         } else {
         	$query = (string) $query;
         }
