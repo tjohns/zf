@@ -253,14 +253,14 @@ abstract class Zend_Controller_Action
 
     /**
      * Gets a parameter from the {@link $_request Request object}.  If the
-     * parameter does not exist, NULL will be return.
+     * parameter does not exist, NULL will be returned.
      *
      * If the parameter does not exist and $default is set, then
      * $default will be returned instead of NULL.
      *
      * @param string $paramName
      * @param mixed $default
-     * @return boolean
+     * @return mixed
      */
     final protected function _getParam($paramName, $default = null)
     {
@@ -272,6 +272,17 @@ abstract class Zend_Controller_Action
         return $value;
     }
 
+    /**
+     * Determine whether a given parameter exists in the 
+     * {@link $_request Request object}.
+     * 
+     * @param string $paramName 
+     * @return boolean
+     */
+    final protected function _hasParam($paramName)
+    {
+        return null !== $this->_request->getParam();
+    }
 
     /**
      * Return all parameters in the {@link $_request Request object}
