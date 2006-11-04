@@ -13,6 +13,7 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  * 
+ * @category   Zend
  * @package    Zend_Cache
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
@@ -78,8 +79,8 @@ abstract class Zend_Cache
         
         // For perfs reasons, we do not use the Zend::loadClass() method
         // (security controls are explicit)
-        require_once(str_replace('_', DIRECTORY_SEPARATOR, $frontendClass) . '.php');
-        require_once(str_replace('_', DIRECTORY_SEPARATOR, $backendClass) . '.php');
+        require_once str_replace('_', DIRECTORY_SEPARATOR, $frontendClass) . '.php';
+        require_once str_replace('_', DIRECTORY_SEPARATOR, $backendClass) . '.php';
         
         $frontendObject = new $frontendClass($frontendOptions);
         $backendObject = new $backendClass($backendOptions);
@@ -96,7 +97,7 @@ abstract class Zend_Cache
     static public function throwException($msg)
     {
         // For perfs reasons, we use this dynamic inclusion
-        require_once('Zend/Cache/Exception.php');
+        require_once 'Zend/Cache/Exception.php';
         throw new Zend_Cache_Exception($msg);
     }
     
