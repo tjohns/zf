@@ -216,6 +216,29 @@ class Zend_Rest_ServerTest extends PHPUnit_Framework_TestCase
 		$result = ob_get_clean();
 		$this->assertEquals("<Zend_Rest_Server_TestFunc8 generator='zend'><foo>bar</foo><baz>1</baz><bat>123</bat><qux>0</qux><status>success</status></Zend_Rest_Server_TestFunc8>", $result, "Bas Response");
 	}
+	
+	function testHandleException()
+	{
+		$server = new Zend_Rest_Server();
+		$server->addFunction('Zend_Rest_Server_TestFunc10');
+		ob_start();
+		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc10'));
+		ob_end_clean();
+		ob_start();
+		$server->fault(new Exception('An error occurred.', 404));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_TestFunc10 generator='zend' version='1.0'><response><message>An error occurred.</message></response><status>failed</status></Zend_Rest_Server_TestFunc10>", $result, "Bad Response");
+	}
+	
+	function testHandleVoid()
+	{
+		$server = new Zend_Rest_Server();
+		$server->addFunction('Zend_Rest_Server_TestFunc10');
+		ob_start();
+		$server->handle(array('method' => 'Zend_Rest_Server_TestFunc10'));
+		$result = ob_get_clean();
+		$this->assertEquals("<Zend_Rest_Server_TestFunc10 generator='zend' version='1.0'><response /><status>success</status></Zend_Rest_Server_TestFunc10>", $result, "Bad Response");
+	}
 }
 
 /* Test Functions */
@@ -313,6 +336,16 @@ function Zend_Rest_Server_TestFunc9($foo, $bar)
 }
 
 /**
+ * Throw Exception
+ * 
+ * @return void
+ */
+function Zend_Rest_Server_TestFunc10()
+{
+	// do nothing
+}
+
+/**
  * Test Class
  */
 class Zend_Rest_Server_Test {
@@ -374,3 +407,5 @@ class Zend_Rest_Server_Test {
 		return "Hello $who, How are you $when";
 	}
 }
+
+class Zend_Rest_TestException extends Exception { }
