@@ -42,7 +42,7 @@ tarball: stage
 stage: stage-files stage-docs
 	@echo "$(ZF_PRODUCT_NAME) Preview Release $(ZF_VERSION) (build $(ZF_TAG))" > $(ZF_STAGE_DIR)/VERSION.txt
 
-stage-files: 
+stage-files:
 	@echo "== STAGING FILES =="
 	-mkdir -p $(ZF_STAGE_DIR)
 	(cd $(ZF_EXPORT_DIR) && rsync --quiet --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR))
@@ -62,26 +62,26 @@ stage-docs: build-docbook build-phpdoc
 		do rsync --archive --delete $$lang/html/ $(ZF_STAGE_DIR)/documentation/end-user/incubator/`basename $$lang` ; \
 	done
 
-build-docbook: 
+build-docbook:
 	@echo "== BUILDING END-USER DOCUMENTATION (CORE) =="
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/end-user/core
-	cd $(ZF_EXPORT_DIR)/documentation/manual && $(MAKE) 
+	cd $(ZF_EXPORT_DIR)/documentation/manual && $(MAKE)
 	@echo "== BUILDING END-USER DOCUMENTATION (INCUBATOR) =="
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/end-user/incubator
-	cd $(ZF_EXPORT_DIR)/incubator/documentation/manual && $(MAKE) 
+	cd $(ZF_EXPORT_DIR)/incubator/documentation/manual && $(MAKE)
 
-build-phpdoc: 
+build-phpdoc:
 	@echo "== BUILDING AND STAGING API DOCUMENTATION (CORE) =="
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/api/core
 	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/core/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(ZF_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
-		$(PHPDOC) --quiet off --target $(ZF_STAGE_DIR)/documentation/api/core --directory $(ZF_STAGE_DIR)/library ; \
+		$(PHPDOC) --quiet off --target $(ZF_STAGE_DIR)/documentation/api/core --directory $(ZF_STAGE_DIR)/library --title "Zend Framework API Documentation" --output HTML:frames:DOM/earthli ; \
 	else \
 		echo "...core API documentation is up to date." ; \
 	fi
 	@echo "== BUILDING AND STAGING API DOCUMENTATION (INCUBATOR) =="
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/api/incubator
 	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(ZF_STAGE_DIR)/incubator/library -newer $(ZF_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
-		$(PHPDOC) --quiet off --target $(ZF_STAGE_DIR)/documentation/api/incubator --directory $(ZF_STAGE_DIR)/incubator/library ; \
+		$(PHPDOC) --quiet off --target $(ZF_STAGE_DIR)/documentation/api/incubator --directory $(ZF_STAGE_DIR)/incubator/library --title "Zend Framework Incubator API Documentation" --output HTML:frames:DOM/earthli ; \
 	else \
 		echo "...incubator API documentation is up to date." ; \
 	fi
