@@ -78,6 +78,8 @@ class Zend_Http_Request implements Zend_Request_Interface
 
                 $this->setRequestUri($path);
             }
+        } else {
+            $this->setRequestUri();
         }
     }
      

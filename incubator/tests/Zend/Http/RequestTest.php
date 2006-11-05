@@ -10,14 +10,29 @@ class Zend_Http_RequestTest extends PHPUnit_Framework_TestCase
      */
     protected $_request;
 
+    /**
+     * Original request URI
+     * @var string 
+     */
+    protected $_origRequestUri;
+
     public function setUp()
     {
+        $this->_origRequestUri = $_SERVER['REQUEST_URI'];
         $this->_request = new Zend_Http_Request('http://framework.zend.com/news/3?var1=val1&var2=val2#anchor');
     }
 
     public function tearDown()
     {
         unset($this->_request);
+        $_SERVER['REQUEST_URI'] = $this->_origRequestUri;
+    }
+
+    public function testConstructSetsRequestUri()
+    {
+        $_SERVER['REQUEST_URI'] = '/mycontroller/myaction?foo=bar';
+        $request = new Zend_Http_Request();
+        $this->assertEquals('/mycontroller/myaction', $request->getPathInfo());
     }
 
     public function testIsPost()
