@@ -64,7 +64,7 @@ interface Zend_Controller_Dispatcher_Interface
      * @param  Zend_Controller_Request_Abstract $request
      * @return boolean
      */
-	public function isDispatchable(Zend_Controller_Request_Abstract $request);
+    public function isDispatchable(Zend_Controller_Request_Abstract $request);
 
     /**
      * Add a parameter with which to instantiate an Action Controller
@@ -134,13 +134,13 @@ interface Zend_Controller_Dispatcher_Interface
      */
     public function getDefaultAction();
 
-	/**
+    /**
      * Dispatches a request object to a controller/action.  If the action
      * requests a forward to another action, a new request will be returned.
-	 *
-	 * @param  Zend_Controller_Request_Abstract $request
-	 * @param  Zend_Controller_Response_Abstract $response
-	 * @return Zend_Controller_Request_Abstract|boolean
-	 */
-	public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response);
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @param  Zend_Controller_Response_Abstract $response
+     * @return Zend_Controller_Request_Abstract|boolean
+     */
+    public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response);
 }

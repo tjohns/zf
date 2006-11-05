@@ -70,9 +70,9 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     {
         $this->_request = $request;
 
-	    foreach ($this->_plugins as $plugin) {
-	        $plugin->setRequest($request);
-	    }
+        foreach ($this->_plugins as $plugin) {
+            $plugin->setRequest($request);
+        }
 
         return $this;
     }
@@ -97,9 +97,9 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     {
         $this->_response = $response;
 
-	    foreach ($this->_plugins as $plugin) {
-	        $plugin->setResponse($response);
-	    }
+        foreach ($this->_plugins as $plugin) {
+            $plugin->setResponse($response);
+        }
 
 
         return $this;
@@ -134,92 +134,92 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     }
 
 
-	/**
-	 * Called before Zend_Controller_Front begins evaluating the
-	 * request against its routes.
-	 *
-	 * @return void
-	 */
-	public function routeStartup()
-	{
-	    foreach ($this->_plugins as $plugin) {
-	        $plugin->routeStartup();
-	    }
-	}
+    /**
+     * Called before Zend_Controller_Front begins evaluating the
+     * request against its routes.
+     *
+     * @return void
+     */
+    public function routeStartup()
+    {
+        foreach ($this->_plugins as $plugin) {
+            $plugin->routeStartup();
+        }
+    }
 
 
-	/**
-	 * Called before Zend_Controller_Front exits its iterations over
-	 * the route set.
-	 *
-	 * @param  Zend_Controller_Request_Abstract $request
-	 * @return void
-	 */
-	public function routeShutdown($request)
-	{
-	    foreach ($this->_plugins as $plugin) {
-	        $plugin->routeShutdown($request);
-	    }
-	}
+    /**
+     * Called before Zend_Controller_Front exits its iterations over
+     * the route set.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return void
+     */
+    public function routeShutdown($request)
+    {
+        foreach ($this->_plugins as $plugin) {
+            $plugin->routeShutdown($request);
+        }
+    }
 
 
-	/**
-	 * Called before Zend_Controller_Front enters its dispatch loop.
+    /**
+     * Called before Zend_Controller_Front enters its dispatch loop.
      *
      * During the dispatch loop, Zend_Controller_Front keeps a
      * Zend_Controller_Request_Abstract object, and uses
      * Zend_Controller_Dispatcher to dispatch the
      * Zend_Controller_Request_Abstract object to controllers/actions.
-	 *
-	 * @param  Zend_Controller_Request_Abstract $request
-	 * @return void
-	 */
-	public function dispatchLoopStartup($request)
-	{
-	    foreach ($this->_plugins as $plugin) {
-	        $plugin->dispatchLoopStartup($request);
-	    }
-	}
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return void
+     */
+    public function dispatchLoopStartup($request)
+    {
+        foreach ($this->_plugins as $plugin) {
+            $plugin->dispatchLoopStartup($request);
+        }
+    }
 
 
-	/**
-	 * Called before an action is dispatched by Zend_Controller_Dispatcher.
-	 *
-	 * @param  Zend_Controller_Request_Abstract $request
-	 * @return void
-	 */
-	public function preDispatch($request)
-	{
-	    foreach ($this->_plugins as $plugin) {
-	        $plugin->preDispatch($request);
-	    }
-	}
+    /**
+     * Called before an action is dispatched by Zend_Controller_Dispatcher.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return void
+     */
+    public function preDispatch($request)
+    {
+        foreach ($this->_plugins as $plugin) {
+            $plugin->preDispatch($request);
+        }
+    }
 
 
-	/**
-	 * Called after an action is dispatched by Zend_Controller_Dispatcher.
-	 *
-	 * @param  Zend_Controller_Request_Abstract $request
-	 * @return void
-	 */
-	public function postDispatch($request)
-	{
-	    foreach ($this->_plugins as $plugin) {
-	        $plugin->postDispatch($request);
-	    }
-	}
+    /**
+     * Called after an action is dispatched by Zend_Controller_Dispatcher.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return void
+     */
+    public function postDispatch($request)
+    {
+        foreach ($this->_plugins as $plugin) {
+            $plugin->postDispatch($request);
+        }
+    }
 
 
-	/**
-	 * Called before Zend_Controller_Front exits its dispatch loop.
-	 *
-	 * @param  Zend_Controller_Request_Abstract $request
-	 * @return void
-	 */
-	public function dispatchLoopShutdown()
-	{
-	   foreach ($this->_plugins as $plugin) {
-	       $plugin->dispatchLoopShutdown();
-	   }
-	}
+    /**
+     * Called before Zend_Controller_Front exits its dispatch loop.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return void
+     */
+    public function dispatchLoopShutdown()
+    {
+       foreach ($this->_plugins as $plugin) {
+           $plugin->dispatchLoopShutdown();
+       }
+    }
 }

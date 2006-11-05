@@ -103,7 +103,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      */
     public function formatControllerName($unformatted)
     {
-	    return ucfirst($this->_formatName($unformatted)) . 'Controller';
+        return ucfirst($this->_formatName($unformatted)) . 'Controller';
     }
 
 
@@ -113,14 +113,15 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * object, and reformat into a proper method name that would be found
      * inside a class extending Zend_Controller_Action.
      *
+     * @todo Should action method names allow underscores?
      * @param string $unformatted
      * @return string
      */
-	public function formatActionName($unformatted)
-	{
+    public function formatActionName($unformatted)
+    {
         $formatted = $this->_formatName($unformatted);
-	    return strtolower(substr($formatted, 0, 1)) . substr($formatted, 1) . 'Action';
-	}
+        return strtolower(substr($formatted, 0, 1)) . substr($formatted, 1) . 'Action';
+    }
 
 
     /**
@@ -177,14 +178,14 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * @param Zend_Controller_Request_Abstract $action
      * @return unknown
      */
-	public function isDispatchable(Zend_Controller_Request_Abstract $request)
-	{
+    public function isDispatchable(Zend_Controller_Request_Abstract $request)
+    {
         if ($request->isDispatched()) {
             return false;
         }
 
         return $this->_dispatch($request, false);
-	}
+    }
 
     /**
      * Add a parameter to use when instantiating an action controller
@@ -284,42 +285,42 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         return $this->_defaultAction;
     }
 
-	/**
-	 * Dispatch to a controller/action
-	 *
-	 * @param Zend_Controller_Request_Abstract $request
-	 * @param Zend_Controller_Response_Abstract $response
-	 * @return boolean
-	 */
-	public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response)
-	{
+    /**
+     * Dispatch to a controller/action
+     *
+     * @param Zend_Controller_Request_Abstract $request
+     * @param Zend_Controller_Response_Abstract $response
+     * @return boolean
+     */
+    public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response)
+    {
         $this->setResponse($response);
-	    return $this->_dispatch($request);
-	}
+        return $this->_dispatch($request);
+    }
 
 
-	/**
-	 * If $performDispatch is FALSE, this method will check if a controller
-	 * file exists.  This still doesn't necessarily mean that it can be dispatched
-	 * in the stricted sense, as file may not contain the controller class or the
-	 * controller may reject the action.
-	 *
-	 * If $performDispatch is TRUE, then this method will actually
-	 * instantiate the controller and call its action.  Calling the action
-	 * is done by passing a Zend_Controller_Dispatcher_Token to the controller's constructor.
-	 *
-	 * @param Zend_Controller_Request_Abstract $request
-	 * @param boolean $performDispatch
-	 * @return void
-	 */
-	protected function _dispatch(Zend_Controller_Request_Abstract $request, $performDispatch = true)
-	{
+    /**
+     * If $performDispatch is FALSE, this method will check if a controller
+     * file exists.  This still doesn't necessarily mean that it can be dispatched
+     * in the stricted sense, as file may not contain the controller class or the
+     * controller may reject the action.
+     *
+     * If $performDispatch is TRUE, then this method will actually
+     * instantiate the controller and call its action.  Calling the action
+     * is done by passing a Zend_Controller_Dispatcher_Token to the controller's constructor.
+     *
+     * @param Zend_Controller_Request_Abstract $request
+     * @param boolean $performDispatch
+     * @return void
+     */
+    protected function _dispatch(Zend_Controller_Request_Abstract $request, $performDispatch = true)
+    {
         /**
          * Controller directory check
          */
-	    if ($this->_directory === null) {
-	        throw new Zend_Controller_Dispatcher_Exception('Controller directory never set.  Use setControllerDirectory() first');
-	    }
+        if ($this->_directory === null) {
+            throw new Zend_Controller_Dispatcher_Exception('Controller directory never set.  Use setControllerDirectory() first');
+        }
 
         /**
          * Get controller name
@@ -331,20 +332,20 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         if (empty($controllerName)) {
             $controllerName = $this->getDefaultController();
         }
-	    $className = $this->formatControllerName($controllerName);
+        $className = $this->formatControllerName($controllerName);
 
         /**
          * Determine if controller is dispatchable
          */
         $dispatchable = Zend::isReadable($this->_directory . DIRECTORY_SEPARATOR . $className . '.php');
 
-	    /**
-	     * If $performDispatch is FALSE, only determine if the controller file
-	     * can be accessed.
-	     */
-	    if (!$performDispatch) {
-	        return $dispatchable;
-	    }
+        /**
+         * If $performDispatch is FALSE, only determine if the controller file
+         * can be accessed.
+         */
+        if (!$performDispatch) {
+            return $dispatchable;
+        }
 
         /**
          * If not dispatchable, get the default controller; if this is already 
@@ -427,5 +428,5 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $controller = null;
         $reflection = null;
         $method     = null;
-	}
+    }
 }

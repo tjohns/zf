@@ -79,47 +79,47 @@ class Zend_Controller_Front
      */
     protected $_invokeParams = array();
 
-	/**
-	 * Constructor
-	 *
-	 * Instantiate the plugin broker.
-	 */
-	public function __construct()
-	{
-	    $this->_plugins = new Zend_Controller_Plugin_Broker();
-	}
+    /**
+     * Constructor
+     *
+     * Instantiate the plugin broker.
+     */
+    public function __construct()
+    {
+        $this->_plugins = new Zend_Controller_Plugin_Broker();
+    }
 
-	/**
-	 * Convenience feature, calls setControllerDirectory()->setRouter()->dispatch()
-	 *
-	 * @param string $controllerDirectory
+    /**
+     * Convenience feature, calls setControllerDirectory()->setRouter()->dispatch()
+     *
+     * @param string $controllerDirectory
      * @return void;
-	 */
+     */
     static public function run($controllerDirectory)
-	{
+    {
         require_once 'Zend/Controller/Router.php';
         $frontController = new self();
-		echo $frontController
+        echo $frontController
             ->setControllerDirectory($controllerDirectory)
             ->setRouter(new Zend_Controller_Router())
             ->dispatch();
-	}
+    }
 
-	/**
-	 * Convenience method, passthru to Zend_Controller_Dispatcher::setControllerDirectory()
-	 *
-	 * @param string $directory
-	 * @return self
-	 */
-	public function setControllerDirectory($directory)
-	{
+    /**
+     * Convenience method, passthru to Zend_Controller_Dispatcher::setControllerDirectory()
+     *
+     * @param string $directory
+     * @return self
+     */
+    public function setControllerDirectory($directory)
+    {
         $dispatcher = $this->getDispatcher();
         if (!method_exists($dispatcher, 'setControllerDirectory')) {
            throw new Zend_Controller_Front_Exception('Custom dispatcher does not support setting controller directory');
         }
-	   $dispatcher->setControllerDirectory($directory);
-	   return $this;
-	}
+       $dispatcher->setControllerDirectory($directory);
+       return $this;
+    }
 
     /**
      * Convenience method, passthru to Zend_Controller_Dispatcher::getControllerDirectory()
@@ -132,7 +132,7 @@ class Zend_Controller_Front
         if (!method_exists($dispatcher, 'getControllerDirectory')) {
            throw new Zend_Controller_Front_Exception('Custom dispatcher does not support setting controller directory');
         }
-	   return $dispatcher->getControllerDirectory();
+       return $dispatcher->getControllerDirectory();
     }
 
     /**
@@ -184,7 +184,7 @@ class Zend_Controller_Front
     /**
      * Set request class/object
      *
-	 * Set the request object.  The request holds the request environment.
+     * Set the request object.  The request holds the request environment.
      *
      * If a class name is provided, it will instantiate it
      *
@@ -207,21 +207,21 @@ class Zend_Controller_Front
         return $this;
     }
 
-	/**
-	 * Return the request object.
-	 *
-	 * @return null|Zend_Controller_Request_Abstract
-	 */
-	public function getRequest()
-	{
+    /**
+     * Return the request object.
+     *
+     * @return null|Zend_Controller_Request_Abstract
+     */
+    public function getRequest()
+    {
         return $this->_request;
-	}
+    }
 
     /**
      * Set router class/object
      *
-	 * Set the router object.  The router is responsible for mapping
-	 * the request to a controller and action.
+     * Set the router object.  The router is responsible for mapping
+     * the request to a controller and action.
      *
      * If a class name is provided, instantiates router with any parameters
      * registered via {@link addParam()} or {@link setParams()}.
@@ -246,51 +246,51 @@ class Zend_Controller_Front
         return $this;
     }
 
-	/**
-	 * Return the router object.
-	 *
-	 * @return null|Zend_Controller_Router_Interface
-	 */
-	public function getRouter()
-	{
+    /**
+     * Return the router object.
+     *
+     * @return null|Zend_Controller_Router_Interface
+     */
+    public function getRouter()
+    {
         return $this->_router;
-	}
+    }
 
-	/**
-	 * Set the dispatcher object.  The dispatcher is responsible for
-	 * taking a Zend_Controller_Dispatcher_Token object, instantiating the controller, and
-	 * call the action method of the controller.
-	 *
-	 * @param Zend_Controller_Dispatcher_Interface $dispatcher
-	 * @return self
-	 */
-	public function setDispatcher(Zend_Controller_Dispatcher_Interface $dispatcher)
-	{
-	    $this->_dispatcher = $dispatcher;
-	    return $this;
-	}
+    /**
+     * Set the dispatcher object.  The dispatcher is responsible for
+     * taking a Zend_Controller_Dispatcher_Token object, instantiating the controller, and
+     * call the action method of the controller.
+     *
+     * @param Zend_Controller_Dispatcher_Interface $dispatcher
+     * @return self
+     */
+    public function setDispatcher(Zend_Controller_Dispatcher_Interface $dispatcher)
+    {
+        $this->_dispatcher = $dispatcher;
+        return $this;
+    }
 
-	/**
-	 * Return the dispatcher object.
-	 *
-	 * @return Zend_Controller_DispatcherInteface
-	 */
-	public function getDispatcher()
-	{
-	    /**
-	     * Instantiate the default dispatcher if one was not set.
-	     */
+    /**
+     * Return the dispatcher object.
+     *
+     * @return Zend_Controller_DispatcherInteface
+     */
+    public function getDispatcher()
+    {
+        /**
+         * Instantiate the default dispatcher if one was not set.
+         */
         if (!$this->_dispatcher instanceof Zend_Controller_Dispatcher_Interface) {
             require_once 'Zend/Controller/Dispatcher.php';
             $this->_dispatcher = new Zend_Controller_Dispatcher();
         }
         return $this->_dispatcher;
-	}
+    }
 
     /**
      * Set response class/object
      *
-	 * Set the response object.  The response is a container for action
+     * Set the response object.  The response is a container for action
      * responses and headers. Usage is optional.
      *
      * If a class name is provided, instantiates a response object.
@@ -314,15 +314,15 @@ class Zend_Controller_Front
         return $this;
     }
 
-	/**
-	 * Return the response object.
-	 *
-	 * @return null|Zend_Controller_Response_Abstract
-	 */
-	public function getResponse()
-	{
+    /**
+     * Return the response object.
+     *
+     * @return null|Zend_Controller_Response_Abstract
+     */
+    public function getResponse()
+    {
         return $this->_response;
-	}
+    }
 
     /**
      * Add a parameter to use when instantiating an action controller
@@ -357,39 +357,39 @@ class Zend_Controller_Front
         return $this->_invokeParams;
     }
 
-	/**
-	 * Register a plugin.
-	 *
-	 * @param Zend_Controller_Plugin_Abstract $plugin
-	 * @return self
-	 */
-	public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin)
-	{
-	    $this->_plugins->registerPlugin($plugin);
-	    return $this;
-	}
+    /**
+     * Register a plugin.
+     *
+     * @param Zend_Controller_Plugin_Abstract $plugin
+     * @return self
+     */
+    public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin)
+    {
+        $this->_plugins->registerPlugin($plugin);
+        return $this;
+    }
 
-	/**
-	 * Unregister a plugin.
-	 *
-	 * @param Zend_Controller_Plugin_Abstract $plugin
-	 * @return self
-	 */
+    /**
+     * Unregister a plugin.
+     *
+     * @param Zend_Controller_Plugin_Abstract $plugin
+     * @return self
+     */
     public function unregisterPlugin(Zend_Controller_Plugin_Abstract $plugin)
     {
         $this->_plugins->unregisterPlugin($plugin);
         return $this;
     }
 
-	/**
-	 * Dispatch an HTTP request to a controller/action.
+    /**
+     * Dispatch an HTTP request to a controller/action.
      *
      * @param Zend_Controller_Request_Abstract|null $request
      * @param Zend_Controller_Response_Abstract|null $response
      * @return Zend_Controller_Response_Abstract
-	 */
-	public function dispatch(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
-	{
+     */
+    public function dispatch(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
+    {
         /**
          * Instantiate default request object (HTTP version) if none provided
          */
@@ -414,7 +414,7 @@ class Zend_Controller_Front
             ->setResponse($response);
 
         // Begin dispatch
-	    try {
+        try {
             /**
              * Route request to controller/action, if a router is provided
              */
@@ -477,10 +477,10 @@ class Zend_Controller_Front
              * Notify plugins of dispatch loop completion
              */
             $this->_plugins->dispatchLoopShutdown();
-	    } catch (Exception $e) {
+        } catch (Exception $e) {
             $response->setException($e);
-	    }
+        }
 
         return $response;
-	}
+    }
 }

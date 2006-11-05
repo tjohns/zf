@@ -37,7 +37,7 @@ interface Zend_Controller_Router_Interface
      * Processes a request and sets its controller and action.  If
      * no route was possible, an exception is thrown.
      *
-	 * @param  Zend_Controller_Request_Abstract
+     * @param  Zend_Controller_Request_Abstract
      * @throws Zend_Controller_Router_Exception
      * @return Zend_Controller_Request_Abstract|boolean
      */
