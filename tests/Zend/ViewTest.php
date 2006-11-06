@@ -236,5 +236,23 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
     	$this->assertEquals("foo bar baz\n", $view->render('test.phtml') );
     }
     
+    /**
+     * Tests that render() works when called within a template, and that 
+     * protected members are not available
+     */
+    public function testRenderSubTemplates()
+    {
+        $view = new Zend_View();
+        $view->setScriptPath(dirname(__FILE__) . '/View/_templates');
+        $view->content = 'testSubTemplate.phtml';
+        $this->assertEquals('', $view->render('testParent.phtml'));
+
+        $logFile = dirname(__FILE__) . '/View/_templates/view.log';
+        $this->assertTrue(file_exists($logFile));
+        $log = file_get_contents($logFile);
+        unlink($logFile); // clean up...
+        $this->assertContains('This text should not be displayed', $log);
+        $this->assertNotContains('testSubTemplate.phtml', $log);
+    }
     
 }

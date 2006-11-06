@@ -336,7 +336,6 @@ abstract class Zend_View_Abstract
         }
     }
 
-
     /**
      * Processes a view script and returns the output.
      *
@@ -346,27 +345,13 @@ abstract class Zend_View_Abstract
     public function render($name)
     {
         // find the script file name using the parent private method
-        $file = $this->_script($name);
+        $this->_file = $this->_script($name);
+        unset($name); // remove $name from local scope
 
-        // are we starting up?
-        if (empty($this->_file)) {
-            // stack was empty, which means this is the first script.
-            ob_start();
-        }
+        ob_start();
+        $this->_run($this->_file); 
 
-        // add to the stack, run the script, then pull off the stack.
-        // we do it this way because there may be sub-scripts rendered
-        // inside the current one.
-        array_push($this->_file, $file);
-        $this->_run($file); // note that this must be implemented by the subclass
-        array_pop($this->_file);
-
-        // are we really done?
-        if (empty($this->_file)) {
-            // stack is empty, so that was the last script.
-            // stop buffering, filter output, and return.
-            return $this->_filter(ob_get_clean());
-        }
+        return $this->_filter(ob_get_clean()); // filter output
     }
 
     /**
@@ -497,4 +482,12 @@ abstract class Zend_View_Abstract
         
         throw new Zend_View_Exception("$type '$name' not found in path.");
     }
+
+    /**
+     * Use to include the view script in a scope that only allows public 
+     * members.
+     * 
+     * @return mixed
+     */
+    abstract protected function _run();
 }
