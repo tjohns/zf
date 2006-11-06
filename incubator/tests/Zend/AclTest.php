@@ -206,4 +206,22 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testRegression()
+    {
+        $acl = new Zend_Acl();
+        
+        // retrieve an instance of the ARO registry
+        $aro = $acl->aroRegistry();
+        $aro->add('guest');
+        $aro->add('staff', $aro->guest);
+        
+        // deny access to all unknown AROs
+        $acl->deny();
+        $acl->allow('staff');
+        $acl->deny('staff', array('task1', 'task2'));
+
+        // Access control checks for the above refinement
+        self::assertFalse($acl->valid('staff', 'task1'));
+    }
+
 }

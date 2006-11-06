@@ -64,9 +64,11 @@ class Zend_Acl_Permission
                 if (in_array($context, $acl[$id])) {
                     // is there an explicit match for the context?
                     $score = 4 * $factor;
+                    break;
                 } elseif (in_array(Zend_Acl::ACO_CATCHALL, $acl[$id])) {
                     // is there an any/all for the context?
                     $score = 1 * $factor;
+                    break;
                 }
             }
         }
