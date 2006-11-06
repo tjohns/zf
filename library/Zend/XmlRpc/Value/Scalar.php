@@ -47,7 +47,7 @@ abstract class Zend_XmlRpc_Value_Scalar extends Zend_XmlRpc_Value
             $dom   = new DOMDocument('1.0', 'UTF-8');
             $value = $dom->appendChild($dom->createElement('value'));
             $type  = $value->appendChild($dom->createElement($this->_type));
-            $type->appendChild($dom->createTextNode($this->_value));
+            $type->appendChild($dom->createTextNode($this->getValue()));
 
             $this->_as_dom = $value;
             $this->_as_xml = $this->_stripXmlDeclaration($dom);
