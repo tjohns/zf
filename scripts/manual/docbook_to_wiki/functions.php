@@ -2,15 +2,33 @@
 
 function processChapters($matches)
 {
-    global $path;
+    global $manualPath;
     
     $filename = $matches[2] . '.xml';
-    $content  = file_get_contents($path . $filename);
+    $content  = file_get_contents($manualPath . 'module_specs/' . $filename);
     $content  = preg_replace_callback('/(&module_specs.)(.+)(;)/', 'processChapters', $content);
     
     $sxml     = @simplexml_load_string($content);
     
     return $content;
+}
+
+function processIncubatorChapters($matches)
+{
+    global $manualIncPath;
+    
+    $filename = $matches[2] . '.xml';
+    
+    if (is_readable($manualIncPath . 'module_specs/' . $filename)) {
+        $content  = file_get_contents($manualIncPath . 'module_specs/' . $filename);
+        $content  = preg_replace_callback('/(&module_specs.)(.+)(;)/', 'processIncubatorChapters', $content);
+        $sxml     = @simplexml_load_string($content);
+        
+        return $content;
+        
+    } else {
+        return processChapters($matches);
+    }
 }
 
 function stripSpaces($haystack)
