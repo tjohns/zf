@@ -15,6 +15,10 @@ class IndexController extends Zend_Controller_Action
 
     public function argsAction()
     {
-        $this->_response->appendBody('Args action called with params ' . implode('; ', $this->getInvokeArgs()) . "\n");
+        $args = '';
+        foreach ($this->getInvokeArgs() as $key => $value) {
+            $args .= $key . ': ' . $value . '; ';
+        }
+        $this->_response->appendBody('Args action called with params ' . $args . "\n");
     }
 }

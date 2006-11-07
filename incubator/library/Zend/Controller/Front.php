@@ -235,7 +235,7 @@ class Zend_Controller_Front
         if (is_string($router)) {
             Zend::loadClass($router);
             $reflection = new ReflectionClass($router);
-            $router = $reflection->newInstanceArgs($this->getParams());
+            $router = $reflection->newInstance($this->getParams());
         }
         if (!$router instanceof Zend_Controller_Router_Interface) {
             throw new Zend_Controller_Front_Exception('Invalid router class');
@@ -327,12 +327,15 @@ class Zend_Controller_Front
     /**
      * Add a parameter to use when instantiating an action controller
      *
-     * @param mixed $param
-     * @return void
+     * @param string $name
+     * @param mixed $value
+     * @return self
      */
-    public function addParam($param)
+    public function addParam($name, $value)
     {
-        array_push($this->_invokeParams, $param);
+        $name = (string) $name;
+        $this->_invokeParams[$name] = $value;
+        return $this;
     }
 
     /**

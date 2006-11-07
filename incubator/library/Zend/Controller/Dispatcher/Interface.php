@@ -69,16 +69,17 @@ interface Zend_Controller_Dispatcher_Interface
     /**
      * Add a parameter with which to instantiate an Action Controller
      * 
-     * @param mixed $param 
-     * @return void
+     * @param string $name 
+     * @param mixed $value 
+     * @return self
      */
-    public function addParam($param);
+    public function addParam($name, $value);
 
     /**
      * Set an array of a parameters to pass to the Action Controller constructor
      * 
      * @param array $params 
-     * @return void
+     * @return self
      */
     public function setParams(array $params);
 

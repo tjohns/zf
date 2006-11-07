@@ -55,36 +55,38 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
     /**
      * Constructor
      * 
+     * @param array $params
      * @return void
      */
-    public function __construct()
+    public function __construct(array $params = array())
     {
-        if (0 < func_num_args()) {
-            $argv = func_get_args();
-            $this->setParams($argv);
-        }
+        $this->setParams($params);
     }
 
     /**
      * Add a parameter to use when instantiating an action controller
      * 
-     * @param mixed $param 
-     * @return void
+     * @param string $name
+     * @param mixed $value 
+     * @return self
      */
-    public function addParam($param)
+    public function addParam($name, $value)
     {
-        array_push($this->_invokeParams, $param);
+        $name = (string) $name;
+        $this->_invokeParams[$name] = $value;
+        return $this;
     }
 
     /**
      * Set parameters to pass to action controller constructors
      * 
      * @param array $params 
-     * @return void
+     * @return self
      */
     public function setParams(array $params)
     {
         $this->_invokeParams = $params;
+        return $this;
     }
 
     /**

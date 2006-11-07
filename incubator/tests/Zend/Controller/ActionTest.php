@@ -12,8 +12,10 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->_controller = new Zend_Controller_ActionTest_TestController(
             new Zend_Controller_Request_Http(),
             new Zend_Controller_Response_Cli(),
-            'foo',
-            'bar'
+            array(
+                'foo' => 'bar',
+                'bar' => 'baz'
+            )
         );
     }
 
@@ -24,8 +26,8 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
 
     public function testInit()
     {
-        $this->assertEquals('foo', $this->_controller->initArgs['foo']);
-        $this->assertEquals('bar', $this->_controller->initArgs['bar']);
+        $this->assertEquals('bar', $this->_controller->initArgs['foo']);
+        $this->assertEquals('baz', $this->_controller->initArgs['bar']);
     }
 
     public function testPreRun()
@@ -60,8 +62,14 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
 
     public function testGetInvokeArgs()
     {
-        $expected = array('foo', 'bar');
+        $expected = array('foo' => 'bar', 'bar' => 'baz');
         $this->assertSame($expected, $this->_controller->getInvokeArgs());
+    }
+
+    public function testGetInvokeArg()
+    {
+        $this->assertSame('bar', $this->_controller->getInvokeArg('foo'));
+        $this->assertSame('baz', $this->_controller->getInvokeArg('bar'));
     }
 
     public function testForward()
@@ -102,10 +110,10 @@ class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
 {
     public $initArgs = array();
 
-    public function init($var1, $var2)
+    public function init()
     {
-        $this->initArgs['foo'] = $var1;
-        $this->initArgs['bar'] = $var2;
+        $this->initArgs['foo'] = $this->getInvokeArg('foo');
+        $this->initArgs['bar'] = $this->getInvokeArg('bar');
     }
 
     public function preDispatch()

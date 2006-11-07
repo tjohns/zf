@@ -84,12 +84,9 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * 
      * @return void
      */
-    public function __construct()
+    public function __construct(array $params = array())
     {
-        if (0 < func_num_args()) {
-            $argv = func_get_args();
-            $this->setParams($argv);
-        }
+        $this->setParams($params);
     }
 
     /**
@@ -190,12 +187,14 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     /**
      * Add a parameter to use when instantiating an action controller
      * 
-     * @param mixed $param 
+     * @param string $name
+     * @param mixed $value 
      * @return self
      */
-    public function addParam($param)
+    public function addParam($name, $value)
     {
-        array_push($this->_invokeParams, $param);
+        $name = (string) $name;
+        $this->_invokeParams[$name] = $value;
         return $this;
     }
 
@@ -374,7 +373,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         /**
          * Get any instance arguments and instantiate a controller object
          */
-        $argv = $this->getParams();
+        $argv = array($this->getParams());
 
         /**
          * Prepend response object to arguments

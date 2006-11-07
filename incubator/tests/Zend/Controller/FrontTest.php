@@ -61,23 +61,23 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
 
     public function testAddParam()
     {
-        $this->_controller->addParam('foo');
-        $this->assertSame(array('foo'), $this->_controller->getParams());
+        $this->_controller->addParam('foo', 'bar');
+        $this->assertSame(array('foo' => 'bar'), $this->_controller->getParams());
 
-        $this->_controller->addParam('bar');
-        $this->assertSame(array('foo', 'bar'), $this->_controller->getParams());
+        $this->_controller->addParam('bar', 'baz');
+        $this->assertSame(array('foo' => 'bar', 'bar' => 'baz'), $this->_controller->getParams());
     }
 
     public function testSetParams()
     {
-        $this->_controller->setParams(array('foo', 'bar'));
-        $this->assertSame(array('foo', 'bar'), $this->_controller->getParams());
+        $this->_controller->setParams(array('foo' => 'bar'));
+        $this->assertSame(array('foo' => 'bar'), $this->_controller->getParams());
 
-        $this->_controller->addParam('foo');
-        $this->assertSame(array('foo', 'bar', 'foo'), $this->_controller->getParams());
+        $this->_controller->addParam('baz', 'bat');
+        $this->assertSame(array('foo' => 'bar', 'baz' => 'bat'), $this->_controller->getParams());
 
-        $this->_controller->setParams(array('foo', 'bar'));
-        $this->assertSame(array('foo', 'bar'), $this->_controller->getParams());
+        $this->_controller->setParams(array('foo' => 'bar'));
+        $this->assertSame(array('foo' => 'bar'), $this->_controller->getParams());
     }
 
     public function testSetGetDefaultController()
@@ -182,12 +182,13 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $request->setControllerName('index');
         $request->setActionName('args');
         $this->_controller->setResponse(new Zend_Controller_Response_Cli());
-        $this->_controller->addParam('foo');
-        $this->_controller->addParam('bar');
+        $this->_controller->addParam('foo', 'bar');
+        $this->_controller->addParam('baz', 'bat');
         $response = $this->_controller->dispatch($request);
 
         $body = $response->getBody();
-        $this->assertContains('foo; bar', $body);
+        $this->assertContains('foo: bar', $body);
+        $this->assertContains('baz: bat', $body);
     }
 
     /**

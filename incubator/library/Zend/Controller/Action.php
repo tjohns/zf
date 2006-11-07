@@ -59,40 +59,36 @@ abstract class Zend_Controller_Action
     /**
      * Class constructor
      *
-     * Marked final to ensure that the request object is provided to the 
-     * constructor. However, additional construction actions can be invoked in 
-     * {@link init()}, and all additional arguments passed to the constructor 
-     * will be passed as arguments to init().
+     * The request and response objects should be registered with the 
+     * controller, as should be any additional optional arguments; these will be 
+     * available via {@link getRequest()}, {@link getResponse()}, and 
+     * {@link getInvokeArgs()}, respectively.
+     *
+     * When overriding the constructor, please consider this usage as a best 
+     * practice and ensure that each is registered appropriately.
+     *
+     * Additionally, {@link init()} is called as the final action of 
+     * instantiation, and may be safely overridden to perform initialization 
+     * tasks; as a general rule, override {@link init()} instead of the 
+     * constructor to customize an action controller's instantiation.
      *
      * @param Zend_Controller_Request_Abstract $request
      * @param Zend_Controller_Response_Abstract $response
+     * @param array $invokeArgs Any additional invocation arguments
      * @return void
      */
-    final public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response)
+    public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $invokeArgs = array())
     {
-        $this->_request  = $request;
-        $this->_response = $response;
-
-        if (1 < func_num_args()) {
-            $argv = func_get_args();
-            array_shift($argv);       // strip request
-            array_shift($argv);       // strip response
-
-            // Set invocation arguments
-            $this->_invokeArgs = $argv;
-        }
-
-        $reflection = new ReflectionObject($this);
-        $init = $reflection->getMethod('init');
-        $init->invokeArgs($this, $this->_invokeArgs);
+        $this->setRequest($request)
+             ->setResponse($response)
+             ->_setInvokeArgs($invokeArgs)
+             ->init();
     }
 
     /**
      * Initialize object
      *
-     * Called from {@link __construct()} with all arguments passed to the 
-     * constructor, minus the request object. Use for custom object 
-     * initialization.
+     * Called from {@link __construct()} as final step of object instantiation. 
      * 
      * @return void
      */
@@ -145,6 +141,18 @@ abstract class Zend_Controller_Action
     }
 
     /**
+     * Set invocation arguments
+     * 
+     * @param array $args 
+     * @return self
+     */
+    protected function _setInvokeArgs(array $args = array())
+    {
+        $this->_invokeArgs = $args;
+        return $this;
+    }
+
+    /**
      * Return the array of constructor arguments (minus the Request object)
      * 
      * @return array
@@ -152,6 +160,21 @@ abstract class Zend_Controller_Action
     public function getInvokeArgs()
     {
         return $this->_invokeArgs;
+    }
+
+    /**
+     * Return a single invocation argument
+     * 
+     * @param string $key 
+     * @return mixed
+     */
+    public function getInvokeArg($key)
+    {
+        if (isset($this->_invokeArgs[$key])) {
+            return $this->_invokeArgs[$key];
+        }
+
+        return null;
     }
 
     /**

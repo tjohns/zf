@@ -46,16 +46,17 @@ interface Zend_Controller_Router_Interface
     /**
      * Add a parameter with which to instantiate any helper objects
      * 
+     * @param string $name 
      * @param mixed $param 
-     * @return void
+     * @return self
      */
-    public function addParam($param);
+    public function addParam($name, $value);
 
     /**
      * Set an array of a parameters to pass to helper object constructors
      * 
      * @param array $params 
-     * @return void
+     * @return self
      */
     public function setParams(array $params);
 
