@@ -152,9 +152,11 @@ abstract class Zend_View_Abstract
         /**
          * @todo exception?
          */
-        if ($key[0] != '_') {
-            return isset($this->_vars[$key]) ? $this->_vars[$key] : null;
+        if ($this->__isset($key)) {
+            return $this->_vars[$key];
         }
+
+        return null;
     }
 
 

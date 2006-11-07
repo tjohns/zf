@@ -255,4 +255,15 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertNotContains('testSubTemplate.phtml', $log);
     }
     
+    public function testSetArrayProperty()
+    {
+        $view = new Zend_View();
+        $view->foo = array();
+        $view->foo[] = 42;
+
+        $foo = $view->foo;
+
+        $this->assertTrue(is_array($foo));
+        $this->assertEquals(42, $foo[0]);
+    }
 }
