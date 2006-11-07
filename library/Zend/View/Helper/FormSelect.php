@@ -64,7 +64,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
         $options = null, $listsep = "<br />\n")
     {
         $info = $this->_getInfo($name, $value, $attribs, $options, $listsep);
-        extract($info); // name, value, attribs, options, listsep, disable
+        extract($info); // name, id, value, attribs, options, listsep, disable
         
         // force $value to array so we can compare multiple values
         // to multiple options.
@@ -108,6 +108,7 @@ class Zend_View_Helper_FormSelect extends Zend_View_Helper_FormElement {
             // the surrounding select element first.
             $xhtml = '<select'
                    . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
+                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, 'UTF-8') . '"'
                    . $this->_htmlAttribs($attribs)
                    . ">\n\t";
             

@@ -56,7 +56,7 @@ class Zend_View_Helper_FormFile extends Zend_View_Helper_FormElement {
     public function formFile($name, $value = null, $attribs = null)
     {
         $info = $this->_getInfo($name, $value, $attribs);
-        extract($info); // name, value, attribs, options, listsep, disable
+        extract($info); // name, id, value, attribs, options, listsep, disable
         
         // build the element
         if ($disable) {
@@ -66,6 +66,7 @@ class Zend_View_Helper_FormFile extends Zend_View_Helper_FormElement {
             // enabled
             $xhtml = '<input type="file"'
                    . ' name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
+                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, 'UTF-8') . '"'
                    . ' value="' . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '"'
                    . $this->_htmlAttribs($attribs) . ' />';
         }

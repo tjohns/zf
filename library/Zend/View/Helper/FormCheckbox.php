@@ -60,7 +60,7 @@ class Zend_View_Helper_FormCheckbox extends Zend_View_Helper_FormElement {
         $options = array(1,0))
     {
         $info = $this->_getInfo($name, $value, $attribs, $options);
-        extract($info); // name, value, attribs, options, listsep, disable
+        extract($info); // name, id, value, attribs, options, listsep, disable
         
         // make sure attribs don't overwrite name and value
         unset($attribs['name']);

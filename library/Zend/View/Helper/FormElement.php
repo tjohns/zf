@@ -79,6 +79,7 @@ abstract class Zend_View_Helper_FormElement {
         // if it's an array.
         $info = array(
             'name'    => is_array($name) ? '' : $name,
+            'id'      => is_array($name) ? '' : $name,
             'value'   => $value,
             'attribs' => $attribs,
             'options' => $options,
@@ -114,7 +115,14 @@ abstract class Zend_View_Helper_FormElement {
             $info['disable'] = true;
             unset($info['attribs']['disable']);
         }
-        
+
+        // Set ID for element
+        if (isset($info['attribs']['id'])) {
+            $info['id'] = (string) $info['attribs']['id'];
+        } elseif (!isset($info['attribs']['id']) && !empty($info['name'])) {
+            $info['id'] = $info['name'];
+        }
+         
         // remove attribs that might overwrite the other keys.
         // we do this LAST because we needed the other attribs
         // values earlier.
@@ -123,7 +131,7 @@ abstract class Zend_View_Helper_FormElement {
                 unset($info['attribs'][$key]);
             }
         }
-        
+       
         // done!
         return $info;
     }

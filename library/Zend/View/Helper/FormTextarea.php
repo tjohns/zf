@@ -98,6 +98,7 @@ class Zend_View_Helper_FormTextarea extends Zend_View_Helper_FormElement {
             
             // now build the element.
             $xhtml = '<textarea name="' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '"'
+                   . ' id="' . htmlspecialchars($id, ENT_COMPAT, 'UTF-8') . '"'
                    . $this->_htmlAttribs($attribs) . '>'
                    . htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '</textarea>';
             
