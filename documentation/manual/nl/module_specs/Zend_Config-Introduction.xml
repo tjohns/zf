@@ -1,0 +1,46 @@
+<sect1 id="zend.config.introduction">
+    <title>Introduction</title>
+    <para>
+        <code>Zend_Config</code> is ontworpen om het gebruik van configuratiedata te vereenvoudigen voor webtoepassingen.
+        Het verstrekt een eigenschap-gebaseerde interface voor het lezen van configuratiedata vanin de toepassingscode. De configuratiedata kan vanuit een panel van verschillende bronnen die data hiërarchisch kunnen opslaan. Momenteel verstrekt <code>Zend_Config</code> hulpklassen voor configuratiedata die in tekstbestanden werd opgeslaan via <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> and <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link>.
+    </para>
+    <example>
+        <title>Opzettelijk Zend_Config gebruiken</title>
+        <para>
+            Normaal gesproken wordt er verondersteld dat gebruikers één van de hulpklassen als <link linkend="zend.config.adapters.ini"><code>Zend_Config_Ini</code></link> or <link linkend="zend.config.adapters.xml"><code>Zend_Config_Xml</code></link> zullen gebruiken, maar indien de configuratiedata in een PHP array is opgeslaan, kan je de data direct aan de <code>Zend_Config</code> doorgeven om een eenvoudig object geörienteerde interface te gebruiken :
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+// Gegeven een array van configuratiedata
+$configArray = array(
+    'webhost' => 'www.example.com',
+    'database' => array(
+        'type'     => 'pdo_mysql',
+        'host'     => 'db.example.com',
+        'username' => 'dbuser',
+        'password' => 'secret',
+        'name'     => 'dbname'
+    )
+);
+
+// De objekt geörienteerde wrapper over de configuratiedata aanmaken
+require_once 'Zend/Config.php';
+$config = new Zend_Config($configArray);
+
+// Een configuratiedata afbeelden (resulteert in 'www.example.com')
+echo $config->webhost;
+
+// De configuratiedata gebruikeb om een verbinding met de database
+// tot stand te brenegen
+$myApplicationObject->databaseConnect($config->database->type,
+                                      $config->database->host,
+                                      $config->database->username,
+                                      $config->database->password,
+                                      $config->database->name);]]></programlisting>
+    </example>
+    <para>
+        Zoals in het voorbeeld hierboven is geïllustreerd, verstrekt<code>Zend_Config</code> een geneste objecteigenschap syntax om de configuratiedata aan te spreken die aan zijn constructor werd doorgegeven.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
