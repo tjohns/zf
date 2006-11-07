@@ -217,8 +217,18 @@ abstract class Zend_View_Abstract
      */
     public function setScriptPath($path)
     {
-        $this->_path['script'] = array('');
+        $this->_path['script'] = array();
         $this->_addPath('script', $path);
+    }
+
+    /**
+     * Returns an array of all currently set script paths
+     * 
+     * @return array
+     */
+    public function getScriptPaths()
+    {
+        return $this->_getPaths('script');
     }
 
     /**
@@ -246,6 +256,16 @@ abstract class Zend_View_Abstract
     }
 
     /**
+     * Returns an array of all currently set helper paths
+     * 
+     * @return array
+     */
+    public function getHelperPaths()
+    {
+        return $this->_getPaths('helper');
+    }
+
+    /**
      * Adds to the stack of filter paths in LIFO order.
      *
      * @param string|array The directory (-ies) to add.
@@ -267,6 +287,16 @@ abstract class Zend_View_Abstract
     public function setFilterPath($path)
     {
         $this->_setPath('filter', $path);
+    }
+
+    /**
+     * Returns an array of all currently set filter paths
+     * 
+     * @return array
+     */
+    public function getFilterPaths()
+    {
+        return $this->_getPaths('filter');
     }
 
     /**
@@ -395,12 +425,17 @@ abstract class Zend_View_Abstract
      */
     protected function _script($name)
     {
+        if (0 == count($this->_path['script'])) {
+            throw new Zend_View_Exception('no view script directory set; unable to determine location for view script');
+        }
+
         foreach ($this->_path['script'] as $dir) {
             if (is_readable($dir . $name)) {
                 return $dir . $name;
             }
         }
-        throw new Zend_View_Exception("script '$name' not found in path.");
+
+        throw new Zend_View_Exception("script '$name' not found in path");
     }
 
     /**
@@ -460,6 +495,17 @@ abstract class Zend_View_Abstract
         $dir = DIRECTORY_SEPARATOR . ucfirst($type) . DIRECTORY_SEPARATOR;
         $this->_path[$type] = array(dirname(__FILE__) . $dir);
         $this->_addPath($type, $path);
+    }
+
+    /**
+     * Return all paths for a given path type
+     * 
+     * @param string $type The path type  ('helper', 'filter', 'script')
+     * @return array
+     */
+    private function _getPaths($type)
+    {
+        return $this->_path[$type];
     }
 
     /**

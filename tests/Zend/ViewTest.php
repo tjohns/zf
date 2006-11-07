@@ -94,12 +94,15 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 			
 		// test default helper path
 		$this->assertType('array', $paths);
-		$this->assertEquals(1, count($paths));
-		
-		if ($testReadability) {
-			$this->assertTrue(is_dir($paths[0]));
-			$this->assertTrue(is_readable($paths[0]));	    	
-		}
+        if ('script' == $pathType) {
+            $this->assertEquals(0, count($paths));
+        } else {
+            $this->assertEquals(1, count($paths));
+            if ($testReadability) {
+                $this->assertTrue(is_dir($paths[0]));
+                $this->assertTrue(is_readable($paths[0]));	    	
+            }
+        }
     }
         
     
@@ -271,6 +274,9 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(42, $foo[0]);
     }
 
+    /**
+     * Test that array properties are cleared following clearVars() call
+     */
     public function testClearVars()
     {
         $view = new Zend_View();
@@ -283,5 +289,34 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $view->clearVars();
         $this->assertTrue(null === $view->foo);
         $this->assertTrue(null === $view->content);
+    }
+
+    /**
+     * Test that script paths are cleared following setScriptPath(null) call
+     */
+    public function testClearScriptPath()
+    {
+        $view = new Zend_View();
+        $view->setScriptPath(dirname(__FILE__) . '/View/_templates');
+        $paths = $view->getScriptPaths();
+        $test  = str_replace('/', DIRECTORY_SEPARATOR, dirname(__FILE__) . '/View/_templates/');
+        $this->assertEquals($test, $paths[0]);
+        $view->setScriptPath(null);
+        $paths = $view->getScriptPaths();
+        $this->assertTrue(empty($paths));
+    }
+
+    /**
+     * Test that an exception is thrown when no script path is set
+     */
+    public function testNoPath()
+    {
+        $view = new Zend_View();
+        try {
+            $view->render('somefootemplate.phtml');
+            $this->fail('Rendering a template when no script path is set should raise an exception');
+        } catch (Exception $e) {
+            // success...
+        }
     }
 }
