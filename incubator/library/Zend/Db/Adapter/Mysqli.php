@@ -62,7 +62,7 @@ class Zend_Db_Adapter_MySQLi extends Zend_Db_Adapter_Abstract {
      * @param string $ident The identifier.
      * @return string The quoted identifier.
      */
-    public function quoteIdentifier($string) {
+    public function quoteIdentifier($ident) {
     	
     	$ident = str_replace('`', '``', $ident);
         return "`$ident`"; 
