@@ -255,6 +255,10 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertNotContains('testSubTemplate.phtml', $log);
     }
     
+    /**
+     * Tests that array properties may be modified after being set (see [ZF-460] 
+     * and [ZF-268] for symptoms leading to this test)
+     */
     public function testSetArrayProperty()
     {
         $view = new Zend_View();
@@ -265,5 +269,19 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(is_array($foo));
         $this->assertEquals(42, $foo[0]);
+    }
+
+    public function testClearVars()
+    {
+        $view = new Zend_View();
+        $view->foo     = array();
+        $view->content = 'content';
+
+        $this->assertTrue(is_array($view->foo));
+        $this->assertEquals('content', $view->content);
+
+        $view->clearVars();
+        $this->assertTrue(null === $view->foo);
+        $this->assertTrue(null === $view->content);
     }
 }

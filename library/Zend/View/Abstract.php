@@ -339,6 +339,19 @@ abstract class Zend_View_Abstract
     }
 
     /**
+     * Clear all assigned variables
+     *
+     * Clears all variables assigned to Zend_View either via {@link assign()} or 
+     * property overloading ({@link __get()}/{@link __set()}).
+     * 
+     * @return void
+     */
+    public function clearVars()
+    {
+        $this->_vars = array();
+    }
+
+    /**
      * Processes a view script and returns the output.
      *
      * @param string $name The script script name to process.
