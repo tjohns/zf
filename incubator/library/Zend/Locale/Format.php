@@ -110,7 +110,7 @@ class Zend_Locale_Format
         // Get correct signs for this locale
         $symbols = Zend_Locale_Data::getContent($locale, 'numbersymbols');
         $format  = Zend_Locale_Data::getContent($locale, 'decimalnumberformat');
-        $format = $format['default'];
+        $format  = $format['default'];
         iconv_set_encoding('internal_encoding', 'UTF-8');
         
         // seperate negative format pattern when avaiable 
@@ -318,126 +318,312 @@ class Zend_Locale_Format
 
 
     /**
+     * Parse a date with a defined format
+     * 
+     * @param string $date - date string
+     * @param string $type - date type CLDR format !!
+     * @param locale $locale
+     * @return mixed
+     */
+    private static function _parseDate($date, $format, $locale)
+    {
+        $found = array();
+
+        // get position
+        $day       = iconv_strpos($format, 'd');
+        $month     = iconv_strpos($format, 'M');
+        $year      = iconv_strpos($format, 'y');
+
+        // search month strings
+        if (substr($format, $month, 3) == 'MMM') {
+            if (substr($format, $month, 4) == 'MMMM') {
+                // search full month name
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'full'));
+            } else {
+                // search abbreviated month name
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+            }
+            foreach ($monthlist as $monthnr => $month) {
+                if (iconv_strpos($date, $month) !== false) {
+                    $found['month'] = $monthnr;
+                }
+            }
+        }
+
+        // search first number part
+        $first = self::getInteger($date, 0, $locale);
+
+        if (($day < $month) && ($day < $year)) {
+            // dd MM yy , dd yy MM
+            $format['day'] = iconv_substr($first, 0, 2);
+        } else if (($year < $day) && ($year < $month)) {
+            // yy dd MM , yy MM dd
+            if (substr($format, $year, 4) === 'yyyy') {
+                // yyyy - 4 digits needed
+                $format['year'] = iconv_substr($first, 0, 4);
+            } else {
+                // yy - only 2 digits needed
+                $format['year'] = iconv_substr($first, 0, 2);
+            }
+        } else if (!isset($found['month']) && ($month < $day) && ($month < $year)) {
+            // MM dd yy , MM yy dd , month as number
+            $format['month'] = iconv_substr($first, 0, 2);
+        }
+
+        // truncate first found number part
+        $date = substr($date, strpos($date, $first) + strlen($first));
+        // search second number part
+        $second = self::getInteger($date, 0, $locale);
+
+        if (!isset($format['day']) && 
+           ((($day < $month) && ($day > $year)) or
+            (($day > $month) && ($day < $year)))) {
+            // MM dd yy , yy dd MM
+            $format['day'] = iconv_substr($second, 0, 2);
+        } else if (!isset($format['year']) &&
+            ((($year < $month) && ($year > $day)) or
+            (($year > $month) && ($year < $day)))) {
+            // MM yy dd , dd yy MM
+            if (substr($format, $year, 4) === 'yyyy') {
+                // yyyy - 4 digits needed
+                $format['year'] = iconv_substr($second, 0, 4);
+            } else {
+                // yy - only 2 digits needed
+                $format['year'] = iconv_substr($second, 0, 2);
+            }
+        } else if (!isset($format['month']) &&
+            ((($month < $day) && ($month > $year)) or
+             (($month > $day) && ($month < $year)))) {
+            $format['month'] = iconv_substr($second, 0, 2);
+        }
+        
+        // truncate second found number part
+        $date = substr($date, strpos($date, $second) + strlen($second));
+        // search third number part
+        $third = self::getInteger($date, 0, $locale);
+
+        if (!isset($format['day']) && 
+            (($day > $month) && ($day > $year))) {
+            // MM yy dd , yy MM dd
+            $format['day'] = iconv_substr($third, 0, 2);
+        } else if (!isset($format['year']) &&
+            (($year > $month) && ($year > $day))) {
+            // MM dd yy , dd MM yy
+            if (substr($format, $year, 4) === 'yyyy') {
+                // yyyy - 4 digits needed
+                $format['year'] = iconv_substr($third, 0, 4);
+            } else {
+                // yy - only 2 digits needed
+                $format['year'] = iconv_substr($third, 0, 2);
+            }
+        } else if (!isset($format['month']) &&
+            (($month > $day) && ($month > $year))) {
+            $format['month'] = iconv_substr($third, 0, 2);
+        }
+
+        if (empty($format['month']) or empty($format['day']) or !isset($format['year'])) {
+            return false;
+        }
+        return $format;
+    }
+
+
+    /**
      * Returns an array with the normalized date from an locale date
      * a input of 10.01.2006 for locale 'de' would return
      * array ('day' => 10, 'month' => 1, 'year' => 2006)
      *
-     * @param $date   - string : date string
-     * @param $type   - string : type of date (full, long, short...)
-     * @param $locale - locale : locale for date normalization
+     * @param string $date    date string
+     * @param string $format  date type CLDR format !!!
+     * @param locale $locale  OPTIONAL locale of date string
      * @return array
      */
-    public static function getDate($date, $type, $locale)
+    public static function getDate($date, $format = false, $locale = false)
     {
-        // @todo Implement
-        self::throwException('function not implemented');
+        if ($format === false) {
+            for ($X = 1; $X <= 4; ++$X) {
+                switch($X) {
+                    case 1:
+                        $type = 'short';
+                        break;
+                    case 2:
+                        $type = 'medium';
+                        break;
+                    case 3:
+                        $type = 'long';
+                        break;
+                    default:
+                        $type = 'full';
+                        break;
+                }
+                // Get correct date for this locale
+                $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $type));
+                $format = $format['pattern'];
 
-        if ($type == 'default') {
-            $type = Zend_Locale_Date::getContent($locale, 'defdateformat', 'gregorian');
-            $type = $type['pattern'];
+                $date = self::_parseDate($date, $format, $locale);
+                if ($date !== false) {
+                    return $date;
+                }
+            }
+        } else {
+            $date = self::_parseDate($date, $format, $locale);
+            if ($date !== false) {
+                return $date;
+            }
         }
 
-        // Get correct date for this locale
-        $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $type));
+        return false;
+    }
 
-        // Parse input locale aware
-        $pattern = str_split($format['pattern']);
-        $last = 0;
-        $step = 0;
-        $format[0] = $pattern[0];
-        for ($key = 1; $key < count($pattern); ++$key)
-        {
-            if ($pattern[$key] == $pattern[$last])
-            {
-                $format[$step] .= $pattern[$key];
-            } else {
-                ++$step;
-                $format[$step] = $pattern[$key];
-            }
-            $last = $key;
+    /**
+     * Returns is the given string is a date
+     *
+     * @param string $date    date string
+     * @param string $format  date type CLDR format !!!
+     * @param locale $locale  OPTIONAL locale of date string
+     * @return boolean
+     */
+    public static function isDate($date, $format = false, $locale = false)
+    {
+        return (!empty(self::getDate($date, $format, $locale)));
+    }
+
+
+    /**
+     * Parse a time with a defined format
+     * 
+     * @param string $time - time string
+     * @param string $type - time type CLDR format !!
+     * @param locale $locale
+     * @return mixed
+     */
+    private static function _parseTime($time, $format, $locale)
+    {
+        $found = array();
+
+        // get position
+        $second    = iconv_strpos($format, 's');
+        $minute    = iconv_strpos($format, 'm');
+        $hour      = iconv_strpos($format, 'H');
+
+        // search first number part
+        $first = self::getInteger($time, 0, $locale);
+
+        if (($second < $minute) && ($second < $hour)) {
+            // ss mm HH , ss HH mm
+            $format['second'] = iconv_substr($first, 0, 2);
+        } else if (($hour < $second) && ($hour < $minute)) {
+            // HH ss mm , HH mm ss
+            $format['hour'] = iconv_substr($first, 0, 2);
+        } else if (($minute < $second) && ($minute < $hour)) {
+            // mm HH ss, mm ss HH
+            $format['minute'] = iconv_substr($first, 0, 2);
         }
 
-        unset($format['pattern']);
+        // truncate first found number part
+        $time = substr($time, strpos($time, $first) + strlen($first));
+        // search second number part
+        $sec = self::getInteger($time, 0, $locale);
 
-        foreach($format as $found)
-        {
-            switch($found)
-            {
-                // Era
-                case 'G'    :
-                case 'GG'   :
-                case 'GGG'  :
-                case 'GGGG' :
-                case 'GGGGG':
-                    break;
+        if (!isset($format['second']) && 
+           ((($second < $minute) && ($second > $hour)) or
+            (($second > $minute) && ($second < $hour)))) {
+            // mm ss HH , HH ss mm
+            $format['second'] = iconv_substr($sec, 0, 2);
+        } else if (!isset($format['hour']) &&
+            ((($hour < $minute) && ($hour > $second)) or
+            (($hour > $minute) && ($hour < $second)))) {
+            // mm HH ss , ss HH mm
+            $format['hour'] = iconv_substr($sec, 0, 2);
+        } else if (!isset($format['minute']) &&
+            ((($minute < $second) && ($minute > $hour)) or
+             (($minute > $second) && ($minute < $hour)))) {
+            $format['minute'] = iconv_substr($sec, 0, 2);
+        }
+        
+        // truncate second found number part
+        $time = substr($time, strpos($time, $second) + strlen($second));
+        // search third number part
+        $third = self::getInteger($time, 0, $locale);
 
-                // Quarter
-                case 'Q'    :
-                case 'QQ'   :
-                case 'QQQ'  :
-                case 'QQQQ' :
-                // Quarter standalone
-                case 'q'    :
-                case 'qq'   :
-                case 'qqq'  :
-                case 'qqqq' :
+        if (!isset($format['second']) && 
+            (($second > $minute) && ($second > $hour))) {
+            // HH mm ss , mm HH ss
+            $format['second'] = iconv_substr($third, 0, 2);
+        } else if (!isset($format['hour']) &&
+            (($hour > $minute) && ($hour > $second))) {
+            $format['hour'] = iconv_substr($third, 0, 2);
+        } else if (!isset($format['minute']) &&
+            (($minute > $second) && ($minute > $hour))) {
+            $format['minute'] = iconv_substr($third, 0, 2);
+        }
 
-                // Month
-                case 'M'    :
-                case 'MM'   :
-                case 'MMM'  :
-                case 'MMMM' :
-                case 'MMMMM':
+        if (empty($format['minute']) or empty($format['second']) or !isset($format['hour'])) {
+            return false;
+        }
+        return $format;
+    }
+    
 
-                // Month standalone
-                case 'm'    :
-                case 'mm'   :
-                case 'mmm'  :
-                case 'mmmm' :
-                case 'mmmmm':
+    /**
+     * Returns an array with the normalized time from an locale time
+     * a input of 11:20:55 for locale 'de' would return
+     * array ('hour' => 11, 'minute' => 20, 'second' => 55)
+     *
+     * @param string $time    time string
+     * @param string $format  time type CLDR format !!!
+     * @param locale $locale  OPTIONAL locale of time string
+     * @return array
+     */
+    public static function getTime($time, $format = false, $locale = false)
+    {
+        if ($format === false) {
+            for ($X = 1; $X <= 4; ++$X) {
+                switch($X) {
+                    case 1:
+                        $type = 'short';
+                        break;
+                    case 2:
+                        $type = 'medium';
+                        break;
+                    case 3:
+                        $type = 'long';
+                        break;
+                    default:
+                        $type = 'full';
+                        break;
+                }
+                // Get correct date for this locale
+                $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $type));
+                $format = $format['pattern'];
 
-                // week of year
-                case 'w'    :
-                case 'ww'   :
-                
-                // week of month
-                case 'W'    :
-
-                // day of month
-                case 'd'    :
-                case 'dd'   :
+                $time = self::_parseTime($time, $format, $locale);
+                if ($time !== false) {
+                    return $time;
+                }
             }
-            
-            if ($found[0] == 'y')
-            {}
-        }        
-print_r($format);
-        $regex = '/[GyYuQqMLwWdDFgEecahHKkmsSAzZv]*/';
-        $found = preg_match_all($regex, $format['pattern'], $match);
+        } else {
+            $time = self::_parseTime($time, $format, $locale);
+            if ($time !== false) {
+                return $time;
+            }
+        }
 
-print_r($found);
-print_r($match);
+        return false;
     }
 
 
-    public static function isDate()
+    /**
+     * Returns is the given string is a time
+     *
+     * @param string $time    time string
+     * @param string $format  time type CLDR format !!!
+     * @param locale $locale  OPTIONAL locale of time string
+     * @return boolean
+     */
+    public static function isTime($time, $format = false, $locale = false)
     {
-        // @todo Implement
-        self::throwException('function not implemented');
-    }
-
-
-    public static function getTime()
-    {
-        // @todo Implement
-        self::throwException('function not implemented');
-    }
-
-
-    public static function isTime()
-    {
-        // @todo Implement 
-        self::throwException('function not implemented');
+        return (!empty(self::getTime($time, $format, $locale)));
     }
 
 
