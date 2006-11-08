@@ -11,8 +11,3 @@
       XML-RPC net zo simpel te maken als de PHP <ulink url="http://www.php.net/soap">SOAP web service extensie</ulink>.
     </para>
 </sect1>
-&module_specs.Zend_XmlRpc_Client;
-<!--&module_specs.Zend_XmlRpc_Server;-->
-<!--
-vim:se ts=4 sw=4 et:
--->
