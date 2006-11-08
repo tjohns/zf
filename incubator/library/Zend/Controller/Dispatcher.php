@@ -61,10 +61,10 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     protected $_defaultController = 'index';
 
     /**
-     * Directory where Zend_Controller_Action files are stored.
-     * @var string
+     * Directories where Zend_Controller_Action files are stored.
+     * @var array
      */
-    protected $_directory = null;
+    protected $_directories = array();
 
     /**
      * Array of invocation parameters to use when instantiating action 
@@ -139,20 +139,38 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         return str_replace(' ', '_', ucwords($unformatted));
     }
 
-
     /**
-     * Sets the directory where the Zend_Controller_Action class files are stored.
-     *
-     * @param string $dir
+     * Add a single path to the controller directory stack
+     * 
+     * @param string $path 
      * @return self
      */
-    public function setControllerDirectory($dir)
+    public function addControllerDirectory($path)
     {
-        if (!is_dir($dir) or !is_readable($dir)) {
-            throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable.");
+        if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
+            throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
         }
 
-        $this->_directory = rtrim($dir, '/\\');
+        return $this->_directories[] = rtrim($path, '/\\');
+    }
+
+    /**
+     * Sets the directory(ies) where the Zend_Controller_Action class files are stored.
+     *
+     * @param string|array $path
+     * @return self
+     */
+    public function setControllerDirectory($path)
+    {
+        $dirs = (array) $path;
+        foreach ($dirs as $key => $dir) {
+            if (!is_dir($dir) or !is_readable($dir)) {
+                throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable");
+            }
+            $dirs[$key] = rtrim($dir, '/\\');
+        }
+
+        $this->_directories = $dirs;
         return $this;
     }
 
@@ -164,7 +182,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      */
     public function getControllerDirectory()
     {
-        return $this->_directory;
+        return $this->_directories;
     }
 
     /**
@@ -317,7 +335,8 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         /**
          * Controller directory check
          */
-        if ($this->_directory === null) {
+        $directories  = $this->getControllerDirectory();
+        if (empty($directories)) {
             throw new Zend_Controller_Dispatcher_Exception('Controller directory never set.  Use setControllerDirectory() first');
         }
 
@@ -336,7 +355,13 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         /**
          * Determine if controller is dispatchable
          */
-        $dispatchable = Zend::isReadable($this->_directory . DIRECTORY_SEPARATOR . $className . '.php');
+        $dispatchable = false;
+        foreach ($directories as $directory) {
+            $dispatchable = Zend::isReadable($directory . DIRECTORY_SEPARATOR . $className . '.php');
+            if ($dispatchable) {
+                break;
+            }
+        }
 
         /**
          * If $performDispatch is FALSE, only determine if the controller file
@@ -360,7 +385,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         /**
          * Load the controller class file
          */
-        Zend::loadClass($className, $this->_directory);
+        Zend::loadClass($className, $directories);
 
         /**
          * Perform reflection on the class and verify it's a controller

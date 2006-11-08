@@ -92,8 +92,9 @@ class Zend_Controller_Front
     /**
      * Convenience feature, calls setControllerDirectory()->setRouter()->dispatch()
      *
-     * @param string $controllerDirectory
-     * @return void;
+     * @param string|array $controllerDirectory Path to Zend_Controller_Action 
+     * controller classes or array of such paths
+     * @return void
      */
     static public function run($controllerDirectory)
     {
@@ -106,33 +107,38 @@ class Zend_Controller_Front
     }
 
     /**
+     * Convenience method, passthru to Zend_Controller_Dispatcher::addControllerDirectory()
+     * 
+     * @param string $directory 
+     * @return self
+     */
+    public function addControllerDirectory($directory)
+    {
+        $this->getDispatcher()->addControllerDirectory($directory);
+        return $this;
+    }
+
+    /**
      * Convenience method, passthru to Zend_Controller_Dispatcher::setControllerDirectory()
      *
-     * @param string $directory
+     * @param string|array $directory Path to Zend_Controller_Action controller 
+     * classes or array of such paths
      * @return self
      */
     public function setControllerDirectory($directory)
     {
-        $dispatcher = $this->getDispatcher();
-        if (!method_exists($dispatcher, 'setControllerDirectory')) {
-           throw new Zend_Controller_Front_Exception('Custom dispatcher does not support setting controller directory');
-        }
-       $dispatcher->setControllerDirectory($directory);
-       return $this;
+        $this->getDispatcher()->setControllerDirectory($directory);
+        return $this;
     }
 
     /**
      * Convenience method, passthru to Zend_Controller_Dispatcher::getControllerDirectory()
      *
-     * @return string
+     * @return array
      */
     public function getControllerDirectory()
     {
-        $dispatcher = $this->getDispatcher();
-        if (!method_exists($dispatcher, 'getControllerDirectory')) {
-           throw new Zend_Controller_Front_Exception('Custom dispatcher does not support setting controller directory');
-        }
-       return $dispatcher->getControllerDirectory();
+        return $this->getDispatcher()->getControllerDirectory();
     }
 
     /**

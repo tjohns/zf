@@ -106,6 +106,32 @@ interface Zend_Controller_Dispatcher_Interface
     public function getResponse();
 
     /**
+     * Add a controller directory to the controller directory stack
+     * 
+     * @param string $path 
+     * @return self
+     */
+    public function addControllerDirectory($path);
+
+    /**
+     * Set the directory where controller files are stored
+     *
+     * Specify a string or an array; if an array is specified, all paths will be 
+     * added.
+     * 
+     * @param string|array $dir 
+     * @return self
+     */
+    public function setControllerDirectory($path);
+
+    /**
+     * Return the currently set directory(ies) for controller file lookup
+     * 
+     * @return array
+     */
+    public function getControllerDirectory();
+
+    /**
      * Set default controller name (minus formatting)
      * 
      * @param string $controller 
