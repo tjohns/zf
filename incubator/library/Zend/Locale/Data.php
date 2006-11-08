@@ -78,9 +78,9 @@ class Zend_Locale_Data
 
         // ohne attribute - alle Werte auslesen
         // mit attribute - nur diesen Wert auslesen
-        if (!empty(self::$_ldml[$locale])) {
+        if (!empty(self::$_ldml[(string) $locale])) {
 
-            $result = self::$_ldml[$locale]->xpath($path);
+            $result = self::$_ldml[(string) $locale]->xpath($path);
             if (!empty($result)) {
                 foreach ($result as &$found) {
 
@@ -124,12 +124,12 @@ class Zend_Locale_Data
     {
         // load locale file if not already in cache
         // needed for alias tag when referring to other locale
-        if (empty(self::$_ldml[$locale])) {
+        if (empty(self::$_ldml[(string) $locale])) {
             if (!file_exists(dirname(__FILE__) . '/Data/' . $locale . '.xml')) {
                 self::throwException('Missing locale file for ' . $locale);
             }
 
-            self::$_ldml[$locale] = simplexml_load_file(dirname(__FILE__) . '/Data/' . $locale . '.xml');
+            self::$_ldml[(string) $locale] = simplexml_load_file(dirname(__FILE__) . '/Data/' . $locale . '.xml');
         }
 
         // search for 'alias' tag in the search path for redirection
@@ -137,10 +137,10 @@ class Zend_Locale_Data
         $tok = strtok($path, '/');
 
         // parse the complete path
-        if (!empty(self::$_ldml[$locale])) {
+        if (!empty(self::$_ldml[(string) $locale])) {
             while ($tok !== false) {
                 $search = $search . '/' . $tok;
-                $result = self::$_ldml[$locale]->xpath($search . '/alias');
+                $result = @self::$_ldml[(string) $locale]->xpath($search . '/alias');
 
                 // alias found
                 if (!empty($result)) {
@@ -189,7 +189,7 @@ class Zend_Locale_Data
      * @param  string $value
      * @access private
      */
-    private static function _getFile($locale, $path, $attribute, $value = false)
+    private static function _getFile($locale, $path, $attribute = false, $value = false)
     {
         $result = self::_findRoute($locale, $path, $attribute, $value);
         if ($result) {
