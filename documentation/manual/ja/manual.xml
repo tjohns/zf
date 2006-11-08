@@ -122,6 +122,8 @@
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
         &module_specs.Zend_XmlRpc;
+        &module_specs.Zend_XmlRpc_Client;
+        <!-- &module_specs.Zend_XmlRpc_Server; -->
     </chapter>
     <!-- &ref.faq; -->
     &ref.coding_standard;

@@ -14,8 +14,6 @@
       と同じくらいにシンプルに XML-RPC を扱えるようにしています。
     </para>
 </sect1>
-&module_specs.Zend_XmlRpc_Client;
-<!--&module_specs.Zend_XmlRpc_Server;-->
 <!--
 vim:se ts=4 sw=4 et:
 -->
