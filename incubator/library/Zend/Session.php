@@ -1,4 +1,22 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Session
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 
 /**
  * Zend_Session_Core
@@ -10,10 +28,13 @@ require_once 'Zend/Session/Core.php';
  */
 require_once 'Zend/Session/Exception.php';
 
-
 /**
  * Zend_Session
- *
+ * 
+ * @category Zend
+ * @package Zend_Session
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Session
 {
@@ -23,7 +44,7 @@ class Zend_Session
      *
      * @var Zend_Session_Core
      */
-    protected $_session_core = null;
+    protected $_sessionCore = null;
 
     /**
      * Namespace - which namespace this instance of zend-session is saving-to/getting-from
@@ -37,7 +58,7 @@ class Zend_Session
      *
      * @var array
      */
-    protected static $_namespace_locks = array();
+    protected static $_namespaceLocks = array();
     
 
     /**
@@ -58,8 +79,8 @@ class Zend_Session
         }
         
         $this->_namespace = $namespace;
-        $this->_session_core = Zend_Session_Core::getInstance();
-        $this->_session_core->_startNamespace($namespace);
+        $this->_sessionCore = Zend_Session_Core::getInstance();
+        $this->_sessionCore->_startNamespace($namespace);
     }
 
 
@@ -73,7 +94,7 @@ class Zend_Session
      */
     public function setExpirationSeconds($seconds, $variables = null)
     {
-        $this->_session_core->namespaceSetExpirationSeconds($this->_namespace, $seconds, $variables);
+        $this->_sessionCore->namespaceSetExpirationSeconds($this->_namespace, $seconds, $variables);
         return;
     }
     
@@ -87,9 +108,9 @@ class Zend_Session
      * @param boolean $hop_count_on_usage_only
      * @return void
      */
-    public function setExpirationHops($hops, $variables = null, $hop_count_on_usage_only = false)
+    public function setExpirationHops($hops, $variables = null, $hopCountOnUsageOnly = false)
     {
-        $this->_session_core->namespaceSetExpirationHops($this->_namespace, $hops, $variables, $hop_count_on_usage_only);
+        $this->_sessionCore->namespaceSetExpirationHops($this->_namespace, $hops, $variables, $hopCountOnUsageOnly);
         return;
     }
     
@@ -101,7 +122,7 @@ class Zend_Session
      */
     public function lock($locked = true)
     {
-        self::$_namespace_locks[$this->_namespace] = $locked;
+        self::$_namespaceLocks[$this->_namespace] = $locked;
         return;
     }
 
@@ -114,7 +135,7 @@ class Zend_Session
      */
     public function __get($name)
     {
-        return $this->_session_core->namespaceGet($this->_namespace, $name);
+        return $this->_sessionCore->namespaceGet($this->_namespace, $name);
     }
     
     
@@ -127,11 +148,11 @@ class Zend_Session
      */
     public function __set($name, $value) 
     {
-        if (isset(self::$_namespace_locks[$this->_namespace]) && self::$_namespace_locks[$this->_namespace] === true) {
+        if (isset(self::$_namespaceLocks[$this->_namespace]) && self::$_namespaceLocks[$this->_namespace] === true) {
             throw new Zend_Session_Exception("This session/namespace has been marked as read-only.");
         }
         
-        return $this->_session_core->namespaceSet($this->_namespace, $name, $value);
+        return $this->_sessionCore->namespaceSet($this->_namespace, $name, $value);
     }
     
     
@@ -143,7 +164,7 @@ class Zend_Session
      */
     public function __isset($name) 
     {
-        return $this->_session_core->namespaceIsset($this->_namespace, $name);
+        return $this->_sessionCore->namespaceIsset($this->_namespace, $name);
     }
     
     
@@ -155,7 +176,7 @@ class Zend_Session
      */
     public function __unset($name)
     {
-        return $this->_session_core->namespaceUnset($this->_namespace, $name);
+        return $this->_sessionCore->namespaceUnset($this->_namespace, $name);
     }
     
 }

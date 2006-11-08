@@ -1,4 +1,22 @@
 <?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Session
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
 
 /**
  * Zend_Session_Exception
@@ -13,9 +31,10 @@ require_once 'Zend/Session/SaveHandler/Interface.php';
 /**
  * Zend_Session_Core
  * 
- * @package    Zend_Session_Core
- * @copyright  none applied yet
- * @license    none applied yet
+ * @category Zend
+ * @package Zend_Session
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 final class Zend_Session_Core
 {
@@ -25,7 +44,7 @@ final class Zend_Session_Core
      *
      * @var bool
      */
-    protected static $_session_started = false;
+    protected static $_sessionStarted = false;
     
     /**
      * Instance of Zend_Session_Core
@@ -49,31 +68,31 @@ final class Zend_Session_Core
      *
      * @var array
      */
-    protected static $_default_options = array(
-        "save_path"                 => null,
-        "name"                      => 'ZFSESSION',
-        "save_handler"              => null,
-        "auto_start"                => null,
-        "gc_probability"            => null,
-        "gc_divisor"                => null,
-        "gc_maxlifetime"            => null,
-        "serialize_handler"         => null,
-        "cookie_lifetime"           => null,
-        "cookie_path"               => null,
-        "cookie_domain"             => null,
-        "cookie_secure"             => null,
-        "use_cookies"               => null,
-        "use_only_cookies"          => 'on',
-        "referer_check"             => null,
-        "entropy_file"              => null,
-        "entropy_length"            => null,
-        "cache_limiter"             => null,
-        "cache_expire"              => null,
-        "use_trans_sid"             => null,
-        "bug_compat_42"             => null,
-        "bug_compat_warn"           => null,
-        "hash_function"             => null,
-        "hash_bits_per_character"   => null
+    protected static $_defaultOptions = array(
+        'save_path'                 => null,
+        'name'                      => 'ZFSESSION',
+        'save_handler'              => null,
+        'auto_start'                => null,
+        'gc_probability'            => null,
+        'gc_divisor'                => null,
+        'gc_maxlifetime'            => null,
+        'serialize_handler'         => null,
+        'cookie_lifetime'           => null,
+        'cookie_path'               => null,
+        'cookie_domain'             => null,
+        'cookie_secure'             => null,
+        'use_cookies'               => null,
+        'use_only_cookies'          => 'on',
+        'referer_check'             => null,
+        'entropy_file'              => null,
+        'entropy_length'            => null,
+        'cache_limiter'             => null,
+        'cache_expire'              => null,
+        'use_trans_sid'             => null,
+        'bug_compat_42'             => null,
+        'bug_compat_warn'           => null,
+        'hash_function'             => null,
+        'hash_bits_per_character'   => null
         );
    
     /**
@@ -81,18 +100,7 @@ final class Zend_Session_Core
      *
      * @var bool
      */
-    protected static $_write_closed = false;
-    
-    /**
-     * The Logging level of Zend_Session, requires Zend_Log
-     *      0 = off
-     *      1 = errors
-     *      2 = set/get/isset/unset
-     *      3 = startup/shutdown values
-     * 
-     * @var bool
-     */
-    protected static $_log_level      = 0;
+    protected static $_writeClosed = false;
     
     /**
      * Wether or not session must be initiated before usage
@@ -106,14 +114,14 @@ final class Zend_Session_Core
      *
      * @var unknown_type
      */
-    protected static $_remember_me_seconds = 1209600; // 2 weeks
+    protected static $_rememberMeSeconds = 1209600; // 2 weeks
     
     /**
      * Wether the default options have been set.
      *
      * @var unknown_type
      */
-    protected static $_default_options_set = false;
+    protected static $_defaultOptionsSet = false;
     
     /**
      * Since expiring data is handled at startup to avoid __destruct difficulties,
@@ -121,7 +129,7 @@ final class Zend_Session_Core
      *
      * @var array
      */
-    protected static $_expiring_data = array();
+    protected static $_expiringData = array();
     
     /**
      * Debug mode: primary use for this will be in unit tests where the environment is command
@@ -129,32 +137,32 @@ final class Zend_Session_Core
      *
      * @var bool
      */
-    public static $debug_mode = false;
+    public static $debugMode = false;
     
     
     /**
      * SetOptions - set both the class specified
      *
-     * @param array $user_options
+     * @param array $userOptions
      */
-    public static function setOptions(Array $user_options = array())
+    public static function setOptions(Array $userOptions = array())
     {
         // set default options on first run only (before applying user settings)
-        if (!self::$_default_options_set) {
-            foreach (self::$_default_options as $default_option_name => $default_option_value) {
-                if (isset(self::$_default_options[$default_option_name]) && $default_option_value !== null) {
+        if (!self::$_defaultOptionsSet) {
+            foreach (self::$_defaultOptions as $default_option_name => $default_option_value) {
+                if (isset(self::$_defaultOptions[$default_option_name]) && $default_option_value !== null) {
                     ini_set('session.' . $default_option_name, $default_option_value);
                 }
             }
             
-            self::$_default_options_set = true;
+            self::$_defaultOptionsSet = true;
         }
         
         // set the options the user has requested to set
-        foreach ($user_options as $user_option_name => $user_option_value) {
+        foreach ($userOptions as $user_option_name => $user_option_value) {
            
             // set the ini based values
-            if (array_key_exists($user_option_name, self::$_default_options)) {
+            if (array_key_exists($user_option_name, self::$_defaultOptions)) {
                 ini_set('session.' . $user_option_name, $user_option_value);
                 continue;
             }
@@ -186,7 +194,7 @@ final class Zend_Session_Core
 
             // get remember me seconds setting if passed
             if ($user_option_name === 'remember_me_seconds') {
-                self::$_remember_me_seconds = $user_option_value;
+                self::$_rememberMeSeconds = $user_option_value;
             }
 
         }
@@ -202,12 +210,12 @@ final class Zend_Session_Core
     public static function setSaveHandler(Zend_Session_SaveHandler_Interface $interface)
     {
         session_set_save_handler(
-            array(&$interface, "open"),
-            array(&$interface, "close"),
-            array(&$interface, "read"),
-            array(&$interface, "write"),
-            array(&$interface, "destroy"),
-            array(&$interface, "gc")
+            array(&$interface, 'open'),
+            array(&$interface, 'close'),
+            array(&$interface, 'read'),
+            array(&$interface, 'write'),
+            array(&$interface, 'destroy'),
+            array(&$interface, 'gc')
             );
         
         return;
@@ -217,13 +225,13 @@ final class Zend_Session_Core
     /**
      * GetInstance() - Enfore the Singleton of the core.
      *
-     * @param boolean $instance_must_exist
+     * @param boolean $instanceMustExist
      * @return Zend_Session_Core
      */
-    public static function getInstance($instance_must_exist = false)
+    public static function getInstance($instanceMustExist = false)
     {
-        if (self::$_instance === null && $instance_must_exist === true) {
-            throw new Zend_Session_Exception(__CLASS__ . "::getInstance() A valid session must exist before calling getInstance() in this manner.");
+        if (self::$_instance === null && $instanceMustExist === true) {
+            throw new Zend_Session_Exception(__CLASS__ . '::getInstance() A valid session must exist before calling getInstance() in this manner.');
         }
         
         if (self::$_instance === null) {
@@ -254,7 +262,7 @@ final class Zend_Session_Core
      */
     public static function regenerateId()
     {
-        if ( headers_sent($filename, $linenum) && (self::$debug_mode !== true) ) {
+        if ( headers_sent($filename, $linenum) && (self::$debugMode !== true) ) {
             throw new Zend_Session_Exception(__CLASS__ . ": You must call this method before any output has been sent to the browser; output started in {$filename}/{$linenum}");
         }
 
@@ -266,13 +274,13 @@ final class Zend_Session_Core
     /**
      * RememberMe() - Send the remember me cookie, which will (on next request) force the session to resend
      * the session cookie that will expire after a number of seconds in the future (not when the browser closes)
-     * Seconds are determined by self::$_remember_me_seconds.
+     * Seconds are determined by self::$_rememberMeSeconds.
      *
      * @return void
      */
     public static function rememberMe()
     {
-        if ( headers_sent($filename, $linenum) && (self::$debug_mode !== true) ) {
+        if ( headers_sent($filename, $linenum) && (self::$debugMode !== true) ) {
             throw new Zend_Session_Exception(__CLASS__ . "::rememberMe() Must be called prior to headers being sent; output started in {$filename}/{$linenum}");
         }
             
@@ -290,7 +298,7 @@ final class Zend_Session_Core
      */
     public static function forgetMe()
     {
-        if ( headers_sent($filename, $linenum) && (self::$debug_mode !== true) ) {
+        if ( headers_sent($filename, $linenum) && (self::$debugMode !== true) ) {
             throw new Zend_Session_Exception(__CLASS__ . "::forgetMe() Must be called prior to headers being sent; output started in {$filename}/{$linenum}");
         }
         
@@ -309,7 +317,7 @@ final class Zend_Session_Core
      */
     public static function sessionExists()
     {
-        if (ini_get('session.use_cookies') == "1" && isset($_COOKIE[session_name()])) {
+        if (ini_get('session.use_cookies') == '1' && isset($_COOKIE[session_name()])) {
             return true;
         } elseif (isset($_REQUEST[session_name()])) {
             return true;
@@ -327,11 +335,11 @@ final class Zend_Session_Core
     public static function start()
     {
         // make sure our default options (at the least) have been set
-        if (!self::$_default_options_set) {
+        if (!self::$_defaultOptionsSet) {
             self::setOptions();
         }
         
-        if (headers_sent($filename, $linenum) && self::$debug_mode !== true) {
+        if (headers_sent($filename, $linenum) && self::$debugMode !== true) {
             throw new Zend_Session_Exception(__CLASS__ . '::start() You must call this method before any output has been sent to the browser; output started in {$filename}/{$linenum}');
         }
             
@@ -339,29 +347,19 @@ final class Zend_Session_Core
             self::_processRememberMe();
         }
         
-        if (self::$_session_started) {
+        if (self::$_sessionStarted) {
             throw new Zend_Session_Exception(__CLASS__ . '::start() can only be called once.');
         }
         
         session_start();
-        self::$_session_started = true;
+        self::$_sessionStarted = true;
 
         // run validators if they exist
         if (isset($_SESSION['__ZF']['VALID'])) {
             self::_processValidators();
         }
         
-        if (self::$_log_level == 3) {
-            Zend_Log::log('Session startup values before processing:', Zend_Log::LEVEL_DEBUG);
-            Zend_Log::log(var_export($_SESSION, true));
-        }
-        
         self::_processStartupMetadataGlobal();
-        
-        if (self::$_log_level == 3) {
-            Zend_Log::log('Session startup values after processing:', Zend_Log::LEVEL_DEBUG);
-            Zend_Log::log(var_export($_SESSION, true));
-        }
                 
         return;
     }
@@ -374,7 +372,7 @@ final class Zend_Session_Core
      */
     public static function isStarted()
     {
-        return self::$_session_started;
+        return self::$_sessionStarted;
     }
     
     
@@ -396,8 +394,8 @@ final class Zend_Session_Core
      */
     public static function setId($id)
     {
-        if (headers_sent($filename, $linenum) && self::$debug_mode !== true) {
-            throw new Zend_Session_Exception(__CLASS__ . "::setId() You must call this method before any output has been sent to the browser.");
+        if (headers_sent($filename, $linenum) && self::$debugMode !== true) {
+            throw new Zend_Session_Exception(__CLASS__ . '::setId() You must call this method before any output has been sent to the browser.');
         }
         
         if (!is_string($id)) {
@@ -440,11 +438,11 @@ final class Zend_Session_Core
      */
     public static function writeClose()
     {
-        if (self::$_write_closed) {
+        if (self::$_writeClosed) {
             return;
         }
             
-        self::$_write_closed = true;
+        self::$_writeClosed = true;
         session_write_close();
         return;
     }
@@ -487,7 +485,7 @@ final class Zend_Session_Core
                     $_SESSION['__ZF'][$namespace]['ENGH']--;
                     
                     if ($_SESSION['__ZF'][$namespace]['ENGH'] === 0) {
-                        self::$_expiring_data[$namespace] = $_SESSION[$namespace];
+                        self::$_expiringData[$namespace] = $_SESSION[$namespace];
                         unset($_SESSION[$namespace]);
                         unset($_SESSION['__ZF'][$namespace]['ENGH']);
                     }
@@ -513,7 +511,7 @@ final class Zend_Session_Core
                         $_SESSION['__ZF'][$namespace]['ENVGH'][$variable]--;
                         
                         if ($_SESSION['__ZF'][$namespace]['ENVGH'][$variable] === 0) {
-                            self::$_expiring_data[$namespace][$variable] = $_SESSION[$namespace][$variable];
+                            self::$_expiringData[$namespace][$variable] = $_SESSION[$namespace][$variable];
                             unset($_SESSION[$namespace][$variable]);
                             unset($_SESSION['__ZF'][$namespace]['ENVGH'][$variable]);
                         }
@@ -553,7 +551,7 @@ final class Zend_Session_Core
                 $_SESSION['__ZF'][$namespace]['ENNH']--;
                 
                 if ($_SESSION['__ZF'][$namespace]['ENNH'] === 0) {
-                    self::$_expiring_data[$namespace] = $_SESSION[$namespace];
+                    self::$_expiringData[$namespace] = $_SESSION[$namespace];
                     unset($_SESSION[$namespace]);
                     unset($_SESSION['__ZF'][$namespace]['ENNH']);
                 }
@@ -565,7 +563,7 @@ final class Zend_Session_Core
                     $_SESSION['__ZF'][$namespace]['ENVNH'][$variable]--;
                     
                     if ($_SESSION['__ZF'][$namespace]['ENVNH'][$variable] === 0) {
-                        self::$_expiring_data = $_SESSION[$namespace][$variable];
+                        self::$_expiringData = $_SESSION[$namespace][$variable];
                         unset($_SESSION[$namespace][$variable]);
                         unset($_SESSION['__ZF'][$namespace]['ENVNH'][$variable]);
                     }
@@ -588,14 +586,14 @@ final class Zend_Session_Core
      * _processRememberMe() - this method handles the process of making the current session
      * cookie extend past the closing of the browser.  The session based cookie will become
      * a time based cookie, expiration will be set into the future (the value specified by
-     * self::$_remember_me_seconds).
+     * self::$_rememberMeSeconds).
      *
      * @return void
      */
     protected static function _processRememberMe()
     {
         $cookie_params = session_get_cookie_params();
-        $cookie_params['lifetime'] = self::$_remember_me_seconds;
+        $cookie_params['lifetime'] = self::$_rememberMeSeconds;
         
         $session_name = session_name();
         
@@ -650,7 +648,7 @@ final class Zend_Session_Core
      */
     public function __construct()
     {
-        if (self::$_strict === true && self::$_session_started === false) {
+        if (self::$_strict === true && self::$_sessionStarted === false) {
             throw new Zend_Session_Exception('You must start the session with Zend_Session_Core::start() when session options are set to strict.');
         }
         
@@ -658,7 +656,7 @@ final class Zend_Session_Core
             throw new Zend_Session_Exception('Zend_Session_Core should be initialized through Zend_Session_Core::getInstance() only.');
         }
         
-        if (self::$_session_started === false) {
+        if (self::$_sessionStarted === false) {
             self::start();
         }
         
@@ -700,14 +698,10 @@ final class Zend_Session_Core
     {
         $return_value = null;
         
-        if (self::$_log_level >= 2) {
-            Zend_Log::log('Session isset called for namespace (' . $namespace . ') and variable (' . $name . ')', Zend_Log::LEVEL_DEBUG);
-        }
-        
         if ($name === null) {
-            return ( isset($_SESSION[$namespace]) || isset(self::$_expiring_data[$namespace]) );
+            return ( isset($_SESSION[$namespace]) || isset(self::$_expiringData[$namespace]) );
         } else {
-            return ( isset($_SESSION[$namespace][$name]) || isset(self::$_expiring_data[$namespace][$name]) );
+            return ( isset($_SESSION[$namespace][$name]) || isset(self::$_expiringData[$namespace][$name]) );
         }
     }
     
@@ -721,17 +715,13 @@ final class Zend_Session_Core
      */
     public function namespaceUnset($namespace, $name = null) 
     {
-        if (self::$_log_level >= 2) {
-            Zend_Log::log('Session unset called for namespace (' . $namespace . ') and variable (' . $name . ')', Zend_Log::LEVEL_DEBUG);
-        }
-        
         // check to see if the api wanted to remove a var from a namespace or a namespace
         if ($name === null) {
             unset($_SESSION[$namespace]);
-            unset(self::$_expiring_data[$namespace]);
+            unset(self::$_expiringData[$namespace]);
         } else {
             unset($_SESSION[$namespace][$name]);
-            unset(self::$_expiring_data[$namespace]);
+            unset(self::$_expiringData[$namespace]);
         }
             
         // if we remove the last value, remove namespace.
@@ -753,10 +743,6 @@ final class Zend_Session_Core
      */
     public function namespaceSet($namespace, $name, $value) 
     {
-        if (self::$_log_level >= 2) {
-            Zend_Log::log('Session set called for namespace (' . $namespace . '), variable (' . $name . ') and value (' . $value . ')', Zend_Log::LEVEL_DEBUG);
-        }
-        
         $_SESSION[$namespace][$name] = $value;
         return;
     }
@@ -771,16 +757,12 @@ final class Zend_Session_Core
      */
     public function namespaceGet($namespace, $name = null)
     {
-        if (self::$_log_level >= 2) {
-            Zend_Log::log('Session get called for namespace (' . $namespace . ') and variable (' . $name . ')', Zend_Log::LEVEL_DEBUG);
-        }
-        
         if ($name === null) {
             
             if (isset($_SESSION[$namespace])) {
                 return $_SESSION[$namespace];
-            } elseif (isset(self::$_expiring_data[$namespace])) {
-                return self::$_expiring_data[$namespace];
+            } elseif (isset(self::$_expiringData[$namespace])) {
+                return self::$_expiringData[$namespace];
             } else {
                 return null;
             }
@@ -789,8 +771,8 @@ final class Zend_Session_Core
             
             if (isset($_SESSION[$namespace][$name])) {
                 return $_SESSION[$namespace][$name];
-            } elseif (isset(self::$_expiring_data[$namespace][$name])) {
-                return self::$_expiring_data[$namespace][$name];
+            } elseif (isset(self::$_expiringData[$namespace][$name])) {
+                return self::$_expiringData[$namespace][$name];
             } else {
                 return null;
             }
@@ -811,7 +793,7 @@ final class Zend_Session_Core
     public function namespaceSetExpirationSeconds($namespace, $seconds, $variables = null)
     {
         if ($seconds <= 0) {
-            throw new Zend_Session_Exception("Seconds must be positive.");
+            throw new Zend_Session_Exception('Seconds must be positive.');
         }
         
         if ($variables === null) {
@@ -826,7 +808,7 @@ final class Zend_Session_Core
             }
 
             foreach ($variables as $variable) {
-                if ($variable != "") {
+                if (!empty($variable)) {
                     $_SESSION['__ZF'][$namespace]['ENVT'][$variable] = time() + $seconds;
                 }
             }
@@ -844,19 +826,19 @@ final class Zend_Session_Core
      * @param string $namespace
      * @param int $hops
      * @param mixed $variables
-     * @param bool $hop_count_on_usage_only
+     * @param bool $hopCountOnUsageOnly
      * @return void
      */
-    public function namespaceSetExpirationHops($namespace, $hops, $variables = null, $hop_count_on_usage_only = false)
+    public function namespaceSetExpirationHops($namespace, $hops, $variables = null, $hopCountOnUsageOnly = false)
     {
         if ($hops <= 0) {
-            throw new Zend_Session_Exception("Hops must be positive number.");
+            throw new Zend_Session_Exception('Hops must be positive number.');
         }
         
         if ($variables === null) {
             
             // apply expiration to entire namespace
-            if ($hop_count_on_usage_only === false) {
+            if ($hopCountOnUsageOnly === false) {
                 $_SESSION['__ZF'][$namespace]['ENGH'] = $hops;
             } else {
                 $_SESSION['__ZF'][$namespace]['ENNH'] = $hops;
@@ -869,8 +851,8 @@ final class Zend_Session_Core
             }
                 
             foreach ($variables as $variable) {
-                if ($variable != "") {
-                    if ($hop_count_on_usage_only === false) {
+                if (!empty($variable)) {
+                    if ($hopCountOnUsageOnly === false) {
                         $_SESSION['__ZF'][$namespace]['ENVGH'][$variable] = $hops;
                     } else {
                         $_SESSION['__ZF'][$namespace]['ENVNH'][$variable] = $hops;
