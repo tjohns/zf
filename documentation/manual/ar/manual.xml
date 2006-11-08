@@ -44,7 +44,10 @@
     </chapter>
     <chapter id="zend.config">
         <title>Zend_Config</title>
-        &module_specs.Zend_Config;
+        &module_specs.Zend_Config-Introduction;
+        &module_specs.Zend_Config-TheoryOfOperation;
+        &module_specs.Zend_Config_Ini;
+        &module_specs.Zend_Config_Xml;
     </chapter>
     <chapter id="zend.controller">
         <title>Zend_Controller</title>

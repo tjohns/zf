@@ -222,11 +222,11 @@ echo $view->render('someView.php');
         <title>View Script Paths</title>
         
         <para>
-            By default, Zend_View expects your view scripts to be in the
-            same directory as the controller script.  For example, if
-            your controller script is at "/path/to/app/controllers" and
-            it calls $view->render('someView.php'), Zend_View will look
-            for "/path/to/app/controllers/someVire.php".
+            By default, Zend_View expects your view scripts to be relative to
+            your calling script.  For example, if your controller script is at
+            "/path/to/app/controllers" and it calls
+            $view->render('someView.php'), Zend_View will look for
+            "/path/to/app/controllers/someView.php".
         </para>
         
         <para>
