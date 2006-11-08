@@ -7,8 +7,6 @@
       The Zend Framework implementation for XML-RPC clients (and in the future for XML-RPC servers) makes the usage of XML-RPC even simpler, by trying to make XML-RPC usage as similar as possible to the PHP5 <ulink url="http://www.php.net/soap">SOAP web service extension</ulink>.
     </para>
 </sect1>
-&module_specs.Zend_XmlRpc_Client;
-<!--&module_specs.Zend_XmlRpc_Server;-->
 <!--
 vim:se ts=4 sw=4 et:
 -->
