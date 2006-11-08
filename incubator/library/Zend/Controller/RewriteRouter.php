@@ -89,7 +89,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     public function setParams(array $params)
     {
         $this->_invokeParams = $params;
-        return self;
+        return $this;
     }
 
     /**
