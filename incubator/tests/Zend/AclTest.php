@@ -11,6 +11,7 @@
  * Zend_Acl
  */
 require_once 'Zend/Acl.php';
+require_once 'Zend/Acl/Exception.php';
 
 /**
  * PHPUnit test case
@@ -224,4 +225,110 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
         self::assertFalse($acl->valid('staff', 'task1'));
     }
 
+    public function testAclAroManagement()
+    {
+        $acl = new Zend_Acl();
+        
+        // retrieve an instance of the ARO registry
+        $aro = $acl->aroRegistry();
+        $aro->add('guest');
+
+        // ensure we cannot create duplicates
+        try {
+            $guest = $aro->add('guest');
+            $this->fail('Cannot create duplicate aros');
+        } catch (Exception $e) {
+            // success
+        }
+        
+        // ARO returns a default ARO for non-existant member
+        self::assertTrue(($aro->nonexistent instanceof Zend_Acl_Aro));
+        self::assertTrue(($aro->nonexistent->getId() == '_default'));
+
+        // ARO returns a correct object for existing member
+        $guest = $aro->guest;
+        self::assertTrue(($guest instanceof Zend_Acl_Aro));
+        
+        // Ensure ARO returns a correct reference to parent registry
+        self::assertTrue(($guest->getRegistry() === $aro));
+        
+        // Add permissions to ACL, remove ARO and ensure permissions are wiped
+        $acl->deny($guest);
+        $acl->allow($guest, array('task1', 'task2'));
+        $acl->testbranch->allow($guest, array('task3'));
+        $acl->forbidden->deny($guest);
+        $acl->temporary->allow($guest);
+        $acl->allow(array('guest', 'nonexistent'), 'task4', '/temporary/folder');
+        $acl->deny(array('guest', 'nonexistent'), 'task4', '/temporary/folder');
+        $acl->allow(array('guest', 'nonexistent'), 'task5', '/temporary/folder');
+        $acl->deny(array('guest', 'nonexistent'), 'task5', '/temporary/folder');
+        
+        // ensure we cannot create get permissions for multiple aros
+        try {
+            $result = $acl->valid(array('guest', 'staff'));
+            $this->fail('Cannot request multiple aros');
+        } catch (Exception $e) {
+            // success
+        }
+        
+        // Ensure we can query the types of permissions set on an ACO
+        $allow = $acl->getAllow();
+        self::assertTrue(isset($allow['guest']));
+        self::assertTrue(in_array('task1', $allow['guest']));
+        self::assertTrue(in_array('task2', $allow['guest']));
+        
+        // Reset testbranch node and allow all
+        $acl->testbranch->allow($guest);
+        $allow = $acl->testbranch->getAllow();
+        self::assertFalse(in_array('task3', $allow['guest']));
+        
+        $acl->removeAllow($guest, 'task2');
+        $allow = $acl->getAllow();
+        self::assertFalse(in_array('task2', $allow['guest']));
+        self::assertFalse($acl->valid($guest, 'task2'));
+        $deny = $acl->getDeny();
+        self::assertTrue(isset($deny['guest']));
+        
+        // Remove the temporary node and test for non-existent node
+        self::assertTrue($acl->temporary->remove());
+        self::assertFalse($acl->remove('nonexistent'));
+        
+        // ensure we cannot remove root node
+        try {
+            $result = $acl->remove();
+            $this->fail('Cannot remove root node');
+        } catch (Exception $e) {
+            // success
+        }
+        
+        // Get a view of the ACL through an ARO's set of permissions
+        $acl2 = $guest->getValidAco($acl, 'task3');
+        self::assertTrue($acl2->testbranch->valid($guest, 'task3'));
+        self::assertFalse($acl2->temporary->valid($guest, 'task4'));
+        self::assertFalse($acl2->valid($guest, 'task3'));
+        self::assertFalse($acl2->forbidden->valid($guest));
+        
+        // See if we can reverse-lookup the valid ARO for this new acl
+        $group = $acl->getValidAro('task1');
+        self::assertTrue(isset($group['guest']));
+        
+        // Remove guest from registry and test return results
+        self::assertTrue($aro->remove($guest, $acl));
+        self::assertFalse($aro->remove('nonexistent', $acl));
+        
+        // Helps code coverage
+        $acl->removeAro('othernonexistent', null, '/nonexistent/path');
+        
+        // Ensure reference to guest now returns default ARO
+        self::assertTrue($aro->guest->getId() == '_default');
+        
+        // Reset all permissions on root node for Guest and check for defaults
+        $acl2->removeAllow('guest');
+        $acl2->removeDeny('guest');
+        self::assertTrue($acl2->testnode->valid($guest) === Zend_Acl::PERM_DEFAULT);
+        
+        // Return an array of ARO members from the registry
+        $list = $aro->toArray();
+        self::assertTrue(is_array($list));
+    }
 }

@@ -168,100 +168,6 @@ class Zend_Acl
     }
 
     /**
-     * Test permissions for a path
-     *
-     * Retrieve permissions for an ACO based on the ARO, current context
-     * and an optional path. The optional path parameter allows for a top-down
-     * search from a root - if not supplied, then this instance is used as a
-     * target. A 'null' context will return true if no explicit permissions
-     * are set to 'deny' for the specified group on the target ACO.
-     *
-     * @param string $id
-     * @param string $context
-     * @param string $path
-     * @throws Zend_Acl_Exception
-     * @return boolean
-     */
-    public function valid($aro = Zend_Acl::ARO_DEFAULT, $context = null, $path = null)
-    {
-        $root = $this->_findPath($this, $path);
-
-        if (is_array($aro)) {
-            throw new Zend_Acl_Exception('cannot determine permissions for multiple AROs');
-        } else {
-            $aro = current($this->_parseAro($aro));
-        }
-
-        return $this->_valid($root, $aro, $context);
-    }
-
-    /**
-     * Returns the ACL's parent object
-     *
-     * @return Zend_Acl|null
-     */
-    public function getParent()
-    {
-        return $this->_parent;
-    }
-
-    /**
-     * Returns the ACL's child nodes
-     *
-     * @return array
-     */
-    public function getChildren()
-    {
-        return $this->_data;
-    }
-
-    /**
-     * Returns the ACL's path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->_path;
-    }
-
-    /**
-     * Returns an array of AROs that can access the ACL
-     *
-     * This function will determine which AROs - from either a list of AROs or
-     * the entire ARO registry - have access to the current ARO.
-     *
-     * AROs can be supplied either an an ARO object, an array of ARO objects,
-     * a string id or an array of string ids. If the ARO parameter is left empty
-     * then the ARO registry is used to return all members.
-     *
-     * To allow fine-grain control, a specific context can also be used to
-     * validate the AROs
-     *
-     * An array of ARO objects is returned upon success or empty
-     *
-     * @param mixed $aro
-     * @param string $context
-     * @return array
-     */
-    public function getValidAro($context = null, $aro = null)
-    {
-        $valid = array();
-
-        if (null === $aro) {
-            $aro = $this->aroRegistry()->toArray();
-        }
-
-        foreach ($this->_parseAro($aro) as $member) {
-            if ($this->valid($member, $context)) {
-                $valid[$member->getId()] = $member;
-            }
-        }
-
-        return $valid;
-    }
-
-    /**
      * Sets allow permissions to the ACL
      *
      * Each parameter can be a string or a numeric array of values to allow
@@ -392,6 +298,100 @@ class Zend_Acl
 
         $root->_getPermission()->setValues('allow', $context, $aro, Zend_Acl::MODE_UNSET);
         $root->_getPermission()->setValues('deny', $context, $aro, Zend_Acl::MODE_UNSET);
+    }
+
+    /**
+     * Test permissions for a path
+     *
+     * Retrieve permissions for an ACO based on the ARO, current context
+     * and an optional path. The optional path parameter allows for a top-down
+     * search from a root - if not supplied, then this instance is used as a
+     * target. A 'null' context will return true if no explicit permissions
+     * are set to 'deny' for the specified group on the target ACO.
+     *
+     * @param string $id
+     * @param string $context
+     * @param string $path
+     * @throws Zend_Acl_Exception
+     * @return boolean
+     */
+    public function valid($aro = Zend_Acl::ARO_DEFAULT, $context = null, $path = null)
+    {
+        $root = $this->_findPath($this, $path);
+
+        if (is_array($aro)) {
+            throw new Zend_Acl_Exception('cannot determine permissions for multiple AROs');
+        } else {
+            $aro = current($this->_parseAro($aro));
+        }
+
+        return $this->_valid($root, $aro, $context);
+    }
+
+    /**
+     * Returns the ACL's parent object
+     *
+     * @return Zend_Acl|null
+     */
+    public function getParent()
+    {
+        return $this->_parent;
+    }
+
+    /**
+     * Returns the ACL's child nodes
+     *
+     * @return array
+     */
+    public function getChildren()
+    {
+        return $this->_data;
+    }
+
+    /**
+     * Returns the ACL's path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->_path;
+    }
+
+    /**
+     * Returns an array of AROs that can access the ACL
+     *
+     * This function will determine which AROs - from either a list of AROs or
+     * the entire ARO registry - have access to the current ARO.
+     *
+     * AROs can be supplied either an an ARO object, an array of ARO objects,
+     * a string id or an array of string ids. If the ARO parameter is left empty
+     * then the ARO registry is used to return all members.
+     *
+     * To allow fine-grain control, a specific context can also be used to
+     * validate the AROs
+     *
+     * An array of ARO objects is returned upon success or empty
+     *
+     * @param mixed $aro
+     * @param string $context
+     * @return array
+     */
+    public function getValidAro($context = null, $aro = null)
+    {
+        $valid = array();
+
+        if (null === $aro) {
+            $aro = $this->aroRegistry()->toArray();
+        }
+
+        foreach ($this->_parseAro($aro) as $member) {
+            if ($this->valid($member->getId(), $context)) {
+                $valid[$member->getId()] = $member;
+            }
+        }
+
+        return $valid;
     }
 
     /**

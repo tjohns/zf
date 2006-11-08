@@ -36,60 +36,6 @@ class Zend_Acl_Permission
                                 'deny' => array());
 
     /**
-     * Returns a score for the selected permission
-     *
-     * The score is factored according to an exact match for an ARO (3), a
-     * match for an inherited ARO (2) or a match for an any/all ARO (1).
-     *
-     * @param string $type
-     * @param array $aro
-     * @param string $context
-     * @return integer
-     */
-    public function score($type, Zend_Acl_Aro $aro, $context = null)
-    {
-        $score = 0;
-        if (!empty($this->_context[$type])) {
-            $acl = $this->_context[$type];
-
-            // determine only existing aros from type
-            $defined = array_keys($acl);
-            // do any parents match the existing aros?
-            $parent = array_intersect($aro->getParent(), $defined);
-
-            foreach ($parent as $id) {
-                // first array member will have the highest inheritance
-                $factor = $this->_getFactor($aro, $id);
-
-                if (in_array($context, $acl[$id])) {
-                    // is there an explicit match for the context?
-                    $score = 4 * $factor;
-                    break;
-                } elseif (in_array(Zend_Acl::ACO_CATCHALL, $acl[$id])) {
-                    // is there an any/all for the context?
-                    $score = 1 * $factor;
-                    break;
-                }
-            }
-        }
-        return $score;
-    }
-
-    /**
-     * Returns the contents of the selected permission
-     *
-     * @param string $type
-     * @return array
-     */
-    public function getPermissions($type)
-    {
-        if (!array_key_exists($type, $this->_context)) {
-            throw new Zend_Acl_Exception('invalid permission type');
-        }
-        return $this->_context[$type];
-    }
-
-    /**
      * Sets contexts for a permission
      *
      * $type represents either an 'allow' or 'deny'
@@ -138,22 +84,9 @@ class Zend_Acl_Permission
                     }
                     break;
 
+                case Zend_Acl::MODE_ADD:
                 case Zend_Acl::MODE_SET:
                     $this->_context[$type][$id] = $value;
-                    break;
-
-                case Zend_Acl::MODE_ADD:
-                    if (isset($this->_context[$type][$id])) {
-                        $merge = array_merge($this->_context[$type][$id], $value);
-                    } else {
-                        $merge = $value;
-                    }
-                    if (in_array(Zend_Acl::ACO_CATCHALL, $merge)) {
-                        $merge = array(Zend_Acl::ACO_CATCHALL);
-                    } else {
-                        $merge = array_unique($merge);
-                    }
-                    $this->_context[$type][$id] = $merge;
                     break;
 
                 case Zend_Acl::MODE_REMOVE:
@@ -163,11 +96,61 @@ class Zend_Acl_Permission
                     }
                     break;
             }
+        }
+    }
 
-            if (in_array(Zend_Acl::ACO_CATCHALL, $value) && !empty($this->_context[$rtype][$id])) {
-                $this->setValues($rtype, Zend_Acl::ACO_CATCHALL, $aro, Zend_Acl::MODE_REMOVE);
+    /**
+     * Returns a score for the selected permission
+     *
+     * The score is factored according to an exact match for an ARO (3), a
+     * match for an inherited ARO (2) or a match for an any/all ARO (1).
+     *
+     * @param string $type
+     * @param array $aro
+     * @param string $context
+     * @return integer
+     */
+    public function score($type, Zend_Acl_Aro $aro, $context = null)
+    {
+        $score = 0;
+        $parent = $aro->getParent();
+        $rank = count($parent);
+
+        if (!empty($this->_context[$type])) {
+            $acl = $this->_context[$type];
+
+            // iterate through all parents to calculate score
+            foreach ($parent as $id) {
+                if (isset($acl[$id])) {
+                    // first array member will have the highest inheritance
+                    $factor = $this->_getFactor($aro, $id);
+
+                    // determine if context matches aro
+                    if (in_array($context, $acl[$id])) {
+                        // is there an explicit match for the context?
+                        $score += 4 * $rank * $factor;
+                        break;
+                    } elseif (in_array(Zend_Acl::ACO_CATCHALL, $acl[$id])) {
+                        // is there an any/all for the context?
+                        $score += 1 * $factor;
+                        break;
+                    }
+                }
+                $rank--;
             }
         }
+        return $score;
+    }
+
+    /**
+     * Returns the contents of the selected permission
+     *
+     * @param string $type
+     * @return array
+     */
+    public function getPermissions($type)
+    {
+        return $this->_context[$type];
     }
 
     /**
@@ -187,9 +170,11 @@ class Zend_Acl_Permission
             }
             $value = array($value);
         }
+
         if (in_array(Zend_Acl::ACO_CATCHALL, $value)) {
             $value = array(Zend_Acl::ACO_CATCHALL);
         }
+
         return $value;
     }
 
@@ -220,9 +205,9 @@ class Zend_Acl_Permission
     {
         if ($type == 'allow') {
             return 'deny';
-        } else {
-            return 'allow';
         }
+        
+        return 'allow';
     }
 }
 

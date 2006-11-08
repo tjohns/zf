@@ -41,12 +41,6 @@ class Zend_Acl_Aro_Registry
     protected $_aro = array();
 
     /**
-     * Parent Aco
-     * @var Zend_Acl
-     */
-    protected $_aco;
-
-    /**
      * Registry instance
      * @var Zend_Acl_Aro_Registry
      */
@@ -98,7 +92,7 @@ class Zend_Acl_Aro_Registry
      * @param Zend_Acl_Aro $aro
      * @return boolean
      */
-    public function remove($aro, $aco)
+    public function remove($aro, Zend_Acl $acl)
     {
         $id = $this->find($aro)->getId();
 
@@ -111,7 +105,7 @@ class Zend_Acl_Aro_Registry
         foreach($this->_aro as $aro) {
             if (in_array($id, $aro->getParent())) {
                 $children[$aro->getId()] =  $aro->getId();
-                $aco->removeAro($aro, $aco);
+                $acl->removeAro($aro, $acl);
             }
         }
 
@@ -138,9 +132,9 @@ class Zend_Acl_Aro_Registry
 
         if (isset($this->_aro[$aro])) {
             return $this->_aro[$aro];
-        } else {
-            return $this->_aro[Zend_Acl::ARO_DEFAULT];
         }
+        
+        return $this->_aro[Zend_Acl::ARO_DEFAULT];
     }
 
     /**
