@@ -1153,7 +1153,7 @@ class Zend_Date {
         }
 
         // $date as object, part of foreign date as own date
-        switch($part) {
+        switch(substr($part, 0, 3)) {
 
             // day formats
             case Zend_Date::DAY :
@@ -1561,7 +1561,11 @@ class Zend_Date {
                 break;
 
             case Zend_Date::DATES :
-                $parsed = Zend_Locale_Format::getDate($date, 'default', $locale);
+                if (strlen($part) > 3) {
+                    $parsed = Zend_Locale_Format::getDate($date, substr($part, 3), $locale);
+                } else {
+                    $parsed = Zend_Locale_Format::getDate($date, 'default', $locale);
+                }
                 return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $parsed['month'], 
                                                          $parsed['day'], $parsed['year'], -1, $gmt),
                                              $this->_Date->mktime(0, 0, 0, $month, $day, $year, -1, $gmt));
@@ -1596,7 +1600,11 @@ class Zend_Date {
                 break;
 
             case Zend_Date::TIMES :
-                $parsed = Zend_Locale_Format::getTime($date, 'default', $locale);
+                if (strlen($part) > 3) {
+                    $parsed = Zend_Locale_Format::getTime($date, substr($part, 3), $locale);
+                } else {
+                    $parsed = Zend_Locale_Format::getTime($date, 'default', $locale);
+                }
                 return $this->_assign($calc, $this->_Date->mktime($parsed['hour'], $parsed['minute'], $parsed['second'],
                                                          1, 1, 0, -1, $gmt),
                                              $this->_Date->mktime($hour, $minute, $second, 1, 1, 0, -1, $gmt));
@@ -1847,135 +1855,239 @@ class Zend_Date {
     /**
      * Returns the time
      *
-     * @todo  implement function
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function getTime()
+    public function getTime($locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+        $time = $this->get(Zend_Date::TIMES, $locale, FALSE);
+        return new Zend_Date($this->_Date->mktime($time['hour'], $time['minute'], $time['second'], 1, 1, 0, $locale, FALSE), $locale);
+    }
+
+
+    /**
+     * Returns the calculated time
+     *
+     * @param $time string    - OPTIONAL time to calculate, when null the actual time is calculated
+     * @param string $format  - OPTIONAL format to parse
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
+     * @return object
+     */
+    private function _time($time, $format, $locale, $calculation)
+    {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
+        if (empty($time)) {
+            $format = 'HH:mm:ss';
+            $time = $this->_Date->date($format);
+        } else if (is_object($time)) {
+            $time = $time->get(Zend_Date::TIMES, $locale, FALSE);
+        }
+
+        if ($format === false) {
+            $format = Zend_Date::TIMES;
+        } else if (strlen($format) > 3) {
+            $format = Zend_Date::TIMES . $format;
+        }
+
+        return $this->_calcdetail($time, $format, $locale, $calculation);
     }
 
 
     /**
      * Sets a new time
      *
-     * @todo  implement function
-     * @param $time string     - OPTIONAL time to set, when null the actual time is set
+     * @param $time string     - OPTIONAL time to compare, when null the actual time is compared
+     * @param string $format   - OPTIONAL format to parse must be CLDR format!
      * @param $locale string   - OPTIONAL locale for parsing input
-     * @param $format          - OPTIONAL an rule for parsing the input
      * @return object
      */
-    public function setTime($time, $locale, $format)
+    public function setTime($time, $format = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_time($time, $format, $locale, 'set');
     }
 
 
     /**
      * Adds a time
      *
-     * @todo  implement function
-     * @param $time object     - OPTIONAL time to add, when null the actual time is add
+     * @param $time string     - OPTIONAL time to compare, when null the actual time is compared
+     * @param string $format   - OPTIONAL format to parse must be CLDR format!
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function addTime($time)
+    public function addTime($time, $format = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_time($time, $format, $locale, 'add');
     }
 
 
     /**
      * Substracts a time
      *
-     * @todo  implement function
-     * @param $time object     - OPTIONAL time to sub, when null the actual time is sub
+     * @param $time string     - OPTIONAL time to compare, when null the actual time is compared
+     * @param string $format   - OPTIONAL format to parse must be CLDR format!
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function subTime($time)
+    public function subTime($time, $format = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_time($time, $format, $locale, 'sub');
     }
 
 
     /**
      * Compares only the time, returning the difference
      *
-     * @todo  implement function
-     * @param $time object     - OPTIONAL time to compare, when null the actual time is used for compare
+     * @param $time string     - OPTIONAL time to compare, when null the actual time is compared
+     * @param string $format   - OPTIONAL format to parse must be CLDR format!
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function compareTime($time)
+    public function compareTime($time, $format = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_time($time, $format, $locale, 'compare');
     }
 
 
     /**
-     * Returns the date
+     * Compares only the time, returning boolean true/false
      *
-     * @todo  implement function
+     * @param $time string     - OPTIONAL time to compare, when null the actual time is compared
+     * @param string $format   - OPTIONAL format to parse must be CLDR format!
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function getDate()
+    public function isTime($time, $format = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return ($this->compareTime($time, $format, $locale) == 0);
+    }
+
+
+    /**
+     * Returns the date part
+     *
+     * @param $locale string   - OPTIONAL locale for parsing input
+     * @return object
+     */
+    public function getDate($locale = false)
+    {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+        $date = $this->get(Zend_Date::DATES, $locale, FALSE);
+        return new Zend_Date($this->_Date->mktime(0, 0, 0, $date['month'], $date['day'], $date['year'], $locale, FALSE), $locale);
+    }
+
+
+    /**
+     * Returns the calculated date
+     *
+     * @param $date string    - OPTIONAL date to calculate, when null the actual date is calculated
+     * @param string $format  - OPTIONAL format to parse
+     * @param $locale string  - OPTIONAL locale for parsing input
+     * @param $calculation string - type of calculation to make
+     * @return object
+     */
+    private function _date($date, $format, $locale, $calculation)
+    {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
+        if (empty($date)) {
+            $format = 'dd MM yy';
+            $date = $this->_Date->date($format);
+        } else if (is_object($date)) {
+            $date = $date->get(Zend_Date::DATES, $locale, FALSE);
+        }
+
+        if ($format === false) {
+            $format = Zend_Date::DATES;
+        } else if (strlen($format) > 3) {
+            $format = Zend_Date::DATES . $format;
+        }
+
+        return $this->_calcdetail($date, $format, $locale, $calculation);
     }
 
 
     /**
      * Sets a new date
      *
-     * @todo  implement function
      * @param $date string     - OPTIONAL date to set, when null the actual date is set
+     * @param string $format  - OPTIONAL format to parse must be CLDR format!
      * @param $locale string   - OPTIONAL locale for parsing input
-     * @param $format          - OPTIONAL an rule for parsing the input
      * @return object
      */
-    public function setDate($date, $locale, $format)
+    public function setDate($date, $format = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_date($date, $format, $locale, 'set');
     }
 
 
     /**
      * Adds a date
      *
-     * @todo  implement function
-     * @param $date object     - OPTIONAL date to add, when null the actual date is add
+     * @param $date string     - OPTIONAL date to add, when null the actual date is add
+     * @param string $format   - OPTIONAL format to parse must be CLDR format!
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function addDate($time)
+    public function addDate($date, $format = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_date($date, $format, $locale, 'add');
     }
 
 
     /**
      * Substracts a date
      *
-     * @todo  implement function
-     * @param $date object     - OPTIONAL date to sub, when null the actual date is sub
+     * @param $date string     - OPTIONAL date to sub, when null the actual date is subbed
+     * @param string $format   - OPTIONAL format to parse must be CLDR format!
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function subDate($date)
+    public function subDate($date, $format = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_date($date, $format, $locale, 'sub');
     }
 
 
     /**
      * Compares only the date, returning the difference date
      *
-     * @todo  implement function
-     * @param $date object     - OPTIONAL date to compare, when null the actual date is used for compare
+     * @param $date string     - OPTIONAL date to compare, when null the actual date is compared
+     * @param string $format   - OPTIONAL format to parse must be CLDR format!
+     * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function compareDate($date)
+    public function compareDate($date, $format = false, $locale = false)
     {
-        $this->_Date->throwException('function yet not implemented');
+        return $this->_date($date, $format, $locale, 'compare');
     }
 
 
+    /**
+     * Compares only the date, returning boolean true/false
+     *
+     * @param $date string     - OPTIONAL date to compare, when null the actual date is compared
+     * @param string $format   - OPTIONAL format to parse must be CLDR format!
+     * @param $locale string   - OPTIONAL locale for parsing input
+     * @return object
+     */
+    public function isDate($date, $format = false, $locale = false)
+    {
+        return ($this->compareDate($date, $format, $locale) == 0);
+    }
+    
+    
     /**
      * Returns a ISO8601 formatted date - ISO is locale-independent
      *
@@ -2420,7 +2532,7 @@ class Zend_Date {
      */
     public function addYear($year = false, $locale = false)
     {
-        return $this->_year($year, $locale, 'set');
+        return $this->_year($year, $locale, 'add');
     }
 
 
@@ -2459,7 +2571,7 @@ class Zend_Date {
      */
     public function isYear($year = false, $locale = false)
     {
-        return ($this->compareYear($year) == 0);
+        return ($this->compareYear($year, $locale) == 0);
     }
 
 
