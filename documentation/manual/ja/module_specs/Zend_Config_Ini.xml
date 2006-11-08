@@ -1,0 +1,67 @@
+<sect1 id="zend.config.adapters.ini">
+    <title>Zend_Config_Ini</title>
+    <para>
+        <code>Zend_Config_Ini</code> は、おなじみの INI
+        形式のファイルに保存された設定データを、<code>Zend_Config</code>
+        を通じてオブジェクトのプロパティとして扱えるようにします。
+        この INI 形式は、階層化された設定データを扱うこと、
+        そしてセクション間の継承関係を扱うことに特化されています。
+        設定データの階層構造は、キーの名前をドットあるいはピリオド
+        (<code>.</code>) で区切ることによって表現します。
+        他のセクションを拡張するなどの継承関係は、
+        セクション名に続けてコロン (<code>:</code>) を、
+        そしてその後に継承元のセクション名を指定することで表します。
+    </para>
+    <note>
+        <code>Zend_Config_Ini</code> は、PHP の
+        <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
+        関数を使用しています。このドキュメントでは、<code>Zend_Config_Ini</code>
+        固有の挙動に注意しましょう。例えば、特殊な値として
+        <code>true</code> や <code>false</code>、
+        <code>yes</code>、<code>no</code> そして <code>null</code>
+        を処理できることなどです。
+    </note>
+    <example>
+        <title>Zend_Config_Ini の使用法</title>
+        <para>
+            この例は、<code>Zend_Config_Ini</code> を使用して
+            INI ファイルから設定データを読み込むための基本的な方法を説明するものです。
+            この例では、運用環境の設定と開発環境の設定を両方管理しています。
+            開発環境用の設定データは運用環境用のものと非常に似ているので、
+            開発環境用のセクションは運用環境用のセクションを継承させています。
+            今回の場合なら、逆に運用環境用のセクションを開発環境用のものから継承させてもいいでしょう。
+            そうしたからといって特に状況が複雑になるわけではありません。
+            ここでは、次のような内容の設定データが
+            <code>/path/to/config.ini</code> に存在するものとします。
+        </para>
+        <programlisting role="ini"><![CDATA[; 運用環境の設定データ
+[production]
+webhost           = www.example.com
+database.type     = pdo_mysql
+database.host     = db.example.com
+database.username = dbuser
+database.password = secret
+database.name     = dbname
+
+; 開発環境の設定データは、運用環境のデータを継承したうえで
+; 必要に応じて値を上書きします
+[staging : production]
+database.host     = dev.example.com
+database.username = devuser
+database.password = devsecret]]></programlisting>
+        <para>
+            次に、開発者が開発環境用の設定データを INI ファイルから読み込むことを考えます。
+            これは簡単なことで、単に INI ファイルとセクションを指定するだけです。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Config/Ini.php';
+
+$config = new Zend_Config_Ini('/path/to/config.ini', 'staging');
+
+echo $config->database->host; // "dev.example.com" と出力します
+echo $config->database->name; // "dbname" と出力します]]></programlisting>
+    </example>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
