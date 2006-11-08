@@ -337,14 +337,14 @@ class Zend_Http_Response
 
     /**
      * A convenience function that returns a text representation of
-     * HTTP response codes. Returns null for unknown codes.
+     * HTTP response codes. Returns 'Unknown' for unknown codes.
      *
-     * Conforms to HTTP/1.1 as defined in RFC 2616
+     * Conforms to HTTP/1.1 as defined in RFC 2616 (except for 'Unknown')
      * See http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10 for reference
      * 
      * @param int $code HTTP response code
      * @param boolean $http11 Use HTTP version 1.1 
-     * @return string|null
+     * @return string
      */ 
     static public function responseCodeAsText($code, $http11 = true)
     {
@@ -403,7 +403,7 @@ class Zend_Http_Response
         if (isset($messages[$code])) {
             return $messages[$code];
         } else {
-            return null;
+            return 'Unknown';
         }
     }
 
