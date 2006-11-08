@@ -340,6 +340,8 @@ class Zend_Http_Cookiejar
                     throw new Zend_Http_Exception("Invalid value passed for \$ret_as: {$ret_as}");
             }
         }
+        
+        return null;
     }
     
     /**

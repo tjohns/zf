@@ -137,7 +137,7 @@ class Zend_Http_Client
     protected $enctype = null;
     
     /**
-     * The raw post data to send. Could be set by setRawPostData($data, $enctype).
+     * The raw post data to send. Could be set by setRawData($data, $enctype).
      *
      * @var string
      */
@@ -216,7 +216,7 @@ class Zend_Http_Client
     public function setUri($uri)
     {
         if (is_string($uri) && Zend_Uri_Http::check($uri)) {
-            $uri = Zend_Uri_Http::factory($uri);
+            $uri = Zend_Uri::factory($uri);
         }
         
         if ($uri instanceof Zend_Uri_Http) {
@@ -304,26 +304,20 @@ class Zend_Http_Client
      *    eg. array('host' => 'www.example.com', 'x-foo: bar'). In This case 
      *    the function will call itself recursively for each array item.
      * 
-     * In all cases, the third parameter $override decides whether to overwrite
-     * the value of this header if it's already set (default), or to add another
-     * header with the same name to the list of headers (good for repeating
-     * headers like 'Cookie').
-     * 
      * @param string|array $name Header name, full header string ('Header: value')
      *     or an array of headers
      * @param mixed $value Header value or null
-     * @param boolean $override Whether to override header if it already exists
      * @return Zend_Http_Client
      */
-    public function setHeaders($name, $value = null, $override = true)
+    public function setHeaders($name, $value = null)
     {
         // If we got an array, go recusive!
         if (is_array($name)) {
             foreach ($name as $k => $v) {
                 if (is_string($k)) {
-                    $this->setHeaders($k, $v, $override);
+                    $this->setHeaders($k, $v);
                 } else {
-                    $this->setHeaders($v, null, $override);
+                    $this->setHeaders($v, null);
                 }
             }
         } else {
@@ -331,33 +325,21 @@ class Zend_Http_Client
             if ($value === null && (strpos($name, ':') > 0)) 
                 list($name, $value) = explode(':', $name, 2);
             
-            // Make sure name is valid
+            // Make sure the name is valid
             if (! preg_match('/^[A-Za-z0-9-]+$/', $name)) {
                 throw new Zend_Http_Client_Exception("{$name} is not a valid HTTP header name");
             }
-        
-            // Header names are storred lowercase internally.
-            $name = strtolower($name);
-        
+
             // If $value is null or false, unset the header
             if ($value === null || $value === false) {
                 unset($this->headers[$name]);
             
             // Else, set the header
             } else {
+                // Header names are storred lowercase internally.
+                $name = strtolower($name);
                 if (is_string($value)) $value = trim($value);
-            
-                // If override is set, set the header as is
-                if ($override || ! isset($this->headers[$name])) {
-                    $this->headers[$name] = $value;
-            
-                // Else, if the header already exists, add a new value
-                } else {
-                    if (! is_array($this->headers[$name])) 
-                        $this->headers[$name] = array($this->headers[$name]);
-
-                    $this->headers[$name][] = $value;
-                }
+                $this->headers[$name] = $value;
             }
         }
         
@@ -375,6 +357,7 @@ class Zend_Http_Client
      */
     public function getHeader($key)
     {
+        $key = strtolower($key);
         if (isset($this->headers[$key])) {
             return $this->headers[$key];
         } else {
@@ -385,28 +368,38 @@ class Zend_Http_Client
     /**
      * Set a GET parameter for the request. Wrapper around _setParameter
      *
-     * @param string $name
+     * @param string|array $name
      * @param string $value
-     * @param boolean $override Whether to overwrite the parameter's value
      * @return Zend_Http_Client
      */    
-    public function setParameterGet($name, $value, $override = true)
+    public function setParameterGet($name, $value = null)
     {
-        $this->_setParameter('GET', $name, $value, $override);
+        if (is_array($name)) {
+            foreach ($name as $k => $v)
+                $this->_setParameter('GET', $k, $v);
+        } else {
+            $this->_setParameter('GET', $name, $value);
+        }
+        
         return $this;
     }
     
     /**
      * Set a POST parameter for the request. Wrapper around _setParameter
      *
-     * @param string $name
+     * @param string|array $name
      * @param string $value
-     * @param boolean $override Whether to overwrite the parameter's value
      * @return Zend_Http_Client
      */        
-    public function setParameterPost($name, $value, $override = true)
+    public function setParameterPost($name, $value = null)
     {
-        $this->_setParameter('POST', $name, $value, $override);
+        if (is_array($name)) {
+            foreach ($name as $k => $v)
+                $this->_setParameter('POST', $k, $v);
+        } else {
+            $this->_setParameter('POST', $name, $value);
+        }
+        
         return $this;
     }
     
@@ -416,9 +409,8 @@ class Zend_Http_Client
      * @param string $type GET or POST
      * @param string $name
      * @param string $value
-     * @param boolean $override Whether to replace old value, or add it as an array of values
      */
-    protected function _setParameter($type, $name, $value, $override = true)
+    protected function _setParameter($type, $name, $value)
     {
         $type = strtolower($type);
         switch ($type) {
@@ -432,13 +424,10 @@ class Zend_Http_Client
                 throw new Zend_Http_Client_Exception("Trying to set unknown parameter type: '{$type}'");
         }
         
-        if ($override || (! isset($parray[$name]))) {
+        if ($value === null) {
+            if (isset($parray[$name])) unset($parray[$name]);
+        } else {
             $parray[$name] = $value;
-        } elseif (isset($parray[$name])) {
-            if (! is_array($parray[$name])) {
-                $parray[$name] = array($parray[$name]);
-            }
-            $parray[$name][] = $value;
         }
     }
 
@@ -479,7 +468,7 @@ class Zend_Http_Client
         } else {
             // Check we got a proper authentication type
             if (! defined('self::AUTH_' . strtoupper($type)))
-                throw new Zend_Http_Client_Exception("Invalid or not supported authentication type: '$auth'");
+                throw new Zend_Http_Client_Exception("Invalid or not supported authentication type: '$type'");
 
             $this->auth = array(
                 'user' => (string) $user,
@@ -546,15 +535,18 @@ class Zend_Http_Client
             }
         } else {
             if ($cookie instanceof Zend_Http_Cookie) {
-                $cookie = $cookie->getName();
+                $name = $cookie->getName();
                 $value = $cookie->getValue();
+                $cookie = $name;
             }
         
             if (preg_match("/[=,; \t\r\n\013\014]/", $cookie))
-                throw new Zend_Http_Client_Exception("Cookie name cannot contain these characters: =,; \t\r\n\013\014 ({$name})");
+                throw new Zend_Http_Client_Exception("Cookie name cannot contain these characters: =,; \t\r\n\013\014 ({$cookie})");
             
-            $value = urlencode($value);
-            $this->setHeaders('cookie', "{$cookie}={$value}", false);
+            $value = addslashes($value);
+            
+            if (! isset($this->headers['cookie'])) $this->headers['cookie'] = '';
+            $this->headers['cookie'] .= $cookie . '=' . $value . '; ';
         }
         
         return $this;
@@ -687,14 +679,17 @@ class Zend_Http_Client
             
             $body = $this->prepare_body();
             $headers = $this->prepare_headers();
-            $request = implode("\r\n", $headers) . "\r\n" . $body;
-            $this->last_request = $request;
+            $this->last_request = implode("\r\n", $headers) . "\r\n" . $body;
             
             // Open the connection, send the request and read the response
             $this->adapter->connect($uri->getHost(), $uri->getPort(), 
                 ($uri->getScheme() == 'https' ? true : false));
             $this->adapter->write($this->method, $uri, $this->config['httpversion'], $headers, $body);
-            $response = Zend_Http_Response::factory($this->adapter->read());
+            $response = $this->adapter->read();
+            if (! $response)
+                throw new Zend_Http_Client_Exception('Unable to read response, or response is empty');
+                
+            $response = Zend_Http_Response::factory($response);
             
             // Load cookies into cookie jar
             if (isset($this->Cookiejar)) $this->Cookiejar->addCookiesFromResponse($response, $uri);
@@ -732,7 +727,7 @@ class Zend_Http_Client
                         $this->uri->setPath($path . '/' . $location);
                     }
                 }
-                $this->redirectCounter++;
+                ++$this->redirectCounter;
                 
             } else {
                 // If we didn't get any location, stop redirecting

@@ -168,7 +168,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
      */
     public function close()
     {
-        fclose($this->socket);
+        if (is_resource($this->socket)) fclose($this->socket);
         $this->socket = null;
         $this->connected_to = array(null, null);
     }
