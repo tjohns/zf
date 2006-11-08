@@ -27,7 +27,7 @@ database.host     = dev.example.com
 database.username = devuser
 database.password = devsecret]]></programlisting>
         <para>
-            Veronderstel vervolgens dat de developpeur de preproductie configuratiedata van het INI bestand nodig heeft. Het is eenvoudig om die data in te laden door het INI bestand en de preproductie sectie te specifiëren :
+            Veronderstel vervolgens dat de programmeur de preproductie configuratiedata van het INI bestand nodig heeft. Het is eenvoudig om die data in te laden door het INI bestand en de preproductie sectie te specifiëren :
         </para>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Ini.php';
