@@ -485,7 +485,10 @@ class Zend_Locale_Format
      */
     public static function isDate($date, $format = false, $locale = false)
     {
-        return (!empty(self::getDate($date, $format, $locale)));
+        if (self::getDate($date, $format, $locale) === false) {
+            return false;
+        }
+        return true;
     }
 
 
@@ -623,7 +626,10 @@ class Zend_Locale_Format
      */
     public static function isTime($time, $format = false, $locale = false)
     {
-        return (!empty(self::getTime($time, $format, $locale)));
+        if (self::getTime($time, $format, $locale) === false) {
+            return false;
+        }
+        return true;
     }
 
 
