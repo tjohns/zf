@@ -227,4 +227,14 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $body = $response->getBody();
         $this->assertContains('Bar action called', $body);
     }
+
+    public function testRunThrowsException()
+    {
+        try {
+            $this->_controller->run(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+            $this->fail('Should not be able to call run() from object instance');
+        } catch (Exception $e) {
+            // success
+        }
+    }
 }
