@@ -132,7 +132,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     protected function _formatName($unformatted)
     {
         $unformatted = str_replace(array('-', '.'), ' ', strtolower($unformatted));
-        $unformatted = preg_replace('[^a-z0-9_ ]', '', $unformatted);
+        $unformatted = preg_replace('/[^a-z0-9_ ]/', '', $unformatted);
         $unformatted = str_replace(' ', '', ucwords($unformatted));
 
         $unformatted = str_replace('_', ' ', $unformatted);
