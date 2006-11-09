@@ -238,7 +238,7 @@ class Zend_Controller_Front
      * the request to a controller and action.
      *
      * If a class name is provided, instantiates router with any parameters
-     * registered via {@link addParam()} or {@link setParams()}.
+     * registered via {@link setParam()} or {@link setParams()}.
      *
      * @param string|Zend_Controller_Router_Interface $router
      * @throws Zend_Controller_Exception if invalid router class
@@ -339,13 +339,13 @@ class Zend_Controller_Front
     }
 
     /**
-     * Add a parameter to use when instantiating an action controller
+     * Add or modify a parameter to use when instantiating an action controller
      *
      * @param string $name
      * @param mixed $value
      * @return self
      */
-    public function addParam($name, $value)
+    public function setParam($name, $value)
     {
         $name = (string) $name;
         $this->_invokeParams[$name] = $value;
@@ -360,8 +360,23 @@ class Zend_Controller_Front
      */
     public function setParams(array $params)
     {
-        $this->_invokeParams = $params;
+        $this->_invokeParams = array_merge($this->_invokeParams, $params);
         return $this;
+    }
+
+    /**
+     * Retrieve a single parameter from the controller parameter stack
+     * 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getParam($name)
+    {
+        if(isset($this->_invokeParams[$name])) {
+            return $this->_invokeParams[$name];
+        }
+
+        return null;
     }
 
     /**
@@ -372,6 +387,18 @@ class Zend_Controller_Front
     public function getParams()
     {
         return $this->_invokeParams;
+    }
+
+    /**
+     * Clear the controller parameter stack
+     * 
+     * @return self
+     */
+    public function clearParams()
+    {
+        $this->_invokeParams = array();
+
+        return $this;
     }
 
     /**

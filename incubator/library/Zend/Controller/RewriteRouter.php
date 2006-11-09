@@ -67,13 +67,13 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     }
 
     /**
-     * Add a parameter to use when instantiating an action controller
+     * Add or modify a parameter to use when instantiating an action controller
      * 
      * @param string $name 
      * @param mixed $value 
      * @return self
      */
-    public function addParam($name, $value)
+    public function setParam($name, $value)
     {
         $name = (string) $name;
         $this->_invokeParams[$name] = $value;
@@ -88,8 +88,23 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
      */
     public function setParams(array $params)
     {
-        $this->_invokeParams = $params;
+        $this->_invokeParams = array_merge($this->_invokeParams, $params);
         return $this;
+    }
+
+    /**
+     * Retrieve a single parameter from the controller parameter stack
+     * 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getParam($name)
+    {
+        if(isset($this->_invokeParams[$name])) {
+            return $this->_invokeParams[$name];
+        }
+
+        return null;
     }
 
     /**
@@ -102,6 +117,17 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         return $this->_invokeParams;
     }
 
+    /**
+     * Clear the controller parameter stack
+     * 
+     * @return self
+     */
+    public function clearParams()
+    {
+        $this->_invokeParams = array();
+
+        return $this;
+    }
 
     public function addDefaultRoutes()
     {

@@ -62,25 +62,34 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files', $test[0]);
     }
 
-    public function testAddParam()
+    public function testGetSetParam()
     {
-        $this->_controller->addParam('foo', 'bar');
-        $this->assertSame(array('foo' => 'bar'), $this->_controller->getParams());
+        $this->_controller->setParam('foo', 'bar');
+        $this->assertEquals('bar', $this->_controller->getParam('foo'));
 
-        $this->_controller->addParam('bar', 'baz');
-        $this->assertSame(array('foo' => 'bar', 'bar' => 'baz'), $this->_controller->getParams());
+        $this->_controller->setParam('bar', 'baz');
+        $this->assertEquals('baz', $this->_controller->getParam('bar'));
     }
 
-    public function testSetParams()
+    public function testGetSetParams()
     {
         $this->_controller->setParams(array('foo' => 'bar'));
         $this->assertSame(array('foo' => 'bar'), $this->_controller->getParams());
 
-        $this->_controller->addParam('baz', 'bat');
+        $this->_controller->setParam('baz', 'bat');
         $this->assertSame(array('foo' => 'bar', 'baz' => 'bat'), $this->_controller->getParams());
 
-        $this->_controller->setParams(array('foo' => 'bar'));
-        $this->assertSame(array('foo' => 'bar'), $this->_controller->getParams());
+        $this->_controller->setParams(array('foo' => 'bug'));
+        $this->assertSame(array('foo' => 'bug', 'baz' => 'bat'), $this->_controller->getParams());
+    }
+
+    public function testClearParams()
+    {
+        $this->_controller->setParams(array('foo' => 'bar', 'baz' => 'bat'));
+        $this->assertSame(array('foo' => 'bar', 'baz' => 'bat'), $this->_controller->getParams());
+
+        $this->_controller->clearParams();
+        $this->assertSame(array(), $this->_controller->getParams());
     }
 
     public function testSetGetDefaultController()
@@ -185,8 +194,8 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $request->setControllerName('index');
         $request->setActionName('args');
         $this->_controller->setResponse(new Zend_Controller_Response_Cli());
-        $this->_controller->addParam('foo', 'bar');
-        $this->_controller->addParam('baz', 'bat');
+        $this->_controller->setParam('foo', 'bar');
+        $this->_controller->setParam('baz', 'bat');
         $response = $this->_controller->dispatch($request);
 
         $body = $response->getBody();

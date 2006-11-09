@@ -44,13 +44,13 @@ interface Zend_Controller_Router_Interface
     public function route(Zend_Controller_Request_Abstract $dispatcher);
 
     /**
-     * Add a parameter with which to instantiate any helper objects
+     * Add or modify a parameter with which to instantiate any helper objects
      * 
      * @param string $name 
      * @param mixed $param 
      * @return self
      */
-    public function addParam($name, $value);
+    public function setParam($name, $value);
 
     /**
      * Set an array of a parameters to pass to helper object constructors
@@ -61,9 +61,24 @@ interface Zend_Controller_Router_Interface
     public function setParams(array $params);
 
     /**
+     * Retrieve a single parameter from the controller parameter stack
+     * 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getParam($name);
+
+    /**
      * Retrieve the parameters to pass to helper object constructors
      * 
      * @return array
      */
     public function getParams();
+
+    /**
+     * Clear the controller parameter stack
+     * 
+     * @return self
+     */
+    public function clearParams();
 }

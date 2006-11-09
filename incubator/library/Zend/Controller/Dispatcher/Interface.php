@@ -67,13 +67,13 @@ interface Zend_Controller_Dispatcher_Interface
     public function isDispatchable(Zend_Controller_Request_Abstract $request);
 
     /**
-     * Add a parameter with which to instantiate an Action Controller
+     * Add or modify a parameter with which to instantiate an Action Controller
      * 
      * @param string $name 
      * @param mixed $value 
      * @return self
      */
-    public function addParam($name, $value);
+    public function setParam($name, $value);
 
     /**
      * Set an array of a parameters to pass to the Action Controller constructor
@@ -84,11 +84,26 @@ interface Zend_Controller_Dispatcher_Interface
     public function setParams(array $params);
 
     /**
+     * Retrieve a single parameter from the controller parameter stack
+     * 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getParam($name);
+
+    /**
      * Retrieve the parameters to pass to the Action Controller constructor
      * 
      * @return array
      */
     public function getParams();
+
+    /**
+     * Clear the controller parameter stack
+     * 
+     * @return self
+     */
+    public function clearParams();
 
     /**
      * Set the response object to use, if any
