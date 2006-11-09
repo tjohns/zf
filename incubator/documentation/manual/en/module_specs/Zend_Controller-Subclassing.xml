@@ -444,8 +444,26 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
             accessible using <code>getInvokeArg()</code> and
             <code>getInvokeArgs()</code>. The recommendation is to use such
             invocation arguments to pass in objects such as view,
-            authentication/authorization, or registry objects.
+            authentication/authorization, or registry objects. For example:
         </para>
+
+        <programlisting role="php"><![CDATA[
+$front = new Zend_Controller_Front();
+$front->setParam('view', new Zend_View())
+      ->setControllerDirectory($config->controller->directory);
+$response = $front->dispatch();
+
+// In a sample action controller:
+class FooController extends Zend_Controller_Action
+{
+    protected $_view = null;
+
+    public function init()
+    {
+        $this->_view = $this->getInvokeArg('view');
+    }
+}
+]]></programlisting>
 
         <para>
             When an action is dispatched, processing may be performed before and
