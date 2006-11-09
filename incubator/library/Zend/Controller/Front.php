@@ -19,6 +19,9 @@
  */
 
 
+/** Zend_Controller_Exception */
+require_once 'Zend/Controller/Exception.php';
+
 /** Zend_Controller_Plugin_Broker */
 require_once 'Zend/Controller/Plugin/Broker.php';
 
@@ -95,9 +98,14 @@ class Zend_Controller_Front
      * @param string|array $controllerDirectory Path to Zend_Controller_Action 
      * controller classes or array of such paths
      * @return void
+     * @throws Zend_Controller_Exception if called from an object instance
      */
     static public function run($controllerDirectory)
     {
+        if (isset($this)) {
+            throw new Zend_Controller_Exception('Zend_Controller_Front::run() should only be called statically');
+        }
+
         require_once 'Zend/Controller/Router.php';
         $frontController = new self();
         echo $frontController
@@ -195,7 +203,7 @@ class Zend_Controller_Front
      * If a class name is provided, it will instantiate it
      *
      * @param string|Zend_Controller_Request_Abstract $request
-     * @throws Zend_Controller_Front_Exception if invalid request class
+     * @throws Zend_Controller_Exception if invalid request class
      * @return self
      */
     public function setRequest($request)
@@ -205,7 +213,7 @@ class Zend_Controller_Front
             $request = new $request();
         }
         if (!$request instanceof Zend_Controller_Request_Abstract) {
-            throw new Zend_Controller_Front_Exception('Invalid request class');
+            throw new Zend_Controller_Exception('Invalid request class');
         }
 
         $this->_request = $request;
@@ -233,7 +241,7 @@ class Zend_Controller_Front
      * registered via {@link addParam()} or {@link setParams()}.
      *
      * @param string|Zend_Controller_Router_Interface $router
-     * @throws Zend_Controller_Front_Exception if invalid router class
+     * @throws Zend_Controller_Exception if invalid router class
      * @return self
      */
     public function setRouter($router)
@@ -244,7 +252,7 @@ class Zend_Controller_Front
             $router = $reflection->newInstance($this->getParams());
         }
         if (!$router instanceof Zend_Controller_Router_Interface) {
-            throw new Zend_Controller_Front_Exception('Invalid router class');
+            throw new Zend_Controller_Exception('Invalid router class');
         }
 
         $this->_router = $router;
@@ -302,7 +310,7 @@ class Zend_Controller_Front
      * If a class name is provided, instantiates a response object.
      *
      * @param string|Zend_Controller_Response_Abstract $response
-     * @throws Zend_Controller_Front_Exception if invalid response class
+     * @throws Zend_Controller_Exception if invalid response class
      * @return self
      */
     public function setResponse($response)
@@ -312,7 +320,7 @@ class Zend_Controller_Front
             $response = new $response();
         }
         if (!$response instanceof Zend_Controller_Response_Abstract) {
-            throw new Zend_Controller_Front_Exception('Invalid response class');
+            throw new Zend_Controller_Exception('Invalid response class');
         }
 
         $this->_response = $response;
