@@ -1246,4 +1246,26 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Format::isInteger('textwithoutnumber', 'de_AT');
         $this->assertEquals($value, FALSE, "FALSE expected");
     }
+
+
+    /**
+     * test if getDate works
+     * expected array
+     */
+    public function testgetDateAlone()
+    {
+        $value = Zend_Locale_Format::getDate('10.10.06');
+        $this->assertEquals(is_array($value), TRUE, "array expected");
+    }
+
+
+    /**
+     * test if getDate works
+     * expected array
+     */
+    public function testgetDatedmy1()
+    {
+        $value = Zend_Locale_Format::getDate('1.1.6','dMy');
+        $this->assertEquals(is_array($value), TRUE, "array expected");
+    }
 }

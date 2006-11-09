@@ -333,6 +333,31 @@ class Zend_Locale_Format
         $day       = iconv_strpos($format, 'd');
         $month     = iconv_strpos($format, 'M');
         $year      = iconv_strpos($format, 'y');
+        if (($day < $month) && ($day < $year)) {
+            $one = $day;
+        } else if (($month < $day) && ($month < $year)) {
+            $one = $month;
+        } else {
+            $one = $year;
+        }
+
+        if (($day > $month) && ($day > $year)) {
+            $three = $day;
+        } else if (($month > $day) && ($month > $year)) {
+            $three = $month;
+        } else {
+            $three = $year;
+        }
+        
+        if ((($day > $month) && ($day < $year)) ||
+            (($day < $month) && ($day > $year))) {
+            $two = $day;
+        } else if ((($month > $day) && ($month < $year)) ||
+                   (($month < $day) && ($month > $year))) {
+            $two = $month;
+        } else {
+            $two = $year;
+        }
 
         // search month strings
         if (substr($format, $month, 3) == 'MMM') {
@@ -349,82 +374,74 @@ class Zend_Locale_Format
                 }
             }
         }
-
+        
         // search first number part
         $first = self::getInteger($date, 0, $locale);
 
-        if (($day < $month) && ($day < $year)) {
+        if ($one == $day) {
             // dd MM yy , dd yy MM
-            $format['day'] = iconv_substr($first, 0, 2);
-        } else if (($year < $day) && ($year < $month)) {
+            $found['day'] = iconv_substr($first, 0, 2);
+        } else if ($one == $year) {
             // yy dd MM , yy MM dd
             if (substr($format, $year, 4) === 'yyyy') {
                 // yyyy - 4 digits needed
-                $format['year'] = iconv_substr($first, 0, 4);
+                $found['year'] = iconv_substr($first, 0, 4);
             } else {
                 // yy - only 2 digits needed
-                $format['year'] = iconv_substr($first, 0, 2);
+                $found['year'] = iconv_substr($first, 0, 2);
+                $next = $year + 2;
             }
-        } else if (!isset($found['month']) && ($month < $day) && ($month < $year)) {
+        } else {
             // MM dd yy , MM yy dd , month as number
-            $format['month'] = iconv_substr($first, 0, 2);
+            $found['month'] = iconv_substr($first, 0, 2);
         }
 
         // truncate first found number part
-        $date = substr($date, strpos($date, $first) + strlen($first));
+        $date = substr($date, $two);
         // search second number part
         $second = self::getInteger($date, 0, $locale);
-
-        if (!isset($format['day']) && 
-           ((($day < $month) && ($day > $year)) or
-            (($day > $month) && ($day < $year)))) {
+        
+        if ($two == $day) {
             // MM dd yy , yy dd MM
-            $format['day'] = iconv_substr($second, 0, 2);
-        } else if (!isset($format['year']) &&
-            ((($year < $month) && ($year > $day)) or
-            (($year > $month) && ($year < $day)))) {
+            $found['day'] = iconv_substr($second, 0, 2);
+        } else if ($two == $year) {
             // MM yy dd , dd yy MM
             if (substr($format, $year, 4) === 'yyyy') {
                 // yyyy - 4 digits needed
-                $format['year'] = iconv_substr($second, 0, 4);
+                $found['year'] = iconv_substr($second, 0, 4);
             } else {
                 // yy - only 2 digits needed
-                $format['year'] = iconv_substr($second, 0, 2);
+                $found['year'] = iconv_substr($second, 0, 2);
             }
-        } else if (!isset($format['month']) &&
-            ((($month < $day) && ($month > $year)) or
-             (($month > $day) && ($month < $year)))) {
-            $format['month'] = iconv_substr($second, 0, 2);
+        } else if (!isset($found['month'])) {
+            $found['month'] = iconv_substr($second, 0, 2);
         }
         
         // truncate second found number part
-        $date = substr($date, strpos($date, $second) + strlen($second));
+        $date = substr($date, ($three - $two));
         // search third number part
         $third = self::getInteger($date, 0, $locale);
-
-        if (!isset($format['day']) && 
-            (($day > $month) && ($day > $year))) {
+        
+        if ($three == $day) {
             // MM yy dd , yy MM dd
-            $format['day'] = iconv_substr($third, 0, 2);
-        } else if (!isset($format['year']) &&
-            (($year > $month) && ($year > $day))) {
+            $found['day'] = $third;
+        } else if ($three == $year) {
             // MM dd yy , dd MM yy
             if (substr($format, $year, 4) === 'yyyy') {
                 // yyyy - 4 digits needed
-                $format['year'] = iconv_substr($third, 0, 4);
+                $found['year'] = $third;
             } else {
                 // yy - only 2 digits needed
-                $format['year'] = iconv_substr($third, 0, 2);
+                $found['year'] = $third;
             }
-        } else if (!isset($format['month']) &&
-            (($month > $day) && ($month > $year))) {
-            $format['month'] = iconv_substr($third, 0, 2);
+        } else if (!isset($found['month'])) {
+            $found['month'] = iconv_substr($third, 0, 2);
         }
 
-        if (empty($format['month']) or empty($format['day']) or !isset($format['year'])) {
+        if (empty($found['month']) or empty($found['day']) or !isset($found['year'])) {
             return false;
         }
-        return $format;
+        return $found;
     }
 
 
@@ -514,13 +531,13 @@ class Zend_Locale_Format
 
         if (($second < $minute) && ($second < $hour)) {
             // ss mm HH , ss HH mm
-            $format['second'] = iconv_substr($first, 0, 2);
+            $found['second'] = iconv_substr($first, 0, 2);
         } else if (($hour < $second) && ($hour < $minute)) {
             // HH ss mm , HH mm ss
-            $format['hour'] = iconv_substr($first, 0, 2);
+            $found['hour'] = iconv_substr($first, 0, 2);
         } else if (($minute < $second) && ($minute < $hour)) {
             // mm HH ss, mm ss HH
-            $format['minute'] = iconv_substr($first, 0, 2);
+            $found['minute'] = iconv_substr($first, 0, 2);
         }
 
         // truncate first found number part
@@ -528,20 +545,20 @@ class Zend_Locale_Format
         // search second number part
         $sec = self::getInteger($time, 0, $locale);
 
-        if (!isset($format['second']) && 
+        if (!isset($found['second']) && 
            ((($second < $minute) && ($second > $hour)) or
             (($second > $minute) && ($second < $hour)))) {
             // mm ss HH , HH ss mm
-            $format['second'] = iconv_substr($sec, 0, 2);
-        } else if (!isset($format['hour']) &&
+            $found['second'] = iconv_substr($sec, 0, 2);
+        } else if (!isset($found['hour']) &&
             ((($hour < $minute) && ($hour > $second)) or
             (($hour > $minute) && ($hour < $second)))) {
             // mm HH ss , ss HH mm
-            $format['hour'] = iconv_substr($sec, 0, 2);
-        } else if (!isset($format['minute']) &&
+            $found['hour'] = iconv_substr($sec, 0, 2);
+        } else if (!isset($found['minute']) &&
             ((($minute < $second) && ($minute > $hour)) or
              (($minute > $second) && ($minute < $hour)))) {
-            $format['minute'] = iconv_substr($sec, 0, 2);
+            $found['minute'] = iconv_substr($sec, 0, 2);
         }
         
         // truncate second found number part
@@ -549,19 +566,19 @@ class Zend_Locale_Format
         // search third number part
         $third = self::getInteger($time, 0, $locale);
 
-        if (!isset($format['second']) && 
+        if (!isset($found['second']) && 
             (($second > $minute) && ($second > $hour))) {
             // HH mm ss , mm HH ss
-            $format['second'] = iconv_substr($third, 0, 2);
-        } else if (!isset($format['hour']) &&
+            $found['second'] = iconv_substr($third, 0, 2);
+        } else if (!isset($found['hour']) &&
             (($hour > $minute) && ($hour > $second))) {
-            $format['hour'] = iconv_substr($third, 0, 2);
-        } else if (!isset($format['minute']) &&
+            $found['hour'] = iconv_substr($third, 0, 2);
+        } else if (!isset($found['minute']) &&
             (($minute > $second) && ($minute > $hour))) {
-            $format['minute'] = iconv_substr($third, 0, 2);
+            $found['minute'] = iconv_substr($third, 0, 2);
         }
 
-        if (empty($format['minute']) or empty($format['second']) or !isset($format['hour'])) {
+        if (empty($found['minute']) or empty($found['second']) or !isset($found['hour'])) {
             return false;
         }
         return $format;
