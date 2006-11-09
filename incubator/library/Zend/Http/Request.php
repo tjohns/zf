@@ -274,27 +274,10 @@ class Zend_Http_Request implements Zend_Request_Interface
             // Set GET items, if available
             $_GET = array();
             if (false !== ($pos = strpos($requestUri, '?'))) {
-                $query = substr($requestUri, $pos + 1);
-
-                // strip off anchor fragment
-                if (false !== ($pos = strpos($query, '#'))) {
-                    $query = substr($query, 0, $pos);
-                }
-
-                // Normalize ampersands
-                $query = str_replace('&amp;', '&', $query);
-
                 // Get key => value pairs and set $_GET
-                $pairs = explode('&', $query);
-                foreach ($pairs as $pair) {
-                    // list() would be better, but throws a notice if there 
-                    // aren't the same number of elements
-                    $item = explode('=', $pair, 2);
-                    if (!isset($item[1])) {
-                        $item[1] = null;
-                    }
-                    $_GET[$item[0]] = urldecode($item[1]);
-                }
+                $query = substr($requestUri, $pos + 1);
+                parse_str($query, $vars);
+                $_GET = $vars;
             }
         }
          
