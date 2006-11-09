@@ -738,7 +738,7 @@ class Zend_Search_Lucene
         }
 
         while (($segmentInfo = $segmentInfoQueue->pop()) !== null) {
-            if ($segmentInfoQueue->top() !== null &&
+            if ($segmentInfoQueue->top() === null ||
                 $segmentInfoQueue->top()->currentTerm()->key() !=
                             $segmentInfo->currentTerm()->key()) {
                 // We got new term
