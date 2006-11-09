@@ -375,7 +375,7 @@ echo $controller->dispatch();
 // Within an action controller action:
 // Set a header
 $this->getResponse()
-    ->setHeader('Content-Type', 'text/html');
+    ->setHeader('Content-Type', 'text/html')
     ->appendBody($content);
 ]]></programlisting>
 

@@ -360,6 +360,14 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
 
         <programlisting role="php"><![CDATA[
     /**
+     * @param Zend_Controller_Request_Abstract $request Request object
+     * @param Zend_Controller_Response_Abstract $response Response object
+     * @param array $args Optional associative array of
+     * configuration/environment settings
+     */
+    public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $args = array());
+
+    /**
      * @return void
      */
     public function init();
@@ -391,6 +399,11 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
      */
     public function getInvokeArgs();
 
+    /**
+     * @return mixed
+     */
+    public function getInvokeArg($name);
+
     public function preDispatch();
 
     public function postDispatch();
@@ -412,15 +425,26 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
 ]]></programlisting>
 
         <para>
-            The constructor is final, to ensure that therequest and response
-            object are available at object instantiation, and that they are
-            registered with the object. While it only specifies two arguments,
-            any parameter registered in the Front Controller using
-            <code>addParam()</code> or <code>setParams()</code> will be passed,
-            in order, following these arguments. They are then registered in the
-            object and passed to <code>init()</code>. A developer may override
-            the <code>init()</code> method to provide further
-            initialization-time actions.
+            The constructor registers the request and response objects with the
+            object, as well as an array of any additional configuration
+            arguments. This last array consists of parameters registered with
+            the Front Controller's <code>setParam()</code> or 
+            <code>setParams()</code> methods. Once done, the constructor passes
+            handling to <code>init()</code>.
+        </para>
+
+        <para>
+            While you may override the constructor, we suggest putting any
+            initialization handling into <code>init()</code> to ensure the
+            request and response objects are properly registered.
+        </para>
+
+        <para>
+            Any configuration arguments passed to the constructor are later
+            accessible using <code>getInvokeArg()</code> and
+            <code>getInvokeArgs()</code>. The recommendation is to use such
+            invocation arguments to pass in objects such as view,
+            authentication/authorization, or registry objects.
         </para>
 
         <para>
