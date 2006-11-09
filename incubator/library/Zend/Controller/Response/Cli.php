@@ -34,4 +34,17 @@ require_once 'Zend/Controller/Response/Abstract.php';
  */
 class Zend_Controller_Response_Cli extends Zend_Controller_Response_Abstract
 {
+    /**
+     * Magic __toString functionality
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        if ($this->isException() && $this->renderExceptions()) {
+            return $this->getException()->getTraceAsString();
+        }
+
+        return $this->_body;
+    }
 }
