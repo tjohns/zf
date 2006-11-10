@@ -70,7 +70,14 @@
     </chapter>
     <chapter id="zend.feed">
         <title>Zend_Feed</title>
-        &module_specs.Zend_Feed;
+        &module_specs.Zend_Feed_Introduction;
+        &module_specs.Zend_Feed_Importing;
+        &module_specs.Zend_Feed_FindFeeds;
+        &module_specs.Zend_Feed_ConsumingRss;
+        &module_specs.Zend_Feed_ConsumingAtom;
+        &module_specs.Zend_Feed_ConsumingAtomSingle;
+        &module_specs.Zend_Feed_ModifyingFeed;
+        &module_specs.Zend_Feed_CustomFeed;
     </chapter>
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
