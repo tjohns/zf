@@ -71,4 +71,17 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($res_lf->getHeadersAsString(true), $res_crlf->getHeadersAsString(true), 'Responses headers do not match');
 		$this->assertEquals($res_lf->getBody(), $res_crlf->getBody(), 'Response bodies do not match');
 	}
+	
+	public function testExtractMessageCrlf()
+	{
+		$response_text = file_get_contents(dirname(__FILE__) . '/_files/response_crlf');
+		$this->assertEquals("OK", Zend_Http_Response::extractMessage($response_text), "Response message is not 'OK' as expected");
+	}
+	
+	public function testExtractMessageLfonly()
+	{
+		$response_text = file_get_contents(dirname(__FILE__) . '/_files/response_lfonly');
+		$this->assertEquals("OK", Zend_Http_Response::extractMessage($response_text), "Response message is not 'OK' as expected");
+	}
+
 }

@@ -432,7 +432,7 @@ class Zend_Http_Response
      */
     static public function extractMessage($response_str)
     {
-        preg_match("|^HTTP/[\d\.x]+ \d+ (.+)$|", $response_str, $m);
+        preg_match("|^HTTP/[\d\.x]+ \d+ ([^\r\n]+)|", $response_str, $m);
 
         if (isset($m[1])) {
             return $m[1];
