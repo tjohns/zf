@@ -77,9 +77,9 @@ class Zend_Service_Audioscrobbler_ProfileTest extends PHPUnit_Framework_TestCase
     {
         try {
             $as = new Zend_Service_Audioscrobbler();
-            $as->set('user', 'RJ');
+            $as->set('user', 'Frith');
             $response = $as->userGetTopAlbums();
-            $this->assertEquals($response['user'], 'RJ');
+            $this->assertEquals($response['user'], 'Frith');
             $this->assertNotNull($response->album);
         } catch (Exception $e) {
             $this->fail("Exception: [" . $e->getMessage() . "] thrown by test");

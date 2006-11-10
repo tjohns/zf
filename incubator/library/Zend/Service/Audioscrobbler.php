@@ -422,185 +422,52 @@ class Zend_Service_Audioscrobbler
 		return $this->getInfo($service);
 	}
 
+    //////////////////////////////////////////////////////////
+	///////////////////////  ALBUM  //////////////////////////
 	//////////////////////////////////////////////////////////
-	/////////////////////////  TRACK  ////////////////////////
-	//////////////////////////////////////////////////////////
+	
+	public function albumGetInfo()
+	{
+	    $service = "/{$this->get('version')}/album/{$this->get('artist')}/{$this->get('album')}/info.xml";
+	    return $this->getInfo($service);
+	}
 
-	/**
-	 * Utility function that returns a list of this track's top listeners
-	 * @return SimpleXML object containing result set
-	 *
-	 */
+    //////////////////////////////////////////////////////////
+	///////////////////////  TRACKS //////////////////////////
+	//////////////////////////////////////////////////////////
+	
 	public function trackGetTopFans()
 	{
-		return $this->getInfoByTrack('fans.xml');
+	    $service = "/{$this->get('version')}/track/{$this->get('artist')}/{$this->get('track')}/fans.xml";
+	    return $this->getInfo($service);
 	}
-
-	/**
-	 * Utility function that returns a list of tags most applied to this track
-	 * @return SimpleXML object containing result set
-	 *
-	 */
+	
 	public function trackGetTopTags()
 	{
-		return $this->getInfoByTrack('toptags.xml');
+	    $service = "/{$this->get('version')}/track/{$this->get('artist')}/{$this->get('track')}/toptags.xml";
+	    return $this->getInfo($service);
 	}
-
-	//////////////////////////////////////////////////////////
-	/////////////////////////  TAGS  /////////////////////////
-	//////////////////////////////////////////////////////////
-
-	/**
-	 * public functions for retrieving tag-specific information
-	 */
-
-	/**
-	 * Utility function that returns a list of the site's overall most used tags
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function tagGetOverallTopTags()
+	
+    //////////////////////////////////////////////////////////
+	///////////////////////  TAGS   //////////////////////////
+	//////////////////////////////////////////////////////////	
+	
+	public function tagGetTopTags()
 	{
-		return $this->getInfoByTag('toptags.xml');
+	    $service = "/{$this->get('version')}/tag/toptags.xml";
+	    return $this->getInfo($service);
 	}
-
-	/**
-	 * Utility function that returns a list of artists this tag was most applied to
-	 * @return SimpleXML object containing result set
-	 *
-	 */
+	
 	public function tagGetTopArtists()
 	{
-		return $this->getInfoByTag('topartists.xml');
+	    $service = "/{$this->get('version')}/tag/{$this->get('tag')}/topartists.xml";
+	    return $this->getInfo($service);
 	}
 
-	/**
-	 * Utility function that returns a list of albums to which this tag was most applied
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function tagGetTopAlbums()
-	{
-		return $this->getInfoByTag('topalbums.xml');
-	}
-	/**
-	 * Utility function that returns a list of tracks to which this tag was most applied
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function tagGetTopTracks()
-	{
-		return $this->getInfoByTag('toptracks.xml');
-	}
-
-	//////////////////////////////////////////////////////////
-	///////////////////////  GROUPS  /////////////////////////
-	//////////////////////////////////////////////////////////
-
-	/**
-	 * public functions for retrieving group-specific information
-	 */
-
-
-	/**
-	 * Utility function that returns a a list of recent journal posts by members of this group
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function groupGetRecentJournals()
-	{
-		return $this->getInfoByGroup('journals.rss');
-	}
-
-	/**
-	 * Utility function that gets list of dates of available weekly charts for this group
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function groupGetWeeklyChart()
-	{
-		return $this->getInfoByGroup('weeklychartlist.xml');
-	}
-
-	/**
-	 * Utility function that gets the most recent weekly artist chart for this group
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function groupGetRecentWeeklyArtistChart()
-	{
-		return $this->getInfoByGroup('weeklyartistchart.xml');
-	}
-
-	/**
-	 * Utility function that gets the most recent album chart for this group
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function groupGetRecentWeeklyAlbumChart()
-	{
-		return $this->getInfoByGroup('weeklyalbumchart.xml');
-	}
-
-	/**
-	 * Utility function that gets the most recent track chart for this group
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function groupGetRecentWeeklyTrackChart()
-	{
-		return $this->getInfoByGroup('weeklytrackchart.xml');
-	}
-
-	/**
-	 * Utility function that gets this group's weekly artist chart by date
-	 * Use groupGetWeeklyChartList() to get a list of valid dates
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function groupGetPreviousWeeklyArtistChart()
-	{
-		$required = array('FromDate'=>'1114965332','ToDate'=>'1115570132');
-		return $this->getInfoByGroup('weeklyartistchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
-	}
-
-	/**
-	 * Utility function that gets this group's weekly album chart by date
-	 * Use groupGetWeeklyChartList() to get a list of valid dates
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function groupGetPreviousWeeklyAlbumChart()
-	{
-		$required = array('FromDate'=>'1114965332','ToDate'=>'1115570132');
-		return $this->getInfoByGroup('weeklyalbumchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
-	}
-
-	/**
-	 * Utility function that gets this group's weekly track chart by date
-	 * Use groupGetWeeklyChartList() to get a list of valid dates
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function groupGetPreviousWeeklyTrackChart()
-	{
-		$required = array('FromDate'=>'1114965332','ToDate'=>'1115570132');
-		return $this->getInfoByGroup('weeklytrackchart.xml?from='.$this->from_date.'&to='.$this->to_date, $required);
-	}
-
-	//////////////////////////////////////////////////////////
-	//////////////////////  FORUM  ///////////////////////////
-	//////////////////////////////////////////////////////////
-
-	/**
-	 * Utility function that gets an RSS feed of recent forum posts in a specific forum
-	 * @return SimpleXML object containing result set
-	 *
-	 */
-	public function forumGetRecentPosts()
-	{
-		return $this->getInfoByForum('posts.rss');
-	}
-
+    public function tagGetTopTracks()
+    {
+        $service = "/{$this->get('version')}/tag/{$this->get('tag')}/toptracks.xml";
+        return $this->getInfo($service);
+    }
 }
 ?>

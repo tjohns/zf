@@ -8,6 +8,9 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'ProfileTest.php';
 require_once 'ArtistTest.php';
+require_once 'AlbumDataTest.php';
+require_once 'TrackDataTest.php';
+require_once 'TagDataTest.php';
 
 class AllTests
 {
@@ -22,7 +25,9 @@ class AllTests
 
         $suite->addTestSuite('Zend_Service_Audioscrobbler_ProfileTest');
 		$suite->addTestSuite('Zend_Service_Audioscrobbler_ArtistTest');
-        //$suite->addTestSuite('Zend_Service_Audioscrobbler_TopartistsTest');
+        $suite->addTestSuite('Zend_Service_Audioscrobbler_AlbumDataTest');
+        $suite->addTestSuite('Zend_Service_Audioscrobbler_TrackDataTest');
+        $suite->addTestSuite('Zend_Service_Audioscrobbler_TagDataTest');
 
         return $suite;
     }
