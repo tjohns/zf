@@ -29,6 +29,11 @@
  */
 require_once 'Zend/Exception.php';
 
+/**
+ * Zend_Registry
+ */
+require_once 'Zend/Registry.php';
+
 
 /**
  * Utility class for common functions.
