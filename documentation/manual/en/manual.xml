@@ -88,7 +88,10 @@
     </chapter>
     <chapter id="zend.log">
         <title>Zend_Log</title>
-        &module_specs.Zend_Log;
+        &module_specs.Zend_Log_Introduction;
+        &module_specs.Zend_Log_Simple;
+        &module_specs.Zend_Log_Levels;
+        &module_specs.Zend_Log_Advanced;
     </chapter>
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
