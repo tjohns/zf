@@ -455,6 +455,7 @@ class Zend_Controller_Front
         if ((null === $request) && (null === ($request = $this->getRequest()))) {
             Zend::loadClass('Zend_Controller_Request_Http');
             $request = new Zend_Controller_Request_Http();
+            $this->setRequest($request);
         }
 
         /**
@@ -463,6 +464,7 @@ class Zend_Controller_Front
         if ((null === $response) && (null === ($response = $this->getResponse()))) {
             Zend::loadClass('Zend_Controller_Response_Http');
             $response = new Zend_Controller_Response_Http();
+            $this->setResponse($response);
         }
 
         /**
