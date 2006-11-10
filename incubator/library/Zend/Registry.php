@@ -39,7 +39,7 @@ class Zend_Registry implements Zend_Registry_Interface
 	/**
 	 * Singleton Instance
 	 */
-	static $instance = NULL;
+	static $instance = null;
 	
     /**
      * Object registry provides storage for shared objects
@@ -114,7 +114,7 @@ class Zend_Registry implements Zend_Registry_Interface
      * Retrieves a registered shared object, where $name is the
      * registered name of the object to retrieve.
      *
-     * If the $name argument is NULL, an array will be returned where 
+     * If the $name argument is null, an array will be returned where 
 	 * the keys to the array are the names of the objects in the registry 
 	 * and the values are the class names of those objects.
      *
