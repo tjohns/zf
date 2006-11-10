@@ -1,0 +1,21 @@
+<sect1 id="zend.controller.rewriterouter.variable-requirements">
+	<title>Variable requirements</title>
+
+	<para>
+		One can add a fourth parameter where variable requirements can be set. These are defined as regular
+		expressions:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
+
+	<note>
+		Unlike Ruby on Rails, ZF RewriteRouter will match a route and use a default when a fourth parameter variable requirement is not met. So the
+		URL of 'http://example.com/archive/test' will match the above route and set the year to 2006. This functionality
+		may be altered in the future as it is being discussed at the moment of writing of this documentation.
+	</note>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

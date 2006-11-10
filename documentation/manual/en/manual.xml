@@ -57,7 +57,13 @@
     </chapter>
     <chapter id="zend.controller.rewriterouter">
         <title>Zend_Controller_RewriteRouter</title>
-        &module_specs.Zend_Controller_RewriteRouter;
+        &module_specs.Zend_Controller_RewriteRouter-Introduction;
+        &module_specs.Zend_Controller_RewriteRouter-Usage;
+        &module_specs.Zend_Controller_RewriteRouter-Basic;
+        &module_specs.Zend_Controller_RewriteRouter-VariableDefaults;
+        &module_specs.Zend_Controller_RewriteRouter-VariableRequirements;
+        &module_specs.Zend_Controller_RewriteRouter-RewriteBase;
+        &module_specs.Zend_Controller_RewriteRouter-DefaultRoutes;
     </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
