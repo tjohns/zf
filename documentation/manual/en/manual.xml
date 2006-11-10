@@ -97,7 +97,9 @@
     </chapter>
     <chapter id="zend.json">
         <title>Zend_Json</title>
-        &module_specs.Zend_Json;
+        &module_specs.Zend_Json-Introduction;
+        &module_specs.Zend_Json-Basics;
+        &module_specs.Zend_Json-Objects;
     </chapter>
     <chapter id="zend.log">
         <title>Zend_Log</title>

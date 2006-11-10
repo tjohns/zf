@@ -1,35 +1,3 @@
-<sect1 id="zend.json.introduction">
-    <title>Introduction</title>
-    <para>
-        <code>Zend_Json</code> provides convenience methods for serializing
-        native PHP to JSON and decoding JSON to native PHP. For more information
-        on JSON, <ulink url="http://www.json.org/">visit the JSON project
-        site</ulink>.
-    </para>
-    <para>
-        JSON, JavaScript Object Notation, can be used for data
-        interchange between JavaScript and other languages. Since JSON can be
-        directly evaluated by JavaScript, it is a more efficient and lightweight
-        format than XML for exchanging data with JavaScript clients.
-    </para>
-</sect1>
-
-<sect1 id="zend.json.basics">
-    <title>Basic Usage</title>
-    <para>
-        Usage of <code>Zend_Json</code> involves using the two public static
-        methods available: <code>Zend_Json::encode()</code> and
-        <code>Zend_Json::decode()</code>. 
-    </para>
-    <programlisting role="php"><![CDATA[<?php
-// Retrieve a value:
-$phpNative = Zend_Json::decode($encodedValue);
-
-// Encode it to return to the client:
-$json = Zend_Json::encode($phpNative);
-?>]]></programlisting>
-</sect1>
-
 <sect1 id="zend.json.objects">
     <title>JSON Objects</title>
     <para>
@@ -65,7 +33,6 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
         code and populated with the values decoded using <code>Zend_Json</code>.
     </para>
 </sect1>
-        
 <!--
 vim:se ts=4 sw=4 et:
 -->
