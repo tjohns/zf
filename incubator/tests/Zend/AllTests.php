@@ -17,6 +17,7 @@ require_once 'Zend/Http/AllTests.php';
 // require_once 'Zend/MeasureTest.php';
 // require_once 'Zend/Measure/AllTests.php';
 require_once 'Zend/Registry/AllTests.php';
+require_once 'Zend/ViewTest.php';
 require_once 'Zend/View/AllTests.php';
 require_once 'Zend/XmlRpc/AllTests.php';
 
@@ -44,6 +45,7 @@ class Zend_AllTests
 //        $suite->addTestSuite('Zend_MeasureTest');
 //        $suite->addTest(Zend_Measure_AllTests::suite());
 //        $suite->addTest(Zend_Registry_AllTests::suite());
+        $suite->addTestSuite('Zend_ViewTest');
         $suite->addTest(Zend_View_AllTests::suite());
         $suite->addTest(Zend_XmlRpc_AllTests::suite());
 
