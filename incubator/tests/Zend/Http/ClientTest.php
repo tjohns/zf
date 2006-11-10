@@ -446,30 +446,30 @@ class Zend_Http_ClientTest extends PHPUnit_Framework_TestCase
 		$jar = $client->getCookieJar();
 		
 		// Check we got the right cookiejar
-		$this->assertTrue($jar instanceof Zend_Http_Cookiejar, '$jar is not an instance of Zend_Http_Cookiejar as expected');
+		$this->assertTrue($jar instanceof Zend_Http_CookieJar, '$jar is not an instance of Zend_Http_CookieJar as expected');
 		$this->assertEquals(count($jar->getAllCookies()), 2, '$jar does not contain 2 cookies as expected');
 		
 		// Try unsetting the cookiejar
-		$client->setCookiejar(null);
-		$this->assertNull($client->getCookiejar(), 'Cookie jar is expected to be null but it is not');
+		$client->setCookieJar(null);
+		$this->assertNull($client->getCookieJar(), 'Cookie jar is expected to be null but it is not');
 	}
 	
 	public function testSetReadyCookieJar() {
 		$client = new Zend_Http_Client();
-		$jar = new Zend_Http_Cookiejar();
+		$jar = new Zend_Http_CookieJar();
 		$jar->addCookie('cookie=value', 'http://www.example.com');
 		$jar->addCookie('chocolate=chips; path=/foo', 'http://www.example.com');
 		
-		$client->setCookiejar($jar);
+		$client->setCookieJar($jar);
 		
-		$this->assertEquals($jar, $client->getCookiejar(), '$jar is not the client\'s cookie jar as expected');
+		$this->assertEquals($jar, $client->getCookieJar(), '$jar is not the client\'s cookie jar as expected');
 	}
 	
 	public function testSetInvalidCookieJar() {
 		$client = new Zend_Http_Client();
 		
 		try {
-			$client->setCookiejar('cookiejar');
+			$client->setCookieJar('cookiejar');
 			$this->fail('Invalid cookiejar exception was not thrown');
 		} catch (Exception $e) {
 			// We're good
@@ -497,7 +497,7 @@ class Zend_Http_ClientTest extends PHPUnit_Framework_TestCase
 	
 	public function testSetCookieObjectJar() {
 		$client = $this->_prepareClient('testCookies');
-		$client->setCookiejar();
+		$client->setCookieJar();
 		$refuri = $client->getUri();
 		
 		$cookies = array(

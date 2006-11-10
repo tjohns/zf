@@ -25,13 +25,13 @@ require_once 'Zend/Http/Client/Exception.php';
 require_once 'Zend/Http/Client/Adapter/Interface.php';
 require_once 'Zend/Http/Response.php';
 require_once 'Zend/Http/Cookie.php';
-require_once 'Zend/Http/Cookiejar.php';
+require_once 'Zend/Http/CookieJar.php';
 
 /**
  * Zend_Http_Client is an implemetation of an HTTP client in PHP. The client 
  * supports basic features like sending different HTTP requests and handling
  * redirections, as well as more advanced features like proxy settings, HTTP
- * authentication and cookie persistance (using a Zend_Http_Cookiejar object)
+ * authentication and cookie persistance (using a Zend_Http_CookieJar object)
  * 
  * @todo Implement proxy settings
  * @category   Zend
@@ -170,7 +170,7 @@ class Zend_Http_Client
     /**
      * The client's cookie jar
      *
-     * @var Zend_Http_Cookiejar
+     * @var Zend_Http_CookieJar
      */
     protected $cookiejar = null;
 
@@ -486,19 +486,19 @@ class Zend_Http_Client
      * A cookie jar is an object that holds and maintains cookies across HTTP requests
      * and responses.
      *
-     * @param Zend_Http_Cookiejar|boolean $cookiejar Exisitng cookiejar object, true to create a new one, false to disable
+     * @param Zend_Http_CookieJar|boolean $cookiejar Exisitng cookiejar object, true to create a new one, false to disable
      * @return Zend_Http_Client
      */
-    public function setCookiejar($cookiejar = true)
+    public function setCookieJar($cookiejar = true)
     {
-        if ($cookiejar instanceof Zend_Http_Cookiejar) {
-            $this->Cookiejar = $cookiejar;
+        if ($cookiejar instanceof Zend_Http_CookieJar) {
+            $this->cookiejar = $cookiejar;
         } elseif ($cookiejar === true) {
-            $this->Cookiejar = new Zend_Http_Cookiejar();
+            $this->cookiejar = new Zend_Http_CookieJar();
         } elseif (! $cookiejar) {
-            $this->Cookiejar = null;
+            $this->cookiejar = null;
         } else {
-            throw new Zend_Http_Client_Exception('Invalid parameter type passed as Cookiejar');
+            throw new Zend_Http_Client_Exception('Invalid parameter type passed as CookieJar');
         }
         
         return $this;
@@ -507,11 +507,11 @@ class Zend_Http_Client
     /**
      * Return the current cookie jar or null if none.
      *
-     * @return Zend_Http_Cookiejar|null
+     * @return Zend_Http_CookieJar|null
      */
-    public function getCookiejar()
+    public function getCookieJar()
     {
-        return $this->Cookiejar;
+        return $this->cookiejar;
     }
     
     /**
@@ -526,12 +526,12 @@ class Zend_Http_Client
     {
         if ($value !== null) $value = urlencode($value);
         
-        if (isset($this->Cookiejar)) {
+        if (isset($this->cookiejar)) {
             if ($cookie instanceof Zend_Http_Cookie) {
-                $this->Cookiejar->addCookie($cookie);
+                $this->cookiejar->addCookie($cookie);
             } elseif (is_string($cookie) && $value !== null) {
                 $cookie = Zend_Http_Cookie::factory("{$cookie}={$value}", $this->uri);
-                $this->Cookiejar->addCookie($cookie);
+                $this->cookiejar->addCookie($cookie);
             }
         } else {
             if ($cookie instanceof Zend_Http_Cookie) {
@@ -692,7 +692,7 @@ class Zend_Http_Client
             $response = Zend_Http_Response::factory($response);
             
             // Load cookies into cookie jar
-            if (isset($this->Cookiejar)) $this->Cookiejar->addCookiesFromResponse($response, $uri);
+            if (isset($this->cookiejar)) $this->cookiejar->addCookiesFromResponse($response, $uri);
 
             // If we got redirected, look for the Location header
             if ($response->isRedirect() && ($location = $response->getHeader('location'))) {
@@ -777,9 +777,9 @@ class Zend_Http_Client
         }
 
         // Load cookies from cookie jar
-        if (isset($this->Cookiejar)) {
-            $cookstr = $this->Cookiejar->getMatchingCookies($this->uri, 
-                true, Zend_Http_Cookiejar::COOKIE_STRING_CONCAT);
+        if (isset($this->cookiejar)) {
+            $cookstr = $this->cookiejar->getMatchingCookies($this->uri, 
+                true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
                 
             if ($cookstr) $headers[] = "Cookie: {$cookstr}";
         }

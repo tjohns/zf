@@ -23,7 +23,7 @@ require_once "Zend/Http/Cookie.php";
 require_once "Zend/Http/Exception.php";
 
 /**
- * A Zend_Http_Cookiejar object is designed to contain and maintain HTTP cookies, and should
+ * A Zend_Http_CookieJar object is designed to contain and maintain HTTP cookies, and should
  * be used along with Zend_Http_Client in order to manage cookies across HTTP requests and 
  * responses. 
  * 
@@ -35,13 +35,13 @@ require_once "Zend/Http/Exception.php";
  * can be returned either in their native form (as Zend_Http_Cookie objects) or as strings - 
  * the later is suitable for sending as the value of the "Cookie" header in an HTTP request. 
  * You can also choose, when returning more than one cookie, whether to get an array of strings
- * (by passing Zend_Http_Cookiejar::COOKIE_STRING_ARRAY) or one unified string for all cookies
- * (by passing Zend_Http_Cookiejar::COOKIE_STRING_CONCAT).
+ * (by passing Zend_Http_CookieJar::COOKIE_STRING_ARRAY) or one unified string for all cookies
+ * (by passing Zend_Http_CookieJar::COOKIE_STRING_CONCAT).
  * 
  * See http://wp.netscape.com/newsref/std/cookie_spec.html for some specs.
  *
  */
-class Zend_Http_Cookiejar
+class Zend_Http_CookieJar
 {
     /**
      * Return cookie(s) as a Zend_Http_Cookie object
@@ -396,12 +396,12 @@ class Zend_Http_Cookiejar
      *
      * @param Zend_Http_Response $response HTTP Response object
      * @param Zend_Uri_Http|string $uri The requested URI 
-     * @return Zend_Http_Cookiejar
+     * @return Zend_Http_CookieJar
      * @todo Add the $uri functionality. 
      */
     static public function factory(Zend_Http_Response $response, $ref_uri)
     {
-        $jar = new Zend_Http_Cookiejar();
+        $jar = new Zend_Http_CookieJar();
         $jar->addCookiesFromResponse($response, $ref_uri);
         return $jar;
     }

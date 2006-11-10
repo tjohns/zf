@@ -14,7 +14,7 @@ Zend_Http_Client
 - Implement digest HTTP authentication
 - Implement proxy
 
-Zend_Http_Cookiejar
+Zend_Http_CookieJar
 ---------------------------------------------------------
 - Path overriding: currently, if you have cookies with the same name from 
   http://myserver/root/ and cookies from http://myserver/root/dir/ 

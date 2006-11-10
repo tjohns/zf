@@ -14,7 +14,7 @@
 	    </para>
     </sect2>
     <sect2 id="zend.http.cookies.cookiejar">
-        <title>The Zend_Http_Cookiejar Class</title>
+        <title>The Zend_Http_CookieJar Class</title>
         <para>
             ...
 	    </para>
