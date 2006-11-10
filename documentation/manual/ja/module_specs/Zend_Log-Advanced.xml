@@ -1,0 +1,30 @@
+<sect1 id="zend.log.advanced-logging">
+   <title>より高度なログの記録: 複数のロガーの使用</title>
+   <para>
+        <code>Zend_Log</code> は、複数のログアダプタを使用したログの記録をサポートしています。
+        メッセージを全てのログに送信するか、あるいは特定のログにのみ送信するかを指定できます。
+   </para>
+
+   <para>
+        複数のロガーを作成する際には、それぞれのロガーに個別の名前をつける必要があります。
+        ロガーの登録には <code>registerLogger()</code> メソッドを使用し、
+        オプションの 2 番目の引数で名前を指定します。
+   </para>
+
+   <para>
+        以下の例では、2 つのロガーが作成されます。ひとつはコンソール用、
+        もうひとつはファイル用で、それぞれの名前は
+        <code>Console</code> および <code>File</code> となります。
+    </para>
+    <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                 // Zend_Log 基底クラス
+require_once 'Zend/Log/Adapter/File.php';    // ファイル用ログアダプタ
+require_once 'Zend/Log/Adapter/Console.php'; // コンソール用ログアダプタ
+
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'File');
+Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Console');
+]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

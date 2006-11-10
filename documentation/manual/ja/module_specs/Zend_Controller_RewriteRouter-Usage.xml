@@ -1,0 +1,23 @@
+<sect1 id="zend.controller.rewriterouter.usage">
+    <title>ルータの使用法</title>
+
+    <para>
+        RewriteRouter を適切に使用するには、まずそのインスタンスを作成し、
+        次にユーザ定義のルーティングを追加し、それをコントローラに注入しなければなりません。
+        以下にコードの例を示します。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+/* -- ルータを作成します -- */
+
+$router = new Zend_Controller_RewriteRouter();
+$router->addRoute('user', 'user/:username', array('controller' => 'user', 'action' => 'info'));
+
+/* -- コントローラにルータを設定します -- */
+
+$ctrl = Zend_Controller_Front::getInstance();
+$ctrl->setRouter($router);]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

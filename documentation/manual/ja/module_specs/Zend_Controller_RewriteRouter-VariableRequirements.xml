@@ -1,0 +1,24 @@
+<sect1 id="zend.controller.rewriterouter.variable-requirements">
+    <title>変数の制限</title>
+
+    <para>
+        4 番目のパラメータで、変数に関する制限事項を設定することができます。
+        この制限は、正規表現で設定します。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
+
+    <note>
+        Ruby on Rails とは異なり、ZF の RewriteRouter は
+        4 番目のパラメータの制限を満たさない場合にもルートにマッチし、
+        デフォルト値を使用するようになっています。
+        そのため、URL 'http://example.com/archive/test' は上のルートにマッチし、
+        year は 2006 に設定されます。この機能は将来変更される予定で、
+        このマニュアルを書いている時点ではまだ議論中です。
+    </note>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

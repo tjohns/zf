@@ -1,0 +1,34 @@
+<sect1 id="zend.log.simple-logging">
+    <title>単一のログへの記録</title>
+    <para>
+        ロガーを作成するには、<code>Zend_Log_Adapter_Interface</code> のインスタンスを引数として
+        <code>Zend_Log::registerLogger()</code> メソッドをコールします。
+    </para>
+    <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                // Zend_Log 基底クラス
+require_once 'Zend/Log/Adapter/File.php';   // ファイル用ログアダプタ
+
+// ファイルロガーを登録します
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
+]]></programlisting>
+
+    <para>
+        メッセージをログに記録するには <code>Zend_Log::log()</code> を使用します。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+/**
+ * メッセージをログに記録します。オプションの 2 番目の引数で
+ * ログのレベルを指定します。指定されなかった場合は LEVEL_DEBUG を使用します。
+ */
+Zend_Log::log('はじめてのログメッセージ。');
+
+/**
+ * 深刻なメッセージを記録します
+ */
+Zend_Log::log('深刻なエラーが発生しました。', Zend_Log::LEVEL_SEVERE);
+]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

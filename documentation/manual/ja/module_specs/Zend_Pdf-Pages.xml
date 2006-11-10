@@ -1,0 +1,82 @@
+<sect1 id="zend.pdf.pages">
+    <title>ドキュメントのページ</title>
+    <para>
+    PDF ドキュメントのページの抽象化を行うのが
+    <code>Zend_Pdf_Page</code> クラスです。
+    </para>
+
+    <para>
+    PDF ページは既存の PDF から読み込むこともできますし、
+    新しく作成することもできます。
+    </para>
+
+    <para>
+    新しいページを取得するには、直接 <code>Zend_Pdf_Page</code>
+    オブジェクトを作成するか、<code>Zend_Pdf::newPage()</code>
+    メソッドをコールします。このメソッドは <code>Zend_Pdf_Page</code>
+    オブジェクトを返します。<code>Zend_Pdf::newPage()</code>
+    の場合は、すでにドキュメントにアタッチされているページを作成するという点が異なります。
+    こうするとそのページを複数の PDF ドキュメントで使いまわすことができませんが、
+    多少高速になります
+    <footnote>
+        <para>
+        これは Zend_Pdf モジュールのバージョン 1.0 の制限事項であり、
+        将来のバージョンではなくなる予定です。しかし、ドキュメント間で
+        ページを共有するには、アタッチされていないページのほうが
+        常によい結果となるでしょう。
+        </para>
+    </footnote>。どちらの手法を使用するかはあなたしだいです。
+    </para>
+
+    <para>
+    <code>Zend_Pdf::newPage()</code> メソッドおよび <code>Zend_Pdf_Page</code>
+    のコンストラクタは、どちらも同じ形式のパラメータを受け取ります。
+    ページサイズを ($x, $y) 形式のポイント数 (1/72 インチ)
+    で表したものか、定義済みの定数のうちのいずれかになります。
+    以下の定数が定義されています。
+        <itemizedlist>
+            <listitem>
+                <para>Zend_Pdf_Page::SIZE_A4</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Page::SIZE_A4_LANDSCAPE</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Page::SIZE_LETTER</para>
+            </listitem>
+            <listitem>
+                <para>Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+    ドキュメントのページは、<code>Zend_Pdf</code> クラスの public メンバである
+    <code>$pages</code> に保存されます。これは <code>Zend_Pdf_Page</code>
+    オブジェクトの配列です。これによってページの並び順も定義され、
+    一般的な配列と同じように操作することができます。
+    </para>
+
+    <example>
+        <title>PDF ドキュメントのページの操作</title>
+        <programlisting role="php"><![CDATA[<?php
+...
+// ページの並び順を反転します。
+$pdf->pages = array_reverse($pdf->pages);
+...
+// 新しいページを追加します。
+$pdf->pages[] = new Zend_Pdf_Page(Zend_Pdf_Page::SIZE_A4);
+// 新しいページを追加します。
+$pdf->pages[] = $pdf->newPage(Zend_Pdf_Page::SIZE_A4);
+
+// 指定したページを削除します。
+unset($pdf->pages[$id]);
+
+...
+?>]]></programlisting>
+    </example>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

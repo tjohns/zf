@@ -1,0 +1,31 @@
+<sect1 id="zend.controller.rewriterouter.introduction">
+    <title>導入</title>
+    <para>
+        Zend_Controller_RewriteRouter は、新しいバージョンのルータです。
+        ルーティングとは、受け取った URI を展開し、どのコントローラのどのアクションが
+        リクエストを処理するのかを決める処理のことです。
+        このコントローラの定義に従って、アクションおよびオプションのパラメータは
+        Zend_Controller_Dispatcher_Token というバリューオブジェクトにまとめられます。
+        このオブジェクトを処理するのが Zend_Controller_Dispatcher です。
+        ルーティングが行われるのは一度だけ、すなわちリクエストを最初に受け取ってから
+        最初のコントローラに処理が渡される際だけです。
+    </para>
+    <para>
+        Zend_Controller_RewriteRouter は、mod_rewrite 風の機能を
+        PHP だけで実現できるように設計されています。
+        この処理は Ruby on Rails のルーティングを多少参考にしており、
+        ウェブサーバの URL 書き換えに関する前提知識を必要としません。
+        以下の単純な mod_rewrite ルール (のいずれか) で動作するように設計されています。
+    </para>
+    <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+    <programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

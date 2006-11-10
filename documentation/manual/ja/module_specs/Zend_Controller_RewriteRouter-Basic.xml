@@ -1,0 +1,67 @@
+<sect1 id="zend.controller.rewriterouter.basic">
+    <title>基本的なルーティング</title>
+
+    <para>
+        RewriteRouter で最も重要なのが、ユーザ定義のルーティングです。
+        これは、RewriteRouter の addRoute メソッドをコールして作成します。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('user', 'user/:username');]]></programlisting>
+
+    <para>
+        最初のパラメータがこのルートの名前です。
+        将来は、URL ビューヘルパーの中でこれを使用し、ビュー内で簡単に
+        URL を生成できるようになる予定です。
+        ここで定義したルートを使用する方法も知っておく必要があるでしょう。
+        事前に定義したルートを取得するには、RewriteRouter の getRoute
+        メソッドを使用します。
+    </para>
+
+    <para>
+        二番目のパラメータは、そのルートに関連付ける URL です。
+        例えば、上の例で示したルートは <code>http://example.com/user/martel</code>
+        に対応します。ルート内のコロンは URL 変数を意味し、これは
+        Zend_Controller_Action::_getParam メソッドからアクセス可能です。
+        今回の例では、username という名前のパラメータに
+        'martel' という値が設定されます。
+    </para>
+
+    <note>
+        一番最後にマッチしたルートが適用されるので、
+        汎用的なルートは最初に定義するようにしましょう。
+    </note>
+
+    <note>
+        現在の実装では、変数の識別子としてスラッシュ (/)
+        以外のあらゆる文字を使用可能ですが、できるだけ PHP
+        の変数で使用可能な範囲の文字のみを使用することを強く推奨します。
+        この実装は将来変更される予定ですので、(PHP
+        の変数で使用できない文字を用いていると)
+        バグを引き起こす可能性があります。
+    </note>
+
+    <para>
+        ルートで使用される変数のうち、'controller' および 'action'
+        のふたつは特別な扱いとなります。これらの特殊変数は、URL から
+        コントローラとアクションを決定するために使用されます。
+        'action' 変数は、そのルートあるいはデフォルトパラメータとして
+        常に定義されていなければなりません。
+        'controller' 変数がもし定義されていない場合は、デフォルト値として
+        IndexController が使用されます。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+$router->addRoute('user', ':controller/:action');]]></programlisting>
+
+    <para>
+        このルートが定義されているときにブラウザで
+        'http://example.com/news/latest' を選択すると、
+        Zend_Controller_Dispatcher は NewsController の
+        latestAction を起動します。
+    </para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

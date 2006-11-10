@@ -1,0 +1,47 @@
+<sect1 id="zend.mail.introduction">
+    <title>導入</title>
+    <para>
+        <code>Zend_Mail</code> は、テキストメールや MIME
+        マルチパートメールを作成・送信するための一般的な機能を提供します。
+        <code>Zend_Mail</code> を使用すると、PHP の組み込みの
+        <ulink url="http://php.net/mail"><code>mail()</code></ulink>
+        関数あるいは SMTP 接続を直接使用してメールを送信することが可能です。
+    </para>
+    <example>
+        <title>Zend_Mail を使用したシンプルなメール</title>
+        <para>
+            受信者、表題、本文および送信者を指定しただけの単純なメールです。
+            このようなメールを送信するには、PHP の
+            <ulink url="http://php.net/mail"><code>mail()</code></ulink>
+            関数を使用して次のようにします。
+        </para>
+        <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+$mail->setBodyText('This is the text of the mail.');
+$mail->setFrom('somebody@example.com', 'Some Sender');
+$mail->addTo('somebody_else@example.com', 'Some Recipient');
+$mail->setSubject('TestSubject');
+$mail->send();
+?>]]>   </programlisting>
+    </example>
+    <note>
+        <code>Zend_Mail</code> でメールを送信するには、
+        最低 1 か所以上の受信者、送信者 (<code>setFrom()</code> を使用します)、
+        そして本文 (テキストや HTML) を指定しなければなりません。
+    </note>
+    <para>
+        大半の属性については、その情報を読み込むための "get"
+        メソッドが用意されています。詳細は、API ドキュメントを参照ください。
+        <code>getRecipients()</code> だけは特別で、
+        これまでに追加されたすべての受信者アドレスを配列で返します。
+    </para>
+    <para>
+        セキュリティの観点から、<code>Zend_Mail</code>
+        はすべてのヘッダフィールドの改行文字 (<code>\n</code>) を取り除きます。
+        これにより、ヘッダインジェクションを防ぎます。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,40 @@
+<sect1 id="zend.feed.importing">
+    <title>Zend_Feed によるフィードの読み込み</title>
+    <para>
+        <code>Zend_Feed</code> を使用すると、フィードの取得が非常に簡単に行えます。
+        フィードの URI がわかれば、単に <code>Zend_Feed::import()</code>
+        メソッドを使用すればよいのです。
+    </para>
+    <programlisting role="php"><![CDATA[
+<?php
+
+$feed = Zend_Feed::import('http://feeds.example.com/feedName');
+
+?>]]></programlisting>
+    <para>
+        <code>Zend_Feed</code> を使用して、ファイルや PHP
+        文字列変数からフィードを読み込むこともできます。
+    </para>
+    <programlisting role="php"><![CDATA[
+<?php
+
+// テキストファイルからフィードを読み込みます
+$feedFromFile = Zend_Feed::importFile('feed.xml');
+
+// PHP の文字列変数からフィードを読み込みます
+$feedFromPHP = Zend_Feed::importString($feedString);
+
+?>]]></programlisting>
+    <para>
+        上のすべての例では、成功した場合に返されるのは
+        <code>Zend_Feed_Abstract</code> を実装したクラスのオブジェクトで、
+        フィードの形式によって異なります。もし上のメソッドで RSS フィードを取得したのなら、
+        返されるオブジェクトは <code>Zend_Feed_Rss</code> です。一方、Atom
+        フィードを読み込んだのなら <code>Zend_Feed_Atom</code>
+        オブジェクトが返されます。読み込みに失敗したりフィードの形式がおかしかったりした場合は
+        <code>Zend_Feed_Exception</code> がスローされます。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

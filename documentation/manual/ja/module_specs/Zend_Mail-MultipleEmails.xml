@@ -1,0 +1,29 @@
+<sect1 id="zend.mail.multiple-emails">
+    <title>SMTP 接続による複数のメールの送信</title>
+    <para>
+        デフォルトでは、メールを送信するたびに新しい SMTP 接続が確立されます。
+        ひとつの SMTP 接続で複数のメールを送信したい場合は、<code>connect()</code>
+        を自分自身で処理します。<code>send()</code> がコールされる前に接続が確立していた場合は、
+        その接続がそのまま用いられ、接続はオープンしたままになります。
+    </para>
+    <example>
+        <title>SMTP 雪像による複数のメールの送信</title>
+        <programlisting role="php"><![CDATA[
+<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+// メッセージを作成します...
+require_once 'Zend/Mail/Transport/Smtp.php';
+$tr = new Zend_Mail_Transport_Smtp('mail.example.com');
+Zend_Mail::setDefaultTransport($tr);
+$tr->connect();
+for ($i = 0; $i < 5; $i++) {    
+$mail->send();
+}
+$tr->disconnect();
+?>]]>   </programlisting>
+    </example>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

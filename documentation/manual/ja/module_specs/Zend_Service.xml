@@ -19,10 +19,6 @@
         将来はさらにいろいろ追加されるでしょう。
     </para>
 </sect1>
-&module_specs.Zend_Service_Rest;
-&module_specs.Zend_Service_Amazon;
-&module_specs.Zend_Service_Flickr;
-&module_specs.Zend_Service_Yahoo;
 <!--
 vim:se ts=4 sw=4 et:
 -->

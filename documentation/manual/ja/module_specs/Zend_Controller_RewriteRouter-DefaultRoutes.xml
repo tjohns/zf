@@ -1,0 +1,36 @@
+<sect1 id="zend.controller.rewriterouter.default-routes">
+    <title>デフォルトのルート</title>
+
+    <para>
+        Zend_Controller_RewriteRouter には、デフォルトのルートとして
+        二種類が事前に定義されています。ひとつめはルート URL を処理するもので、
+        これは IndexController の IndexAction に関連付けられます。
+        そのため、<xref linkend="zend.controller.getting-started" />
+        に書かれているようにこれらのコントローラとアクションを準備する必要があります
+        (<xref linkend="zend.controller.overview.indexcontroller" /> を参照ください)。
+        もうひとつのデフォルトルートは、
+        以前のバージョンのルータとの互換性を保つために提供されています。
+        これは <code>'controller/action'</code> 形式の URI にマッチします。
+    </para>
+
+    <para>
+        デフォルトのルールは、以下のように設定されています。
+    </para>
+
+    <programlisting role="php"><![CDATA[
+// ルート URL 用のデフォルトのルート
+$this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
+
+// 以前のルータとの互換性のためのルート
+$this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
+
+    <note>
+        Zend_Controller_RewriteRouter は過去との互換性を考慮して設定されていますが、
+        <code>controller/action</code> 形式の URI
+        に追加のパラメータが付いたものには現時点では対応できません。
+    </note>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
