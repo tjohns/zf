@@ -100,10 +100,15 @@ interface Zend_Controller_Dispatcher_Interface
 
     /**
      * Clear the controller parameter stack
+     *
+     * By default, clears all parameters. If a parameter name is given, clears 
+     * only that parameter; if an array of parameter names is provided, clears 
+     * each.
      * 
+     * @param null|string|array single key or array of keys for params to clear
      * @return self
      */
-    public function clearParams();
+    public function clearParams($name = null);
 
     /**
      * Set the response object to use, if any

@@ -119,12 +119,27 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 
     /**
      * Clear the controller parameter stack
+     *
+     * By default, clears all parameters. If a parameter name is given, clears 
+     * only that parameter; if an array of parameter names is provided, clears 
+     * each.
      * 
+     * @param null|string|array single key or array of keys for params to clear
      * @return self
      */
-    public function clearParams()
+    public function clearParams($name = null)
     {
-        $this->_invokeParams = array();
+        if (null === $name) {
+            $this->_invokeParams = array();
+        } elseif (is_string($name) && isset($this->_invokeParams[$name])) {
+            unset($this->_invokeParams[$name]);
+        } elseif (is_array($name)) {
+            foreach ($name as $key) {
+                if (is_string($key) && isset($this->_invokeParams[$key])) {
+                    unset($this->_invokeParams[$key]);
+                }
+            }
+        }
 
         return $this;
     }

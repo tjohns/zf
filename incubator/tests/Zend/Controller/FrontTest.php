@@ -88,8 +88,16 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->_controller->setParams(array('foo' => 'bar', 'baz' => 'bat'));
         $this->assertSame(array('foo' => 'bar', 'baz' => 'bat'), $this->_controller->getParams());
 
+        $this->_controller->clearParams('foo');
+        $this->assertSame(array('baz' => 'bat'), $this->_controller->getParams());
+
         $this->_controller->clearParams();
         $this->assertSame(array(), $this->_controller->getParams());
+
+        $this->_controller->setParams(array('foo' => 'bar', 'bar' => 'baz', 'baz' => 'bat'));
+        $this->assertSame(array('foo' => 'bar', 'bar' => 'baz', 'baz' => 'bat'), $this->_controller->getParams());
+        $this->_controller->clearParams(array('foo', 'baz'));
+        $this->assertSame(array('bar' => 'baz'), $this->_controller->getParams());
     }
 
     public function testSetGetDefaultController()
