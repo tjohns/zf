@@ -42,7 +42,7 @@ class Zend_Controller_Response_Cli extends Zend_Controller_Response_Abstract
     public function __toString()
     {
         if ($this->isException() && $this->renderExceptions()) {
-            return $this->getException()->getTraceAsString();
+            return $this->getException()->__toString();
         }
 
         return $this->_body;

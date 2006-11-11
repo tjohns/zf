@@ -209,7 +209,7 @@ abstract class Zend_Controller_Response_Abstract
         }
 
         if ($this->isException() && $this->renderExceptions()) {
-            return $this->getException()->getTraceAsString();
+            return $this->getException()->__toString();
         }
 
         return $this->_body;
