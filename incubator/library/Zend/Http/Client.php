@@ -79,12 +79,13 @@ class Zend_Http_Client
      * @var unknown_type
      */
     protected $config = array(
-        'maxredirects'       => 5,
-        'strictredirects'    => false,
-        'useragent'          => 'Zend_Http_Client',
-        'timeout'            => 10,
-        'adapter'            => 'Zend_Http_Client_Adapter_Socket',
-        'httpversion'        => self::HTTP_1 
+        'maxredirects'    => 5,
+        'strictredirects' => false,
+        'useragent'       => 'Zend_Http_Client',
+        'timeout'         => 10,
+        'adapter'         => 'Zend_Http_Client_Adapter_Socket',
+        'httpversion'     => self::HTTP_1,
+        'keepalive'       => false
     );
 
     /**
@@ -200,11 +201,10 @@ class Zend_Http_Client
         if ($uri !== null) $this->setUri($uri);
         if ($config !== null) $this->setConfig($config);
         
+        // Load adapter and pass configuration array
         Zend::loadClass($this->config['adapter']);
         $this->adapter = new $this->config['adapter'];
-        $this->adapter->setConfig(array(
-            'timeout'    => $this->config['timeout'],
-        ));
+        $this->adapter->setConfig($this->config);
     }
     
     /**
@@ -755,9 +755,8 @@ class Zend_Http_Client
         }
         
         // Set the connection header
-        // For now, only support closed connections
         if (! isset($this->headers['connection'])) {
-            $headers[] = "Connection: close";
+        	if (! $this->config['keepalive']) $headers[] = "Connection: close";
         }
         
         // Set the content-type header

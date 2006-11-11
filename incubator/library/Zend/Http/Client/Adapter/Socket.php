@@ -90,27 +90,30 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
      */
     public function connect($host, $port = 80, $secure = false)
     {
-        // If we're already connected, disconnect first
-        if ($this->socket) $this->close();
+//        // If we're already connected, disconnect first
+//        if ($this->socket) $this->close();
         
         // If the URI should be accessed via SSL, prepend the Hostname with ssl://
         $host = ($secure ? 'ssl://' . $host : $host);
         
-        // If we are connected to a different server or port, disconnect first
-        if ($this->socket && is_array($this->connected_to) && 
+        if (is_resource($this->socket)) {
+        	// If we are connected to a different server or port, disconnect first
+        	if (is_array($this->connected_to) && 
             ($this->connected_to[0] != $host || $this->connected_to[1] != $port))
                 $this->close();
         
-        // Do the actual connection
-        $this->socket = @fsockopen($host, $port, $errno, $errstr, (int) $this->config['timeout']);
-        if (! $this->socket) {
-            $this->close();
-            throw new Zend_Http_Client_Adapter_Exception('Unable to Connect to ' . 
-                $host . ':' . $port . '. Error #' . $errno . ': ' . $errstr);
+        } else {
+	        // Do the actual connection
+        	$this->socket = @fsockopen($host, $port, $errno, $errstr, (int) $this->config['timeout']);
+        	if (! $this->socket) {
+            	$this->close();
+            	throw new Zend_Http_Client_Adapter_Exception('Unable to Connect to ' . 
+                	$host . ':' . $port . '. Error #' . $errno . ': ' . $errstr);
+        	}
+        	
+        	// Update connected_to
+        	$this->connected_to = array($host, $port);
         }
-        
-        // Update connected_to
-        $this->connected_to = array($host, $port);
     }
     
     /**
@@ -154,11 +157,73 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
      */
     public function read()
     {
-        $response = '';
-        while ($buff = fread($this->socket, 8192)) {
-            $response .= $buff;
-        }
-        
+    	// First, read headers only
+    	$response = '';
+		while ($line = fgets($this->socket)) {
+			$response .= $line;
+			if (! chop($line)) break;
+		}
+
+		// Check headers to see what kind of connection / transfer encoding we have
+		$headers = Zend_Http_Response::extractHeaders($response);
+		
+		// if the connection is set to close, just read until socket closes
+		if (isset($headers['connection']) && $headers['connection'] == 'close') {
+			while ($buff = fread($this->socket, 8192)) {
+				$response .= $buff;
+			}
+			
+			$this->close();
+			
+		// Else, if we got a transfer-encoding header (chunked body)
+		} elseif (isset($headers['transfer-encoding'])) {
+			if ($headers['transfer-encoding'] == 'chunked') {
+				do {
+					$chunk = '';
+					$line = fgets($this->socket);
+					$chunk .= $line;
+
+					$hexchunksize = chop($line);
+					$chunksize = hexdec(chop($line));
+					if (dechex($chunksize) != $hexchunksize) {			
+						fclose($this->socket);
+						throw new Zend_Http_Client_Adapter_Exception('Invalid chunk size "' . 
+							$hexchunksize . '" unable to read chunked body');
+					}
+		
+					$left_to_read = $chunksize;
+					while ($left_to_read > 0) {
+						$chunk .= fread($this->socket, $left_to_read);
+						$left_to_read = $chunksize - strlen($chunk);
+					}
+
+					$chunk .= fgets($this->socket);
+					$response .= $chunk;
+				} while ($chunksize > 0);
+			} else {
+				throw new Zend_Http_Client_Adapter_Exception("Can't handle '" .
+					$headers['transfer-encoding'] . "' transfer encoding");
+			}
+			
+		// Else, if we got the content-length header, read this number of bytes
+		} elseif (isset($headers['content-length'])) {
+			$left_to_read = $headers['content-length'];
+			$chunk = '';
+			while ($left_to_read > 0) {
+				$chunk .= fread($this->socket, $left_to_read);
+				$left_to_read = $headers['content-length'] - strlen($chunk);
+				$response .= $chunk;
+			}
+			
+		// Fallback: just read the response (should not happen)
+		} else {
+			while ($buff = fread($this->socket, 8192)) {
+				$response .= $buff;
+			}
+			
+			$this->close();
+		}
+ 		
         return $response;
     }
     

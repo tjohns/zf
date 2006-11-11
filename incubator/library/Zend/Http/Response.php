@@ -476,7 +476,7 @@ class Zend_Http_Response
 
             if (preg_match("|^([\w-]+):\s+(.+)|", $line, $m)) {
                 unset($last_header);
-                $h_name = $m[1];
+                $h_name = strtolower($m[1]);
                 $h_value = $m[2];
 
                 if (isset($headers[$h_name])) {
