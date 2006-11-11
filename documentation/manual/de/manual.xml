@@ -32,7 +32,14 @@
     <!-- &ref.conf;    -->
     <chapter id="zend">
         <title>Zend</title>
-        &module_specs.Zend;
+        &module_specs.Zend-Introduction;
+        &module_specs.Zend-LoadFile;
+        &module_specs.Zend-LoadClass;
+        &module_specs.Zend-LoadInterface;
+        &module_specs.Zend-IsReadable;
+        &module_specs.Zend-Dump;
+        &module_specs.Zend-Register;
+        &module_specs.Zend-Registry;
     </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
@@ -166,6 +173,8 @@
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
         &module_specs.Zend_XmlRpc;
+        &module_specs.Zend_XmlRpc_Client;
+        <!--&module_specs.Zend_XmlRpc_Server;-->
     </chapter>
     <!-- &ref.faq; -->
     &ref.coding_standard;

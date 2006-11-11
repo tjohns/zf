@@ -1,0 +1,36 @@
+<sect1 id="zend.register">
+    <title>Zend::register()</title>
+
+    <para>
+    Registriert ein Objekt im Objektspeicher.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::register($name, $object)
+
+?>]]></programlisting>
+
+    <para>
+    Der Objektspeicher ist ein Mechanismus, um einmalige Instanzen von Objekten im 
+    Applikationsspeicher zu erstellen (Singleton). Es wird immer die gleiche Instanz zurückgegeben, 
+    sowohl beim einmaligen Ablegen des Objektes im Objektspeicher, als auch beim Zurückholen des 
+    Objektes aus dem Objektspeicher, wann immer es erforderlich ist. 
+    </para>
+
+    <para>
+    Der <code>$name</code> ist eine beliebige Zeichenkette, um das Objekt im Objektspeicher zu 
+    bezeichnen. Dieser Name wird beim Aufruf von <code>Zend::registry()</code> erneut verwendet, um 
+    das Objekt zurückzuholen.
+    </para>
+
+    <para>
+    Das <code>$name</code> Argument muss eine Zeichenkette sein, nur Objekte können im 
+    Objektspeicher abgelegt werden, ein Objekt kann niemals aus dem Objektspeicher entfernt werden 
+    und eine Instanz kann immer nur einmal im Objektspeicher abgelegt werden. Beim Missachten 
+    dieser Regeln wird eine <code>Zend_Exception</code> ausgeworfen.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

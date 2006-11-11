@@ -1,0 +1,33 @@
+<sect1 id="zend.registry">
+    <title>Zend::registry()</title>
+
+    <para>
+    Holt ein Objekt aus dem Objektspeicher zurück oder listet alle Objekte des Objektspeichers auf.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::registry($name=null)
+
+?>]]></programlisting>
+
+    <para>
+    Wenn das <code>$name</code> Argument gleich <code>NULL</code> ist, wird ein Array 
+    zurückgegeben, bei dem die Schlüssel den Namen des Objektes und die Werte den Klassennamen 
+    wiedergeben. 
+    </para>
+
+    <para>
+    Wenn <code>$name</code> eine Zeichenkette ist, wird das mit dem Namen verknüpfte Objekt-Handle 
+    zurückgegeben. Wenn das Objekt nicht mit dem Namen <code>$name</code> im Objektspeicher 
+    existiert, wird eine <code>Zend_Exception</code> ausgeworfen.
+    </para>
+
+    <para>
+    Um schnell zu prüfen, ob ein Objekt im Objektspeicher vorhanden ist, verwende 
+    Zend::isRegistered().
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

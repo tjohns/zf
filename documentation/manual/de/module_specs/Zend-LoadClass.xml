@@ -1,0 +1,32 @@
+<sect1 id="zend.loadclass">
+    <title>Zend::loadClass()</title>
+    <para>
+    <code>Zend::loadClass()</code> lädt eine PHP Datei, dessen Dateiname wie 
+    "<code>$className.php</code>" formatiert ist, und prüft, ob die Klasse 
+    <code>$className</code> existiert.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::loadClass($class, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+    Wenn die Datei nicht gefunden wird oder die Klasse nach dem Laden nicht existiert, wird eine 
+    <code>Zend_Exception</code> geworfen. <code>Zend::loadFile()</code> wird für das Laden 
+    verwendet und das <code>$dirs</code> Argument wird direkt übergeben.
+    </para>
+
+    <para>
+    Soll eine Klasse geladen werden, die Unterstriche im Namen enthält, und ist <code>$dirs</code> 
+    gleich null (die Voreinstellung), wird <code>Zend::loadClass()</code> die Verzeichnisangaben 
+    <code>$dirs</code> automatisch anhand des Klassennamens erkennen, indem die Unterstriche in 
+    Verzeichnistrenner konvertiert werden. Wird als <code>$class</code> z.B. 
+    <code>Zend_Example_Class</code> übergeben, wird dies auf den Pfad 
+    <code>Zend/Example/Class.php</code> abgebildet.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
