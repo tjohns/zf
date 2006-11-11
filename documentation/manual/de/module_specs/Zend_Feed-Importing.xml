@@ -1,0 +1,39 @@
+<sect1 id="zend.feed.importing">
+    <title>Feeds mit Zend_Feed importieren</title>
+    <para>
+        <code>Zend_Feed</code> ermöglicht es Entwicklern, Feeds sehr einfach abzurufen. Wenn Du die
+        URI eines Feeds kennst, verwende einfach die <code>Zend_Feed::import()</code> Methode:
+    </para>
+        <programlisting role="php"><![CDATA[
+<?php
+
+$feed = Zend_Feed::import('http://feeds.example.com/feedName');
+
+?>]]>   </programlisting>
+    <para>
+        Du kannst <code>Zend_Feed</code> außerdem verwenden, um Inhalte eines Feeds aus einer Datei
+        oder die Inhalte aus einem PHP String Variable zu abzurufen.
+    </para>
+        <programlisting role="php"><![CDATA[
+<?php
+
+// Importiere einen Feed aus einer Textdatei
+$feedFromFile = Zend_Feed::importFile('feed.xml');
+
+// Importiere einen Feed aus einer PHP String Variable
+$feedFromPHP = Zend_Feed::importString($feedString);
+
+?>]]></programlisting>
+    <para>
+        In jedem der obigen Beispiele wird bei Erfolg abhängig vom Typ des Feeds ein Objekt einer 
+        Klasse zurück gegeben, welche <code>Zend_Feed_Abstract</code> erweitert. Wird ein RSS Feed
+        durch eine der obigen Importiermethoden abgerufen, wird eine <code>Zend_Feed_Rss</code>
+        Objekt zurückgegeben. Auf der anderen Seite wird beim Importieren eines Atom Feeds ein 
+        <code>Zend_Feed_Atom</code> Objekt zurückgegeben. Bei Fehlern, wie z.B. ein unlesbarer oder
+        nicht wohlgeformter Feed, werfen die Importiermethoden auch ein 
+        <code>Zend_Feed_Exception</code> Objekt. 
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
