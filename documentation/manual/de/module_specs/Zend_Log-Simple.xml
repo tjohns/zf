@@ -1,0 +1,35 @@
+<sect1 id="zend.log.simple-logging">
+    <title>Protokollieren in einem einzigen Log</title>
+    <para>
+        Ein Protokoll wird durch den Aufruf der <code>Zend_Log::registerLogger()</code> Methode mit
+        einer <code>Zend_Log_Adapter_Interface</code> Instanz als Argument erstellt.
+    </para>
+
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                // Zend_Log Basisklasse
+require_once 'Zend/Log/Adapter/File.php';   // Protokolladapter für Dateien
+
+// Dateiprotokoll registrieren
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
+]]></programlisting>
+
+    <para>
+        Nachrichten werden an das Protokoll dann mit <code>Zend_Log::log()</code> gesendet. 
+    </para>
+
+        <programlisting role="php"><![CDATA[
+/**
+ * Sende eine Nachricht an das Protokoll. Ein optionales zweites Argument gibt die Protokollstufe
+ * an. Wenn keine Protokollstufe angegeben wird, wird LEVEL_DEBUG angenommen.
+ */
+Zend_Log::log('Erste Protokollnachricht.');
+
+/**
+ * Protokolliere eine schwerwiegende Nachricht.
+ */
+Zend_Log::log('Ein schwerer Fehler ist aufgetreten.', Zend_Log::LEVEL_SEVERE);
+]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

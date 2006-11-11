@@ -1,0 +1,43 @@
+<sect1 id="zend.mail.attachments">
+    <title>Anhänge</title>
+    <para>
+        Dateien können durch die <code>addAttachment()</code> Methode an eine E-Mail angehängt 
+        werden. Standardmäßig nimmt <code>Zend_Mail</code> an, dass der Anhang ein binärisches 
+        Objekt (application/octet-stream) ist, über eine bas64 Kodierung übertragen werden soll und 
+        als Anhang verarbeitet wird. Diese Annahmen können durch die Übergabe von weiteren  
+        Parametern an <code>addAttachment()</code> überschrieben werden:
+    </para>
+    <example>
+        <title>E-Mail Nachrichten mit Anhängen</title>
+        <programlisting role="php"><![CDATA[
+<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+// erstelle Nachricht...
+$mail->addAttachment($someBinaryString);
+$mail->addAttachment($myImage, 'image/gif', Zend_Mime::DISPOSITION_INLINE, Zend_Mime::ENCODING_8BIT);
+?>]]>   </programlisting>
+    </example>
+    <para>
+        Wenn du weitere Kontrolle über den für diesen Anhang generierten MIME Teil benötigst, kannst
+        du zurückgegebenen Wert von <code>addAttachment()</code> verwenden, um die Attributes zu
+        verändern. Die <code>addAttachment()</code> Methode gibt ein <code>Zend_Mime_Part</code>
+        Objekt zurück:
+    </para>
+        <programlisting role="php"><![CDATA[
+<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+
+$at = $mail->addAttachment($myImage);
+$at->type        = 'image/gif';
+$at->disposition = Zend_Mime::DISPOSITION_INLINE;
+$at->encoding    = Zend_Mime::ENCODING_8BIT;
+$at->filename    = 'test.gif';
+
+$mail->send();
+?>]]>   </programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,30 @@
+<sect1 id="zend.mail.multiple-emails">
+    <title>Versand von mehrteiligen E-Mails über eine SMTP Verbindung</title>
+    <para>
+        Standardmäßig wird eine SMTP Verbindung für jede Mail eingerichtet, die versandt werden 
+        soll. Wenn du mehrteilige Mails über eine SMTP Verbindung versenden möchtest, kannst Du die 
+        Aufrufe von <code>connect()</code> selber erledigen. Wenn der Versand bereits eine 
+        Verbindung vor dem Aufruf von <code>send()</code> eingerichtet hat, wird diese verwendet und
+        nicht geschlossen. 
+    </para>
+    <example>
+        <title>Versand von mehrteiligen E-Mails über eine SMTP Verbindung</title>
+        <programlisting role="php"><![CDATA[
+<?php
+require_once 'Zend/Mail.php';
+$mail = new Zend_Mail();
+// erstelle Nachricht...
+require_once 'Zend/Mail/Transport/Smtp.php';
+$tr = new Zend_Mail_Transport_Smtp('mail.example.com');
+Zend_Mail::setDefaultTransport($tr);
+$tr->connect();
+for ($i = 0; $i < 5; $i++) {
+    $mail->send();
+}
+$tr->disconnect();
+?>]]>   </programlisting>
+    </example>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
