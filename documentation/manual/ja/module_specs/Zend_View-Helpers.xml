@@ -1,0 +1,279 @@
+<sect1 id="zend.view.helpers">
+    
+    <title>ビューヘルパー</title>
+    
+    <para>
+        ビュースクリプトの中で、複雑な関数を繰り返し実行しなければならないこともあるでしょう
+        (例えば日付のフォーマット、フォーム要素の作成、リンクの作成など)。
+        このような作業を行うために、ヘルパークラスを使用することができます。
+    </para>
+    
+    <para>
+        ビュースクリプト内でヘルパーを使用するには、
+        $this->helperName() をコールします。これをコールすると、裏側では
+        Zend_View が Zend_View_Helper_HelperName クラスを読み込み、
+        そのクラスのインスタンスを作成して helperName() メソッドをコールします。
+        オブジェクトのインスタンスは Zend_View インスタンスの中に残り続け、
+        後で $this->helperName() がコールされたときには再利用されます。
+    </para>
+    
+    <sect2 id="zend.view.helpers.initial">
+    
+        <title>付属のヘルパー</title>
+        
+        <para>
+            Zend_View には、はじめからいくつかのヘルパークラスが付属しています。
+            これらはすべて、フォーム要素の生成に関するものです。
+            それぞれのヘルパーは、適切なエスケープ処理を自動的に行います。
+            以下に一覧を示します。
+        </para>
+        
+        <itemizedlist>
+            
+            <listitem><para>
+                formButton($name, $value, $attribs): &lt;input
+                type="button" /&gt; 要素を作成します。
+            </para></listitem>
+            
+            <listitem><para>
+                formCheckbox($name, $value, $attribs, $options):
+                &lt;input type="checkbox" /&gt; 要素を作成します。
+                $options パラメータは配列で、最初の値が
+                "checked" に対応する値、2 番目が "unchecked" に対応する値となります
+                (デフォルトは '1' および '0' です)。$value が
+                "checked" の値に一致すると、チェックボックスがチェックされた状態になります。
+            </para></listitem>
+            
+            <listitem><para>
+                formFile($name, $value, $attribs): &lt;input
+                type="file" /&gt; 要素を作成します。
+            </para></listitem>
+            
+            <listitem><para>
+                formHidden($name, $value, $attribs): &lt;input
+                type="hidden" /&gt; 要素を作成します。
+            </para></listitem>
+            
+            <listitem><para>
+                formPassword($name, $value, $attribs): &lt;input
+                type="password" /&gt; 要素を作成します。
+            </para></listitem>
+            
+            <listitem><para>
+                formRadio($name, $value, $attribs, $options):
+                一連の &lt;input type="radio" /&gt; 要素を、
+                $options の要素ごとに作成します。$options は、
+                ラジオボタンの値をキー、ラベルを値とする配列となります。
+                $value はラジオボタンの初期選択状態を設定します。
+            </para></listitem>
+            
+            <listitem><para>
+                formReset($name, $value, $attribs): &lt;input
+                type="reset" /&gt; 要素を作成します。
+            </para></listitem>
+            
+            <listitem><para>
+                formSelect($name, $value, $attribs, $options):
+                &lt;select&gt;...&lt;/select&gt; ブロックを作成します。
+                $options の要素ごとに &lt;option&gt; を作成します。
+                $options は、選択肢の値をキー、
+                ラベルを値とする配列となります。$value
+                は初期選択状態を設定します。
+            </para></listitem>
+            
+            <listitem><para>
+                formSubmit($name, $value, $attribs): &lt;input
+                type="submit" /&gt; 要素を作成します。
+            </para></listitem>
+            
+            <listitem><para>
+                formText($name, $value, $attribs): &lt;input
+                type="text" /&gt; 要素を作成します。
+            </para></listitem>
+            
+            <listitem><para>
+                formTextarea($name, $value, $attribs): 
+                &lt;textarea&gt;...&lt;/textarea&gt; ブロックを作成します。
+            </para></listitem>
+            
+        </itemizedlist>
+        
+        <para>
+            これらをビュースクリプト内で使用するのはとても簡単です。
+            以下に例を示します。ただ単に、ヘルパーをコールするだけでよいことに注意しましょう。
+            読み込みやインスタンス作成は、必要に応じて自動的に行われます。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+// ビュースクリプト内では、$this は Zend_View のインスタンスを指します。
+// 
+// select の選択肢を、変数 $countries に
+// array('us' => 'United States', 'il' => 'Israel', 'de' => 'Germany')
+// として設定済みであることにします。
+?>
+<form action="action.php" method="post">
+    <p><label>メールアドレス:
+        <?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
+    </label></p>
+    <p><label>国:
+        <?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
+    </label></p>
+    <p><label>メールを受け取りますか?
+        <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
+    </label></p>
+</form>]]>
+        </programlisting>
+        
+        <para>
+            ビュースクリプトの出力結果は、次のようになります。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<form action="action.php" method="post">
+    <p><label>メールアドレス:
+        <input type="text" name="email" value="you@example.com" size="32" />
+    </label></p>
+    <p><label>国:
+        <select name="country">
+            <option value="us" selected="selected">United States</option>
+            <option value="il">Israel</option>
+            <option value="de">Germany</option>
+        </select>
+    </label></p>
+    <p><label>メールを受け取りますか?
+        <input type="hidden" name="opt_in" value="no" />
+        <input type="checkbox" name="opt_in" value="yes" checked="checked" />
+    </label></p>
+</form>]]>
+        </programlisting>
+        
+    </sect2>
+    
+    <sect2 id="zend.view.helpers.paths">
+        
+        <title>ヘルパーのパス</title>
+        
+        <para>
+            ビュースクリプトと同様、
+            Zend_View がヘルパークラスを探すパスをコントローラから積み重ねて指定することができます。
+            デフォルトでは、Zend_View は "Zend/View/Helper/*" からヘルパークラスを探します。
+            Zend_View に別の場所を探すように指定するには
+            setHelperPath() および addHelperPath() メソッドを使用します。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$view = new Zend_View();
+$view->setHelperPath('/path/to/more/helpers');
+?>]]>
+        </programlisting>
+        
+        <para>
+            addHelperPath() メソッドを使用すると、検索パスを「積み重ねる」
+            ことができます。これを使用すると、Zend_View
+            は一番最後に追加されたパスからヘルパークラスを探し始めます。
+            これにより、付属しているヘルパーの内容を上書きしたり、
+            新しいヘルパーを追加したりすることができるようになります。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$view = new Zend_View();
+$view->addHelperPath('/path/to/some/helpers');
+$view->addHelperPath('/other/path/to/helpers');
+
+// $this->helperName() をコールすると、Zend_View は
+// まず最初に "/other/path/to/helpers/HelperName.php" を探し、
+// 次に "/path/to/some/helpers/HelperName"、そして最後に
+// "Zend/View/Helpers/HelperName.php" を探します。
+?>]]>
+        </programlisting>
+        
+    </sect2>
+    
+    <sect2 id="zend.view.helpers.custom">
+        
+        <title>独自のヘルパーを書く</title>
+        
+        <para>
+            独自のヘルパーを書くのは簡単です。以下の規則に従ってください。
+        </para>
+        
+        <itemizedlist>
+            
+            <listitem><para>
+                クラス名は Zend_View_Helper_* でなければなりません。*
+                の部分はヘルパーの名前になります。例えば、"specialPurpose"
+                という名前のヘルパーを作成した場合は、そのクラス名は
+                "Zend_View_Helper_SpecialPurpose" となります
+                (大文字の使用法に注意してください)。
+            </para></listitem>
+            
+            <listitem><para>
+                クラスは、ヘルパーと同じ名前の public メソッドを持っている必要があります。
+                テンプレートが "$this->specialPurpose()" をコールした際に、
+                このメソッドがコールされます。"specialPurpose" ヘルパーの例では、
+                "public function specialPurpose()" というメソッドが必要です。
+            </para></listitem>
+            
+            <listitem><para>
+                一般に、クラスでは echo や print その他の出力を行ってはいけません。
+                その代わりに、print あるいは echo される内容を返します。
+                返り値は、適切にエスケープしなければなりません。
+            </para></listitem>
+            
+            <listitem><para>
+                クラスは、ヘルパーメソッドと同じ名前のファイルに作成しなければなりません。
+                再び "specialPurpose" ヘルパーを例にとると、ファイル名は
+                "SpecialPurpose.php" でなければなりません。
+            </para></listitem>
+        </itemizedlist>
+        
+        <para>
+            指定したヘルパーパスのどこかにヘルパークラスのファイルを配置すると、
+            Zend_View は自動的にそれを読み込んでインスタンスを作成し、
+            必要に応じて実行します。
+        </para>
+        
+        <para>
+            SpecialPurpose ヘルパーのコードの例を示します。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+class Zend_View_Helper_SpecialPurpose {
+    protected $_count = 0;
+    public function specialPurpose()
+    {
+        $this->_count++;
+        $output = "'The Jerk' を {$this->_count} 回見ました。";
+        return htmlspecialchars($output);
+    }
+}
+?>]]>
+        </programlisting>
+        
+        <para>
+            そして、ビュースクリプト内で SpecialPurpose
+            ヘルパーを必要なだけコールします。いちどインスタンスが作成された後は、
+            Zend_View インスタンスの中でそれが持続します。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+// ビュースクリプト内では、$this は Zend_View インスタンスを指すことを覚えておきましょう。
+echo $this->specialPurpose();
+echo $this->specialPurpose();
+echo $this->specialPurpose();
+?>]]>
+        </programlisting>
+        
+        <para>
+            出力結果は、次のようになります。
+        </para>
+        <programlisting role="php"><![CDATA['The Jerk' を 1 回見ました。
+'The Jerk' を 2 回見ました。
+'The Jerk' を 3 回見ました。]]>
+        </programlisting>
+        
+    </sect2>
+    
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

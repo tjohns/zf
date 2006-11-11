@@ -1,0 +1,179 @@
+<sect1 id="zend.view.scripts">
+    
+    <title>ビュースクリプト</title>
+        
+    <para>
+        コントローラが変数を代入して render() をコールすると、
+        指定されたビュースクリプトを Zend_View が読み込み、Zend_View
+        インスタンスのスコープでそれを実行します。したがって、
+        ビュースクリプトの中で $this を参照すると、
+        実際には Zend_View のインスタンスを指すことになります。
+    </para>
+    
+    <para>
+        コントローラからビューに代入された変数は、
+        ビューインスタンスのプロパティとして参照できます。例えば、
+        コントローラで変数 'something' を代入したとすると、
+        ビュースクリプト内ではそれを $this->something で取得できます
+        (これにより、どの値がコントローラから代入されたもので、
+        どの値がスクリプト内部で作成されたものなのかを追いかけられるようになります)。
+    </para>
+    
+    <para>
+        Zend_View の導入の部分で示したビュースクリプトの例を思い出してみましょう。
+    </para>
+    
+    <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+    
+    <!-- 本の一覧 -->
+    <table>
+        <tr>
+            <th>著者</th>
+            <th>タイトル</th>
+        </tr>
+        
+        <?php foreach ($this->books as $key => $val): ?>
+        <tr>
+            <td><?php echo $this->escape($val['author']) ?></td>
+            <td><?php echo $this->escape($val['title']) ?></td>
+        </tr>
+        <?php endforeach; ?>
+        
+    </table>
+    
+<?php else: ?>
+    
+    <p>表示する本がありません。</p>
+    
+<?php endif; ?>]]>
+    </programlisting>
+        
+    <sect2 id="zend.view.scripts.escaping">
+        
+        <title>出力のエスケープ</title>
+        
+        <para>
+            ビュースクリプトで行うべき仕事のうち最も重要なもののひとつは、
+            出力を適切にエスケープすることです。これは、
+            クロスサイトスクリプティング攻撃を防ぐのを助けます。
+            それ自身がエスケープを行ってくれるような関数、メソッド、
+            あるいはヘルパーを使用しているのでない限り、
+            変数を出力する際には常にそれをエスケープしなければなりません。
+        </para>
+        
+        <para>
+            Zend_View の escape() というメソッドが、このエスケープを行います。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+// ビュースクリプトの悪い例
+echo $this->variable;
+
+// ビュースクリプトのよい例
+echo $this->escape($this->variable);
+?>]]>
+        </programlisting>
+        
+        <para>
+            デフォルトでは、escape() メソッドは PHP の htmlspecialchars()
+            関数でエスケープを行います。しかし環境によっては、
+            別の方法でエスケープしたくなることもあるでしょう。
+            コントローラから setEscape() メソッドを実行することで、
+            エスケープに使用するコールバックを Zend_View に通知することができます。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+// Zend_View のインスタンスを作成します
+$view = new Zend_View();
+
+// エスケープに htmlentities を使用するように通知します
+$view->setEscape('htmlentities');
+
+// あるいは、クラスの静的メソッドを使用するように通知します
+$view->setEscape(array('SomeClass', 'methodName'));
+
+// あるいは、インスタンスメソッドを指定することもできます
+$obj = new SomeClass();
+$view->setEscape(array($obj, 'methodName'));
+
+// そして、ビューをレンダリングします
+echo $view->render(...);
+?>]]>
+        </programlisting>
+        
+        <para>
+            コールバック関数あるいはメソッドは、
+            エスケープする値を最初のパラメータとして受け取ります。
+            それ以外のパラメータはオプションとなります。
+        </para>
+        
+    </sect2>
+
+    <sect2 id="zend.view.scripts.templates">
+    
+        <title>テンプレートシステム</title>
+        
+        <para>
+            PHP 自身も強力なテンプレートシステムではありますが、
+            開発者の多くは、テンプレートを設計するには高機能すぎる/複雑すぎる
+            と感じているようです。
+            そこでビュースクリプトでは、PHPLIB 形式のテンプレートのような
+            独立したテンプレートオブジェクトを使用できるようになっています。
+            この場合のビュースクリプトは、次のようなものになるでしょう。
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+include_once 'template.inc';
+$tpl = new Template();
+
+if ($this->books) {
+    $tpl->setFile(array(
+        "booklist" => "booklist.tpl",
+        "eachbook" => "eachbook.tpl",
+    ));
+    
+    foreach ($this->books as $key => $val) {
+        $tpl->set_var('author', $this->escape($val['author']);
+        $tpl->set_var('title', $this->escape($val['title']);
+        $tpl->parse("books", "eachbook", true);
+    }
+    
+    $tpl->pparse("output", "booklist");
+} else {
+    $tpl->setFile("nobooks", "nobooks.tpl")
+    $tpl->pparse("output", "nobooks");
+}
+?>]]>
+        </programlisting>
+        
+        <para>
+            関連するテンプレートファイルは、このようになります。
+        </para>
+        
+        <programlisting role="html"><![CDATA[
+<!-- booklist.tpl -->
+<table>
+    <tr>
+        <th>著者</th>
+        <th>タイトル</th>
+    </tr>
+    {books}
+</table>
+
+<!-- eachbook.tpl -->
+    <tr>
+        <td>{author}</td>
+        <td>{title}</td>
+    </tr>
+
+<!-- nobooks.tpl -->
+<p>表示する本がありません。</p>
+]]>
+        </programlisting>
+        
+    </sect2>
+    
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

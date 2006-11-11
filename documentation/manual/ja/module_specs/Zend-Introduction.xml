@@ -1,0 +1,13 @@
+<sect1 id="zend.introduction">
+    <title>導入</title>
+    <para>
+    Zend クラスは、Zend Framework の基礎となるクラスです。
+    このフレームワークの原則である DRY (Don't Repeat Yourself : 同じことを繰り返すな)
+    に従うために作成されました。
+    このクラスに含まれているのは静的なメソッドのみで、
+    Zend Framework の多くのコンポーネントが必要とする機能を含んでいます。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

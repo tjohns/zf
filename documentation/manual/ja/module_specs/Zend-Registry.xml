@@ -1,0 +1,34 @@
+<sect1 id="zend.registry">
+    <title>Zend::registry()</title>
+
+    <para>
+    レジストリ内のオブジェクトを返すか、レジストリ内のオブジェクトの一覧を返します。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::registry($name=null)
+
+?>]]></programlisting>
+
+    <para>
+    引数 <code>$name</code> が <code>NULL</code> の場合は配列が返されます。
+    レジストリ内のオブジェクトの名前が配列のキー、
+    対応するオブジェクトのクラス名が配列の値となります。
+    </para>
+
+    <para>
+    <code>$name</code> が文字列の場合は、
+    その名前に関連付けられたオブジェクトハンドルが返されます。
+    <code>$name</code> という名前に対応するオブジェクトがレジストリに存在しない場合は
+    <code>Zend_Exception</code> がスローされます。
+    </para>
+
+    <para>
+    オブジェクトがレジストリに登録されているかどうかを手っ取り早く調べるには、
+    Zend::isRegistered() を使用します。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

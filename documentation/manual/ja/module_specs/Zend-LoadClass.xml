@@ -1,0 +1,33 @@
+<sect1 id="zend.loadclass">
+    <title>Zend::loadClass()</title>
+    <para>
+    <code>Zend::loadClass()</code> は、"<code>$className.php</code>"
+    のようなファイル名の PHP ファイルを読み込み、クラス
+    <code>$className</code> が存在するかを確かめます。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::loadClass($class, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+    ファイルが見つからなかったり、読み込んだファイルにクラスが存在しなかった場合は
+    <code>Zend_Exception</code> がスローされます。ファイルの読み込みには
+    <code>Zend::loadFile()</code> が使用されます。その際に引数 <code>$dirs</code>
+    の内容が渡されます。
+    </para>
+
+    <para>
+    アンダースコアを含めたクラス名を指定して <code>$dirs</code>
+    を null (デフォルト) にすると、<code>Zend::loadClass()</code>
+    はクラス名のアンダースコアをディレクトリ区切り文字に変換して
+    <code>$dirs</code> を自動的に設定します。例えば、
+    <code>$class</code> が <code>Zend_Example_Class</code>
+    の場合は <code>Zend/Example/Class.php</code> と読みかえられます。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

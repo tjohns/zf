@@ -1,0 +1,22 @@
+<sect1 id="zend.isreadable">
+    <title>Zend::isReadable()</title>
+
+    <para>ファイルが読み込み可能な場合に <code>TRUE</code>、それ以外の場合に FALSE を返します。</para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::isReadable($filename)
+
+?>]]></programlisting>
+
+    <para>
+    引数 <code>$filename</code> には調べたいファイル名を指定します。
+    ここにはパス情報を含めることができます。このメソッドは、PHP の関数
+    <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>
+    のラッパーです。PHP の関数では <code>include_path</code> は検索しませんが、
+    <code>Zend::isReadable()</code> は <code>include_path</code> も対象とします。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
