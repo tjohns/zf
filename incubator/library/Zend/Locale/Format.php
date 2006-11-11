@@ -19,6 +19,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once 'Zend/Locale/Data.php';
 
 /**
  * @category   Zend
@@ -318,130 +319,135 @@ class Zend_Locale_Format
 
 
     /**
-     * Parse a date with a defined format
-     * 
-     * @param string $date - date string
-     * @param string $type - date type CLDR format !!
-     * @param locale $locale
-     * @return mixed
+     * Split numbers in proper array fields
+     * @param string  $number   Number to parse
+     * @param string  $format   Format to parse
      */
-    private static function _parseDate($date, $format, $locale)
+    private static function _parseDate($number, $format, $locale)
     {
-        $found = array();
-
-        // get position
-        $day       = iconv_strpos($format, 'd');
-        $month     = iconv_strpos($format, 'M');
-        $year      = iconv_strpos($format, 'y');
-        if (($day < $month) && ($day < $year)) {
-            $one = $day;
-        } else if (($month < $day) && ($month < $year)) {
-            $one = $month;
-        } else {
-            $one = $year;
-        }
-
-        if (($day > $month) && ($day > $year)) {
-            $three = $day;
-        } else if (($month > $day) && ($month > $year)) {
-            $three = $month;
-        } else {
-            $three = $year;
-        }
+        $day   = iconv_strpos($format, 'd');
+        $month = iconv_strpos($format, 'M');
+        $year  = iconv_strpos($format, 'y');
+        $hour  = iconv_strpos($format, 'H');
+        $min   = iconv_strpos($format, 'm');
+        $sec   = iconv_strpos($format, 's');
         
-        if ((($day > $month) && ($day < $year)) ||
-            (($day < $month) && ($day > $year))) {
-            $two = $day;
-        } else if ((($month > $day) && ($month < $year)) ||
-                   (($month < $day) && ($month > $year))) {
-            $two = $month;
-        } else {
-            $two = $year;
+        if ($day !== false) {
+            $parse[$day]   = 'd';
+            $parse[$month] = 'M';
+            $parse[$year]  = 'y';
         }
+        if ($hour !== false) {
+            $parse[$hour] = 'H';
+            $parse[$min]  = 'm';
+            $parse[$sec]  = 's';
+        }
+        ksort($parse);
 
-        // search month strings
-        if (substr($format, $month, 3) == 'MMM') {
-            if (substr($format, $month, 4) == 'MMMM') {
-                // search full month name
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'full'));
-            } else {
-                // search abbreviated month name
-                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
-            }
-            foreach ($monthlist as $monthnr => $month) {
-                if (iconv_strpos($date, $month) !== false) {
-                    $found['month'] = $monthnr;
-                }
+        // convert month string to number
+        $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+        foreach($monthlist as $key => $name) {
+            if (iconv_strpos($number, $name)) {
+                $number = str_replace($name, $key, $number);
+                break;
             }
         }
-        
-        // search first number part
-        $first = self::getInteger($date, 0, $locale);
 
-        if ($one == $day) {
-            // dd MM yy , dd yy MM
-            $found['day'] = iconv_substr($first, 0, 2);
-        } else if ($one == $year) {
-            // yy dd MM , yy MM dd
-            if (substr($format, $year, 4) === 'yyyy') {
-                // yyyy - 4 digits needed
-                $found['year'] = iconv_substr($first, 0, 4);
-            } else {
-                // yy - only 2 digits needed
-                $found['year'] = iconv_substr($first, 0, 2);
-                $next = $year + 2;
+        // split number parts 
+        preg_match_all('/\d+/', $number, $splitted);
+        if (count($splitted[0]) == 1) {
+            $split = true;
+            $splitted[0][1] = $splitted[0][0];
+            $splitted[0][2] = $splitted[0][0];
+
+            // full date one string
+            if (($day !== false) && ($hour !== false)) {
+                $splitted[0][3] = $splitted[0][0];
+                $splitted[0][4] = $splitted[0][0];
+                $splitted[0][5] = $splitted[0][0];
             }
-        } else {
-            // MM dd yy , MM yy dd , month as number
-            $found['month'] = iconv_substr($first, 0, 2);
+        }
+        $cnt = 0;
+        foreach($parse as $key => $value) {
+
+            switch($value) {
+                case 'd':
+                    if (empty($split)) {
+                        $result['day']    = (int) $splitted[0][$cnt];
+                    } else {
+                        $result['day']    = (int) iconv_substr($splitted[0][$cnt], $day, 2);
+                    }
+                    ++$cnt;
+                    break;
+                case 'M':
+                    if (empty($split)) {
+                        $result['month']  = (int) $splitted[0][$cnt];
+                    } else {
+                        $result['month']  = (int) iconv_substr($splitted[0][$cnt], $month, 2);
+                    }
+                    ++$cnt;
+                    break;
+                case 'y':
+                    $length = 2;
+                    if (iconv_substr($format, $year, 4) == 'yyyy') {
+                        $length = 4;
+                    }
+                    if (empty($split)) {
+                        $result['year']   = (int) $splitted[0][$cnt];
+                    } else {
+                        $result['year']   = (int) iconv_substr($splitted[0][$cnt], $year, $length);
+                    }
+                    ++$cnt;
+                    break;
+                case 'H':
+                    if (empty($split)) {
+                        $result['hour']   = (int) $splitted[0][$cnt];
+                    } else {
+                        $result['hour']   = (int) iconv_substr($splitted[0][$cnt], $hour, 2);
+                    }
+                    ++$cnt;
+                    break;
+                case 'm':
+                    if (empty($split)) {
+                        $result['minute'] = (int) $splitted[0][$cnt];
+                    } else {
+                        $result['minute'] = (int) iconv_substr($splitted[0][$cnt], $minute, 2);
+                    }
+                    ++$cnt;
+                    break;
+                case 's':
+                    if (empty($split)) {
+                        $result['second'] = (int) $splitted[0][$cnt];
+                    } else {
+                        $result['second'] = (int) iconv_substr($splitted[0][$cnt], $second, 2);
+                    }
+                    ++$cnt;
+                    break;
+            }
         }
 
-        // truncate first found number part
-        $date = substr($date, $two);
-        // search second number part
-        $second = self::getInteger($date, 0, $locale);
-        
-        if ($two == $day) {
-            // MM dd yy , yy dd MM
-            $found['day'] = iconv_substr($second, 0, 2);
-        } else if ($two == $year) {
-            // MM yy dd , dd yy MM
-            if (substr($format, $year, 4) === 'yyyy') {
-                // yyyy - 4 digits needed
-                $found['year'] = iconv_substr($second, 0, 4);
-            } else {
-                // yy - only 2 digits needed
-                $found['year'] = iconv_substr($second, 0, 2);
-            }
-        } else if (!isset($found['month'])) {
-            $found['month'] = iconv_substr($second, 0, 2);
-        }
-        
-        // truncate second found number part
-        $date = substr($date, ($three - $two));
-        // search third number part
-        $third = self::getInteger($date, 0, $locale);
-        
-        if ($three == $day) {
-            // MM yy dd , yy MM dd
-            $found['day'] = $third;
-        } else if ($three == $year) {
-            // MM dd yy , dd MM yy
-            if (substr($format, $year, 4) === 'yyyy') {
-                // yyyy - 4 digits needed
-                $found['year'] = $third;
-            } else {
-                // yy - only 2 digits needed
-                $found['year'] = $third;
-            }
-        } else if (!isset($found['month'])) {
-            $found['month'] = iconv_substr($third, 0, 2);
+        // fix switched values d <> y
+        if ($result['day'] > 31) {
+            $temp = $result['year'];
+            $result['year'] = $result['day'];
+            $result['day']  = $temp;
         }
 
-        if (empty($found['month']) or empty($found['day']) or !isset($found['year'])) {
-            return false;
+        // fix switched values M <> y
+        if ($result['month'] > 31) {
+            $temp = $result['year'];
+            $result['year'] = $result['month'];
+            $result['month']  = $temp;
         }
-        return $found;
+
+        // fix switched values M <> y
+        if ($result['month'] > 12) {
+            $temp = $result['day'];
+            $result['day'] = $result['month'];
+            $result['month']  = $temp;
+        }
+        
+        return $result;
     }
 
 
@@ -458,35 +464,16 @@ class Zend_Locale_Format
     public static function getDate($date, $format = false, $locale = false)
     {
         if ($format === false) {
-            for ($X = 1; $X <= 4; ++$X) {
-                switch($X) {
-                    case 1:
-                        $type = 'short';
-                        break;
-                    case 2:
-                        $type = 'medium';
-                        break;
-                    case 3:
-                        $type = 'long';
-                        break;
-                    default:
-                        $type = 'full';
-                        break;
-                }
-                // Get correct date for this locale
-                $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $type));
-                $format = $format['pattern'];
+            $format = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
+            $format = $format['default'];
 
-                $date = self::_parseDate($date, $format, $locale);
-                if ($date !== false) {
-                    return $date;
-                }
-            }
-        } else {
-            $date = self::_parseDate($date, $format, $locale);
-            if ($date !== false) {
-                return $date;
-            }
+            $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $format));
+            $format = $format['pattern'];
+        }
+
+        $date = self::_parseDate($date, $format, $locale);
+        if ($date !== false) {
+            return $date;
         }
 
         return false;
@@ -510,82 +497,6 @@ class Zend_Locale_Format
 
 
     /**
-     * Parse a time with a defined format
-     * 
-     * @param string $time - time string
-     * @param string $type - time type CLDR format !!
-     * @param locale $locale
-     * @return mixed
-     */
-    private static function _parseTime($time, $format, $locale)
-    {
-        $found = array();
-
-        // get position
-        $second    = iconv_strpos($format, 's');
-        $minute    = iconv_strpos($format, 'm');
-        $hour      = iconv_strpos($format, 'H');
-
-        // search first number part
-        $first = self::getInteger($time, 0, $locale);
-
-        if (($second < $minute) && ($second < $hour)) {
-            // ss mm HH , ss HH mm
-            $found['second'] = iconv_substr($first, 0, 2);
-        } else if (($hour < $second) && ($hour < $minute)) {
-            // HH ss mm , HH mm ss
-            $found['hour'] = iconv_substr($first, 0, 2);
-        } else if (($minute < $second) && ($minute < $hour)) {
-            // mm HH ss, mm ss HH
-            $found['minute'] = iconv_substr($first, 0, 2);
-        }
-
-        // truncate first found number part
-        $time = substr($time, strpos($time, $first) + strlen($first));
-        // search second number part
-        $sec = self::getInteger($time, 0, $locale);
-
-        if (!isset($found['second']) && 
-           ((($second < $minute) && ($second > $hour)) or
-            (($second > $minute) && ($second < $hour)))) {
-            // mm ss HH , HH ss mm
-            $found['second'] = iconv_substr($sec, 0, 2);
-        } else if (!isset($found['hour']) &&
-            ((($hour < $minute) && ($hour > $second)) or
-            (($hour > $minute) && ($hour < $second)))) {
-            // mm HH ss , ss HH mm
-            $found['hour'] = iconv_substr($sec, 0, 2);
-        } else if (!isset($found['minute']) &&
-            ((($minute < $second) && ($minute > $hour)) or
-             (($minute > $second) && ($minute < $hour)))) {
-            $found['minute'] = iconv_substr($sec, 0, 2);
-        }
-        
-        // truncate second found number part
-        $time = substr($time, strpos($time, $second) + strlen($second));
-        // search third number part
-        $third = self::getInteger($time, 0, $locale);
-
-        if (!isset($found['second']) && 
-            (($second > $minute) && ($second > $hour))) {
-            // HH mm ss , mm HH ss
-            $found['second'] = iconv_substr($third, 0, 2);
-        } else if (!isset($found['hour']) &&
-            (($hour > $minute) && ($hour > $second))) {
-            $found['hour'] = iconv_substr($third, 0, 2);
-        } else if (!isset($found['minute']) &&
-            (($minute > $second) && ($minute > $hour))) {
-            $found['minute'] = iconv_substr($third, 0, 2);
-        }
-
-        if (empty($found['minute']) or empty($found['second']) or !isset($found['hour'])) {
-            return false;
-        }
-        return $format;
-    }
-    
-
-    /**
      * Returns an array with the normalized time from an locale time
      * a input of 11:20:55 for locale 'de' would return
      * array ('hour' => 11, 'minute' => 20, 'second' => 55)
@@ -598,35 +509,16 @@ class Zend_Locale_Format
     public static function getTime($time, $format = false, $locale = false)
     {
         if ($format === false) {
-            for ($X = 1; $X <= 4; ++$X) {
-                switch($X) {
-                    case 1:
-                        $type = 'short';
-                        break;
-                    case 2:
-                        $type = 'medium';
-                        break;
-                    case 3:
-                        $type = 'long';
-                        break;
-                    default:
-                        $type = 'full';
-                        break;
-                }
-                // Get correct date for this locale
-                $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $type));
-                $format = $format['pattern'];
+            $format = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
+            $format = $format['default'];
 
-                $time = self::_parseTime($time, $format, $locale);
-                if ($time !== false) {
-                    return $time;
-                }
-            }
-        } else {
-            $time = self::_parseTime($time, $format, $locale);
-            if ($time !== false) {
-                return $time;
-            }
+            $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $format));
+            $format = $format['pattern'];
+        }
+
+        $date = self::_parseDate($date, $format, $locale);
+        if ($date !== false) {
+            return $date;
         }
 
         return false;

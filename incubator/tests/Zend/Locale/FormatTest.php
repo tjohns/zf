@@ -1249,23 +1249,361 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test if getDate works
+     * test if getDate parses a date
      * expected array
      */
-    public function testgetDateAlone()
+    public function testgetDateParsing()
     {
         $value = Zend_Locale_Format::getDate('10.10.06');
-        $this->assertEquals(is_array($value), TRUE, "array expected");
+        $this->assertEquals(is_array($value), true, "array expected");
     }
 
 
     /**
-     * test if getDate works
+     * test if getDate parses a date with fixed format
      * expected array
      */
-    public function testgetDatedmy1()
+    public function testgetDateParsing2()
     {
-        $value = Zend_Locale_Format::getDate('1.1.6','dMy');
-        $this->assertEquals(is_array($value), TRUE, "array expected");
+        $value = Zend_Locale_Format::getDate('10.10.06','dd.MM.yy');
+        $this->assertEquals(count($value), 3, "array with 3 tags expected");
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing3()
+    {
+        $value = Zend_Locale_Format::getDate('10.11.06','dd.MM.yy');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 06, 'Year 06 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing4()
+    {
+        $value = Zend_Locale_Format::getDate('10.11.2006','dd.MM.yy');
+        $this->assertSame($value['day'], 10, 'Day 10 expected');
+        $this->assertSame($value['month'], 11, 'Month 11 expected');
+        $this->assertSame($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing5()
+    {
+        $value = Zend_Locale_Format::getDate('2006.13.01','dd.MM.yy');
+        $this->assertEquals($value['day'], 13, 'Day 13 expected');
+        $this->assertEquals($value['month'], 1, 'Month 1 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing6()
+    {
+        $value = Zend_Locale_Format::getDate('2006.01.13','dd.MM.yy');
+        $this->assertEquals($value['day'], 13, 'Day 13 expected');
+        $this->assertEquals($value['month'], 1, 'Month 1 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing7()
+    {
+        $value = Zend_Locale_Format::getDate('101106','ddMMyy');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 6, 'Year 6 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing8()
+    {
+        $value = Zend_Locale_Format::getDate('10112006','ddMMyyyy');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing9()
+    {
+        $value = Zend_Locale_Format::getDate('10 Nov 2006','dd.MMM.yy', 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing10()
+    {
+        $value = Zend_Locale_Format::getDate('10 November 2006','dd.MMM.yy', 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing11()
+    {
+        $value = Zend_Locale_Format::getDate('November 10 2006','dd.MMM.yy', 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing12()
+    {
+        $value = Zend_Locale_Format::getDate('Nov 10 2006','dd.MMM.yy', 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing13()
+    {
+        $value = Zend_Locale_Format::getDate('2006 10 Nov','dd.MMM.yy', 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing14()
+    {
+        $value = Zend_Locale_Format::getDate('2006 Nov 10','dd.MMM.yy', 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing15()
+    {
+        $value = Zend_Locale_Format::getDate('10.11.06','yy.dd.MM');
+        $this->assertEquals($value['day'], 11, 'Day 11 expected');
+        $this->assertEquals($value['month'], 6, 'Month 6 expected');
+        $this->assertEquals($value['year'], 10, 'Year 10 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing16()
+    {
+        $value = Zend_Locale_Format::getDate('10.11.06','dd.yy.MM');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 6, 'Month 6 expected');
+        $this->assertEquals($value['year'], 11, 'Year 11 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing17()
+    {
+        $value = Zend_Locale_Format::getDate('10.11.06', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 6, 'Year 6 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing18()
+    {
+        $value = Zend_Locale_Format::getDate('10.11.2006', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing19()
+    {
+        $value = Zend_Locale_Format::getDate('2006.13.01', false, 'de_AT');
+        $this->assertEquals($value['day'], 13, 'Day 13 expected');
+        $this->assertEquals($value['month'], 1, 'Month 1 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing20()
+    {
+        $value = Zend_Locale_Format::getDate('2006.01.13', false, 'de_AT');
+        $this->assertEquals($value['day'], 13, 'Day 13 expected');
+        $this->assertEquals($value['month'], 1, 'Month 1 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing21()
+    {
+        $value = Zend_Locale_Format::getDate('101106', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing22()
+    {
+        $value = Zend_Locale_Format::getDate('10112006', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing23()
+    {
+        $value = Zend_Locale_Format::getDate('10 Nov 2006', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing24()
+    {
+        $value = Zend_Locale_Format::getDate('10 November 2006', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing25()
+    {
+        $value = Zend_Locale_Format::getDate('November 10 2006', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing26()
+    {
+        $value = Zend_Locale_Format::getDate('Nov 10 2006', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing27()
+    {
+        $value = Zend_Locale_Format::getDate('2006 10 Okt', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+    }
+
+
+    /**
+     * test if getDate parses a date with fixed format
+     * expected array
+     */
+    public function testgetDateParsing28()
+    {
+        $value = Zend_Locale_Format::getDate('2006 Nov 10', false, 'de_AT');
+        $this->assertEquals($value['day'], 10, 'Day 10 expected');
+        $this->assertEquals($value['month'], 11, 'Month 11 expected');
+        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
     }
 }
