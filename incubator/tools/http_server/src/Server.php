@@ -81,18 +81,18 @@ class Server
 		}
 	}
 
-	public function SetHandler( $handler_class )
+	public function setHandler( $handler_class )
 	{
 		$this->handler = $handler_class;
 	}
 
-	public function GetHandler()
+	public function getHandler()
 	{
 		return $this->handler;
 	}
 
 
-	public function Listen()
+	public function listen()
 	{
 		if( ( $ret = socket_listen( $this->socket, 5 ) ) < 0 )
 		{
@@ -171,7 +171,7 @@ class Server
 								{
 									$handler = new $this->handler( $request );
 
-									$response = $handler->Handle();
+									$response = $handler->handle();
 									socket_write( $client, $response->asString() );
 
 									print( $request->remote_ip . " - - [" . date( "d/M/Y:H:i:s O" ) . "] \"" . 

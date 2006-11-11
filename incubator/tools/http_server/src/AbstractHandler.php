@@ -54,6 +54,6 @@ abstract class AbstractHandler
 	 *
 	 * @return Zend_Http_Response
 	 */
-	abstract public function Handle();
+	abstract public function handle();
 }
 

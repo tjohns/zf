@@ -74,6 +74,6 @@
 
 	$server = new Server( $address, $port );
 	$server->document_root = $document_root;
-	$server->Listen();
+	$server->listen();
 
 ?>

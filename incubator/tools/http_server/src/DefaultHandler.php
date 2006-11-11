@@ -31,7 +31,7 @@ require_once( 'AbstractHandler.php' );
  */
 class DefaultHandler extends AbstractHandler
 {
-	public function Handle()
+	public function handle()
 	{
 		$this->applyRewriteRules();
 
