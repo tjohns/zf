@@ -24,7 +24,7 @@
 
         <para>
             Наиболее легкий способ создания экземпляра <code>Zend_Db_Select</code>
-            -- использование метода <code>Zend_Db_Adapter::select()</code>.
+            — использование метода <code>Zend_Db_Adapter::select()</code>.
 <!--
             The easiest way to create an instance of Zend_Db_Select is to use the
             Zend_Db_Adapter::select() method.
@@ -403,7 +403,7 @@ $select->order(array('noble_title DESC', 'first_name'));
 
         <para>
             <code>Zend_Db_Select</code> предлагает независимую от типа СУБД поддержку
-            LIMIT. Для многих баз данных -- таких, как MySQL и PostgreSQL --
+            LIMIT. Для многих баз данных — таких, как MySQL и PostgreSQL —
             это относительно легко, так как они поддерживают синтаксис
             "LIMIT :количество_строк [OFFSET :смещение]".
 <!--        
@@ -415,7 +415,7 @@ $select->order(array('noble_title DESC', 'first_name'));
         </para>
 
         <para>
-            Для других баз данных -- таких, как Microsoft SQL и Oracle -- это
+            Для других баз данных — таких, как Microsoft SQL и Oracle — это
             не так легко, поскольку они совсем не поддерживают конструкцию LIMIT.
             MS-SQL имеет только конструкцию TOP, Oracle требует, чтобы
             запрос был написан специальным образом для эмуляции LIMIT. Благодаря

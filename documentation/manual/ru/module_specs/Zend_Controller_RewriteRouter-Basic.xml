@@ -1,0 +1,96 @@
+<sect1 id="zend.controller.rewriterouter.basic">
+	<title>Основные маршруты</title>
+
+	<para>
+	  Основой RewriteRouter является определение пользователем маршрутов.
+    Маршруты создаются вызовом метода <code>addRoute()</code>: 
+<!--
+		The heart of the RewriteRouter is the definition of user defined routes. Routes are created by calling the addRoute method of
+		RewriteRouter:
+-->
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('user', 'user/:username');]]></programlisting>
+
+	<para>
+	  Первым параметром является имя маршрута. На данный момент он является избыточным,
+	  но в будущем будет использоваться в вспомогательном классе вида (view) для
+    легкой генерации URL в ваших видах. Если нужно воспользоваться предварительно
+    сконфигурированным маршрутом с именем, то можно получить его
+    с помощью метода <code>getRoute</code>.
+<!--
+		The first parameter is the name of the route. It is redundant at the moment of writing but will be used in the future in
+		a URL view helper to allow for easy URL generation in your views. Should you need to make use of a previously
+		configured named route, you can retrieve it with the getRoute method of the RewriteRouter.
+-->
+	</para>
+
+	<para>
+	  Вторым параметром является маршрут, который будет сверяться с URL —
+    например, приведенный выше маршрут будет соответствовать
+    <code>http://example.com/user/martel</code>. Двоеточие в маршруте обозначает
+    переменную URL, которая будет доступна через метод
+    <code>Zend_Controller_Action::_getParam()</code>. В нашем примере параметру с
+    именем <code>username</code> будет присвоено значение <code>'martel'</code>.
+<!--
+		The second parameter is a route that will be matched to a URL - for example, the above route will match
+		<code>http://example.com/user/martel</code>. The colon in a route marks a URL variable which will be accessible
+		through a Zend_Controller_Action::_getParam method. In our example a parameter named username will be set to a value of
+		'martel'.
+-->
+	</para>
+
+	<note>
+	  Маршруты сверяются в обратном порядке, поэтому удостоверьтесь, что
+	  наиболее общие маршруты определены первыми.
+<!--
+		Routes are matched in reverse order so make sure your most generic routes are defined first.
+-->
+	</note>
+
+	<note>
+	  На данный момент текущая реализация позволяет использовать любые символы,
+	  кроме прямой косой черты (/), в идентификаторе переменной, но
+	  сильно рекомендуется использовать в них только символы,
+    допустимые для переменных в php. Есть вероятность, что в будущем реализация
+    изменится, и это может вызвать ошибки в вашем коде.
+<!--
+		For now the current implementation allows for use of any characters except a slash (/) as a variable identifier but
+		it is strongly recommended that one uses only php variable friendly characters. In future the implementation will probably be
+		altered and this may introduce bugs to your code.
+-->
+	</note>
+
+	<para>
+	  Есть две специальные переменные, которые можно использовать в
+    маршрутах — 'controller' и 'action'. Эти специальные переменные могут
+    использоваться для получения контроллера и/или действия, выбранных в URL.
+    Переменная 'action' всегда должна быть определена в маршруте или как
+    параметр по умолчанию. Переменная 'controller' по умолчанию будет
+    <code>IndexController</code>, если не была определена.
+<!--
+		There are two special variables which can be used in your routes - 'controller' and 'action'. These special
+		variables will be used to find a controller and/or an action chosen in the URL. The 'action' variable 
+		must always be defined either in the route or as a default parameter. The 'controller' variable will default 
+		to the IndexController if it is not defined.
+-->
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('user', ':controller/:action');]]></programlisting>
+
+	<para>
+	  Адрес <code>http://example.com/news/latest</code> с таким маршрутом вызовет
+    действие <code>latestAction</code> в контроллере <code>NewsController</code>.
+	  
+<!--
+		If you point your browser to 'http://example.com/news/latest' with this route defined the
+		Zend_Controller_Dispatcher will invoke the latestAction of your NewsController.
+-->
+	</para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

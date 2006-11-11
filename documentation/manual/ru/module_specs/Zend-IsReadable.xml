@@ -1,0 +1,34 @@
+<sect1 id="zend.isreadable">
+    <title>Zend::isReadable()</title>
+
+    <para>
+        Возвращает <code>TRUE</code>, если файл доступен для чтения, иначе
+        <code>FALSE</code>.
+<!--
+        Returns <code>TRUE</code> if a file is readable, FALSE otherwise.
+-->
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::isReadable($filename)
+
+?>]]></programlisting>
+
+    <para>
+        Аргумент <code>$filename</code> задает имя файла для проверки, он может
+        содержать путь к файлу. Этот метод является оберткой для функции PHP
+        <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.
+        Функция PHP не ищет в <code>include_path</code>, в то время как
+        <code>Zend::isReadable()</code> делает это.
+<!--
+        The <code>$filename</code> argument specifies the filename to check, which may
+        contain path information.  This method is a wrapper for the PHP function
+        <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.  The PHP function
+        does not search the <code>include_path</code>, while <code>Zend::isReadable()</code> does.
+-->
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

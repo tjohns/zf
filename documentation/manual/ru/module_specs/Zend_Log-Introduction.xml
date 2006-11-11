@@ -1,0 +1,49 @@
+<sect1 id="zend.log.introduction">
+    <title>Введение</title>
+    <para>
+        <code>Zend_Log</code> — класс общего назначения для протоколирования.
+        <code>Zend_Log</code> является статическим классом и его экземпляры не могут
+        создаваться напрямую. Он содержит массив экземпляров
+        <code>Zend_Log</code>, по одному на каждый журнал, используемый приложением.
+        Каждый экземпляр данного класса использует адаптер, который реализует
+        интерфейс <code>Zend_Log_Adapter_Interface</code>.
+<!--
+        <code>Zend_Log</code> is a general purpose logging class.  <code>Zend_Log</code> is a static class that
+        can not be instantiated directly.  It holds an array of instances of <code>Zend_Log</code>, one for
+        each log used by the application.  Each logger instance uses an adapter that implements
+        <code>Zend_Log_Adapter_Interface</code>.
+-->
+    </para>
+
+    <para>
+        Для того, чтобы использовать <code>Zend_Log</code>, включите класс
+        <code>Zend_Log</code> (функция <ulink url="http://php.net/include">include()</ulink>)
+        и любые классы адаптеров, которые будут использоваться. Например,
+        если приложение будет записывать в консоль (выходной буфер PHP) и
+        в текстовые файлы, то должны быть включены следующие файлы:
+<!--
+        To use <code>Zend_Log</code>, <ulink url="http://php.net/include">include()</ulink> the
+        <code>Zend_Log</code> class and any adapter classes that will be used. For example, if an application
+        will log to both the console (PHP's output buffer) and text files, the following files would be
+        included:
+-->
+    </para>
+    <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                  // Базовый класс Zend_Log
+require_once 'Zend/Log/Adapter/Console.php';  // Адаптер записи в консоль
+require_once 'Zend/Log/Adapter/File.php';     // Адаптер записи в файл
+]]></programlisting>
+    <para>
+        <code>Zend_Log</code> может применяться для простого 
+        ведения одного журнала, может быть сконфигурирован для ведения
+        нескольких журналов, а также использоваться для протоколирования внутренних
+        операций множества классов Zend Framework.
+<!--
+        <code>Zend_Log</code> can be used in a simplified way for a single log, can be configured for multiple
+        logs, and can also be used to log internal operations of many Zend Framework classes.
+-->
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

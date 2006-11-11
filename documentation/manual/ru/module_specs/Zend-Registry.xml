@@ -1,0 +1,48 @@
+<sect1 id="zend.registry">
+    <title>Zend::registry()</title>
+
+    <para>
+        Возвращает объект в реестре или список всех объектов в реестре.
+<!--
+        Returns an object in the registry or lists all objects in the registry.
+-->
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::registry($name=null)
+
+?>]]></programlisting>
+
+    <para>
+        Если значение аргумента <code>$name</code> равно <code>NULL</code>, то будет
+        возвращен массив, в котором ключами массива являются имена объектов в реестре, а
+        значениями — имена классов, к которым принадлежат эти объекты.
+<!--
+        If the <code>$name</code> argument is <code>NULL</code>, an array will be returned where the keys to the array
+        are the names of the objects in the registry and the values are the class names of those objects.
+-->
+    </para>
+
+    <para>
+        Если <code>$name</code> является строкой, будет возвращен дескриптор
+        объекта, которому присвоено данное имя. Если объект с именем <code>$name</code>
+        не существует в реестре, будет сгенерировано исключение <code>Zend_Exception</code>.
+<!--
+        If <code>$name</code> is a string, the object handle assigned to that name will be returned.  If
+        an object does not exist in the registry with that <code>$name</code>, a
+        <code>Zend_Exception</code> will be thrown.
+-->
+    </para>
+
+    <para>
+        Для быстрого определения, представлен ли объект в реестре, используйте
+        <code>Zend::isRegistered()</code>.
+<!--
+        To quickly determine if an object is present in the registry, use Zend::isRegistered().
+-->
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

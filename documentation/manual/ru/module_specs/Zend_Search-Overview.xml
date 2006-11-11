@@ -20,7 +20,7 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                        Ранжированный поиск -- более подходящие результаты возвращаются первыми
+                        Ранжированный поиск — более подходящие результаты возвращаются первыми
 <!--
                         Ranked searching - best results returned first
 -->
@@ -190,7 +190,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                     В полях <code>UnIndexed</code> нельзя производить поиск,
                     но они возвращаются в результатах поиска. Поля timestamp,
                     ключевые поля, пути в файловой системе и другие
-                    внешние идентификаторы -- хорошие кандидаты для того, чтобы
+                    внешние идентификаторы — хорошие кандидаты для того, чтобы
                     быть полями UnIndexed.
 <!--
                     <code>UnIndexed</code> fields are not searchable, but they are returned with search hits.  Database
@@ -204,7 +204,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                     Поля <code>Binary</code> не разбиваются на лексемы и не индексируются,
                     но сохраняются для возвращения в результатах поиска.
                     Они могут использоваться для хранения любых данных,
-                    закодированных в виде бинарной строки -- как, например,
+                    закодированных в виде бинарной строки — как, например,
                     иконки.
 <!--
                     <code>Binary</code> fields are not tokenized or indexed, but are stored for retrieval with search hits.
@@ -216,7 +216,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                 <para>
                     Поля <code>Text</code> сохраняются, разбиваются на лексемы
                     и индексируются. Текстовые поля подходят для хранения
-                    такой информации, как темы и заголовки -- в них нужно не
+                    такой информации, как темы и заголовки — в них нужно не
                     только искать, но и возвращать с результатами поиска. 
 <!--
                     <code>Text</code> fields are stored, indexed, and tokenized.

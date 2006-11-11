@@ -30,7 +30,7 @@
         <title>Извлечение набора строк</title>
 
         <para>
-            Первое, что нужно сделать -- создать экземпляр класса <code>Zend_Db_Table</code>.
+            Первое, что нужно сделать — создать экземпляр класса <code>Zend_Db_Table</code>.
 <!--
             The first thing to do is instantiate a Zend_Db_Table class.
 -->

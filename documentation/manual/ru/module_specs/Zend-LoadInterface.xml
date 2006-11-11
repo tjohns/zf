@@ -1,0 +1,49 @@
+<sect1 id="zend.loadinterface">
+    <title>Zend::loadInterface()</title>
+    <para>
+        <code>Zend::loadInterface()</code> работает точно так же, как и
+        <code>Zend::loadClass()</code>, за исключением того, что он загружает интерфейсы
+        вместо классов.
+<!--
+        <code>Zend::loadInterface()</code> works exactly the same as <code>Zend::loadClass()</code>, only it
+        loads an interface instead.
+-->
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::loadInterface($interface, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+        Метод <code>Zend::loadClass()</code> не может использоваться для загрузки
+        интерфейсов из-за того, что функция PHP
+        <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink>
+        не может проверять наличие интерфейсов (начиная с PHP 5.0.2). Вместо
+        этого используйте <code>Zend::loadInterface()</code>.
+<!--
+        The <code>Zend::loadClass()</code> method cannot be used for loading interfaces because the PHP
+        function <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink> does cannot check
+        for interfaces (since PHP 5.0.2).  Use <code>Zend::loadInterface()</code> instead.
+-->
+    </para>
+
+    <para>
+        Если вы запросили интерфейс со знаками подчеркивания в имени и <code>$dirs</code>
+        равен <code>NULL</code> (значение по умолчанию), то <code>Zend::loadInterface()</code> 
+        будет автоматически находить <code>$dirs</code> из имени интерфейса посредством
+        замены знаков подчеркивания на разделители директорий. Например, если имя
+        интерфейса — <code>Zend_Example_Interface</code>, то оно будет преобразовано
+        в путь <code>Zend/Example/Interface.php</code>.
+<!--
+        If you ask for an interface with underscores in the name, and <code>$dirs</code> is null (the default),
+        <code>Zend::loadInterface()</code> will auto-discover the <code>$dirs</code> from the interface name
+        by converting underscores to directory separators.  For example, if <code>$interface</code> is
+        <code>Zend_Example_Interface</code>, that will map to a path of <code>Zend/Example/Interface.php</code>.
+-->
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -26,7 +26,7 @@
         <title>Начало работы</title>
 
         <para>
-            Первое, что нужно сделать -- установить для абстрактного класса
+            Первое, что нужно сделать — установить для абстрактного класса
             <code>Zend_Db_Table</code> адаптер БД по умолчанию. Все
             экземпляры класса <code>Zend_Db_Table</code> будут использовать
             этот адаптер по умолчанию, пока вы не укажете другое.
@@ -106,7 +106,7 @@ $table = new RoundTable();
         <programlisting role="php"><![CDATA[<?php
 class ClassName extends Zend_Db_Table
 {
-    // имя таблицы по умолчанию -- 'class_name',
+    // имя таблицы по умолчанию - 'class_name',
     // но мы хотим установить соответствие с чем-то другим
     protected $_name = 'another_table_name';
 }
@@ -130,7 +130,7 @@ class ClassName extends Zend_Db_Table
         <programlisting role="php"><![CDATA[<?php
 class ClassName extends Zend_Db_Table
 {
-    // первичный ключ по умолчанию -- 'id',
+    // первичный ключ по умолчанию - 'id',
     // но мы хотим использовать другой
     protected $_primary = 'another_column_name';
 }
@@ -139,7 +139,7 @@ class ClassName extends Zend_Db_Table
 
         <para>
             Также вы можете установить их в методе <code>_setup()</code>
-            вашего унаследованного класса -- только убедитесь, что после
+            вашего унаследованного класса — только убедитесь, что после
             этого вызывается <code>parent::_setup()</code>.
 <!--
             Alternatively, you may set these in the _setup() method of

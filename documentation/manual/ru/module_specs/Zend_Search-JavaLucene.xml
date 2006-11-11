@@ -195,7 +195,7 @@ indexWriter.addDocument(doc);]]>
         </para>
         
         <para>
-            Будьте осторожны -- применение опции <option>-s</option>
+            Будьте осторожны — применение опции <option>-s</option>
             увеличивает объем индекса примерно в пять раз.   
 <!--
             Please be careful, using <option>-s</option> option increases index

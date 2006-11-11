@@ -1,0 +1,49 @@
+<sect1 id="zend.loadclass">
+    <title>Zend::loadClass()</title>
+    <para>
+        <code>Zend::loadClass()</code> загружает файл PHP, имя которого сформировано
+        как "<code>$className.php</code>", затем проверяет наличие класса
+        <code>$className</code>.
+<!--
+        <code>Zend::loadClass()</code> loads a PHP file whose filename is formatted like
+        "<code>$className.php</code>", and then checks for the existance of the class <code>$className</code>.
+-->
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::loadClass($class, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+        Если файл не найден или класс не существует, генерируется исключение
+        <code>Zend_Exception</code>. Для загрузки используется функция
+        <code>Zend::loadFile()</code>, ей непосредственно передается аргумент
+        <code>$dirs</code>.
+<!--
+        If the file is not found or the class does not exist after the load, a <code>Zend_Exception</code> is
+        thrown. <code>Zend::loadFile()</code> is used for loading, and the <code>$dirs</code> argument is
+        passed directly to it..
+-->
+    </para>
+
+    <para>
+        Если вы запросили класс со знаками подчеркивания в имени и
+        <code>$dirs</code> равен <code>NULL</code> (значение по умолчанию),
+        то <code>Zend::loadClass()</code> будет автоматически находить
+        <code>$dirs</code> из имени класса посредством замены знаков
+        подчеркивания на разделители директорий. Например, если имя класса -
+        <code>Zend_Example_Class</code>, то оно будет преобразовано в путь
+        <code>Zend/Example/Class.php</code>.
+<!--
+        If you ask for a class with underscores in the name, and <code>$dirs</code> is null (the default),
+        <code>Zend::loadClass()</code> will auto-discover the <code>$dirs</code> from the class name
+        by converting underscores to directory separators.  For example, if <code>$class</code> is
+        <code>Zend_Example_Class</code>, that will map to a path of <code>Zend/Example/Class.php</code>.
+-->
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -32,11 +32,21 @@
     <!-- &ref.conf;    -->
     <chapter id="zend">
         <title>Zend</title>
-        &module_specs.Zend;
+        &module_specs.Zend-Introduction;
+        &module_specs.Zend-LoadFile;
+        &module_specs.Zend-LoadClass;
+        &module_specs.Zend-LoadInterface;
+        &module_specs.Zend-IsReadable;
+        &module_specs.Zend-Dump;
+        &module_specs.Zend-Register;
+        &module_specs.Zend-Registry;
     </chapter>
     <chapter id="zend.cache">	
         <title>Zend_Cache</title>	
-        &module_specs.Zend_Cache;	
+        &module_specs.Zend_Cache-Introduction;
+        &module_specs.Zend_Cache-Theory;
+        &module_specs.Zend_Cache-Frontends;
+        &module_specs.Zend_Cache-Backends;
     </chapter>	
     <chapter id="zend.config">
         <title>Zend_Config</title>
@@ -54,7 +64,13 @@
     </chapter>
     <chapter id="zend.controller.rewriterouter">
         <title>Zend_Controller_RewriteRouter</title>
-        &module_specs.Zend_Controller_RewriteRouter;
+        &module_specs.Zend_Controller_RewriteRouter-Introduction;
+        &module_specs.Zend_Controller_RewriteRouter-Usage;
+        &module_specs.Zend_Controller_RewriteRouter-Basic;
+        &module_specs.Zend_Controller_RewriteRouter-VariableDefaults;
+        &module_specs.Zend_Controller_RewriteRouter-VariableRequirements;
+        &module_specs.Zend_Controller_RewriteRouter-RewriteBase;
+        &module_specs.Zend_Controller_RewriteRouter-DefaultRoutes;
     </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
@@ -67,7 +83,14 @@
     </chapter>
     <chapter id="zend.feed">
         <title>Zend_Feed</title>
-        &module_specs.Zend_Feed;
+        &module_specs.Zend_Feed-Introduction;
+        &module_specs.Zend_Feed-Importing;
+        &module_specs.Zend_Feed-FindFeeds;
+        &module_specs.Zend_Feed-ConsumingRss;
+        &module_specs.Zend_Feed-ConsumingAtom;
+        &module_specs.Zend_Feed-ConsumingAtomSingle;
+        &module_specs.Zend_Feed-ModifyingFeed;
+        &module_specs.Zend_Feed-CustomFeed;
     </chapter>
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
@@ -81,25 +104,46 @@
     </chapter>
     <chapter id="zend.json">
         <title>Zend_Json</title>
-        &module_specs.Zend_Json;
+        &module_specs.Zend_Json-Introduction;
+        &module_specs.Zend_Json-Basics;
+        &module_specs.Zend_Json-Objects;
     </chapter>
     <chapter id="zend.log">
         <title>Zend_Log</title>
-        &module_specs.Zend_Log;
+        &module_specs.Zend_Log-Introduction;
+        &module_specs.Zend_Log-Simple;
+        &module_specs.Zend_Log-Levels;
+        &module_specs.Zend_Log-Advanced;
     </chapter>
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
-        &module_specs.Zend_Mail;
+        &module_specs.Zend_Mail-Introduction;
+        &module_specs.Zend_Mail-Sending;
+        &module_specs.Zend_Mail-MultipleEmails;
+        &module_specs.Zend_Mail-DifferentTransports;
+        &module_specs.Zend_Mail-HtmlMails;
+        &module_specs.Zend_Mail-Attachments;
+        &module_specs.Zend_Mail-AddingRecipients;
+        &module_specs.Zend_Mail-Boundary;
+        &module_specs.Zend_Mail-AdditionalHeaders;
+        &module_specs.Zend_Mail-CharacterSets;
+        &module_specs.Zend_Mail-Encoding;
+        &module_specs.Zend_Mail-SmtpAuthentication;
     </chapter>
     <chapter id="zend.mime">
         <title>Zend_Mime</title>
         &module_specs.Zend_Mime;
-        &module_specs.Zend_Mime_Message;<!-- TODO translate Zend_Mime_Message -->
-        &module_specs.Zend_Mime_Part;<!-- TODO translate Zend_Mime_Part -->
+        &module_specs.Zend_Mime_Message;
+        &module_specs.Zend_Mime_Part;
     </chapter>
     <chapter id="zend.pdf">
         <title>Zend_Pdf</title>
-        &module_specs.Zend_Pdf;
+        &module_specs.Zend_Pdf-Introduction;
+        &module_specs.Zend_Pdf-Create;
+        &module_specs.Zend_Pdf-Save;
+        &module_specs.Zend_Pdf-Pages;
+        &module_specs.Zend_Pdf-Drawing;
+        &module_specs.Zend_Pdf-Usage;
     </chapter>
     <chapter id="zend.search">
         <title>Zend_Search</title>
@@ -114,14 +158,22 @@
     <chapter id="zend.service">
         <title>Zend_Service</title>
         &module_specs.Zend_Service;
+        &module_specs.Zend_Service_Rest;
+        &module_specs.Zend_Service_Amazon;
+        &module_specs.Zend_Service_Flickr;
+        &module_specs.Zend_Service_Yahoo;
     </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
-        &module_specs.Zend_View;
+        &module_specs.Zend_View-Introduction;
+        &module_specs.Zend_View-Controllers;
+        &module_specs.Zend_View-Scripts;
+        &module_specs.Zend_View-Helpers;
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
         &module_specs.Zend_XmlRpc;
+        &module_specs.Zend_XmlRpc_Client;
     </chapter>
     <!-- &ref.faq; -->
     &ref.coding_standard;

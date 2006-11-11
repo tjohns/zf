@@ -1,0 +1,27 @@
+<sect1 id="zend.controller.rewriterouter.usage">
+	<title>Использование маршрутизатора</title>
+
+	<para>
+	  Чтобы использовать RewriteRouter, нужно инстанцировать его, добавить
+    маршруты и ввести в контроллер. Следующий код иллюстрирует
+    эту процедуру:
+<!--
+		To properly use the RewriteRouter you have to instantiate it, add some user defined routes and inject it into the
+		controller. The following code illustrates the procedure:
+-->
+	</para>
+
+	<programlisting role="php"><![CDATA[
+/* -- создание маршрутизатора -- */
+
+$router = new Zend_Controller_RewriteRouter();
+$router->addRoute('user', 'user/:username', array('controller' => 'user', 'action' => 'info'));
+
+/* -- установка его в контроллере -- */
+
+$ctrl = Zend_Controller_Front::getInstance();
+$ctrl->setRouter($router);]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

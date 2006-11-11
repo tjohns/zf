@@ -1,0 +1,49 @@
+<sect1 id="zend.log.advanced-logging">
+   <title>
+       Ведение нескольких журналов
+<!--
+       Advanced Logging: Multiple Loggers
+-->
+   </title>
+   <para>
+        <code>Zend_Log</code> поддерживает протоколирование с несколькими адаптерами.
+        Он может отправлять сообщения во все журналы или только в определенный журнал.   
+<!--
+        <code>Zend_Log</code> supports logging to multiple log adapters.  It can either send a message to all
+        logs, or target a message to a specific log.
+-->
+   </para>
+
+   <para>
+        Когда создается несколько регистраторов, каждому журналу должно быть дано
+        уникальное имя. Регистратор создается с помощью
+        метода <code>registerLogger()</code> с именем журнала, данным
+        в качестве необязательного второго аргумента.  
+<!--
+        When creating multiple loggers, each log must be given a unique name.  Loggers are registered with the
+        <code>registerLogger()</code> method, with the log name supplied as the optional second argument.
+-->
+   </para>
+
+   <para>
+        В примере, данном ниже, создаются два регистратора: один для консоли,
+        другой для файла. Им будут даны имена <code>Console</code> и <code>File</code>,
+        соответственно.  
+<!--
+        In the example below, two loggers are created: one for the console, and one for a file.  They will be
+        given the names <code>Console</code> and <code>File</code>, respectively.
+-->
+
+    </para>
+    <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                 // Базовый класс Zend_Log
+require_once 'Zend/Log/Adapter/File.php';    // Адаптер для файла File log adapter
+require_once 'Zend/Log/Adapter/Console.php'; // Адаптер для консоли
+
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'File');
+Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Console');
+]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

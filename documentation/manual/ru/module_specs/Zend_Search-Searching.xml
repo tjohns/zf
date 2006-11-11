@@ -226,7 +226,7 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-        Обратите внимание, что идентификатор документа (в нашем примере -- 'path')
+        Обратите внимание, что идентификатор документа (в нашем примере — 'path')
         также сохраняется в индексе и должен извлекаться из него.
 <!--
         Pay attention, that document identity ('path' in our example) is also stored

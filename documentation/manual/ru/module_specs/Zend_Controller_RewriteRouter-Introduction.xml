@@ -1,0 +1,45 @@
+<sect1 id="zend.controller.rewriterouter.introduction">
+    <title>Введение</title>
+	<para>
+	  <code>Zend_Controller_RewriteRouter</code> является новой версией маршрутизатора
+	  фреймворка. Маршрутизация является процессом принятия конечной точки URI и ее
+    декомпозиции для определения того, какой контроллер и какое действие этого
+    контроллера должны получить запрос. Определение контроллера, действия
+    и необязательных параметров упаковывается в объект значений, называемый
+    <code>Zend_Controller_Dispatcher_Token</code> и обрабатывается
+    <code>Zend_Controller_Dispatcher</code>. Маршрутизация производится только
+    один раз -- когда вначале получен запрос и до того, как первый контроллер
+    будет запущен.
+<!--
+
+		Zend_Controller_RewriteRouter is a new version of the framework router. Routing is the process of taking a URI
+		endpoint and decomposing it to determine which controller and action of that controller, should receive the
+		request. This definition of controller, action and optional parameters is packaged into a value object called
+		Zend_Controller_Dispatcher_Token which is then processed by Zend_Controller_Dispatcher. Routing occurs only once:
+		when the request is initially received and before the first controller is dispatched.
+-->
+	</para>
+	<para>
+	  <code>Zend_Controller_RewriteRouter</code> предназначен для того, чтобы
+	  обеспечить функциональность, подобную mod_rewrite, с применением чистого
+    php. Он отчасти основан на маршрутизации в Ruby on Rails и
+    не требует каких-либо предварительных знаний о перезаписи URL веб-сервером.
+    Он спроектирован для работы с единственным правилом mod_rewrite, одним из:
+<!--
+		Zend_Controller_RewriteRouter is designed to allow for mod_rewrite like functionality using pure php
+		structures. It is very loosely based on Ruby on Rails routing and does not require any prior knowledge of
+		webserver URL rewriting. It is designed to work with a single mod_rewrite rule (one of):
+-->
+	</para>
+	<programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+	<programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1	]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

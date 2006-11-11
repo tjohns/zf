@@ -362,7 +362,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
 
         <para>
             Метод <code>Zend_Search_Lucene_Search_Query_Phrase::addTerm()</code>
-            принимает два аргумента -- объект элемента
+            принимает два аргумента — объект элемента
             <code>Zend_Search_Lucene_Index_Term</code> в качестве обязательного
             параметра и позицию элемента в качестве необязательного.  
 <!--
