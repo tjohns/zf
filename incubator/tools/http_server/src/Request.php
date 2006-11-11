@@ -131,6 +131,12 @@ class Request
 	{
 		$lines = explode( "\r\n", $raw_request );
 
+		if( array_pop( $lines ) !== "" )
+		{
+			$this->complete = false;
+			return;
+		}
+
 		list( $this->method, $uri, $this->protocol_version ) = explode( " ", array_shift( $lines ) );
 
 		$this->setURI( $uri );
@@ -142,7 +148,7 @@ class Request
 			if( count( $lines ) == 0 )
 			{
 				$this->complete = false;
-				$line = "";
+				return;
 			}
 			else
 			{
@@ -170,7 +176,7 @@ class Request
 
 		if( ( $this->method == "POST" || $this->method == "PUT" ) && $this->data === null )
 		{
-				$this->complete = false;
+			$this->complete = false;
 		}
 	}
 
