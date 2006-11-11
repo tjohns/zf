@@ -1,0 +1,23 @@
+<sect1 id="zend.controller.rewriterouter.variable-requirements">
+	<title>Anforderungen an Variablen</title>
+
+	<para>
+	    Du kannst einen vierten Parameter hinzufügen, in dem Anforderungen an die Variablen 
+	    angegeben werden können. Diese werden als reguläre Ausdrücke definiert:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
+
+	<note>
+	    Im Gegensatz zu Ruby on Rails wird <code>Zend_Controller_RewriteRouter</code> für eine Route 
+	    Standardwerte verwenden, wenn die Anforderungen an die Variablen im vierten Parameter nicht 
+	    erfüllt werden. Also passt die URL <code>http://example.com/archive/test</code> auf die 
+	    obige Route und setzt den Parameter 'year' auf 2006. Diese Funktionalität kann sich in 
+	    Zukunft ändern, da sie im Moment beim Schreiben dieser Dokumentation noch diskutiert wird.
+	</note>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

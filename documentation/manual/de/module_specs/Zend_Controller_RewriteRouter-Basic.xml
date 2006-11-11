@@ -1,0 +1,60 @@
+<sect1 id="zend.controller.rewriterouter.basic">
+	<title>Einfache Routen</title>
+
+	<para>
+	    Das Herz des RewriteRouter ist die Definition der benutzerdefinierten Routen. Routen werden
+	    durch Aufruf der <code>addRoute</code> Methode des RewriteRouter erstellt:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('user', 'user/:username');]]></programlisting>
+
+	<para>
+	    Der erste Parameter ist der Name der Route. Zum derzeitigen Zeitpunkt ist er redundant  
+	    aber wird in Zukunft in einem URL View Helper verwendet, um eine einfache Erstellung von
+	    URLs in deinen Views zu ermöglichen. Wenn du die vorher konfigurierte, benannte Route 
+	    verwenden möchtest, kannst du sie mit den <code>getRoute</code> Methode des RewriteRouter 
+	    erhalten.
+	</para>
+
+	<para>
+	    Der zweite Parameter ist eine Route, die auf eine URL passt - zum Beispiel passt die obige
+	    Route auf <code>http://example.com/user/martel</code>. Der Doppelpunkt in einer Route 
+	    markiert eine URL Variable, die durch die <code>Zend_Controller_Action::_getParam</code> 
+	    Methode zugänglich ist. In unserem Beispiel wird der mit 'username' benannte Parameter auf 
+	    den Wert 'martel' gesetzt. 
+	</para>
+
+	<note>
+	    Routes werden in umgekehrter Reihenfolge abgeglichen, so dass du sicherstellen musst, dass 
+	    die allgemeinste Route als erstes definiert ist.
+	</note>
+
+	<note>
+	    Fürs Erste erlaubt die aktuelle Implementation die Verwendung jedes Zeichens für den 
+	    Variablenbezeichner außer den Schrägstrich (/), es wird aber sehr empfohlen, dass du nur 
+	    Zeichen verwendest, die für PHP Variablen verwendet werden dürfen. In Zukunft wird die 
+	    Implementation vermutlich angepasst und dies könnte Fehler in deinen Code einführen.
+	</note>
+
+	<para>
+	    Es gibt zwei besondere Variablen, die in deinen Routen verwendet werden können - 
+	    'controller' und 'action'. Diese besonderen Variablen werden verwendet, um einen gewählten 
+	    Controller und/oder eine Aktion in der URL zu finden. Die 'action' Variable muß immer 
+	    entweder in der Route oder als Standardparameter definiert sein. Die 'controller' Variable
+	    wird stanardmäßig auf IndexController verweisen, wenn sie nicht definiert wurde.
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('user', ':controller/:action');]]></programlisting>
+
+	<para>
+	    Wenn du deinen Browser mit dieser Route auf <code>http://example.com/news/latest</code> 
+	    richtest, wird der <code>Zend_Controller_Dispatcher</code> die Aktion latestAction deines 
+	    Controllers NewsController ausführen.
+	</para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

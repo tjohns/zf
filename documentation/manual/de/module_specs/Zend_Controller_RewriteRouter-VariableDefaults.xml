@@ -1,0 +1,33 @@
+<sect1 id="zend.controller.rewriterouter.variable-defaults">
+	<title>Vorgegebene Variablenwerte</title>
+
+	<para>
+	    Jede Variable in der Route kann einen vorgegebenen Wert haben. Um diesen vorzugeben, mußt du
+	    einen dritten Parameter zur <code>addRoute</code> Methode hinzufügen. Dieser dritte 
+	    Parameter ist ein Array mit den Variablennamen als Schlüssel und den vorgegebenen Werten 
+	    als Werten.
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006));]]>
+	</programlisting>
+	
+	<para>
+	    Was nicht sofort erkennbar sein mag, ist, dass die obige Route auf URLs wie 
+		<code>http://example.com/archive/2005</code> und <code>http://example.com/archive</code> 
+		passt. Im letzteren Fall hat die Variable 'year' den Wert 2006.
+	</para>
+
+	<para>
+	    Im obigen Beispiel haben wir keinen Controller angegeben, so dass immer auf die noRoute 
+	    Aktion des IndexController verwiesen wird. Damit es anwendbar ist, musst du einen gültigen 
+	    Controller und eine gültige Aktion als Standardwerte festlegen:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'));]]></programlisting>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

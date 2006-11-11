@@ -1,0 +1,23 @@
+<sect1 id="zend.controller.rewriterouter.usage">
+	<title>Einen Router verwenden</title>
+
+	<para>
+	    Um den RewriteRouter richtig zu verwenden, mußt du ihn instanziieren, einige 
+	    benutzerdefinierte Routen hinzufügen und in den Controller einbinden. Der folgende Code
+	    veranschaulicht die Vorgehensweise:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+/* -- erstelle einen Router -- */
+
+$router = new Zend_Controller_RewriteRouter();
+$router->addRoute('user', 'user/:username', array('controller' => 'user', 'action' => 'info'));
+
+/* -- binde ihn in den Controller ein -- */
+
+$ctrl = Zend_Controller_Front::getInstance();
+$ctrl->setRouter($router);]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
