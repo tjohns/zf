@@ -131,7 +131,12 @@
     </chapter>
     <chapter id="zend.pdf">
         <title>Zend_Pdf</title>
-        &module_specs.Zend_Pdf;
+        &module_specs.Zend_Pdf-Introduction;
+        &module_specs.Zend_Pdf-Create;
+        &module_specs.Zend_Pdf-Save;
+        &module_specs.Zend_Pdf-Pages;
+        &module_specs.Zend_Pdf-Drawing;
+        &module_specs.Zend_Pdf-Usage;
     </chapter>
 	<chapter id="zend.search">
         <title>Zend_Search</title>
