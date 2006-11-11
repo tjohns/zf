@@ -1,0 +1,23 @@
+<sect1 id="zend.controller.rewriterouter.usage">
+	<title>إستخدام معرفات التحويل - routes</title>
+
+	<para>
+        لتستخدم RewriteRouter يجب ان تنشئ instance جديدة منه , ثم تنشئ معرف تحويل,
+        ثم تقوم بحقن هذا الموجه "route" فى الـ controller . المثال التالى يوضح كيفية عمل هذا :
+	</para>
+
+	<programlisting role="php"><![CDATA[
+/* -- create a router -- */
+
+$router = new Zend_Controller_RewriteRouter();
+$router->addRoute('user', 'user/:username', array('controller' => 'user', 'action' => 'info'));
+
+/* -- set it in a controller -- */
+
+$ctrl = Zend_Controller_Front::getInstance();
+$ctrl->setRouter($router);]]></programlisting>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

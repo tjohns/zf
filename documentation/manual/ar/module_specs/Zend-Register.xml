@@ -1,0 +1,42 @@
+<sect1 id="zend.register">
+    <title>()Zend::register</title>
+
+    <para>
+
+    يسجل Object فى مسجل (registry) الـ Objects .
+
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+register($name, $object)
+
+?>]]></programlisting>
+
+    <para>
+
+    الـ registry هى ميكنة للتزويد بنسخ ثابتة (singleton instances) من الـ Objects فى نطاق عمل التطبيق.
+    عند حفظ الـ Object فى الـ registry مرة واحدة, ثم إسترجاع الـ Object مرة ثانية من الـ registry عندما 
+    نكن فى حاجة إليه, يعود إلينا نفس المثال (instance) دائما.
+
+    </para>
+
+    <para>
+
+    المتغير <code>name$</code> هو اى string يمكن إستخدامه لتسمية الـ Object فى المـ registry.
+    هذا الأسم سيمرر إلى <code>()Zend::registry</code> لأستعادة الـ Object مرة اخرى.
+ 
+    </para>
+
+    <para>
+
+    المتغير <code>name$</code> يجب ان يكن string, و فقط الـ Objects يمكن حفظها فى الـ registry, و لا يمكن حذف 
+    Object من الـ registry, و المثال الواحد (instance) يمكن حفظه مرة واحدة فى الـ registry. 
+    الفشل فى الإلتزام بهذه القواعد سيتسبب فى إلقاء <code>Zend_Exception</code> .
+
+    </para>
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

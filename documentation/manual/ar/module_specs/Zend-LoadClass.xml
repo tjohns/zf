@@ -1,0 +1,34 @@
+<sect1 id="zend.loadclass">
+    <title>()Zend::loadClass</title>
+    <para>
+
+    <code>()Zend::loadClass</code> يقوم بتحميل ملف PHP حيث اسمه يكن على هذا الشكل 
+    "<code>className.php$</code>", ثم بعد ذلك يقم بالتحقق من وجود الـ Class الممر اسمه فى 
+    <code>className$</code>.
+   </para>
+
+
+    <programlisting role="php"><![CDATA[<?php
+
+loadClass($class, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+
+    إذا لم يتم ايجاد الملف او ان الـ Class لم يكن موجود بعد التحميل, سيتم إلقاء <code>Zend_Exception</code>.
+    يستخدم <code>()Zend::loadFile</code> للتحميل و المتغير <code>dirs$</code> يمرر مباشرة إليه.
+ 
+    </para>
+
+    <para>
+
+    إذا قمت بتمرير اسم Class يحتوى على شُرط منخفضة "_", و المتغير <code>dirs$</code> يحمل القيمة 
+    <code>NULL</code> (القيمة الأساسية),
+    فسيقوم <code>()Zend::loadClass</code> تلقائيا بإكتشاف قيمة <code>dirs$</code> من اسم الـ Class 
+    عن طريق تبديل الشُرط المنخفضة "_" بفواصل مجلدات.
+    على سبيل المثال, إذا كانت قيمة المتغير <code>class$</code> هى <code>Zend_Example_Class</code>, 
+    فسيتم ترجمة هذا الى المسار <code>Zend/Example/Class.php</code>.
+
+    </para>
+</sect1>

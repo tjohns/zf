@@ -1,0 +1,39 @@
+<sect1 id="zend.loadinterface">
+    <title>()Zend::loadInterface</title>
+    <para>
+
+    يعمل <code>()Zend::loadInterface</code> تماما مثل <code>()Zend::loadClass</code>, 
+    إلا انه يقوم بتحميل Interface بدلا من تحميل Class.
+ 
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+loadInterface($interface, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+
+    لا يمكن إستخدام <code>()Zend::loadClass</code> فى تحميل الـ Interfaces لأن دالة الـ PHP 
+    <ulink url="http://php.net/class_exists"><code>()class_exists</code></ulink> لا يمكنها 
+    التأكد من وجود الـ Interfaces (من اصدار PHP 5.0.2). 
+    إستخدم <code>()Zend::loadInterface</code> بدلاً منها.
+    
+
+    </para>
+
+    <para>
+
+     إذا قمت بتمرير اسم Interface يحتوى على شُرط منخفضة "_", و المتغير <code>dirs$</code> يحمل القيمة 
+    <code>NULL</code> (القيمة الأساسية),
+    فسيقوم <code>()Zend::loadInterface</code> تلقائيا بإكتشاف قيمة <code>dirs$</code> من اسم الـ Interface 
+    عن طريق تبديل الشُرط المنخفضة "_" بفواصل مجلدات.
+    على سبيل المثال, إذا كانت قيمة المتغير <code>interface$</code> هى <code>Zend_Example_Interface</code>, 
+    فسيتم ترجمة هذا الى المسار <code>Zend/Example/Interface.php</code>.
+
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

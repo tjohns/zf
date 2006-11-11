@@ -1,0 +1,40 @@
+<sect1 id="zend.registry">
+    <title>()Zend::registry</title>
+
+    <para>
+
+    يقوم بإرجاع Object من الـ registry او يقوم بإرجاع قائمة بالكائنات  
+    الموجدة فى الـ registry.
+
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+registry($name=null)
+
+?>]]></programlisting>
+
+    <para>
+
+    إذا كان المتغير <code>name$</code> يحمل قيمة <code>NULL</code>, سيتم إرجاع Array حيث الـ key فيها هو 
+    اسم الـ Objects فى الـ registry و الـ value هى اسماء الـ Classes المنشء منها الـ Objects.
+ 
+    </para>
+
+    <para>
+
+    إذا كانت قيمة <code>name$</code> عبارة عن string, سيتم إرجاع مقبض الـ Object المشار إليه بهذا الإسم.
+    إن فشل العثور على Object فى الـ registry بهذا الأسم <code>name$</code>, 
+    سيتم إلقاء <code>Zend_Exception</code>.
+ 
+    </para>
+
+    <para>
+
+    لتعرف سريعاً إذا ما كان الـ Object موجود فى الـ registry, استخدم <code> ()Zend::isRegistred</code>.
+
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

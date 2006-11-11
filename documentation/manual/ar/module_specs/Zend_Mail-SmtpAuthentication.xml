@@ -1,0 +1,9 @@
+<sect1 id="zend.mail.smtp-authentication">
+    <title>SMTP Authentication</title>
+    <para>
+        Various SMTP authentication methods may be added later but are currently unsupported.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,23 @@
+<sect1 id="zend.controller.rewriterouter.variable-requirements">
+	<title>уЪисШЧЪ ЧсуЪлэбЧЪ</title>
+
+	<para>
+        эупффЧ Ъубэб ШбЧуэЪб бЧШк Хсь addRout ЭэЫ гфжк дбци эЬШ Чф ЪфиШо ксь ЧсуЪлэбЧЪ, 
+        ц хах Чсдбци гЪцжк ксь хэЦЩ regular expressions :
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
+
+	<note>
+        ксь кпг Ruby on Rails, эоцу Чсм RewriteRouter ЧсЮЧе Шм ZF ШуоЧбфЩ Чсм URL Чсуубб ук Чсм route Ыу 
+        гэоцу ШХгЪЮЯЧу Чсоэу ЧсУгЧгэЩ ЧсуцЬцЯЩ сЯэх нь ЭЧсЩ Уф ЧсуЪисШЧЪ ЧсууббЩ нь ЧсШбЧуэЪб ЧсбЧШк су эЪу ХгЪэнЧЦхЧ, 
+        сасп 'http://example.com/archive/test' кфЯуЧ гэЪу уоЧбфЪх ук Чсм route гэЪу цжк оэуЩ ЧсуЪлэб year Хсь 2006, 
+        хаЧ Чсгсцп оЯ эЪлэб угЪоШсЧ сУфх эЪу уфЧодЩ хах ЧсЮЧеэЩ нь ЧсцоЪ Чсаь ЪпЪШ нэх хах ЧспсуЧЪ.
+	</note>
+
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->

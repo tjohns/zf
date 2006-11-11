@@ -1,0 +1,16 @@
+<sect1 id="zend.introduction">
+    <title>مقدمة</title>
+    <para>
+
+    Zend هو الـ Class الرئيسى فى إطار عمل Zend. هذا الـ Class نبع من إلتزام إطار العمل 
+    بمبدأ DRY و هو إختصار (Don't Repeat Yourself) اى بمعنى لا تكرر نفسك. 
+    و هو يحتوى فقط على static methods, و هذه الـ methods تقوم بوظائف تحتاجها الكثير من 
+    الـ Components فى إطار عمل Zend.
+
+    </para>
+
+</sect1>
+
+<!--
+vim:se ts=4 sw=4 et:
+-->
