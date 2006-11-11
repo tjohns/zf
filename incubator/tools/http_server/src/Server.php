@@ -46,6 +46,11 @@ class Server
 		{
 			throw new Zend_Http_Server_Exception( "Socket extension not found" );
 		}
+		
+		// Make sure pcntl functions are available
+		if (! function_exists('pcntl_fork')) {
+			throw new Zend_Http_Server_Exception('PCNTL exntension not found');
+		}
 
 		if( ( $this->socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP ) ) < 0 )
 		{
