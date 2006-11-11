@@ -36,10 +36,10 @@
     </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
-        &module_specs.Zend_Cache_Introduction;
-        &module_specs.Zend_Cache_Theory;
-        &module_specs.Zend_Cache_Frontends;
-        &module_specs.Zend_Cache_Backends;
+        &module_specs.Zend_Cache-Introduction;
+        &module_specs.Zend_Cache-Theory;
+        &module_specs.Zend_Cache-Frontends;
+        &module_specs.Zend_Cache-Backends;
     </chapter>
     <chapter id="zend.config">
         <title>Zend_Config</title>
@@ -117,7 +117,10 @@
     </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
-        &module_specs.Zend_View;
+        &module_specs.Zend_View-Introduction;
+        &module_specs.Zend_View-Controllers;
+        &module_specs.Zend_View-Scripts;
+        &module_specs.Zend_View-Helpers;
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>

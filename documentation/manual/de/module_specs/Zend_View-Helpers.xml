@@ -1,0 +1,272 @@
+<sect1 id="zend.view.helpers">
+    
+    <title>View Helfer</title>
+    
+    <para>
+        In deinen View Skripten ist es oft notwendig, bestimmte komplexe Funktionen immer wieder 
+        auszuführen, z.B. Datum formatieren, Formularelemente erstellen oder Links für Aktionen
+        anzuzeigen. Du kannst Helferklassen verwenden, um diese Aufgaben für dich durchführen zu
+        lassen. 
+    </para>
+    
+    <para>
+        Um einen Helfer in deinem View Skript zu verwenden, rufe ihn mittels $this->helperName() 
+        auf. Im Hintergrund wird Zend_View die Klasse Zend_View_Helper_HelperName laden, eine 
+        Objektinstanz der Klasse erstellen und deren Methode helperName() aufrufen. Die 
+        Objektinstanz bleibt innerhalb der Zend_View Instanz bestehen und wird bei allen weiteren 
+        Aufrufen von $this->helperName() wiederverwendet.
+    </para>
+    
+    <sect2 id="zend.view.helpers.initial">
+    
+        <title>Vorhandene Helfer</title>
+        
+        <para>
+            Zend_View enthält bereits einige vorhandene Helferklassen, die sich alle auf die 
+            Erstellung von Formularelementen beziehen. Alle führen die entsprechende 
+            Ausgabemaskierung automatisch durch. Diese sind: 
+        </para>
+        
+        <itemizedlist>
+            
+            <listitem><para>
+                formButton($name, $value, $attribs): Erstellt ein &lt;input type="button" /&gt; 
+                Element.
+            </para></listitem>
+            
+            <listitem><para>
+                formCheckbox($name, $value, $attribs, $options): Erstellt ein 
+                &lt;input type="checkbox" /&gt; Element. Der $options Parameter ist ein Array, bei
+                dem der erste Wert der ausgewählte Wert ("checked") und der zweite Wert der 
+                nicht ausgewählte Wert ("unchecked") angibt (die Standardwerte sind '1' und '0').
+                Wenn $value mit dem ausgewählten Wert ("checked") übereinstimmt, wird die Checkbox
+                für dich ausgewählt sein.
+            </para></listitem>
+            
+            <listitem><para>
+                formFile($name, $value, $attribs): Erstellt ein &lt;input type="file" /&gt; 
+                Element.
+            </para></listitem>
+            
+            <listitem><para>
+                formHidden($name, $value, $attribs): Erstellt ein &lt;input type="hidden" /&gt; 
+                Element.
+            </para></listitem>
+            
+            <listitem><para>
+                formPassword($name, $value, $attribs): Erstellt ein an &lt;input type="password" /&gt; 
+                Element.
+            </para></listitem>
+            
+            <listitem><para>
+                formRadio($name, $value, $attribs, $options): Erstellt eine Reihe von 
+                &lt;input type="radio" /&gt; Elementen, eine für jeden der $options Elemente. 
+                Im $options Array ist der Elementschlüssel der Wert und der Elementwert die 
+                Bezeichnung des Radio-Buttons. Der $value Radiobutton wird für dich vorgewählt.
+            </para></listitem>
+            
+            <listitem><para>
+                formReset($name, $value, $attribs): Erstellt eine &lt;input type="reset" /&gt; 
+                Element.
+            </para></listitem>
+            
+            <listitem><para>
+                formSelect($name, $value, $attribs, $options): Erstellt einen 
+                &lt;select&gt;...&lt;/select&gt; block mit einer &lt;option&gt;one für jedes
+                $options Element. Im $options Array ist der Elementschlüssel der Optionswert und 
+                der Elementwert die Optionsbezeichnung. Die $value Optionen werden für dich 
+                vorgewählt.
+            </para></listitem>
+            
+            <listitem><para>
+                formSubmit($name, $value, $attribs): Erstellt ein &lt;input type="submit" /&gt; 
+                Element.
+            </para></listitem>
+            
+            <listitem><para>
+                formText($name, $value, $attribs): Erstellt ein &lt;input type="text" /&gt; Element.
+            </para></listitem>
+            
+            <listitem><para>
+                formTextarea($name, $value, $attribs): Erstellt einen
+                &lt;textarea&gt;...&lt;/textarea&gt; Block.
+            </para></listitem>
+            
+        </itemizedlist>
+        
+        <para>
+            Die Verwendung dieser Helfer in deinem View Skript ist sehr einfach, hier ist ein
+            Beispiel. Beachte, dass du diese Helfer nur aufzurufen brauchst; sie werden automatisch
+            geladen und instanziiert, sobald sie benötigt werden.
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+// Innerhalb deines View Skriptes, verweist $this auf die Zend_View 
+// Instanz.
+// 
+// Sagen wir, dass du bereits eine Serie von Auswahlwerten der Variable
+// $countries in Form eines Arrays zugewiesen hast 
+// ('us' => 'United States', 'il' => 'Israel', 'de' => 'Germany')
+?>
+<form action="action.php" method="post">
+    <p><label>Deine Email:
+        <?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
+    </label></p>
+    <p><label>Dein Land:
+        <?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
+    </label></p>
+    <p><label>Möchtest Du hinzugefügt werden?
+        <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
+    </label></p>
+</form>]]>
+        </programlisting>
+        
+        <para>
+            Die Ausgabe des View Skriptes wird in etwa so aussehen:
+        </para>
+        
+        <programlisting role="php"><![CDATA[<form action="action.php" method="post">
+    <p><label>Deine Email:
+        <input type="text" name="email" value="you@example.com" size="32" />
+    </label></p>
+    <p><label>Dein Land:
+        <select name="country">
+            <option value="us" selected="selected">United States</option>
+            <option value="il">Israel</option>
+            <option value="de">Germany</option>
+        </select>
+    </label></p>
+    <p><label>Möchtest Du hinzugefügt werden?
+        <input type="hidden" name="opt_in" value="no" />
+        <input type="checkbox" name="opt_in" value="yes" checked="checked" />
+    </label></p>
+</form>]]>
+        </programlisting>
+        
+    </sect2>
+    
+    <sect2 id="zend.view.helpers.paths">
+        
+        <title>Helfer Pfade</title>
+        
+        <para>
+            Wie bei den View Skripten kann der Controller für Zend_View auch einen Stapel an Pfaden 
+            festlegen, in dem nach Hilfsklassen gesucht werden soll. Standardmäßig sucht Zend_View
+            in "Zend/View/Helper/*" nach Hilfsklassen. Du kannst Zend_View mit Hilfe der Methoden
+            setHelperPath() und addHelperPath() mitteilen, auch in anderen Verzeichnissen zu suchen.
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$view = new Zend_View();
+$view->setHelperPath('/path/to/more/helpers');
+?>]]>
+        </programlisting>
+        
+        <para>
+            Durch Verwendung der addHelperPath() Methode können die Pfade "gestapelt" werden. Wenn 
+            du Pfade zu diesem Stapelspeicher hinzufügst, wird Zend_View im zuletzt hinzugefügten 
+            Pfad nach der angeforderten Hilfsklasse schauen. Dies erlaubt dir, zu den vorhandenen 
+            Helfern weitere hinzufügen oder diese durch eigene zu ersetzen. 
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$view = new Zend_View();
+$view->addHelperPath('/path/to/some/helpers');
+$view->addHelperPath('/other/path/to/helpers');
+
+// wenn du nun $this->helperName() aufrufst, wird Zend_View zuerst nach
+// "/other/path/to/helpers/HelperName.php", dann nach for
+// "/path/to/some/helpers/HelperName", und zuletzt nach 
+// "Zend/View/Helpers/HelperName.php" schauen.
+?>]]>
+        </programlisting>
+        
+    </sect2>
+    
+    <sect2 id="zend.view.helpers.custom">
+        
+        <title>Eigene Helfer schreiben</title>
+        
+        <para>
+            Eigene Helfer zu schreiben ist einfach; du mußt nur diese Regeln befolgen:
+        </para>
+        
+        <itemizedlist>
+            
+            <listitem><para>
+                Der Klassennamen muss Zend_View_Helper_* sein, wobei * für den Helfernamen selber
+                steht. Wenn du z.B. einen Helfer mit Namen "specialPurpose" schreibst, würde der
+                Klassennamen "Zend_View_Helper_SpecialPurpose" lauten (beachte die Großschreibung).
+            </para></listitem>
+            
+            <listitem><para>
+                Die Klasse muss eine öffentliche Methode mit dem Namen des Helfers haben. Dies ist 
+                die Methode, welche vom View Skript durch "$this->specialPurpose()" aufgerufen wird.
+                In unserem "specialPurpose" Beispiel, würde die notwendige Deklaration dieser 
+                Methode "public function specialPurpose()" lauten. 
+            </para></listitem>
+            
+            <listitem><para>
+                Im Allgemeinen sollte die Klasse keine Ausgaben durch echo(), print() oder auf
+                andere Weise erstellen. Stattdessen sollte es die auszugebenen Werte zurückgeben.
+                Die zurückgegebenen Werte sollten entsprechend maskiert werden.
+            </para></listitem>
+            
+            <listitem><para>
+                Diese Klasse muss sich in einer Datei befinden, die nach der Helfermethode benannt
+                ist. Bezogen auf unser "specialPurpose" Beispiel, muss der Dateiname 
+                "SpecialPurpose.php" lauten.
+            </para></listitem>
+        </itemizedlist>
+        
+        <para>
+            Platziere die Hilfsklasse irgendwo in deinem Stapelspeicher für Hilfspfade und Zend_View 
+            wird den Helfer automatisch für dich laden, instanziieren, speichern und ausführen. 
+        </para>
+        
+        <para>
+            Hier ist ein Beispiel für unseren SpecialPurpose Helfer:
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+class Zend_View_Helper_SpecialPurpose {
+    protected $_count = 0;
+    public function specialPurpose()
+    {
+        $this->_count++;
+        $output = "Ich habe 'The Jerk' {$this->_count} Mal(e) gesehen.";
+        return htmlspecialchars($output);
+    }
+}
+?>]]>
+        </programlisting>
+        
+        <para>
+            Dann rufst du in einem View Skript den SpecialPurpose Helfer so oft auf, wie du 
+            möchtest; er wird einmal instanziiert und bleibt für die Lebensdauer der Zend_View
+            Instanz bestehen.
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+// denke daran, dass $this in deinem View Skript auf die 
+// Zend_View Instanz verweist.
+echo $this->specialPurpose();
+echo $this->specialPurpose();
+echo $this->specialPurpose();
+?>]]>
+        </programlisting>
+        
+        <para>
+            Die Ausgabe wird in etwa so aussehen:
+        </para>
+        <programlisting role="php"><![CDATA[Ich habe 'The Jerk' 1 Mal(e) gesehen.
+Ich habe 'The Jerk' 2 Mal(e) gesehen.
+Ich habe 'The Jerk' 3 Mal(e) gesehen.]]>
+        </programlisting>
+        
+    </sect2>
+    
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
