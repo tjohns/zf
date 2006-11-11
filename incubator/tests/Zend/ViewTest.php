@@ -337,4 +337,18 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $view = new Zend_View();
         $this->assertTrue($view instanceof Zend_View_Interface);
     }
+
+    public function testGetVars()
+    {
+        $view = new Zend_View();
+        $view->foo = 'bar';
+        $view->bar = 'baz';
+        $view->baz = array('foo', 'bar');
+
+        $vars = $view->getVars();
+        $this->assertEquals(3, count($vars));
+        $this->assertEquals('bar', $vars['foo']);
+        $this->assertEquals('baz', $vars['bar']);
+        $this->assertEquals(array('foo', 'bar'), $vars['baz']);
+    }
 }

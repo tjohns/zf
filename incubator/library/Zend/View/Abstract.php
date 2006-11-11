@@ -398,6 +398,16 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     }
 
     /**
+     * Return list of all assigned variables
+     * 
+     * @return array
+     */
+    public function getVars()
+    {
+        return $this->_vars;
+    }
+
+    /**
      * Clear all assigned variables
      *
      * Clears all variables assigned to Zend_View either via {@link assign()} or 
