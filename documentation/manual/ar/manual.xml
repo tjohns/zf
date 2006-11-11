@@ -40,7 +40,10 @@
     </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
-        &module_specs.Zend_Cache;
+        &module_specs.Zend_Config-Introduction;
+        &module_specs.Zend_Config-TheoryOfOperation;
+        &module_specs.Zend_Config_Ini;
+        &module_specs.Zend_Config_Xml;
     </chapter>
     <chapter id="zend.config">
         <title>Zend_Config</title>
@@ -71,7 +74,14 @@
     </chapter>
     <chapter id="zend.feed">
         <title>Zend_Feed</title>
-        &module_specs.Zend_Feed;
+        &module_specs.Zend_Feed-Introduction;
+        &module_specs.Zend_Feed-Importing;
+        &module_specs.Zend_Feed-FindFeeds;
+        &module_specs.Zend_Feed-ConsumingRss;
+        &module_specs.Zend_Feed-ConsumingAtom;
+        &module_specs.Zend_Feed-ConsumingAtomSingle;
+        &module_specs.Zend_Feed-ModifyingFeed;
+        &module_specs.Zend_Feed-CustomFeed;
     </chapter>
     <chapter id="zend.filter">
         <title>Zend_Filter</title>
@@ -89,7 +99,10 @@
     </chapter>
     <chapter id="zend.log">
         <title>Zend_Log</title>
-        &module_specs.Zend_Log;
+        &module_specs.Zend_Log-Introduction;
+        &module_specs.Zend_Log-Simple;
+        &module_specs.Zend_Log-Levels;
+        &module_specs.Zend_Log-Advanced;
     </chapter>
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
