@@ -60,11 +60,11 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     );
 
     /**
-     * Stack of executing script file names.
+     * Script file name to execute
      *
-     * @var array
+     * @var string
      */
-    private $_file = array();
+    private $_file = null;
 
     /**
      * Instances of helper objects.
