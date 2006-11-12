@@ -331,7 +331,7 @@ class Zend_Locale_Format
         $hour  = iconv_strpos($format, 'H');
         $min   = iconv_strpos($format, 'm');
         $sec   = iconv_strpos($format, 's');
-        
+
         if ($day !== false) {
             $parse[$day]   = 'd';
             $parse[$month] = 'M';
@@ -341,6 +341,11 @@ class Zend_Locale_Format
             $parse[$hour] = 'H';
             $parse[$min]  = 'm';
             $parse[$sec]  = 's';
+        }
+
+        // format unknown wether date nor time
+        if (empty($parse)) {
+            self::throwException('unknown format, wether date nor time in ' . $format . ' found');
         }
         ksort($parse);
 
@@ -358,6 +363,11 @@ class Zend_Locale_Format
         // split number parts 
         $split = false;
         preg_match_all('/\d+/', $number, $splitted);
+
+        if (count($splitted[0]) == 0) {
+            self::throwException('No date part in ' . $number . ' found');
+        }
+        
         if (count($splitted[0]) == 1) {
             $split = 0;
         }
@@ -426,32 +436,34 @@ class Zend_Locale_Format
             }
         }
 
-        // fix false month
-        if (($position !== false) && ($position != $month)) {
-            $temp = $result['day'];
-            $result['day']   = $result['month'];
-            $result['month'] = $temp;
-        }
+        if ($day !== false) {
+            // fix false month
+            if (($position !== false) && ($position != $month)) {
+                $temp = $result['day'];
+                $result['day']   = $result['month'];
+                $result['month'] = $temp;
+            }
 
-        // fix switched values d <> y
-        if ($result['day'] > 31) {
-            $temp = $result['year'];
-            $result['year'] = $result['day'];
-            $result['day']  = $temp;
-        }
+            // fix switched values d <> y
+            if ($result['day'] > 31) {
+                $temp = $result['year'];
+                $result['year'] = $result['day'];
+                $result['day']  = $temp;
+            }
 
-        // fix switched values M <> y
-        if ($result['month'] > 31) {
-            $temp = $result['year'];
-            $result['year']  = $result['month'];
-            $result['month'] = $temp;
-        }
+            // fix switched values M <> y
+            if ($result['month'] > 31) {
+                $temp = $result['year'];
+                $result['year']  = $result['month'];
+                $result['month'] = $temp;
+            }
 
-        // fix switched values M <> y
-        if ($result['month'] > 12) {
-            $temp = $result['day'];
-            $result['day']   = $result['month'];
-            $result['month'] = $temp;
+            // fix switched values M <> y
+            if ($result['month'] > 12) {
+                $temp = $result['day'];
+                $result['day']   = $result['month'];
+                $result['month'] = $temp;
+            }
         }
         return $result;
     }
@@ -478,11 +490,8 @@ class Zend_Locale_Format
         }
 
         $date = self::_parseDate($date, $format, $locale);
-        if ($date !== false) {
-            return $date;
-        }
 
-        return false;
+        return $date;
     }
 
     /**
@@ -495,7 +504,9 @@ class Zend_Locale_Format
      */
     public static function isDate($date, $format = false, $locale = false)
     {
-        if (self::getDate($date, $format, $locale) === false) {
+        try {
+            $date = self::getDate($date, $format, $locale);
+        } catch (Exception $e) {
             return false;
         }
         return true;
@@ -522,12 +533,9 @@ class Zend_Locale_Format
             $format = $format['pattern'];
         }
 
-        $date = self::_parseDate($date, $format, $locale);
-        if ($date !== false) {
-            return $date;
-        }
+        $time = self::_parseDate($time, $format, $locale);
 
-        return false;
+        return $time;
     }
 
 
@@ -541,7 +549,9 @@ class Zend_Locale_Format
      */
     public static function isTime($time, $format = false, $locale = false)
     {
-        if (self::getTime($time, $format, $locale) === false) {
+        try {
+            $date = self::getTime($time, $format, $locale);
+        } catch (Exception $e) {
             return false;
         }
         return true;
