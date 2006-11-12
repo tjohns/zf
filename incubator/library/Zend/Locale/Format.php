@@ -346,44 +346,40 @@ class Zend_Locale_Format
 
         // convert month string to number
         $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+        $position = false;
         foreach($monthlist as $key => $name) {
-            if (iconv_strpos($number, $name)) {
-                $number = str_replace($name, $key, $number);
+            if (iconv_strpos($number, $name) !== false) {
+                $position = iconv_strpos($number, $name);
+                $number   = str_replace($name, $key, $number);
                 break;
             }
         }
 
         // split number parts 
+        $split = false;
         preg_match_all('/\d+/', $number, $splitted);
         if (count($splitted[0]) == 1) {
-            $split = true;
-            $splitted[0][1] = $splitted[0][0];
-            $splitted[0][2] = $splitted[0][0];
-
-            // full date one string
-            if (($day !== false) && ($hour !== false)) {
-                $splitted[0][3] = $splitted[0][0];
-                $splitted[0][4] = $splitted[0][0];
-                $splitted[0][5] = $splitted[0][0];
-            }
+            $split = 0;
         }
         $cnt = 0;
         foreach($parse as $key => $value) {
 
             switch($value) {
                 case 'd':
-                    if (empty($split)) {
+                    if ($split === false) {
                         $result['day']    = (int) $splitted[0][$cnt];
                     } else {
-                        $result['day']    = (int) iconv_substr($splitted[0][$cnt], $day, 2);
+                        $result['day']    = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $split += 2;
                     }
                     ++$cnt;
                     break;
                 case 'M':
-                    if (empty($split)) {
+                    if ($split === false) {
                         $result['month']  = (int) $splitted[0][$cnt];
                     } else {
-                        $result['month']  = (int) iconv_substr($splitted[0][$cnt], $month, 2);
+                        $result['month']  = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $split += 2;
                     }
                     ++$cnt;
                     break;
@@ -392,38 +388,49 @@ class Zend_Locale_Format
                     if (iconv_substr($format, $year, 4) == 'yyyy') {
                         $length = 4;
                     }
-                    if (empty($split)) {
+                    if ($split === false) {
                         $result['year']   = (int) $splitted[0][$cnt];
                     } else {
-                        $result['year']   = (int) iconv_substr($splitted[0][$cnt], $year, $length);
+                        $result['year']   = (int) iconv_substr($splitted[0][0], $split, $length);
+                        $split += $length;
                     }
                     ++$cnt;
                     break;
                 case 'H':
-                    if (empty($split)) {
+                    if ($split === false) {
                         $result['hour']   = (int) $splitted[0][$cnt];
                     } else {
-                        $result['hour']   = (int) iconv_substr($splitted[0][$cnt], $hour, 2);
+                        $result['hour']   = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $split += 2;
                     }
                     ++$cnt;
                     break;
                 case 'm':
-                    if (empty($split)) {
+                    if ($split === false) {
                         $result['minute'] = (int) $splitted[0][$cnt];
                     } else {
-                        $result['minute'] = (int) iconv_substr($splitted[0][$cnt], $minute, 2);
+                        $result['minute'] = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $split += 2;
                     }
                     ++$cnt;
                     break;
                 case 's':
-                    if (empty($split)) {
+                    if ($split === false) {
                         $result['second'] = (int) $splitted[0][$cnt];
                     } else {
-                        $result['second'] = (int) iconv_substr($splitted[0][$cnt], $second, 2);
+                        $result['second'] = (int) iconv_substr($splitted[0][0], $split, 2);
+                        $split += 2;
                     }
                     ++$cnt;
                     break;
             }
+        }
+
+        // fix false month
+        if (($position !== false) && ($position != $month)) {
+            $temp = $result['day'];
+            $result['day']   = $result['month'];
+            $result['month'] = $temp;
         }
 
         // fix switched values d <> y
@@ -436,17 +443,16 @@ class Zend_Locale_Format
         // fix switched values M <> y
         if ($result['month'] > 31) {
             $temp = $result['year'];
-            $result['year'] = $result['month'];
-            $result['month']  = $temp;
+            $result['year']  = $result['month'];
+            $result['month'] = $temp;
         }
 
         // fix switched values M <> y
         if ($result['month'] > 12) {
             $temp = $result['day'];
-            $result['day'] = $result['month'];
-            $result['month']  = $temp;
+            $result['day']   = $result['month'];
+            $result['month'] = $temp;
         }
-        
         return $result;
     }
 

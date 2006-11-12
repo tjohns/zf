@@ -1513,7 +1513,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
         $value = Zend_Locale_Format::getDate('101106', false, 'de_AT');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
-        $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
+        $this->assertEquals($value['year'], 6, 'Year 6 expected');
     }
 
 
@@ -1588,7 +1588,7 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
      */
     public function testgetDateParsing27()
     {
-        $value = Zend_Locale_Format::getDate('2006 10 Okt', false, 'de_AT');
+        $value = Zend_Locale_Format::getDate('2006 10 Nov', false, 'de_AT');
         $this->assertEquals($value['day'], 10, 'Day 10 expected');
         $this->assertEquals($value['month'], 11, 'Month 11 expected');
         $this->assertEquals($value['year'], 2006, 'Year 2006 expected');
