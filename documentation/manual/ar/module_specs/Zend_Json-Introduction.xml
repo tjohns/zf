@@ -1,16 +1,15 @@
 <sect1 id="zend.json.introduction">
-    <title>Introduction</title>
+    <title>مقدمة</title>
     <para>
-        <code>Zend_Json</code> provides convenience methods for serializing
-        native PHP to JSON and decoding JSON to native PHP. For more information
-        on JSON, <ulink url="http://www.json.org/">visit the JSON project
-        site</ulink>.
+        توفر <code>Zend_Json</code> مجموعة من الـ methods التى تسهل عملية الـ serialization من PHP 
+        إلى JSON , و عملية تحويل JSON إلى PHP عادية , و لمزيد من المعلومات عن JSON : 
+        <ulink url="http://www.json.org/">قم بزيارة موقع مشروع JSON</ulink>.
     </para>
     <para>
-        JSON, JavaScript Object Notation, can be used for data
-        interchange between JavaScript and other languages. Since JSON can be
-        directly evaluated by JavaScript, it is a more efficient and lightweight
-        format than XML for exchanging data with JavaScript clients.
+        JSON أو JavaScript Object Notation , يمكن إستخدامها لتبادل البيانات بين لغة JavaScript 
+        و اللغات الأخرى, و حيث أن JSON يمكن أن يتم فهمها مباشرة من قبل JavaScript , 
+        لذلك تتميز بكفائة و خفة وزن أكبر من التى توفرها XML و ذلك فى عمليات تبادل البيانات 
+        مع لغة JavaScript .
     </para>
 </sect1>
 <!--

@@ -1,9 +1,8 @@
 <sect1 id="zend.json.basics">
-    <title>Basic Usage</title>
+    <title>إستخدامات بسيطة</title>
     <para>
-        Usage of <code>Zend_Json</code> involves using the two public static
-        methods available: <code>Zend_Json::encode()</code> and
-        <code>Zend_Json::decode()</code>. 
+        إستخدام <code>Zend_Json</code> يتطلب إستخدام إثنان من الـ public static methods المتوفرة : 
+        <code>()Zend_Json::encode</code> و <code>()Zend_Json::decode</code>. 
     </para>
     <programlisting role="php"><![CDATA[<?php
 // Retrieve a value:
