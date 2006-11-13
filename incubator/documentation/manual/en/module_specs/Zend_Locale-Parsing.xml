@@ -1,0 +1,492 @@
+<sect1 id="zend.locale.parsing">
+    <title>Normalization and Localization</title>
+    <para>
+        <code>Zend_Locale_Format</code> is a internal subclass of Zend_Locale which provides
+        normalization and localization for numbers and dates. All locale aware classes
+        use this one for normalization and localization.
+    </para>
+    <para>
+        Therefor all functions need a proper locale for parsing.
+        <note>
+            If no locale is given the standard locale will be taken for normalization and localization.
+            This can lead to unpredicted behavior.
+        </note>
+    </para>
+    <sect2 id="zend.locale.number.normalize">
+        <title>Number normalization</title>
+        <para>
+            Numbers can be parsed with the <code>getNumber()</code> function.
+            A normalized string of the number will be returned.
+        </para>
+        <example>
+            <title>Number normalization</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::getNumber('13.524,678', $locale);
+
+// will return 13524.678
+print $number;
+?>]]></programlisting>
+        </example>
+        <para>
+            <note>
+                <code>getNumber()</code> can normalize numbers with unlimited length.
+                It is not related to integer or float limitations. So be aware using the output
+                within calculations. 
+            </note>
+        </para>
+        <para>
+            Also the precision can be truncated to a given length with <code>getNumber()</code>.
+            A normalized string of the number will be returned. If no precision is given, the 
+            complete normalized number will be returned.
+        </para>
+        <example>
+            <title>Number normalization with precision</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::getNumber('13.524,678', 1, $locale);
+
+// will return 13524.6
+print $number;
+?>]]></programlisting>
+        </example>
+        <para>
+            <note>
+                <code>getNumber()</code> will truncate the input. The result will not be 
+                rounded. So 1.6 will not return 2 but 1 instead.
+            </note>
+        </para>
+    </sect2>
+    <sect2 id="zend.locale.number.localize">
+        <title>Number localization</title>
+        <para>
+            <code>toNumber()</code> can localize any given number.
+            This function will return a localized string of the given number.
+        </para>
+        <example>
+            <title>Number localization</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::toNumber(13547.36, $locale);
+
+// will return 13.547,36
+print $number;
+?>]]></programlisting>
+        </example>
+        <para>
+            <note>
+                <code>toNumber()</code> can localize numbers with unlimited length.
+                It is not related to integer or float limitations.
+            </note>
+        </para>
+        <para>
+            The same way as within <code>getNumber()</code>, <code>toNumber()</code> handles
+            precision. If no precision is given, the complete localized number will be returned.
+        </para>
+        <example>
+            <title>Number localization with precision</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::toNumber(13547.3678, 2, $locale);
+
+// will return 13.547,36
+print $number;
+?>]]></programlisting>
+        </example>
+        <para>
+            <note>
+                <code>toNumber()</code> will truncate the output. The result will not be 
+                rounded. So 1.6 will not return 2 but 1 instead.
+            </note>
+        </para>
+    </sect2>
+    <sect2 id="zend.locale.number.test">
+        <title>Number testing</title>
+        <para>
+            <code>isNumber()</code> checks if a given string is a number and returns true or false.
+        </para>
+        <example>
+            <title>Number testing</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale();
+if (Zend_Locale_Format::isNumber('13.445,36', 'de_AT') {
+    print "Number";
+} else {
+    print "not a Number";
+} 
+?>]]></programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.float.normalize">
+        <title>Float value normalization</title>
+        <para>
+            Floating point values can be parsed with the <code>getFloat()</code> function.
+            A floating point value will be returned.
+        </para>
+        <example>
+            <title>Floating point value normalization</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::getFloat('13.524,678', 2, $locale);
+
+// will return 13524.67
+print $number;
+?>]]></programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.float.localize">
+        <title>Floating point value localization</title>
+        <para>
+            <code>toFloat()</code> can localize floating point values.
+            This function will return a localized string of the given number.
+        </para>
+        <example>
+            <title>Floating point value localization</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::toFloat(13547.3655, 1, $locale);
+
+// will return 13.547,3
+print $number;
+?>]]></programlisting>
+        </example>
+        <para>
+            <note>
+                <code>toFloat()</code> will truncate the output. The result will not be 
+                rounded. So 1.6 will not return 2 but 1 instead.
+            </note>
+        </para>
+    </sect2>
+    <sect2 id="zend.locale.float.test">
+        <title>Floating point value testing</title>
+        <para>
+            <code>isFloat()</code> checks if a given string is a floating point value and returns true or false.
+        </para>
+        <example>
+            <title>Floating point value testing</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale();
+if (Zend_Locale_Format::isFloat('13.445,36', 'de_AT') {
+    print "float";
+} else {
+    print "not a float";
+} 
+?>]]></programlisting>
+        </example>
+    </sect2>
+
+
+
+    <sect2 id="zend.locale.integer.normalize">
+        <title>Integer value normalization</title>
+        <para>
+            Integer values can be parsed with the <code>getInteger()</code> function.
+            A integer value will be returned.
+        </para>
+        <example>
+            <title>Integer value normalization</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::getInteger('13.524,678', $locale);
+
+// will return 13524
+print $number;
+?>]]></programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.integer.localize">
+        <title>Integer point value localization</title>
+        <para>
+            <code>toInteger()</code> can localize integer values.
+            This function will return a localized string of the given number.
+        </para>
+        <example>
+            <title>Integer value localization</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$number = Zend_Locale_Format::toInteger(13547.3655, $locale);
+
+// will return 13.547
+print $number;
+?>]]></programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.integer.test">
+        <title>Integer value testing</title>
+        <para>
+            <code>isInteger()</code> checks if a given string is a integer value and returns true or false.
+        </para>
+        <example>
+            <title>Integer value testing</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale();
+if (Zend_Locale_Format::isInteger('13.445', 'de_AT') {
+    print "integer";
+} else {
+    print "not a integer";
+} 
+?>]]></programlisting>
+        </example>
+    </sect2>
+    <sect2 id="zend.locale.date.normalizing">
+        <title>Normalize a date or time</title>
+        <para>
+            <code>getDate()</code> has the ability to parse a localized date.
+            There will always be an array with the date values returned.
+            <note>
+                All return values as OPTIONAL. If only date is given all time values are supressed.
+                If no time is given all date values are supressed.
+            </note>
+            <note>
+                If no date or time can be found within the given input, an exception will be thrown.
+            </note>
+        </para>
+        <para>
+            The following return values are possible :
+            <table>
+                <title>Return values</title>
+                <tgroup cols='4'>
+                    <thead>
+                        <row>
+                            <entry>Array key</entry>
+                            <entry>Returned value</entry>
+                            <entry>Minimum</minimum>
+                            <entry>Maximum</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>day</entry>
+                            <entry>integer</entry>
+                            <entry>1</entry>
+                            <entry>31</entry>
+                        </row>
+                        <row>
+                            <entry>month</entry>
+                            <entry>integer</entry>
+                            <entry>1</entry>
+                            <entry>12</entry>
+                        </row>
+                        <row>
+                            <entry>year</entry>
+                            <entry>integer</entry>
+                            <entry>no limit</entry>
+                            <entry>no limit</entry>
+                        </row>
+                        <row>
+                            <entry>hour</entry>
+                            <entry>integer</entry>
+                            <entry>0</entry>
+                            <entry>no limit</entry>
+                        </row>
+                        <row>
+                            <entry>minute</entry>
+                            <entry>integer</entry>
+                            <entry>0</entry>
+                            <entry>59</entry>
+                        </row>
+                        <row>
+                            <entry>second</entry>
+                            <entry>integer</entry>
+                            <entry>0</entry>
+                            <entry>59</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </para>
+        <example>
+            <title>Normalizing a date</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale();
+$date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
+
+print_r ($date);
+?>]]></programlisting>
+        </example>
+        <para>
+            But <code>getDate()</code> can now only handle given formats, it also knows local standard
+            formats, so by using only the locale the used format can be automatically detected.
+        </para>
+        <example>
+            <title>Normalizing a date by locale</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$date = Zend_Locale_Format::getDate('13.04.2006', false, $locale);
+
+print_r ($date);
+?>]]></programlisting>
+        </example>
+        <para>
+            Also a complete date can be parsed by only giving by giving a complete date as input.
+        </para>
+        <example>
+            <title>Normalizing a date with time</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$locale = new Zend_Locale('de_AT');
+$date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', false, $locale);
+
+print_r ($date);
+?>]]></programlisting>
+        </example>
+        <para>
+            Of course also an unusal´or userdefined format can be parsed.
+        </para>
+        <example>
+            <title>Normalizing a userdefined date</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$date = Zend_Locale_Format::getDate('13200504T551422', 'ddyyyyMM ssmmHH');
+
+print_r ($date);
+?>]]></programlisting>
+        </example>
+        <para>
+            The format can include the following signs :
+            <table>
+                <title>Format definition</title>
+                <tgroup cols='2'>
+                    <thead>
+                        <row>
+                            <entry>Format Letter</entry>
+                            <entry>Description</minimum>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>d or dd</entry>
+                            <entry>1 or 2 digit day</entry>
+                        </row>
+                        <row>
+                            <entry>M or MM</entry>
+                            <entry>1 or 2 digit month</entry>
+                        </row>
+                        <row>
+                            <entry>y or yy</entry>
+                            <entry>1 or 2 digit year</entry>
+                        </row>
+                        <row>
+                            <entry>yyyy</entry>
+                            <entry>4 digit year</entry>
+                        </row>
+                        <row>
+                            <entry>h</entry>
+                            <entry>1 or 2 digit hour</entry>
+                        </row>
+                        <row>
+                            <entry>m</entry>
+                            <entry>1 or 2 digit minute</entry>
+                        </row>
+                        <row>
+                            <entry>s</entry>
+                            <entry>1 or 2 digit second</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </para>
+        <para>
+            Examples for proper formats are
+            <table>
+                <title>Example formats</title>
+                <tgroup cols='3'>
+                    <thead>
+                        <row>
+                            <entry>Formats</entry>
+                            <entry>Input</minimum>
+                            <entry>Output</minimum>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>dd.MM.yy</entry>
+                            <entry>1.4.6</entry>
+                            <entry>['day'] => 1,
+                                   ['month'] => 4, 
+                                   ['year'] => 6</entry>
+                        </row>
+                        <row>
+                            <entry>dd.MM.yy</entry>
+                            <entry>01.04.2006</entry>
+                            <entry>['day'] => 1, ['month'] => 4, ['year'] => 2006</entry>
+                        </row>
+                        <row>
+                            <entry>yyyyMMdd</entry>
+                            <entry>1.4.6</entry>
+                            <entry>['day'] => 6, ['month'] => 4, ['year'] => 1</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </para>
+        <para>
+            <note>
+                If you want to parse a database date value (f.e. MySql or MsSql) use Zend_Date's ISO_8601 
+                format instead of getDate().
+            </note>
+        </para>
+        <para>
+            <code>getDate()</code> has an build in automatic correction for false inputs.
+            It can detect false values and will fix them.
+        </para>
+        <example>
+            <title>Correction for date normalizing</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Format.php';
+
+$date = Zend_Locale_Format::getDate('41.10.20', 'ddMMyy');
+
+// instead of 41 for the day, the 41 will be returned as year value
+print_r ($date);
+?>]]></programlisting>
+        </example>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
