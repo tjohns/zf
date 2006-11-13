@@ -1,0 +1,625 @@
+<?php
+
+require_once 'Zend/Http/Client.php';
+require_once 'PHPUnit/Framework/TestCase.php';
+
+/**
+ * This Testsuite includes all Zend_Http_Client that require a working web 
+ * server to perform. It was designed to be extendable, so that several 
+ * test suites could be run against several servers, with different client
+ * adapters and configurations.
+ * 
+ * Note that $this->baseuri must point to a directory on a web server
+ * containing all the files under the _files directory. You should symlink
+ * or copy these files and set 'baseuri' properly.
+ * 
+ * You can also set the proper constand in your test configuration file to 
+ * point to the right place.
+ *
+ * @category Zend
+ * @package Zend_Http_Client
+ * @subpackage UnitTests
+ * @copyright 
+ * @license
+ */
+class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase 
+{
+	/**
+	 * Identifier of this test suite. Should be the same as used in constants
+	 * in TestConfiguration.php
+	 *
+	 * @var string
+	 */
+	protected $testname = 'SOCKET';
+	
+	/**
+	 * The bast URI for this test, containing all files in the _files directory
+	 * Should be set in TestConfiguration.php or TestConfiguration.php.dist
+	 *
+	 * @var string
+	 */
+	protected $baseuri = 'http://localhost/Framework/tests/';
+	
+	/**
+	 * Common HTTP client
+	 *
+	 * @var Zend_Http_Client
+	 */
+	protected $client = null;
+	
+	/**
+	 * Configuration array
+	 *
+	 * @var array
+	 */
+	protected $config = array(
+		'adapter'     => 'Zend_Http_Client_Adapter_Socket'
+	);
+	
+	/**
+	 * Set up the test case
+	 *
+	 */
+	protected function setUp()
+	{
+		if (defined('TESTS_ZEND_HTTP_CLIENT_' . $this->testname) && 
+			! constant('TESTS_ZEND_HTTP_CLIENT_' . $this->testname))
+			$this->markTestSkipped('Set to skip Zend_Http_Client_SocketTest');
+			
+		if (defined('TESTS_ZEND_HTTP_CLIENT_' . $this->testname . '_BASEURI')) 
+			$this->baseuri = constant('TESTS_ZEND_HTTP_CLIENT_' . $this->testname . '_BASEURI');
+		
+		
+		if (substr($this->uri, -1) != '/') $this->uri .= '/';
+		$uri = $this->baseuri . $this->getName() . '.php';
+		$this->client = new Zend_Http_Client($uri, $this->config);
+	}
+	
+	/**
+	 * Simple request tests
+	 */
+	
+	/**
+	 * Test simple requests
+	 * 
+	 */
+	public function testSimpleRequests()
+	{
+		$methods = array('GET', 'POST', 'OPTIONS', 'PUT', 'DELETE');
+
+		foreach ($methods as $method) {
+			$res = $this->client->request($method);
+			$this->assertEquals('Success', $res->getBody(), "HTTP {$method} request failed.");
+		}
+	}
+	
+	/**
+	 * Test we can get the last request as string
+	 *
+	 */
+	public function testGetLastRequest()
+	{
+		$this->client->setUri($this->baseuri . 'testHeaders.php');
+		$this->client->setParameterGet('someinput', 'somevalue');
+		$this->client->setHeaders(array(
+			'X-Powered-By' => 'My Glorious Golden Ass',
+		));
+		
+		$res = $this->client->request(Zend_Http_Client::TRACE);
+		
+		$this->assertEquals($this->client->getLastRequest() . "\r\n", $res->getBody(), 'Response body should be exactly like the last request');
+	}
+
+
+	/**
+	 * GET and POST parameters tests
+	 */
+	
+	/**
+	 * Test we can properly send GET parameters
+	 * 
+	 */
+	public function testGetData()
+	{
+		$params = array(
+			'quest' => 'To seek the holy grail',
+			'YourMother' => 'Was a hamster',
+			'specialChars' => '<>$+ &?=[]^%',
+			'array' => array('firstItem', 'secondItem', '3rdItem')
+		);
+		
+		$this->client->setUri($this->client->getUri(true) . '?name=Arthur');
+		
+		$this->client->setParameterGet($params);
+		$res = $this->client->request('GET');
+		$this->assertEquals(serialize(array_merge(array('name' => 'Arthur'), $params)), $res->getBody());
+	}
+
+	/**
+	 * Test we can properly send POST parameters with
+	 * application/x-www-form-urlencoded content type
+	 * 
+	 */
+	public function testPostDataUrlEncoded()
+	{
+		$this->client->setUri($this->baseuri . 'testPostData.php');
+		$params = array(
+			'quest' => 'To seek the holy grail',
+			'YourMother' => 'Was a hamster',
+			'specialChars' => '<>$+ &?=[]^%',
+			'array' => array('firstItem', 'secondItem', '3rdItem')
+		);
+		
+		$this->client->setEncType(Zend_Http_Client::ENC_URLENCODED);
+		$this->client->setParameterPost($params);
+		$res = $this->client->request('POST');
+		$this->assertEquals(serialize($params), $res->getBody(), "POST data integrity test failed");
+	}
+	
+	/**
+	 * Test we can properly send POST parameters with
+	 * multipart/form-data content type
+	 * 
+	 */
+	public function testPostDataMultipart()
+	{
+		$this->client->setUri($this->baseuri . 'testPostData.php');
+		$params = array(
+			'quest' => 'To seek the holy grail',
+			'YourMother' => 'Was a hamster',
+			'specialChars' => '<>$+ &?=[]^%',
+			'array' => array('firstItem', 'secondItem', '3rdItem')
+		);
+		
+		$this->client->setEncType(Zend_Http_Client::ENC_FORMDATA);
+		$this->client->setParameterPost($params);
+		$res = $this->client->request('POST');
+		$this->assertEquals(serialize($params), $res->getBody(), "POST data integrity test failed");
+	}
+
+	/**
+	 * Test using raw HTTP POST data
+	 *
+	 */
+	public function testRawPostData() 
+	{
+		$data = "Chuck Norris never wet his bed as a child. The bed wet itself out of fear.";
+		
+		$res = $this->client->setRawData($data, 'text/html')->request('POST');
+		$this->assertEquals($data, $res->getBody(), 'Response body does not contain the expected data');
+	}
+
+	/**
+	 * Make sure we can reset the parameters between consecutive requests
+	 * 
+	 */
+	public function testResetParameters() 
+	{
+		$params = array(
+			'quest' => 'To seek the holy grail',
+			'YourMother' => 'Was a hamster',
+			'specialChars' => '<>$+ &?=[]^%',
+			'array' => array('firstItem', 'secondItem', '3rdItem')
+		);
+		
+		$this->client->setParameterPost($params);
+		$this->client->setParameterGet($params);
+		
+		$res = $this->client->request('POST');
+
+		$this->assertContains(serialize($params) . "\n" . serialize($params), 
+			$res->getBody(), "returned body does not contain all GET and POST parameters (it should!)");
+		
+		$this->client->resetParameters();
+		$res = $this->client->request('POST');
+		
+		$this->assertNotContains(serialize($params), $res->getBody(), 
+			"returned body contains GET or POST parameters (it shouldn't!)");
+	}
+	
+	/**
+	 * Test parameters get reset when we unset them
+	 *
+	 */
+	public function testParameterUnset()
+	{
+		$this->client->setUri($this->baseuri . 'testResetParameters.php');
+		
+		$gparams = array (
+			'cheese' => 'camambert',
+			'beer'   => 'jever pilnsen',
+		);
+		
+		$pparams = array (
+			'from' => 'bob',
+			'to'   => 'alice'
+		);
+		
+		$this->client->setParameterGet($gparams)->setParameterPost($pparams);
+		
+		// Remove some parameters
+		$this->client->setParameterGet('cheese', null)->setParameterPost('to', null);
+		$res = $this->client->request('POST');
+		
+		$this->assertNotContains('cheese', $res->getBody(), 'The "cheese" GET parameter was expected to be unset');
+		$this->assertNotContains('alice', $res->getBody(), 'The "to" POST parameter was expected to be unset');
+	}
+	
+	/**
+	 * Header Tests
+	 */
+	
+	/**
+	 * Make sure we can set a single header
+	 * 
+	 */
+	public function testHeadersSingle()
+	{
+		$this->client->setUri($this->baseuri . 'testHeaders.php');
+		
+		$headers = array(
+			'Accept-encoding' => 'gzip,deflate',
+			'X-baz' => 'Foo',
+			'X-powered-by' => 'A large wooden badger'
+		);
+		
+		foreach ($headers as $key => $val) {
+			$this->client->setHeaders($key, $val);
+		}
+		
+		$acceptHeader = "Accept: text/xml,text/html,*/*";
+		$this->client->setHeaders($acceptHeader);
+		
+		$res = $this->client->request('TRACE');
+		$body = strtolower($res->getBody());
+		
+		foreach ($headers as $key => $val) 
+			$this->assertContains(strtolower("$key: $val"), $body);
+		
+		$this->assertContains(strtolower($acceptHeader), $body);
+	}
+	
+	/**
+	 * Test we can set an array of headers
+	 * 
+	 */
+	public function testHeadersArray()
+	{
+		$this->client->setUri($this->baseuri . 'testHeaders.php');
+		
+		$headers = array(
+			'Accept-encoding' => 'gzip,deflate',
+			'X-baz' => 'Foo',
+			'X-powered-by' => 'A large wooden badger',
+			'Accept: text/xml,text/html,*/*'
+		);
+		
+		$this->client->setHeaders($headers);
+		
+		$res = $this->client->request('TRACE');
+		$body = strtolower($res->getBody());
+		
+		foreach ($headers as $key => $val) {
+			if (is_string($key)) {
+				$this->assertContains(strtolower("$key: $val"), $body);
+			} else {
+				$this->assertContains(strtolower($val), $body);
+			}
+		}
+ 	}
+ 	
+ 	/**
+ 	 * Test we can set a set of values for one header
+ 	 *
+ 	 */
+ 	public function testMultipleHeader()
+ 	{
+ 		$this->client->setUri($this->baseuri . 'testHeaders.php');
+		$headers = array(
+			'Accept-encoding' => 'gzip,deflate',
+			'X-baz' => 'Foo',
+			'X-powered-by' => array(
+				'A large wooden badger',
+				'My Shiny Metal Ass',
+				'Dark Matter'
+			),
+			'Cookie' => array(
+				'foo=bar',
+				'baz=waka'
+			)
+		);
+		
+		$this->client->setHeaders($headers);
+		$res = $this->client->request('TRACE');
+		$body = strtolower($res->getBody());
+		
+		foreach ($headers as $key => $val) {
+			if (is_array($val)) 
+				$val = implode(', ', $val);
+
+			$this->assertContains(strtolower("$key: $val"), $body);
+		}
+ 	}
+
+ 	/**
+ 	 * Redirection tests
+ 	 */
+ 	
+ 	/**
+ 	 * Test the client properly redirects in default mode
+ 	 *
+ 	 */
+	public function testRedirectDefault()
+	{
+		$this->client->setUri($this->baseuri . 'testRedirections.php');
+		
+		// Set some parameters
+		$this->client->setParameterGet('swallow', 'african');
+		$this->client->setParameterPost('Camelot', 'A silly place');
+		
+		// Request
+		$res = $this->client->request('POST');
+		
+		$this->assertEquals(3, $this->client->getRedirectionsCount(), 'Redirection counter is not as expected');
+		
+		// Make sure the body does *not* contain the set parameters
+		$this->assertNotContains('swallow', $res->getBody());
+		$this->assertNotContains('Camelot', $res->getBody());
+	}
+	
+	/**
+	 * Make sure the client properly redirects in strict mode
+	 *
+	 */
+	public function testRedirectStrict()
+	{
+		$this->client->setUri($this->baseuri . 'testRedirections.php');
+		
+		// Set some parameters
+		$this->client->setParameterGet('swallow', 'african');
+		$this->client->setParameterPost('Camelot', 'A silly place');
+		
+		// Set strict redirections
+		$this->client->setConfig(array('strictredirects' => true));
+		
+		// Request
+		$res = $this->client->request('POST');
+		
+		$this->assertEquals(3, $this->client->getRedirectionsCount(), 'Redirection counter is not as expected');
+		
+		// Make sure the body *does* contain the set parameters
+		$this->assertContains('swallow', $res->getBody());
+		$this->assertContains('Camelot', $res->getBody());
+	}
+	
+	/**
+	 * Make sure redirections stop when limit is exceeded
+	 *
+	 */
+	public function testMaxRedirectsExceeded()
+	{
+		$this->client->setUri($this->baseuri . 'testRedirections.php');
+		
+		// Set some parameters
+		$this->client->setParameterGet('swallow', 'african');
+		$this->client->setParameterPost('Camelot', 'A silly place');
+		
+		// Set lower max redirections
+		// Try with strict redirections first
+		$this->client->setConfig(array('strictredirects' => true, 'maxredirects' => 2));
+		
+		$res = $this->client->request('POST');
+		$this->assertTrue($res->isRedirect(), 
+			"Last response was not a redirection as expected. Response code: {$res->getStatus()}. Redirections counter: {$this->client->getRedirectionsCount()} (when strict redirects are on)");
+		
+		// Then try with normal redirections
+		$this->client->setParameterGet('redirection', '0');
+		$this->client->setConfig(array('strictredirects' => false));
+		$res = $this->client->request('POST');
+		$this->assertTrue($res->isRedirect(), 
+			"Last response was not a redirection as expected. Response code: {$res->getStatus()}. Redirections counter: {$this->client->getRedirectionsCount()} (when strict redirects are off)");
+	}
+	
+	/**
+	 * Test we can properly redirect to an absolute path (not full URI)
+	 *
+	 */
+	public function testAbsolutePathRedirect() 
+	{
+		$this->client->setUri($this->baseuri . 'testRelativeRedirections.php');
+		$this->client->setParameterGet('redirect', 'abpath');
+		$this->client->setConfig(array('maxredirects' => 1));
+		
+		// Get the host and port part of our baseuri
+		$uri = 'http://' . $this->client->getUri()->getHost() . ':' . 
+			$this->client->getUri()->getPort();
+		
+		$res = $this->client->request('GET');
+		
+		$this->assertEquals("{$uri}/path/to/fake/file.ext?redirect=abpath", $this->client->getUri(true),
+			"The new location is not as expected: {$this->client->getUri(true)}");
+	}
+	
+	/**
+	 * Test we can properly redirect to a relative path
+	 *
+	 */
+	public function testRelativePathRedirect() 
+	{
+		$this->client->setUri($this->baseuri . 'testRelativeRedirections.php');
+		$this->client->setParameterGet('redirect', 'relpath');
+		$this->client->setConfig(array('maxredirects' => 1));
+		
+		// Set the new expected URI
+		$uri = clone $this->client->getUri();
+//		$uri->setPort(80);
+		$uri->setPath(dirname($uri->getPath()) . '/path/to/fake/file.ext');
+		$uri = $uri->__toString();
+
+		$res = $this->client->request('GET');
+		
+		$this->assertEquals("{$uri}?redirect=relpath", $this->client->getUri(true),
+			"The new location is not as expected: {$this->client->getUri(true)}");
+	}
+	
+	/**
+	 * HTTP Authentication Tests
+	 *
+	 */
+	
+	/**
+	 * Test we can properly use Basic HTTP authentication
+	 *
+	 */
+	public function testHttpAuthBasic() 
+	{
+		$this->client->setUri($this->baseuri. 'testHttpAuth.php');
+		$this->client->setParameterGet(array(
+			'user'   => 'alice',
+			'pass'   => 'secret',
+			'method' => 'Basic'
+		));
+		
+		// First - fail password
+		$this->client->setAuth('alice', 'wrong');
+		$res = $this->client->request();
+		$this->assertEquals(401, $res->getStatus(), 'Expected HTTP 401 response was not recieved');
+	
+		// Now use good password
+		$this->client->setAuth('alice', 'secret');
+		$res = $this->client->request();
+		$this->assertEquals(200, $res->getStatus(), 'Expected HTTP 200 response was not recieved');
+	}
+	
+	/**
+	 * Test we can unset HTTP authentication
+	 *
+	 */
+	public function testCancelAuth() 
+	{
+		$this->client->setUri($this->baseuri. 'testHttpAuth.php');
+		
+		// Set auth and cancel it
+		$this->client->setAuth('alice', 'secret');
+		$this->client->setAuth(false);
+		$res = $this->client->request();
+		
+		$this->assertEquals(401, $res->getStatus(), 'Expected HTTP 401 response was not recieved');
+		$this->assertNotContains('alice', $res->getBody(), "Body contains the user name, but it shouldn't");
+		$this->assertNotContains('secret', $res->getBody(), "Body contains the password, but it shouldn't");
+	}		
+	
+	/**
+	 * Cookie and CookieJar Tests
+	 *
+	 */
+	
+	/**
+	 * Test we can set string cookies with no jar
+	 *
+	 */
+	public function testCookiesStringNoJar() 
+	{
+		$this->client->setUri($this->baseuri. 'testCookies.php');
+		
+		$cookies = array(
+			'name'   => 'value',
+			'cookie' => 'crumble'
+		);
+		
+		foreach ($cookies as $k => $v) {
+			$this->client->setCookie($k, $v);
+		}
+		
+		$res = $this->client->request();
+		
+		$this->assertEquals($res->getBody(), serialize($cookies), 'Response body does not contain the expected cookies');
+	}
+
+	/**
+	 * Make sure we can set object cookies with no jar
+	 *
+	 */
+	public function testSetCookieObjectNoJar() 
+	{
+		$this->client->setUri($this->baseuri. 'testCookies.php');
+		$refuri = $this->client->getUri();
+		
+		$cookies = array(
+			Zend_Http_Cookie::factory('chocolate=chips', $refuri),
+			Zend_Http_Cookie::factory('crumble=apple', $refuri)
+		);
+		
+		$strcookies = array();
+		foreach ($cookies as $c) {
+			$this->client->setCookie($c);
+			$strcookies[$c->getName()] = $c->getValue();
+		}
+		
+		$res = $this->client->request();
+		$this->assertEquals($res->getBody(), serialize($strcookies), 'Response body does not contain the expected cookies');
+	}
+	
+	/**
+	 * Make sure we can set cookie objects with a jar
+	 *
+	 */
+	public function testSetCookieObjectJar() 
+	{
+		$this->client->setUri($this->baseuri. 'testCookies.php');
+		$this->client->setCookieJar();
+		$refuri = $this->client->getUri();
+		
+		$cookies = array(
+			Zend_Http_Cookie::factory('chocolate=chips', $refuri),
+			Zend_Http_Cookie::factory('crumble=apple', $refuri)
+		);
+		
+		$strcookies = array();
+		foreach ($cookies as $c) {
+			$this->client->setCookie($c);
+			$strcookies[$c->getName()] = $c->getValue();
+		}
+		
+		$res = $this->client->request();
+		$this->assertEquals($res->getBody(), serialize($strcookies), 'Response body does not contain the expected cookies');
+	}
+	
+	/**
+	 * File Upload Tests
+	 *
+	 */
+	
+	/**
+	 * Test we can upload raw data as a file
+	 *
+	 */
+	public function testUploadRawData() 
+	{
+		$this->client->setUri($this->baseuri. 'testUploads.php');
+		
+		$rawdata = file_get_contents(__FILE__);
+		$this->client->setFileUpload('myfile.txt', 'uploadfile', $rawdata, 'text/plain');
+		$res = $this->client->request('POST');
+		
+		$body = 'uploadfile myfile.txt text/plain ' . strlen($rawdata) . "\n";
+		$this->assertEquals($res->getBody(), $body, 'Response body does not include expected upload parameters');
+	}
+	
+	/**
+	 * Test we can upload an existing file
+	 *
+	 */
+	public function testUploadLocalFile() 
+	{
+		$this->client->setUri($this->baseuri. 'testUploads.php');
+		$this->client->setFileUpload(__FILE__, 'uploadfile');
+		
+		$res = $this->client->request('POST');
+		$mtype = (function_exists('mime_content_type') ? 'text/plain' : 'application/octet-stream');
+		$size = filesize(__FILE__);
+		
+		$body = "uploadfile " . basename(__FILE__) . " $mtype $size\n";
+		$this->assertEquals($res->getBody(), $body, 'Response body does not include expected upload parameters');
+	}
+}
