@@ -1,25 +1,25 @@
 <sect1 id="zend.config.theory_of_operation">
     <title>Theory of Operation</title>
     <para>
-        Configuration data are made accessible to the <code>Zend_Config</code> constructor through an associative array, which may be multidimensional, in order to support organizing the data from general to specific. Concrete adapter classes function to adapt configuration data from storage to produce the associative array for the <code>Zend_Config</code> constructor. User scripts may provide such arrays directly to the <code>Zend_Config</code> constructor, without using an adapter class, since it may be appropriate to do so in certain situations.
+        Konfigurations-Daten werden dem <code>Zend_Config</code>-Konstruktor als assoziatives Array zur Verfügung gestellt. Das Array kann mehrdimensional sein, um die Übergabe geordneter Daten zu unterstützen. Spezifische Adapter fungieren als Schnittstelle zwischen der Datenhaltung und dem <code>Zend_Config</code>-Konstruktor, indem sie die Daten für diesen als Array aufbereiten. Es können auch direkt aus dem eigenen Code Arrays an den <code>Zend_Config</code>-Konstruktor übergeben werden, ohne eine Adapter-Klasse zu benutzen. In manchen Situationen kann das angebracht sein.
     </para>
     <para>
-        <code>Zend_Config</code> implements the <code>Countable</code> and <code>Iterator</code> interfaces in order to facilitate simple access to configuration data. Thus, one may use the <ulink url="http://php.net/count"><code>count()</code></ulink> function and PHP constructs such as <ulink url="http://php.net/foreach"><code>foreach</code></ulink> upon <code>Zend_Config</code> objects.
+        <code>Zend_Config</code> implementiert die Programmieradapter <code>Countable</code> und <code>Iterator</code> um den einfachen Zugriff auf Konfigurationsdaten zu gewährleisten. Dementsprechend kann man die <ulink url="http://php.net/count"><code>count()</code></ulink>-Funktion und auch PHP-Konstrukte wie <ulink url="http://php.net/foreach"><code>foreach</code></ulink> auf <code>Zend_Config</code>-Objekte anwenden.
     </para>
     <para>
-        By default, configuration data made available through <code>Zend_Config</code> are read-only, and an assignment (e.g., <code><![CDATA[$config->database->host = 'example.com']]></code>) results in a thrown exception. This default behavior may be overridden through the constructor, however, to allow modification of data values.
+        Standardmäßig gewährt <code>Zend_Config</code> nur Lesezugriff auf die Daten und der Versuch einer Wertzuweisung (wie z. B. <code><![CDATA[$config->database->host = 'example.com']]></code>) löst einen Fehler aus. Dieses Standard-Verhalten kann mit Hilfe des Konstruktors aber so überschrieben werden, dass die Veränderung von Daten erlaubt ist.
         <note>
-            It is important not to confuse such in-memory modifications with saving configuration data out to specific storage media. Tools for creating and modifying configuration data for various storage media are out of scope with respect to <code>Zend_Config</code>. Third-party open source solutions are readily available for the purpose of creating and modifying configuration data for various storage media.
+            Es muss angemerkt werden, dass hierbei nur die Daten im Speicher verändert werden. Es wird keine Änderung an den Konfigurations-Daten auf dem Speichermedium vorgenommen. Werkzeuge zur Veränderung gespeicherter Konfigurations-Daten liegen nicht im Bereich von <code>Zend_Config</code>. Drittanbieter bieten bereits diverse Open-Source-Lösungen für das Erstellen und Verändern von Konfigurations-Datensätzen in verschienen Formaten.
         </note>
     </para>
     <para>
-        Adapter classes inherit from the <code>Zend_Config</code> class since they utilize its functionality.
+        Adapter-Klassen erben von der <code>Zend_Config</code>-Klasse, da sie ihre Funktionalität nutzen.
     </para>
     <para>
-        The <code>Zend_Config</code> family of classes enables configuration data to be organized into sections. <code>Zend_Config</code> adapter objects may be loaded with a single specified section, multiple specified sections, or all sections (if none are specified).
+        Die Familie der <code>Zend_Config</code>-Klassen ermöglicht es, Daten in Sektionen einzuteilen. Beim Initialisieren eines <code>Zend_Config</code>-Adapter-Objektes können eine einzelne spezifizierte Sektion, mehrere spezifizierte Sektionen oder alle Sektionen (wenn keine spezifiziert ist) geladen werden.
     </para>
     <para>
-        <code>Zend_Config</code> adapter classes support a single inheritance model that enables configuration data to be inherited from one section of configuration data into another. This is provided in order to reduce or eliminate the need for duplicating configuration data for different purposes. An inheriting section may also override the values that it inherits through its parent section. Like PHP class inheritance, a section may inherit from a parent section, which may inherit from a grandparent section, and so on, but multiple inheritance (i.e., section C inheriting directly from parent sections A and B) is not supported.
+        Die <code>Zend_Config</code>-Adapter-Klassen unterstützen ein Modell einfacher Vererbung, welches es ermöglicht, dass Konfigurations-Daten aus einer Sektion an eine Andere vererbt werden können. Dadurch kann die Notwendigeit doppelter Konfigurations-Daten für verschiedene Einsatzgebiete reduziert oder beseitigt werden. Eine erbende Sektion kann die von der Eltern-Sektion geerbten Werte auch überschreiben. Wie auch bei der Klassen-Vererbung in PHP kann eine Sektion von einer Eltern-Sektion geerbt werden, die wiederum von einer Großeltern-Sektion geerbt hat und so weiter. Mehrfaches Erben (Beispielsweise der Fall, dass Sektion C direkt von den Eltern-Sektionen A und B erbt) wird dagegen nicht unterstützt.
     </para>
 </sect1>
 <!--
