@@ -1,41 +1,36 @@
 <sect1 id="zend.view.introduction">
 
-    <title>Introduction</title>
+    <title>مقدمة</title>
     
     <para>
-        Zend_View is a class for working with the "view" portion of
-        the model-view-controller pattern.  That is, it exists to
-        help keep the view script separate from the model and
-        controller scripts.  It provides a system of helpers, output
-        filters, and variable escaping.
+        Zend_View عبارة عن class للعمل مع جزء الـ "view" الخاص بالنمط model-view-controller , 
+        أى أنه يتواجد ليفصل عملية العرض "view" عن كل من جزء الـ model و جزء الـ controller , 
+        حيث يوفر نظام من المساعدات "helpers" و فلاتر للخرج "output filters" و وسائل لتجاهل قيم المتغيرات.
     </para>
     
     <para>
-        Zend_View is template system agnostic; you may use PHP as
-        your template language, or create instances of other
-        template systems and manipulate them within your view
-        script.
+        Zend_View عبارة عن نظام قوالب (مجهول) ; يمكنك أن تستخدم لغة PHP نفسها كنظام قوالب, 
+        أو يمكنك إنشاء نسخة "instance" من أى نظام قوالب و دمجه مع أكواد جزء الـ view خاصتك.
     </para>
 
     <para>
-        Essentially, using Zend_View happens in two major steps:
+        فى الأساس, إستخدام Zend_View يحدث فى خطوتان هامتان :
         
-        1.  Your controller script creates an instance of
-        Zend_View and assigns variables to that instance.
+        1. الـ controller خاصتك يقوم بإنشاء نسخة من Zend_View و يقوم بتمرير 
+        متغيرات إلى هذه النسخة .
         
-        2. The controller tells the Zend_View to render a particular
-        view, thereby handing control over the view script, which 
-        generates the view output.
+        2. الـ controller يأمر Zend_View بأن يقوم بمعالجة view محدد, 
+        بذلك يتم نقل التحكم إلى أكواد الـ view التى تقوم بإنتاج خرج الـ view.
     </para>
     
     <sect2 id="zend.view.introduction.controller">
         
-        <title>Controller Script</title>
+        <title>كود الـ Controller</title>
         
         <para>
-            As a simple example, let us say your controller has a list
-            of book data that it wants to have rendered by a view.  The
-            controller script might look something like this:
+            كمثال بسيط, دعونا نفترض أن الـ controller خاصتك لديه قائمة ببيانات كتب 
+            و التى نريد أن يتم عرضها (عمل render "تصيير" لها) من خلال view , 
+            جزء الـ controller من الممكن أن يكون بهذا الشكل :
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -69,17 +64,16 @@ echo $view->render('booklist.php');
     
     <sect2 id="zend.view.introduction.view">
     
-        <title>View Script</title>
+        <title>كود الـ View</title>
         
         <para>
-            Now we need the associated view script, "booklist.php". 
-            This is a PHP script like any other, with one exception:  it
-            executes inside the scope of the Zend_View instance, which
-            means that references to $this point to the Zend_View
-            instance properties and methods.  (Variables assigned to the
-            instance by the controller are public properties of the
-            Zend_View instance.)  Thus, a very basic view script could
-            look like this:
+            الأن نحن نحتاج كود الـ view المرافق لـ "booklist.php", و هو عبارة عن كود PHP عادى 
+            مع وجود إختلاف واحد: أنه يتم تنفيذه داخل مدى "scope" نسخة الـ  Zend_View , 
+            و الذى يعنى أن المتغير this$ فى هذا الكود سيشير إلى الـ properties و الـ methods 
+            الخاصة بهذه النسخة من Zend_View .
+            (المتغيرات التى سيتم تمريرها إلى هذه النسخة من خلال الـ controller ستكون عبارة عن 
+            public properties تابعة لنسخة الـ Zend_View ) , 
+            إذاً كود view بسيط من الممكن أن يكون مثل هذا :
         </para>
         
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
@@ -108,8 +102,7 @@ echo $view->render('booklist.php');
         </programlisting>
         
         <para>
-            Note how we use the "escape()" method to apply output
-            escaping to variables.
+            لاحظ كيف نستخدم الـ method المسمى "()escape" لنقوم بعمل تجاهل لقيم المتغيرات.
         </para>
         
     </sect2>

@@ -1,21 +1,20 @@
 <sect1 id="zend.view.controllers">
-    <title>Controller Scripts</title>
+    <title>جزء الـ Controller</title>
     
     <para>
-        The controller is where you instantiate and configure Zend_View.
-        You then assign variables to the view, and tell the view to 
-        render output using a particular script.
+        الـ controller هو حيث يتم إنشاء نسخة من Zend_View و إعدادها , أنت بعد ذلك تقم 
+        بإنشاء متغيرات جديدة فيها و إعطائها قيم ليتم إستخدامها فى الـ view , 
+        ثم تقوم بالأمر بأن يتم معاجلة الـ view و إنتاج الخرج الذى سيتم عرضه.
     </para>
     
     <sect2 id="zend.view.controllers.assign">
     
-        <title>Assigning Variables</title>
+        <title>إنشاء متغيرات و إعطائها قيم</title>
         
         <para>
-            Your controller script should assign necessary variables to the view
-            before it hands over control to the view script.  Normally, you
-            can do assignments one at a time by assigning to property names
-            of the view instance:
+            يجب أن يقوم الـ controller خاصتك بإنشاء المتغيرات التى يحتاج إليها فى الـ view و تمريرها له 
+            قبل أن يقوم بنقل التحكم إلى الكود الخاص بالـ view , بشكل طبيعى يمكنك إضافة متغيرات إلى 
+            الـ view عن طريق الـ properties الخاصة بالنسخة التى أنشئتها من Zend_View :
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -27,14 +26,13 @@ $view->c = "Sea";
         </programlisting>
         
         <para>
-            However, this can be tedious when you have already collected the
-            values to be assigned into an array or object.
+            لكن ربما هذا سيكون مزعج فى حالة أنك قد قمت مسبقاً بجمع كل القيم التى تريد تمريرها فى مصفوفة 
+            أو فى كائن.
         </para>
         
         <para>
-            The assign() method lets you assign from an array or object "in
-            bulk."  The following examples have the same effect as the above
-            one-by-one property assignments.
+            الـ method المسمى ()assign يسمح لك بإنشاء متغيرات من مصفوفة أو كائن (بشكل مفكك)  , 
+            المثال التالى لديه نفس التأثير الذى تقوم به عملية إنشاء المتغيرات واحد-واحد .
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -61,9 +59,9 @@ $view->assign((array) $obj);
         </programlisting>
         
         <para>
-            Alternatively, you can use the assign method to assign
-            one-by-one by passing a string variable name, and then the
-            variable value.
+        أيضاً, يمكنك ان تستخدم الـ method المسمى assign لإنشاء متغيرت بطريقة واحد-واحد , 
+        و ذلك عن طريق تمرير اسم المتغير الذى تريد إنشائه كـ string , ثم فى البراميتر الثانى 
+        مرر قيمة المتغير .
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -78,14 +76,13 @@ $view->assign('c', "Sea");
 
     <sect2 id="zend.view.controllers.render">
         
-        <title>Rendering a View Script</title>
+        <title>معالجة(تصيير) جزء الـ View</title>
         
         <para>
-            Once you have assigned all needed variables, the controller
-            should tell Zend_View to render a particular view script.
-            Do so by calling the render() method.  Note that the method will
-            return the rendered view, not print it, so you need to print or
-            echo it yourself at the appropriate time.
+            بمجرد إنتهائك من عملية إنساب المتغيرات التى تحتاجها فى الـ view , يجب أن يقوم الـ controller 
+            بأمر Zend_View أن يقوم بمعالجة view محدد , يمكن القيام بهذا عن طريق إستدعاء الـ method 
+            المسمى ()render , لاحظ أن هذا الـ method سيقوم بإرجاع الـ view بعد معالجته و لن يقوم بطباعته, 
+            لذلك أنت تحتاج لطباعته بنفسك فى الوقت الذى يناسبك.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -101,20 +98,20 @@ echo $view->render('someView.php');
     
     <sect2 id="zend.view.controllers.script-paths">
         
-        <title>View Script Paths</title>
+        <title>مسارات أجزاء الـ View</title>
         
         <para>
-            By default, Zend_View expects your view scripts to be relative to
-            your calling script.  For example, if your controller script is at
-            "/path/to/app/controllers" and it calls
-            $view->render('someView.php'), Zend_View will look for
-            "/path/to/app/controllers/someView.php".
+            الأعدادات الأساسية لـ Zend_View تعتبر أن الملفات التى تحتوى أجزاء الـ view خاصتك 
+            تتواجد فى مسارات لها علاقة "relative" مع مكان تواجد الكود الذى يستدعيها, 
+            على سبيل المثال : إن كان الـ controller خاصتك موجود فى "path/to/app/controllers/" 
+            و هو يقوم بإستدعاء ('view->render('someView.php$ , سيقوم Zend_View 
+            بالبحث فى المسار "path/to/app/controllers/someView.php/".
         </para>
         
         <para>
-            Obviously, your view scripts are probably located elsewhere.  To
-            tell Zend_View where it should look for view scripts, use the
-            setScriptPath() method.
+            من الطبيعى أن تكون ملفات الـ view خاصتك محفوظة فى مسار أخر , 
+            لكى تخبر Zend_View أين يجب عليه أن يبحث عن ملفات الـ view , 
+            يمكنك إستخدام الـ method المسمى ()setScriptPath .
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -124,17 +121,17 @@ $view->setScriptPath('/path/to/app/views');
         </programlisting>
         
         <para>
-            Now when you call $view->render('someView.php'), it will look
-            for "/path/to/app/views/someView.php".
+            الأن عندما ستقوم بإستدعاء ('view->render('someView.php$ , 
+            سيتم البحث فى المسار "path/to/app/views/someView.php/".
         </para>
         
         <para>
-            In fact, you can "stack" paths using the addScriptPath()
-            method. As you add paths to the stack, Zend_View will look
-            at the most-recently-added path for the requested view
-            script.  This allows you override default views with custom
-            views so that you may create custom "themes" or "skins" for
-            some views, while leaving others alone.
+            فى الحقيقة, يمكنك عمل مرصوصة من المسارات بإستخدام الـ method المسمى ()addScriptPath ,
+            كلما قمت بإضافة مسار جديد إلى المرصوصة , سيقوم Zend_View بالبحث فى المسارات التى تم إضافتها 
+            إلى المرصوصة من أخر واحد تم إضافته إلى المرصوصة صعوداً إلى أول من تم إضافته 
+             لجلب جزء الـ view المراد معالجته, هذا يسمح لك بأن تقوم بالتغطية على الـ views 
+            الأساسية و إستخدام views أخرى , و هذا سيسمح لك بأن تقوم بإنشاء themes أو skins خاصة لبعض 
+            الـ views , مع أمكانية ترك views أخرى بدون.
         </para>
         
         <programlisting role="php"><![CDATA[<?php

@@ -1,122 +1,148 @@
 <sect1 id="zend.view.helpers">
     
-    <title>View Helpers</title>
+    <title>مساعدات الـ View</title>
     
     <para>
-        In your view scripts, often it is necessary to perform certain
-        complex functions over and over; e.g., formatting a date,
-        generating form elements, or displaying action links.  You can
-        use helper classes to perform these behaviors for you.
+        داحل أكواد الـ view خاصتك, أحياناً تحتاج إلى تنفيذ بعض العمليات المعقدة بشكل متكرر, 
+        مثل : ضبط هيئة التواريخ أو إنشاء عناصر الـ forms أو عرض وصلات تنفيذية, 
+        فى مثل هذه الحالات يمكنك أن تستخدم الـ helper classes أو "الـ classes المساعدة" 
+        لتنفيذ مثل هذه الأشياء.
     </para>
     
     <para>
-        To use a helper in your view script, call it using
-        $this->helperName(). Behind the scenes, Zend_View will load the
-        Zend_View_Helper_HelperName class, create an object instance of
-        it, and call its helperName() method.  The object instance is
-        persistent within the Zend_View instance, and is reused for all
-        future calls to $this->helperName().
+        لتستخدم مساعد "helper" داخل كود الـ view , إستدعيه بإستخدام 
+        ()this->helperName$ (بحيث helperName هو إسم المساعد) , 
+        خلف الكواليس سيقوم Zend_View بتحميل الـ class المسمى 
+        Zend_View_Helper_HelperName و ينشئ نسخة منه, 
+        ثم يقوم بإستدعاء الـ method المسمى ()helperName الخاص به , 
+        و ستكون نسخة هذا الكائن مثابرة داخل نسخة الـ Zend_View , 
+        و سيتم إعادة إستخدامها فى كل الأستدعائات المستقبلية لـ ()this->helperName$ .
     </para>
     
     <sect2 id="zend.view.helpers.initial">
     
-        <title>Initial Helpers</title>
+        <title>المساعدات الأساسية</title>
         
         <para>
-            Zend_View comes with an initial set of helper classes, all of
-            which relate to form element generation.  They each perform the
-            appopriate output escaping automatically.  They are:
+            يأتى Zend_View مع مجموعة أساسية من الـ classes المساعدة , 
+            كلهم لهم علاقة بعملية إنشاء عناصر الـ forms , و كل منهم يقوم بعملية تجاهل المخرجات 
+            تلقائياً, و هم :
         </para>
         
         <itemizedlist>
             
             <listitem><para>
-                formButton($name, $value, $attribs): Creates an &lt;input
-                type="button" /&gt; element.
+                <programlisting role="php"><![CDATA[
+                    formButton($name, $value, $attribs)
+                ]]></programlisting>
+                 ينشئ input من النوع button.
             </para></listitem>
             
             <listitem><para>
-                formCheckbox($name, $value, $attribs, $options): Creates
-                an &lt;input type="checkbox" /&gt; element.  The
-                $options param is an array where the first value is the
-                "checked" value, and the second is the "unchecked" value
-                (the defaults are '1' and '0').  If $value matches the
-                "checked" value, the box will be checked for you.
+                <programlisting role="php"><![CDATA[
+                    formCheckbox($name, $value, $attribs, $options)
+                ]]></programlisting>
+                ينشئ عنصر input من النوع checkbox , و البراميتر options$ هو عبارة عن 
+                مصفوفة بحيث أن أول قيمة فيها هى التى سيتم وضع علامة الأختيار عندها "checked", 
+                و الثانية هى القيمة التى لم يتم اختيارها "unchecked" (القيم الأساسية هى '1' و '0' ) , 
+                إن كانت value$ تتطابق مع القيمة الـ checked , سيتم وضع علامة الأختيار لك.
             </para></listitem>
             
             <listitem><para>
-                formFile($name, $value, $attribs): Creates an &lt;input
-                type="file" /&gt; element.
+                <programlisting role="php"><![CDATA[
+                    formFile($name, $value, $attribs)
+                ]]></programlisting>
+                
+                ينشى عنصر input من النوع file .
             </para></listitem>
             
             <listitem><para>
-                formHidden($name, $value, $attribs): Creates an &lt;input
-                type="hidden" /&gt; element.
+                <programlisting role="php"><![CDATA[
+                    formHidden($name, $value, $attribs)
+                ]]></programlisting>
+                
+                ينشى عنصر input من النوع hidden .
             </para></listitem>
             
             <listitem><para>
-                formPassword($name, $value, $attribs): Creates an &lt;input
-                type="password" /&gt; element.
+                <programlisting role="php"><![CDATA[
+                    formPassword($name, $value, $attribs)
+                ]]></programlisting>
+                ينشى عنصر input من النوع password .
             </para></listitem>
             
             <listitem><para>
-                formRadio($name, $value, $attribs, $options): Creates a
-                series of &lt;input type="radio" /&gt; elements, one for
-                each of the $options elements.  In the $options array, the
-                element key is the radio value, and the element value is the
-                radio label.  The $value radio will be preselected for you.
+                <programlisting role="php"><![CDATA[
+                    formRadio($name, $value, $attribs, $options)
+                ]]></programlisting>
+                ينشئ سلسلة من عناصر input من النوع radio , 
+                واحد لكل عنصر فى options$, فى المصفوفة options$ , 
+                الـ key لكل عنصر سيكون قيمة عنصر الـ radio , 
+                و الـ value للعنصر ستكون الـ 
+                label (الأسم الذى سيظهر للمستخدم) الخاص بالـ radio.
             </para></listitem>
             
             <listitem><para>
-                formReset($name, $value, $attribs): Creates an &lt;input
-                type="reset" /&gt; element.
+                <programlisting role="php"><![CDATA[
+                    formReset($name, $value, $attribs)
+                ]]></programlisting>
+                ينشى عنصر input من النوع reset .
             </para></listitem>
             
             <listitem><para>
-                formSelect($name, $value, $attribs, $options): Creates a
-                &lt;select&gt;...&lt;/select&gt; block, with one
-                &lt;option&gt;one for each of the $options elements.  In
-                the $options array, the element key is the option value,
-                and the element value is the option label.  The $value
-                option(s) will be preselected for you.
+                <programlisting role="php"><![CDATA[
+                    formSelect($name, $value, $attribs, $options)
+                ]]></programlisting>
+                ينشئ بلوك من العنصر select , مع إنشاء عنصر option واحد 
+                لكل عنصر فى البراميتر options$ , فى المصفوفة options$ , 
+                الـ key الخاص بالعنصر هو قيمة عنصر الـ option , 
+                أما الـ value ستكون الـ 
+                label (الأسم الذى سيظهر للمستخدم) الخاص بعنصر الـ option .
             </para></listitem>
             
             <listitem><para>
-                formSubmit($name, $value, $attribs): Creates an &lt;input
-                type="submit" /&gt; element.
+                <programlisting role="php"><![CDATA[
+                    formSubmit($name, $value, $attribs)
+                ]]></programlisting>
+                ينشى عنصر input من النوع submit .
             </para></listitem>
             
             <listitem><para>
-                formText($name, $value, $attribs): Creates an &lt;input
-                type="text" /&gt; element.
+                <programlisting role="php"><![CDATA[
+                    formText($name, $value, $attribs)
+                ]]></programlisting>
+                
+                ينشى عنصر input من النوع text .
             </para></listitem>
             
             <listitem><para>
-                formTextarea($name, $value, $attribs): Creates a
-                &lt;textarea&gt;...&lt;/textarea&gt; block.
+                <programlisting role="php"><![CDATA[
+                    formTextarea($name, $value, $attribs)
+                ]]></programlisting>
+                ينشئ عنصر textarea .
             </para></listitem>
             
         </itemizedlist>
         
         <para>
-            Using these in your view scripts is very easy, here is an example.
-            Note that you all you need to do is call them; they will load
-            and instantiate themselves as they are needed.
+            إستخدام هذه الأشياء داخل كود الـ view خاصتك سهل جداً, و هنا مثال على ذلك, 
+            لاحظ أن كل ما تحتاج أن تقوم به هو أن تستدعيهم, و هم سيتم تحميلهم 
+            و سيقوموا بإنشاء نسخ من انفسهم كلما ظهرت حاجة إليهم.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 // inside your view script, $this refers to the Zend_View instance.
 // 
 // say that you have already assigned a series of select options under
-// the name $countries as array('us' => 'United States', 'il' =>
-// 'Israel', 'de' => 'Germany').
+// the name $countries as array('us' => 'United States', 'eg' =>
+// 'Egypt', 'de' => 'Germany').
 ?>
 <form action="action.php" method="post">
     <p><label>Your Email:
         <?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
     </label></p>
     <p><label>Your Country:
-        <?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
+        <?php echo $this->formSelect('country', 'eg', null, $this->countries) ?>
     </label></p>
     <p><label>Would you like to opt in?
         <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
@@ -125,7 +151,7 @@
         </programlisting>
         
         <para>
-            The resulting output from the view script will look something like this:
+            الخرج الذى سينتج من كود الـ view هذا , ربما سيبدوا بهذا الشكل:
         </para>
         
         <programlisting role="php"><![CDATA[<form action="action.php" method="post">
@@ -135,7 +161,7 @@
     <p><label>Your Country:
         <select name="country">
             <option value="us" selected="selected">United States</option>
-            <option value="il">Israel</option>
+            <option value="eg">Egypt</option>
             <option value="de">Germany</option>
         </select>
     </label></p>
@@ -150,14 +176,14 @@
     
     <sect2 id="zend.view.helpers.paths">
         
-        <title>Helper Paths</title>
+        <title>مسارات المساعدات</title>
         
         <para>
-            As with view scripts, your controller can specify a stack of
-            paths for Zend_View to search for helper classes. By
-            default, Zend_View looks in "Zend/View/Helper/*" for helper
-            classes. You can tell Zend_View to look in other locations
-            using the setHelperPath() and addHelperPath() methods.
+            مثل ملفات الـ view , يمكن للـ controller أن يحدد مرصوصة من المسارات 
+            لـ Zend_View لتبحث فيها عن الـ helper classes , 
+            الأعدادات الأساسية لـ Zend_View تبحث فى "*/Zend/View/Helper" عن 
+            الـ helper classes , يمكنك إخبار Zend_View أن تبحث فى أماكن أخرى بإستخدام 
+            ()setHelperPath أو ()addHelperPath .
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -167,12 +193,12 @@ $view->setHelperPath('/path/to/more/helpers');
         </programlisting>
         
         <para>
-            In fact, you can "stack" paths using the addHelperPath()
-            method. As you add paths to the stack, Zend_View will look
-            at the most-recently-added path for the requested helper
-            class.  This allows you to add to (or even override) the
-            initial distribution of helpers with your own custom
-            helpers.
+            فى الحقيقة, يمكنك عمل مرصوصة من المسارات بإستخدام الـ method المسمى ()addScriptPath ,
+            كلما قمت بإضافة مسار جديد إلى المرصوصة , سيقوم Zend_View بالبحث فى المسارات التى تم إضافتها 
+            إلى المرصوصة من أخر واحد تم إضافته إلى المرصوصة صعوداً إلى أول من تم إضافته 
+             لجلب الـ helper classes .
+            هذا يسمح لك بأن تضيف (أو حتى أن تقوم بالتغطية ) على مجموعة المساعدات الأساسية 
+            بـ helpers جديدة.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -191,52 +217,52 @@ $view->addHelperPath('/other/path/to/helpers');
     
     <sect2 id="zend.view.helpers.custom">
         
-        <title>Writing Custom Helpers</title>
+        <title>كتابة مساعداتك الخاصة</title>
         
         <para>
-            Writing custom helpers is easy; just follow these rules:
+            عملية كتابة مساعد خاص تعتبر سهلة جدا, فقط أتبع هذه القواعد:
         </para>
         
         <itemizedlist>
             
             <listitem><para>
-                The class name must be Zend_View_Helper_*, where * is
-                the helper name itself.  E.g., if you were writing a
-                helper called "specialPurpose", the class name would be
-                "Zend_View_Helper_SpecialPurpose" (note the
-                capitalization).
+                أسم الـ class يجب أن يكون *_Zend_View_Helper , بحيث أن * 
+                هى أسم الـ helper نفسه, على سبيل المثال : إن كنت تكتب helper 
+                يسمى "specialPurpose" , أسم الـ class يجب أن يكون 
+                Zend_View_Helper_SpecialPurpose .
+                (لاحظ عملية تكبير الحروف "capitalization")
             </para></listitem>
             
             <listitem><para>
-                The class must have a public method that matches the
-                helper name; this is the method that will be called when
-                your template calls "$this->specialPurpose()".  In our
-                "specialPurpose" helper example, the required method
-                declaration would be "public function specialPurpose()". 
+                هذا الـ class يجب أن يملك public method يتطابق مع أسم الـ helper , 
+                هذا الـ method سيتم إستدعائه عندما سيقوم الـ view بإستدعاء 
+                ()this->specialPurpose$ , فى مثالنا هذا لإنشاء المساعد "specialPurpose", 
+                الـ method الذى نحتاج إلى التصريح به سيكون 
+                "()public function specialPurpose".
             </para></listitem>
             
             <listitem><para>
-                In general, the class should not echo or print or otherwise
-                generate output.  Instead, it should return values to be
-                printed or echoed.  The returned values should be escaped
-                appropriately.
+                عامتاً , الـ class يجب ألا يقوم بطباعة أو إخراج أى شئ إلى المتصفح , 
+                بل يجب أن يعيد "return" البيانات التى بحاجة إلى الطباعة , 
+                و هذه البيانات المرجعة يجب أن يكون قد تم تنفيذ تجاهل "escaping" 
+                للقيم الأتية من متغيرات بها .
             </para></listitem>
             
             <listitem><para>
-                The class must be in file named after the helper method.
-                Again using our "specialPurpose" helper example, the file
-                has to be named "SpecialPurpose.php".
+                الـ class يجب أن يكون فى ملف مسمى تبعاً لأسم الـ method , 
+                أى كما فى مثالنا السابق , المساعد "specialPurpose" يجب أن يكون 
+                فى ملف يسمى "SpecialPurpose.php".
             </para></listitem>
         </itemizedlist>
         
         <para>
-            Place the helper class file somewhere in your helper path stack,
-            and Zend_View will automatically load, instantiate, persist,
-            and execute it for you.
+            ضع ملف الـ helper class تحت أى من المسارات الموجودة 
+            فى مرصوصة المسارات خاصتك, و سيقوم Zend_View تلقائياً 
+            بتحميله و إنشاء نسخة منه و مثابرته و تنفيذه لك.
         </para>
         
         <para>
-            Here is an example of our SpecialPurpose helper code:
+            هنا مثال على كود المساعد SpecialPurpose خاصتنا :
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -253,9 +279,9 @@ class Zend_View_Helper_SpecialPurpose {
         </programlisting>
         
         <para>
-            Then in a view script, you can call the SpecialPurpose helper
-            as many times as you like; it will be instantiated once, and
-            then it persists for the life of that Zend_View instance.
+            بعدها فى كود الـ view , يمكنك أن تستدعى المساعد SpecialPurpose 
+            أى عدد من المرات تريده, حيث سيتم إنشاء نسخة منه مرة واحدة فقط , 
+            و بعدها سيثابر طوال فترة حياة هذه النسخة من Zend_View.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -267,7 +293,7 @@ echo $this->specialPurpose();
         </programlisting>
         
         <para>
-            The output would look something like this:
+            الخرج سيكون مثل هذا :
         </para>
         <programlisting role="php"><![CDATA[I have seen 'The Jerk' 1 time(s).
 I have seen 'The Jerk' 2 time(s).

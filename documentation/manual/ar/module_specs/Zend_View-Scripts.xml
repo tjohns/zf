@@ -1,27 +1,23 @@
 <sect1 id="zend.view.scripts">
     
-    <title>View Scripts</title>
+    <title>جزء الـ View</title>
         
     <para>
-        Once your controller has assigned variables and called render(),
-        Zend_View then includes the requested view script and executes
-        it "inside" the scope of the Zend_View instance.  Therefore,
-        in your view scripts, references to $this actually point to the
-        Zend_View instance itself.
+        بمجرد إنتهاء الـ controller خاصتك من عملية نَسب المتغيرات إلى نسخة Zend_View 
+        و إستدعاء ()render , يقوم Zend_View بجلب محتويات ملف الـ view و ينفذها داخل 
+        المدى "scope" الخاص بنسخة الـ Zend_View , لذلك داخل أكواد الـ view خاصتك 
+        تكون this$ تشير إلى نسخة الـ Zend_View نفسها .
     </para>
     
     <para>
-        Variables assigned to the view from the controller are referred
-        to as instance properties.  For example, if the controller were
-        to assign a variable 'something', you would refer to it as
-        $this->something in the view script.  (This allows you to keep
-        track of which values were assigned to the script, and which are
-        internal to the script itself.)
+        المتغيرات التى تم نسبها إلى الـ view من قبل الـ controller يتم الإشارة إليها على انها instance properties 
+        (أى properties تنتمى للنسخة فقط) , على سبيل المثال : إن قام الـ controller بنسب متغير بأسم 
+        'something' , يمكنك الأشار إليه داخل كود الـ view كـ this->something$ , 
+        (هذا يسمح لك بمعرفة أى المتغيرات تم نسبها إلى النسخة و أى المتغيرات داخلية فى كود الـ view نفسه).
     </para>
     
     <para>
-        By way of reminder, here is the example view script from the
-        Zend_View introduction.
+        لنتذكر من جديد, ها هو مثال كود الـ view من فصل "مقدمة الـ Zend_view" .
     </para>
     
     <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
@@ -51,20 +47,18 @@
         
     <sect2 id="zend.view.scripts.escaping">
         
-        <title>Escaping Output</title>
+        <title>تجاهل "escaping" المخرجات</title>
         
         <para>
-            One of the most important tasks to perform in a view script
-            is to make sure that output is escaped properly; among other
-            things, this helps to avoid cross-site scripting attacks. 
-            Unless you are using a function, method, or helper that does
-            escaping on its own, you should always escape variables when
-            you output them.
+            واحدة من أهم المهام التى يجب تنفيذها فى كود الـ view هى أن تتأكد من أن المخرجات قد تم 
+            عمل تجاهل لها أو escaping دائماً , و هذا أهم من أشياء كثيرة أخرى , هذا يساعد فى تجنب 
+            هجمات الـ cross-site scripting , فإن لم تكن تستخدم دالة أو method أو مساعد "helper" 
+            يقوم بعملية التجاهل "escaping" بنفسه , فيجب عليك أنت أن تقوم بعمل تجاهل لمحتويات متغيراتك 
+            قبل إخراجهم دائماً .
         </para>
         
         <para>
-            Zend_View comes with a method called escape() that does such
-            escaping for you.
+            Zend_View يأتى مع method يسمى ()escape و هو الذى يقوم لك بعملية التجاهل للمخرجات.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -77,11 +71,11 @@ echo $this->escape($this->variable);
         </programlisting>
         
         <para>
-            By default, the escape() method uses the PHP htmlspecialchars()
-            function for escaping.  However, depending on your environment,
-            you may wish for escaping to occur in a different way.  Use the
-            setEscape() method at the controller level to tell Zend_View
-            what escaping callback to use.
+            الأعدادات الأساسية للـ method المسمى ()escape هى أن يعتمد على دالة لغة PHP المسمى 
+            ()htmlspecialchars لعمل تجاهل , لكن إعتماداً على بيئة عمل تطبيقك , ربما تود أن تتم عملية 
+            التجاهل للمخرجات بطريقة أخرى , إستخدم الـ method المسمى ()setEscape و أنت فى مستوى 
+            الـ controller لتخبر Zend_View عن ما الذى يجب إستدعائه (callback) عند تنفيذ عملية
+             تجاهل المخرجات.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -104,24 +98,22 @@ echo $view->render(...);
         </programlisting>
         
         <para>
-            The callback function or method should take the value to be
-            escaped as its first parameter, and all other parameters should
-            be optional.
+            الدالة أو الـ method الذى سيتم عمل callback له يجب أن يستلم القيمة التى سيقوم بتجاهلها 
+            فى البراميتر الأول , و كل البراميترات الأخرى يجب أن تكون أختيارية.
         </para>
         
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
     
-        <title>Template Systems</title>
+        <title>أنظمة القوالب</title>
         
         <para>
-            Although PHP is itself a powerful template system, many
-            developers feel it is too powerful or complex for their
-            template designers.  As such, the view script may be used to
-            instantiate and manipulate a separate template object, such
-            as a PHPLIB-style template.  The view script for that kind
-            of activity might look something like this:
+            أيضاً لغة PHP نفسها عبارة عن نظام قوالب قوى, لكن بعض المطورين يرى 
+            أنها قوية جدا أو معقدة بالنسبة إلى المصممين الذين سيستخدمون القوالب. 
+            لذلك , كود الـ view من الممكن إستخدامه لإنشاء نسخ أو معالجة 
+            كائنات قوالب منفصلة , مثل قوالب PHPLIB-style , كود الـ view 
+            لهذا النوع من النشاطات من الممكن أن بيدو مثل هذا :
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -149,7 +141,7 @@ if ($this->books) {
         </programlisting>
         
         <para>
-            These would be the related template files:
+            و هذه هى الملفات الأخرى ذات الصلة المفروض وجودها :
         </para>
         
         <programlisting role="html"><![CDATA[
