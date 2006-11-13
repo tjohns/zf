@@ -1,15 +1,15 @@
 <sect1 id="zend.config.adapters.xml">
     <title>Zend_Config_Xml</title>
     <para>
-        <code>Zend_Config_Xml</code> enables developers to store configuration data in a simple XML format and read them via nested object property syntax. The root element of the XML file is irrelevant and may be named arbitrarily. The first level of XML elements correspond with configuration data sections. The XML format supports hierarchical organization through nesting of XML elements below the section-level elements. The content of a leaf-level XML element corresponds to the value of a configuration datum. Section inheritance is supported by a special XML attribute named <code>extends</code>, and the value of this attribute corresponds with the section from which data are to be inherited by the extending section.
+        <code>Zend_Config_Xml</code> ermöglicht es Entwicklern, Konfigurations-Daten in einfachen XML-Dateien zu speichern und sie mit einer Syntax auszulesen, die dem Zugriff auf die Eigenschaften verschachtelter Objekte entspricht. Der Name des Root-Elementes der XML-Datei ist unwichtig und kann beliebig gewählt werden. Die erste Ebene der XML-Struktur stellt die Konfigurationsdaten-Sektionen dar. Hirarchische Strukturen können im XLM-Format durch Verschachteln von XML-Elementen unterhalb der Sektions-Ebene umgesetzt werden. Der Inhalt eines XML-Blatt-Elementes (Leaf) ist der Wert eines Konfigurations-Eintrages. Die Sektions-Vererbung wird durch ein spezielles Attribut namens <code>extends</code> unterstützt, der Wert des Attributs entspricht dabei dem Namen der Sektion, von der Daten geerbt werden sollen.
     </para>
     <note>
-        Configuration data read into <code>Zend_Config_Xml</code> are always returned as strings. Conversion of data from strings to other types is left to developers to suit their particular needs.
+        Konfigurations-Daten, die in <code>Zend_Config_Xml</code> eingelesen wurden, werden immer als Strings zurück gegeben. Die Konvertierung der Daten von Strings in andere Datentypen ist Aufgabe der Entwickler und von deren Bedürfnissen abhängig.
     </note>
     <example>
-        <title>Using Zend_Config_Xml</title>
+        <title>Zend_Config_Xml benutzen</title>
         <para>
-            This example illustrates a basic use of <code>Zend_Config_Xml</code> for loading configuration data from an XML file. In this example there are configuration data for both a production system and for a staging system. Because the staging system configuration data are very similar to those for production, the staging section inherits from the production section. In this case, the decision is arbitrary and could have been written conversely, with the production section inheriting from the staging section, though this may not be the case for more complex situations. Suppose, then, that the following configuration data are contained in <code>/path/to/config.xml</code>:
+            Dieses Beispiel zeigt die grundlegende Nutzung von <code>Zend_Config_Xml</code> um Konfigurations-Daten aus einem XML-File zu laden. In diesem Beispiel gibt es Konfigurations-Daten für ein Produktiv- und ein Staging-System. Da sich die Daten für das Staging-System nur unwesentlich von denen für das Produktiv-System unterscheiden, erbt das Staging-System vom Produktiv-System. In diesem Fall ist die Entscheidung darüber, welche Sektion von welcher erben soll, willkürlich und es könnte auch anders herum gemacht werden. In komplexeren Fällen ist das möglicherweise nicht der Fall. Nehmen wir also an, dass sich die folgenden Konfigurations-Daten in der Datei <code>/path/to/config.xml</code> befinden:
         </para>
         <programlisting role="xml"><![CDATA[<?xml version="1.0"?>
 <configdata>
@@ -32,15 +32,15 @@
     </staging>
 </configdata>]]></programlisting>
         <para>
-            Next, assume that the application developer needs the staging configuration data from the XML file. It is a simple matter to load these data by specifying the XML file and the staging section:
+            Nehmen wir weiterhin an, dass der Anwendungs-Entwickler die Staging-Konfiguration aus diesem XML-File benötigt. Es ist ein Leichtes, diese Daten zu laden, es muss nur das XML-File und die Staging-Sektion spezifiziert werden:
         </para>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Config/Xml.php';
 
 $config = new Zend_Config_Xml('/path/to/config.xml', 'staging');
 
-echo $config->database->host; // prints "dev.example.com"
-echo $config->database->name; // prints "dbname"]]></programlisting>
+echo $config->database->host; // gibt "dev.example.com" aus
+echo $config->database->name; // gibt "dbname" aus]]></programlisting>
     </example>
 </sect1>
 <!--
