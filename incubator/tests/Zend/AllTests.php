@@ -34,20 +34,20 @@ class Zend_AllTests
 
         // place other tests here for incubator suite
 
-        $suite->addTestSuite('Zend_AclTest');
-        $suite->addTest(Zend_Controller_AllTests::suite());
+//        $suite->addTestSuite('Zend_AclTest');
+//        $suite->addTest(Zend_Controller_AllTests::suite());
 //        $suite->addTest(Zend_Currency_AllTests::suite());
 //        $suite->addTest(Zend_Date_AllTests::suite());
-        $suite->addTest(Zend_Http_AllTests::suite());
+//        $suite->addTest(Zend_Http_AllTests::suite());
         $suite->addTestSuite('Zend_LocaleTest');
         $suite->addTest(Zend_Locale_AllTests::suite());
 //        $suite->addTest(Zend_Mail_AllTests::suite());
 //        $suite->addTestSuite('Zend_MeasureTest');
 //        $suite->addTest(Zend_Measure_AllTests::suite());
 //        $suite->addTest(Zend_Registry_AllTests::suite());
-        $suite->addTestSuite('Zend_ViewTest');
-        $suite->addTest(Zend_View_AllTests::suite());
-        $suite->addTest(Zend_XmlRpc_AllTests::suite());
+//        $suite->addTestSuite('Zend_ViewTest');
+//        $suite->addTest(Zend_View_AllTests::suite());
+//        $suite->addTest(Zend_XmlRpc_AllTests::suite());
 
         return $suite;
     }
