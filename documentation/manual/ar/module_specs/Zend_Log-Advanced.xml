@@ -1,18 +1,21 @@
 <sect1 id="zend.log.advanced-logging">
-   <title>Advanced Logging: Multiple Loggers</title>
+   <title>عمليات متقدمة فى الـ Logging: أكثر من Logger</title>
    <para>
-        <code>Zend_Log</code> supports logging to multiple log adapters.  It can either send a message to all
-        logs, or target a message to a specific log.
+        Zend_Log تدعم أمكانية عمل logging إلى أكثر من log adapter , 
+        حيث يمكنها إرسال رسالة إلى كل الـ logs , أو أن تستهدف بالرسالة 
+        log محدد.
    </para>
 
    <para>
-        When creating multiple loggers, each log must be given a unique name.  Loggers are registered with the
-        <code>registerLogger()</code> method, with the log name supplied as the optional second argument.
+        عند القيام بإنشاء أكثر من logger , كل log يجب أن يتم إعطائه إسم مميز, 
+        و يتم حجز الـ loggers بإستخدام الـ method المسمى ()registerLogger , 
+        حيث يتم تمرير إسم الـ log فى البراميتر الثانى الأختيارى.
    </para>
 
    <para>
-        In the example below, two loggers are created: one for the console, and one for a file.  They will be
-        given the names <code>Console</code> and <code>File</code>, respectively.
+        فى المثال التالى , يتم إنشاء إثنان من الـ loggers : 
+        واحد للـ console , و واحد لملف , و سيتم إعطائهم الأسماء 
+        Console و File .
     </para>
     <programlisting role="php"><![CDATA[
 require_once 'Zend/Log.php';                 // Zend_Log base class

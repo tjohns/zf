@@ -1,9 +1,10 @@
 <sect1 id="zend.log.log-levels">
-   <title>Log Levels</title>
+   <title>مستويات الـ Log</title>
    <para>
-       <code>Zend_Log::log()</code> will log all messages as <code>LEVEL_DEBUG</code> unless a different level
-       is supplied as the optional second argument.  The following levels are available as constants of the
-       <code>Zend_Log</code> class.
+       <code>()Zend_Log::log</code> سيقوم بعمل Log لكل الرسائل على أنها 
+       <code>LEVEL_DEBUG</code> إلا إذا أن يكن قد تم أمره بإستخدام مستوى أخر 
+       و ذلك بتمريره فى البراميتر الثانى , و المستويات التالية متوافرة كـ 
+       constants "ثوابت" للـ Zend_Log class.
     </para>
     <programlisting role="php"><![CDATA[
 LEVEL_DEBUG     = 1
