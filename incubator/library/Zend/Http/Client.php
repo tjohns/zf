@@ -412,6 +412,7 @@ class Zend_Http_Client
      */
     protected function _setParameter($type, $name, $value)
     {
+    	$parray = array();
         $type = strtolower($type);
         switch ($type) {
             case 'get':
@@ -420,8 +421,6 @@ class Zend_Http_Client
             case 'post':
                 $parray = &$this->paramsPost;
                 break;
-            default:
-                throw new Zend_Http_Client_Exception("Trying to set unknown parameter type: '{$type}'");
         }
         
         if ($value === null) {
@@ -679,7 +678,8 @@ class Zend_Http_Client
             
             $body = $this->prepare_body();
             $headers = $this->prepare_headers();
-            $this->last_request = implode("\r\n", $headers) . "\r\n" . $body;
+            $this->last_request = "{$this->method} {$uri->__toString()} HTTP/{$this->config['httpversion']}\r\n" . 
+                implode("\r\n", $headers) . "\r\n" . $body;
             
             // Open the connection, send the request and read the response
             $this->adapter->connect($uri->getHost(), $uri->getPort(), 
@@ -785,13 +785,10 @@ class Zend_Http_Client
         
         // Add all other user defined headers
         foreach ($this->headers as $name => $value) {
-            if (is_array($value)) {
-                foreach ($value as $subval) {
-                    $headers[] = ucfirst($name) . ": {$subval}";
-                }
-            } else {
-                $headers[] = ucfirst($name) . ": {$value}";
-            }
+            if (is_array($value))
+                $value = implode(', ', $value);
+
+            $headers[] = ucfirst($name) . ": {$value}";
         }
         
         return $headers;
