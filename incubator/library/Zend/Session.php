@@ -16,6 +16,8 @@
  * @package    Zend_Session
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ * @since      Preview Release 0.2
  */
 
 /**
@@ -36,7 +38,7 @@ require_once 'Zend/Session/Exception.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Session
+class Zend_Session implements IteratorAggregate
 {
     
     /**
@@ -82,6 +84,20 @@ class Zend_Session
         $this->_sessionCore = Zend_Session_Core::getInstance();
         $this->_sessionCore->_startNamespace($namespace);
     }
+    
+    
+    /**
+     * getIterator() - return an iteratable object for use in foreach and the like,
+     * this completes the IteratorAggregate interface
+     *
+     * @return ArrayObject
+     */
+    public function getIterator()
+    {
+        $name_values = $this->_sessionCore->namespaceGet($this->_namespace);
+        
+        return new ArrayObject($name_values);
+    }
 
 
     /**
@@ -120,12 +136,26 @@ class Zend_Session
      *
      * @return void
      */
-    public function lock($locked = true)
+    public function setLock($locked = true)
     {
         self::$_namespaceLocks[$this->_namespace] = $locked;
         return;
     }
 
+    
+    /**
+     * unsetAll() - unset all variables in this namespace
+     *
+     * @return void
+     */
+    public function unsetAll()
+    {
+        foreach ($this as $name => $value) {
+            unset($this->{$name});
+        }
+        
+        return;
+    }
     
     /**
      * __get() - method to get a variable in this objects current namespace
@@ -178,5 +208,5 @@ class Zend_Session
     {
         return $this->_sessionCore->namespaceUnset($this->_namespace, $name);
     }
-    
+  
 }

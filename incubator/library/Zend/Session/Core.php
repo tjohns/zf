@@ -16,6 +16,8 @@
  * @package    Zend_Session
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ * @since      Preview Release 0.2
  */
 
 /**
@@ -164,25 +166,6 @@ final class Zend_Session_Core
             // set the ini based values
             if (array_key_exists($user_option_name, self::$_defaultOptions)) {
                 ini_set('session.' . $user_option_name, $user_option_value);
-                continue;
-            }
-            
-            // get log level setting if passed
-            if ($user_option_name === 'log_level') {
-                
-                if (!is_int($user_option_value)) {
-                    throw new Zend_Session_Exception(__CLASS__ . '::setOptions() log_level expects an integer.');
-                }
-
-                if ($user_option_value < 0 || $user_option_value > 3) {
-                    throw new Zend_Session_Exception(__CLASS__ . '::setOptions() log_level value is out of range, must be 0 to 5 inclusive.');
-                }
-                
-                if (!class_exists('Zend_Log', false)) {
-                    throw new Zend_Session_Exception(__CLASS__ . '::setOptions() logging is enabled, but Zend_Log was not loaded');    
-                }
-                
-                self::$_log_level = $user_option_value;
                 continue;
             }
             
@@ -757,26 +740,19 @@ final class Zend_Session_Core
      */
     public function namespaceGet($namespace, $name = null)
     {
-        if ($name === null) {
-            
-            if (isset($_SESSION[$namespace])) {
-                return $_SESSION[$namespace];
-            } elseif (isset(self::$_expiringData[$namespace])) {
-                return self::$_expiringData[$namespace];
+        $current_data  = (is_array($_SESSION[$namespace])) ? $_SESSION[$namespace] : array();
+        $expiring_data = (is_array(self::$_expiringData[$namespace])) ? self::$_expiringData[$namespace] : array();
+        
+        $merged_data = array_merge($current_data, $expiring_data);
+        
+        if ($name !== null) {
+            if (isset($merged_data[$name])) {
+                return $merged_data[$name];
             } else {
                 return null;
             }
-            
         } else {
-            
-            if (isset($_SESSION[$namespace][$name])) {
-                return $_SESSION[$namespace][$name];
-            } elseif (isset(self::$_expiringData[$namespace][$name])) {
-                return self::$_expiringData[$namespace][$name];
-            } else {
-                return null;
-            }
-            
+            return $merged_data;
         }
     }
 

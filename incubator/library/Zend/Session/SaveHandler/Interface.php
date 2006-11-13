@@ -16,6 +16,8 @@
  * @package    Zend_Session
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
+ * @since      Preview Release 0.2
  */
 
 /**
