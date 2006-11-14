@@ -740,8 +740,8 @@ final class Zend_Session_Core
      */
     public function namespaceGet($namespace, $name = null)
     {
-        $current_data  = (is_array($_SESSION[$namespace])) ? $_SESSION[$namespace] : array();
-        $expiring_data = (is_array(self::$_expiringData[$namespace])) ? self::$_expiringData[$namespace] : array();
+        $current_data  = (isset($_SESSION[$namespace]) && is_array($_SESSION[$namespace])) ? $_SESSION[$namespace] : array();
+        $expiring_data = (isset(self::$_expiringData[$namespace]) && is_array(self::$_expiringData[$namespace])) ? self::$_expiringData[$namespace] : array();
         
         $merged_data = array_merge($current_data, $expiring_data);
         
