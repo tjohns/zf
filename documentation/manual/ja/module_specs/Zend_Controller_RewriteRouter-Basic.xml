@@ -7,7 +7,8 @@
     </para>
 
     <programlisting role="php"><![CDATA[
-$router->addRoute('user', 'user/:username');]]></programlisting>
+$route = new Zend_Controller_Router_Route('user/:username');
+$router->addRoute('user', $route);]]></programlisting>
 
     <para>
         最初のパラメータがこのルートの名前です。
@@ -41,6 +42,11 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
         バグを引き起こす可能性があります。
     </note>
 
+    <note>
+        既存のルートとまったく同じ名前のルートを追加しようとした場合、
+        最後に追加したルートがそれまでのものを上書きします。
+    </note>
+
     <para>
         ルートで使用される変数のうち、'controller' および 'action'
         のふたつは特別な扱いとなります。これらの特殊変数は、URL から
@@ -52,7 +58,8 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
     </para>
 
     <programlisting role="php"><![CDATA[
-$router->addRoute('user', ':controller/:action');]]></programlisting>
+$route = new Zend_Controller_Router_Route(':controller/:action');
+$router->addRoute('user', $route);]]></programlisting>
 
     <para>
         このルートが定義されているときにブラウザで
