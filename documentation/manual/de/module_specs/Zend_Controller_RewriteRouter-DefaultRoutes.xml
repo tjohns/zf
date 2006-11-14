@@ -16,17 +16,13 @@
 	</para>
 
 	<programlisting role="php"><![CDATA[
-// Standardroute für Root URL
-$this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
+// Füge Standardroute hinzu (für Root URL - '/')
+$default = new Zend_Controller_Router_Route('', array('controller' => 'index', 'action' => 'index'));
+$this->addRoute('default', $default);
 
 // Standardroute für Kompatibilität zu Router Version 1
-$this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
-
-	<note>
-	    Obwohl <code>Zend_Controller_RewriteRouter</code> für Rückwärtskompatibilität konfiguriert
-	    wurde, passt es noch nicht auf <code>controller/action</code> URIs mit zusätzlichen 
-	    Parametern.
-	</note>
+$compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+$this->addRoute('compat', $compat);]]></programlisting>
 
 </sect1>
 <!--
