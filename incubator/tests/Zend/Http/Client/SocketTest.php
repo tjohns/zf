@@ -13,7 +13,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * containing all the files under the _files directory. You should symlink
  * or copy these files and set 'baseuri' properly.
  * 
- * You can also set the proper constand in your test configuration file to 
+ * You can also set the proper constant in your test configuration file to 
  * point to the right place.
  *
  * @category Zend
@@ -25,20 +25,12 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase 
 {
 	/**
-	 * Identifier of this test suite. Should be the same as used in constants
-	 * in TestConfiguration.php
-	 *
-	 * @var string
-	 */
-	protected $testname = 'SOCKET';
-	
-	/**
 	 * The bast URI for this test, containing all files in the _files directory
 	 * Should be set in TestConfiguration.php or TestConfiguration.php.dist
 	 *
 	 * @var string
 	 */
-	protected $baseuri = 'http://localhost/Framework/tests/';
+	protected $baseuri;
 	
 	/**
 	 * Common HTTP client
@@ -62,15 +54,15 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 	 */
 	protected function setUp()
 	{
-		if (defined('TESTS_ZEND_HTTP_CLIENT_' . $this->testname) && 
-			! constant('TESTS_ZEND_HTTP_CLIENT_' . $this->testname))
-			$this->markTestSkipped('Set to skip Zend_Http_Client_SocketTest');
-			
-		if (defined('TESTS_ZEND_HTTP_CLIENT_' . $this->testname . '_BASEURI')) 
-			$this->baseuri = constant('TESTS_ZEND_HTTP_CLIENT_' . $this->testname . '_BASEURI');
+		if (defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') && 
+			Zend_Uri_Http::check(TESTS_ZEND_HTTP_CLIENT_BASEURI)) {
+				
+			$this->baseuri = TESTS_ZEND_HTTP_CLIENT_BASEURI;
+		} else {
+			$this->markTestSkipped('Set to skip Zend_Http_Client dynamic tests');
+		}
 		
-		
-		if (substr($this->uri, -1) != '/') $this->uri .= '/';
+		if (substr($this->baseuri, -1) != '/') $this->baseuri .= '/';
 		$uri = $this->baseuri . $this->getName() . '.php';
 		$this->client = new Zend_Http_Client($uri, $this->config);
 	}

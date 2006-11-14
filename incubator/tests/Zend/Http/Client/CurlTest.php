@@ -26,14 +26,6 @@ require_once 'SocketTest.php';
 class Zend_Http_Client_CurlTest extends Zend_Http_Client_SocketTest
 {
 	/**
-	 * Identifier of this test suite. Should be the same as used in constants
-	 * in TestConfiguration.php
-	 *
-	 * @var string
-	 */
-	protected $testname = 'CURL';
-	
-	/**
 	 * Configuration array
 	 *
 	 * @var array

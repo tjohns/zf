@@ -3,6 +3,13 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Http_Client_AllTests::main');
 }
 
+// Read local configuration
+if (! defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') &&
+    is_readable('TestConfiguration.php')) {
+
+    require_once 'TestConfiguration.php';
+}
+
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
@@ -23,9 +30,12 @@ class Zend_Http_Client_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
 
         $suite->addTestSuite('Zend_Http_Client_StaticTest');
-        $suite->addTestSuite('Zend_Http_Client_SocketTest');
-        $suite->addTestSuite('Zend_Http_Client_SocketKeepaliveTest');
-        $suite->addTestSuite('Zend_Http_Client_CurlTest');
+        
+        if (defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') && TESTS_ZEND_HTTP_CLIENT_BASEURI) {
+            $suite->addTestSuite('Zend_Http_Client_SocketTest');
+            $suite->addTestSuite('Zend_Http_Client_SocketKeepaliveTest');
+            $suite->addTestSuite('Zend_Http_Client_CurlTest');
+        }
 
         return $suite;
     }

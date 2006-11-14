@@ -62,6 +62,16 @@ define('TESTS_ZEND_MAIL_MAILDIR_ENABLED', false);
 define('TESTS_ZEND_REST_CLIENT_FLICKR_APIKEY', false);
 
 /**
+ * Zend_Http_Client tests
+ * 
+ * To enable the dynamic Zend_Http_Client tests, you will need to symbolically
+ * link or copy the files in tests/Zend/Http/Client/_files to a directory 
+ * under your web server(s) document root and set the constants to point to the
+ * URL of this directory.
+ */
+define('TESTS_ZEND_HTTP_CLIENT_BASEURI', false);
+
+/**
  * PHPUnit Code Coverage / Test Report
  */
 define('TESTS_GENERATE_REPORT', false);
