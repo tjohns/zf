@@ -1,33 +1,57 @@
-<sect1 id="zend.controller.rewriterouter.default-routes">
-	<title>الـ routes الأساسية</title>
+<sect1 id="zend.controller.rewriterouter.basic">
+	<title>اساسيات عملية التحويل</title>
 
 	<para>
-        تم تجهيز Zend_Controller_RewriteRouter بإثنان من الـ routes الأساسية, 
-        الأول يقوم بإدارة الـ URL الرئيسى حيث يشير إلى indexAction و IndexController : لذلك يجب عليك توفيرهما 
-        كما هو موضح فى 
-		<xref linkend="zend.controller.getting-started" />
-		(أنظر <xref linkend="zend.controller.overview.indexcontroller" />).
-        الـ route الأساسى الثانى تم إيجاده ليوفر توافق مع النسخة الأولى من الـ router "الموجه" , حيث سيقبل URIs على الشكل 
-        <code>'controller/action'</code>.
-	</para>
-
-	<para>
-		و بهذا الشكل تم تجهيز الـ routes الأساسية:
+        قلب الـ RewriteRouter هو إنشاء معرفات تحويل "routes" من قِبل المستخدم, يتم إنشاء الـ routes عن طريق إستدعاء 
+        الـ method المسمى addRoute الخاص بـ RewriteRouter :
 	</para>
 
 	<programlisting role="php"><![CDATA[
-// Default route for root URL
-$this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
+$router->addRoute('user', 'user/:username');]]></programlisting>
 
-// Route for Router v1 compatibility
-$this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
+	<para>
+        البراميتر الأول هو إسم الـ route , فى وقت كتابة هذه الكلمات لا يوجد إستخدام لهذا الأسم , و لكن فى المستقبل سيتم 
+        إستخدامه فى اداة "URL view helper"  مساعدة لإنشاء URLs بسهولة فى الـ view . 
+        إن كنت تحتاج إلى إستخدام routes قد قمت بتسجيلها مسبقاً, يمكنك إستعادتها عن طريق الـ method المسمى getRoute 
+        الموجود فى RewriteRouter.
+	</para>
+
+	<para>
+        البراميتر الثانى عبارة عن route "معرف تحويل" و الذى سيتم مطابقته بالـ URL - على سبيل المثال, 
+        الـ route المذكور بالأعلى سيتوافق مع <code>http://example.com/user/martel</code>.
+        النقطة المزدوجة ":" فى الـ route توضح ان هذا متغير URL و الذى يمكن الوصول إليه من خلال الـ method المسمى 
+        Zend_Controller_Action::_getParam . 
+        فى مثالنا هذا , باراميتر يأسم username سيتم إنشائه بالقيمة 'martel'.
+	</para>
 
 	<note>
-بالرغم من ان Zend_Controller_RewriteRouter تم تجهيزه ليتوافق مع النسخة الأولى منه , و لكنه لن يتمكن 
-من التطابق مع URIs على الشكل <code>controller/action</code> مع بارمترات إضافية إلى الأن.
+        يتم تنفيذ عملية اختبار المطابقة للـ routes بترتيب عكسى , لذلك تأكد من أن الـ routes الأكثر عمومية (فرصة مطابقتها اكبر)
+         تم تعريفها اولاً.
 	</note>
 
+	<note>
+        فى الوقت الحالى , مسموح إستخدام أى حروف ما عدا (/) فى أسماء البراميترات, لكن ينصح بشدة أن تستخدم الحروف 
+        المسموح إستخدامها فى اسماء متغيرات PHP العادية, لأنه ربما تحدث تغييرات فى المستقبل فى طريقة العمل و بالتالى 
+        سيترتب هذا على اخطاء فى الكود الخاص بك.
+	</note>
+
+	<para>
+        هناك اثنان من المتغيرات الخاصة التى يمكنك إستخدامها فى الـ routes خاصتك - 'controller' و 'action', 
+        هذه المتغيرات الخاصة ستستخدم لإيجاد controller و/ أو action يتم تحديده فى الـ URL. 
+        المتغير الخاص 'action' يجب ان يتم تحديد قيمته سواء فى الـ route او كقيمة أساسية لبراميتر, 
+        و المتغير الخاص 'controller'  إن لم يتم تعريفه مسبقا فسيتم اعتبار قيمته هى 'IndexController'.
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('user', ':controller/:action');]]></programlisting>
+
+	<para>
+        إن قمت بتجربة الوصول الى 'http://example.com/news/latest' من خلال متصفحك , فسيقوم 
+        Zend_Controller_Dispatcher بإستدعاء latestAction من الـ NewsController خاصتك.
+	</para>
+
 </sect1>
+
 
 <!--
 vim:se ts=4 sw=4 et:
