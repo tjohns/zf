@@ -7,7 +7,8 @@
 	</para>
 
 	<programlisting role="php"><![CDATA[
-$router->addRoute('user', 'user/:username');]]></programlisting>
+$route = new Zend_Controller_Router_Route('user/:username');
+$router->addRoute('user', $route);]]></programlisting>
 
 	<para>
 		The first parameter is the name of the route. It is redundant at the moment of writing but will be used in the future in
@@ -32,6 +33,10 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
 		altered and this may introduce bugs to your code.
 	</note>
 
+	<note>
+		If you choose to add a Route named exactly the same as already existent route then the newest will override (replace) the older one.
+	</note>
+
 	<para>
 		There are two special variables which can be used in your routes - 'controller' and 'action'. These special
 		variables will be used to find a controller and/or an action chosen in the URL. The 'action' variable 
@@ -40,7 +45,8 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
 	</para>
 
 	<programlisting role="php"><![CDATA[
-$router->addRoute('user', ':controller/:action');]]></programlisting>
+$route = new Zend_Controller_Router_Route(':controller/:action');
+$router->addRoute('user', $route);]]></programlisting>
 
 	<para>
 		If you point your browser to 'http://example.com/news/latest' with this route defined the

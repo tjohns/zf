@@ -9,8 +9,11 @@
 	<programlisting role="php"><![CDATA[
 /* -- create a router -- */
 
+$routes = array();
+$routes['user'] = new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'));
+
 $router = new Zend_Controller_RewriteRouter();
-$router->addRoute('user', 'user/:username', array('controller' => 'user', 'action' => 'info'));
+$router->addRoutes($routes);
 
 /* -- set it in a controller -- */
 

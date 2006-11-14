@@ -7,7 +7,7 @@
 	</para>
 
 	<programlisting role="php"><![CDATA[
-$router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
+$route = new Zend_Controller_Router_Route('archive/:year', array('year' => 2006));]]></programlisting>
 	<para>
 		What may not be clearly visible is that the above route will match URLs like 'http://example.com/archive/2005' and
 		'http://example.com/archive'. In the latter case the variable year will have a value of 2006.
