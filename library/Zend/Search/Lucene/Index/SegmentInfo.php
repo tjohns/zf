@@ -316,6 +316,8 @@ class Zend_Search_Lucene_Index_SegmentInfo
 
     /**
      * Loads Term dictionary from TermInfoIndex file
+     *
+     * @throws Zend_Search_Lucene_Exception
      */
     protected function _loadDictionary()
     {
@@ -335,6 +337,10 @@ class Zend_Search_Lucene_Index_SegmentInfo
         $indexTermCount = $tiiFile->readLong();
                           $tiiFile->readInt();  // IndexInterval
         $skipInterval   = $tiiFile->readInt();
+
+        if ($indexTermCount < 1) {
+            throw new Zend_Search_Lucene_Exception('Wrong number of terms in a term dictionary index');
+        }
 
         $prevTerm     = '';
         $freqPointer  =  0;
@@ -362,6 +368,15 @@ class Zend_Search_Lucene_Index_SegmentInfo
                 new Zend_Search_Lucene_Index_TermInfo($docFreq, $freqPointer, $proxPointer, $skipDelta, $indexPointer);
             $prevTerm = $termValue;
         }
+
+        // Check special index entry mark
+        if ($this->_termDictionary[0]->field != (int)0xFFFFFFFF) {
+            throw new Zend_Search_Lucene_Exception('Wrong TermInfoIndexFile file format');
+        } else if (PHP_INT_SIZE > 4){
+            // Treat 64-bit 0xFFFFFFFF as -1
+            $this->_termDictionary[0]->field = -1;
+        }
+
     }
 
 
