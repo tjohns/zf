@@ -133,14 +133,12 @@
         &module_specs.Zend_Rest_Client;
         &module_specs.Zend_Rest_Server;
     </chapter>
-    <!--
     <chapter id="zend.locale">
         <title>Zend_Locale</title>
         &module_specs.Zend_Locale-Introduction;
         &module_specs.Zend_Locale-Functions;
         &module_specs.Zend_Locale-Parsing;
     </chapter>
-    -->
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
         &module_specs.Zend_XmlRpc;
