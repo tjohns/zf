@@ -10,7 +10,7 @@ require_once 'Zend/XmlRpc/Server/Fault.php';
  *
  * @package Zend_XmlRpc
  * @subpackage UnitTests
- * @version $Id: $
+ * @version $Id$
  */
 class Zend_XmlRpc_Server_FaultTest extends PHPUnit_Framework_TestCase 
 {

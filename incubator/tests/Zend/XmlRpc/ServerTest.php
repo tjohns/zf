@@ -7,7 +7,7 @@ require_once 'PHPUnit/Framework/TestCase.php';
  *
  * @package Zend_XmlRpc
  * @subpackage UnitTests
- * @version $Id: $
+ * @version $Id$
  */
 class Zend_XmlRpc_ServerTest extends PHPUnit_Framework_TestCase 
 {
