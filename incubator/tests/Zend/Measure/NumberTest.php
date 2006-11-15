@@ -124,7 +124,7 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     public function testNumberValueDecimal()
     {
         $value = new Zend_Measure_Number('-100,200',Zend_Measure_Number::STANDARD,'de');
-        $this->assertEquals(100.200, $value->getValue(), 'Zend_Measure_Number value expected to be a decimal value');
+        $this->assertEquals(100, $value->getValue(), 'Zend_Measure_Number value expected to be a decimal value');
     }
 
 
@@ -135,7 +135,7 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     public function testNumberValueDecimalSeperated()
     {
         $value = new Zend_Measure_Number('-100.100,200',Zend_Measure_Number::STANDARD,'de');
-        $this->assertEquals(100100.200, $value->getValue(),'Zend_Measure_Number Object not returned');
+        $this->assertEquals(100100, $value->getValue(),'Zend_Measure_Number Object not returned');
     }
 
 
@@ -146,7 +146,7 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     public function testNumberValueString()
     {
         $value = new Zend_Measure_Number('string -100.100,200',Zend_Measure_Number::STANDARD,'de');
-        $this->assertEquals(100100.200, $value->getValue(),'Zend_Measure_Number Object not returned');
+        $this->assertEquals(100100, $value->getValue(),'Zend_Measure_Number Object not returned');
     }
 
 
@@ -231,7 +231,7 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Number('-100,200',Zend_Measure_Number::STANDARD,'de');
         $value->setValue('-200,200',Zend_Measure_Number::STANDARD,'de');
-        $this->assertEquals(200.200, $value->getValue(), 'Zend_Measure_Number value expected to be a decimal value');
+        $this->assertEquals(200, $value->getValue(), 'Zend_Measure_Number value expected to be a decimal value');
     }
 
 
@@ -243,7 +243,7 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Number('-100.100,200',Zend_Measure_Number::STANDARD,'de');
         $value->setValue('-200.200,200',Zend_Measure_Number::STANDARD,'de');
-        $this->assertEquals(200200.200, $value->getValue(),'Zend_Measure_Number Object not returned');
+        $this->assertEquals(200200, $value->getValue(),'Zend_Measure_Number Object not returned');
     }
 
 
@@ -255,7 +255,7 @@ class Zend_Measure_NumberTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Measure_Number('string -100.100,200',Zend_Measure_Number::STANDARD,'de');
         $value->setValue('otherstring -200.200,200',Zend_Measure_Number::STANDARD,'de');
-        $this->assertEquals(200200.200, $value->getValue(),'Zend_Measure_Number Object not returned');
+        $this->assertEquals(200200, $value->getValue(),'Zend_Measure_Number Object not returned');
     }
 
 

@@ -6,7 +6,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-//require_once 'Zend/Date/CurrencyTest.php';
+require_once 'Zend/Date/DateObjectTest.php';
 
 class Zend_Date_AllTests
 {
@@ -17,9 +17,9 @@ class Zend_Date_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Date');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Date_DateObject');
 
-//        $suite->addTestSuite('Zend_Date_DateTest');
+        $suite->addTestSuite('Zend_Date_DateObjectTest');
 
         return $suite;
     }

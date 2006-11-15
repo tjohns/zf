@@ -234,7 +234,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                 $value = $ergebnis[0];
                 break;
             default:
-                $value = Zend_Locale_Format::getNumber($value, $locale);
+                $value = Zend_Locale_Format::getInteger($value, $locale);
                 if (bccomp($value, 0) < 0) {
                     $value =  bcsqrt(bcpow($value, 2));
                 }
