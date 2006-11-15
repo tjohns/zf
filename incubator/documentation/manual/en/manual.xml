@@ -118,13 +118,13 @@
     <!--
     <chapter id="zend.measure">
         <title>Zend_Measure</title>
-        &module_specs.Zend_Measure_Introduction;
-        &module_specs.Zend_Measure_Writing;
-        &module_specs.Zend_Measure_Creation;
-        &module_specs.Zend_Measure_Output;
-        &module_specs.Zend_Measure_Edit;
-        &module_specs.Zend_Measure_Special;
-        &module_specs.Zend_Measure_Types;
+        &module_specs.Zend_Measure-Introduction;
+        &module_specs.Zend_Measure-Writing;
+        &module_specs.Zend_Measure-Creation;
+        &module_specs.Zend_Measure-Output;
+        &module_specs.Zend_Measure-Edit;
+        &module_specs.Zend_Measure-Special;
+        &module_specs.Zend_Measure-Types;
     </chapter>
     -->
     <chapter id="zend.rest">

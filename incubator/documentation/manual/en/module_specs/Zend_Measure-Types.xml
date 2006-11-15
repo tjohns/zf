@@ -461,6 +461,10 @@ echo $binary->convertTo(Zend_Measure_Number::ROMAN);
         <para>
             Additionaly this class covers the octal system, the hexadecimal system,
             the binary system, the roman number format and a few not so familiar systems.
+            <note>
+                Be aware that only the decimal part of numbers is handled.
+                The fractional part will be stripped.
+            </note>
         </para>
         <note>
             <para>
