@@ -138,7 +138,7 @@ class Zend_Session implements IteratorAggregate
      */
     public function lock()
     {
-        self::$_namespaceLocks[$this->_namespace] = null;
+        self::$_namespaceLocks[$this->_namespace] = true;
         return;
     }
 
@@ -152,6 +152,17 @@ class Zend_Session implements IteratorAggregate
     {
         unset(self::$_namespaceLocks[$this->_namespace]);
         return;
+    }
+
+
+    /**
+     * isLocked() - return lock status, true if, and only if, read-only
+     *
+     * @return bool
+     */
+    public function isLocked()
+    {
+        return isset(self::$_namespaceLocks[$this->_namespace]);
     }
 
     
@@ -190,7 +201,7 @@ class Zend_Session implements IteratorAggregate
      */
     public function __set($name, $value) 
     {
-        if (isset(self::$_namespaceLocks[$this->_namespace]) && self::$_namespaceLocks[$this->_namespace] === true) {
+        if (isset(self::$_namespaceLocks[$this->_namespace])) {
             throw new Zend_Session_Exception("This session/namespace has been marked as read-only.");
         }
         
