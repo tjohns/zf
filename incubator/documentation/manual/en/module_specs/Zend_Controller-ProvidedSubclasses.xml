@@ -14,12 +14,69 @@
     <sect2 id="zend.controller.providedsubclasses.request.http">
         <title>Zend_Controller_Request_Http</title>
 
-        <para>
-            <code>Zend_Controller_Request_Http</code> provides a request object
-            for use in an HTTP environment. In addition to extending
-            <code>Zend_Controller_Request_Abstract</code>, it proxies to a
-            <code>Zend_Http_Request</code> object
-        </para>
+        <sect3 id="zend.controller.providedsubclasses.request.http.introduction">
+            <title>Introduction</title>
+
+            <para>
+                <code>Zend_Controller_Request_Http</code> provides a request object
+                for use in an HTTP environment. In addition to extending
+                <code>Zend_Controller_Request_Abstract</code>, it proxies to a
+                <code>Zend_Http_Request</code> object
+            </para>
+        </sect3>
+
+        <sect3 id="zend.controller.providedsubclasses.request.http.baseurl">
+            <title>Base Url and subdirectories</title>
+
+            <para>
+                <code>Zend_Controller_Request_Http</code> by proxying to
+                <code>Zend_Http_Request</code> allows Zend_Controller_RewriteBase
+                to be used in subdirectories. Zend_Http_Request will attempt to
+                automatically detect your base URL and set it accordingly.
+            </para>
+
+            <para>
+                For example, if you keep your
+                <code>index.php</code> in a webserver subdirectory named
+                <code>/projects/myapp/index.php</code> base URL (rewrite base)
+                will be set to <code>/projects/myapp</code>. This string will
+                then be stripped from the beginning of the path before
+                calculating any route matches. This frees one from the necessity
+                of prepending it to any of your routes. The route of
+                <code>'user/:username'</code> will match URIs like
+                <code>http://localhost/projects/myapp/user/martel</code> and
+                <code>http://example.com/user/martel</code>.
+            </para>
+
+            <note>
+                Automatic base URL is case sensitive, so make sure your URL
+                will match a subdirectory name in a filesystem (even on Windows
+                machines). If it doesn't you will get to noRoute action.
+            </note>
+
+            <para>
+                Should base URL be detected incorrectly you can override it
+                with your own base path with the help of the setBaseUrl()
+                method of the Zend_Http_Request class. This can also be called on
+                Zend_Controller_Request_Http. An example usage:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+/**
+ * Instantiate a new Zend_Controller_Request_Http
+ * class and set a custom Base URL
+ */
+$request = new Zend_Controller_Request_Http();
+$request->setBaseUrl('/projects/myapp');
+
+/* dispatch Request with custom base URL with Zend_Controller_Front */
+
+$router = new Zend_Controller_RewriteRouter;
+$controller = new Zend_Controller_Front;
+$response = $controller->setControllerDirectory('./application/controllers')
+                        ->setRouter($router)
+                        ->dispatch($request);]]></programlisting>
+        </sect3>
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.rewriterouter">
@@ -48,6 +105,9 @@
             <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+            <para>
+            or:
+            </para>
             <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteCond %{SCRIPT_FILENAME} !-f
@@ -82,11 +142,11 @@ $ctrl->setRouter($router);]]></programlisting>
             <para>
                 The heart of the RewriteRouter is the definition of user defined
                 routes. Routes are created by calling the addRoute method of
-                RewriteRouter:
+                RewriteRouter and passing in a new instance of Zend_Controller_Router_Route:
             </para>
 
             <programlisting role="php"><![CDATA[
-$router->addRoute('user', 'user/:username');]]></programlisting>
+$router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
 
             <para>
                 The first parameter is the name of the route. It is redundant at
@@ -129,7 +189,9 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
             </para>
 
             <programlisting role="php"><![CDATA[
-$router->addRoute('user', ':controller/:action');]]></programlisting>
+$router->addRoute(
+    'user', new Zend_Controller_Router_Route(':controller/:action')
+);]]></programlisting>
 
             <para>
                 If you point your browser to 'http://example.com/news/latest'
@@ -150,7 +212,9 @@ $router->addRoute('user', ':controller/:action');]]></programlisting>
             </para>
 
             <programlisting role="php"><![CDATA[
-$router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
+$router->addRoute(
+    'archive', new Zend_Controller_Router_Route('archive/:year', array('year' => 2006))
+);]]></programlisting>
             <para>
                 What may not be clearly visible is that the above route will
                 match URLs like 'http://example.com/archive/2005' and
@@ -166,7 +230,10 @@ $router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></progra
             </para>
 
             <programlisting role="php"><![CDATA[
-$router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'));]]></programlisting>
+$router->addRoute(
+    'archive',
+    new Zend_Controller_Router_Route('archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show')
+);]]></programlisting>
 
         </sect3>
 
@@ -179,7 +246,10 @@ $router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller'
             </para>
 
             <programlisting role="php"><![CDATA[
-$router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
+$router->addRoute(
+    'archive',
+    new Zend_Controller_Router_Route('archive/:year', array('year' => 2006), array('year' => '\d+'))
+);]]></programlisting>
 
             <note>
                 Unlike Ruby on Rails, ZF RewriteRouter will match a route and
@@ -197,40 +267,17 @@ $router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year
 
             <para>
                 Unlike the original Router, RewriteRouter can be used in
-                subdirectories - it automatically detects your base URL and sets
-                it accordingly. For example: if you keep your
-                <code>index.php</code> in a webserver subdirectory named
-                <code>/projects/myapp/index.php</code> rewrite base (base URL)
-                will be set to <code>/projects/myapp</code>. This string will
-                then be stripped from the beginning of the path before
-                calculating any route matches. This frees one from the necessity
-                of prepending it to any of your routes. The route of
-                <code>'user/:username'</code> will match URIs like
-                <code>http://localhost/projects/myapp/user/martel</code> and
-                <code>http://example.com/user/martel</code>.
+                subdirectories. The original RewriteRouter's setRewriteBase()
+                method is no longer available however. Instead the base URL
+                will be automatically detected by Zend_Controller_Request_Http 
+                (which proxies to Zend_Http_Request).
             </para>
-
-            <note>
-                Automatic rewrite base is case sensitive, so make sure your URL
-                will match a subdirectory name in a filesystem (even on Windows
-                machines). If it doesn't you will get to noRoute action.
-            </note>
 
             <para>
                 Should rewrite base be detected incorrectly you can override it
-                with your own base path with the help of the setRewriteBase
-                method of the RewriteRouter class:
+                with your own base path with the help of Zend_Http_Request
+                by calling the setBaseUrl() method (see <xref linkend="zend.controller.providedsubclasses.request.http" />).
             </para>
-
-            <programlisting role="php"><![CDATA[
-$router->setRewriteBase('/projects/myapp');]]></programlisting>
-
-            <note>
-                This step won't be necessary in most cases and is strongly
-                discouraged as it introduces another configuration variable
-                which would have to be altered when one moves code to another
-                directory configuration.
-            </note>
 
         </sect3>
 
@@ -245,7 +292,8 @@ $router->setRewriteBase('/projects/myapp');]]></programlisting>
                 (see <xref linkend="zend.controller.overview.defaultcontroller" />).
                 The second default route is included to provide compatibility with
                 the first version of the router. It will match URIs in the shape
-                of <code>'controller/action'</code>.
+                of <code>'controller/action'</code> and will also match any
+                additional parameters appended to the URI by default.
             </para>
 
             <para>
@@ -253,16 +301,21 @@ $router->setRewriteBase('/projects/myapp');]]></programlisting>
             </para>
 
             <programlisting role="php"><![CDATA[
-// Default route for root URL
-$this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
-
+// Add default route (for root url - '/')
+$default = new Zend_Controller_Router_Route('', array('controller' => 'index', 'action' => 'index'));
+$this->addRoute('default', $default);
+        
 // Route for Router v1 compatibility
-$this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
+$compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+$this->addRoute('compat', $compat);]]></programlisting>
 
             <note>
-                Though Zend_Controller_RewriteRouter is configured for backwards
-                compatibility it will not match <code>controller/action</code>
-                URIs with additional parameters just yet.
+                Zend_Controller_RewriteRouter is configured for backwards
+                compatibility. It will automatically match <code>controller/action</code>
+                URIs with additional parameters. The additional parameters do not
+                require the addition of new routes unless they must have default values
+                or variable requirements. These additional parameters will be accessible
+                from the Zend_Controller_Action::_getParam method.
             </note>
 
         </sect3>    </sect2>
@@ -300,4 +353,3 @@ $this->addRoute('compat', ':controller/:action', array('controller' => 'index', 
 <!--
 vim:se ts=4 sw=4 et:
 -->
-
