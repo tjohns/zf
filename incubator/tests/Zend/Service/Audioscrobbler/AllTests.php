@@ -11,6 +11,7 @@ require_once 'ArtistTest.php';
 require_once 'AlbumDataTest.php';
 require_once 'TrackDataTest.php';
 require_once 'TagDataTest.php';
+require_once 'GroupTest.php';
 
 class AllTests
 {
@@ -28,6 +29,7 @@ class AllTests
         $suite->addTestSuite('Zend_Service_Audioscrobbler_AlbumDataTest');
         $suite->addTestSuite('Zend_Service_Audioscrobbler_TrackDataTest');
         $suite->addTestSuite('Zend_Service_Audioscrobbler_TagDataTest');
+        $suite->addTestSuite('Zend_Service_Audioscrobbler_GroupTest');
 
         return $suite;
     }

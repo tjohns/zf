@@ -469,5 +469,59 @@ class Zend_Service_Audioscrobbler
         $service = "/{$this->get('version')}/tag/{$this->get('tag')}/toptracks.xml";
         return $this->getInfo($service);
     }
+    
+    //////////////////////////////////////////////////////////
+	/////////////////////// GROUPS  //////////////////////////
+	//////////////////////////////////////////////////////////
+	
+	public function groupGetWeeklyChartList()
+	{
+	    $service = "/{$this->get('version')}/group/{$this->get('group')}/weeklychartlist.xml";
+	    return $this->getInfo($service);
+	}
+	
+	public function groupGetWeeklyArtistChartList($from = NULL, $to = NULL)
+	{
+	    
+	    if ($from != NULL && $to != NULL) {
+	        $from = (int)$from;
+	        $to = (int)$to;
+	        $params = "from={$from}&$to={$to}";
+	    } else {
+	        $params = "";
+	    }
+	    
+	    $service = "/{$this->get('version')}/group/{$this->get('group')}/weeklyartistchart.xml";
+	    return $this->getInfo($service, $params);
+	}
+	
+	public function groupGetWeeklyTrackChartList($from = NULL, $to = NULL)
+	{
+	    if ($from != NULL && $to != NULL) {
+	        $from = (int)$from;
+	        $to = (int)$to;
+	        $params = "from={$from}&to={$to}";
+	    } else {
+	        $params = "";
+	    }
+	    
+	    $service = "/{$this->get('version')}/group/{$this->get('group')}/weeklytrackchart.xml";
+	    return $this->getInfo($service, $params);
+	}
+	
+	public function groupGetWeeklyAlbumChartList($from = NULL, $to = NULL)
+	{
+	    if ($from != NULL && $to != NULL) {
+	        $from = (int)$from;
+	        $to = (int)$to;
+	        $params = "from={$from}&to={$to}";
+	    } else {
+	        $params = "";
+	    }
+	    
+	    $service = "/{$this->get('version')}/group/{$this->get('group')}/weeklyalbumchart.xml";
+	    return $this->getInfo($service, $params);
+	}
+	
 }
 ?>
