@@ -1083,12 +1083,12 @@ class Zend_Date {
      *
      * @param $part datepart - OPTIONAL the part of date to clone
      * @return object
-     *      */
+     */
     public function cloneIt($part = '')
     {
         $this->_calculate('clone', $this, $part, false, false);
     }
-    
+
 
     /**
      * Calculates the date or object

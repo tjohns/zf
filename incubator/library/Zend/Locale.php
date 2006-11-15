@@ -625,9 +625,9 @@ class Zend_Locale {
      * 
      * @return locale 
      */
-    public function getLocale()
+    public function cloneIt()
     {
-        return $this;
+        return new Zend_Locale($this->_Locale);
     }
 
 

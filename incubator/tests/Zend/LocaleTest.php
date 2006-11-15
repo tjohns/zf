@@ -189,14 +189,14 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * test getLocale
+     * test cloneIt
      * expected true
      */
-    public function testgetLocale()
+    public function testCloneIt()
     {
         $value = new Zend_Locale('de_DE');
-        $default = $value->getLocale();
-        $this->assertEquals($default->toString(), 'de_DE', 'Environment Locale failed');
+        $newvalue = $value->cloneIt();
+        $this->assertEquals($value->toString(), $newvalue->toString(), 'Cloning Locale failed');
     }
 
 

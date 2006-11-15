@@ -145,24 +145,24 @@ print_r($found);
 ?>]]></programlisting>
         </example>
     </sect2>
-    <sect2 id="zend.locale.getlocale">
-        <title>Get the actual set locale</title>
+    <sect2 id="zend.locale.cloneIt">
+        <title>Get a clone if the actual locale</title>
         <para>
-            The actual set locale can be retrieved with the function <code>getLocale()</code>.
-            But the locale will be returned as object. It you need a string, you should use the 
-            <code>toString()</code> function.
+            The actual locale settings can be cloned to an new locale object with the function 
+            <code>cloneIt()</code>. So you can double your locale objects without changing all contents.
         </para>
         <example>
-            <title>getLocale</title>
+            <title>cloneIt</title>
             <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Locale.php');
-
-$locale = new Zend_Locale();
+$locale = new Zend_Locale('ar');
 
 // Return all browser locales
-$found = $locale->getLocale();
-print $found->toString();
+$found = $locale->toString();
+$newlocale = $locale->cloneIt();
+
+print $newlocale->toString();
 ?>]]></programlisting>
         </example>
     </sect2>
