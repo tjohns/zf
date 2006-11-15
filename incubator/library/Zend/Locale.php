@@ -760,7 +760,7 @@ class Zend_Locale {
         $language = Zend_Locale_Data::getContent($this->_Locale, 'language', $language);
 
         if (!empty($language)) {
-            return key($language);
+            return current($language);
         }
 
         return false;
@@ -789,7 +789,7 @@ class Zend_Locale {
         $script = Zend_Locale_Data::getContent($this->_Locale, 'script', $script);
 
         if (!empty($script)) {
-            return key($script);
+            return current($script);
         }
 
         return false;
@@ -818,7 +818,7 @@ class Zend_Locale {
         $region = Zend_Locale_Data::getContent($this->_Locale, 'territory', $region);
 
         if (!empty($region)) {
-            return key($region);
+            return current($region);
         }
 
         return false;
@@ -847,7 +847,7 @@ class Zend_Locale {
         $calendar = Zend_Locale_Data::getContent($this->_Locale, 'type', $calendar);
 
         if (!empty($calendar)) {
-            return key($calendar);
+            return current($calendar);
         }
 
         return false;
