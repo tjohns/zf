@@ -81,7 +81,7 @@ class Zend_Session implements IteratorAggregate
      */
     public function __construct($namespace = 'Default', $singleInstance = false)
     {
-        if (!is_string($namespace) || $namespace !== '') {
+        if (!is_string($namespace) || $namespace === '') {
             throw new Zend_Session_Exception("Session namespace must be a non-empty string.");
         }
                
@@ -89,12 +89,12 @@ class Zend_Session implements IteratorAggregate
             throw new Zend_Session_Exception("Session namespace must not start with an underscore.");
         }
         
-        if (in_array($namespace, self::$_singleInstances)) {
+        if (isset(self::$_singleInstances[$namespace])) {
             throw new Zend_Session_Exception("A session namespace '$namespace' already exists and is set to be the only instance of this namespace.");
         }
         
         if ($singleInstance === true) {
-            self::$_singleInstance[] = $namespace;
+            self::$_singleInstance[$namespace] = true;
         }
         
         $this->_namespace = $namespace;
