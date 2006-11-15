@@ -72,7 +72,7 @@ class Zend_Session implements IteratorAggregate
      */
     public function __construct($namespace = 'Default')
     {
-        if (!is_string($namespace) || empty($namespace)) {
+        if (!is_string($namespace) || $namespace !== '') {
             throw new Zend_Session_Exception("Namespace must be a non-empty string.");
         }
             
@@ -132,13 +132,25 @@ class Zend_Session implements IteratorAggregate
     
     
     /**
-     * lock() - ability to mark a session/namespace as readonly
+     * lock() - mark a session/namespace as readonly
      *
      * @return void
      */
-    public function setLock($locked = true)
+    public function lock()
     {
-        self::$_namespaceLocks[$this->_namespace] = $locked;
+        self::$_namespaceLocks[$this->_namespace] = null;
+        return;
+    }
+
+
+    /**
+     * unlock() - unmark a session/namespace to enable read & write
+     *
+     * @return void
+     */
+    public function unlock()
+    {
+        unset(self::$_namespaceLocks[$this->_namespace]);
         return;
     }
 
