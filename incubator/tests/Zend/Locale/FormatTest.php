@@ -1649,7 +1649,18 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
      */
     public function testgetTimeParsing()
     {
-        $value = Zend_Locale_Format::getTime('13:14:55');
+        $value = Zend_Locale_Format::getTime('13:14:55', 'HH:mm:ss');
+        $this->assertEquals(is_array($value), true, "array expected");
+    }
+
+
+    /**
+     * test if getTime parses a time
+     * expected array
+     */
+    public function testgetTimeParsingFormat2()
+    {
+        $value = Zend_Locale_Format::getTime('11:14:55 am', 'h:mm:ss a');
         $this->assertEquals(is_array($value), true, "array expected");
     }
 
@@ -1712,7 +1723,18 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
      */
     public function testIsDate()
     {
-        $value = Zend_Locale_Format::isDate('13.Nov.2006');
+        $value = Zend_Locale_Format::isDate('13.Nov.2006',false,'de_AT');
+        $this->assertTrue($value, "true expected");
+    }
+
+
+    /**
+     * test isDate
+     * expected true
+     */
+    public function testIsDateWithoutMonth()
+    {
+        $value = Zend_Locale_Format::isDate('13.XXX.2006', false, 'ar_EG');
         $this->assertTrue($value, "true expected");
     }
 
@@ -1734,7 +1756,18 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
      */
     public function testIsTime()
     {
-        $value = Zend_Locale_Format::isTime('13:10:55');
+        $value = Zend_Locale_Format::isTime('13:10:55', false, 'de_AT');
+        $this->assertTrue($value, "true expected");
+    }
+
+
+    /**
+     * test isTime
+     * expected true
+     */
+    public function testIsTimeAR()
+    {
+        $value = Zend_Locale_Format::isTime('11:10:55 am', false, 'ar_EG');
         $this->assertTrue($value, "true expected");
     }
 

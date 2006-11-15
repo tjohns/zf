@@ -331,7 +331,10 @@ class Zend_Locale_Format
         $hour  = iconv_strpos($format, 'H');
         $min   = iconv_strpos($format, 'm');
         $sec   = iconv_strpos($format, 's');
-
+        if ($hour === false) {
+            $hour = iconv_strpos($format, 'h');
+        }
+        
         if ($day !== false) {
             $parse[$day]   = 'd';
             $parse[$month] = 'M';
@@ -377,7 +380,9 @@ class Zend_Locale_Format
             switch($value) {
                 case 'd':
                     if ($split === false) {
-                        $result['day']    = (int) $splitted[0][$cnt];
+                        if (count($splitted[0]) > $cnt) {
+                            $result['day']    = (int) $splitted[0][$cnt];
+                        }
                     } else {
                         $result['day']    = (int) iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
@@ -386,7 +391,9 @@ class Zend_Locale_Format
                     break;
                 case 'M':
                     if ($split === false) {
-                        $result['month']  = (int) $splitted[0][$cnt];
+                        if (count($splitted[0]) > $cnt) {
+                            $result['month']  = (int) $splitted[0][$cnt];
+                        }
                     } else {
                         $result['month']  = (int) iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
@@ -399,7 +406,9 @@ class Zend_Locale_Format
                         $length = 4;
                     }
                     if ($split === false) {
-                        $result['year']   = (int) $splitted[0][$cnt];
+                        if (count($splitted[0]) > $cnt) {
+                            $result['year']   = (int) $splitted[0][$cnt];
+                        }
                     } else {
                         $result['year']   = (int) iconv_substr($splitted[0][0], $split, $length);
                         $split += $length;
@@ -408,7 +417,9 @@ class Zend_Locale_Format
                     break;
                 case 'H':
                     if ($split === false) {
-                        $result['hour']   = (int) $splitted[0][$cnt];
+                        if (count($splitted[0]) > $cnt) {
+                            $result['hour']   = (int) $splitted[0][$cnt];
+                        }
                     } else {
                         $result['hour']   = (int) iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
@@ -417,7 +428,9 @@ class Zend_Locale_Format
                     break;
                 case 'm':
                     if ($split === false) {
-                        $result['minute'] = (int) $splitted[0][$cnt];
+                        if (count($splitted[0]) > $cnt) {
+                            $result['minute'] = (int) $splitted[0][$cnt];
+                        }
                     } else {
                         $result['minute'] = (int) iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
@@ -426,7 +439,9 @@ class Zend_Locale_Format
                     break;
                 case 's':
                     if ($split === false) {
-                        $result['second'] = (int) $splitted[0][$cnt];
+                        if (count($splitted[0]) > $cnt) {
+                            $result['second'] = (int) $splitted[0][$cnt];
+                        }
                     } else {
                         $result['second'] = (int) iconv_substr($splitted[0][0], $split, 2);
                         $split += 2;
@@ -438,31 +453,39 @@ class Zend_Locale_Format
 
         if ($day !== false) {
             // fix false month
-            if (($position !== false) && ($position != $month)) {
-                $temp = $result['day'];
-                $result['day']   = $result['month'];
-                $result['month'] = $temp;
+            if (isset($result['day']) and isset($result['month'])) {
+                if (($position !== false) && ($position != $month)) {
+                    $temp = $result['day'];
+                    $result['day']   = $result['month'];
+                    $result['month'] = $temp;
+                }
             }
 
             // fix switched values d <> y
-            if ($result['day'] > 31) {
-                $temp = $result['year'];
-                $result['year'] = $result['day'];
-                $result['day']  = $temp;
+            if (isset($result['day']) and isset($result['year'])) {
+                if ($result['day'] > 31) {
+                    $temp = $result['year'];
+                    $result['year'] = $result['day'];
+                    $result['day']  = $temp;
+                }
             }
 
             // fix switched values M <> y
-            if ($result['month'] > 31) {
-                $temp = $result['year'];
-                $result['year']  = $result['month'];
-                $result['month'] = $temp;
+            if (isset($result['month']) and isset($result['year'])) {
+                if ($result['month'] > 31) {
+                    $temp = $result['year'];
+                    $result['year']  = $result['month'];
+                    $result['month'] = $temp;
+                }
             }
 
             // fix switched values M <> y
-            if ($result['month'] > 12) {
-                $temp = $result['day'];
-                $result['day']   = $result['month'];
-                $result['month'] = $temp;
+            if (isset($result['month']) and isset($result['day'])) {
+                if ($result['month'] > 12) {
+                    $temp = $result['day'];
+                    $result['day']   = $result['month'];
+                    $result['month'] = $temp;
+                }
             }
         }
         return $result;
