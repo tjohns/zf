@@ -72,8 +72,8 @@ class Zend_Session implements IteratorAggregate
      */
     public function __construct($namespace = 'Default')
     {
-        if (!is_string($namespace)) {
-            throw new Zend_Session_Exception("Namespace must be a string.");
+        if (!is_string($namespace) || empty($namespace)) {
+            throw new Zend_Session_Exception("Namespace must be a non-empty string.");
         }
             
         if ($namespace[0] == "_") {
