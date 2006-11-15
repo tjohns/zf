@@ -333,6 +333,11 @@ final class Zend_Session_Core
         if (self::$_sessionStarted) {
             throw new Zend_Session_Exception(__CLASS__ . '::start() can only be called once.');
         }
+
+		// See http://www.php.net/manual/en/ref.session.php for explanation
+        if (defined('SID')) {
+            throw new Zend_Session_Exception(__CLASS__ . '::session has already been started (by session.auto-start or session_start()?)');
+        }
         
         session_start();
         self::$_sessionStarted = true;
