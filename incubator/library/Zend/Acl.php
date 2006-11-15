@@ -75,10 +75,10 @@ class Zend_Acl
     /**
      * Modes for adding permissions to a permission container
      */
-    const MODE_SET = 1;
-    const MODE_ADD = 2;
+    const MODE_SET    = 1;
+    const MODE_ADD    = 2;
     const MODE_REMOVE = 3;
-    const MODE_UNSET = 4;
+    const MODE_UNSET  = 4;
 
     /**
      * Path name for ACO
@@ -170,30 +170,25 @@ class Zend_Acl
         if (null === $aroRegistry) {
             $aroRegistry = new Zend_Acl_Aro_Registry();
         }
-        $current = $this;
-        while (!$current->_isRoot()) {
-            $current = $current->getParent();
-        }
-        $current->_registry = $aroRegistry;
+        $root = $this->_getRoot();
+        $root->_registry = $aroRegistry;
         return $this;
     }
 
     /**
      * Retrieve the ARO registry for this ACL. If one does not already exist,
-     * an empty registry is created automatically and returned.
+     * an empty registry is created automatically and returned. The ARO registry
+     * is a property of the root ACL node.
      *
      * @return Zend_Acl_Aro_Registry
      */
     public function getAroRegistry()
     {
-        $current = $this;
-        while (!$current->_isRoot()) {
-            $current = $current->getParent();
+        $root = $this->_getRoot();
+        if (!($root->_registry instanceof Zend_Acl_Aro_Registry)) {
+            $root->setAroRegistry();
         }
-        if (!($current->_registry instanceof Zend_Acl_Aro_Registry)) {
-            $current->setAroRegistry();
-        }
-        return $current->_registry;
+        return $root->_registry;
     }
 
     /**
@@ -589,6 +584,20 @@ class Zend_Acl
     protected function _isRoot()
     {
         return null === $this->_parent;
+    }
+
+    /**
+     * Returns the root ACO node of the ACL.
+     *
+     * @return Zend_Acl
+     */
+    protected function _getRoot()
+    {
+        $current = $this;
+        while (!$current->_isRoot()) {
+            $current = $current->getParent();
+        }
+        return $current;
     }
 
 }
