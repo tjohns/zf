@@ -62,22 +62,39 @@ class Zend_Session implements IteratorAggregate
      */
     protected static $_namespaceLocks = array();
     
+    /**
+     * Single instance namespace array to ensure data security.
+     *
+     * @var array
+     */
+    protected static $_singleInstances = array()
 
     /**
      * __construct() - This will create an instance that saves to/gets from an 
      * instantiated core.  An optional namespace allows for saving/getting
-     * to isolated sections of the session.
+     * to isolated sections of the session.  An optional argument $singleInstance
+     * will prevent any futured attempts of getting a Zend_Session object in the
+     * same namespace that is provided.
      *
      * @param string $namespace
+     * @param bool $singleInstance
      */
-    public function __construct($namespace = 'Default')
+    public function __construct($namespace = 'Default', $singleInstance = false)
     {
         if (!is_string($namespace) || $namespace !== '') {
-            throw new Zend_Session_Exception("Namespace must be a non-empty string.");
+            throw new Zend_Session_Exception("Session namespace must be a non-empty string.");
         }
-            
+               
         if ($namespace[0] == "_") {
-            throw new Zend_Session_Exception("Namespace must not start with an underscore.");
+            throw new Zend_Session_Exception("Session namespace must not start with an underscore.");
+        }
+        
+        if (in_array($namespace, self::$_singleInstances)) {
+            throw new Zend_Session_Exception("A session namespace '$namespace' already exists and is set to be the only instance of this namespace.");
+        }
+        
+        if ($singleInstance === true) {
+            self::$_singleInstance[] = $namespace;
         }
         
         $this->_namespace = $namespace;
@@ -188,6 +205,10 @@ class Zend_Session implements IteratorAggregate
      */
     public function __get($name)
     {
+        if (!is_string($name)) {
+            throw new Zend_Session_Exception(get_class($this) . "::__get() the '$name' key must be a string");
+        }
+        
         return $this->_sessionCore->namespaceGet($this->_namespace, $name);
     }
     
@@ -205,6 +226,10 @@ class Zend_Session implements IteratorAggregate
             throw new Zend_Session_Exception("This session/namespace has been marked as read-only.");
         }
         
+        if (!is_string($name)) {
+            throw new Zend_Session_Exception(get_class($this) . "::__set() the '$name' key must be a string");
+        }
+        
         return $this->_sessionCore->namespaceSet($this->_namespace, $name, $value);
     }
     
@@ -217,6 +242,10 @@ class Zend_Session implements IteratorAggregate
      */
     public function __isset($name) 
     {
+        if (!is_string($name)) {
+            throw new Zend_Session_Exception(get_class($this) . "::__isset() the '$name' key must be a string");
+        }
+        
         return $this->_sessionCore->namespaceIsset($this->_namespace, $name);
     }
     
@@ -229,6 +258,10 @@ class Zend_Session implements IteratorAggregate
      */
     public function __unset($name)
     {
+        if (!is_string($name)) {
+            throw new Zend_Session_Exception(get_class($this) . "::__unset() the '$name' key must be a string");
+        }
+        
         return $this->_sessionCore->namespaceUnset($this->_namespace, $name);
     }
   
