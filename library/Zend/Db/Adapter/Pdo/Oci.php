@@ -82,7 +82,7 @@ class Zend_Db_Adapter_Pdo_Oci extends Zend_Db_Adapter_Pdo_Abstract
         $sql = "SELECT column_name, data_type, data_length, nullable, data_default from all_tab_columns WHERE table_name='$table' ORDER BY column_name";
         $result = $this->query($sql);
         while ($val = $result->fetch()) {
-			$descr[$val['column_name']] = array(
+            $descr[$val['column_name']] = array(
                'name'    => $val['column_name'],
                'notnull' => (bool)($val['nullable'] === 'N'), // nullable is N when mandatory
                'type'    => $val['data_type'],
