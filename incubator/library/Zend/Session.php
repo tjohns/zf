@@ -72,7 +72,7 @@ class Zend_Session implements IteratorAggregate
      *
      * @var array
      */
-    protected static $_singleInstances = array()
+    protected static $_singleInstances = array();
 
     /**
      * __construct() - This will create an instance that saves to/gets from an 
@@ -210,8 +210,8 @@ class Zend_Session implements IteratorAggregate
      */
     public function __get($name)
     {
-        if (!is_string($name)) {
-            throw new Zend_Session_Exception(get_class($this) . "::__get() the '$name' key must be a string");
+        if (!is_string($name) || $name === '') {
+            throw new Zend_Session_Exception(get_class($this) . "::__get() the '$name' key must be a non-empty string");
         }
         
         return $this->_sessionCore->namespaceGet($this->_namespace, $name);
@@ -231,8 +231,8 @@ class Zend_Session implements IteratorAggregate
             throw new Zend_Session_Exception("This session/namespace has been marked as read-only.");
         }
         
-        if (!is_string($name)) {
-            throw new Zend_Session_Exception(get_class($this) . "::__set() the '$name' key must be a string");
+        if (!is_string($name) || $name === '') {
+            throw new Zend_Session_Exception(get_class($this) . "::__set() the '$name' key must be a non-empty string");
         }
         
         return $this->_sessionCore->namespaceSet($this->_namespace, $name, $value);
@@ -247,8 +247,8 @@ class Zend_Session implements IteratorAggregate
      */
     public function __isset($name) 
     {
-        if (!is_string($name)) {
-            throw new Zend_Session_Exception(get_class($this) . "::__isset() the '$name' key must be a string");
+        if (!is_string($name) || $name === '') {
+            throw new Zend_Session_Exception(get_class($this) . "::__isset() the '$name' key must be a non-empty string");
         }
         
         return $this->_sessionCore->namespaceIsset($this->_namespace, $name);
@@ -263,8 +263,8 @@ class Zend_Session implements IteratorAggregate
      */
     public function __unset($name)
     {
-        if (!is_string($name)) {
-            throw new Zend_Session_Exception(get_class($this) . "::__unset() the '$name' key must be a string");
+        if (!is_string($name) || $name === '') {
+            throw new Zend_Session_Exception(get_class($this) . "::__unset() the '$name' key must be a non-empty string");
         }
         
         return $this->_sessionCore->namespaceUnset($this->_namespace, $name);
