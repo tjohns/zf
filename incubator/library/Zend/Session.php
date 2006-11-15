@@ -101,7 +101,7 @@ class Zend_Session implements IteratorAggregate
 
 
     /**
-     * SetExpirationSeconds() - expire the namespace, or specific variables after a specified
+     * setExpirationSeconds() - expire the namespace, or specific variables after a specified
      * number of seconds
      *
      * @param int $seconds
@@ -116,7 +116,7 @@ class Zend_Session implements IteratorAggregate
     
     
     /**
-     * SetExpirationHops() - expire the namespace, or specific variables after a specified 
+     * setExpirationHops() - expire the namespace, or specific variables after a specified 
      * number of page hops
      *
      * @param int $hops
@@ -132,7 +132,7 @@ class Zend_Session implements IteratorAggregate
     
     
     /**
-     * Lock() - ability to mark a session/namespace as readonly
+     * lock() - ability to mark a session/namespace as readonly
      *
      * @return void
      */

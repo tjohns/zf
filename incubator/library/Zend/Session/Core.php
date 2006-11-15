@@ -143,7 +143,7 @@ final class Zend_Session_Core
     
     
     /**
-     * SetOptions - set both the class specified
+     * setOptions - set both the class specified
      *
      * @param array $userOptions
      */
@@ -185,7 +185,7 @@ final class Zend_Session_Core
    
     
     /**
-     * Session Save Handler assignment
+     * setSaveHandler() - Session Save Handler assignment
      *
      * @param Zend_Session_SaveHandlerInterface $interface
      * @return void
@@ -206,7 +206,7 @@ final class Zend_Session_Core
     
     
     /**
-     * GetInstance() - Enfore the Singleton of the core.
+     * getInstance() - Enfore the Singleton of the core.
      *
      * @param boolean $instanceMustExist
      * @return Zend_Session_Core
@@ -227,7 +227,7 @@ final class Zend_Session_Core
     
     
     /**
-     * RemoveInstance() - Remove the instance.
+     * removeInstance() - Remove the instance.
      *
      * @return void
      */
@@ -239,7 +239,7 @@ final class Zend_Session_Core
     
 
     /**
-     * RegenerateId() - Regenerate the session id.
+     * regenerateId() - Regenerate the session id.
      *
      * @return void
      */
@@ -255,7 +255,7 @@ final class Zend_Session_Core
     
     
     /**
-     * RememberMe() - Send the remember me cookie, which will (on next request) force the session to resend
+     * rememberMe() - Send the remember me cookie, which will (on next request) force the session to resend
      * the session cookie that will expire after a number of seconds in the future (not when the browser closes)
      * Seconds are determined by self::$_rememberMeSeconds.
      *
@@ -275,7 +275,7 @@ final class Zend_Session_Core
     
     
     /**
-     * ForgetMe() - This will make sure to kill the session cookie on the users browser.
+     * forgetMe() - This will make sure to kill the session cookie on the users browser.
      *
      * @return void
      */
@@ -294,7 +294,7 @@ final class Zend_Session_Core
     
     
     /**
-     * SessionExists() - wether or not a session exist for the current request.
+     * sessionExists() - wether or not a session exist for the current request.
      *
      * @return bool
      */
@@ -311,7 +311,7 @@ final class Zend_Session_Core
     
     
     /**
-     * Start() - Start the session.
+     * start() - Start the session.
      *
      * @return void
      */
@@ -354,7 +354,7 @@ final class Zend_Session_Core
 
     
     /**
-     * IsStarted() - convenience methods to determine if the session is already started.
+     * isStarted() - convenience methods to determine if the session is already started.
      *
      * @return bool
      */
@@ -365,7 +365,7 @@ final class Zend_Session_Core
     
     
     /**
-     * GetId() - get the current session id
+     * getId() - get the current session id
      *
      * @return string
      */
@@ -376,7 +376,7 @@ final class Zend_Session_Core
     
     
     /**
-     * SetId() - set an id to a user specified id
+     * setId() - set an id to a user specified id
      *
      * @param string $id
      */
@@ -395,7 +395,7 @@ final class Zend_Session_Core
     
     
     /**
-     * RegisterValidator() - register a validator that will attempt to validate this session for
+     * registerValidator() - register a validator that will attempt to validate this session for
      * every future request
      *
      * @param Zend_Session_Validator_Interface $validator
@@ -408,7 +408,7 @@ final class Zend_Session_Core
     
     
     /**
-     * Stop() - Convienance method, links to shutdown
+     * stop() - Convienance method, links to shutdown
      *
      * @return void
      */
@@ -420,7 +420,7 @@ final class Zend_Session_Core
     
     
     /**
-     * WriteClose() - this will complete the internal data transformation on this request.
+     * writeClose() - this will complete the internal data transformation on this request.
      *
      * @return void
      */
@@ -437,7 +437,7 @@ final class Zend_Session_Core
     
 
     /**
-     * Shutdown() - Shutdown the sesssion, close writing and remove the instance
+     * shutdown() - Shutdown the sesssion, close writing and remove the instance
      *
      */
     public static function shutdown()
@@ -737,7 +737,7 @@ final class Zend_Session_Core
     
     
     /**
-     * NamespaceGet() - get a variable from a namespace.
+     * namespaceGet() - get a variable from a namespace.
      *
      * @param string $namespace
      * @param string $name
@@ -763,7 +763,7 @@ final class Zend_Session_Core
 
     
     /**
-     * NamespaceSetExpirationSeconds() - exprire a namespace, or data within after a specified number
+     * namespaceSetExpirationSeconds() - exprire a namespace, or data within after a specified number
      * of seconds.
      *
      * @param string $namespace
@@ -802,7 +802,7 @@ final class Zend_Session_Core
     
     
     /**
-     * NamespaceSetExpirationHops() - 
+     * namespaceSetExpirationHops() - 
      *
      * @param string $namespace
      * @param int $hops
