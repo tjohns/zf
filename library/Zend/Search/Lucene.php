@@ -346,8 +346,9 @@ class Zend_Search_Lucene
 
         $this->commit();
 
-        $hits = array();
+        $hits   = array();
         $scores = array();
+        $ids    = array();
 
         $docNum = $this->count();
         for( $count=0; $count < $docNum; $count++ ) {
@@ -357,11 +358,14 @@ class Zend_Search_Lucene
                 $hit->id = $count;
                 $hit->score = $docScore;
 
-                $hits[] = $hit;
+                $hits[]   = $hit;
+                $ids[]    = $count;
                 $scores[] = $docScore;
             }
         }
-        array_multisort($scores, SORT_DESC, SORT_REGULAR, $hits);
+        array_multisort($scores, SORT_DESC, SORT_NUMERIC,
+                        $ids,    SORT_ASC,  SORT_NUMERIC,
+                        $hits);
 
         $query->reset();
 
