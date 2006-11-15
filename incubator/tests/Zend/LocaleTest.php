@@ -208,7 +208,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Locale('de_DE');
         $value->setLocale('en_US');
-        $this->assertEquals($value->getLocale()->toString(), 'en_US', 'Environment Locale not set');
+        $this->assertEquals($value->toString(), 'en_US', 'Environment Locale not set');
     }
 
 
@@ -220,7 +220,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Locale('de_DE');
         $value->setLocale('en_AA');
-        $this->assertEquals($value->getLocale()->toString(), 'en', 'Environment Locale not set');
+        $this->assertEquals($value->toString(), 'en', 'Environment Locale not set');
     }
 
     /**
@@ -231,7 +231,7 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Locale();
         $value->setLocale('xx_AA');
-        $this->assertEquals($value->getLocale()->toString(), 'root', 'Environment Locale not set');
+        $this->assertEquals($value->toString(), 'root', 'Environment Locale not set');
     }
 
 
