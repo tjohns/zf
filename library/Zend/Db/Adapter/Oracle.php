@@ -175,13 +175,16 @@ class Zend_Db_Adapter_Oracle extends Zend_Db_Adapter_Abstract
      */
     public function describeTable($table)
     {
-        $sql = "DESCRIBE $table";
-        $result = $this->fetchAll($sql);
-        foreach ($result as $key => $val) {
-            $descr[$val['Field']] = array(
-                'name'    => $val['Field'],
-                'notnull' => (bool) ($val['Null'] === ''), // not null is empty, null is yes
-                'type'    => $val['Type'],
+        $table = strtoupper($table);
+        $sql = "SELECT column_name, data_type, data_length, nullable, data_default from all_tab_columns WHERE table_name='$table' ORDER BY column_name";
+        $result = $this->query($sql);
+        while ($val = $result->fetch()) {
+			$descr[$val['column_name']] = array(
+               'name'    => $val['column_name'],
+               'notnull' => (bool)($val['nullable'] === 'N'), // nullable is N when mandatory
+               'type'    => $val['data_type'],
+               'default' => $val['data_default'],
+               'length'  => $val['data_length']
             );
         }
         return $descr;
