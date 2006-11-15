@@ -50,8 +50,16 @@ abstract class Zend_Db_Adapter_Pdo_Abstract extends Zend_Db_Adapter_Abstract
         unset($dsn['password']);
 
         // use all remaining parts in the DSN
-        foreach ($dsn as $key => $val) {
-            $dsn[$key] = "$key=$val";
+        if ($this->_pdoType == 'oci') {
+            $dsn['dbname'] = 'dbname=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST='.$dsn['host'].')(PORT='.$dsn['port'].')))(CONNECT_DATA=(SID='.$dsn['dbname'].')))';
+            unset($dsn['type']);
+            unset($dsn['host']);
+            unset($dsn['port']);
+        }
+        else {
+            foreach ($dsn as $key => $val) {
+                $dsn[$key] = "$key=$val";
+            }
         }
 
         return $this->_pdoType . ':' . implode(';', $dsn);
