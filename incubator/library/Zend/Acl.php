@@ -17,7 +17,14 @@
  * @package    Zend_Acl
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
+
+/**
+ * Zend_Acl_Exception
+ */
+require_once 'Zend/Acl/Exception.php';
 
 
 /**
@@ -81,13 +88,13 @@ class Zend_Acl
 
     /**
      * Permissions for this ACO.
-     * @var Zend_Acl
+     * @var Zend_Acl_Permission
      */
-    protected $_perm;
+    protected $_perm = null;
 
     /**
-     * ARO registry for this ARO.
-     * @var Zend_Acl
+     * ARO registry for this ACL, which is set at the root ACO only.
+     * @var Zend_Acl_Aro_Registry
      */
     protected $_registry;
 
@@ -95,7 +102,7 @@ class Zend_Acl
      * Parent ACO.
      * @var Zend_Acl
      */
-    protected $_parent;
+    protected $_parent = null;
 
     /**
      * All children of this ACO
@@ -108,9 +115,9 @@ class Zend_Acl
      *
      * A reference to the parent object is created if supplied.
      *
-     * @param  Zend_Acl $parent
-     * @param  string   $path
-     * @throws Zend_Acl_Exception
+     * @param  Zend_Acl|null $parent
+     * @param  string        $path
+     * @return void
      */
     public function __construct(Zend_Acl $parent = null, $path = self::PATH_DEFAULT)
     {
@@ -126,7 +133,7 @@ class Zend_Acl
      * rather than explicitly set (they infer an inherited permission).
      *
      * @param  string $path
-     * @return Zend_Acl
+     * @return Zend_Acl Provides a fluent interface
      */
     public function __get($path)
     {
@@ -152,19 +159,41 @@ class Zend_Acl
     }
 
     /**
-     * Retrieve the global ARO registry
+     * Sets the ARO registry to use for this ACL. The ARO registry is a property
+     * of the root ACL node.
+     *
+     * @param Zend_Acl_Aro_Registry|null $aroRegistry
+     * @return Zend_Acl Provides a fluent interface
+     */
+    public function setAroRegistry(Zend_Acl_Aro_Registry $aroRegistry = null)
+    {
+        if (null === $aroRegistry) {
+            $aroRegistry = new Zend_Acl_Aro_Registry();
+        }
+        $current = $this;
+        while (!$current->_isRoot()) {
+            $current = $current->getParent();
+        }
+        $current->_registry = $aroRegistry;
+        return $this;
+    }
+
+    /**
+     * Retrieve the ARO registry for this ACL. If one does not already exist,
+     * an empty registry is created automatically and returned.
      *
      * @return Zend_Acl_Aro_Registry
      */
-    public function aroRegistry()
+    public function getAroRegistry()
     {
-        if (!$this->_isRoot()) {
-            return $this->getParent()->aroRegistry();
+        $current = $this;
+        while (!$current->_isRoot()) {
+            $current = $current->getParent();
         }
-        if (!($this->_registry instanceof Zend_Acl_Aro_Registry)) {
-            $this->_registry = new Zend_Acl_Aro_Registry;
+        if (!($current->_registry instanceof Zend_Acl_Aro_Registry)) {
+            $current->setAroRegistry();
         }
-        return $this->_registry;
+        return $current->_registry;
     }
 
     /**
@@ -259,24 +288,23 @@ class Zend_Acl
      * (if the current ACL is not root)
      *
      * @param string $path
-     * @return boolean
      * @throws Zend_Acl_Exception
+     * @return void
      */
     public function remove($path = null)
     {
         if (null === $path) {
-            if (null !== ($parent = $this->getParent())) {
-                return $parent->remove($this->getPath());
+            if (!$this->_isRoot()) {
+                return $this->getParent()->remove($this->getPath());
             } else {
-                throw new Zend_Acl_Exception('cannot remove root node');
-            }
-        } else {
-            if (isset($this->_data[$path])) {
-                unset($this->_data[$path]);
-                return true;
+                throw new Zend_Acl_Exception('Cannot remove root node');
             }
         }
-        return false;
+        if (isset($this->_data[$path])) {
+            unset($this->_data[$path]);
+        } else {
+            throw new Zend_Acl_Exception("Path '$path' does not exist");
+        }
     }
 
     /**
@@ -285,7 +313,7 @@ class Zend_Acl
      * @param mixed $aro
      * @param mixed $context
      * @param mixed $path
-     * @return boolean
+     * @return void
      */
     public function removeAro($aro, $context = Zend_Acl::ACO_CATCHALL, $path = null)
     {
@@ -320,7 +348,7 @@ class Zend_Acl
         $root = $this->_findPath($this, $path);
 
         if (is_array($aro)) {
-            throw new Zend_Acl_Exception('cannot determine permissions for multiple AROs');
+            throw new Zend_Acl_Exception('Cannot determine permissions for multiple AROs');
         } else {
             $aro = current($this->_parseAro($aro));
         }
@@ -329,7 +357,7 @@ class Zend_Acl
     }
 
     /**
-     * Returns the ACL's parent object
+     * Returns the ACL's parent object or null if there is no parent.
      *
      * @return Zend_Acl|null
      */
@@ -382,7 +410,7 @@ class Zend_Acl
         $valid = array();
 
         if (null === $aro) {
-            $aro = $this->aroRegistry()->toArray();
+            $aro = $this->getAroRegistry()->toArray();
         }
 
         foreach ($this->_parseAro($aro) as $member) {
@@ -464,14 +492,15 @@ class Zend_Acl
     }
 
     /**
-     * Retrieves permissions for a container
+     * Retrieves permissions for a container. If permissions do not already
+     * exist, an empty permission set is created automatically.
      *
      * @return Zend_Acl_Permission
      */
     protected function _getPermission()
     {
         if (null === $this->_perm) {
-            $this->_perm = new Zend_Acl_Permission;
+            $this->_perm = new Zend_Acl_Permission();
         }
         return $this->_perm;
     }
@@ -479,6 +508,7 @@ class Zend_Acl
     /**
      * Retrieves an array of ARO objects for the selected id
      *
+     * @param string $id ARO identifier
      * @return array
      */
     protected function _parseAro($id)
@@ -489,9 +519,9 @@ class Zend_Acl
         }
         foreach ($id as $member) {
             if (!($member instanceof Zend_Acl_Aro)) {
-                $member = $this->aroRegistry()->find($member);
+                $member = $this->getAroRegistry()->find($member);
             }
-            array_push($aro, $member);
+            $aro[] = $member;
         }
         return $aro;
     }
@@ -503,7 +533,7 @@ class Zend_Acl
      * If the target path does not exist, a new empty ACL is created.
      *
      * @param string $path
-     * @return Zend_Acl_Permission
+     * @return Zend_Acl
      */
     protected function _createPath($path)
     {
@@ -511,7 +541,7 @@ class Zend_Acl
         if (null !== $path && $path !== '_default') {
             $path = explode(Zend_Acl::PATH_DELIMITER, $path);
             foreach ($path as $key) {
-                $root->{$key} = $this->$key;
+                $root->{$key} = $this->{$key};
                 $root = $root->{$key};
             }
         }

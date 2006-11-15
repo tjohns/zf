@@ -17,7 +17,14 @@
  * @package    Zend_Acl
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
+
+/**
+ * Zend_Acl
+ */
+require_once 'Zend/Acl.php';
 
 
 /**
@@ -80,7 +87,7 @@ class Zend_Acl_Aro
                 $this->_addParent($parent);
             }
         }
-        array_push($this->_parent, Zend_Acl::ARO_DEFAULT);
+        $this->_parent[] = Zend_Acl::ARO_DEFAULT;
     }
 
     /**
@@ -169,7 +176,7 @@ class Zend_Acl_Aro
         }
 
         if (!in_array($parent->getId(), $this->_parent)) {
-            array_push($this->_parent, $parent->getId());
+            $this->_parent[] = $parent->getId();
         }
 
         return $parent;

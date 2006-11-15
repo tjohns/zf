@@ -17,7 +17,14 @@
  * @package    Zend_Acl
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
+
+
+/**
+ * Zend_Acl
+ */
+require_once 'Zend/Acl.php';
 
 
 /**
@@ -133,7 +140,7 @@ class Zend_Acl_Aro_Registry
         if (isset($this->_aro[$aro])) {
             return $this->_aro[$aro];
         }
-        
+
         return $this->_aro[Zend_Acl::ARO_DEFAULT];
     }
 
