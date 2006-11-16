@@ -135,6 +135,14 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('2000', $values['year']);
     }
 
+    public function testVariableUTFValues()
+    {
+        $route = new Zend_Controller_Router_Route('test/:param');
+        $values = $route->match('test/aä');
+
+        $this->assertSame('aä', $values['param']);
+    }
+
     public function testOneVariableValue()
     {
         $route = new Zend_Controller_Router_Route(':action', array('controller' => 'ctrl', 'action' => 'action'));
