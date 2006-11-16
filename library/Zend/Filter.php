@@ -320,7 +320,7 @@ class Zend_Filter
         }
 
         // check input against domain name schema
-        $status = @preg_match('/^(?:[^\W_](?:[^\W_]|-){0,61}[^\W_]\.)+[a-zA-Z]{2,6}\.?$/', $value);
+		$status = @preg_match('/^(?:[^\W_]((?:[^\W_]|-){0,61}[^\W_])?\.)+[a-zA-Z]{2,6}\.?$/', $value);
         if ($status === false) {
             throw new Zend_Filter_Exception('Internal error: DNS validation failed');
         }
