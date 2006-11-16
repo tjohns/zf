@@ -638,8 +638,10 @@ class Zend_Locale {
         
         if (!isset($this->_LocaleData[$locale])) {
             $region = substr($locale, 0, 3);
-            if (($region[2] == '_') or ($region[2] == '-')) {
-                $region = substr($region, 0, 2);
+            if (isset($region[2])) {
+                if (($region[2] == '_') or ($region[2] == '-')) {
+                    $region = substr($region, 0, 2);
+                }
             }
             if (isset($this->_LocaleData[$region])) {
                 $this->_Locale = $region;
