@@ -21,7 +21,9 @@
                 <code>Zend_Controller_Request_Http</code> provides a request object
                 for use in an HTTP environment. In addition to extending
                 <code>Zend_Controller_Request_Abstract</code>, it proxies to a
-                <code>Zend_Http_Request</code> object.
+                <code>Zend_Http_Request</code> object. <code>Zend_Controller_Request_Http</code>
+                is the default request class utilised by
+                <code>Zend_Controller_Dispatcher</code>.
             </para>
 
         <sect3 id="zend.controller.providedsubclasses.request.http.dataaccess">
@@ -100,13 +102,19 @@
 $request = new Zend_Controller_Request_Http();
 $request->setBaseUrl('/projects/myapp');
 
-/* dispatch Request with custom base URL with Zend_Controller_Front */
+/** 
+ * Dispatch Request with custom base URL with Zend_Controller_Front.
+ *
+ * If using ZF 0.20 (not SVN) Zend_Controller_Front should be
+ * instantiated as a new object without using getInstance(), i.e.
+ * $controller = new Zend_Controller_Front();
+ */
 
 $router = new Zend_Controller_RewriteRouter();
-$controller = Zend_Controller_Front::getInstance();
-$response = $controller->setControllerDirectory('./application/controllers')
-                        ->setRouter($router)
-                        ->dispatch($request);]]></programlisting>
+$response = Zend_Controller_Front::getInstance()
+                ->setControllerDirectory('./application/controllers')
+                ->setRouter($router)
+                ->dispatch($request);]]></programlisting>
         </sect3>
     </sect2>
 
