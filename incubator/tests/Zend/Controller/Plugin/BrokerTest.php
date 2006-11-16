@@ -24,7 +24,7 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
 
     public function testUsingFrontController()
     {
-        $controller = new Zend_Controller_Front();
+        $controller = Zend_Controller_Front::getInstance();
         $controller->setControllerDirectory(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . '_files');
         $request = new Zend_Controller_Request_Http('http://framework.zend.com/empty');
         $controller->setResponse(new Zend_Controller_Response_Cli());

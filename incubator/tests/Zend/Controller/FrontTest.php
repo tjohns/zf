@@ -9,17 +9,29 @@ require_once 'Zend/Controller/Router.php';
 
 class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
 {
-    protected $_controller;
+    protected $_controller = null;
 
     public function setUp()
     {
-        $this->_controller = new Zend_Controller_Front();
+        $this->_controller = Zend_Controller_Front::getInstance();
+        $this->_controller->resetInstance();
         $this->_controller->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
     }
 
     public function tearDown()
     {
         unset($this->_controller);
+    }
+
+    public function testResetInstance()
+    {
+        $this->_controller->setParam('foo', 'bar');
+        $this->assertEquals('bar', $this->_controller->getParam('foo'));
+
+        $this->_controller->resetInstance();
+        $this->assertNull($this->_controller->getParam('bar'));
+        $this->assertNull($this->_controller->getRouter());
+        $this->assertSame(array(), $this->_controller->getDispatcher()->getControllerDirectory());
     }
 
     public function testSetGetRequest()

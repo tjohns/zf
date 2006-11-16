@@ -83,13 +83,66 @@ class Zend_Controller_Front
     protected $_invokeParams = array();
 
     /**
+     * Singleton instance
+     * @var self 
+     */
+    private static $_instance = null;
+
+    /**
      * Constructor
      *
-     * Instantiate the plugin broker.
+     * Instantiate using {@link getInstance()}; front controller is a singleton 
+     * object.
+     *
+     * Instantiates the plugin broker.
+     *
+     * @return void
      */
-    public function __construct()
+    private function __construct()
     {
         $this->_plugins = new Zend_Controller_Plugin_Broker();
+    }
+
+    /**
+     * Singleton instance
+     * 
+     * @return self
+     */
+    public static function getInstance()
+    {
+        if (null === self::$_instance) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+
+    /**
+     * Resets all object properties of the singleton instance
+     *
+     * Primarily used for testing; could be used to chain front controllers.
+     * 
+     * @return void
+     */
+    public function resetInstance()
+    {
+        $reflection = new ReflectionObject($this);
+        foreach ($reflection->getProperties() as $property) {
+            $name = $property->getName();
+            switch ($name) {
+                case '_instance':
+                    break;
+                case '_invokeParams':
+                    $this->{$name} = array();
+                    break;
+                case '_plugins':
+                    $this->{$name} = new Zend_Controller_Plugin_Broker();
+                    break;
+                default:
+                    $this->{$name} = null;
+                    break;
+            }
+        }
     }
 
     /**
@@ -107,7 +160,7 @@ class Zend_Controller_Front
         }
 
         require_once 'Zend/Controller/Router.php';
-        $frontController = new self();
+        $frontController = self::getInstance();
         echo $frontController
             ->setControllerDirectory($controllerDirectory)
             ->setRouter(new Zend_Controller_Router())
