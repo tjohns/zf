@@ -44,24 +44,24 @@ class Zend_Locale {
         'af'    => 'iso-8859-1,windows-1252',
         'am_ET' => '',
         'am'    => '',
-        'ar_AE' => 'iso-8859-6',
-        'ar_BH' => 'iso-8859-6',
-        'ar_DZ' => 'iso-8859-6',
-        'ar_EG' => 'iso-8859-6',
-        'ar_IQ' => 'iso-8859-6',
-        'ar_JO' => 'iso-8859-6',
-        'ar_KW' => 'iso-8859-6',
-        'ar_LB' => 'iso-8859-6',
-        'ar_LY' => 'iso-8859-6',
-        'ar_MA' => 'iso-8859-6',
-        'ar_OM' => 'iso-8859-6',
-        'ar_QA' => 'iso-8859-6',
-        'ar_SA' => 'iso-8859-6',
-        'ar_SD' => 'iso-8859-6',
-        'ar_SY' => 'iso-8859-6',
-        'ar_TN' => 'iso-8859-6',
-        'ar_YE' => 'iso-8859-6',
-        'ar'    => 'iso-8859-6',
+        'ar_AE' => 'iso-8859-6,windows-1256',
+        'ar_BH' => 'iso-8859-6,windows-1256',
+        'ar_DZ' => 'iso-8859-6,windows-1256',
+        'ar_EG' => 'iso-8859-6,windows-1256',
+        'ar_IQ' => 'iso-8859-6,windows-1256',
+        'ar_JO' => 'iso-8859-6,windows-1256',
+        'ar_KW' => 'iso-8859-6,windows-1256',
+        'ar_LB' => 'iso-8859-6,windows-1256',
+        'ar_LY' => 'iso-8859-6,windows-1256',
+        'ar_MA' => 'iso-8859-6,windows-1256',
+        'ar_OM' => 'iso-8859-6,windows-1256',
+        'ar_QA' => 'iso-8859-6,windows-1256',
+        'ar_SA' => 'iso-8859-6,windows-1256',
+        'ar_SD' => 'iso-8859-6,windows-1256',
+        'ar_SY' => 'iso-8859-6,windows-1256',
+        'ar_TN' => 'iso-8859-6,windows-1256',
+        'ar_YE' => 'iso-8859-6,windows-1256',
+        'ar'    => 'iso-8859-6,windows-1256',
         'as_IN' => '',
         'as'    => '',
         'az_AZ' => '',
@@ -617,17 +617,6 @@ class Zend_Locale {
     {
         $languages = array();
         return $languages;
-    }
-
-
-    /**
-     * Return the actual set locale
-     * 
-     * @return locale 
-     */
-    public function cloneIt()
-    {
-        return new Zend_Locale($this->_Locale);
     }
 
 
