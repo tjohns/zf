@@ -36,12 +36,8 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     const URL_VARIABLE = ':';
     const URI_DELIMITER = '/';
     const REGEX_DELIMITER = '#';
+    const DEFAULT_REGEX = '[\p{L}0-9\-\.,_~%;:@&=\!\*\'\(\)\+\$\[\]]+';
     
-    // TODO: Support for reserved URI characters (per RFC 3986). 
-    // All unreserved characters are already supported.
-    // http://en.wikipedia.org/wiki/URL_encoding
-    const DEFAULT_REGEX = '[\p{L}0-9\-\._~%]+';
-
     protected $_parts;
     protected $_defaults = array();
     protected $_requirements = array();
