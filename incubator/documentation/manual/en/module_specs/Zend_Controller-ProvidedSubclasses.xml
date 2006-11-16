@@ -88,33 +88,26 @@
 
             <para>
                 Should base URL be detected incorrectly you can override it
-                with your own base path with the help of the setBaseUrl()
-                method of the <code>Zend_Http_Request<code> class. This can
-                also be called on <code>Zend_Controller_Request_Http</code>.
-                Example usage to set a custom base URL:
+                with your own base path with the help of the
+                <code>setBaseUrl()</code> method of either the
+                <code>Zend_Http_Request<code> class, the
+                <code>Zend_Controller_Request_Http</code> class, or the
+                <code>Zend_Controller_Front</code> class. The easiest
+                method is to set it in <code>Zend_Controller_Front</code>, 
+                which will proxy it into the request object. Example usage to
+                set a custom base URL:
             </para>
 
             <programlisting role="php"><![CDATA[
-/**
- * Instantiate a new Zend_Controller_Request_Http
- * class and set a custom Base URL
- */
-$request = new Zend_Controller_Request_Http();
-$request->setBaseUrl('/projects/myapp');
-
 /** 
  * Dispatch Request with custom base URL with Zend_Controller_Front.
- *
- * If using ZF 0.20 (not SVN) Zend_Controller_Front should be
- * instantiated as a new object without using getInstance(), i.e.
- * $controller = new Zend_Controller_Front();
  */
-
-$router = new Zend_Controller_RewriteRouter();
-$response = Zend_Controller_Front::getInstance()
-                ->setControllerDirectory('./application/controllers')
-                ->setRouter($router)
-                ->dispatch($request);]]></programlisting>
+$router     = new Zend_Controller_RewriteRouter();
+$controller = Zend_Controller_Front::getInstance();
+$controller->setControllerDirectory('./application/controllers')
+           ->setRouter($router)
+           ->setBaseUrl('/projects/myapp'); // set the base url!
+$response   = $controller->dispatch();]]></programlisting>
         </sect3>
     </sect2>
 
