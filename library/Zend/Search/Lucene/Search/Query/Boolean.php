@@ -55,7 +55,6 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
      *
      * @var array
      */
-
     private $_signs = array();
 
     /**
@@ -72,6 +71,9 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
     /**
      * Class constructor.  Create a new Boolean query object.
      *
+     * if $signs array is omitted then all subqueries are required
+     * it differs from addSubquery() behavior, but should never be used
+     *
      * @param array $subqueries    Array of Zend_Search_Search_Query objects
      * @param array $signs    Array of signs.  Sign is boolean|null.
      * @return void
@@ -87,7 +89,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                 foreach ($signs as $sign ) {
                     if ($sign !== true) {
                         $this->_signs = $signs;
-                        continue;
+                        break;
                     }
                 }
             }
@@ -108,10 +110,10 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
      * @return void
      */
     public function addSubquery(Zend_Search_Lucene_Search_Query $subquery, $sign=null) {
-        if ($sign !== null || $this->_signs !== null) {       // Skip, if all subqueries are optional
-            if ($this->_signs === null) {                     // Check, If all previous subqueries are optional
+        if ($sign !== true || $this->_signs !== null) {       // Skip, if all subqueries are required
+            if ($this->_signs === null) {                     // Check, If all previous subqueries are required
                 foreach ($this->_subqueries as $prevSubquery) {
-                    $this->_signs[] = null;
+                    $this->_signs[] = true;
                 }
             }
             $this->_signs[] = $sign;

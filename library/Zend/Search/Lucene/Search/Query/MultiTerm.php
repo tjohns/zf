@@ -55,7 +55,6 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      *
      * @var array
      */
-
     private $_signs;
 
     /**
@@ -101,6 +100,9 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
     /**
      * Class constructor.  Create a new multi-term query object.
      *
+     * if $signs array is omitted then all terms are required
+     * it differs from addTerm() behavior, but should never be used
+     *
      * @param array $terms    Array of Zend_Search_Lucene_Index_Term objects
      * @param array $signs    Array of signs.  Sign is boolean|null.
      * @return void
@@ -116,7 +118,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                 foreach ($signs as $sign ) {
                     if ($sign !== true) {
                         $this->_signs = $signs;
-                        continue;
+                        break;
                     }
                 }
             }
@@ -137,10 +139,10 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
      * @return void
      */
     public function addTerm(Zend_Search_Lucene_Index_Term $term, $sign = null) {
-        if ($sign !== null || $this->_signs !== null) {       // Skip, if all terms are optional
-            if ($this->_signs === null) {                     // Check, If all previous terms are optional
+        if ($sign !== true || $this->_signs !== null) {       // Skip, if all terms are required
+            if ($this->_signs === null) {                     // Check, If all previous terms are required
                 foreach ($this->_terms as $prevTerm) {
-                    $this->_signs[] = null;
+                    $this->_signs[] = true;
                 }
             }
             $this->_signs[] = $sign;
