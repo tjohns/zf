@@ -25,6 +25,7 @@
                 is the default request class utilised by
                 <code>Zend_Controller_Dispatcher</code>.
             </para>
+        </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.request.http.dataaccess">
             <title>Accessing Request Data</title>
@@ -90,7 +91,7 @@
                 Should base URL be detected incorrectly you can override it
                 with your own base path with the help of the
                 <code>setBaseUrl()</code> method of either the
-                <code>Zend_Http_Request<code> class, the
+                <code>Zend_Http_Request</code> class, the
                 <code>Zend_Controller_Request_Http</code> class, or the
                 <code>Zend_Controller_Front</code> class. The easiest
                 method is to set it in <code>Zend_Controller_Front</code>, 
@@ -125,7 +126,7 @@ $response   = $controller->dispatch();]]></programlisting>
                 controller and action of that
                 controller should receive the request. This value of the
                 controller, action and other parameters is packaged into a
-                <code>Zend_Controller_Request_Http<code> object which is
+                <code>Zend_Controller_Request_Http</code> object which is
                 then processed by <code>Zend_Controller_Dispatcher</code>.
                 Routing occurs only once: when the request is initially
                 received and before the first controller is dispatched.
