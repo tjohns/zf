@@ -52,11 +52,11 @@ class Zend_Measure_Temperature extends Zend_Measure_Abstract
     const KELVIN     = 'Temperature::KELVIN';
 
     public static $_UNITS = array(
-        'Temperature::CELSIUS'    => array(array('' => 1, '+' => 274.15),'�C'),
-        'Temperature::FAHRENHEIT' => array(array('' => 1, '-' => 32, '/' => 1.8, '+' => 273.15),'�F'),
-        'Temperature::RANKINE'    => array(array('' => 1, '/' => 1.8),'�R'),
-        'Temperature::REAUMUR'    => array(array('' => 1, '*' => 1.25, '+' => 273.15),'�r'),
-        'Temperature::KELVIN'     => array(1,'�K')
+        'Temperature::CELSIUS'    => array(array('' => 1, '+' => 274.15),'°C'),
+        'Temperature::FAHRENHEIT' => array(array('' => 1, '-' => 32, '/' => 1.8, '+' => 273.15),'°F'),
+        'Temperature::RANKINE'    => array(array('' => 1, '/' => 1.8),'°R'),
+        'Temperature::REAUMUR'    => array(array('' => 1, '*' => 1.25, '+' => 273.15),'°r'),
+        'Temperature::KELVIN'     => array(1,'°K')
     );
 
     private $_Locale;

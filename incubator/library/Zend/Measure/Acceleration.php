@@ -52,8 +52,8 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
     const DEKAMETER_PER_SQUARE_SECOND  = 'Acceleration::DEKAMETER_PER_SQUARE_SECOND';  // Metric
     const FOOT_PER_SQUARE_SECOND       = 'Acceleration::FOOT_PER_SQUARE_SECOND';       // US
     const G                            = 'Acceleration::G';                        // Gravity
-    const GAL                          = 'Acceleration::GAL';                      // Metric = 1cm/s�
-    const GALILEO                      = 'Acceleration::GALILEO';                  // Metric = 1cm/s�
+    const GAL                          = 'Acceleration::GAL';                      // Metric = 1cm/s²
+    const GALILEO                      = 'Acceleration::GALILEO';                  // Metric = 1cm/s²
     const GRAV                         = 'Acceleration::GRAV';                     // Gravity
     const HECTOMETER_PER_SQUARE_SECOND = 'Acceleration::HECTOMETER_PER_SQUARE_SECOND'; // Metric
     const INCH_PER_SQUARE_SECOND       = 'Acceleration::INCH_PER_SQUARE_SECOND';       // US
@@ -68,25 +68,25 @@ class Zend_Measure_Acceleration extends Zend_Measure_Abstract
 
     private static $_UNITS = array(
         'Acceleration::CENTIGAL'                     => array(0.0001,   'cgal'),
-        'Acceleration::CENTIMETER_PER_SQUARE_SECOND' => array(0.01,     'cm/s�'),
+        'Acceleration::CENTIMETER_PER_SQUARE_SECOND' => array(0.01,     'cm/s²'),
         'Acceleration::DECIGAL'                      => array(0.001,    'dgal'),
-        'Acceleration::DECIMETER_PER_SQUARE_SECOND'  => array(0.1,      'dm/s�'),
-        'Acceleration::DEKAMETER_PER_SQUARE_SECOND'  => array(10,       'dam/s�'),
-        'Acceleration::FOOT_PER_SQUARE_SECOND'       => array(0.3048,   'ft/s�'),
+        'Acceleration::DECIMETER_PER_SQUARE_SECOND'  => array(0.1,      'dm/s²'),
+        'Acceleration::DEKAMETER_PER_SQUARE_SECOND'  => array(10,       'dam/s²'),
+        'Acceleration::FOOT_PER_SQUARE_SECOND'       => array(0.3048,   'ft/s²'),
         'Acceleration::G'                            => array(9.80665,  'g'),
         'Acceleration::GAL'                          => array(0.01,     'gal'),
         'Acceleration::GALILEO'                      => array(0.01,     'gal'),
         'Acceleration::GRAV'                         => array(9.80665,  'g'),
-        'Acceleration::HECTOMETER_PER_SQUARE_SECOND' => array(100,      'h/s�'),
-        'Acceleration::INCH_PER_SQUARE_SECOND'       => array(0.0254,   'in/s�'),
-        'Acceleration::KILOMETER_PER_HOUR_SECOND'    => array(array('' => 5,'/' => 18), 'km/h�'),
-        'Acceleration::KILOMETER_PER_SQUARE_SECOND'  => array(1000,     'km/s�'),
-        'Acceleration::METER_PER_SQUARE_SECOND'      => array(1,        'm/s�'),
+        'Acceleration::HECTOMETER_PER_SQUARE_SECOND' => array(100,      'h/s²'),
+        'Acceleration::INCH_PER_SQUARE_SECOND'       => array(0.0254,   'in/s²'),
+        'Acceleration::KILOMETER_PER_HOUR_SECOND'    => array(array('' => 5,'/' => 18), 'km/h²'),
+        'Acceleration::KILOMETER_PER_SQUARE_SECOND'  => array(1000,     'km/s²'),
+        'Acceleration::METER_PER_SQUARE_SECOND'      => array(1,        'm/s²'),
         'Acceleration::MILE_PER_HOUR_MINUTE'         => array(array('' => 22, '/' => 15, '*' => 0.3048, '/' => 60), 'mph/m'),
         'Acceleration::MILE_PER_HOUR_SECOND'         => array(array('' => 22, '/' => 15, '*' => 0.3048), 'mph/s'),
-        'Acceleration::MILE_PER_SQUARE_SECOND'       => array(1609.344, 'mi/s�'),
+        'Acceleration::MILE_PER_SQUARE_SECOND'       => array(1609.344, 'mi/s²'),
         'Acceleration::MILLIGAL'                     => array(0.00001,  'mgal'),
-        'Acceleration::MILLIMETER_PER_SQUARE_SECOND' => array(0.001,    'mm/s�')
+        'Acceleration::MILLIMETER_PER_SQUARE_SECOND' => array(0.001,    'mm/s²')
     );
 
     private $_Locale;

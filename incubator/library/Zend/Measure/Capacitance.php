@@ -87,7 +87,7 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
         'Capacitance::JAR'                  => array(1.11265e-9,  'jar'),
         'Capacitance::KILOFARAD'            => array(1000,        'kF'),
         'Capacitance::MEGAFARAD'            => array(1000000,     'MF'),
-        'Capacitance::MICROFARAD'           => array(0.000001,    '�F'),
+        'Capacitance::MICROFARAD'           => array(0.000001,    'µF'),
         'Capacitance::MILLIFARAD'           => array(0.001,       'mF'),
         'Capacitance::NANOFARAD'            => array(1.0e-9,      'nF'),
         'Capacitance::PICOFARAD'            => array(1.0e-12,     'pF'),

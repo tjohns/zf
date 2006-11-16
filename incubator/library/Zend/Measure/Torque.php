@@ -70,7 +70,7 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
         'Torque::KILONEWTON_METER'    => array(1000,               'kNm'),
         'Torque::KILOPOND_METER'      => array(9.80665,            'kpm'),
         'Torque::MEGANEWTON_METER'    => array(1000000,            'MNm'),
-        'Torque::MICRONEWTON_METER'   => array(0.000001,           '�Nm'),
+        'Torque::MICRONEWTON_METER'   => array(0.000001,           'µNm'),
         'Torque::MILLINEWTON_METER'   => array(0.001,              'mNm'),
         'Torque::NEWTON_CENTIMETER'   => array(0.01,               'Ncm'),
         'Torque::NEWTON_METER'        => array(1,                  'Nm'),

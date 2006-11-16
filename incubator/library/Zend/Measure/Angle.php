@@ -64,7 +64,7 @@ class Zend_Measure_Angle extends Zend_Measure_Abstract
         'Angle::RADIAN'      => array(1,'rad'),
         'Angle::MIL'         => array(array('' => M_PI,'/' => 3200),   'mil'),
         'Angle::GRAD'        => array(array('' => M_PI,'/' => 200),    'gr'),
-        'Angle::DEGREE'      => array(array('' => M_PI,'/' => 180),    '�'),
+        'Angle::DEGREE'      => array(array('' => M_PI,'/' => 180),    '°'),
         'Angle::MINUTE'      => array(array('' => M_PI,'/' => 10800),  "'"),
         'Angle::SECOND'      => array(array('' => M_PI,'/' => 648000), '"'),
         'Angle::POINT'       => array(array('' => M_PI,'/' => 16),     'pt'),

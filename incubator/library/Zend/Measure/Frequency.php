@@ -67,9 +67,9 @@ class Zend_Measure_Frequency extends Zend_Measure_Abstract
     private static $_UNITS = array(
         'Frequency::ONE_PER_SECOND'        => array(1,             '1/s'),
         'Frequency::CYCLE_PER_SECOND'      => array(1,             'cps'),
-        'Frequency::DEGREE_PER_HOUR'       => array(array('' => 1, '/' => 1296000), '�/h'),
-        'Frequency::DEGREE_PER_MINUTE'     => array(array('' => 1, '/' => 21600),   '�/m'),
-        'Frequency::DEGREE_PER_SECOND'     => array(array('' => 1, '/' => 360),     '�/s'),
+        'Frequency::DEGREE_PER_HOUR'       => array(array('' => 1, '/' => 1296000), '°/h'),
+        'Frequency::DEGREE_PER_MINUTE'     => array(array('' => 1, '/' => 21600),   '°/m'),
+        'Frequency::DEGREE_PER_SECOND'     => array(array('' => 1, '/' => 360),     '°/s'),
         'Frequency::GIGAHERTZ'             => array(1000000000,    'GHz'),
         'Frequency::HERTZ'                 => array(1,             'Hz'),
         'Frequency::KILOHERTZ'             => array(1000,          'kHz'),
