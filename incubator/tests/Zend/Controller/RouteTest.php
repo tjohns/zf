@@ -27,6 +27,14 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array(), $values);
     }
 
+    public function testStaticUTFMatch()
+    {
+        $route = new Zend_Controller_Router_Route('żółć');
+        $values = $route->match('żółć');
+
+        $this->assertSame(array(), $values);
+    }
+
     public function testStaticPathShorterThanParts()
     {
         $route = new Zend_Controller_Router_Route('users/a/martel');

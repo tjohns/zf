@@ -129,7 +129,9 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             
             $part = $this->_parts[$pos];
             $name = isset($part['name']) ? $part['name'] : null;
-            $regex = self::REGEX_DELIMITER . '^' . $part['regex'] . '$' . self::REGEX_DELIMITER . 'i';
+            $regex = self::REGEX_DELIMITER . '^' . $part['regex'] . '$' . self::REGEX_DELIMITER . 'iu';
+
+            $pathPart = urldecode($pathPart);
 
             if (!preg_match($regex, $pathPart)) {
                 return false;
@@ -137,7 +139,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
             
             if ($name !== null) {
                 // It's a variable. Setting a value
-                $this->_params[$name] = urldecode($pathPart);
+                $this->_params[$name] = $pathPart;
                 $unique[$name] = true;
             } else {
                 $pathStaticCount++;
