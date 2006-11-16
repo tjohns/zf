@@ -38,18 +38,18 @@
             <para>
                 For example, if you keep your
                 <code>index.php</code> in a webserver subdirectory named
-                <code>/projects/myapp/index.php</code> base URL (rewrite base)
+                <code>/projects/myapp/index.php</code>, base URL (rewrite base)
                 will be set to <code>/projects/myapp</code>. This string will
                 then be stripped from the beginning of the path before
                 calculating any route matches. This frees one from the necessity
-                of prepending it to any of your routes. The route of
+                of prepending it to any of your routes. A route of
                 <code>'user/:username'</code> will match URIs like
                 <code>http://localhost/projects/myapp/user/martel</code> and
                 <code>http://example.com/user/martel</code>.
             </para>
 
             <note>
-                Automatic base URL is case sensitive, so make sure your URL
+                Automatic base URL detection is case sensitive, so make sure your URL
                 will match a subdirectory name in a filesystem (even on Windows
                 machines). If it doesn't you will get to noRoute action.
             </note>
@@ -88,9 +88,9 @@ $response = $controller->setControllerDirectory('./application/controllers')
                 Zend_Controller_RewriteRouter is a new version of the framework
                 router. Routing is the process of taking a URI endpoint and
                 decomposing it to determine which controller and action of that
-                controller, should receive the request. This definition of
+                controller should receive the request. This definition of
                 controller, action and optional parameters is packaged into a
-                value object called Zend_Controller_Dispatcher_Token which is
+                Zend_Controller_Request_Http object which is
                 then processed by Zend_Controller_Dispatcher. Routing occurs
                 only once: when the request is initially received and before the
                 first controller is dispatched.
@@ -125,14 +125,17 @@ RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
             </para>
 
             <programlisting role="php"><![CDATA[
-/* -- create a router -- */
+/* Create a router */
 
 $router = new Zend_Controller_RewriteRouter();
-$router->addRoute('user', 'user/:username', array('controller' => 'user', 'action' => 'info'));
+$router->addRoute(
+	'user',
+	new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
+);
 
-/* -- set it in a controller -- */
+/* Set it in a controller */
 
-$ctrl = Zend_Controller_Front::getInstance();
+$ctrl = new Zend_Controller_Front();
 $ctrl->setRouter($router);]]></programlisting>
         </sect3>
 
@@ -181,10 +184,10 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
 
             <para>
                 There are two special variables which can be used in your routes
-                - 'controller' and 'action'. These special variables will be
+                - ':controller' and ':action'. These special variables will be
                 used to find a controller and/or an action chosen in the URL.
-                The 'action' variable must always be defined either in the route
-                or as a default parameter. The 'controller' variable will
+                The ':action' variable must always be defined either in the route
+                or as a default parameter. The ':controller' variable will
                 default to the IndexController if it is not defined.
             </para>
 
@@ -196,7 +199,7 @@ $router->addRoute(
             <para>
                 If you point your browser to 'http://example.com/news/latest'
                 with this route defined the Zend_Controller_Dispatcher will
-                invoke the latestAction of your NewsController.
+                invoke the latestAction method of your NewsController class.
             </para>
 
         </sect3>
@@ -266,7 +269,7 @@ $router->addRoute(
             <title>Base URL and subdirectories</title>
 
             <para>
-                Unlike the original Router, RewriteRouter can be used in
+                Unlike the original Router, the current RewriteRouter can be used in
                 subdirectories. The original RewriteRouter's setRewriteBase()
                 method is no longer available however. Instead the base URL
                 will be automatically detected by Zend_Controller_Request_Http 
@@ -274,7 +277,7 @@ $router->addRoute(
             </para>
 
             <para>
-                Should rewrite base be detected incorrectly you can override it
+                Should the base URL be detected incorrectly you can override it
                 with your own base path with the help of Zend_Http_Request
                 by calling the setBaseUrl() method (see <xref linkend="zend.controller.providedsubclasses.request.http" />).
             </para>
