@@ -16,6 +16,7 @@
  * @category   Zend
  * @package    Zend_TimeSync
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -36,19 +37,35 @@ require_once 'Zend/TimeSync/Exception.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
-{
+{    
     protected $_timeserver;
     protected $_port;
-    protected $_scheme;
     
     public function __construct($timeserver, $port)
     {
         $this->_timeserver = $timeserver;
         $this->_port       = $port;
     }
-    
-    protected function query()
+        
+    protected function _query()
     {
-        // query the sntp server
+        if (!$this->_connect()) {
+            return false;
+        }
+                
+        fputs($this->_socket, "\n");
+        $result = fread($socket, 49);
+        fclose($socket);
+        
+        $this->_disconnect();
+        
+        if (!$result) {
+            return false;
+        } else {
+            $time  = abs(hexdec('7fffffff') - bin2hex($result) - hexdec('7fffffff'));
+            $time -= 2208988800 - $delay;
+            
+            return $time;
+        }
     }
 }

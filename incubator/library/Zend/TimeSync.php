@@ -16,6 +16,7 @@
  * @category   Zend
  * @package    Zend_TimeSync
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -93,13 +94,15 @@ class Zend_TimeSync
             }
             
             if (!isset($url['port'])) {
-                $url['port'] = (strcasecmp($url['scheme'], 'ntp')) ? self::DEFAULT_NTP_PORT : self::DEFAULT_SNTP_PORT;
+                $url['port'] = (strcasecmp($url['scheme'], 'ntp') == 0) ? self::DEFAULT_NTP_PORT : self::DEFAULT_SNTP_PORT;
             }
             
             $className = 'Zend_TimeSync_' . ucfirst($url['scheme']);
             require_once str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
             
-            $this->timeservers[] = new $className($url['host'], $url['port']);
+            $protocol = (strcasecmp($url['scheme'], 'ntp') == 0) ? 'udp' : 'tcp';
+            
+            $this->timeservers[] = new $className($protocol . '://' . $url['host'], $url['port']);
         }
     }
 }

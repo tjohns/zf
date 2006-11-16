@@ -16,6 +16,7 @@
  * @category   Zend
  * @package    Zend_TimeSync
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -39,24 +40,26 @@ abstract class Zend_TimeSync_Protocol
      * already connected, it disconnects and connects again.
      *
      * @param string  $server  IP address or host name.
-     * @param integer $port    UDP port number.
+     * @param integer $port    port number.
      *
      * @access protected
      * @return boolean
      */
-    protected function _connect($server, $port)
+    protected function _connect()
     {
         if (is_resource($this->_socket)) {
             @fclose($this->_socket);
             $this->_socket = null;
         }
         
-        $socket = @fsockopen($this->scheme . $server, $port, $errno, $errstr);
+        $socket = fsockopen($this->_timeserver, $this->_port, $errno, $errstr, 5);
         if (!$socket) {
             return false;
         }
-        
+                
         $this->_socket = $socket;
+        
+        return true;
     }
     
     /**
