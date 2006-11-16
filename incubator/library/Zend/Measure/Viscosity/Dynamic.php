@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -84,38 +85,38 @@ class Zend_Measure_Viscosity_Dynamic extends Zend_Measure_Abstract
     private static $_UNITS = array(
         'Viscosity_Dynamic::CENTIPOISE'          => array(0.001,      'cP'),
         'Viscosity_Dynamic::DECIPOISE'           => array(0.01,       'dP'),
-        'Viscosity_Dynamic::DYNE_SECOND_PER_SQUARE_CENTIMETER'       => array(0.1,     'dyn s/cm²'),
-        'Viscosity_Dynamic::GRAM_FORCE_SECOND_PER_SQUARE_CENTIMETER' => array(98.0665, 'gf s/cm²'),
+        'Viscosity_Dynamic::DYNE_SECOND_PER_SQUARE_CENTIMETER'       => array(0.1,     'dyn s/cmï¿½'),
+        'Viscosity_Dynamic::GRAM_FORCE_SECOND_PER_SQUARE_CENTIMETER' => array(98.0665, 'gf s/cmï¿½'),
         'Viscosity_Dynamic::GRAM_PER_CENTIMETER_SECOND'              => array(0.1,     'g/cm s'),
-        'Viscosity_Dynamic::KILOGRAM_FORCE_SECOND_PER_SQUARE_METER'  => array(9.80665, 'kgf s/m²'),
+        'Viscosity_Dynamic::KILOGRAM_FORCE_SECOND_PER_SQUARE_METER'  => array(9.80665, 'kgf s/mï¿½'),
         'Viscosity_Dynamic::KILOGRAM_PER_METER_HOUR'    => array(array('' => 1, '/' => 3600), 'kg/m h'),
         'Viscosity_Dynamic::KILOGRAM_PER_METER_SECOND'  => array(1,   'kg/ms'),
         'Viscosity_Dynamic::MILLIPASCAL_SECOND'  => array(0.001,      'mPa s'),
         'Viscosity_Dynamic::MILLIPOISE'          => array(0.0001,     'mP'),
-        'Viscosity_Dynamic::NEWTON_SECOND_PER_SQUARE_METER' => array(1, 'N s/m²'),
+        'Viscosity_Dynamic::NEWTON_SECOND_PER_SQUARE_METER' => array(1, 'N s/mï¿½'),
         'Viscosity_Dynamic::PASCAL_SECOND'       => array(1,          'Pa s'),
         'Viscosity_Dynamic::POISE'               => array(0.1,        'P'),
         'Viscosity_Dynamic::POISEUILLE'          => array(1,          'Pl'),
-        'Viscosity_Dynamic::POUND_FORCE_SECOND_PER_SQUARE_FEET' => array(47.880259,  'lbf s/ft²'),
-        'Viscosity_Dynamic::POUND_FORCE_SECOND_PER_SQUARE_INCH' => array(6894.75729, 'lbf s/in²'),
+        'Viscosity_Dynamic::POUND_FORCE_SECOND_PER_SQUARE_FEET' => array(47.880259,  'lbf s/ftï¿½'),
+        'Viscosity_Dynamic::POUND_FORCE_SECOND_PER_SQUARE_INCH' => array(6894.75729, 'lbf s/inï¿½'),
         'Viscosity_Dynamic::POUND_PER_FOOT_HOUR' => array(0.00041337887,             'lb/ft h'),
         'Viscosity_Dynamic::POUND_PER_FOOT_SECOND'          => array(1.4881639,      'lb/ft s'),
-        'Viscosity_Dynamic::POUNDAL_HOUR_PER_SQUARE_FOOT'   => array(0.00041337887,  'pdl h/ft²'),
-        'Viscosity_Dynamic::POUNDAL_SECOND_PER_SQUARE_FOOT' => array(1.4881639,      'pdl s/ft²'),
+        'Viscosity_Dynamic::POUNDAL_HOUR_PER_SQUARE_FOOT'   => array(0.00041337887,  'pdl h/ftï¿½'),
+        'Viscosity_Dynamic::POUNDAL_SECOND_PER_SQUARE_FOOT' => array(1.4881639,      'pdl s/ftï¿½'),
         'Viscosity_Dynamic::REYN'                => array(6894.75729, 'reyn'),
         'Viscosity_Dynamic::SLUG_PER_FOOT_SECOND'=> array(47.880259,  'slug/ft s'),
-        'Viscosity_Dynamic::WATER_20C'           => array(0.001,      'water (20°)'),
-        'Viscosity_Dynamic::WATER_40C'           => array(0.00065,    'water (40°)'),
-        'Viscosity_Dynamic::HEAVY_OIL_20C'       => array(0.45,       'oil (20°)'),
-        'Viscosity_Dynamic::HEAVY_OIL_40C'       => array(0.11,       'oil (40°)'),
-        'Viscosity_Dynamic::GLYCERIN_20C'        => array(1.41,       'glycerin (20°)'),
-        'Viscosity_Dynamic::GLYCERIN_40C'        => array(0.284,      'glycerin (40°)'),
-        'Viscosity_Dynamic::SAE_5W_MINUS18C'     => array(1.2,        'SAE 5W (-18°)'),
-        'Viscosity_Dynamic::SAE_10W_MINUS18C'    => array(2.4,        'SAE 10W (-18°)'),
-        'Viscosity_Dynamic::SAE_20W_MINUS18C'    => array(9.6,        'SAE 20W (-18°)'),
-        'Viscosity_Dynamic::SAE_5W_99C'          => array(0.0039,     'SAE 5W (99°)'),
-        'Viscosity_Dynamic::SAE_10W_99C'         => array(0.0042,     'SAE 10W (99°)'),
-        'Viscosity_Dynamic::SAE_20W_99C'         => array(0.0057,     'SAE 20W (99°)')
+        'Viscosity_Dynamic::WATER_20C'           => array(0.001,      'water (20ï¿½)'),
+        'Viscosity_Dynamic::WATER_40C'           => array(0.00065,    'water (40ï¿½)'),
+        'Viscosity_Dynamic::HEAVY_OIL_20C'       => array(0.45,       'oil (20ï¿½)'),
+        'Viscosity_Dynamic::HEAVY_OIL_40C'       => array(0.11,       'oil (40ï¿½)'),
+        'Viscosity_Dynamic::GLYCERIN_20C'        => array(1.41,       'glycerin (20ï¿½)'),
+        'Viscosity_Dynamic::GLYCERIN_40C'        => array(0.284,      'glycerin (40ï¿½)'),
+        'Viscosity_Dynamic::SAE_5W_MINUS18C'     => array(1.2,        'SAE 5W (-18ï¿½)'),
+        'Viscosity_Dynamic::SAE_10W_MINUS18C'    => array(2.4,        'SAE 10W (-18ï¿½)'),
+        'Viscosity_Dynamic::SAE_20W_MINUS18C'    => array(9.6,        'SAE 20W (-18ï¿½)'),
+        'Viscosity_Dynamic::SAE_5W_99C'          => array(0.0039,     'SAE 5W (99ï¿½)'),
+        'Viscosity_Dynamic::SAE_10W_99C'         => array(0.0042,     'SAE 10W (99ï¿½)'),
+        'Viscosity_Dynamic::SAE_20W_99C'         => array(0.0057,     'SAE 20W (99ï¿½)')
     );
 
     private $_Locale;

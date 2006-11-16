@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -88,7 +89,7 @@ class Zend_Measure_Current extends Zend_Measure_Abstract
         'Current::HECTOAMPERE'          => array(100,          'hA'),
         'Current::KILOAMPERE'           => array(1000,         'kA'),
         'Current::MEGAAMPERE'           => array(1000000,      'MA') ,
-        'Current::MICROAMPERE'          => array(0.000001,     'µA'),
+        'Current::MICROAMPERE'          => array(0.000001,     'ï¿½A'),
         'Current::MILLIAMPERE'          => array(0.001,        'mA'),
         'Current::NANOAMPERE'           => array(1.0e-9,       'nA'),
         'Current::PICOAMPERE'           => array(1.0e-12,      'pA'),

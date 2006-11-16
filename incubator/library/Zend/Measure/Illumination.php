@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -59,10 +60,10 @@ class Zend_Measure_Illumination extends Zend_Measure_Abstract
     private static $_UNITS = array(
         'Illumination::FOOTCANDLE'              => array(10.7639104,   'fc'),
         'Illumination::KILOLUX'                 => array(1000,         'klx'),
-        'Illumination::LUMEN_PER_SQUARE_CENTIMETER' => array(10000,    'lm/cm²'),
-        'Illumination::LUMEN_PER_SQUARE_FOOT'   => array(10.7639104,   'lm/ft²'),
-        'Illumination::LUMEN_PER_SQUARE_INCH'   => array(1550.0030976, 'lm/in²'),
-        'Illumination::LUMEN_PER_SQUARE_METER'  => array(1,            'lm/m²'),
+        'Illumination::LUMEN_PER_SQUARE_CENTIMETER' => array(10000,    'lm/cmï¿½'),
+        'Illumination::LUMEN_PER_SQUARE_FOOT'   => array(10.7639104,   'lm/ftï¿½'),
+        'Illumination::LUMEN_PER_SQUARE_INCH'   => array(1550.0030976, 'lm/inï¿½'),
+        'Illumination::LUMEN_PER_SQUARE_METER'  => array(1,            'lm/mï¿½'),
         'Illumination::LUX'                     => array(1,            'lx'),
         'Illumination::METERCANDLE'             => array(1,            'metercandle'),
         'Illumination::MILLIPHOT'               => array(10,           'mph'),

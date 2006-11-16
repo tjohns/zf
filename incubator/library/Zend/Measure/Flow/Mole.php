@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -74,10 +75,10 @@ class Zend_Measure_Flow_Mole extends Zend_Measure_Abstract
         'Flow_Mole::MEGAMOLE_PER_HOUR'    => array(array('' => 1000000, '/' => 3600),   'Mmol/h'),
         'Flow_Mole::MEGAMOLE_PER_MINUTE'  => array(array('' => 1000000, '/' => 60),     'Mmol/m'),
         'Flow_Mole::MEGAMOLE_PER_SECOND'  => array(1000000,  'Mmol/s'),
-        'Flow_Mole::MICROMOLE_PER_DAY'    => array(array('' => 0.000001, '/' => 86400), 'µmol/day'),
-        'Flow_Mole::MICROMOLE_PER_HOUR'   => array(array('' => 0.000001, '/' => 3600),  'µmol/h'),
-        'Flow_Mole::MICROMOLE_PER_MINUTE' => array(array('' => 0.000001, '/' => 60),    'µmol/m'),
-        'Flow_Mole::MICROMOLE_PER_SECOND' => array(0.000001, 'µmol/s'),
+        'Flow_Mole::MICROMOLE_PER_DAY'    => array(array('' => 0.000001, '/' => 86400), 'ï¿½mol/day'),
+        'Flow_Mole::MICROMOLE_PER_HOUR'   => array(array('' => 0.000001, '/' => 3600),  'ï¿½mol/h'),
+        'Flow_Mole::MICROMOLE_PER_MINUTE' => array(array('' => 0.000001, '/' => 60),    'ï¿½mol/m'),
+        'Flow_Mole::MICROMOLE_PER_SECOND' => array(0.000001, 'ï¿½mol/s'),
         'Flow_Mole::MILLIMOLE_PER_DAY'    => array(array('' => 0.001, '/' => 86400),    'mmol/day'),
         'Flow_Mole::MILLIMOLE_PER_HOUR'   => array(array('' => 0.001, '/' => 3600),     'mmol/h'),
         'Flow_Mole::MILLIMOLE_PER_MINUTE' => array(array('' => 0.001, '/' => 60),       'mmol/m'),

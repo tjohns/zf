@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -129,13 +130,13 @@ class Zend_Measure_Cooking_Volume extends Zend_Measure_Abstract
         'Cooking_Volume::BUSHEL_US'         => array(0.03523907,    'bu'),
         'Cooking_Volume::CENTILITER'        => array(0.00001,       'cl'),
         'Cooking_Volume::COFFEE_SPOON'      => array(array('' => 0.0037854118, '/' => 1536), 'coffee spoon'),
-        'Cooking_Volume::CUBIC_CENTIMETER'  => array(0.000001,      'cm³'),
-        'Cooking_Volume::CUBIC_DECIMETER'   => array(0.001,         'dm³'),
-        'Cooking_Volume::CUBIC_FOOT'        => array(array('' => 6.54119159, '/' => 231),   'ft³'),
-        'Cooking_Volume::CUBIC_INCH'        => array(array('' => 0.0037854118, '/' => 231), 'in³'),
-        'Cooking_Volume::CUBIC_METER'       => array(1,             'm³'),
-        'Cooking_Volume::CUBIC_MICROMETER'  => array(1.0e-18,       'µm³'),
-        'Cooking_Volume::CUBIC_MILLIMETER'  => array(1.0e-9,        'mm³'),
+        'Cooking_Volume::CUBIC_CENTIMETER'  => array(0.000001,      'cmï¿½'),
+        'Cooking_Volume::CUBIC_DECIMETER'   => array(0.001,         'dmï¿½'),
+        'Cooking_Volume::CUBIC_FOOT'        => array(array('' => 6.54119159, '/' => 231),   'ftï¿½'),
+        'Cooking_Volume::CUBIC_INCH'        => array(array('' => 0.0037854118, '/' => 231), 'inï¿½'),
+        'Cooking_Volume::CUBIC_METER'       => array(1,             'mï¿½'),
+        'Cooking_Volume::CUBIC_MICROMETER'  => array(1.0e-18,       'ï¿½mï¿½'),
+        'Cooking_Volume::CUBIC_MILLIMETER'  => array(1.0e-9,        'mmï¿½'),
         'Cooking_Volume::CUP_CANADA'        => array(0.0002273045,  'c'),
         'Cooking_Volume::CUP'               => array(0.00025,       'c'),
         'Cooking_Volume::CUP_US'            => array(array('' => 0.0037854118, '/' => 16),   'c'),
@@ -159,7 +160,7 @@ class Zend_Measure_Cooking_Volume extends Zend_Measure_Abstract
         'Cooking_Volume::LITER'             => array(0.001,         'l'),
         'Cooking_Volume::MEASURE'           => array(0.0077,        'measure'),
         'Cooking_Volume::MEGALITER'         => array(1000,          'Ml'),
-        'Cooking_Volume::MICROLITER'        => array(1.0e-9,        'µl'),
+        'Cooking_Volume::MICROLITER'        => array(1.0e-9,        'ï¿½l'),
         'Cooking_Volume::MILLILITER'        => array(0.000001,      'ml'),
         'Cooking_Volume::MINIM'             => array(array('' => 0.00454609, '/' => 76800),  'min'),
         'Cooking_Volume::MINIM_US'          => array(array('' => 0.0037854118,'/' => 61440), 'min'),

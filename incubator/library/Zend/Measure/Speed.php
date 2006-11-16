@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -168,8 +169,8 @@ class Zend_Measure_Speed extends Zend_Measure_Abstract
         'Speed::MILLIMETER_PER_HOUR'            => array(array('' => 0.001, '/' => 3600),       'mm/h'),
         'Speed::MILLIMETER_PER_MINUTE'          => array(array('' => 0.001, '/' => 60),         'mm/m'),
         'Speed::MILLIMETER_PER_SECOND'          => array(0.001,                                 'mm/s'),
-        'Speed::MILLIMETER_PER_MICROSECOND'     => array(1000,                                  'mm/µs'),
-        'Speed::MILLIMETER_PER_100_MICROSECOND' => array(10,                                    'mm/100µs'),
+        'Speed::MILLIMETER_PER_MICROSECOND'     => array(1000,                                  'mm/ï¿½s'),
+        'Speed::MILLIMETER_PER_100_MICROSECOND' => array(10,                                    'mm/100ï¿½s'),
         'Speed::NAUTIC_MILE_PER_DAY'            => array(array('' => 1852, '/' => 86400),       'nmi/day'),
         'Speed::NAUTIC_MILE_PER_HOUR'           => array(array('' => 1852, '/' => 3600),        'nmi/h'),
         'Speed::NAUTIC_MILE_PER_MINUTE'         => array(array('' => 1852, '/' => 60),          'nmi/m'),

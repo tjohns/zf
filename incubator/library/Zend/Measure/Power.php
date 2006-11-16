@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -165,7 +166,7 @@ class Zend_Measure_Power extends Zend_Measure_Abstract
         'Power::KILOPOND_METER_PER_SECOND'   => array(9.80665,           'kp/s'),
         'Power::KILOWATT'                    => array(1000,              'kW'),
         'Power::MEGAWATT'                    => array(1000000,           'MW'),
-        'Power::MICROWATT'                   => array(0.000001,          'µW'),
+        'Power::MICROWATT'                   => array(0.000001,          'ï¿½W'),
         'Power::MILLION_BTU_PER_HOUR'        => array(293071.07,         'mio BTU/h'),
         'Power::MILLIWATT'                   => array(0.001,             'mM'),
         'Power::NANOWATT'                    => array(1.0e-9,            'nN'),
@@ -176,7 +177,7 @@ class Zend_Measure_Power extends Zend_Measure_Abstract
         'Power::PFERDESTAERKE'               => array(735.49875,         'PS'),
         'Power::PICOWATT'                    => array(1.0e-12,           'pW'),
         'Power::PONCELET'                    => array(980.665,           'p'),
-        'Power::POUND_SQUARE_FOOT_PER_CUBIC_SECOND' => array(0.04214011, 'lb ft²/s³'),
+        'Power::POUND_SQUARE_FOOT_PER_CUBIC_SECOND' => array(0.04214011, 'lb ftï¿½/sï¿½'),
         'Power::TERAWATT'                    => array(1.0e+12,           'TW'),
         'Power::TON_OF_REFRIGERATION'        => array(3516.85284,        'RT'),
         'Power::WATT'                        => array(1,                 'W'),

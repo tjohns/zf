@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -144,18 +145,18 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
         'Volume::CENTILITER'          => array(0.00001,       'cl'),
         'Volume::CORD'                => array(3.624556416,   'cd'),
         'Volume::CORD_FOOT'           => array(0.453069552,   'cd ft'),
-        'Volume::CUBIC_CENTIMETER'    => array(0.000001,      'cm³'),
-        'Volume::CUBIC_CUBIT'         => array(0.144,         'cubit³'),
-        'Volume::CUBIC_DECIMETER'     => array(0.001,         'dm³'),
-        'Volume::CUBIC_DEKAMETER'     => array(1000,          'dam³'),
-        'Volume::CUBIC_FOOT'          => array(array('' => 6.54119159, '/' => 231),   'ft³'),
-        'Volume::CUBIC_INCH'          => array(array('' => 0.0037854118, '/' => 231), 'in³'),
-        'Volume::CUBIC_KILOMETER'     => array(1.0e+9,        'km³'),
-        'Volume::CUBIC_METER'         => array(1,             'm³'),
-        'Volume::CUBIC_MILE'          => array(array('' => 0.0037854118, '/' => 231, '*' => 75271680, '*' => 3379200), 'mi³'),
-        'Volume::CUBIC_MICROMETER'    => array(1.0e-18,       'µm³'),
-        'Volume::CUBIC_MILLIMETER'    => array(1.0e-9,        'mm³'),
-        'Volume::CUBIC_YARD'          => array(array('' => 0.0037854118, '/' => 231, '*' => 46656), 'yd³'),
+        'Volume::CUBIC_CENTIMETER'    => array(0.000001,      'cmï¿½'),
+        'Volume::CUBIC_CUBIT'         => array(0.144,         'cubitï¿½'),
+        'Volume::CUBIC_DECIMETER'     => array(0.001,         'dmï¿½'),
+        'Volume::CUBIC_DEKAMETER'     => array(1000,          'damï¿½'),
+        'Volume::CUBIC_FOOT'          => array(array('' => 6.54119159, '/' => 231),   'ftï¿½'),
+        'Volume::CUBIC_INCH'          => array(array('' => 0.0037854118, '/' => 231), 'inï¿½'),
+        'Volume::CUBIC_KILOMETER'     => array(1.0e+9,        'kmï¿½'),
+        'Volume::CUBIC_METER'         => array(1,             'mï¿½'),
+        'Volume::CUBIC_MILE'          => array(array('' => 0.0037854118, '/' => 231, '*' => 75271680, '*' => 3379200), 'miï¿½'),
+        'Volume::CUBIC_MICROMETER'    => array(1.0e-18,       'ï¿½mï¿½'),
+        'Volume::CUBIC_MILLIMETER'    => array(1.0e-9,        'mmï¿½'),
+        'Volume::CUBIC_YARD'          => array(array('' => 0.0037854118, '/' => 231, '*' => 46656), 'ydï¿½'),
         'Volume::CUP_CANADA'          => array(0.0002273045,  'c'),
         'Volume::CUP'                 => array(0.00025,       'c'),
         'Volume::CUP_US'              => array(array('' => 0.0037854118, '/' => 16), 'c'),
@@ -179,7 +180,7 @@ class Zend_Measure_Volume extends Zend_Measure_Abstract
         'Volume::LITER'               => array(0.001,         'l'),
         'Volume::MEASURE'             => array(0.0077,        'measure'),
         'Volume::MEGALITER'           => array(1000,          'Ml'),
-        'Volume::MICROLITER'          => array(1.0e-9,        'µl'),
+        'Volume::MICROLITER'          => array(1.0e-9,        'ï¿½l'),
         'Volume::MILLILITER'          => array(0.000001,      'ml'),
         'Volume::MINIM'               => array(array('' => 0.00454609, '/' => 76800),  'min'),
         'Volume::MINIM_US'            => array(array('' => 0.0037854118,'/' => 61440), 'min'),

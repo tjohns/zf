@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -86,7 +87,7 @@ class Zend_Measure_Capacitance extends Zend_Measure_Abstract
         'Capacitance::JAR'                  => array(1.11265e-9,  'jar'),
         'Capacitance::KILOFARAD'            => array(1000,        'kF'),
         'Capacitance::MEGAFARAD'            => array(1000000,     'MF'),
-        'Capacitance::MICROFARAD'           => array(0.000001,    'µF'),
+        'Capacitance::MICROFARAD'           => array(0.000001,    'ï¿½F'),
         'Capacitance::MILLIFARAD'           => array(0.001,       'mF'),
         'Capacitance::NANOFARAD'            => array(1.0e-9,      'nF'),
         'Capacitance::PICOFARAD'            => array(1.0e-12,     'pF'),

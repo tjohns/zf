@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Measure
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -63,15 +64,15 @@ class Zend_Measure_Lightness extends Zend_Measure_Abstract
     private static $_UNITS = array(
         'Lightness::APOSTILB'                      => array(0.31830989,   'asb'),
         'Lightness::BLONDEL'                       => array(0.31830989,   'blondel'),
-        'Lightness::CANDELA_PER_SQUARE_CENTIMETER' => array(10000,        'cd/cm²'),
-        'Lightness::CANDELA_PER_SQUARE_FOOT'       => array(10.76391,     'cd/ft²'),
-        'Lightness::CANDELA_PER_SQUARE_INCH'       => array(1550.00304,   'cd/in²'),
-        'Lightness::CANDELA_PER_SQUARE_METER'      => array(1,            'cd/m²'),
+        'Lightness::CANDELA_PER_SQUARE_CENTIMETER' => array(10000,        'cd/cmï¿½'),
+        'Lightness::CANDELA_PER_SQUARE_FOOT'       => array(10.76391,     'cd/ftï¿½'),
+        'Lightness::CANDELA_PER_SQUARE_INCH'       => array(1550.00304,   'cd/inï¿½'),
+        'Lightness::CANDELA_PER_SQUARE_METER'      => array(1,            'cd/mï¿½'),
         'Lightness::FOOTLAMBERT'                   => array(3.4262591,    'ftL'),
-        'Lightness::KILOCANDELA_PER_SQUARE_CENTIMETER' => array(10000000, 'kcd/cm²'),
-        'Lightness::KILOCANDELA_PER_SQUARE_FOOT'   => array(10763.91,     'kcd/ft²'),
-        'Lightness::KILOCANDELA_PER_SQUARE_INCH'   => array(1550003.04,   'kcd/in²'),
-        'Lightness::KILOCANDELA_PER_SQUARE_METER'  => array(1000,         'kcd/m²'),
+        'Lightness::KILOCANDELA_PER_SQUARE_CENTIMETER' => array(10000000, 'kcd/cmï¿½'),
+        'Lightness::KILOCANDELA_PER_SQUARE_FOOT'   => array(10763.91,     'kcd/ftï¿½'),
+        'Lightness::KILOCANDELA_PER_SQUARE_INCH'   => array(1550003.04,   'kcd/inï¿½'),
+        'Lightness::KILOCANDELA_PER_SQUARE_METER'  => array(1000,         'kcd/mï¿½'),
         'Lightness::LAMBERT'                       => array(3183.0989,    'L'),
         'Lightness::MILLILAMBERT'                  => array(3.1830989,    'mL'),
         'Lightness::NIT'                           => array(1,            'nt'),
