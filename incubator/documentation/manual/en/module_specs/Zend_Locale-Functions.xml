@@ -237,7 +237,6 @@ print $locale->getRegion();
         <example>
             <title>getLanguageDisplay</title>
             <programlisting role="php"><![CDATA[<?php
-
 require_once('Zend/Locale.php');
 
 $locale = new Zend_Locale();
@@ -246,6 +245,31 @@ $locale = new Zend_Locale();
 print $locale->getLanguageDisplay('de');
 ?>]]></programlisting>
         </example>
+        <para>
+            You want to have for each language the language written in native letters ?
+            Well... then you should just try this example within your browser:
+        </para>
+        <example>
+            <title>All Languages written in native letters</title>
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
+$locale = new Zend_Locale();
+$list = $locale->getLanguageList();
+// for 'no' there's no locale defined for now
+unset($list['no']);
+
+foreach($list as $language => $content) {
+   $lang = new Zend_Locale($language);
+   print "\n<br>[".$language."] ".$lang->getLanguageDisplay($language);
+}
+?>]]></programlisting>
+        </example>
+        <para>
+            As you can see the handling and receiving of information is very easy.
+            You can do the same for all scripts or all territories for example
+        </para>
     </sect2>
     <sect2 id="zend.locale.getlanguagelist">
         <title>Get a list of languages</title>
