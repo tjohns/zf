@@ -208,7 +208,7 @@ class Zend_Session implements IteratorAggregate
      * @param string $name
      * @return mixed
      */
-    public function __get($name)
+    protected function __get($name)
     {
         if ($name === '') {
             throw new Zend_Session_Exception(get_class($this) . "::__get() the '$name' key must be a non-empty string");
@@ -225,7 +225,7 @@ class Zend_Session implements IteratorAggregate
      * @param mixed $value
      * @return true
      */
-    public function __set($name, $value) 
+    protected function __set($name, $value) 
     {
         if (isset(self::$_namespaceLocks[$this->_namespace])) {
             throw new Zend_Session_Exception("This session/namespace has been marked as read-only.");
@@ -245,7 +245,7 @@ class Zend_Session implements IteratorAggregate
      * @param string $name
      * @return bool
      */
-    public function __isset($name) 
+    protected function __isset($name) 
     {
         if ($name === '') {
             throw new Zend_Session_Exception(get_class($this) . "::__isset() the '$name' key must be a non-empty string");
@@ -261,7 +261,7 @@ class Zend_Session implements IteratorAggregate
      * @param string $name
      * @return true
      */
-    public function __unset($name)
+    protected function __unset($name)
     {
         if ($name === '') {
             throw new Zend_Session_Exception(get_class($this) . "::__unset() the '$name' key must be a non-empty string");
