@@ -30,7 +30,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
 
         $this->_controller->resetInstance();
         $this->assertNull($this->_controller->getParam('bar'));
-        $this->assertNull($this->_controller->getRouter());
+        $this->assertSame(array(), $this->_controller->getParams());
         $this->assertSame(array(), $this->_controller->getDispatcher()->getControllerDirectory());
     }
 
@@ -193,16 +193,14 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
      */
     public function testDispatch4()
     {
-        $request = new Zend_Controller_Request_Http();
-        $request->setControllerName('foo');
-        $request->setActionName('bar');
+        $request = new Zend_Controller_Request_Http('http://example.com/foo/bar');
         $this->_controller->setResponse(new Zend_Controller_Response_Cli());
         $response = $this->_controller->dispatch($request);
 
         $body = $response->getBody();
-        $this->assertContains('Bar action called', $body);
-        $this->assertContains('preDispatch called', $body);
-        $this->assertContains('postDispatch called', $body);
+        $this->assertContains('Bar action called', $body, $body);
+        $this->assertContains('preDispatch called', $body, $body);
+        $this->assertContains('postDispatch called', $body, $body);
     }
 
     /**
@@ -257,6 +255,9 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertContains('Bar action called', $body);
     }
 
+    /**
+     * Test that run() throws exception when called from object instance
+     */
     public function testRunThrowsException()
     {
         try {
@@ -265,5 +266,29 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             // success
         }
+    }
+
+    /**
+     * Test that set/getBaseUrl() functionality works
+     */
+    public function testSetGetBaseUrl()
+    {
+        $this->assertNull($this->_controller->getBaseUrl());
+        $this->_controller->setBaseUrl('/index.php');
+        $this->assertEquals('/index.php', $this->_controller->getBaseUrl());
+    }
+
+    /**
+     * Test that a set base URL is pushed to the request during the dispatch 
+     * process
+     */
+    public function testBaseUrlPushedToRequest()
+    {
+        $this->_controller->setBaseUrl('/index.php');
+        $request  = new Zend_Controller_Request_Http('http://example.com/index');
+        $response = new Zend_Controller_Response_Cli();
+        $response = $this->_controller->dispatch($request, $response);
+
+        $this->assertContains('index.php', $request->getBaseUrl());
     }
 }

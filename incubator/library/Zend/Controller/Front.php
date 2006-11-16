@@ -64,6 +64,12 @@ class Zend_Controller_Front
     private $_router = null;
 
     /**
+     * Base URL
+     * @var string 
+     */
+    private $_baseUrl = null;
+
+    /**
      * Instance of Zend_Controller_Dispatcher_Interface
      * @var Zend_Controller_Dispatcher_Interface
      */
@@ -316,11 +322,46 @@ class Zend_Controller_Front
     /**
      * Return the router object.
      *
+     * Instantiates a Zend_Controller_Router object if no router currently set.
+     *
      * @return null|Zend_Controller_Router_Interface
      */
     public function getRouter()
     {
+        if (null == $this->_router) {
+            require_once 'Zend/Controller/Router.php';
+            $this->setRouter(new Zend_Controller_Router());
+        }
+
         return $this->_router;
+    }
+
+    /**
+     * Set the base URL used for requests
+     * 
+     * @param string $base
+     * @return self
+     * @throws Zend_Controller_Exception for non-string $base
+     */
+    public function setBaseUrl($base)
+    {
+        if (!is_string($base)) {
+            throw new Zend_Controller_Exception('Rewrite base must be a string');
+        }
+
+        $this->_baseUrl = (string) $base;
+
+        return $this;
+    }
+
+    /**
+     * Retrieve the currently set base URL
+     * 
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        return $this->_baseUrl;
     }
 
     /**
@@ -512,6 +553,15 @@ class Zend_Controller_Front
         }
 
         /**
+         * Set base URL of request object, if available
+         */
+        if (is_callable(array($request, 'setBaseUrl'))) {
+            if (null !== ($baseUrl = $this->getBaseUrl())) {
+                $request->setBaseUrl($baseUrl);
+            }
+        }
+
+        /**
          * Instantiate default response object (HTTP version) if none provided
          */
         if ((null === $response) && (null === ($response = $this->getResponse()))) {
@@ -532,20 +582,20 @@ class Zend_Controller_Front
             /**
              * Route request to controller/action, if a router is provided
              */
-            if (null !== ($router = $this->getRouter())) {
-                /**
-                * Notify plugins of router startup
-                */
-                $this->_plugins->routeStartup($request);
+            $router = $this->getRouter();
 
-                $router->setParams($this->getParams());
-                $router->route($request);
+            /**
+            * Notify plugins of router startup
+            */
+            $this->_plugins->routeStartup($request);
 
-                /**
-                * Notify plugins of router completion
-                */
-                $this->_plugins->routeShutdown($request);
-            }
+            $router->setParams($this->getParams());
+            $router->route($request);
+
+            /**
+            * Notify plugins of router completion
+            */
+            $this->_plugins->routeShutdown($request);
 
             /**
              * Notify plugins of dispatch loop startup
