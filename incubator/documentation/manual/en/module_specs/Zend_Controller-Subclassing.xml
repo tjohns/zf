@@ -448,7 +448,7 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
         </para>
 
         <programlisting role="php"><![CDATA[
-$front = new Zend_Controller_Front();
+$front = Zend_Controller_Front::getInstance();
 $front->setParam('view', new Zend_View())
       ->setControllerDirectory($config->controller->directory);
 $response = $front->dispatch();

@@ -84,7 +84,7 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
     }
 }
 
-$controller = new Zend_Controller_Front();
+$controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('/path/to/controllers')
            ->setRouter(new Zend_Controller_Router())
            ->registerPlugin(new MyPlugin());

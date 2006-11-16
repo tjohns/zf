@@ -103,7 +103,7 @@ $request->setBaseUrl('/projects/myapp');
 /* dispatch Request with custom base URL with Zend_Controller_Front */
 
 $router = new Zend_Controller_RewriteRouter();
-$controller = new Zend_Controller_Front;
+$controller = Zend_Controller_Front::getInstance();
 $response = $controller->setControllerDirectory('./application/controllers')
                         ->setRouter($router)
                         ->dispatch($request);]]></programlisting>
@@ -195,7 +195,7 @@ $router->addRoute(
 
 /* Set it in a controller */
 
-$ctrl = new Zend_Controller_Front();
+$ctrl = Zend_Controller_Front::getInstance();
 $ctrl->setRouter($router);]]></programlisting>
         </sect3>
 
