@@ -153,7 +153,8 @@ RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
             
             <para>
-                The RewriteRouter can also be used with the IIS webserver if Isapi_Rewrite
+                The RewriteRouter can also be used with the IIS webserver
+                if <ulink url="http://www.isapirewrite.com">Isapi_Rewrite</ulink>
                 has been installed as an Isapi extension with the following rewrite rule:
             </para>
 
@@ -161,10 +162,11 @@ RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
 RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]></programlisting>
 
             <note>
-                When using IIS, $_SERVER['REQUEST_URI'] will either not exist, or
-                be set as an empty string. In this case, Zend_Http_Request will
-                attempt to use the $_SERVER['HTTP_X_REWRITE_URL'] value set
-                by Isapi_Rewrite.
+                When using IIS, <code>$_SERVER['REQUEST_URI']</code>
+                will either not exist, or be set as an empty string. In
+                this case, <code>Zend_Http_Request</code> will
+                attempt to use the <code>$_SERVER['HTTP_X_REWRITE_URL']</code>
+                value set by the Isapi_Rewrite extension.
             </note>
 
             <para>If using Lighttpd, the following rewrite rule is valid:</para>
@@ -344,7 +346,7 @@ $router->addRoute(
             <para>
                 Should the base URL be detected incorrectly you can override it
                 with your own base path with the help of Zend_Http_Request
-                by calling the setBaseUrl() method (see <xref linkend="zend.controller.providedsubclasses.request.http" />).
+                by calling the setBaseUrl() method (see <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
             </para>
 
         </sect3>
