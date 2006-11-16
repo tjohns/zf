@@ -44,7 +44,9 @@ class Zend_Session_Validator_HttpUserAgent extends Zend_Session_Validator_Abstra
      */
     public function setup()
     {
-        $this->setValidData($_SERVER['HTTP_USER_AGENT']);
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $this->setValidData($_SERVER['HTTP_USER_AGENT']);
+        }
     }
     
     /**
@@ -55,7 +57,9 @@ class Zend_Session_Validator_HttpUserAgent extends Zend_Session_Validator_Abstra
      */
     public function validate()
     {
-        $current_browser = $_SERVER['HTTP_USER_AGENT'];
+        if (isset($_SERVER['HTTP_USER_AGENT'])) {
+            $current_browser = $_SERVER['HTTP_USER_AGENT'];
+        }
         
         if ($current_browser === $this->getValidData()) {
             return true;
