@@ -86,7 +86,7 @@ class Zend_Session implements IteratorAggregate
      */
     public function __construct($namespace = 'Default', $singleInstance = false)
     {
-        if (!is_string($namespace) || $namespace === '') {
+        if ($namespace === '') {
             throw new Zend_Session_Exception("Session namespace must be a non-empty string.");
         }
                
@@ -210,7 +210,7 @@ class Zend_Session implements IteratorAggregate
      */
     public function __get($name)
     {
-        if (!is_string($name) || $name === '') {
+        if ($name === '') {
             throw new Zend_Session_Exception(get_class($this) . "::__get() the '$name' key must be a non-empty string");
         }
         
@@ -231,7 +231,7 @@ class Zend_Session implements IteratorAggregate
             throw new Zend_Session_Exception("This session/namespace has been marked as read-only.");
         }
         
-        if (!is_string($name) || $name === '') {
+        if ($name === '') {
             throw new Zend_Session_Exception(get_class($this) . "::__set() the '$name' key must be a non-empty string");
         }
         
@@ -247,7 +247,7 @@ class Zend_Session implements IteratorAggregate
      */
     public function __isset($name) 
     {
-        if (!is_string($name) || $name === '') {
+        if ($name === '') {
             throw new Zend_Session_Exception(get_class($this) . "::__isset() the '$name' key must be a non-empty string");
         }
         
@@ -263,7 +263,7 @@ class Zend_Session implements IteratorAggregate
      */
     public function __unset($name)
     {
-        if (!is_string($name) || $name === '') {
+        if ($name === '') {
             throw new Zend_Session_Exception(get_class($this) . "::__unset() the '$name' key must be a non-empty string");
         }
         
