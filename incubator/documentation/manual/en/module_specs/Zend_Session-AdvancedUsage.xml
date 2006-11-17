@@ -20,7 +20,7 @@
 
         <para>By starting the session in the bootstrap file, you avoid the possibility that your session might be started after headers have been sent to the browser, which results in an exception, and possibly a broken page for website viewers.  Various advanced features require <code>Zend_Session_Core::start()</code> first.  (More on advanced features later).</para>
 
-        <para>There are four ways to start a session, when using Zend_Session.   Two are wrong.
+        <para>There are four ways to start a session, when using Zend_Session.   Two are wrong.</para>
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>

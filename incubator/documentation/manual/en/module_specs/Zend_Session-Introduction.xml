@@ -1,7 +1,4 @@
 <sect1 id="zend.session.introduction">
-    <title>Zend_Session</title>
-
-    <sect1 id="zend.controller.introduction">
       <title>Introduction</title>
 
       <para>With web applications written using PHP, a <emphasis
@@ -22,14 +19,14 @@
       authentication component of the ZF uses Zend_Session to store some
       information associated with login sessions. Since Zend_Session uses the
       normal PHP session functions internally, all the usual configuration
-      options and settings apply (see <link
-      linkend="http://www.php.net/session">http://www.php.net/session</link>).
+      options and settings apply (see <ulink
+      url="http://www.php.net/session">http://www.php.net/session</ulink>).
       Thus, a session id, stored either in a cookie or URLs, maintains the
       association between a client and session state data.</para>
 
-      <para>The default <link
-      linkend="http://www.php.net/manual/en/function.session-set-save-handler.php">ext/session
-      save handler</link> does not solve the problem of maintaining this
+      <para>The default <ulink
+      url="http://www.php.net/manual/en/function.session-set-save-handler.php">ext/session
+      save handler</ulink> does not solve the problem of maintaining this
       association, when a client may connect to any sever in a cluster of
       servers, since session state data is saved to the local server only. A
       list of appropriate save handlers will be provided, when
