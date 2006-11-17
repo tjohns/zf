@@ -364,7 +364,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
     public function testMeasureToString()
     {
         $value = new Zend_Measure('-100',Zend_Measure::TEMPERATURE,'de');
-        $this->assertEquals($value->toString(), '-100 캩', 'Value -100 캩 expected');
+        $this->assertEquals($value->toString(), '-100 째K', 'Value -100 째K expected');
     }
 
 
@@ -375,7 +375,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
     public function testMeasure_ToString()
     {
         $value = new Zend_Measure('-100',Zend_Measure::TEMPERATURE,'de');
-        $this->assertEquals($value->__toString(), '-100 캩', 'Value -100 캩 expected');
+        $this->assertEquals($value->__toString(), '-100 째K', 'Value -100 째K expected');
     }
 
 
@@ -386,7 +386,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
     public function testMeasureConvertTo()
     {
         $value = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
-        $this->assertEquals($value->convertTo(Zend_Measure_Temperature::CELSIUS), '-174.15 캜', 'Value -174.15 캜 expected');
+        $this->assertEquals($value->convertTo(Zend_Measure_Temperature::CELSIUS), '-174.15 째C', 'Value -174.15 째C expected');
     }
 
 
@@ -415,7 +415,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
         $value  = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
         $value2 = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
         $newvalue = $value->add($value2);
-        $this->assertEquals($newvalue->toString(), '200 캩', 'Value 200 캩 expected');
+        $this->assertEquals($newvalue->toString(), '200 째K', 'Value 200 째K expected');
     }
 
 
@@ -445,7 +445,7 @@ class Zend_MeasureTest extends PHPUnit_Framework_TestCase
         $value  = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
         $value2 = new Zend_Measure('100',Zend_Measure_Temperature::KELVIN,'de');
         $newvalue = $value->sub($value2);
-        $this->assertEquals($newvalue->toString(), '0 캩', 'Value 0 캩 expected');
+        $this->assertEquals($newvalue->toString(), '0 째K', 'Value 0 째K expected');
     }
 
 

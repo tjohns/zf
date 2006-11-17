@@ -390,7 +390,7 @@ class Zend_Measure_PressureTest extends PHPUnit_Framework_TestCase
     public function testPressureToString()
     {
         $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 N/m²', 'Value -100 N/m² expected');
+        $this->assertEquals($value->toString(), '-100 N/mÂ²', 'Value -100 N/mÂ² expected');
     }
 
 
@@ -401,7 +401,7 @@ class Zend_Measure_PressureTest extends PHPUnit_Framework_TestCase
     public function testPressure_ToString()
     {
         $value = new Zend_Measure_Pressure('-100',Zend_Measure_Pressure::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 N/m²', 'Value -100 N/m² expected');
+        $this->assertEquals($value->__toString(), '-100 N/mÂ²', 'Value -100 N/mÂ² expected');
     }
 
 

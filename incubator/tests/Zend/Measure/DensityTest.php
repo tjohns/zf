@@ -378,7 +378,7 @@ class Zend_Measure_DensityTest extends PHPUnit_Framework_TestCase
     public function testDensityToString()
     {
         $value = new Zend_Measure_Density('-100',Zend_Measure_Density::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 kg/m³', 'Value -100 kg/m³ expected');
+        $this->assertEquals($value->toString(), '-100 kg/mÂ³', 'Value -100 kg/mÂ³ expected');
     }
 
 
@@ -389,7 +389,7 @@ class Zend_Measure_DensityTest extends PHPUnit_Framework_TestCase
     public function testDensity_ToString()
     {
         $value = new Zend_Measure_Density('-100',Zend_Measure_Density::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 kg/m³', 'Value -100 kg/m³ expected');
+        $this->assertEquals($value->__toString(), '-100 kg/mÂ³', 'Value -100 kg/mÂ³ expected');
     }
 
 

@@ -378,7 +378,7 @@ class Zend_Measure_AreaTest extends PHPUnit_Framework_TestCase
     public function testAreaToString()
     {
         $value = new Zend_Measure_Area('-100',Zend_Measure_Area::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 m²', 'Value -100 m² expected');
+        $this->assertEquals($value->toString(), '-100 mÂ²', 'Value -100 mÂ² expected');
     }
 
 
@@ -389,7 +389,7 @@ class Zend_Measure_AreaTest extends PHPUnit_Framework_TestCase
     public function testArea_ToString()
     {
         $value = new Zend_Measure_Area('-100',Zend_Measure_Area::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 m²', 'Value -100 m² expected');
+        $this->assertEquals($value->__toString(), '-100 mÂ²', 'Value -100 mÂ² expected');
     }
 
 

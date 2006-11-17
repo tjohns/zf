@@ -377,7 +377,7 @@ class Zend_Measure_Cooking_VolumeTest extends PHPUnit_Framework_TestCase
     public function testCooking_VolumeToString()
     {
         $value = new Zend_Measure_Cooking_Volume('-100',Zend_Measure_Cooking_Volume::STANDARD,'de');
-        $this->assertEquals($value->toString(), '-100 m³', 'Value -100 m³ expected');
+        $this->assertEquals($value->toString(), '-100 mÂ³', 'Value -100 mÂ³ expected');
     }
 
 
@@ -388,7 +388,7 @@ class Zend_Measure_Cooking_VolumeTest extends PHPUnit_Framework_TestCase
     public function testCooking_Volume_ToString()
     {
         $value = new Zend_Measure_Cooking_Volume('-100',Zend_Measure_Cooking_Volume::STANDARD,'de');
-        $this->assertEquals($value->__toString(), '-100 m³', 'Value -100 m³ expected');
+        $this->assertEquals($value->__toString(), '-100 mÂ³', 'Value -100 mÂ³ expected');
     }
 
 
