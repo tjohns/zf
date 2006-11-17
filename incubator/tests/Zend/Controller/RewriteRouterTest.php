@@ -126,8 +126,6 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
 
     public function testRouteNotMatched()
     {
-        $this->markTestSkipped('Needs a rewrite for new Controller structure');
-        
         $router = new Zend_Controller_RewriteRouter();
         $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/archive/action/bogus');
 
@@ -135,8 +133,9 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         
         $token = $router->route($request);
 
-        $this->assertSame('index', $token->getControllerName());
-        $this->assertSame('noRoute', $token->getActionName());
+        $this->assertEquals(0, count($token->getParams()));
+        $this->assertNull($token->getControllerName());
+        $this->assertNull($token->getActionName());
     }
 
     public function testDefaultRouteMatched()
