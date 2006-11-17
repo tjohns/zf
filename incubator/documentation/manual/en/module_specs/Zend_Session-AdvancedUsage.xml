@@ -69,10 +69,10 @@
     <sect2 id="Locking Session Namespaces">
         <title>Locking Session Namespaces</title>
 
-        <para>Session namespaces can be locked, to prevent further alterations to the data in that namespace.  Use  {{lock()}} to make the namespace read-only, {{unLock()}} to make a read-only namespace read-write, and {{isLocked()}} to test if a namespace has been previously locked.</para>
+        <para>Session namespaces can be locked, to prevent further alterations to the data in that namespace.  Use  {{lock()}} to make the namespace read-only, {{unLock()}} to make a read-only namespace read-write, and {{isLocked()}} to test if a namespace has been previously locked. Note: Locking the namespace has no effect on setter methods of objects stored in the namespace, but does prevent the use of the namespace's setter method to remove or replace the object.</para>
 
             <example>
-                <title>Instantiating a Zend_Http_Client object</title>
+                <title>Locking Session Namespaces</title>
                 <programlisting role="php">
 <![CDATA[<?php
     // assuming:
@@ -94,7 +94,7 @@
 
         <para>Zend_Session provides the full [IteratorAggregate|http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html] interface, including support for the {{foreach}} statement:</para>
             <example>
-                <title>Instantiating a Zend_Http_Client object</title>
+                <title>Session Iteration</title>
                 <programlisting role="php">
 <![CDATA[<?php
     // Zend_Session is iteratable
@@ -108,7 +108,7 @@
     <sect2 id="Accessors for Session Namespaces">
         <title>Accessors for Session Namespaces</title>
 
-        <para>The usual accessors are available, via the __set(), __unset(), __isset(), and __get() magic methods.</para>
+        <para>The usual accessors are available, via the __set(), __unset(), __isset(), and __get() magic methods.  The magic methods should not be used directly, except from within a subclass of Zend_Session.  Instead, use the normal <code>$object->property = $value;  echo (isset($object->property) ? 'set' : 'unset');</code> operators to invoke these magic methods.</para>
     </sect2>
 
 </sect1>

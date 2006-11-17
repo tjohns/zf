@@ -5,7 +5,7 @@
     <sect2 id="zend.session.setOptions">
         <title>setOptions()</title>
 
-        <para>When the first session namespace is requested, Zend_Session_Core will autostart itself based on the default session settings, unless modified first by {{Zend_Session::setOptions()}}.</para>
+        <para>When the first session namespace is requested, Zend_Session_Core will autostart itself based on the default session settings, unless modified first by <code>Zend_Session::setOptions()</code>.</para>
 
         <para>To pass the options just pass the basename (the non session. part) as part of an array to setOptions.  Without setting any options, Zend_Session will utilize the recommended options first, then the default php.ini settings.  *Community feedback is welcome on what the best practices set of recommended options should be. *** See Use Cases #</para>
 
