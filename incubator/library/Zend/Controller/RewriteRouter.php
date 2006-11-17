@@ -146,10 +146,6 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 
     public function addDefaultRoutes()
     {
-        // Add default route (for root url - '/')
-        $default = new Zend_Controller_Router_Route('', array('controller' => 'index', 'action' => 'index'));
-        $this->addRoute('default', $default);
-        
         // Route for Router v1 compatibility
         $compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
         $this->addRoute('compat', $compat); 
@@ -175,6 +171,13 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
             $defs = (isset($info->defaults)) ? $info->defaults->asArray() : null;
             $this->addRoute($name, new Zend_Controller_Router_Route($info->route, $defs, $reqs));
         }
+    }
+
+    public function removeRoute($name) {
+        if (!isset($this->_routes[$name])) {
+            throw new Zend_Controller_Router_Exception("Route $name is not defined");
+        }
+        unset($this->_routes[$name]);
     }
 
     public function getRoute($name)

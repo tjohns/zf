@@ -28,17 +28,36 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
     {
         $router = new Zend_Controller_RewriteRouter();
         $routes = $router->getRoutes();
-        $this->assertType('Zend_Controller_Router_Route', $routes['default']);
+        $this->assertType('Zend_Controller_Router_Route', $routes['compat']);
     }
 
     public function testGetRoute()
     {
         $router = new Zend_Controller_RewriteRouter();
-        $route = $router->getRoute('default');
+        $route = $router->getRoute('compat');
         $routes = $router->getRoutes();
     
         $this->assertType('Zend_Controller_Router_Route', $route);
-        $this->assertSame($route, $routes['default']);
+        $this->assertSame($route, $routes['compat']);
+    }
+
+    public function testRemoveRoute()
+    {
+        $router = new Zend_Controller_RewriteRouter();
+        $route = $router->getRoute('compat');
+        
+        $router->removeRoute('compat');
+    
+        $routes = $router->getRoutes();
+        $this->assertSame(0, count($routes));
+
+        try {
+            $route = $router->getRoute('compat');
+        } catch (Zend_Controller_Router_Exception $e) {
+            return true;
+        }
+
+        $this->fail();
     }
 
     public function testGetNonExistentRoute()
@@ -61,13 +80,13 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $router->addRoute('archive', new Zend_Controller_Router_Route('archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+')));
         $routes = $router->getRoutes();
 
-        $this->assertSame(3, count($routes));
+        $this->assertSame(2, count($routes));
         $this->assertType('Zend_Controller_Router_Route', $routes['archive']);
 
         $router->addRoute('register', new Zend_Controller_Router_Route('register/:action', array('controller' => 'profile', 'action' => 'register')));
         $routes = $router->getRoutes();
 
-        $this->assertSame(4, count($routes));
+        $this->assertSame(3, count($routes));
         $this->assertType('Zend_Controller_Router_Route', $routes['register']);
     }
 
@@ -81,11 +100,24 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_Controller_Request_Http', $token);
     }
 
-    public function testRouteDefault()
+    public function testEmptyRoute()
     {
         $router = new Zend_Controller_RewriteRouter();
         $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/');
+        
+        $router->removeRoute('compat');
+        $router->addRoute('empty', new Zend_Controller_Router_Route(':year', array('year' => '2006')));
+        
+        $token = $router->route($request);
 
+        $this->assertSame('2006', $token->getParam('year'));
+    }
+
+    public function testRouteCompat()
+    {
+        $router = new Zend_Controller_RewriteRouter();
+        $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/');
+        
         $token = $router->route($request);
 
         $this->assertSame('index', $token->getControllerName());
