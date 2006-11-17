@@ -16,17 +16,12 @@
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
- 
+
 /**
  * Zend_Mail_Transport_Exception
  */
 require_once 'Zend/Mail/Transport/Exception.php';
- 
-// WARNING: This is still experimental. The unit test passes, but the parsing is currently
-// not the best and some methods don't really work yet. If you want to test this class ...
-// ... you've been warned. Please don't report bugs yet, as they might vanish after the
-// parsing changes.
- 
+
 /**
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -38,7 +33,7 @@ class Zend_Mail_Transport_Imap
      * socket to imap server
      */
     private $_socket;
-    
+
 
     /**
      * Public constructor
@@ -47,11 +42,11 @@ class Zend_Mail_Transport_Imap
      * @param int    $port  port of IMAP server, default is 143 (993 for ssl)
      * @param bool   $ssl   use ssl?
      */
-    function __construct($host = '', $port = null, $ssl = false) 
+    function __construct($host = '', $port = null, $ssl = false)
     {
         if($host) {
             $this->connect($host, $port, $ssl);
-        } 
+        }
     }
 
     /**
@@ -61,7 +56,7 @@ class Zend_Mail_Transport_Imap
     {
         $this->logout();
     }
-    
+
     /**
      * Open connection to POP3 server
      *
@@ -71,7 +66,7 @@ class Zend_Mail_Transport_Imap
      * @throws Zend_Mail_Transport_Exception
      * @return string welcome message
      */
-    public function connect($host, $port = null, $ssl = false) 
+    public function connect($host, $port = null, $ssl = false)
     {
         if ($ssl == 'SSL') {
             $host = 'ssl://' . $host;
@@ -80,49 +75,82 @@ class Zend_Mail_Transport_Imap
         if($port === null) {
             $port = $ssl === 'SSL' ? 993 : 143;
         }
-        
+
         $this->_socket = @fsockopen($host, $port);
         if(!$this->_socket) {
             throw new Zend_Mail_Transport_Exception('cannot connect to host');
         }
 
-        if(!$this->readLine()) {
-            throw new Zend_Mail_Transport_Exception('host doesn\'t allow connection');          
+        if(!$this->_assumedNextLine('* OK')) {
+            throw new Zend_Mail_Transport_Exception('host doesn\'t allow connection');
         }
-        
+
         if($ssl === 'TLS') {
-            $result = $this->requestAndResponse('STARTTLS');
+            $result = $this->requestAndResponse('STARTTLS', array(), true);
             $result = $result && stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             if(!$result) {
                 throw new Zend_Mail_Transport_Exception('cannot enable TLS');
             }
         }
     }
-    
+
     /**
-     * read a response "line" (could also be more than one real line if response has {..}<NL>)
-     * and do a simple decode
+     * get the next line from socket with error checking, but nothing else
      *
-     * @params array  $tokens    decoded tokens are returned by reference
-     * @params string $wantedTag check for this tag for response code. Default '*' is 
-     *                           continuation tag.
-     * @return bool if returned tag matches wanted tag
+     * @return string next line
+     * @throws Zend_Mail_Transport_Exception
      */
-    public function readLine(&$tokens = array(), $wantedTag = '*') 
+    private function _nextLine()
+    {
+        $line = fgets($this->_socket);
+        if($line === false) {
+            throw new Zend_Mail_Transport_Exception('cannot read - connection closed?');
+        }
+
+        return $line;
+    }
+
+    /**
+     * get next line and assume it starts with $start. some requests give a simple
+     * feedback so we can quickly check if we can go on.
+     *
+     * @params string $start the first bytes we assume to be in the next line
+     * @return bool line starts with $start
+     * @throws Zend_Mail_Transport_Exception
+     */
+    private function _assumedNextLine($start)
+    {
+        $line = $this->_nextLine();
+        return strpos($line, $start) === 0;
+    }
+
+    /**
+     * get next line and split the tag. that's the normal case for a response line
+     *
+     * @params string $tag tag of line is returned by reference
+     * @return string next line
+     * @throws Zend_Mail_Transport_Exception
+     */
+    private function _nextTaggedLine(&$tag)
+    {
+        $line = $this->_nextLine();
+
+        // seperate tage from line
+        list($tag, $line) = explode(' ', $line, 2);
+
+        return $line;
+    }
+
+    /**
+     * split a given line in tokens. a token is literal of any form or a list
+     *
+     * @params string $line line to decode
+     * @return array tokens, literals are returned as string, lists as array
+     */
+    private function _decodeLine($line)
     {
         $tokens = array();
         $stack = array();
-        
-        $line = fgets($this->_socket);
-        if($line === false) {
-            throw new Zend_Mail_Transport_Exception('cannot read - connection closed?');            
-        }
-
-        //  remove <NL>
-        $line = rtrim($line) . ' ';
-        
-        // seperate tage from line
-        list($tag, $line) = explode(' ', $line, 2);
 
         /*
             We start to decode the response here. The unterstood tokens are:
@@ -136,25 +164,14 @@ class Zend_Mail_Transport_Imap
             would be returned as:
                 array('foo', 'baz', 'bar', array('f\\\"oo', 'bar'));
         */
+        //  replace any trailling <NL> including spaces with a single space
+        $line = rtrim($line) . ' ';
         while(($pos = strpos($line, ' ')) !== false) {
             $token = substr($line, 0, $pos);
-            if($token[0] == '(') {
+            while($token[0] == '(') {
                 array_push($stack, $tokens);
                 $tokens = array();
                 $token = substr($token, 1);
-            }
-            if($token[0] == '{') {
-                $endPos = strpos($token, '}');
-                $chars = substr($token, 1, $endPos - 1);                
-                if(is_numeric($chars)) {
-                    $token = '';
-                    while(strlen($token) < $chars) {
-                        $token .= fgets($this->_socket);
-                    }
-                    $tokens[] = $token;
-                    $line = trim(fgets($this->_socket)) . ' ';
-                    continue;
-                }
             }
             if($token[0] == '"') {
                 if(preg_match('%^"((.|\\\\|\\")*)"%', $line, $matches)) {
@@ -163,52 +180,100 @@ class Zend_Mail_Transport_Imap
                     continue;
                 }
             }
-            if($stack && substr($token, -1) == ')') {
-                $tokens[] = rtrim($token, ')');
+            if($token[0] == '{') {
+                $endPos = strpos($token, '}');
+                $chars = substr($token, 1, $endPos - 1);
+                if(is_numeric($chars)) {
+                    $token = '';
+                    while(strlen($token) < $chars) {
+                        $token .= $this->_nextLine();
+                    }
+                    $line = '';
+                    if(strlen($token) > $chars) {
+                        $line = substr($token, $chars);
+                        $token = substr($token, 0, $chars);
+                    } else {
+                        $line .= $this->_nextLine();
+                    }
+                    $tokens[] = $token;
+                    $line = trim($line) . ' ';
+                    continue;
+                }
+            }
+            if($stack && $token[strlen($token) - 1] == ')') {
+                // closing braces are not seperated by spaces, so we need to count them
+                $braces = strlen($token);
+                $token = rtrim($token, ')');
+                // only count braces if more than one
+                $braces -= strlen($token) + 1;
+                // only add if token had more than just closing braces
+                if($token) {
+                    $tokens[] = $token;
+                }
                 $token = $tokens;
                 $tokens = array_pop($stack);
+                // special handline if more than one closing brace
+                while($braces-- > 0) {
+                    $tokens[] = $token;
+                    $token = $tokens;
+                    $tokens = array_pop($stack);
+                }
             }
             $tokens[] = $token;
             $line = substr($line, $pos + 1);
         }
+
+        // maybe the server forgot to send some closing braces
         while($stack) {
             $child = $tokens;
             $tokens = array_pop($stack);
             $tokens[] = $child;
         }
-        
+
+        return $tokens;
+    }
+
+    /**
+     * read a response "line" (could also be more than one real line if response has {..}<NL>)
+     * and do a simple decode
+     *
+     * @params array|string  $tokens    decoded tokens are returned by reference, if $dontParse
+     *                                  is true the unparsed line is returned here
+     * @params string        $wantedTag check for this tag for response code. Default '*' is
+     *                                  continuation tag.
+     * @params bool          $dontParse if true only the unparsed line is returned $tokens
+     * @return bool if returned tag matches wanted tag
+     */
+    public function readLine(&$tokens = array(), $wantedTag = '*', $dontParse = false)
+    {
+        $line = $this->_nextTaggedLine($tag);
+        if(!$dontParse) {
+            $tokens = $this->_decodeLine($line);
+        } else {
+            $tokens = $line;
+        }
+
         // if tag is wanted tag we might be at the end of a multiline response
         return $tag == $wantedTag;
     }
-    
+
     /**
      * read all lines of response until given tag is found (last line of response)
      *
-     * @params string       $tag    the tag of your request
-     * @params string|array $filter you can filter the response so you get only the 
-     *                              given response lines
+     * @params string       $tag       the tag of your request
+     * @params string|array $filter    you can filter the response so you get only the
+     *                                 given response lines
+     * @params bool         $dontParse if true every line is returned unparsed instead of
+     *                                 the decoded tokens
      * @return null|bool|array tokens if success, false if error, null if bad request
      */
-    public function readResponse($tag, $filter = '') 
+    public function readResponse($tag, $dontParse = false)
     {
         $lines = array();
-        while(!$this->readLine($tokens, $tag)) {
-            if($filter) {
-                if(is_array($filter)) {
-                    if(!in_array($tokens[0], $filter)) {
-                        continue;
-                    }
-                } else {
-                    if($tokens[0] == $filter) {
-                        array_shift($tokens);
-                    } else {
-                        continue;
-                    }
-                }
-            }
+        while(!$this->readLine($tokens, $tag, $dontParse)) {
             $lines[] = $tokens;
         }
-        
+
         // last line has response code
         if($tokens[0] == 'OK') {
             return $lines;
@@ -217,7 +282,7 @@ class Zend_Mail_Transport_Imap
         }
         return null;
     }
-    
+
     /**
      * send a request
      *
@@ -227,18 +292,18 @@ class Zend_Mail_Transport_Imap
      *
      * @throws Zend_Mail_Transport_Exception
      */
-    public function sendRequest($command, $tokens = array(), &$tag = null) 
+    public function sendRequest($command, $tokens = array(), &$tag = null)
     {
         if(!$tag) {
             $tag = 'TAG' . rand(100, 999);
         }
-        
+
         fputs($this->_socket, $tag . ' ' . $command);
-        
+
         foreach($tokens as $token) {
             if(is_array($token)) {
                 fputs($this->_socket, ' ' . $token[0] . "\r\n");
-                if(!$this->readLine($response, '+') || $response[0] != 'OK') {
+                if(!$this->_assumedNextLine('+ OK')) {
                     throw new Zend_Mail_Transport_Exception('cannot send literal string');
                 }
                 fputs($this->_socket, $token[1]);
@@ -246,32 +311,33 @@ class Zend_Mail_Transport_Imap
                 fputs($this->_socket, ' ' . $token);
             }
         }
-        
+
         fputs($this->_socket, "\r\n");
     }
-    
+
     /**
      * send a request and get response at once
-     * 
-     * @params string $command command as in sendRequest()
-     * @params array  $tokens  parameters as in sendRequest()
+     *
+     * @params string $command   command as in sendRequest()
+     * @params array  $tokens    parameters as in sendRequest()
+     * @params bool   $dontParse if true unparsed lines are returned instead of tokens
      * @return mixed response as in readResponse()
      */
-    public function requestAndResponse($command, $tokens = array()) 
+    public function requestAndResponse($command, $tokens = array(), $dontParse = false)
     {
         $this->sendRequest($command, $tokens, $tag);
-        $response = $this->readResponse($tag, $command);
-        return is_array($response) && !$response ? true: $response;
+        $response = $this->readResponse($tag, $command, $dontParse);
+        return ($dontParse || is_array($response)) && !$response ? true: $response;
     }
-    
+
     /**
      * escape one or more literals i.e. for sendRequest
      *
      * @params string|array $string the literal/-s
-     * @return string|array escape literals, literals with newline ar returned 
+     * @return string|array escape literals, literals with newline ar returned
      *                      as array('{size}', 'string');
      */
-    public function escapeString($string) 
+    public function escapeString($string)
     {
         if(func_num_args() < 2) {
             if(strpos($string, "\n") !== false) {
@@ -286,7 +352,13 @@ class Zend_Mail_Transport_Imap
         }
         return $result;
     }
-    
+
+    /**
+     * escape a list with literals or lists
+     *
+     * @params array $list list with literals or lists as PHP array
+     * @return string escaped list for imap
+     */
     public function escapeList($list)
     {
         $result = array();
@@ -300,7 +372,7 @@ class Zend_Mail_Transport_Imap
         }
         return '(' . implode(' ', $result) . ')';
     }
-    
+
     /**
      * Login to IMAP server.
      *
@@ -308,22 +380,22 @@ class Zend_Mail_Transport_Imap
      * @param  string $password  password
      * @return bool success
      */
-    public function login($user, $password) 
+    public function login($user, $password)
     {
-        return $this->requestAndResponse('LOGIN', $this->escapeString($user, $password));
+        return $this->requestAndResponse('LOGIN', $this->escapeString($user, $password), true);
     }
-    
+
     /**
      * logout of imap server
      *
      * @return bool success
      */
-    public function logout() 
+    public function logout()
     {
         $result = false;
         if($this->_socket) {
             try {
-                $result = $this->requestAndResponse('LOGOUT');
+                $result = $this->requestAndResponse('LOGOUT', array(), true);
             } catch (Zend_Mail_Transport_Exception $e) {
                 // ignoring exception
             }
@@ -332,17 +404,17 @@ class Zend_Mail_Transport_Imap
         }
         return $result;
     }
-    
-    
+
+
     /**
      * Get capabilities from IMAP server
      *
      * @return array list of capabilities
      */
-    public function capability() 
+    public function capability()
     {
         $response = $this->requestAndResponse('CAPABILITY');
-        
+
         if(!$response) {
             return $response;
         }
@@ -353,21 +425,21 @@ class Zend_Mail_Transport_Imap
         }
         return $capabilities;
     }
-    
+
     /**
      * Examine and select have the same response. The common code for both
      * is in this method
      *
      * @params string can be 'EXAMINE' or 'SELECT' and this is used as command
      * @params string which folder to change to or examine
-     * 
-     * @return bool|array false if error, array with returned information 
+     *
+     * @return bool|array false if error, array with returned information
      *                    otherwise (flags, exists, recent, uidvalidity)
      */
-    public function examineOrSelect($command = 'EXAMINE', $box = 'INBOX') 
+    public function examineOrSelect($command = 'EXAMINE', $box = 'INBOX')
     {
         $this->sendRequest($command, (array)$this->escapeString($box), $tag);
-        
+
         $result = array();
         while(!$this->readLine($tokens, $tag)) {
             if($tokens[0] == 'FLAGS') {
@@ -387,36 +459,49 @@ class Zend_Mail_Transport_Imap
                     // ignore
             }
         }
-        
+
         if($tokens[0] != 'OK') {
             return false;
         }
         return $result;
     }
-    
+
     /**
      * change folder
-     * 
+     *
      * @params string     $box change to this folder
      * @return bool|array see examineOrselect()
      */
-    public function select($box = 'INBOX') 
+    public function select($box = 'INBOX')
     {
         return $this->examineOrSelect('SELECT', $box);
     }
 
     /**
      * examine folder
-     * 
+     *
      * @params string     $box examine this folder
      * @return bool|array see examineOrselect()
      */
-    public function examine($box = 'INBOX') 
+    public function examine($box = 'INBOX')
     {
         return $this->examineOrSelect('EXAMINE', $box);
     }
-    
-    public function fetch($items, $from, $to = null) 
+
+    /**
+     * fetch one or more items of one or more messages
+     *
+     * @params string|array $items items to fetch from message(s) as string (if only one item)
+     *                             or array of strings
+     * @params int          $from  message for items or start message if $to !== null
+     * @params int|null     $to    if null only one message ($from) is fetched, else it's the
+     *                             last message, INF means last message avaible
+     * @return string|array if only one item of one message is fetched it's returned as string
+     *                      if items of one message are fetched it's returned as (name => value)
+     *                      if one items of messages are fetched it's returned as (msgno => value)
+     *                      if items of messages are fetchted it's returned as (msgno => (name => value))
+     */
+    public function fetch($items, $from, $to = null)
     {
         if($to === null) {
             $set = (int)$from;
@@ -427,12 +512,12 @@ class Zend_Mail_Transport_Imap
         } else {
             $set = (int)$from . ':' . (int)$to;
         }
-        
+
         $items = (array)$items;
         $itemList = $this->escapeList($items);
-        
+
         $this->sendRequest('FETCH', array($set, $itemList), $tag);
-        
+
         $result = array();
         while(!$this->readLine($tokens, $tag)) {
             if($tokens[1] != 'FETCH') {
@@ -455,11 +540,11 @@ class Zend_Mail_Transport_Imap
             }
             $result[$tokens[0]] = $data;
         }
-        
+
         if($to === null) {
             throw new Zend_Mail_Transport_Exception('the single id was not found in response');
         }
-        
+
         return $result;
     }
 }

@@ -16,8 +16,8 @@
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
- 
- 
+
+
 /**
  * Zend_Mail_Abstract
  */
@@ -38,17 +38,12 @@ require_once 'Zend/Mail/Message.php';
  */
 require_once 'Zend/Mail/Exception.php';
 
-// WARNING: This is still experimental. The unit test passes, but the parsing is currently
-// not the best and some methods don't really work yet. If you want to test this class ...
-// ... you've been warned. Please don't report bugs yet, as they might vanish after the
-// parsing changes.
-
 /**
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_Imap extends Zend_Mail_Abstract 
+class Zend_Mail_Imap extends Zend_Mail_Abstract
 {
     private $_protocol;
     private $_currentFolder = '';
@@ -58,7 +53,7 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
      *
      * Count messages all messages in current box
      * No flags are supported by POP3 (exceptions is thrown)
-     * 
+     *
      * @param int filter by flags
      * @return int number of messages
      * @throws Zend_Mail_Exception
@@ -71,7 +66,7 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
         $result = $this->_protocol->examine($this->_currentFolder);
         return $result['exists'];
     }
-    
+
     /**
      * get a list of messages with number and size
      *
@@ -85,7 +80,7 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
         }
         return $this->_protocol->fetch('RFC822.SIZE', 1, INF);
     }
-    
+
     /**
      *
      * get a message with headers and body
@@ -96,16 +91,16 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
     public function getMessage($id)
     {
         $message = $this->_protocol->fetch(array('RFC822.HEADER', 'RFC822.TEXT'), $id);
-        return new Zend_Mail_Message($message['RFC822.TEXT'], $message['RFC822.HEADER']);       
+        return new Zend_Mail_Message($message['RFC822.TEXT'], $message['RFC822.HEADER']);
     }
-    
+
     /**
      *
      * get a message with only header and $bodyLines lines of body
      *
      * @param int number of message
      * @param int also retrieve this number of body lines
-     * @return Zend_Mail_Message 
+     * @return Zend_Mail_Message
      */
     public function getHeader($id, $bodyLines = 0)
     {
@@ -130,65 +125,67 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
      * @param  $params array  mail reader specific parameters
      * @throws Zend_Mail_Exception
      */
-    public function __construct($params) 
+    public function __construct($params)
     {
         if($params instanceof Zend_Mail_Transport_Imap) {
             $this->_protocol = $params;
+	        $this->_currentFolder = 'INBOX';
+    	    $this->_protocol->select($this->_currentFolder);
             return;
         }
-    
+
         if(!isset($params['host']) || !isset($params['user'])) {
             throw new Zend_Mail_Exception('need at least a host an user in params');
         }
         $params['password'] = isset($params['password']) ? $params['password'] : '';
         $params['port']     = isset($params['port'])     ? $params['port']     : null;
         $params['ssl']      = isset($params['ssl']) ? $params['ssl'] : false;
-        
+
         $this->_protocol = new Zend_Mail_Transport_Imap();
         $this->_protocol->connect($params['host'], $params['port'], $params['ssl']);
         $this->_protocol->login($params['user'], $params['password']);
         $this->_currentFolder = isset($params['folder']) ? $params['folder'] : 'INBOX';
         $this->_protocol->select($this->_currentFolder);
     }
-    
-    
+
+
     /**
      *
      * public destructor
-     */    
-    public function __destruct() 
+     */
+    public function __destruct()
     {
         $this->close();
     }
-    
+
     /**
      *
      * Close resource for mail lib. If you need to control, when the resource
      * is closed. Otherwise the destructor would call this.
      *
      */
-    public function close() 
+    public function close()
     {
         $this->_currentFolder = '';
         $this->_protocol->logout();
     }
-    
+
     /**
      *
      * Keep the server busy.
      *
      */
-    public function noop() 
+    public function noop()
     {
         // TODO: real noop
-        return false;   
+        return false;
 //        return $this->_protocol->noop();
     }
-    
+
     /**
      *
      * Remove a message from server. If you're doing that from a web enviroment
-     * you should be careful and use a uniqueid as parameter if possible to 
+     * you should be careful and use a uniqueid as parameter if possible to
      * identify the message.
      *
      * @param int number of message
@@ -201,14 +198,14 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
     }
 
     /**
-     * 
+     *
      * Special handling for hasTop. The headers of the first message is
      * retrieved if Top wasn't needed/tried yet.
-     * 
+     *
      * @see Zend_Mail_Abstract:__get()
-     */        
-    public function __get($var) 
-    {        
+     */
+    public function __get($var)
+    {
         return parent::__get($var);
     }
 }
