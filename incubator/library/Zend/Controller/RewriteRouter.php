@@ -148,7 +148,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     {
         // Route for Router v1 compatibility
         $compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
-        $this->addRoute('compat', $compat); 
+        $this->addRoute('default', $compat); 
     }
 
     public function addRoute($name, Zend_Controller_Router_Route_Interface $route) {

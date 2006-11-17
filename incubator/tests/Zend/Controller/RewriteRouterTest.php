@@ -28,31 +28,31 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
     {
         $router = new Zend_Controller_RewriteRouter();
         $routes = $router->getRoutes();
-        $this->assertType('Zend_Controller_Router_Route', $routes['compat']);
+        $this->assertType('Zend_Controller_Router_Route', $routes['default']);
     }
 
     public function testGetRoute()
     {
         $router = new Zend_Controller_RewriteRouter();
-        $route = $router->getRoute('compat');
+        $route = $router->getRoute('default');
         $routes = $router->getRoutes();
     
         $this->assertType('Zend_Controller_Router_Route', $route);
-        $this->assertSame($route, $routes['compat']);
+        $this->assertSame($route, $routes['default']);
     }
 
     public function testRemoveRoute()
     {
         $router = new Zend_Controller_RewriteRouter();
-        $route = $router->getRoute('compat');
+        $route = $router->getRoute('default');
         
-        $router->removeRoute('compat');
+        $router->removeRoute('default');
     
         $routes = $router->getRoutes();
         $this->assertSame(0, count($routes));
 
         try {
-            $route = $router->getRoute('compat');
+            $route = $router->getRoute('default');
         } catch (Zend_Controller_Router_Exception $e) {
             return true;
         }
@@ -105,7 +105,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $router = new Zend_Controller_RewriteRouter();
         $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/');
         
-        $router->removeRoute('compat');
+        $router->removeRoute('default');
         $router->addRoute('empty', new Zend_Controller_Router_Route(':year', array('year' => '2006')));
         
         $token = $router->route($request);
@@ -129,7 +129,7 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $router = new Zend_Controller_RewriteRouter();
         $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/archive/action/bogus');
 
-        $router->addRoute('compat', new Zend_Controller_Router_Route(':controller/:action'));
+        $router->addRoute('default', new Zend_Controller_Router_Route(':controller/:action'));
         
         $token = $router->route($request);
 

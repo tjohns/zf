@@ -380,7 +380,7 @@ $router->addRoute(
             <programlisting role="php"><![CDATA[
 // Route for Router v1 compatibility
 $compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
-$this->addRoute('compat', $compat);]]></programlisting>
+$this->addRoute('default', $compat);]]></programlisting>
 
             <note>
                 Zend_Controller_RewriteRouter is configured for backwards
