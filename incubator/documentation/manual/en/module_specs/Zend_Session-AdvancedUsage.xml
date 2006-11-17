@@ -1,0 +1,114 @@
+<sect1 id="zend.session.advancedusage">
+    <title>Advanced Usage</title>
+
+    <para>While the above examples are a perfectly acceptable way to utilize Zend_Session, there are some best practices to consider.</para>
+
+    <sect2 id="zend.session.startingasession">
+        <title>Starting a Session</title>
+
+        <para>If you know that your application will be using Zend_Session, start the session in the bootstrap file, if you want all requests to have a session.</para>
+
+            <example>
+                <title>Starting the Global Session</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    ...
+    Zend_Session_Core::start();
+    ...
+?>]]></programlisting>
+            </example>
+
+        <para>By starting the session in the bootstrap file, you avoid the possibility that your session might be started after headers have been sent to the browser, which results in an exception, and possibly a broken page for website viewers.  Various advanced features require <code>Zend_Session_Core::start()</code> first.  (More on advanced features later).</para>
+
+        <para>There are four ways to start a session, when using Zend_Session.   Two are wrong.
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+1. Wrong: Do not set PHP's session.auto_start ini setting in either php.ini or .htaccess (http://www.php.net/manual/en/ref.session.php#ini.session.auto-start).  If you do not have the ability to disable this setting in php.ini, then add <code>php_value session.auto_start 0</code> to your .htaccess file (usually in your HTML document root directory).
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+2. Wrong: Do not use <code>session_start()</code> directly (see http://www.php.net/session_start).  Zend_Session
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+3. Correct: In your ZF bootstrap code, use <code>Zend_Session_Core::start()</code>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+4. Correct: Just use <code>new Zend_Session()</code>, and the session will be automatically started within Zend_Session_Core.
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>Option #4 is more difficult to use than #3, because you are responsible for ensuring that the first <code>new Zend_Session()</code> happens *before* any output has been sent by PHP to the client, if you are using the default, cookie-based sessions (recommended).</para>
+
+    </sect2>
+
+    <sect2 id="zend.session.limitinginstances">
+        <title>Limiting Instances of Zend_Session to One Per Namespace</title>
+
+        <para>In addition to the namespace feature, at construction time you can also tell Zend_Session that the namespace you are wishing to instantiate is to be the only instance of that namespace. This increases protection from intentional changes by components that should not modify a particular session namespace.</para>
+
+        <example>
+            <title>Limiting to Single Instances</title>
+            <programlisting role="php">
+<![CDATA[<?php
+    $componentFooState = new Zend_Session('Foo', Zend_Session::SINGLE_INSTANCE);
+    doSomething($options, $componentFooState); // pass the state to wherever it is needed
+?>]]></programlisting>
+        </example>
+
+        <para>The second parameter in the constructor above will tell Zend_Session that any future Zend_Sessions that are instantiated with the 'Zend_Auth' namespace are not allowed and will thus result in an exception being thrown.</para>
+
+    </sect2>
+
+    <sect2 id="Locking Session Namespaces">
+        <title>Locking Session Namespaces</title>
+
+        <para>Session namespaces can be locked, to prevent further alterations to the data in that namespace.  Use  {{lock()}} to make the namespace read-only, {{unLock()}} to make a read-only namespace read-write, and {{isLocked()}} to test if a namespace has been previously locked.</para>
+
+            <example>
+                <title>Instantiating a Zend_Http_Client object</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // assuming:
+    $my_session = new Zend_Session('my_session');
+
+    // marking session as read only locked
+    $my_session->lock();
+
+    // unlocking read-only lock
+    if ($my_session->isLocked()) {
+        $my_session->unLock();
+    }
+?>]]></programlisting>
+            </example>
+    </sect2>
+
+    <sect2 id="Iterating Over Session Namespaces">
+        <title>Iterating Over Session Namespaces</title>
+
+        <para>Zend_Session provides the full [IteratorAggregate|http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html] interface, including support for the {{foreach}} statement:</para>
+            <example>
+                <title>Instantiating a Zend_Http_Client object</title>
+                <programlisting role="php">
+<![CDATA[<?php
+    // Zend_Session is iteratable
+    foreach ($my_session as $name => $value) {
+        ....
+    }
+?>]]></programlisting>
+            </example>
+    </sect2>
+
+    <sect2 id="Accessors for Session Namespaces">
+        <title>Accessors for Session Namespaces</title>
+
+        <para>The usual accessors are available, via the __set(), __unset(), __isset(), and __get() magic methods.</para>
+    </sect2>
+
+</sect1>

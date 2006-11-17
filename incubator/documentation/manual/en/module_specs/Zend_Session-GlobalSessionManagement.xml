@@ -1,0 +1,15 @@
+<sect1 id="zend.session.globalsessionmanagement">
+    <title>Global Session Management</title>
+
+    <para>The default behavior of sessions can be modified using the static methods in Zend_Session_Core.  All management and manipulation of global session management occurs using Zend_Session_Core, including configuration of the <link linkend="http://us3.php.net/session#session.configuration">usual options provided by ext/session</link>, using <code>Zend_Session::setOptions()</code>. </para>
+    <sect2 id="zend.session.setOptions">
+        <title>setOptions()</title>
+
+        <para>When the first session namespace is requested, Zend_Session_Core will autostart itself based on the default session settings, unless modified first by {{Zend_Session::setOptions()}}.</para>
+
+        <para>To pass the options just pass the basename (the non session. part) as part of an array to setOptions.  Without setting any options, Zend_Session will utilize the recommended options first, then the default php.ini settings.  *Community feedback is welcome on what the best practices set of recommended options should be. *** See Use Cases #</para>
+
+        <para>A common case of usage might be for a use to separate session access by controllers.  One might want to protect variables in say the 'Zend_Auth' controller.  That is done by retireving an instance from the sessions getInstance and priming it with a string of the desired namespace.  *** See Example #</para>
+    </sect2>
+
+</sect1>
