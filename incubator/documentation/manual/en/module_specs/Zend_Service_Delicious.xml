@@ -173,7 +173,7 @@ $delicious->renameTag('ZF', 'zendFramework');
 ?>]]>       </programlisting>
         </example>
     </sect2>
-    <sect2 id="zend.service.delicious.tags">
+    <sect2 id="zend.service.delicious.bundles">
         <title>Bundles</title>
         <example>
             <title>Bundles</title>
