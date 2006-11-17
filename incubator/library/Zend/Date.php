@@ -236,26 +236,28 @@ class Zend_Date {
      * @param $part mixed    - OPTIONAL defines the input format of $date
      * @return object
      */
-    public function __construct($date, $part = false, $locale = false)
+    public function __construct($date = false, $part = false, $locale = false)
     {
-        if (empty($locale)) {
+        // set locale
+        if ($locale === false) {
             $this->_Locale = new Zend_Locale();
         } else {
             $this->_Locale = $locale;
         }
 
-        if (empty($part)) {
+        // set timestamp if not given
+        if ($date === false) {
+            $date = time();
+        }
 
-            if (!is_numeric($date)) {
-                $this->throwException('no timestamp found');
-            }
-            $this->_Date = new Zend_Date_DateObject($date);
-
-        } else {
+        // set datepart
+        if (($part !== false) or (!is_numeric($date))) {
 
             $this->_Date = new Zend_Date_DateObject(0);
-            $this->set($date, $part, $this->_Locale, FALSE);
+            $this->set($date, $part, $this->_Locale, false);
 
+        } else {
+            $this->_Date = new Zend_Date_DateObject($date);
         }
     }
 
@@ -3561,5 +3563,16 @@ class Zend_Date {
     public function isWeek($week = false, $locale = false)
     {
         return ($this->compareWeek($week) == 0);
+    }
+
+
+    /**
+     * Throw an exception
+     * Note : for performance reasons, the "load" of Zend/Date/Exception is dynamic
+     */
+    public static function throwException($message)
+    {
+        require_once 'Zend/Date/Exception.php';
+        throw new Zend_Date_Exception($message);
     }
 }

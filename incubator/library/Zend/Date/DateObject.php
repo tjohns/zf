@@ -72,9 +72,9 @@ class Zend_Date_DateObject {
      * must be given as Timestamp
      * This object simulates the PHP 5.2 Date Object
      *
-     * @param $date mixed - timestamp number
+     * @param $date mixed - OPTIONAL timestamp number
      */
-    public function __construct($date)
+    public function __construct($date = false)
     {
         $this->setTimestamp($date);
     }
@@ -83,14 +83,14 @@ class Zend_Date_DateObject {
     /**
      * Sets a new timestamp
      *
-     * @param $date mixed - timestamp number
+     * @param $date mixed - OPTIONAL timestamp otherwise actual timestamp is used
      * @return boolean
      * @throws Zend_Date_Exception
      */
-    public function setTimestamp($date)
+    public function setTimestamp($date = false)
     {
         // no date value, take actual time
-        if (empty($date)) {
+        if ($date === false) {
             $this->_unixtimestamp = time();
             return true;
         }
