@@ -129,8 +129,10 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
     {
         if($params instanceof Zend_Mail_Transport_Imap) {
             $this->_protocol = $params;
-	        $this->_currentFolder = 'INBOX';
-    	    $this->_protocol->select($this->_currentFolder);
+            $this->_currentFolder = 'INBOX';
+            if(!$this->_protocol->select($this->_currentFolder)) {
+                throw new Zend_Mail_Exception('cannot select INBOX, is this a valid transport?');
+            }
             return;
         }
 
@@ -143,9 +145,13 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
 
         $this->_protocol = new Zend_Mail_Transport_Imap();
         $this->_protocol->connect($params['host'], $params['port'], $params['ssl']);
-        $this->_protocol->login($params['user'], $params['password']);
+        if(!$this->_protocol->login($params['user'], $params['password'])) {
+            throw new Zend_Mail_Exception('cannot login, user or password wrong');
+        }
         $this->_currentFolder = isset($params['folder']) ? $params['folder'] : 'INBOX';
-        $this->_protocol->select($this->_currentFolder);
+        if(!$this->_protocol->select($this->_currentFolder)) {
+            throw new Zend_Mail_Exception('cannot change folder, maybe it does not exist');
+        }
     }
 
 

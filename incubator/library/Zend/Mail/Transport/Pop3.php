@@ -16,30 +16,30 @@
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
- 
+
 /**
  * Zend_Mail_Transport_Exception
  */
 require_once 'Zend/Mail/Transport/Exception.php';
- 
- 
+
+
 /**
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_Transport_Pop3 
+class Zend_Mail_Transport_Pop3
 {
     /**
      * saves if server supports top
      */
     public $hasTop = null;
-    
+
     /**
      * socket to pop3
      */
     private $_socket;
-    
+
     /**
      * greeting timestamp for apop
      */
@@ -53,14 +53,14 @@ class Zend_Mail_Transport_Pop3
      * @param int    $port  port of POP3 server, default is 110 (995 for ssl)
      * @param bool   $ssl   use ssl?
      */
-    public function __construct($host = '', $port = null, $ssl = false) 
+    public function __construct($host = '', $port = null, $ssl = false)
     {
         if ($host) {
             $this->connect($host, $port, $ssl);
         }
     }
-    
-    
+
+
     /**
      * Public destructor
      */
@@ -68,8 +68,8 @@ class Zend_Mail_Transport_Pop3
     {
         $this->logout();
     }
-    
-    
+
+
     /**
      * Open connection to POP3 server
      *
@@ -79,16 +79,16 @@ class Zend_Mail_Transport_Pop3
      * @throws Zend_Mail_Transport_Exception
      * @return string welcome message
      */
-    public function connect($host, $port = null, $ssl = false) 
+    public function connect($host, $port = null, $ssl = false)
     {
         if ($ssl == 'SSL') {
             $host = 'ssl://' . $host;
         }
-        
+
         if ($port === null) {
             $port = $ssl == 'SSL' ? 995 : 110;
         }
-    
+
         $this->_socket = @fsockopen($host, $port);
         if (!$this->_socket) {
             throw new Zend_Mail_Transport_Exception('cannot connect to host');
@@ -103,7 +103,7 @@ class Zend_Mail_Transport_Pop3
         } else {
             $this->_timestamp = '<' . $this->_timestamp . '>';
         }
-        
+
         if($ssl === 'TLS') {
             $this->request('STLS');
             $result = stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
@@ -111,7 +111,7 @@ class Zend_Mail_Transport_Pop3
                 throw new Zend_Mail_Transport_Exception('cannot enable TLS');
             }
         }
-        
+
         return $welcome;
     }
 
@@ -120,8 +120,8 @@ class Zend_Mail_Transport_Pop3
      * Send a request
      *
      * @param string $request  your request without newline
-     */ 
-    public function sendRequest($request) 
+     */
+    public function sendRequest($request)
     {
         $result = fputs($this->_socket, $request."\n");
         if (!$result) {
@@ -138,13 +138,13 @@ class Zend_Mail_Transport_Pop3
      * @throws Zend_Mail_Transport_Exception
      * @return string response
      */
-    public function readResponse($multiline = false) 
+    public function readResponse($multiline = false)
     {
         $result = fgets($this->_socket);
         if (!is_string($result)) {
             throw new Zend_Mail_Transport_Exception('read failed - connection closed?');
         }
-        
+
         $result = trim($result);
         if (strpos($result, ' ')) {
             list($status, $message) = explode(' ', $result, 2);
@@ -152,7 +152,7 @@ class Zend_Mail_Transport_Pop3
             $status = $result;
             $message = '';
         }
-        
+
         if ($status != '+OK') {
             throw new Zend_Mail_Transport_Exception('last request failed');
         }
@@ -178,7 +178,7 @@ class Zend_Mail_Transport_Pop3
      * @param  bool   $multiline  multiline response?
      * @return string             result from readResponse()
      */
-    public function request($request, $multiline = false) 
+    public function request($request, $multiline = false)
     {
         $this->sendRequest($request);
         return $this->readResponse($multiline);
@@ -188,18 +188,18 @@ class Zend_Mail_Transport_Pop3
     /**
      * End communication with POP3 server (also closes socket)
      */
-    public function logout() 
+    public function logout()
     {
         if(!$this->_socket) {
             return;
         }
-        
+
         try {
             $this->request('QUIT');
         } catch (Zend_Mail_Transport_Exception $e) {
             // ignore error - we're closing the socket anyway
         }
-        
+
         fclose($this->_socket);
         $this->_socket = null;
     }
@@ -210,7 +210,7 @@ class Zend_Mail_Transport_Pop3
      *
      * @return array list of capabilities
      */
-    public function capa() 
+    public function capa()
     {
         $result = $this->request('CAPA', true);
         return explode("\n", $result);
@@ -225,14 +225,14 @@ class Zend_Mail_Transport_Pop3
      * @param  bool   $try_apop  should APOP be tried?
      * @return void
      */
-    public function login($user, $password, $tryApop = true) 
+    public function login($user, $password, $tryApop = true)
     {
         if ($tryApop && $this->_timestamp) {
             try {
                 $this->request("APOP $user " . md5($this->_timestamp . $password));
                 return;
             } catch (Zend_Mail_Transport_Exception $e) {
-                // ignore 
+                // ignore
             }
         }
 
@@ -292,7 +292,7 @@ class Zend_Mail_Transport_Pop3
      * @param  int $msgno    number of message
      * @return string|array  uniqueid of message or list with array(num => uniqueid)
      */
-    public function uniqueid($msgno = null) 
+    public function uniqueid($msgno = null)
     {
         if ($msgno !== null) {
             $result = $this->request("UIDL $msgno");
@@ -302,7 +302,7 @@ class Zend_Mail_Transport_Pop3
         }
 
         $result = $this->request('UIDL', true);
-        
+
         $result = explode("\n", $result);
         $messages = array();
         foreach ($result as $line) {
@@ -311,7 +311,7 @@ class Zend_Mail_Transport_Pop3
         }
 
         return $messages;
-    
+
     }
 
 
@@ -321,13 +321,13 @@ class Zend_Mail_Transport_Pop3
      *
      * The fallback makes normale RETR call, which retrieves the whole message. Additional
      * lines are not removed.
-     * 
+     *
      * @param int  $msgno     number of message
      * @param int  $lines     number of wanted body lines (empty line is inserted after header lines)
      * @param bool $fallback  fallback with full retrieve if top is not supported
      * @return string message headers with wanted body lines
      */
-    public function top($msgno, $lines = 0, $fallback = false) 
+    public function top($msgno, $lines = 0, $fallback = false)
     {
         if ($this->hasTop === false) {
             if ($fallback) {
@@ -352,7 +352,7 @@ class Zend_Mail_Transport_Pop3
                 $result = $this->retrive($msgno);
             } else {
                 throw $e;
-            }           
+            }
         }
 
         return $result;
@@ -365,7 +365,7 @@ class Zend_Mail_Transport_Pop3
      * @param  int     $msgno  message number
      * @return string          message
      */
-    public function retrive($msgno) 
+    public function retrive($msgno)
     {
         $result = $this->request("RETR $msgno", true);
         return $result;
@@ -375,7 +375,7 @@ class Zend_Mail_Transport_Pop3
     /**
      * Make a NOOP call, maybe needed for keeping the server happy
      */
-    public function noop() 
+    public function noop()
     {
         $this->request('NOOP');
     }
@@ -384,7 +384,7 @@ class Zend_Mail_Transport_Pop3
     /**
      * Make a DELE count to remove a message
      */
-    public function delete($msgno) 
+    public function delete($msgno)
     {
         $this->request("DELE $msgno");
     }
@@ -393,7 +393,7 @@ class Zend_Mail_Transport_Pop3
     /**
      * Make RSET call, which rollbacks delete requests
      */
-    public function undelete() 
+    public function undelete()
     {
         $this->request('RSET');
     }

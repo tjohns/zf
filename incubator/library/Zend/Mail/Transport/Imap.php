@@ -86,7 +86,7 @@ class Zend_Mail_Transport_Imap
         }
 
         if($ssl === 'TLS') {
-            $result = $this->requestAndResponse('STARTTLS', array(), true);
+            $result = $this->requestAndResponse('STARTTLS');
             $result = $result && stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             if(!$result) {
                 throw new Zend_Mail_Transport_Exception('cannot enable TLS');
@@ -273,10 +273,14 @@ class Zend_Mail_Transport_Imap
         while(!$this->readLine($tokens, $tag, $dontParse)) {
             $lines[] = $tokens;
         }
+        if($dontParse) {
+            // last to chars are still needed for response code
+            $tokens = array(substr($tokens, 0, 2));
+        }
 
         // last line has response code
         if($tokens[0] == 'OK') {
-            return $lines;
+            return $lines ? $lines : true;
         } else if($tokens[0] == 'NO'){
             return false;
         }
@@ -327,7 +331,8 @@ class Zend_Mail_Transport_Imap
     {
         $this->sendRequest($command, $tokens, $tag);
         $response = $this->readResponse($tag, $command, $dontParse);
-        return ($dontParse || is_array($response)) && !$response ? true: $response;
+
+        return $response;
     }
 
     /**

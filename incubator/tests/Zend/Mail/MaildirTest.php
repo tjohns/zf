@@ -40,7 +40,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
             $this->fail('exception raised while loading maildir');
         }
     }
-    
+
     public function testLoadFailure()
     {
         try {
@@ -48,7 +48,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             return; // test ok
         }
-        
+
         $this->fail('no exception raised while loading unknown dir');
     }
 
@@ -59,10 +59,10 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             return; // test ok
         }
-        
+
         $this->fail('no exception while loading invalid dir');
     }
-    
+
     public function testClose()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
@@ -106,7 +106,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         $count = $mail->countMessages();
         $this->assertEquals(5, $count);
     }
-    
+
     public function testSize()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
@@ -116,7 +116,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         $sizes = $mail->getSize();
         $this->assertEquals($shouldSizes, $sizes);
     }
-    
+
     public function testSingleSize()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
@@ -128,7 +128,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     public function testFetchHeader()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
-        
+
         $subject = $mail->getHeader(1)->subject;
         $this->assertEquals('Simple Message', $subject);
     }
@@ -136,7 +136,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     public function testFetchTopBody()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
-        
+
         $content = $mail->getHeader(3, 1)->getContent();
         $this->assertEquals('Fair river! in thy bright, clear flow', trim($content));
     }
@@ -144,7 +144,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     public function testFetchMessageHeader()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
-        
+
         $subject = $mail->getMessage(1)->subject;
         $this->assertEquals('Simple Message', $subject);
     }
@@ -152,12 +152,51 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
     public function testFetchMessageBody()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
-        
+
         $content = $mail->getMessage(3)->getContent();
         list($content, ) = explode("\n", $content, 2);
         $this->assertEquals('Fair river! in thy bright, clear flow', trim($content));
     }
-    
+
+    public function testFetchWrongSize()
+    {
+        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+
+        try {
+            $mail->getSize(0);
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception raised while getting size for message 0');
+    }
+
+    public function testFetchWrongHeader()
+    {
+        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+
+        try {
+            $mail->getHeader(0);
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception raised while fetching headers for message 0');
+    }
+
+    public function testFetchWrongMessageBody()
+    {
+        $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
+
+        try {
+            $mail->getMessage(0);
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception raised while fetching message 0');
+    }
+
     public function testFailedRemove()
     {
         $mail = new Zend_Mail_Maildir(array('dirname' => $this->_maildir));
@@ -167,7 +206,7 @@ class Zend_Mail_MaildirTest extends PHPUnit_Framework_TestCase
         } catch (Exception $e) {
             return; // test ok
         }
-        
+
         $this->fail('no exception raised while deleting message (maildir is read-only)');
     }
 }
