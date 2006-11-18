@@ -1,7 +1,32 @@
 <sect1 id="zend.session.advancedusage">
     <title>Advanced Usage</title>
 
-    <para>While the above examples are a perfectly acceptable way to utilize Zend_Session, there are some best practices to consider.</para>
+    <para>While the basic usage examples are a perfectly acceptable way to utilize Zend_Session, there are some best practices to consider.</para>
+
+    <para>Namespaces can also be used to separate session access by controllers to protect variables from contamination. For example, the 'Zend_Auth' controller might keep its session state data separate from all other controllers.  That is done by retireving an instance from the sessions getInstance and priming it with a string of the desired namespace.</para>
+            <example>
+                <title>Namespaced Sessions for Controllers with Automatic Expiration</title>
+                <programlisting role="php">
+<![CDATA[<?php
+// question view controller
+$test_session = new Zend_Session('test');
+$test_session->setExpirationSeconds(300, "accept_answer"); // expire only this variable
+
+$test_session->accept_answer = true;
+
+-- 
+
+// answer processing controller
+$test_session = new Zend_Session('test');
+
+if ($test_session->accept_answer === true) {
+    // within time
+}
+else {
+    // not within time
+}
+?>]]></programlisting>
+            </example>
 
     <sect2 id="zend.session.startingasession">
         <title>Starting a Session</title>
@@ -69,7 +94,7 @@
     <sect2 id="Locking Session Namespaces">
         <title>Locking Session Namespaces</title>
 
-        <para>Session namespaces can be locked, to prevent further alterations to the data in that namespace.  Use  {{lock()}} to make the namespace read-only, {{unLock()}} to make a read-only namespace read-write, and {{isLocked()}} to test if a namespace has been previously locked. Note: Locking the namespace has no effect on setter methods of objects stored in the namespace, but does prevent the use of the namespace's setter method to remove or replace the object.</para>
+        <para>Session namespaces can be locked, to prevent further alterations to the data in that namespace.  Use  {{lock()}} to make the namespace read-only, {{unLock()}} to make a read-only namespace read-write, and {{isLocked()}} to test if a namespace has been previously locked. Locks are transient and do not persist from one request to the next.  Note: Locking the namespace has no effect on setter methods of objects stored in the namespace, but does prevent the use of the namespace's setter method to remove or replace the object.</para>
 
             <example>
                 <title>Locking Session Namespaces</title>
