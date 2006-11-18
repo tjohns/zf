@@ -95,14 +95,14 @@ foreach ($results as $result) {
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
 ?>]]>       </programlisting>
-            <note>
-                <title>Country codes</title>
-                <para>
-                    Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                    <code>UK</code>, and <code>US</code>.
-                </para>
-            </note>
         </example>
+        <note>
+            <title>Country codes</title>
+            <para>
+                Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                <code>UK</code>, and <code>US</code>.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemlookup">
         <title>Looking up a Specific Amazon Item by ASIN</title>
