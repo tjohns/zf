@@ -36,8 +36,11 @@ echo $unit;
             </example>
         </para>
         <note>
-            Output can be achieved simply by using <ulink url="http://php.net/echo"><code>echo</code></ulink> or
-            <ulink url="http://php.net/print"><code>print</code></ulink>.
+            <title>Measurement output</title>
+            <para>
+                Output can be achieved simply by using <ulink url="http://php.net/echo"><code>echo</code></ulink> or
+                <ulink url="http://php.net/print"><code>print</code></ulink>.
+            </para>
         </note>
     </sect2>
     <sect2 id="zend.measure.output.value">
