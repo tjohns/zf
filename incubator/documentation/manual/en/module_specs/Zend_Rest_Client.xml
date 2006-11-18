@@ -20,12 +20,14 @@ $client = new Zend_Rest_Client('http://framework.zend.com/rest');
 echo $client->sayHello('Davey', 'Day')->get(); // "Hello Davey, Good Day"
 ?>]]></programlisting>
         </example>
-        <para>
-            <note>
-                <code>Zend_Rest_Client</code> attempts to make remote methods look as much like native methods as possible, the only difference
-                being that you must follow the method call with one of either <code>get()</code>,<code>post()</code>,<code>put()</code> or <code>delete()</code>.
-            </note>
-        </para>
+        <note>
+            <title>Differences in calling</title>
+            <para>
+                <code>Zend_Rest_Client</code> attempts to make remote methods look as much like native methods
+                as possible, the only difference being that you must follow the method call with one of
+                either <code>get()</code>,<code>post()</code>,<code>put()</code> or <code>delete()</code>.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.rest.client.return">
         <title>Responses</title>
@@ -103,11 +105,12 @@ echo $result->firstname .' '. $result->lastname;
             Here we are accessing the <code>firstname</code> and <code>lastname</code> properties. Even though these are not top-level
             elements, they are automatically returned when accessed by name.
         </para>
-        <para>
-            <note>
+        <note>
+            <title>Multiple items</title>
+            <para>
                 If multiple items are found when accessing a value by name, an array will be returned.
-            </note>
-        </para>
+            </para>
+        </note>
     </sect2>
 	<sect2 id="zend.rest.client.args">
 		<title>Request Arguments</title>
