@@ -9,11 +9,13 @@
                 <code>Zend_Cache_Core</code> ist ein spezielles Frontend, da es der Kern dieses Moduls ist.
                 Es ist ein generelles Cache Frontend und durch andere Klassen erweiterbar.
             </para>
-            <note><para>
-                Alle Frontends sind von <code>Zend_Cache_Core</code> abgeleitet, so dass deren Methoden und
-                Optionen (wie folgt beschrieben) auch in anderen Frontends vorhanden sind. Deswegen werden
-                sie dort nicht dokumentiert.
-            </para></note>
+            <note>
+                <para>
+                    Alle Frontends sind von <code>Zend_Cache_Core</code> abgeleitet, so dass deren Methoden und
+                    Optionen (wie folgt beschrieben) auch in anderen Frontends vorhanden sind. Deswegen werden
+                    sie dort nicht dokumentiert.
+                </para>
+            </note>
         </sect3>
         <sect3 id="zend.cache.core.options">
             <title>Mögliche Optionen</title>
@@ -532,17 +534,82 @@ $res = $cache->foobar2('1', '2');
 	                          <entry>
 	                              Ein assoziatives Array mit Default Optionen: 
 	                              <itemizedlist>
-	                                  <listitem><code>(boolean, true per Default) cache</code> : Cache ist aktiviert wenn true</listitem>
-	                                  <listitem><code>(boolean, false per Default) cacheWithGetVariables</code> : wenn true, ist der Cache weiterhin aktiviert, selbst wenn es einige Variables im <code>$_GET</code> Array gibt</listitem>
-	                                  <listitem><code>(boolean, false per Default) cacheWithPostVariables</code> : wenn true, ist der Cache weiterhin aktiviert, selbst wenn es einige Variables im <code>$_POST</code> Array gibt</listitem>
-	                                  <listitem><code>(boolean, false per Default) cacheWithSessionVariables</code> : wenn true, ist der Cache weiterhin aktiviert, selbst wenn es einige Variables im <code>$_SESSION</code> Array gibt</listitem>
-	                                  <listitem><code>(boolean, false per Default) cacheWithFilesVariables</code> : wenn true, ist der Cache weiterhin aktiviert, selbst wenn es einige Variables im <code>$_FILES</code> Array gibt</listitem>
-	                                  <listitem><code>(boolean, false per Default) cacheWithCookieVariables</code> : wenn true, ist der Cache weiterhin aktiviert, selbst wenn es einige Variables im <code>$_COOKIE</code> Array gibt</listitem>
-									  <listitem><code>(boolean, true per Default) makeIdWithGetVariables</code> : wenn true, wird die Cache ID vom Inhalt des <code>$_GET</code> Arrays abhängig sein</listitem>
-	                                  <listitem><code>(boolean, true per Default) makeIdWithPostVariables</code> : wenn true, wird die Cache ID vom Inhalt des <code>$_POST</code> Arrays abhängig sein</listitem>
-	                                  <listitem><code>(boolean, true per Default) makeIdWithSessionVariables</code> : wenn true, wird die Cache ID vom Inhalt des <code>$_SESSION</code> Arrays abhängig sein</listitem>
-	                                  <listitem><code>(boolean, true per Default) makeIdWithFilesVariables</code> : wenn true, wird die Cache ID vom Inhalt des <code>$_FILES</code> Arrays abhängig sein</listitem>
-	                                  <listitem><code>(boolean, true per Default) makeIdWithCookieVariables</code> : wenn true, wird die Cache ID vom Inhalt des <code>$_COOKIE</code> Arrays abhängig sein</listitem>	                              
+	                                  <listitem>
+        	                              <para>
+	                                          <code>(boolean, true per Default) cache</code> : 
+	                                          Cache ist aktiviert wenn true
+        	                              </para>
+	                                  </listitem>
+	                                  <listitem>
+        	                              <para>
+	                                          <code>(boolean, false per Default) cacheWithGetVariables</code> : 
+	                                          wenn true, ist der Cache weiterhin aktiviert, selbst wenn es 
+	                                          einige Variables im <code>$_GET</code> Array gibt
+        	                              </para>
+	                                  </listitem>
+	                                  <listitem>
+        	                              <para>
+	                                          <code>(boolean, false per Default) cacheWithPostVariables</code> : 
+	                                          wenn true, ist der Cache weiterhin aktiviert, selbst wenn es 
+	                                          einige Variables im <code>$_POST</code> Array gibt
+        	                              </para>
+	                                  </listitem>
+	                                  <listitem>
+        	                              <para>
+	                                          <code>(boolean, false per Default) cacheWithSessionVariables</code> :
+	                                          wenn true, ist der Cache weiterhin aktiviert, selbst wenn es
+	                                          einige Variables im <code>$_SESSION</code> Array gibt
+        	                              </para>
+	                                  </listitem>
+	                                  <listitem>
+        	                              <para>
+        	                                  <code>(boolean, false per Default) cacheWithFilesVariables</code> : 
+        	                                  wenn true, ist der Cache weiterhin aktiviert, selbst wenn es 
+        	                                  einige Variables im <code>$_FILES</code> Array gibt
+        	                              </para>
+	                                  </listitem>
+	                                  <listitem>
+        	                              <para>
+	                                          <code>(boolean, false per Default) cacheWithCookieVariables</code> : 
+	                                          wenn true, ist der Cache weiterhin aktiviert, selbst wenn es 
+	                                          einige Variables im <code>$_COOKIE</code> Array gibt
+        	                              </para>
+	                                  </listitem>
+									  <listitem>
+        	                              <para>
+						        			  <code>(boolean, true per Default) makeIdWithGetVariables</code> : 
+						        			  wenn true, wird die Cache ID vom Inhalt des <code>$_GET</code> 
+						        			  Arrays abhängig sein
+        	                              </para>
+									  </listitem>
+	                                  <listitem>
+        	                              <para>
+	                                          <code>(boolean, true per Default) makeIdWithPostVariables</code> : 
+	                                          wenn true, wird die Cache ID vom Inhalt des <code>$_POST</code> 
+	                                          Arrays abhängig sein
+        	                              </para>
+	                                  </listitem>
+	                                  <listitem>
+        	                              <para>
+	                                          <code>(boolean, true per Default) makeIdWithSessionVariables</code> : 
+	                                          wenn true, wird die Cache ID vom Inhalt des <code>$_SESSION</code> 
+	                                          Arrays abhängig sein
+        	                              </para>
+	                                  </listitem>
+	                                  <listitem>
+        	                              <para>
+        	                                  <code>(boolean, true per Default) makeIdWithFilesVariables</code> : 
+        	                                  wenn true, wird die Cache ID vom Inhalt des <code>$_FILES</code> 
+        	                                  Arrays abhängig sein
+        	                              </para>
+	                                  </listitem>
+	                                  <listitem>
+        	                              <para>
+        	                                  <code>(boolean, true per Default) makeIdWithCookieVariables</code> : 
+        	                                  wenn true, wird die Cache ID vom Inhalt des <code>$_COOKIE</code> 
+        	                                  Arrays abhängig sein
+        	                              </para>
+	                                  </listitem>	                              
 	                              </itemizedlist>              
 	                          </entry>
 	                     </row>
