@@ -501,9 +501,12 @@ $controller->run();
 ]]></programlisting>
         
         <note>
-            We recommend using the Front Controller/Action Controller
-            combination instead of the Page Controller paradigm to encourage
-            writing applications that will inter-operate.
+            <title>Use Front-/Action Controller</title>
+            <para>
+                We recommend using the Front Controller/Action Controller
+                combination instead of the Page Controller paradigm to encourage
+                writing applications that will inter-operate.
+            </para>
         </note>
     </sect2>
     
