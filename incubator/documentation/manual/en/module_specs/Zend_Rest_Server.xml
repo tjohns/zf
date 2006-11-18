@@ -49,11 +49,12 @@ $server->handle();
 			using either the name of the argument (i.e. "who") or using <code>arg</code> following by the numeric position
 			of the argument (i.e. "arg1").
 		</para>
-		<para>
-            <note>
+        <note>
+            <title>Numeric index</title>
+    	    <para>
                 Numeric arguments use a 1-based index.
-            </note>
-        </para>
+            </para>
+        </note>
 		<para>
 			To call <code>sayHello</code> from the example above, you can use either:
 		</para>
