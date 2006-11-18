@@ -4,7 +4,10 @@
         <code>Zend_Config_Ini</code> ermöglicht es Entwicklern, Konfigurations-Daten in einem vertrauten INI-Format zu speichern und sie mit einer Syntax auszulesen, die dem Zugriff auf die Eigenschaften verschachtelter Objekte entspricht. Das verwendete INI-Format bietet einerseits die Möglichkeit, Konfigurations-Daten hierarchisch abzulegen und andererseits Vererbung zwischen Sektionen zu spezifizieren. Konfigurations-Daten-Hierarchien werden durch das trennen der Schlüsselwörter durch einen Punkt (<code>.</code>). Eine Sektion kann eine andere Sektion erweitern oder beerben indem man nach dem Sektionsname einen Doppelpunkt (<code>:</code>) notiert, gefolgt vom Namen der zu beerbenden Sektion.
     </para>
     <note>
-        <code>Zend_Config_Ini</code> verwendet die PHP-Funktion <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>. Deren Dokumentation klärt über spezielle Verhaltensweisen auf, die sich auch auf <code>Zend_Config_Ini</code> auswirken, z. B. wie die besonderen Werte <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code> und <code>null</code> gehandhabt werden.
+        <title>parse_ini_file</title>
+        <para>
+            <code>Zend_Config_Ini</code> verwendet die PHP-Funktion <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>. Deren Dokumentation klärt über spezielle Verhaltensweisen auf, die sich auch auf <code>Zend_Config_Ini</code> auswirken, z. B. wie die besonderen Werte <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code> und <code>null</code> gehandhabt werden.
+        </para>
     </note>
     <example>
         <title>Zend_Config_Ini benutzen</title>

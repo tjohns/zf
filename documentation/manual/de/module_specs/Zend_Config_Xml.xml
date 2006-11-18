@@ -4,7 +4,10 @@
         <code>Zend_Config_Xml</code> ermöglicht es Entwicklern, Konfigurations-Daten in einfachen XML-Dateien zu speichern und sie mit einer Syntax auszulesen, die dem Zugriff auf die Eigenschaften verschachtelter Objekte entspricht. Der Name des Root-Elementes der XML-Datei ist unwichtig und kann beliebig gewählt werden. Die erste Ebene der XML-Struktur stellt die Konfigurationsdaten-Sektionen dar. Hirarchische Strukturen können im XLM-Format durch Verschachteln von XML-Elementen unterhalb der Sektions-Ebene umgesetzt werden. Der Inhalt eines XML-Blatt-Elementes (Leaf) ist der Wert eines Konfigurations-Eintrages. Die Sektions-Vererbung wird durch ein spezielles Attribut namens <code>extends</code> unterstützt, der Wert des Attributs entspricht dabei dem Namen der Sektion, von der Daten geerbt werden sollen.
     </para>
     <note>
-        Konfigurations-Daten, die in <code>Zend_Config_Xml</code> eingelesen wurden, werden immer als Strings zurück gegeben. Die Konvertierung der Daten von Strings in andere Datentypen ist Aufgabe der Entwickler und von deren Bedürfnissen abhängig.
+        <title>Rückgabe Typen</title>
+        <para>
+            Konfigurations-Daten, die in <code>Zend_Config_Xml</code> eingelesen wurden, werden immer als Strings zurück gegeben. Die Konvertierung der Daten von Strings in andere Datentypen ist Aufgabe der Entwickler und von deren Bedürfnissen abhängig.
+        </para>
     </note>
     <example>
         <title>Zend_Config_Xml benutzen</title>
