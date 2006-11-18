@@ -9,9 +9,12 @@
             może wykonywać żądania GET, POST, PUT oraz DELETE.
         </para>
         <note>
-            <code>Zend_Http_Client</code> domyślnie podąża za 5 przekierowaniami
-            HTTP. Aby zmienić te zachowanie, przekaż maksymalną ilość dozwolonych
-            przekierowań jako parametr do metody <code>get()</code>.
+            <title>Ilość przekierowań</title>
+            <para>
+                <code>Zend_Http_Client</code> domyślnie podąża za 5 przekierowaniami
+                HTTP. Aby zmienić te zachowanie, przekaż maksymalną ilość dozwolonych
+                przekierowań jako parametr do metody <code>get()</code>.
+            </para>
         </note>
         <example>
             <title>Wykonanie prostego żądania GET</title>

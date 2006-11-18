@@ -33,9 +33,12 @@
 $router->setRewriteBase('/projects/myapp');]]></programlisting>
 
 	<note>
-	    Ten krok nie jest konieczny w większości przypadków i jest mocno odradzany,
-	    ponieważ wprowadza kolejną zmienną konfiguracyjną, która musi być zmieniona
-	    gdy ktoś przeniesie kod do innego katalogu.
+	    <title>Bądź ostrożny</title>
+	    <para>
+	        Ten krok nie jest konieczny w większości przypadków i jest mocno odradzany,
+	        ponieważ wprowadza kolejną zmienną konfiguracyjną, która musi być zmieniona
+	        gdy ktoś przeniesie kod do innego katalogu.
+	    </para>
 	</note>
 
 </sect1>

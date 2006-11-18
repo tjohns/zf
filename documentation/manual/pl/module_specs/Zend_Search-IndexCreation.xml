@@ -166,12 +166,11 @@ $index->optimize();
             <para>
                 Default value is 10.
             </para>
+            <para>
+                Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+                can also be used to optimize index.
+            </para>
         </sect3>
-
-        <para>
-            Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-            can also be used to optimize index.
-        </para>
     </sect2>
 </sect1>
 

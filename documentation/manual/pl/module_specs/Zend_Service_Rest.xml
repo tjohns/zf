@@ -33,22 +33,25 @@ try {
         echo '<p>Wystąpił błąd (' .$e->getMessage(). ')<p>';
 }
 ?>]]>       </programlisting>
-            <note>
+        </example>
+ 	 	<note>
+ 	 	    <title>Przekazywanie</title>
+ 	 	    <para>
                 Możesz przekazać odpowiednio sformatowaną treść zapytania (bez początkowego znaku zapytania "<code>?</code>") do
                 metody <code>restGet()</code>, lub możesz przekazać tablicę asocjacyjną par nazwa-wartość. Niezależnie
                 od tego, której z nich użyjesz, nazwy i wartości muszą być zakodowane dla URL (np. za pomocą
                 <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>).
-            </note>
-            <para>
-                Użycie metod <code>restPost()</code> oraz <code>restPut()</code> 
-                jest identyczne jak użycie metody <code>restGet()</code>, ale dane są 
-                wysyłane odpowiednio za pomocą HTTP POST lub PUT, zamiast GET.
             </para>
-            <para>
-                Metoda <code>restDelete()</code> operuje także na adresie, ale nie
-                przyjmuje drugiego parametru, w którym są przekazywane dane.
-            </para>
-        </example>
+        </note>
+        <para>
+            Użycie metod <code>restPost()</code> oraz <code>restPut()</code> 
+            jest identyczne jak użycie metody <code>restGet()</code>, ale dane są 
+            wysyłane odpowiednio za pomocą HTTP POST lub PUT, zamiast GET.
+        </para>
+        <para>
+            Metoda <code>restDelete()</code> operuje także na adresie, ale nie
+            przyjmuje drugiego parametru, w którym są przekazywane dane.
+        </para>
     </sect2>
 </sect1>
 <!--

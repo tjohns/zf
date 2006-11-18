@@ -9,22 +9,34 @@
             zbiór metod do pracy z danymi odpowiedzi HTTP otrzymanymi z żądania:
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Zwraca TRUE gdy został otrzymany kod błędu HTTP; W przeciwnym razie FALSE.
+                    <para>
+                        <code>isError()</code>: Zwraca TRUE gdy został otrzymany kod błędu HTTP; W przeciwnym razie FALSE.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Zwraca TRUE gdy został otrzymany kod powodzenia HTTP; W przeciwnym razie FALSE.
+                    <para>
+                        <code>isSuccessful()</code>: Zwraca TRUE gdy został otrzymany kod powodzenia HTTP; W przeciwnym razie FALSE.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Zwraca TRUE gdy został otrzymany kod przekierowania HTTP; W przeciwnym razie FALSE.
+                    <para>
+                        <code>isRedirect()</code>: Zwraca TRUE gdy został otrzymany kod przekierowania HTTP; W przeciwnym razie FALSE.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Zwraca kod odpowiedzi HTTP.
+                    <para>
+                        <code>getStatus()</code>: Zwraca kod odpowiedzi HTTP.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Zwraca tablicę nagłówków odpowiedzi HTTP.
+                    <para>
+                        <code>getHeaders()</code>: Zwraca tablicę nagłówków odpowiedzi HTTP.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Zwraca treść odpowiedzi HTTP jako łańcuch znaków.
+                    <para>
+                        <code>getBody()</code>: Zwraca treść odpowiedzi HTTP jako łańcuch znaków.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>

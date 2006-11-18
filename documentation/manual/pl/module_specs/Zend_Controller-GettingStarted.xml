@@ -82,11 +82,14 @@ Zend_Controller_Front::run('/sciezka/do/kontrolerow');
 		</para>
 
 		<note>
-		    Obecnie szukamy sposobu nie wymagającego instalacji mod_rewrite. Chcemy zaproponować
-		    konfigurację zarówno dla systemów używających mod_rewrite jak i dla tych które tego modułu
-		    nie używają. Proszę także zwrócić uwagę na to, że ta funkcjonalność nie jest tylko przeznaczona
-		    dla serwera Apache, ale także dla każdego innego serwera posiadającego podobne możliwości
-		    w zakresie przekierowań żądań do plików.
+		    <title>Wymagania</title>
+		    <para>
+		        Obecnie szukamy sposobu nie wymagającego instalacji mod_rewrite. Chcemy zaproponować
+		        konfigurację zarówno dla systemów używających mod_rewrite jak i dla tych które tego modułu
+		        nie używają. Proszę także zwrócić uwagę na to, że ta funkcjonalność nie jest tylko przeznaczona
+		        dla serwera Apache, ale także dla każdego innego serwera posiadającego podobne możliwości
+		        w zakresie przekierowań żądań do plików.
+		    </para>
 		</note>
 	</sect2>	
 		
@@ -119,7 +122,10 @@ Zend_Controller_Front::run('/sciezka/do/kontrolerow');
 ]]></programlisting>
 		
 		<note>
-			Ta sekcja nie jest jeszcze gotowa.
+		    <title>W trakcie budowy</title>
+		    <para>
+			    Ta sekcja nie jest jeszcze gotowa.
+			</para>
 		</note>
 	</sect2>	
 		
@@ -159,7 +165,10 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
 		<note>
-			Ta sekcja nie jest jeszcze gotowa.
+		    <title>W trakcie budowy</title>
+		    <para>
+			    Ta sekcja nie jest jeszcze gotowa.
+			</para>
         </note>			
 
 	</sect2>			
