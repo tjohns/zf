@@ -505,7 +505,7 @@
             consecutive requests transparently. This allows, for example, going
             through an authentication request before sending the actual data
             fetching request.
-        </para>.
+        </para>
         <para>
             If your application requires one authentication request per user,
             and consecutive requests might be performed in more than one script
