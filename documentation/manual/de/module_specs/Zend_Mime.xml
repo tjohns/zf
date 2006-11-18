@@ -18,16 +18,22 @@
             Verarbeitung bereit:
             <itemizedlist>
                 <listitem>
-                    <code>Zend_Mime::isPrintable()</code>: Gibt TRUE zurück, wenn der String keine 
-                    nicht druckbaren Zeichen enthält, ansonsten wird FALSE zurückgegeben.
+                    <para>
+                        <code>Zend_Mime::isPrintable()</code>: Gibt TRUE zurück, wenn der String keine 
+                        nicht druckbaren Zeichen enthält, ansonsten wird FALSE zurückgegeben.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Mime::encodeBase64()</code>: Kodiert einen String in die base64 
-                    Kodierung.
+                    <para>
+                        <code>Zend_Mime::encodeBase64()</code>: Kodiert einen String in die base64 
+                        Kodierung.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Mime::encodeQuotedPrintable()</code>: Kodiert einen String mit dem 
-                    "quoted-printable" Mechanismus.
+                    <para>
+                        <code>Zend_Mime::encodeQuotedPrintable()</code>: Kodiert einen String mit dem 
+                        "quoted-printable" Mechanismus.
+                    </para>
                 </listitem>
     	    </itemizedlist>
     	</para>
@@ -36,23 +42,49 @@
     	    MIME Nachrichten verwendet werden:
     	    <itemizedlist>
     	        <listitem>
-    	            <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
-		        </listitem><listitem>
-    	            <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
-		        </listitem><listitem>
-    	            <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
-	    	    </listitem><listitem>
-    	            <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
-	        	</listitem><listitem>
-    	            <code>Zend_Mime::ENCODING_8BIT</code>: '8bit';
-	        	</listitem><listitem>
-    	            <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
-	        	</listitem><listitem>
-    	            <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
-	        	</listitem><listitem>
-    	            <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
-	        	</listitem><listitem>
-    	            <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+                    <para>
+        	            <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
+                    </para>
+		        </listitem>
+		        <listitem>
+                    <para>
+        	            <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+                    </para>
+		        </listitem>
+		        <listitem>
+                    <para>
+    	                <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
+                    </para>
+	    	    </listitem>
+	    	    <listitem>
+                    <para>
+    	                <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
+                    </para>
+	        	</listitem>
+	        	<listitem>
+                    <para>
+    	                <code>Zend_Mime::ENCODING_8BIT</code>: '8bit';
+                    </para>
+	        	</listitem>
+	        	<listitem>
+                    <para>
+        	            <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
+                    </para>
+	        	</listitem>
+	        	<listitem>
+                    <para>
+        	            <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
+                    </para>
+	        	</listitem>
+	        	<listitem>
+                    <para>
+    	                <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
+                    </para>
+	        	</listitem>
+	        	<listitem>
+                    <para>
+    	                <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+                    </para>
     	        </listitem>
     	    </itemizedlist>
     	</para>
