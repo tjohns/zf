@@ -67,8 +67,10 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
         </para>
 
         <note>
-            The bootstrap file should be the only PHP file stored in the
-            document root.
+            <title>Document root</title>
+            <para>
+                The bootstrap file should be the only PHP file stored in the document root.
+            </para>
         </note>
 
         <para>
@@ -131,8 +133,11 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 ]]></programlisting>
 
         <note>
-            This section is not yet complete.  It is under heavy construction
-            and is subject to change.
+            <title>Under construction</title>
+            <para>
+                This section is not yet complete.  It is under heavy construction
+                and is subject to change.
+            </para>
         </note>
     </sect2>
 
@@ -194,8 +199,11 @@ class IndexController extends Zend_Controller_Action
         </para>
 
         <note>
-            This section is not yet complete.  It is under heavy construction
-            and is subject to change.
+            <title>Under construction</title>
+            <para>
+                This section is not yet complete.  It is under heavy construction
+                and is subject to change.
+            </para>
         </note>
     </sect2>
 </sect1>
