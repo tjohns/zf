@@ -254,16 +254,22 @@ echo $body;
             response transfer encodings:
             <itemizedlist>
                 <listitem>
-                    <code>string Zend_Http_Response::decodeChunkedBody($body)</code>: Decode
-                    a complete "Content-Transfer-Encoding: Chunked" body
+                    <para>
+                        <code>string Zend_Http_Response::decodeChunkedBody($body)</code>: Decode
+                        a complete "Content-Transfer-Encoding: Chunked" body
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string Zend_Http_Response::decodeGzip($body)</code>: Decode
-                    a "Content-Encoding: gzip" body
+                    <para>
+                        <code>string Zend_Http_Response::decodeGzip($body)</code>: Decode
+                        a "Content-Encoding: gzip" body
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string Zend_Http_Response::decodeDeflate($body)</code>: Decode 
-                    a "Content-Encoding: deflate" body
+                    <para>
+                        <code>string Zend_Http_Response::decodeDeflate($body)</code>: Decode 
+                        a "Content-Encoding: deflate" body
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
