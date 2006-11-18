@@ -12,19 +12,29 @@
             Web Seiten durch das Amazon Web Services API zu empfangen. Beispiele beinhalten :
             <itemizedlist>
                 <listitem>
-                    Informationen speichern, wie Bilder, Beschreibungen, Preise uvm.
+                    <para>
+                        Informationen speichern, wie Bilder, Beschreibungen, Preise uvm.
+                    </para>
                 </listitem>
                 <listitem>
-                    Kunden und Editorial Reviews
+                    <para>
+                        Kunden und Editorial Reviews
+                    </para>
                 </listitem>
                 <listitem>
-                    Ähnliche Produkte und Zubehör
+                    <para>
+                        Ähnliche Produkte und Zubehör
+                    </para>
                 </listitem>
                 <listitem>
-                    Amazon.com Angebote
+                    <para>
+                        Amazon.com Angebote
+                    </para>
                 </listitem>
                 <listitem>
-                    ListMania Listen
+                    <para>
+                        ListMania Listen
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
@@ -34,8 +44,11 @@
             <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Service</ulink> Web Seite.
         </para>
         <note>
-            Ihr Amazon Entwickler API Schlüssel is verknüpft mit Ihrer Amazon Identität. Deswegen sollten sie darauf
-            achten das Ihr API Schlüssel privat bleibt.
+            <title>Achtung</title>
+            <para>
+                Ihr Amazon Entwickler API Schlüssel is verknüpft mit Ihrer Amazon Identität. Deswegen sollten sie darauf
+                achten das Ihr API Schlüssel privat bleibt.
+            </para>
         </note>
         <example>
             <title>Suchen in Amazon mit der traditionellen API</title>
@@ -83,8 +96,11 @@ require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
 ?>]]>       </programlisting>
             <note>
-                Gültige Ländercodes sind: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                <code>UK</code>, and <code>US</code>.
+                <title>Ländercodes</title>
+                <para>
+                    Gültige Ländercodes sind: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                    <code>UK</code>, and <code>US</code>.
+                </para>
             </note>
         </example>
     </sect2>
@@ -109,7 +125,10 @@ $item = $amazon->itemLookup('B0000A432X');
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevante Amazon Dokumentation</ulink>.
         </para>
         <note>
-        	Um Bildinformationen für deine Suchergebnisse zu erhalten, musst du die <code>ResponseGroup</code> Pption auf <code>Medium</code> oder <code>Large</code> setzen.
+            <title>Bildinformationen</title>
+            <para>
+            	Um Bildinformationen für deine Suchergebnisse zu erhalten, musst du die <code>ResponseGroup</code> Pption auf <code>Medium</code> oder <code>Large</code> setzen.
+        	</para>
         </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
@@ -406,6 +425,7 @@ foreach($response as $r) {
                 und erlauben es, die vielfach zurück gelieferten Resultate, einfachst zu Handhaben.
             </para>
             <note>
+                <title>SeekableIterator</title>
                 <para>
                     Implementiert den <code>SeekableIterator</code> für einfach Iteration 
                     (z.B. benutzen von <code>foreach</code>), sowie direkten Zugriff auf ein Spezielles Resultat
