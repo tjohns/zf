@@ -27,7 +27,10 @@ foreach ($results as $result) {
 ?>]]>       </programlisting>
         </example>
         <note>
-            <code>tagSearch()</code> accepts an optional second parameter as an array of options.
+            <title>Optional parameter<title>
+            <para>
+                <code>tagSearch()</code> accepts an optional second parameter as an array of options.
+            </para>
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
