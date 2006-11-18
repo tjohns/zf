@@ -85,11 +85,21 @@ $hits = $index->find('+word1 author:word2 -word3');
 ?>]]></programlisting>
 
         <itemizedlist>
-            <listitem>'+' wird für notwendige Begriffe verwendet.</listitem>
-            <listitem>'-' wird für verbotene Begriffe verwendet.</listitem>
             <listitem>
-                Der 'field:' Präfix wird für die Angabe des Dokumentenfelds für die Suche verwendet.
-                Wenn er weggelassen wird, wird 'contents' verwendet.
+                <para>
+                    '+' wird für notwendige Begriffe verwendet.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    '-' wird für verbotene Begriffe verwendet.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Der 'field:' Präfix wird für die Angabe des Dokumentenfelds für die Suche verwendet.
+                    Wenn er weggelassen wird, wird 'contents' verwendet.
+                </para>
             </listitem>
         </itemizedlist>
 
@@ -113,9 +123,21 @@ $hits = $index->find('+word1 author:word2 -word3');
         <para>
             Das <code>$signs</code> Array enthält Informationen über den Begriffstyp:
             <itemizedlist>
-                <listitem><code>true</code> wird für notwendige Begriffe verwendet.</listitem>
-                <listitem><code>false</code> wird für verbotene Begriffe verwendet.</listitem>
-                <listitem><code>null</code> wird für weder notwendige noch verbotene Begriffe verwendet.</listitem>
+                <listitem>
+                    <para>
+                        <code>true</code> wird für notwendige Begriffe verwendet.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>false</code> wird für verbotene Begriffe verwendet.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>null</code> wird für weder notwendige noch verbotene Begriffe verwendet.
+                    </para>
+                </listitem>
             </itemizedlist>
         </para>
 	</sect2>

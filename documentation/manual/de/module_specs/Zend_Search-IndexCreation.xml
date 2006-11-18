@@ -177,12 +177,11 @@ $index->optimize();
             <para>
                 Standardwert ist 10.
             </para>
+            <para>
+                Lucene Java und Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+                können auch für die Optimierung eines Index verwendet werden.
+            </para>
         </sect3>
-
-        <para>
-            Lucene Java und Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-            können auch für die Optimierung eines Index verwendet werden.
-        </para>
     </sect2>
 </sect1>
 

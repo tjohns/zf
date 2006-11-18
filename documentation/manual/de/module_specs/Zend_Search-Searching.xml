@@ -16,28 +16,34 @@
 
             <orderedlist>
                 <listitem>
-                    Wenn du deine Abfragestrings programmseitig erstellst und dann durch den Query 
-                    Parser verarbeiten lässt, solltest du ernsthaft darüber nachdenken, deine 
-                    Abfragen direct mit der Programmierschnittstelle (API) für Abfragen zu erstellen.
-                    In anderen Worten, der Query Parser wurde für von Menschen eingegebene Texte 
-                    und nicht für von Programmen erstellte Texte entwickelt.
+                    <para>
+                        Wenn du deine Abfragestrings programmseitig erstellst und dann durch den Query 
+                        Parser verarbeiten lässt, solltest du ernsthaft darüber nachdenken, deine 
+                        Abfragen direct mit der Programmierschnittstelle (API) für Abfragen zu erstellen.
+                        In anderen Worten, der Query Parser wurde für von Menschen eingegebene Texte 
+                        und nicht für von Programmen erstellte Texte entwickelt.
+                    </para>
                 </listitem>
                 <listitem>
-                    Nicht in einzelne Tokens aufgeteilte Felder werden am besten direkt zu der 
-                    Abfrage und nicht über den Query Parser hinzugefügt. Wenn die Feldwerte durch 
-                    die Anwendung programmseitig erstellt werden, dann sollte dies für 
-                    Abfrageklauseln dieses Felds ebenfalls geschehen. Ein Analysator, welche der 
-                    Query Parser verwendet, wurde entwickelt, um von Menschen eingegebenen Text in
-                    Begriffe zu konvertieren. Durch Programme erstellte Werte wie Datumsangaben,
-                    Schlüsselwörter, usw. sollten durchweg durch Programme erstellt werden.
+                    <para>
+                        Nicht in einzelne Tokens aufgeteilte Felder werden am besten direkt zu der 
+                        Abfrage und nicht über den Query Parser hinzugefügt. Wenn die Feldwerte durch 
+                        die Anwendung programmseitig erstellt werden, dann sollte dies für 
+                        Abfrageklauseln dieses Felds ebenfalls geschehen. Ein Analysator, welche der 
+                        Query Parser verwendet, wurde entwickelt, um von Menschen eingegebenen Text in
+                        Begriffe zu konvertieren. Durch Programme erstellte Werte wie Datumsangaben,
+                        Schlüsselwörter, usw. sollten durchweg durch Programme erstellt werden.
+                    </para>
                 </listitem>
                 <listitem>
-                    In einem Abfrageformular sollten generelle Textfelder den Query Parser 
-                    verwenden. Alle anderen, wie z.B. Datumsbereiche, Schlüsselwörter, usw. werden
-                    besser direkt durch die Programmierschnittstelle (API) der Abfrage hinzugefügt. Ein
-                    Feld mit einem begrenzten Wertebereich, das durch ein Pulldown-Menü spezifiziert
-                    wird, sollte nicht einem Abfragestring hinzugefügt werden, der anschließend 
-                    wieder geparst wird, sondern eher als eine TermQuery Klausel hinzugefügt werden.
+                    <para>
+                        In einem Abfrageformular sollten generelle Textfelder den Query Parser 
+                        verwenden. Alle anderen, wie z.B. Datumsbereiche, Schlüsselwörter, usw. werden
+                        besser direkt durch die Programmierschnittstelle (API) der Abfrage hinzugefügt. Ein
+                        Feld mit einem begrenzten Wertebereich, das durch ein Pulldown-Menü spezifiziert
+                        wird, sollte nicht einem Abfragestring hinzugefügt werden, der anschließend 
+                        wieder geparst wird, sondern eher als eine TermQuery Klausel hinzugefügt werden.
+                    </para>
                 </listitem>
             </orderedlist>
 

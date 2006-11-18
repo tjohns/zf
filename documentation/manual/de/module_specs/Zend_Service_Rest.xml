@@ -33,21 +33,24 @@ try {
         echo '<p>Ein Fehler trat auf (' .$e->getMessage(). ')<p>';
 }
 ?>]]>       </programlisting>
-            <note>
+        </example>
+        <note>
+            <title>Übergabe</title>
+            <para>
                 Man kann einen gültig formatierten Abfrage String (ohne das führende Fragezeichen "<code>?</code>")
                 an <code>restGet()</code> übergeben, oder ein assiziatives Array mit Name-Wert Paaren. Egal welche 
                 Methode ausgewählt wird, die Namen und Werte müssen URL-verschlüsselt sein (z.B. mit
                 <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>)
-            </note>
-            <para>
-                <code>restPost()</code> und <code>restPut()</code> werden wie <code>restGet()</code> benutzt,
-                nur das die Daten über HTTP POST oder PUT gesendet werden, statt mit GET.
             </para>
-            <para>
-                Die <code>restDelete()</code> Methode arbeitet über den Pfad, aber Sie hat keinen zweiten Parameter
-                in dem Daten übergeben werden können
-            </para>
-        </example>
+        </note>
+        <para>
+            <code>restPost()</code> und <code>restPut()</code> werden wie <code>restGet()</code> benutzt,
+            nur das die Daten über HTTP POST oder PUT gesendet werden, statt mit GET.
+        </para>
+        <para>
+            Die <code>restDelete()</code> Methode arbeitet über den Pfad, aber Sie hat keinen zweiten Parameter
+            in dem Daten übergeben werden können
+        </para>
     </sect2>
 </sect1>
 <!--

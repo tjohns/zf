@@ -519,6 +519,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
                 <para>
                 <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
                 <blockquote>
+                    <para>
 The nonzero winding number rule determines whether a given point is inside a
 path by conceptually drawing a ray from that point to infinity in any direction
 and then examining the places where a segment of the path crosses the ray. Starting
@@ -542,6 +543,7 @@ of two concentric circles, the areas enclosed by both circles are considered
 to be inside, provided that both are drawn in the same direction. If the circles are
 drawn in opposite directions, only the "doughnut" shape between them is inside,
 according to the rule; the "doughnut hole" is outside.
+                </para>
             </blockquote>
             </para>
             </listitem>
@@ -550,6 +552,7 @@ according to the rule; the "doughnut hole" is outside.
                 <para>
                 <citetitle>Die PDF Referenz</citetitle> beschreibt diese Regel wie folgt:
                 <blockquote>
+                    <para>
 An alternative to the nonzero winding number rule is the even-odd rule. This rule
 determines the "insideness" of a point by drawing a ray from that point in any
 direction and simply counting the number of path segments that cross the ray,
@@ -563,6 +566,7 @@ to complex paths. For the five-pointed star, the rule considers the triangular
 points to be inside the path, but not the pentagon in the center. For the two
 concentric circles, only the "doughnut" shape between the two circles is considered inside,
 regardless of the directions in which the circles are drawn.
+                    </para>
                 </blockquote>
             </para>
             </listitem>
