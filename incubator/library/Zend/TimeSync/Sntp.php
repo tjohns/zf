@@ -26,11 +26,6 @@
 require_once 'Zend/TimeSync/Protocol.php';
 
 /**
- * Zend_TimeSync_Exception
- */
-require_once 'Zend/TimeSync/Exception.php';
-
-/**
  * @category   Zend
  * @package    Zend_TimeSync
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -47,7 +42,7 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         $this->_port       = $port;
     }
         
-    protected function _query()
+    public function query()
     {
         if (!$this->_connect()) {
             return false;
@@ -63,7 +58,7 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
             return false;
         } else {
             $time  = abs(hexdec('7fffffff') - bin2hex($result) - hexdec('7fffffff'));
-            $time -= 2208988800 - $delay;
+            $time -= 2208988800; // todo minus socket delay
             
             return $time;
         }

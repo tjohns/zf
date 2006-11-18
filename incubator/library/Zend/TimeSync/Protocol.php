@@ -21,11 +21,6 @@
  */
 
 /**
- * Zend_TimeSync_Exception
- */
-require_once 'Zend/TimeSync/Exception.php';
-
-/**
  * @category   Zend
  * @package    Zend_TimeSync
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)

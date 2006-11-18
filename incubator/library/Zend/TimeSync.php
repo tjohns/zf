@@ -83,26 +83,27 @@ class Zend_TimeSync
                 $this->_addServer($timeServer);
             }
         } else {
-            $url = array();
-            $url = @parse_url($server);
-            
-            if (!isset($url['scheme']) || !in_array(strtolower($url['scheme']), $this->_allowedSchemes)) {
-                if (!isset($url['host']) && isset($url['path'])) {
-                    $url['host'] = $url['path'];
-                }
+            $defaultUrl = array('scheme' => self::DEFAULT_TIMESERVER_SCHEME,
+                                'port'   => self::DEFAULT_NTP_PORT);
+                                
+            $url = @array_merge($defaultUrl, @parse_url($server));
+            if (!in_array(strtolower($url['scheme']), $this->_allowedSchemes)) {
                 $url['scheme'] = self::DEFAULT_TIMESERVER_SCHEME;
             }
             
-            if (!isset($url['port'])) {
-                $url['port'] = (strcasecmp($url['scheme'], 'ntp') == 0) ? self::DEFAULT_NTP_PORT : self::DEFAULT_SNTP_PORT;
+            if (!isset($url['host']) && isset($url['path'])) {
+                $url['host'] = $url['path'];
             }
             
+            $protocol  = (strcasecmp($url['scheme'], 'ntp') == 0) ? 'udp' : 'tcp';
             $className = 'Zend_TimeSync_' . ucfirst($url['scheme']);
-            require_once str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
             
-            $protocol = (strcasecmp($url['scheme'], 'ntp') == 0) ? 'udp' : 'tcp';
+            require_once 'Zend/TimeSync/' . ucfirst($url['scheme']) . '.php';
             
             $this->timeservers[] = new $className($protocol . '://' . $url['host'], $url['port']);
         }
     }
+    
+    public function getDate($locale = false)
+    {}
 }

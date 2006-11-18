@@ -26,11 +26,6 @@
 require_once 'Zend/TimeSync/Protocol.php';
 
 /**
- * Zend_TimeSync_Exception
- */
-require_once 'Zend/TimeSync/Exception.php';
-
-/**
  * @category   Zend
  * @package    Zend_TimeSync
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -47,7 +42,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $this->_port       = $port;
     }
     
-    public function _query()
+    public function query()
     {
         $frac   = microtime();
         $fracb1 = ($frac & 0xff000000) >> 24;
