@@ -60,16 +60,36 @@ $profiler = $db->getProfiler();
         </para>
 
         <itemizedlist>
-            <listitem><code>getTotalNumQueries()</code> gibt die Gesamtzeit aller aufgezeichneten 
-                Abfragen zurück.</listitem>
-            <listitem><code>getTotalElapsedSecs()</code> gibt die gesamte Anzahl an Sekunden 
-                für alle aufgezeichneten Abfragen zurück.</listitem>
-            <listitem><code>getQueryProfiles()</code> gibt ein Array mit allen aufgezeichneten
-                Abfragen zurück.</listitem>
-            <listitem><code>getLastQueryProfile()</code> gibt das Profil der letzten (neuesten) 
-                Abfrage zurück, gleichgültig ob die Abfrage beendet werden konnte oder nicht (wenn
-                nicht, wird die Endzeit null sein)</listitem>
-            <listitem><code>clear()</code> löscht jedes vorherige Abfrageprofile vom Stapel.</listitem>
+            <listitem>
+                <para>
+                    <code>getTotalNumQueries()</code> gibt die Gesamtzeit aller aufgezeichneten 
+                    Abfragen zurück.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getTotalElapsedSecs()</code> gibt die gesamte Anzahl an Sekunden 
+                    für alle aufgezeichneten Abfragen zurück.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getQueryProfiles()</code> gibt ein Array mit allen aufgezeichneten
+                    Abfragen zurück.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getLastQueryProfile()</code> gibt das Profil der letzten (neuesten) 
+                    Abfrage zurück, gleichgültig ob die Abfrage beendet werden konnte oder nicht (wenn
+                    nicht, wird die Endzeit null sein)
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>clear()</code> löscht jedes vorherige Abfrageprofile vom Stapel.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -79,9 +99,17 @@ $profiler = $db->getProfiler();
         </para>
 
         <itemizedlist>
-            <listitem><code>getQuery()</code> gibt den SQL Text der Abfrage zurück.</listitem>
-            <listitem><code>getElapsedSecs()</code> gibt die Anzahl der Sekunden zurück, wie lange
-                die Abfrage gelaufen ist.</listitem>
+            <listitem>
+                <para>
+                    <code>getQuery()</code> gibt den SQL Text der Abfrage zurück.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getElapsedSecs()</code> gibt die Anzahl der Sekunden zurück, wie lange
+                    die Abfrage gelaufen ist.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -164,20 +192,48 @@ $profiler->setFilterElapsedSecs(null);
             </para>
 
             <itemizedlist>
-                <listitem><code>Zend_Db_Profiler::CONNECT</code>: Verbindungsoperationen oder 
-                    Auswahl einer Datenbank .</listitem>
-                <listitem><code>Zend_Db_Profiler::QUERY</code>: allgemeine Datenbankabfragen, die
-                    keinem der anderen Typen entsprechen.</listitem>
-                <listitem><code>Zend_Db_Profiler::INSERT</code>: jede Abfrage, die neue Daten zur
-                    Datenbank hinzufügt, normalerweise ein SQL INSERT.</listitem>
-                <listitem><code>Zend_Db_Profiler::UPDATE</code>: jede Abfrage, die vorhandene Daten
-                    aktualisiert, normalerweise ein SQL UPDATE.</listitem>
-                <listitem><code>Zend_Db_Profiler::DELETE</code>: jede Abfrage, die vorhandene Daten
-                    löscht, normalerweise ein SQL DELETE.</listitem>
-                <listitem><code>Zend_Db_Profiler::SELECT</code>: jede Abfrage, die vorhandene Daten
-                    selektiert, normalerweise ein SQL SELECT.</listitem>
-                <listitem><code>Zend_Db_Profiler::TRANSACTION</code>: jede Transaktionsoperation,
-                    wie zum Beispiel START TRANSACTION, COMMIT oder ROLLBACK.</listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::CONNECT</code>: Verbindungsoperationen oder 
+                        Auswahl einer Datenbank .
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::QUERY</code>: allgemeine Datenbankabfragen, die
+                        keinem der anderen Typen entsprechen.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::INSERT</code>: jede Abfrage, die neue Daten zur
+                        Datenbank hinzufügt, normalerweise ein SQL INSERT.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::UPDATE</code>: jede Abfrage, die vorhandene Daten
+                        aktualisiert, normalerweise ein SQL UPDATE.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::DELETE</code>: jede Abfrage, die vorhandene Daten
+                        löscht, normalerweise ein SQL DELETE.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::SELECT</code>: jede Abfrage, die vorhandene Daten
+                        selektiert, normalerweise ein SQL SELECT.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::TRANSACTION</code>: jede Transaktionsoperation,
+                        wie zum Beispiel START TRANSACTION, COMMIT oder ROLLBACK.
+                    </para>
+                </listitem>
             </itemizedlist>
 
             <para>
