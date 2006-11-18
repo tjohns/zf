@@ -356,6 +356,7 @@ $service->serviceProcedure($param);
                     </para>
                 </listitem>
                 <listitem>
+                    <para>
                         <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Gib ein 
                         <code>Zend_XmlRpc_Value</code> Objekt zurück, dass den erhaltenen XML-RPC
                         Typ abbildet.
