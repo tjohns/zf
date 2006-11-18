@@ -115,19 +115,25 @@ $service->serviceProcedure($p1, $p2);
                 The main reasons for explictly specifing the XML-RPC types are:
                 <itemizedlist>
                     <listitem>
-                        When you want to make sure the correct parameter type is passed to the
-                        procedure (i.e. the procedure requires an integer and you may receive the
-                        parameter from the $_GET array as a string)
+                        <para>
+                            When you want to make sure the correct parameter type is passed to the
+                            procedure (i.e. the procedure requires an integer and you may receive the
+                            parameter from the $_GET array as a string)
+                        </para>
                     </listitem>
                     <listitem>
-                        When the procedure requires base64 or dateTime.iso8601 type (which doesn't
-                        exists as a PHP native type)
+                        <para>
+                            When the procedure requires base64 or dateTime.iso8601 type (which doesn't
+                            exists as a PHP native type)
+                        </para>
                     </listitem>
                     <listitem>
-                        When auto-convertion may fail (i.e. you want to pass an empty XML-RPC struct
-                        as a parameter. Empty structs are represented as empty arrays in PHP but,
-                        if you give an empty array as a parameter it will be auto-converted to an XML-RPC
-                        array since it's not an associative array)
+                        <para>
+                            When auto-convertion may fail (i.e. you want to pass an empty XML-RPC struct
+                            as a parameter. Empty structs are represented as empty arrays in PHP but,
+                            if you give an empty array as a parameter it will be auto-converted to an XML-RPC
+                            array since it's not an associative array)
+                        </para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -326,16 +332,22 @@ $service->serviceProcedure($param);
             The response options are:
             <itemizedlist>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - Return the procedure return value
-                    as a PHP native type (convert the XML-RPC type into a PHP type).
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - Return the procedure return value
+                        as a PHP native type (convert the XML-RPC type into a PHP type).
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - Return the XML string representation
-                    of the XML-RPC response.
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - Return the XML string representation
+                        of the XML-RPC response.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Return a
-                    <code>Zend_XmlRpc_Value</code> object which represents the returned XML-RPC type.
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Return a
+                        <code>Zend_XmlRpc_Value</code> object which represents the returned XML-RPC type.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
