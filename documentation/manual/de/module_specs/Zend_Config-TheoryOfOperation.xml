@@ -9,7 +9,9 @@
     <para>
         Standardmäßig gewährt <code>Zend_Config</code> nur Lesezugriff auf die Daten und der Versuch einer Wertzuweisung (wie z. B. <code><![CDATA[$config->database->host = 'example.com']]></code>) löst einen Fehler aus. Dieses Standard-Verhalten kann mit Hilfe des Konstruktors aber so überschrieben werden, dass die Veränderung von Daten erlaubt ist.
         <note>
-            Es muss angemerkt werden, dass hierbei nur die Daten im Speicher verändert werden. Es wird keine Änderung an den Konfigurations-Daten auf dem Speichermedium vorgenommen. Werkzeuge zur Veränderung gespeicherter Konfigurations-Daten liegen nicht im Bereich von <code>Zend_Config</code>. Drittanbieter bieten bereits diverse Open-Source-Lösungen für das Erstellen und Verändern von Konfigurations-Datensätzen in verschienen Formaten.
+            <para>
+                Es muss angemerkt werden, dass hierbei nur die Daten im Speicher verändert werden. Es wird keine Änderung an den Konfigurations-Daten auf dem Speichermedium vorgenommen. Werkzeuge zur Veränderung gespeicherter Konfigurations-Daten liegen nicht im Bereich von <code>Zend_Config</code>. Drittanbieter bieten bereits diverse Open-Source-Lösungen für das Erstellen und Verändern von Konfigurations-Datensätzen in verschienen Formaten.
+            </para>
         </note>
     </para>
     <para>
