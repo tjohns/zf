@@ -28,10 +28,12 @@
             Probably the most important feature is the conversion into different units of measurement.
             The conversion of a unit can be done any number of times using the method <code>convertTo()</code>.
         </para>
-        <para>
-            <note>
+        <note>
+            <para>
                 Units of measurement can only be converted to other units of the same type.
-            </note>
+            </para>
+        </note>
+        <para>
             Therefore, it is not possible to convert (e.g.) a length into a weight.
         </para>
         <example>
@@ -75,18 +77,18 @@ $sum = $unit->add($unit2);
 echo $sum;
 ?>]]></programlisting>
             </example>
-            <note>
-                Each addition will create a new object for the result.
-            </note>
-            <note>
-                The new object will be of the same type as the originating object.
-            </note>
-            <note>
-                Adding one object to another will automatically convert it to the
-                correct unit. It is not neccessary to call <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link>
-                before adding different units.
-            </note>
         </para>
+        <note>
+            Each addition will create a new object for the result.
+        </note>
+        <note>
+            The new object will be of the same type as the originating object.
+        </note>
+        <note>
+            Adding one object to another will automatically convert it to the
+            correct unit. It is not neccessary to call <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link>
+            before adding different units.
+        </note>
         <para>
             <example>
                 <title>Subtract</title>
@@ -154,11 +156,11 @@ if ($unit->equals($unit2)) {
 }
 ?>]]></programlisting>
             </example>
-            <note>
-                <code>equals()</code> will return <code>TRUE</code> only if both the value
-                and the unit of measure are identical.
-            </note>
         </para>
+        <note>
+            <code>equals()</code> will return <code>TRUE</code> only if both the value
+            and the unit of measure are identical.
+        </note>
     </sect2>
     <sect2 id="zend.measure.edit.compare">
         <title>Calculate differences</title>

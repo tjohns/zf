@@ -34,11 +34,11 @@ $unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,$locale);
 echo $unit;
 ?>]]></programlisting>
             </example>
-            <note>
-                Output can be achieved simply by using <ulink url="http://php.net/echo"><code>echo</code></ulink> or
-                <ulink url="http://php.net/print"><code>print</code></ulink>.
-            </note>
         </para>
+        <note>
+            Output can be achieved simply by using <ulink url="http://php.net/echo"><code>echo</code></ulink> or
+            <ulink url="http://php.net/print"><code>print</code></ulink>.
+        </note>
     </sect2>
     <sect2 id="zend.measure.output.value">
         <title>Outputting values</title>
@@ -91,11 +91,11 @@ echo $unit->getType();
         <para>
             For example, the measurement "1234567.8" would become "1.234.567,8" for Germany.
         </para>
-        <para>
-            <note>
+        <note>
+            <para>
                 This functionality will be supported in a future release.
-            </note>
-        </para>
+            </para>
+        </note>
     </sect2>
 </sect1>
 <!--
