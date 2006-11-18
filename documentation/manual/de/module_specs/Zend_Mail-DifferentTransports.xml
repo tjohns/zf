@@ -22,8 +22,11 @@ $mail->send();  // wieder Standardmethode verwenden
 ?>]]>   </programlisting>
     </example>
     <note>
-        Weitere Versandwege können geschrieben werden, indem  <code>Zend_Mail_Transport_Interface</code> 
-        implementiert wird.
+        <title>Zusätzliche Versandwege</title>
+        <para>
+            Weitere Versandwege können geschrieben werden, indem  <code>Zend_Mail_Transport_Interface</code> 
+            implementiert wird.
+        </para>
     </note>
 </sect1>
 <!--

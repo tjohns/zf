@@ -25,9 +25,12 @@
     </para>
 
     <note>
-        Viele RSS Feeds bieten verschiedene Eigenschaften für Kanäle und Einträge. Die RSS
-        Spezifikation bietet viele optionale Eigenschaften, also sei dir dessen beim Schreiben von 
-        Code für die Verarbeitung von RSS Daten bewußt.
+        <title>Achtung</title>
+        <para>
+            Viele RSS Feeds bieten verschiedene Eigenschaften für Kanäle und Einträge. Die RSS
+            Spezifikation bietet viele optionale Eigenschaften, also sei dir dessen beim Schreiben von 
+            Code für die Verarbeitung von RSS Daten bewußt.
+        </para>
     </note>
 
     <example>

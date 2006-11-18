@@ -15,8 +15,11 @@
         </itemizedlist>
     </para>
     <note>
-        <code>addTo()</code> und <code>addCc()</code> akzeptieren einen zweiten, optionalen 
-        Parameter, der für einen visuell lesbaren Namen des Empfängers in der Kopfzeile verwendet wird.
+        <title>Zusätzliche Parameter</title>
+        <para>
+            <code>addTo()</code> und <code>addCc()</code> akzeptieren einen zweiten, optionalen 
+            Parameter, der für einen visuell lesbaren Namen des Empfängers in der Kopfzeile verwendet wird.
+        </para>
     </note>
 </sect1>
 <!--

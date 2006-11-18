@@ -9,9 +9,12 @@
             ausführen.
         </para>
         <note>
-            <code>Zend_Http_Client</code> verfolgt standardmäßig bis zu 5 HTTP Weiterleitungen. Um dieses
-            Verhalten zu ändern, übergebe die maximale Anzahl der erlaubten Weiterleitungen an die 
-            <code>get()</code> Methode.
+            <title>Anzahl an Weiterleitungen</title>
+            <para>
+                <code>Zend_Http_Client</code> verfolgt standardmäßig bis zu 5 HTTP Weiterleitungen. Um dieses
+                Verhalten zu ändern, übergebe die maximale Anzahl der erlaubten Weiterleitungen an die 
+                <code>get()</code> Methode.
+            </para>
         </note>
         <para>
             <example>

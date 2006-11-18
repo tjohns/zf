@@ -42,51 +42,45 @@ public $charset;
     $encoding definiert wurde. Gültige Werte sind ZMime::ENCODING_* Zeichensatz Konvertierungen 
     werden nicht durchgeführt.</para>
 
-    <para><code>-&gt;getHeaders()</code> gibt den Mime-Headers für den
-    MimePart zurück, erzeugt anhand der Informationen der öffentlich
-    zugänglichen Attribute. Die Attribute des Objektes müssen korrekt gesetzt sein,
-    bevor diese Methode aufgerufen wird.<itemizedlist>
-        <listitem>
-           
-
-          <code>$charset</code>
-
-           muß auf den aktuellen Charset des Inhaltes gesetzt werden, wenn dieser ein Texttyp ist (Text oder HTML).
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$id</code>
-
-           kann gesetzt werden für die Erkennung einer Content-ID für Inline Grafiken in einer HTML Nachricht. 
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$filename</code>
-
-           enthält den Namen welche die Datei bekommt wenn sie heruntergeladen wird. 
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$disposition</code>
-
-           definiert ob die Datei als Anhang behandelt werden soll, oder ob sie in einer (HTML-) Nachricht 
-           verwendet wird (Inline).
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$description</code>
-
-           wird nur zur Zweck der Information verwendet. 
-        </listitem>
-      </itemizedlist></para>
+    <para>
+        <code>-&gt;getHeaders()</code> gibt den Mime-Headers für den
+        MimePart zurück, erzeugt anhand der Informationen der öffentlich
+        zugänglichen Attribute. Die Attribute des Objektes müssen korrekt gesetzt sein,
+        bevor diese Methode aufgerufen wird.
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>$charset</code>
+                    muß auf den aktuellen Charset des Inhaltes gesetzt werden, wenn dieser ein Texttyp ist (Text oder HTML).
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$id</code>
+                    kann gesetzt werden für die Erkennung einer Content-ID für Inline Grafiken in einer HTML Nachricht. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$filename</code>
+                    enthält den Namen welche die Datei bekommt wenn sie heruntergeladen wird. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$disposition</code>
+                    definiert ob die Datei als Anhang behandelt werden soll, oder ob sie in einer (HTML-) Nachricht 
+                    verwendet wird (Inline).
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$description</code>
+                    wird nur zur Zweck der Information verwendet. 
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
   </sect2>
 </sect1>
 <!--

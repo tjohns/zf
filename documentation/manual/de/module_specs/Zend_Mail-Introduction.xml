@@ -26,9 +26,12 @@ $mail->send();
 ?>]]>       </programlisting>
     </example>
     <note>
-        Um eine E-Mail mit <code>Zend_Mail</code> zu versenden, musst du mindestens einen Empfänger,
-        einen Versender (z.B., mit <code>setFrom()</code>) und einen Nachrichtentext (Text und/oder 
-        HTML) angeben. 
+        <title>Minimale Definitionen</title>
+        <para>
+            Um eine E-Mail mit <code>Zend_Mail</code> zu versenden, musst du mindestens einen Empfänger,
+            einen Versender (z.B., mit <code>setFrom()</code>) und einen Nachrichtentext (Text und/oder 
+            HTML) angeben. 
+        </para>
     </note>
     <para>
         Für die meisten Mailattribute gibt es "Get" Methoden, um die im Mailobjekt abgelegten 

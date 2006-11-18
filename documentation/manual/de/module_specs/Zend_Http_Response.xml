@@ -10,26 +10,38 @@
             gegeben werden.
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Gibt TRUE zurück, wenn ein HTTP Fehlercode empfangen 
-                    wurde; andernfalls wird FALSE zurückgegeben.
+                    <para>
+                        <code>isError()</code>: Gibt TRUE zurück, wenn ein HTTP Fehlercode empfangen 
+                        wurde; andernfalls wird FALSE zurückgegeben.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Gibt TRUE zurück, when ein HTTP Erfolgscode 
-                    empfangen wurde; andernfalls wird FALSE zurückgegeben.
+                    <para>
+                        <code>isSuccessful()</code>: Gibt TRUE zurück, when ein HTTP Erfolgscode 
+                        empfangen wurde; andernfalls wird FALSE zurückgegeben.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Gibt TRUE zurück, wenn ein HTTP Weiterleitungscode
-                    empfangen wurde; andernfalls wird FALSE zurückgegeben.
+                    <para>
+                        <code>isRedirect()</code>: Gibt TRUE zurück, wenn ein HTTP Weiterleitungscode
+                        empfangen wurde; andernfalls wird FALSE zurückgegeben.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Gibt den HTTP Statuscode zurück.
+                    <para>
+                        <code>getStatus()</code>: Gibt den HTTP Statuscode zurück.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Gibt ein Array mit Strings von HTTP Response Header 
-                    zurück.
+                    <para>
+                        <code>getHeaders()</code>: Gibt ein Array mit Strings von HTTP Response Header 
+                        zurück.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Gibt den HTTP Response Rumpf als String zurück.
+                    <para>
+                        <code>getBody()</code>: Gibt den HTTP Response Rumpf als String zurück.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>

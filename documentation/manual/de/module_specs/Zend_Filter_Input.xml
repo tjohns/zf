@@ -49,6 +49,7 @@
             eine einfach Regel - wenn die Daten gültig sind, werden sie zurückgegeben, andernfalls wird
             <literal>FALSE</literal> zurückgegeben. Extreme Einfachheit.
         </para>
+    </sect2>
         <sect2 id="zend.filter.input.introduction.whitelist">
             <title>Whitelist Filtern</title>
             <para>
@@ -141,7 +142,6 @@
     ?>]]>
             </programlisting>
         </sect2>
-    </sect2>
     <sect2 id="zend.filter.input.theoryofoperation">
         <title>Theoretischer Ablauf</title>
         <para>

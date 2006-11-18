@@ -9,7 +9,10 @@
         angegeben werden. 
     </para>
     <note>
-        Zeichensätze sind nur auf Mailbestandteile im Textformat anwendbar.
+        <title>Nur im Textformat</title>
+        <para>
+            Zeichensätze sind nur auf Mailbestandteile im Textformat anwendbar.
+        </para>
     </note>
 </sect1>
 <!--

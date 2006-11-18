@@ -103,13 +103,19 @@
     	    Ein <code>Zend_Mime</code> Objekt hat die folgenden Methoden:
     	    <itemizedlist>
                 <listitem>
-                    <code>boundary()</code>: Gibt den String mit der MIME Abgrenzung zurück.
+                    <para>
+                        <code>boundary()</code>: Gibt den String mit der MIME Abgrenzung zurück.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>boundaryLine()</code>: Gibt die komplette Zeile der MIME Abgrenzung zurück.
+                    <para>
+                        <code>boundaryLine()</code>: Gibt die komplette Zeile der MIME Abgrenzung zurück.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>mimeEnd()</code>: Gibt die komplette Endzeile der MIME Abgrenzung zurück.
+                    <para>
+                        <code>mimeEnd()</code>: Gibt die komplette Endzeile der MIME Abgrenzung zurück.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
