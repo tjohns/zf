@@ -27,7 +27,7 @@ foreach ($results as $result) {
 ?>]]>       </programlisting>
         </example>
         <note>
-            <title>Optional parameter<title>
+            <title>Optional parameter</title>
             <para>
                 <code>tagSearch()</code> accepts an optional second parameter as an array of options.
             </para>
