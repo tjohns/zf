@@ -40,26 +40,34 @@ $response = Zend_Http_Response::factory($str);
                 public function __construct($code, $headers, $body = null, $version = '1.1', $message = null)
             </code>
         </para>
-        <para>
-            <itemizedlist>
-                <listitem>
+        <itemizedlist>
+            <listitem>
+                <para>
                     <code>$code</code>: The HTTP response code (eg. 200, 404, etc.)
-                </listitem>
-                <listitem>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     <code>$headers</code>: An associative array of HTTP response headers (eg. 'Host' => 'example.com')
-                </listitem>
-                <listitem>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     <code>$body</code>: The response body as a string
-                </listitem>
-                <listitem>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     <code>$version</code>: The HTTP response version (usually 1.0 or 1.1)
-                </listitem>
-                <listitem>
+                </para>
+            </listitem>
+            <listitem>
+                <para>
                     <code>$message</code>: The HTTP response message (eg 'OK', 'Internal Server Error'). 
                     If not specified, the message will be set according to the response code
-                </listitem>      
-            </itemizedlist>
-        </para>
+                </para>
+            </listitem>      
+        </itemizedlist>
     </sect2>
     <sect2 id="zend.http.response.testers">
         <title>Boolean Tester Methods</title>
@@ -69,16 +77,22 @@ $response = Zend_Http_Response::factory($str);
             return Boolean true or false:
             <itemizedlist>
                 <listitem>
-                    <code>Boolean isSuccessful()</code>: Whether the request was successful or not. Returns
-                    TRUE for HTTP 1xx and 2xx response codes
+                    <para>
+                        <code>Boolean isSuccessful()</code>: Whether the request was successful or not. Returns
+                        TRUE for HTTP 1xx and 2xx response codes
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Boolean isError()</code>: Whether the response code implies an error or not. Returns
-                    TRUE for HTTP 4xx (client errors) and 5xx (server errors) response codes
+                    <para>
+                        <code>Boolean isError()</code>: Whether the response code implies an error or not. Returns
+                        TRUE for HTTP 4xx (client errors) and 5xx (server errors) response codes
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Boolean isRedirect()</code>: Whether the response is a redirection response or not. Returns
-                    TRUE for HTTP 3xx response codes
+                    <para>
+                        <code>Boolean isRedirect()</code>: Whether the response is a redirection response or not. Returns
+                        TRUE for HTTP 3xx response codes
+                    </para>
                 </listitem>
             </itemizedlist>
             <example>
@@ -100,36 +114,52 @@ if ($response->isError()) {
             various response parameters. 
             <itemizedlist>
                 <listitem>
-                    <code>int getStatus()</code>: Get the HTTP response status code (eg. 200, 504, etc.)
+                    <para>
+                        <code>int getStatus()</code>: Get the HTTP response status code (eg. 200, 504, etc.)
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string getMessage()</code>: Get the HTTP response status message (eg. "Not Found",
-                    "Authorization Required")
+                    <para>
+                        <code>string getMessage()</code>: Get the HTTP response status message (eg. "Not Found",
+                        "Authorization Required")
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string getBody()</code>: Get the fully decoded HTTP response body
+                    <para>
+                        <code>string getBody()</code>: Get the fully decoded HTTP response body
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string getRawBody()</code>: Get the raw, possibly encoded HTTP response body. If
-                    the body was decoded using GZIP encoding for example, it will not be decoded.
+                    <para>
+                        <code>string getRawBody()</code>: Get the raw, possibly encoded HTTP response body. If
+                        the body was decoded using GZIP encoding for example, it will not be decoded.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>array getHeaders()</code>: Get the HTTP response headers as an associative array
-                    (eg. 'Content-type' => 'text/html')
+                    <para>
+                        <code>array getHeaders()</code>: Get the HTTP response headers as an associative array
+                        (eg. 'Content-type' => 'text/html')
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string|array getHeader($header)</code>: Get a specific HTTP response header, specified 
-                    by $header
+                    <para>
+                        <code>string|array getHeader($header)</code>: Get a specific HTTP response header, specified 
+                        by $header
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string getHeadersAsString($status_line = true, $br = "\n")</code>: Get the entire
-                    set of headers as a string. If $status_line is true (default), the first status
-                    line (eg. "HTTP/1.1 200 OK") will also be returned. Lines are broken with the
-                    $br parameter (Can be, for example, "&lt;br /&gt;")
+                    <para>
+                        <code>string getHeadersAsString($status_line = true, $br = "\n")</code>: Get the entire
+                        set of headers as a string. If $status_line is true (default), the first status
+                        line (eg. "HTTP/1.1 200 OK") will also be returned. Lines are broken with the
+                        $br parameter (Can be, for example, "&lt;br /&gt;")
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string asString($br = "\n")</code>: Get the entire response message as a string.
-                    Lines are broken with the $br parameter (Can be, for example, "&lt;br /&gt;")
+                    <para>
+                        <code>string asString($br = "\n")</code>: Get the entire response message as a string.
+                        Lines are broken with the $br parameter (Can be, for example, "&lt;br /&gt;")
+                    </para>
                 </listitem>
             </itemizedlist>
             <example>
@@ -145,10 +175,13 @@ if ($response->getStatus() == 200) {
 ?>]]></programlisting>
             </example>
             <note>
-                Since a response can contain several instances of the same header,
-                the getHeader() method and getHeaders() method may return either a
-                single string, or an array of strings for each header. You should
-                always check whether the returned value is a string or array.
+                <title>Always check return value</title>
+                <para>
+                    Since a response can contain several instances of the same header,
+                    the getHeader() method and getHeaders() method may return either a
+                    single string, or an array of strings for each header. You should
+                    always check whether the returned value is a string or array.
+                </para>
             </note>
             <example>
                 <title>Accessing Response Headers</title>
@@ -177,30 +210,42 @@ echo $body;
             object, and just want to extract a specific part of the response.
             <itemizedlist>
                 <listitem>
-                    <code>int Zend_Http_Response::extractCode($response_str)</code>: Extract 
-                    and return the HTTP response code (eg. 200 or 404) from $response_str
+                    <para>
+                        <code>int Zend_Http_Response::extractCode($response_str)</code>: Extract 
+                        and return the HTTP response code (eg. 200 or 404) from $response_str
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string Zend_Http_Response::extractMessage($response_str)</code>: Extract 
-                    and return the HTTP response message (eg. "OK" or "File Not Found") from $response_str
+                    <para>
+                        <code>string Zend_Http_Response::extractMessage($response_str)</code>: Extract 
+                        and return the HTTP response message (eg. "OK" or "File Not Found") from $response_str
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string Zend_Http_Response::extractVersion($response_str)</code>: : Extract 
-                    and return the HTTP version (eg. 1.1 or 1.0) from $response_str
+                    <para>
+                        <code>string Zend_Http_Response::extractVersion($response_str)</code>: : Extract 
+                        and return the HTTP version (eg. 1.1 or 1.0) from $response_str
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>array Zend_Http_Response::extractHeaders($response_str)</code>: Extract 
-                    and return the HTTP response headers from $response_str as an array
+                    <para>
+                        <code>array Zend_Http_Response::extractHeaders($response_str)</code>: Extract 
+                        and return the HTTP response headers from $response_str as an array
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string Zend_Http_Response::extractBody($response_str)</code>: Extract 
-                    and return the HTTP response body from $response_str
+                    <para>
+                        <code>string Zend_Http_Response::extractBody($response_str)</code>: Extract 
+                        and return the HTTP response body from $response_str
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>string Zend_Http_Response::responseCodeAsText($code, $http11 = true)</code>: Get
-                    the standard HTTP response message for a response code $code. For example, 
-                    will return "Internal Server Error" if $code is 500. If $http11 is true (default),
-                    will return HTTP/1.1 standard messages - otherwise HTTP/1.0 messages will be returned.
+                    <para>
+                        <code>string Zend_Http_Response::responseCodeAsText($code, $http11 = true)</code>: Get
+                        the standard HTTP response message for a response code $code. For example, 
+                        will return "Internal Server Error" if $code is 500. If $http11 is true (default),
+                        will return HTTP/1.1 standard messages - otherwise HTTP/1.0 messages will be returned.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
