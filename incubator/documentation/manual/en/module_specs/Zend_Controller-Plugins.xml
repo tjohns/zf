@@ -5,18 +5,56 @@
         <title>Introduction</title>
 
         <para>
-        The controller architecture includes a plugin system that allows user code to be called when certain events occur in the controller process lifetime. The front controller uses a plugin broker as a registry for user plugins, and the plugin broker ensures that event methods are called on each plugin registered with the front controller.
+            The controller architecture includes a plugin system that allows user code to
+            be called when certain events occur in the controller process lifetime.
+            The front controller uses a plugin broker as a registry for user plugins,
+            and the plugin broker ensures that event methods are called on each plugin
+            registered with the front controller.
         </para>
 
         <para>
-        The event methods are defined in the abstract class <code>Zend_Controller_Plugin_Abstract</code>, from which user plugin classes inherit:
-        <itemizedlist>
-            <listitem><code>routeStartup()</code> is called before <code>Zend_Controller_Front</code> begins evaluating the request against its routes.</listitem>
-            <listitem><code>routeShutdown()</code> is called after <code>Zend_Controller_Router</code> exits, when Zend_Controller_Front exits from the router.</listitem>
-            <listitem><code>dispatchLoopStartup()</code> is called before <code>Zend_Controller_Front</code> enters its dispatch loop.</listitem>
-            <listitem><code>preDispatch()</code> is called before an action is dispatched by <code>Zend_Controller_Dispatcher</code>. This callback allows for proxy or filter behavior. By altering the request and resetting its dispatched flag (via <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), the current action may be skipped.</listitem>
-            <listitem><code>postDispatch()</code> is called after an action is dispatched by <code>Zend_Controller_Dispatcher</code>. This callback allows for proxy or filter behavior. By altering the request and resetting its dispatched flag (via <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), a new action may be specified for dispatching.</listitem>
-            <listitem><code>dispatchLoopShutdown()</code> is called before <code>Zend_Controller_Front</code> exits its dispatch loop.</listitem>
+            The event methods are defined in the abstract class
+            <code>Zend_Controller_Plugin_Abstract</code>,
+            from which user plugin classes inherit:
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>routeStartup()</code> is called before <code>Zend_Controller_Front</code>
+                        begins evaluating the request against its routes.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>routeShutdown()</code> is called after <code>Zend_Controller_Router</code>
+                        exits, when Zend_Controller_Front exits from the router.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>dispatchLoopStartup()</code> is called before <code>Zend_Controller_Front</code>
+                        enters its dispatch loop.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>preDispatch()</code> is called before an action is dispatched by
+                        <code>Zend_Controller_Dispatcher</code>. This callback allows for proxy
+                        or filter behavior. By altering the request and resetting its dispatched
+                        flag (via <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
+                        the current action may be skipped.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>postDispatch()</code> is called after an action is dispatched by <code>Zend_Controller_Dispatcher</code>. This callback allows for proxy or filter behavior. By altering the request and resetting its dispatched flag (via <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), a new action may be specified for dispatching.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>dispatchLoopShutdown()</code> is called before <code>Zend_Controller_Front</code> exits its dispatch loop.
+                    </para>
+                </listitem>
         </itemizedlist>
         </para>
     </sect2>
