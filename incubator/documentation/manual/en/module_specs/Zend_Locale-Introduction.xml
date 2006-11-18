@@ -116,7 +116,10 @@ $locale = new Zend_Locale();
             <code>Zend_Locale</code> itself is able to detect the proper locale for a user.
         </para>
         <note>
-            It is recommended to let Zend_Locale detect the right locale instead of defining it per hand.
+            <title>Automatic detection</title>
+            <para>
+                It is recommended to let Zend_Locale detect the right locale instead of defining it per hand.
+            </para>
         </note>
         <para>
             The seach algorithm will give the most probable locale based on

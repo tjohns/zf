@@ -8,8 +8,11 @@
     <para>
         Therefor all functions need a proper locale for parsing.
         <note>
-            If no locale is given the standard locale will be taken for normalization and localization.
-            This can lead to unpredicted behavior.
+            <title>Be aware</title>
+            <para>
+                If no locale is given the standard locale will be taken for normalization and localization.
+                This can lead to unpredicted behavior.
+            </para>
         </note>
     </para>
     <sect2 id="zend.locale.number.normalize">
@@ -33,9 +36,12 @@ print $number;
         </example>
         <para>
             <note>
-                <code>getNumber()</code> can normalize numbers with unlimited length.
-                It is not related to integer or float limitations. So be aware using the output
-                within calculations. 
+                <title>Unlimited numbers</title>
+                <para>
+                    <code>getNumber()</code> can normalize numbers with unlimited length.
+                    It is not related to integer or float limitations. So be aware using the output
+                    within calculations. 
+                </para>
             </note>
         </para>
         <para>
@@ -58,8 +64,11 @@ print $number;
         </example>
         <para>
             <note>
-                <code>getNumber()</code> will truncate the input. The result will not be 
-                rounded. So 1.6 will not return 2 but 1 instead.
+                <title>Be aware</title>
+                <para>
+                    <code>getNumber()</code> will truncate the input. The result will not be 
+                    rounded. So 1.6 will not return 2 but 1 instead.
+                </para>
             </note>
         </para>
     </sect2>
@@ -84,8 +93,11 @@ print $number;
         </example>
         <para>
             <note>
-                <code>toNumber()</code> can localize numbers with unlimited length.
-                It is not related to integer or float limitations.
+                <title>Unlimited length</title>
+                <para>
+                    <code>toNumber()</code> can localize numbers with unlimited length.
+                    It is not related to integer or float limitations.
+                </para>
             </note>
         </para>
         <para>
@@ -107,8 +119,11 @@ print $number;
         </example>
         <para>
             <note>
-                <code>toNumber()</code> will truncate the output. The result will not be 
-                rounded. So 1.6 will not return 2 but 1 instead.
+                <title>Be aware</title>
+                <para>
+                    <code>toNumber()</code> will truncate the output. The result will not be 
+                    rounded. So 1.6 will not return 2 but 1 instead.
+                </para>
             </note>
         </para>
     </sect2>
@@ -173,8 +188,11 @@ print $number;
         </example>
         <para>
             <note>
-                <code>toFloat()</code> will truncate the output. The result will not be 
-                rounded. So 1.6 will not return 2 but 1 instead.
+                <title>Be aware</title>
+                <para>
+                    <code>toFloat()</code> will truncate the output. The result will not be 
+                    rounded. So 1.6 will not return 2 but 1 instead.
+                </para>
             </note>
         </para>
     </sect2>
@@ -264,11 +282,17 @@ if (Zend_Locale_Format::isInteger('13.445', $locale) {
             <code>getDate()</code> has the ability to parse a localized date.
             There will always be an array with the date values returned.
             <note>
-                All return values as OPTIONAL. If only date is given all time values are supressed.
-                If no time is given all date values are supressed.
+                <title>Return values</title>
+                <para>
+                    All return values are OPTIONAL. If only date is given all time values are supressed.
+                    If no time is given all date values are supressed.
+                </para>
             </note>
             <note>
-                If no date or time can be found within the given input, an exception will be thrown.
+                <title>Exception</title>
+                <para>
+                    If no date or time can be found within the given input, an exception will be thrown.
+                </para>
             </note>
         </para>
         <para>
@@ -457,12 +481,13 @@ print_r ($date);
                 </tgroup>
             </table>
         </para>
-        <para>
-            <note>
+        <note>
+            <title>Database date format</title>
+            <para>
                 If you want to parse a database date value (f.e. MySql or MsSql) use Zend_Date's ISO_8601 
                 format instead of getDate().
-            </note>
-        </para>
+            </para>
+        </note>
         <para>
             <code>getDate()</code> has an build in automatic correction for false inputs.
             It can detect false values and will fix them.
