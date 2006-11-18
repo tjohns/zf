@@ -27,20 +27,29 @@ $router->addRoute('user', $route);]]></programlisting>
 	</para>
 
 	<note>
-	    Routes werden in umgekehrter Reihenfolge abgeglichen, so dass du sicherstellen musst, dass 
-	    die allgemeinste Route als erstes definiert ist.
+	    <title>Reihenfolge der Definitionen</title>
+	    <para>
+    	    Routes werden in umgekehrter Reihenfolge abgeglichen, so dass du sicherstellen musst, dass 
+	        die allgemeinste Route als erstes definiert ist.
+	    </para>
 	</note>
 
 	<note>
-	    Fürs Erste erlaubt die aktuelle Implementation die Verwendung jedes Zeichens für den 
-	    Variablenbezeichner außer den Schrägstrich (/), es wird aber sehr empfohlen, dass du nur 
-	    Zeichen verwendest, die für PHP Variablen verwendet werden dürfen. In Zukunft wird die 
-	    Implementation vermutlich angepasst und dies könnte Fehler in deinen Code einführen.
+	    <title>Erlaubte Zeichen</title>
+	    <para>
+    	    Fürs Erste erlaubt die aktuelle Implementation die Verwendung jedes Zeichens für den 
+	        Variablenbezeichner außer den Schrägstrich (/), es wird aber sehr empfohlen, dass du nur 
+	        Zeichen verwendest, die für PHP Variablen verwendet werden dürfen. In Zukunft wird die 
+    	    Implementation vermutlich angepasst und dies könnte Fehler in deinen Code einführen.
+	    </para>
 	</note>
 
 	<note>
-		Wenn du eine Route mit genau dem selben Namen wie eine bereits vorhandene Route hinzufügen 
-		möchtest, wird die neuere Route die ältere überschreiben (ersetzen).
+	    <title>Achtung</title>
+	    <para>
+    		Wenn du eine Route mit genau dem selben Namen wie eine bereits vorhandene Route hinzufügen 
+	    	möchtest, wird die neuere Route die ältere überschreiben (ersetzen).
+	    </para>
 	</note>
 
 	<para>
