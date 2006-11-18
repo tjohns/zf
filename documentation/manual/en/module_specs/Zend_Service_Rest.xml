@@ -33,20 +33,23 @@ try {
         echo '<p>An error occurred (' .$e->getMessage(). ')<p>';
 }
 ?>]]>       </programlisting>
-            <note>
+        </example>
+        <note>
+            <title>Passing</title>
+            <para>
                 You can pass a properly formatted query string (without the leading question mark "<code>?</code>") to
                 <code>restGet()</code>, or you can pass an associative array of name-value pairs. Regardless of which
                 method you choose, the names and values must be URL-encoded (e.g., with
                 <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>).
-            </note>
-            <para>
-                Using <code>restPost()</code> and <code>restPut()</code> is the same as using <code>restGet()</code>, but the data are sent via HTTP POST or PUT, respectively, instead of GET.
             </para>
-            <para>
-                The <code>restDelete()</code> method operates on a path, but does not have a second parameter into
-                which data may be passed.
-            </para>
-        </example>
+        </note>
+        <para>
+            Using <code>restPost()</code> and <code>restPut()</code> is the same as using <code>restGet()</code>, but the data are sent via HTTP POST or PUT, respectively, instead of GET.
+        </para>
+        <para>
+            The <code>restDelete()</code> method operates on a path, but does not have a second parameter into
+            which data may be passed.
+        </para>
     </sect2>
 </sect1>
 <!--
