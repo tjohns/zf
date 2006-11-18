@@ -78,8 +78,10 @@ foreach ($results as $result) {
     </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Retrieving Flickr Image Details</title>
-        <code>Zend_Service_Flickr</code> makes it quick and easy to get an image's details based on a given image ID.
-        Just use the <code>getImageDetails()</code> method, as in the following example:
+        <para>
+            <code>Zend_Service_Flickr</code> makes it quick and easy to get an image's details based on a given image ID.
+            Just use the <code>getImageDetails()</code> method, as in the following example:
+        </para>
         <example>
             <title>Retrieving Flickr Image Details</title>
             <para>
@@ -94,7 +96,7 @@ $image = $flickr->getImageDetails($imageId);
 
 echo "Image ID $imageId is $image->width x $image->height pixels.<br />\n";
 echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.classes">
@@ -165,10 +167,10 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                 <para>
                     Returns the total number of results in this result set.
                 </para>
+                <para>
+                    <link linkend="zend.service.flickr.classes">Back to Class List</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">Back to Class List</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.flickr.classes.result">
             <title>Zend_Service_Flickr_Result</title>
@@ -286,10 +288,10 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.flickr.classes">Back to Class List</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">Back to Class List</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.flickr.classes.image">
             <title>Zend_Service_Flickr_Image</title>
@@ -330,10 +332,10 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.flickr.classes">Back to Class List</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">Back to Class List</link>
-            </para>
         </sect3>
     </sect2>
 </sect1>
