@@ -138,12 +138,14 @@ $client->arg('value1')->arg2('value2')->get();
 			You will notice that the first call of <code>$client->arg('value1');</code> resulted in both <code>method=arg&amp;arg1=value1</code> and <code>arg=value1</code>,
 			this is so that <code>Zend_Rest_Server</code> can understand the request properly, rather than requiring pre-existing knowledge of the service.
 		</para>
-		<para>
-			<warning>
-				Any REST service that is strict about the arguments it recieves will likely fail using <code>Zend_Rest_Client</code>, because of the behavior described
+		<warning>
+		    <title>Strictness of Zend_Rest_Client</title>
+		    <para>
+				Any REST service that is strict about the arguments it recieves will likely fail
+				using <code>Zend_Rest_Client</code>, because of the behavior described
 				above, this is not a common practice and should not cause problems.
-			</warning>
-		</para>
+		    </para>
+        </warning>
 	</sect2>
 </sect1>
 <!--
