@@ -25,9 +25,12 @@ $mail->send();
 ?>]]>   </programlisting>
     </example>
     <note>
-        Aby wysłać e-mail za pomocą <code>Zend_Mail</code> musisz określić chociaż
-        jednego odbiorcę, nadawcę (np., za pomocą <code>setFrom()</code>), i treść
-        wiadomości (tekst i/lub HTML).
+        <title>Minimalne definicje</title>
+        <para>
+            Aby wysłać e-mail za pomocą <code>Zend_Mail</code> musisz określić chociaż
+            jednego odbiorcę, nadawcę (np., za pomocą <code>setFrom()</code>), i treść
+            wiadomości (tekst i/lub HTML).
+        </para>
     </note>
     <para>
          Dla większości atrybutów obiektu mail są dostępne metody "get" w służące do 

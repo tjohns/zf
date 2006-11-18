@@ -13,11 +13,14 @@
         z której dane mają być dziedziczone.
     </para>
     <note>
-        <code>Zend_Config_Ini</code> wykorzystuje funkcję PHP <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>.
-        Proszę przejrzyj dokumentację tej funkcji aby znać jej specyficzne zachowania,
-        które dziedziczy <code>Zend_Config_Ini</code>, takie jak to w jaki sposób
-        są obsługiwane specjalne wartości takie jak <code>true</code>, <code>false</code>, 
-        <code>yes</code>, <code>no</code>, oraz <code>null</code>.
+        <title>parse_ini_file</title>
+        <para>
+            <code>Zend_Config_Ini</code> wykorzystuje funkcję PHP <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>.
+            Proszę przejrzyj dokumentację tej funkcji aby znać jej specyficzne zachowania,
+            które dziedziczy <code>Zend_Config_Ini</code>, takie jak to w jaki sposób
+            są obsługiwane specjalne wartości takie jak <code>true</code>, <code>false</code>, 
+            <code>yes</code>, <code>no</code>, oraz <code>null</code>.
+        </para>
     </note>
     <example>
         <title>Użycie Zend_Config_Ini</title>

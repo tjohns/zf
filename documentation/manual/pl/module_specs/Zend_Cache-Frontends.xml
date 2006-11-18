@@ -528,17 +528,72 @@ $res = $cache->foobar2('1', '2');
 	                          <entry>
 	                              an associative array of default options : 
 	                              <itemizedlist>
-	                                  <listitem><code>(boolean, true by default) cache</code> : cache is on if true</listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithGetVariables</code> : if true, cache is still on even if there are some variables in <code>$_GET</code> array</listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithPostVariables</code> : if true, cache is still on even if there are some variables in <code>$_POST</code> array</listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithSessionVariables</code> : if true, cache is still on even if there are some variables in <code>$_SESSION</code> array</listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithFilesVariables</code> : if true, cache is still on even if there are some variables in <code>$_FILES</code> array</listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithCookieVariables</code> : if true, cache is still on even if there are some variables in <code>$_COOKIE</code> array</listitem>
-									  <listitem><code>(boolean, true by default) makeIdWithGetVariables</code> : if true, the cache id will be dependent of the content of the <code>$_GET</code> array</listitem>
-	                                  <listitem><code>(boolean, true by default) makeIdWithPostVariables</code> : if true, the cache id will be dependent of the content of the <code>$_POST</code> array</listitem>
-	                                  <listitem><code>(boolean, true by default) makeIdWithSessionVariables</code> : if true, the cache id will be dependent of the content of the <code>$_SESSION</code> array</listitem>
-	                                  <listitem><code>(boolean, true by default) makeIdWithFilesVariables</code> : if true, the cache id will be dependent of the content of the <code>$_FILES</code> array</listitem>
-	                                  <listitem><code>(boolean, true by default) makeIdWithCookieVariables</code> : if true, the cache id will be dependent of the content of the <code>$_COOKIE</code> array</listitem>	                              
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, true by default) cache</code> : 
+	                                          cache is on if true
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, false by default) cacheWithGetVariables</code> : 
+	                                          if true, cache is still on even if there are some variables in <code>$_GET</code> array
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, false by default) cacheWithPostVariables</code> : 
+	                                          if true, cache is still on even if there are some variables in <code>$_POST</code> array
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, false by default) cacheWithSessionVariables</code> : 
+	                                          if true, cache is still on even if there are some variables in <code>$_SESSION</code> array
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, false by default) cacheWithFilesVariables</code> : 
+	                                          if true, cache is still on even if there are some variables in <code>$_FILES</code> array
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, false by default) cacheWithCookieVariables</code> : 
+	                                          if true, cache is still on even if there are some variables in <code>$_COOKIE</code> array
+	                                      </para>
+	                                  </listitem>
+									  <listitem>
+	                                      <para>
+	                                          <code>(boolean, true by default) makeIdWithGetVariables</code> : 
+	                                          if true, the cache id will be dependent of the content of the <code>$_GET</code> array
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, true by default) makeIdWithPostVariables</code> : 
+	                                          if true, the cache id will be dependent of the content of the <code>$_POST</code> array
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, true by default) makeIdWithSessionVariables</code> : 
+	                                          if true, the cache id will be dependent of the content of the <code>$_SESSION</code> array
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, true by default) makeIdWithFilesVariables</code> : 
+	                                          if true, the cache id will be dependent of the content of the <code>$_FILES</code> array
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(boolean, true by default) makeIdWithCookieVariables</code> : 
+	                                          if true, the cache id will be dependent of the content of the <code>$_COOKIE</code> array
+	                                      </para>
+	                                  </listitem>	                              
 	                              </itemizedlist>              
 	                          </entry>
 	                     </row>

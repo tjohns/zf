@@ -15,10 +15,13 @@
 	</para>
 
 	<note>
-	    W automatycznym bazowym adresie URL rozróżniane są wielkie i małe litery,
-	    więc upewnij się, że twój adres URL będzie odpowiadał nazwie podkatalogu
-	    w systemie plików (nawet na komputerach z Windows). Jeśli nie będzie
-	    to zostanie wywołana akcja noRoute.
+	    <title>Wielkie i małe litery</title>
+	    <para>
+	        W automatycznym bazowym adresie URL rozróżniane są wielkie i małe litery,
+	        więc upewnij się, że twój adres URL będzie odpowiadał nazwie podkatalogu
+	        w systemie plików (nawet na komputerach z Windows). Jeśli nie będzie
+	        to zostanie wywołana akcja noRoute.
+	    </para>
 	</note>
 
 	<para>

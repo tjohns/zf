@@ -10,8 +10,11 @@
         z części.
     </para>
     <note>
-        Zestawy znaków mają jedynie zastosowanie dla części wiadomości które są
-        w formacie tekstowym.
+        <title>Tylko w formacie tekstowym</title>
+        <para>
+            Zestawy znaków mają jedynie zastosowanie dla części wiadomości które są
+            w formacie tekstowym.
+        </para>
     </note>
 </sect1>
 <!--

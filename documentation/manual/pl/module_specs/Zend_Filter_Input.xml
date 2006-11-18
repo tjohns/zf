@@ -45,6 +45,7 @@
         konwencjach nazewnictwa. Wszystkie metody działają według prostej zasady 
         - jeśli dane są prawidłowe, są one zwracane, w przeciwnym wypadku zwracana
         jest wartość <literal>FALSE</literal>. Jest to maksymalnie proste.</para>
+    </sect2>
         <sect2 id="zend.filter.input.introduction.whitelist">
             <title>Filtrowanie Whitelist</title>
             <para>Metody filtrowania whitelist poprzedzone są przedrostkiem 
@@ -130,7 +131,6 @@
     ?>]]>
             </programlisting>
         </sect2>
-    </sect2>
     <sect2 id="zend.filter.input.theoryofoperation">
         <title>Opis działania</title>
         <para><literal>Zend_Filter_Input</literal> łączy kilka różnych podejść do 

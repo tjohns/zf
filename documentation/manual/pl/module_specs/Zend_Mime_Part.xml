@@ -41,53 +41,48 @@ public $charset;
     Poprawne wartości to ZMime::ENCODING_*. Konwersje zestawów znaków nie są 
     przeprowadzane.</para>
 
-    <para><code>-&gt;getHeaders()</code> zwraca nagłówki Mime dla zawartości
-    MimePart wygenerowane na podstawie informacji zawartych w publicznie dostępnych
-    atrybutach. Przed wywołaniem tej metody, atrybuty obiektu muszą być poprawnie
-    zdefiniowane. <itemizedlist>
-        <listitem>
-           
+    <para>
+        <code>-&gt;getHeaders()</code> zwraca nagłówki Mime dla zawartości
+        MimePart wygenerowane na podstawie informacji zawartych w publicznie dostępnych
+        atrybutach. Przed wywołaniem tej metody, atrybuty obiektu muszą być poprawnie
+        zdefiniowane. 
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>$charset</code>
+                    musi określać aktualny zestaw znaków zawartości, jeśli jest ona typu
+                    tekstowego (Text lub HTML).
+                </para>
+           </listitem>
 
-          <code>$charset</code>
-
-          musi określać aktualny zestaw znaków zawartości, jeśli jest ona typu
-          tekstowego (Text lub HTML). 
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$id</code>
-
-           może być ustawiony aby identyfikować obrazy wstawione bezpośrfednio 
-           w kodzie wiadomości HTML.
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$filename</code>
-
-           zawiera nazwę pliku która będzie mu nadana gdy będzie on ściągany.
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$disposition</code>
-
-          określa czy plik powinien być traktowany jako załącznik, czy powinien być
-          użyty bezpośrednio w wiadomości HTML. 
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$description</code>
-
-           jest używane jedynie dla celów informacyjnych.
-        </listitem>
-      </itemizedlist></para>
+           <listitem>
+               <para>
+                   <code>$id</code>
+                   może być ustawiony aby identyfikować obrazy wstawione bezpośrfednio 
+                   w kodzie wiadomości HTML.
+               </para>
+           </listitem>
+           <listitem>
+               <para>
+                   <code>$filename</code>
+                   zawiera nazwę pliku która będzie mu nadana gdy będzie on ściągany.
+               </para>
+           </listitem>
+           <listitem>
+               <para>
+                   <code>$disposition</code>
+                   określa czy plik powinien być traktowany jako załącznik, czy powinien być
+                   użyty bezpośrednio w wiadomości HTML. 
+               </para>
+           </listitem>
+           <listitem>
+               <para>
+                   <code>$description</code>
+                   jest używane jedynie dla celów informacyjnych.
+               </para>
+           </listitem>
+      </itemizedlist>
+    </para>
   </sect2>
 </sect1>
 <!--

@@ -10,12 +10,15 @@
 $route = new Zend_Controller_Router_Route('archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
 
 	<note>
-		W przeciwieństwie do Ruby on Rails, RewriteRouter z ZF dopasuje trasę i użyje 
-		domyślnej gdy czwarty parametr zawierający wymagania zmiennych nie zostanie 
-		znaleziony. Więc adres URL 'http://example.com/archive/test' zostanie 
-		dopasowany do powyższej trasy, a rok zostanie ustawiony na 2006. Ta 
-		funkcjonalność może w przyszłości się zmienić, ponieważ w momencie pisania 
-		tej dokumentacji ta kwestia jest jeszcze uzgadniana.
+	    <title>Dopasowanie tras</title>
+	    <para>
+		    W przeciwieństwie do Ruby on Rails, RewriteRouter z ZF dopasuje trasę i użyje 
+		    domyślnej gdy czwarty parametr zawierający wymagania zmiennych nie zostanie 
+		    znaleziony. Więc adres URL 'http://example.com/archive/test' zostanie 
+		    dopasowany do powyższej trasy, a rok zostanie ustawiony na 2006. Ta 
+		    funkcjonalność może w przyszłości się zmienić, ponieważ w momencie pisania 
+		    tej dokumentacji ta kwestia jest jeszcze uzgadniana.
+		</para>
 	</note>
 
 </sect1>

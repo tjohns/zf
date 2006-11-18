@@ -47,9 +47,12 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		    która powinna być umieszczona poza głównym katalogiem serwera.
 		</para>
 
-		<note>	
-		    Plik ładujący powinien być jedynym plikiem PHP umieszczonym w głównym
-		    katalogu serwera www.
+		<note>
+            <title>Lokalizacja pliku ładującego</title>
+		    <para>
+		        Plik ładujący powinien być jedynym plikiem PHP umieszczonym w głównym
+		        katalogu serwera www.
+		    </para>
 		</note>
 
 		<para>

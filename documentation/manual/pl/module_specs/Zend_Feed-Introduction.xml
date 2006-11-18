@@ -26,9 +26,12 @@
     </para>
 
     <note>
-        Wiele kanałów RSS ma dostępne różne właściwości samego kanału i jego elementów.
-        Specyfikacja RSS umożliwia użycie wielu opcjonalnych parametrów, więc
-        bądź ostrożny gdy będziesz pisał kod pracujący z RSS.
+        <title>Bądż ostrożny</title>
+        <para>
+            Wiele kanałów RSS ma dostępne różne właściwości samego kanału i jego elementów.
+            Specyfikacja RSS umożliwia użycie wielu opcjonalnych parametrów, więc
+            bądź ostrożny gdy będziesz pisał kod pracujący z RSS.
+        </para>
     </note>
 
     <example>

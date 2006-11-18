@@ -139,9 +139,12 @@ Akcja    : index]]>
 	    </programlisting>
 
 		<note>
-			Obecnie pracujemy nad nowym routerem z silnikiem przepisywania adresów URI,
-	        który da o wiele szersze możliwosci niż te obecnie dostępne w routerze.
-			Będzie to dostępne w niedalekiej przyszłości.
+		    <title>Nowy silnik przepisywania adresów</title>
+		    <para>
+			    Obecnie pracujemy nad nowym routerem z silnikiem przepisywania adresów URI,
+	            który da o wiele szersze możliwosci niż te obecnie dostępne w routerze.
+			    Będzie to dostępne w niedalekiej przyszłości.
+			</para>
 		</note>
 
 		<para>

@@ -27,11 +27,14 @@ print_r( $server->system->listMethods() );
         </example>
         <para>
             <note>
-                <code>Zend_XmlRpc_Client</code> dąży do tego, aby użycie zdalnych metod
-                były tak podobne do metod natywnych jak to tylko możliwe. Jeśli zdalne
-                metody zawierają przestrzenie nazw jak np. <code>system.listMethods()</code>, 
-                powinny one być wywoływane w PHP w sposób łańcuchowy: 
-                <code>$server->system->listMethods()</code>.
+                <title>Łańcuchowe wywoływanie metod</title>
+                <para>
+                    <code>Zend_XmlRpc_Client</code> dąży do tego, aby użycie zdalnych metod
+                    były tak podobne do metod natywnych jak to tylko możliwe. Jeśli zdalne
+                    metody zawierają przestrzenie nazw jak np. <code>system.listMethods()</code>, 
+                    powinny one być wywoływane w PHP w sposób łańcuchowy: 
+                    <code>$server->system->listMethods()</code>.
+                </para>
             </note>
         </para>
     </sect2>
@@ -118,22 +121,28 @@ $service->serviceProcedure($p1, $p2);
                 dokładnego określania typów XML-RPC są:
                 <itemizedlist>
                     <listitem>
-                        Gdy chcesz być pewny, że parametr poprawnego typu jest
-                        przekazywany do procedury (np. gdy procedura wymaga 
-                        parametru typu integer a ty możesz otrzymać parametr
-                        z tablicy $_GET, który jest łańcuchem znaków)
+                        <para>
+                            Gdy chcesz być pewny, że parametr poprawnego typu jest
+                            przekazywany do procedury (np. gdy procedura wymaga 
+                            parametru typu integer a ty możesz otrzymać parametr
+                            z tablicy $_GET, który jest łańcuchem znaków)
+                        </para>
                     </listitem>
                     <listitem>
-                        Gdy procedura wymaga typu base64 lub dateTime, typu iso8601 
-                        (który nie istnieje jako natywny typ PHP)
+                        <para>
+                            Gdy procedura wymaga typu base64 lub dateTime, typu iso8601 
+                            (który nie istnieje jako natywny typ PHP)
+                        </para>
                     </listitem>
                     <listitem>
-                        Gdy automatyczna konwersja zawiedzie (np. gdy chcesz 
-                        przekazać pustą strukturę XML-RPC jako parametr. Puste 
-                        struktury są reprezentowane jako puste tablice w PHP, ale 
-                        gdy w parametrze przekażesz pustą tablicę to będzie ona
-                        automatycznie skonwertowana do tablicy XML-RPC ponieważ
-                        nie jest ona tablicą asocjacyjną.)
+                        <para>
+                            Gdy automatyczna konwersja zawiedzie (np. gdy chcesz 
+                            przekazać pustą strukturę XML-RPC jako parametr. Puste 
+                            struktury są reprezentowane jako puste tablice w PHP, ale 
+                            gdy w parametrze przekażesz pustą tablicę to będzie ona
+                            automatycznie skonwertowana do tablicy XML-RPC ponieważ
+                            nie jest ona tablicą asocjacyjną.)
+                        </para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -213,15 +222,16 @@ $service->serviceProcedure($p1, $p2);
 
 ?>]]>
             </programlisting>
-            <para>
-                <note>
+            <note>
+ 	 	        <title>Automatyczna konwersja</title>
+ 	 	        <para>
                     Wartość parametru jest także podana jako zmienna PHP, ale jest
                     ona konwertowana do określonego typu przy użyciu technik 
                     konwersji (np. jeśli łańcuch znaków zostanie przekazany do
                     obiektu <code>Zend_XmlRpc_Value_Integer</code>, to będzie
                     on skonwertowany przy użyciu <code>(int)$value</code>).
-                </note>
-            </para>
+                </para>
+            </note>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.as_xml'>
             <title>Konwersja danych XML do parametrów XML-RPC</title>
@@ -255,9 +265,12 @@ $service->serviceProcedure($p1, $p2);
             zwracanej przez nią wartości.
         </para>
         <note>
-            Nie wszystkie serwery XML-RPC obsługują procedurę <code>system.methodSignature</code>, 
-            serwery które jej nie obsługują, nie umożliwiają identyfikowania typów
-            parametrów.
+            <title>Obsługa procedury methodSignature</title>
+            <para>
+                Nie wszystkie serwery XML-RPC obsługują procedurę <code>system.methodSignature</code>, 
+                serwery które jej nie obsługują, nie umożliwiają identyfikowania typów
+                parametrów.
+            </para>
         </note>
         <para>
             Klient <code>Zend_XmlRpc_Client</code> implementuje plik rodzaju 'WSDL' 
@@ -334,17 +347,23 @@ $service->serviceProcedure($param);
             Opcje odpowiedzi:
             <itemizedlist>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - Zwraca
-                    wartość jako natywną wartość PHP (konwertuje typ XML-RPC do typu PHP).
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - Zwraca
+                        wartość jako natywną wartość PHP (konwertuje typ XML-RPC do typu PHP).
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - Zwraca odpowiedź
-                    serwisu XML-RPC w postaci łańcucha znaków XML.
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - Zwraca odpowiedź
+                        serwisu XML-RPC w postaci łańcucha znaków XML.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Zwraca
-                    obiekt <code>Zend_XmlRpc_Value</code> który reprezentuje zwrócony
-                    typ XML-RPC.
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Zwraca
+                        obiekt <code>Zend_XmlRpc_Value</code> który reprezentuje zwrócony
+                        typ XML-RPC.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>

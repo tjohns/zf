@@ -60,17 +60,37 @@ $profiler = $db->getProfiler();
         </para>
 
         <itemizedlist>
-            <listitem><code>getTotalNumQueries()</code> zwraca liczbę wszystkich
-                zapytań które były profilowane.</listitem>
-            <listitem><code>getTotalElapsedSecs()</code> zwraca całkowity czas
-                trwania profilowanych zapytań.</listitem>
-            <listitem><code>getQueryProfiles()</code> zwraca tablicę wszystkich
-                profilów zapytań.</listitem>
-            <listitem><code>getLastQueryProfile()</code> zwraca ostatni (najnowszy) 
-                profil zapytania, niezależnie od tego czy zostało ono zakończone czy 
-                nie (jeśli nie zostało, to czas zakończenia będzie miał wartość null)</listitem>
-            <listitem><code>clear()</code> czyści wszystkie poprzednie profile
-                zapytań ze stosu.</listitem>
+            <listitem>
+                <para>
+                    <code>getTotalNumQueries()</code> zwraca liczbę wszystkich
+                    zapytań które były profilowane.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getTotalElapsedSecs()</code> zwraca całkowity czas
+                    trwania profilowanych zapytań.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getQueryProfiles()</code> zwraca tablicę wszystkich
+                    profilów zapytań.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getLastQueryProfile()</code> zwraca ostatni (najnowszy) 
+                    profil zapytania, niezależnie od tego czy zostało ono zakończone czy 
+                    nie (jeśli nie zostało, to czas zakończenia będzie miał wartość null)
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>clear()</code> czyści wszystkie poprzednie profile
+                    zapytań ze stosu.
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -81,9 +101,16 @@ $profiler = $db->getProfiler();
         </para>
 
         <itemizedlist>
-            <listitem><code>getQuery()</code> zwraca tekst SQL zapytania.</listitem>
-            <listitem><code>getElapsedSecs()</code> zwraca czas trwania zapytania
-                </listitem>
+            <listitem>
+                <para>
+                    <code>getQuery()</code> zwraca tekst SQL zapytania.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>getElapsedSecs()</code> zwraca czas trwania zapytania
+                </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -167,21 +194,49 @@ $profiler->setFilterElapsedSecs(null);
             </para>
 
             <itemizedlist>
-                <listitem><code>Zend_Db_Profiler::CONNECT</code>: operacje
-                    połączenia lub wybierania bazy danych.</listitem>
-                <listitem><code>Zend_Db_Profiler::QUERY</code>: ogólne zapytania 
-                     które nie pasują do pozostałych typów.</listitem>
-                <listitem><code>Zend_Db_Profiler::INSERT</code>: każde zapytanie
-                    które wstawia nowe dane do bazy, generalnie SQL INSERT.</listitem>
-                <listitem><code>Zend_Db_Profiler::UPDATE</code>: każde zapytanie
-                    ktore uaktualnia dane w bazie, najczęściej SQL UPDATE.</listitem>
-                <listitem><code>Zend_Db_Profiler::DELETE</code>: każde zapytanie
-                    które usuwa istnięjące dane, najczęściej SQL DELETE.</listitem>
-                <listitem><code>Zend_Db_Profiler::SELECT</code>: każde zapytanie
-                    które pobiera istnięjące dane, najczęściej SQL SELECT.</listitem>
-                <listitem><code>Zend_Db_Profiler::TRANSACTION</code>: każda
-                    operacja transakcyjna, taka jak start transakcji, potwierdzenie
-                    zmian czy ich cofnięcie.</listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::CONNECT</code>: operacje
+                        połączenia lub wybierania bazy danych.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::QUERY</code>: ogólne zapytania 
+                         które nie pasują do pozostałych typów.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::INSERT</code>: każde zapytanie
+                        które wstawia nowe dane do bazy, generalnie SQL INSERT.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::UPDATE</code>: każde zapytanie
+                        ktore uaktualnia dane w bazie, najczęściej SQL UPDATE.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::DELETE</code>: każde zapytanie
+                        które usuwa istnięjące dane, najczęściej SQL DELETE.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::SELECT</code>: każde zapytanie
+                        które pobiera istnięjące dane, najczęściej SQL SELECT.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Db_Profiler::TRANSACTION</code>: każda
+                        operacja transakcyjna, taka jak start transakcji, potwierdzenie
+                        zmian czy ich cofnięcie.
+                    </para>
+                </listitem>
             </itemizedlist>
 
             <para>

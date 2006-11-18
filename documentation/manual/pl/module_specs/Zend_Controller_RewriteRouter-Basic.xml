@@ -26,20 +26,29 @@ $router->addRoute('user', $route);]]></programlisting>
 	</para>
 
 	<note>
-		Trasy są dopasowywane w odwrotnej kolejności więc musisz pamiętać żeby
-		podstawowe trasy były zdefiniowane na początku.
+	    <title>Kolejność definicji</title>
+	    <para>
+		    Trasy są dopasowywane w odwrotnej kolejności więc musisz pamiętać żeby
+		    podstawowe trasy były zdefiniowane na początku.
+		</para>
 	</note>
 
 	<note>
-		Teraz obecna implementacja pozwala na użycie w nazwie zmiennej dowolnych znaków
-		z wyjątkiem ukośnika (/), ale jest mocno zalecane używanie jedynie znaków,
-		które są bezproblemowo obsługiwane ptzrz PHP. W przyszłości implementacja
-		prawdopodobnie zostanie zmodyfikowana co mogłoby wprowadzić do twojego kodu błędy.
+	    <title>Dozwolone znaki</title>
+	    <para>
+		    Teraz obecna implementacja pozwala na użycie w nazwie zmiennej dowolnych znaków
+		    z wyjątkiem ukośnika (/), ale jest mocno zalecane używanie jedynie znaków,
+		    które są bezproblemowo obsługiwane ptzrz PHP. W przyszłości implementacja
+		    prawdopodobnie zostanie zmodyfikowana co mogłoby wprowadzić do twojego kodu błędy.
+		</para>
 	</note>
 
     <note>
-        Jeśli zdecydujesz się dodać trasę o nazwie identycznej z istniejącą
-        już trasą, to nowa trasa nadpisze (zastąpi) tę starszą.
+        <title>Bądź ostrożny</title>
+        <para>
+            Jeśli zdecydujesz się dodać trasę o nazwie identycznej z istniejącą
+            już trasą, to nowa trasa nadpisze (zastąpi) tę starszą.
+        </para>
     </note>
 
 	<para>

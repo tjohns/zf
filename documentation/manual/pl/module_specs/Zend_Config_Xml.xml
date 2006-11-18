@@ -14,10 +14,13 @@
         odziedziczone przez rozszerzającą sekcję.
     </para>
     <note>
-        Dane konfiguracyjne odczytywane przez <code>Zend_Config_Xml</code> są
-        zawsze zwracane jako łańcuchy znaków. Konwersja danych z łańcuchów znaków
-        do innych typów leży w gestii programistów, którzy mogą dopasować to
-        do własnych potrzeb.
+        <title>Zwracany typ</title>
+        <para>
+            Dane konfiguracyjne odczytywane przez <code>Zend_Config_Xml</code> są
+            zawsze zwracane jako łańcuchy znaków. Konwersja danych z łańcuchów znaków
+            do innych typów leży w gestii programistów, którzy mogą dopasować to
+            do własnych potrzeb.
+        </para>
     </note>
     <example>
         <title>Użycie Zend_Config_Xml</title>

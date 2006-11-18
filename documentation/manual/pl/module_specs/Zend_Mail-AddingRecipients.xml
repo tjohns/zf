@@ -15,8 +15,11 @@
         </itemizedlist>
     </para>
     <note>
-        Metody <code>addTo()</code> oraz <code>addCc()</code> akceptują drugi opcjonalny
-        parametr, który jest używany jako nazwa odbiorcy.
+        <title>Dodatkowy parametr</title>
+        <para>
+            Metody <code>addTo()</code> oraz <code>addCc()</code> akceptują drugi opcjonalny
+            parametr, który jest używany jako nazwa odbiorcy.
+        </para>
     </note>
 </sect1>
 <!--

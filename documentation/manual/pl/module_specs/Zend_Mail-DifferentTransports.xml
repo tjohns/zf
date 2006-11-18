@@ -22,8 +22,11 @@ $mail->send();  // znów używamy domyślnego transportu
 ?>]]>   </programlisting>
     </example>
     <note>
-        Dodatkowe transporty mogą być napisane poprzez zaimplementowanie interfejsu
-        <code>Zend_Mail_Transport_Interface</code>.
+        <title>Dodatkowe transporty</title>
+        <para>
+            Dodatkowe transporty mogą być napisane poprzez zaimplementowanie interfejsu
+            <code>Zend_Mail_Transport_Interface</code>.
+        </para>
     </note>
 </sect1>
 <!--
