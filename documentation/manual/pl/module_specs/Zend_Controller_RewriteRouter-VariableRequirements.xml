@@ -7,7 +7,7 @@
 	</para>
 
 	<programlisting role="php"><![CDATA[
-$router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
+$route = new Zend_Controller_Router_Route('archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
 
 	<note>
 		W przeciwieństwie do Ruby on Rails, RewriteRouter z ZF dopasuje trasę i użyje 

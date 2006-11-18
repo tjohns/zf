@@ -16,17 +16,13 @@
 	</para>
 
 	<programlisting role="php"><![CDATA[
-// Domyślna trasa dla bazowego URL
-$this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
+// Dodajemy domyślną trasę (dla bazowego URL - '/')
+$default = new Zend_Controller_Router_Route('', array('controller' => 'index', 'action' => 'index'));
+$this->addRoute('default', $default);
 
 // Trasa kompatybilna z pierwszą wersja routera
-$this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
-
-	<note>
-		Zend_Controller_RewriteRouter jest skonfigurowany w taki sposób aby był kompatybilny
-		wstecz, ale jednak na razie nie obsługuje adresów URI <code>controller/action</code> 
-		z dodatkowymi parametrami.
-	</note>
+$compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+$this->addRoute('compat', $compat);]]></programlisting>
 
 </sect1>
 <!--

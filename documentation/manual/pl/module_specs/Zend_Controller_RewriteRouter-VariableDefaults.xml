@@ -9,7 +9,7 @@
 	</para>
 
 	<programlisting role="php"><![CDATA[
-$router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
+$route = new Zend_Controller_Router_Route('archive/:year', array('year' => 2006));]]></programlisting>
 	<para>
 	     Może nie jest wyraźnie widoczne to, że powyższa trasa dopasuje adresy URL
 	     takie jak 'http://example.com/archive/2005' oraz 'http://example.com/archive'. 
