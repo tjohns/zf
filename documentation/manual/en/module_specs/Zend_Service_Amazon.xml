@@ -542,6 +542,7 @@ foreach($response as $r) {
             <sect4 id="zend.service.amazon.classes.offer.properties">
                 <title>Zend_Service_Amazon_Offer Properties</title>
                 <table>
+                    <title>Properties</title>
                     <tgroup cols="3">
                         <thead>
                             <row>
