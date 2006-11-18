@@ -41,50 +41,45 @@ public $charset;
     $encoding. Valid values are ZMime::ENCODING_* Characterset conversions are
     not performed.</para>
 
-    <para><code>-&gt;getHeaders()</code> returns the Mime-Headers for the
-    MimePart as generated from the information in the publicly accessable
-    attributes. The attributes of the object need to be set correctly before
-    this method is called. <itemizedlist>
-        <listitem>
-           
-
-          <code>$charset</code>
-
-           has to be set to the actual charset of the content if it is a text type (Text or HTML). 
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$id</code>
-
-           may be set to identify a content-id for inline images in a HTML mail. 
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$filename</code>
-
-           contains the name the file will get when downloading it. 
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$disposition</code>
-
-           defines if the file should be treated as an attachment or if it is used inside the (HTML-) mail (inline). 
-        </listitem>
-
-        <listitem>
-           
-
-          <code>$description</code>
-
-           is only used for informational purposes. 
-        </listitem>
-      </itemizedlist></para>
+    <para>
+        <code>-&gt;getHeaders()</code> returns the Mime-Headers for the
+        MimePart as generated from the information in the publicly accessable
+        attributes. The attributes of the object need to be set correctly before
+        this method is called. 
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>$charset</code>
+                    has to be set to the actual charset of the content if it is a text type (Text or HTML). 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$id</code>
+´                   may be set to identify a content-id for inline images in a HTML mail. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$filename</code>
+                    contains the name the file will get when downloading it. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$disposition</code>
+                    defines if the file should be treated as an attachment or if it is used inside
+                    the (HTML-) mail (inline). 
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>$description</code>
+                    is only used for informational purposes. 
+                </para>
+            </listitem>
+        </itemizedlist>
+    </para>
   </sect2>
 </sect1>
 <!--
