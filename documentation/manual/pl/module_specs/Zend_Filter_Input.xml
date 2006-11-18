@@ -3,7 +3,7 @@
 
     <sect2 id="zend.filter.input.introduction">
         <title>Wprowadzenie</title>
-        Klasa <para><literal>Zend_Filter_Input</literal> dostarcza proste metody, 
+        <para>Klasa <literal>Zend_Filter_Input</literal> dostarcza proste metody, 
         które zapewniają poważne potraktowanie filtrowania danych przychodzących. 
         Jej przeznaczenie jest różnorodne, ponieważ zaspokaja ona potrzeby trzech 
         różnych grup ludzi:</para>

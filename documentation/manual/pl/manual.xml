@@ -43,10 +43,10 @@
     </chapter>
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
-        &module_specs.Zend_Cache_Introduction;
-        &module_specs.Zend_Cache_Theory;
-        &module_specs.Zend_Cache_Frontends;
-        &module_specs.Zend_Cache_Backends;
+        &module_specs.Zend_Cache-Introduction;
+        &module_specs.Zend_Cache-Theory;
+        &module_specs.Zend_Cache-Frontends;
+        &module_specs.Zend_Cache-Backends;
     </chapter>
     <chapter id="zend.config">
         <title>Zend_Config</title>
@@ -110,10 +110,10 @@
     </chapter>
     <chapter id="zend.log">
         <title>Zend_Log</title>
-        &module_specs.Zend_Log_Introduction;
-        &module_specs.Zend_Log_Simple;
-        &module_specs.Zend_Log_Levels;
-        &module_specs.Zend_Log_Advanced;
+        &module_specs.Zend_Log-Introduction;
+        &module_specs.Zend_Log-Simple;
+        &module_specs.Zend_Log-Levels;
+        &module_specs.Zend_Log-Advanced;
     </chapter>
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
