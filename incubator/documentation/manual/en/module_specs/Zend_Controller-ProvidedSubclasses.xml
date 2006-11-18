@@ -43,10 +43,13 @@
             </para>
 
             <note>
-                When accessing superglobal data through <code>Zend_Controller_Request_Http</code>
-                as public member properties, it is necessary to keep in mind that
-                the property name (superglobal array key) is matched to a superglobal
-                in a specific order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV.
+                <title>Superglobal data</title>
+                <para>
+                    When accessing superglobal data through <code>Zend_Controller_Request_Http</code>
+                    as public member properties, it is necessary to keep in mind that
+                    the property name (superglobal array key) is matched to a superglobal
+                    in a specific order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV.
+                </para>
             </note>
 
             <para>
@@ -82,9 +85,12 @@
             </para>
 
             <note>
-                Automatic base URL detection is case sensitive, so make sure your URL
-                will match a subdirectory name in a filesystem (even on Windows
-                machines). If it doesn't you will get to noRoute action.
+                <title>URL detection is case sensitive</title>
+                <para>
+                    Automatic base URL detection is case sensitive, so make sure your URL
+                    will match a subdirectory name in a filesystem (even on Windows
+                    machines). If it doesn't you will get to noRoute action.
+                </para>
             </note>
 
             <para>
@@ -164,11 +170,14 @@ RewriteRule ^(.*)$ index.php/$1 ]]></programlisting>
 RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [I]]]></programlisting>
 
             <note>
-                When using IIS, <code>$_SERVER['REQUEST_URI']</code>
-                will either not exist, or be set as an empty string. In
-                this case, <code>Zend_Http_Request</code> will
-                attempt to use the <code>$_SERVER['HTTP_X_REWRITE_URL']</code>
-                value set by the Isapi_Rewrite extension.
+                <title>IIS Isapi_Rewrite</title>
+                <para>
+                    When using IIS, <code>$_SERVER['REQUEST_URI']</code>
+                    will either not exist, or be set as an empty string. In
+                    this case, <code>Zend_Http_Request</code> will
+                    attempt to use the <code>$_SERVER['HTTP_X_REWRITE_URL']</code>
+                    value set by the Isapi_Rewrite extension.
+                </para>
             </note>
 
             <para>If using Lighttpd, the following rewrite rule is valid:</para>
@@ -238,16 +247,22 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             </para>
 
             <note>
-                Routes are matched in reverse order so make sure your most
-                generic routes are defined first.
+                <title>Reverse matching</title>
+                <para>
+                    Routes are matched in reverse order so make sure your most
+                    generic routes are defined first.
+                </para>
             </note>
 
             <note>
-                For now the current implementation allows for use of any
-                characters except a slash (/) as a variable identifier but it is
-                strongly recommended that one uses only php variable friendly
-                characters. In future the implementation will probably be
-                altered and this may introduce bugs to your code.
+                <title>Character useage</title>
+                <para>
+                    For now the current implementation allows for use of any
+                    characters except a slash (/) as a variable identifier but it is
+                    strongly recommended that one uses only php variable friendly
+                    characters. In future the implementation will probably be
+                    altered and this may introduce bugs to your code.
+                </para>
             </note>
 
             <para>
@@ -260,9 +275,12 @@ $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]
             </para>
 
             <note>
-                Names of these special variables may be different if you choose to 
-                alter the defaults in <code>Zend_Controller_Request_Http</code> 
-                by the means of setControllerKey and setActionKey methods.
+                <title>Special variables</title>
+                <para>
+                    Names of these special variables may be different if you choose to 
+                    alter the defaults in <code>Zend_Controller_Request_Http</code> 
+                    by the means of setControllerKey and setActionKey methods.
+                </para>
             </note>
 
             <programlisting role="php"><![CDATA[
@@ -337,12 +355,15 @@ $router->addRoute(
 );]]></programlisting>
 
             <note>
-                Unlike Ruby on Rails, ZF RewriteRouter will match a route and
-                use a default when a third parameter variable requirement is
-                not met. So the URL of 'http://example.com/archive/test' will
-                match the above route and set the year to 2006. This
-                functionality may be altered in the future as it is being
-                discussed at the moment of writing of this documentation.
+                <title>Routing behavior</title>
+                <para>
+                    Unlike Ruby on Rails, ZF RewriteRouter will match a route and
+                    use a default when a third parameter variable requirement is
+                    not met. So the URL of 'http://example.com/archive/test' will
+                    match the above route and set the year to 2006. This
+                    functionality may be altered in the future as it is being
+                    discussed at the moment of writing of this documentation.
+                </para>
             </note>
 
         </sect3>
@@ -383,12 +404,15 @@ $compat = new Zend_Controller_Router_Route(':controller/:action/*', array('contr
 $this->addRoute('default', $compat);]]></programlisting>
 
             <note>
-                Zend_Controller_RewriteRouter is configured for backwards
-                compatibility. It will automatically match <code>controller/action</code>
-                URIs with additional parameters. The additional parameters do not
-                require the addition of new routes unless they must have default values
-                or variable requirements. These additional parameters will be accessible
-                from the Zend_Controller_Action::_getParam method.
+                <title>Matching URIs</title>
+                <para>
+                    Zend_Controller_RewriteRouter is configured for backwards
+                    compatibility. It will automatically match <code>controller/action</code>
+                    URIs with additional parameters. The additional parameters do not
+                    require the addition of new routes unless they must have default values
+                    or variable requirements. These additional parameters will be accessible
+                    from the Zend_Controller_Action::_getParam method.
+                </para>
             </note>
 
         </sect3>    
