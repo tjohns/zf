@@ -22,8 +22,11 @@ $mail->send();
 ?>]]>   </programlisting>
     </example>
     <note>
-        In order to send an e-mail with <code>Zend_Mail</code> you have to specify at least one recipient, a
-        sender (e.g., with <code>setFrom()</code>), and a message body (text and/or HTML).
+        <title>Minimum definitions</title>
+        <para>
+            In order to send an e-mail with <code>Zend_Mail</code> you have to specify at least one recipient, a
+            sender (e.g., with <code>setFrom()</code>), and a message body (text and/or HTML).
+        </para>
     </note>
     <para>
         For most mail attributes there are "get" methods to read the information stored in the mail object. For

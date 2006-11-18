@@ -22,7 +22,10 @@ $mail->send();  // use default again
 ?>]]>   </programlisting>
     </example>
     <note>
-        Additional transports can be written by implementing <code>Zend_Mail_Transport_Interface</code>.
+        <title>Additional transports</title>
+        <para>
+            Additional transports can be written by implementing <code>Zend_Mail_Transport_Interface</code>.
+        </para>
     </note>
 </sect1>
 <!--

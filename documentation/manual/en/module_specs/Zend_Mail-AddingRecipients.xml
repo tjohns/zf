@@ -15,8 +15,11 @@
         </itemizedlist>
     </para>
     <note>
-        <code>addTo()</code> and <code>addCc()</code> accept a second optional parameter that is used as a
-        human-readable name of the recipient for the header.
+        <title>Additional parameter</title>
+        <para>
+            <code>addTo()</code> and <code>addCc()</code> accept a second optional parameter that is used as a
+            human-readable name of the recipient for the header.
+        </para>
     </note>
 </sect1>
 <!--
