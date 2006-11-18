@@ -37,15 +37,21 @@ foreach ($results as $result) {
         </para>
         <itemizedlist>
             <listitem>
-                <code>userSearch()</code>: Accepts a string query of space-delimited tags and an optional second
-                parameter as an array of search options, and returns a <code>Zend_Service_Flickr_ResultSet</code>
-                object.
+                <para>
+                    <code>userSearch()</code>: Accepts a string query of space-delimited tags and an optional second
+                    parameter as an array of search options, and returns a <code>Zend_Service_Flickr_ResultSet</code>
+                    object.
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByUsername()</code>: Returns a string user ID associated with the given username string.
+                <para>
+                    <code>getIdByUsername()</code>: Returns a string user ID associated with the given username string.
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByEmail()</code>: Returns a string user ID associated with the given email address string.
+                <para>
+                    <code>getIdByEmail()</code>: Returns a string user ID associated with the given email address string.
+                </para>
             </listitem>
         </itemizedlist>
         <example>
