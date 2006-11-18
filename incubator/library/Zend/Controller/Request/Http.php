@@ -25,6 +25,8 @@ require_once 'Zend/Http/Request.php';
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
+/** Zend_Controller_Request_Exception */
+require_once 'Zend/Controller/Request/Exception.php';
 
 /**
  * Zend_Controller_Request_Http
