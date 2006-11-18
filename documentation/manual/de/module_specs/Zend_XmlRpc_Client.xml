@@ -28,11 +28,14 @@ print_r( $server->system->listMethods() );
         </example>
         <para>
             <note>
-                <code>Zend_XmlRpc_Client</code> versucht, die entfernten Methoden so weit wie 
-                möglich so aussehen zu lassen wie native Methoden. Wenn eine entfernte Methode
-                Namensräume, wie z.B. das obige <code>system.listMethods()</code>, enthält, wird
-                der Aufruf in PHP über Objektverkettungen durchgeführt: 
-                <code>$server->system->listMethods()</code>.
+                <title>Objektverkettung</title>
+                <para>
+                    <code>Zend_XmlRpc_Client</code> versucht, die entfernten Methoden so weit wie 
+                    möglich so aussehen zu lassen wie native Methoden. Wenn eine entfernte Methode
+                    Namensräume, wie z.B. das obige <code>system.listMethods()</code>, enthält, wird
+                    der Aufruf in PHP über Objektverkettungen durchgeführt: 
+                    <code>$server->system->listMethods()</code>.
+                </para>
             </note>
         </para>
     </sect2>
@@ -217,15 +220,16 @@ $service->serviceProcedure($p1, $p2);
 
 ?>]]>
             </programlisting>
-            <para>
-                <note>
+            <note>
+                <title>Automatische Konvertierung</title>
+                <para>
                     Der Parameterwert wird nach wie vor in einer PHP Variable übergeben, wird aber
                     durch Verwendung der PHP Konvertierungstechniken in den festgelegten Typ 
                     konvertiert (d.h. wenn ein String als Wert an das
                     <code>Zend_XmlRpc_Value_Integer</code> Objekt übergeben wird, wird es durch 
                     Verwendung von <code>(int)$value</code> konvertiert).
-                </note>
-            </para>
+                </para>
+            </note>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.as_xml'>
             <title>Parse einen XML String in einen XML-RPC Parameter</title>
@@ -261,9 +265,12 @@ $service->serviceProcedure($p1, $p2);
             Prozedur. 
         </para>
         <note>
-            Nicht alle XML-RPC Server unterstützen diese besondere Prozedur 
-            <code>system.methodSignature</code>. Server, die dies nicht unterstützen, können keine
-            Typbestimmung anbieten.
+            <title>Unterstützung von methodSignature</title>
+            <para>
+                Nicht alle XML-RPC Server unterstützen diese besondere Prozedur 
+                <code>system.methodSignature</code>. Server, die dies nicht unterstützen, können keine
+                Typbestimmung anbieten.
+            </para>
         </note>
         <para>
             Der <code>Zend_XmlRpc_Client</code> implementiert eine Art von 'WSDL' Typdatei für den

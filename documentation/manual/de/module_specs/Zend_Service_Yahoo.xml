@@ -165,10 +165,10 @@ foreach ($results as $result) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.yahoo.classes.webresultset">
             <title>Zend_Service_Yahoo_WebResultSet</title>
@@ -282,10 +282,10 @@ foreach ($results as $result) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
-            </para>
          </sect3>
          <sect3 id="zend.service.yahoo.classes.webresult">
             <title>Zend_Service_Yahoo_WebResult</title>
@@ -333,10 +333,10 @@ foreach ($results as $result) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
-            </para>
          </sect3>
          <sect3 id="zend.service.yahoo.classes.imageresult">
             <title>Zend_Service_Yahoo_ImageResult</title>
@@ -394,10 +394,10 @@ foreach ($results as $result) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
-            </para>
          </sect3>
          <sect3 id="zend.service.yahoo.classes.localresult">
             <title>Zend_Service_Yahoo_LocalResult</title>
@@ -465,10 +465,10 @@ foreach ($results as $result) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
-            </para>
          </sect3>
          <sect3 id="zend.service.yahoo.classes.newsresult">
             <title>Zend_Service_Yahoo_NewsResult</title>
@@ -526,10 +526,10 @@ foreach ($results as $result) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
-            </para>
          </sect3>
          <sect3 id="zend.service.yahoo.classes.image">
             <title>Zend_Service_Yahoo_Image</title>
@@ -568,10 +568,10 @@ foreach ($results as $result) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.yahoo.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
     </sect2>
 </sect1>

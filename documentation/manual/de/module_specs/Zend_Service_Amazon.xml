@@ -95,14 +95,14 @@ foreach ($results as $result) {
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
 ?>]]>       </programlisting>
-            <note>
-                <title>Ländercodes</title>
-                <para>
-                    Gültige Ländercodes sind: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                    <code>UK</code>, and <code>US</code>.
-                </para>
-            </note>
         </example>
+        <note>
+            <title>Ländercodes</title>
+            <para>
+                Gültige Ländercodes sind: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                <code>UK</code>, and <code>US</code>.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemlookup">
         <title>Betrachten eines speziellen Teils bei Amazon durch ASIN</title>
@@ -155,8 +155,10 @@ foreach($response as $r) {
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevante Amazon Dokumentation</ulink>
         </para>
         <tip>
-            Die <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> Klasse ist ein
-            einfach zu benutzender Wrapper für diese Methode.
+            <para>
+                Die <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> Klasse ist ein
+                einfach zu benutzender Wrapper für diese Methode.
+            </para>
         </tip>
     </sect2>
     <sect2 id="zend.service.amazon.query">
@@ -373,10 +375,10 @@ foreach($response as $r) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.amazon.classes.image">
             <title>Zend_Service_Amazon_Image</title>
@@ -412,10 +414,10 @@ foreach($response as $r) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.amazon.classes.resultset">
             <title>Zend_Service_Amazon_ResultSet</title>
@@ -440,10 +442,10 @@ foreach($response as $r) {
                     <void />
                 </methodsynopsis>
                 <para>Liefert die Gesamtanzahl der Resultate welche die Suche zurückgegeben hat</para>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.amazon.classes.offerset">
             <title>Zend_Service_Amazon_OfferSet</title>
@@ -527,10 +529,10 @@ foreach($response as $r) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.amazon.classes.offer">
             <title>Zend_Service_Amazon_Offer</title>
@@ -540,8 +542,9 @@ foreach($response as $r) {
                 Objekt zurück gegeben.
             </para>
             <sect4 id="zend.service.amazon.classes.offer.properties">
+                <title>Zend_Service_Amazon_Offer Eigenschaften</title>
                 <table>
-                    <title>Zend_Service_Amazon_Offer Eigenschaften</title>
+                    <title>Eigenschaften</title>
                     <tgroup cols="3">
                         <thead>
                             <row>
@@ -594,10 +597,10 @@ foreach($response as $r) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.amazon.classes.similarproduct">
             <title>Zend_Service_Amazon_SimilarProduct</title>
@@ -636,10 +639,10 @@ foreach($response as $r) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.amazon.classes.accessories">
             <title>Zend_Service_Amazon_Accessories</title>
@@ -672,10 +675,10 @@ foreach($response as $r) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Back to Class List</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Back to Class List</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.amazon.classes.customerreview">
             <title>Zend_Service_Amazon_CustomerReview</title>
@@ -733,10 +736,10 @@ foreach($response as $r) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.amazon.classes.editorialreview">
             <title>Zend_Service_Amazon_EditorialReview</title>
@@ -769,10 +772,10 @@ foreach($response as $r) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.amazon.classes.listmania">
             <title>Zend_Service_Amazon_Listmania</title>
@@ -806,10 +809,10 @@ foreach($response as $r) {
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.amazon.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
     </sect2>
 </sect1>

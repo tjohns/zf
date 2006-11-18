@@ -27,7 +27,10 @@ foreach ($results as $result) {
 ?>]]>       </programlisting>
         </example>
         <note>
-            <code>tagSearch()</code> aktepziert als optionalen zweiten Parameter ein Array mit Optionen.
+            <title>Optionale Parameter</title>
+            <para>
+                <code>tagSearch()</code> aktepziert als optionalen zweiten Parameter ein Array mit Optionen.
+            </para>
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
@@ -38,17 +41,23 @@ foreach ($results as $result) {
         </para>
         <itemizedlist>
             <listitem>
-                <code>userSearch()</code>: Akzeptiert ein String Abfrage von mit Leerzeichen getrennten Tags
-                und als optionalen zweiten Parameter ein Array mit Such Optionen. Zurückgegeben wird ein
-                <code>Zend_Service_Flickr_ResultSet</code> Objekt.
+                <para>
+                    <code>userSearch()</code>: Akzeptiert ein String Abfrage von mit Leerzeichen getrennten Tags
+                    und als optionalen zweiten Parameter ein Array mit Such Optionen. Zurückgegeben wird ein
+                    <code>Zend_Service_Flickr_ResultSet</code> Objekt.
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByUsername()</code>: Gibt die Benutzer ID als String zurück, welcher mit dem
-                übergebenen String des Benutzernamens verknüpft ist.
+                <para>
+                    <code>getIdByUsername()</code>: Gibt die Benutzer ID als String zurück, welcher mit dem
+                    übergebenen String des Benutzernamens verknüpft ist.
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByEmail()</code>: Gibt die Benutzer ID als String zurück, welcher mit dem übergebenen
-                String der Email Adresse verknüpft ist.
+                <para>
+                    <code>getIdByEmail()</code>: Gibt die Benutzer ID als String zurück, welcher mit dem übergebenen
+                    String der Email Adresse verknüpft ist.
+                </para>
             </listitem>
         </itemizedlist>
         <example>
@@ -72,9 +81,11 @@ foreach ($results as $result) {
     </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Empfangen von Details zu Bildern durch Flickr</title>
-        <code>Zend_Service_Flickr</code> erlaubt es schnell und einfach an Details zu Bilders zu kommen,
-        basieren auf einer übergebenen ID des Bildes. Einfach durch benutzen der  <code>getImageDetails()</code> Methode,
-        wie im folgenden Beispiel:
+        <para>
+            <code>Zend_Service_Flickr</code> erlaubt es schnell und einfach an Details zu Bilders zu kommen,
+            basieren auf einer übergebenen ID des Bildes. Einfach durch benutzen der  <code>getImageDetails()</code> Methode,
+            wie im folgenden Beispiel:
+        </para>
         <example>
             <title>Empfangen von Details zu Bildern durch Flickr</title>
             <para>
@@ -161,10 +172,10 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";
                 <para>
                     Gibt die Gesamt Anzahl der Ergebnisse für dieses Ergebnis Set zurück.
                 </para>
+                <para>
+                    <link linkend="zend.service.flickr.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.flickr.classes.result">
             <title>Zend_Service_Flickr_Result</title>
@@ -282,10 +293,10 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.flickr.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.flickr.classes.image">
             <title>Zend_Service_Flickr_Image</title>
@@ -326,10 +337,10 @@ echo "<a href=\"$image->clickUri\">Klicken für das Bild</a>\n";
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.flickr.classes">Zurück zur Liste der Klassen</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">Zurück zur Liste der Klassen</link>
-            </para>
         </sect3>
     </sect2>
 </sect1>
