@@ -57,7 +57,10 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		</para>
 
 		<note>	
-			Die Ladedatei sollte die einzige PHP Datei sein, die im Hauptverzeichnis abgelegt ist.
+		    <title>Ort der Ladedatei</title>
+		    <para>
+    			Die Ladedatei sollte die einzige PHP Datei sein, die im Hauptverzeichnis abgelegt ist.
+            </para>
 		</note>
 
 		<para>
@@ -92,11 +95,14 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		</para>
 
 		<note>
-		    Zur Zeit werden Lösungen untersucht, die keine Installation von mod_rewrite erfordern.
-		    Wir beabsichtigen, eine Konfiguration für System mit und ohne mod_rewrite Möglichkeiten 
-		    vorzuschlagen. Außerdem beachte bitte, dass das System nicht speziell an Apache oder 
-		    mod_rewrite gebunden ist. Jeder Webserver mit ähnlichen Umleitungsmöglichkeiten sollte
-		    ausreichen.
+		    <title>Voraussetzungen</title>
+		    <para>
+	    	    Zur Zeit werden Lösungen untersucht, die keine Installation von mod_rewrite erfordern.
+    		    Wir beabsichtigen, eine Konfiguration für System mit und ohne mod_rewrite Möglichkeiten 
+		        vorzuschlagen. Außerdem beachte bitte, dass das System nicht speziell an Apache oder 
+		        mod_rewrite gebunden ist. Jeder Webserver mit ähnlichen Umleitungsmöglichkeiten sollte
+    		    ausreichen.
+    		</para>
 		</note>
 	</sect2>	
 		
@@ -131,8 +137,11 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 ]]></programlisting>
 		
 		<note>
-		    Dieser Abschnitt ist noch nicht fertig. Er ist in Bearbeitung und unterliegt laufenden 
-		    Änderungen.
+		    <title>In Bearbeitung</title>
+		    <para>
+    		    Dieser Abschnitt ist noch nicht fertig. Er ist in Bearbeitung und unterliegt laufenden 
+	    	    Änderungen.
+	    	</para>
 		</note>
 	</sect2>	
 		
@@ -176,9 +185,12 @@ class IndexController extends Zend_Controller_Action
 
 ?>]]></programlisting>
 			
-			<note>
-		    Dieser Abschnitt ist noch nicht fertig. Er ist in Bearbeitung und unterliegt laufenden 
-		    Änderungen.
-			</note>			
+    	<note>
+	        <title>In Bearbeitung</title>
+		    <para>
+    		    Dieser Abschnitt ist noch nicht fertig. Er ist in Bearbeitung und unterliegt laufenden 
+	    	    Änderungen.
+	    	</para>
+	    </note>			
 	</sect2>			
 </sect1>
