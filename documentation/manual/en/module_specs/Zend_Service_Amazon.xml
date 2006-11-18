@@ -12,19 +12,29 @@
             web sites directly through the Amazon Web Services API. Examples include:
             <itemizedlist>
                 <listitem>
-                    Store item information, such as images, descriptions, pricing, and more
+                    <para>
+                        Store item information, such as images, descriptions, pricing, and more
+                    </para>
                 </listitem>
                 <listitem>
-                    Customer and editorial reviews
+                    <para>
+                        Customer and editorial reviews
+                    </para>
                 </listitem>
                 <listitem>
-                    Similar products and accessories
+                    <para>
+                        Similar products and accessories
+                    </para>
                 </listitem>
                 <listitem>
-                    Amazon.com offers
+                    <para>
+                        Amazon.com offers
+                    </para>
                 </listitem>
                 <listitem>
-                    ListMania lists
+                    <para>
+                        ListMania lists
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
@@ -34,8 +44,11 @@
             <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> web site.
         </para>
         <note>
-            Your Amazon developer API key is linked to your Amazon identity, so take appropriate measures to keep your
-            API key private.
+            <title>Attention</title>
+            <para>
+                Your Amazon developer API key is linked to your Amazon identity, 
+                so take appropriate measures to keep your API key private.
+            </para>
         </note>
         <example>
             <title>Search Amazon Using the Traditional API</title>
@@ -83,8 +96,11 @@ require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
 ?>]]>       </programlisting>
             <note>
-                Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                <code>UK</code>, and <code>US</code>.
+                <title>Country codes</title>
+                <para>
+                    Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                    <code>UK</code>, and <code>US</code>.
+                </para>
             </note>
         </example>
     </sect2>
@@ -109,7 +125,11 @@ $item = $amazon->itemLookup('B0000A432X');
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevant Amazon documentation</ulink>.
         </para>
         <note>
-        	To retrieve images information for your search results, you must set <code>ResponseGroup</code> option to <code>Medium</code> or <code>Large</code>.
+            <title>Image information</title>
+            <para>
+            	To retrieve images information for your search results, you must set 
+            	<code>ResponseGroup</code> option to <code>Medium</code> or <code>Large</code>.
+        	</para>
         </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemsearch">
@@ -404,6 +424,7 @@ foreach($response as $r) {
                 and allow you to easily handle the multiple results returned.
             </para>
             <note>
+                <title>SeekableIterator</title>
                 <para>
                     Implements the <code>SeekableIterator</code> for easy iteration (e.g. using <code>foreach</code>), as
                     well as direct access to a specific result using <code>seek()</code>.
