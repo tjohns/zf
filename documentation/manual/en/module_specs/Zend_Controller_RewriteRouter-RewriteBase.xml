@@ -11,8 +11,11 @@
 	</para>
 
 	<note>
-		Automatic rewrite base is case sensitive, so make sure your URL will match a subdirectory name in a filesystem
-		(even on Windows machines). If it doesn't you will get to noRoute action.
+	    <title>Case sensitivity</title>
+	    <para>
+    		Automatic rewrite base is case sensitive, so make sure your URL will match a subdirectory name in a filesystem
+	    	(even on Windows machines). If it doesn't you will get to noRoute action.
+		</para>
 	</note>
 
 	<para>

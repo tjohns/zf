@@ -47,7 +47,10 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		</para>
 
 		<note>	
-			The bootstrap file should be the only PHP file stored in the document root.			
+		    <title>Location of the bootstrap file</title>
+		    <para>
+    			The bootstrap file should be the only PHP file stored in the document root.			
+			</para>
 		</note>
 
 		<para>

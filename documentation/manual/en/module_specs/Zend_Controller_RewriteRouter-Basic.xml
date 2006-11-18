@@ -24,17 +24,26 @@ $router->addRoute('user', $route);]]></programlisting>
 	</para>
 
 	<note>
-		Routes are matched in reverse order so make sure your most generic routes are defined first.
+	    <title>Order of definitions</title>
+	    <para>
+    		Routes are matched in reverse order so make sure your most generic routes are defined first.
+		</para>
 	</note>
 
 	<note>
-		For now the current implementation allows for use of any characters except a slash (/) as a variable identifier but
-		it is strongly recommended that one uses only php variable friendly characters. In future the implementation will probably be
-		altered and this may introduce bugs to your code.
+	    <title>Allowed characters</title>
+	    <para>
+		    For now the current implementation allows for use of any characters except a slash (/) as a variable identifier but
+	    	it is strongly recommended that one uses only php variable friendly characters. In future the implementation will probably be
+    		altered and this may introduce bugs to your code.
+		</para>
 	</note>
 
 	<note>
-		If you choose to add a Route named exactly the same as already existent route then the newest will override (replace) the older one.
+	    <title>Be aware</title>
+	    <para>
+    		If you choose to add a Route named exactly the same as already existent route then the newest will override (replace) the older one.
+		</para>
 	</note>
 
 	<para>
