@@ -42,21 +42,21 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                    <emphasis>required</emphasis> means that documents not matching this term will not match
-                    the query;
+                        <emphasis>required</emphasis> means that documents not matching this term will not match
+                        the query;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <emphasis>prohibited</emphasis> means that documents matching this term will not match
-                    the query;
+                        <emphasis>prohibited</emphasis> means that documents matching this term will not match
+                        the query;
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <emphasis>neither</emphasis>, in which case matched documents are neither prohibited
-                    from, nor required to, match the term. A document must match at least 1 term, however, to
-                    match the query.
+                        <emphasis>neither</emphasis>, in which case matched documents are neither prohibited
+                        from, nor required to, match the term. A document must match at least 1 term, however, to
+                        match the query.
                     </para>
                 </listitem>
             </itemizedlist>
@@ -82,11 +82,21 @@ $hits = $index->find('+word1 author:word2 -word3');
 ?>]]></programlisting>
 
         <itemizedlist>
-            <listitem>'+' is used to define a required term.</listitem>
-            <listitem>'-' is used to define a prohibited term.</listitem>
             <listitem>
-            'field:' prefix is used to indicate a document field for a search.
-            If it's omitted, then 'contents' is used.
+                <para>
+                    '+' is used to define a required term.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    '-' is used to define a prohibited term.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    'field:' prefix is used to indicate a document field for a search.
+                    If it's omitted, then 'contents' is used.
+                </para>
             </listitem>
         </itemizedlist>
 
@@ -110,10 +120,20 @@ $hits = $index->find('+word1 author:word2 -word3');
         <para>
             The <code>$signs</code> array contains information about the term type:
             <itemizedlist>
-                <listitem><code>true</code> is used to define required term.</listitem>
-                <listitem><code>false</code> is used to define prohibited term.</listitem>
                 <listitem>
-                <code>null</code> is used to define a term that is neither required nor prohibited.
+                    <para>
+                        <code>true</code> is used to define required term.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>false</code> is used to define prohibited term.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>null</code> is used to define a term that is neither required nor prohibited.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
