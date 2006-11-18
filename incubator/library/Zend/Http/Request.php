@@ -334,7 +334,7 @@ class Zend_Http_Request implements Zend_Request_Interface
                     $path = (substr($path, 0, $pos));
                 }
                 $segs    = explode('/', trim($filename, '/'));
-                $index   = $count($segs) - 1;
+                $index   = count($segs) - 1;
                 $baseUrl = ' ';
                 do {
                     $last = $segs[$index];
