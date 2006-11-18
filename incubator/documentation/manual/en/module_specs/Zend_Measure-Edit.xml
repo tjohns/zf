@@ -29,6 +29,7 @@
             The conversion of a unit can be done any number of times using the method <code>convertTo()</code>.
         </para>
         <note>
+            <title>Conversion limit</title>
             <para>
                 Units of measurement can only be converted to other units of the same type.
             </para>
@@ -79,15 +80,22 @@ echo $sum;
             </example>
         </para>
         <note>
-            Each addition will create a new object for the result.
+            <title>Addition returns object</title>
+            <para>
+                Each addition will create a new object for the result.
+                The actual object will never be changed by the class.
+            </para>
+            <para>
+                The new object will be of the same type as the originating object.
+            </para>
         </note>
         <note>
-            The new object will be of the same type as the originating object.
-        </note>
-        <note>
-            Adding one object to another will automatically convert it to the
-            correct unit. It is not neccessary to call <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link>
-            before adding different units.
+            <title>Automatic conversion</title>
+            <para>
+                Adding one object to another will automatically convert it to the
+                correct unit. It is not neccessary to call <link linkend="zend.measure.edit.convert"><code>convertTo()</code></link>
+                before adding different units.
+            </para>
         </note>
         <para>
             <example>
@@ -158,8 +166,11 @@ if ($unit->equals($unit2)) {
             </example>
         </para>
         <note>
-            <code>equals()</code> will return <code>TRUE</code> only if both the value
-            and the unit of measure are identical.
+            <title>Equality</title>
+            <para>
+                <code>equals()</code> will return <code>TRUE</code> only if both the value
+                and the unit of measure are identical.
+            </para>
         </note>
     </sect2>
     <sect2 id="zend.measure.edit.compare">
