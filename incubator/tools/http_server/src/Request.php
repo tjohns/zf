@@ -175,7 +175,7 @@ class Request
 			$this->setData( array_shift( $lines ) );
 		}
 
-		if( ( $this->method == "POST" || $this->method == "PUT" ) && $this->data === null )
+		if( ( $this->method == "POST" || $this->method == "PUT" ) && ( ( !isset( $this->headers[ "Content-Length" ] ) && $this->data === null ) || strlen( $this->data ) < $this->headers[ "Content-Length" ] ) )
 		{
 			$this->complete = false;
 		}
