@@ -1,57 +1,75 @@
 <sect1 id="zend.acl.introduction">
-
     <title>Introduction</title>
 
     <para>
-    Zend_Acl provides lightweight and flexible access control list (ACL) functionality and privileges management. In general, an application may utilize such functionality to control access to certain protected objects by other requesting objects.
+        Zend_Acl provides lightweight and flexible access control list (ACL) functionality
+        and privileges management. In general, an application may utilize such functionality
+        to control access to certain protected objects by other requesting objects.
     </para>
 
     <para>
-    For the purposes of this documentation,
+        For the purposes of this documentation,
 
-    <itemizedlist>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    an <emphasis role="strong">Access Control Object (ACO)</emphasis> is an object
+                    to which access is controlled.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    an <emphasis role="strong">Access Request Object (ARO)</emphasis> is an object
+                    that may request access to an ACO.
+                </para>
+            </listitem>
+        </itemizedlist>
 
-    <listitem>
-    an <emphasis role="strong">Access Control Object (ACO)</emphasis> is an object to which access is controlled.
-    </listitem>
-
-    <listitem>
-    an <emphasis role="strong">Access Request Object (ARO)</emphasis> is an object that may request access to an ACO.
-    </listitem>
-
-    </itemizedlist>
-
-    Put simply, <emphasis role="strong">AROs request access to ACOs</emphasis>. For example, if a person requests access to a car, then the person is the requesting ARO, and the car is the ACO, since access to the car is under control.
+        Put simply, <emphasis role="strong">AROs request access to ACOs</emphasis>. 
+        For example, if a person requests access to a car, then the person is the requesting ARO,
+        and the car is the ACO, since access to the car is under control.
     </para>
 
     <para>
-    Through the specification and use of an access control list (ACL), an application may control how requesting objects (AROs) are granted access to protected objects (ACOs).
+        Through the specification and use of an access control list (ACL), an application may control
+        how requesting objects (AROs) are granted access to protected objects (ACOs).
 
-    Zend_Acl provides a tree-based structure to which multiple 'areas' (also known as ACOs) can be added. These 'areas' within the ACL can be assigned either generic or specific 'actions' (known as Contexts) that determine access privileges for user-defined 'groups' (or AROs). These actions are assigned to ACOs ad hoc when calling <code>allow()</code> or <code>deny()</code>.
+        Zend_Acl provides a tree-based structure to which multiple 'areas' (also known as ACOs)
+        can be added. These 'areas' within the ACL can be assigned either generic or specific
+        'actions' (known as Contexts) that determine access privileges for user-defined 'groups' (or AROs).
+        These actions are assigned to ACOs ad hoc when calling <code>allow()</code> or <code>deny()</code>.
     </para>
 
     <sect2 id="zend.acl.introduction.creating">
-
         <title>Creating the Access Control List (ACL)</title>
 
         <para>
-        An ACL can represent any set of physical or virtual objects that you wish. For the purposes of demonstration, however, we will create a basic Content Management System ACL that maintains several tiers of groups over a wide variety of areas. To create a new ACL object, we instantiate the ACL with no parameters:
+            An ACL can represent any set of physical or virtual objects that you wish.
+            For the purposes of demonstration, however, we will create a basic Content Management System ACL
+            that maintains several tiers of groups over a wide variety of areas. To create a new ACL object,
+            we instantiate the ACL with no parameters:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();]]></programlisting>
-
     </sect2>
 
     <sect2 id="zend.acl.introduction.aro_registry">
-
         <title>Registering Access Request Objects (AROs)</title>
 
         <para>
-        Content Management Systems will nearly always require a hierarchy of permissions to determine the authoring capabilities of its users. There may be a 'Guest' group to allow limited access for demonstrations, a 'Staff' group for the majority of CMS users who perform most of the day-to-day operations, an 'Editor' group for those responsible for publishing, reviewing, archiving and deleting content, and finally an 'Administrator' group whose tasks may include all of those of the other groups as well as maintenance of sensitive information, user management, back-end configuration data and backup/export. This set of permissions can be represented in an ARO registry, allowing each group to inherit privileges from 'parent' groups, as well as providing distinct privileges for their unique group only. The permissions may be expressed as follows:
+            Content Management Systems will nearly always require a hierarchy of permissions
+            to determine the authoring capabilities of its users. There may be a 'Guest' group to
+            allow limited access for demonstrations, a 'Staff' group for the majority of CMS users
+            who perform most of the day-to-day operations, an 'Editor' group for those responsible for publishing,
+            reviewing, archiving and deleting content, and finally an 'Administrator' group whose tasks may
+            include all of those of the other groups as well as maintenance of sensitive information, 
+            user management, back-end configuration data and backup/export. This set of permissions can be
+            represented in an ARO registry, allowing each group to inherit privileges from 'parent' groups,
+            as well as providing distinct privileges for their unique group only. 
+            The permissions may be expressed as follows:
         </para>
 
         <table>
@@ -90,11 +108,10 @@ $acl = new Zend_Acl();]]></programlisting>
         </table>
 
         <para>
-        These groups can be added to the ARO registry as follows:
+            These groups can be added to the ARO registry as follows:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
@@ -120,23 +137,29 @@ $aro->add('administrator');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.defining">
-
         <title>Defining Access Controls</title>
 
         <para>
-        Now that the ARO registry contains the groups, permissions can be assigned to areas within the ACL. Zend_Acl provides an extremely flexible implementation whereby ACOs need only be created for those areas that require specific permissions. All descendant ACOs - even undeclared ACOs - inherit permissions defined for their ancestor ACOs.
+            Now that the ARO registry contains the groups, permissions can be assigned to areas
+            within the ACL. Zend_Acl provides an extremely flexible implementation whereby ACOs need
+            only be created for those areas that require specific permissions. 
+            All descendant ACOs - even undeclared ACOs - inherit permissions defined for their ancestor ACOs.
         </para>
 
         <para>
-        For example, if we assign access controls to <code><![CDATA[$acl->newsletters]]></code>, then descendant ACOs such as <code><![CDATA[$acl->newsletters->archive]]></code> and <code><![CDATA[$acl->newsletters->pending]]></code> inherit access controls from the parent ACO, <code><![CDATA[$acl->newsletters]]></code>, despite that they have not been specifically defined for either child ACO.
+            For example, if we assign access controls to <code><![CDATA[$acl->newsletters]]></code>,
+            then descendant ACOs such as <code><![CDATA[$acl->newsletters->archive]]></code> and
+            <code><![CDATA[$acl->newsletters->pending]]></code> inherit access controls from the parent ACO,
+            <code><![CDATA[$acl->newsletters]]></code>, despite that they have not been specifically 
+            defined for either child ACO.
         </para>
 
         <para>
-        Consequently, we can define a reasonably complex set of permissions with a minimum amount of code. To apply the base permissions as defined above:
+            Consequently, we can define a reasonably complex set of permissions with a minimum amount of code.
+            To apply the base permissions as defined above:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
@@ -168,15 +191,15 @@ $acl->allow($aro->administrator);]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.querying">
-
         <title>Querying the ACL</title>
 
         <para>
-        We now have a flexible ACL that can be used to determine whether requesters have permission to access areas and perform functions throughout the web application. Performing queries can be as flexible as you require:
+            We now have a flexible ACL that can be used to determine whether requesters have permission
+            to access areas and perform functions throughout the web application. Performing queries
+            can be as flexible as you require:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-
 // Querying the ACL at the root ACO
 
 echo $acl->valid($aro->guest, 'view') ?
@@ -202,7 +225,6 @@ echo $aro->staff->canAccess($acl->newsletter->pending, 'view') ?
      "allowed" : "denied"; // allowed]]></programlisting>
 
     </sect2>
-
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
