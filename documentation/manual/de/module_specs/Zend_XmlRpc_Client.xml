@@ -118,20 +118,26 @@ $service->serviceProcedure($p1, $p2);
                 Festlegung der XML-RPC Typen sind:
                 <itemizedlist>
                     <listitem>
-                        Wenn du sicherstellen möchtest, dass der korrekte Parametertyp an die 
-                        Prozedur übergeben wird (d.h. die Prozedur erfordert einen Integer and 
-                        du hast den Parameter aus dem $_GET Array als String erhalten)
+                        <para>
+                            Wenn du sicherstellen möchtest, dass der korrekte Parametertyp an die 
+                            Prozedur übergeben wird (d.h. die Prozedur erfordert einen Integer and 
+                            du hast den Parameter aus dem $_GET Array als String erhalten)
+                        </para>
                     </listitem>
                     <listitem>
-                        Wenn die Prozedur einen base64 oder dateTime.iso8601 Typ erfordert (welche
-                        nicht als native PHP Typen existieren) 
+                        <para>
+                            Wenn die Prozedur einen base64 oder dateTime.iso8601 Typ erfordert (welche
+                            nicht als native PHP Typen existieren) 
+                        </para>
                     </listitem>
                     <listitem>
-                        Wenn die automatische Konvertierung fehlschlagen könnte (d.h. du möchtest
-                        einen leeren XML-RPC Struct als Parameter übergeben. Leere Structs werden
-                        in PHP als leere Arrays abgebildet, aber wenn du ein leeres Array als 
-                        Parameter übergibst, wird es automatisch in ein XML-RPC Array konvertiert, 
-                        da es kein assoziatives Array ist)
+                        <para>
+                            Wenn die automatische Konvertierung fehlschlagen könnte (d.h. du möchtest
+                            einen leeren XML-RPC Struct als Parameter übergeben. Leere Structs werden
+                            in PHP als leere Arrays abgebildet, aber wenn du ein leeres Array als 
+                            Parameter übergibst, wird es automatisch in ein XML-RPC Array konvertiert, 
+                            da es kein assoziatives Array ist)
+                        </para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -337,18 +343,23 @@ $service->serviceProcedure($param);
             hinweist. Die Antwortoptionen sind:
             <itemizedlist>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - Gib den Rückgabewert der
-                    Prozedur als nativen PHP Typ zurück (konvertiere den XML-RPC Typ in einen PHP
-                    Typ).
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - Gib den Rückgabewert der
+                        Prozedur als nativen PHP Typ zurück (konvertiere den XML-RPC Typ in einen PHP
+                        Typ).
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - Gib eine Darstellung 
-                    der XML-RPC Antwort in einem XML String zurück.
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - Gib eine Darstellung 
+                        der XML-RPC Antwort in einem XML String zurück.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Gib ein 
-                    <code>Zend_XmlRpc_Value</code> Objekt zurück, dass den erhaltenen XML-RPC
-                    Typ abbildet.
+                        <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Gib ein 
+                        <code>Zend_XmlRpc_Value</code> Objekt zurück, dass den erhaltenen XML-RPC
+                        Typ abbildet.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
