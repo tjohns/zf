@@ -1,0 +1,33 @@
+<sect1 id="zend.log.simple-logging">
+    <title>Rejestrowanie do pojedynczego dziennika</title>
+    <para>
+        Rejestrator jest tworzony poprzez wywołanie metody <code>Zend_Log::registerLogger()</code> 
+        z argumentem w postaci instancji klasy <code>Zend_Log_Adapter_Interface</code>.
+    </para>
+    <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                // Podstawowa klasa Zend_Log
+require_once 'Zend/Log/Adapter/File.php';   // Adapter rejestrowania do pliku
+
+// Utwórz rejestrator
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/simple.txt'));
+]]></programlisting>
+
+    <para>
+        Wiadomości są wysyłane do dziennika za pomocą metody <code>Zend_Log::log()</code>.
+    </para>
+    <programlisting role="php"><![CDATA[
+/**
+ * Wysyła wiadomośc do dziennika.  Opcjonalny drugi argument określa priorytet wiadomości.
+ * Jeśli priorytet nie zostanie podany, zostanie przyjęty domyślny LEVEL_DEBUG.
+ */
+Zend_Log::log('Pierwsza wiadomość.');
+
+/**
+ * Zapisuje wiadomość o wysokim priorytecie.
+ */
+Zend_Log::log('Wystąpił poważny błąd.', Zend_Log::LEVEL_SEVERE);
+]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

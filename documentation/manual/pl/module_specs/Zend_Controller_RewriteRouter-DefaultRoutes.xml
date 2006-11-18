@@ -1,0 +1,34 @@
+<sect1 id="zend.controller.rewriterouter.default-routes">
+	<title>Domyślne trasy</title>
+
+	<para>
+		Zend_Controller_RewriteRouter jest wstępnie skonfigurowany z dwoma domyślnymi
+		trasami. Pierwsza obsługuje twój główny adres URL i jest zmapowana na
+		akcję indexAction kontrolera IndexController: musisz więc zadeklarować
+		je jak napisano w <xref linkend="zend.controller.getting-started" />
+		(zobacz <xref linkend="zend.controller.overview.indexcontroller" />).
+		Druga domyślna trasa jest dołączona aby zapewnić kompatybilność z pierwszą
+		wersją routera. Dopasuje ona adresy URI w postaci <code>'controller/action'</code>.
+	</para>
+
+	<para>
+		Domyślne trasy są skonfigurowane jako:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+// Domyślna trasa dla bazowego URL
+$this->addRoute('default', '', array('controller' => 'index', 'action' => 'index'));
+
+// Trasa kompatybilna z pierwszą wersja routera
+$this->addRoute('compat', ':controller/:action', array('controller' => 'index', 'action' => 'index'));]]></programlisting>
+
+	<note>
+		Zend_Controller_RewriteRouter jest skonfigurowany w taki sposób aby był kompatybilny
+		wstecz, ale jednak na razie nie obsługuje adresów URI <code>controller/action</code> 
+		z dodatkowymi parametrami.
+	</note>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,31 @@
+<sect1 id="zend.controller.rewriterouter.variable-defaults">
+	<title>Domyślne wartości zmiennych</title>
+
+	<para>
+		Każda zmienna w trasie może mieć wartość domyślną. Aby to zrobić,
+		musisz przekazać trzeci parametr do metody addRoute. Ten trzeci parametr 
+		jest tablicą z nazwami zmiennych jako kluczami i z wartościami, które mają
+		być uznane za domyślne.
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
+	<para>
+	     Może nie jest wyraźnie widoczne to, że powyższa trasa dopasuje adresy URL
+	     takie jak 'http://example.com/archive/2005' oraz 'http://example.com/archive'. 
+	     Ostatecznie zmienna year i tak będzie miała wartość 2006.
+	</para>
+
+	<para>
+		W powyższym przykładzie nie ustawiliśmy kontrolera więc spowoduje to zawsze
+		wywołanie akcji noRoute z kontrolera IndexController. Aby było to użyteczne,
+		musisz zadeklarować poprawny domyślny kontroler oraz akcję:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'));]]></programlisting>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

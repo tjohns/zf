@@ -220,10 +220,10 @@ echo $view->render('someView.php');
         
         <para>
             Domyślnie, Zend_View oczekuje, że skrypty widoku są umieszczone
-            w tym samym katalogu co skrypty kontrolera. Na przykład jeśli 
+            względnie do skryptu wywołującego. Na przykład jeśli 
             Twój skrypt kontrolera jest w katalogu "/path/to/app/controllers" 
             i wywołuje on $view->render('someView.php'), to Zend_View będzie
-            szukać pliku "/path/to/app/controllers/someVire.php".
+            szukać pliku "/path/to/app/controllers/someView.php".
         </para>
         
         <para>

@@ -1,0 +1,41 @@
+<sect1 id="zend.controller.rewriterouter.rewritebase">
+	<title>Bazowy adres URL i podkatalogi</title>
+
+	<para>
+		W przeciwieństwie do oryginalnego routera, RewriteRouter może być użyty w
+		podkatalogach - automatycznie wykrywa twój bazowy adres URL i odpowiednio
+		go ustawia. Na przykład: jeśli twój plik <code>index.php</code> jest umieszczony
+		na serwerze www w podkatalogu nazwanym <code>/projects/myapp/index.php</code> 
+		bazowy adres URL zostanie ustawiony na <code>/projects/myapp</code>. Ten
+		łańcuch znaków będzie wycięty z początku ścieżki przed dopasowaniem tras.
+        To uwalnia od konieczności dodawania bazowej ścieżki do wszystkich tras.
+		Trasa <code>'user/:username'</code> zostanie dopasowana
+		do adresów URI <code>http://localhost/projects/myapp/user/martel</code> 
+		oraz <code>http://example.com/user/martel</code>.
+	</para>
+
+	<note>
+	    W automatycznym bazowym adresie URL rozróżniane są wielkie i małe litery,
+	    więc upewnij się, że twój adres URL będzie odpowiadał nazwie podkatalogu
+	    w systemie plików (nawet na komputerach z Windows). Jeśli nie będzie
+	    to zostanie wywołana akcja noRoute.
+	</note>
+
+	<para>
+	    Jeśli bazowy adres URL jest wykrywany nieprawidłowo, możesz go nadpisać
+	    własną ścieżką bazową za pomocą metody setRewriteBase z klasy RewriteRouter:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->setRewriteBase('/projects/myapp');]]></programlisting>
+
+	<note>
+	    Ten krok nie jest konieczny w większości przypadków i jest mocno odradzany,
+	    ponieważ wprowadza kolejną zmienną konfiguracyjną, która musi być zmieniona
+	    gdy ktoś przeniesie kod do innego katalogu.
+	</note>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

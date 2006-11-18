@@ -1,0 +1,10 @@
+<sect1 id="zend.mail.smtp-authentication">
+    <title>Uwierzytelnianie SMTP</title>
+    <para>
+        Różne metody uwierzytelniania SMTP będą dodane w przyszłości, obecnie żadna 
+        nie jest obsługiwana.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

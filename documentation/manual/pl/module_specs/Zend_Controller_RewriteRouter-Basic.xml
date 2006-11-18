@@ -1,0 +1,59 @@
+<sect1 id="zend.controller.rewriterouter.basic">
+	<title>Podstawowe trasy</title>
+
+	<para>
+		Sercem RewriteRoutera jest definicja tras określonych przez użytkownika.
+		Trasy są tworzone przez wywołanie metody addRoute obiektu RewriteRouter:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('user', 'user/:username');]]></programlisting>
+
+	<para>
+		Pierwszy parametr jest nazwą trasy. Obecnie nie jest konieczne jego definiowanie,
+		jednak będzie on używany w przyszłości w klasie pomocniczej widoku ułatwiającej
+		łatwe generowanie adresów URL. Jeśli chcesz użyć wcześniej skonfigurowanej
+		trasy, możesz ją odebrać za pomocą metody getRoute RewriteRoutera.
+	</para>
+
+	<para>
+		Drugi parametr jest trasą która będzie dopasowana do URL - na przykład, 
+		powyższa trasa zostanie dopasowana do adresu <code>http://example.com/user/martel</code>. 
+		Dwukropek w trasie oznacza zmienną z URL która będzie dostępna za pomocą metody 
+		Zend_Controller_Action::_getParam. W naszym przykładzie nasz parametr 
+		o nazwie username otrzyma wartość 'martel'.
+	</para>
+
+	<note>
+		Trasy są dopasowywane w odwrotnej kolejności więc musisz pamiętać żeby
+		podstawowe trasy były zdefiniowane na początku.
+	</note>
+
+	<note>
+		Teraz obecna implementacja pozwala na użycie w nazwie zmiennej dowolnych znaków
+		z wyjątkiem ukośnika (/), ale jest mocno zalecane używanie jedynie znaków,
+		które są bezproblemowo obsługiwane ptzrz PHP. W przyszłości implementacja
+		prawdopodobnie zostanie zmodyfikowana co mogłoby wprowadzić do twojego kodu błędy.
+	</note>
+
+	<para>
+		Są dwie specjalne zmienne które nie mogą być użyte w twoich trasach - 
+		'controller' oraz 'action'. Te specjalne zmienne będą użyte aby znaleść
+		kotroler oraz akcję w danym adresie URL. Zmienna 'action' zawsze musi być
+		zdefiniowana w trasie lub jako domyślny parametr. Zmienna 'controller' 
+		będzie domyślnie ustawiona na IndexController jeśli nie będzie zdefiniowana.
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('user', ':controller/:action');]]></programlisting>
+
+	<para>
+		Jeśli skierujesz przeglądarkę na adres 'http://example.com/news/latest' ze
+		zdefiniowaną powyższą trasą Zend_Controller_Dispatcher odwoła się do akcji
+		latestAction z kontrolera NewsController.
+	</para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
