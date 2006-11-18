@@ -133,9 +133,12 @@ Action    : index]]>
         </programlisting>
 
 		<note>
-			We are currently developing a new router with a URI rewriting engine that will give
-			much more flexible capabilities than are presently available in the router.
-			This will be included in a preview release in the very near future.
+		    <title>New rewrite engine</title>
+		    <para>
+    			We are currently developing a new router with a URI rewriting engine that will give
+	    		much more flexible capabilities than are presently available in the router.
+		    	This will be included in a preview release in the very near future.
+		    </para>
 		</note>
 
 		<para>

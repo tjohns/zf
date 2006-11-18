@@ -10,9 +10,12 @@
 $route = new Zend_Controller_Router_Route('archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
 
 	<note>
-		Unlike Ruby on Rails, ZF RewriteRouter will match a route and use a default when a fourth parameter variable requirement is not met. So the
-		URL of 'http://example.com/archive/test' will match the above route and set the year to 2006. This functionality
-		may be altered in the future as it is being discussed at the moment of writing of this documentation.
+	    <title>Route matching</title>
+	    <para>
+    		Unlike Ruby on Rails, ZF RewriteRouter will match a route and use a default when a fourth parameter variable requirement is not met. So the
+	    	URL of 'http://example.com/archive/test' will match the above route and set the year to 2006. This functionality
+		    may be altered in the future as it is being discussed at the moment of writing of this documentation.
+		</para>
 	</note>
 
 </sect1>
