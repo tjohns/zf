@@ -1,0 +1,31 @@
+<sect1 id="zend.registry">
+    <title>Zend::registry()</title>
+
+    <para>
+    Zwraca z rejestru obiekt lub listę obiektów.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::registry($name=null)
+
+?>]]></programlisting>
+
+    <para>
+    Jeśli parametr <code>$name</code> ma wartość <code>NULL</code>, zostaje zwrócona
+    tablica której kluczami są nazwy obiektów a wartościami nazwy ich klas.
+    </para>
+
+    <para>
+    Jeśli parametr <code>$name</code> jest łańcuchem znaków, zostaje zwrócony
+    uchwyt obiektu przypisanego do tej nazwy. Jeśli obiekt o nazwie <code>$name</code>
+    nie istnieje w rejestrze zostaje wyrzucony wyjątek <code>Zend_Exception</code>.
+    </para>
+
+    <para>
+    Do szybkiego sprawdzenia czy obiekt istnieje w rejestrze służy metoda Zend::isRegistered().
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

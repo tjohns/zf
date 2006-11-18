@@ -1,0 +1,32 @@
+<sect1 id="zend.loadclass">
+    <title>Zend::loadClass()</title>
+    <para>
+    <code>Zend::loadClass()</code> ładuje plik PHP o nazwie w postaci "<code>$className.php</code>", 
+    a następnie sprawdza czy istnieje klasa o nazwie <code>$className</code>.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::loadClass($class, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+    Jeśli plik nie zostaje znaleziony lub gdy po załadowaniu pliku klasa nie istnieje
+    wyrzucany jest wyjątek <code>Zend_Exception</code>. Do załadowania pliku używana
+    jest metoda <code>Zend::loadFile()</code>, a parametr <code>$dirs</code> jest
+    do niej bezpośrednio przekazywany.
+    </para>
+
+    <para>
+    Jeśli próbuje się załadować klasę zawierającą podkreślniki w nazwie, a parametr 
+    <code>$dirs</code> ma wartość null (wartość domyślna), to metoda <code>Zend::loadClass()</code> 
+    spróbuje automatycznie pobrać parametr <code>$dirs</code> z nazwy klasy
+    zamieniając podkreślniki na separatory katalogów. Na przykład jeżeli parametr
+    <code>$class</code> ma wartość <code>Zend_Example_Class</code>, to zostanie
+    załadowana klasa <code>Zend/Example/Class.php</code>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

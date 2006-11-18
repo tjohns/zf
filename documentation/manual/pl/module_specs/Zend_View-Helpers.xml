@@ -1,0 +1,281 @@
+<sect1 id="zend.view.helpers">
+    
+    <title>Klasy pomocników</title>
+    
+    <para>
+        W skryptach widoków często potrzebne jest przeprowadzanie złożonych 
+        funkcji; na przykład formatowanie daty, generowanie elementów formularzy, 
+        czy wyświetlanie odnośnikow akcji. Możesz użyć klas pomocników w tym celu.
+    </para>
+    
+    <para>
+        Aby użyć pomocnika w swoim skrypcie widoku, wywołaj go za pomocą
+        $this->nazwaPomocnika(). Obiekt Zend_View załaduje klasę 
+        Zend_View_Helper_NazwaPomocnika, utworzy obiekt tej klasy i wywoła
+        metodę nazwaPomocnika(). Instancja obiektu istnieje teraz w instancji
+        Zend_View i będzie ona ponownie używana przy następnych wywołaniach 
+        $this->nazwaPomocnika().
+    </para>
+    
+    <sect2 id="zend.view.helpers.initial">
+    
+        <title>Wbudowane klasy pomocników</title>
+        
+        <para>
+            Zend_View posiada wbudowany zbiór klas pomocników, z których
+            wszystkie odnoszą się do generowania formularzy. Każda z nich
+            autmatycznie filtruje dane wyjściowe. Są to:
+        </para>
+        
+        <itemizedlist>
+            
+            <listitem><para>
+                formButton($name, $value, $attribs): Tworzy element &lt;input
+                type="button" /&gt;.
+            </para></listitem>
+            
+            <listitem><para>
+                formCheckbox($name, $value, $attribs, $options): Tworzy element 
+                &lt;input type="checkbox" /&gt;. Parametr $options jest tablicą
+                w której pierwszy element jest wartością dla pola zaznaczonego 
+                ("checked"), a drugi wartością dla niezaznaczonego ("unchecked")
+                (domyślnie są to wartości '1' i '0'). Jeśli wartość $value odpowiada
+                wartości pola zaznaczonego ("checked"), to pole zostanie zaznaczone.
+            </para></listitem>
+            
+            <listitem><para>
+                formFile($name, $value, $attribs): Tworzy element &lt;input
+                type="file" /&gt;.
+            </para></listitem>
+            
+            <listitem><para>
+                formHidden($name, $value, $attribs): Tworzy element &lt;input
+                type="hidden" /&gt;.
+            </para></listitem>
+            
+            <listitem><para>
+                formPassword($name, $value, $attribs): Tworzy element &lt;input
+                type="password" /&gt;.
+            </para></listitem>
+            
+            <listitem><para>
+                formRadio($name, $value, $attribs, $options): Tworzy serię
+                elementów &lt;input type="radio" /&gt;, po jednym dla każdego
+                elementu tablicy $options. W tablicy $options, klucz
+                jest wartością przycisku radio, a wartość elementu tablicy 
+                jest etykietą przycisku radio. Zmienna $value określa wartość
+                przycisku, który ma być początkowo zaznaczony.
+            </para></listitem>
+            
+            <listitem><para>
+                formReset($name, $value, $attribs): Tworzy element &lt;input
+                type="reset" /&gt;.
+            </para></listitem>
+            
+            <listitem><para>
+                formSelect($name, $value, $attribs, $options): Tworzy blok
+                &lt;select&gt;...&lt;/select&gt;, z elementami 
+                &lt;option&gt; po jednym dla każdego elementu tablicy $options.  
+                W tablicy $options klucz jest wartościa elementu, a wartość
+                jest etykietą. Zmienna $value określa wartośc elementu (lub
+                elementów), który ma być początkowo zaznaczony.
+            </para></listitem>
+            
+            <listitem><para>
+                formSubmit($name, $value, $attribs): Tworzy element &lt;input
+                type="submit" /&gt;.
+            </para></listitem>
+            
+            <listitem><para>
+                formText($name, $value, $attribs): Tworzy element &lt;input
+                type="text" /&gt;.
+            </para></listitem>
+            
+            <listitem><para>
+                formTextarea($name, $value, $attribs): Tworzy element 
+                &lt;textarea&gt;...&lt;/textarea&gt;.
+            </para></listitem>
+            
+        </itemizedlist>
+        
+        <para>
+            Użycie tych metod w Twoim skrypcie jest bardzo łatwe, poniżej
+            znajduje się przykład. Zauważ, że wszystko czego potrzebujesz
+            to wywołanie tych metod; załadowanie ich i utworzenie instancji
+            odbędzie się automatycznie.
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+// wewnątrz skryptu widoku, $this odnosi się do instancji Zend_View.
+// 
+// załóżmy, że już przypisałeś serię elementów opcji jako tablicę
+// o nazwie $countries = array('us' => 'United States', 'il' =>
+// 'Israel', 'de' => 'Germany').
+?>
+<form action="action.php" method="post">
+    <p><label>Adres Email:
+        <?php echo $this->formText('email', 'you@example.com', array('size' => 32)) ?>
+    </label></p>
+    <p><label>Kraj:
+        <?php echo $this->formSelect('country', 'us', null, $this->countries) ?>
+    </label></p>
+    <p><label>Czy zgadzasz się?
+        <?php echo $this->formCheckbox('opt_in', 'yes', null, array('yes', 'no')) ?>
+    </label></p>
+</form>]]>
+        </programlisting>
+
+        <para>
+            Rezultat wyglądałby w ten sposób:    
+        </para>
+
+        <programlisting role="php"><![CDATA[<form action="action.php" method="post">
+    <p><label>Adres Email:
+        <input type="text" name="email" value="you@example.com" size="32" />
+    </label></p>
+    <p><label>Kraj:
+        <select name="country">
+            <option value="us" selected="selected">United States</option>
+            <option value="il">Israel</option>
+            <option value="de">Germany</option>
+        </select>
+    </label></p>
+    <p><label>Czy zgadzasz się?
+        <input type="hidden" name="opt_in" value="no" />
+        <input type="checkbox" name="opt_in" value="yes" checked="checked" />
+    </label></p>
+</form>]]>
+        </programlisting>
+        
+    </sect2>
+    
+    <sect2 id="zend.view.helpers.paths">
+        
+        <title>Ścieżki klas pomocników</title>
+        
+        <para>
+            Tak jak ze skryptami widoków, kontroler może określić stos ścieżek,
+            w których Zend_View ma szukać klas pomocników. Domyślnie Zend_View 
+            szuka klas pomocników w katalogu "Zend/View/Helper/*". Możesz wybrać
+            inny katalog używając metod setHelperPath() oraz addHelperPath().
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$view = new Zend_View();
+$view->setHelperPath('/path/to/more/helpers');
+?>]]>
+        </programlisting>
+        
+        <para>
+            Oczywiście możesz dodawać ścieżki na stos używająć metody addHelperPath().
+            Gdy dodajesz ścieżki na stos, Zend_View będzie szukać klasy pomocnika
+            począwszy od ostatnio dodanej ścieżki. To pozwala na dodanie (lub 
+            nawet nadpisanie) podstawowego pakietu klas pomocników swoimi własnymi 
+            klasami.
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$view = new Zend_View();
+$view->addHelperPath('/path/to/some/helpers');
+$view->addHelperPath('/other/path/to/helpers');
+
+// teraz kiedy wywołasz $this->helperName(), Zend_View będzie wpierw szukał w
+// "/other/path/to/helpers/HelperName.php", potem w
+// "/path/to/some/helpers/HelperName" i ostatecznie w
+// "Zend/View/Helpers/HelperName.php".
+?>]]>
+        </programlisting>
+        
+    </sect2>
+    
+    <sect2 id="zend.view.helpers.custom">
+        
+        <title>Pisanie własnych klas pomocników</title>
+        
+        <para>
+            Pisanie własnych klas pomocników jest łatwe; po prostu pisz według 
+            poniższych zasad:
+        </para>
+        
+        <itemizedlist>
+            
+            <listitem><para>
+                Nazwa klasy musi być w postaci Zend_View_Helper_*, gdzie * oznacza
+                nazwę pomocnika. Na przykład jeśli chcesz napisać pomocnika
+                nazwanego "twojPomocnik", klasa powinna nazywać się 
+                "Zend_View_Helper_TwojPomocnik" (zwróć uwagę na początkowe
+                wielkie litery).
+            </para></listitem>
+            
+            <listitem><para>
+                Klasa musi posiadać publiczną metodę która jest taka jak nazwa 
+                pomocnika; jest to metoda która zostanie wywołana gdy skrypt
+                widoku wywoła "$this->twojPomocnik()". W przykładzie pomocnika
+                "twojPomocnik", wymaganą deklaracją metody powinno być
+                "public function twojPomocnik()". 
+            </para></listitem>
+            
+            <listitem><para>
+                Klasa nie powinna wyświetlać ani w inny sposób generować danych 
+                wyjściowych. Zamiast tego powinna zwrócić dane do wyświetlenia.
+                Zwracane wartości powinny być odpowiednio przefiltrowane.
+            </para></listitem>
+            
+            <listitem><para>
+                Klasa musi znajdować się w pliku odpowiednio do nazwy pomocnika.
+                Przykladowo dla pomocnika o nazwie "twojPomocnik", plik powinien
+                nazywać się "TwojPomocnik.php".
+            </para></listitem>
+        </itemizedlist>
+        
+        <para>
+            Umieść plik klasy pomocnika w katalogu który był dodany do stosu 
+            ścieżek, a Zend_View automatycznie załaduje klasę, utworzy instancję,
+            i uruchomi metodę. 
+        </para>
+        
+        <para>
+            Poniżej przykład kodu naszego przykładowego pomocnika twojPomocnik:
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+class Zend_View_Helper_TwojPomocnik {
+    protected $_count = 0;
+    public function twojPomocnik()
+    {
+        $this->_count++;
+        $output = "I have seen 'The Jerk' {$this->_count} time(s).";
+        return htmlspecialchars($output);
+    }
+}
+?>]]>
+        </programlisting>
+        
+        <para>
+            Teraz w skrypcie widoku możesz wywołać pomocnika TwojPomocnik
+            tyle razy ile zechcesz; instancja zostanie utworzona raz i będzie
+            ona istniała przez cały okres istnienia instancji Zend_View.
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+// pamiętaj, że w skrypcie widoku $this odnosi się do instancji Zend_View.
+echo $this->twojPomocnik();
+echo $this->twojPomocnik();
+echo $this->twojPomocnik();
+?>]]>
+        </programlisting>
+        
+        <para>
+            Dane wyjściowe wyglądałyby w ten sposób:
+        </para>
+        <programlisting role="php"><![CDATA[I have seen 'The Jerk' 1 time(s).
+I have seen 'The Jerk' 2 time(s).
+I have seen 'The Jerk' 3 time(s).]]>
+        </programlisting>
+        
+    </sect2>
+    
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,35 @@
+<sect1 id="zend.register">
+    <title>Zend::register()</title>
+
+    <para>
+    Rejestruje obiekt w rejestrze.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::register($name, $object)
+
+?>]]></programlisting>
+
+    <para>
+    Rejestr jest mechanizmem umożliwiającym aplikacji dostęp do jednej instancji
+    obiektu (singleton). Rejestrując obiekt w rejestrze, a następnie go odbierając
+    zawsze otrzymamy tą samą instancję obiektu.
+    </para>
+
+    <para>
+    Parametr <code>$name</code> jest nazwą obiektu przechowywanego w rejestrze.
+    Nazwa ta jest przekazywana jako parametr do metody <code>Zend::registry()</code> 
+    w celu powtórnego odebrania obiektu.
+    </para>
+
+    <para>
+    Parametr <code>$name</code> musi być łańcuchem znaków, w rejestrze mogą być
+    przechowywane tylko obiekty, obiekty nigdy nie mogą być usuwane z rejestru, a
+    instancja obiektu może być zarejestrowana tylko raz. Złamanie tych zasad 
+    spowoduje wyrzucenie wyjątku <code>Zend_Exception</code>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,32 @@
+<sect1 id="zend.loadinterface">
+    <title>Zend::loadInterface()</title>
+    <para>
+    <code>Zend::loadInterface()</code> działa identycznie jak <code>Zend::loadClass()</code>, 
+    jednak zamiast klasy ładuje interfejs.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::loadInterface($interface, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+    Metoda <code>Zend::loadClass()</code> nie może być używana do ładowania interfejsów
+    ponieważ funkcja PHP <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink> 
+    nie może sprawdzać istnienia interfejsów (od wersji PHP 5.0.2). Zamiast niej używamy
+    metody <code>Zend::loadInterface()</code>.
+    </para>
+
+    <para>
+    Jeśli próbuje się załadować interfejs zawierający podkreślniki w nazwie, a parametr 
+    <code>$dirs</code> ma wartość null (wartość domyślna), to metoda <code>Zend::loadInterface()</code> 
+    spróbuje automatycznie pobrać parametr <code>$dirs</code> z nazwy interfejsu
+    zamieniając podkreślniki na separatory katalogów. Na przykład jeżeli parametr <code>$interface</code> 
+    ma wartość <code>Zend_Example_Interface</code>, to zostanie załadowany interfejs 
+    <code>Zend/Example/Interface.php</code>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

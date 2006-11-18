@@ -1,0 +1,38 @@
+<sect1 id="zend.loadfile">
+    <title>Zend::loadFile()</title>
+
+    <para>
+    <code>Zend::loadFile()</code> ładuje plik PHP, który może zawierać dowolny kod PHP. 
+    Jest aliasem dla funkcji PHP <ulink url="http://php.net/include"><code>include()</code></ulink>, 
+    który w przypadku niepowodzenia wyrzuca wyjątek <code>Zend_Exception</code>.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::loadFile($filename, $dirs=null, $once=false)
+
+?>]]></programlisting>
+
+    <para>Parametr <code>$filename</code> określa nazwę pliku do załadowania. Nie może
+    on zawierać żadnych informacji o ścieżce. Parametr <code>$filename</code> sprawdzany jest
+    pod kątem bezpieczeństwa. Parametr <code>$filename</code> może zawierać jedynie znaki 
+    alfanumeryczne, myślniki ("-"), podkreślniki ("_"), lub znaki kropki ("."). 
+    Takich ograniczeń nie posiada parametr <code>$dirs</code>.
+    </para>
+
+    <para>Parametr <code>$dirs</code> określa ścieżki w których funkcja będzie szukała pliku.
+    Jeżeli wartością parametru jest <code>NULL</code>, to sprawdzane są tylko ścieżki
+    z dyrektywy <code>include_path</code>. Jeżeli wartością jest łańcuch znaków lub
+    tablica to w pierwszej kolejności sprawdzana jest podana ścieżka (lub ścieżki), a 
+    dopiero potem dyrektywa <code>include_path</code>.
+    </para>
+
+    <para>
+    Parametr <code>$once</code> jest wartością logiczną określającą czy plik
+    ma być załadowany za pomocą funkcji <ulink url="http://php.net/include"><code>include()</code></ulink> czy <ulink
+    url="http://php.net/include_once"><code>include_once()</code></ulink>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

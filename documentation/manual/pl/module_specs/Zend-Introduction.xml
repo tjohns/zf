@@ -1,0 +1,12 @@
+<sect1 id="zend.introduction">
+    <title>Wstęp</title>
+    <para>
+    Klasa Zend jest podstawową klasą Zend Framework. Została ona wydzielona
+    według zasady DRY (Don't Repeat Yourself - Nie Powtarzaj Siebie). Klasa zawiera
+    jedynie statyczne metody, a te metody zawierają funkcjonalność wymaganą przez 
+    wiele komponentów Zend Framework.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
