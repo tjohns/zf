@@ -390,14 +390,17 @@
             server and will be available as $_FILES['bufile']. The content type
             will be guesses automatically if possible - and if not, the content
             type will be set to 'application/octet-stream'. 
-            <note>
+        </para>
+        <note>
+            <title>Uploading files</title>
+            <para>
                 When uploading files, the HTTP request content-type is 
                 automatically set to multipart/form-data. Keep in mind that
                 you must send a POST or PUT request in order to upload files. 
                 Most servers will ignore the requests body on other request
                 methods.
-            </note>
-        </para>
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.http.client.raw_post_data">
         <title>Sending Raw POST Data</title>
@@ -426,13 +429,16 @@
             </example>
             The data should be available on the server side through PHP's 
             $HTTP_RAW_POST_DATA variable or through the php://input stream.
-            <note>
+        </para>
+        <note>
+            <title>Using raw POST data</title>
+            <para>
                 Setting raw POST data for a request will override any POST
                 parameters or file uploads. You should not try to use both on
                 the same request. Keep in mind that most servers will ignore 
                 the request body unless you send a POST request.
-            </note>
-        </para>
+            </para>
+        </note>
     </sect2>
     
     <sect2 id="zend.http.client.http_authentication">
@@ -481,14 +487,17 @@
             should use the resetParameters() method. This ensures that GET and
             POST parameters, request body and request-specific headers are 
             reset and are not reused in the next request.
-            <note>
+        </para>
+        <note>
+            <title>Reseting parameters</title>
+            <para>
                 Note that non-request specific headers are not reset when the 
                 resetParameters method is used. As a matter of fact, only the
                 'Content-length' and 'Content-type' headers are reset. This 
                 allows you to set-and-forget headers like 'Accept-language' and
                 'Accept-encoding'
-            </note>
-        </para>
+            </para>
+        </note>
         <para>
             Another feature designed specifically for consecutive requests is 
             the Cookie Jar object. Cookie Jars allow you to automatically save
