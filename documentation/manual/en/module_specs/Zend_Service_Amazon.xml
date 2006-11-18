@@ -156,8 +156,10 @@ foreach($response as $r) {
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>
         </para>
         <tip>
-            The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> class
-            is an easy to use wrapper around this method.
+            <para>
+                The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> class
+                is an easy to use wrapper around this method.
+            </para>
         </tip>
     </sect2>
     <sect2 id="zend.service.amazon.query">
