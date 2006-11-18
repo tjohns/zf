@@ -27,8 +27,11 @@
 $router->setRewriteBase('/projects/myapp');]]></programlisting>
 
 	<note>
-		This step won't be necessary in most cases and is strongly discouraged as it introduces another configuration variable
-		which would have to be altered when one moves code to another directory configuration.
+	    <title>Be aware</title>
+	    <para>
+    		This step won't be necessary in most cases and is strongly discouraged as it introduces another configuration variable
+	    	which would have to be altered when one moves code to another directory configuration.
+		</para>
 	</note>
 
 </sect1>
