@@ -282,8 +282,11 @@ Action    : index]]>
         </programlisting>
 
 		<note>
-            If you want more flexible capabilities, you may want to check out
-            <xref linkend="zend.controller.providedsubclasses.rewriterouter">Zend_Controller_RewriteRouter</xref>.
+		    <title>Flexibility</title>
+		    <para>
+                If you want more flexible capabilities, you may want to check out
+                <xref linkend="zend.controller.providedsubclasses.rewriterouter">Zend_Controller_RewriteRouter</xref>.
+            </para>
 		</note>
 
 		<para>
