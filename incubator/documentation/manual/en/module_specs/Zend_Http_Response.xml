@@ -10,11 +10,11 @@
             returned by a Zend_Http_Client request.
         </para>
         <para>
-            In most cases, a Zend_Http_Response object will be instanciated
+            In most cases, a Zend_Http_Response object will be instantiated
             using the factory() method, which reads a string containing an HTTP
             response message, and returns a new Zend_Http_Response object:
             <example>
-                <title>Instanciating a Zend_Http_Response object using the factory method</title>
+                <title>Instantiating a Zend_Http_Response object using the factory method</title>
                 <programlisting role="php"><![CDATA[<?php
 $str = '';
 $sock = fsockopen('www.example.com', 80);
@@ -32,8 +32,8 @@ $response = Zend_Http_Response::factory($str);
             </example>
         </para>
         <para>
-            You can also use the contructor method to create a new response
-            object, by specifieing all the parameters of the response:
+            You can also use the contractor method to create a new response
+            object, by specifying all the parameters of the response:
         </para>
         <para>
             <code>
@@ -64,20 +64,20 @@ $response = Zend_Http_Response::factory($str);
     <sect2 id="zend.http.response.testers">
         <title>Boolean Tester Methods</title>
         <para>
-            Once a Zend_Http_Response object is instanciated, it provides several
+            Once a Zend_Http_Response object is instantiated, it provides several
             methods that can be used to test the type of the response. These all
-            return boolean true or false:
+            return Boolean true or false:
             <itemizedlist>
                 <listitem>
-                    <code>boolean isSuccessful()</code>: Whether the request was succesful or not. Returns
+                    <code>Boolean isSuccessful()</code>: Whether the request was successful or not. Returns
                     TRUE for HTTP 1xx and 2xx response codes
                 </listitem>
                 <listitem>
-                    <code>boolean isError()</code>: Whether the response code implies an error or not. Returns
+                    <code>Boolean isError()</code>: Whether the response code implies an error or not. Returns
                     TRUE for HTTP 4xx (client errors) and 5xx (server errors) response codes
                 </listitem>
                 <listitem>
-                    <code>boolean isRedirect()</code>: Whether the response is a redirection response or not. Returns
+                    <code>Boolean isRedirect()</code>: Whether the response is a redirection response or not. Returns
                     TRUE for HTTP 3xx response codes
                 </listitem>
             </itemizedlist>
@@ -85,7 +85,7 @@ $response = Zend_Http_Response::factory($str);
                 <title>Using the isError() method to validate a response</title>
                 <programlisting role="php"><![CDATA[<?php
 if ($response->isError()) {
-  echo "Error transimitting data.\n"
+  echo "Error transmitting data.\n"
   echo "Server reply was: " . $response->getStatus() . " " . $response->getMessage() . "\n";
 }
 // .. process the response here...
@@ -96,7 +96,7 @@ if ($response->isError()) {
     <sect2 id="zend.http.response.acessors">
         <title>Accessor Methods</title>
         <para>
-            The main goal of the response objecdt is to provide easy access to
+            The main goal of the response object is to provide easy access to
             various response parameters. 
             <itemizedlist>
                 <listitem>
@@ -104,13 +104,13 @@ if ($response->isError()) {
                 </listitem>
                 <listitem>
                     <code>string getMessage()</code>: Get the HTTP response status message (eg. "Not Found",
-                    "Authorisation Required")
+                    "Authorization Required")
                 </listitem>
                 <listitem>
                     <code>string getBody()</code>: Get the fully decoded HTTP response body
                 </listitem>
                 <listitem>
-                    <code>string getRawBody()</code>: Get the raw, undecoded HTTP response body. If
+                    <code>string getRawBody()</code>: Get the raw, possibly encoded HTTP response body. If
                     the body was decoded using GZIP encoding for example, it will not be decoded.
                 </listitem>
                 <listitem>
@@ -139,7 +139,7 @@ if ($response->getStatus() == 200) {
   echo "The request returned the following information:<br />";
   echo $response->getBody();
 } else {
-  echo "An error occured while fetching data:<br />";
+  echo "An error occurred while fetching data:<br />";
   echo $response->getStatus() . ": " . $response->getMessage();
 }
 ?>]]></programlisting>
@@ -168,12 +168,12 @@ echo $body;
     </sect2>
     
     <sect2 id="zend.http.response.static_parsers">
-        <title>Statis HTTP Response Parsers</title>
+        <title>Static HTTP Response Parsers</title>
         <para>
             The Zend_Http_Response class also includes several internally-used 
             methods for processing and parsing HTTP response messages. These 
             methods are all exposed as static methods, which means they can be
-            used externally, even if you do not need to instanciate a response
+            used externally, even if you do not need to instantiate a response
             object, and just want to extract a specific part of the response.
             <itemizedlist>
                 <listitem>
