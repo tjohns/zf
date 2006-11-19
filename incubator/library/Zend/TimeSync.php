@@ -58,9 +58,9 @@ class Zend_TimeSync
     private $timeservers = array();
         
     /**
-     * Current timeserver being used
+     * Holds a reference to the current timeserver being used
      *
-     * @var integer
+     * @var object
      */
     protected $_current;
     
@@ -81,6 +81,8 @@ class Zend_TimeSync
     public function __construct($server, $options = array()) {
         $this->_addServer($server);
         $this->setOptions($options);
+        
+        $this->_current = current($this->timeservers);
     }
     
     public function setOptions($options = array()) 
@@ -103,7 +105,6 @@ class Zend_TimeSync
         } else {
             $defaultUrl = array(
                 'scheme' => self::DEFAULT_TIMESERVER_SCHEME,
-                'port'   => self::DEFAULT_NTP_PORT
             );
                                 
             $url = @array_merge($defaultUrl, @parse_url($server));
@@ -114,6 +115,11 @@ class Zend_TimeSync
             if (!isset($url['host']) && isset($url['path'])) {
                 $url['host'] = $url['path'];
             }
+            if (!isset($url['port']) && $protocol === 'udp') {
+                $url['port'] = self::DEFAULT_NTP_PORT;
+            } else {
+                $url['port'] = self::DEFAULT_SNTP_PORT;
+            }
             
             $className = 'Zend_TimeSync_' . ucfirst($url['scheme']);
             require_once 'Zend/TimeSync/' . ucfirst($url['scheme']) . '.php';
@@ -123,5 +129,14 @@ class Zend_TimeSync
     }
     
     public function getDate($locale = false)
-    {}
+    {
+        $timestamp = $this->_current->query();
+        if ($timestamp) {
+            return new Zend_Date($timestamp, false, $locale);
+        } elseif (next($this->timeservers)) {
+            $this->getDate($locale);
+        } else {
+            throw new Zend_TimeSync_Exception('all servers are bogus');
+        }
+    }
 }
