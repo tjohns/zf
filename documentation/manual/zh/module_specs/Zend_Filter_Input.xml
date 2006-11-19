@@ -19,6 +19,7 @@
             </listitem>
         </itemizedlist>
         <para>有多种方法和机能，供PHP开发人员用来输入数据的过滤。白名单过滤，黑名单过滤，正则表达式，条件语句，PHP函数，这些只仅仅是输入数据过滤的一部分例子。<literal>Zend_Filter_Input</literal>联合了所有这些机能，提供了一个统一的、命名规范的API。所有<literal>Zend_Filter_Input</literal>函数方法都遵守这么一个简单的规则：如果是有效的数据就被返回数据本身，否则就返回<literal>FALSE</literal>。就是如此的简单！</para>
+    </sect2>
         <sect2 id="zend.filter.input.introduction.whitelist">
             <title>白名单过滤(Whitelist Filtering)</title>
             <para>白名单过滤方法的函数名以<literal>test</literal>开头，例如<literal>testAlpha()</literal>、<literal>testEmail()</literal>。这些方法按照预先定义的准则检查输入数据，如果符合准则就返回数据本身，否则返回<literal>FALSE</literal>。下面是一个简单的例子。</para>
@@ -83,7 +84,6 @@
     ?>]]>
             </programlisting>
         </sect2>
-    </sect2>
     <sect2 id="zend.filter.input.theoryofoperation">
         <title>运转原理</title>
         <para><literal>Zend_Filter_Input</literal>为输入数据的过滤，提供了一个统一的、命名规范的API（请见<xref linkend="zend.filter.input.introduction" />）。这些特性，使得<literal>Zend_Filter_Input</literal>与现有的解决方案平起平坐，但是<literal>Zend_Filter_Input</literal> 不做更进一步的过滤。因此，<literal>Zend_Filter_Input</literal>默认地约束了输入数据的使用。</para>
@@ -92,7 +92,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST);
-    $email = $filterPost->isEmail('email');
+    $email = $filterPost->testEmail('email');
     
     ?>]]>
         </programlisting>
@@ -102,7 +102,7 @@
     <![CDATA[<?php
     
     $filterPost = new Zend_Filter_Input($_POST, FALSE);
-    $email = $filterPost->isEmail('email');
+    $email = $filterPost->testEmail('email');
     
     ?>]]>
         </programlisting>
@@ -117,7 +117,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST);
     
-    if ($email = $filterPost->isEmail('email')) {
+    if ($email = $filterPost->testEmail('email')) {
         /* $email is a valid email format. */
     } else {
         /* $email is not a valid email format. */
@@ -149,7 +149,7 @@
     
     $filterPost = new Zend_Filter_Input($_POST, FALSE);
     
-    if ($email = $filterPost->isEmail('email')) {
+    if ($email = $filterPost->testEmail('email')) {
         /* $email is a valid email format. */
     } else {
         /* $email is not a valid email format. */
