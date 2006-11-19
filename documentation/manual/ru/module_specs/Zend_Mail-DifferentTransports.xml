@@ -39,11 +39,14 @@ $mail->send();  // опять используется соединение по
 ?>]]>   </programlisting>
     </example>
     <note>
-        Дополнительные транспортировщики могут быть написаны посредством реализации
-        интерфейса <code>Zend_Mail_Transport_Interface</code>.
+        <title>Дополнительные транспортировщики<!--Additional transports--></title>
+        <para>
+            Дополнительные транспортировщики могут быть написаны посредством реализации
+            интерфейса <code>Zend_Mail_Transport_Interface</code>.
 <!--
-        Additional transports can be written by implementing <code>Zend_Mail_Transport_Interface</code>.
+            Additional transports can be written by implementing <code>Zend_Mail_Transport_Interface</code>.
 -->
+        </para>
     </note>
 </sect1>
 <!--

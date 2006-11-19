@@ -41,13 +41,16 @@ $mail->send();
 ?>]]>   </programlisting>
     </example>
     <note>
-        Чтобы отправить сообщение с помощью <code>Zend_Mail</code>, вы должны
-        указать как минимум одного получателя, отправителя (например, с помощью
-        <code>setFrom()</code>), и текст сообщения (текстовое и/или в формате HTML).
+        <title>Минимально необходимые определения<!--Minimum definitions--></title>
+        <para>
+            Чтобы отправить сообщение с помощью <code>Zend_Mail</code>, вы должны
+            указать как минимум одного получателя, отправителя (например, с помощью
+            <code>setFrom()</code>), и текст сообщения (текстовое и/или в формате HTML).
 <!--
-        In order to send an e-mail with <code>Zend_Mail</code> you have to specify at least one recipient, a
-        sender (e.g., with <code>setFrom()</code>), and a message body (text and/or HTML).
+            In order to send an e-mail with <code>Zend_Mail</code> you have to specify at least one recipient, a
+            sender (e.g., with <code>setFrom()</code>), and a message body (text and/or HTML).
 -->
+        </para>
     </note>
     <para>
         Для большинства атрибутов сообщений электронной почты есть методы

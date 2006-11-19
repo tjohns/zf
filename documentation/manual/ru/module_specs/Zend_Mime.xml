@@ -19,29 +19,41 @@
 -->
         <itemizedlist>
             <listitem>
-                <code>boundary()</code>: Возвращает разделитель MIME.
-                <!--Returns the MIME boundary string.-->
+                <para>
+                    <code>boundary()</code>: Возвращает разделитель MIME.
+                    <!--Returns the MIME boundary string.-->
+                </para>
             </listitem>
             <listitem>
-                <code>boundaryLine()</code>: Возвращает полную строку с разделителем MIME.
-                <!--Returns the complete MIME boundary line.-->
+                <para>
+                    <code>boundaryLine()</code>: Возвращает полную строку с разделителем MIME.
+                    <!--Returns the complete MIME boundary line.-->
+                </para>
             </listitem>
             <listitem>
-                <code>encodeBase64()</code>: Кодирует строку по алгоритму base64.
-                <!--Encodes a string into base64 encoding.-->
+                <para>
+                    <code>encodeBase64()</code>: Кодирует строку по алгоритму base64.
+                    <!--Encodes a string into base64 encoding.-->
+                </para>
             </listitem>
             <listitem>
-                <code>encodeQuotedPrintable()</code>: Кодирует строку по алгоритму quoted-printable.
-                <!--Encodes a string with the quoted-printable mechanism.-->
+                <para>
+                    <code>encodeQuotedPrintable()</code>: Кодирует строку по алгоритму quoted-printable.
+                    <!--Encodes a string with the quoted-printable mechanism.-->
+                </para>
             </listitem>
             <listitem>
-                <code>isPrintable()</code>: Возвращает TRUE, если данная строка не содержит непечатаемых символов,
-                иначе FALSE.
-                <!--Returns TRUE if the given string contains no unprintable characters, FALSE otherwise.-->
+                <para>
+                    <code>isPrintable()</code>: Возвращает TRUE, если данная строка не содержит непечатаемых символов,
+                    иначе FALSE.
+                    <!--Returns TRUE if the given string contains no unprintable characters, FALSE otherwise.-->
+                </para>
             </listitem>
             <listitem>
-                <code>mimeEnd()</code>: Возвращает полную завершающую строку с разделителем MIME. 
-                <!--Returns the complete MIME end boundary line.-->
+                <para>
+                    <code>mimeEnd()</code>: Возвращает полную завершающую строку с разделителем MIME. 
+                    <!--Returns the complete MIME end boundary line.-->
+                </para>
             </listitem>
         </itemizedlist>
     </para>

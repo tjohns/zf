@@ -11,8 +11,8 @@
 	</para>
 
 	<programlisting role="php"><![CDATA[
-$router->addRoute('user', 'user/:username');]]></programlisting>
-
+$route = new Zend_Controller_Router_Route('user/:username');
+$router->addRoute('user', $route);]]></programlisting>
 	<para>
 	  Первым параметром является имя маршрута. На данный момент он является избыточным,
 	  но в будущем будет использоваться в вспомогательном классе вида (view) для
@@ -42,26 +42,44 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
 	</para>
 
 	<note>
-	  Маршруты сверяются в обратном порядке, поэтому удостоверьтесь, что
-	  наиболее общие маршруты определены первыми.
+      <title>Порядок определения<!--Order of definitions--></title>
+      <para>
+          Маршруты сверяются в обратном порядке, поэтому удостоверьтесь, что
+	        наиболее общие маршруты определены первыми.
 <!--
 		Routes are matched in reverse order so make sure your most generic routes are defined first.
 -->
+	    </para>
 	</note>
 
 	<note>
-	  На данный момент текущая реализация позволяет использовать любые символы,
-	  кроме прямой косой черты (/), в идентификаторе переменной, но
-	  сильно рекомендуется использовать в них только символы,
-    допустимые для переменных в php. Есть вероятность, что в будущем реализация
-    изменится, и это может вызвать ошибки в вашем коде.
+	    <title>Разрешенные символы<!--Allowed characters--></title>
+	    <para>
+	        На данный момент текущая реализация позволяет использовать любые символы,
+	        кроме прямой косой черты (/), в идентификаторе переменной, но
+  	      сильно рекомендуется использовать в них только символы,
+          допустимые для переменных в php. Есть вероятность, что в будущем реализация
+          изменится, и это может вызвать ошибки в вашем коде.
 <!--
 		For now the current implementation allows for use of any characters except a slash (/) as a variable identifier but
 		it is strongly recommended that one uses only php variable friendly characters. In future the implementation will probably be
 		altered and this may introduce bugs to your code.
 -->
+      </para>
 	</note>
-
+	
+  <note>
+      <title>Внимание</title>
+      <para>
+          Если вы добавите маршрут с таким же именем, как у уже существующего, то
+          старый маршрут будет перезаписан новым.
+<!--
+    If you choose to add a Route named exactly the same as already existent
+    route then the newest will override (replace) the older one.
+-->
+      </para>  
+  </note>
+  
 	<para>
 	  Есть две специальные переменные, которые можно использовать в
     маршрутах — 'controller' и 'action'. Эти специальные переменные могут
@@ -78,7 +96,8 @@ $router->addRoute('user', 'user/:username');]]></programlisting>
 	</para>
 
 	<programlisting role="php"><![CDATA[
-$router->addRoute('user', ':controller/:action');]]></programlisting>
+$route = new Zend_Controller_Router_Route(':controller/:action');
+$router->addRoute('user', $route);]]></programlisting>
 
 	<para>
 	  Адрес <code>http://example.com/news/latest</code> с таким маршрутом вызовет

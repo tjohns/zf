@@ -15,32 +15,44 @@
 -->
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Возвращает <code>TRUE</code>, если
-                    был получен код ошибки, иначе <code>FALSE</code>.
-                    <!-- Returns TRUE if an HTTP error code was received; FALSE otherwise. -->
+                    <para>
+                        <code>isError()</code>: Возвращает <code>TRUE</code>, если
+                        был получен код ошибки, иначе <code>FALSE</code>.
+                        <!-- Returns TRUE if an HTTP error code was received; FALSE otherwise. -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Возвращает <code>TRUE</code>, если
-                    был получен код успешного выполнения, иначе <code>FALSE</code>.
-                    <!-- Returns TRUE if an HTTP success code was received; FALSE otherwise. -->
+                    <para>
+                        <code>isSuccessful()</code>: Возвращает <code>TRUE</code>, если
+                        был получен код успешного выполнения, иначе <code>FALSE</code>.
+                        <!-- Returns TRUE if an HTTP success code was received; FALSE otherwise. -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Возвращает <code>TRUE</code>, если
-                    был получен код переадресации, иначе <code>FALSE</code>.
-                    <!-- Returns TRUE if an HTTP redirect code was received; FALSE otherwise. -->
+                    <para>
+                        <code>isRedirect()</code>: Возвращает <code>TRUE</code>, если
+                        был получен код переадресации, иначе <code>FALSE</code>.
+                        <!-- Returns TRUE if an HTTP redirect code was received; FALSE otherwise. -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Возвращает код состояния.
-                    <!-- Returns the HTTP status code. -->
+                    <para>
+                        <code>getStatus()</code>: Возвращает код состояния.
+                        <!-- Returns the HTTP status code. -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Возвращает массив строк с заголовками
-                    ответа HTTP.  
-                    <!-- Returns an array of HTTP response header strings. -->
+                    <para>
+                        <code>getHeaders()</code>: Возвращает массив строк с заголовками
+                        ответа HTTP.  
+                        <!-- Returns an array of HTTP response header strings. -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Возвращает тело ответа HTTP в виде строки. 
-                    <!-- Returns the HTTP response body as a string. -->
+                    <para>
+                        <code>getBody()</code>: Возвращает тело ответа HTTP в виде строки. 
+                        <!-- Returns the HTTP response body as a string. -->
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>

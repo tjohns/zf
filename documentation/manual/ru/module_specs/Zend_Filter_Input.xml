@@ -102,132 +102,133 @@
             Extreme simplicity.
 -->
         </para>
-        <sect2 id="zend.filter.input.introduction.whitelist">
-            <title>
-                Фильтрация по "белому списку"
-                <!-- Whitelist Filtering -->
-            </title>
-            <para>
-                Методы для фильтрации по "белому списку" начинаются с префикса 
-                <literal>test</literal>, как, например, <literal>testAlpha()</literal> и
-                <literal>testEmail()</literal>. Эти методы проверяют соответствие входных
-                данных предопределенному критерию и возвращают данные, только если
-                они соответствуют этому критерию. Если не соответствуют, то возвращается
-                <literal>FALSE</literal>. Следующий простой пример демонстрирует это:
+    </sect2>
+    <sect2 id="zend.filter.input.introduction.whitelist">
+        <title>
+            Фильтрация по "белому списку"
+            <!-- Whitelist Filtering -->
+        </title>
+        <para>
+            Методы для фильтрации по "белому списку" начинаются с префикса 
+            <literal>test</literal>, как, например, <literal>testAlpha()</literal> и
+            <literal>testEmail()</literal>. Эти методы проверяют соответствие входных
+            данных предопределенному критерию и возвращают данные, только если
+            они соответствуют этому критерию. Если не соответствуют, то возвращается
+            <literal>FALSE</literal>. Следующий простой пример демонстрирует это:
 <!--
-                Whitelist filtering methods begin with the <literal>test</literal>
-                prefix, such as <literal>testAlpha()</literal> and
-                <literal>testEmail()</literal>. These methods inspect input according to
-                pre-defined criteria and return the data only if it adheres to the
-                criteria. If not, <literal>FALSE</literal> is returned. The following
-                provides a simple demonstration:
+            Whitelist filtering methods begin with the <literal>test</literal>
+            prefix, such as <literal>testAlpha()</literal> and
+            <literal>testEmail()</literal>. These methods inspect input according to
+            pre-defined criteria and return the data only if it adheres to the
+            criteria. If not, <literal>FALSE</literal> is returned. The following
+            provides a simple demonstration:
 -->
-            </para>
-            <programlisting>
-    <![CDATA[<?php
+        </para>
+        <programlisting>
+<![CDATA[<?php
     
-    $filterPost = new Zend_Filter_Input($_POST);
+$filterPost = new Zend_Filter_Input($_POST);
     
-    if ($alphaName = $filterPost->testAlpha('name')) {
-        /* $alphaName содержит только алфавитные символы. */
-    } else {
-        /* $alphaName имеет значение FALSE. */
-    }
+if ($alphaName = $filterPost->testAlpha('name')) {
+    /* $alphaName содержит только алфавитные символы. */
+} else {
+    /* $alphaName имеет значение FALSE. */
+}
     
-    ?>]]>
-            </programlisting>
-            <para>
-                В этом подходе мы перестраховываемся, производя оценку
-                возвращаемого значения как булев тип.  
-                Если вы хотите отличать значения, которые при преобразовании
-                в булев тип рассматриваются как <literal>FALSE</literal>
-                (такие, как целочисленное значение <literal>0</literal>, пустая строка),
-                то можете производить строгое сравнение с <literal>FALSE</literal>: 
+?>]]>
+        </programlisting>
+        <para>
+            В этом подходе мы перестраховываемся, производя оценку
+            возвращаемого значения как булев тип.  
+            Если вы хотите отличать значения, которые при преобразовании
+            в булев тип рассматриваются как <literal>FALSE</literal>
+            (такие, как целочисленное значение <literal>0</literal>, пустая строка),
+            то можете производить строгое сравнение с <literal>FALSE</literal>: 
 <!--
-                This approach errs on the side of caution by performing a boolean
-                evaluation of the return value. If you want to distinguish among values
-                that evaluate to <literal>FALSE</literal> in PHP (such as the integer
-                <literal>0</literal> and the empty string), you can perform a strict
-                comparison to <literal>FALSE</literal>:
+            This approach errs on the side of caution by performing a boolean
+            evaluation of the return value. If you want to distinguish among values
+            that evaluate to <literal>FALSE</literal> in PHP (such as the integer
+            <literal>0</literal> and the empty string), you can perform a strict
+            comparison to <literal>FALSE</literal>:
 -->
-            </para>
-            <programlisting>
-    <![CDATA[<?php
+        </para>
+        <programlisting>
+<![CDATA[<?php
     
-    $filterPost = new Zend_Filter_Input($_POST);
-    $alphaName = $filterPost->testAlpha('name');
+$filterPost = new Zend_Filter_Input($_POST);
+$alphaName = $filterPost->testAlpha('name');
+   
+if ($alphaName !== FALSE) {
+    /* $alphaName содержит только алфавитные символы. */
+} else {
+    /* $alphaName === FALSE */
+}
     
-    if ($alphaName !== FALSE) {
-        /* $alphaName содержит только алфавитные символы. */
-    } else {
-        /* $alphaName === FALSE */
-    }
-    
-    ?>]]>
-            </programlisting>
-        </sect2>
-        <sect2 id="zend.filter.input.introduction.blind">
-            <title>
-                "Слепая" фильтрация
-                <!-- Blind Filtering -->
-            </title>
-            <para>
-                Методы для "слепой" фильтрации начинаются с префикса
-                <literal>get</literal>, как, например, <literal>getAlpha()</literal>
-                и <literal>getDigits()</literal>. Эти методы не проверяют входные
-                данные, вместо этого возвращают те его части, которые считаются
-                корректными. Например, <literal>getAlpha()</literal> возвращает только
-                алфавитные символы, если они есть. (Если их нет, то остаточная строка
-                будет пустой.) Следующий простой пример демонстрирует это:
+?>]]>
+        </programlisting>
+    </sect2>
+    <sect2 id="zend.filter.input.introduction.blind">
+        <title>
+            "Слепая" фильтрация
+            <!-- Blind Filtering -->
+        </title>
+        <para>
+            Методы для "слепой" фильтрации начинаются с префикса
+            <literal>get</literal>, как, например, <literal>getAlpha()</literal>
+            и <literal>getDigits()</literal>. Эти методы не проверяют входные
+            данные, вместо этого возвращают те его части, которые считаются
+            корректными. Например, <literal>getAlpha()</literal> возвращает только
+            алфавитные символы, если они есть. (Если их нет, то остаточная строка
+            будет пустой.) Следующий простой пример демонстрирует это:
 <!--
-                Blind filtering methods begin with the <literal>get</literal>
-                prefix, such as <literal>getAlpha()</literal> and
-                <literal>getDigits()</literal>. These methods do not inspect input but
-                instead return the portion of it considered to be valid. For example,
-                <literal>getAlpha()</literal> returns only the alphabetic characters,
-                if there are any. (If not, the remaining string is the empty string.)
-                The following provides a simple demonstration:
+            Blind filtering methods begin with the <literal>get</literal>
+            prefix, such as <literal>getAlpha()</literal> and
+            <literal>getDigits()</literal>. These methods do not inspect input but
+            instead return the portion of it considered to be valid. For example,
+            <literal>getAlpha()</literal> returns only the alphabetic characters,
+            if there are any. (If not, the remaining string is the empty string.)
+            The following provides a simple demonstration:
 -->
-            </para>
-            <programlisting>
-    <![CDATA[<?php
-    
-    /* $_POST['username'] = 'John123Doe'; */
-    
-    $filterPost = new Zend_Filter_Input($_POST);
-    $alphaUsername = $filterPost->getAlpha('username');
-    
-    /* $alphaUsername = 'JohnDoe'; */
-    
-    ?>]]>
-            </programlisting>
-        </sect2>
-        <sect2 id="zend.filter.input.introduction.blacklist">
-            <title>
-                Фильтрация по "черному списку"
-                <!-- Blacklist Filtering -->
-            </title>
-            <para>
-                Методы для фильтрации по "черному списку" начинаются с префикса
-                <literal>no</literal>, как, например, <literal>noPath()</literal>.
-                Эти методы идентичны методам для "слепой" фильтрации, за исключением
-                того, что критерии, которым они следуют, основаны на том, что
-                считается недопустимым, а не на том, что считается допустимым.
-                Недопустимые данные удаляются и возвращаются оставшиеся данные
-                (рассматриваемые как допустимые). Следующий простой пример
-                демонстрирует это:
+        </para>
+        <programlisting>
+<![CDATA[<?php
+
+/* $_POST['username'] = 'John123Doe'; */
+
+$filterPost = new Zend_Filter_Input($_POST);
+$alphaUsername = $filterPost->getAlpha('username');
+
+/* $alphaUsername = 'JohnDoe'; */
+
+?>]]>
+        </programlisting>
+    </sect2>
+    <sect2 id="zend.filter.input.introduction.blacklist">
+        <title>
+            Фильтрация по "черному списку"
+            <!-- Blacklist Filtering -->
+        </title>
+        <para>
+            Методы для фильтрации по "черному списку" начинаются с префикса
+            <literal>no</literal>, как, например, <literal>noPath()</literal>.
+            Эти методы идентичны методам для "слепой" фильтрации, за исключением
+            того, что критерии, которым они следуют, основаны на том, что
+            считается недопустимым, а не на том, что считается допустимым.
+            Недопустимые данные удаляются и возвращаются оставшиеся данные
+            (рассматриваемые как допустимые). Следующий простой пример
+            демонстрирует это:
 <!--
-                Blacklist filtering methods begin with the <literal>no</literal>
-                prefix, such as <literal>noTags()</literal> and
-                <literal>noPath()</literal>. These methods are identical to the blind
-                filtering methods, except the criteria they enforce is based upon what
-                is considered invalid instead of what is considered valid. Invalid data
-                is removed, and the remaining data (assumed valid) is returned. The
-                following provides a simple demonstration:</para>
+            Blacklist filtering methods begin with the <literal>no</literal>
+            prefix, such as <literal>noTags()</literal> and
+            <literal>noPath()</literal>. These methods are identical to the blind
+            filtering methods, except the criteria they enforce is based upon what
+            is considered invalid instead of what is considered valid. Invalid data
+            is removed, and the remaining data (assumed valid) is returned. The
+            following provides a simple demonstration:</para>
 -->
-                <programlisting><![CDATA[
+            <programlisting><![CDATA[
 <?php
-    
+
 /* $_POST['comment'] = '<b>I love PHP!</b>'; */
 
 $filterPost = new Zend_Filter_Input($_POST);
@@ -236,8 +237,7 @@ $taglessComment = $filterPost->noTags('comment');
 /* $taglessComment = 'I love PHP!'; */
     
 ?>]]></programlisting>
-            </para>
-        </sect2>
+        </para>
     </sect2>
     <sect2 id="zend.filter.input.theoryofoperation">
         <title>

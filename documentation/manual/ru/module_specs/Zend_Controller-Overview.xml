@@ -226,14 +226,18 @@ Action    : index]]>
         </programlisting>
 
         <note>
-            В настоящее время мы разрабатываем новый маршрутизатор, с механизмом перезаписи URI (URI rewriting),
-            который даст намного более гибкие возможности, что сейчас доступны в маршрутизаторе. Это будет включено
-            в предварительном релизе в очень близком будущем.
+            <title>Новый механизм перезаписи<!--New rewrite engine--></title>
+            <para>
+                В настоящее время мы разрабатываем новый маршрутизатор, с механизмом
+                перезаписи URI (URI rewriting), который даст намного более
+                гибкие возможности, что сейчас доступны в маршрутизаторе. Это
+                будет включено в предварительном релизе в ближайшем будущем.
 <!--
-            We are currently developing a new router with a URI rewriting engine that will give
-            much more flexible capabilities than are presently available in the router.
-            This will be included in a preview release in the very near future.
+                We are currently developing a new router with a URI rewriting engine that will give
+                much more flexible capabilities than are presently available in the router.
+                This will be included in a preview release in the very near future.
 -->
+            </para>
         </note>
 
         <para>

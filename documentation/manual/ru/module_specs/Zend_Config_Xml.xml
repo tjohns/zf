@@ -26,14 +26,17 @@
 -->
     </para>
     <note>
-        Конфигурационные данные, прочитанные в <code>Zend_Config_Xml</code>,
-        всегда возвращаются как строки. Приведение данных из строк к другим
-        типам под свои нужды предоставляется разработчикам.
+        <title>Тип возвращаемых данных<!--Return type--></title>
+        <para>
+            Конфигурационные данные, прочитанные в <code>Zend_Config_Xml</code>,
+            всегда возвращаются как строки. Приведение данных из строк к другим
+            типам под свои нужды предоставляется разработчикам.
 <!--
-        Configuration data read into <code>Zend_Config_Xml</code> are always
-        returned as strings. Conversion of data from strings to other types is
-        left to developers to suit their particular needs.
+            Configuration data read into <code>Zend_Config_Xml</code> are always
+            returned as strings. Conversion of data from strings to other types is
+            left to developers to suit their particular needs.
 -->
+        </para>
     </note>
     <example>
         <title>Использование Zend_Config_Xml<!--Using Zend_Config_Xml--></title>

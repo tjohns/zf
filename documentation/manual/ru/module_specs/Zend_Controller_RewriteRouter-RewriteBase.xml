@@ -23,14 +23,17 @@
 	</para>
 
 	<note>
-	  Автоматическая замена основы URL чувствительна к регистру, поэтому удостоверьтесь,
-	  что ваш URL будет соответствует имени подкаталога в файловой системе
-	  (даже под Windows). Если вы не сделаете этого, то в результате может
-    вызываться действие <code>noRoute</code>.
+	    <title>Чувствительность к регистру<!--Case sensitivity--></title>
+	    <para>
+	        Автоматическая замена основы URL чувствительна к регистру, поэтому удостоверьтесь,
+	        что ваш URL будет соответствует имени подкаталога в файловой системе
+	        (даже под Windows). Если вы не сделаете этого, то в результате может
+          вызываться действие <code>noRoute</code>.
 <!--
-		Automatic rewrite base is case sensitive, so make sure your URL will match a subdirectory name in a filesystem
-		(even on Windows machines). If it doesn't you will get to noRoute action.
+		      Automatic rewrite base is case sensitive, so make sure your URL will match a subdirectory name in a filesystem
+		      (even on Windows machines). If it doesn't you will get to noRoute action.
 -->
+      </para>
 	</note>
 
 	<para>
@@ -46,14 +49,19 @@
 $router->setRewriteBase('/projects/myapp');]]></programlisting>
 
 	<note>
-	  В большинстве случаев этот шаг не является обязательным и сильно не
-    рекомендуется, так как вносит дополнительную переменную конфигурации,
-    которая должна изменяться, когда производится перемещение кода в
-    другой каталог.
+	    <title>Внимание</title>
+	    <para>
+	        В большинстве случаев этот шаг не является обязательным и сильно не
+          рекомендуется, так как вносит дополнительную переменную конфигурации,
+          которая должна изменяться, когда производится перемещение кода в
+          другой каталог.
 <!--
-		This step won't be necessary in most cases and is strongly discouraged as it introduces another configuration variable
-		which would have to be altered when one moves code to another directory configuration.
+		      This step won't be necessary in most cases and is strongly
+          discouraged as it introduces another configuration variable
+		      which would have to be altered when one moves code to another
+          directory configuration.
 -->
+      </para>
 	</note>
 
 </sect1>

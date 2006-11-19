@@ -86,48 +86,58 @@ $profiler = $db->getProfiler();
 
         <itemizedlist>
             <listitem>
-                <code>getTotalNumQueries()</code> возвращает общее количество
-                запросов, которые были обработаны профайлером.
+                <para>
+                    <code>getTotalNumQueries()</code> возвращает общее количество
+                    запросов, которые были обработаны профайлером.
 <!--
-                <code>getTotalNumQueries()</code> returns the total number
-                of queries that have been profiled.
+                    <code>getTotalNumQueries()</code> returns the total number
+                    of queries that have been profiled.
 -->
+                </para>
             </listitem>
             <listitem>
-                <code>getTotalElapsedSecs()</code> возвращает общее
-                количество секунд, затраченное на все запросы, обработанные
-                профайлером.
+                <para>
+                    <code>getTotalElapsedSecs()</code> возвращает общее
+                    количество секунд, затраченное на все запросы, обработанные
+                    профайлером.
 <!--
-                <code>getTotalElapsedSecs()</code> returns the total
-                number of seconds elapsed for all profiled queries.
+                    <code>getTotalElapsedSecs()</code> returns the total
+                    number of seconds elapsed for all profiled queries.
 -->
+                </para>
             </listitem>
             <listitem>
-                <code>getQueryProfiles()</code> возвращает массив всех профайлов
-                запросов.
+                <para>
+                    <code>getQueryProfiles()</code> возвращает массив всех профайлов
+                    запросов.
 <!--
                 <code>getQueryProfiles()</code> returns an array of all
                 query profiles.
 -->
+                </para>
             </listitem>
             <listitem>
-                <code>getLastQueryProfile()</code> возвращает последний
-                (самый недавний) профайл запроса, безотносительно того, был ли
-                запрос завершен (Если не был завершен, то конечное время будет
-                равно <code>NULL</code>).
+                <para>
+                    <code>getLastQueryProfile()</code> возвращает последний
+                    (самый недавний) профайл запроса, безотносительно того, был ли
+                    запрос завершен (Если не был завершен, то конечное время будет
+                    равно <code>NULL</code>).
 <!--
                 <code>getLastQueryProfile()</code> returns the last (most
                 recent) query profile, regardless of whether or not the query
                 has finished (if it hasn't, the end time will be null)
 -->
+                </para>
             </listitem>
             <listitem>
-                <code>clear()</code> удаляет все профайлы прошлых запросов из
-                стека.
+                <para>
+                    <code>clear()</code> удаляет все профайлы прошлых запросов из
+                    стека.
 <!--
                 <code>clear()</code> clears any past query profiles
                 fromthe stack.
 -->
+                </para>
             </listitem>
         </itemizedlist>
 
@@ -146,18 +156,22 @@ $profiler = $db->getProfiler();
 
         <itemizedlist>
             <listitem>
-                <code>getQuery()</code> возвращает код SQL-запроса.
+                <para>
+                    <code>getQuery()</code> возвращает код SQL-запроса.
 <!--
-                <code>getQuery()</code> returns the SQL text of the query.
+                    <code>getQuery()</code> returns the SQL text of the query.
 -->
+                </para>
             </listitem>
             <listitem>
-                <code>getElapsedSecs()</code> возвращает время выполнения запроса
-                в секундах.
+                <para>
+                    <code>getElapsedSecs()</code> возвращает время выполнения запроса
+                    в секундах.
 <!--
                 <code>getElapsedSecs()</code> returns the number of
                 seconds the query ran.
 -->
+                </para>
             </listitem>
         </itemizedlist>
 
@@ -277,66 +291,80 @@ $profiler->setFilterElapsedSecs(null);
 
             <itemizedlist>
                 <listitem>
-                    <code>Zend_Db_Profiler::CONNECT</code>: операции по установке
-                    соединения или выбора базы данных.
+                    <para>
+                        <code>Zend_Db_Profiler::CONNECT</code>: операции по установке
+                        соединения или выбора базы данных.
 <!--
-                    <code>Zend_Db_Profiler::CONNECT</code>: connection
-                    operations, or selecting a database.
+                        <code>Zend_Db_Profiler::CONNECT</code>: connection
+                        operations, or selecting a database.
 -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::QUERY</code>: обычные запросы к
-                    базе данных, которые не подходят к другим типам.
+                    <para>
+                        <code>Zend_Db_Profiler::QUERY</code>: обычные запросы к
+                        базе данных, которые не подходят к другим типам.
 <!--
                     <code>Zend_Db_Profiler::QUERY</code>: general database
                     queries that do not match other types.
 -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::INSERT</code>: любые запросы, которые
-                    добавляют новые данные в базу данных; как правило,
-                    это команда INSERT.
+                    <para>
+                        <code>Zend_Db_Profiler::INSERT</code>: любые запросы, которые
+                        добавляют новые данные в базу данных; как правило,
+                        это команда INSERT.
 <!--
-                    <code>Zend_Db_Profiler::INSERT</code>: any query that
-                    adds new data to the database, generally SQL
-                    INSERT.
+                        <code>Zend_Db_Profiler::INSERT</code>: any query that
+                        adds new data to the database, generally SQL
+                        INSERT.
 -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::UPDATE</code>: любые запросы,
-                    которые обновляют существующие данные, обычно это команда
-                    UPDATE.
+                    <para>
+                        <code>Zend_Db_Profiler::UPDATE</code>: любые запросы,
+                        которые обновляют существующие данные, обычно это команда
+                        UPDATE.
 <!--
-                    <code>Zend_Db_Profiler::UPDATE</code>: any query that
-                    updates existing data, usually SQL UPDATE.
+                        <code>Zend_Db_Profiler::UPDATE</code>: any query that
+                        updates existing data, usually SQL UPDATE.
 -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::DELETE</code>: любые запросы,
-                    которые удаляют существующие данные, обычно это команда
-                    DELETE.
+                    <para>
+                        <code>Zend_Db_Profiler::DELETE</code>: любые запросы,
+                        которые удаляют существующие данные, обычно это команда
+                        DELETE.
 <!--
-                    <code>Zend_Db_Profiler::DELETE</code>: any query that
-                    deletes existing data, usually SQL DELETE.
+                        <code>Zend_Db_Profiler::DELETE</code>: any query that
+                        deletes existing data, usually SQL DELETE.
 -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::SELECT</code>: любые запросы, которые
-                    извлекают существующие данные, обычно это команда SELECT. 
+                    <para>
+                        <code>Zend_Db_Profiler::SELECT</code>: любые запросы, которые
+                        извлекают существующие данные, обычно это команда SELECT. 
 <!--
-                    <code>Zend_Db_Profiler::SELECT</code>: any query that
-                    retrieves existing data, usually SQL SELECT.
+                        <code>Zend_Db_Profiler::SELECT</code>: any query that
+                        retrieves existing data, usually SQL SELECT.
 -->
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::TRANSACTION</code>: любые
-                    операции с транзакциями, такие, как начало транзакции,
-                    фиксация транзакции или откат.
+                    <para>
+                        <code>Zend_Db_Profiler::TRANSACTION</code>: любые
+                        операции с транзакциями, такие, как начало транзакции,
+                        фиксация транзакции или откат.
 <!--
-                    <code>Zend_Db_Profiler::TRANSACTION</code>: any
-                    transactional operation, such as start transaction, commit,
-                    or rollback.
+                        <code>Zend_Db_Profiler::TRANSACTION</code>: any
+                        transactional operation, such as start transaction, commit,
+                        or rollback.
 -->
+                    </para>
                 </listitem>
             </itemizedlist>
 

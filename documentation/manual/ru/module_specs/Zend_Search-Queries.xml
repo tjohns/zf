@@ -67,35 +67,35 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                    "обязательный" элемент означает, что документы, которые не соответствуют
-                    данному элементу, не соответствуют всему запросу;
+                        "обязательный" элемент означает, что документы, которые не соответствуют
+                        данному элементу, не соответствуют всему запросу;
 <!--
-                    required which means that documents which do not match this term
-                    will not match the query;
+                        required which means that documents which do not match this term
+                        will not match the query;
 -->
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    "запрещенный" элемент означает, что документы, соответствующие
-                    данному элементу, не соответствуют всему запросу;
+                        "запрещенный" элемент означает, что документы, соответствующие
+                        данному элементу, не соответствуют всему запросу;
 <!--
-                    prohibited which means that documents which do match this term
-                    will not match the query;
+                        prohibited which means that documents which do match this term
+                        will not match the query;
 -->
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                     в случае "необязательного" элемента
-                     документы не обязательно должны соответствовать
-                     (или не иметь соответствия) элементу. Тем не менее,
-                     документ должен соответствовать хотя бы одному элементу, чтобы
-                     соответствовать запросу. 
+                         в случае "необязательного" элемента
+                         документы не обязательно должны соответствовать
+                         (или не иметь соответствия) элементу. Тем не менее,
+                         документ должен соответствовать хотя бы одному элементу, чтобы
+                         соответствовать запросу. 
 <!--
-                    neither, in which case matched documents are neither prohibited from
-                    nor required to match the term. However, a document must match at least
-                    1 term to match the query.
+                        neither, in which case matched documents are neither prohibited from
+                        nor required to match the term. However, a document must match at least
+                        1 term to match the query.
 -->
                     </para>
                 </listitem>
@@ -137,22 +137,34 @@ $hits = $index->find('+word1 author:word2 -word3');
 ?>]]>   </programlisting>
 
         <itemizedlist>
-            <listitem>'+' используется для определения обязательного элемента<!--is used to define required term.--></listitem>
-            <listitem>'-' используется для определения запрещенного элемента<!--is used to define prohibited term.--></listitem>
             <listitem>
-            Приставка 'field:' используется, чтобы указать поле документа
-            для поиска. Если она опущена, то используется поле 'contents'.  
+                <para>
+                    '+' используется для определения обязательного элемента
+                    <!--is used to define required term.-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    '-' используется для определения запрещенного элемента
+                    <!--is used to define prohibited term.-->
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Приставка 'field:' используется, чтобы указать поле документа
+                    для поиска. Если она опущена, то используется поле 'contents'.  
 <!--
-            'field:' prefix is used to indicate document field for a search.
-            If it's omitted, then 'contents' is used.
+                    'field:' prefix is used to indicate document field for a search.
+                    If it's omitted, then 'contents' is used.
 -->
+                </para>
             </listitem>
         </itemizedlist>
 
         <para>или</para>
 
         <para>
-        Построение запроса через программный интерфейс:
+            Построение запроса через программный интерфейс:
 <!--
         Query construction by API:
 -->
@@ -177,25 +189,31 @@ $hits = $index->find('+word1 author:word2 -word3');
 -->
             <itemizedlist>
                 <listitem>
-                <code>true</code> используется для определения обязательных элементов.
+                    <para>
+                        <code>true</code> используется для определения обязательных элементов.
 <!--
-                true is used to define required term.
+                        true is used to define required term.
 -->
+                    </para>
                 </listitem>
                 
                 <listitem>
-                <code>false</code> используется для определения запрещенных элементов.
+                    <para>
+                        <code>false</code> используется для определения запрещенных элементов.
 <!--
-                false is used to define prohibited term.
+                        false is used to define prohibited term.
 -->
+                    </para>
                 </listitem>
                 <listitem>
-                <code>null</code> используется для определения необязательных
-                элементов.
+                    <para>
+                        <code>null</code> используется для определения необязательных
+                        элементов.
 <!--
-                null is used to define neither required,
-                nor prohibited term.
+                        null is used to define neither required,
+                        nor prohibited term.
 -->
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>

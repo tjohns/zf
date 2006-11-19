@@ -14,7 +14,7 @@
 	</para>
 
 	<programlisting role="php"><![CDATA[
-$router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
+$route = new Zend_Controller_Router_Route('archive/:year', array('year' => 2006));]]></programlisting>
 	<para>
 	  Что может быть не очевидным, так это то, что приведенный выше маршрут
 	  будет соответствовать таким URL-ам, как

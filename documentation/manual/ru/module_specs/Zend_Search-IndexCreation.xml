@@ -302,17 +302,16 @@ $index->optimize();
                 Default value is 10.
 -->
             </para>
-        </sect3>
-
-        <para>
-            Lucene Java и Luke (Lucene Index Toolbox -
-            <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-            также могут использоваться для оптимизации индекса.
+            <para>
+                Lucene Java и Luke (Lucene Index Toolbox -
+                <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+                также могут использоваться для оптимизации индекса.
 <!--
-            Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-            can also be used to optimize index.
+                Lucene Java and Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+                can also be used to optimize index.
 -->
-        </para>
+            </para>
+        </sect3>
     </sect2>
 </sect1>
 

@@ -92,11 +92,17 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
         </para>
 
         <note>
-            Файл загрузки должен быть единственным PHP-файлом, хранящимся в
-            корневом каталоге сайта.
+            <title>
+                Местонахождение загрузочного файла 
+                <!--Location of the bootstrap file-->
+            </title>
+            <para>
+                Загузочный файл должен быть единственным PHP-файлом, хранящимся в
+                корневом каталоге сайта.
 <!--
-            The bootstrap file should be the only PHP file stored in the document root.
+                The bootstrap file should be the only PHP file stored in the document root.
 -->
+            </para>
         </note>
 
         <para>
@@ -147,18 +153,21 @@ Zend_Controller_Front::run('/path/to/your/controllers');
         </para>
 
         <note>
-            Сейчас мы рассматриваем решения, которые не будут требовать
-            установки mod_rewrite. Мы намереваемся предложить конфигурацию
-            для систем как с поддержкой mod_rewrite, так и без нее. Еще,
-            пожалуйста, обратите внимание на то, что эта система не завязана
-            конкретно на Apache или модуле mod_rewrite, должен подойти любой
-            веб-сервер с возможностью перенаправления.
+            <title>Требования к системе<!--Requirements--></title>
+            <para>
+                Сейчас мы рассматриваем решения, которые не будут требовать
+                установки mod_rewrite. Мы намереваемся предложить конфигурацию
+                для систем как с поддержкой mod_rewrite, так и без нее. Еще,
+                пожалуйста, обратите внимание на то, что эта система не завязана
+                конкретно на Apache или модуле mod_rewrite, должен подойти любой
+                веб-сервер с возможностью перенаправления.
 <!--
-            At this time, we are presently investigating solutions will not require mod_rewrite installation.  We
-            intend to suggest a configuration for systems both with and without mod_rewrite capabilities.  Also,
-            please note this system is not bound to Apache or mod_rewrite specifically, any webserver with similar
-            redirection capabilities should be sufficient.
+                At this time, we are presently investigating solutions will not require mod_rewrite installation.  We
+                intend to suggest a configuration for systems both with and without mod_rewrite capabilities.  Also,
+                please note this system is not bound to Apache or mod_rewrite specifically, any webserver with similar
+                redirection capabilities should be sufficient.
 -->
+            </para>
         </note>
     </sect2>
 
@@ -203,8 +212,11 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 ]]>     </programlisting>
 
         <note>
-            Этот раздел еще не завершен. Он на стадии интенсивной разработки и
-            подвержен изменениям.
+            <title>В стадии разработки</title>
+            <para>
+                Этот раздел еще не завершен. Он на стадии интенсивной разработки и
+                подвержен изменениям.
+            </para>
 <!--
             This section is not yet complete.  It is under heavy construction and is subject to change.
 -->
@@ -260,11 +272,14 @@ class IndexController extends Zend_Controller_Action
 ?>]]>   </programlisting>
 
         <note>
-            Этот раздел еще не завершен. Он на стадии интенсивной разработки
-            и подвержен изменениям.
+            <title>В стадии разработки</title>
+            <para>
+                Этот раздел еще не завершен. Он на стадии интенсивной разработки
+                и подвержен изменениям.
 <!--
-            This section is not yet complete.  It is under heavy construction and is subject to change.
+                This section is not yet complete.  It is under heavy construction and is subject to change.
 -->
+            </para>
         </note>
     </sect2>
 </sect1>

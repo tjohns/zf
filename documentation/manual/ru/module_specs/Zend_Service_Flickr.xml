@@ -36,13 +36,16 @@ $results = $flickr->tagSearch("php");
 foreach ($results as $result) {
     echo $result->title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
         <note>
-            <code>tagSearch()</code> принимает массив опций как второй необязательный параметр.
+            <title>Необязательный параметр<!--Optional parameter--></title>
+            <para>
+                <code>tagSearch()</code> принимает массив опций как второй необязательный параметр.
 <!--
-            <code>tagSearch()</code> accepts an optional second parameter as an array of options.
+                <code>tagSearch()</code> accepts an optional second parameter as an array of options.
 -->
+            </para>
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
@@ -57,32 +60,38 @@ foreach ($results as $result) {
         </para>
         <itemizedlist>
             <listitem>
-                <code>userSearch()</code>: Принимает строку запроса, состоящую из
-                разделенных пробелами тегов, массив опций поиска
-                как необязательный второй параметр и возвращает объект 
-                <code>Zend_Service_Flickr_ResultSet</code>.
+                <para>
+                    <code>userSearch()</code>: Принимает строку запроса, состоящую из
+                    разделенных пробелами тегов, массив опций поиска
+                    как необязательный второй параметр и возвращает объект 
+                    <code>Zend_Service_Flickr_ResultSet</code>.
 <!--
-                <code>userSearch()</code>: Accepts a string query of space-delimited
-                tags and an optional second
-                parameter as an array of search options, and returns a
-                <code>Zend_Service_Flickr_ResultSet</code> object.
+                    <code>userSearch()</code>: Accepts a string query of space-delimited
+                    tags and an optional second
+                    parameter as an array of search options, and returns a
+                    <code>Zend_Service_Flickr_ResultSet</code> object.
 -->
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByUsername()</code>: Возвращает ID
-                пользователя, связанного с данным именем.
+                <para>
+                    <code>getIdByUsername()</code>: Возвращает ID
+                    пользователя, связанного с данным именем.
 <!--
-                <code>getIdByUsername()</code>: Returns a string user ID
-                associated with the given username string.
+                    <code>getIdByUsername()</code>: Returns a string user ID
+                    associated with the given username string.
 -->
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByEmail()</code>: Возвращает ID пользователя,
-                связанного с данным адресом e-mail.
+                <para>
+                    <code>getIdByEmail()</code>: Возвращает ID пользователя,
+                    связанного с данным адресом e-mail.
 <!--
-                <code>getIdByEmail()</code>: Returns a string user ID
-                associated with the given email address string.
+                    <code>getIdByEmail()</code>: Returns a string user ID
+                    associated with the given email address string.
 -->
+                </para>
             </listitem>
         </itemizedlist>
         <example>
@@ -106,20 +115,22 @@ $results = $flickr->userSearch($userEmail);
 foreach ($results as $result) {
     echo $result->title . '<br />';
 }
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Получение данных по изображению в Flickr<!--Retrieving Flickr Image Details--></title>
-        <code>Zend_Service_Flickr</code> делает быстрым и легким получение
-        данных по изображению через его ID. Просто используйте метод
-        <code>getImageDetails()</code>, как показано в следующем примере:
+        <para>
+            <code>Zend_Service_Flickr</code> делает быстрым и легким получение
+            данных по изображению через его ID. Просто используйте метод
+            <code>getImageDetails()</code>, как показано в следующем примере:
 <!--
-        <code>Zend_Service_Flickr</code> makes it quick and easy to get an
-        image's details based on a given image ID.
-        Just use the <code>getImageDetails()</code> method, as in the following
-        example:
+            <code>Zend_Service_Flickr</code> makes it quick and easy to get an
+            image's details based on a given image ID.
+            Just use the <code>getImageDetails()</code> method, as in the following
+            example:
 -->
+        </para>
         <example>
             <title>Получение данных по изображению в Flickr<!--Retrieving Flickr Image Details--></title>
             <para>
@@ -136,7 +147,7 @@ $image = $flickr->getImageDetails($imageId);
 
 echo "Image ID $imageId is $image->width x $image->height pixels.<br />\n";
 echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.classes">
@@ -145,9 +156,21 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
             Следующие классы возвращаются методами <code>tagSearch()</code> и
             <code>userSearch()</code>:
             <itemizedlist>
-                <listitem><para><link linkend="zend.service.flickr.classes.resultset"><code>Zend_Service_Flickr_ResultSet</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.flickr.classes.result"><code>Zend_Service_Flickr_Result</code></link></para></listitem>
-                <listitem><para><link linkend="zend.service.flickr.classes.image"><code>Zend_Service_Flickr_Image</code></link></para></listitem>
+                <listitem>
+                    <para>
+                        <link linkend="zend.service.flickr.classes.resultset"><code>Zend_Service_Flickr_ResultSet</code></link>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <link linkend="zend.service.flickr.classes.result"><code>Zend_Service_Flickr_Result</code></link>
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <link linkend="zend.service.flickr.classes.image"><code>Zend_Service_Flickr_Image</code></link>
+                    </para>
+                </listitem>
             </itemizedlist>
 <!--
             The following classes are all returned by <code>tagSearch()</code> and <code>userSearch()</code>:
@@ -223,10 +246,10 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                     Returns the total number of results in this result set.
 -->
                 </para>
+                <para>
+                    <link linkend="zend.service.flickr.classes">Назад к списку классов<!--Back to Class List--></link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">Назад к списку классов<!--Back to Class List--></link>
-            </para>
         </sect3>
         <sect3 id="zend.service.flickr.classes.result">
             <title>Zend_Service_Flickr_Result</title>
@@ -347,10 +370,10 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.flickr.classes">Назад к списку классов<!--Back to Class List--></link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">Назад к списку классов<!--Back to Class List--></link>
-            </para>
         </sect3>
         <sect3 id="zend.service.flickr.classes.image">
             <title>Zend_Service_Flickr_Image</title>
@@ -394,10 +417,10 @@ echo "<a href=\"$image->clickUri\">Click for Image</a>\n";
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.flickr.classes">Назад к списку классов<!--Back to Class List--></link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">Назад к списку классов<!--Back to Class List--></link>
-            </para>
         </sect3>
     </sect2>
 </sect1>

@@ -42,13 +42,16 @@
     </para>
 
     <note>
-        Многие ленты RSS имеют различные доступные свойства каналов и их элементов.
-        Спецификация RSS предоставляет множество необязательных свойств, поэтому имейте
-        это в виду, когда пишете код для работы с данными RSS.
+        <title>Внимание</title>
+        <para>
+            Многие ленты RSS имеют различные доступные свойства каналов и их элементов.
+            Спецификация RSS предоставляет множество необязательных свойств, поэтому имейте
+            это в виду, когда пишете код для работы с данными RSS.
 <!--
-        Many RSS feeds have different channel and item properties available. The RSS specification provides for
-        many optional properties, so be aware of this when writing code to work with RSS data.
+            Many RSS feeds have different channel and item properties available. The RSS specification provides for
+            many optional properties, so be aware of this when writing code to work with RSS data.
 -->
+        </para>
     </note>
 
     <example>

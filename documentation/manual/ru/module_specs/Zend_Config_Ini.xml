@@ -25,21 +25,24 @@
 -->
     </para>
     <note>
-        <code>Zend_Config_Ini</code> использует функцию PHP
-        <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>.
-        Пожалуйста, почитайте документацию, чтобы знать
-        особенности ее поведения, которые распространяются и на
-        <code>Zend_Config_Ini</code> — например, о том, как обрабатываются
-        специальные значения <code>true</code>, <code>false</code>, <code>yes</code>,
-        <code>no</code> и <code>null</code>.
+        <para>
+            <title>parse_ini_file</title>
+            <code>Zend_Config_Ini</code> использует функцию PHP
+            <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>.
+            Пожалуйста, почитайте документацию, чтобы знать
+            особенности ее поведения, которые распространяются и на
+            <code>Zend_Config_Ini</code> — например, о том, как обрабатываются
+            специальные значения <code>true</code>, <code>false</code>, <code>yes</code>,
+            <code>no</code> и <code>null</code>.
 <!--
-        <code>Zend_Config_Ini</code> utilizes the
-        <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
-        PHP function. Please review this documentation to be aware of its specific
-        behaviors, which propagate to <code>Zend_Config_Ini</code>, such as how
-        the special values of <code>true</code>, <code>false</code>, <code>yes</code>,
-        <code>no</code>, and <code>null</code> are handled.
+            <code>Zend_Config_Ini</code> utilizes the
+            <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
+            PHP function. Please review this documentation to be aware of its specific
+            behaviors, which propagate to <code>Zend_Config_Ini</code>, such as how
+            the special values of <code>true</code>, <code>false</code>, <code>yes</code>,
+            <code>no</code>, and <code>null</code> are handled.
 -->
+        </para>
     </note>
     <example>
         <title>Использование Zend_Config_Ini<!--Using Zend_Config_Ini--></title>

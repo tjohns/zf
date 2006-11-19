@@ -45,7 +45,10 @@ try {
         echo '<p>An error occurred (' .$e->getMessage(). ')<p>';
 }
 ?>]]>       </programlisting>
-            <note>
+        </example>
+        <note>
+            <title>Передача<!--Passing--></title>
+            <para>
                 Вы можете передавать правильно сформированную строку запроса (без знака
                 вопроса "<code>?</code>" в начале) методу <code>restGet()</code>,
                 либо передавать ассоциативный массив из пар имя-значение.
@@ -59,27 +62,27 @@ try {
                 method you choose, the names and values must be URL-encoded (e.g., with
                 <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>).
 -->
-            </note>
-            <para>
-                Методы <code>restPost()</code> и <code>restPut()</code>
-                используются так же, как и метод <code>restGet()</code>,
-                за тем отличием, что данные в них отправляются через HTTP-методы
-                POST и PUT соответственно.
-<!--
-                Using <code>restPost()</code> and <code>restPut()</code> is the same
-                as using <code>restGet()</code>, but the data are sent via HTTP
-                POST or PUT, respectively, instead of GET.
--->
             </para>
-            <para>
-                Метод <code>restDelete()</code> работает с путем в URL, но не имет
-                второго параметра, в котором передаются данные. 
+        </note>
+        <para>
+            Методы <code>restPost()</code> и <code>restPut()</code>
+            используются так же, как и метод <code>restGet()</code>,
+            за тем отличием, что данные в них отправляются через HTTP-методы
+            POST и PUT соответственно.
 <!--
-                The <code>restDelete()</code> method operates on a path, but
-                does not have a second parameter into which data may be passed.
+            Using <code>restPost()</code> and <code>restPut()</code> is the same
+            as using <code>restGet()</code>, but the data are sent via HTTP
+            POST or PUT, respectively, instead of GET.
 -->
-            </para>
-        </example>
+        </para>
+        <para>
+            Метод <code>restDelete()</code> работает с путем в URL, но не имет
+            второго параметра, в котором передаются данные. 
+<!--
+            The <code>restDelete()</code> method operates on a path, but
+            does not have a second parameter into which data may be passed.
+-->
+        </para>
     </sect2>
 </sect1>
 <!--
