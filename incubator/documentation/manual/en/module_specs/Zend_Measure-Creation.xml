@@ -25,10 +25,9 @@
     </para>
     <sect2 id="zend.measure.creation.number">
         <title>Measurements from variables</title>
-        <para>
-            <example>
-                <title>Creation using integer variables</title>
-                <programlisting role="php"><![CDATA[<?php
+        <example>
+            <title>Creation using integer variables</title>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 
@@ -38,25 +37,26 @@ $unit = new Zend_Measure($integer,Zend_Measure::LENGTH);
 echo $unit;
 // outputs '1234 m'
 ?>]]></programlisting>
-            </example>
-            <note>
+        </example>
+        <note>
+            <title>Using floating point</title>
+            <para>
                 Instead of integer types, floating point types could be used as well. It doesn't make any difference.
-            </note>
-        </para>
-        <para>
-            <note>
+            </para>
+            <para>
                 When using floating point variables, please be aware that there may be
                 inaccuracies during the conversion.
-            </note>
-        </para>
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.measure.creation.string">
         <title>Measurements from strings</title>
         <para>
             Many measurements can only be passed as strings, such as roman numbers or binary values.
-            <example>
-                <title>Creation using strings</title>
-                <programlisting role="php"><![CDATA[<?php
+        </para>
+        <example>
+            <title>Creation using strings</title>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Number');
@@ -66,23 +66,24 @@ $unit = new Zend_Measure($mystring,Zend_Measure_Number::BINARY);
 
 echo $unit;
 ?>]]></programlisting>
-            </example>
-            <note>
+        </example>
+        <note>
+            <title>Also strings are allowed</title>
+            <para>
                 All integer types can of course also be written as string types, without resulting in any drawbacks.
-            </note>
-        </para>
-        <para>
-            <note>
+            </para>
+            <para>
                 As shown in the above example, <code>Zend_Measure_Number</code> can work with values of arbitrary length.
                 <code>Zend_Measure_Number</code> does not have any of the 16/32bit limitations such as the
                 PHP function <ulink url="http://php.net/bin2dec"><code>bin2dec()</code></ulink>.
-            </note>
-        </para>
-        <para>
-            Measurements can also be just a part of an arbitrary string.
-            <example>
-                <title>Arbitrary texts</title>
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+        </note>
+        <example>
+            <title>Arbitrary texts</title>
+            <para>
+                Measurements can also be just a part of an arbitrary string.
+            </para>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 
@@ -91,14 +92,17 @@ $unit = new Zend_Measure($mystring,Zend_Measure::AREA);
 
 echo $unit;
 ?>]]></programlisting>
-            </example>
-            <note>
+        </example>
+        <note>
+            <title>Be aware</title>
+            <para>
                 Only the first identifiable number us being used for measurement creation. If there are
                 more numbers in the string, the rest will be ignored.
-            </note>
-            <example>
-                <title>Arbitrary texts</title>
-                <programlisting role="php"><![CDATA[<?php
+            </para>
+        </note>
+        <example>
+            <title>Arbitrary texts</title>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 
@@ -107,8 +111,7 @@ $unit = new Zend_Measure($mystring,Zend_Measure::AREA);
 
 echo $unit;
 ?>]]></programlisting>
-            </example>
-        </para>
+        </example>
     </sect2>
     <sect2 id="zend.measure.creation.localized">
         <title>Measurements from localized strings</title>
@@ -125,9 +128,10 @@ echo $unit;
         <para>
             To deal with such problems, <code>Zend_Measure</code> offers the possibility to specify a language
             or region.
-            <example>
-                <title>Localized string</title>
-                <programlisting role="php"><![CDATA[<?php
+        <para>
+        <example>
+            <title>Localized string</title>
+            <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Locale');
@@ -139,15 +143,7 @@ $unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,$locale);
 
 echo $unit;
 ?>]]></programlisting>
-            </example>
-            <note>
-                The region or language can be defined automatically or manually.
-            </note>
-            <note>
-                As <code>Zend_Locale</code> is not yet feature-complete, the region or language must
-                always be defined manually for now. This will change when <code>Zend_Locale</code> is released.
-            </note>
-        </para>
+        </example>
     </sect2>
 </sect1>
 
