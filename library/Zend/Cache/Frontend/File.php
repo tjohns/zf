@@ -83,15 +83,15 @@ class Zend_Cache_Frontend_File extends Zend_Cache_Core
      * @param boolean $doNotUnserialize do not serialize (even if automaticSerialization is true) => for internal use
      * @return mixed cached datas (or false)
      */
-    public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
+    public function load($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
     {
         if (!$doNotTestCacheValidity) {
             if ($this->test($id)) {
-                return parent::get($id, true, $doNotUnserialize);
+                return parent::load($id, true, $doNotUnserialize);
             }
             return false;
         }
-        return parent::get($id, true, $doNotUnserialize);
+        return parent::load($id, true, $doNotUnserialize);
     }
    
     /**

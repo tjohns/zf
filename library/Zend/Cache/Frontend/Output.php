@@ -56,7 +56,7 @@ class Zend_Cache_Frontend_Output extends Zend_Cache_Core
      */
     public function start($id, $doNotTestCacheValidity = false)
     {
-        $data = $this->get($id, $doNotTestCacheValidity);
+        $data = $this->load($id, $doNotTestCacheValidity);
         if ($data !== false) {
             echo($data);
             return true;

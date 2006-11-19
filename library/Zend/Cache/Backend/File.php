@@ -127,7 +127,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
      * @return string cached datas (or false)
      */
-    public function get($id, $doNotTestCacheValidity = false) 
+    public function load($id, $doNotTestCacheValidity = false) 
     {
         clearstatcache();
         $file = $this->_file($id);
@@ -167,7 +167,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
 		    if ($hashData != $hashControl) {
                 // Problem detected by the read control !
                 if ($this->_directives['logging']) {
-                    Zend_Log::log('Zend_Cache_Backend_File::get() / readControl : stored hash and computed hash do not match', Zend_Log::LEVEL_WARNING);
+                    Zend_Log::log('Zend_Cache_Backend_File::load() / readControl : stored hash and computed hash do not match', Zend_Log::LEVEL_WARNING);
 		        }
                 $this->_remove($file);
 		        return false;    

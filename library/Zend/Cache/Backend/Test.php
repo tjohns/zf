@@ -104,7 +104,7 @@ class Zend_Cache_Backend_Test implements Zend_Cache_Backend_Interface
      * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
      * @return string cached datas (or false)
      */
-    public function get($id, $doNotTestCacheValidity = false) 
+    public function load($id, $doNotTestCacheValidity = false) 
     {
         $this->_addLog('get', array($id, $doNotTestCacheValidity));
         if ($id=='false') {

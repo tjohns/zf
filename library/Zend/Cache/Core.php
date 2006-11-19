@@ -205,14 +205,14 @@ class Zend_Cache_Core
      * @param boolean $doNotUnserialize do not serialize (even if automaticSerialization is true) => for internal use
      * @return mixed cached datas (or false)
      */
-    public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
+    public function load($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
     {
         if (!$this->_options['caching']) {
             return false;
         }
         $this->_lastId = $id;        
         self::_validateIdOrTag($id);
-        $data = $this->_backend->get($id, $doNotTestCacheValidity);
+        $data = $this->_backend->load($id, $doNotTestCacheValidity);
         if ($data===false) {
             // no cache available
             return false;
@@ -222,6 +222,17 @@ class Zend_Cache_Core
             return unserialize($data);
         }
         return $data;
+    }
+    
+    /**
+     * THIS METHOD IS DEPRECATED : USE LOAD() INSTEAD (same syntax) !
+     */
+    public function get($id, $doNotTestCacheValidity = false, $doNotUnserialize = false)
+    {
+        if ($this->_options['logging']) {
+            Zend_Log::log("get() method is deprecated => use load() method instead (same syntax) !", Zend_Log::LEVEL_WARNING);
+        }
+        return $this->load($id, $doNotTestCacheValidity, $doNotUnserialize);
     }
     
     /**
@@ -283,7 +294,7 @@ class Zend_Cache_Core
             return false;
         }
         if ($this->_options['writeControl']) {
-            $data2 = $this->_backend->get($id, true);
+            $data2 = $this->_backend->load($id, true);
             if ($data!=$data2) {
                 if ($this->_options['logging']) {
                     Zend_Log::log('Zend_Cache_Core::save() / writeControl : written and read data do not match', Zend_Log::LEVEL_WARNING);

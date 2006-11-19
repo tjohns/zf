@@ -46,7 +46,7 @@ interface Zend_Cache_Backend_Interface
      * @param boolean $doNotTestCacheValidity if set to true, the cache validity won't be tested
      * @return string cached datas (or false)
      */
-    public function get($id, $doNotTestCacheValidity = false);
+    public function load($id, $doNotTestCacheValidity = false);
     
     /**
      * Test if a cache is available or not (for the given id)

@@ -194,7 +194,7 @@ class Zend_Cache_Frontend_Page extends Zend_Cache_Core
 	            return false;
 	        }
         }
-        $data = $this->get($id);
+        $data = $this->load($id);
         if ($data !== false) {
             if ($this->_specificOptions['debugHeader']) {
                 echo 'DEBUG HEADER : This is a cached page !';

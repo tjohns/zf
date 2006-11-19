@@ -37,7 +37,7 @@ if (!($cache->test($id))) {
 } else {
 	// cache hit
 	
-	$data = $cache->get($id);
+	$data = $cache->load($id);
 
 }
 
@@ -62,7 +62,7 @@ if (!($cache->test($id))) {
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 $id = 'foo'; // cache id of "what we want to cache"
 
-if (!($data = $cache->get($id))) {
+if (!($data = $cache->load($id))) {
 	// cache missed
 	
 	$data = '';
@@ -97,7 +97,7 @@ $id1 = 'foo'; // cache id of block1
 $id1 = 'foo'; // cache id of block2
 
 // BLOCK1
-if (!($data = $cache->get($id1))) {
+if (!($data = $cache->load($id1))) {
 	// cache missed
 	
 	$data = '';
@@ -114,7 +114,7 @@ echo($data);
 echo('NEVER CACHED !');
 
 // BLOCK2
-if (!($data = $cache->get($id2))) {
+if (!($data = $cache->load($id2))) {
 	// cache missed
 	
 	$data = '';

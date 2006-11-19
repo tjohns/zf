@@ -108,7 +108,7 @@ class Zend_Cache_Frontend_Class extends Zend_Cache_Core
         $id = $this->_makeId($name, $parameters);       
         if ($this->test($id)) {
             // A cache is available
-            $result = $this->get($id);
+            $result = $this->load($id);
             $output = $result[0];
             $return = $result[1];                      
         } else {
