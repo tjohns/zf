@@ -50,7 +50,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 // $cache initialisiert im vorhergehenden Beispiel
 
 // Nachsehen, ob der Cache bereits existiert:
-if(!$result = $cache->get('myresult')) {
+if(!$result = $cache->load('myresult')) {
 
     // Cache miss; mit Datenbank verbinden
     

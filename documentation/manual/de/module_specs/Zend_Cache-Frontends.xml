@@ -113,7 +113,7 @@
 
 $id = 'myBigLoop'; // Die Cache ID von dem "das gecached werden soll"
 
-if (!($data = $cache->get($id))) {
+if (!($data = $cache->load($id))) {
     // Cache miss
     
     $data = '';
@@ -139,7 +139,7 @@ $id1 = 'foo';
 $id2 = 'bar';
 
 // Block 1
-if (!($data = $cache->get($id1))) {
+if (!($data = $cache->load($id1))) {
     // Cache miss
     
     $data = '';
@@ -156,7 +156,7 @@ echo($data);
 echo('NIE GECACHED! ');
 
 // Block 2
-if (!($data = $cache->get($id2))) {
+if (!($data = $cache->load($id2))) {
     // Cache miss
     
     $data = '';
