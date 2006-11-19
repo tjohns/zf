@@ -42,6 +42,7 @@
         naming conventions. All of the methods abide by a simple rule - if the data
         is valid, it is returned, otherwise <literal>FALSE</literal> is returned.
         Extreme simplicity.</para>
+    </sect2>
         <sect2 id="zend.filter.input.introduction.whitelist">
             <title>Whitelist Filtering</title>
             <para>Whitelist filtering methods begin with the <literal>test</literal>
@@ -127,7 +128,6 @@
     ?>]]>
             </programlisting>
         </sect2>
-    </sect2>
     <sect2 id="zend.filter.input.theoryofoperation">
         <title>Theory of Operation</title>
         <para><literal>Zend_Filter_Input</literal> consolidates a few distinct

@@ -76,8 +76,11 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		</para>
 
 		<note>	
-			ملف الـ bootstrap يجب ان يكون ملف الـ PHP الوحيد المحفوظ فى الـ document root.			
-		</note>
+            <title> مكان ملف الـ bootstrap</title>
+            <para>
+    			ملف الـ bootstrap يجب ان يكون ملف الـ PHP الوحيد المحفوظ فى الـ document root.			
+    		</para>
+        </note>
 
 		<para>
             لأسباب امنية, ينصح إطار عمل Zend بأن لا يتم وضع اى ملف PHP فى مجلدات يمكن الوصول إليها من خلال الـ 
@@ -106,10 +109,13 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		</para>
 
 		<note>
-            فى هذا الوقت, نحن نقوم بالبحث عن حل لا يتطلب توافر mod_rewrite . ربما سنقوم بتوفير اعدادات للأنظمة التى تعمل 
-            مع او بدون امكانيات الـ mod_rewrite . ايضا يرجى ملاحظة ان هذا النظام ليس مرتبط بـ Apache و mod_rewrite 
-            تحديداً, و لكن اى webserver  لديه هذه القدرة على اعادة التوجيه يجب ان يفى بالغرض.
-		</note>
+            <title>المتطلبات</title>
+            <para>
+                فى هذا الوقت, نحن نقوم بالبحث عن حل لا يتطلب توافر mod_rewrite . ربما سنقوم بتوفير اعدادات للأنظمة التى تعمل 
+                مع او بدون امكانيات الـ mod_rewrite . ايضا يرجى ملاحظة ان هذا النظام ليس مرتبط بـ Apache و mod_rewrite 
+                تحديداً, و لكن اى webserver  لديه هذه القدرة على اعادة التوجيه يجب ان يفى بالغرض.
+    		</para>
+        </note>
 	</sect2>	
 		
 	<sect2 id="zend.controller.getting-started.directory-structure">
@@ -140,7 +146,10 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 ]]></programlisting>
 		
 		<note>
+        <title>تحت الإنشاء</title>
+        <para>
 			هذا القسم لم ينتهى بعد و مازال تحت البناء و يمكن ان يتغير محتواه فى اى وقت.
+        </para>
 		</note>
 	</sect2>	
 		
@@ -182,7 +191,10 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
 		<note>
-			هذا القسم لم ينتهى بعد و مازال تحت البناء و يمكن ان يتغير محتواه فى اى وقت.
+            <title>تحت الإنشاء</title>
+            <para>
+    			هذا القسم لم ينتهى بعد و مازال تحت البناء و يمكن ان يتغير محتواه فى اى وقت.
+            </para>
 		</note>
 	</sect2>			
 </sect1>

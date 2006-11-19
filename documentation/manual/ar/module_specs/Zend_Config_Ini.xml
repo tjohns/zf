@@ -13,13 +13,16 @@
         ثم إلحاقها بأسم القسم الذى سيتم الوراثة منه.
     </para>
     <note>
-        تستخدم <code>Zend_Config_Ini</code> دالة PHP تسمى 
-        <ulink url="http://php.net/parse_ini_file"><code>()parse_ini_file</code></ulink> , 
-        يرجى أن تقوم بمراجعة دليل المبرمج الخاص بلغة PHP لتتعرف على سلوك هذه الدالة, و الذى ينطبق على 
-        <code>Zend_Config_Ini</code> , مثل كيف يتم التعامل مع القيم الخاصة 
-        <code>true</code> و <code>false</code> و 
-        <code>yes</code> و <code>no</code> و 
-        <code>null</code> .
+        <title>parse_ini_file</title>
+        <para>
+            تستخدم <code>Zend_Config_Ini</code> دالة PHP تسمى 
+            <ulink url="http://php.net/parse_ini_file"><code>()parse_ini_file</code></ulink> , 
+            يرجى أن تقوم بمراجعة دليل المبرمج الخاص بلغة PHP لتتعرف على سلوك هذه الدالة, و الذى ينطبق على 
+            <code>Zend_Config_Ini</code> , مثل كيف يتم التعامل مع القيم الخاصة 
+            <code>true</code> و <code>false</code> و 
+            <code>yes</code> و <code>no</code> و 
+            <code>null</code> .
+        </para>
     </note>
     <example>
         <title>إستخدام Zend_Config_Ini</title>

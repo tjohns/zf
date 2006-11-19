@@ -17,14 +17,20 @@
 	    <code>Zend_Mime</code> provides a simple set of static helper methods to work with MIME:
 	    <itemizedlist>
 	        <listitem>
-	            <code>Zend_Mime::isPrintable()</code>: Returns TRUE if the given string contains no unprintable characters,
+	            <para>
+	                <code>Zend_Mime::isPrintable()</code>: Returns TRUE if the given string contains no unprintable characters,
 	            FALSE otherwise.
+	            </para>
 	        </listitem>
 	        <listitem>
-	            <code>Zend_Mime::encodeBase64()</code>: Encodes a string into base64 encoding.
+	            <para>
+	                <code>Zend_Mime::encodeBase64()</code>: Encodes a string into base64 encoding.
+	            </para>
 	        </listitem>
 	        <listitem>
-	            <code>Zend_Mime::encodeQuotedPrintable()</code>: Encodes a string with the quoted-printable mechanism.
+	            <para>
+    	            <code>Zend_Mime::encodeQuotedPrintable()</code>: Encodes a string with the quoted-printable mechanism.
+	            </para>
 	        </listitem>
 	    </itemizedlist>
 	</para>
@@ -32,23 +38,49 @@
 	    <code>Zend_Mime</code> defines a set of constants commonly used with MIME Messages:
 	    <itemizedlist>
 	        <listitem>
-	            <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
-	        </listitem><listitem>
-	            <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
-	        </listitem><listitem>
-	            <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
-	        </listitem><listitem>
-	            <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
-	        </listitem><listitem>
-	            <code>Zend_Mime::ENCODING_8BIT</code>: '8bit'
-	        </listitem><listitem>
-	            <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
-	        </listitem><listitem>
-	            <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
-	        </listitem><listitem>
-	            <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
-	        </listitem><listitem>
-	            <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+	            <para>
+    	            <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::ENCODING_8BIT</code>: '8bit'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+    	            <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+	            </para>
 	        </listitem>
 	    </itemizedlist>
 	</para>
@@ -67,13 +99,19 @@
 	    A <code>Zend_Mime</code> object has the following Methods:
 	    <itemizedlist>
 	        <listitem>
-	            <code>boundary()</code>: Returns the MIME boundary string.
+	            <para>
+	                <code>boundary()</code>: Returns the MIME boundary string.
+	            </para>
 	        </listitem>
 	        <listitem>
-	            <code>boundaryLine()</code>: Returns the complete MIME boundary line.
+	            <para>
+	                <code>boundaryLine()</code>: Returns the complete MIME boundary line.
+	            </para>
 	        </listitem>
 	        <listitem>
-	            <code>mimeEnd()</code>: Returns the complete MIME end boundary line.
+	            <para>
+    	            <code>mimeEnd()</code>: Returns the complete MIME end boundary line.
+	            </para>
 	        </listitem>
 	    </itemizedlist>
 	</para>

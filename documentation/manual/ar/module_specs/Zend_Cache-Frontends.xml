@@ -553,17 +553,82 @@ $res = $cache->foobar2('1', '2');
 	                          <entry>
 	                              associative array تحتوى على الـ default options :
 	                              <itemizedlist>
-	                                  <listitem><code>(boolean, true by default) cache</code> : إن كانت تحمل قيمة true فالـ cache مفعل</listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithGetVariables</code> : إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة <code>GET_$</code></listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithPostVariables</code> : إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة <code>POST_$</code></listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithSessionVariables</code> : إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة <code>SESSION_$</code></listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithFilesVariables</code> : إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة <code>FILES_$</code></listitem>
-	                                  <listitem><code>(boolean, false by default) cacheWithCookieVariables</code> : إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة <code>COOKIE_$</code></listitem>
-									  <listitem><code>(boolean, true by default) makeIdWithGetVariables</code> : إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  <code>GET_$</code></listitem>
-	                                  <listitem><code>(boolean, true by default) makeIdWithPostVariables</code> : إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  <code>POST_$</code></listitem>
-	                                  <listitem><code>(boolean, true by default) makeIdWithSessionVariables</code> : إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  <code>SESSION_$</code></listitem>
-	                                  <listitem><code>(boolean, true by default) makeIdWithFilesVariables</code> : إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  <code>FILES_$</code></listitem>
-	                                  <listitem><code>(boolean, true by default) makeIdWithCookieVariables</code> : إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  <code>COOKIE_$</code></listitem>	                              
+	                                  <listitem>
+                                        <para>  
+                                            <code>(boolean, true by default) cache</code> : 
+                                            إن كانت تحمل قيمة true فالـ cache مفعل
+                                        </para>
+                                      </listitem>
+	                                  <listitem>
+                                        <para>
+                                            <code>(boolean, false by default) cacheWithGetVariables</code> : 
+                                            إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة 
+                                            <code>GET_$</code>
+                                        </para>
+                                    </listitem>
+	                                  <listitem>
+                                        <para>
+                                            <code>(boolean, false by default) cacheWithPostVariables</code> : 
+                                            إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة 
+                                            <code>POST_$</code>
+                                        </para>    
+                                    </listitem>
+	                                  <listitem>
+                                        <para>
+                                            <code>(boolean, false by default) cacheWithSessionVariables</code> : 
+                                            إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة 
+                                            <code>SESSION_$</code>
+                                        </para>    
+                                      </listitem>
+	                                  <listitem>
+                                        <para>
+                                            <code>(boolean, false by default) cacheWithFilesVariables</code> : 
+                                            إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة 
+                                            <code>FILES_$</code>
+                                        </para>    
+                                      </listitem>
+	                                  <listitem>
+                                        <para>
+                                            <code>(boolean, false by default) cacheWithCookieVariables</code> : 
+                                            إن كانت تحمل القيمة true فالـ cache مفعل حتى لو كان هناك قيم فى المصفوفة 
+                                            <code>COOKIE_$</code>
+                                        </para>    
+                                      </listitem>
+									  <listitem>
+                                        <para>
+                                            <code>(boolean, true by default) makeIdWithGetVariables</code> : 
+                                            إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  
+                                            <code>GET_$</code>
+                                        </para>    
+                                      </listitem>
+	                                  <listitem>
+                                        <para>
+                                            <code>(boolean, true by default) makeIdWithPostVariables</code> : 
+                                            إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  
+                                            <code>POST_$</code>
+                                        </para>   
+                                      </listitem>
+	                                  <listitem>
+                                        <para>
+                                            <code>(boolean, true by default) makeIdWithSessionVariables</code> : 
+                                            إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  
+                                            <code>SESSION_$</code>
+                                        </para>    
+                                      </listitem>
+	                                  <listitem>
+                                        <para>
+                                            <code>(boolean, true by default) makeIdWithFilesVariables</code> : 
+                                            إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  
+                                            <code>FILES_$</code>
+                                        </para>
+                                      </listitem>
+	                                  <listitem>
+                                        <para>
+                                            <code>(boolean, true by default) makeIdWithCookieVariables</code> : 
+                                            إن كانت تحمل القيمة true فقيمة الـ "cache id" تعتمد على محتويات المصفوفة  
+                                            <code>COOKIE_$</code>
+                                        </para>    
+                                      </listitem>	                              
 	                              </itemizedlist>              
 	                          </entry>
 	                     </row>
