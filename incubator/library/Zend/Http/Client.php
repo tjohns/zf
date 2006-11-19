@@ -16,6 +16,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client
+ * @version    $Id$
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -37,7 +38,7 @@ require_once 'Zend/Http/CookieJar.php';
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client
- * @throws Zend_Http_Client_Exception
+ * @throws     Zend_Http_Client_Exception
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -412,7 +413,7 @@ class Zend_Http_Client
      */
     protected function _setParameter($type, $name, $value)
     {
-    	$parray = array();
+        $parray = array();
         $type = strtolower($type);
         switch ($type) {
             case 'get':
@@ -750,13 +751,20 @@ class Zend_Http_Client
         
         // Set the host header
         if (! isset($this->headers['host'])) {
-            $host = $this->uri->getHost() . ($this->uri->getPort() == 80 ? '' : ':' . $this->uri->getPort());
+            $host = $this->uri->getHost();
+            
+            // If the port is not default, add it
+            if (! (($this->uri->getScheme() == 'http' && $this->uri->getPort() == 80) || 
+                  ($this->uri->getScheme() == 'https' && $this->uri->getPort() == 443))) {
+                $host .= ':' . $this->uri->getPort();
+            }
+            
             $headers[] = "Host: {$host}";
         }
         
         // Set the connection header
         if (! isset($this->headers['connection'])) {
-        	if (! $this->config['keepalive']) $headers[] = "Connection: close";
+            if (! $this->config['keepalive']) $headers[] = "Connection: close";
         }
         
         // Set the content-type header
