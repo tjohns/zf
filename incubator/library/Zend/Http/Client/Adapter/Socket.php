@@ -16,6 +16,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Adapter
+ * @version    $Id$
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -90,11 +91,8 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
      */
     public function connect($host, $port = 80, $secure = false)
     {
-//        // If we're already connected, disconnect first
-//        if ($this->socket) $this->close();
-        
         // If the URI should be accessed via SSL, prepend the Hostname with ssl://
-        $host = ($secure ? 'ssl://' . $host : $host);
+        $host = ($secure ? 'sslv2://' . $host : $host);
         
         if (is_resource($this->socket)) {
         	// If we are connected to a different server or port, disconnect first
@@ -132,7 +130,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
             throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are not connected");
         
         $host = $uri->getHost();
-            $host = (strtolower($uri->getScheme()) == 'https' ? 'ssl://' . $host : $host);
+            $host = (strtolower($uri->getScheme()) == 'https' ? 'sslv2://' . $host : $host);
         if ($this->connected_to[0] != $host || $this->connected_to[1] != $uri->getPort())
             throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are connected to the wrong host");
 

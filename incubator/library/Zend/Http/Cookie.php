@@ -14,6 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Http
+ * @subpackage Cookie
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
  * @version    $Id$
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0

@@ -1,5 +1,12 @@
 <?php
 
+// Read local configuration
+if (! defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') &&
+    is_readable('TestConfiguration.php')) {
+
+    require_once 'TestConfiguration.php';
+}
+
 require_once 'Zend/Http/Client.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 
@@ -16,9 +23,10 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * You can also set the proper constant in your test configuration file to 
  * point to the right place.
  *
- * @category Zend
- * @package Zend_Http_Client
+ * @category   Zend
+ * @package    Zend_Http_Client
  * @subpackage UnitTests
+ * @version    $Id$
  * @copyright 
  * @license
  */
@@ -423,7 +431,7 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 		$this->client->setConfig(array('maxredirects' => 1));
 		
 		// Get the host and port part of our baseuri
-		$uri = 'http://' . $this->client->getUri()->getHost() . ':' . 
+		$uri = $this->client->getUri()->getScheme() . '://' . $this->client->getUri()->getHost() . ':' . 
 			$this->client->getUri()->getPort();
 		
 		$res = $this->client->request('GET');

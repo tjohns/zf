@@ -9,9 +9,10 @@ require_once 'PHPUnit/Framework/TestCase.php';
  * executed once, and do not need to be tested with different servers / 
  * client setups.
  *
- * @category Zend
- * @package Zend_Http_Client
+ * @category   Zend
+ * @package    Zend_Http_Client
  * @subpackage UnitTests
+ * @version    $Id$
  * @copyright 
  * @license
  */

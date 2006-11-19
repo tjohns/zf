@@ -1,5 +1,12 @@
 <?php
 
+// Read local configuration
+if (! defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') &&
+    is_readable('TestConfiguration.php')) {
+
+    require_once 'TestConfiguration.php';
+}
+
 require_once 'Zend/Http/Client.php';
 require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'SocketTest.php';
@@ -17,9 +24,10 @@ require_once 'SocketTest.php';
  * You can also set the proper constand in your test configuration file to 
  * point to the right place.
  *
- * @category Zend
- * @package Zend_Http_Client
+ * @category   Zend
+ * @package    Zend_Http_Client
  * @subpackage UnitTests
+ * @version    $Id$
  * @copyright 
  * @license
  */
