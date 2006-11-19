@@ -21,6 +21,11 @@
  */
 
 /**
+ * Zend_Date
+ */
+require_once 'Zend/Date.php';
+
+/**
  * Zend_TimeSync_Exception
  */
 require_once 'Zend/TimeSync/Exception.php';
@@ -34,13 +39,9 @@ require_once 'Zend/TimeSync/Exception.php';
 class Zend_TimeSync
 {
     /**
-     * The well-known NTP port number
+     * The well-known NTP and SNTP port numbers
      */
-    const DEFAULT_NTP_PORT = 123;
-    
-    /**
-     * The well-known SNTP port number
-     */
+    const DEFAULT_NTP_PORT  = 123;
     const DEFAULT_SNTP_PORT = 37;
     
     /**
@@ -63,19 +64,36 @@ class Zend_TimeSync
      */
     protected $_current;
     
-    
     /**
      * Allowed timeserver schemes
      *
      * @var array
      */
-    protected $_allowedSchemes = array('ntp', 
-                                       'sntp');
+    protected $_allowedSchemes = array(
+        'ntp',
+        'sntp'
+    );
+    
+    static $options = array(
+        'timeout' => 10
+    );
     
     public function __construct($server, $options = array()) {
         $this->_addServer($server);
+        $this->setOptions($options);
     }
     
+    public function setOptions($options = array()) 
+    {
+        if (!is_array($options)) {
+            throw new Zend_TimeSync_Exception('$config is expected to be an array, ' . gettype($config) . ' given');
+        }
+        
+        foreach ($options as $key => $value) {
+            Zend_TimeSync::$options[strtolower($key)] = $value;
+        }
+    }
+        
     protected function _addServer($server)
     {
         if (is_array($server)) {
@@ -83,21 +101,21 @@ class Zend_TimeSync
                 $this->_addServer($timeServer);
             }
         } else {
-            $defaultUrl = array('scheme' => self::DEFAULT_TIMESERVER_SCHEME,
-                                'port'   => self::DEFAULT_NTP_PORT);
+            $defaultUrl = array(
+                'scheme' => self::DEFAULT_TIMESERVER_SCHEME,
+                'port'   => self::DEFAULT_NTP_PORT
+            );
                                 
             $url = @array_merge($defaultUrl, @parse_url($server));
             if (!in_array(strtolower($url['scheme']), $this->_allowedSchemes)) {
                 $url['scheme'] = self::DEFAULT_TIMESERVER_SCHEME;
             }
-            
+            $protocol = (strtolower($url['scheme']) === 'ntp') ? 'udp' : 'tcp';
             if (!isset($url['host']) && isset($url['path'])) {
                 $url['host'] = $url['path'];
             }
             
-            $protocol  = (strcasecmp($url['scheme'], 'ntp') == 0) ? 'udp' : 'tcp';
             $className = 'Zend_TimeSync_' . ucfirst($url['scheme']);
-            
             require_once 'Zend/TimeSync/' . ucfirst($url['scheme']) . '.php';
             
             $this->timeservers[] = new $className($protocol . '://' . $url['host'], $url['port']);

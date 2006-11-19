@@ -47,7 +47,7 @@ abstract class Zend_TimeSync_Protocol
             $this->_socket = null;
         }
         
-        $socket = fsockopen($this->_timeserver, $this->_port, $errno, $errstr, 5);
+        $socket = fsockopen($this->_timeserver, $this->_port, $errno, $errstr, Zend_TimeSync::$options['timeout']);
         if (!$socket) {
             return false;
         }
