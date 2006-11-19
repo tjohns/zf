@@ -128,7 +128,7 @@ echo $unit;
         <para>
             To deal with such problems, <code>Zend_Measure</code> offers the possibility to specify a language
             or region.
-        <para>
+        </para>
         <example>
             <title>Localized string</title>
             <programlisting role="php"><![CDATA[<?php
