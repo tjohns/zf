@@ -15,6 +15,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
+ * @version    $Id$
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
@@ -41,7 +42,7 @@ require_once "Zend/Http/Exception.php";
  * @todo        replace asString() with __toString()
  */
 class Zend_Http_Cookie 
-{    
+{
     /**
      * Cookie name
      *
@@ -280,8 +281,9 @@ class Zend_Http_Cookie
                 continue;
             }
             
-            list($k, $v) = explode('=', $part);
-            if (isset($k) && isset($v))    {
+            $keyValue = explode('=', $part, 2);
+            if (count($keyValue) == 2) {
+                list($k, $v) = $keyValue;
                 switch ($k)    {
                     case 'expires':
                         $expires = strtotime($v);
