@@ -138,17 +138,17 @@ class Zend_Cache_FileFrontendTest extends PHPUnit_Framework_TestCase {
     
     public function testGetCorrectCall1()
     {
-        $this->assertFalse($this->_instance1->get('false'));    
+        $this->assertFalse($this->_instance1->load('false'));    
     }
     
     public function testGetCorrectCall2()
     {
-        $this->assertEquals('foo', $this->_instance1->get('cache_id'));    
+        $this->assertEquals('foo', $this->_instance1->load('cache_id'));    
     }
     
     public function testGetCorrectCall3()
     {
-        $this->assertFalse($this->_instance2->get('cache_id'));    
+        $this->assertFalse($this->_instance2->load('cache_id'));    
     }   
     
     public function testConstructorWithABadMasterFile()
@@ -163,7 +163,7 @@ class Zend_Cache_FileFrontendTest extends PHPUnit_Framework_TestCase {
     
     public function testGetWithDoNotTestCacheValidity()
     {
-        $this->assertEquals('foo', $this->_instance1->get('cache_id', true));    
+        $this->assertEquals('foo', $this->_instance1->load('cache_id', true));    
     }
     
 }

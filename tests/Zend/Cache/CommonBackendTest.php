@@ -192,27 +192,27 @@ class Zend_Cache_CommonBackendTest extends PHPUnit_Framework_TestCase {
     
     public function testGetWithANonExistingCacheId()
     {
-        $this->assertFalse($this->_instance->get('barbar'));        
+        $this->assertFalse($this->_instance->load('barbar'));        
     }
     
     public function testGetWithAnExistingCacheId()
     {
-        $this->assertEquals('bar : data to cache', $this->_instance->get('bar'));
+        $this->assertEquals('bar : data to cache', $this->_instance->load('bar'));
     }
     
     public function testGetWithAnExistingCacheIdAndUTFCharacters()
     {
         $data = '"""""' . "'" . '\n' . 'ééééé';
         $this->_instance->save($data, 'foo');
-        $this->assertEquals($data, $this->_instance->get('foo'));
+        $this->assertEquals($data, $this->_instance->load('foo'));
     }
     
     public function testGetWithAnExpiredCacheId()
     {
         $this->_instance->___expire('bar');
         $this->_instance->setDirectives(array('lifeTime' => -1));
-        $this->assertFalse($this->_instance->get('bar'));
-        $this->assertEquals('bar : data to cache', $this->_instance->get('bar', true));
+        $this->assertFalse($this->_instance->load('bar'));
+        $this->assertEquals('bar : data to cache', $this->_instance->load('bar', true));
     }   
 
     public function testCleanModeAll()

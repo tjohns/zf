@@ -62,7 +62,7 @@ class Zend_Cache_FileBackendTest extends Zend_Cache_CommonBackendTest {
     public function testGetWithANonExistingCacheIdAndANullLifeTime() 
     {
         $this->_instance->setDirectives(array('lifeTime' => null));
-        $this->assertFalse($this->_instance->get('barbar'));         
+        $this->assertFalse($this->_instance->load('barbar'));         
     }
     
     public function testSaveCorrectCallWithHashedDirectoryStructure()

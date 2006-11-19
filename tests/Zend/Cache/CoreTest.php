@@ -328,7 +328,7 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     {
         $i1 = $this->_backend->getLogIndex();
         $this->_instance->setOption('caching', false);
-        $res = $this->_instance->get('foo');
+        $res = $this->_instance->load('foo');
         $i2 = $this->_backend->getLogIndex();
         $this->assertFalse($res);
         $this->assertEquals($i1, $i2);
@@ -337,7 +337,7 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     public function testGetBadCall()
     {
         try {
-            $res = $this->_instance->get('foo bar');
+            $res = $this->_instance->load('foo bar');
         }  catch (Zend_Cache_Exception $e) {
             return;
         }
@@ -346,20 +346,20 @@ class Zend_Cache_CoreTest extends PHPUnit_Framework_TestCase {
     
     public function testGetCorrectCall1()
     {
-        $res = $this->_instance->get('false');
+        $res = $this->_instance->load('false');
         $this->assertFalse($res);
     }
     
     public function testGetCorrectCall2()
     {
-        $res = $this->_instance->get('bar');
+        $res = $this->_instance->load('bar');
         $this->assertEquals('foo', 'foo');
     }
     
     public function testGetCorrectCallWithAutomaticSerialization()
     {
         $this->_instance->setOption('automaticSerialization', true);
-        $res = $this->_instance->get('serialized');
+        $res = $this->_instance->load('serialized');
         $this->assertEquals(array('foo'), $res);
     }
     
