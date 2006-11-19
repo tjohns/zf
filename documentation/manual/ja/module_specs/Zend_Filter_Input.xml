@@ -56,6 +56,7 @@
         もしデータが有効ならそれをそのまま返し、有効でなければ
         <literal>FALSE</literal> を返すという、ごく単純な規則です。
         </para>
+    </sect2>
         <sect2 id="zend.filter.input.introduction.whitelist">
             <title>ホワイトリストフィルタリング</title>
             <para>
@@ -149,7 +150,6 @@
     ?>]]>
             </programlisting>
         </sect2>
-    </sect2>
     <sect2 id="zend.filter.input.theoryofoperation">
         <title>動作の原理</title>
         <para>

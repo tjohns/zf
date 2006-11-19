@@ -15,8 +15,11 @@
         </itemizedlist>
     </para>
     <note>
-        <code>addTo()</code> および <code>addCc()</code> では、
-        2 番目の引数として、人間が読みやすい形式のあて先を指定することができます。
+        <title>追加のパラメータ</title>
+        <para>
+            <code>addTo()</code> および <code>addCc()</code> では、
+            2 番目の引数として、人間が読みやすい形式のあて先を指定することができます。
+        </para>
     </note>
 </sect1>
 <!--

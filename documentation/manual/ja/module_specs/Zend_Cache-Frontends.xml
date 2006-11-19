@@ -545,28 +545,72 @@ $res = $cache->foobar2('1', '2');
                               <entry>
                                   デフォルトのオプションを表す連想配列です。
                                   <itemizedlist>
-                                      <listitem><code>(boolean, デフォルトは true) cache</code> :
-                                        true の場合はキャッシュが有効になります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは false) cacheWithGetVariables</code> :
-                                        true の場合は、<code>$_GET</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは false) cacheWithPostVariables</code> :
-                                        true の場合は、<code>$_POST</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは false) cacheWithSessionVariables</code> :
-                                        true の場合は、<code>$_SESSION</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは false) cacheWithFilesVariables</code> :
-                                        true の場合は、<code>$_FILES</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは false) cacheWithCookieVariables</code> :
-                                        true の場合は、<code>$_COOKIE</code> 配列に変数が含まれていてもキャッシュがオンのままになります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは true) makeIdWithGetVariables</code> :
-                                        true の場合は、キャッシュ ID が <code>$_GET</code> 配列の内容に依存するようになります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは true) makeIdWithPostVariables</code> :
-                                        true の場合は、キャッシュ ID が <code>$_POST</code> 配列の内容に依存するようになります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは true) makeIdWithSessionVariables</code> :
-                                        true の場合は、キャッシュ ID が <code>$_SESSION</code> 配列の内容に依存するようになります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは true) makeIdWithFilesVariables</code> :
-                                        true の場合は、キャッシュ ID が <code>$_FILES</code> 配列の内容に依存するようになります。</listitem>
-                                      <listitem><code>(boolean, デフォルトは true) makeIdWithCookieVariables</code> :
-                                        true の場合は、キャッシュ ID が <code>$_COOKIE</code> 配列の内容に依存するようになります。</listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは true) cache</code> :
+                                              true の場合はキャッシュが有効になります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは false) cacheWithGetVariables</code> :
+                                              true の場合は、<code>$_GET</code> 配列に変数が含まれていてもキャッシュがオンのままになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは false) cacheWithPostVariables</code> :
+                                              true の場合は、<code>$_POST</code> 配列に変数が含まれていてもキャッシュがオンのままになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは false) cacheWithSessionVariables</code> :
+                                              true の場合は、<code>$_SESSION</code> 配列に変数が含まれていてもキャッシュがオンのままになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは false) cacheWithFilesVariables</code> :
+                                              true の場合は、<code>$_FILES</code> 配列に変数が含まれていてもキャッシュがオンのままになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは false) cacheWithCookieVariables</code> :
+                                              true の場合は、<code>$_COOKIE</code> 配列に変数が含まれていてもキャッシュがオンのままになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは true) makeIdWithGetVariables</code> :
+                                              true の場合は、キャッシュ ID が <code>$_GET</code> 配列の内容に依存するようになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは true) makeIdWithPostVariables</code> :
+                                              true の場合は、キャッシュ ID が <code>$_POST</code> 配列の内容に依存するようになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは true) makeIdWithSessionVariables</code> :
+                                              true の場合は、キャッシュ ID が <code>$_SESSION</code> 配列の内容に依存するようになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは true) makeIdWithFilesVariables</code> :
+                                              true の場合は、キャッシュ ID が <code>$_FILES</code> 配列の内容に依存するようになります。
+                                          </para>
+                                      </listitem>
+                                      <listitem>
+                                          <para>
+                                              <code>(boolean, デフォルトは true) makeIdWithCookieVariables</code> :
+                                              true の場合は、キャッシュ ID が <code>$_COOKIE</code> 配列の内容に依存するようになります。
+                                          </para>
+                                      </listitem>
                                   </itemizedlist>
                               </entry>
                          </row>

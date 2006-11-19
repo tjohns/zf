@@ -9,25 +9,37 @@
             リクエストの結果として受け取った内容を操作するための直感的なメソッド群を提供します。
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: HTTP のエラーコードを受け取った場合に TRUE、
-                    それ以外の場合に FALSE を返します。
+                    <para>
+                        <code>isError()</code>: HTTP のエラーコードを受け取った場合に TRUE、
+                        それ以外の場合に FALSE を返します。
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: HTTP の成功コードを受け取った場合に TRUE、
-                    それ以外の場合に FALSE を返します。
+                    <para>
+                        <code>isSuccessful()</code>: HTTP の成功コードを受け取った場合に TRUE、
+                        それ以外の場合に FALSE を返します。
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: HTTP のリダイレクトコードを受け取った場合に TRUE、
-                    それ以外の場合に FALSE を返します。
+                    <para>
+                        <code>isRedirect()</code>: HTTP のリダイレクトコードを受け取った場合に TRUE、
+                        それ以外の場合に FALSE を返します。
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: HTTP ステータスコードを返します。
+                    <para>
+                        <code>getStatus()</code>: HTTP ステータスコードを返します。
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: HTTP レスポンスヘッダを文字列の配列で返します。
+                    <para>
+                        <code>getHeaders()</code>: HTTP レスポンスヘッダを文字列の配列で返します。
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: HTTP レスポンスの本文を文字列で返します。
+                    <para>
+                        <code>getBody()</code>: HTTP レスポンスの本文を文字列で返します。
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>

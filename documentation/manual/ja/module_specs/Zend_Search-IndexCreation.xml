@@ -180,12 +180,11 @@ $index->optimize();
             <para>
                 デフォルト値は 10 です。
             </para>
+            <para>
+                Lucene Java および Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
+                を使用してインデックスを最適化することもできます。
+            </para>
         </sect3>
-
-        <para>
-            Lucene Java および Luke (Lucene Index Toolbox - <ulink url="http://www.getopt.org/luke/">http://www.getopt.org/luke/</ulink>)
-            を使用してインデックスを最適化することもできます。
-        </para>
     </sect2>
 </sect1>
 

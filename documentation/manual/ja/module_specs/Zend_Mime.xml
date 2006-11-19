@@ -18,16 +18,22 @@
 	    <code>Zend_Mime</code> は、MIME を処理するための以下のような静的ヘルパーメソッドを提供しています。
 	    <itemizedlist>
 	        <listitem>
-	            <code>Zend_Mime::isPrintable()</code>:
-	            指定した文字列の中に表示できない文字がなければ TRUE、
-	            それ以外の場合に FALSE を返します。
+	            <para>
+	                <code>Zend_Mime::isPrintable()</code>:
+	                指定した文字列の中に表示できない文字がなければ TRUE、
+	                それ以外の場合に FALSE を返します。
+	            </para>
 	        </listitem>
 	        <listitem>
-	            <code>Zend_Mime::encodeBase64()</code>: 文字列を base64 でエンコードします。
+	            <para>
+	                <code>Zend_Mime::encodeBase64()</code>: 文字列を base64 でエンコードします。
+	            </para>
 	        </listitem>
 	        <listitem>
-	            <code>Zend_Mime::encodeQuotedPrintable()</code>:
-	            文字列を quoted-printable でエンコードします。
+	            <para>
+	                <code>Zend_Mime::encodeQuotedPrintable()</code>:
+	                文字列を quoted-printable でエンコードします。
+	            </para>
 	        </listitem>
 	    </itemizedlist>
 	</para>
@@ -35,23 +41,49 @@
 	    <code>Zend_Mime</code> では、MIME メッセージでよく使われる定数を定義しています。
 	    <itemizedlist>
 	        <listitem>
-	            <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
-	        </listitem><listitem>
-	            <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
-	        </listitem><listitem>
-	            <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
-	        </listitem><listitem>
-	            <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
-	        </listitem><listitem>
-	            <code>Zend_Mime::ENCODING_8BIT</code>: '8bit';
-	        </listitem><listitem>
-	            <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
-	        </listitem><listitem>
-	            <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
-	        </listitem><listitem>
-	            <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
-	        </listitem><listitem>
-	            <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+	            <para>
+    	            <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::ENCODING_8BIT</code>: '8bit'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+    	            <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
+	            </para>
+	        </listitem>
+	        <listitem>
+	            <para>
+	                <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+	            </para>
 	        </listitem>
 	    </itemizedlist>
 	</para>
@@ -71,13 +103,19 @@
 	    <code>Zend_Mime</code> オブジェクトには次のメソッドがあります。
 	    <itemizedlist>
 	        <listitem>
-	            <code>boundary()</code>: MIME バウンダリ文字列を返します。
+	            <para>
+	                <code>boundary()</code>: MIME バウンダリ文字列を返します。
+	            </para>
 	        </listitem>
 	        <listitem>
-	            <code>boundaryLine()</code>: 完全な MIME バウンダリ行を返します。
+	            <para>
+	                <code>boundaryLine()</code>: 完全な MIME バウンダリ行を返します。
+	            </para>
 	        </listitem>
 	        <listitem>
-	            <code>mimeEnd()</code>: 完全な MIME 最終バウンダリ行を返します。
+	            <para>
+	                <code>mimeEnd()</code>: 完全な MIME 最終バウンダリ行を返します。
+	            </para>
 	        </listitem>
 	    </itemizedlist>
 	</para>

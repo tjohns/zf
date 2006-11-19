@@ -43,23 +43,23 @@
             <itemizedlist>
                 <listitem>
                     <para>
-                    <emphasis>required</emphasis> を指定した場合、
-                    この単語を含まないドキュメントはクエリにマッチしません。
+                        <emphasis>required</emphasis> を指定した場合、
+                        この単語を含まないドキュメントはクエリにマッチしません。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <emphasis>prohibited</emphasis> を指定した場合、
-                    この単語を含むドキュメントはクエリにマッチしません。
+                        <emphasis>prohibited</emphasis> を指定した場合、
+                        この単語を含むドキュメントはクエリにマッチしません。
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                    <emphasis>neither</emphasis> を指定した場合、
-                    この単語を含むドキュメントは除外されるわけでもなく、
-                    この単語を含まなければマッチしないというわけでもありません。
-                    ただし、クエリにマッチするためには、
-                    この単語のうち最低ひとつを含まなければなりません。
+                        <emphasis>neither</emphasis> を指定した場合、
+                        この単語を含むドキュメントは除外されるわけでもなく、
+                        この単語を含まなければマッチしないというわけでもありません。
+                        ただし、クエリにマッチするためには、
+                        この単語のうち最低ひとつを含まなければなりません。
                     </para>
                 </listitem>
             </itemizedlist>
@@ -85,11 +85,21 @@ $hits = $index->find('+word1 author:word2 -word3');
 ?>]]></programlisting>
 
         <itemizedlist>
-            <listitem>必須の単語には '+' を使用します。</listitem>
-            <listitem>禁止する単語には '-' を使用します。</listitem>
             <listitem>
-            検索するドキュメントフィールドを指定するには 'field:'
-            を先頭につけます。これが省略された場合は 'contents' が使用されます。
+                <para>
+                    必須の単語には '+' を使用します。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    禁止する単語には '-' を使用します。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    検索するドキュメントフィールドを指定するには 'field:'
+                    を先頭につけます。これが省略された場合は 'contents' が使用されます。
+                </para>
             </listitem>
         </itemizedlist>
 
@@ -113,10 +123,20 @@ $hits = $index->find('+word1 author:word2 -word3');
         <para>
             <code>$signs</code> 配列に、単語の種別についての情報を含めます。
             <itemizedlist>
-                <listitem>必須の単語には true を使用します。</listitem>
-                <listitem>禁止する単語には false を使用します。</listitem>
                 <listitem>
-                 必須・禁止のどちらでもない場合は null を使用します。
+                    <para>
+                        必須の単語には <code>true</code> を使用します。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        禁止する単語には <code>false</code> を使用します。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        必須・禁止のどちらでもない場合は <code>null</code> を使用します。
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>

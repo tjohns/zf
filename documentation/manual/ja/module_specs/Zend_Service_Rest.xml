@@ -36,7 +36,10 @@ try {
         echo '<p>エラーが発生しました (' .$e->getMessage(). ')<p>';
 }
 ?>]]>       </programlisting>
-            <note>
+        </example>
+        <note>
+            <title>渡す方法</title>
+            <para>
                 <code>restGet()</code> にクエリ文字列を渡すには、
                 適切にフォーマットした文字列
                 (先頭の疑問符 "<code>?</code>" は含めません)
@@ -45,18 +48,18 @@ try {
                 エンコードしなければなりません (例えば
                 <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>
                 を使用します)。
-            </note>
-            <para>
-                <code>restPost()</code> および <code>restPut()</code> の使用法は
-                <code>restGet()</code> と同じです。違うのは、GET
-                の代わりにそれぞれ HTTP POST あるいは PUT を使用することです。
             </para>
-            <para>
-                <code>restDelete()</code> メソッドは、
-                最初のパラメータで指定したパスを操作します。
-                2 番目のパラメータを渡して対象を指定することはできません。
-            </para>
-        </example>
+        </note>
+        <para>
+            <code>restPost()</code> および <code>restPut()</code> の使用法は
+            <code>restGet()</code> と同じです。違うのは、GET
+            の代わりにそれぞれ HTTP POST あるいは PUT を使用することです。
+        </para>
+        <para>
+            <code>restDelete()</code> メソッドは、
+            最初のパラメータで指定したパスを操作します。
+            2 番目のパラメータを渡して対象を指定することはできません。
+        </para>
     </sect2>
 </sect1>
 <!--

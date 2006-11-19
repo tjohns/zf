@@ -29,8 +29,11 @@ foreach ($results as $result) {
 ?>]]>       </programlisting>
         </example>
         <note>
-            <code>tagSearch()</code> は、オプションの
-            2 番目の引数に検索オプションを指定することができます。
+            <title>オプションのパラメータ</title>
+            <para>
+                <code>tagSearch()</code> は、オプションの
+                2 番目の引数に検索オプションを指定することができます。
+            </para>
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
@@ -41,18 +44,24 @@ foreach ($results as $result) {
         </para>
         <itemizedlist>
             <listitem>
-                <code>userSearch()</code>: 
-                タグをスペースで区切ったクエリ文字列、
-                そしてオプションの 2 番目のパラメータで検索オプションの配列を指定して検索し、
-                結果を <code>Zend_Service_Flickr_ResultSet</code> オブジェクトで返します。
+                <para>
+                    <code>userSearch()</code>: 
+                    タグをスペースで区切ったクエリ文字列、
+                    そしてオプションの 2 番目のパラメータで検索オプションの配列を指定して検索し、
+                    結果を <code>Zend_Service_Flickr_ResultSet</code> オブジェクトで返します。
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByUsername()</code>: 
-                指定したユーザ名に対応するユーザ ID を文字列で返します。
+                <para>
+                    <code>getIdByUsername()</code>: 
+                    指定したユーザ名に対応するユーザ ID を文字列で返します。
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByEmail()</code>: 
-                指定したメールアドレスに対応するユーザ ID を文字列で返します。
+                <para>
+                    <code>getIdByEmail()</code>: 
+                    指定したメールアドレスに対応するユーザ ID を文字列で返します。
+                </para>
             </listitem>
         </itemizedlist>
         <example>
@@ -76,10 +85,12 @@ foreach ($results as $result) {
     </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Flickr 画像の詳細の取得</title>
-        <code>Zend_Service_Flickr</code> を使用すると、指定した画像 ID
-        の画像についての詳細情報をすばやく簡単に取得できます。
-        そのためには、以下の例のように単純に
-        <code>getImageDetails()</code> メソッドを使用します。
+        <para>
+            <code>Zend_Service_Flickr</code> を使用すると、指定した画像 ID
+            の画像についての詳細情報をすばやく簡単に取得できます。
+            そのためには、以下の例のように単純に
+            <code>getImageDetails()</code> メソッドを使用します。
+        </para>
         <example>
             <title>Flickr 画像の詳細の取得</title>
             <para>
@@ -94,7 +105,7 @@ $image = $flickr->getImageDetails($imageId);
 
 echo "画像 ID $imageId は $image->width x $image->height ピクセルです。<br />\n";
 echo "<a href=\"$image->clickUri\">クリックすると画像を表示します</a>\n";
-?>]]>       </programlisting>
+?>]]></programlisting>
         </example>
     </sect2>
     <sect2 id="zend.service.flickr.classes">
@@ -162,10 +173,10 @@ echo "<a href=\"$image->clickUri\">クリックすると画像を表示します
                 <para>
                     この結果セット内の結果の数を返します。
                 </para>
+                <para>
+                    <link linkend="zend.service.flickr.classes">クラス一覧に戻る</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">クラス一覧に戻る</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.flickr.classes.result">
             <title>Zend_Service_Flickr_Result</title>
@@ -283,10 +294,10 @@ echo "<a href=\"$image->clickUri\">クリックすると画像を表示します
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.flickr.classes">クラス一覧に戻る</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">クラス一覧に戻る</link>
-            </para>
         </sect3>
         <sect3 id="zend.service.flickr.classes.image">
             <title>Zend_Service_Flickr_Image</title>
@@ -327,10 +338,10 @@ echo "<a href=\"$image->clickUri\">クリックすると画像を表示します
                         </tbody>
                     </tgroup>
                 </table>
+                <para>
+                    <link linkend="zend.service.flickr.classes">クラス一覧に戻る</link>
+                </para>
             </sect4>
-            <para>
-                <link linkend="zend.service.flickr.classes">クラス一覧に戻る</link>
-            </para>
         </sect3>
     </sect2>
 </sect1>

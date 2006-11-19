@@ -57,8 +57,11 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		</para>
 
 		<note>	
-			ドキュメントルートに配置する PHP ファイルは、
-			この起動用ファイルだけにしておくべきです。
+		    <title>起動用ファイルの場所</title>
+		    <para>
+				ドキュメントルートに配置する PHP ファイルは、
+				この起動用ファイルだけにしておくべきです。
+			</para>
 		</note>
 
 		<para>
@@ -90,11 +93,14 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		</para>
 
 		<note>
-			mod_rewrite を必要としない手法については現在調査中です。
-			mod_rewrite の機能を使用する方法と使用しない方法の両方を提示できるようにするつもりです。
-			また、この仕組みは決して Apache や mod_rewrite
-			特有の機能にとらわれたものではないことにも注意しましょう。
-			同じようなリダイレクトの仕組みを持っているウェブサーバでも使用可能です。
+		    <title>前提条件</title>
+		    <para>
+				mod_rewrite を必要としない手法については現在調査中です。
+				mod_rewrite の機能を使用する方法と使用しない方法の両方を提示できるようにするつもりです。
+				また、この仕組みは決して Apache や mod_rewrite
+				特有の機能にとらわれたものではないことにも注意しましょう。
+				同じようなリダイレクトの仕組みを持っているウェブサーバでも使用可能です。
+			</para>
 		</note>
 	</sect2>	
 		
@@ -128,7 +134,10 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 ]]></programlisting>
 		
 		<note>
-			この節は未完成です。現在作成中であり、今後変わる可能性があります。
+		    <title>作成中</title>
+		    <para>
+				この節は未完成です。現在作成中であり、今後変わる可能性があります。
+			</para>
 		</note>
 	</sect2>	
 		
@@ -172,7 +181,10 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
 		<note>
-			この節は未完成です。現在作成中であり、今後変わる可能性があります。
+		    <title>作成中</title>
+		    <para>
+				この節は未完成です。現在作成中であり、今後変わる可能性があります。
+			</para>
 		</note>
 	</sect2>			
 </sect1>

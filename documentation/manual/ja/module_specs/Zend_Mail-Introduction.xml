@@ -26,9 +26,12 @@ $mail->send();
 ?>]]>   </programlisting>
     </example>
     <note>
-        <code>Zend_Mail</code> でメールを送信するには、
-        最低 1 か所以上の受信者、送信者 (<code>setFrom()</code> を使用します)、
-        そして本文 (テキストや HTML) を指定しなければなりません。
+        <title>最低限の定義</title>
+        <para>
+            <code>Zend_Mail</code> でメールを送信するには、
+            最低 1 か所以上の受信者、送信者 (<code>setFrom()</code> を使用します)、
+            そして本文 (テキストや HTML) を指定しなければなりません。
+        </para>
     </note>
     <para>
         大半の属性については、その情報を読み込むための "get"

@@ -23,8 +23,11 @@ $mail->send();  // もう一度デフォルトを使用します
 ?>]]>   </programlisting>
     </example>
     <note>
-        別の転送手段を用意するには、<code>Zend_Mail_Transport_Interface</code>
-        を実装します。
+        <title>転送手段の追加</title>
+        <para>
+            別の転送手段を用意するには、<code>Zend_Mail_Transport_Interface</code>
+            を実装します。
+        </para>
     </note>
 </sect1>
 <!--

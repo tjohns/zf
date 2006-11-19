@@ -13,9 +13,12 @@
         データを継承しているセクション名を表します。
     </para>
     <note>
-        <code>Zend_Config_Xml</code> で読み込んだ設定データは、
-        常に文字列形式で返されます。必要に応じて、
-        文字列から適切な型に変換してください。
+        <title>返り値の型</title>
+        <para>
+            <code>Zend_Config_Xml</code> で読み込んだ設定データは、
+            常に文字列形式で返されます。必要に応じて、
+            文字列から適切な型に変換してください。
+        </para>
     </note>
     <example>
         <title>Zend_Config_Xml の使用法</title>

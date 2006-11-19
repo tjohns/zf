@@ -10,12 +10,15 @@
 $route = new Zend_Controller_Router_Route('archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
 
     <note>
-        Ruby on Rails とは異なり、ZF の RewriteRouter は
-        4 番目のパラメータの制限を満たさない場合にもルートにマッチし、
-        デフォルト値を使用するようになっています。
-        そのため、URL 'http://example.com/archive/test' は上のルートにマッチし、
-        year は 2006 に設定されます。この機能は将来変更される予定で、
-        このマニュアルを書いている時点ではまだ議論中です。
+        <title>ルートのマッチング</title>
+        <para>
+            Ruby on Rails とは異なり、ZF の RewriteRouter は
+            4 番目のパラメータの制限を満たさない場合にもルートにマッチし、
+            デフォルト値を使用するようになっています。
+            そのため、URL 'http://example.com/archive/test' は上のルートにマッチし、
+            year は 2006 に設定されます。この機能は将来変更される予定で、
+            このマニュアルを書いている時点ではまだ議論中です。
+        </para>
     </note>
 
 </sect1>

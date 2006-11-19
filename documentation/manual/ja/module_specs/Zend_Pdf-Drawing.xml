@@ -510,6 +510,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
                 <para>
                 <citetitle>PDF リファレンス</citetitle> によると、これは以下のように定義されています。
                 <blockquote>
+                    <para>
 nonzero winding number ルールは、ある点がパスの内側にあるかどうかを
 判断するため、その点からどこかの方向に放射線を引いて
 その線がパスを構成する線と交わる場所を調べます。
@@ -533,6 +534,7 @@ nonzero winding number ルールは、ある点がパスの内側にあるかど
 内側となります。2 つの円が反対方向に描画された際には、2 つの円からなる
 「ドーナツ型」の部分が内側となります。このルールの場合は、
 「ドーナツの穴」の部分は外側という扱いになります。
+                </para>
             </blockquote>
             </para>
             </listitem>
@@ -541,6 +543,7 @@ nonzero winding number ルールは、ある点がパスの内側にあるかど
                 <para>
                 <citetitle>PDF リファレンス</citetitle> によると、これは以下のように定義されています。
                 <blockquote>
+                    <para>
 nonzero winding number ルールに対するもうひとつのルールが even-odd ルールです。
 このルールでは、ある点が「内側である」かどうかを判断する材料として、
 その点からどこかの方向に放射線を引いてその線がパスを構成する線と何回交わるか
@@ -554,6 +557,7 @@ nonzero winding number ルールに対するもうひとつのルールが even-
 三角形の部分のみが内側として扱われます。真ん中の五角形は、内側とはみなされません。
 2 つの同心円の場合、2 つの円からなる「ドーナツ型」の部分のみが内側として扱われます。
 これは、円の描画された方向に依存しません。
+                    </para>
                 </blockquote>
             </para>
             </listitem>

@@ -9,9 +9,12 @@
             GET、POST、PUT および DELETE です。
         </para>
         <note>
-            <code>Zend_Http_Client</code> は、デフォルトでは 5 段階までの
-            HTTP リダイレクトを追いかけます。この振る舞いを変更するには、
-            最大値として指定したい数値を <code>get()</code> メソッドに渡します。
+            <title>リダイレクトの回数</title>
+            <para>
+                <code>Zend_Http_Client</code> は、デフォルトでは 5 段階までの
+                HTTP リダイレクトを追いかけます。この振る舞いを変更するには、
+                最大値として指定したい数値を <code>get()</code> メソッドに渡します。
+            </para>
         </note>
         <example>
             <title>基本的な GET リクエストの実行</title>

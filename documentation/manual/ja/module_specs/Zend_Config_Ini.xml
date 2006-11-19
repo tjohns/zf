@@ -13,13 +13,16 @@
         そしてその後に継承元のセクション名を指定することで表します。
     </para>
     <note>
-        <code>Zend_Config_Ini</code> は、PHP の
-        <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
-        関数を使用しています。このドキュメントでは、<code>Zend_Config_Ini</code>
-        固有の挙動に注意しましょう。例えば、特殊な値として
-        <code>true</code> や <code>false</code>、
-        <code>yes</code>、<code>no</code> そして <code>null</code>
-        を処理できることなどです。
+        <title>parse_ini_file</title>
+        <para>
+            <code>Zend_Config_Ini</code> は、PHP の
+            <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink>
+            関数を使用しています。このドキュメントでは、<code>Zend_Config_Ini</code>
+            固有の挙動に注意しましょう。例えば、特殊な値として
+            <code>true</code> や <code>false</code>、
+            <code>yes</code>、<code>no</code> そして <code>null</code>
+            を処理できることなどです。
+        </para>
     </note>
     <example>
         <title>Zend_Config_Ini の使用法</title>

@@ -29,12 +29,15 @@ print_r( $server->system->listMethods() );
         </example>
         <para>
             <note>
-                <code>Zend_XmlRpc_Client</code> は、
-                リモートメソッドを可能な限りネイティブメソッドと同様に扱おうとします。
-                上の <code>system.listMethods()</code> のように
-                リモートメソッドが名前空間を含んでいる場合は、
-                PHP 風にオブジェクトを連結して
-                <code>$server->system->listMethods()</code> のようにコールします。
+                <title>オブジェクトの連結</title>
+                <para>
+                    <code>Zend_XmlRpc_Client</code> は、
+                    リモートメソッドを可能な限りネイティブメソッドと同様に扱おうとします。
+                    上の <code>system.listMethods()</code> のように
+                    リモートメソッドが名前空間を含んでいる場合は、
+                    PHP 風にオブジェクトを連結して
+                    <code>$server->system->listMethods()</code> のようにコールします。
+                </para>
             </note>
         </para>
     </sect2>
@@ -123,21 +126,27 @@ $service->serviceProcedure($p1, $p2);
                 XML-RPC 型を明示的に指定する主な理由としては、以下が考えられるでしょう。
                 <itemizedlist>
                     <listitem>
-                        プロシージャに正しい型で渡されることを確実にしたいことがある
-                        (例えば、integer を要求しているプロシージャに対して
-                        $_GET 配列の中の文字列を渡したい場合など)。
+                        <para>
+                            プロシージャに正しい型で渡されることを確実にしたいことがある
+                            (例えば、integer を要求しているプロシージャに対して
+                            $_GET 配列の中の文字列を渡したい場合など)。
+                        </para>
                     </listitem>
                     <listitem>
-                        プロシージャが base64 型や dateTime.iso8601 型を要求していることがある
-                        (これらは PHP のネイティブ型には存在しません)。
+                        <para>
+                            プロシージャが base64 型や dateTime.iso8601 型を要求していることがある
+                            (これらは PHP のネイティブ型には存在しません)。
+                        </para>
                     </listitem>
                     <listitem>
-                        自動変換が失敗することがある (例えば、空の XML-RPC 
-                        構造体をパラメータとして渡すことを考えましょう。
-                        これは、PHP では空の配列に対応します。しかし、
-                        空の配列をパラメータとして渡すと、それが自動変換されたときに
-                        XML-RPC の array になってしまいます。なぜなら、
-                        からの配列は連想配列ではないからです)。
+                        <para>
+                            自動変換が失敗することがある (例えば、空の XML-RPC 
+                            構造体をパラメータとして渡すことを考えましょう。
+                            これは、PHP では空の配列に対応します。しかし、
+                            空の配列をパラメータとして渡すと、それが自動変換されたときに
+                            XML-RPC の array になってしまいます。なぜなら、
+                            からの配列は連想配列ではないからです)。
+                        </para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -217,15 +226,16 @@ $service->serviceProcedure($p1, $p2);
 
 ?>]]>
             </programlisting>
-            <para>
-                <note>
+            <note>
+                <title>自動変換</title>
+                <para>
                     この場合もパラメータの値は PHP の変数で渡していますが、
                     指定した型に PHP の変換機能によって変換されます
                     (もし <code>Zend_XmlRpc_Value_Integer</code>
                     オブジェクトの値として文字列が渡されたら、
                     <code>(int)$value</code> を使用して変換されます)。
-                </note>
-            </para>
+                </para>
+            </note>
         </sect3>
         <sect3 id='zend.xmlrpc.client.parameters.as_xml'>
             <title>XML 文字列を XML-RPC パラメータとしてパースする</title>
@@ -262,9 +272,12 @@ $service->serviceProcedure($p1, $p2);
             必須パラメータの型および返り値の型が含まれます。
         </para>
         <note>
-            すべての XML-RPC サーバが <code>system.methodSignature</code>
-            プロシージャをサポートしているわけではありません。
-            サポートしていないサーバの場合は、型指定を使用することはできません。
+            <title>methodSignature のサポート</title>
+            <para>
+                すべての XML-RPC サーバが <code>system.methodSignature</code>
+                プロシージャをサポートしているわけではありません。
+                サポートしていないサーバの場合は、型指定を使用することはできません。
+            </para>
         </note>
         <para>
             <code>Zend_XmlRpc_Client</code> では、<code>system.methodSignature</code>
@@ -344,17 +357,23 @@ $service->serviceProcedure($param);
             応答内容として指定できるオプションは以下のとおりです。
             <itemizedlist>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - 
-                    プロシージャの返り値を、PHP のネイティブ型として返します
-                    (XML-RPC 型を PHP 型に変換します)。
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - 
+                        プロシージャの返り値を、PHP のネイティブ型として返します
+                        (XML-RPC 型を PHP 型に変換します)。
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - 
-                    XML-RPC の応答を、XML 文字列形式で返します。
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - 
+                        XML-RPC の応答を、XML 文字列形式で返します。
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - 
-                    XML-RPC 型を表す <code>Zend_XmlRpc_Value</code> オブジェクトを返します。
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - 
+                        XML-RPC 型を表す <code>Zend_XmlRpc_Value</code> オブジェクトを返します。
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
