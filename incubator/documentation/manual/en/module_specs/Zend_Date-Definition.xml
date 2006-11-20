@@ -61,7 +61,7 @@
         </para>
         <para>
             Trotzdem werden, solange es möglich ist, die internen PHP Funktionen benutzt.
-            Das führt dazu das Zend_Date sehr schnell in der Verarbeitung ist.
+            Das führt dazu das <code>Zend_Date</code> sehr schnell in der Verarbeitung ist.
         </para>
         <note>
             <title>Vorsicht</title>
@@ -78,7 +78,7 @@
     <sect2 id="zend.date.definition.normalizing">
         <title>Normalisierung und Lokalisierung</title>
         <para>
-            Wie bereits erwähnt kann Zend_Date Monatsnamen in der jeweiligen Landessprache
+            Wie bereits erwähnt kann <code>Zend_Date</code> Monatsnamen in der jeweiligen Landessprache
             erkennen. Hierbei wird das lokalisierte Monat auf den entsprechenden Timestamp umgewandelt.
             Auf die gleiche Art und Weise kann natürlich jedes Datum auch lokalisiert ausgegeben werden.
         </para>
@@ -87,7 +87,7 @@
         </para>
         <para>
             Für detailierte Informationen zur Handhabung von Lokalisierung und Normalisierung wird die
-            Dokumenation von Zend_Locale empfohlen.
+            Dokumenation von <code>Zend_Locale</code> empfohlen.
         </para>
     </sect2>
 </sect1>
