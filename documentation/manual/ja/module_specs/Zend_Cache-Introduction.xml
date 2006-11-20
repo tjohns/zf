@@ -53,7 +53,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 // $cache は先ほどの例で作成したものです
 
 // キャッシュがすでに存在するかどうかを調べます
-if(!$result = $cache->get('myresult')) {
+if(!$result = $cache->load('myresult')) {
 
     // キャッシュが見つかりませんでした。データベースに接続します
     
