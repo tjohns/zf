@@ -54,20 +54,22 @@
         through the constructor, however, to allow modification of data values.
 -->
         <note>
-            Важно не путать изменение данных в памяти с сохранением
-            конфигурационных данных на физическом носителе данных. Инструменты
-            для создания и изменения конфигурационных данных для различных
-            носителей данных не входят в сферу назначений <code>Zend_Config</code>.
-            Для этих целей доступны продукты сторонних разработчиков
-            с открытым исходным кодом к различным носителям информации. 
+            <para>
+                Важно не путать изменение данных в памяти с сохранением
+                конфигурационных данных на физическом носителе данных. Инструменты
+                для создания и изменения конфигурационных данных для различных
+                носителей данных не входят в сферу назначений <code>Zend_Config</code>.
+                Для этих целей доступны продукты сторонних разработчиков
+                с открытым исходным кодом к различным носителям информации. 
 <!--
-            It is important not to confuse such in-memory modifications with
-            saving configuration data out to specific storage media. Tools for
-            creating and modifying configuration data for various storage media
-            are out of scope with respect to <code>Zend_Config</code>. Third
-            party open source solutions are readily available for the purpose
-            of creating and modifying configuration data for various storage media.
+                It is important not to confuse such in-memory modifications with
+                saving configuration data out to specific storage media. Tools for
+                creating and modifying configuration data for various storage media
+                are out of scope with respect to <code>Zend_Config</code>. Third
+                party open source solutions are readily available for the purpose
+                of creating and modifying configuration data for various storage media.
 -->
+            </para>
         </note>
     </para>
     <para>

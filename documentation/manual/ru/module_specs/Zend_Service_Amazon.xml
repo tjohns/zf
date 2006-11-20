@@ -152,18 +152,18 @@ foreach ($results as $result) {
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
 ?>]]>       </programlisting>
-            <note>
-                <title>Коды стран<!--Country codes--></title>
-                <para>
-                    Возможные коды стран: <code>CA</code>, <code>DE</code>, <code>FR</code>,
-                    <code>JP</code>, <code>UK</code> и <code>US</code>.
-<!--
-                    Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                    <code>UK</code>, and <code>US</code>.
--->
-                </para>
-            </note>
         </example>
+        <note>
+            <title>Коды стран<!--Country codes--></title>
+            <para>
+                Возможные коды стран: <code>CA</code>, <code>DE</code>, <code>FR</code>,
+                <code>JP</code>, <code>UK</code> и <code>US</code>.
+<!--
+                Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                <code>UK</code>, and <code>US</code>.
+-->
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemlookup">
         <title>Поиск товара по его коду ASIN<!--Looking up a Specific Amazon Item by ASIN--></title>
@@ -820,6 +820,7 @@ foreach ($results as $result) {
 -->
             </para>
             <sect4 id="zend.service.amazon.classes.offer.properties">
+                <title>Свойства класса</title>
                 <table>
                     <title>Свойства класса Zend_Service_Amazon_Offer</title>
                     <tgroup cols="3">
