@@ -5,12 +5,12 @@
 SVN=/usr/bin/svn
 SVN_USER=
 SVN_PASS=
-ZF_TAG=1416
+ZF_TAG=HEAD
 
 ZF_SVN_URL=http://framework.zend.com/svn/framework/trunk/
 ZF_PRODUCT_NAME=ZendFramework
 ZF_PRODUCTNAME=ZendFramework
-ZF_VERSION=0.2.0
+ZF_VERSION=0.6.0
 ZF_PRODUCT=$(ZF_PRODUCTNAME)-$(ZF_VERSION)
 ZF_EXPORT_DIR=./$(ZF_PRODUCT)-export-$(ZF_TAG)
 STAGE_HOME=stage
@@ -22,10 +22,10 @@ TAR=tar
 ZF_TARBALL=$(ZF_PRODUCT).tar.gz
 
 # for Windows:
-# PHPDOC=php 'C:\php\phpdoc'
+PHPDOC=php 'C:\php\phpdoc'
 
 # for non-Windows:
-PHPDOC=php '/usr/local/bin/phpdoc'
+# PHPDOC=php '/usr/local/bin/phpdoc'
 
 .PHONY: clean
 
