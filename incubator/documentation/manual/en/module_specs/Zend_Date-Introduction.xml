@@ -2,12 +2,11 @@
     <title>Einführung</title>
     <para>
         Der Zend_Framework bietet mit <code>Zend_Date</code> eine ausführliche und sehr einfache API 
-        für die Handhabung von Datum und Zeit. Mit <code>Zend_Date</code> lassen sich Datum und Zeit
-        auf einfachste Weise handhaben. Es wird eine große Anzahl an Funktionen und Möglichkeiten 
+        für die Handhabung von Datum und Zeit. Es wird eine große Anzahl an Funktionen und Möglichkeiten 
         geboten die sogar die Standardfunktionen von PHP auf ein höheres Level bringt.
     </para>
     <para>
-        Eine einfache Handhabung von Zeit und Datum werden von jedem Benutzer vorausgesetzt.
+        Die einfache Handhabung von Zeit und Datum werden von jedem Benutzer vorausgesetzt.
         Aber so einfach wie es auf den ersten Blick scheint ist es in Wirklichkeit nicht.
     </para>
     <para>
