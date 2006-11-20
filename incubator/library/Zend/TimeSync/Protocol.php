@@ -29,13 +29,11 @@
 abstract class Zend_TimeSync_Protocol
 {
     protected $_socket;
+    protected $_exceptions;
     
     /**
      * Connect to the specified NTP server. If called when the socket is
      * already connected, it disconnects and connects again.
-     *
-     * @param string  $server  IP address or host name.
-     * @param integer $port    port number.
      *
      * @access protected
      * @return boolean
@@ -47,8 +45,10 @@ abstract class Zend_TimeSync_Protocol
             $this->_socket = null;
         }
         
-        $socket = fsockopen($this->_timeserver, $this->_port, $errno, $errstr, Zend_TimeSync::$options['timeout']);
+        $socket = @fsockopen($this->_timeserver, $this->_port, $errno, $errstr, Zend_TimeSync::$options['timeout']);
         if (!$socket) {
+            $this->_exceptions = new Zend_TimeSync_Exception("could not connect to '$this->_timeserver' .
+                on port '$this->_port', reason: '$errstr'");
             return false;
         }
                 
@@ -66,6 +66,8 @@ abstract class Zend_TimeSync_Protocol
     protected function _disconnect()
     {
         if (!is_resource($this->_socket)) {
+            $this->_exceptions = new Zend_TimeSync_Exception("could not close server connection from '.
+                'to '$this->_timeserver' on port '$this->_port'");
             return false;
         }
         

@@ -133,7 +133,7 @@ class Zend_TimeSync
         $timestamp = $this->_current->query();
         if ($timestamp) {
             return new Zend_Date($timestamp, false, $locale);
-        } elseif (next($this->timeservers)) {
+        } elseif ($this->_current = next($this->timeservers)) {
             $this->getDate($locale);
         } else {
             throw new Zend_TimeSync_Exception('all servers are bogus');
