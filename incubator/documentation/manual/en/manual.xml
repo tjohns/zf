@@ -150,6 +150,7 @@
     <chapter id="zend.date">
         <title>Zend_Date</title>
         &module_specs.Zend_Date-Introduction;
+        &module_specs.Zend_Date-Definition;
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
