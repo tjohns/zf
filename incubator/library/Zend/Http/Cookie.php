@@ -225,7 +225,7 @@ class Zend_Http_Cookie
     public function match($uri, $matchSessionCookies = true, $now = null)
     {
         if (is_string ($uri)) {
-            $uri = Zend_Uri_Http::factory($uri);
+            $uri = Zend_Uri::factory($uri);
         }
         
         // Make sure we have a valid Zend_Uri_Http object
@@ -256,26 +256,32 @@ class Zend_Http_Cookie
      * @param Zend_Uri_Http|string $ref_uri Reference URI for default values (domain, path)
      * @return Zend_Http_Cookie A new Zend_Http_Cookie object or false on failure.
      */
-    static public function factory($cookieStr, $ref_uri = null)
+    static public function fromString($cookieStr, $ref_uri = null)
     {
         // Set default values
         if (is_string($ref_uri)) {
-            $ref_uri = Zend_Uri_Http::factory($ref_uri);
+            $ref_uri = Zend_Uri::factory($ref_uri);
         }
         
-        $name = null;
-        $value = null;
-        $expires = null;
-        $domain = null;
-        $path = null;
+        $name = '';
+        $value = '';
+        $expires = 0;
+        $domain = '';
+        $path = '';
         $secure = false;
 
+        // Get the name and value of the cookie
+        $parts = explode(';', $cookieStr);
+        list($name, $value) = explode('=', trim(array_shift($parts)), 2);
+        
+        // Set default domain and path
         if ($ref_uri instanceof Zend_Uri_Http) {
             $domain = $ref_uri->getHost();
             $path = dirname($ref_uri->getPath());
         }
-
-        foreach (explode(';', $cookieStr ) as $part) {
+        
+        // Set other cookie parameters
+        foreach ($parts as $part) {
             $part = trim($part);
             if (strtolower($part) == 'secure') {
                 $secure = true;
@@ -285,7 +291,7 @@ class Zend_Http_Cookie
             $keyValue = explode('=', $part, 2);
             if (count($keyValue) == 2) {
                 list($k, $v) = $keyValue;
-                switch ($k)    {
+                switch (strtolower($k))    {
                     case 'expires':
                         $expires = strtotime($v);
                         break;
@@ -296,14 +302,12 @@ class Zend_Http_Cookie
                         $domain = $v;
                         break;
                     default:
-                        $name = $k;
-                        $value = $v;
                         break;
                 }
             }
         }
         
-        if ($name && isset($value)) {
+        if ($name !== '') {
             return new Zend_Http_Cookie($name, $value, $domain, $expires, $path, $secure);
         } else {
             return false;

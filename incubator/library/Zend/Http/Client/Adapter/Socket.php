@@ -122,11 +122,12 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
      * @param float $http_ver
      * @param array  $headers
      * @param string $body
+     * @return string Request as string
      */
     public function write($method, $uri, $http_ver = 1.1, $headers = array(), $body = '')
     {
         // Make sure we're properly connected
-        if (! $this->socket) 
+        if (! $this->socket)
             throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are not connected");
         
         $host = $uri->getHost();
@@ -134,8 +135,10 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         if ($this->connected_to[0] != $host || $this->connected_to[1] != $uri->getPort())
             throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are connected to the wrong host");
 
-            // Build request headers
-        $request = "{$method} {$uri->__toString()} HTTP/{$http_ver}\r\n";
+        // Build request headers
+        $path = $uri->getPath();
+        if ($uri->getQuery()) $path .= '?' . $uri->getQuery();
+        $request = "{$method} {$path} HTTP/{$http_ver}\r\n";
         foreach ($headers as $k => $v) {
             if (is_string($k)) $v = ucfirst($k) . ": $v";
             $request .= "$v\r\n";
@@ -145,7 +148,11 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         $request .= "\r\n" . $body;
         
         // Send the request
-        fwrite($this->socket, $request);
+        if (! fwrite($this->socket, $request)) {
+        	throw new Zend_Http_Client_Adapter_Exception("Error writing request to server");
+        }
+        
+        return $request;
     }
     
     /**

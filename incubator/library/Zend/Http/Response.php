@@ -13,8 +13,10 @@
  * obtain it through the world-wide-web, please send an email
  * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Http
- * @subpackage Client
+ * @subpackage Response
+ * @version    $Id$
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -569,7 +571,7 @@ class Zend_Http_Response
      * @param string $response_str
      * @return Zend_Http_Response
      */
-    static public function factory($response_str)
+    static public function fromString($response_str)
     {
         $code    = self::extractCode($response_str);
         $headers = self::extractHeaders($response_str);

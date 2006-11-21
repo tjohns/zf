@@ -32,7 +32,7 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	{
 		$response_text = file_get_contents(dirname(__FILE__) . '/_files/response_gzip');
 		
-		$res = Zend_Http_Response::factory($response_text);
+		$res = Zend_Http_Response::fromString($response_text);
 		
 		$this->assertEquals('gzip', $res->getHeader('Content-encoding'));
 		$this->assertEquals('0b13cb193de9450aa70a6403e2c9902f', md5($res->getBody()));
@@ -43,7 +43,7 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	{
 		$response_text = file_get_contents(dirname(__FILE__) . '/_files/response_deflate');
 		
-		$res = Zend_Http_Response::factory($response_text);
+		$res = Zend_Http_Response::fromString($response_text);
 		
 		$this->assertEquals('deflate', $res->getHeader('Content-encoding'));
 		$this->assertEquals('0b13cb193de9450aa70a6403e2c9902f', md5($res->getBody()));
@@ -54,7 +54,7 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	{
 		$response_text = file_get_contents(dirname(__FILE__) . '/_files/response_chunked');
 		
-		$res = Zend_Http_Response::factory($response_text);
+		$res = Zend_Http_Response::fromString($response_text);
 		
 		$this->assertEquals('chunked', $res->getHeader('Transfer-encoding'));
 		$this->assertEquals('0b13cb193de9450aa70a6403e2c9902f', md5($res->getBody()));
@@ -64,10 +64,10 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	public function testLineBreaksCompatibility()
 	{
 		$response_text_lf = $this->readResponse('response_lfonly');
-		$res_lf = Zend_Http_Response::factory($response_text_lf);
+		$res_lf = Zend_Http_Response::fromString($response_text_lf);
 		
 		$response_text_crlf = $this->readResponse('response_crlf');
-		$res_crlf = Zend_Http_Response::factory($response_text_crlf);
+		$res_crlf = Zend_Http_Response::fromString($response_text_crlf);
 		
 		$this->assertEquals($res_lf->getHeadersAsString(true), $res_crlf->getHeadersAsString(true), 'Responses headers do not match');
 		$this->assertEquals($res_lf->getBody(), $res_crlf->getBody(), 'Response bodies do not match');
@@ -88,7 +88,7 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	public function test404IsError()
 	{
 		$response_text = $this->readResponse('response_404');
-		$response = Zend_Http_Response::factory($response_text);
+		$response = Zend_Http_Response::fromString($response_text);
 		
 		$this->assertEquals(404, $response->getStatus(), 'Response code is expected to be 404, but it\'s not.');
 		$this->assertTrue($response->isError(), 'Response is an error, but isError() returned false');
@@ -99,7 +99,7 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	public function test500isError()
 	{
 		$response_text = $this->readResponse('response_500');
-		$response = Zend_Http_Response::factory($response_text);
+		$response = Zend_Http_Response::fromString($response_text);
 		
 		$this->assertEquals(500, $response->getStatus(), 'Response code is expected to be 500, but it\'s not.');
 		$this->assertTrue($response->isError(), 'Response is an error, but isError() returned false');
@@ -109,7 +109,7 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	
 	public function test300isRedirect()
 	{
-		$response = Zend_Http_Response::factory($this->readResponse('response_302'));
+		$response = Zend_Http_Response::fromString($this->readResponse('response_302'));
 
 		$this->assertEquals(302, $response->getStatus(), 'Response code is expected to be 302, but it\'s not.');
 		$this->assertTrue($response->isRedirect(), 'Response is a redirection, but isRedirect() returned false');
@@ -119,7 +119,7 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	
 	public function test200Ok()
 	{
-		$response = Zend_Http_Response::factory($this->readResponse('response_deflate'));
+		$response = Zend_Http_Response::fromString($this->readResponse('response_deflate'));
 		
 		$this->assertEquals(200, $response->getStatus(), 'Response code is expected to be 200, but it\'s not.');
 		$this->assertFalse($response->isError(), 'Response is OK, but isError() returned true');
@@ -134,7 +134,7 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	
 	public function testAutoMessageSet()
 	{
-		$response = Zend_Http_Response::factory($this->readResponse('response_403_nomessage'));
+		$response = Zend_Http_Response::fromString($this->readResponse('response_403_nomessage'));
 		
 		$this->assertEquals(403, $response->getStatus(), 'Response status is expected to be 403, but it isn\'t');
 		$this->assertEquals('Forbidden', $response->getMessage(), 'Response is 403, but message is not "Forbidden" as expected');
@@ -148,14 +148,14 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	public function testAsString()
 	{
 		$response_str = $this->readResponse('response_404');
-		$response = Zend_Http_Response::factory($response_str);
+		$response = Zend_Http_Response::fromString($response_str);
 		
 		$this->assertEquals(strtolower($response_str), strtolower($response->asString()), 'Response convertion to string does not match original string');
 	}
 	
 	public function testGetHeaders()
 	{
-		$response = Zend_Http_Response::factory($this->readResponse('response_deflate'));
+		$response = Zend_Http_Response::fromString($this->readResponse('response_deflate'));
 		$headers = $response->getHeaders();
 		
 		$this->assertEquals(8, count($headers), 'Header count is not as expected');
@@ -165,14 +165,14 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	
 	public function testGetVersion()
 	{
-		$response = Zend_Http_Response::factory($this->readResponse('response_chunked'));
+		$response = Zend_Http_Response::fromString($this->readResponse('response_chunked'));
 		$this->assertEquals(1.1, $response->getVersion(), 'Version is expected to be 1.1');
 	}
 	
 	public function testUnknownCode()
 	{
 		$response_str = $this->readResponse('response_unknown');
-		$response = Zend_Http_Response::factory($response_str);
+		$response = Zend_Http_Response::fromString($response_str);
 		
 		// Check that dynamically the message is parsed 
 		$this->assertEquals(550, $response->getStatus(), 'Status is expected to be a non-standard 550');
@@ -184,7 +184,7 @@ class Zend_Http_ResponseTest extends PHPUnit_Framework_TestCase
 	
 	public function testMultilineHeader()
 	{
-		$response = Zend_Http_Response::factory($this->readResponse('response_multiline_header'));
+		$response = Zend_Http_Response::fromString($this->readResponse('response_multiline_header'));
 		
 		// Make sure we got the corrent no. of headers
 		$this->assertEquals(6, count($response->getHeaders()), 'Header count is expected to be 6');

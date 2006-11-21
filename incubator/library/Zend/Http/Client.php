@@ -530,7 +530,7 @@ class Zend_Http_Client
             if ($cookie instanceof Zend_Http_Cookie) {
                 $this->cookiejar->addCookie($cookie);
             } elseif (is_string($cookie) && $value !== null) {
-                $cookie = Zend_Http_Cookie::factory("{$cookie}={$value}", $this->uri);
+                $cookie = Zend_Http_Cookie::fromString("{$cookie}={$value}", $this->uri);
                 $this->cookiejar->addCookie($cookie);
             }
         } else {
@@ -584,7 +584,7 @@ class Zend_Http_Client
         $this->setEncType(self::ENC_FORMDATA);
 
         if ($ctype === null) $ctype = 'application/octet-stream';
-        $this->files[$formname] = array($filename, $ctype, $data);
+        $this->files[$formname] = array(basename($filename), $ctype, $data);
         
         return $this;
     }
@@ -679,18 +679,19 @@ class Zend_Http_Client
             
             $body = $this->prepare_body();
             $headers = $this->prepare_headers();
-            $this->last_request = "{$this->method} {$uri->__toString()} HTTP/{$this->config['httpversion']}\r\n" . 
-                implode("\r\n", $headers) . "\r\n" . $body;
             
             // Open the connection, send the request and read the response
             $this->adapter->connect($uri->getHost(), $uri->getPort(), 
                 ($uri->getScheme() == 'https' ? true : false));
-            $this->adapter->write($this->method, $uri, $this->config['httpversion'], $headers, $body);
+                
+            $this->last_request = $this->adapter->write($this->method, 
+                $uri, $this->config['httpversion'], $headers, $body);
+                
             $response = $this->adapter->read();
             if (! $response)
                 throw new Zend_Http_Client_Exception('Unable to read response, or response is empty');
                 
-            $response = Zend_Http_Response::factory($response);
+            $response = Zend_Http_Response::fromString($response);
             
             // Load cookies into cookie jar
             if (isset($this->cookiejar)) $this->cookiejar->addCookiesFromResponse($response, $uri);
@@ -701,7 +702,9 @@ class Zend_Http_Client
                 // Check whether we send the exact same request again, or drop the parameters
                 // and send a GET request
                 if ($response->getStatus() == 303 ||
-                ((! $this->config['strictredirects']) && ($response->getStatus() == 302 || $response->getStatus() == 301))) {
+                   ((! $this->config['strictredirects']) && ($response->getStatus() == 302 || 
+                       $response->getStatus() == 301))) {
+                       	
                     $this->resetParameters();
                     $this->setMethod(self::GET);
                 }

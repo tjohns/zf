@@ -16,6 +16,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Adapter
+ * @version    $Id$
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -58,6 +59,7 @@ interface Zend_Http_Client_Adapter_Interface
      * @param float $http_ver
      * @param array  $headers
      * @param string $body
+     * @return string Request as text
      */
     public function write($method, $url, $http_ver = 1.1, $headers = array(), $body = '');
     

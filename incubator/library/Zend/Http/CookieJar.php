@@ -12,7 +12,10 @@
  * obtain it through the world-wide-web, please send a note to
  * license@zend.com so we can mail you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Http
+ * @subpackage CookieJar
+ * @version    $Id$
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
@@ -97,7 +100,7 @@ class Zend_Http_CookieJar
     public function addCookie($cookie, $ref_uri = null)
     {
         if (is_string($cookie)) {
-            $cookie = Zend_Http_Cookie::factory($cookie, $ref_uri);
+            $cookie = Zend_Http_Cookie::fromString($cookie, $ref_uri);
         }
         
         if ($cookie instanceof Zend_Http_Cookie) {
@@ -157,7 +160,7 @@ class Zend_Http_CookieJar
     public function getMatchingCookies($uri, $matchSessionCookies = true, 
         $ret_as = self::COOKIE_OBJECT, $now = null)
     {
-        if (is_string($uri)) $uri = Zend_Uri_Http::factory($uri);
+        if (is_string($uri)) $uri = Zend_Uri::factory($uri);
         if (! $uri instanceof Zend_Uri_Http) {
             throw new Zend_Http_Exception("Invalid URI: {$uri}");
         }
@@ -192,7 +195,7 @@ class Zend_Http_CookieJar
     public function getCookie($uri, $cookie_name, $ret_as = self::COOKIE_OBJECT)
     {
         if (is_string($uri)) {
-            $uri = Zend_Uri_Http::factory($uri);
+            $uri = Zend_Uri::factory($uri);
         }
         
         if (! $uri instanceof Zend_Uri_Http) {
@@ -277,7 +280,7 @@ class Zend_Http_CookieJar
             $path = dirname($domain->getPath());
             $domain = $domain->getHost();
         } elseif (is_string($domain) && Zend_Uri_Http::check($domain)) {
-            $domain = Zend_Uri_Http::factory($domain);
+            $domain = Zend_Uri::factory($domain);
             $path = dirname($domain->getPath());
             $domain = $domain->getHost();
         }
@@ -399,7 +402,7 @@ class Zend_Http_CookieJar
      * @return Zend_Http_CookieJar
      * @todo Add the $uri functionality. 
      */
-    static public function factory(Zend_Http_Response $response, $ref_uri)
+    static public function fromResponse(Zend_Http_Response $response, $ref_uri)
     {
         $jar = new Zend_Http_CookieJar();
         $jar->addCookiesFromResponse($response, $ref_uri);

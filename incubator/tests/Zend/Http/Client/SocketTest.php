@@ -107,7 +107,7 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 		
 		$res = $this->client->request(Zend_Http_Client::TRACE);
 		
-		$this->assertEquals($this->client->getLastRequest() . "\r\n", $res->getBody(), 'Response body should be exactly like the last request');
+		$this->assertEquals($this->client->getLastRequest(), $res->getBody(), 'Response body should be exactly like the last request');
 	}
 
 
@@ -546,8 +546,8 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 		$refuri = $this->client->getUri();
 		
 		$cookies = array(
-			Zend_Http_Cookie::factory('chocolate=chips', $refuri),
-			Zend_Http_Cookie::factory('crumble=apple', $refuri)
+			Zend_Http_Cookie::fromString('chocolate=chips', $refuri),
+			Zend_Http_Cookie::fromString('crumble=apple', $refuri)
 		);
 		
 		$strcookies = array();
@@ -571,8 +571,8 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 		$refuri = $this->client->getUri();
 		
 		$cookies = array(
-			Zend_Http_Cookie::factory('chocolate=chips', $refuri),
-			Zend_Http_Cookie::factory('crumble=apple', $refuri)
+			Zend_Http_Cookie::fromString('chocolate=chips', $refuri),
+			Zend_Http_Cookie::fromString('crumble=apple', $refuri)
 		);
 		
 		$strcookies = array();
@@ -620,6 +620,18 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 		$size = filesize(__FILE__);
 		
 		$body = "uploadfile " . basename(__FILE__) . " $mtype $size\n";
+		$this->assertEquals($res->getBody(), $body, 'Response body does not include expected upload parameters');
+	}
+	
+	public function testUploadNameWithSpecialChars()
+	{
+		$this->client->setUri($this->baseuri. 'testUploads.php');
+		
+		$rawdata = file_get_contents(__FILE__);
+		$this->client->setFileUpload('/some strage/path%/with[!@#$&]/myfile.txt', 'uploadfile', $rawdata, 'text/plain');
+		$res = $this->client->request('POST');
+		
+		$body = 'uploadfile myfile.txt text/plain ' . strlen($rawdata) . "\n";
 		$this->assertEquals($res->getBody(), $body, 'Response body does not include expected upload parameters');
 	}
 }
