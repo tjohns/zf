@@ -1,0 +1,9 @@
+<sect1 id="zend.mail.smtp-authentication">
+    <title>SMTP验证</title>
+    <para>
+        今后会添加一些SMTP验证方法，目前Zend_Mail还不支持SMTP验证。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
