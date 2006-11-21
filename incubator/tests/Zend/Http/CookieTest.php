@@ -158,7 +158,7 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
     	$refUrls = array(
     	    'http://www.example.com/foo/bar/' => '/foo/bar',
     	    'http://foo.com'                 => '/',
-    	    'http://qua.qua.co.uk/path/to/very/deep/file.php'           => '/path/to/very/deep/'
+    	    'http://qua.qua.co.uk/path/to/very/deep/file.php' => '/path/to/very/deep'
     	);
     	
     	foreach ($refUrls as $url => $path) {
@@ -169,69 +169,156 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetExpiryTime().
+     * Test we get the correct expiry time
+     * 
      */
-    public function testGetExpiryTime() {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
+    public function testGetExpiryTime() 
+    {
+    	$now = time();
+    	$yesterday = $now - (3600 * 24);
+        $cookies = array(
+            'cookie=bar; domain=example.com; expires=' . date(DATE_COOKIE, $now) . ';' => $now,
+            'cookie=foo; expires=' . date(DATE_COOKIE, $yesterday) . '; domain=some.really.deep.domain.com; path=/;' => $yesterday,
+            'cookie=baz; domain=foo.com; path=/some/path; secure' => null
         );
+        
+        foreach ($cookies as $cstr => $exp) {
+        	$cookie = Zend_Http_Cookie::fromString($cstr);
+        	if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+        	$this->assertEquals($exp, $cookie->getExpiryTime(), 'Expiry time is not as expected');
+        }
     }
 
     /**
-     * @todo Implement testIsSecure().
+     * Make sure the "is secure" flag is correctly set
      */
-    public function testIsSecure() {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
+    public function testIsSecure() 
+    {
+        $cookies = array(
+            'cookie=foo; path=/foo/baz; secure; expires=Tue, 21-Nov-2006 08:33:44 GMT; domain=.example.com;' => true,
+            'cookie=foo; path=/; expires=Tue, 21-Nov-2006 08:33:44 GMT; domain=.example.com;' => false,
+            'cookie=foo; path=/; SECURE; domain=.example.com;' => true,
+            'cookie=foo; path=/; domain=.example.com; SECURE' => true
         );
+        
+        foreach ($cookies as $cstr => $secure) {
+        	$cookie = Zend_Http_Cookie::fromString($cstr);
+        	if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+        	$this->assertEquals($secure, $cookie->isSecure(), 'isSecure is not as expected');
+        }
+        
     }
 
     /**
-     * @todo Implement testIsExpired().
+     * Make sure we get the correct value for 'isExpired'
      */
-    public function testIsExpired() {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+    public function testIsExpired() 
+    {
+		$notexpired = time() + 3600;
+		$expired = time() - 3600;
+		
+		$cookies = array(
+			'cookie=foo; domain=example.com; expires=' . date(DATE_COOKIE, $notexpired) => false,
+			'cookie=foo; domain=example.com; expires=' . date(DATE_COOKIE, $expired) => true,
+			'cookie=foo; domain=example.com;' => false
+		);
+		
+		foreach ($cookies as $cstr => $isexp) {
+			$cookie = Zend_Http_Cookie::fromString($cstr);
+			if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+			$this->assertEquals($isexp, $cookie->isExpired(), 'Got the wrong value for isExpired()');
+		}
     }
 
     /**
-     * @todo Implement testIsSessionCookie().
+     * Make sure we get the correct value for 'isExpired', when time is manually set
      */
-    public function testIsSessionCookie() {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+    public function testIsExpiredDifferentTime() 
+    {
+		$notexpired = time() + 3600;
+		$expired = time() - 3600;
+		$now = time() + 7200;
+		
+		$cookies = array(
+			'cookie=foo; domain=example.com; expires=' . date(DATE_COOKIE, $notexpired),
+			'cookie=foo; domain=example.com; expires=' . date(DATE_COOKIE, $expired)
+		);
+		
+		// Make sure all cookies are expired
+		foreach ($cookies as $cstr) {
+			$cookie = Zend_Http_Cookie::fromString($cstr);
+			if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+			$this->assertTrue($cookie->isExpired($now), 'Cookie is expected to be expired');
+		}
+		
+		// Make sure all cookies are not expired
+		$now = time() - 7200;
+		foreach ($cookies as $cstr) {
+			$cookie = Zend_Http_Cookie::fromString($cstr);
+			if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+			$this->assertFalse($cookie->isExpired($now), 'Cookie is expected not to be expired');
+		}
     }
 
     /**
-     * @todo Implement testAsString().
+     * Test we can properly check if a cookie is a session cookie (has no expiry time)
      */
-    public function testAsString() {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
+    public function testIsSessionCookie() 
+    {
+        $cookies = array(
+            'cookie=foo; path=/foo/baz; secure; expires=Tue, 21-Nov-2006 08:33:44 GMT; domain=.example.com;' => false,
+            'cookie=foo; path=/; domain=.example.com;' => true,
+            'cookie=foo; path=/; secure; domain=.example.com;' => true,
+            'cookie=foo; path=/; domain=.example.com; secure; expires=' . date(DATE_COOKIE) => false
         );
+        
+        foreach ($cookies as $cstr => $issession) {
+        	$cookie = Zend_Http_Cookie::fromString($cstr);
+        	if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+        	$this->assertEquals($issession, $cookie->isSessionCookie(), 'isSessionCookie is not as expected');
+        }
+    }
+
+    /**
+     * Make sure cookies are properly converted back to strings
+     */
+    public function testToString() 
+    {
+    	$cookies = array(
+    	    'name=value;',
+    	    'blank=;',
+    	    'urlencodedstuff=' . urlencode('!@#$)(@$%_+{} !@#?^&') . ';',    	
+    	);
+    	
+    	foreach ($cookies as $cstr) {
+    		$cookie = Zend_Http_Cookie::fromString($cstr, 'http://example.com');
+    		if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+    		$this->assertEquals($cstr, $cookie->asString(), 'Cookie is not converted back to the expected string');
+    	}
+    
+    }
+    
+    public function testGarbageInStrIsIgnored()
+    {
+    	$cookies = array(
+    	    'name=value; domain=foo.com; silly=place; secure',
+    	    'foo=value; someCrap; secure; domain=foo.com; ',
+    	    'anothercookie=value; secure; has some crap; ignore=me; domain=foo.com; '
+    	);
+    	
+    	foreach ($cookies as $cstr) {
+    		$cookie = Zend_Http_Cookie::fromString($cstr);
+    		if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
+    		$this->assertEquals('value', $cookie->getValue(), 'Value is not as expected');
+    		$this->assertEquals('foo.com', $cookie->getDomain(), 'Domain is not as expected');
+    		$this->assertTrue($cookie->isSecure(), 'Cookie is expected to be secure');
+    	}
     }
 
     /**
      * @todo Implement testMatch().
      */
     public function testMatch() {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
-    }
-
-    /**
-     * @todo Implement testFromString().
-     */
-    public function testFromString() {
         // Remove the following line when you implement this test.
         $this->markTestIncomplete(
           "This test has not been implemented yet."

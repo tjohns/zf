@@ -178,7 +178,7 @@ class Zend_Http_Cookie
     /**
      * Check whether the cookie has expired
      * 
-     * Always returns true if the cookie is a session cookie (has no expiry time)
+     * Always returns false if the cookie is a session cookie (has no expiry time)
      *
      * @param int $now Timestamp to consider as "now"
      * @return boolean
@@ -215,7 +215,7 @@ class Zend_Http_Cookie
     }
     
     /**
-     * Checks whether the cookie should be sent on not in a specific scenario
+     * Checks whether the cookie should be sent or not in a specific scenario
      *
      * @param string|Zend_Uri_Http $uri URI to check against (secure, domain, path)
      * @param boolean $matchSessionCookies Whether to send session cookies
@@ -265,7 +265,7 @@ class Zend_Http_Cookie
         
         $name = '';
         $value = '';
-        $expires = 0;
+        $expires = null;
         $domain = '';
         $path = '';
         $secure = false;
@@ -278,7 +278,8 @@ class Zend_Http_Cookie
         // Set default domain and path
         if ($ref_uri instanceof Zend_Uri_Http) {
             $domain = $ref_uri->getHost();
-            $path = dirname($ref_uri->getPath());
+            $path = $ref_uri->getPath();
+            $path = substr($path, 0, strrpos($path, '/'));
         }
         
         // Set other cookie parameters
