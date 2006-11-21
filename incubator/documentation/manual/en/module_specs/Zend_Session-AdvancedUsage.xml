@@ -7,51 +7,22 @@
         practices to consider.
     </para>
 
-    <para>
-        Namespaces can also be used to separate session access by controllers to protect variables from contamination.
-        For example, the 'Zend_Auth' controller might keep its session state data separate from all other controllers.
-        That is done by retrieving an instance from the sessions getInstance and priming it with a string of the desired
-        namespace.
-    </para>
-
-    <example>
-        <title>Namespaced Sessions for Controllers with Automatic Expiration</title>
-<programlisting role="php">
-<![CDATA[<?php
-// question view controller
-$test_session = new Zend_Session('test');
-$test_session->setExpirationSeconds(300, "accept_answer"); // expire only this variable
-$test_session->accept_answer = true;
-
--- 
-
-// answer processing controller
-$test_session = new Zend_Session('test');
-
-if ($test_session->accept_answer === true) {
-    // within time
-}
-else {
-    // not within time
-}
-?>]]></programlisting>
-    </example>
-
     <sect2 id="zend.session.startingasession">
 
         <title>Starting a Session</title>
 
         <para>
-            If you want all requests to have a session and use Zend_Session, then start the session in the bootstrap file, 
+            If you want all requests to have a session and use Zend_Session, then start the session in the bootstrap
+            file,
         </para>
 
         <example>
             <title>Starting the Global Session</title>
 <programlisting role="php">
 <![CDATA[<?php
-    ...
-    Zend_Session_Core::start();
-    ...
+...
+Zend_Session_Core::start();
+...
 ?>]]></programlisting>
         </example>
 
@@ -71,14 +42,15 @@ else {
                 <para>
                     1. Wrong: Do not set PHP's session.auto_start ini setting in either php.ini or .htaccess
                     (http://www.php.net/manual/en/ref.session.php#ini.session.auto-start). If you do not have the
-                    ability to disable this setting in php.ini, then add <code>php_value session.auto_start 0</code>
-                    to your .htaccess file (usually in your HTML document root directory).
+                    ability to disable this setting in php.ini, then add <code>php_value session.auto_start 0</code> to
+                    your .htaccess file (usually in your HTML document root directory).
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    2. Wrong: Do not use <code>session_start()</code> directly
-                    (see <code><ulink url="http://www.php.net/session_start">session_start()</ulink></code>).
+                    2. Wrong: Do not use <code>session_start()</code> directly (see <code>
+                    <ulink url="http://www.php.net/session_start">session_start()</ulink>
+                    </code>).
                 </para>
             </listitem>
             <listitem>
@@ -96,8 +68,8 @@ else {
 
         <para>
             Option #4 is more difficult to use than #3, because you are responsible for ensuring that the first
-            <code>new Zend_Session()</code> happens <emphasis role="strong">before</emphasis> any output has been sent by PHP to the client, if you are
-            using the default, cookie-based sessions (recommended).
+            <code>new Zend_Session()</code> happens <emphasis role="strong">before</emphasis> any output has been sent
+            by PHP to the client, if you are using the default, cookie-based sessions (recommended).
         </para>
 
     </sect2>
@@ -107,7 +79,9 @@ else {
         <title>Limiting Instances of Zend_Session to One Per Namespace</title>
 
         <para>
-            When constructing the first instance of Zend_Session attached to a specific namespace, you can also instruct Zend_Session to not make any more instances for that namespace.  This increases protection from changes by components that should not modify a particular session namespace.
+            When constructing the first instance of Zend_Session attached to a specific namespace, you can also instruct
+            Zend_Session to not make any more instances for that namespace. This increases protection from changes by
+            components that should not modify a particular session namespace.
         </para>
 
         <example>
@@ -135,10 +109,12 @@ else {
             Session namespaces can be locked, to prevent further alterations to the data in that namespace. Use
             <code>lock()</code> to make the namespace read-only, <code>unLock()</code> to make a read-only namespace
             read-write, and <code>isLocked()</code> to test if a namespace has been previously locked. Locks are
-            transient and do not persist from one request to the next. Locking the namespace has no effect on
-            setter methods of objects stored in the namespace, but does prevent the use of the namespace's setter method
-            to remove or replace the object. Similarly, locking Zend_Session namespaces does not prevent the use of
-            symbol table aliases to the same data (see <ulink url="http://www.php.net/references">PHP references</ulink>).
+            transient and do not persist from one request to the next. Locking the namespace has no effect on setter
+            methods of objects stored in the namespace, but does prevent the use of the namespace's setter method to
+            remove or replace the object. Similarly, locking Zend_Session namespaces does not prevent the use of symbol
+            table aliases to the same data (see
+            <ulink url="http://www.php.net/references">PHP references</ulink>
+            ).
         </para>
 
         <example>
@@ -158,41 +134,74 @@ else {
 ?>]]></programlisting>
         </example>
 
-    </sect2>
-
-    <sect2 id="zend.session.iteration">
-
-        <title>Iterating Over Session Namespaces</title>
-
         <para>
-            Zend_Session provides the full
-            <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate interface</ulink>,
-            including support for the <code>foreach</code> statement:
+            There are numerous ideas for how to manage models in MVC paradigms for the Web, including creating
+            presentation models for use by views. Sometimes existing data, whether part of your domain model or not, is
+            adequate for the task. To discourage views from applying any processing logic to alter such data, consider
+            locking session namespaces before permitting views to access this subset of your "presentation" model.
         </para>
 
         <example>
-            <title>Session Iteration</title>
+            <title>Locking Sessions in Views</title>
 <programlisting role="php">
 <![CDATA[<?php
-    // Zend_Session is iteratable
-    foreach ($my_session as $name => $value) {
-        ....
+class FooModule_View extends Zend_View
+{
+    public function show($name)
+    {
+        if (!isset($this->session)) {
+            $this->session = Zend::registry('FooModule');
+        }
+
+        if ($this->session->isLocked()) {
+            return parent::render($name);
+        }
+
+        $this->session->lock();
+        $return = parent::render($name);
+        $this->session->unLock();
+
+        return $return;
     }
+}
 ?>]]></programlisting>
         </example>
 
     </sect2>
 
-    <sect2 id="zend.session.accessors">
+    <sect2 id="zend.session.controllers">
 
-        <title>Accessors for Session Namespaces</title>
+        <title>Session Encapsulation and Controllers</title>
 
         <para>
-            The usual accessors are available, via the __set(), __unset(), __isset(), and __get() magic methods. The
-            magic methods should not be used directly, except from within a subclass of Zend_Session. Instead, use the
-            normal <code>$object->property = $value; echo (isset($object->property) ? 'set' : 'unset');</code> operators
-            to invoke these magic methods.
+            Namespaces can also be used to separate session access by controllers to protect variables from
+            contamination. For example, the 'Zend_Auth' controller might keep its session state data separate from all
+            other controllers. That is done by retrieving an instance from the sessions getInstance and priming it with
+            a string of the desired namespace.
         </para>
+
+        <example>
+            <title>Namespaced Sessions for Controllers with Automatic Expiration</title>
+<programlisting role="php">
+<![CDATA[<?php
+// question view controller
+$test_session = new Zend_Session('test');
+$test_session->setExpirationSeconds(300, "accept_answer"); // expire only this variable
+$test_session->accept_answer = true;
+
+-- 
+
+// answer processing controller
+$test_session = new Zend_Session('test');
+
+if ($test_session->accept_answer === true) {
+    // within time
+}
+else {
+    // not within time
+}
+?>]]></programlisting>
+        </example>
 
     </sect2>
 

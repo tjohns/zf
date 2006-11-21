@@ -3,9 +3,11 @@
     <title>Theory</title>
 
     <para>
-        Zend_Session_Core provides an internal interface to encapsulate all access to singleton $_SESSION using the
-        typical getInstance() pattern. Developers should not directly access $_SESSION, when using the Zend_Session
-        component.
+        <code>Zend_Session_Core</code> provides an internal interface to encapsulate all access to singleton
+        <code>$_SESSION</code> using the typical getInstance() pattern. In general, developers should not directly
+        access <code>$_SESSION</code>, when using the Zend_Session component. However, it is possible for legacy code to
+        coexist with Zend_Session, provided the namespaces used by Zend_Session do not overlap with the keys in
+        <code>$_SESSION</code> used by legacy code.
     </para>
 
     <para>
@@ -15,15 +17,14 @@
     </para>
 
     <para>
-        Unlike $_SESSION, Zend_Session segregates all session data into separate namespaces, by storing data in a PHP
-        array and storing the array in $_SESSION using the namespace as the key. Constructing an instance of
-        Zend_Session returns a non-unique "window" to the selected namespace. Multiple "windows" are possible for the
-        same namespace, although there is only one namespace possible for a given programmatic key. These instances
-        serve to restrict manipulation of session state data to a specific namespaces, as explicitly specified when
-        creating an instance of Zend_Session. Zend_Session instances therefore restrict scope by introducing a locally
-        scoped variable (instance object) that effectively imports a specific session namespace into the local scope.
-        Namespace keys are restricted to character sequences represented as non-empty PHP strings that do not begin with
-        an underscore ('_') character.
+        Unlike <code>$_SESSION</code>, Zend_Session segregates all session data into separate namespaces, by storing
+        data in a PHP array and storing the array in <code>$_SESSION</code> using the namespace as the key. Constructing
+        an instance of Zend_Session returns a non-unique "window" to the selected namespace. Multiple "windows" are
+        possible for the same namespace, although there is only one namespace possible for a given programmatic key (the
+        name of the namespace). These instances serve to restrict manipulation of session state data to specific
+        namespaces, as explicitly specified when creating an instance of Zend_Session. Zend_Session instances therefore
+        help restrict scope by introducing a locally scoped variable (instance object) that effectively imports a
+        specific session namespace into the local scope.
     </para>
 
 </sect1>

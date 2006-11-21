@@ -26,7 +26,7 @@
             To pass the options just pass the basename (the non <code>session.</code> part) as part of an array to
             setOptions. Without setting any options, Zend_Session will utilize the recommended options first, then the
             default php.ini settings. Community feedback about best practices for these options should be sent to
-            <ulink url="" href="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
+            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
             .
         </para>
 
