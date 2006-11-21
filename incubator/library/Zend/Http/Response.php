@@ -487,13 +487,15 @@ class Zend_Http_Response
                     }
 
                     $headers[$h_name][] = $h_value;
-                    $last_header = &end($headers[$h_name]);
+                    end($headers);
+                    $last_header = key($headers);
                 } else {
                     $headers[$h_name] = $h_value;
-                    $last_header = &$headers[$h_name];
+                    end($headers);
+                    $last_header = key($headers);
                 }
             } elseif (preg_match("|^\s+(\S+)$|", $line, $m) && $last_header !== null) {
-                $last_header .= $m[1];
+                $headers[$last_header] .= $m[1];
             }
         }
 
