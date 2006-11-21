@@ -6,7 +6,7 @@
     </para>
 
     <para>
-        حقوق الملكية &copy; 2005-<?dbtimestamp format="Y"?> Zend Technologies Inc.
+        حقوق الملكية &#169; 2005-<?dbtimestamp format="Y"?> Zend Technologies Inc.
         (<ulink url="http://www.zend.com" />) 
     </para>
 
