@@ -211,7 +211,7 @@ class Zend_Http_Cookie
      */
     public function asString()
     {
-        return "{$this->name}={$this->value}; ";
+        return $this->name . '=' . urlencode($this->value) . ';';
     }
     
     /**
@@ -273,6 +273,7 @@ class Zend_Http_Cookie
         // Get the name and value of the cookie
         $parts = explode(';', $cookieStr);
         list($name, $value) = explode('=', trim(array_shift($parts)), 2);
+        $value = urldecode($value);
         
         // Set default domain and path
         if ($ref_uri instanceof Zend_Uri_Http) {
