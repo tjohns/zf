@@ -149,7 +149,7 @@ class Zend_Date_DateObject {
 
         // after here we are handling 64bit timestamps
 
-        // get difference fronm local to gmt
+        // get difference from local to gmt
         $difference = ($gmt) ? 0 : $this->_gmtDifference();
 
         // date to integer
@@ -249,7 +249,7 @@ class Zend_Date_DateObject {
         if ($this->_timezone !== false)
             return $this->_timezone;
 
-        $this->_timezone = mktime(0, 0, 0, 1, 2, 1970, 0) - gmmktime(0, 0, 0, 1, 2, 1970, 0);
+        $this->_timezone = mktime(0, 0, 0, 1, 2, 1970) - gmmktime(0, 0, 0, 1, 2, 1970);
         return $this->_timezone;
     }
 

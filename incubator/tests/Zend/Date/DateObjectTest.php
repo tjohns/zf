@@ -104,14 +104,125 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
       	$result = $date->getTimestamp();
        	$this->assertSame($result, time());
     }
-    
+
 	/**
 	 * Test for mktime
 	 */
     public function testMkTime()
     {
-      	$date = new Zend_Date_DateObject();
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
       	$result = $date->mktime(0,0,0);
        	$this->assertTrue($result < time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime2()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(23,50,50);
+       	$this->assertTrue($result > time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime3()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(100,100,100);
+       	$this->assertTrue($result > time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime4()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(0,0,0,1,1,1970);
+       	$this->assertTrue($result < time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime5()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(0,0,0,1,1,1902);
+       	$this->assertTrue($result < time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime6()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(0,0,0,1,1,2037);
+       	$this->assertTrue($result > time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime7()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(0,0,0,1,1,1800);
+       	$this->assertTrue($result < time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime8()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(0,0,0,1,1,1600);
+       	$this->assertTrue($result < time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime9()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(0,0,0,1,1,0);
+       	$this->assertTrue($result < time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime10()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(0,0,0,1,1,-2000);
+       	$this->assertTrue($result < time());
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime11()
+    {
+        date_default_timezone_set('Europe/Paris');
+      	$date = new Zend_Date_DateObject();
+      	$result = $date->mktime(0,0,0,1,1,3000);
+       	$this->assertTrue($result > time());
     }
 }
