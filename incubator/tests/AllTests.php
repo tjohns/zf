@@ -26,6 +26,7 @@ set_include_path(dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'library'
                  . dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'library'
                  . PATH_SEPARATOR . get_include_path());
 
+require_once 'ZendTest.php';
 require_once 'Zend/AllTests.php';
 
 class AllTests
@@ -45,6 +46,7 @@ class AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Incubator');
 
+        $suite->addTestSuite('ZendTest');
         $suite->addTest(Zend_AllTests::suite());
 
         return $suite;

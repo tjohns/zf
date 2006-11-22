@@ -226,14 +226,62 @@ final class Zend
      */
     static public function isReadable($filename)
     {
-        $f = @fopen($filename, 'r', true);
-        $readable = is_resource($f);
-        if ($readable) {
-            fclose($f);
+        if (is_readable($filename)) {
+            return true;
         }
-        return $readable;
+
+        $path = get_include_path();
+        $dirs = explode(PATH_SEPARATOR, $path);
+
+        foreach ($dirs as $dir) {
+            // No need to check against current dir -- already checked
+            if ('.' == $dir) {
+                continue;
+            }
+
+            if (is_readable($dir . DIRECTORY_SEPARATOR . $filename)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
+    /**
+     * Return a new exception
+     *
+     * Loads an exceptoin class as specified by $class, and then passes the 
+     * message and code arguments to the Exception's constructor, returning the 
+     * new Exception object. 
+     *
+     * If the exception created is not a true Exception, throws a Zend_Exception 
+     * indicating an invalid exception class was passed.
+     *
+     * Usage:
+     * <code>
+     *     throw Zend::exception('Some_Exception', 'exception message');
+     * </code>
+     * 
+     * @param string $class 
+     * @param string $message Defaults to empty string
+     * @param int $code Defaults to 0
+     * @return Exception
+     * @throws Zend_Exception when invalid exception class passed
+     */
+    static public function exception($class, $message = '', $code = 0)
+    {
+        $class = (string) $class;
+
+        self::loadClass($class);
+
+        $exception = new $class($message, $code);
+
+        if (!$exception instanceof Exception) {
+            throw new Zend_Exception('Invalid exception class used in Zend::exception()');
+        }
+
+        return $exception;
+    }
 
     /**
      * Debug helper function.  This is a wrapper for var_dump() that adds
