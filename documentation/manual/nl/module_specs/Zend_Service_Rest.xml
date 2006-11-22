@@ -33,21 +33,23 @@ try {
         echo '<p>Er trad een fout op (' .$e->getMessage(). ')<p>';
 }
 ?>]]>       </programlisting>
-            <note>
-				Je kan een correct geformateerde query string (zonder de voorafgaande vraagtekens "<code>?</code>") aan
-                <code>restGet()</code> doorgeven, of je kan een associatieve array van naam/waarde-paren doorgeven. 
-				In ieder geval moeten de namen en waarden URL-encoded zijn (bv. met
-                <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>).
-            </note>
-            <para>
-                Het gebruik van <code>restPost()</code> en <code>restPut()</code> is hetzelfde als het gebruik van de 
-				<code>restGet()</code>, maar de data wordt respectievelijk via HTTP POST of PUT gezonden in plaats van via GET.
-            </para>
-            <para>
-				De <code>restDelete()</code> methode werkt met een pad maar heeft geen tweede parameter in welke data
-				kan worden doorgegeven.
-            </para>
         </example>
+        <note>
+          <para>
+			Je kan een correct geformateerde query string (zonder de voorafgaande vraagtekens "<code>?</code>") aan
+            <code>restGet()</code> doorgeven, of je kan een associatieve array van naam/waarde-paren doorgeven. 
+			In ieder geval moeten de namen en waarden URL-encoded zijn (bv. met
+            <ulink url="http://php.net/urlencode"><code>urlencode()</code></ulink>).
+          </para>
+        </note>
+        <para>
+            Het gebruik van <code>restPost()</code> en <code>restPut()</code> is hetzelfde als het gebruik van de 
+			<code>restGet()</code>, maar de data wordt respectievelijk via HTTP POST of PUT gezonden in plaats van via GET.
+        </para>
+        <para>
+			De <code>restDelete()</code> methode werkt met een pad maar heeft geen tweede parameter in welke data
+			kan worden doorgegeven.
+        </para>
     </sect2>
 </sect1>
 <!--

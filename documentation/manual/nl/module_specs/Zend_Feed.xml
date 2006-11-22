@@ -23,8 +23,10 @@
     </para>
 
     <note>
+      <para>
 		Vele RSS feeds bieden verschillende eigenschappen van kanalen en items. De RSS specificatie verstrekt
 		vele optionele eigenschappen, wees er dus van gewaar wanneer je code schrijft om met RSS data te werken.
+      </para>
     </note>
 
     <example>

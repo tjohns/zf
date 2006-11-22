@@ -139,9 +139,11 @@ Action    : index]]>
         </programlisting>
 
 		<note>
+		  <para>
 			Momenteel ontwikkelen we een nieuwe router met een URI herschrijvingsmotor die veel meer
 			flexibiliteit aan de router zal geven dan nu het geval is. De nieuwe router zal aanwezig zijn
 			in een preview versie in de nabije toekomst.
+	      </para>
 		</note>
 
 		<para>

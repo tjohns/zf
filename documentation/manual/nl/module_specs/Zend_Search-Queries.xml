@@ -79,11 +79,21 @@ $hits = $index->find('+word1 author:word2 -word3');
 ?>]]></programlisting>
         <para>
         <itemizedlist>
-            <listitem>'+' word gebruikt voor een noodzakelijke term.</listitem>
-            <listitem>'-' word gebruikt voor een verboden term.</listitem>
             <listitem>
-            'field:' prefix word gebruikt om een document veld aan te geven bij het zoeken.
-            Wanneer het niet wordt ingegeven, wordt 'contents' gebruikt.
+              <para>
+                '+' word gebruikt voor een noodzakelijke term.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                '-' word gebruikt voor een verboden term.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                'field:' prefix word gebruikt om een document veld aan te geven bij het zoeken.
+                Wanneer het niet wordt ingegeven, wordt 'contents' gebruikt.
+              </para>
             </listitem>
         </itemizedlist>
         </para>
@@ -108,10 +118,20 @@ $hits = $index->find('+word1 author:word2 -word3');
         <para>
             <code>$signs</code> array bevat informatie over het type term:
             <itemizedlist>
-                <listitem>true word gebruikt om een noodzakelijke term te definieren.</listitem>
-                <listitem>false word gebruikt om een verboden term te definieren.</listitem>
                 <listitem>
-                null word gebruikt om geen noodzakelijk en geen verboden term te definieren.
+                  <para>
+                    true word gebruikt om een noodzakelijke term te definieren.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    false word gebruikt om een verboden term te definieren.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    null word gebruikt om geen noodzakelijk en geen verboden term te definieren.
+                  </para>
                 </listitem>
             </itemizedlist>
         </para>

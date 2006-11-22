@@ -21,8 +21,10 @@ $mail->send();
 ?>]]>   </programlisting>
     </example>
     <note>
+      <para>
 		Om een mail te sturen met <code>Zend_Mail</code> moet je op zijn minst één geadresseerde, een
 		afzender (bijvoorbeeld met <code>setFrom()</code>) en een inhoud (tekst of HTML) ingeven.
+      </para>
     </note>
     <para>
 		Voor de meeste mail attributen zijn er "get" methodes om de informatie die in het mail object is 
@@ -108,8 +110,10 @@ $mail->send();  // standaard transport weer gebruiken
 ?>]]>   </programlisting>
     </example>
     <note>
+      <para>
 		Bijkomende transporten kunnen geschreven worden door de <code>Zend_Mail_Transport_Interface</code> te
 		implementeren.
+      </para>
     </note>
 </sect1>
 <sect1 id="zend.mail.html-mails">
@@ -191,8 +195,10 @@ $mail->send();
         </itemizedlist>
     </para>
     <note>
+      <para>
         <code>addTo()</code> en <code>addCc()</code> aanvaarden een tweede optionele parameter die gebruikt word als een
 		voor de mens leesbare naam van de geadresseerde.
+      </para>
     </note>
 </sect1>
 <sect1 id="zend.mail.boundary">
@@ -243,7 +249,9 @@ $mail->addHeader('X-greetingsTo', 'Pappa', true);
 		deel dat aan het bericht wordt toegevoegd.
     </para>
     <note>
+      <para>
 		Character sets zijn alleen toepasbaar op berichtdelen in tekstformaat.
+      </para>
     </note>
 </sect1>
 <sect1 id="zend.mail.encoding">

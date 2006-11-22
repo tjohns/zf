@@ -13,14 +13,20 @@
 
             <orderedlist>
                 <listitem>
+                  <para>
                     Wanneer je query string door je applicatie wordt opgebouwd dan moet je serieus overwegen om je queries op te bouwen met de query API. Met andere woorden: De query parser is bedoeld voor door mensen ingevoerde tekst, niet voor applicatie-gerelateerde tekst.
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
                     Untokenized velden worden het best direct aan queries toegevoegd, en niet via de query parser. Wanneerde waarde van een veld via een applicatie wordt gegenereerd, dan dienen de query clases ook op die manier tot stand te komen voor dit veld.
                     De query parser gebruikt een analyzer om door mensen ingegeven strings to converteren van tekst naar termen. Waardes gegenereerd door een programma, zoals data, trefwoorden, etc. dienen consistent door het programma gegenereerd te worden.
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
                     In een query formulier dienen velden die over het algemeen tekst bevatten de query parser te gebruiken. Alle andere velden, zoals datum ranges, trefwoorden etc. kunnen het beste direct via de query API worden toegevoegd. Een veld met een gelimiteerde set van waarden, die kan worden geselecteerd via een pull-down menu, horen niet via een query string toegevoegd en geparsed worden, maar via een TermQuery clausule.
+                  </para>
                 </listitem>
             </orderedlist>
 

@@ -12,19 +12,29 @@
 			direct op te vragen via de Amazon Web Services API. Voorbeelden:
             <itemizedlist>
                 <listitem>
+                  <para>
 					Item informatie opvragen, zoals beelden, beschrijvingen, prijzen, en meer
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
 					Klant- en uitgeversrecensies
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
 					Gelijksoortige producten en accessoires
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
 					Amazon.com aanbiedingen
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
 					ListMania lijsten
+                  </para>
                 </listitem>
             </itemizedlist>
         </para>
@@ -34,8 +44,10 @@
             <ulink url="http://www.amazon.com/gp/aws/landing.html">Amazon Web Services</ulink> website.
         </para>
         <note>
+          <para>
 			Je Amazon developer API key is aan je Amazon identiteit verbonden, neem dus de nodige maatregelen om je key
 			te beveiligen en privé te houden.
+	      </para>
         </note>
         <example>
             <title>Amazon doorzoeken met de traditionele API</title>
@@ -82,11 +94,13 @@ foreach ($results as $result) {
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'FR');
 ?>]]>       </programlisting>
-            <note>
-                Geldige landcodes zijn: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                <code>UK</code>, en <code>US</code>.
-            </note>
         </example>
+        <note>
+          <para>
+            Geldige landcodes zijn: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+            <code>UK</code>, en <code>US</code>.
+          </para>
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemlookup">
         <title>Een specifiek item opzoeken met ASIN code</title>
@@ -136,8 +150,10 @@ foreach($response as $r) {
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevante Amazon documentatie</ulink>
         </para>
         <tip>
+          <para>
             De <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> klasse
             is een gemakkelijk te gebruiken "wrapper" van deze methode.
+          </para>
         </tip>
     </sect2>
     &module_specs.Zend_Service_Amazon_Query;

@@ -27,7 +27,9 @@ foreach ($results as $result) {
 ?>]]>       </programlisting>
         </example>
         <note>
+          <para>
             <code>tagSearch()</code> aanvaardt een optionele tweede parameter met een array van opties.
+          </para>
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
@@ -38,15 +40,21 @@ foreach ($results as $result) {
         </para>
         <itemizedlist>
             <listitem>
+              <para>
                 <code>userSearch()</code>: Aanvaardt een string query van spatiegescheiden vermeldingen en een optionele
 				tweede parameter als een array van zoekopties, en geeft een <code>Zend_Service_Flickr_ResultSet</code>
                 object terug.
+              </para>
             </listitem>
             <listitem>
+              <para>
                 <code>getIdByUsername()</code>: Geeft een string user ID terug, verbonden met de opgegeven gebruikersnaam string.
+              </para>
             </listitem>
             <listitem>
+              <para>
                 <code>getIdByEmail()</code>: Geeft een string user ID terug, verbonden met de opgegeven gebruikerse-mail string.
+              </para>
             </listitem>
         </itemizedlist>
         <example>

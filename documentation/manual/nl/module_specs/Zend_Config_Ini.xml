@@ -4,7 +4,9 @@
         <code>Zend_Config_Ini</code> staat programmeurs toe configuratiedate op te slaan in een gekend INI formaat en deze terug in te lezen in de toepassing door gebruik te maken van een syntax met geneste objecteigenshappen. Het INI formaat is gespecializeerd om een hiërarchie van configuratiedata keys te verstrekken, evenals de erfelijkheid tussen verschillende configuratiedata sekties. Hiërachies van configuratiedata worden ondersteund door de keys te scheiden met een punt (<code>.</code>). Een sektie kan een andere sektie uitbreiden of overerven door een dubbelpunt te schrijven achter de sektienaam (<code>:</code>) en de naam van de sektie van dewelke de data wordt geërfd.
     </para>
     <note>
+      <para>
         <code>Zend_Config_Ini</code> gebruikt de <ulink url="http://php.net/parse_ini_file"><code>parse_ini_file()</code></ulink> PHP functie. Ga deze dokumentatie na om op de hoogte te zijn van specifiek gedrag van de functie, die wordt overgedragen naar <code>Zend_Config_Ini</code>, zoals hoe speciale waarden als <code>true</code>, <code>false</code>, <code>yes</code>, <code>no</code>, and <code>null</code> worden behandeld.
+      </para>
     </note>
     <example>
         <title>Zend_Config_Ini gebruiken</title>

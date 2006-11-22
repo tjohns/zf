@@ -51,8 +51,10 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 			Zend_Controller_Front, die zich bij voorkeur buiten de documentroot zou moeten bevinden.
 		</para>
 
-		<note>	
+		<note>
+		  <para>
 			Het bootstrap bestand zou het enige PHP bestand moeten zijn dat in de document root is opgeslagen.
+	      </para>
 		</note>
 
 		<para>
@@ -82,10 +84,12 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers');
 		</para>
 
 		<note>
+		  <para>
 			Momenteel proberen we oplossingen te vinden die zonder de installatie van mod_rewrite kunnen werken. We
 			denken aan een configuratieregel voor systemen met en zonder mod_rewrite mogelijkheden. Gelieve er
 			nota van te nemen dat dit systeem niet specifiek aan Apache of mod_rewrite gebonden is, elke
 			webserver met gelijkaardige doorstuurmogelijkheden (redirect capabilities) zou moeten volstaan.
+		  </para>
 		</note>
 	</sect2>	
 		
@@ -118,7 +122,9 @@ Zend_Controller_Front::run('/pad/naar/jouw/controllers');
 ]]></programlisting>
 		
 		<note>
+		  <para>
 			Deze sectie is nog niet compleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
+	      </para>
 		</note>
 	</sect2>	
 		
@@ -160,7 +166,9 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
 		<note>
-		  Deze sectie is nog niet compleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
+		  <para>
+		    Deze sectie is nog niet compleet. Ze is nog in opbouw en zal hoogstwaarschijnlijk veranderen.
+		  </para>
 		</note>
 	</sect2>			
 </sect1>

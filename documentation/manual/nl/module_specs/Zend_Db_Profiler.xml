@@ -61,17 +61,36 @@ $profiler = $db->getProfiler();
         </para>
 
         <itemizedlist>
-            <listitem><code>getTotalNumQueries()</code> geeft het totaal aantal
-                queries weer die werden geprofileerd.</listitem>
-            <listitem><code>getTotalElapsedSeconds()</code> geeft het totaal aantal
-                seconden weer die nodig waren om alle queries uit te voeren.</listitem>
-            <listitem><code>getQueryProfiles()</code> geeft een array van alle query
-                profielen weer.</listitem>
-            <listitem><code>getLastQueryProfile()</code> geeft het laatste (meest recente)
+            <listitem>
+              <para>
+                <code>getTotalNumQueries()</code> geeft het totaal aantal
+                queries weer die werden geprofileerd.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <code>getTotalElapsedSeconds()</code> geeft het totaal aantal
+                seconden weer die nodig waren om alle queries uit te voeren.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <code>getQueryProfiles()</code> geeft een array van alle query
+                profielen weer.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <code>getLastQueryProfile()</code> geeft het laatste (meest recente)
                 query profiel weer, ongeacht of de query volledig uitgevoerd is (indien niet, zal
-                de eindtijd null zijn)</listitem>
-            <listitem><code>clear()</code> vaagt alle query profielen van de 
-                lijst weg.</listitem>
+                de eindtijd null zijn)
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <code>clear()</code> vaagt alle query profielen van de lijst weg.
+              </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -81,9 +100,17 @@ $profiler = $db->getProfiler();
         </para>
 
         <itemizedlist>
-            <listitem><code>getQuery()</code> geeft de SQL tekst van de query terug.</listitem>
-            <listitem><code>getElapsedSecs()</code> geeft het aantal seconden terug die de query
-                nam om uitgevoerd te worden.</listitem>
+            <listitem>
+              <para>
+                <code>getQuery()</code> geeft de SQL tekst van de query terug.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <code>getElapsedSecs()</code> geeft het aantal seconden terug die de query
+                nam om uitgevoerd te worden.
+              </para>
+            </listitem>
         </itemizedlist>
 
         <para>
@@ -165,21 +192,49 @@ $profiler->setFilterElapsedSecs(null);
             </para>
 
             <itemizedlist>
-                <listitem><code>Zend_Db_Profiler::CONNECT</code>: verbindingsoperaties, of het 
-                    selecteren van een database.</listitem>
-                <listitem><code>Zend_Db_Profiler::QUERY</code>: standaard database queries die
-                    met geen ander type query overeenkomen.</listitem>
-                <listitem><code>Zend_Db_Profiler::INSERT</code>: eender welke query die data
-                    aan de database toevoegt, meestal SQL INSERT.</listitem>
-                <listitem><code>Zend_Db_Profiler::UPDATE</code>: eender welke query die bestaande
-                    data wijzigt, meestal SQL UPDATE.</listitem>
-                <listitem><code>Zend_Db_Profiler::DELETE</code>: eender welke query die bestaande
-                    data verwijdert, meestal SQL DELETE.</listitem>
-                <listitem><code>Zend_Db_Profiler::SELECT</code>: eender welke query die bestaande
-                    data opvraagt, meestal SQL SELECT.</listitem>
-                <listitem><code>Zend_Db_Profiler::TRANSACTION</code>: eender welke transactionele
+                <listitem>
+                  <para>
+                    <code>Zend_Db_Profiler::CONNECT</code>: verbindingsoperaties, of het 
+                    selecteren van een database.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <code>Zend_Db_Profiler::QUERY</code>: standaard database queries die
+                    met geen ander type query overeenkomen.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <code>Zend_Db_Profiler::INSERT</code>: eender welke query die data
+                    aan de database toevoegt, meestal SQL INSERT.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <code>Zend_Db_Profiler::UPDATE</code>: eender welke query die bestaande
+                    data wijzigt, meestal SQL UPDATE.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <code>Zend_Db_Profiler::DELETE</code>: eender welke query die bestaande
+                    data verwijdert, meestal SQL DELETE.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <code>Zend_Db_Profiler::SELECT</code>: eender welke query die bestaande
+                    data opvraagt, meestal SQL SELECT.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para>
+                    <code>Zend_Db_Profiler::TRANSACTION</code>: eender welke transactionele
                     operatie, zoals een transactie starten, bevestigen (commit) of annuleren 
-                    (rollback).</listitem>
+                    (rollback).
+                  </para>
+                </listitem>
             </itemizedlist>
 
             <para>

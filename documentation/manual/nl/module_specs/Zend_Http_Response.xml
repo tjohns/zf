@@ -9,22 +9,34 @@
 			van methodes om met de HTTP antwoorddata die van een verzoek wordt ontvangen te werken:
             <itemizedlist>
                 <listitem>
+                  <para>
                     <code>isError()</code>: TRUE indien een HTTP foutcode werd ontvangen; anders FALSE.
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
                     <code>isSuccessful()</code>: TRUE indien een HTTP succescode werd ontvangen; anders FALSE.
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
                     <code>isRedirect()</code>: TRUE indien een HTTP verwijzingscode werd ontvangen; anders FALSE.
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
                     <code>getStatus()</code>: Geeft de HTTP statuscode terug.
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
                     <code>getHeaders()</code>: Geeft een array van strings van HTTP antwoordheaders terug.
+                  </para>
                 </listitem>
                 <listitem>
+                  <para>
                     <code>getBody()</code>: Geeft de HTTP antwoordinhoud als een string terug.
+                  </para>
                 </listitem>
             </itemizedlist>
         </para>

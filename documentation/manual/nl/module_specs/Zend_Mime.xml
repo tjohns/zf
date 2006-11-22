@@ -11,14 +11,20 @@
         <code>Zend_Mime</code> verstrekt een set eenvoudige methodes om met MIME te werken:
         <itemizedlist>
             <listitem>
+              <para>
                 <code>isPrintable()</code>: Geeft TRUE terug indien de gegeven string geen onafdrukbare tekens bevat, 
 				anders FALSE.
+		      </para>
             </listitem>
             <listitem>
+              <para>
                 <code>encodeBase64()</code>: Encodeert een string met base64.
+		      </para>
             </listitem>
             <listitem>
+              <para>
                 <code>encodeQuotedPrintable()</code>: Encodeert een string met het quoted-printable mechanisme.
+		      </para>
             </listitem>
         </itemizedlist>
     </para>
@@ -27,31 +33,49 @@
         in MIME Messages:
         <itemizedlist>
             <listitem>
+              <para>
                 <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
+		      </para>
             </listitem>
 			<listitem>
+			  <para>
 				<code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+		      </para>
             </listitem>
 			<listitem>
+			  <para>
                 <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
+		      </para>
             </listitem>
 			<listitem>
+			  <para>
                 <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
+		      </para>
             </listitem>
 			<listitem>
+			  <para>
                 <code>Zend_Mime::ENCODING_8BIT</code>: '8bit'
+		      </para>
             </listitem>
 			<listitem>
+			  <para>
                 <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
+		      </para>
             </listitem>
 			<listitem>
+			  <para>
                 <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
+		      </para>
             </listitem>
 			<listitem>
+			  <para>
                 <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
+		      </para>
             </listitem>
 			<listitem>
+			  <para>
                 <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+		      </para>
             </listitem>
         </itemizedlist>
     </para>
@@ -70,13 +94,19 @@
         Een <code>Zend_Mime</code> object heeft de volgende methodes:
         <itemizedlist>
             <listitem>
+              <para>
                 <code>boundary()</code>: Geeft de MIME boundary string terug.
+		      </para>
             </listitem>
             <listitem>
+              <para>
                 <code>boundaryLine()</code>: Geeft de gehele MIME boundary regel terug.
+		      </para>
             </listitem>
             <listitem>
+              <para>
                 <code>mimeEnd()</code>: Geeft de gehele MIME einde boundary regel terug.
+		      </para>
             </listitem>
         </itemizedlist>
     </para>

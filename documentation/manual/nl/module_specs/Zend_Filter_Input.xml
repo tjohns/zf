@@ -43,7 +43,8 @@
         benamingsovereenkomsten. Alle methodes luisteren naar een eenvoudige regel - als
         de data geldig is, wordt ze teruggestuurd, zo niet wordt <literal>FALSE</literal>
         teruggestuurd. Extreme simpliciteit.</para>
-        <sect2 id="zend.filter.input.introduction.whitelist">
+    </sect2>
+    <sect2 id="zend.filter.input.introduction.whitelist">
             <title>Witte lijst filteren</title>
             <para>Witte lijst filtermethodes beginnen met de <literal>is</literal>
             prefix, zoals <literal>isAlpha()</literal> en <literal>isEmail()</literal>. 
@@ -127,7 +128,7 @@
     ?>]]>
             </programlisting>
         </sect2>
-    </sect2>
+
     <sect2 id="zend.filter.input.theoryofoperation">
         <title>Werkingstheorie</title>
         <para><literal>Zend_Filter_Input</literal> consolideert een paar verschillende

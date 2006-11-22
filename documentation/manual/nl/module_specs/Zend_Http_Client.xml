@@ -8,8 +8,10 @@
             <code>Zend_Http_Client</code> kan GET, POST, PUT en DELETE verzoeken maken.
         </para>
         <note>
+          <para>
             <code>Zend_HttpClient</code> volgt standaard tot 5 HTTP verwijzingen. Om dit gedrag te veranderen
             geef je het maximum toegestane verwijzingen aan de <code>get()</code> methode op.
+          </para>
         </note>
         <para>
             <example>

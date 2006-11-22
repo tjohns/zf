@@ -46,39 +46,36 @@ public $charset;
     attributen. De attributen van het object dienen op gepaste wijze te zijn gezet voor
     deze methode voor aangeroepen. <itemizedlist>
         <listitem>
-           
-
+          <para>
           <code>$charset</code>
            moet naar dezelfde charset worden gezet als de inhoud indien dat een text type is (Text of HTML).
+          </para>
         </listitem>
 
         <listitem>
-           
-
+          <para>
           <code>$id</code>
            mag worden gezet om inline beelden in een HTML mail met een ID te identifiëren.
+          </para>
         </listitem>
-
         <listitem>
-           
-
-          <code>$filename</code>
+          <para>
+           <code>$filename</code>
            bevat de bestandsnaam dat het bestand zal krijgen indien het gedownload wordt.
+          </para>
         </listitem>
-
         <listitem>
-           
-
+          <para>
           <code>$disposition</code>
            definieert indien het bestand moet worden beschouwd als een bijvoegsel of indien het wordt
            gebruikt binnenin een (HTML-) mail (inline).
+           </para>
         </listitem>
-
         <listitem>
-           
-
+          <para>
           <code>$description</code>
            word alleen voor informatiueve doeleinden gebruikt.
+          </para>
         </listitem>
       </itemizedlist></para>
   </sect2>

@@ -16,6 +16,7 @@
       </sect2>
 
       <sect2 id="zend.mime.message.instantiation">
+        <title>Instantiëring</title>
         Er is geen expliciete constructor voor <code>Zend_Mime_Message</code>. 
       </sect2>
 

@@ -4,7 +4,9 @@
         <code>Zend_Config_Xml</code> laat programmeurs toe om configurateidate in een eenvoudig XML bestand op te slaan en deze via geneste objecteigenshap syntax te lezen. Het root element van het XML bestand is irrelevant en kan eender welke naam hebben. Het eerste niveau van de XML elementen komt overeen met configuratiedata secties. Het XML formaat ondersteunt hiërarchische organizatie via geneste XML elementen onder de sectieniveau elementen. De inhoud van een leaf-level XML element komt overeen met de waarde van een configuratiedata element. Sectie overerving wordt ondersteund via een speciaal XML attribuut genaamd <code>extends</code>, en de waarde van dit attribuut komt overeen met de naam van de sectie van dewelke data moet worden overgeërfd door de uitbreidende sectie.
     </para>
     <note>
+      <para>
         Configuratiedata die door <code>Zend_Config_Xml</code> word ingelezen wordt altijd als strings. Omzetting van data van strings naar andere types word aan de zorg van de programmeur overgelaten om aan hun specifieke behoeften te voldoen.
+      </para>
     </note>
     <example>
         <title>Zend_Config_Xml gebruiken</title>
