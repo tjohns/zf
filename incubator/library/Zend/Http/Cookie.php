@@ -269,9 +269,12 @@ class Zend_Http_Cookie
         $domain = '';
         $path = '';
         $secure = false;
-
-        // Get the name and value of the cookie
         $parts = explode(';', $cookieStr);
+        
+        // If first part does not include '=', fail
+        if (strpos($parts[0], '=') === false) return false;
+        
+        // Get the name and value of the cookie
         list($name, $value) = explode('=', trim(array_shift($parts)), 2);
         $value = urldecode($value);
         

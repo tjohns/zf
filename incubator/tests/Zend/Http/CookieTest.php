@@ -316,32 +316,91 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testMatch().
+     * Test the match() method against a domain
+     * 
      */
-    public function testMatch() 
+    public function testMatchDomain() 
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+    	$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com;');
+    	$this->assertTrue($cookie->match('http://www.example.com/foo/bar.php'), 'Cookie expected to match, but didn\'t');
+    	$this->assertFalse($cookie->match('http://www.somexample.com/foo/bar.php'), 'Cookie expected not to match, but did');
+    	
+    	$uri = Zend_Uri::factory('http://www.foo.com/some/file.txt');
+    	$cookie = Zend_Http_Cookie::fromString('cookie=value; domain=www.foo.com');
+    	$this->assertTrue($cookie->match($uri), 'Cookie expected to match, but didn\'t');
+    	$this->assertTrue($cookie->match('http://il.www.foo.com'), 'Cookie expected to match, but didn\'t');
+    	$this->assertFalse($cookie->match('http://bar.foo.com'), 'Cookie expected not to match, but did');
     }
     
     /**
-     * @todo Implement testNotMatch().
+     * Test the match() method against a domain
+     * 
      */
-    public function testNotMatch() 
+    public function testMatchPath() 
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+    	$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; path=/foo');
+    	$this->assertTrue($cookie->match('http://www.example.com/foo/bar.php'), 'Cookie expected to match, but didn\'t');
+    	$this->assertFalse($cookie->match('http://www.example.com/bar.php'), 'Cookie expected not to match, but did');
+    	
+    	$cookie = Zend_Http_Cookie::fromString('cookie=value; domain=www.foo.com; path=/some/long/path');
+    	$this->assertTrue($cookie->match('http://www.foo.com/some/long/path/file.txt'), 'Cookie expected to match, but didn\'t');
+    	$this->assertTrue($cookie->match('http://www.foo.com/some/long/path/and/even/more'), 'Cookie expected to match, but didn\'t');
+    	$this->assertFalse($cookie->match('http://www.foo.com/some/long/file.txt'), 'Cookie expected not to match, but did');
+    	$this->assertFalse($cookie->match('http://www.foo.com/some/different/path/file.txt'), 'Cookie expected not to match, but did');
     }
     
+    /**
+     * Test the match() method against secure / non secure connections
+     *
+     */
+    public function testMatchSecure()
+    {
+    	// A non secure cookie, should match both
+    	$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com;');
+    	$this->assertTrue($cookie->match('http://www.example.com/foo/bar.php'), 'Cookie expected to match, but didn\'t');
+    	$this->assertTrue($cookie->match('https://www.example.com/bar.php'), 'Cookie expected to match, but didn\'t');
+    	
+    	// A secure cookie, should match secure connections only
+    	$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; secure');
+    	$this->assertFalse($cookie->match('http://www.example.com/foo/bar.php'), 'Cookie expected not to match, but it did');
+    	$this->assertTrue($cookie->match('https://www.example.com/bar.php'), 'Cookie expected to match, but didn\'t');
+    }
+
+    /**
+     * Test the match() method against different expiry times
+     *
+     */
+    public function testMatchExpire()
+    {
+    	// A session cookie - should always be valid
+    	$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com;');
+    	$this->assertTrue($cookie->match('http://www.example.com/'), 'Cookie expected to match, but didn\'t');
+    	$this->assertTrue($cookie->match('http://www.example.com/', true, time() + 3600), 'Cookie expected to match, but didn\'t');
+    	
+    	// A session cookie, should not match
+    	$this->assertFalse($cookie->match('https://www.example.com/', false), 'Cookie expected not to match, but it did');
+    	$this->assertFalse($cookie->match('https://www.example.com/', false, time() - 3600), 'Cookie expected not to match, but it did');
+    	
+    	// A cookie with expiry time in the future
+    	$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; expires=' . date(DATE_COOKIE, time() + 3600));
+    	$this->assertTrue($cookie->match('http://www.example.com/'), 'Cookie expected to match, but didn\'t');
+    	$this->assertFalse($cookie->match('https://www.example.com/', true, time() + 7200), 'Cookie expected not to match, but it did');
+    	
+    	// A cookie with expiry time in the past
+    	$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=.example.com; expires=' . date(DATE_COOKIE, time() - 3600));
+    	$this->assertFalse($cookie->match('http://www.example.com/'), 'Cookie expected not to match, but it did');
+    	$this->assertTrue($cookie->match('https://www.example.com/', true, time() - 7200), 'Cookie expected to match, but didn\'t');
+    }
+
     public function testFromStringFalse()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $cookie = Zend_Http_Cookie::fromString('foo; domain=www.exmaple.com');
+        $this->assertEquals(false, $cookie, 'fromString was expected to fail and return false');
+        
+        $cookie = Zend_Http_Cookie::fromString('=bar; secure; domain=foo.nl');
+        $this->assertEquals(false, $cookie, 'fromString was expected to fail and return false');
+        
+        $cookie = Zend_Http_Cookie::fromString('fo;o=bar; secure; domain=foo.nl');
+        $this->assertEquals(false, $cookie, 'fromString was expected to fail and return false');
     }
 }
