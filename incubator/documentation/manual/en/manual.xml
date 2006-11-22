@@ -166,6 +166,7 @@
     </chapter>
     &module_specs.Zend_Locale-AppendixLanguages;
     &module_specs.Zend_Locale-AppendixRegions;
+    &module_specs.Zend_Cache_Backend_ZendPlatform;
     <!-- &ref.faq; -->
     &ref.coding_standard;
     &ref.copyrights;
