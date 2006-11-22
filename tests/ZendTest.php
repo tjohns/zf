@@ -209,4 +209,29 @@ class ZendTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(Zend::registry(), array('objectName' => 'stdClass'));
     }
 
+    /**
+     * Tests that isReadable works
+     */
+    public function testIsReadable()
+    {
+        $this->assertTrue(Zend::isReadable(__FILE__));
+        $this->assertFalse(Zend::isReadable(__FILE__ . '.foobaar'));
+    }
+
+    /**
+     * Tests that:
+     *   1. returns a valid Exception object when given a valid exception class
+     *   2. throws an exception when in invalid class is provided
+     */
+    public function testException()
+    {
+        $this->assertTrue(Zend::exception('Zend_Exception') instanceof Exception);
+
+        try {
+            $e = Zend::exception('Zend_FooBar_Baz', 'should fail');
+            $this->fail('invalid exception class should throw exception');
+        } catch (Exception $e) {
+            // success...
+        }
+    }
 }
