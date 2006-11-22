@@ -96,8 +96,11 @@ require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
 ?>]]>       </programlisting>
             <note>
-                Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                <code>UK</code>, and <code>US</code>.
+            <title>country codes</title>
+                <para>
+                    Valid country codes are: <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                    <code>UK</code>, and <code>US</code>.
+                </para>
             </note>
         </example>
     </sect2>
@@ -417,6 +420,7 @@ foreach($response as $r) {
                 and allow you to easily handle the multiple results returned.
             </para>
             <note>
+                <title>note</title>
                 <para>
                     Implements the <code>SeekableIterator</code> for easy iteration (e.g. using <code>foreach</code>), as
                     well as direct access to a specific result using <code>seek()</code>.
