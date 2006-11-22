@@ -14,61 +14,43 @@
  *
  * @category   Zend
  * @package    Zend_Search_Lucene
- * @subpackage Index
+ * @subpackage Search
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+
+
+/** Zend_Search_Lucene_Search_Weight */
+require_once 'Zend/Search/Lucene/Search/Weight.php';
 
 
 /**
- * A Term represents a word from text.  This is the unit of search.  It is
- * composed of two elements, the text of the word, as a string, and the name of
- * the field that the text occured in, an interned string.
- *
- * Note that terms may represent more than words from text fields, but also
- * things like dates, email addresses, urls, etc.
- *
  * @category   Zend
  * @package    Zend_Search_Lucene
- * @subpackage Index
+ * @subpackage Search
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Index_Term
+class Zend_Search_Lucene_Search_Weight_Empty extends Zend_Search_Lucene_Search_Weight
 {
     /**
-     * Field name or field number (depending from context)
+     * The sum of squared weights of contained query clauses.
      *
-     * @var mixed
+     * @return float
      */
-    public $field;
-
-    /**
-     * Term value
-     *
-     * @var string
-     */
-    public $text;
-
-
-    /**
-     * Object constructor
-     */
-    public function __construct($text, $field = null)
+    public function sumOfSquaredWeights()
     {
-        $this->field = ($field !== null)? $field : 'contents';
-        $this->text  = $text;
+        return 1;
     }
 
 
     /**
-     * Returns term key
+     * Assigns the query normalization factor to this.
      *
-     * @return string
+     * @param float $queryNorm
      */
-    public function key()
+    public function normalize($queryNorm)
     {
-        return $this->field . chr(0) . $this->text;
     }
 }
 

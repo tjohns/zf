@@ -73,7 +73,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
      *
      * The slop is zero by default, requiring exact matches.
      *
-     * @var unknown_type
+     * @var integer
      */
     private $_slop;
 
@@ -418,6 +418,39 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
         } else {
             return 0;
         }
+    }
+
+    /**
+     * Print a query
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        // It's used only for query visualisation, so we don't care about characters escaping
+
+        $query = '';
+
+        if (isset($this->_terms[0]) && $this->_terms[0]->field !== null) {
+            $query .= $this->_terms[0]->field . ':';
+        }
+
+        $query .= '"';
+
+        foreach ($this->_terms as $id => $term) {
+            if ($id != 0) {
+                $query .= ' ';
+            }
+            $query .= $term->text;
+        }
+
+        $query .= '"';
+
+        if ($this->_slop != 0) {
+            $query .= '~' . $this->_slop;
+        }
+
+        return $query;
     }
 }
 

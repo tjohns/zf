@@ -427,5 +427,36 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             return 0;
         }
     }
+
+    /**
+     * Print a query
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        // It's used only for query visualisation, so we don't care about characters escaping
+
+        $query = '';
+
+        foreach ($this->_terms as $id => $term) {
+            if ($id != 0) {
+                $query .= ' ';
+            }
+
+            if ($this->_signs === null || $this->_signs[$id] === true) {
+                $query .= '+';
+            } else if ($this->_signs[$id] === false) {
+                $query .= '-';
+            }
+
+            if ($term->field !== null) {
+                $query .= $term->field . ':';
+            }
+            $query .= $term->text;
+        }
+
+        return $query;
+    }
 }
 

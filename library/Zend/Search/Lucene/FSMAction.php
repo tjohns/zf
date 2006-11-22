@@ -14,61 +14,52 @@
  *
  * @category   Zend
  * @package    Zend_Search_Lucene
- * @subpackage Index
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 
 /**
- * A Term represents a word from text.  This is the unit of search.  It is
- * composed of two elements, the text of the word, as a string, and the name of
- * the field that the text occured in, an interned string.
+ * Abstract Finite State Machine
  *
- * Note that terms may represent more than words from text fields, but also
- * things like dates, email addresses, urls, etc.
  *
  * @category   Zend
  * @package    Zend_Search_Lucene
- * @subpackage Index
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Index_Term
+class Zend_Search_Lucene_FSMAction
 {
     /**
-     * Field name or field number (depending from context)
+     * Object reference
      *
-     * @var mixed
+     * @var object
      */
-    public $field;
+    private $_object;
 
     /**
-     * Term value
+     * Method name
      *
      * @var string
      */
-    public $text;
-
+    private $_method;
 
     /**
      * Object constructor
+     *
+     * @param object $object
+     * @param string $method
      */
-    public function __construct($text, $field = null)
+    public function __construct($object, $method)
     {
-        $this->field = ($field !== null)? $field : 'contents';
-        $this->text  = $text;
+        $this->_object = $object;
+        $this->_method = $method;
     }
 
-
-    /**
-     * Returns term key
-     *
-     * @return string
-     */
-    public function key()
+    public function doAction()
     {
-        return $this->field . chr(0) . $this->text;
+        $methodName = $this->_method;
+        $this->_object->$methodName();
     }
 }
 

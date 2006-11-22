@@ -249,5 +249,37 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             return $this->_nonConjunctionScore($docId, $reader);
         }
     }
+
+    /**
+     * Print a query
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        // It's used only for query visualisation, so we don't care about characters escaping
+
+        $query = '';
+
+        foreach ($this->_subqueries as $id => $subquery) {
+            if ($id != 0) {
+                $query .= ' ';
+            }
+
+            if ($this->_signs === null || $this->_signs[$id] === true) {
+                $query .= '+';
+            } else if ($this->_signs[$id] === false) {
+                $query .= '-';
+            }
+
+            $query .= '(' . $subquery->__toString() . ')';
+
+            if ($subquery->getBoost() != 1) {
+                $query .= '^' . $subquery->getBoost();
+            }
+        }
+
+        return $query;
+    }
 }
 

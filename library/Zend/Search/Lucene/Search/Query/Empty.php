@@ -14,61 +14,59 @@
  *
  * @category   Zend
  * @package    Zend_Search_Lucene
- * @subpackage Index
+ * @subpackage Search
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
+
+
+/** Zend_Search_Lucene_Search_Query */
+require_once 'Zend/Search/Lucene/Search/Query.php';
+
+/** Zend_Search_Lucene_Search_Weight_Empty */
+require_once 'Zend/Search/Lucene/Search/Weight/Empty.php';
 
 
 /**
- * A Term represents a word from text.  This is the unit of search.  It is
- * composed of two elements, the text of the word, as a string, and the name of
- * the field that the text occured in, an interned string.
- *
- * Note that terms may represent more than words from text fields, but also
- * things like dates, email addresses, urls, etc.
- *
  * @category   Zend
  * @package    Zend_Search_Lucene
- * @subpackage Index
+ * @subpackage Search
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Index_Term
+class Zend_Search_Lucene_Search_Query_Empty extends Zend_Search_Lucene_Search_Query
 {
     /**
-     * Field name or field number (depending from context)
+     * Constructs an appropriate Weight implementation for this query.
      *
-     * @var mixed
+     * @param Zend_Search_Lucene $reader
+     * @return Zend_Search_Lucene_Search_Weight
      */
-    public $field;
-
-    /**
-     * Term value
-     *
-     * @var string
-     */
-    public $text;
-
-
-    /**
-     * Object constructor
-     */
-    public function __construct($text, $field = null)
+    public function createWeight($reader)
     {
-        $this->field = ($field !== null)? $field : 'contents';
-        $this->text  = $text;
+        return new Zend_Search_Lucene_Search_Weight_Empty();
     }
 
+    /**
+     * Score specified document
+     *
+     * @param integer $docId
+     * @param Zend_Search_Lucene $reader
+     * @return float
+     */
+    public function score($docId, $reader)
+    {
+        return 0;
+    }
 
     /**
-     * Returns term key
+     * Print a query
      *
      * @return string
      */
-    public function key()
+    public function __toString()
     {
-        return $this->field . chr(0) . $this->text;
+        return '<EmptyQuery>';
     }
 }
 

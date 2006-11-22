@@ -35,7 +35,7 @@ abstract class Zend_Search_Lucene_Search_Query
      *
      * @var float
      */
-    private $_boost = 1.0;
+    private $_boost = 1;
 
     /**
      * Query weight
@@ -110,5 +110,13 @@ abstract class Zend_Search_Lucene_Search_Query
     {
         $this->_weight = null;
     }
+
+
+    /**
+     * Print a query
+     *
+     * @return string
+     */
+    abstract public function __toString();
 }
 
