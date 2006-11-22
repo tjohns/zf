@@ -318,7 +318,27 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
     /**
      * @todo Implement testMatch().
      */
-    public function testMatch() {
+    public function testMatch() 
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+    
+    /**
+     * @todo Implement testNotMatch().
+     */
+    public function testNotMatch() 
+    {
+        // Remove the following line when you implement this test.
+        $this->markTestIncomplete(
+          "This test has not been implemented yet."
+        );
+    }
+    
+    public function testFromStringFalse()
+    {
         // Remove the following line when you implement this test.
         $this->markTestIncomplete(
           "This test has not been implemented yet."

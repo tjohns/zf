@@ -8,6 +8,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Http/RequestTest.php';
 require_once 'Zend/Http/ResponseTest.php';
+require_once 'Zend/Http/CookieTest.php';
 require_once 'Zend/Http/Client/AllTests.php';
 
 class Zend_Http_AllTests
@@ -23,6 +24,7 @@ class Zend_Http_AllTests
 
         $suite->addTestSuite('Zend_Http_RequestTest');
         $suite->addTestSuite('Zend_Http_ResponseTest');
+        $suite->addTestSuite('Zend_Http_CookieTest');
         $suite->addTest(Zend_Http_Client_AllTests::suite());
 
         return $suite;

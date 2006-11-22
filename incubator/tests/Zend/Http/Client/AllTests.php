@@ -16,7 +16,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'Zend/Http/Client/StaticTest.php';
 require_once 'Zend/Http/Client/SocketTest.php';
 require_once 'Zend/Http/Client/SocketKeepaliveTest.php';
-require_once 'Zend/Http/Client/CurlTest.php';
+//require_once 'Zend/Http/Client/CurlTest.php';
 
 class Zend_Http_Client_AllTests
 {
@@ -34,7 +34,7 @@ class Zend_Http_Client_AllTests
         if (defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') && TESTS_ZEND_HTTP_CLIENT_BASEURI) {
             $suite->addTestSuite('Zend_Http_Client_SocketTest');
             $suite->addTestSuite('Zend_Http_Client_SocketKeepaliveTest');
-            $suite->addTestSuite('Zend_Http_Client_CurlTest');
+            //$suite->addTestSuite('Zend_Http_Client_CurlTest');
         }
 
         return $suite;
