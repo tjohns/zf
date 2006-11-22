@@ -247,7 +247,8 @@ print $locale->getLanguageDisplay('de');
         </example>
         <para>
             You want to have for each language the language written in native letters ?
-            Well... then you should just try this example within your browser:
+            Well... then you should just try this example within your browser. You can just
+            add an locale for which you want the display be returned.
         </para>
         <example>
             <title>All Languages written in native letters</title>
@@ -257,12 +258,16 @@ Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale();
 $list = $locale->getLanguageList();
-// for 'no' there's no locale defined for now
-unset($list['no']);
 
 foreach($list as $language => $content) {
-   $lang = new Zend_Locale($language);
-   print "\n<br>[".$language."] ".$lang->getLanguageDisplay($language);
+   try {
+       $output = $locale->getLanguageDisplay($language, $language);
+       if (is_string($output)) {
+           print "\n<br>[".$language."] ".$output;
+       }
+   } catch (Exception $e) {
+       continue;
+   }
 }
 ?>]]></programlisting>
         </example>
@@ -270,6 +275,14 @@ foreach($list as $language => $content) {
             As you can see the handling and receiving of information is very easy.
             You can do the same for all scripts or all territories for example
         </para>
+        <note>
+            <title>Be aware</title>
+            <para>
+                The useage of a locale which does not exist, will throw an exception.
+                As not all languages are also locales a exception would be thrown
+                if we would not have catched it.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.locale.getlanguagelist">
         <title>Get a list of languages</title>
@@ -289,6 +302,14 @@ $locale = new Zend_Locale();
 print_r($locale->getLanguageList());
 ?>]]></programlisting>
         </example>
+        <note>
+            <title>Languagelists for other locales</title>
+            <para>
+                The same way as with the function getLanguageDisplay() this function also
+                supports the useage for informations returned from other locales.
+                Just use the optional locale setting as last parameter.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.locale.getscriptdisplay">
         <title>Get an translated string of an script</title>
@@ -308,6 +329,14 @@ $locale = new Zend_Locale();
 print $locale->getScriptDisplay('Latn');
 ?>]]></programlisting>
         </example>
+        <note>
+            <title>Scripts for other locales</title>
+            <para>
+                The same way as with the function getLanguageDisplay() this function also
+                supports the useage for informations returned from other locales.
+                Just use the optional locale setting as last parameter.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.locale.getscriptlist">
         <title>Get a list of scripts</title>
@@ -327,6 +356,14 @@ $locale = new Zend_Locale();
 print_r($locale->getScriptList());
 ?>]]></programlisting>
         </example>
+        <note>
+            <title>Scriptlists for other locales</title>
+            <para>
+                The same way as with the function getLanguageDisplay() this function also
+                supports the useage for informations returned from other locales.
+                Just use the optional locale setting as last parameter.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.locale.getregiondisplay">
         <title>Get an translated string of an region</title>
@@ -346,6 +383,14 @@ $locale = new Zend_Locale();
 print $locale->getRegionDisplay('AT');
 ?>]]></programlisting>
         </example>
+        <note>
+            <title>Regions for other locales</title>
+            <para>
+                The same way as with the function getLanguageDisplay() this function also
+                supports the useage for informations returned from other locales.
+                Just use the optional locale setting as last parameter.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.locale.getregionlist">
         <title>Get a list of regions</title>
@@ -365,6 +410,14 @@ $locale = new Zend_Locale();
 print_r($locale->getRegionList());
 ?>]]></programlisting>
         </example>
+        <note>
+            <title>Regionlists for other locales</title>
+            <para>
+                The same way as with the function getLanguageDisplay() this function also
+                supports the useage for informations returned from other locales.
+                Just use the optional locale setting as last parameter.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.locale.getcalendardisplay">
         <title>Get an translated string of an calendar</title>
@@ -384,6 +437,14 @@ $locale = new Zend_Locale();
 print $locale->getCalendarDisplay('chinese');
 ?>]]></programlisting>
         </example>
+        <note>
+            <title>Calendars for other locales</title>
+            <para>
+                The same way as with the function getLanguageDisplay() this function also
+                supports the useage for informations returned from other locales.
+                Just use the optional locale setting as last parameter.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.locale.getcalendarlist">
         <title>Get a list of calendars</title>
@@ -403,6 +464,14 @@ $locale = new Zend_Locale();
 print_r($locale->getCalendarList());
 ?>]]></programlisting>
         </example>
+        <note>
+            <title>Calendarlists for other locales</title>
+            <para>
+                The same way as with the function getLanguageDisplay() this function also
+                supports the useage for informations returned from other locales.
+                Just use the optional locale setting as last parameter.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.locale.getquestion">
         <title>Get a translation for yes and no</title>
@@ -426,6 +495,14 @@ $locale = new Zend_Locale();
 print_r($locale->getQuestion());
 ?>]]></programlisting>
         </example>
+        <note>
+            <title>Question strings for other locales</title>
+            <para>
+                The same way as with the function getLanguageDisplay() this function also
+                supports the useage for informations returned from other locales.
+                Just use the optional locale setting as last parameter.
+            </para>
+        </note>
     </sect2>
 </sect1>
 <!--

@@ -248,6 +248,18 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test getLanguageListLocale
+     * expected true
+     */
+    public function testgetLanguageListLocale()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getLanguageList('de');
+        $this->assertTrue(is_array($list), 'Language List not returned');
+    }
+
+
+    /**
      * test getLanguageDisplay
      * expected true
      */
@@ -258,6 +270,18 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($list, 'Deutsch', 'Language Display not returned');
     }
 
+
+    /**
+     * test getLanguageDisplay
+     * expected true
+     */
+    public function testgetLanguageDisplayLocale()
+    {
+        $value = new Zend_Locale('de_AT');
+        $list = $value->getLanguageDisplay('de','en');
+        $this->assertEquals($list, 'German', 'Language Display not returned');
+    }
+    
 
     /**
      * test getLanguageDisplayFalse
@@ -284,6 +308,18 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test getScriptList
+     * expected true
+     */
+    public function testgetScriptListLocale()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getScriptList('de');
+        $this->assertTrue(is_array($list), 'Script List not returned');
+    }
+
+
+    /**
      * test getScriptDisplay
      * expected true
      */
@@ -294,6 +330,18 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($list, 'Arabisch', 'Script Display not returned');
     }
 
+
+    /**
+     * test getScriptDisplay
+     * expected true
+     */
+    public function testgetScriptDisplayLocale()
+    {
+        $value = new Zend_Locale('de_AT');
+        $list = $value->getScriptDisplay('Arab', 'en');
+        $this->assertEquals($list, 'Arabic', 'Script Display not returned');
+    }
+    
 
     /**
      * test getScriptDisplayFalse
@@ -320,6 +368,18 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test getRegionList
+     * expected true
+     */
+    public function testgetRegionListLocale()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getRegionList('de');
+        $this->assertTrue(is_array($list), 'Region List not returned');
+    }
+    
+
+    /**
      * test getRegionDisplay
      * expected true
      */
@@ -329,7 +389,19 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $list = $value->getRegionDisplay('DE');
         $this->assertEquals($list, 'Deutschland', 'Region Display not returned');
     }
+    
 
+    /**
+     * test getRegionDisplay
+     * expected true
+     */
+    public function testgetRegionDisplayLocale()
+    {
+        $value = new Zend_Locale('de_AT');
+        $list = $value->getRegionDisplay('DE','en');
+        $this->assertEquals($list, 'Germany', 'Region Display not returned');
+    }
+    
 
     /**
      * test getRegionDisplayFalse
@@ -356,16 +428,40 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test getCalendarList
+     * expected true
+     */
+    public function testgetCalendarListLocale()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getCalendarList('de');
+        $this->assertTrue(is_array($list), 'Calendar List not returned');
+    }
+
+
+    /**
      * test getCalendarDisplay
      * expected true
      */
     public function testgetCalendarDisplay()
     {
-        $value = new Zend_Locale();
+        $value = new Zend_Locale('de');
         $list = $value->getCalendarDisplay('chinese');
         $this->assertEquals($list, 'Chinesischer Kalender', 'Calendar Display not returned');
     }
 
+
+    /**
+     * test getCalendarDisplay
+     * expected true
+     */
+    public function testgetCalendarDisplayLocale()
+    {
+        $value = new Zend_Locale('de');
+        $list = $value->getCalendarDisplay('chinese','en');
+        $this->assertEquals($list, 'Chinese Calendar', 'Calendar Display not returned');
+    }
+    
 
     /**
      * test getCalendarFalse
@@ -444,6 +540,18 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
     {
         $value = new Zend_Locale();
         $list = $value->getQuestion();
+        $this->assertTrue(isset($list['yes']), 'Question not returned');
+    }
+
+
+    /**
+     * test getQuestion
+     * expected true
+     */
+    public function testgetQuestionLocale()
+    {
+        $value = new Zend_Locale();
+        $list = $value->getQuestion('de');
         $this->assertTrue(isset($list['yes']), 'Question not returned');
     }
 }
