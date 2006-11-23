@@ -15,6 +15,7 @@
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
@@ -36,7 +37,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
     const URL_VARIABLE = ':';
     const URI_DELIMITER = '/';
     const REGEX_DELIMITER = '#';
-    const DEFAULT_REGEX = '[\p{L}0-9\-\.,_~%;:@&=\!\*\'\(\)\+\$\[\]]+';
+    const DEFAULT_REGEX = '.+';
     
     protected $_parts;
     protected $_defaults = array();
@@ -195,7 +196,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
                 } elseif (isset($this->_defaults[$part['name']])) {
                     $url[$key] = $this->_defaults[$part['name']];
                 } else
-                    throw new Zend_Controller_Router_Exception($part['name'] . ' is not specified');
+                    throw Zend::exception('Zend_Controller_Router_Exception', $part['name'] . ' is not specified');
 
             } else {
                 

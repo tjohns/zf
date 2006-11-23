@@ -133,7 +133,6 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         
         $token = $router->route($request);
 
-        $this->assertEquals(0, count($token->getParams()));
         $this->assertNull($token->getControllerName());
         $this->assertNull($token->getActionName());
     }

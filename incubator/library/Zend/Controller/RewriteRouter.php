@@ -15,14 +15,12 @@
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 
 /** Zend_Controller_Router_Interface */
 require_once 'Zend/Controller/Router/Interface.php';
-
-/** Zend_Controller_Router_Exception */
-require_once 'Zend/Controller/Router/Exception.php';
 
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
@@ -164,7 +162,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     public function addConfig(Zend_Config $config, $section) 
     {
         if ($config->{$section} === null) {
-            throw new Zend_Controller_Router_Exception("No route configuration in section '{$section}'");
+            throw Zend::exception('Zend_Controller_Router_Exception', "No route configuration in section '{$section}'");
         }
         foreach ($config->{$section} as $name => $info) {
             $reqs = (isset($info->reqs)) ? $info->reqs->asArray() : null;
@@ -175,7 +173,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 
     public function removeRoute($name) {
         if (!isset($this->_routes[$name])) {
-            throw new Zend_Controller_Router_Exception("Route $name is not defined");
+            throw Zend::exception('Zend_Controller_Router_Exception', "Route $name is not defined");
         }
         unset($this->_routes[$name]);
     }
@@ -183,7 +181,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     public function getRoute($name)
     {
         if (!isset($this->_routes[$name])) {
-            throw new Zend_Controller_Router_Exception("Route $name is not defined");
+            throw Zend::exception('Zend_Controller_Router_Exception', "Route $name is not defined");
         }
         return $this->_routes[$name];
     }
@@ -191,7 +189,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     public function getCurrentRoute()
     {
         if (!isset($this->_currentRoute)) {
-            throw new Zend_Controller_Router_Exception("Current route is not defined");
+            throw Zend::exception('Zend_Controller_Router_Exception', "Current route is not defined");
         }
         return $this->_currentRoute;
     }
@@ -205,7 +203,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     {
         
         if (!$request instanceof Zend_Controller_Request_Http) {
-            throw new Zend_Controller_Router_Exception('Zend_Controller_RewriteRouter requires a Zend_Controller_Request_Http-based request object');
+            throw Zend::exception('Zend_Controller_Router_Exception', 'Zend_Controller_RewriteRouter requires a Zend_Controller_Request_Http-based request object');
         }
 
         $pathInfo = $request->getPathInfo();
