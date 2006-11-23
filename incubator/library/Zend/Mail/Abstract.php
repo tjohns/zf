@@ -16,7 +16,11 @@
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
- 
+
+/**
+ * Zend
+ */
+require_once 'Zend.php';
  
 /**
  * @package    Zend_Mail
@@ -63,7 +67,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
             return isset($this->_has[$var]) ? $this->_has[$var] : null;
         }
         
-        throw new Zend_Mail_Exception($var . ' not found');
+        throw Zend::exception('Zend_Mail_Exception', $var . ' not found');
     }
 
 
@@ -205,7 +209,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
       */
      public function offsetSet($id, $value) 
      {
-        throw new Zend_Mail_Exception('cannot write mail messages via array access');
+        throw Zend::exception('Zend_Mail_Exception', 'cannot write mail messages via array access');
      }
      
      
@@ -298,8 +302,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
         }
 
         if ($pos > $this->_iterationMax) {
-            // OutOfBoundsException would be the right one here, but it seems like it was added after PHP 5.0.4
-            throw new Zend_Mail_Exception('Out of Bounds');
+            throw new OutOfBoundsException('this position does not exist');
         }
         $this->_iterationPos = $pos;
      }

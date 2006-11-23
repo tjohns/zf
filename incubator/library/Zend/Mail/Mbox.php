@@ -29,9 +29,9 @@ require_once 'Zend/Mail/Abstract.php';
 require_once 'Zend/Mail/Message.php';
 
 /**
- * Zend_Mail_Exception
+ * Zend
  */
-require_once 'Zend/Mail/Exception.php';
+require_once 'Zend.php';
 
 
 /**
@@ -63,7 +63,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     public function countMessages($flags = null)
     {
         if ($flags) {
-            throw new Zend_Mail_Exception('mbox does not support flags');
+            throw Zend::exception('Zend_Mail_Exception', 'mbox does not support flags');
         }
         return count($this->_positions);
     }
@@ -100,7 +100,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     private function _goto($id)
     {
         if(!isset($this->_positions[$id - 1])) {
-            throw new Zend_Mail_Exception('id does not exist');
+            throw Zend::exception('Zend_Mail_Exception', 'id does not exist');
         }
 
         $pos = $this->_positions[$id - 1];
@@ -173,18 +173,18 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     public function __construct($params)
     {
         if (!isset($params['filename']) /* || Zend::isReadable($params['filename']) */) {
-            throw new Zend_Mail_Exception('no valid filename given in params');
+            throw Zend::exception('Zend_Mail_Exception', 'no valid filename given in params');
         }
 
         $this->_fh = @fopen($params['filename'], 'r');
         if (!$this->_fh) {
-            throw new Zend_Mail_Exception('cannot open mbox file');
+            throw Zend::exception('Zend_Mail_Exception', 'cannot open mbox file');
         }
 
         $line = fgets($this->_fh);
         if (strpos($line, 'From ') !== 0) {
             @fclose($this->_fh);
-            throw new Zend_Mail_Exception('file is not a valid mbox format');
+            throw Zend::exception('Zend_Mail_Exception', 'file is not a valid mbox format');
         }
 
         $messagePos = array(ftell($this->_fh), 0);
@@ -232,7 +232,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      */
     public function removeMessage($id)
     {
-        throw new Zend_Mail_Exception('mbox is read-only');
+        throw Zend::exception('Zend_Mail_Exception', 'mbox is read-only');
     }
 
 }

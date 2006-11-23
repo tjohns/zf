@@ -29,9 +29,9 @@ require_once 'Zend/Mail/Abstract.php';
 require_once 'Zend/Mail/Message.php';
 
 /**
- * Zend_Mail_Exception
+ * Zend
  */
-require_once 'Zend/Mail/Exception.php';
+require_once 'Zend.php';
 
 
 /**
@@ -74,7 +74,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
 
         if($id !== null) {
             if(!isset($this->_files[$id - 1])) {
-                throw new Zend_Mail_Exception('id does not exist');
+                throw Zend::exception('Zend_Mail_Exception', 'id does not exist');
              }
             return filesize($this->_files[$id - 1]['filename']);
         }
@@ -98,7 +98,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
     public function getMessage($id)
     {
         if(!isset($this->_files[$id - 1])) {
-            throw new Zend_Mail_Exception('id does not exist');
+            throw Zend::exception('Zend_Mail_Exception', 'id does not exist');
         }
 
         return new Zend_Mail_Message(file_get_contents($this->_files[$id - 1]['filename']));
@@ -115,7 +115,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
     public function getHeader($id, $bodyLines = 0)
     {
         if(!isset($this->_files[$id - 1])) {
-            throw new Zend_Mail_Exception('id does not exist');
+            throw Zend::exception('Zend_Mail_Exception', 'id does not exist');
         }
 
         $inHeader = true;
@@ -153,11 +153,11 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
     public function __construct($params)
     {
         if (!isset($params['dirname']) || !is_dir($params['dirname'])) {
-            throw new Zend_Mail_Exception('no valid dirname given in params');
+            throw Zend::exception('Zend_Mail_Exception', 'no valid dirname given in params');
         }
 
         if(!is_dir($params['dirname'] . '/cur')) {
-            throw new Zend_Mail_Exception('invalid maildir given');
+            throw Zend::exception('Zend_Mail_Exception', 'invalid maildir given');
         }
 
         $dh = opendir($params['dirname'] . '/cur/');
@@ -216,7 +216,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
      */
     public function removeMessage($id)
     {
-        throw new Zend_Mail_Exception('maildir is (currently) read-only');
+        throw Zend::exception('Zend_Mail_Exception', 'maildir is (currently) read-only');
     }
 
 }

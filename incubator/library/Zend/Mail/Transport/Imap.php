@@ -18,9 +18,9 @@
  */
 
 /**
- * Zend_Mail_Transport_Exception
+ * Zend
  */
-require_once 'Zend/Mail/Transport/Exception.php';
+require_once 'Zend.php';
 
 /**
  * @package    Zend_Mail
@@ -78,18 +78,18 @@ class Zend_Mail_Transport_Imap
 
         $this->_socket = @fsockopen($host, $port);
         if(!$this->_socket) {
-            throw new Zend_Mail_Transport_Exception('cannot connect to host');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'cannot connect to host');
         }
 
         if(!$this->_assumedNextLine('* OK')) {
-            throw new Zend_Mail_Transport_Exception('host doesn\'t allow connection');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'host doesn\'t allow connection');
         }
 
         if($ssl === 'TLS') {
             $result = $this->requestAndResponse('STARTTLS');
             $result = $result && stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             if(!$result) {
-                throw new Zend_Mail_Transport_Exception('cannot enable TLS');
+                throw Zend::exception('Zend_Mail_Transport_Exception', 'cannot enable TLS');
             }
         }
     }
@@ -104,7 +104,7 @@ class Zend_Mail_Transport_Imap
     {
         $line = fgets($this->_socket);
         if($line === false) {
-            throw new Zend_Mail_Transport_Exception('cannot read - connection closed?');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'cannot read - connection closed?');
         }
 
         return $line;
@@ -308,7 +308,7 @@ class Zend_Mail_Transport_Imap
             if(is_array($token)) {
                 fputs($this->_socket, ' ' . $token[0] . "\r\n");
                 if(!$this->_assumedNextLine('+ OK')) {
-                    throw new Zend_Mail_Transport_Exception('cannot send literal string');
+                    throw Zend::exception('Zend_Mail_Transport_Exception', 'cannot send literal string');
                 }
                 fputs($this->_socket, $token[1]);
             } else {
@@ -330,7 +330,7 @@ class Zend_Mail_Transport_Imap
     public function requestAndResponse($command, $tokens = array(), $dontParse = false)
     {
         $this->sendRequest($command, $tokens, $tag);
-        $response = $this->readResponse($tag, $command, $dontParse);
+        $response = $this->readResponse($tag, $dontParse);
 
         return $response;
     }
@@ -547,7 +547,7 @@ class Zend_Mail_Transport_Imap
         }
 
         if($to === null) {
-            throw new Zend_Mail_Transport_Exception('the single id was not found in response');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'the single id was not found in response');
         }
 
         return $result;

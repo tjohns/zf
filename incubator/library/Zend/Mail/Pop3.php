@@ -34,9 +34,9 @@ require_once 'Zend/Mail/Transport/Pop3.php';
 require_once 'Zend/Mail/Message.php';
 
 /**
- * Zend_Mail_Exception
+ * Zend
  */
-require_once 'Zend/Mail/Exception.php';
+require_once 'Zend.php';
 
 /**
  * @package    Zend_Mail
@@ -60,7 +60,7 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
     public function countMessages($flags = null) 
     {
         if($flags) {
-            throw new Zend_Mail_Exception('POP3 does not support flags');
+            throw Zend::exception('Zend_Mail_Exception', 'POP3 does not support flags');
         }
         $this->_protocol->status($count, $null);
         return (int)$count;
@@ -132,7 +132,7 @@ class Zend_Mail_Pop3 extends Zend_Mail_Abstract
         }
     
         if(!isset($params['host']) || !isset($params['user'])) {
-            throw new Zend_Mail_Exception('need at least a host an user in params');
+            throw Zend::exception('Zend_Mail_Exception', 'need at least a host an user in params');
         }
         $params['password'] = isset($params['password']) ? $params['password'] : '';
         $params['port']     = isset($params['port'])     ? $params['port']     : null;

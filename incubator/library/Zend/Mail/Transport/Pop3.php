@@ -18,9 +18,9 @@
  */
 
 /**
- * Zend_Mail_Transport_Exception
+ * Zend
  */
-require_once 'Zend/Mail/Transport/Exception.php';
+require_once 'Zend.php';
 
 
 /**
@@ -91,7 +91,7 @@ class Zend_Mail_Transport_Pop3
 
         $this->_socket = @fsockopen($host, $port);
         if (!$this->_socket) {
-            throw new Zend_Mail_Transport_Exception('cannot connect to host');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'cannot connect to host');
         }
 
         $welcome = $this->readResponse();
@@ -108,7 +108,7 @@ class Zend_Mail_Transport_Pop3
             $this->request('STLS');
             $result = stream_socket_enable_crypto($this->_socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
             if(!$result) {
-                throw new Zend_Mail_Transport_Exception('cannot enable TLS');
+                throw Zend::exception('Zend_Mail_Transport_Exception', 'cannot enable TLS');
             }
         }
 
@@ -123,9 +123,9 @@ class Zend_Mail_Transport_Pop3
      */
     public function sendRequest($request)
     {
-        $result = fputs($this->_socket, $request."\n");
+        $result = @fputs($this->_socket, $request."\n");
         if (!$result) {
-            throw new Zend_Mail_Transport_Exception('send failed - connection closed?');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'send failed - connection closed?');
         }
     }
 
@@ -142,7 +142,7 @@ class Zend_Mail_Transport_Pop3
     {
         $result = fgets($this->_socket);
         if (!is_string($result)) {
-            throw new Zend_Mail_Transport_Exception('read failed - connection closed?');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'read failed - connection closed?');
         }
 
         $result = trim($result);
@@ -154,7 +154,7 @@ class Zend_Mail_Transport_Pop3
         }
 
         if ($status != '+OK') {
-            throw new Zend_Mail_Transport_Exception('last request failed');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'last request failed');
         }
 
         if ($multiline) {
@@ -333,7 +333,7 @@ class Zend_Mail_Transport_Pop3
             if ($fallback) {
                 return $this->retrive($msgno);
             } else {
-                throw new Zend_Mail_Transport_Exception('top not supported and no fallback wanted');
+                throw Zend::exception('Zend_Mail_Transport_Exception', 'top not supported and no fallback wanted');
             }
         }
         $this->hasTop = true;

@@ -34,9 +34,9 @@ require_once 'Zend/Mail/Transport/Imap.php';
 require_once 'Zend/Mail/Message.php';
 
 /**
- * Zend_Mail_Exception
+ * Zend
  */
-require_once 'Zend/Mail/Exception.php';
+require_once 'Zend.php';
 
 /**
  * @package    Zend_Mail
@@ -61,7 +61,7 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
     public function countMessages($flags = null)
     {
         if(!$this->_currentFolder) {
-            throw new Zend_Mail_Exception('No selected folder to count');
+            throw Zend::exception('Zend_Mail_Exception', 'No selected folder to count');
         }
         $result = $this->_protocol->examine($this->_currentFolder);
         return $result['exists'];
@@ -105,7 +105,7 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
     public function getHeader($id, $bodyLines = 0)
     {
         if($bodyLines) {
-            throw new Zend_Mail_Exception('body lines not yet supported');
+            throw Zend::exception('Zend_Mail_Exception', 'body lines not yet supported');
         }
         $message = $this->_protocol->fetch('RFC822.HEADER', $id);
         return new Zend_Mail_Message('', $message);
@@ -131,13 +131,13 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
             $this->_protocol = $params;
             $this->_currentFolder = 'INBOX';
             if(!$this->_protocol->select($this->_currentFolder)) {
-                throw new Zend_Mail_Exception('cannot select INBOX, is this a valid transport?');
+                throw Zend::exception('Zend_Mail_Exception', 'cannot select INBOX, is this a valid transport?');
             }
             return;
         }
 
         if(!isset($params['host']) || !isset($params['user'])) {
-            throw new Zend_Mail_Exception('need at least a host an user in params');
+            throw Zend::exception('Zend_Mail_Exception', 'need at least a host an user in params');
         }
         $params['password'] = isset($params['password']) ? $params['password'] : '';
         $params['port']     = isset($params['port'])     ? $params['port']     : null;
@@ -146,11 +146,11 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
         $this->_protocol = new Zend_Mail_Transport_Imap();
         $this->_protocol->connect($params['host'], $params['port'], $params['ssl']);
         if(!$this->_protocol->login($params['user'], $params['password'])) {
-            throw new Zend_Mail_Exception('cannot login, user or password wrong');
+            throw Zend::exception('Zend_Mail_Exception', 'cannot login, user or password wrong');
         }
         $this->_currentFolder = isset($params['folder']) ? $params['folder'] : 'INBOX';
         if(!$this->_protocol->select($this->_currentFolder)) {
-            throw new Zend_Mail_Exception('cannot change folder, maybe it does not exist');
+            throw Zend::exception('Zend_Mail_Exception', 'cannot change folder, maybe it does not exist');
         }
     }
 

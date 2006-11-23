@@ -23,6 +23,10 @@
  */
 require_once 'Zend/Mime/Decode.php';
 
+/**
+ * Zend
+ */
+require_once 'Zend.php';
  
 /**
  * @package    Zend_Mail
@@ -103,7 +107,7 @@ class Zend_Mail_Message
     {
         $name = strtolower($name);
         if (!isset($this->_headers[$name])) {
-            throw new Zend_Mail_Exception("no Header with Name $name found");           
+            throw Zend::exception('Zend_Mail_Exception', "no Header with Name $name found");           
         }
         
         return $this->_headers[$name];
