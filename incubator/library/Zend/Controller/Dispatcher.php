@@ -19,15 +19,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
 
-
 /** Zend */
 require_once 'Zend.php';
 
 /** Zend_Controller_Dispatcher_Interface */
 require_once 'Zend/Controller/Dispatcher/Interface.php';
-
-/** Zend_Controller_Dispatcher_Exception */
-require_once 'Zend/Controller/Dispatcher/Exception.php';
 
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
@@ -37,7 +33,6 @@ require_once 'Zend/Controller/Response/Abstract.php';
 
 /** Zend_Controller_Action */
 require_once 'Zend/Controller/Action.php';
-
 
 /**
  * @category   Zend
@@ -430,32 +425,13 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         Zend::loadClass($className, $directories);
 
         /**
-         * Perform reflection on the class and verify it's a controller
+         * Instantiate controller with request, response, and invocation 
+         * arguments; throw exception if it's not an action controller
          */
-        $reflection = new ReflectionClass($className);
-        if (!$reflection->isSubclassOf(new ReflectionClass('Zend_Controller_Action'))) {
-           throw new Zend_Controller_Dispatcher_Exception("Controller \"$className\" is not an instance of Zend_Controller_Action");
+        $controller = new $className($request, $this->getResponse(), $this->getParams());
+        if (!$controller instanceof Zend_Controller_Action) {
+            throw Zend::exception('Zend_Controller_Dispatcher_Exception', "Controller '$className' is not an instance of Zend_Controller_Action");
         }
-
-        /**
-         * Get any instance arguments and instantiate a controller object
-         */
-        $argv = array($this->getParams());
-
-        /**
-         * Prepend response object to arguments
-         */
-        array_unshift($argv, $this->getResponse());
-
-        /**
-         * Prepend request object to arguments
-         */
-        array_unshift($argv, $request);
-
-        /**
-         * Instantiate controller with arguments
-         */
-        $controller = $reflection->newInstanceArgs($argv);
 
         /**
          * Determine the action name
@@ -467,17 +443,12 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         if (empty($action)) {
             $action = $this->getDefaultAction();
         }
-        $action     = $this->formatActionName($action);
-        $invokeArgs = array();
+        $action = $this->formatActionName($action);
 
         /**
          * If method does not exist, default to __call()
          */
-        if (!$reflection->hasMethod($action)) {
-            $invokeArgs = array($action, array());
-            $action = '__call';
-        }
-        $method = $reflection->getMethod($action);
+        $doCall = !method_exists($controller, $action);
 
         /**
          * Dispatch the method call
@@ -486,7 +457,11 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $controller->preDispatch();
         if ($request->isDispatched()) {
             // preDispatch() didn't change the action, so we can continue
-            $method->invokeArgs($controller, $invokeArgs);
+            if ($doCall) {
+                $controller->__call($action, array());
+            } else {
+                $controller->$action();
+            }
             $controller->postDispatch();
         }
 
