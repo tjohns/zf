@@ -21,6 +21,11 @@
 
 
 /**
+ * Include needed Date classes
+ */
+require_once 'Zend.php';
+
+/**
  * @category   Zend
  * @package    Zend_Date
  * @subpackage Zend_Date_DateObject
@@ -100,7 +105,7 @@ class Zend_Date_DateObject {
           return true;
         }
 
-        $this->throwException('"' . $date . '" is no valid date');
+        throw Zend::exception('Zend_Date_Exception', '\'' . $date . '\' is no valid date');
     }
 
 
@@ -203,7 +208,7 @@ class Zend_Date_DateObject {
 
             // Date is after UNIX epoch
             // go through leapyears
-            // add months from letest given year
+            // add months from latest given year
             for ($count = 1969; $count >= $year; $count--) {
 
                 $leapyear = $this->isLeapYear($count);
@@ -225,13 +230,13 @@ class Zend_Date_DateObject {
             }
 
             $date += ($this->_monthTable[$mcount] - $day);
-            $date = -(($date * 86400) + (86400 - (($hour * 3600) + ($minute * 60 + $second))) - $difference);
+            $date = -(($date * 86400) + (86400 - (($hour * 3600) + ($minute * 60) + $second + $difference)));
 
             // gregorian correction for 5.Oct.1582
-            if ($date < -12220185600) {
+            if ($date < -12220156800) {
                 $date += 864000;
-            } else if ($date < -12219321600) {
-                $date  = -12219321600;
+            } else if ($date < -12219292800) {
+                $date  = -12219292800;
             }
 
             return $date;
@@ -914,17 +919,5 @@ class Zend_Date_DateObject {
         return $this->mktime($hour, $min, $sec, $this->date('m', $this->_unixtimestamp),
                              $this->date('j', $this->_unixtimestamp), $this->date('Y', $this->_unixtimestamp),
                              -1, true);
-    }
-
-
-    /**
-     * Throw an exception
-     *
-     * Note : for performance reasons, the "load" of Zend/Date/Exception is dynamic
-     */
-    public static function throwException($message)
-    {
-        require_once 'Zend/Date/Exception.php';
-        throw new Zend_Date_Exception($message);
     }
 }

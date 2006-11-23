@@ -23,14 +23,11 @@
 /**
  * Include needed Date classes
  */
-require_once 'Zend/Date/DateObject.php';
+require_once 'Zend.php';
 
-
-/**
- * Include needed Locale classes
- */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
+Zend::loadClass('Zend_Date_DateObject');
+Zend::loadClass('Zend_Locale');
+Zend::loadClass('Zend_Locale_Data');
 
 
 /**
@@ -1824,7 +1821,7 @@ class Zend_Date {
      */
     public function getMaximum($part)
     {
-        $this->_Date->throwException('function yet not implemented');
+        throw Zend::exception('Zend_Date_Exception','function yet not implemented');
     }
 
 
@@ -1837,7 +1834,7 @@ class Zend_Date {
      */
     public function getMinimum($part)
     {
-        $this->_Date->throwException('function yet not implemented');
+        throw Zend::exception('Zend_Date_Exception','function yet not implemented');
     }
 
 
@@ -1851,7 +1848,7 @@ class Zend_Date {
      */
     public function getFirstDayOfWeek($locale, $format)
     {
-        $this->_Date->throwException('function yet not implemented');
+        throw Zend::exception('Zend_Date_Exception','function yet not implemented');
     }
 
 
@@ -2242,13 +2239,13 @@ class Zend_Date {
     private function _checkLocation($location)
     {
         if (!is_set($location['longitude']) or !is_set($location['latitude'])) {
-            $this->throwException("Location must include 'longitude' and 'latitude'.");
+            throw Zend::exception('Zend_Date_Exception','Location must include \'longitude\' and \'latitude\'');
         }
         if (($location['longitude'] > 180) or ($location['longitude'] < -180)) {
-            $this->throwException('Longitude must be between -180 and 180');
+            throw Zend::exception('Zend_Date_Exception','Longitude must be between -180 and 180');
         }
         if (($location['latitude'] > 90) or ($location['latitude'] < -90)) {
-            $this->throwException('Latitude must be between -90 and 90');
+            throw Zend::exception('Zend_Date_Exception','Latitude must be between -90 and 90');
         }
 
         if (!is_set($location['horizon'])){
@@ -3563,16 +3560,5 @@ class Zend_Date {
     public function isWeek($week = false, $locale = false)
     {
         return ($this->compareWeek($week) == 0);
-    }
-
-
-    /**
-     * Throw an exception
-     * Note : for performance reasons, the "load" of Zend/Date/Exception is dynamic
-     */
-    public static function throwException($message)
-    {
-        require_once 'Zend/Date/Exception.php';
-        throw new Zend_Date_Exception($message);
     }
 }
