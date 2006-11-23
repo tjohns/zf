@@ -307,8 +307,7 @@ class Zend_Controller_Front
     {
         if (is_string($router)) {
             Zend::loadClass($router);
-            $reflection = new ReflectionClass($router);
-            $router = $reflection->newInstance($this->getParams());
+            $router = new $router($this->getParams());
         }
         if (!$router instanceof Zend_Controller_Router_Interface) {
             throw new Zend_Controller_Exception('Invalid router class');
