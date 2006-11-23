@@ -293,7 +293,7 @@ class Zend_Http_CookieTest extends PHPUnit_Framework_TestCase
     	foreach ($cookies as $cstr) {
     		$cookie = Zend_Http_Cookie::fromString($cstr, 'http://example.com');
     		if (! $cookie) $this->fail('Got no cookie object from a valid cookie string');
-    		$this->assertEquals($cstr, $cookie->asString(), 'Cookie is not converted back to the expected string');
+    		$this->assertEquals($cstr, $cookie->__toString(), 'Cookie is not converted back to the expected string');
     	}
     
     }

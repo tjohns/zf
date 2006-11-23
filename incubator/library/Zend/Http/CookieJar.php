@@ -23,6 +23,7 @@
 require_once "Zend.php";
 require_once "Zend/Uri.php";
 require_once "Zend/Http/Cookie.php";
+require_once "Zend/Http/Response.php";
 require_once "Zend/Http/Exception.php";
 
 /**
@@ -123,6 +124,10 @@ class Zend_Http_CookieJar
      */
     public function addCookiesFromResponse($response, $ref_uri)
     {
+    	if (! $response instanceof Zend_Http_Response)
+    	    throw new Zend_Http_Exception('$response is expected to be a Response object, ' . 
+    	        gettype($response) . ' was passed');
+    	    
         $cookie_hdrs = $response->getHeader('Set-Cookie');
         
         if (is_array($cookie_hdrs)) {
@@ -202,8 +207,13 @@ class Zend_Http_CookieJar
             throw new Zend_Http_Exception('Invalid URI specified');
         }
         
-        if (isset($this->cookies[$uri->getHost()][dirname($uri->getPath())][$cookie_name])) {
-            $cookie = $this->cookies[$uri->getHost()][dirname($uri->getPath())][$cookie_name];
+        // Get correct cookie path
+        $path = $uri->getPath();
+        $path = substr($path, 0, strrpos($path, '/'));
+        if (! $path) $path = '/';
+        
+        if (isset($this->cookies[$uri->getHost()][$path][$cookie_name])) {
+            $cookie = $this->cookies[$uri->getHost()][$path][$cookie_name];
             
             switch ($ret_as) {
                 case self::COOKIE_OBJECT:
@@ -212,7 +222,7 @@ class Zend_Http_CookieJar
                     
                 case self::COOKIE_STRING_ARRAY:
                 case self::COOKIE_STRING_CONCAT:
-                    return $cookie->asString();
+                    return $cookie->__toString();
                     break;
                     
                 default:
@@ -332,11 +342,11 @@ class Zend_Http_CookieJar
                     break;
                 
                 case self::COOKIE_STRING_ARRAY:
-                    return array($ptr->asString());
+                    return array($ptr->__toString());
                     break;
                     
                 case self::COOKIE_STRING_CONCAT:
-                    return $ptr->asString();
+                    return $ptr->__toString();
                     break;
                     
                 default:

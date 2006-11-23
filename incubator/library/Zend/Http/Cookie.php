@@ -40,7 +40,6 @@ require_once "Zend/Http/Exception.php";
  * @package     Zend_Http
  * @copyright   Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
  * @license     http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
- * @todo        replace asString() with __toString()
  */
 class Zend_Http_Cookie 
 {
@@ -204,17 +203,6 @@ class Zend_Http_Cookie
     }
     
     /**
-     * Get the cookie as a string, suitable for sending as a "Cookie" header in an 
-     * HTTP request
-     *
-     * @return string
-     */
-    public function asString()
-    {
-        return $this->name . '=' . urlencode($this->value) . ';';
-    }
-    
-    /**
      * Checks whether the cookie should be sent or not in a specific scenario
      *
      * @param string|Zend_Uri_Http $uri URI to check against (secure, domain, path)
@@ -246,6 +234,17 @@ class Zend_Http_Cookie
         
         // If we didn't die until now, return true.
         return true;
+    }
+
+    /**
+     * Get the cookie as a string, suitable for sending as a "Cookie" header in an 
+     * HTTP request
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name . '=' . urlencode($this->value) . ';';
     }
     
     /**
