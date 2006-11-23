@@ -47,7 +47,7 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         Zend::loadClass('Zend_TimeSync_Exception');
         try {
             $this->_connect();
-        } catch (Zend_TimeSync_Exception $e) {
+        } catch (Zend_TimeSync_ProtocolException $e) {
             $this->exceptions[] = $e;
             return false;
         }
@@ -57,7 +57,7 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         
         try {
             $this->_disconnect();
-        } catch (Zend_TimeSync_Exception $e) {
+        } catch (Zend_TimeSync_ProtocolException $e) {
             $this->exceptions[] = $e;
         }
         

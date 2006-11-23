@@ -47,7 +47,7 @@ abstract class Zend_TimeSync_Protocol
         
         $socket = @fsockopen($this->_timeserver, $this->_port, $errno, $errstr, Zend_TimeSync::$options['timeout']);
         if (!$socket) {
-            throw Zend::exception('Zend_TimeSync_Exception', "could not connect to '$this->_timeserver' " .
+            throw Zend::exception('Zend_TimeSync_ProtocolException', "could not connect to '$this->_timeserver' " .
                 "on port '$this->_port', reason: '$errstr'");
         }
         
@@ -63,7 +63,7 @@ abstract class Zend_TimeSync_Protocol
     protected function _disconnect()
     {
         if (!is_resource($this->_socket)) {
-            throw Zend::exception('Zend_TimeSync_Exception', "could not close server connection from " .
+            throw Zend::exception('Zend_TimeSync_ProtocolException', "could not close server connection from " .
                 "'$this->_timeserver' on port '$this->_port'");
         }
         

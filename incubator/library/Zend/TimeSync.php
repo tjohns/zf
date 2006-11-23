@@ -138,16 +138,12 @@ class Zend_TimeSync
         } elseif ($this->_current = next($this->_timeservers)) {
             return $this->getDate($locale);
         } else {
-            $masterException  = Zend::exception('Zend_TimeSync_Exception', 'all the provided servers are bogus');
-            $currentException = $masterException;
-            
+            $masterException = Zend::exception('Zend_TimeSync_Exception', 'all the provided servers are bogus');            
             foreach ($this->_timeservers as $key => $server) {
-                foreach ($server->exceptions as $exception) {
-                    $currentException->next = $exception;
-                    $currentException = $exception;
+                foreach ($server->exceptions as $index => $exception) {
+                    $masterException->add($exception);
                 }
             }
-            
             throw $masterException;
         }
     }

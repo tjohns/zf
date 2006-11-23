@@ -73,10 +73,10 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $ntppacket .= chr($secb1) .chr($secb2) .chr($secb3) .chr($secb4);   // Transmit Timestamp Seconds
         $ntppacket .= chr($fracb1).chr($fracb2).chr($fracb3).chr($fracb4);  // Transmit Timestamp Fractional
         
-        Zend::loadClass('Zend_TimeSync_Exception');
+        Zend::loadClass('Zend_TimeSync_ProtocolException');
         try {
             $this->_connect();
-        } catch (Zend_TimeSync_Exception $e) {
+        } catch (Zend_TimeSync_ProtocolException $e) {
             $this->exceptions[] = $e;
             return false;
         }

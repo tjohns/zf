@@ -27,9 +27,22 @@ require_once 'Zend/Exception.php';
 
 /**
  * @category   Zend
- * @package    Zend_Config
+ * @package    Zend_TimeSync
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    Zend Framework License version 1.0
  */
-class Zend_TimeSync_Exception extends Zend_Exception {}
-
+class Zend_TimeSync_Exception extends Zend_Exception
+{
+    protected $_exceptions;
+    protected $_current;
+    
+    public function add(Zend_TimeSync_ProtocolException $exception)
+    {
+        $this->_exceptions[] = $exception;
+    }
+    
+    public function get()
+    {
+        return $this->_exceptions;
+    }
+}
