@@ -20,15 +20,14 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-/**
- * Zend_Date
- */
-require_once 'Zend/Date.php';
 
 /**
- * Zend_TimeSync_Exception
+ * include needed Date class
  */
-require_once 'Zend/TimeSync/Exception.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
+Zend::loadClass('Zend_TimeSync_Exception');
+
 
 /**
  * @category   Zend
@@ -88,7 +87,7 @@ class Zend_TimeSync
     public function setOptions($options = array()) 
     {
         if (!is_array($options)) {
-            throw new Zend_TimeSync_Exception('$config is expected to be an array, ' . gettype($config) . ' given');
+            throw Zend::exception('Zend_TimeSync_Exception', '$config is expected to be an array, ' . gettype($config) . ' given');
         }
         
         foreach ($options as $key => $value) {
@@ -122,7 +121,7 @@ class Zend_TimeSync
             }
             
             $className = 'Zend_TimeSync_' . ucfirst($url['scheme']);
-            require_once 'Zend/TimeSync/' . ucfirst($url['scheme']) . '.php';
+            Zend::loadClass($classname);
             
             $this->timeservers[] = new $className($protocol . '://' . $url['host'], $url['port']);
         }
@@ -136,7 +135,7 @@ class Zend_TimeSync
         } elseif ($this->_current = next($this->timeservers)) {
             $this->getDate($locale);
         } else {
-            throw new Zend_TimeSync_Exception('all servers are bogus');
+            throw Zend::exception('Zend_TimeSync_Exception', 'all servers are bogus');
         }
     }
 }
