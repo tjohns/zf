@@ -29,7 +29,7 @@
 abstract class Zend_TimeSync_Protocol
 {
     protected $_socket;
-    protected $_exceptions;
+    public $exceptions;
     
     /**
      * Connect to the specified NTP server. If called when the socket is
@@ -47,14 +47,11 @@ abstract class Zend_TimeSync_Protocol
         
         $socket = @fsockopen($this->_timeserver, $this->_port, $errno, $errstr, Zend_TimeSync::$options['timeout']);
         if (!$socket) {
-            $this->_exceptions = new Zend_TimeSync_Exception("could not connect to '$this->_timeserver' .
-                on port '$this->_port', reason: '$errstr'");
-            return false;
+            throw Zend::exception('Zend_TimeSync_Exception', "could not connect to '$this->_timeserver' " .
+                "on port '$this->_port', reason: '$errstr'");
         }
-                
-        $this->_socket = $socket;
         
-        return true;
+        $this->_socket = $socket;
     }
     
     /**
@@ -66,14 +63,11 @@ abstract class Zend_TimeSync_Protocol
     protected function _disconnect()
     {
         if (!is_resource($this->_socket)) {
-            $this->_exceptions = new Zend_TimeSync_Exception("could not close server connection from '.
-                'to '$this->_timeserver' on port '$this->_port'");
-            return false;
+            throw Zend::exception('Zend_TimeSync_Exception', "could not close server connection from " .
+                "'$this->_timeserver' on port '$this->_port'");
         }
         
         @fclose($this->_socket);
         $this->_socket = null;
-        
-        return true;
     }
 }

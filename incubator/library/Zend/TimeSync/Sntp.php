@@ -44,14 +44,22 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         
     public function query()
     {
-        if (!$this->_connect()) {
+        Zend::loadClass('Zend_TimeSync_Exception');
+        try {
+            $this->_connect();
+        } catch (Zend_TimeSync_Exception $e) {
+            $this->exceptions[] = $e;
             return false;
         }
-                
+        
         fputs($this->_socket, "\n");
         $result = fread($this->_socket, 49);
         
-        $this->_disconnect();
+        try {
+            $this->_disconnect();
+        } catch (Zend_TimeSync_Exception $e) {
+            $this->exceptions[] = $e;
+        }
         
         if (!$result) {
             return false;

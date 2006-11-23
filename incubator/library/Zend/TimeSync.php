@@ -20,14 +20,15 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
- * include needed Date class
+ * Zend
  */
 require_once 'Zend.php';
-Zend::loadClass('Zend_Date');
-Zend::loadClass('Zend_TimeSync_Exception');
 
+/**
+ * Zend_Date
+ */
+require_once 'Zend/Date.php';
 
 /**
  * @category   Zend
@@ -54,7 +55,7 @@ class Zend_TimeSync
      *
      * @var array
      */
-    private $timeservers = array();
+    protected $_timeservers = array();
         
     /**
      * Holds a reference to the current timeserver being used
@@ -73,28 +74,28 @@ class Zend_TimeSync
         'sntp'
     );
     
-    static $options = array(
-        'timeout' => 10
+    public static $options = array(
+        'timeout' => 1
     );
     
     public function __construct($server, $options = array()) {
         $this->_addServer($server);
         $this->setOptions($options);
         
-        $this->_current = current($this->timeservers);
+        $this->_current = current($this->_timeservers);
     }
     
     public function setOptions($options = array()) 
     {
         if (!is_array($options)) {
-            throw Zend::exception('Zend_TimeSync_Exception', '$config is expected to be an array, ' . gettype($config) . ' given');
+            throw Zend::exception('Zend_TimeSync_Exception', '$options is expected to be an array, ' . gettype($config) . ' given');
         }
         
         foreach ($options as $key => $value) {
             Zend_TimeSync::$options[strtolower($key)] = $value;
         }
     }
-        
+    
     protected function _addServer($server)
     {
         if (is_array($server)) {
@@ -110,10 +111,12 @@ class Zend_TimeSync
             if (!in_array(strtolower($url['scheme']), $this->_allowedSchemes)) {
                 $url['scheme'] = self::DEFAULT_TIMESERVER_SCHEME;
             }
-            $protocol = (strtolower($url['scheme']) === 'ntp') ? 'udp' : 'tcp';
+            
             if (!isset($url['host']) && isset($url['path'])) {
                 $url['host'] = $url['path'];
             }
+            
+            $protocol = (strtolower($url['scheme']) === 'ntp') ? 'udp' : 'tcp';
             if (!isset($url['port']) && $protocol === 'udp') {
                 $url['port'] = self::DEFAULT_NTP_PORT;
             } else {
@@ -121,9 +124,9 @@ class Zend_TimeSync
             }
             
             $className = 'Zend_TimeSync_' . ucfirst($url['scheme']);
-            Zend::loadClass($classname);
-            
-            $this->timeservers[] = new $className($protocol . '://' . $url['host'], $url['port']);
+            Zend::loadClass($className);
+                        
+            $this->_timeservers[] = new $className($protocol . '://' . $url['host'], $url['port']);
         }
     }
     
@@ -132,10 +135,20 @@ class Zend_TimeSync
         $timestamp = $this->_current->query();
         if ($timestamp) {
             return new Zend_Date($timestamp, false, $locale);
-        } elseif ($this->_current = next($this->timeservers)) {
-            $this->getDate($locale);
+        } elseif ($this->_current = next($this->_timeservers)) {
+            return $this->getDate($locale);
         } else {
-            throw Zend::exception('Zend_TimeSync_Exception', 'all servers are bogus');
+            $masterException  = Zend::exception('Zend_TimeSync_Exception', 'all the provided servers are bogus');
+            $currentException = $masterException;
+            
+            foreach ($this->_timeservers as $key => $server) {
+                foreach ($server->exceptions as $exception) {
+                    $currentException->next = $exception;
+                    $currentException = $exception;
+                }
+            }
+            
+            throw $masterException;
         }
     }
 }

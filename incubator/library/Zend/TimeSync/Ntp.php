@@ -73,7 +73,11 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $ntppacket .= chr($secb1) .chr($secb2) .chr($secb3) .chr($secb4);   // Transmit Timestamp Seconds
         $ntppacket .= chr($fracb1).chr($fracb2).chr($fracb3).chr($fracb4);  // Transmit Timestamp Fractional
         
-        if (!$this->_connect()) {
+        Zend::loadClass('Zend_TimeSync_Exception');
+        try {
+            $this->_connect();
+        } catch (Zend_TimeSync_Exception $e) {
+            $this->exceptions[] = $e;
             return false;
         }
                               
@@ -84,7 +88,11 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $poll      = ord(fread($this->_socket, 1));
         $precision = ord(fread($this->_socket, 1));
         
-        $this->_disconnect();
+        try {
+            $this->_disconnect();
+        } catch (Zend_TimeSync_Exception $e) {
+            $this->exceptions[] = $e;
+        }
         
         $leap    = ($flags & 0xc0) >> 6; // Leap Indicator bit 1100 0000
         // 0 = no warning, 1 = last min. 61 sec., 2 = last min. 59 sec., 3 = not synconised
