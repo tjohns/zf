@@ -634,11 +634,14 @@ class Zend_Controller_Front
                  */
                 $this->_plugins->postDispatch($request);
             } while (!$request->isDispatched());
+        } catch (Exception $e) {
+            $response->setException($e);
+        }
 
-
-            /**
-             * Notify plugins of dispatch loop completion
-             */
+        /**
+         * Notify plugins of dispatch loop completion
+         */
+        try {
             $this->_plugins->dispatchLoopShutdown();
         } catch (Exception $e) {
             $response->setException($e);

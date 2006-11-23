@@ -36,10 +36,10 @@ abstract class Zend_Controller_Response_Abstract
     protected $_body = '';
 
     /**
-     * Exception
+     * Exception stack
      * @var Exception
      */
-    protected $_exception = null;
+    protected $_exceptions = array();
 
     /**
      * Array of headers. Each header is an array with keys 'name' and 'value'
@@ -151,18 +151,18 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function setException(Exception $e)
     {
-        $this->_exception = $e;
+        $this->_exceptions[] = $e;
         return $this;
     }
 
     /**
-     * Retrieve the exception object, if set
+     * Retrieve the exception stack
      * 
-     * @return null|Exception
+     * @return array
      */
     public function getException()
     {
-        return $this->_exception;
+        return $this->_exceptions;
     }
 
     /**
@@ -172,7 +172,7 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function isException()
     {
-        return $this->_exception instanceof Exception;
+        return !empty($this->_exceptions);
     }
 
     /**
@@ -209,7 +209,11 @@ abstract class Zend_Controller_Response_Abstract
         }
 
         if ($this->isException() && $this->renderExceptions()) {
-            return $this->getException()->__toString();
+            $exceptions = '';
+            foreach ($this->getException() as $e) {
+                $exceptions .= $e->__toString() . "\n";
+            }
+            return $exceptions;
         }
 
         return $this->_body;
