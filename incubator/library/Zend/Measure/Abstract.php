@@ -97,18 +97,6 @@ abstract class Zend_Measure_Abstract //implements Serializable
 
 
     /**
-     * Throw an exception
-     *
-     * Note : for performance reasons, the "load" of Zend/Measure/Exception is dynamic
-     */
-    public static function throwException($message)
-    {
-        require_once 'Zend/Measure/Exception.php';
-        throw new Zend_Measure_Exception($message);
-    }
-
-
-    /**
      * Compare if the value and type is equal
      *
      * @param  $object  object to equal with

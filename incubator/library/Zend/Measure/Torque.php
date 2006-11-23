@@ -21,16 +21,13 @@
 
 
 /**
- * Implement basic abstract class
+ * Implement needed classes
  */
-require_once 'Zend/Measure/Abstract.php';
-
-/**
- * Implement Locale Data and Format class
- */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure_Abstract');
+Zend::loadClass('Zend_Locale');
+Zend::loadClass('Zend_Locale_Data');
+Zend::loadClass('Zend_Locale_Format');
 
 
 /**
@@ -140,7 +137,7 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
 
         $value = Zend_Locale_Format::getNumber($value, $locale);
         if (empty( self::$_UNITS[$type] )) {
-            self::throwException('unknown type of torque:' . $type);
+            throw Zend::exception('Zend_Measure_Exception', 'unknown type of torque:' . $type);
         }
 
         parent::setValue($value, $type, $locale);
@@ -157,7 +154,7 @@ class Zend_Measure_Torque extends Zend_Measure_Abstract
     public function setType( $type )
     {
         if (empty( self::$_UNITS[$type] )) {
-            self::throwException('unknown type of torque:' . $type);
+            throw Zend::exception('Zend_Measure_Exception', 'unknown type of torque:' . $type);
         }
 
         // Convert to standard value

@@ -21,16 +21,13 @@
 
 
 /**
- * Implement basic abstract class
+ * Implement needed classes
  */
-require_once 'Zend/Measure/Abstract.php';
-
-/**
- * Implement Locale Data and Format class
- */
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Data.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure_Abstract');
+Zend::loadClass('Zend_Locale');
+Zend::loadClass('Zend_Locale_Data');
+Zend::loadClass('Zend_Locale_Format');
 
 
 /**
@@ -186,7 +183,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
         }
 
         if (empty(self::$_UNITS[$type])) {
-            self::throwException('unknown type of number:' . $type);
+            throw Zend::exception('Zend_Measure_Exception', 'unknown type of number:' . $type);
         }
 
         switch( $type ) {
@@ -337,7 +334,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
     public function setType( $type )
     {
         if (empty(self::$_UNITS[$type])) {
-            self::throwException('unknown type of number:' . $type);
+            throw Zend::exception('Zend_Measure_Exception', 'unknown type of number:' . $type);
         }
 
         $value = $this->toDecimal(parent::getValue(), parent::getType());
