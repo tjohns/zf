@@ -23,7 +23,8 @@
 /**
  * Include needed Locale classes
  */
-require_once 'Zend/Locale/Data.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale_Data');
 
 
 /**

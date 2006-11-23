@@ -20,7 +20,13 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once 'Zend/Locale/Data.php';
+
+/**
+ * include needed classes
+ */
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale_Data');
+
 
 /**
  * @category   Zend
@@ -66,7 +72,7 @@ class Zend_Locale_Format
                         $symbols['decimal'] . '){0,1}\d+/';
         preg_match($regex, $input, $found);
         if (!isset($found[0]))
-            self::throwException('No value in ' . $input . ' found');
+            throw Zend::exception('Zend_Locale_Exception', 'No value in ' . $input . ' found');
         $found = $found[0];
 
         // Change locale input to be standard number
@@ -349,7 +355,7 @@ class Zend_Locale_Format
 
         // format unknown wether date nor time
         if (empty($parse)) {
-            self::throwException('unknown format, wether date nor time in ' . $format . ' found');
+            throw Zend::exception('Zend_Locale_Exception', 'unknown format, wether date nor time in ' . $format . ' found');
         }
         ksort($parse);
 
@@ -369,7 +375,7 @@ class Zend_Locale_Format
         preg_match_all('/\d+/', $number, $splitted);
 
         if (count($splitted[0]) == 0) {
-            self::throwException('No date part in ' . $number . ' found');
+            throw Zend::exception('Zend_Locale_Exception', 'No date part in ' . $number . ' found');
         }
         
         if (count($splitted[0]) == 1) {
@@ -579,18 +585,5 @@ class Zend_Locale_Format
             return false;
         }
         return true;
-    }
-
-
-    /**
-     * Throw an exception
-     *
-     * Note : for performance reasons, the "load" of Zend/Measure/Exception is dynamic
-     */
-    public static function throwException($message)
-    {
-        // For performance reasons, we use this dynamic inclusion
-        require_once 'Zend/Locale/Exception.php';
-        throw new Zend_Locale_Exception($message);
     }
 }
