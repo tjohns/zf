@@ -124,10 +124,10 @@ class Zend_Http_CookieJar
      */
     public function addCookiesFromResponse($response, $ref_uri)
     {
-    	if (! $response instanceof Zend_Http_Response)
-    	    throw new Zend_Http_Exception('$response is expected to be a Response object, ' . 
-    	        gettype($response) . ' was passed');
-    	    
+        if (! $response instanceof Zend_Http_Response)
+            throw new Zend_Http_Exception('$response is expected to be a Response object, ' . 
+                gettype($response) . ' was passed');
+            
         $cookie_hdrs = $response->getHeader('Set-Cookie');
         
         if (is_array($cookie_hdrs)) {
@@ -166,25 +166,27 @@ class Zend_Http_CookieJar
         $ret_as = self::COOKIE_OBJECT, $now = null)
     {
         if (is_string($uri)) $uri = Zend_Uri::factory($uri);
-        if (! $uri instanceof Zend_Uri_Http) {
+        if (! $uri instanceof Zend_Uri_Http) 
             throw new Zend_Http_Exception("Invalid URI: {$uri}");
-        }
+        
+        // Set path
+        $path = $uri->getPath();
+        $path = substr($path, 0, strrpos($path, '/'));
+        if (! $path) $path = '/';
         
         // First, reduce the array of cookies to only those matching domain and path
         $cookies = $this->_matchDomain($uri->getHost());
-        $cookies = $this->_matchPath($cookies, dirname($uri->getPath()));
+        $cookies = $this->_matchPath($cookies, $path);
         $cookies = $this->_flattenCookiesArray($cookies, self::COOKIE_OBJECT);
         
         // Next, run Cookie->match on all cookies to check secure, time and session mathcing
         $ret = array();
-        foreach ($cookies as $cookie) {
-            if ($cookie->match($uri, $matchSessionCookies, $now)) {
+        foreach ($cookies as $cookie) 
+            if ($cookie->match($uri, $matchSessionCookies, $now))
                 $ret[] = $cookie;
-            }
-        }
         
         // Now, use self::_flattenCookiesArray again - only to convert to the return format ;)
-        $ret = $this->_flattenCookiesArray($cookies, $ret_as);
+        $ret = $this->_flattenCookiesArray($ret, $ret_as);
         
         return $ret;
     }
@@ -275,25 +277,26 @@ class Zend_Http_CookieJar
     }
     
     /**
-     * Delete a cookie according to it's name and domain. If no name is specified,
-     * all cookies from this domain will be cleared out.
+     * Delete a cookie according to it's name and reference uri. If no name is
+     * specified,all cookies from this domain will be cleared out.
      *
-     * @param string|Zend_Uri_Http $domain
+     * @param string|Zend_Uri_Http $uri
      * @param string $cookie_name 
      * @return boolean true if cookie was deleted.
      */
-    public function deleteCookies($domain, $cookie_name = null)
+    public function deleteCookies($uri, $cookie_name = null)
     {
         $ret = false;
-        $path = '/';
-        if ($domain instanceof Zend_Uri_Http) {
-            $path = dirname($domain->getPath());
-            $domain = $domain->getHost();
-        } elseif (is_string($domain) && Zend_Uri_Http::check($domain)) {
-            $domain = Zend_Uri::factory($domain);
-            $path = dirname($domain->getPath());
-            $domain = $domain->getHost();
-        }
+        if (is_string($uri)) 
+            $uri = Zend_Uri_Http::factory($uri);
+        
+        if (! $uri instanceof Zend_Uri_Http) 
+            throw new Zend_Http_Exception('$uri is expected to by a Zend_Uri_Http, ' . gettype($uri) . ' passed');
+            
+        $domain = $uri->getHost();
+        $path   = $uri->getPath();
+        $path   = substr($path, 0, strrpos($path, '/'));
+        if (! $path) $path = '/';
         
         // If we have a cookie's name, delete only this one
         if (isset($cookie_name) && isset($this->cookies[$domain][$path][$cookie_name])) {
@@ -302,10 +305,10 @@ class Zend_Http_CookieJar
             
         // If we only got a URI, clear all cookies matching this URI.    
         } else {
-            $cookies = $this->_matchPath($this->_matchDomain($domain), $path);
+            $cookies = $this->_flattenCookiesArray($this->_matchPath($this->_matchDomain($domain), $path), self::COOKIE_OBJECT);
             foreach ($cookies as $cookie) {
-                if (isset($this->cookies[$cookie->getDomain()][$cookie->getPath])) {
-                    unset($this->cookies[$cookie->getDomain()][$cookie->getPath]);
+                if (isset($this->cookies[$cookie->getDomain()][$cookie->getPath()])) {
+                    unset($this->cookies[$cookie->getDomain()][$cookie->getPath()]);
                     $ret = true;
                     if (count ($this->cookies[$cookie->getDomain()]) == 0)
                         unset($this->cookies[$cookie->getDomain()]);
@@ -337,10 +340,6 @@ class Zend_Http_CookieJar
             return $ret;
         } elseif ($ptr instanceof Zend_Http_Cookie) {
             switch ($ret_as) {
-                case self::COOKIE_OBJECT:
-                    return array($ptr);
-                    break;
-                
                 case self::COOKIE_STRING_ARRAY:
                     return array($ptr->__toString());
                     break;
@@ -348,9 +347,11 @@ class Zend_Http_CookieJar
                 case self::COOKIE_STRING_CONCAT:
                     return $ptr->__toString();
                     break;
-                    
+                
+                case self::COOKIE_OBJECT:
                 default:
-                    throw new Zend_Http_Exception("Invalid value passed for \$ret_as: {$ret_as}");
+                    return array($ptr);
+                    break;
             }
         }
         

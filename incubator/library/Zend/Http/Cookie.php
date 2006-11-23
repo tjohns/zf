@@ -221,7 +221,7 @@ class Zend_Http_Cookie
             throw new Zend_Http_Exception('Passed URI is not a valid HTTP or HTTPS URI');
         
         // Check that the cookie is secure (if required) and not expired
-        if ($this->isSecure() && $uri->getScheme() != 'https') return false;
+        if ($this->secure && $uri->getScheme() != 'https') return false;
         if ($this->isExpired($now)) return false;
         if ($this->isSessionCookie() && ! $matchSessionCookies) return false;
         

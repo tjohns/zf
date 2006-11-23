@@ -171,7 +171,7 @@ class Zend_Http_CookieJarTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testGetCookie().
+     * Check we can get a cookie as a string
      */
     public function testGetCookieAsString() 
     {
@@ -185,31 +185,70 @@ class Zend_Http_CookieJarTest extends PHPUnit_Framework_TestCase
         $cstr = $jar->getCookie('http://www.example.com/tests/', 'foo', Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
         $this->assertEquals($cookie->__toString(), $cstr, 'Cookie string is not the expected string');
     }
-    
+
     /**
-     * @todo Implement testGetCookie().
+     * Check we can get false when trying to get a non-existant cookie
      */
-    public function testExceptGetCookieInvalidUri() 
+    public function testGetCookieReturnFalse()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=www.example.com; path=/tests');
+        $jar = new Zend_Http_CookieJar();
+        $jar->addCookie($cookie);
+        
+        $cstr = $jar->getCookie('http://www.example.com/tests/', 'otherfoo', Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
+        $this->assertFalse($cstr, 'getCookie was expected to return false, no such cookie');
+
+        $cstr = $jar->getCookie('http://www.otherexample.com/tests/', 'foo', Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
+        $this->assertFalse($cstr, 'getCookie was expected to return false, no such domain');
+        
+        $cstr = $jar->getCookie('http://www.example.com/othertests/', 'foo', Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
+        $this->assertFalse($cstr, 'getCookie was expected to return false, no such path');
     }
 
     /**
-     * @todo Implement testGetCookie().
+     * Test we get a proper exception when an invalid URI is passed
+     */
+    public function testExceptGetCookieInvalidUri() 
+    {
+    	$cookie = Zend_Http_Cookie::fromString('foo=bar; domain=www.example.com; path=/tests');
+        $jar = new Zend_Http_CookieJar();
+        $jar->addCookie($cookie);
+        
+    	try {
+    		$jar->getCookie('foo.com', 'foo');
+    		$this->fail('Expected getCookie to throw exception, invalid URI string passed');
+    	} catch (Zend_Exception $e) {
+    		// We are ok!
+    	}
+    	
+    	try {
+    		$jar->getCookie(Zend_Uri::factory('mailto:nobody@dev.null.com'), 'foo');
+    		$this->fail('Expected getCookie to throw exception, invalid URI object passed');
+    	} catch (Zend_Exception $e) {
+    		// We are ok!
+    	}
+    }
+
+    /**
+     * Test we get a proper exception when an invalid return constant is passed
+     * 
      */
     public function testExceptGetCookieInvalidReturnType() 
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $cookie = Zend_Http_Cookie::fromString('foo=bar; domain=example.com;');
+        $jar = new Zend_Http_CookieJar();
+        $jar->addCookie($cookie);
+        
+    	try {
+    		$jar->getCookie('http://example.com/', 'foo', 5);
+    		$this->fail('Expected getCookie to throw exception, invalid return type');
+    	} catch (Zend_Http_Exception $e) {
+    		// We are ok!
+    	}
     }
     
     /**
-     * @todo Implement testDeleteAllCookies().
+     * Test we can delete all cookies
      */
     public function testDeleteAllCookies() 
     {
@@ -226,50 +265,221 @@ class Zend_Http_CookieJarTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @todo Implement testDeleteExpiredCookies().
+     * Test we can delete expired cookies
      */
-    public function testDeleteExpiredCookies() {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+    public function testDeleteExpiredCookies() 
+    {
+    	$jar = new Zend_Http_CookieJar();
+    	$cookies = array(
+    		Zend_Http_Cookie::fromString('foo=bar; domain=example.com; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('evil=premature+optimization; domain=example.com; expires=' . date(DATE_COOKIE, time() - 3600)),
+    		Zend_Http_Cookie::fromString('PHPSESSID=123abc; domain=example.com;'),
+    		Zend_Http_Cookie::fromString('flavor=chocolate+chips; domain=example.com; expires=' . date(DATE_COOKIE, time() - 7600))
+    	);
+    	
+    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
+    	$this->assertEquals(4, count($jar->getAllCookies()), 'Cookie count is expected to be 4');
+    	
+    	$jar->deleteExpiredCookies();
+    	$this->assertEquals(2, count($jar->getAllCookies()), 'Cookie count is expected to be 2');
     }
 
     /**
-     * @todo Implement testDeleteSessionCookies().
+     * Test we can delete expired cookies with a modified time
      */
-    public function testDeleteSessionCookies() {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+    public function testDeleteExpiredCookiesWithTime() 
+    {
+    	$jar = new Zend_Http_CookieJar();
+    	$cookies = array(
+    		Zend_Http_Cookie::fromString('foo=bar; domain=example.com; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('evil=premature+optimization; domain=example.com; expires=' . date(DATE_COOKIE, time() - 3600)),
+    		Zend_Http_Cookie::fromString('PHPSESSID=123abc; domain=example.com;'),
+    		Zend_Http_Cookie::fromString('flavor=chocolate+chips; domain=example.com; expires=' . date(DATE_COOKIE, time() - 7600))
+    	);
+    	
+    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
+    	$this->assertEquals(4, count($jar->getAllCookies()), 'Cookie count is expected to be 4');
+    	
+    	$jar->deleteExpiredCookies(time() - 3700);
+    	$this->assertEquals(3, count($jar->getAllCookies()), 'Cookie count is expected to be 3');
+    }
+    
+    /**
+     * Test we can delete session cookies
+     */
+    public function testDeleteSessionCookies() 
+    {
+        $jar = new Zend_Http_CookieJar();
+    	$cookies = array(
+    		Zend_Http_Cookie::fromString('foo=bar; domain=example.com; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('evil=premature+optimization; domain=example.com;'),
+    		Zend_Http_Cookie::fromString('PHPSESSID=123abc; domain=example.com;'),
+    		Zend_Http_Cookie::fromString('flavor=chocolate+chips; domain=example.com; expires=' . date(DATE_COOKIE, time() - 7600))
+    	);
+    	
+    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
+    	$this->assertEquals(4, count($jar->getAllCookies()), 'Cookie count is expected to be 4');
+    	
+    	$jar->deleteSessionCookies();
+    	$this->assertEquals(2, count($jar->getAllCookies()), 'Cookie count is expected to be 2');
     }
 
     /**
-     * @todo Implement testDeleteCookies().
+     * Test we can delete all cookies from a specific domain, or just one cookie
+     * by domain and name
      */
     public function testDeleteCookies() {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+    	$jar = new Zend_Http_CookieJar();
+    	$cookies = array(
+    		Zend_Http_Cookie::fromString('foo=bar; domain=foo.com; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('evil=premature+optimization; domain=example.com;'),
+    		Zend_Http_Cookie::fromString('evil=scott; domain=foo.com;'),
+    		Zend_Http_Cookie::fromString('PHPSESSID=123abc; domain=foo.com;'),
+    		Zend_Http_Cookie::fromString('flavor=chocolate+chips; domain=example.com; expires=' . date(DATE_COOKIE, time() - 7600))
+    	);
+    	
+    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
+    	$this->assertEquals(5, count($jar->getAllCookies()), 'Cookie count is expected to be 5');
+    	
+    	$jar->deleteCookies('http://foo.com', 'foo');
+    	$this->assertEquals(4, count($jar->getAllCookies()), 'Cookie count is expected to be 4');
+    	
+    	$jar->deleteCookies('http://foo.com');
+    	$this->assertEquals(2, count($jar->getAllCookies()), 'Cookie count is expected to be 2');
     }
 
     /**
-     * @todo Implement testGetMatchingCookies().
+     * Test we can get all matching cookies for a request, with session cookies
      */
     public function testGetMatchingCookies()
     {
-        // Remove the following line when you implement this test.
-        $this->markTestIncomplete(
-          "This test has not been implemented yet."
-        );
+        $jar = new Zend_Http_CookieJar();
+    	$cookies = array(
+    		Zend_Http_Cookie::fromString('foo1=bar1; domain=.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo2=bar2; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo3=bar3; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() - 3600)),
+    		Zend_Http_Cookie::fromString('foo4=bar4; domain=.foo.com; path=/;'),
+    		Zend_Http_Cookie::fromString('foo5=bar5; domain=.foo.com; path=/; secure; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo6=bar6; domain=.foo.com; path=/otherpath; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo7=bar7; domain=www.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo8=bar8; domain=subdomain.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    	);
+    	
+    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
+    	
+    	$this->assertEquals(8, count($jar->getAllCookies()), 'Cookie count is expected to be 8');
+    	
+    	$cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt');
+    	$this->assertEquals(4, count($cookies), 'Cookie count is expected to be 4');
+
+    	$cookies = $jar->getMatchingCookies('https://www.foo.com/path/file.txt');
+    	$this->assertEquals(5, count($cookies), 'Cookie count is expected to be 5');
     }
 
     /**
-     * Test we can build a new object from a response object
+     * Test we can get all matching cookies for a request, without session cookies
+     */
+    public function testGetMatchingCookiesNoSession()
+    {
+        $jar = new Zend_Http_CookieJar();
+    	$cookies = array(
+    		Zend_Http_Cookie::fromString('foo1=bar1; domain=.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo2=bar2; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo3=bar3; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() - 3600)),
+    		Zend_Http_Cookie::fromString('foo4=bar4; domain=.foo.com; path=/;'),
+    		Zend_Http_Cookie::fromString('foo5=bar5; domain=.foo.com; path=/; secure; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo6=bar6; domain=.foo.com; path=/otherpath; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo7=bar7; domain=www.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo8=bar8; domain=subdomain.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    	);
+    	
+    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
+    	
+    	$this->assertEquals(8, count($jar->getAllCookies()), 'Cookie count is expected to be 8');
+    	
+    	$cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', false);
+    	$this->assertEquals(3, count($cookies), 'Cookie count is expected to be 3');
+
+    	$cookies = $jar->getMatchingCookies('https://www.foo.com/path/file.txt', false);
+    	$this->assertEquals(4, count($cookies), 'Cookie count is expected to be 4');
+    }
+    
+    /**
+     * Test we can get all matching cookies for a request, when we set a different time for now
+     */
+    public function testGetMatchingCookiesWithTime()
+    {
+        $jar = new Zend_Http_CookieJar();
+    	$cookies = array(
+    		Zend_Http_Cookie::fromString('foo1=bar1; domain=.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo2=bar2; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() + 7200)),
+    		Zend_Http_Cookie::fromString('foo3=bar3; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() - 3600)),
+    		Zend_Http_Cookie::fromString('foo4=bar4; domain=.foo.com; path=/;'),
+    		Zend_Http_Cookie::fromString('foo5=bar5; domain=.foo.com; path=/; secure; expires=' . date(DATE_COOKIE, time() - 7200)),
+    		Zend_Http_Cookie::fromString('foo6=bar6; domain=.foo.com; path=/otherpath; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo7=bar7; domain=www.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo8=bar8; domain=subdomain.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    	);
+    	
+    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
+    	
+    	$this->assertEquals(8, count($jar->getAllCookies()), 'Cookie count is expected to be 8');
+    	
+    	$cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_OBJECT, time() + 3700);
+    	$this->assertEquals(2, count($cookies), 'Cookie count is expected to be 2');
+
+    	$cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_OBJECT, time() - 3700);
+    	$this->assertEquals(5, count($cookies), 'Cookie count is expected to be 5');
+    }
+    
+    /**
+     * Test we can get all matching cookies for a request, and return as strings array / concat
+     */
+    public function testGetMatchingCookiesAsStrings()
+    {
+        $jar = new Zend_Http_CookieJar();
+    	$cookies = array(
+    		Zend_Http_Cookie::fromString('foo1=bar1; domain=.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo2=bar2; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo3=bar3; domain=.foo.com; path=/; expires=' . date(DATE_COOKIE, time() - 3600)),
+    		Zend_Http_Cookie::fromString('foo4=bar4; domain=.foo.com; path=/;'),
+    		Zend_Http_Cookie::fromString('foo5=bar5; domain=.foo.com; path=/; secure; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo6=bar6; domain=.foo.com; path=/otherpath; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo7=bar7; domain=www.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    		Zend_Http_Cookie::fromString('foo8=bar8; domain=subdomain.foo.com; path=/path; expires=' . date(DATE_COOKIE, time() + 3600)),
+    	);
+    	
+    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
+    	
+    	$this->assertEquals(8, count($jar->getAllCookies()), 'Cookie count is expected to be 8');
+    	
+    	$cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_STRING_ARRAY);
+    	$this->assertType('array', $cookies, '$cookies is expected to be an array, but it is not');
+    	$this->assertType('string', $cookies[0], '$cookies[0] is expected to be a string');;
+
+    	$cookies = $jar->getMatchingCookies('http://www.foo.com/path/file.txt', true, Zend_Http_CookieJar::COOKIE_STRING_CONCAT);
+    	$this->assertType('string', $cookies, '$cookies is expected to be a string');
+    }
+    
+    /**
+     * Test we can build a new object from a response object (single cookie header)
      */
     public function testFromResponse() 
+    {
+    	$res_str = file_get_contents(dirname(realpath(__FILE__)) . 
+    	    DIRECTORY_SEPARATOR . '_files'  . DIRECTORY_SEPARATOR . 'response_with_single_cookie');
+    	$response = Zend_Http_Response::fromString($res_str);
+        
+    	$jar = Zend_Http_CookieJar::fromResponse($response, 'http://www.example.com');
+    	
+    	$this->assertTrue($jar instanceof Zend_Http_CookieJar, '$jar is not an instance of CookieJar as expected');
+    	$this->assertEquals(1, count($jar->getAllCookies()), 'CookieJar expected to contain 1 cookie');
+    }
+    
+    /**
+     * Test we can build a new object from a response object (multiple cookie headers)
+     */
+    public function testFromResponseMultiHeader() 
     {
     	$res_str = file_get_contents(dirname(realpath(__FILE__)) . 
     	    DIRECTORY_SEPARATOR . '_files'  . DIRECTORY_SEPARATOR . 'response_with_cookies');
