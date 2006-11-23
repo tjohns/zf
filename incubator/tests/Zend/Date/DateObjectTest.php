@@ -190,7 +190,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         date_default_timezone_set('Europe/Paris');
         $date = new Zend_Date_DateObject();
       	$result = $date->mktime(0,0,0,1,1,1600, -1, true);
-       	$this->assertSame($result, -11676960000, "-11676960000 expected");
+       	$this->assertSame($result, -11676096000, "-11676096000 expected");
     }
 
 	/**
@@ -201,7 +201,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         date_default_timezone_set('Europe/Paris');
         $date = new Zend_Date_DateObject();
       	$result = $date->mktime(0,0,0,1,1,0, -1, true);
-       	$this->assertSame($result, -62168256000, "-62168256000 expected");
+       	$this->assertSame($result, -62167392000, "-62167392000 expected");
     }
 
 	/**
@@ -277,7 +277,29 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     {
         date_default_timezone_set('Europe/Paris');
         $date = new Zend_Date_DateObject();
-      	$result = $date->mktime(0,0,0,10,10,3000, -1, true);
-       	$this->assertSame($result, 32528044800, "32528044800 expected");
+      	$result = $date->mktime(0,0,0,10,10,3004, -1, true);
+       	$this->assertSame($result, 32654275200, "32654275200 expected");
+    }
+
+	/**
+	 * Test for mktime
+	 */
+    public function testMkTime17()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->mktime(0,0,0,10,10,3004, -1, false);
+       	$this->assertSame($result, 32654271600, "32654271600 expected");
+    }
+
+	/**
+	 * Test for date
+	 */
+    public function testDate1()
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = new Zend_Date_DateObject();
+      	$result = $date->date('d');
+       	$this->assertTrue(is_string($result), "integer expected");
     }
 }

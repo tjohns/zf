@@ -161,7 +161,7 @@ class Zend_Date_DateObject {
         $day   = intval($day);
         $month = intval($month);
         $year  = intval($year);
-
+        
         // correct months > 12 and months < 1
         if ($month > 12) {
             $overlap = floor($month / 12);
@@ -172,7 +172,7 @@ class Zend_Date_DateObject {
             $year   -= $overlap;
             $month  += $overlap * 12;
         }
-
+        
         $date = 0;
         if ($year >= 1970) {
 
@@ -193,7 +193,7 @@ class Zend_Date_DateObject {
 
                     for ($mcount = 0; $mcount < ($month - 1); $mcount++) {
                         $date += $this->_monthTable[$mcount];
-                        if (($leapyear == true) and ($month == 1)) {
+                        if (($leapyear == true) and ($mcount == 1)) {
                             $date++;
                         }
 
@@ -205,7 +205,7 @@ class Zend_Date_DateObject {
 
             return (($date * 86400) + ($hour * 3600) + ($minute * 60) + $second + $difference);
         } else {
-
+            
             // Date is after UNIX epoch
             // go through leapyears
             // add months from latest given year
@@ -221,7 +221,7 @@ class Zend_Date_DateObject {
 
                     for ($mcount = 11; $mcount > ($month - 1); $mcount--) {
                         $date += $this->_monthTable[$mcount];
-                        if (($leapyear == true) and ($month == 1)) {
+                        if (($leapyear == true) and ($mcount == 1)) {
                             $date++;
                         }
 
@@ -427,7 +427,7 @@ class Zend_Date_DateObject {
                     if ($gmt) {
                         $dayseconds += 3600;
                     }
-                    return (int) (($dayseconds % 86400) / 86.4); 
+                    $output .= (int) (($dayseconds % 86400) / 86.4); 
                     break;
 
                 case 'g':  // hours without leading zeros, 12h format

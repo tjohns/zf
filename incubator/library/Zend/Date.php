@@ -343,13 +343,19 @@ class Zend_Date {
      * 
      * @param  $locale  locale  - OPTIONAL locale for parsing input
      * @param  $format  string  - OPTIONAL an rule for formatting the output
-     * @param  $gmt     boolean - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
+     * @param  $gmt     boolean - OPTIONAL, FALSE = actual timezone time, TRUE = UTC time
      * @return string
      */
-    public function toString($locale = false, $format, $gmt)
+    public function toString($locale = false, $format = false, $gmt = false)
     {
         if ($locale === false) {
             $locale = $this->_Locale;
+        }
+
+        if ($format === false) {
+            $format  = Zend_Locale_Data::getContent($locale, 'defdateformat');
+            $format .= " ";
+            $format .= Zend_Locale_Data::getContent($locale, 'deftimeformat');
         }
 
         // get format tokens
@@ -611,7 +617,7 @@ class Zend_Date {
      * @param  $gmt     boolean - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return string
      */
-    public function __toString($locale = false, $format, $gmt)
+    public function __toString($locale = false, $format = false, $gmt = false)
     {
         return $this->toString($locale, $format, $gmt);
     }
