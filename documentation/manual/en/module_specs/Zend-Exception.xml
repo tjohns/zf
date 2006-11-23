@@ -1,0 +1,35 @@
+<sect1 id="zend.exception">
+    <title>Zend::exception()</title>
+
+    <para>Lazy loads an exception class, instantiates the exception, and returns it.</para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::exception($class, $message, $code);
+
+?>]]></programlisting>
+
+    <para>
+        The <code>$class</code> argument specifies the exception class to load
+        and instantiate, and is loaded using 
+        <xref linkend="zend.loadclass">Zend::loadClass()</xref>; as such, it
+        must follow the framework class naming conventions and be somewhere in
+        the PHP <code>include_path</code>.
+    </para>
+
+    <para>
+        The <code>$message</code> and <code>$code</code> parameters are both
+        optional and passed as arguments to the exception class constructor.
+    </para>
+
+    <para>
+        If successful, it loads the exception class and creates an instance
+        using the <code>$message</code> and <code>$code</code> provided,
+        returning the newly created exception instance. If unable to load the
+        class or if the class does not extend <code>Exception</code>, it throws
+        an exception.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
