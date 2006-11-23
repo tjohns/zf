@@ -313,6 +313,10 @@ class Zend_Mime_Decode
      */
     public static function decodeQuotedPrintable($string) 
     {
+        // avoid calling expensive regex
+        if(strpos($string, '=') === false) {
+            return $string;
+        }
         if(!preg_match_all('%=\?([^?]+)\?(?:[Qq]\?)?(.*?)\?=\s*%', $string, $matches)) {
             return $string;
         }
