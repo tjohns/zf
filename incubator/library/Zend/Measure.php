@@ -20,7 +20,11 @@
  */
 
 
-require_once 'Zend/Locale.php';
+/**
+ * Include needed Measure classes
+ */
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 
 /**
@@ -125,7 +129,7 @@ class Zend_Measure
             if (!empty(self::$_UNIT[$type])) {
                 $library = $library . '_' . key(self::$_UNIT[$type]);
             } else {
-                $this->throwException('unknown measurement type: ' . $type);
+                throw Zend::exception('Zend_Measure_Exception', 'unknown measurement type ' . $type);
             }
 
             $sublib = key(self::$_UNIT[$type]) . '::' . current(self::$_UNIT[$type]);
@@ -333,17 +337,5 @@ class Zend_Measure
     {
         $values = $this->_Measurement->getConversionList();
         return $values;
-    }
-
-
-    /**
-     * Throw an exception
-     *
-     * Note : for performance reasons, the "load" of Zend/Measure/Exception is dynamic
-     */
-    public static function throwException($message)
-    {
-        require_once 'Zend/Measure/Exception.php';
-        throw new Zend_Measure_Exception($message);
     }
 }
