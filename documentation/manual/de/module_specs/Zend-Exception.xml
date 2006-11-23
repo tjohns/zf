@@ -1,0 +1,36 @@
+<sect1 id="zend.exception">
+    <title>Zend::exception()</title>
+
+    <para>
+        Faules Laden ("lazy load") einer Ausnahmeklasse, instantiiert die Ausnahme und gibt sie 
+        zurück.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::exception($class, $message, $code);
+
+?>]]></programlisting>
+
+    <para>
+        Das <code>$class</code> Argumente gibt die Ausnahmeklasse an, die geladen und instantiiert
+        werden soll und durch <xref linkend="zend.loadclass">Zend::loadClass()</xref> geladen wird;
+        deshalb muss die Klasse den Framework Konventionen zur Benennung von Klassen folgen und sich
+        irgendwo im <code>include_path</code> befinden.
+    </para>
+
+    <para>
+        Die <code>$message</code> und <code>$code</code> Parameter sind beide optional und werden
+        als Argumente an den Konstruktur der Ausnahmeklasse übergeben. 
+    </para>
+
+    <para>
+        Bei Erfolg wird die Ausnahmeklasse geladen, eine Instanz unter Verwendung der übergebenen 
+        <code>$message</code> und <code>$code</code> Parameter erstellt und die neu erstellte
+        Ausnahmeinstanz zurückgegeben. Wenn die Klasse nicht geladen werden kann oder die Klasse
+        nicht <code>Exception</code> erweitert, wird eine Ausnahme geworfen.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
