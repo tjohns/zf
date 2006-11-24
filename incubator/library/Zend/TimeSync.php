@@ -75,20 +75,48 @@ class Zend_TimeSync
     );
     
     public static $options = array(
-        'timeout' => 1
+        'timeout' => 5
     );
     
+    /**
+     * The constructor takes one to two parameters.
+     *
+     * The first parameter is $server, which may be a single string
+     * representation for a timeserver, or a structured array for 
+     * multiple timeservers.
+     *
+     * Each server must be provided with a valid scheme, and may 
+     * contain an optional port number. If no port number has been
+     * suplied, the default matching port number will be used.
+     *
+     * The second parameter is $options, and it is optional. If not
+     * specified, default options will be used.
+     *
+     * @param string|array $server
+     * @param array $options
+     * @return Zend_TimeSync
+     */ 
     public function __construct($server, $options = array()) {
-        $this->_addServer($server);
+        $this->addServer($server);
         $this->setOptions($options);
         
-        $this->_current = current($this->_timeservers);
+        $this->_current = reset($this->_timeservers);
     }
     
+    /**
+     * Set options for this component.
+     * These replace any currently defined.
+     *
+     * @param array $options
+     * @throws Zend_TimeSync_Exception
+     */ 
     public function setOptions($options = array()) 
     {
         if (!is_array($options)) {
-            throw Zend::exception('Zend_TimeSync_Exception', '$options is expected to be an array, ' . gettype($config) . ' given');
+            throw Zend::exception(
+                'Zend_TimeSync_Exception', 
+                '$options is expected to be an array, ' . gettype($config) . ' given'
+            );
         }
         
         foreach ($options as $key => $value) {
@@ -96,38 +124,98 @@ class Zend_TimeSync
         }
     }
     
-    protected function _addServer($server)
+    public function setCurrent($flag)
+    {
+        if (isset($this->_timeservers[$flag])) {
+            $this->_current = $this->_timeservers[$flag];
+        } else {
+            throw Zend::exception(
+                'Zend_TimeSync_Exception', 
+                '$flag does not point to valid timeserver'
+            );
+        }
+    }
+    
+    /**
+     * Return a list of options that have been set.
+     *
+     * @return array
+     */ 
+    public function getOptions()
+    {
+        return Zend_TimeSync::$options;
+    }
+    
+    /**
+     * This function returns the value to the option, if any.
+     * If the option was not found, this function returns false.
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function getOption($flag)
+    {
+        if (isset(Zend_TimeSync::$options[$flag])) {
+            return Zend_TimeSync::$options[$flag];   
+        } else {
+            return false;
+        }
+    }
+    
+    public function getCurrent()
+    {
+        if (isset($this->_current)) {
+            return $this->_current;
+        } else {
+            throw Zend::exception(
+                'Zend_TimeSync_Exception', 
+                'currently, there is no timeserver set'
+            );
+        }   
+    }
+    
+    public function addServer($server)
     {
         if (is_array($server)) {
             foreach ($server as $key => $timeServer) {
                 $this->_addServer($timeServer);
             }
+        } elseif (is_string($server)) {
+            $this->_addServer($server);
         } else {
-            $defaultUrl = array(
-                'scheme' => self::DEFAULT_TIMESERVER_SCHEME,
+            throw Zend::exception(
+                'Zend_TimeSync_Exception', 
+                '$server should be an array or string, ' . gettype($server) . ' given'
             );
-                                
-            $url = @array_merge($defaultUrl, @parse_url($server));
-            if (!in_array(strtolower($url['scheme']), $this->_allowedSchemes)) {
-                $url['scheme'] = self::DEFAULT_TIMESERVER_SCHEME;
-            }
-            
-            if (!isset($url['host']) && isset($url['path'])) {
-                $url['host'] = $url['path'];
-            }
-            
-            $protocol = (strtolower($url['scheme']) === 'ntp') ? 'udp' : 'tcp';
-            if (!isset($url['port']) && $protocol === 'udp') {
-                $url['port'] = self::DEFAULT_NTP_PORT;
-            } else {
-                $url['port'] = self::DEFAULT_SNTP_PORT;
-            }
-            
-            $className = 'Zend_TimeSync_' . ucfirst($url['scheme']);
-            Zend::loadClass($className);
-                        
-            $this->_timeservers[] = new $className($protocol . '://' . $url['host'], $url['port']);
         }
+    }
+    
+    protected function _addServer($server)
+    {
+        $defaultUrl = array(
+            'scheme' => self::DEFAULT_TIMESERVER_SCHEME,
+        );
+                            
+        $url = @array_merge($defaultUrl, @parse_url($server));
+        if (!in_array(strtolower($url['scheme']), $this->_allowedSchemes)) {
+            $url['scheme'] = self::DEFAULT_TIMESERVER_SCHEME;
+        }
+        
+        if (!isset($url['host']) && isset($url['path'])) {
+            $url['host'] = $url['path'];
+        }
+        
+        $protocol = (strtolower($url['scheme']) === 'ntp') ? 'udp' : 'tcp';
+        if (!isset($url['port']) && $protocol === 'udp') {
+            $url['port'] = self::DEFAULT_NTP_PORT;
+        } else {
+            $url['port'] = self::DEFAULT_SNTP_PORT;
+        }
+        
+        $className = 'Zend_TimeSync_' . ucfirst($url['scheme']);
+        Zend::loadClass($className);
+                    
+        $this->_timeservers[] = new $className($protocol . '://' . $url['host'], $url['port']);
     }
     
     public function getDate($locale = false)
@@ -138,7 +226,11 @@ class Zend_TimeSync
         } elseif ($this->_current = next($this->_timeservers)) {
             return $this->getDate($locale);
         } else {
-            $masterException = Zend::exception('Zend_TimeSync_Exception', 'all the provided servers are bogus');            
+            $masterException = Zend::exception(
+                'Zend_TimeSync_Exception', 
+                'all the provided servers are bogus'
+            );
+            
             foreach ($this->_timeservers as $key => $server) {
                 foreach ($server->exceptions as $index => $exception) {
                     $masterException->add($exception);
