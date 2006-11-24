@@ -1,0 +1,33 @@
+<sect1 id="zend.exception">
+    <title>()Zend::exception</title>
+
+    <para>يقوم بعمل lazy loading لـ exception class و يقوم بعمل نسخة من الـ exception ثم إرجاعها.</para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::exception($class, $message, $code);
+
+?>]]></programlisting>
+
+    <para>
+        قيمة class$ تحدد اسم الـ exception class الذى سيتم تحميله و إنشاء نسخة منه , 
+        و سيتم تحميله بإستخدام
+        <xref linkend="zend.loadclass">()Zend::loadClass</xref>; لذلك يجب أن يتبع معايير تسمية الـ class المعتمدة فى 
+        إطار العمل و أن يكون موجود داخل نطاق الـ include_path .
+    </para>
+
+    <para>
+        كل من البراميتران message$ و code$ أختياريان و يتم تمريرهما إلى الـ constuctor الخاص 
+        بالـ exception class .
+    </para>
+
+    <para>
+        يتم تحميل الـ exception class ثم تقوم بعمل نسخة "instance" منه بإستخدام 
+        message$ و code$ المتوفران, ثم يتم إرجاع النسخة التى تم إنشائها, 
+        و إن لم تنجح عملية تحميل الـ class أو أن الـ class لا يمتد من Exception , 
+        سيتم إلقاء exception.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
