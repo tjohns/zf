@@ -1,0 +1,37 @@
+<sect1 id="zend.exception">
+    <title>Zend::exception()</title>
+
+    <para>
+        例外クラスを読み込み、そのインスタンスを作成して返します。
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::exception($class, $message, $code);
+
+?>]]></programlisting>
+
+    <para>
+        引数 <code>$class</code> で、実際に読み込んでインスタンスを作成する
+        例外クラスを指定します。クラスを読み込む際には
+        <xref linkend="zend.loadclass">Zend::loadClass()</xref> を使用します。
+        つまり、読み込むクラスはこのフレームワークの命名規約に従ったものでなければならず、
+        また PHP の <code>include_path</code> に存在しなければなりません。
+    </para>
+
+    <para>
+        <code>$message</code> と <code>$code</code> はいずれもオプションで、
+        例外クラスのコンストラクタに引数として渡されます。
+    </para>
+
+    <para>
+        成功すると、このメソッドは例外クラスを読み込み、
+        <code>$message</code> と <code>$code</code>
+        を使用してそのインスタンスを作成します。そしてそのインスタンスを返します。
+        クラスの読み込みに失敗した場合や、読み込んだクラスが
+        <code>Exception</code> を継承していない場合は、例外をスローします。
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
