@@ -143,25 +143,26 @@ class Zend_Date_DateObject {
     {
         // only time - use PHP internal
         if ($month === false) {
-            return ($gmt) ? @gmmktime($hour, $minute, $second) : @mktime($hour, $minute, $second);
+            return ($gmt) ? @gmmktime($hour, $minute, $second)
+                          :   @mktime($hour, $minute, $second);
         }
 
         // complete date but in 32bit timestamp - use PHP internal
         if ((1901 < $year) and ($year < 2038)) {
             return ($gmt) ? @gmmktime($hour, $minute, $second, $month, $day, $year, $dst) 
-                          : @mktime($hour, $minute, $second, $month, $day, $year, $dst);
+                          :   @mktime($hour, $minute, $second, $month, $day, $year, $dst);
         }
 
         // after here we are handling 64bit timestamps
-
         // get difference from local to gmt
-        $difference = ($gmt) ? 0 : $this->_gmtDifference();
+        $difference = ($gmt) ? 0 
+                             : $this->_gmtDifference();
 
         // date to integer
         $day   = intval($day);
         $month = intval($month);
         $year  = intval($year);
-        
+
         // correct months > 12 and months < 1
         if ($month > 12) {
             $overlap = floor($month / 12);
@@ -172,7 +173,7 @@ class Zend_Date_DateObject {
             $year   -= $overlap;
             $month  += $overlap * 12;
         }
-        
+
         $date = 0;
         if ($year >= 1970) {
 
@@ -185,7 +186,7 @@ class Zend_Date_DateObject {
                 if ($count < $year) {
 
                     $date += 365;
-                    if ($leapyear == true) {
+                    if ($leapyear === true) {
                         $date++;
                     }
 
@@ -193,7 +194,7 @@ class Zend_Date_DateObject {
 
                     for ($mcount = 0; $mcount < ($month - 1); $mcount++) {
                         $date += $this->_monthTable[$mcount];
-                        if (($leapyear == true) and ($mcount == 1)) {
+                        if (($leapyear === true) and ($mcount == 1)) {
                             $date++;
                         }
 
@@ -215,13 +216,13 @@ class Zend_Date_DateObject {
                 if ($count > $year)
                 {
                     $date += 365;
-                    if ($leapyear == true)
+                    if ($leapyear === true)
                         $date++;
                 } else {
 
                     for ($mcount = 11; $mcount > ($month - 1); $mcount--) {
                         $date += $this->_monthTable[$mcount];
-                        if (($leapyear == true) and ($mcount == 1)) {
+                        if (($leapyear === true) and ($mcount == 1)) {
                             $date++;
                         }
 
@@ -229,14 +230,14 @@ class Zend_Date_DateObject {
                 }
             }
 
-            $date += ($this->_monthTable[$mcount] - $day);
-            $date = -(($date * 86400) + (86400 - (($hour * 3600) + ($minute * 60) + $second + $difference)));
+            $date += ($this->_monthTable[$month - 1] - $day);
+            $date = -(($date * 86400) + (86400 - (($hour * 3600) + ($minute * 60) + $second)) - $difference);
 
             // gregorian correction for 5.Oct.1582
-            if ($date < -12220156800) {
+            if ($date < -12220185600) {
                 $date += 864000;
-            } else if ($date < -12219292800) {
-                $date  = -12219292800;
+            } else if ($date < -12219321600) {
+                $date  = -12219321600;
             }
 
             return $date;
@@ -251,6 +252,10 @@ class Zend_Date_DateObject {
      */
     private function _gmtDifference()
     {
+        // fix if no timezone was set, if all failes UTC will be set
+        $zone = @date_default_timezone_get();
+        date_default_timezone_set($zone);
+
         if ($this->_timezone !== false)
             return $this->_timezone;
 
@@ -297,17 +302,20 @@ class Zend_Date_DateObject {
      */
     public function date($format, $timestamp = false, $gmt = false)
     {
-        if ($gmt) {
-            $timestamp += $this->_gmtDifference();
-        }
 
         if ($timestamp === false)
-            return @date($format);
+            return ($gmt) ? @gmdate($format)
+                          :   @date($format);
 
         if (abs($timestamp) <= 0x7FFFFFFF) {
-            return @date($format, $timestamp);
+            return ($gmt) ? @gmdate($format, $timestamp)
+                          :   @date($format, $timestamp);
         }
 
+        if ($gmt === true) {
+            $timestamp += $this->_gmtDifference();
+        }
+        
         $date = $this->getDate($timestamp, true);
         $length = strlen($format);
         $output = '';
@@ -611,10 +619,10 @@ class Zend_Date_DateObject {
      * Default is false, so the function works faster
      *
      * @param  $timestamp  mixed
-     * @param  $all        boolean
+     * @param  $fast       boolean
      * @return array
      */
-    public function getDate($timestamp = false, $all = false)
+    public function getDate($timestamp = false, $fast = false)
     {
         // actual timestamp
         if ($timestamp === false) {
@@ -626,6 +634,7 @@ class Zend_Date_DateObject {
             return @getdate($timestamp);
         }
 
+        $otimestamp = $timestamp;
         // gregorian correction
         if ($timestamp < -12219321600) {
             $timestamp -= 864000;
@@ -656,7 +665,8 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp += 31536000;
-                if ($leapyear = $this->isLeapYear($i)) {
+                $leapyear = $this->isLeapYear($i);
+                if ($leapyear === true) {
                     $timestamp += 86400;
                 }
 
@@ -674,14 +684,14 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp += $this->_monthTable[$i] * 86400;
-                if ($leapyear) {
+                if ($leapyear === true) {
                     $timestamp += 86400;
                 }
 
                 if ($timestamp >= 0) {
                     $month  = $i;
                     $numday = $this->_monthTable[$i];
-                    if ($leapyear) {
+                    if ($leapyear === true) {
                         ++$numday;
                     }
                     break;
@@ -700,7 +710,8 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp -= 31536000;
-                if ($leapyear = $this->isLeapYear($i)) {
+                $leapyear = $this->isLeapYear($i);
+                if ($leapyear === true) {
                     $timestamp -= 86400;
                 }
 
@@ -718,14 +729,14 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
                 $timestamp -= $this->_monthTable[$i] * 86400;
 
-                if ($leapyear) {
+                if ($leapyear === true) {
                     $timestamp -= 86400;
                 }
 
                 if ($timestamp < 0) {
                     $month  = $i;
                     $numday = $this->_monthTable[$i];
-                    if ($leapyear) {
+                    if ($leapyear === true) {
                         ++$numday;
                     }
                     break;
@@ -740,10 +751,11 @@ class Zend_Date_DateObject {
 
         $timestamp -= $hours * 3600;
 
+        $month  += 1;
         $minutes = floor($timestamp / 60);
         $seconds = $timestamp - $minutes * 60;
 
-        if ($all) {
+        if ($fast === true) {
             return array(
                 'seconds' => $seconds,
                 'minutes' => $minutes,
@@ -767,8 +779,8 @@ class Zend_Date_DateObject {
                 'year'    => $year,
                 'yday'    => floor($secondsPerYear / 86400),
                 'weekday' => gmdate('l', 86400 * (3 + $dayofweek)),
-                'month'   => gmdate('F', mktime(0, 0, 0, $month, 2, 1971)),
-                0         => $timestamp
+                'month'   => gmdate('F', mktime(0, 0, 0, $month, 1, 1971)),
+                0         => $otimestamp
         );
     }
 
