@@ -1,0 +1,35 @@
+<sect1 id="zend.exception">
+    <title>Zend::exception()</title>
+
+    <para>Metoda ładuje klasę wyjątku, tworzy instancję wyjątku i następnie zwraca ją.</para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::exception($class, $message, $code);
+
+?>]]></programlisting>
+
+    <para>
+        Argument <code>$class</code> określa klasę wyjątku do załadowania i 
+        utworzenia instancji, która jest ładowana za pomocą 
+        <xref linkend="zend.loadclass">Zend::loadClass()</xref>; 
+        Klasa musi być nazwana zgodnie z konwencjami nazewnictwa przyjętymi
+        we frameworku i musi znajdować się gdzieś wewnątrz <code>include_path</code>.
+    </para>
+
+    <para>
+        Parametry <code>$message</code> oraz <code>$code</code> są opcjonalne
+        i są przekazywane jako argumenty do konstruktora klasy wyjątku.
+    </para>
+
+    <para>
+        Jeśli się uda, metoda ładuje klasę wyjątku, tworzy instancję
+        używając parametrów <code>$message</code> oraz <code>$code</code>, 
+        a następnie zwraca nowoutworzoną instancję wyjątku. Jeśli się nie uda
+        załadować klasy, lub gdy klasa nie rozszerza klasy <code>Exception</code>,
+        wyrzucany jest wyjątek.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
