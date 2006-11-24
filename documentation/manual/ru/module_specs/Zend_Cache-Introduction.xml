@@ -78,7 +78,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 // $cache определен в предыдущем примере
 
 // проверка, есть ли уже запись в кэше:
-if(!$result = $cache->get('myresult')) {
+if(!$result = $cache->load('myresult')) {
 
     // промах кэша
     // установка соединения с базой данных

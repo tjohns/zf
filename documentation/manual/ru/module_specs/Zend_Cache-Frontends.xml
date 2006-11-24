@@ -150,7 +150,7 @@
 
 $id = 'myBigLoop'; // идентификатор того, что мы хотим закэшировать
 
-if (!($data = $cache->get($id))) {
+if (!($data = $cache->load($id))) {
     // промах кэша
     
     $data = '';
@@ -179,7 +179,7 @@ $id1 = 'foo';
 $id2 = 'bar';
 
 // блок 1
-if (!($data = $cache->get($id1))) {
+if (!($data = $cache->load($id1))) {
     // промах кэша
     
     $data = '';
@@ -196,7 +196,7 @@ echo($data);
 echo('НЕ КЭШИРУЕТСЯ! ');
 
 // блок 2
-if (!($data = $cache->get($id2))) {
+if (!($data = $cache->load($id2))) {
     // промах кэша
     
     $data = '';
