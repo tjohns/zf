@@ -1,16 +1,69 @@
 #
-# Makefile for building Zend Framework product
+# Zend Framework
 #
+# LICENSE
+#
+# This source file is subject to the new BSD license that is bundled
+# with this package in the file LICENSE.txt.
+# It is also available through the world-wide-web at this URL:
+# http://framework.zend.com/license/new-bsd
+# If you did not receive a copy of the license and are unable to
+# obtain it through the world-wide-web, please send an email
+# to license@zend.com so we can send you a copy immediately.
+#
+# @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+# @license    http://framework.zend.com/license/new-bsd     New BSD License
+#
+
+#
+# Makefile - build Zend Framework product and documentation
+#
+# Main targets:
+#  dist - produce zip and tarball.
+#  zip - produce zip from staged tree.
+#  tarball - produce tarball from staged tree.
+#  stage - produce staged product tree.
+#  export - get files from subversion.
+#  docbook - build and stage manual from docbook sources.
+#  phpdoc - build and stage API doc using phpDocumentor.
+#  clean - remove staged files.
+#  clean-docbook - remove temp files under docbook sources.
+#  clean-export - remove exported product tree.
+# 
+
+# -- parameters you are likely to want to change --
+
+# PHPDOC is the command to run to run phpDocumentor.  On Cygwin,
+# run 'php' with the phpdoc script as the argument, in Windows-style
+# path format, e.g.  "C:/php/phpdoc".  On UNIX/Linux you can just run
+# 'phpdoc' if that script is in your PATH.
+PHPDOC=php C:/xampp/php/phpdoc
+
+# ZF_TAG is the subversion tag to use to export the files.
+# Typically use 'HEAD' until the tree is tagged for a release
+# candidate, then use that tag.
+ZF_TAG=HEAD
+
+# ZF_VERSION is the release version string to build.  This is added
+# to the VERSION.txt file, and is also used for the name of the 
+# staging directory and the names of the zip and tarball files.
+ZF_VERSION=0.6.0
+
+# For DOCBOOK_LANG_PATTERN, use '*' if you want to build all manual
+# translations.  If you want to build one language, use one of the
+# names of language directories, e.g. 'en', 'de', etc.  You also can
+# use any file-globbing pattern.
+DOCBOOK_LANG_PATTERN=*
+
+# -- end of parameters you are likely to want to change --
 
 SVN=/usr/bin/svn
 SVN_USER=
 SVN_PASS=
-ZF_TAG=HEAD
 
 ZF_SVN_URL=http://framework.zend.com/svn/framework/trunk/
-ZF_PRODUCT_NAME=ZendFramework
+ZF_PRODUCT_NAME=Zend Framework
 ZF_PRODUCTNAME=ZendFramework
-ZF_VERSION=0.6.0
 ZF_PRODUCT=$(ZF_PRODUCTNAME)-$(ZF_VERSION)
 ZF_EXPORT_DIR=./$(ZF_PRODUCT)-export-$(ZF_TAG)
 STAGE_HOME=stage
@@ -21,15 +74,13 @@ ZF_ZIPBALL=$(ZF_PRODUCT).zip
 TAR=tar
 ZF_TARBALL=$(ZF_PRODUCT).tar.gz
 
-# for Windows:
-PHPDOC=php 'C:\php\phpdoc'
+API_DOC_TITLE_CORE=Zend Framework API Documentation
+API_DOC_TITLE_INCUBATOR=Zend Framework Incubator API Documentation
+API_DOC_OUTPUT_STYLE=HTML:frames:DOM/earthli
 
-# for non-Windows:
-# PHPDOC=php '/usr/local/bin/phpdoc'
+.PHONY: clean clean-docbook clean-export
 
-.PHONY: clean
-
-dist: checkout stage zip tarball
+dist: export stage zip tarball
 
 zip: stage
 	@echo "== CREATING ZIP ARCHIVE =="
@@ -45,48 +96,73 @@ stage: stage-files stage-docs
 stage-files:
 	@echo "== STAGING FILES =="
 	-mkdir -p $(ZF_STAGE_DIR)
-	(cd $(ZF_EXPORT_DIR) && rsync --quiet --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR))
+	@(cd $(ZF_EXPORT_DIR) && rsync --quiet --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR))
 
 
-checkout:
+checkout: export
+export:
 	@echo "== EXPORTING SVN FILES =="
-	$(SVN) export -r $(ZF_TAG) --quiet --force --config-dir /tmp $(ZF_SVN_URL) $(ZF_EXPORT_DIR)
+	[ -f "$(ZF_EXPORT_DIR)/VERSION.txt" ] || $(SVN) export -r $(ZF_TAG) --quiet --force --config-dir /tmp $(ZF_SVN_URL) $(ZF_EXPORT_DIR)
 
-stage-docs: build-docbook build-phpdoc
-	@echo "== STAGING END-USER DOCUMENTATION (CORE) =="
-	for lang in $(ZF_EXPORT_DIR)/documentation/manual/*/ ; \
-		do rsync --archive --delete $$lang/html/ $(ZF_STAGE_DIR)/documentation/end-user/core/`basename $$lang` ; \
-	done
-	@echo "== STAGING END-USER DOCUMENTATION (INCUBATOR) =="
-	-for lang in $(ZF_EXPORT_DIR)/incubator/documentation/manual/*/ ; \
-		do rsync --archive --delete $$lang/html/ $(ZF_STAGE_DIR)/documentation/end-user/incubator/`basename $$lang` ; \
-	done
+stage-docs: docbook phpdoc
 
-build-docbook:
-	@echo "== BUILDING END-USER DOCUMENTATION (CORE) =="
+docbook: docbook-core docbook-incubator
+
+docbook-core:
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/end-user/core
-	cd $(ZF_EXPORT_DIR)/documentation/manual && $(MAKE)
-	@echo "== BUILDING END-USER DOCUMENTATION (INCUBATOR) =="
-	-mkdir -p $(ZF_STAGE_DIR)/documentation/end-user/incubator
-	cd $(ZF_EXPORT_DIR)/incubator/documentation/manual && $(MAKE)
+	@for language in $(ZF_EXPORT_DIR)/documentation/manual/$(DOCBOOK_LANG_PATTERN)/ ; do \
+	    lang=`basename $$language` ; \
+	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
+	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) ) ; \
+	    rsync --archive --delete $$language/html/ $(ZF_STAGE_DIR)/documentation/end-user/core/$$lang ; \
+	done
 
-build-phpdoc:
+docbook-incubator:
+	-mkdir -p $(ZF_STAGE_DIR)/documentation/end-user/incubator
+	@for language in $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(DOCBOOK_LANG_PATTERN)/ ; do \
+	    lang=`basename $$language` ; \
+	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
+	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) ) ; \
+	    rsync --archive --delete $$language/html/ $(ZF_STAGE_DIR)/documentation/end-user/incubator/$$lang ; \
+	done
+
+phpdoc: phpdoc-core phpdoc-incubator
+
+phpdoc-core:
 	@echo "== BUILDING AND STAGING API DOCUMENTATION (CORE) =="
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/api/core
-	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/core/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(ZF_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
-		$(PHPDOC) --quiet off --target $(ZF_STAGE_DIR)/documentation/api/core --directory $(ZF_STAGE_DIR)/library --title "Zend Framework API Documentation" --output HTML:frames:DOM/earthli ; \
+	@if [ ! -f $(ZF_STAGE_DIR)/documentation/api/core/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(ZF_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
+	    $(PHPDOC) --quiet off \
+	      --target $(ZF_STAGE_DIR)/documentation/api/core \
+	      --directory $(ZF_STAGE_DIR)/library \
+	      --title "$(API_DOC_TITLE_CORE)" \
+	      --output $(API_DOC_OUTPUT_STYLE) ; \
 	else \
-		echo "...core API documentation is up to date." ; \
+	    echo "...core API documentation is up to date." ; \
 	fi
+
+phpdoc-incubator:
 	@echo "== BUILDING AND STAGING API DOCUMENTATION (INCUBATOR) =="
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/api/incubator
-	if [ ! -f $(ZF_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(ZF_STAGE_DIR)/incubator/library -newer $(ZF_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
-		$(PHPDOC) --quiet off --target $(ZF_STAGE_DIR)/documentation/api/incubator --directory $(ZF_STAGE_DIR)/incubator/library --title "Zend Framework Incubator API Documentation" --output HTML:frames:DOM/earthli ; \
+	@if [ ! -f $(ZF_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(ZF_STAGE_DIR)/incubator/library -newer $(ZF_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
+	    $(PHPDOC) --quiet off \
+	      --target $(ZF_STAGE_DIR)/documentation/api/incubator \
+	      --directory $(ZF_STAGE_DIR)/incubator/library \
+	      --title "$(API_DOC_TITLE_INCUBATOR)" \
+	      --output $(API_DOC_OUTPUT_STYLE) ; \
 	else \
-		echo "...incubator API documentation is up to date." ; \
+	    echo "...incubator API documentation is up to date." ; \
 	fi
 
 clean:
 	-rm -rf $(ZF_STAGE_DIR)
 	-rm -f $(ZF_ZIPBALL)
 	-rm -f $(ZF_TARBALL)
+
+clean-docbook:
+	for language in $(ZF_EXPORT_DIR)/documentation/manual/$(DOCBOOK_LANG_PATTERN)/ $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(DOCBOOK_LANG_PATTERN)/ ; do \
+	    rm -rf $$language/autom4te.cache $$language/build/docbook-xsl $$language/html/*.html $$language/html/HTML.manifest $$language/config.* $$language/configure $$language/entities.ent $$language/Makefile ; \
+	done
+
+clean-export:
+	-rm -rf $(ZF_EXPORT_DIR)
