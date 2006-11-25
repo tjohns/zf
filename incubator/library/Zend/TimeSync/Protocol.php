@@ -29,7 +29,7 @@
 abstract class Zend_TimeSync_Protocol
 {
     protected $_socket;
-    public $exceptions;
+    protected $_exceptions;
     
     /**
      * Connect to the specified NTP server. If called when the socket is
@@ -69,5 +69,29 @@ abstract class Zend_TimeSync_Protocol
         
         @fclose($this->_socket);
         $this->_socket = null;
+    }
+    
+    public function getDate($locale = false)
+    {
+        try {
+            $timestamp = $this->_query();
+            return new Zend_Date($timestamp, false, $locale);
+        } catch (Zend_TimeSync_ProtocolException $e) {
+            throw $e;
+        }
+    }
+    
+    public function getExceptions()
+    {
+        if (isset($this->_exceptions)) {
+            return $this->_exceptions;
+        }
+        
+        return false;
+    }
+    
+    public function addException(Zend_TimeSync_ProtocolException $exception)
+    {
+        $this->_exceptions[] = $exception;
     }
 }
