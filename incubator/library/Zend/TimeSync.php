@@ -96,11 +96,17 @@ class Zend_TimeSync
      * @param array $options
      * @return Zend_TimeSync
      */ 
-    public function __construct($server, $options = array()) {
+    public function __construct($server, $options = array())
+    {
         $this->addServer($server);
         $this->setOptions($options);
         
         $this->_current = reset($this->_timeservers);
+    }
+    
+    public function setOption($key, $value) 
+    {
+        Zend_TimeSync::$options[strtolower($key)] = $value;
     }
     
     /**
@@ -120,7 +126,7 @@ class Zend_TimeSync
         }
         
         foreach ($options as $key => $value) {
-            Zend_TimeSync::$options[strtolower($key)] = $value;
+            $this->setOption($key, $value);
         }
     }
     
@@ -162,6 +168,18 @@ class Zend_TimeSync
         }
     }
     
+    public function get($flag)
+    {
+        if (isset($this->_timeservers[$flag])) {
+            return $this->_timeservers[$flag];
+        } else {
+            throw Zend::exception(
+                'Zend_TimeSync_Exception', 
+                '$flag does not point to valid timeserver'
+            );
+        }
+    }
+    
     public function getCurrent()
     {
         if (isset($this->_current)) {
@@ -192,30 +210,12 @@ class Zend_TimeSync
     
     protected function _addServer($server)
     {
-        $defaultUrl = array(
-            'scheme' => self::DEFAULT_TIMESERVER_SCHEME,
-        );
-                            
-        $url = @array_merge($defaultUrl, @parse_url($server));
-        if (!in_array(strtolower($url['scheme']), $this->_allowedSchemes)) {
-            $url['scheme'] = self::DEFAULT_TIMESERVER_SCHEME;
-        }
-        
-        if (!isset($url['host']) && isset($url['path'])) {
-            $url['host'] = $url['path'];
-        }
-        
-        $protocol = (strtolower($url['scheme']) === 'ntp') ? 'udp' : 'tcp';
-        if (!isset($url['port']) && $protocol === 'udp') {
-            $url['port'] = self::DEFAULT_NTP_PORT;
-        } else {
-            $url['port'] = self::DEFAULT_SNTP_PORT;
-        }
+        $url = $this->_extract($server);
         
         $className = 'Zend_TimeSync_' . ucfirst($url['scheme']);
         Zend::loadClass($className);
                     
-        $this->_timeservers[] = new $className($protocol . '://' . $url['host'], $url['port']);
+        $this->_timeservers[] = new $className($url['protocol'] . '://' . $url['host'], $url['port']);
     }
     
     public function getDate($locale = false)
@@ -238,5 +238,30 @@ class Zend_TimeSync
             }
             throw $masterException;
         }
+    }
+    
+    protected function _extract($server)
+    {
+        $defaultUrl = array(
+            'scheme' => self::DEFAULT_TIMESERVER_SCHEME,
+        );
+        
+        $url = @array_merge($defaultUrl, @parse_url($server));
+        if (!in_array(strtolower($url['scheme']), $this->_allowedSchemes)) {
+            $url['scheme'] = self::DEFAULT_TIMESERVER_SCHEME;
+        }
+        
+        if (!isset($url['host']) && isset($url['path'])) {
+            $url['host'] = $url['path'];
+        }
+        
+        $url['protocol'] = (strtolower($url['scheme']) === 'ntp') ? 'udp' : 'tcp';
+        if (!isset($url['port']) && $url['protocol'] === 'udp') {
+            $url['port'] = self::DEFAULT_NTP_PORT;
+        } else {
+            $url['port'] = self::DEFAULT_SNTP_PORT;
+        }
+        
+        return $url;
     }
 }
