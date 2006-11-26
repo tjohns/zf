@@ -4,21 +4,23 @@
 
     <sect2 id="zend.db.adapter.introduction">
 
-        <title>Introduction</title>
+        <title>مقدمة</title>
 
         <para>
-            <code>Zend_Db_Adapter</code> is the database API abstraction layer for the Zend Framework.
-            Based on PDO, you can use <code>Zend_Db_Adapter</code> to connect to and work with any
-            of the supported SQL database systems using the same API.  These
-            include Microsoft SQL Server, MySQL, PostgreSQL, SQLite, and others.
+            <code>Zend_Db_Adapter</code> هو طبقة الـ abstraction لـ API قواعد البيانات 
+            المستخدم فى إطار عمل Zend , و أعتماداً على PDO يمكنك ان تستخدم 
+            <code>Zend_Db_Adapter</code> للأتصال و العمل مع أى من قواعد بيانات 
+            SQL المدعومة و ذلك بأستخدام نفس الـ API , و هذا يشمل كل من 
+            Microsoft SQL Server و MySQL و PostgreSQL و SQLite و أخريات.
         </para>
 
-        <para>To create an instance of <code>Zend_Db_Adapter</code> for your
-        particular database backend, you need to call
-        <code>Zend_Db::factory()</code> with the name of the adapter and an
-        array of parameters describing the connection. For example, to connect
-        to a MySQL database called "camelot" on the local host as a user named
-        "malory":</para>
+        <para>
+            لتقوم بإنشاء نسخة "instance" من <code>Zend_Db_Adapter</code> 
+            لتستخدمه مع قاعدة البيانات خاصتك, ستحتاج إلى إستدعاء 
+            <code>()Zend_Db::factory</code> مع تمرير إسم الـ Adapter 
+            و مصفوفة تحتوى بيانات الأتصال, على سبيل المثال, للأتصال بقاعدة بيانات 
+            MySQL تسمى "camelot" على الـ localhost بأسم المستخدم "malory" :
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -34,7 +36,7 @@ $db = Zend_Db::factory('PDO_MYSQL', $params);
 ?>]]></programlisting>
 
         <para>
-            Similarly, to connect to an SQLite database called "camelot.sq3":
+            بنفس الطريقة تقريبا, للأتصال بقاعدة بيانات SQLite تسمى "camelot.sq3" : 
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -48,9 +50,9 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
 ?>]]></programlisting>
 
         <para>
-            Similarly, to connect to an SQLite2 database called "camelot.sq2":
-            For a memory-based sqlite database, do not specify a dsnprefix,
-            and use a dbname called ":memory:".
+            بنفس الطريقة تقريبا, للأتصال بقاعدة بيانات SQLite2 تسمى "camelot.sq2" : 
+            بالنسبة إلى قواعد بيانات sqlite الـ memory-based , لا تقم بتحديد dsnprefix و 
+            إستخدم أسم قاعدة البيانات ":memory:" .
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -65,28 +67,29 @@ $db = Zend_Db::factory('PDO_SQLITE', $params);
 ?>]]></programlisting>
 
         <para>
-            Either way, you will be able to use the exact same API to
-            query the database.
+            فى كل الحالات, ستتمكن من إستخدام نفس الـ API بدون أى تغيير للتعامل مع قواعد البيانات.
         </para>
     </sect2>
 
     <sect2 id="zend.db.adapter.quoting">
 
-        <title>Quoting Against SQL Injection</title>
+        <title>الـ Quoting للحماية من الـ SQL Injection</title>
 
         <para>
-            You should always quote values that are to be used in an
-            SQL statement; this is to help prevent SQL injection attacks.
-            <code>Zend_Db_Adapter</code> provides two methods (via the underlying PDO object)
-            to help you manually quote values.
+            يجب عليك أن تقوم بعمل quoting "تحديد قيم/إقتباس" للبيانات التى سيتم إستخدامها 
+            فى جمل الـ SQL, و ذلك للحماية من هجمات الـ SQL injection , 
+            يوفر <code>Zend_Db_Adapter</code> إثنان من الـ methods 
+            (من خلال كائن الـ PDO الداخلى) لتساعدك فى عمل quoting للقيم.
         </para>
 
         <para>
-            The first of these is the <code>quote()</code> method.  It will quote a
-            scalar value appropriately for your database adapter; if you
-            attempt to quote an array, it will return a comma-separated
-            string of the array values, each properly quoted (this is
-            useful for functions that take a list parameter).
+            اولهم هو الـ method المسمى <code>()quote</code>, 
+            سيقوم بعمل quoting للقيم ذات البعد الواحد لتتمكن من إستخدامها 
+            مع الـ Adapter الخاص بقاعدة البيانات خاصتك ;
+             إن قمت بتمرير مصفوفة , سيتم إرجاع string عبارة عن قيم 
+            المصفوفة مفصول بين كل منها بفصلة, و كل من هذه القيم قد تم 
+            عمل quoting له 
+            (هذا مفيد فى العمليات التى تتطلب قائمة من البرامترات).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -104,11 +107,12 @@ $value = $db->quote(array('a', 'b', 'c');
 ?>]]></programlisting>
 
         <para>
-            The second is the <code>quoteInto()</code> method.  You provide a base
-            string with a question-mark placeholder, and then one scalar
-            or array to quote into it.  This is useful for constructing
-            queries and clauses as-you-go.  Scalars and arrays work just
-            as in the <code>quote()</code> method.
+            ثانى method هو <code>()quoteInto</code> , 
+            انت تقوم بتمرير string أساس يحتوى على علامة إستفهام تعمل 
+            كـ placeholder , ثم تمرر قيمة احادية البعد أو مصفوفة ليتم عمل 
+            quoting لها و وضع الناتج فى string الأساس, هذه العملية مفيدة 
+            عند إنشاء إستعلامات - على الطاير - , القيم احادية البعد و المصفوفات
+            سيتم معاملتها تماما بنفس الطريقة المتبعة فى <code>()quote</code>.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -128,14 +132,15 @@ $where = $db->quoteInto('id IN(?)', array(1, 2, 3));
 
     <sect2 id="zend.db.adapter.queries">
 
-        <title>Direct Queries</title>
+        <title>الإستعلامات المباشرة</title>
 
         <para>
-            Once you have a <code>Zend_Db_Adapter</code> instance, you can execute queries
-            directly in SQL.  <code>Zend_Db_Adapter</code> passes these queries to the
-            underlying PDO object, which prepares and executes them, and
-            then passes back a PDOStatement object for you to manipulate
-            the results (if any).
+            بمجرد أن تنشئ نسخة من <code>Zend_Db_Adapter</code>, 
+            ستتمكن من تنفيذ إستعلامات مباشرة بإستخدام SQL , 
+            سيقوم <code>Zend_Db_Adapter</code> بتمرير هذه 
+            الإستعلامات إلى كائن الـ PDO الموجود داخله, و الذى بدوره يقوم 
+            بتجهيز و تنفيذ هذه الأستعلامات, و بعدها يقوم بإرجاع كائن 
+            PDOStatement إليك لتتعامل مع نتائج الأستعلام (إن وجدت).
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -154,12 +159,12 @@ $rows = $result->fetchAll();
 ?>]]></programlisting>
 
         <para>
-            You may bind data into your query automatically.  This means
-            you can set multiple named placeholders in the query, and
-            then pass an array of data that is substituted for those
-            placeholders.  The substituted values are automatically
-            quoted for you, providing greater security against SQL
-            injection attacks.
+            يمكنك أن تربط كل بياناتك بالأستعلام تلقائياً , و هذا يعنى انك
+            من الممكن أن تقوم بإنشاء اكثر من placeholder بأسماء مختلفة 
+            داخل جملة الأستعلام, و بعدها تمرر مصفوفة من البيانات التى 
+            سيتم إحلالها مكان الـ placeholders , و سيتم عمل quoting 
+            لهذه البيانات , بحيث يتوفر تأمين أكبر بالنسبة إلى هجمات الـ 
+            SQL injection .
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -177,9 +182,10 @@ $rows = $result->fetchAll();
 ?>]]></programlisting>
 
         <para>
-            Optionally, you may wish to prepare and bind data to SQL statements
-            manually.  To do so, use the <code>prepare()</code> method to get a prepared
-            <code>PDOStatement</code> that you can manipulate directly.
+            إختيارياً, ربما انت تريد ان تقوم بتجهيز و ربط البيانات بجملة الـ SQL يدوياً, 
+            لتتمكن من هذا, إستخدم الـ method المسمى <code>()prepare</code> 
+            ليتم إرجاع نسخة مجهزة من <code>PDOStatement</code> و التى 
+            يمكنك أن تتعامل معها مباشرة.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -198,15 +204,19 @@ $rows = $stmt->fetchAll();
 
     <sect2 id="zend.db.adapter.transactions">
 
-        <title>Transactions</title>
+        <title>الـ Transactions</title>
 
         <para>
-            By default, PDO (and thus <code>Zend_Db_Adapter</code>) are in "auto-commit" mode.
-            This means that all queries are committed as they are executed.
-            If you wish to execute within a transaction, simply call the
-            <code>beginTransaction()</code> method, then either <code>commit()</code> or <code>rollBack()</code>
-            your changes.  <code>Zend_Db_Adapter</code> returns to auto-commit mode until
-            you call <code>beginTransaction()</code> again.
+            حسب الأعدادات الأساسية , يكون PDO 
+            ( و بالطبع <code>Zend_Db_Adapter</code> ) 
+            فى وضعية الـ "auto-commit" أى "التأكيد-التلقائى" , 
+            هذا يعنى أن كل الأستعلامات يتم تأكيدها "commited" بمجرد تنفيذها , 
+            فإن كنت تود أن تقوم بتنفيذ إستعلام داخل عملية transaction , 
+            ببساطة إستدعى الـ method المسمى <code>()beginTransaction</code> , 
+            و بعدها إما تستدعى <code>()commit</code> لتأكيد العملية أو إستدعى 
+            <code>()rollBack</code> للإلغاء العملية, و سيعود 
+            <code>Zend_Db_Adapter</code> إلى وضعية الـ auto-commit إلى 
+            أن تقوم بإستدعاء <code>()beginTransaction</code> مرة ثانية .
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -230,21 +240,21 @@ try {
 
     <sect2 id="zend.db.adapter.insert">
 
-        <title>Inserting Rows</title>
+        <title>إدخال صفوف</title>
 
         <para>
-            As a convenience, you may use the <code>insert()</code> method to create
-            an INSERT statement for you and bind data to be inserted into it.
-            (The bound data is quoted for you automatically to help prevent
-            SQL injection attacks.)
+            للتسهيل, يمكنك أن تستخدم الـ method المسمى <code>()insert</code>
+            لتنشئ جملة INSERT لك و تقوم بربط البيانات التى سيتم إدخالها إليها
+            ( البيانات التى يتم ربطها يتم عمل quoting لها تلقائياً لتحد من هجمات 
+            الـ SQL injection ).
         </para>
 
         <para>
-            The return value is <emphasis>not</emphasis> the last inserted ID, as the table
-            may not have an auto-incremented column; instead, the return value
-            is the number of rows affected (usually 1).  If you want the
-            ID of the last inserted record, call the <code>lastInsertId()</code> method after the
-            insert.
+            القيمة التى سيتم ارجاعها <emphasis>ليست</emphasis> أخر ID تم إدخاله, 
+            لأن الجدول ربما لا يحتوى على عمود auto-incremented , لذلك القيمة التى 
+            سيتم إرجاعها هى عدد الصفوف التى تم التأثير عليها (غالبا 1), 
+            إن كنت تريد الـ ID الخاص بأخر صف تم إدخاله, إستدعى الـ method المسمى 
+            <code>()lastInsertId</code> بعد إتمام عملية إدخال البيانات.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -275,19 +285,20 @@ $last_insert_id = $db->lastInsertId();
 
     <sect2 id="zend.db.adapter.update">
 
-        <title>Updating Rows</title>
+        <title>عمل Update للصفوف</title>
 
         <para>
-            As a convenience, you may use the <code>update()</code> method to create
-            an UPDATE statement for you and bind data to be updated into it.
-            (The bound data is quoted for you automatically to help prevent
-            SQL injection attacks.)
+            للتسهيل, يمكنك أن تستخدم الـ method المسمى <code>()update</code>
+            لتنشئ جملة UPDATE لك و تربطها بالبيانات التى سيتم عمل update لها.
+            (البيانات التى سيتم ربطها يتم عمل quoting لها تلقائياً للمساعدة فى الحد من 
+            هجمات الـ SQL injection )
         </para>
 
         <para>
-            You may provide an optional WHERE clause
-            to tell which rows to update.  (Note that the WHERE clause is not
-            a bound parameter, so you need to quote values in it yourself.)
+            يمكنك ان توفر شرط WHERE اختيارياً لتحدد أى الصفوف سيتم 
+            عمل update لها . 
+            (لاحظ أن فقرة WHERE ليست براميتر ربط, لذلك يجب عليك أن تقوم 
+            بعمل quoting للقيم المستخدمة فيها بنفسك )
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -318,13 +329,14 @@ $rows_affected = $db->update($table, $set, $where);
 
     <sect2 id="zend.db.adapter.delete">
 
-        <title>Deleting Rows</title>
+        <title>حذف صفوف</title>
 
         <para>
-            As a convenience, you may use the <code>delete()</code> method to create
-            a DELETE statement for you; you may provide an optional WHERE clause
-            to tell which rows to delete.  (Note that the WHERE clause is not
-            a bound parameter, so you need to quote values in it yourself.)
+            للتسهيل, يمكنك أن تستخدم الـ method المسمى <code>()delete</code>
+            لتنشئ جملة DELETE لك ,
+            و يمكنك ان توفر شرط WHERE اختيارى لتحدد أى الصفوف يتم حذفها 
+            (لاحظ أن فقرة WHERE ليست براميتر ربط, لذلك يجب عليك أن تقوم 
+            بعمل quoting للقيم المستخدمة فيها بنفسك )
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -349,25 +361,24 @@ $rows_affected = $db->delete($table, $where);
 
     <sect2 id="zend.db.adapter.fetch">
 
-        <title>Fetching Rows</title>
+        <title>جلب الصفوف</title>
 
         <para>
-            Although you may query the database directly with the <code>query()</code>
-            method, frequently all you need to do is select rows and get
-            the results.  The <code>fetch*()</code> series of methods does this for you.
-            For each of the <code>fetch*()</code> methods, you pass an SQL SELECT
-            statement; if you use named placeholders in the statement, you
-            may also pass an array of bind values to be quoted and replaced
-            into the statement for you.  The <code>fetch*()</code> methods are:
+            ايضاَ يمكنك أن تنفذ استعلامات مباشرة على قاعدة البيانات بإستخدام الـ method 
+            المسمى <code>()query</code>, غالباً كل ما تحتاج إلى عمله هو ان تختار 
+            الصفوف و تأتى بالنتائج, مجموعة methods الـ ()*fetch تقوم بعمل هذا من أجلك, 
+            لكل من methods الـ ()*fetch , تمرر جملة  SELECT ; و إن كنت تستخدم 
+            placeholders فى الجملة , يمكنك أن تمرر مصفوفة من قيم الربط ليتم عمل 
+            quoting لها و إحلالها فى الجملة , مجموعة methods الـ ()*fetch هم :
         </para>
 
         <itemizedlist>
-            <listitem><para><code>fetchAll()</code></para></listitem>
-            <listitem><para><code>fetchAssoc()</code></para></listitem>
-            <listitem><para><code>fetchCol()</code></para></listitem>
-            <listitem><para><code>fetchOne()</code></para></listitem>
-            <listitem><para><code>fetchPairs()</code></para></listitem>
-            <listitem><para><code>fetchRow()</code></para></listitem>
+            <listitem><para><code>()fetchAll</code></para></listitem>
+            <listitem><para><code>()fetchAssoc</code></para></listitem>
+            <listitem><para><code>()fetchCol</code></para></listitem>
+            <listitem><para><code>()fetchOne</code></para></listitem>
+            <listitem><para><code>()fetchPairs</code></para></listitem>
+            <listitem><para><code>()fetchRow</code></para></listitem>
         </itemizedlist>
 
         <programlisting role="php"><![CDATA[<?php
