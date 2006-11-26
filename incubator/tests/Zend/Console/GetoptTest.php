@@ -92,14 +92,15 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
     {
         $opts = new Zend_Console_Getopt('abp:', array('-a', '-p', 'p_arg'));
         $this->assertEquals($opts->dumpJson(),
-            "{\n  \"options\": {\n    \"option\": [\n      { \"flag\": \"a\" },\n      { \"flag\": \"p\", \"parameter\": \"p_arg\" }\n    ]\n  }\n}");
+            '{"options":[{"option":{"flag":"a","parameter":true}},{"option":{"flag":"p","parameter":"p_arg"}}]}');
+
     }
 
     public function testDumpXml()
     {
         $opts = new Zend_Console_Getopt('abp:', array('-a', '-p', 'p_arg'));
         $this->assertEquals($opts->dumpXml(),
-            "<options>\n  <option flag=\"a\" />\n  <option flag=\"p\" parameter=\"p_arg\" />\n</options>");
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<options><option flag=\"a\"/><option flag=\"p\" parameter=\"p_arg\"/></options>\n");
     }
 
     public function testExceptionForMissingFlag()

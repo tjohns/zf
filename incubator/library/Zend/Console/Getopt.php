@@ -375,6 +375,7 @@ class Zend_Console_Getopt
 
     /**
      * Return the current set of options and parameters seen in Json format.
+     * @todo Use an external Json library, e.g. Zend_Json.
      *
      * @throws Zend_Console_Getopt_Exception
      * @return string
@@ -384,24 +385,25 @@ class Zend_Console_Getopt
         if (!$this->_parsed) {
             $this->parse();
         }
-        $json = "{\n  \"options\": {\n";
-        $json .= "    \"option\": [\n";
-        $jsonElements = array();
+        $j = array();
         foreach ($this->_options as $flag => $value) {
-            $line = "      { \"flag\": \"$flag\"";
-            if ($value !== true ) {
-                $line .= ", \"parameter\": \"$value\"";
-            }
-            $line .= " }";
-            $jsonElements[] = $line;
+            $j['options'][] = array(
+                'option' => array(
+                    'flag' => $flag,
+                    'parameter' => $value
+                )
+            );
         }
-        $json .= implode(",\n", $jsonElements);
-        $json .= "\n    ]\n  }\n}";
+
+        Zend::loadClass('Zend_Json');
+        $json = Zend_Json::encode($j);
+
         return $json;
     }
 
     /**
      * Return the current set of options and parameters seen in XML format.
+     * @todo Use an external XML library, e.g. DOM
      *
      * @throws Zend_Console_Getopt_Exception
      * @return string
@@ -411,18 +413,18 @@ class Zend_Console_Getopt
         if (!$this->_parsed) {
             $this->parse();
         }
-        $xml = "<options>\n";
-        $xmlElements = array();
+        $doc = new DomDocument('1.0', 'utf-8');
+        $optionsNode = $doc->createElement('options');
+        $doc->appendChild($optionsNode);
         foreach ($this->_options as $flag => $value) {
-            $line = "  <option flag=\"$flag\"";
+            $optionNode = $doc->createElement('option');
+            $optionNode->setAttribute('flag', utf8_encode($flag));
             if ($value !== true) {
-                $line .= " parameter=\"$value\"";
+                $optionNode->setAttribute('parameter', utf8_encode($value));
             }
-            $line .= " />";
-            $xmlElements[] = $line;
+            $optionsNode->appendChild($optionNode);
         }
-        $xml .= implode("\n", $xmlElements);
-        $xml .= "\n</options>";
+        $xml = $doc->saveXML();
         return $xml;
     }
 
