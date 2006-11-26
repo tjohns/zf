@@ -18,12 +18,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
 /**
  * Zend_Filter_Exception
  */
 require_once 'Zend/Filter/Exception.php';
-
 
 /**
  * @category   Zend
@@ -116,7 +114,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if every character is alphabetic or a digit,
+     * Returns TRUE if every character is alphabetic or a digit,
      * FALSE otherwise.
      *
      * @param mixed $value
@@ -128,7 +126,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if every character is alphabetic, FALSE
+     * Returns TRUE if every character is alphabetic, FALSE
      * otherwise.
      *
      * @param mixed $value
@@ -140,7 +138,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is greater than or equal to $min and less
+     * Returns TRUE if value is greater than or equal to $min and less
      * than or equal to $max, FALSE otherwise. If $inc is set to
      * FALSE, then the value must be strictly greater than $min and
      * strictly less than $max.
@@ -168,7 +166,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is a valid credit card number format. The
+     * Returns TRUE if it is a valid credit card number format. The
      * optional second argument allows developers to indicate the
      * type.
      *
@@ -204,7 +202,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns $value if it is a valid date, FALSE otherwise. The
+     * Returns TRUE if value is a valid date, FALSE otherwise. The
      * date is required to be in ISO 8601 format.
      *
      * @param mixed $value
@@ -230,7 +228,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is a valid email format, FALSE otherwise.
+     * Returns TRUE if value is a valid email format, FALSE otherwise.
      *
      * @param mixed $value
      * @return mixed
@@ -240,10 +238,12 @@ class Zend_Filter
         /**
          * @todo RFC 2822 (http://www.ietf.org/rfc/rfc2822.txt)
          */
+        throw new Zend_Filter_Exception('isEmail() has not been implemented.');
+        return FALSE;
     }
 
     /**
-     * Returns value if it is a valid float value, FALSE otherwise.
+     * Returns TRUE if value is a valid float value, FALSE otherwise.
      *
      * @param mixed $value
      * @return mixed
@@ -259,7 +259,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is greater than $min, FALSE otherwise.
+     * Returns TRUE if value is greater than $min, FALSE otherwise.
      *
      * @param mixed $value
      * @param mixed $min
@@ -271,7 +271,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is a valid hexadecimal format, FALSE
+     * Returns TRUE if value is a valid hexadecimal format, FALSE
      * otherwise.
      *
      * @param mixed $value
@@ -283,7 +283,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is a valid hostname, FALSE otherwise.
+     * Returns TRUE if value is a valid hostname, FALSE otherwise.
      * Depending upon the value of $allow, Internet domain names, IP
      * addresses, and/or local network names are considered valid.
      * The default is HOST_ALLOW_ALL, which considers all of the
@@ -351,7 +351,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is a valid integer value, FALSE otherwise.
+     * Returns TRUE if value is a valid integer value, FALSE otherwise.
      *
      * @param mixed $value
      * @return mixed
@@ -367,7 +367,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is a valid IP format, FALSE otherwise.
+     * Returns TRUE if value is a valid IP format, FALSE otherwise.
      *
      * @param mixed $value
      * @return mixed
@@ -378,7 +378,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is less than $max, FALSE otherwise.
+     * Returns TRUE if value is less than $max, FALSE otherwise.
      *
      * @param mixed $value
      * @param mixed $max
@@ -390,7 +390,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is one of $allowed, FALSE otherwise.
+     * Returns TRUE if value is one of $allowed, FALSE otherwise.
      *
      * @param mixed $value
      * @return mixed
@@ -407,7 +407,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is a valid phone number format, FALSE
+     * Returns TRUE if value is a valid phone number format, FALSE
      * otherwise. The optional second argument indicates the country.
      * This method requires that the value consist of only digits.
      *
@@ -483,7 +483,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it matches $pattern, FALSE otherwise. Uses
+     * Returns TRUE if value matches $pattern, FALSE otherwise. Uses
      * preg_match() for the matching.
      *
      * @param mixed $value
@@ -503,7 +503,7 @@ class Zend_Filter
     }
 
     /**
-     * Returns TRUE if it is a valid US ZIP, FALSE otherwise.
+     * Returns TRUE if value is a valid US ZIP, FALSE otherwise.
      *
      * @param mixed $value
      * @return bool
