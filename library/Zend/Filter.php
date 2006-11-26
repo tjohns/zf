@@ -158,9 +158,9 @@ class Zend_Filter
             return TRUE;
         }
 
-        if ($value >= $min &&
-            $value <= $max &&
-            $inc) {
+        if ($inc &&
+            $value >= $min &&
+            $value <= $max) {
             return TRUE;
         }
 
