@@ -35,6 +35,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 {    
     protected $_timeserver;
     protected $_port;
+    protected $_info;
     
     public function __construct($timeserver, $port)
     {
@@ -49,47 +50,171 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $fracb2 = ($frac & 0x00ff0000) >> 16;
         $fracb3 = ($frac & 0x0000ff00) >> 8;
         $fracb4 = ($frac & 0x000000ff);
-        
+
         $sec    = time() + 2208988800;
         $secb1  = ($sec & 0xff000000) >> 24;
         $secb2  = ($sec & 0x00ff0000) >> 16;
         $secb3  = ($sec & 0x0000ff00) >> 8;
         $secb4  = ($sec & 0x000000ff);
-        
+
         $ntppacket  = chr(0xd9).chr(0x00).chr(0x0a).chr(0xfa); // Flags
         $ntppacket .= chr(0x00).chr(0x00).chr(0x1c).chr(0x9b); // Root Delay
         $ntppacket .= chr(0x00).chr(0x08).chr(0xd7).chr(0xff); // Clock Dispersion
         $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00); // ReferenceClockID
-        
+
         $ntppacket .= chr($secb1) .chr($secb2) .chr($secb3) .chr($secb4);   // Reference Timestamp Seconds
         $ntppacket .= chr($fracb1).chr($fracb2).chr($fracb3).chr($fracb4);  // Reference Timestamp Fractional
-        
+
         $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00); // Originate Timestamp Seconds
         $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00); // Originate Timestamp Fractional
-        
+
         $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00); // Receive Timestamp Seconds
         $ntppacket .= chr(0x00).chr(0x00).chr(0x00).chr(0x00); // Receive Timestamp Fractional
-        
+
         $ntppacket .= chr($secb1) .chr($secb2) .chr($secb3) .chr($secb4);   // Transmit Timestamp Seconds
         $ntppacket .= chr($fracb1).chr($fracb2).chr($fracb3).chr($fracb4);  // Transmit Timestamp Fractional
-        
+
         $this->_connect();
-                              
+
         fwrite($this->_socket, $ntppacket);
-        
-        $flags     = ord(fread($this->_socket, 1));
-        $stratum   = ord(fread($this->_socket, 1));
-        $poll      = ord(fread($this->_socket, 1));
-        $precision = ord(fread($this->_socket, 1));
+
+        $flags          = ord(fread($this->_socket, 1));
+        $stratum        = ord(fread($this->_socket, 1));
+        $this->_info['poll']      = ord(fread($this->_socket, 1));
+        $this->_info['precision'] = ord(fread($this->_socket, 1));
+        $rootdelay      = ord(fread($this->_socket, 4));
+        $rootdispersion = ord(fread($this->_socket, 4));
+        $referenceid    = ord(fread($this->_socket, 4));
+        $referencestamp = ord(fread($this->_socket, 4));
+        $referencemicro = ord(fread($this->_socket, 4));
+        $originatestamp = ord(fread($this->_socket, 4));
+        $originatemicro = ord(fread($this->_socket, 4));
+        $receivestamp   = ord(fread($this->_socket, 4));
+        $receivemicro   = ord(fread($this->_socket, 4));
+        $transmitstamp  = ord(fread($this->_socket, 4));
+        $transmitmicro  = ord(fread($this->_socket, 4));
+
+        $clientreceived = time() + 2208988800;
         
         $this->_disconnect();
-        
-        $leap    = ($flags & 0xc0) >> 6; // Leap Indicator bit 1100 0000
+
+        $leap = ($flags & 0xc0) >> 6; // Leap Indicator bit 1100 0000
         // 0 = no warning, 1 = last min. 61 sec., 2 = last min. 59 sec., 3 = not synconised
-        $version = ($flags & 0x38) >> 3; // Version Number bit 0011 1000
+        switch($leap) {
+            case 0 :
+                $this->_info['leap'] = '0 - no warning';
+                break;
+            case 1 :
+                $this->_info['leap'] = '1 - last minute has 61 seconds';
+                break;
+            case 2 :
+                $this->_info['leap'] = '2 - last minute has 59 seconds';
+                break;
+            default:
+                $this->_info['leap'] = '3 - not syncronised';
+        }
+
+        $this->_info['version'] = ($flags & 0x38) >> 3; // Version Number bit 0011 1000
         // should be 3
-        $mode    = ($flags & 0x07);      // Mode bit 0000 0111
+
+        $mode = ($flags & 0x07);      // Mode bit 0000 0111
         // 0 = reserved, 1 = symetric active, 2 = symetric passive, 3 = client
         // 4 = server, 5 = broadcast, 6 & 7 = reserved
+        switch($mode) {
+            case 1 :
+                $this->_info['mode'] = 'symetric active';
+                break;
+            case 2 :
+                $this->_info['mode'] = 'symetric passive';
+                break;
+            case 3 :
+                $this->_info['mode'] = 'client';
+                break;
+            case 4 :
+                $this->_info['mode'] = 'server';
+                break;
+            case 5 :
+                $this->_info['mode'] = 'broadcast';
+                break;
+            default:
+                $this->_info['mode'] = 'reserved';
+                break;
+        }
+
+        $ntpserviceid = 'Unknown Stratum ' . $stratum . ' Service';
+        $refid = strtoupper($referenceid);
+        switch($stratum) {
+            case 0:
+                if (substr($refid, 0, 3) == 'DCN') {
+                    $ntpserviceid = 'DCN routing protocol';
+                } else if (substr($refid, 0, 4) == 'NIST') {
+                    $ntpserviceid = 'NIST public modem';
+                } else if (substr($refid, 0, 3) == 'TSP') {
+                    $ntpserviceid = 'TSP time protocol';
+                } else if (substr($refid, 0, 3) == 'DTS') {
+                    $ntpserviceid = 'Digital Time Service';
+                }
+                break;
+            case 1:
+                if (substr($refid, 0, 4) == 'ATOM') {
+                    $ntpserviceid = 'Atomic Clock (calibrated)';
+                } else if (substr($refid, 0, 3) == 'VLF') {
+                    $ntpserviceid = 'VLF radio';
+                } else if ($refid == 'CALLSIGN') {
+                    $ntpserviceid = 'Generic radio';
+                } else if (substr($refid, 0, 4) == 'LORC') {
+                    $ntpserviceid = 'LORAN-C radionavigation';
+                } else if (substr($refid, 0, 4) == 'GOES') {
+                    $ntpserviceid = 'GOES UHF environment satellite';
+                } else if (substr($refid, 0, 3) == 'GPS') {
+                    $ntpserviceid = 'GPS UHF satellite positioning';
+                }
+                break;
+            default:
+                $ntpserviceid  = ord(substr($referenceid, 0, 1));
+                $ntpserviceid .= ".";
+                $ntpserviceid .= ord(substr($referenceid, 1, 1));
+                $ntpserviceid .= ".";
+                $ntpserviceid .= ord(substr($referenceid, 2, 1));
+                $ntpserviceid .= ".";
+                $ntpserviceid .= ord(substr($referenceid, 3, 1));
+                break;
+        }
+        $this->_info['ntpid']   = $ntpserviceid;
+
+        switch($stratum) {
+            case 0:
+                $this->_info['stratum'] = 'undefined';
+                break;
+            case 1:
+                $this->_info['stratum'] = 'primary reference';
+                break;
+            default:
+                $this->_info['stratum'] = 'secondary reference';
+                break;
+        }
+
+        $this->_info['rootdelay']     = $rootdelay >> 15;
+        $this->_info['rootdelayfrac'] = ($rootdelay << 17) >> 17;
+        $this->_info['rootdispersion']     = $rootdispersion >> 15;
+        $this->_info['rootdispersionfrac'] = ($rootdispersion << 17) >> 17;
+        
+        // seconds for message to the server
+        $original  = (float) $originatestamp;
+        $original += (float) $originatemicro / 4294967296;
+        $received  = (float) $receivestamp;
+        $received += (float) $receivemicro / 4294967296;
+        $transmit  = (float) $transmitstamp;
+        $transmit += (float) $transmitmicro / 4294967296;
+        
+        $roundtrip  = ($clientreceived - $original) - ($transmit - $received);
+        $this->_info['roundtrip'] = $roundtrip / 2;
+
+        // seconds to add for local clock
+        $offset = $received - $original + $transmit - $clientreceived;
+        $this->_info['offset'] = $offset / 2;
+
+        $time = time() - $offset;
+        return $time;
     }
 }

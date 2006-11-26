@@ -45,9 +45,11 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
     protected function _query()
     {
         $this->_connect();
-        
+
+        $begin = time();
         fputs($this->_socket, "\n");
         $result = fread($this->_socket, 49);
+        $end = time();
         
         $this->_disconnect();
         
@@ -55,7 +57,9 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
             return false;
         } else {
             $time  = abs(hexdec('7fffffff') - hexdec(bin2hex($result)) - hexdec('7fffffff'));
-            $time -= 2208988800; // todo minus socket delay
+            $time -= 2208988800;
+            // socket delay
+            $time -= (($end - $begin) / 2);
             
             return $time;
         }
