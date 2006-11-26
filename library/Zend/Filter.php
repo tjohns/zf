@@ -390,18 +390,6 @@ class Zend_Filter
     }
 
     /**
-     * Returns value if it is a valid format for a person's name,
-     * FALSE otherwise.
-     *
-     * @param mixed $value
-     * @return mixed
-     */
-    public static function isName($value)
-    {
-        return (bool) !preg_match('/[^[:alpha:]\ \-\']/', $value);
-    }
-
-    /**
      * Returns value if it is one of $allowed, FALSE otherwise.
      *
      * @param mixed $value
