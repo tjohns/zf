@@ -28,12 +28,12 @@
         <programlisting>
     <![CDATA[<?php
     
-    if ($email = Zend_Filter::testEmail($value)) {
-        /* $email ist in einem gültigen E-Mail Format  */
+    if (Zend_Filter::isEmail($value)) {
+        /* $value ist in einem gültigen E-Mail Format. */
     } else {
-        /* $email ist nicht in einem gültigen E-Mail Format. */
+        /* $value ist nicht in einem gültigen E-Mail Format. */
     }
-    
+
     ?>]]>
         </programlisting>
         <para>Blindes Filtern:</para>
