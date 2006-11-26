@@ -500,6 +500,8 @@ class Zend_Filter
         /**
          * @todo
          */
+        throw new Zend_Filter_Exception('isUri() has not been implemented.');
+        return FALSE;
     }
 
     /**
