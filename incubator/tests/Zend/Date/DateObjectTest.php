@@ -173,445 +173,50 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, true),  -62167392000);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, false), -125282588400);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, true),  -125282592000);
+
+       	$this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, false), -2208985200);
+       	$this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, true),  -2208988800);
+       	$this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, false), -2208985200);
+       	$this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, true),  -2208988800);
     }
 
-	/**
-	 * Test for date
-	 */
-/*    public function testDate1()
+    public function testIsLeapYear()
     {
-        date_default_timezone_set('Europe/Paris');
         $date = new Zend_Date_DateObject();
-      	$result = $date->date('d');
-       	$this->assertTrue(is_string($result), "string expected");
+        $this->assertSame($date->isLeapYear(2000), true);
+        $this->assertSame($date->isLeapYear(2002), false);
+        $this->assertSame($date->isLeapYear(2004), true);
+        $this->assertSame($date->isLeapYear(1899), false);
+        $this->assertSame($date->isLeapYear(1500), true);
+        $this->assertSame($date->isLeapYear(1455), false);
     }
 
-	/**
-	 * Test for date
-	 */
-/*    public function testDate2()
+    public function testWeekNumber()
     {
-        date_default_timezone_set('Europe/Paris');
         $date = new Zend_Date_DateObject();
-      	$result = $date->date('d', false, true);
-       	$this->assertTrue(is_string($result), "string expected");
+        $this->assertSame($date->weekNumber(2000, 1, 1), (int) date('W',mktime(0, 0, 0, 1, 1, 2000)));
+        $this->assertSame($date->weekNumber(2020, 10, 1), (int) date('W',mktime(0, 0, 0, 10, 1, 2020)));
+        $this->assertSame($date->weekNumber(2005, 5, 15), (int) date('W',mktime(0, 0, 0, 5, 15, 2005)));
+        $this->assertSame($date->weekNumber(1994, 11, 22), (int) date('W',mktime(0, 0, 0, 11, 22, 1994)));
     }
 
-	/**
-	 * Test for date
-	 */
-/*    public function testDate3()
+    public function testDayOfWeek()
     {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-        $stamp = $date->mktime(13, 44, 22, 10, 6, 3000, -1, true);
-        $this->assertSame($date->date('d', $stamp, true), '01', "01 expected");
+        $this->markTestIncomplete('included soon');
     }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate4()
+    
+    public function testCalcSun()
     {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('D', 32503680000, true), '01', "01 expected");
+        $this->markTestIncomplete('included soon');
     }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate5()
+    
+    public function testGetDate()
     {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('j', 32503680000, true), '01', "01 expected");
+        $this->markTestIncomplete('included soon');
     }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate6()
+    
+    public function testDate()
     {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('l', 32503680000, true), '01', "01 expected");
+        $this->markTestIncomplete('included soon');
     }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate7()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('N', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate8()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('S', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate9()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('w', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate10()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('z', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate11()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('W', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate12()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('F', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate13()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('m', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate14()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('M', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate15()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('n', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate16()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('t', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate17()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('L', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate18()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('o', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate19()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('Y', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate20()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('y', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate21()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('a', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate22()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('A', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate23()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('B', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate24()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('g', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate25()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('G', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate26()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('h', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate27()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('H', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate28()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('i', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate29()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('s', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate30()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('e', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate31()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('I', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate32()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('O', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate33()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('P', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate34()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('T', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate35()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('Z', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate36()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, true);
-       	$this->assertSame($date->date('c', 32503680000, true), '01', "01 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate37()
-    {
-        date_default_timezone_set('UTC');
-        $date = new Zend_Date_DateObject();
-        $stamp = $date->mktime(13, 44, 22, 10, 6, 3000, -1, false);
-       	$this->assertSame($date->date('r', $stamp, false), 'Mon, 06 Oct 3000 13:44:22 -0000', "Mon, 06 Oct 3000 13:44:22 -0000 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate38()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject(32503680000, false, false);
-       	$this->assertSame($date->date('U', 32503680000, false), '32503680000', "32503680000 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate39()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject();
-        $stamp = $date->mktime(13, 44, 22, 10, 6, 3000, -1, false);
-       	$this->assertSame($date->date('r', $stamp, false), 'Mon, 06 Oct 3000 13:44:22 +0100', "Mon, 06 Oct 3000 13:44:22 +0100 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate40()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject();
-        $stamp = $date->mktime(13, 44, 22, 10, 6, 2000, -1, false);
-       	$this->assertSame($date->date('r', $stamp, false), 'Mon, 06 Oct 2000 13:44:22 +0100', "Mon, 06 Oct 3000 13:44:22 +0100 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate41()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject();
-        $stamp = $date->mktime(13, 44, 22, 10, 6, 2000, -1, true);
-       	$this->assertSame($date->date('r', $stamp, true), 'Mon, 06 Oct 2000 13:44:22 +0100', "Mon, 06 Oct 3000 13:44:22 +0100 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate42()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject();
-        $stamp = $date->mktime(13, 44, 22, 10, 6, 2000, -1, true);
-       	$this->assertSame($date->date('r', $stamp, false), 'Mon, 06 Oct 2000 13:44:22 +0100', "Mon, 06 Oct 3000 13:44:22 +0100 expected");
-    }
-
-	/**
-	 * Test for date
-	 */
-/*    public function testDate43()
-    {
-        date_default_timezone_set('Europe/Paris');
-        $date = new Zend_Date_DateObject();
-        $stamp = $date->mktime(13, 44, 22, 10, 6, 2000, -1, false);
-       	$this->assertSame($date->date('r', $stamp, true), 'Mon, 06 Oct 2000 13:44:22 +0100', "Mon, 06 Oct 3000 13:44:22 +0100 expected");
-    }
-*/
 }
