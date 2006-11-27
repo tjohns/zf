@@ -195,6 +195,14 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         if (!isset($this->_currentRoute)) {
             throw Zend::exception('Zend_Controller_Router_Exception', "Current route is not defined");
         }
+        return $this->getRoute($this->_currentRoute);
+    }
+
+    public function getCurrentRouteName()
+    {
+        if (!isset($this->_currentRoute)) {
+            throw Zend::exception('Zend_Controller_Router_Exception', "Current route is not defined");
+        }
         return $this->_currentRoute;
     }
 
@@ -213,12 +221,12 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         $pathInfo = $request->getPathInfo();
 
         /** Find the matching route */
-        foreach (array_reverse($this->_routes) as $route) {
+        foreach (array_reverse($this->_routes) as $name => $route) {
             if ($params = $route->match($pathInfo)) {
                 foreach ($params as $param => $value) {
                     $request->setParam($param, $value);
                 }
-                $this->_currentRoute = $route;
+                $this->_currentRoute = $name;
                 break;
             }
         }

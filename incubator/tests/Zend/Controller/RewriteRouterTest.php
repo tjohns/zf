@@ -166,6 +166,24 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $this->assertSame('show', $token->getActionName());
     }
 
+    public function testGetCurrentRoute()
+    {
+        $router = new Zend_Controller_RewriteRouter();
+        $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/ctrl/act');
+
+        $token = $router->route($request);
+
+        try {
+            $route = $router->getCurrentRoute();
+            $name = $router->getCurrentRouteName();
+        } catch (Exception $e) {
+            $this->fail('Current route is not set');
+        }
+        
+        $this->assertSame('default', $name);
+        $this->assertType('Zend_Controller_Router_Route', $route);
+    }
+
 }
 
 /**
