@@ -80,12 +80,6 @@ class Zend_FilterTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(Zend_Filter::isHex('ABK'), '"ABK" is not a valid hex number');
     }
 
-    public function testisName()
-    {
-        $this->assertTrue(Zend_Filter::isName('Mark'), '"Mark" is a valid name');
-        $this->assertFalse(Zend_Filter::isName('100'), '"100" is not a valid name');
-    }
-
     public function testisDate()
     {
         $this->assertTrue(Zend_Filter::isDate('1997-07-16'), '"1997-07-16" is a valid date');
