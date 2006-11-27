@@ -634,4 +634,13 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 		$body = 'uploadfile myfile.txt text/plain ' . strlen($rawdata) . "\n";
 		$this->assertEquals($res->getBody(), $body, 'Response body does not include expected upload parameters');
 	}
+	
+	public function testStaticLargeFileDownload()
+	{
+		$this->client->setUri($this->baseuri . 'staticFile.jpg');
+		$file = $this->client->request()->getBody();
+		
+		$this->assertEquals(file_get_contents(dirname(realpath(__FILE__)) . DIRECTORY_SEPARATOR . 
+		    '_files' . DIRECTORY_SEPARATOR . 'staticFile.jpg'), $file, 'Downloaded file does not seem to match!');
+	}
 }
