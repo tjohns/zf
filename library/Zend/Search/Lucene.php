@@ -738,7 +738,11 @@ class Zend_Search_Lucene
 
         foreach ($this->_segmentInfos as $segName => $segmentInfo) {
             $segmentInfo->reset();
-            $segmentInfoQueue->put($segmentInfo);
+
+            // Skip "empty" segments
+            if ($segmentInfo->currentTerm() !== null) {
+                $segmentInfoQueue->put($segmentInfo);
+            }
         }
 
         while (($segmentInfo = $segmentInfoQueue->pop()) !== null) {

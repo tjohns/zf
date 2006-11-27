@@ -784,6 +784,11 @@ class Zend_Search_Lucene_Index_SegmentInfo
             $this->_lastTerm     = null;
             $this->_lastTermInfo = null;
 
+            // may be necessary for "empty" segment
+            $this->_tisFile = null;
+            $this->_frqFile = null;
+            $this->_prxFile = null;
+
             return null;
         }
 

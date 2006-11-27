@@ -233,7 +233,11 @@ class Zend_Search_Lucene_Index_SegmentMerger
         $segmentStartId = 0;
         foreach ($this->_segmentInfos as $segName => $segmentInfo) {
             $segmentStartId = $segmentInfo->reset($segmentStartId, true);
-            $segmentInfoQueue->put($segmentInfo);
+
+            // Skip "empty" segments
+            if ($segmentInfo->currentTerm() !== null) {
+                $segmentInfoQueue->put($segmentInfo);
+            }
         }
 
         $this->_writer->initializeDictionaryFiles();
