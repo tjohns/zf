@@ -100,7 +100,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         }
         
         // Now, if we are not connected, connect
-        if (! is_resource($this->socket)) {
+        if (! is_resource($this->socket) || ! $this->config['keepalive']) {
         	$this->socket = @fsockopen($host, $port, $errno, $errstr, (int) $this->config['timeout']);
         	if (! $this->socket) {
             	$this->close();
