@@ -31,8 +31,8 @@ require_once "Zend/Http/Exception.php";
  * be used along with Zend_Http_Client in order to manage cookies across HTTP requests and 
  * responses. 
  * 
- * The class contains an array of Zend_Http_Cookie objects. Cookies can be added and removed 
- * from this array in various ways. The jar can also be useful in returning only the cookies 
+ * The class contains an array of Zend_Http_Cookie objects. Cookies can be added to the jar
+ * automatically from a request or manually. Then, the jar can find and return the cookies
  * needed for a specific HTTP request. 
  * 
  * A special parameter can be passed to all methods of this class that return cookies: Cookies 
@@ -42,8 +42,12 @@ require_once "Zend/Http/Exception.php";
  * (by passing Zend_Http_CookieJar::COOKIE_STRING_ARRAY) or one unified string for all cookies
  * (by passing Zend_Http_CookieJar::COOKIE_STRING_CONCAT).
  * 
- * See http://wp.netscape.com/newsref/std/cookie_spec.html for some specs.
- *
+ * @see        http://wp.netscape.com/newsref/std/cookie_spec.html for some specs. 
+ * @category   Zend
+ * @package    Zend_Http
+ * @subpackage CookieJar
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com/)
+ * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
 class Zend_Http_CookieJar
 {
@@ -235,89 +239,6 @@ class Zend_Http_CookieJar
             return false;
         }
     }        
-    
-    /**
-     * Remove all cookies from the jar
-     *
-     */
-    public function deleteAllCookies()
-    {
-        unset($this->cookies);
-        $this->cookies = new ArrayObject();
-    }
-    
-    /**
-     * Clear all cookies who's expiry time is older than $time
-     *
-     * @param int $time Expiry time (default is now)
-     */
-    public function deleteExpiredCookies($time = null)
-    {
-        if ($time === null) $time = time();
-        $cookies = $this->_flattenCookiesArray($this->cookies, self::COOKIE_OBJECT);
-        
-        foreach ($cookies as $cookie) {
-            if ($cookie->isExpired($time))
-                unset($this->cookies[$cookie->getDomain()][$cookie->getPath()][$cookie->getName()]);
-        }
-    }
-    
-    /**
-     * Clear "Session" cookies (cookies without specific expiry time)
-     *
-     */
-    public function deleteSessionCookies()
-    {
-        $cookies = $this->_flattenCookiesArray($this->cookies, self::COOKIE_OBJECT);
-        
-        foreach ($cookies as $cookie) {
-            if ($cookie->isSessionCookie())
-                unset($this->cookies[$cookie->getDomain()][$cookie->getPath()][$cookie->getName()]);
-        }
-    }
-    
-    /**
-     * Delete a cookie according to it's name and reference uri. If no name is
-     * specified,all cookies from this domain will be cleared out.
-     *
-     * @param string|Zend_Uri_Http $uri
-     * @param string $cookie_name 
-     * @return boolean true if cookie was deleted.
-     */
-    public function deleteCookies($uri, $cookie_name = null)
-    {
-        $ret = false;
-        if (is_string($uri)) 
-            $uri = Zend_Uri_Http::factory($uri);
-        
-        if (! $uri instanceof Zend_Uri_Http) 
-            throw new Zend_Http_Exception('$uri is expected to by a Zend_Uri_Http, ' . gettype($uri) . ' passed');
-            
-        $domain = $uri->getHost();
-        $path   = $uri->getPath();
-        $path   = substr($path, 0, strrpos($path, '/'));
-        if (! $path) $path = '/';
-        
-        // If we have a cookie's name, delete only this one
-        if (isset($cookie_name) && isset($this->cookies[$domain][$path][$cookie_name])) {
-            unset($this->cookies[$domain][$path][$cookie_name]);
-            $ret = true;
-            
-        // If we only got a URI, clear all cookies matching this URI.    
-        } else {
-            $cookies = $this->_flattenCookiesArray($this->_matchPath($this->_matchDomain($domain), $path), self::COOKIE_OBJECT);
-            foreach ($cookies as $cookie) {
-                if (isset($this->cookies[$cookie->getDomain()][$cookie->getPath()])) {
-                    unset($this->cookies[$cookie->getDomain()][$cookie->getPath()]);
-                    $ret = true;
-                    if (count ($this->cookies[$cookie->getDomain()]) == 0)
-                        unset($this->cookies[$cookie->getDomain()]);
-                }
-            }
-        }
-        
-        return $ret;
-    }
     
     /**
      * Helper function to recursivly flatten an array. Shoud be used when exporting the 

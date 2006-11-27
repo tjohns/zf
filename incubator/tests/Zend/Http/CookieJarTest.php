@@ -9,7 +9,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-require_once "PHPUnit/Framework/TestCase.php";
+require_once 'PHPUnit/Framework/TestCase.php';
 require_once 'Zend/Http/CookieJar.php';
 
 /**
@@ -245,107 +245,6 @@ class Zend_Http_CookieJarTest extends PHPUnit_Framework_TestCase
     	} catch (Zend_Http_Exception $e) {
     		// We are ok!
     	}
-    }
-    
-    /**
-     * Test we can delete all cookies
-     */
-    public function testDeleteAllCookies() 
-    {
-        $jar = new Zend_Http_Cookiejar();
-    	$res_str = file_get_contents(dirname(realpath(__FILE__)) . 
-    	    DIRECTORY_SEPARATOR . '_files'  . DIRECTORY_SEPARATOR . 'response_with_cookies');
-    	$response = Zend_Http_Response::fromString($res_str);
-        
-    	$jar->addCookiesFromResponse($response, 'http://www.example.com');
-    	
-    	$this->assertEquals(3, count($jar->getAllCookies()), 'CookieJar expected to contain 3 cookies');
-    	$jar->deleteAllCookies();
-    	$this->assertEquals(0, count($jar->getAllCookies()), 'CookieJar is expected to contain 0 cookies');
-    }
-
-    /**
-     * Test we can delete expired cookies
-     */
-    public function testDeleteExpiredCookies() 
-    {
-    	$jar = new Zend_Http_CookieJar();
-    	$cookies = array(
-    		Zend_Http_Cookie::fromString('foo=bar; domain=example.com; expires=' . date(DATE_COOKIE, time() + 3600)),
-    		Zend_Http_Cookie::fromString('evil=premature+optimization; domain=example.com; expires=' . date(DATE_COOKIE, time() - 3600)),
-    		Zend_Http_Cookie::fromString('PHPSESSID=123abc; domain=example.com;'),
-    		Zend_Http_Cookie::fromString('flavor=chocolate+chips; domain=example.com; expires=' . date(DATE_COOKIE, time() - 7600))
-    	);
-    	
-    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
-    	$this->assertEquals(4, count($jar->getAllCookies()), 'Cookie count is expected to be 4');
-    	
-    	$jar->deleteExpiredCookies();
-    	$this->assertEquals(2, count($jar->getAllCookies()), 'Cookie count is expected to be 2');
-    }
-
-    /**
-     * Test we can delete expired cookies with a modified time
-     */
-    public function testDeleteExpiredCookiesWithTime() 
-    {
-    	$jar = new Zend_Http_CookieJar();
-    	$cookies = array(
-    		Zend_Http_Cookie::fromString('foo=bar; domain=example.com; expires=' . date(DATE_COOKIE, time() + 3600)),
-    		Zend_Http_Cookie::fromString('evil=premature+optimization; domain=example.com; expires=' . date(DATE_COOKIE, time() - 3600)),
-    		Zend_Http_Cookie::fromString('PHPSESSID=123abc; domain=example.com;'),
-    		Zend_Http_Cookie::fromString('flavor=chocolate+chips; domain=example.com; expires=' . date(DATE_COOKIE, time() - 7600))
-    	);
-    	
-    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
-    	$this->assertEquals(4, count($jar->getAllCookies()), 'Cookie count is expected to be 4');
-    	
-    	$jar->deleteExpiredCookies(time() - 3700);
-    	$this->assertEquals(3, count($jar->getAllCookies()), 'Cookie count is expected to be 3');
-    }
-    
-    /**
-     * Test we can delete session cookies
-     */
-    public function testDeleteSessionCookies() 
-    {
-        $jar = new Zend_Http_CookieJar();
-    	$cookies = array(
-    		Zend_Http_Cookie::fromString('foo=bar; domain=example.com; expires=' . date(DATE_COOKIE, time() + 3600)),
-    		Zend_Http_Cookie::fromString('evil=premature+optimization; domain=example.com;'),
-    		Zend_Http_Cookie::fromString('PHPSESSID=123abc; domain=example.com;'),
-    		Zend_Http_Cookie::fromString('flavor=chocolate+chips; domain=example.com; expires=' . date(DATE_COOKIE, time() - 7600))
-    	);
-    	
-    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
-    	$this->assertEquals(4, count($jar->getAllCookies()), 'Cookie count is expected to be 4');
-    	
-    	$jar->deleteSessionCookies();
-    	$this->assertEquals(2, count($jar->getAllCookies()), 'Cookie count is expected to be 2');
-    }
-
-    /**
-     * Test we can delete all cookies from a specific domain, or just one cookie
-     * by domain and name
-     */
-    public function testDeleteCookies() {
-    	$jar = new Zend_Http_CookieJar();
-    	$cookies = array(
-    		Zend_Http_Cookie::fromString('foo=bar; domain=foo.com; expires=' . date(DATE_COOKIE, time() + 3600)),
-    		Zend_Http_Cookie::fromString('evil=premature+optimization; domain=example.com;'),
-    		Zend_Http_Cookie::fromString('evil=scott; domain=foo.com;'),
-    		Zend_Http_Cookie::fromString('PHPSESSID=123abc; domain=foo.com;'),
-    		Zend_Http_Cookie::fromString('flavor=chocolate+chips; domain=example.com; expires=' . date(DATE_COOKIE, time() - 7600))
-    	);
-    	
-    	foreach ($cookies as $cookie) $jar->addCookie($cookie);
-    	$this->assertEquals(5, count($jar->getAllCookies()), 'Cookie count is expected to be 5');
-    	
-    	$jar->deleteCookies('http://foo.com', 'foo');
-    	$this->assertEquals(4, count($jar->getAllCookies()), 'Cookie count is expected to be 4');
-    	
-    	$jar->deleteCookies('http://foo.com');
-    	$this->assertEquals(2, count($jar->getAllCookies()), 'Cookie count is expected to be 2');
     }
 
     /**
