@@ -94,14 +94,13 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         // If the URI should be accessed via SSL, prepend the Hostname with ssl://
         $host = ($secure ? 'sslv2://' . $host : $host);
         
-        if (is_resource($this->socket)) {
-        	// If we are connected to a different server or port, disconnect first
-        	if (is_array($this->connected_to) && 
-            ($this->connected_to[0] != $host || $this->connected_to[1] != $port))
-                $this->close();
+        // If we are connected to the wrong host, disconnect first
+        if (($this->connected_to[0] != $host || $this->connected_to[1] != $port)) {
+        	if (is_resource($this->socket)) $this->close();
+        }
         
-        } else {
-	        // Do the actual connection
+        // Now, if we are not connected, connect
+        if (! is_resource($this->socket)) {
         	$this->socket = @fsockopen($host, $port, $errno, $errstr, (int) $this->config['timeout']);
         	if (! $this->socket) {
             	$this->close();
