@@ -238,7 +238,7 @@ class Zend_Mail_Pop3Test extends PHPUnit_Framework_TestCase
 
     public function testWithInstanceConstruction()
     {
-        $transport = new Zend_Mail_Transport_Pop3($this->_params['host'], $this->_params['port']);
+        $transport = new Zend_Mail_Transport_Pop3($this->_params['host']);
         $mail = new Zend_Mail_Pop3($transport);
         try {
             // because we did no login this has to throw an exception

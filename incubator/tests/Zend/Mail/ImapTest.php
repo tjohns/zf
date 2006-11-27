@@ -144,7 +144,7 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
 
     public function testWithInstanceConstruction()
     {
-        $transport = new Zend_Mail_Transport_Imap($this->_params['host'], $this->_params['port']);
+        $transport = new Zend_Mail_Transport_Imap($this->_params['host']);
         $transport->login($this->_params['user'], $this->_params['password']);
         // if $transport is invalid the constructor fails while selecting INBOX
         $mail = new Zend_Mail_Imap($transport);
