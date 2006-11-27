@@ -178,6 +178,10 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         unset($this->_routes[$name]);
     }
 
+    public function removeDefaultRoutes() {
+        $this->removeRoute('default');
+    }
+
     public function getRoute($name)
     {
         if (!isset($this->_routes[$name])) {
