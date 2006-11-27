@@ -169,6 +169,10 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
 			if (! chop($line)) break;
 		}
 
+		// Handle 100 and 101 responses internally by restarting the read again
+		if (Zend_Http_Response::extractCode($response) == 100 ||  
+		    Zend_Http_Response::extractCode($response) == 101) return $this->read();
+		
 		// Check headers to see what kind of connection / transfer encoding we have
 		$headers = Zend_Http_Response::extractHeaders($response);
 		
