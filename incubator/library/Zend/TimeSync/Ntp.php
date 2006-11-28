@@ -213,7 +213,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         // seconds to add for local clock
         $offset = $received - $original + $transmit - $clientreceived;
         $this->_info['offset'] = $offset / 2;
-
+        
         $time = time() - $offset;
         return $time;
     }

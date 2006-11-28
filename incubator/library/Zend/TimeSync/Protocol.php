@@ -73,12 +73,9 @@ abstract class Zend_TimeSync_Protocol
     
     public function getDate($locale = false)
     {
-        try {
-            $timestamp = $this->_query();
-            return new Zend_Date($timestamp, false, $locale);
-        } catch (Zend_TimeSync_ProtocolException $e) {
-            throw $e;
-        }
+        $timestamp = $this->_query();
+        
+        return new Zend_Date($timestamp, false, $locale);
     }
     
     public function getExceptions()
