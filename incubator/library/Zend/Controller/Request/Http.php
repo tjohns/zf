@@ -115,6 +115,8 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     public function __get($key) 
     { 
         switch (true) {
+            case isset($this->_params[$key]):
+                return $this->_params[$key];
             case isset($_GET[$key]):
                 return $_GET[$key];
             case isset($_POST[$key]):
