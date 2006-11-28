@@ -47,9 +47,19 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     private $_fh;
 
     /**
+     * filename of mbox file for __wakeup
+     */
+    protected $_filename;
+
+    /**
+     * modification date of mbox file for __wakeup
+     */
+    protected $_filemtime;
+
+    /**
      * start and end position of messages as array(0 => start, 1 => end)
      */
-    private $_positions;
+    protected $_positions;
 
 
     /**
@@ -176,13 +186,64 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
             throw Zend::exception('Zend_Mail_Exception', 'no valid filename given in params');
         }
 
-        $this->_fh = @fopen($params['filename'], 'r');
+        $this->_openMboxFile($params['filename']);
+        $this->_has['top'] = true;
+    }
+
+    /**
+     * check if given file is a mbox file
+     *
+     * if $file is a resource its file pointer is moved after the first line
+     *
+     * @params resource|string $file stream resource of name of file
+     * @params bool $fileIsString file is string or resource
+     * @return bool file is mbox file
+     */
+    protected function _isMboxFile($file, $fileIsString = true)
+    {
+        if($fileIsString) {
+            $file = @fopen($file, 'r');
+            if(!$file) {
+                return false;
+            }
+        } else {
+            fseek($file, 0);
+        }
+
+        $result = false;
+
+        $line = fgets($file);
+        if(strpos($line, 'From ') === 0) {
+            $result = true;
+        }
+
+        if($fileIsString) {
+            @fclose($file);
+        }
+
+        return $result;
+    }
+
+    /**
+     * open given file as current mbox file
+     *
+     * @params string $filename filename of mbox file
+     * @throws Zend_Mail_Exception
+     */
+    protected function _openMboxFile($filename)
+    {
+        if($this->_fh) {
+            $this->close();
+        }
+
+        $this->_fh = @fopen($filename, 'r');
         if (!$this->_fh) {
             throw Zend::exception('Zend_Mail_Exception', 'cannot open mbox file');
         }
+        $this->_filename = $filename;
+        $this->_filemtime = filemtime($this->_filename);
 
-        $line = fgets($this->_fh);
-        if (strpos($line, 'From ') !== 0) {
+        if(!$this->_isMboxFile($this->_fh, false)) {
             @fclose($this->_fh);
             throw Zend::exception('Zend_Mail_Exception', 'file is not a valid mbox format');
         }
@@ -198,10 +259,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
 
         $messagePos[1] = ftell($this->_fh);
         $this->_positions[] = $messagePos;
-
-        $this->_has['top'] = true;
     }
-
 
     /**
      * Close resource for mail lib. If you need to control, when the resource
@@ -233,6 +291,37 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     public function removeMessage($id)
     {
         throw Zend::exception('Zend_Mail_Exception', 'mbox is read-only');
+    }
+
+    /**
+     * magic method for serialize()
+     *
+     * with this method you can cache the mbox class
+     *
+     * @return array name of variables
+     */
+    public function __sleep()
+    {
+        return array('_filename', '_positions', '_filemtime');
+    }
+
+    /**
+     * magic method for unserialize()
+     *
+     * with this method you can cache the mbox class
+     * for cache validation the mtime of the mbox file is used
+     */
+    public function __wakeup()
+    {
+        if($this->_filemtime != filemtime($this->_filename)) {
+            $this->close();
+            $this->_openMboxFile($this->_filename);
+        } else {
+            $this->_fh = @fopen($this->_filename, 'r');
+            if (!$this->_fh) {
+                throw Zend::exception('Zend_Mail_Exception', 'cannot open mbox file');
+            }
+        }
     }
 
 }
