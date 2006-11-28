@@ -42,8 +42,9 @@ Zend_Session_Core::start();
                 <para>
                     1. Wrong: Do not set PHP's session.auto_start ini setting in either php.ini or .htaccess
                     (http://www.php.net/manual/en/ref.session.php#ini.session.auto-start). If you do not have the
-                    ability to disable this setting in php.ini, then add <code>php_value session.auto_start 0</code> to
-                    your .htaccess file (usually in your HTML document root directory).
+                    ability to disable this setting in php.ini, you are using mod_php (or equivalent), and the setting
+                    is already enabled in php.ini, then add <code>php_value session.auto_start 0</code> to your
+                    .htaccess file (usually in your HTML document root directory).
                 </para>
             </listitem>
             <listitem>
