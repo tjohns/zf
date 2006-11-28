@@ -88,6 +88,12 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     private $_escape = 'htmlspecialchars';
 
     /**
+     * Encoding to use in escaping mechanisms; defaults to latin1 (ISO-8859-1)
+     * @var string 
+     */
+    private $_encoding = 'ISO-8859-1';
+
+    /**
      * Constructor.
      *
      * @param array $config Configuration key-value pairs.
@@ -441,8 +447,8 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     /**
      * Escapes a value for output in a view script.
      *
-     * If escaping mechanism is one of htmlspecialchars or htmlentities, UTF-8 
-     * encoding is assumed for escaping purposes.
+     * If escaping mechanism is one of htmlspecialchars or htmlentities, uses 
+     * {@link $_encoding} setting.
      *
      * @param mixed $var The output to escape.
      * @return mixed The escaped value.
@@ -450,10 +456,31 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     public function escape($var)
     {
         if (in_array($this->_escape, array('htmlspecialchars', 'htmlentities'))) {
-            return call_user_func($this->_escape, $var, ENT_COMPAT, 'UTF-8');
+            return call_user_func($this->_escape, $var, ENT_COMPAT, $this->_encoding);
         }
 
         return call_user_func($this->_escape, $var);
+    }
+
+    /**
+     * Set encoding to use with htmlentities() and htmlspecialchars()
+     * 
+     * @param string $encoding 
+     * @return void
+     */
+    public function setEncoding($encoding)
+    {
+        $this->_encoding = $encoding;
+    }
+
+    /**
+     * Return current escape encoding
+     * 
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->_encoding;
     }
 
     /**

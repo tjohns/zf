@@ -351,4 +351,16 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('baz', $vars['bar']);
         $this->assertEquals(array('foo', 'bar'), $vars['baz']);
     }
+
+    /**
+     * Test set/getEncoding() 
+     */
+    public function testSetGetEncoding()
+    {
+        $view = new Zend_View();
+        $this->assertEquals('ISO-8859-1', $view->getEncoding());
+
+        $view->setEncoding('UTF-8');
+        $this->assertEquals('UTF-8', $view->getEncoding());
+    }
 }
