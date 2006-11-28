@@ -110,6 +110,11 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             $this->setEscape($config['escape']);
         }
 
+        // encoding
+        if (array_key_exists('encoding', $config)) {
+            $this->setEncoding($config['encoding']);
+        }
+
         // user-defined view script path
         if (array_key_exists('scriptPath', $config)) {
             $this->addScriptPath($config['scriptPath']);
