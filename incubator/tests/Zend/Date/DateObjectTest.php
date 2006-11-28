@@ -143,12 +143,12 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     public function testMkTimeforDateValuesGreaterPHPRange()
     {
         $date = new Zend_Date_DateObject();
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 2040, -1, false), 2208985200);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 2040, -1, true),  2208988800);
+       	$this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, false), 2232658800);
+       	$this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, true),  2232662400);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, false), 7258114800);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, true),  7258118400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 2500, -1, false), 16725222000);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 2500, -1, true),  16725225600);
+       	$this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, false), 16749586800);
+       	$this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, true),  16749590400);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, false), 32503676400);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, true),  32503680000);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 5000, -1, false), 95617580400);
@@ -167,6 +167,8 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1700, -1, true),  -8520336000);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, false), -14830988400);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, true),  -14830992000);
+       	$this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, false), -12219321600);
+       	$this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, true),  -12219321600);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, false), -30609788400);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, true),  -30609792000);
        	$this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, false), -62167388400);
@@ -198,11 +200,32 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->weekNumber(2020, 10, 1), (int) date('W',mktime(0, 0, 0, 10, 1, 2020)));
         $this->assertSame($date->weekNumber(2005, 5, 15), (int) date('W',mktime(0, 0, 0, 5, 15, 2005)));
         $this->assertSame($date->weekNumber(1994, 11, 22), (int) date('W',mktime(0, 0, 0, 11, 22, 1994)));
+        $this->assertSame($date->weekNumber(2000, 12, 31), (int) date('W',mktime(0, 0, 0, 12, 31, 2000)));
+        $this->assertSame($date->weekNumber(2050, 12, 31), 1);
+        $this->assertSame($date->weekNumber(2050, 6, 6), 23);
+        $this->assertSame($date->weekNumber(2056, 1, 1), 52);
     }
 
     public function testDayOfWeek()
     {
-        $this->markTestIncomplete('included soon');
+        $date = new Zend_Date_DateObject();
+        $this->assertSame($date->dayOfWeek(2000, 1, 1), (int) date('w',mktime(0, 0, 0, 1, 1, 2000)));
+        $this->assertSame($date->dayOfWeek(2000, 1, 2), (int) date('w',mktime(0, 0, 0, 1, 2, 2000)));
+        $this->assertSame($date->dayOfWeek(2000, 1, 3), (int) date('w',mktime(0, 0, 0, 1, 3, 2000)));
+        $this->assertSame($date->dayOfWeek(2000, 1, 4), (int) date('w',mktime(0, 0, 0, 1, 4, 2000)));
+        $this->assertSame($date->dayOfWeek(2000, 1, 5), (int) date('w',mktime(0, 0, 0, 1, 5, 2000)));
+        $this->assertSame($date->dayOfWeek(2000, 1, 6), (int) date('w',mktime(0, 0, 0, 1, 6, 2000)));
+        $this->assertSame($date->dayOfWeek(2000, 1, 7), (int) date('w',mktime(0, 0, 0, 1, 7, 2000)));
+        $this->assertSame($date->dayOfWeek(2000, 1, 8), (int) date('w',mktime(0, 0, 0, 1, 8, 2000)));
+        $this->assertSame($date->dayOfWeek(2050, 1, 1), 6);
+        $this->assertSame($date->dayOfWeek(2050, 1, 2), 0);
+        $this->assertSame($date->dayOfWeek(2050, 1, 3), 1);
+        $this->assertSame($date->dayOfWeek(2050, 1, 4), 2);
+        $this->assertSame($date->dayOfWeek(2050, 1, 5), 3);
+        $this->assertSame($date->dayOfWeek(2050, 1, 6), 4);
+        $this->assertSame($date->dayOfWeek(2050, 1, 7), 5);
+        $this->assertSame($date->dayOfWeek(2050, 1, 8), 6);
+        $this->assertSame($date->dayOfWeek(1500, 1, 1), 4);
     }
     
     public function testCalcSun()

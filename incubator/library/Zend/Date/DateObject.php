@@ -586,6 +586,10 @@ class Zend_Date_DateObject {
      */
     public function dayOfWeek($year, $month, $day)
     {
+        if ((1901 < $year) and ($year < 2038)) {
+            return (int) date('w', mktime(0, 0, 0, $month, $day, $year));
+        }
+
         // gregorian correction
         $correction = 0;
         if (($year < 1582) or (($year == 1582) and (($month < 10) or (($month == 10) && ($day < 15))))) {
@@ -599,13 +603,10 @@ class Zend_Date_DateObject {
             $year--;
         }
 
-        $day = floor((13 * $month - 1) / 5)
-             + $day + ($year % 100)
-             + floor(($year % 100) / 4)
-             + floor(($year / 100) / 4) - 2
-             * floor($year / 100) + 77 + $correction;
+        $day  = floor((13 * $month - 1) / 5) + $day + ($year % 100) + floor(($year % 100) / 4);
+        $day += floor(($year / 100) / 4) - 2 * floor($year / 100) + 77 + $correction;
 
-        return $day - 7 * floor($day / 7);
+        return (int) ($day - 7 * floor($day / 7));
     }
 
 
@@ -798,20 +799,22 @@ class Zend_Date_DateObject {
      */
     public function weekNumber($year, $month, $day)
     {
+        if ((1901 < $year) and ($year < 2038)) {
+            return (int) date('W', mktime(0, 0, 0, $month, $day, $year));
+        }
+        
         $dayofweek = $this->dayOfWeek($year, $month, $day);
         $firstday  = $this->dayOfWeek($year, 1, 1);
-        if (($month == 1) and (3 < $firstday) and ($firstday < (8 - $day))) {
-
+        if (($month == 1) and (3 < $firstday) and ($firstday < 7) and ($day < 4)) {
             $dayofweek = $firstday - 1;
             $firstday  = $this->dayOfWeek($year - 1, 1, 1);
             $month     = 12;
             $day       = 31;
 
-        } else if (($month == 12) and ((31 - $day) < $this->dayOfWeek($year + 1, 1, 1)) and
-                   ($this->dayOfWeek($year + 1, 1, 1) < 4)) {
+        } else if (($month == 12) and ($this->dayOfWeek($year + 1, 1, 1) < 4)) {
             return 1;
         }
-        
+
         return intval(($this->dayOfWeek($year, 1, 1) < 4) + 4 * ($month - 1) +
                (2 * ($month - 1) + ($day - 1) + $firstday - $dayofweek + 6) * 36 / 256);
     }
