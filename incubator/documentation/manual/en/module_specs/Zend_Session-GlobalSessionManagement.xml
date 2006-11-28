@@ -30,6 +30,63 @@
             .
         </para>
 
+        <para>
+            To "automatically" configure this component using an ".ini" file with Zend_Config_Ini:
+            <example>
+                <title>Using Zend_Config to Configure Zend_Session</title>
+<programlisting role="php">
+<![CDATA[<?php
+$config = new Zend_Config_Ini('myapp.ini', 'sandbox');
+Zend_Session_Core::setOptions($config->asArray()); 
+?>]]></programlisting>
+            </example>
+            The corresponding "myapp.ini" file:
+            <example>
+                <title>myapp.ini</title>
+<programlisting role="php">
+<![CDATA[
+;  Defaults for our live servers
+[live]
+; bug_compat_42
+; bug_compat_warn
+; cache_expire
+; cache_limiter
+; cookie_domain
+; cookie_lifetime
+; cookie_path
+; cookie_secure
+; entropy_file
+; entropy_length
+; gc_divisor
+; gc_maxlifetime
+; gc_probability
+; hash_bits_per_character
+; hash_function
+; name = ZFSESSION
+; referer_check
+; save_handler
+; save_path
+; serialize_handler
+; use_cookies
+; use_only_cookies
+; use_trans_sid
+
+; remember_me_seconds = <integer seconds>
+; strict = on|off
+
+
+; Our sandbox server uses the same settings as our live server,
+; except as overriden below:
+[sandbox : live]
+; Don't forget to create this directory and make it rwx (readable and modifiable) by PHP.
+save_path = /home/myaccount/zend_sessions/myapp
+use_only_cookies = on
+; When persisting session id cookies, request a TTL of 10 days
+remember_me_seconds = 864000
+]]></programlisting>
+            </example>
+        </para>
+
     </sect2>
 
 </sect1>
