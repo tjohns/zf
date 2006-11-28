@@ -19,8 +19,8 @@
  */ 
 
 
-/** Zend_Controller_Action_Exception */
-require_once 'Zend/Controller/Action/Exception.php';
+/** Zend_Controller_Exception */
+require_once 'Zend/Controller/Exception.php';
 
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
@@ -239,7 +239,7 @@ abstract class Zend_Controller_Action
                  .'() does not exist and was not trapped in __call()';
         }
 
-        throw new Zend_Controller_Action_Exception($msg);
+        throw new Zend_Controller_Exception($msg);
     }
 
     /**
@@ -369,14 +369,18 @@ abstract class Zend_Controller_Action
     /**
      * Redirect to another URL
      *
+     * Prepends base URL as defined in request object if url is relative by 
+     * default; override this behaviour by setting the third argument false.
+     *
      * @param string $url
      * @param int $code HTTP response code to use in redirect; defaults to 302, 
      * Found (same as Location header redirect sent by PHP)
+     * @param bool $prependBase
      */
-    final protected function _redirect($url, $code = 302)
+    protected function _redirect($url, $code = 302, $prependBase = true)
     {
         if (headers_sent($file, $line)) {
-            throw new Zend_Controller_Action_Exception('Cannot redirect because headers were already been sent in file ' . $file . ', line ' . $line);
+            throw new Zend_Controller_Exception('Cannot redirect because headers were already been sent in file ' . $file . ', line ' . $line);
         }
 
         // prevent header injections
@@ -393,7 +397,20 @@ abstract class Zend_Controller_Action
             // headers
             header('HTTP/1.1 ' . $code . ' ' . $this->_redirectCodes[$code]);
         } elseif (302 != $code) {
-            throw new Zend_Controller_Action_Exception('Invalid response code ("' . $code . '") provided');
+            throw new Zend_Controller_Exception('Invalid response code ("' . $code . '") provided');
+        }
+
+        // If relative URL, decide if we should prepend base URL
+        if ($prependBase && !preg_match('|^[a-z]+://|', $url)) {
+            $request = $this->getRequest();
+            if ($request instanceof Zend_Controller_Request_Http) {
+                $base = $request->getBaseUrl();
+                if (('/' != substr($base, -1)) && ('/' != substr($url, 0, 1))) {
+                    $url = $base . '/' . $url;
+                } else {
+                    $url = $base . $url;
+                }
+            }
         }
 
         // redirect
