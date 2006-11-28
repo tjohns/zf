@@ -44,15 +44,6 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
     private $_term;
 
     /**
-     * Term sign.
-     * If true then term is required
-     * If false then term is prohibited.
-     *
-     * @var bool
-     */
-    private $_sign;
-
-    /**
      * Documents vector.
      * Bitset or array of document IDs
      * (depending from Bitset extension availability).
@@ -76,10 +67,34 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
      * @param Zend_Search_Lucene_Index_Term $term
      * @param boolean $sign
      */
-    public function __construct( $term, $sign = true )
+    public function __construct($term)
     {
         $this->_term = $term;
-        $this->_sign = $sign;
+    }
+
+    /**
+     * Re-write queries into primitive queries
+     * Also used for query optimization and binding to the index
+     *
+     * @param Zend_Search_Lucene $index
+     * @return Zend_Search_Lucene_Search_Query
+     */
+    public function rewrite(Zend_Search_Lucene $index)
+    {
+        if ($this->_term->field != null) {
+            return $this;
+        } else {
+            $query = new Zend_Search_Lucene_Search_Query_MultiTerm();
+            $query->setBoost($this->getBoost());
+
+            foreach ($index->getFieldNames(true) as $fieldName) {
+                $term = new Zend_Search_Lucene_Index_Term($this->_term->text, $fieldName);
+
+                $query->addTerm($term);
+            }
+
+            return $query->rewrite($index);
+        }
     }
 
 
@@ -117,7 +132,7 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
 
         $match = extension_loaded('bitset') ?  bitset_in($this->_docVector, $docId) :
                                                isset($this->_docVector[$docId]);
-        if ($this->_sign && $match) {
+        if ($match) {
             return $reader->getSimilarity()->tf(count($this->_termPositions[$docId]) ) *
                    $this->_weight->getValue() *
                    $reader->norm($docId, $this->_term->field);

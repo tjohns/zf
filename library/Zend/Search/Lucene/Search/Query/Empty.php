@@ -37,6 +37,18 @@ require_once 'Zend/Search/Lucene/Search/Weight/Empty.php';
 class Zend_Search_Lucene_Search_Query_Empty extends Zend_Search_Lucene_Search_Query
 {
     /**
+     * Re-write queries into primitive queries
+     * Also used for query optimization and binding to the index
+     *
+     * @param Zend_Search_Lucene $index
+     * @return Zend_Search_Lucene_Search_Query
+     */
+    public function rewrite(Zend_Search_Lucene $index)
+    {
+        return $this;
+    }
+
+    /**
      * Constructs an appropriate Weight implementation for this query.
      *
      * @param Zend_Search_Lucene $reader

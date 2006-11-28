@@ -122,6 +122,25 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
         $this->_subqueries[] = $subquery;
     }
 
+    /**
+     * Re-write queries into primitive queries
+     * Also used for query optimization and binding to the index
+     *
+     * @param Zend_Search_Lucene $index
+     * @return Zend_Search_Lucene_Search_Query
+     */
+    public function rewrite(Zend_Search_Lucene $index)
+    {
+        $query = new Zend_Search_Lucene_Search_Query_Boolean();
+        $query->setBoost($this->getBoost());
+
+        foreach ($this->_subqueries as $subqueryId => $subquery) {
+            $query->addSubquery($subquery->rewrite($index),
+                                ($this->_signs === null)?  true : $this->_signs[$subqueryId]);
+        }
+
+        return $query;
+    }
 
     /**
      * Returns subqueries

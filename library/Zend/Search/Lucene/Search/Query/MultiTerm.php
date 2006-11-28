@@ -153,6 +153,46 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
 
 
     /**
+     * Re-write queries into primitive queries
+     * Also used for query optimization and binding to the index
+     *
+     * @param Zend_Search_Lucene $index
+     * @return Zend_Search_Lucene_Search_Query
+     */
+    public function rewrite(Zend_Search_Lucene $index)
+    {
+        if (count($this->_terms) == 0) {
+            return new Zend_Search_Lucene_Search_Query_Empty();
+        }
+
+        // Check, that all fields are qualified
+        $allQualified = true;
+        foreach ($this->_terms as $term) {
+            if ($term->field === null) {
+                $allQualified = false;
+                break;
+            }
+        }
+
+        if ($allQualified) {
+            return $this;
+        } else {
+            /** transform multiterm query to boolean and apply rewrite() method to subqueries. */
+            $query = new Zend_Search_Lucene_Search_Query_Boolean();
+            $query->setBoost($this->getBoost());
+
+            foreach ($this->_terms as $termId => $term) {
+                $subquery = new Zend_Search_Lucene_Search_Query_Term($term);
+
+                $query->addSubquery($subquery->rewrite($index),
+                                    ($this->_signs === null)?  true : $this->_signs[$subqueryId]);
+            }
+
+            return $query;
+        }
+    }
+
+    /**
      * Returns query term
      *
      * @return array

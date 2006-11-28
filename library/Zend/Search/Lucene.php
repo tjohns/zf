@@ -65,6 +65,15 @@ require_once 'Zend/Search/Lucene/Index/SegmentInfoPriorityQueue.php';
 class Zend_Search_Lucene
 {
     /**
+     * Default field name for search
+     *
+     * Null means search through all fields
+     *
+     * @var string
+     */
+    static private $_defaultSearchField = null;
+
+    /**
      * File system adapter.
      *
      * @var Zend_Search_Lucene_Storage_Directory
@@ -218,6 +227,33 @@ class Zend_Search_Lucene
         return $this->_docCount;
     }
 
+
+    /**
+     * Set default search field.
+     *
+     * Null means, that search is performed through all fields by default
+     *
+     * Default value is null
+     *
+     * @param string $fieldName
+     */
+    static public function setDefaultSearchField($fieldName)
+    {
+        self::$_defaultSearchField = $fieldName;
+    }
+
+    /**
+     * Get default search field.
+     *
+     * Null means, that search is performed through all fields by default
+     *
+     * @return string
+     */
+    static public function getDefaultSearchField()
+    {
+        return self::$_defaultSearchField;
+    }
+
     /**
      * Retrieve index maxBufferedDocs option
      *
@@ -349,6 +385,8 @@ class Zend_Search_Lucene
         $hits   = array();
         $scores = array();
         $ids    = array();
+
+        $query = $query->rewrite($this)->optimize($this);
 
         $docNum = $this->count();
         for( $count=0; $count < $docNum; $count++ ) {
