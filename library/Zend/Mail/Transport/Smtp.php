@@ -21,11 +21,6 @@
 
 
 /**
- * Zend_Mail_Transport_Exception
- */
-require_once 'Zend/Mail/Transport/Exception.php';
-
-/**
  * Zend_Mail_Transport_Abstract
  */
 require_once 'Zend/Mail/Transport/Abstract.php';
@@ -73,8 +68,16 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
      * @param int $port
      * @param string $myName  (for use with HELO)
      */
-    public function __construct($host = '127.0.0.1', $port=25, $myName='127.0.0.1')
+    public function __construct($host = '127.0.0.1',
+                                $port = null,
+                                $myName = '127.0.0.1')
     {
+        if ($port === null) {
+            if (($port = ini_get('smtp_port')) == '') {
+                $port = 25;
+            }
+        }
+
         $this->_host = $host;
         $this->_port = $port;
         $this->_myName = $myName;
@@ -94,7 +97,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
         $errstr = null;
 
         // open connection
-        $fp = stream_socket_client('tcp://'.$this->_host.':'.$this->_port, $errno, $errstr, self::CONNECTION_TIMEOUT);
+        $fp = stream_socket_client('tcp://' . $this->_host .':'.$this->_port, $errno, $errstr, self::CONNECTION_TIMEOUT);
 
         if ($fp===false) {
             if ($errno==0) {
@@ -102,7 +105,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
             } else {
                 $msg = $errstr;
             }
-            throw new Zend_Mail_Transport_Exception($msg);
+            throw Zend::exception('Zend_Mail_Transport_Exception', $msg);
         }
 
         $this->_con = $fp;
@@ -110,7 +113,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
         try {
             $res = stream_set_timeout($this->_con, self::COMMUNICATION_TIMEOUT );
             if ($res === false) {
-                throw new Zend_Mail_Transport_Exception('Could not set Stream Timeout');
+                throw Zend::exception('Zend_Mail_Transport_Exception', 'Could not set Stream Timeout');
             }
 
             /**
@@ -157,7 +160,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
      */
     public function mail_from($from_email)
     {
-        $this->_send('MAIL FROM: <'.$from_email.'>');
+        $this->_send('MAIL FROM:<' . $from_email . '>');
         $this->_expect(250);
     }
 
@@ -170,7 +173,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
      */
     public function rcpt_to($to)
     {
-        $this->_send('RCPT TO: <' .$to. '>');
+        $this->_send('RCPT TO:<' . $to . '>');
         $this->_expect(250,251);
     }
 
@@ -188,9 +191,9 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
         $this->_send('DATA');
         $this->_expect(354);
         foreach(explode($this->EOL, $data) as $line) {
-            if ($line=='.') {
-                // important. replace single dot on a line
-                $line='..';
+            if (strpos($line, '.') === 0) {
+                // Escape lines prefixed with a '.'
+                $line = '.' . $line;
             }
             $this->_send($line);
         }
@@ -306,7 +309,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
             // returncode is always 3 digits at the beginning of the line
             $errorcode = substr($res,0,3);
             if ($errorcode === NULL || ( ($errorcode!=$val1) && ($errorcode!=$val2) && ($errorcode!=$val3)) ) {
-                throw new Zend_Mail_Transport_Exception($res);
+                throw Zend::exception('Zend_Mail_Transport_Exception', $res);
             }
         } while($res[3]=='-');
     }
@@ -323,7 +326,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
         $res = fgets($this->_con, 1024);
 
         if ($res === false) {
-            throw new Zend_Mail_Transport_Exception('Could not read from SMTP server');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'Could not read from SMTP server');
         }
 
         if (self::DEBUG) {
@@ -342,9 +345,9 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
      */
     protected function _send($str)
     {
-        $res = fwrite($this->_con, $str.$this->EOL);
+        $res = fwrite($this->_con, $str . $this->EOL);
         if ($res === false) {
-            throw new Zend_Mail_Transport_Exception('Could not write to SMTP server');
+            throw Zend::exception('Zend_Mail_Transport_Exception', 'Could not write to SMTP server');
         }
 
         if (self::DEBUG) {
