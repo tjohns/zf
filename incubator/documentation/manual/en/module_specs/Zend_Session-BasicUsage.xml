@@ -3,7 +3,7 @@
     <title>Basic Usage</title>
 
     <para>
-        Zend_Session utilizes ext/session and its special <code>$_SESSION</code> supberglobal as the storage mechanism
+        Zend_Session utilizes ext/session and its special <code>$_SESSION</code> superglobal as the storage mechanism
         for session state data. While <code>$_SESSION</code> is still available in the global namespace, developers
         should refrain from directly accessing it, so that Zend_Session can most effectively and securely provide its
         suite of session related functionality.
