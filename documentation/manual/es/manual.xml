@@ -166,7 +166,10 @@
     </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
-        &module_specs.Zend_View;
+        &module_specs.Zend_View-Introduction;
+        &module_specs.Zend_View-Controllers;
+        &module_specs.Zend_View-Scripts;
+        &module_specs.Zend_View-Helpers;
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
