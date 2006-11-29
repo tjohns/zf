@@ -71,7 +71,7 @@ interface Zend_Controller_Dispatcher_Interface
      * 
      * @param string $name 
      * @param mixed $value 
-     * @return self
+     * @return Zend_Controller_Dispatcher_Interface
      */
     public function setParam($name, $value);
 
@@ -79,7 +79,7 @@ interface Zend_Controller_Dispatcher_Interface
      * Set an array of a parameters to pass to the Action Controller constructor
      * 
      * @param array $params 
-     * @return self
+     * @return Zend_Controller_Dispatcher_Interface
      */
     public function setParams(array $params);
 
@@ -106,7 +106,7 @@ interface Zend_Controller_Dispatcher_Interface
      * each.
      * 
      * @param null|string|array single key or array of keys for params to clear
-     * @return self
+     * @return Zend_Controller_Dispatcher_Interface
      */
     public function clearParams($name = null);
 
@@ -129,7 +129,7 @@ interface Zend_Controller_Dispatcher_Interface
      * Add a controller directory to the controller directory stack
      * 
      * @param string $path 
-     * @return self
+     * @return Zend_Controller_Dispatcher_Interface
      */
     public function addControllerDirectory($path);
 
@@ -140,7 +140,7 @@ interface Zend_Controller_Dispatcher_Interface
      * added.
      * 
      * @param string|array $dir 
-     * @return self
+     * @return Zend_Controller_Dispatcher_Interface
      */
     public function setControllerDirectory($path);
 
@@ -155,7 +155,7 @@ interface Zend_Controller_Dispatcher_Interface
      * Set default controller name (minus formatting)
      * 
      * @param string $controller 
-     * @return self
+     * @return Zend_Controller_Dispatcher_Interface
      */
     public function setDefaultController($controller);
 
@@ -170,7 +170,7 @@ interface Zend_Controller_Dispatcher_Interface
      * Set default action name (minus formatting)
      * 
      * @param string $action 
-     * @return self
+     * @return Zend_Controller_Dispatcher_Interface
      */
     public function setDefaultAction($action);
 

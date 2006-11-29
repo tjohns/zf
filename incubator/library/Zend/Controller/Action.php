@@ -122,7 +122,7 @@ abstract class Zend_Controller_Action
      * Set the Request object
      * 
      * @param Zend_Controller_Request_Abstract $request 
-     * @return self
+     * @return Zend_Controller_Action
      */
     public function setRequest(Zend_Controller_Request_Abstract $request)
     {
@@ -144,7 +144,7 @@ abstract class Zend_Controller_Action
      * Set the Response object
      * 
      * @param Zend_Controller_Response_Abstract $response 
-     * @return self
+     * @return Zend_Controller_Action
      */
     public function setResponse(Zend_Controller_Response_Abstract $response)
     {
@@ -156,7 +156,7 @@ abstract class Zend_Controller_Action
      * Set invocation arguments
      * 
      * @param array $args 
-     * @return self
+     * @return Zend_Controller_Action
      */
     protected function _setInvokeArgs(array $args = array())
     {
@@ -312,7 +312,7 @@ abstract class Zend_Controller_Action
      * 
      * @param string $paramName 
      * @param mixed $value 
-     * @return self
+     * @return Zend_Controller_Action
      */
     final protected function _setParam($paramName, $value)
     {

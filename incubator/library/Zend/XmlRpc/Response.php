@@ -84,7 +84,7 @@ class Zend_XmlRpc_Response
      * Set encoding to use in response
      * 
      * @param string $encoding 
-     * @return self
+     * @return Zend_XmlRpc_Response
      */
     public function setEncoding($encoding)
     {

@@ -172,7 +172,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * 
      * @param string $key 
      * @param mixed $value 
-     * @return self
+     * @return Zend_Controller_Request_Http
      */
     public function set($key, $value)
     {
@@ -279,7 +279,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * If no request URI is passed, uses the value in $_SERVER or $_SERVER['HTTP_X_REWRITE_URL']
      * 
      * @param string $requestUri 
-     * @return self
+     * @return Zend_Controller_Request_Http
      */
     public function setRequestUri($requestUri = null) 
     { 
@@ -337,7 +337,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * and ORIG_SCRIPT_NAME in its determination.
      * 
      * @param mixed $baseUrl 
-     * @return self
+     * @return Zend_Controller_Request_Http
      */
     public function setBaseUrl($baseUrl = null) 
     { 
@@ -411,7 +411,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * Set the base path for the URL
      * 
      * @param string|null $basePath 
-     * @return self
+     * @return Zend_Controller_Request_Http
      */
     public function setBasePath($basePath = null) 
     { 
@@ -452,7 +452,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * Set the PATH_INFO string
      * 
      * @param string|null $pathInfo 
-     * @return self
+     * @return Zend_Controller_Request_Http
      */
     public function setPathInfo($pathInfo = null) 
     { 
@@ -506,7 +506,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * 
      * @param mixed $key 
      * @param mixed $value 
-     * @return self
+     * @return Zend_Controller_Request_Http
      */
     public function setParam($key, $value) 
     { 
@@ -563,7 +563,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * using the keys specified in the array.
      * 
      * @param array $params 
-     * @return self
+     * @return Zend_Controller_Request_Http
      */
     public function setParams(array $params) 
     { 
@@ -581,7 +581,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * 
      * @param string $name 
      * @param string $target 
-     * @return self
+     * @return Zend_Controller_Request_Http
      */
     public function setAlias($name, $target) 
     { 

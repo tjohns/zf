@@ -62,7 +62,7 @@ abstract class Zend_Controller_Response_Abstract
      * @param string $name
      * @param string $value
      * @param boolean $replace
-     * @return self
+     * @return Zend_Controller_Response_Abstract
      */
     public function setHeader($name, $value, $replace = false)
     {
@@ -98,7 +98,7 @@ abstract class Zend_Controller_Response_Abstract
     /**
      * Clear headers
      *
-     * @return self
+     * @return Zend_Controller_Response_Abstract
      */
     public function clearHeaders()
     {
@@ -113,7 +113,7 @@ abstract class Zend_Controller_Response_Abstract
      * If body content already defined, this will replace it.
      *
      * @param string $content
-     * @return self
+     * @return Zend_Controller_Response_Abstract
      */
     public function setBody($content)
     {
@@ -125,7 +125,7 @@ abstract class Zend_Controller_Response_Abstract
      * Append content to the body content
      *
      * @param string $content
-     * @return self
+     * @return Zend_Controller_Response_Abstract
      */
     public function appendBody($content)
     {
@@ -147,7 +147,7 @@ abstract class Zend_Controller_Response_Abstract
      * Register an exception with the response
      * 
      * @param Exception $e 
-     * @return self
+     * @return Zend_Controller_Response_Abstract
      */
     public function setException(Exception $e)
     {

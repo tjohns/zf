@@ -155,7 +155,7 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
      *
      * Returns the object instance, as it is its own template engine
      * 
-     * @return self
+     * @return Zend_View_Abstract
      */
     public function getEngine()
     {

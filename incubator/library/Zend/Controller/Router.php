@@ -68,7 +68,7 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
      * 
      * @param string $name
      * @param mixed $value 
-     * @return self
+     * @return Zend_Controller_Router
      */
     public function setParam($name, $value)
     {
@@ -81,7 +81,7 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
      * Set parameters to pass to action controller constructors
      * 
      * @param array $params 
-     * @return self
+     * @return Zend_Controller_Router
      */
     public function setParams(array $params)
     {
@@ -122,7 +122,7 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
      * each.
      * 
      * @param null|string|array single key or array of keys for params to clear
-     * @return self
+     * @return Zend_Controller_Router
      */
     public function clearParams($name = null)
     {

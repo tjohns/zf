@@ -112,7 +112,7 @@ class Zend_Controller_Front
     /**
      * Singleton instance
      * 
-     * @return self
+     * @return Zend_Controller_Front
      */
     public static function getInstance()
     {
@@ -177,7 +177,7 @@ class Zend_Controller_Front
      * Convenience method, passthru to Zend_Controller_Dispatcher::addControllerDirectory()
      * 
      * @param string $directory 
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function addControllerDirectory($directory)
     {
@@ -190,7 +190,7 @@ class Zend_Controller_Front
      *
      * @param string|array $directory Path to Zend_Controller_Action controller 
      * classes or array of such paths
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function setControllerDirectory($directory)
     {
@@ -212,7 +212,7 @@ class Zend_Controller_Front
      * Set the default controller (unformatted string)
      *
      * @param string $controller
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function setDefaultController($controller)
     {
@@ -235,7 +235,7 @@ class Zend_Controller_Front
      * Set the default action (unformatted string)
      *
      * @param string $action
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function setDefaultAction($action)
     {
@@ -263,7 +263,7 @@ class Zend_Controller_Front
      *
      * @param string|Zend_Controller_Request_Abstract $request
      * @throws Zend_Controller_Exception if invalid request class
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function setRequest($request)
     {
@@ -301,7 +301,7 @@ class Zend_Controller_Front
      *
      * @param string|Zend_Controller_Router_Interface $router
      * @throws Zend_Controller_Exception if invalid router class
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function setRouter($router)
     {
@@ -339,7 +339,7 @@ class Zend_Controller_Front
      * Set the base URL used for requests
      * 
      * @param string $base
-     * @return self
+     * @return Zend_Controller_Front
      * @throws Zend_Controller_Exception for non-string $base
      */
     public function setBaseUrl($base)
@@ -369,7 +369,7 @@ class Zend_Controller_Front
      * call the action method of the controller.
      *
      * @param Zend_Controller_Dispatcher_Interface $dispatcher
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function setDispatcher(Zend_Controller_Dispatcher_Interface $dispatcher)
     {
@@ -404,7 +404,7 @@ class Zend_Controller_Front
      *
      * @param string|Zend_Controller_Response_Abstract $response
      * @throws Zend_Controller_Exception if invalid response class
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function setResponse($response)
     {
@@ -436,7 +436,7 @@ class Zend_Controller_Front
      *
      * @param string $name
      * @param mixed $value
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function setParam($name, $value)
     {
@@ -449,7 +449,7 @@ class Zend_Controller_Front
      * Set parameters to pass to action controller constructors
      *
      * @param array $params
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function setParams(array $params)
     {
@@ -490,7 +490,7 @@ class Zend_Controller_Front
      * each.
      * 
      * @param null|string|array single key or array of keys for params to clear
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function clearParams($name = null)
     {
@@ -513,7 +513,7 @@ class Zend_Controller_Front
      * Register a plugin.
      *
      * @param Zend_Controller_Plugin_Abstract $plugin
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin)
     {
@@ -525,7 +525,7 @@ class Zend_Controller_Front
      * Unregister a plugin.
      *
      * @param Zend_Controller_Plugin_Abstract $plugin
-     * @return self
+     * @return Zend_Controller_Front
      */
     public function unregisterPlugin(Zend_Controller_Plugin_Abstract $plugin)
     {

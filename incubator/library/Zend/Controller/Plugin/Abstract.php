@@ -48,7 +48,7 @@ abstract class Zend_Controller_Plugin_Abstract
      * Set request object
      * 
      * @param Zend_Controller_Request_Abstract $request 
-     * @return self
+     * @return Zend_Controller_Plugin_Abstract
      */
     public function setRequest(Zend_Controller_Request_Abstract $request) 
     {
@@ -70,7 +70,7 @@ abstract class Zend_Controller_Plugin_Abstract
      * Set response object
      * 
      * @param Zend_Controller_Response_Abstract $response 
-     * @return self
+     * @return Zend_Controller_Plugin_Abstract
      */
     public function setResponse(Zend_Controller_Response_Abstract $response) 
     {

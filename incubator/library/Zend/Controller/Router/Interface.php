@@ -48,7 +48,7 @@ interface Zend_Controller_Router_Interface
      * 
      * @param string $name 
      * @param mixed $param 
-     * @return self
+     * @return Zend_Controller_Router_Interface
      */
     public function setParam($name, $value);
 
@@ -56,7 +56,7 @@ interface Zend_Controller_Router_Interface
      * Set an array of a parameters to pass to helper object constructors
      * 
      * @param array $params 
-     * @return self
+     * @return Zend_Controller_Router_Interface
      */
     public function setParams(array $params);
 
@@ -83,7 +83,7 @@ interface Zend_Controller_Router_Interface
      * each.
      * 
      * @param null|string|array single key or array of keys for params to clear
-     * @return self
+     * @return Zend_Controller_Router_Interface
      */
     public function clearParams($name = null);
 }

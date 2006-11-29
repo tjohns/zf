@@ -276,7 +276,7 @@ class Zend_XmlRpc_Server
      * Set encoding
      * 
      * @param string $encoding 
-     * @return self
+     * @return Zend_XmlRpc_Server
      */
     public function setEncoding($encoding)
     {
@@ -417,7 +417,7 @@ class Zend_XmlRpc_Server
      * Set the request object
      * 
      * @param string|Zend_XmlRpc_Request $request 
-     * @return self
+     * @return Zend_XmlRpc_Server
      * @throws Zend_XmlRpc_Server_Exception on invalid request class or object
      */
     public function setRequest($request)

@@ -141,7 +141,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Add a single path to the controller directory stack
      * 
      * @param string $path 
-     * @return self
+     * @return Zend_Controller_Dispatcher
      */
     public function addControllerDirectory($path)
     {
@@ -156,7 +156,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Sets the directory(ies) where the Zend_Controller_Action class files are stored.
      *
      * @param string|array $path
-     * @return self
+     * @return Zend_Controller_Dispatcher
      */
     public function setControllerDirectory($path)
     {
@@ -205,7 +205,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * 
      * @param string $name
      * @param mixed $value 
-     * @return self
+     * @return Zend_Controller_Dispatcher
      */
     public function setParam($name, $value)
     {
@@ -218,7 +218,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Set parameters to pass to action controller constructors
      * 
      * @param array $params 
-     * @return self
+     * @return Zend_Controller_Dispatcher
      */
     public function setParams(array $params)
     {
@@ -259,7 +259,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * each.
      * 
      * @param null|string|array single key or array of keys for params to clear
-     * @return self
+     * @return Zend_Controller_Dispatcher
      */
     public function clearParams($name = null)
     {
@@ -282,7 +282,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Set response object to pass to action controllers
      * 
      * @param Zend_Controller_Response_Abstract|null $response 
-     * @return self
+     * @return Zend_Controller_Dispatcher
      */
     public function setResponse(Zend_Controller_Response_Abstract $response = null)
     {
@@ -304,7 +304,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Set the default controller (minus any formatting)
      * 
      * @param string $controller 
-     * @return self
+     * @return Zend_Controller_Dispatcher
      */
     public function setDefaultController($controller)
     {
@@ -325,7 +325,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * Set the default action (minus any formatting)
      * 
      * @param string $action 
-     * @return self
+     * @return Zend_Controller_Dispatcher
      */
     public function setDefaultAction($action)
     {

@@ -123,7 +123,7 @@ class Zend_XmlRpc_Fault
      * Set the fault code
      * 
      * @param int $code 
-     * @return self
+     * @return Zend_XmlRpc_Fault
      */
     public function setCode($code)
     {
@@ -145,7 +145,7 @@ class Zend_XmlRpc_Fault
      * Retrieve fault message
      * 
      * @param string
-     * @return self
+     * @return Zend_XmlRpc_Fault
      */
     public function setMessage($message)
     {
@@ -167,7 +167,7 @@ class Zend_XmlRpc_Fault
      * Set encoding to use in fault response
      * 
      * @param string $encoding 
-     * @return self
+     * @return Zend_XmlRpc_Fault
      */
     public function setEncoding($encoding)
     {

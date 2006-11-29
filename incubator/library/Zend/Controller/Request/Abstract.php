@@ -64,7 +64,7 @@ abstract class Zend_Controller_Request_Abstract
      * Set the controller name to use
      * 
      * @param string $value 
-     * @return self
+     * @return Zend_Controller_Request_Abstract
      */
     public function setControllerName($value)
     {
@@ -86,7 +86,7 @@ abstract class Zend_Controller_Request_Abstract
      * Set the action name 
      * 
      * @param string $value 
-     * @return self
+     * @return Zend_Controller_Request_Abstract
      */
     public function setActionName($value)
     {
@@ -108,7 +108,7 @@ abstract class Zend_Controller_Request_Abstract
      * Set the controller key
      * 
      * @param string $key 
-     * @return self
+     * @return Zend_Controller_Request_Abstract
      */
     public function setControllerKey($key)
     {
@@ -130,7 +130,7 @@ abstract class Zend_Controller_Request_Abstract
      * Set the action key 
      * 
      * @param string $key 
-     * @return self
+     * @return Zend_Controller_Request_Abstract
      */
     public function setActionKey($key)
     {
@@ -159,7 +159,7 @@ abstract class Zend_Controller_Request_Abstract
      * 
      * @param string $key 
      * @param mixed $value 
-     * @return self
+     * @return Zend_Controller_Request_Abstract
      */
     public function setParam($key, $value)
     {
@@ -182,7 +182,7 @@ abstract class Zend_Controller_Request_Abstract
      * Set action parameters en masse; does not overwrite
      * 
      * @param array $array 
-     * @return self
+     * @return Zend_Controller_Request_Abstract
      */
     public function setParams(array $array)
     {
@@ -194,7 +194,7 @@ abstract class Zend_Controller_Request_Abstract
      * Set flag indicating whether or not request has been dispatched
      * 
      * @param boolean $flag 
-     * @return self
+     * @return Zend_Controller_Request_Abstract
      */
     public function setDispatched($flag = true)
     {
