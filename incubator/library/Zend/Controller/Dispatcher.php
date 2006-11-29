@@ -441,6 +441,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $action = $request->getActionName();
         if (empty($action)) {
             $action = $this->getDefaultAction();
+            $request->setActionName($action);
         }
         $action = $this->formatActionName($action);
 
