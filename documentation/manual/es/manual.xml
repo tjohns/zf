@@ -118,7 +118,18 @@
     </chapter>
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
-        &module_specs.Zend_Mail;
+        &module_specs.Zend_Mail-Introduction;
+        &module_specs.Zend_Mail-Sending;
+        &module_specs.Zend_Mail-MultipleEmails;
+        &module_specs.Zend_Mail-DifferentTransports;
+        &module_specs.Zend_Mail-HtmlMails;
+        &module_specs.Zend_Mail-Attachments;
+        &module_specs.Zend_Mail-AddingRecipients;
+        &module_specs.Zend_Mail-Boundary;
+        &module_specs.Zend_Mail-AdditionalHeaders;
+        &module_specs.Zend_Mail-CharacterSets;
+        &module_specs.Zend_Mail-Encoding;
+        &module_specs.Zend_Mail-SmtpAuthentication;
     </chapter>
     <chapter id="zend.mime">
         <title>Zend_Mime</title>
