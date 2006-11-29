@@ -332,9 +332,19 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     /**
      * Set the base URL of the request; i.e., the segment leading to the script name
      *
-     * If a boolean true $baseUrl is provided, attempts to determine the base 
-     * URL from the environment, using SCRIPT_FILENAME, SCRIPT_NAME, PHP_SELF, 
-     * and ORIG_SCRIPT_NAME in its determination.
+     * E.g.:
+     * - /admin
+     * - /myapp
+     * - /subdir/index.php
+     *
+     * Do not use the full URI when providing the base. The following are 
+     * examples of what not to use:
+     * - http://example.com/admin (should be just /admin)
+     * - http://example.com/subdir/index.php (should be just /subdir/index.php)
+     *
+     * If no $baseUrl is provided, attempts to determine the base URL from the 
+     * environment, using SCRIPT_FILENAME, SCRIPT_NAME, PHP_SELF, and 
+     * ORIG_SCRIPT_NAME in its determination.
      * 
      * @param mixed $baseUrl 
      * @return Zend_Controller_Request_Http

@@ -337,18 +337,31 @@ class Zend_Controller_Front
 
     /**
      * Set the base URL used for requests
+     *
+     * Use to set the base URL segment of the REQUEST_URI to use when 
+     * determining PATH_INFO, etc. Examples:
+     * - /admin
+     * - /myapp
+     * - /subdir/index.php
+     *
+     * Note that the URL should not include the full URI. Do not use:
+     * - http://example.com/admin
+     * - http://example.com/myapp
+     * - http://example.com/subdir/index.php
+     *
+     * If a null value is passed, this can be used as well for autodiscovery (default).
      * 
      * @param string $base
      * @return Zend_Controller_Front
      * @throws Zend_Controller_Exception for non-string $base
      */
-    public function setBaseUrl($base)
+    public function setBaseUrl($base = null)
     {
-        if (!is_string($base)) {
+        if (!is_string($base) && (null !== $base)) {
             throw new Zend_Controller_Exception('Rewrite base must be a string');
         }
 
-        $this->_baseUrl = (string) $base;
+        $this->_baseUrl = $base;
 
         return $this;
     }
