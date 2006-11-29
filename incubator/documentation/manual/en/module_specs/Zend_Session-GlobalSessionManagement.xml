@@ -76,7 +76,7 @@ Zend_Session_Core::setOptions($config->asArray());
 
 
 ; Our sandbox server uses the same settings as our live server,
-; except as overriden below:
+; except as overridden below:
 [sandbox : live]
 ; Don't forget to create this directory and make it rwx (readable and modifiable) by PHP.
 save_path = /home/myaccount/zend_sessions/myapp
@@ -85,6 +85,46 @@ use_only_cookies = on
 remember_me_seconds = 864000
 ]]></programlisting>
             </example>
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.options">
+
+        <title>Options</title>
+
+        <para>
+            Most options shown above need no explanation beyond that found in the standard PHP documentation.
+            <itemizedlist mark='opencircle'>
+                <listitem>
+                    <para>
+                        boolean <code>strict</code> - disables automatic starting of <code>Zend_Session_Core</code> when
+                        using <code>new Zend_Session()</code>.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        integer <code>remember_me_seconds</code> - how long should session id cookie persist, after user
+                        agent has ended (i.e. browser window closed)
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        string <code>save_path</code> - The correct value is system dependent, and should be provided by
+                        the developer using an <emphasis role="strong">absolute path</emphasis> to a directory readable
+                        and writable by the PHP process.
+                    </para>
+                    <note>
+                        <title>Security Risk</title>
+                        <para>
+                            If this path is shared with other users or PHP applications, various security issues might
+                            occur, including theft of session content, hijacking of sessions, and collision of garbage
+                            collection (e.g. another user's application might cause PHP to delete your application's
+                            session files).
+                        </para>
+                    </note>
+                </listitem>
+            </itemizedlist>
         </para>
 
     </sect2>
