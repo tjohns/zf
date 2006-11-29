@@ -844,16 +844,16 @@ class Zend_Date_DateObject {
      * @param bool $rise      - true: sunrise, false: sunset
      * @return mixed  - false: midnight sun, integer: 
      */
-    public function calcSun($location, $horizon, $rise = true)
+    public function calcSun($location, $horizon, $rise = false)
     {
         // timestamp within 32bit
         if (abs($this->_unixtimestamp) <= 0x7FFFFFFF) {
-            if ($rise === true) {
-                return date_sunrise($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
-                                     $location['longitude'], $horizon, $this->_gmtDifference());
+            if ($rise === false) {
+                return date_sunset($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
+                                   $location['longitude'], 90 + $horizon, $this->_gmtDifference() / 3600);
             }
-            return date_sunset($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
-                                 $location['longitude'], $horizon, $this->_gmtDifference());
+            return date_sunrise($this->_unixtimestamp, SUNFUNCS_RET_TIMESTAMP, $location['latitude'],
+                                $location['longitude'], 90 + $horizon, $this->_gmtDifference() / 3600);
         }
 
         // self calculation - timestamp bigger than 32bit

@@ -227,12 +227,49 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->dayOfWeek(2050, 1, 8), 6);
         $this->assertSame($date->dayOfWeek(1500, 1, 1), 4);
     }
-    
-    public function testCalcSun()
+
+    public function testCalcSunInternal()
     {
-        $this->markTestIncomplete('included soon');
+        $date = new Zend_Date_DateObject(10000000);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => -29), -0.0145439, true),  9961681);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => -29), -0.0145439, false), 10010367);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => -29), -0.0145439, true),  9967006);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => -29), -0.0145439, false), 10005042);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' =>  29), -0.0145439, true),  9947773);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' =>  29), -0.0145439, false), 9996438);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' =>  29), -0.0145439, true),  9953077);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' =>  29), -0.0145439, false), 9991134);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => 129), -0.0145439, true),  9923795);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => 129), -0.0145439, false), 9972422);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => 129), -0.0145439, true),  9929062);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => 129), -0.0145439, false), 9967155);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' =>-129), -0.0145439, true),  9985660);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' =>-129), -0.0145439, false), 10034383);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' =>-129), -0.0145439, true),  9991022);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' =>-129), -0.0145439, false), 10029021);
     }
-    
+
+    public function testCalcSunExternal()
+    {
+        $date = new Zend_Date_DateObject(-14830988400);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => -29), -0.0145439, true),  -14830008411);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => -29), -0.0145439, false), -14829974084);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => -29), -0.0145439, true),  -14830017896);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => -29), -0.0145439, false), -14829964616);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' =>  29), -0.0145439, true),  -14830022333);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' =>  29), -0.0145439, false), -14829988011);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' =>  29), -0.0145439, true),  -14830031824);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' =>  29), -0.0145439, false), -14829978538);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => 129), -0.0145439, true),  -14829959936);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' => 129), -0.0145439, false), -14830012024);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => 129), -0.0145439, true),  -14829969437);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' => 129), -0.0145439, false), -14830002541);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' =>-129), -0.0145439, true),  -14829984408);
+        $this->assertSame($date->calcSun(array('latitude' =>  38.4, 'longitude' =>-129), -0.0145439, false), -14830036471);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' =>-129), -0.0145439, true),  -14829993883);
+        $this->assertSame($date->calcSun(array('latitude' => -38.4, 'longitude' =>-129), -0.0145439, false), -14830027014);
+    }
+
     public function testGetDate()
     {
         $this->markTestIncomplete('included soon');
