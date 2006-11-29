@@ -12,7 +12,7 @@ Zend::exception($class, $message, $code);
     <para>
         Argument <code>$class</code> określa klasę wyjątku do załadowania i 
         utworzenia instancji, która jest ładowana za pomocą 
-        <xref linkend="zend.loadclass">Zend::loadClass()</xref>; 
+        <xref linkend="zend.loadclass" />; 
         Klasa musi być nazwana zgodnie z konwencjami nazewnictwa przyjętymi
         we frameworku i musi znajdować się gdzieś wewnątrz <code>include_path</code>.
     </para>
