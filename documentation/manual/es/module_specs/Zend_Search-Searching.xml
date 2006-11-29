@@ -1,8 +1,8 @@
 <sect1 id="zend.search.searching">
-	<title>Searching an Index</title>
+    <title>Searching an Index</title>
 
-	<sect2 id="zend.search.searching.query-parser">
-		<title>Building Queries</title>
+    <sect2 id="zend.search.searching.query-parser">
+        <title>Building Queries</title>
 
         <para>
             There are two ways to search the index. The first method uses
@@ -16,25 +16,32 @@
 
             <orderedlist>
                 <listitem>
-                    If you are programmatically generating a query string and then parsing
-                    it with the query parser then you should seriously consider building
-                    your queries directly with the query API. In other words, the query
-                    parser is designed for human-entered text, not for program-generated text.
+                    <para>
+                        If you are programmatically generating a query string and then parsing
+                        it with the query parser then you should seriously consider building
+                        your queries directly with the query API. In other words, the query
+                        parser is designed for human-entered text, not for program-generated text.
+                    </para>
                 </listitem>
                 <listitem>
-                    Untokenized fields are best added directly to queries, and not through
-                    the query parser. If a field's values are generated programmatically
-                    by the application, then so should query clauses for this field.
-                    An analyzer, which the query parser uses, is designed to convert
-                    human-entered text to terms. Program-generated values, like dates,
-                    keywords, etc., should be consistently program-generated.
+                    <para>
+                        Untokenized fields are best added directly to queries and not through
+                        the query parser. If a field's values are generated programmatically
+                        by the application, then the query clauses for this field should also
+                        be constructed programmatically.
+                        An analyzer, which the query parser uses, is designed to convert
+                        human-entered text to terms. Program-generated values, like dates,
+                        keywords, etc., should be consistently program-generated.
+                    </para>
                 </listitem>
                 <listitem>
-                    In a query form, fields which are general text should use the query parser.
-                    All others, such as date ranges, keywords, etc. are better added directly
-                    through the query API. A field with a limit set of values, that can be
-                    specified with a pull-down menu should not be added to a query string
-                    which is subsequently parsed, but rather added as a TermQuery clause.
+                    <para>
+                        In a query form, fields that are general text should use the query parser.
+                        All others, such as date ranges, keywords, etc., are better added directly
+                        through the query API. A field with a limited set of values that can be
+                        specified with a pull-down menu should not be added to a query string
+                        that is subsequently parsed but instead should be added as a TermQuery clause.
+                    </para>
                 </listitem>
             </orderedlist>
 
@@ -42,6 +49,7 @@
 
         <para>
             Both ways use the same API method to search through the index:
+        </para>
 
         <programlisting role="php"><![CDATA[<?php
 
@@ -52,7 +60,7 @@ $index = new Zend_Search_Lucene('/data/my_index');
 $index->find($query);
 
 ?>]]></programlisting>
-
+        <para>
             The <code>Zend_Search_Lucene::find()</code> method determines input type automatically and
             uses query parser to construct appropriate Zend_Search_Lucene_Search_Query object
             from a string.
@@ -67,10 +75,10 @@ $index->find($query);
             to <code>find()</code> must pass through <code>strtolower()</code>, or else it
             may not match.
         </para>
-	</sect2>
+    </sect2>
 
-	<sect2 id="zend.search.searching.results">
-		<title>Search Results</title>
+    <sect2 id="zend.search.searching.results">
+        <title>Search Results</title>
         <para>
             The search result is an array of Zend_Search_Lucene_Search_QueryHit objects.  Each of these has
             two properties: <code>$hit->document</code> is a document number within
@@ -82,7 +90,7 @@ $index->find($query);
             The Zend_Search_Lucene_Search_QueryHit object also exposes each field of the Zend_Search_Lucene_Document found by
             the hit as a property of the hit.  In this example, a hit is returned and
             the corresponding document has two fields: title and author.
-
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -92,23 +100,21 @@ $index = new Zend_Search_Lucene('/data/my_index');
 $hits = $index->find($query);
 
 foreach ($hits as $hit) {
-    echo $hit->id;
     echo $hit->score;
-
     echo $hit->title;
     echo $hit->author;
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
         Optionally, the original Zend_Search_Lucene_Document object can be returned from the
         Zend_Search_Lucene_Search_QueryHit.
 
-        You can retrieve indexed parts of the document by using the <code>getDocument()</code>
+        You can retrieve stored parts of the document by using the <code>getDocument()</code>
         method of the index object and then get them by
         <code>getFieldValue()</code> method:
+        </para>
         <programlisting role="php"><![CDATA[<?php
 
 require_once('Zend/Search/Lucene.php');
@@ -132,7 +138,7 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-
+        <para>
         The fields available from the Zend_Search_Lucene_Document object are determined at
         the time of indexing.  The document fields are either indexed, or
         index and stored, in the document by the indexing application
@@ -140,30 +146,29 @@ foreach ($hits as $hit) {
         </para>
 
         <para>
-        Pay attention, that document identity ('path' in our example) is also stored
-        in the index and must be retrieved from them.
+        Note that the document identity ('path' in our example) is also stored
+        in the index and must be retrieved from it.
         </para>
 
-	</sect2>
+    </sect2>
 
 
-	<sect2 id="zend.search.searching.results-scoring">
-		<title>Results Scoring</title>
+    <sect2 id="zend.search.searching.results-scoring">
+        <title>Results Scoring</title>
         <para>
             Zend_Search_Lucene uses the same scoring algorithms as Java Lucene.
-            Saerch results are ordered by score. Hits with greater score come first.
+            Search results are ordered by score. Hits with greater score come first, and
+            documents having higher scores match the query more than documents having lower scores.
         </para>
 
         <para>
-            Different score means, that one document matches the query more then another.
+            Roughly speaking, search hits that contain the searched term or phrase more frequently
+            will have a higher score.
         </para>
 
         <para>
-            Roughly speaking, search hits, which contain searched term or phrase more frequently, have greater score.
+            A scores can be retrieved by accessing the <code>score</code> property of a hit:
         </para>
-
-        <para>
-            Score can be retrived by <code>score</code> property of hit:
         <programlisting role="php"><![CDATA[<?php
 $hits = $index->find($query);
 
@@ -173,14 +178,13 @@ foreach ($hits as $hit) {
 }
 
 ?>]]></programlisting>
-        </para>
 
         <para>
             Zend_Search_Lucene_Search_Similarity class is used to calculate score.
             See <link linkend="zend.search.extending.scoring">Extensibility. Scoring Algorithms</link> section for details.
         </para>
 
-	</sect2>
+    </sect2>
 
 </sect1>
 
