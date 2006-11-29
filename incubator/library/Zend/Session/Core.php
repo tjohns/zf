@@ -292,10 +292,38 @@ final class Zend_Session_Core
      */
     static public function rememberMe($seconds = null)
     {
+        $seconds = (int) $seconds;
+        $seconds = ($seconds > 0) ? $seconds : self::$_rememberMeSeconds;
+        
+        self::rememberUntil($seconds);
+        return;
+    }
+
+
+    /**
+     * forgetMe() - The exact opposite of rememberMe(), a session cookie is ensured to be 'session based'
+     *
+     * @return void
+     */
+    static public function forgetMe()
+    {
+        self::rememberUntil(0); // this will make sure the session is not 'session based'
+        return;
+    }
+    
+    
+    /**
+     * rememberUntil() - This method does the work of changing the state of the session cookie and making
+     * sure that it gets resent to the browser via regenerateId()
+     *
+     * @param int $seconds
+     */
+    static public function rememberUntil($seconds = 0)
+    {
         $cookie_params = session_get_cookie_params();
 
         session_set_cookie_params(
-            ( ($seconds !== null && (int) $seconds > 0) ? $seconds : self::$_localOptions['remember_me_seconds']),
+            $seconds,
             $cookie_params['path'], 
             $cookie_params['domain'], 
             $cookie_params['secure']
@@ -303,25 +331,6 @@ final class Zend_Session_Core
             
         // normally "rememberMe()" represents a security context change, so should use new session id
         self::regenerateId();
-        return;
-    }
-    
-    
-    /**
-     * forgetMe() - This will make sure to kill the session cookie on the users browser.
-     *
-     * @return void
-     */
-    static public function forgetMe()
-    {
-        if ( headers_sent($filename, $linenum) && (self::$debugMode !== true) ) {
-            throw new Zend_Session_Exception(__CLASS__ . "::forgetMe() Must be called prior to headers being sent; output started in {$filename}/{$linenum}");
-        }
-        
-        $_SESSION = null;
-        $cookie_params = session_get_cookie_params();
-        setcookie(session_name(), $_COOKIE[session_name()], time()-630720000, $cookie_params['path'], $cookie_params['domain'], $cookie_params['secure']);
-        
         return;
     }
     
@@ -363,7 +372,7 @@ final class Zend_Session_Core
             throw new Zend_Session_Exception(__CLASS__ . '::start() can only be called once.');
         }
 
-		// See http://www.php.net/manual/en/ref.session.php for explanation
+        // See http://www.php.net/manual/en/ref.session.php for explanation
         if (defined('SID')) {
             throw new Zend_Session_Exception(__CLASS__ . '::session has already been started (by session.auto-start or session_start()?)');
         }
@@ -491,6 +500,30 @@ final class Zend_Session_Core
         return;
     }
 
+    
+    /**
+     * destroy() - This is used to destroy session data, and optionally, the session cookie itself
+     *
+     * @param bool $remove_cookie
+     */
+    static public function destroy($remove_cookie = false)
+    {
+        session_destroy();
+        
+        if ($remove_cookie && isset($_COOKIE[session_name()])) {
+            $cookie_params = session_get_cookie_params();
+            
+            setcookie(
+                session_name(), 
+                false,
+                315554400, // strtotime('1980-01-01'),
+                $cookie_params['path'],
+                $cookie_params['domain'],
+                $cookie_params['secure']
+                );
+        }
+    }
+    
     
     /**
      * _processGlobalMetadata() - this method initizes the sessions GLOBAL 
@@ -714,6 +747,8 @@ final class Zend_Session_Core
      */
     public function namespaceUnset($namespace, $name = null) 
     {
+        $name = (string) $name;
+        
         // check to see if the api wanted to remove a var from a namespace or a namespace
         if ($name === null) {
             unset($_SESSION[$namespace]);
@@ -742,6 +777,8 @@ final class Zend_Session_Core
      */
     public function namespaceSet($namespace, $name, $value) 
     {
+        $name = (string) $name;
+        
         $_SESSION[$namespace][$name] = $value;
         return;
     }
