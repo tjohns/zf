@@ -1,5 +1,3 @@
-<appendix id="zend.locale.appendix.languages">
-    <title>Appendix Languages</title>
     <sect1 id="zend.locale.appendix.languages.intro">
         <title>Supported languages for locales</title>
         <para>
@@ -405,8 +403,6 @@
             </para>
         </sect2>
     </sect1>
-</appendix>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->
