@@ -14,7 +14,7 @@ Zend::exception($class, $message, $code);
     <para>
         引数 <code>$class</code> で、実際に読み込んでインスタンスを作成する
         例外クラスを指定します。クラスを読み込む際には
-        <xref linkend="zend.loadclass">Zend::loadClass()</xref> を使用します。
+        <xref linkend="zend.loadclass" /> を使用します。
         つまり、読み込むクラスはこのフレームワークの命名規約に従ったものでなければならず、
         また PHP の <code>include_path</code> に存在しなければなりません。
     </para>
