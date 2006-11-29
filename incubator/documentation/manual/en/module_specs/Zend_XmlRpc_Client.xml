@@ -112,7 +112,7 @@ $service->serviceProcedure($p1, $p2);
             <para>
                 Parameters passed as <code>Zend_XmlRpc_Value</code> objects. You can create one of the
                 <code>Zend_XmlRpc_Value</code> instances to specify the exact XML-RPC type of your parameters.
-                The main reasons for explictly specifing the XML-RPC types are:
+                The main reasons for explicitly specifying the XML-RPC types are:
                 <itemizedlist>
                     <listitem>
                         <para>
@@ -129,7 +129,7 @@ $service->serviceProcedure($p1, $p2);
                     </listitem>
                     <listitem>
                         <para>
-                            When auto-convertion may fail (i.e. you want to pass an empty XML-RPC struct
+                            When auto-conversion may fail (i.e. you want to pass an empty XML-RPC struct
                             as a parameter. Empty structs are represented as empty arrays in PHP but,
                             if you give an empty array as a parameter it will be auto-converted to an XML-RPC
                             array since it's not an associative array)
@@ -202,7 +202,7 @@ $service->serviceProcedure($p1, $p2);
  * 2 parameters are passed to this procedure:
  *    - The first parameter is an XML-RPC base64 type that is created using the 
  *      static Zend_XmlRpc_Value::getXmlRpcValue() function
- *    - The second parameter is an XML-RPC structure that is created explictly
+ *    - The second parameter is an XML-RPC structure that is created explicitly
  */
 
 $p1 = Zend_XmlRpc_Value::getXmlRpcValue('encoded string', Zend_XmlRpc_Value::XMLRPC_TYPE_BASE64);
@@ -225,7 +225,7 @@ $service->serviceProcedure($p1, $p2);
         <sect3 id='zend.xmlrpc.client.parameters.as_xml'>
             <title>Parse an XML string into XML-RPC parameter</title>
             <para>
-                This method of passing parameters is used internaly in the <code>Zend_XmlRpc</code>
+                This method of passing parameters is used internally in the <code>Zend_XmlRpc</code>
                 package and it's not recommended.
             </para>
             <para>
@@ -241,7 +241,7 @@ $service->serviceProcedure($p1, $p2);
         <title>Type hinting of parameters</title>
         <para>
             The main difference between the XML-RPC and SOAP web services is the WSDL file. The SOAP protocol
-            usualy has a WSDL file that describes the interface to the web service. According to this interface,
+            usually has a WSDL file that describes the interface to the web service. According to this interface,
             the SOAP client knows what are the necessary parameter types it has to send to the server
             and what is the return value type. Without the WSDL file, the user might have a problem knowing
             these types.
@@ -281,7 +281,7 @@ $service->serviceProcedure($p1, $p2);
             <programlisting role="php"><![CDATA[<?php
               
 /**
- * Connect to an XML-RPC server, and save it's signatures file (the XML-RPC eqvivilant to a SOAP WSDL file)
+ * Connect to an XML-RPC server, and save it's signatures file (the XML-RPC equivalent to a SOAP WSDL file)
  */
 require_once 'Zend/XmlRpc/Client.php';
 
