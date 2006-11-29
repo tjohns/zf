@@ -18,7 +18,7 @@ Zend::exception($class, $message, $code);
     <para>
         Аргумент <code>$class</code> определяет класс исключения для загрузки и
         инстанцирования. Класс загружается с помощью
-        <xref linkend="zend.loadclass">Zend::loadClass()</xref>, поэтому он
+        <xref linkend="zend.loadclass" />, поэтому он
         должен следовать соглашению по именованию классов фреймворка и быть
         размещенным по пути, указанному в <code>include_path</code>. 
 <!--
