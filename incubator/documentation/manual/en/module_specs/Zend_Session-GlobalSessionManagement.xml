@@ -129,4 +129,43 @@ remember_me_seconds = 864000
 
     </sect2>
 
+    <sect2 id="zend.session.rememberme">
+
+        <title>rememberMe(integer $seconds)</title>
+
+        <para>
+            Ordinarily, sessions end when the user agent ends its "session", such as when an end user closes their
+            browser window. However, when a user logs in to your website, they might want their virtual session to last
+            for 24 hours, or even longer. Forum software commonly gives the user a choice for how long their session
+            should last. Use <code>Zend_Session_Core::rememberMe()</code> to send an updated session cookie to the user
+            agent with a lifetime defaulting to <code>remember_me_seconds</code>, which is set to 2 weeks, unless you
+            modify that value using <code>setOptions()</code>.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.forgetme">
+
+        <title>forgetMe()</title>
+
+        <para>
+            This function complements <code>rememberMe()</code> by changing the session cookie back to a lifetime ending
+            when the user agent ends its session (e.g. user closes their browser window).
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.destroy">
+
+        <title>destroy(bool $remove_cookie)</title>
+
+        <para>
+            <code>Zend_Session_Core::destroy()</code> destroys all of the persistent data associated with the current
+            session. However, no variables in PHP are affected, so your namespaced sessions (instances of
+            <code>Zend_Session</code>) remain readable. To complete a "logout", set the optional parameter to true to
+            also delete the user agent's session id cookie.
+        </para>
+
+    </sect2>
+
 </sect1>
