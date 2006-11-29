@@ -101,9 +101,14 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
             $this->assertEquals(0, count($paths));
         } else {
             $this->assertEquals(1, count($paths));
+            $item = $paths[0];
+
+            $prefix = 'Zend_View_' . ucfirst($pathType) . '_';
+            $this->assertEquals($prefix, $item['prefix']);
+
             if ($testReadability) {
-                $this->assertTrue(is_dir($paths[0]));
-                $this->assertTrue(is_readable($paths[0]));	    	
+                $this->assertTrue(is_dir($item['dir']));
+                $this->assertTrue(is_readable($item['dir']));	    	
             }
         }
     }
@@ -117,14 +122,22 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
      */
     protected function _testAddPath($pathType)
     {
-    	$view = new Zend_View();
+    	$view   = new Zend_View();
+        $prefix = 'Zend_View_' . ucfirst($pathType) . '_';
 
     	// introspect default paths and build expected results.
 		$reflector = (array)$view; 
 		$expectedPaths = $reflector["\0Zend_View_Abstract\0_path"][$pathType];
-    	array_unshift($expectedPaths, 'baz' . DIRECTORY_SEPARATOR);
-    	array_unshift($expectedPaths, 'bar' . DIRECTORY_SEPARATOR);
-    	array_unshift($expectedPaths, 'foo' . DIRECTORY_SEPARATOR);
+
+        if ('script' == $pathType) {
+            array_unshift($expectedPaths, 'baz' . DIRECTORY_SEPARATOR);
+            array_unshift($expectedPaths, 'bar' . DIRECTORY_SEPARATOR);
+            array_unshift($expectedPaths, 'foo' . DIRECTORY_SEPARATOR);
+        } else {
+            array_unshift($expectedPaths, array('prefix' => $prefix, 'dir' => 'baz' . DIRECTORY_SEPARATOR));
+            array_unshift($expectedPaths, array('prefix' => $prefix, 'dir' => 'bar' . DIRECTORY_SEPARATOR));
+            array_unshift($expectedPaths, array('prefix' => $prefix, 'dir' => 'foo' . DIRECTORY_SEPARATOR));
+        }
     	
     	// add paths
     	$func = 'add' . ucfirst($pathType) . 'Path';
@@ -136,7 +149,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 		$reflector = (array)$view; 
 		$actualPaths = $reflector["\0Zend_View_Abstract\0_path"][$pathType];
 
-		$this->assertSame($expectedPaths, $actualPaths);
+        $this->assertSame($expectedPaths, $actualPaths);
     }
 
     
@@ -200,7 +213,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
     	try {
 	    	$view->nonexistantHelper();
     	} catch (Zend_View_Exception $e) {
-    		$this->assertRegexp('/helper [\'A-z]+ not found in path/i', $e->getMessage());
+    		$this->assertRegexp('/helper [\'a-z]+ not found in path/i', $e->getMessage());
     		return;
     	}
     }
@@ -222,7 +235,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 			// does not contain the expected class within
 			$view->stubEmpty();	
 		} catch (Zend_View_Exception $e) {
-    		$this->assertRegexp('/loaded but class [\'_A-z]+ not found/i', $e->getMessage());
+    		$this->assertRegexp("/['_a-z]+ not found in path/i", $e->getMessage());
 		}
     }
     
