@@ -25,9 +25,6 @@ require_once 'Zend.php';
 /** Zend_Controller_Dispatcher_Interface */
 require_once 'Zend/Controller/Dispatcher/Interface.php';
 
-/** Zend_Controller_Dispatcher_Exception */
-require_once 'Zend/Controller/Dispatcher/Exception.php';
-
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
@@ -146,7 +143,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     public function addControllerDirectory($path)
     {
         if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
-            throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
+            throw Zend::exception('Zend_Controller_Dispatcher_Exception', "Directory \"$path\" not found or not readable");
         }
 
         return $this->_directories[] = rtrim($path, '/\\');
@@ -163,7 +160,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $dirs = (array) $path;
         foreach ($dirs as $key => $dir) {
             if (!is_dir($dir) or !is_readable($dir)) {
-                throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable");
+                throw Zend::exception('Zend_Controller_Dispatcher_Exception', "Directory \"$dir\" not found or not readable");
             }
             $dirs[$key] = rtrim($dir, '/\\');
         }
@@ -377,7 +374,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          */
         $directories  = $this->getControllerDirectory();
         if (empty($directories)) {
-            throw new Zend_Controller_Dispatcher_Exception('Controller directory never set.  Use setControllerDirectory() first');
+            throw Zend::exception('Zend_Controller_Dispatcher_Exception', 'Controller directory never set.  Use setControllerDirectory() first');
         }
 
         /**
@@ -415,7 +412,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          * If it's not dispatchable, report exceptional behaviour
          */
         if (!$dispatchable) {
-            throw new Zend_Controller_Dispatcher_Exception('"' . $controllerName . '" controller does not exist');
+            throw Zend::exception('Zend_Controller_Dispatcher_Exception', '"' . $controllerName . '" controller does not exist');
         }
 
         /**

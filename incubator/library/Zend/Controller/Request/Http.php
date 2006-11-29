@@ -18,11 +18,11 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/** Zend */
+require_once 'Zend.php';
+
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
-
-/** Zend_Controller_Request_Exception */
-require_once 'Zend/Controller/Request/Exception.php';
 
 /** Zend_Uri */ 
 require_once 'Zend/Uri.php'; 
@@ -32,7 +32,6 @@ require_once 'Zend/Uri.php';
  *
  * HTTP request object for use with Zend_Controller family.
  *
- * @uses Zend_Http_Request
  * @uses Zend_Controller_Request_Abstract
  * @package Zend_Controller
  * @subpackage Request
@@ -160,11 +159,11 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * @param string $key 
      * @param mixed $value 
      * @return void
-     * @throws Zend_Http_Exception
+     * @throws Zend_Controller_Request_Exception
      */
     public function __set($key, $value)
     {
-        throw new Zend_Http_Exception('Setting values in superglobals not allowed; please use setParam()');
+        throw Zend::exception('Zend_Controller_Request_Exception', 'Setting values in superglobals not allowed; please use setParam()');
     }
 
     /**

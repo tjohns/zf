@@ -19,8 +19,8 @@
  */ 
 
 
-/** Zend_Controller_Exception */
-require_once 'Zend/Controller/Exception.php';
+/** Zend */
+require_once 'Zend.php';
 
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
@@ -239,7 +239,7 @@ abstract class Zend_Controller_Action
                  .'() does not exist and was not trapped in __call()';
         }
 
-        throw new Zend_Controller_Exception($msg);
+        throw Zend::exception('Zend_Controller_Exception', $msg);
     }
 
     /**
@@ -380,7 +380,7 @@ abstract class Zend_Controller_Action
     protected function _redirect($url, $code = 302, $prependBase = true)
     {
         if (headers_sent($file, $line)) {
-            throw new Zend_Controller_Exception('Cannot redirect because headers were already been sent in file ' . $file . ', line ' . $line);
+            throw Zend::exception('Zend_Controller_Exception', 'Cannot redirect because headers were already been sent in file ' . $file . ', line ' . $line);
         }
 
         // prevent header injections
@@ -397,7 +397,7 @@ abstract class Zend_Controller_Action
             // headers
             header('HTTP/1.1 ' . $code . ' ' . $this->_redirectCodes[$code]);
         } elseif (302 != $code) {
-            throw new Zend_Controller_Exception('Invalid response code ("' . $code . '") provided');
+            throw Zend::exception('Zend_Controller_Exception', 'Invalid response code ("' . $code . '") provided');
         }
 
         // If relative URL, decide if we should prepend base URL
