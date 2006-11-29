@@ -105,11 +105,16 @@
     </chapter>
     <chapter id="zend.json">
         <title>Zend_Json</title>
-        &module_specs.Zend_Json;
+        &module_specs.Zend_Json-Introduction;
+        &module_specs.Zend_Json-Basics;
+        &module_specs.Zend_Json-Objects;
     </chapter>
     <chapter id="zend.log">
         <title>Zend_Log</title>
-        &module_specs.Zend_Log;
+        &module_specs.Zend_Log-Introduction;
+        &module_specs.Zend_Log-Simple;
+        &module_specs.Zend_Log-Levels;
+        &module_specs.Zend_Log-Advanced;
     </chapter>
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
