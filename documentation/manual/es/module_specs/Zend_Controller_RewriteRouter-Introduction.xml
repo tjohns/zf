@@ -1,0 +1,26 @@
+<sect1 id="zend.controller.rewriterouter.introduction">
+    <title>Introduction</title>
+	<para>
+		Zend_Controller_RewriteRouter is a new version of the framework router. Routing is the process of taking a URI
+		endpoint and decomposing it to determine which controller and action of that controller, should receive the
+		request. This definition of controller, action and optional parameters is packaged into a value object called
+		Zend_Controller_Dispatcher_Token which is then processed by Zend_Controller_Dispatcher. Routing occurs only once:
+		when the request is initially received and before the first controller is dispatched.
+	</para>
+	<para>
+		Zend_Controller_RewriteRouter is designed to allow for mod_rewrite like functionality using pure php
+		structures. It is very loosely based on Ruby on Rails routing and does not require any prior knowledge of
+		webserver URL rewriting. It is designed to work with a single mod_rewrite rule (one of):
+	</para>
+	<programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php]]></programlisting>
+	<programlisting role="php"><![CDATA[
+RewriteEngine on
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1	]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
