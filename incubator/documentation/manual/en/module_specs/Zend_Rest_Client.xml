@@ -55,7 +55,7 @@ if ($result->isSuccess()) {
             will allow you to echo any scalar value - that is of string, integer or boolean values. For complex types, you can use either array or object notation.
         </para>
         <para>
-            If however, you wish to query a service not using <code>Zend_Rest_Server</code> the <code>Zend_Rest_Client_Response</code> object will behave more like a <code>SimpleXMLElement</code>. However, to make things easier, it will automatically query the XML using XPath if the property is not a direct descendent of the document root element.
+            If however, you wish to query a service not using <code>Zend_Rest_Server</code> the <code>Zend_Rest_Client_Response</code> object will behave more like a <code>SimpleXMLElement</code>. However, to make things easier, it will automatically query the XML using XPath if the property is not a direct descendant of the document root element.
         </para>
         <example>
             <title>Using Technorati's Rest Service</title>
@@ -141,7 +141,7 @@ $client->arg('value1')->arg2('value2')->get();
 		<warning>
 		    <title>Strictness of Zend_Rest_Client</title>
 		    <para>
-				Any REST service that is strict about the arguments it recieves will likely fail
+				Any REST service that is strict about the arguments it receives will likely fail
 				using <code>Zend_Rest_Client</code>, because of the behavior described
 				above, this is not a common practice and should not cause problems.
 		    </para>
