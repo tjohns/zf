@@ -1,0 +1,29 @@
+<sect1 id="zend.loadclass">
+    <title>Zend::loadClass()</title>
+    <para>
+    <code>Zend::loadClass()</code> carga un fichero PHP cuyo nombre está formateado como
+    "<code>$className.php</code>", y chequea la existencia de la clase <code>$className</code>.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+loadClass($class, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+    Si el fichero no se encuentra o la clase no existe después de cargarlo, una excepción <code>Zend_Exception</code> es
+    lanzada. <code>Zend::loadFile()</code> se utiliza para cargar, y el argumento <code>$dirs</code> es pasado
+    directamente a ella..
+    </para>
+
+    <para>
+    Si preguntas por una clase con subrayados en el nombre, y <code>$dirs</code> es null (por defecto),
+    <code>Zend::loadClass()</code> auto-descubrirá el <code>$dirs</code> del nombre de la clase
+    convirtiendo los caracteres de subrayado a separadores de directorios.  Por ejemplo, si <code>$class</code> es
+    <code>Zend_Example_Class</code>, esto se mapeará a un camino en la forma <code>Zend/Example/Class.php</code>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

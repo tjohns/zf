@@ -1,0 +1,33 @@
+<sect1 id="zend.dump">
+    <title>Zend::dump()</title>
+
+    <para>
+    <code>Zend::dump()</code> imprime y/o devuelve información sobre una expresión.  Es un wrapper
+    para la función PHP <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>. Esta
+    envuelve la salida con tags (X)HTML <code>&lt;pre&gt;</code> y opcionalmente añade previamente una etiqueta.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+dump($var, $label=null, $echo=true)
+
+?>]]></programlisting>
+
+    <para>
+    El argumento <code>$var</code> especifica la expresión o variable para cual la información será
+    obtenida.
+    </para>
+
+    <para>
+    La etiqueta <code>$label</code> es un texto arbitrario para añadir previamnte a la salida de
+    <code>Zend::dump()</code>.  Esto es útil cuando descarga varias variables en una única pantalla.
+    </para>
+
+    <para>El boleano <code>$echo</code> controla si la salida de <code>Zend::dump()</code> es impresa
+    o no.  Si es <code>TRUE</code>, la salida será impresa.  Independientemente del estado de
+    <code>$echo</code>, la salida es siempre devuelta.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
