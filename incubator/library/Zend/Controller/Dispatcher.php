@@ -25,6 +25,9 @@ require_once 'Zend.php';
 /** Zend_Controller_Dispatcher_Interface */
 require_once 'Zend/Controller/Dispatcher/Interface.php';
 
+/** Zend_Controller_Dispatcher_Exception */
+require_once 'Zend/Controller/Dispatcher/Exception.php';
+
 /** Zend_Controller_Request_Abstract */
 require_once 'Zend/Controller/Request/Abstract.php';
 
@@ -409,14 +412,10 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         }
 
         /**
-         * If not dispatchable, get the default controller; if this is already 
-         * the default controller, throw an exception
+         * If it's not dispatchable, report exceptional behaviour
          */
         if (!$dispatchable) {
-            if ($controllerName == $this->getDefaultController()) {
-                throw new Zend_Controller_Dispatcher_Exception('Default controller class not defined');
-            }
-            $className = $this->formatControllerName($this->getDefaultController());
+            throw new Zend_Controller_Dispatcher_Exception('"' . $controllerName . '" controller does not exist');
         }
 
         /**
@@ -467,7 +466,5 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 
         // Destroy the page controller instance and reflection objects
         $controller = null;
-        $reflection = null;
-        $method     = null;
     }
 }
