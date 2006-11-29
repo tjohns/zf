@@ -71,7 +71,7 @@ foreach ($feed as $entry) {
                 <para><code>title</code> - The entry's title, same as RSS item titles</para>
             </listitem>
             <listitem>
-                <para><code>link</code> - A link to another format an an alternate view of this entry</para>
+                <para><code>link</code> - A link to another format or an alternate view of this entry</para>
             </listitem>
             <listitem>
                 <para><code>summary</code> - A summary of this entry's content</para>

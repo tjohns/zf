@@ -78,7 +78,7 @@
 			
 			<para>
 				The <code>Zend_Controller</code> classes are stored in the library directory as follows:
-
+            </para>
     <programlisting role="php"><![CDATA[
 /library
   /Zend
@@ -87,7 +87,7 @@
       Dispatcher.php
       Router.php
 ]]></programlisting>			
-
+            <para>
 				When subclassing <code>Zend_Controller</code> classes, it is recommended that the new classes
 				be stored in an identical structure under your prefix.  This will make them easy to find for
 				someone during that learning process of reviewing the code for your project.  
@@ -95,7 +95,7 @@
 			
 			<para>
 				For example, a project from Widget, Inc. which implements only a custom router might look like this:
-				
+			</para>	
 <programlisting role="php"><![CDATA[
 /library
   /Zend
@@ -104,7 +104,7 @@
       Router.php
       README.txt
 ]]></programlisting>			
-
+            <para>
 				Notice in this example that the <code>Widget/Controller/</code> directory mirrors the <code>Zend/Controller/</code>
 				directory wherever possible.  In this case, it provides the class <code>Widget_Controller_Router</code>,
 				which would be either a subclass or replacement for <code>Zend_Controller_Router</code> implementing
@@ -125,8 +125,8 @@
 		
 		<para>
 			The interface <code>Zend_Controller_Router_Interface</code> provides a definition for only one method:
-
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
   /**				
    * @param  Zend_Controller_Dispatcher_Interface
@@ -136,7 +136,7 @@
   public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
 
 ?>]]></programlisting>
-			
+        <para>
 			Routing only occurs once: when the request is first received into the system.  The purpose of the
 			router is to generate a <code>Zend_Controller_Dispatch_Token</code> that specifies a controller and action of
 			that controller.  This is then passed to the dispatcher.  If it is not possible to map a route to 
@@ -168,8 +168,8 @@
 		
 		<para>
 			The interface <code>Zend_Controller_Dispatcher_Interface</code> provides definitions for two methods:
-			
-			<programlisting role="php"><![CDATA[<?php
+        </para>
+        <programlisting role="php"><![CDATA[<?php
 				
 /**
  * @param  Zend_Controller_Dispatcher_Token $route
@@ -178,12 +178,12 @@
 public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
-
-		<code>isDispatchable()</code> checks if a dispatch token is dispatchable.  If it is, it returns <code>TRUE</code>.  
-		Otherwise, it returns <code>FALSE</code>.  The definition of what is dispatchable is left to the class 
-		implementing the interface.  In the case of the default implementation, <code>Zend_Controller_Dispatcher</code>, it means
-		that the controller file exists, the class exists within the file, and the action method exists within the class.
-		
+        <para>
+    		<code>isDispatchable()</code> checks if a dispatch token is dispatchable.  If it is, it returns <code>TRUE</code>.  
+    		Otherwise, it returns <code>FALSE</code>.  The definition of what is dispatchable is left to the class 
+    		implementing the interface.  In the case of the default implementation, <code>Zend_Controller_Dispatcher</code>, it means
+    		that the controller file exists, the class exists within the file, and the action method exists within the class.
+        </para>
 		<programlisting role="php"><![CDATA[<?php
 			
 /**
@@ -193,10 +193,9 @@ public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
 public function dispatch(Zend_Controller_Dispatcher_Token $route);
 
 ?>]]></programlisting>
-		
-		<code>dispatch()</code> is where the work gets done.  This method must execute the action of the controller.
-		It must return either a dispatch token or a boolean, FALSE, to indicate that there is no more work to do.
-		
+		<para>
+    		<code>dispatch()</code> is where the work gets done.  This method must execute the action of the controller.
+    		It must return either a dispatch token or a boolean, FALSE, to indicate that there is no more work to do.
 		</para>
 	</sect2>
 		

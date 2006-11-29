@@ -63,14 +63,14 @@ class MyEntry extends Zend_Feed_EntryAtom
         <para>
             Then to use this class, you'd just instantiate it directly and set the <code>myUpdated</code>
             property:
-            <programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 <?php
 
 $entry = new MyEntry();
 $entry->myUpdated = '2005-04-19T15:30';
 
 ?>]]>       </programlisting>
-        </para>
     </example>
 
 </sect1>

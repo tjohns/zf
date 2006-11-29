@@ -22,8 +22,11 @@
     </para>
 
     <note>
-        Many RSS feeds have different channel and item properties available. The RSS specification provides for
-        many optional properties, so be aware of this when writing code to work with RSS data.
+        <title>Be aware</title>
+        <para>
+            Many RSS feeds have different channel and item properties available. The RSS specification provides for
+            many optional properties, so be aware of this when writing code to work with RSS data.
+        </para>
     </note>
 
     <example>

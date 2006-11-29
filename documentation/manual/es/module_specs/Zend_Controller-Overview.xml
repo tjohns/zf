@@ -96,11 +96,11 @@
 		<para>
 			The router uses a very simple mapping to determine the name of the controller and
 			the name of the action within that controller:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
-			</programlisting>
-
+        </programlisting>
+        <para>
 			Notice above that the first segment is always the name of the controller and the
 			second segment is always the name of the action.
 		</para>
@@ -108,18 +108,17 @@ http://framework.zend.com/controller/action/]]>
 		<para>
 			Optionally, parameters may be defined in the URI that will be passed to the controller.
 			These take the form of key/value pairs:
-
-			<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/key1/value1/]]>
-			</programlisting>
-		</para>
+        </programlisting>
 
 		<para>
 			If nothing is present in the <code>/controller/</code> part of the URI, then this will become
 			"<code>index</code>".  If nothing is present in the <code>/action/</code> part of the URI, then
 			this will also become "<code>index</code>".  These examples illustrate:
-
-				<programlisting role="php"><![CDATA[
+        </para>
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
 Controller: roadmap
 Action    : future
@@ -131,24 +130,23 @@ Action    : index
 http://framework.zend.com/
 Controller: index
 Action    : index]]>
-				</programlisting>
-			</para>
+        </programlisting>
 
 		<note>
 		    <title>New rewrite engine</title>
 		    <para>
-				We are currently developing a new router with a URI rewriting engine that will give
-				much more flexible capabilities than are presently available in the router.
-				This will be included in a preview release in the very near future.
-			</para>
-	    </note>
+    			We are currently developing a new router with a URI rewriting engine that will give
+	    		much more flexible capabilities than are presently available in the router.
+		    	This will be included in a preview release in the very near future.
+		    </para>
+		</note>
 
-			<para>
-				The controller name, the action name within that controller, and any optional parameters
-				are packaged into a token, <code>Zend_Controller_Dispatcher_Token</code>.  This token
-				is returned to <code>Zend_Controller_Front</code>, which will then enter the dispatch loop.
-				Once in the dispatch loop, the token will be passed to <code>Zend_Controller_Dispatcher</code>.
-			</para>
+		<para>
+			The controller name, the action name within that controller, and any optional parameters
+			are packaged into a token, <code>Zend_Controller_Dispatcher_Token</code>.  This token
+			is returned to <code>Zend_Controller_Front</code>, which will then enter the dispatch loop.
+			Once in the dispatch loop, the token will be passed to <code>Zend_Controller_Dispatcher</code>.
+		</para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatch-token">

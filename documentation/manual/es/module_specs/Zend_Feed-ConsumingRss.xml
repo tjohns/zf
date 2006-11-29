@@ -3,24 +3,28 @@
     <para>
         Reading an RSS feed is as simple as instantiating a <code>Zend_Feed_Rss</code> object with the URL
         of the feed:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 $channel = new Zend_Feed_Rss('http://rss.example.com/channelName');
 
 ?>]]></programlisting>
+    <para>
         If any errors occur fetching the feed, a <code>Zend_Feed_Exception</code> will be thrown.
     </para>
 
     <para>
         Once you have a feed object, you can access any of the standard RSS "channel" properties directly
         on the object:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->title();
 
 ?>]]></programlisting>
+    <para>
         Note the function syntax. <code>Zend_Feed</code> uses a convention of treating properties as XML
         object if they are requested with variable "getter" syntax (<code>$obj->property</code>) and as
         strings if they are access with method syntax (<code>$obj->property()</code>). This enables access
@@ -29,12 +33,14 @@ echo $channel->title();
 
     <para>
         If channel properties have attributes, they are accessible using PHP's array syntax:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 echo $channel->category['domain'];
 
 ?>]]></programlisting>
+    <para>
         Since XML attributes cannot have children, method syntax is not necessary for accessing attribute
         values.
     </para>
@@ -43,7 +49,8 @@ echo $channel->category['domain'];
         Most commonly you'll want to loop through the feed and do something with its entries.
         <code>Zend_Feed_Abstract</code> implements PHP's <code>Iterator</code> interface, so printing all
         titles of articles in a channel is just a matter of:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 foreach ($channel as $item) {
@@ -51,6 +58,7 @@ foreach ($channel as $item) {
 }
 
 ?>]]></programlisting>
+    <para>
         If you are not familiar with RSS, here are the standard elements you can expect to be available in
         an RSS channel and in individual RSS items (entries).
     </para>
@@ -130,7 +138,8 @@ foreach ($channel as $item) {
 
     <para>
         In your code you can always test to see if an element is non-empty with:
-        <programlisting role="php"><![CDATA[
+    </para>
+    <programlisting role="php"><![CDATA[
 <?php
 
 if ($item->propname()) {
@@ -138,7 +147,6 @@ if ($item->propname()) {
 }
 
 ?>]]></programlisting>
-    </para>
 
     <para>
         If you use <code>$item->propname</code> instead, you will always get an empty object which will
