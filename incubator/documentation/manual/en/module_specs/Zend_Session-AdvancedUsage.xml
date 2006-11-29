@@ -64,7 +64,7 @@ Zend_Session_Core::start();
                     </link>
                     ), and call <code>Zend_Session_Core::start()</code>, before <code>new Zend_Session()</code>.
                     Sessions have some overhead. The <code>strict</code> option prevents <code>new Zend_Session()</code>
-                    from automaticaly starting Zend_Session_Core. Thus, this option helps developers enforce a design
+                    from automatically starting Zend_Session_Core. Thus, this option helps developers enforce a design
                     decision to avoid using sessions for certain requests, since an error will be thrown when using this
                     option and instantiating Zend_Session before an explicit call to
                     <code>Zend_Session_Core::start()</code>.
