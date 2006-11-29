@@ -14,7 +14,7 @@ Zend::exception($class, $message, $code);
 
     <para>
         Das <code>$class</code> Argumente gibt die Ausnahmeklasse an, die geladen und instantiiert
-        werden soll und durch <xref linkend="zend.loadclass">Zend::loadClass()</xref> geladen wird;
+        werden soll und durch <xref linkend="zend.loadclass" /> geladen wird;
         deshalb muss die Klasse den Framework Konventionen zur Benennung von Klassen folgen und sich
         irgendwo im <code>include_path</code> befinden.
     </para>

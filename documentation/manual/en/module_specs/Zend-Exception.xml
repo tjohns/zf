@@ -12,7 +12,7 @@ Zend::exception($class, $message, $code);
     <para>
         The <code>$class</code> argument specifies the exception class to load
         and instantiate, and is loaded using 
-        <xref linkend="zend.loadclass">Zend::loadClass()</xref>; as such, it
+        <xref linkend="zend.loadclass" />; as such, it
         must follow the framework class naming conventions and be somewhere in
         the PHP <code>include_path</code>.
     </para>
