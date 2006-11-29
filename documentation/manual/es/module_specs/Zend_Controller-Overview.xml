@@ -134,11 +134,14 @@ Action    : index]]>
 				</programlisting>
 			</para>
 
-			<note>
+		<note>
+		    <title>New rewrite engine</title>
+		    <para>
 				We are currently developing a new router with a URI rewriting engine that will give
 				much more flexible capabilities than are presently available in the router.
 				This will be included in a preview release in the very near future.
-			</note>
+			</para>
+	    </note>
 
 			<para>
 				The controller name, the action name within that controller, and any optional parameters

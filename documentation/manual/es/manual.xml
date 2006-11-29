@@ -34,6 +34,13 @@
         <title>Zend</title>
         &module_specs.Zend;
     </chapter>
+    <chapter id="zend.cache">
+        <title>Zend_Cache</title>
+        &module_specs.Zend_Cache-Introduction;
+        &module_specs.Zend_Cache-Theory;
+        &module_specs.Zend_Cache-Frontends;
+        &module_specs.Zend_Cache-Backends;
+    </chapter>
 	<chapter id="zend.controller">
 		<title>Zend_Controller</title>
 		&module_specs.Zend_Controller-Overview;
