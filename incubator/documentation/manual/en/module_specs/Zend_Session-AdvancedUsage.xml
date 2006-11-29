@@ -13,7 +13,7 @@
 
         <para>
             If you want all requests to have a session and use Zend_Session, then start the session in the bootstrap
-            file,
+            file:
         </para>
 
         <example>
@@ -56,7 +56,18 @@ Zend_Session_Core::start();
             </listitem>
             <listitem>
                 <para>
-                    3. Correct: In your ZF bootstrap code, use <code>Zend_Session_Core::start()</code>
+                    3. Correct: Use <code>Zend_Session_Core::start()</code>. If you want all requests to have sessions,
+                    then place this function call in your ZF bootstrap code. If some requests should have sessions, but
+                    others should not, then set the <code>strict</code> option to true (see
+                    <link
+                        linkend="zend.session.startingasession"><code>setOptions()</code>
+                    </link>
+                    ), and call <code>Zend_Session_Core::start()</code>, before <code>new Zend_Session()</code>.
+                    Sessions have some overhead. The <code>strict</code> option prevents <code>new Zend_Session()</code>
+                    from automaticaly starting Zend_Session_Core. Thus, this option helps developers enforce a design
+                    decision to avoid using sessions for certain requests, since an error will be thrown when using this
+                    option and instantiating Zend_Session before an explicit call to
+                    <code>Zend_Session_Core::start()</code>.
                 </para>
             </listitem>
             <listitem>
