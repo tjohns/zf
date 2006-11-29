@@ -204,7 +204,13 @@ abstract class Zend_Controller_Response_Abstract
     {
         if (!headers_sent()) {
             foreach ($this->_headers as $header) {
-                header($header['name'] . ': ' . $header['value']);
+                if ('status' == strtolower($header['name'])) {
+                    // 'status' headers indicate an HTTP status, and need to be 
+                    // handled slightly differently
+                    header(ucfirst(strtolower($header['name'])) . ': ' . $header['value'], null, (int) $header['value']);
+                } else {
+                    header($header['name'] . ': ' . $header['value']);
+                }
             }
         }
 
