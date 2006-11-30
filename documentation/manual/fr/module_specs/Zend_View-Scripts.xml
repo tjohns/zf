@@ -1,0 +1,171 @@
+<sect1 id="zend.view.scripts">
+
+    <title>Scripts de vue</title>
+
+    <para>
+        une fois que le contrôleur a assigné les variables et appelé <code>render()</code>,
+        <code>Zend_View</code> inclus le script de vue requis, et l'exécute &quot;à l'intérieur&quot;
+        de la porté de l'instance <code>Zend_View</code>. Donc dans vos scripts de vue, les références à
+        $this-> pointent en fait sur l'instance <code>Zend_View</code> elle-même.
+    </para>
+
+    <para>
+        Les variables assignées à la vue depuis le contrôleur lui sont référrées comme des propriétés
+        de l'instance. Par exemple, si le contrôleur a assigné une variable &quot;quelque-chose&quot;, vous
+        vous référerrez à cette variable par <code>$this->quelque-chose</code> dans le script de vue.
+        (Cela vous permet de garder une trace pour savoir quelles valeurs ont été assignées au script, et quelles
+        sont internes au script lui même.)
+    </para>
+
+    <para>
+        Pour rappel, voici l'exemple de script issu de l'introduction de ce chapitre sur <code>Zend_View</code>.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+
+    <!-- La table des livres -->
+    <table>
+        <tr>
+            <th>Auteur</th>
+            <th>Titre</th>
+        </tr>
+
+        <?php foreach ($this->books as $key => $val): ?>
+        <tr>
+            <td><?php echo $this->escape($val['auteur']) ?></td>
+            <td><?php echo $this->escape($val['titre']) ?></td>
+        </tr>
+        <?php endforeach; ?>
+
+    </table>
+
+<?php else: ?>
+
+    <p>Aucun livre à afficher</p>
+
+<?php endif; ?>]]>
+    </programlisting>
+
+    <sect2 id="zend.view.scripts.escaping">
+
+        <title>Echapper la sortie</title>
+
+        <para>
+            Une des tâches les plus importantes à effectuer dans un script de vue est de s'assurer
+            que la sortie est correctement échappé; de plus ceci permet d'éviter les attaques de type
+            cross-site scriptin. A moins que vous n'utilisiez une fonction, une méthode , ou une aidre
+            qui gère l'échappement, vous devriez toujours échapper les variable lors de l'affichage.
+        </para>
+
+        <para>
+            <code>Zend_View</code> a une méthode appelée <code>escape()</code> qui se charge de l'échappement.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// mauvaise pratique d'affichage
+echo $this->variable;
+
+// bonne pratique d'affichage
+echo $this->escape($this->variable);
+?>]]>
+        </programlisting>
+
+        <para>
+            Par défaut, la méthode <code>escape()</code> utilise la fonction PHP htmlspecialchar()
+            pour l'échappement. Cependant, en fonction de votre environnement, you souhaitez peut-être un
+            échappement différent. Utilisez la méthode <code>setEscape()</code> au niveau du contrôleur pour
+            dire à <code>Zend_View</code> quelle méthode de rappel elle doit utiliser.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// créé une instance Zend_View
+$view = new Zend_View();
+
+// spécifie qu'il faut utiliser htmlentities comme rappel d'échappement
+$view->setEscape('htmlentities');
+
+// ou spécifie qu'il faut utiliser une méthode statique comme rappel d'échapement
+$view->setEscape(array('SomeClass', 'methodName'));
+
+// ou alors une méthode d'instance
+$obj = new SomeClass();
+$view->setEscape(array($obj, 'methodName'));
+
+// et ensuite effectue le rendu de la vue
+echo $view->render(...);
+?>]]>
+        </programlisting>
+
+        <para>
+            La fonction ou méthode de rappel doit prendre la valeur à échapper dans le premier paramètre, et tout
+            les autres paramètres devraient être optionnels.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.view.scripts.templates">
+
+        <title>Systèmes de template</title>
+
+        <para>
+            Bien que PHP lui-même un moteur de template puissant, beaucoup de développeurs pensent que c'est
+            beaucoup trop puissant ou complexe pour les graphiste/intégrateur. Le script de vue peut être
+            utilisé en tant que tel pour instantier et manipuler des objets de templates, comme les template
+            PHPLIB. Le script de vue pour ce type d'activité pourrait ressemble à ceci :
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+include_once 'template.inc';
+$tpl = new Template();
+
+if ($this->books) {
+    $tpl->setFile(array(
+        "booklist" => "booklist.tpl",
+        "eachbook" => "eachbook.tpl",
+    ));
+
+    foreach ($this->books as $key => $val) {
+        $tpl->set_var('auteur', $this->escape($val['auteur']);
+        $tpl->set_var('titre', $this->escape($val['titre']);
+        $tpl->parse("livre", "eachbook", true);
+    }
+
+    $tpl->pparse("output", "booklist");
+} else {
+    $tpl->setFile("nobooks", "nobooks.tpl")
+    $tpl->pparse("output", "nobooks");
+}
+?>]]>
+        </programlisting>
+
+        <para>
+            Et ceci pourrait être les fichiers de templates correspondants :
+        </para>
+
+        <programlisting role="html"><![CDATA[
+<!-- booklist.tpl -->
+<table>
+    <tr>
+        <th>Auteur</th>
+        <th>Titre</th>
+    </tr>
+    {books}
+</table>
+
+<!-- eachbook.tpl -->
+    <tr>
+        <td>{auteur}</td>
+        <td>{title}</td>
+    </tr>
+
+<!-- nobooks.tpl -->
+<p>Aucun livre à afficher</p>
+]]>
+        </programlisting>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

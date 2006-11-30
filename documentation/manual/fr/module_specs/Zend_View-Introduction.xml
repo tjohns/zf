@@ -1,0 +1,114 @@
+<sect1 id="zend.view.introduction">
+
+    <title>Introduction</title>
+
+    <para>
+        <code>Zend_View</code> est une classe qui permet de travailler avec la partie &quot;vue&quot; du
+        design pattern Modèle Vue Contrôleur. Elle existe pour aider à garder la vue séparée du modèle
+        et des scripts du contrôleur. Elle fournie un système d'aides, de filtre d'affichage, et d'échappement
+        de variables.
+    </para>
+
+    <para>
+        <code>Zend_View</code> est un système de template agnostique; vous pouvez utiliser PHP comme
+        langage de template, ou créer des instances d'autres systèmes de templates, et les manipuler à
+        travers les scripts de vue.
+    </para>
+
+    <para>
+        L'utilisation de <code>Zend_View</code> se déroule en étape principales :
+
+        1. Votre script de contrôleur crée une instance de <code>Zend_View</code> et assigne
+        des variables à cette instance.
+
+        2. Le contrôleur dit à <code>Zend_View</code> de rendre une vue particulière, et de ce fait
+        va donner le contrôle au script de vue, qui va générer l'affichage.
+    </para>
+
+    <sect2 id="zend.view.introduction.controller">
+
+        <title>Script du Controlleur</title>
+
+        <para>
+            Comme exemple simple, imaginons que vous contrôleur aie une liste de données sur des livres
+            qu'il veut rendre en passant par une vue. The contrôleur pourrait alors ressembler à
+            quelque chose comme ça :
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+// utilise un modèle pour obtenir les données sur les livres : auteurs et titres
+$data = array(
+    array(
+        'auteur' => 'Hernando de Soto',
+        'titre' => 'Le mystère du capitalisme'
+    ),
+    array(
+        'auteur' => 'Henry Hazlitt',
+        'titre' => 'Les sciences économique en un cours'
+    ),
+    array(
+        'auteur' => 'Milton Friedman',
+        'titre' => 'Libre de choisir'
+    )
+);
+
+// assigniation des données du livre à une instance Zend_View
+Zend::loadClass('Zend_View');
+$view = new Zend_View();
+$view->books = $data;
+
+// et appel du script de rendu d'affichage appelé &quot;booklist.php&quot;
+echo $view->render('booklist.php');
+?>]]>
+        </programlisting>
+
+    </sect2>
+
+    <sect2 id="zend.view.introduction.view">
+
+        <title>Script de vue</title>
+
+        <para>
+            Maintenant, nous avons besoin d'associer le script de vue, &quot;booklist.php&quot;.
+            C'est un script PHP comme les autres, à une exception près : il s'exécute dans la portée de
+            l'instance <code>Zend_View</code>, ce qui veut dire que les référence à $this pointent vers les
+            attributs et les méthodes de <code>Zend_View</code>. (Les variables assignées à l'instance par le contrôlleur
+            sont des propriétés publiques de l'instance <code>Zend_View</code>). Ainsi un script de vue de base
+            pourrait ressembler à ceci:
+      </para>
+
+        <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
+
+    <!-- La table des livres -->
+    <table>
+        <tr>
+            <th>Auteur</th>
+            <th>Titre</th>
+        </tr>
+
+        <?php foreach ($this->books as $key => $val): ?>
+        <tr>
+            <td><?php echo $this->escape($val['auteur']) ?></td>
+            <td><?php echo $this->escape($val['titre']) ?></td>
+        </tr>
+        <?php endforeach; ?>
+
+    </table>
+
+<?php else: ?>
+
+    <p>Aucun livre à afficher</p>
+
+<?php endif; ?>]]>
+        </programlisting>
+
+        <para>
+            Notez l'utilisation de la méthode <code>escape</code> pour échapper les variables à afficher.
+        </para>
+
+    </sect2>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

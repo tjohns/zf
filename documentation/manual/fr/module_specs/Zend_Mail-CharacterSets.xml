@@ -1,0 +1,15 @@
+<sect1 id="zend.mail.character-sets">
+    <title>Jeux de caractères</title>
+    <para>
+        <code>Zend_Mail</code> ne cherche pas le jeu de caractères des parties de l'email. Lorsque vous instanciez
+        <code>Zend_Mail</code>, un jeu de caractères pour l'email peut être fournit. La valeur par défaut est iso-8859-1.
+        L'application doit vérifier que toutes les parties ajoutées à cet email soient encodées avec le bon jeu de caractères.
+        Lors de la création d'une nouvelle partie de l'email, un jeu de caractères différent peut-être définit pour chaque partie.
+    </para>
+    <note>
+        Les jeux de caractères ne s'appliquent que pour les parties au format texte.
+    </note>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
