@@ -32,37 +32,53 @@
 	        Instantiating a Cookie object can be done in two ways:
 	        <itemizedlist>
 	            <listitem>
+                    <para>
 	                Through the construcotr, using the following syntax:
 	                <code>new Zend_Http_Cookie(string $name, string $value, string $domain, [int $expires, [string $path, [boolean $secure]]]);</code>
+                    </para>
 	                <itemizedlist>
 	                    <listitem>
+                            <para>
 	                        <code>$name</code>: The name of the cookie (eg. 'PHPSESSID') (required)
+                            </para>
 	                    </listitem>
 	                    <listitem>
+                            <para>
 	                        <code>$value</code>: The value of the cookie  (required)
+                            </para>
 	                    </listitem>
 	                    <listitem>
+                            <para>
 	                        <code>$domain</code>: The cookie's domain (eg. '.example.com') (required)
+                            </para>
 	                    </listitem>
 	                    <listitem>
+                            <para>
 	                        <code>$expires</code>: Cookie expiration time, as UNIX timestamp (optional, defaults to null). 
 	                        If not set, cookie will be treated as a 'session cookie' with no expiration time.
+                            </para>
 	                    </listitem>
 	                    <listitem>
+                            <para>
 	                        <code>$path</code>: Cookie path, eg. '/foo/bar/' (optional, defaults to '/')
+                            </para>
 	                    </listitem>
 	                    <listitem>
+                            <para>
 	                        <code>$secure</code>: Boolean, Whether the cookie is to be sent over secure (HTTPS)
 	                        connections only (optional, defaults to boolean FALSE)
+                            </para>
 	                    </listitem>
 	                </itemizedlist>
 	            </listitem>
 	            <listitem>
+                    <para>
 	                By calling the fromString() static method, with a cookie string as represented in the
 	                'Set-Cookie' HTTP response header or 'Cookie' HTTP request header. In this case, the 
 	                cookie value must already be encoded. When the cookie string does not contain a 'domain'
 	                part, you must provide a reference URI according to which the cookie's domain and path 
 	                will be set.
+                    </para>
 	            </listitem>
 	        </itemizedlist>
 	        <example>
@@ -81,9 +97,11 @@ $cookie = Zend_Http_Cookie::fromString('foo=bar; secure;', 'http://www.example.c
 ?>]]></programlisting>
             </example>
             <note>
+                <para>
                 When instantiating a cookie object using the Zend_Http_Cookie::fromString() method, the
                 cookie value is expected to be URL encoded, as cookie strings should be. However, when 
                 using the constructor, the cookie value string is expected to be the real, decoded value.
+                </para>
             </note>
         </para>
         <para>
@@ -117,20 +135,30 @@ echo $cookie;
             the different properties of the HTTP cookie:
             <itemizedlist>
                 <listitem>
+                    <para>
                     <code>string getName()</code>: Get the name of the cookie
+                    </para>
                 </listitem>
                 <listitem>
+                    <para>
                     <code>string getValue()</code>: Get the real, decoded value of the cookie
+                    </para>
                 </listitem>
                 <listitem>
+                    <para>
                     <code>string getDomain()</code>: Get the cookie's domain
+                    </para>
                 </listitem>
                 <listitem>
+                    <para>
                     <code>string getPath()</code>: Get the cookie's path, which defaults to '/'
+                    </para>
                 </listitem>
                 <listitem>
+                    <para>
                     <code>int getExpiryTime()</code>: Get the cookie's expiration time, as UNIX time stamp. If 
                     the cookie has no expiration time set, will return NULL.
+                    </para>
                 </listitem>
             </itemizedlist>
 	    </para>
@@ -138,17 +166,23 @@ echo $cookie;
 	        Additionally, several boolean tester methods are provided:
 	        <itemizedlist>
                 <listitem>
+                    <para>
                     <code>boolean isSecure()</code>: Check whether the cookie is set to be sent over secure 
                     connections only. Generally speaking, if true the cookie should only be sent over HTTPS.
+                    </para>
                 </listitem>
                 <listitem>
+                    <para>
                     <code>boolean isExpired(int $time = null)</code>: Check whether the cookie is expired or not.
                     If the cookie has no expiration time, will always return true. If $time is provided, it will
                     override the current timestamp as the time to check the cookie against.
+                    </para>
                 </listitem>
                 <listitem>
+                    <para>
                     <code>boolean inSessionCookie()</code>: Check whether the cookie is a "session cookie" - that
                     is a cookie with no expiration time, which is meant to expire when the session ends.
+                    </para>
                 </listitem>
             </itemizedlist>
 	    </para>
@@ -190,17 +224,23 @@ echo ($cookie->isSessionCookie() ? 'Yes' : 'No');
             <code>boolean Zend_Http_Cookie->match(mixed $uri, [boolean $matchSessionCookies, [int $now]]);</code>
             <itemizedlist>
                 <listitem>
+                    <para>
                     <code>mixed $uri</code>: A Zend_Uri_Http object with a domain name and path to be checked. 
                     Optionally, a string representing a valid HTTP URL can be passed instead. The cookie will
                     match if the URL's scheme (HTTP or HTTPS), domain and path all match.
+                    </para>
                 </listitem>
                 <listitem>
+                    <para>
                     <code>boolean $matchSessionCookies</code>: Whether session cookies should be matched or not.
                     Defaults to true. If set to false, cookies with no expiration time will never match.
+                    </para>
                 </listitem>
                 <listitem>
+                    <para>
                     <code>int $now</code>: Time (represented as UNIX timestamp) to check a cookie against
                     for expiration. If not specified, will default to the current time.
+                    </para>
                 </listitem>
             </itemizedlist>
             <example>
