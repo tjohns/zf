@@ -32,11 +32,22 @@
     <!-- &ref.conf;    -->
     <chapter id="zend">
         <title>Zend</title>
-        &module_specs.Zend;
+        &module_specs.Zend-Introduction;
+        &module_specs.Zend-LoadFile;
+        &module_specs.Zend-LoadClass;
+        &module_specs.Zend-LoadInterface;
+        &module_specs.Zend-IsReadable;
+        &module_specs.Zend-Exception;
+        &module_specs.Zend-Dump;
+        &module_specs.Zend-Register;
+        &module_specs.Zend-Registry;
     </chapter>
     <chapter id="zend.cache">
 	    <title>Zend_Cache</title>
-	    &module_specs.Zend_Cache;
+        &module_specs.Zend_Cache-Introduction;
+        &module_specs.Zend_Cache-Theory;
+        &module_specs.Zend_Cache-Frontends;
+        &module_specs.Zend_Cache-Backends;
     </chapter>
     <chapter id="zend.config">
 	    <title>Zend_Config</title>
@@ -52,10 +63,20 @@
 		&module_specs.Zend_Controller-Subclassing;
 		&module_specs.Zend_Controller-Plugins;
 	</chapter>
+    <chapter id="zend.controller.rewriterouter">
+        <title>Zend_Controller_RewriteRouter</title>
+        &module_specs.Zend_Controller_RewriteRouter-Introduction;
+        &module_specs.Zend_Controller_RewriteRouter-Usage;
+        &module_specs.Zend_Controller_RewriteRouter-Basic;
+        &module_specs.Zend_Controller_RewriteRouter-VariableDefaults;
+        &module_specs.Zend_Controller_RewriteRouter-VariableRequirements;
+        &module_specs.Zend_Controller_RewriteRouter-RewriteBase;
+        &module_specs.Zend_Controller_RewriteRouter-DefaultRoutes;
+    </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
         &module_specs.Zend_Db_Adapter;
-	&module_specs.Zend_Db_Profiler;
+	    &module_specs.Zend_Db_Profiler;
         &module_specs.Zend_Db_Select;
         &module_specs.Zend_Db_Table;
         &module_specs.Zend_Db_Table_Row;

@@ -1,0 +1,34 @@
+<sect1 id="zend.loadinterface">
+    <title>Zend::loadInterface()</title>
+    <para>
+    <code>Zend::loadInterface()</code> werkt net zoals <code>Zend::loadClass()</code>, 
+	maar laadt een interface in plaats van een klasse.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::loadInterface($interface, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+	De methode <code>Zend::loadClass()</code> kan niet gebruikt worden voor 
+	het laden van interfaces omdat de PHP functie 
+	<ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink>
+	het bestaan van interfaces niet kan nagaan (sinds PHP 5.0.2).
+	Gebruik <code>Zend::loadInterface()</code> in plaats hiervan.
+    </para>
+
+    <para>
+	Indien je een interface opvraagt waarin underscores in de naam voorkomen en 
+	het argument <code>$dirs</code> gelijk is aan null (standaard waarde), zal 
+	<code>Zend::loadInterface()</code> zelf de <code>$dirs</code> kunnen achterhalen. 
+	Alle underscores die in het <code>$interface</code> argument voorkomen, zullen 
+	geconverteerd worden naar directory seperators. Bijvoorbeeld, indien 
+	<code>$interface</code> de waarde <code>Zend_Example_Interface</code> heeft, 
+	zal dit gemapt worden naar het pad <code>Zend/Example/Interface.php</code>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

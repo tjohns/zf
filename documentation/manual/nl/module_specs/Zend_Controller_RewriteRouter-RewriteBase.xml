@@ -1,0 +1,24 @@
+<sect1 id="zend.controller.rewriterouter.rewritebase">
+	<title>Basis URL en subdirectories</title>
+
+	<para>
+		In tegenstelling tot de originele Router kan RewriteRouter gebruikt worden in subdirectories - het zal automatisch de basis URL herkennen en deze ook instellen. Bijvoorbeeld: Als je je <code>index.php</code> in een webserver subdirectory zet genaamd <code>/projecten/mijnapp/index.php</code> zal de 'rewrite base' (basis URL) worden ingesteld op <code>/projecten/mijnapp</code>. Deze string zal dan worden verwijderd van het begin van het pad alvorens de route matches te berekenen. Hierdoor is het niet meer nodig om de string voor al je routes te plakken. De route <code>'user/:username'</code> zal hierdoor matchen aan URIs als 
+		<code>http://localhost/projecten/mijnapp/user/martel</code> en <code>http://example.com/user/martel</code>.
+	</para>
+
+	<note>
+		Automatische rewrite bases is hoofdletter-afhankelijk, dus zorg ervoor dat je URL exact hetzelfde is als de subdirectory naam in je bestandssysteem (zelfs op Windows machines). Wanneer dit niet zo is, zal je een noRoute action krijgen.
+	</note>
+
+	<para>
+		In het geval dat de rewrite basis verkeerd wordt herkend kan je het overschrijven met je eigen basis pad met behulp van de setRewriteBase methode van de RewriteRouter class:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->setRewriteBase('/projecten/mijnapp');]]></programlisting>
+
+	<note>
+		Deze stap zal in de meeste gevallen niet noodzakelijk zijn en wordt sterk ontraden omdat het een nieuwe configuratie variabele introduceert die moet worden aangepast als de code verplaatst wordt naar een andere directory configuratie.
+	</note>
+
+</sect1>

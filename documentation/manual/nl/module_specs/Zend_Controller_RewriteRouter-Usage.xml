@@ -1,0 +1,18 @@
+<sect1 id="zend.controller.rewriterouter.usage">
+	<title>Een router gebruiken</title>
+
+	<para>
+		Om een RewriteRouter juist te kunnen gebruiken dien je het te instanti�ren, een aantal routes te defini�ren en het in de controller te injecteren. De volgende code illustreert de procedure:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+/* -- maak een nieuwe router -- */
+
+$router = new Zend_Controller_RewriteRouter();
+$router->addRoute('user', 'user/:username', array('controller' => 'user', 'action' => 'info'));
+
+/* -- geef de router aan de controller door -- */
+
+$ctrl = Zend_Controller_Front::getInstance();
+$ctrl->setRouter($router);]]></programlisting>
+</sect1>

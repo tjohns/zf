@@ -1,0 +1,21 @@
+<sect1 id="zend.controller.rewriterouter.variable-defaults">
+	<title>Variabele standaarden</title>
+
+	<para>
+		Elke variabele in de route kan een standaard waarde hebben. Om deze in te stellen moet je een derde parameter aan de addRoute methode doorgeven. Deze derde parameter is een array met keys als variabele namen en waardes als de gewenste standaardwaarde.
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006));]]></programlisting>
+	<para>
+		Wat mogelijk niet direct zichtbaar is, is dat de bovenstaande route URL's zal matchen zoals <code>http://example.com/archive/2005</code> en <code>http://example.com/archive</code>. In het laatste geval zal de variabele <code>year</code> een waarde hebben van 2006.
+	</para>
+
+	<para>
+		In het bovenstaande voorbeeld hebben we geen controller gezet dus zal het altijd resulteren in een noRoute action van de IndexController. Om het bruikbaar te maken dien je een geldige controller en een geldige action als standaard in te stellen:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006, 'controller' => 'archive', 'action' => 'show'));]]></programlisting>
+
+</sect1>

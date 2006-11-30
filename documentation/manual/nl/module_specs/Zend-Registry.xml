@@ -1,0 +1,29 @@
+<sect1 id="zend.registry">
+    <title>Zend::registry()</title>
+
+    <para>
+	Geeft een object, of een lijst van alle objecten in het register terug.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::registry($name=null)
+
+?>]]></programlisting>
+
+    <para>
+	Indien het <code>$name</code> argument <code>NULL</code> is zal een array 
+	teruggegeven worden waarvan de keys de namen van de objecten in het register 
+	zijn en de waarden de klassenamen van de objecten.
+    </para>
+
+    <para>
+	Als <code>$name</code> een string is zal het overeenstemmende object  
+	worden teruggegeven. Indien er geen object bestaat in het register met
+	de naam <code>$name</code> zal er een  <code>Zend_Exception</code>
+	worden doorgegeven.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

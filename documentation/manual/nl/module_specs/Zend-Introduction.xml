@@ -1,0 +1,13 @@
+<sect1 id="zend.introduction">
+    <title>Inleiding</title>
+    <para>
+    De Zend klasse is de fundering (basis) van het Zend Framework. Deze klasse 
+    is tot stand gekomen doordat het framework het DRY (Don't Repeat Yourself) 
+    principe - dat aan de basis van het Zend Framework ligt - hanteert. Deze 
+    klasse bevat enkel statische methodes waarvan de functionaliteit nodig is 
+    in vele componenten van het Zend Framework.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

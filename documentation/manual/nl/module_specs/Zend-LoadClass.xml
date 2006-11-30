@@ -1,0 +1,33 @@
+<sect1 id="zend.loadclass">
+    <title>Zend::loadClass()</title>
+    <para>
+    <code>Zend::loadClass()</code> laadt een PHP bestand waarvan de bestandsnaam 
+	opgebouwd is in het volgende formaat: "<code>$className.php</code>". Het bestaan 
+	van de klasse <code>$className</code> zal worden nagegaan.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::loadClass($class, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+	Indien er wordt vastgesteld dat het bestand niet werd gevonden 
+	of de klasse niet bestaat zal er een <code>Zend_Exception</code> worden doorgegeven.
+	<code>Zend::loadFile()</code> wordt gebruikt voor het laden van het bestand.
+    </para>
+
+    <para>
+	Indien u een klasse opvraagt waarin underscores in de naam voorkomen en het argument 
+	<code>$dirs</code> gelijk is aan null (standaard waarde), zal 
+	<code>Zend::loadClass()</code> zelf de <code>$dirs</code> kunnen achterhalen. 
+	Alle underscores die in het <code>$class</code> argument voorkomen, zullen geconverteerd 
+	worden naar directory seperators. Bijvoorbeeld, indien <code>$class</code> de waarde 
+	<code>Zend_Example_Class</code> heeft, zal dit gemapt worden naar het pad 
+	<code>Zend/Example/Class.php</code>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

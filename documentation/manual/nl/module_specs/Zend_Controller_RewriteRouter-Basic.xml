@@ -1,0 +1,38 @@
+<sect1 id="zend.controller.rewriterouter.basic">
+	<title>Basis Routes</title>
+
+	<para>
+		Het hart van de RewriteRouter is de definitie van de routes. Routes worden aangemaakt door het aanroepen van de addRoute methode van RewriteRouter:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('user', 'user/:username');]]></programlisting>
+
+	<para>
+		De eerste parameter is de naam van de route. Deze is op het moment van schrijven niet nodig maar zal in de toekomst gebruikt worden in een URL view helper om het mogelijk te maken makkelijk URLs te genereren in je views. Indien je een al gedefinieerde route wilt hergebruiken, kan je deze met de getRoute methode van de RewriteRouter verkrijgen.
+	</para>
+
+	<para>
+		De tweede parameter is een route dat door de URL kan worden gebruikt - bijvoorbeeld, de bovenstaande route kan worden gebruikt als: <code>http://example.com/user/martel</code>. De dubbele punt in een route markeert een URL variabele welke toegankelijk zal zijn via een Zend_Controller_Action::_getParam methode. In ons voorbeeld wordt een enkele parameter genaamd username gezet naar een waarde 'martel'.
+	</para>
+
+	<note>
+		Routes worden gematched in omgekeerde volgorde, zorg dus dat de meest generieke routes als eerste worden gedefinieerd.
+	</note>
+
+	<note>
+		De huidige implementatie staat het gebruik van alle karakters toe behalve de slash (/) in variabele identifiers maar het wordt sterk aangeraden om alleen PHP vriendelijke karakters te gebruiken. In toekomstige implementaties zal dit waarschijnlijk worden aangepast, wat bugs kan introduceren in je code.
+	</note>
+
+	<para>
+		Er zijn twee speciale variabelen die in de routes kunnen worden gebruikt - 'controller' en 'action'. Deze speciale variabelen zullen worden gebruikt om een controller en/of een action te vinden binnen een URL. De 'action' variabele moet altijd worden gedefinieerd in ofwel de route of als een standaard parameter. De 'controller' variabele zal standaard de IndexController zijn wanneer hij niet gedefinieerd is.
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('user', ':controller/:action');]]></programlisting>
+
+	<para>
+		Wanneer je je browser wijst naar 'http://example.com/news/latest' met deze route gedefinieerd zal Zend_Controller_Dispatcher de latestAction van de NewsController aanroepen.
+	</para>
+
+</sect1>

@@ -1,0 +1,15 @@
+<sect1 id="zend.controller.rewriterouter.variable-requirements">
+	<title>Variabele eisen</title>
+
+	<para>
+		Men kan ook een vierde parameter toevoegen waar eisen aan de variabelen in kunnen worden aangegeven. Deze worden gedefinieerd als reguliere expressies:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+$router->addRoute('archive', 'archive/:year', array('year' => 2006), array('year' => '\d+'));]]></programlisting>
+
+	<note>
+		In tegenstelling tot Ruby on Rails zal de ZF RewriteRouter een route matchen en de standaard waarde gebruiken wanneer niet aan een variabele eis wordt voldaan. Dus de URL 'http://example.com/archive/test' zal de bovenstaande route matchen en year op 2006 zetten. Deze functionaliteit kan in de toekomst nog worden aangepast, er worden nog discussies over gevoerd op het moment van het schrijven van deze documentatie.
+	</note>
+
+</sect1>
