@@ -313,4 +313,24 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('author', $values['sort']);
     }
     
+    public function testGetDefaults()
+    {
+        $route = new Zend_Controller_Router_Route('users/all', 
+                    array('controller' => 'ctrl', 'action' => 'act'));
+
+        $values = $route->getDefaults();
+
+        $this->assertType('array', $values);
+        $this->assertSame('ctrl', $values['controller']);
+        $this->assertSame('act', $values['action']);
+    }
+
+    public function testGetDefault()
+    {
+        $route = new Zend_Controller_Router_Route('users/all', 
+                    array('controller' => 'ctrl', 'action' => 'act'));
+
+        $this->assertSame('ctrl', $route->getDefault('controller'));
+    }
+
 }

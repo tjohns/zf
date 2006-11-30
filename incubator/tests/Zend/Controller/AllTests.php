@@ -21,6 +21,7 @@ require_once 'Request/HttpTest.php';
 require_once 'Response/HttpTest.php';
 require_once 'RouterTest.php';
 require_once 'RouteTest.php';
+require_once 'StaticRouteTest.php';
 require_once 'RewriteRouterTest.php';
 
 
@@ -43,6 +44,7 @@ class Zend_Controller_AllTests
         $suite->addTestSuite('Zend_Controller_Response_HttpTest');
         $suite->addTestSuite('Zend_Controller_RouterTest');
         $suite->addTestSuite('Zend_Controller_RouteTest');
+        $suite->addTestSuite('Zend_Controller_StaticRouteTest');
         $suite->addTestSuite('Zend_Controller_RewriteRouterTest');
 
         return $suite;

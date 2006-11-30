@@ -83,7 +83,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
     /**
      * Matches a user submitted path with parts defined by a map. Assigns and 
-     * returns an array of variables on a succesfull match.  
+     * returns an array of variables on a successful match.  
      *
      * @param string Path used to match against this routing map 
      * @return array|false An array of assigned values or a false on a mismatch
@@ -215,7 +215,27 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         return implode(self::URI_DELIMITER, $url);
 
     }
+    
+    /**
+     * Return a single parameter of route's defaults 
+     *
+     * @param name Array key of the parameter 
+     * @return string Previously set default
+     */
+    public function getDefault($name) {
+        if (isset($this->_defaults[$name])) {
+            return $this->_defaults[$name];
+        }
+        return null;
+    }
+
+    /**
+     * Return an array of defaults 
+     *
+     * @return array Route defaults
+     */
+    public function getDefaults() {
+        return $this->_defaults;
+    }
 
 }
-
-?>

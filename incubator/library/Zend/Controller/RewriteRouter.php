@@ -142,23 +142,54 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         return $this;
     }
 
+    /** 
+     * Add default routes which are used to mimic basic router behaviour
+     */
     protected function addDefaultRoutes()
     {
-        // Route for Router v1 compatibility
         $compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
         $this->addRoute('default', $compat); 
     }
 
+    /** 
+     * Add route to the route chain
+     * 
+     * @param string Name of the route
+     * @param Zend_Controller_Router_Route_Interface Route
+     */
     public function addRoute($name, Zend_Controller_Router_Route_Interface $route) {
         $this->_routes[$name] = $route;
     }
 
+    /** 
+     * Add routes to the route chain
+     * 
+     * @param array Array of routes with names as keys and routes as values 
+     */
     public function addRoutes($routes) {
         foreach ($routes as $name => $route) {
             $this->addRoute($name, $route);
         }
     }
 
+    /** 
+     * Create routes out of Zend_Config configuration
+     * 
+     * Example INI:
+     * route.archive.route = "archive/:year/*"
+     * route.archive.defaults.controller = archive
+     * route.archive.defaults.action = show
+     * route.archive.defaults.year = 2000
+     * route.archive.reqs.year = "\d+"
+     * 
+     * And finally after you have created a Zend_Config with above ini:
+     * $router = new Zend_Controller_RewriteRouter();
+     * $router->addConfig($config, 'route');
+     * 
+     * @param Zend_Config Configuration object
+     * @param string Name of the config section containing route's definitions  
+     * @throws Zend_Controller_Router_Exception
+     */
     public function addConfig(Zend_Config $config, $section) 
     {
         if ($config->{$section} === null) {
@@ -171,6 +202,12 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         }
     }
 
+    /** 
+     * Remove a route from the route chain
+     * 
+     * @param string Name of the route
+     * @throws Zend_Controller_Router_Exception
+     */
     public function removeRoute($name) {
         if (!isset($this->_routes[$name])) {
             throw Zend::exception('Zend_Controller_Router_Exception', "Route $name is not defined");
@@ -178,10 +215,23 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         unset($this->_routes[$name]);
     }
 
+    /** 
+     * Remove all standard default routes
+     * 
+     * @param string Name of the route
+     * @param Zend_Controller_Router_Route_Interface Route
+     */
     public function removeDefaultRoutes() {
         $this->removeRoute('default');
     }
 
+    /** 
+     * Retrieve a named route 
+     * 
+     * @param string Name of the route
+     * @throws Zend_Controller_Router_Exception
+     * @return Zend_Controller_Router_Route_Interface Route object
+     */
     public function getRoute($name)
     {
         if (!isset($this->_routes[$name])) {
@@ -190,6 +240,12 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         return $this->_routes[$name];
     }
 
+    /** 
+     * Retrieve a currently matched route 
+     * 
+     * @throws Zend_Controller_Router_Exception
+     * @return Zend_Controller_Router_Route_Interface Route object
+     */
     public function getCurrentRoute()
     {
         if (!isset($this->_currentRoute)) {
@@ -198,6 +254,12 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         return $this->getRoute($this->_currentRoute);
     }
 
+    /** 
+     * Retrieve a name of currently matched route 
+     * 
+     * @throws Zend_Controller_Router_Exception
+     * @return Zend_Controller_Router_Route_Interface Route object
+     */
     public function getCurrentRouteName()
     {
         if (!isset($this->_currentRoute)) {
@@ -206,11 +268,23 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         return $this->_currentRoute;
     }
 
+    /** 
+     * Retrieve an array of routes added to the route chain 
+     * 
+     * @return array All of the defined routes
+     */
     public function getRoutes()
     {
         return $this->_routes;
     }
 
+    /** 
+     * Find a matching route to the current PATH_INFO and inject 
+     * returning values to the Request object. 
+     * 
+     * @throws Zend_Controller_Router_Exception 
+     * @return Zend_Controller_Request_Abstract Request object
+     */
     public function route(Zend_Controller_Request_Abstract $request)
     {
         
