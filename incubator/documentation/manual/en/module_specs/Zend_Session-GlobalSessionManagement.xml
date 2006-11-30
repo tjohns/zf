@@ -168,4 +168,15 @@ remember_me_seconds = 864000
 
     </sect2>
 
+    <sect2 id="zend.session.savehandler">
+
+        <title>setSaveHandler(Zend_Session_SaveHandler_Interface $interface)</title>
+
+        <para>
+            Most developers will find the default save handler sufficient.  This method provides an object-oriented
+            wrapper for <code><ulink url="http://php.net/session_set_save_handler">session_set_save_handler()</ulink></code>.
+        </para>
+
+    </sect2>
+
 </sect1>
