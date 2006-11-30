@@ -19,7 +19,7 @@
                        proximity queries, range queries and more
                         <footnote>
                            <para>
-                             Only term, multi term and phrase queries are supported at this time.
+                             Term, multi term, phrase queries, boolean expressions and subqueries are supported at this time.
                            </para>
                         </footnote>
                     </para>
@@ -92,8 +92,12 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 ?>]]></programlisting>
 
             <para>
-                You could give names for fields by your own choice.  A "contents" field name is used to search
-                by default.  It's good idea to place main document data into this field with this name.
+                You could give names for fields by your own choice.
+            </para>
+            <para>
+                Java Lucene uses "contents" field as a default field to search.
+                Zend_Search_Lucene searches through all fiels by default, but it's also possible to change this behavior.
+                See <link linkend="zend.search.query-language.fields">"Default search field"</link> chapter for details.
             </para>
     </sect2>
 
