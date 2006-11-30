@@ -181,6 +181,8 @@ abstract class Zend_Mail_Transport_Abstract {
         if (!$this->_mail) {
             throw new Zend_Mail_Transport_Exception('Missing Zend_Mail object in _mail property');
         }
+        
+        $this->header = '';
 
         foreach ($headers as $header => $content) {
             if (isset($content['append'])) {
