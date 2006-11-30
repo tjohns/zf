@@ -51,6 +51,6 @@ class Zend_Controller_AllTests
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Zend_Config_AllTests::main') {
-    Zend_Config_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Zend_Controller_AllTests::main') {
+    Zend_Controller_AllTests::main();
 }
