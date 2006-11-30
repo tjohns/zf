@@ -265,6 +265,7 @@ abstract class Zend_Server_Reflection_Function_Abstract
         $function           = $this->_reflection;
         $helpText           = '';
         $signatures         = array();
+        $returnDesc         = '';
         $paramCount         = $function->getNumberOfParameters();
         $paramCountRequired = $function->getNumberOfRequiredParameters();
         $parameters         = $function->getParameters();
@@ -282,7 +283,6 @@ abstract class Zend_Server_Reflection_Function_Abstract
 
             // Get return type(s) and description
             $return     = 'void';
-            $returnDesc = '';
             if (preg_match('/@return ([^\s]*)/', $docBlock, $matches)) {
                 $return = explode('|', $matches[1]);
                 if (preg_match('/@return [^\s]*\s+(.*?)(@|\*\/)/s', $docBlock, $matches))
