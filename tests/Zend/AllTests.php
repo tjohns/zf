@@ -19,9 +19,11 @@ require_once 'Zend/MailTest.php';
 require_once 'Zend/MimeTest.php';
 require_once 'Zend/Mime/AllTests.php';
 require_once 'Zend/Pdf/AllTests.php';
+require_once 'Zend/Server/AllTests.php';
 require_once 'Zend/UriTest.php';
 require_once 'Zend/Uri/AllTests.php';
 require_once 'Zend/ViewTest.php';
+require_once 'Zend/XmlRpc/AllTests.php';
 
 
 class Zend_AllTests
@@ -47,9 +49,11 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_MimeTest');
         $suite->addTest(Zend_Mime_AllTests::suite());
         $suite->addTest(Zend_Pdf_AllTests::suite());
+        $suite->addTest(Zend_Server_AllTests::suite());
         $suite->addTestSuite('Zend_UriTest');
         $suite->addTest(Zend_Uri_AllTests::suite());
         $suite->addTestSuite('Zend_ViewTest');
+        $suite->addTest(Zend_XmlRpc_AllTests::suite());
         return $suite;
     }
 }
