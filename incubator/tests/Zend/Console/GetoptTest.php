@@ -79,19 +79,19 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
     public function testDumpString()
     {
         $opts = new Zend_Console_Getopt('abp:', array('-a', '-p', 'p_arg'));
-        $this->assertEquals($opts->dumpString(), 'a=true p=p_arg');
+        $this->assertEquals($opts->toString(), 'a=true p=p_arg');
     }
 
     public function testDumpArray()
     {
         $opts = new Zend_Console_Getopt('abp:', array('-a', '-p', 'p_arg'));
-        $this->assertEquals(implode(',', $opts->dumpOptions()), 'a,p,p_arg');
+        $this->assertEquals(implode(',', $opts->toArray()), 'a,p,p_arg');
     }
 
     public function testDumpJson()
     {
         $opts = new Zend_Console_Getopt('abp:', array('-a', '-p', 'p_arg'));
-        $this->assertEquals($opts->dumpJson(),
+        $this->assertEquals($opts->toJson(),
             '{"options":[{"option":{"flag":"a","parameter":true}},{"option":{"flag":"p","parameter":"p_arg"}}]}');
 
     }
@@ -99,7 +99,7 @@ class Zend_Console_GetoptTest extends PHPUnit_Framework_TestCase
     public function testDumpXml()
     {
         $opts = new Zend_Console_Getopt('abp:', array('-a', '-p', 'p_arg'));
-        $this->assertEquals($opts->dumpXml(),
+        $this->assertEquals($opts->toXml(),
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<options><option flag=\"a\"/><option flag=\"p\" parameter=\"p_arg\"/></options>\n");
     }
 
