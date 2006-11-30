@@ -272,7 +272,73 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
 
     public function testGetDate()
     {
-        $this->markTestIncomplete('included soon');
+        $date = new Zend_Date_DateObject(0);
+        $this->assertTrue(is_array($date->getDate()));
+        $this->assertTrue(is_array($date->getDate(1000000)));
+
+        $test = array(             'seconds' => 40,        'minutes' => 46,
+            'hours'   => 14,       'mday'    => 12,        'wday'    => 1,
+            'mon'     => 1,        'year'    => 1970,      'yday'    => 11,
+            'weekday' => 'Monday', 'month'   => 'January', 0         => 1000000);
+        $result = $date->getDate(1000000);
+
+        $this->assertSame((int) $result['seconds'], (int) $test['seconds']);
+        $this->assertSame((int) $result['minutes'], (int) $test['minutes']);
+        $this->assertSame((int) $result['hours'],   (int) $test['hours']);
+        $this->assertSame((int) $result['mday'],    (int) $test['mday']);
+        $this->assertSame((int) $result['wday'],    (int) $test['wday']);
+        $this->assertSame((int) $result['mon'],     (int) $test['mon']);
+        $this->assertSame((int) $result['year'],    (int) $test['year']);
+        $this->assertSame((int) $result['yday'],    (int) $test['yday']);
+        $this->assertSame($result['weekday'],             $test['weekday']);
+        $this->assertSame($result['month'],               $test['month']);
+        $this->assertSame($result[0],                     $test[0]);
+    }
+
+    public function testGetDate2()
+    {
+        $date = new Zend_Date_DateObject(0);
+
+        $test = array(               'seconds' => 20,        'minutes' => 33,
+            'hours'   => 11,         'mday'    => 16,        'wday'    => 6,
+            'mon'     => 3,          'year'    => 1748,      'yday'    => 65,
+            'weekday' => 'Saturday', 'month'   => 'February', 0        => -7000000000);
+        $result = $date->getDate(-7000000000);
+
+        $this->assertSame((int) $result['seconds'], (int) $test['seconds']);
+        $this->assertSame((int) $result['minutes'], (int) $test['minutes']);
+        $this->assertSame((int) $result['hours'],   (int) $test['hours']);
+        $this->assertSame((int) $result['mday'],    (int) $test['mday']);
+        $this->assertSame((int) $result['wday'],    (int) $test['wday']);
+        $this->assertSame((int) $result['mon'],     (int) $test['mon']);
+        $this->assertSame((int) $result['year'],    (int) $test['year']);
+        $this->assertSame((int) $result['yday'],    (int) $test['yday']);
+        $this->assertSame($result['weekday'],             $test['weekday']);
+        $this->assertSame($result['month'],               $test['month']);
+        $this->assertSame($result[0],                     $test[0]);
+    }
+
+    public function testGetDate3()
+    {
+        $date = new Zend_Date_DateObject(0);
+
+        $test = array(               'seconds' => 0,        'minutes' => 40,
+            'hours'   => 2,          'mday'    => 20,       'wday'    => 3,
+            'mon'     => 8,          'year'    => 2188,     'yday'    => 238,
+            'weekday' => 'Wednesday', 'month'   => 'July', 0      => 6900000000);
+        $result = $date->getDate(6900000000);
+
+        $this->assertSame((int) $result['seconds'], (int) $test['seconds']);
+        $this->assertSame((int) $result['minutes'], (int) $test['minutes']);
+        $this->assertSame((int) $result['hours'],   (int) $test['hours']);
+        $this->assertSame((int) $result['mday'],    (int) $test['mday']);
+        $this->assertSame((int) $result['wday'],    (int) $test['wday']);
+        $this->assertSame((int) $result['mon'],     (int) $test['mon']);
+        $this->assertSame((int) $result['year'],    (int) $test['year']);
+        $this->assertSame((int) $result['yday'],    (int) $test['yday']);
+        $this->assertSame($result['weekday'],             $test['weekday']);
+        $this->assertSame($result['month'],               $test['month']);
+        $this->assertSame($result[0],                     $test[0]);
     }
     
     public function testDate()
