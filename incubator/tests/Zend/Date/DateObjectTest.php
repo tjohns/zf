@@ -340,9 +340,74 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($result['month'],               $test['month']);
         $this->assertSame($result[0],                     $test[0]);
     }
+
+    public function testGetDate4()
+    {
+        $date = new Zend_Date_DateObject(0);
+
+        $test = array(               'seconds' => 0,        'minutes' => 40,
+            'hours'   => 2,          'mday'    => 20,       'wday'    => 3,
+            'mon'     => 8,          'year'    => 2188,     'yday'    => 238,
+            'weekday' => 'Wednesday', 'month'   => 'July', 0      => 6900000000);
+        $result = $date->getDate(6900000000, true);
+
+        $this->assertSame((int) $result['seconds'], (int) $test['seconds']);
+        $this->assertSame((int) $result['minutes'], (int) $test['minutes']);
+        $this->assertSame((int) $result['hours'],   (int) $test['hours']);
+        $this->assertSame((int) $result['mday'],    (int) $test['mday']);
+        $this->assertSame((int) $result['mon'],     (int) $test['mon']);
+        $this->assertSame((int) $result['year'],    (int) $test['year']);
+        $this->assertSame((int) $result['yday'],    (int) $test['yday']);
+    }
     
     public function testDate()
     {
-        $this->markTestIncomplete('included soon');
+        $date = new Zend_Date_DateObject(0);
+        $this->assertTrue($date->date('U') > 0);
+        $this->assertSame($date->date('U',0),'0');
+        $this->assertSame($date->date('U',0,false),'0');
+        $this->assertSame($date->date('U',0,true),'0');
+        $this->assertSame($date->date('U',6900000000),'6900000000');
+        $this->assertSame($date->date('U',-7000000000),'-7000000000');
+        $this->assertSame($date->date('d',-7000000000),'16');
+        $this->assertSame($date->date('D',-7000000000),'Sat');
+        $this->assertSame($date->date('j',-7000000000),'16');
+        $this->assertSame($date->date('l',-7000000000),'Saturday');
+        $this->assertSame($date->date('N',-7000000000),'6');
+        $this->assertSame($date->date('S',-7000000000),'th');
+        $this->assertSame($date->date('w',-7000000000),'6');
+        $this->assertSame($date->date('z',-7000000000),'65');
+        $this->assertSame($date->date('W',-7000000000),'11');
+        $this->assertSame($date->date('F',-7000000000),'March');
+        $this->assertSame($date->date('m',-7000000000),'03');
+        $this->assertSame($date->date('M',-7000000000),'Mar');
+        $this->assertSame($date->date('n',-7000000000),'3');
+        $this->assertSame($date->date('T',-7000000000),'CET');
+        $this->assertSame($date->date('L',-7000000000),'1');
+        $this->assertSame($date->date('o',-7000000000),'1748');
+        $this->assertSame($date->date('Y',-7000000000),'1748');
+        $this->assertSame($date->date('y',-7000000000),'48');
+        $this->assertSame($date->date('a',-7000000000),'am');
+        $this->assertSame($date->date('A',-7000000000),'AM');
+        $this->assertSame($date->date('B',-7000000000),'481');
+        $this->assertSame($date->date('g',-7000000000),'11');
+        $this->assertSame($date->date('G',-7000000000),'11');
+        $this->assertSame($date->date('h',-7000000000),'11');
+        $this->assertSame($date->date('H',-7000000000),'11');
+        $this->assertSame($date->date('i',-7000000000),'33');
+        $this->assertSame($date->date('s',-7000000000),'20');
+        $this->assertSame($date->date('e',-7000000000),'Europe/Paris');
+        $this->assertSame($date->date('I',-7000000000),'0');
+        $this->assertSame($date->date('O',-7000000000),'+0100');
+        $this->assertSame($date->date('P',-7000000000),'+01:00');
+        $this->assertSame($date->date('T',-7000000000),'CET');
+        $this->assertSame($date->date('Z',-7000000000),'3600');
+        $this->assertSame($date->date('c',-7000000000),'1748-3-16T11:33:20+01:00');
+        $this->assertSame($date->date('r',-7000000000),'Sat, 16 Mar 1748 11:33:20 +0100');
+        $this->assertSame($date->date('U',-7000000000),'-7000000000');
+        $this->assertSame($date->date('\\H',-7000000000),'H');
+        $this->assertSame($date->date('.',-7000000000),'.');
+        $this->assertSame($date->date('H:m:s',-7000000000),'11:03:20');
+        $this->assertSame($date->date('d-M-Y',-7000000000),'16-Mar-1748');
     }
 }

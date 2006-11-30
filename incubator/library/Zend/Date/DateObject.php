@@ -303,13 +303,12 @@ class Zend_Date_DateObject {
     public function date($format, $timestamp = false, $gmt = false)
     {
 
-        if ($timestamp === false)
-            return ($gmt) ? @gmdate($format)
-                          :   @date($format);
+        if ($timestamp === false) {
+            return ($gmt === false) ? @date($format) : @gmdate($format);
+        }
 
         if (abs($timestamp) <= 0x7FFFFFFF) {
-            return ($gmt) ? @gmdate($format, $timestamp)
-                          :   @date($format, $timestamp);
+            return ($gmt === false) ? @gmdate($format, $timestamp) : @date($format, $timestamp);
         }
 
         if ($gmt === true) {
@@ -484,20 +483,20 @@ class Zend_Date_DateObject {
                 // timezone formats
                 case 'e':  // timezone identifier
                     if ($gmt) {
-                        $output .= gmdate('e', mktime($date['hour'], $date['minutes'], $date['seconds'], 
+                        $output .= gmdate('e', mktime($date['hours'], $date['minutes'], $date['seconds'], 
                                                       $date['mon'], $date['mday'], 2000));
                     } else {
-                        $output .=   date('e', mktime($date['hour'], $date['minutes'], $date['seconds'], 
+                        $output .=   date('e', mktime($date['hours'], $date['minutes'], $date['seconds'], 
                                                       $date['mon'], $date['mday'], 2000));
                     }
                     break;
 
                 case 'I':  // daylight saving time or not
                     if ($gmt) {
-                        $output .= gmdate('I', mktime($date['hour'], $date['minutes'], $date['seconds'],
+                        $output .= gmdate('I', mktime($date['hours'], $date['minutes'], $date['seconds'],
                                                       $date['mon'], $date['mday'], 2000));
                     } else {
-                        $output .=   date('I', mktime($date['hour'], $date['minutes'], $date['seconds'],
+                        $output .=   date('I', mktime($date['hours'], $date['minutes'], $date['seconds'],
                                                       $date['mon'], $date['mday'], 2000));
                     }
                     break;
@@ -515,10 +514,10 @@ class Zend_Date_DateObject {
 
                 case 'T':  // timezone settings
                     if ($gmt) {
-                        $output .= gmdate('T', mktime($date['hour'], $date['minutes'], $date['seconds'],
+                        $output .= gmdate('T', mktime($date['hours'], $date['minutes'], $date['seconds'],
                                                       $date['mon'], $date['mday'], 2000));
                     } else {
-                        $output .=   date('T', mktime($date['hour'], $date['minutes'], $date['seconds'],
+                        $output .=   date('T', mktime($date['hours'], $date['minutes'], $date['seconds'],
                                                       $date['mon'], $date['mday'], 2000));
                     }
                     break;
