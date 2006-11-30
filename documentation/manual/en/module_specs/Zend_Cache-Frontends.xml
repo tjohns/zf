@@ -82,7 +82,7 @@
                           <row>
                               <entry><code>automaticCleaningFactor</code></entry>
                               <entry><code>int</code></entry>
-                              <entry><code>0</code></entry>
+                              <entry><code>10</code></entry>
                               <entry>
                                 Disable / Tune the automatic cleaning process (garbage collector):
                                 0 means no automatic cache cleaning, 1 means systematic cache cleaning

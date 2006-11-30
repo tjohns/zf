@@ -76,7 +76,7 @@ class Zend_Cache_Core
         'writeControl' => true, 
         'caching' => true, 
         'automaticSerialization' => false,
-        'automaticCleaningFactor' => 0,
+        'automaticCleaningFactor' => 10,
         'lifeTime' => 3600,
         'logging' => false
     ); 
