@@ -8,7 +8,6 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/AclTest.php';
 require_once 'Zend/Console/GetoptTest.php';
-require_once 'Zend/Controller/AllTests.php';
 require_once 'Zend/Currency/AllTests.php';
 require_once 'Zend/DateTest.php';
 require_once 'Zend/Date/AllTests.php';
@@ -19,8 +18,6 @@ require_once 'Zend/Mail/AllTests.php';
 require_once 'Zend/MeasureTest.php';
 require_once 'Zend/Measure/AllTests.php';
 require_once 'Zend/Registry/AllTests.php';
-require_once 'Zend/ViewTest.php';
-require_once 'Zend/View/AllTests.php';
 require_once 'Zend/XmlRpc/AllTests.php';
 
 class Zend_AllTests
@@ -38,7 +35,6 @@ class Zend_AllTests
 
         $suite->addTestSuite('Zend_AclTest');
         $suite->addTestSuite('Zend_Console_GetoptTest');
-        $suite->addTest(Zend_Controller_AllTests::suite());
         $suite->addTest(Zend_Currency_AllTests::suite());
         $suite->addTestSuite('Zend_DateTest');
         $suite->addTest(Zend_Date_AllTests::suite());
@@ -49,8 +45,6 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_MeasureTest');
         $suite->addTest(Zend_Measure_AllTests::suite());
         $suite->addTest(Zend_Registry_AllTests::suite());
-        $suite->addTestSuite('Zend_ViewTest');
-        $suite->addTest(Zend_View_AllTests::suite());
         $suite->addTest(Zend_XmlRpc_AllTests::suite());
 
         return $suite;
