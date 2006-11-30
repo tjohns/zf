@@ -62,7 +62,7 @@ class Zend_Cache_Backend_Sqlite extends Zend_Cache_Backend implements Zend_Cache
      */
     protected $_options = array(
     	'cacheDBCompletePath' => null,
-        'automaticVacuumFactor' => 0
+        'automaticVacuumFactor' => 10
     ); 
   
     /**
