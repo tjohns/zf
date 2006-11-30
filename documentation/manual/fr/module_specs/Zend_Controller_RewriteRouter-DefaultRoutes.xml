@@ -1,0 +1,29 @@
+<sect1 id="zend.controller.rewriterouter.default-routes">
+	<title>Default routes</title>
+
+	<para>
+		Zend_Controller_RewriteRouter is preconfigured with two default routes. The first handles  your root URL and is
+		mapped to indexAction of IndexController: so you have to provide them as outlined in the
+		<xref linkend="zend.controller.getting-started" />
+		(see <xref linkend="zend.controller.overview.indexcontroller" />).
+		The second default route is included to provide compatibility with the first version of the router. It will match URIs in
+		the shape of <code>'controller/action'</code>.
+	</para>
+
+	<para>
+		Default rules are configured as:
+	</para>
+
+	<programlisting role="php"><![CDATA[
+// Add default route (for root url - '/')
+$default = new Zend_Controller_Router_Route('', array('controller' => 'index', 'action' => 'index'));
+$this->addRoute('default', $default);
+
+// Route for Router v1 compatibility
+$compat = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'index', 'action' => 'index'));
+$this->addRoute('compat', $compat);]]></programlisting>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

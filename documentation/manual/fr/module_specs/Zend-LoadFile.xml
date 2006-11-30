@@ -1,0 +1,44 @@
+<sect1 id="zend.loadfile">
+    <title>Zend::loadFile()</title>
+
+    <para>    
+    <code>Zend::loadFile()</code> charge un fichier PHP, qui peut contenir du 
+    code PHP arbitraire. Cette méthode enveloppe la fonction PHP <ulink 
+    url="http://php.net/include"><code>include()</code></ulink>, et lance une 
+    exception <code>Zend_Exception</code> en cas d'échec.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::loadFile($filename, $dirs=null, $once=false)
+
+?>]]></programlisting>
+
+    <para>
+    L'argument <code>$filename</code> définit le nom du fichier à charger, et il 
+    ne doit contenir aucune information concernant son chemin d'accès. Une 
+    vérification de sécurité est effectuée sur <code>$filename</code>. Le 
+    fichier <code>$filename</code> ne peut contenir que des caractères 
+    alphanumérique, des tirets ("-"), des tirets-bas ("_") ou des points ("."). 
+    Aucune de ces restrictions ne s'applique à l'argument <code>$dirs</code>.
+    </para>
+
+    <para>
+    L'argument <code>$dirs</code> définit les dossiers où rechercher le fichier. 
+    Si <code>NULL</code>, la recherche s'effectuera uniquement dans les dossiers 
+    définis par la variable <code>include_path</code>. Si c'est une chaîne ou un 
+    tableau, le ou les répertoires spécifiés seront scannés, ainsi que les 
+    dossiers définis par la variable <code>include_path</code>.
+    </para>
+
+    <para>
+    L'argument <code>$once</code> est un booléen qui spécifie s'il faut utiliser 
+    la fonction PHP <ulink 
+    url="http://php.net/include"><code>include()</code></ulink> ou <ulink 
+    url="http://php.net/include_once"><code>include_once()</code></ulink> pour 
+    charger le fichier.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

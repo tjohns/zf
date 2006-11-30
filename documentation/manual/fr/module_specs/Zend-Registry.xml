@@ -1,0 +1,29 @@
+<sect1 id="zend.registry">
+    <title>Zend::registry()</title>
+
+    <para>
+    Retourne un objet du registre ou dresse la liste de tous les objets du 
+    registre.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::registry($name=null)
+
+?>]]></programlisting>
+
+    <para>
+     Si l'argument <code>$name</code> vaut <code>NULL</code>, un tableau sera 
+     retourné : les clés de ce tableau seront les noms des objets du registre, 
+     ses valeurs les noms des classes de ces objets.
+    </para>
+
+    <para>
+    Si l'argument <code>$name</code> est une chaîne, l'objet stocké sous ce nom 
+    sera retourné. Si aucun objet de nom <code>$name</code> n'existe dans le 
+    registre, une exception <code>Zend_Exception</code> sera lancée.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

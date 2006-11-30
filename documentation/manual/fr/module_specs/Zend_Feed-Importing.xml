@@ -1,0 +1,43 @@
+<sect1 id="zend.feed.importing">
+    <title>Importer des flux avec Zend_Feed</title>
+    <para>
+        <code>Zend_Feed</code> permet aux développeurs d'obtenir très facilement 
+        des flux. Si vous connaissez l'URI d'un flux, utilisez simplement la 
+        méthode <code>Zend_Feed::import()</code> :
+        <programlisting role="php">
+        <![CDATA[
+<?php
+
+$flux = Zend_Feed::import('http://flux.exemple.com/nomDuFlux');
+
+?>]]>   </programlisting>
+    </para>
+    <para>
+        Vous pouvez aussi utiliser <code>Zend_Feed</code> pour aller chercher le 
+        contenu d'un flux à partir d'un fichier ou d'une chaîne PHP :
+        <programlisting role="php"><![CDATA[
+<?php
+
+// on importe un flux à partir d'un fichier texte
+$fluxAPartirDeFichierTexte = Zend_Feed::importFile('flux.xml');
+
+// on importe un flux à partir d'une variable PHP de type chaîne
+$fluxAPartirDePHP = Zend_Feed::importString($chaineFlux);
+
+?>]]></programlisting>
+    </para>
+    <para>
+Dans chacun des exemples ci-dessus, une instance d'une classe étendant 
+<code>Zend_Feed_Abstract</code> est renvoyée en cas de succès, selon le 
+type du flux. Si un flux RSS a été obtenu au moyen de l'une des méthodes 
+d'importation décrites ci-dessus, alors un objet 
+<code>Zend_Feed_Rss</code> sera renvoyé. Par contre, si un flux Atom a 
+été importé, alors un objet <code>Zend_Feed_Atom</code> est renvoyé. Les 
+méthodes d'importation déclencheront aussi une exception 
+<code>Zend_Feed_Exception</code> en cas d'échec, par exemple si le flux 
+est illisible ou malformé.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

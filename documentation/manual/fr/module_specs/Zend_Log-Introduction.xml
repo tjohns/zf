@@ -1,0 +1,26 @@
+<sect1 id="zend.log.introduction">
+    <title>Introduction</title>
+    <para>
+        <code>Zend_Log</code> est une classe qui permet de gérer des fichiers de log.
+        <code>Zend_Log</code> est une classe statique qui ne peut être instantiée directement. 
+        Elle contient un tableau d'instances de <code>Zend_Log</code> une pour chaque fichier de log utilisé par l'application.
+        Chaque instance de log utilise un adapteur qui implémente <code>Zend_Log_Adapter_Interface</code>.
+    </para>
+
+    <para>
+        Pour utiliser <code>Zend_Log</code>, vous devez inclure (<ulink url="http://php.net/require_once">require_once()</ulink>) la classe
+        <code>Zend_Log</code> et toutes les classes adapteurs qui vont être utilisées. Par exemple, si l'application
+        doit logguer la console (le tampon de sortie de PHP) et les fichiers textes, les fichiers suivant seront inclus :
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                  // classe de base Zend_Log
+require_once 'Zend/Log/Adapter/Console.php';  // adapteur de log Console
+require_once 'Zend/Log/Adapter/File.php';     // adapteur de log File
+]]></programlisting>
+        <code>Zend_Log</code> peut-être utilisé de façon simplifiée pour un fichier de log unique, peut-être configuré pour
+        plusieurs fichiers de log, et peut aussi être utilisé pour enregistrer des opérations internes de beaucoup de classes du 
+        Framework Zend.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

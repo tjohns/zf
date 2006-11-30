@@ -1,0 +1,37 @@
+<sect1 id="zend.register">
+    <title>Zend::register()</title>
+
+    <para>
+    Enregistre un objet dans le magasin d'objets.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::register($name, $object)
+
+?>]]></programlisting>
+
+    <para>
+    Le registre est un mécanisme qui fournit à l'application des instances 
+    singleton d'objets. En enregistrant une seule fois l'objet dans le registre, 
+    puis en l'obtenant auprès du registre à chaque fois que cela s'avère 
+    nécessaire, la même instance est toujours retournée.
+    </para>
+
+    <para>
+    L'argument <code>$name</code> est une chaîne arbitraire permettant de nommer 
+    l'objet au sein du magasin. Ce nom devra être fourni 
+    à <code>Zend::registry()</code> pour obtenir de nouveau l'objet.
+    </para>
+
+    <para>
+     L'argument <code>$name</code> doit être une chaîne de caractères, seuls des 
+     objets peuvent être stockés dans le registre, un objet ne peut jamais être 
+     enlevé du registre et une instance donnée ne peut être stockée qu'une et 
+     une seule fois dans le registre. Le non respect de ces règles entraînera le 
+     lancement d'une exception <code>Zend_Exception</code>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

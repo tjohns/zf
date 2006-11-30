@@ -1,0 +1,13 @@
+<sect1 id="zend.introduction">
+    <title>Introduction</title>
+    <para>
+    La classe Zend est la classe qui sert de fondation au Framework Zend. Cette 
+    classe est née de l'adhésion du framework au principe DRY (Don't Repeat 
+    Yourself, [NDT : Ne vous répétez pas]). Elle ne contient que des méthodes 
+    statiques et ces méthodes implémentent des fonctionnalités qui sont requises 
+    par plusieurs composants du Framework Zend.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

@@ -1,0 +1,34 @@
+<sect1 id="zend.loadclass">
+    <title>Zend::loadClass()</title>
+    <para>
+    <code>Zend::loadClass()</code> charge un fichier PHP dont le nom est de la 
+    forme "<code>$nomClasse.php</code>", et vérifie ensuite si 
+    <code>$nomClasse</code> existe.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+	
+Zend::loadClass($class, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+    Si le fichier est introuvable ou si la classe n'existe pas après chargement, 
+    une exception <code>Zend_Exception</code> est lancée. La méthode 
+    <code>Zend::loadFile()</code> est utilisée pour le chargement du fichier, et 
+    l'argument <code>$dirs</code> lui est passé directement.
+    </para>
+
+    <para>
+    Si vous demandez une classe dont le nom contient des tirets-bas ("_") et si 
+    <code>$dirs</code> vaut null (le cas par défaut), 
+    <code>Zend::loadClass()</code> déterminera automatiquement 
+    <code>$dirs</code> à partir du nom de la classe, en convertissant les 
+    tirets-bas en séparateurs de répertoires. Par exemple, si 
+    <code>$class</code> est <code>Zend_Exemple_Classe</code>, ce nom 
+    correspondra au chemin d'accès <code>Zend/Exemple/Classe.php</code>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

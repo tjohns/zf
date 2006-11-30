@@ -1,0 +1,613 @@
+<sect1 id="zend.feed.introduction">
+    <title>Introduction</title>
+    <para>
+        Le composant <code>Zend_Feed</code> offre des services permettant de 
+        traiter des flux RSS et Atom. Il permet d'accéder aux éléments d'un 
+        flux, aux attributs d'un flux et aux attributs des entrées d'un flux, 
+        tout cela au moyen d'une syntaxe intuitive. <code>Zend_Feed</code> prend 
+        aussi complètement en charge la modification de la structure des flux et 
+        des entrées, avec la même syntaxe intuitive que précédemment, et il sait 
+        transformer le résultat en XML. À l'avenir, la prise en charge des 
+        modifications pourrait aussi inclure la prise en charge du protocole de 
+        publication Atom.
+    </para>
+
+    <para>
+        Sur le plan de la programmation, <code>Zend_Feed</code> est constitué 
+        d'une classe de base <code>Zend_Feed</code> et de classes de base 
+        abstraites <code>Zend_Feed_Abstract</code> et 
+        <code>Zend_Feed_EntryAbstract</code>, permettant de représenter 
+        respectivement des flux et des entrées; <code>Zend_Feed</code> contient 
+        aussi des implémentations particulières de ces classes abstraites pour 
+        les flux et entrées RSS et Atom ainsi qu'un assistant en coulisses qui 
+        assure le bon fonctionnement de la syntaxe intuitive.
+    </para>
+
+    <para>
+        Dans l'exemple ci-dessous, nous illustrons une utilisation simple de 
+        <code>Zend_Feed</code> : on obtient un flux RSS et on enregistre les 
+        portions du flux qui nous intéressent dans un tableau PHP simple, qui 
+        pourra ensuite être utilisé pour afficher les données, les stocker dans 
+        une base de données etc.
+    </para>
+
+    <note>
+        Beaucoup de flux RSS ont à leur disposition différentes propriétés, pour 
+        les canaux comme pour les éléments. La spécification RSS spécifie 
+        beaucoup de propriétés optionnelles et gardez donc cela à l'esprit 
+        lorsque vous écrivez du code qui manipule des données RSS.
+    </note>
+
+    <example>
+        <title>Manipuler des données RSS avec Zend_Feed</title>
+        <programlisting role="php"><![CDATA[
+<?php
+require_once 'Zend/Feed.php';
+
+// on va chercher les dernières news de Slashdot
+try {
+    $rssSlashdot = 
+Zend_Feed::import('http://rss.slashdot.org/Slashdot/slashdot');
+} catch (Zend_Feed_Exception $e) {
+    // l'importation du flux a échoué
+    echo "Une exception a été interceptée lors de l'importation du flux : 
+{$e->getMessage()}\n";
+    exit;
+}
+
+// on initialise un tableau contenant les données du canal RSS
+$canal = array(
+    'titre'       =>; $rssSlashdot->title(),
+    'lien'        => $rssSlashdot->link(),
+    'description' => $rssSlashdot->description(),
+    'elements'    => array()
+    );
+
+// on itère sur chaque élément du canal et on stocke les données qui nous 
+intéressent
+foreach ($rssSlashdot as $elem) {
+    $canal['elements'][] = array(
+        'titre'       => $elem->title(),
+        'lien'        => $elem->link(),
+        'description' => $elem->description()
+        );
+}
+
+?>]]>   </programlisting>
+    </example>
+</sect1>
+
+<sect1 id="zend.feed.importing">
+    <title>Importer des flux avec Zend_Feed</title>
+    <para>
+        <code>Zend_Feed</code> permet aux développeurs d'obtenir très facilement 
+        des flux. Si vous connaissez l'URI d'un flux, utilisez simplement la 
+        méthode <code>Zend_Feed::import()</code> :
+        <programlisting role="php">
+        <![CDATA[
+<?php
+
+$flux = Zend_Feed::import('http://flux.exemple.com/nomDuFlux');
+
+?>]]>   </programlisting>
+    </para>
+    <para>
+        Vous pouvez aussi utiliser <code>Zend_Feed</code> pour aller chercher le 
+        contenu d'un flux à partir d'un fichier ou d'une chaîne PHP :
+        <programlisting role="php"><![CDATA[
+<?php
+
+// on importe un flux à partir d'un fichier texte
+$fluxAPartirDeFichierTexte = Zend_Feed::importFile('flux.xml');
+
+// on importe un flux à partir d'une variable PHP de type chaîne
+$fluxAPartirDePHP = Zend_Feed::importString($chaineFlux);
+
+?>]]></programlisting>
+    </para>
+    <para>
+Dans chacun des exemples ci-dessus, une instance d'une classe étendant 
+<code>Zend_Feed_Abstract</code> est renvoyée en cas de succès, selon le 
+type du flux. Si un flux RSS a été obtenu au moyen de l'une des méthodes 
+d'importation décrites ci-dessus, alors un objet 
+<code>Zend_Feed_Rss</code> sera renvoyé. Par contre, si un flux Atom a 
+été importé, alors un objet <code>Zend_Feed_Atom</code> est renvoyé. Les 
+méthodes d'importation déclencheront aussi une exception 
+<code>Zend_Feed_Exception</code> en cas d'échec, par exemple si le flux 
+est illisible ou malformé.
+    </para>
+</sect1>
+
+<sect1 id="zend.feed.findFeeds">
+    <title>Obtenir des flux à partir de pages web</title>
+    <para>
+        Les pages web contiennent souvent des balises <code>&lt;link&gt;</code> 
+qui font référence à des flux dont le contenu est lié à la page. 
+<code>Zend_Feed</code> vous permet d'obtenir tous les flux référencés 
+par une page web en appelant simplement une méthode :
+        <programlisting role="php"><![CDATA[
+<?php
+
+$tableauFlux = Zend_Feed::findFeeds('http://www.exemple.com/news.html');
+
+?>]]></programlisting>
+La méthode <code>findFeeds()</code> renvoie ici un tableau d'objets 
+<code>Zend_Feed_Abstract</code> associés aux flux référencés par les 
+balises <code>&lt;link&gt;</code> de la page web <code>news.html</code>. 
+Selon le type de chaque flux, chaque entrée respective du tableau 
+<code>$tableauFlux</code> peut être une instance de 
+<code>Zend_Feed_Rss</code> ou <code>Zend_Feed_Atom</code>. 
+<code>Zend_Feed</code> déclenchera une exception 
+<code>Zend_Feed_Exception</code> en cas d'échec, par exemple en cas de 
+code HTTP 404 renvoyé en réponse ou si le flux est malformé.
+    </para>
+</sect1>
+
+<sect1 id="zend.feed.consuming-rss">
+    <title>Consommer un flux RSS</title>
+    <para>
+       Lire un flux RSS se résume à instancier un objet 
+<code>Zend_Feed_Rss</code> en passant l'URL du flux :
+        <programlisting role="php"><![CDATA[
+<?php
+
+$canal = new Zend_Feed_Rss('http://rss.exemple.com/nomDuCanal');
+
+?>]]></programlisting>
+        Si une erreur a lieu lors de l'obtention du flux, une <code>Zend_Feed_Exception</code> sera déclenchée.
+    </para>
+
+    <para>
+        Une fois que vous disposez d'un objet "flux RSS", vous pouvez accéder aux propriétés RSS standard 
+        du canal, et ce directement à partir de l'objet :
+        <programlisting role="php"><![CDATA[
+<?php
+
+echo $canal->title();
+
+?>]]></programlisting>
+    Notez la syntaxe utilisée : un appel de fonction. <code>Zend_Feed</code> 
+    utilise une convention selon laquelle les propriétés sont traitées comme 
+    des objets XML si elles sont demandées au moyen de la syntaxe 
+    <code>$obj->propriété</code> et comme des chaînes si elles sont 
+    demandées au moyen de la syntaxe <code>$obj->propriété()</code>. Ceci 
+    permet d'accéder à la totalité du contenu textuel d'un nœud particulier 
+    tout comme à l'ensemble des enfants de ce nœud.
+    </para>
+
+    <para>
+    Si les propriétés du canal possèdent des attributs, ils sont accessibles 
+    à l'aide de l'indiçage PHP :
+        <programlisting role="php"><![CDATA[
+<?php
+
+echo $canal->category['domain'];
+
+?>]]></programlisting>
+        Comme les attributs XML ne peuvent avoir des enfants, la syntaxe 
+<code>$obj->propriété['attribut']()</code> n'est pas nécessaire pour 
+accéder aux valeurs des attributs.
+    </para>
+
+    <para>
+        La plupart du temps vous voudrez itérer sur le flux et réaliser quelque 
+chose avec ses entrées. <code>Zend_Feed_Abstract</code> implémente 
+l'interface <code>iterator</code> de PHP, ce qui résume au code suivant 
+l'affichage des titres de tous les articles du canal :
+        <programlisting role="php"><![CDATA[
+<?php
+
+foreach ($canal as $elem) {
+    echo $elem->title() . "\n";
+}
+
+?>]]></programlisting>
+        Si vous n'êtes pas un familier de RSS, voici les éléments standard 
+associés au canal RSS et à ses éléments pris séparément (les entrées).
+    </para>
+
+    <para>
+       Les éléments requis pour les canaux sont :
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para><code>title</code> (titre) - Le nom du canal</para>
+            </listitem>
+            <listitem>
+                <para><code>link</code> (lien) - L'URL du site web correspondant au canal</para>
+            </listitem>
+            <listitem>
+                <para><code>description</code> - Une ou plusieurs phrases décrivant le canal</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Les éléments optionnels pour les canaux sont :
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para><code>pubDate</code> (date de publication) - La date de publication de l'ensemble, au format RFC 822</para>
+            </listitem>
+            <listitem>
+                <para><code>language</code> (langue) - La langue dans laquelle est écrit le canal</para>
+            </listitem>
+            <listitem>
+                <para><code>category</code> (catégorie) - Un ou plusieurs noms de catégorie 
+                (spécifiés au moyen de plusieurs balises) auquel appartient le canal</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Les éléments RSS <code>&lt;item&gt;</code> n'ont pas d'éléments requis particulier. Cependant soit 
+        <code>title</code> soit <code>description</code> doivent être présents.
+    </para>
+
+    <para>
+        Les éléments communs sont :
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para><code>title</code> (titre) - Le titre de l'élément</para>
+            </listitem>
+            <listitem>
+                <para><code>link</code> (lien) - L'URL de l'élément</para>
+            </listitem>
+            <listitem>
+                <para><code>description</code> - Un résumé de l'élément</para>
+            </listitem>
+            <listitem>
+                <para><code>author</code> (auteur) - L'adresse e-mail de l'auteur</para>
+            </listitem>
+            <listitem>
+                <para><code>category</code> (catégorie) - Une ou plusieurs catégories auquel appartient l'élément</para>
+            </listitem>
+            <listitem>
+                <para><code>comments</code> (commentaires) - L'URL des commentaires relatifs à cet élément</para>
+            </listitem>
+            <listitem>
+                <para><code>pubDate</code> (date de publication) - La date à laquelle l'élément a été publié, au format RFC 822</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Dans votre code vous pouvez toujours tester si un élément est non-vide au moyen du test suivant :
+        <programlisting role="php"><![CDATA[
+<?php
+
+if ($elemt->nomPropriete()) {
+    // ... traitement
+}
+
+?>]]></programlisting>
+    </para>
+
+    <para>
+        Si vous utilisez à la place de la condition 
+<code>$elem->nomPropriete</code>, vous obtiendrez toujours un objet qui, 
+même vide, sera évalué comme <code>TRUE</code>, donc le test échouera.
+    </para>
+
+    <para>
+        Pour plus d'informations, la spécification RSS 2.0 officielle est disponible à l'adresse : 
+        <ulink url="http://blogs.law.harvard.edu/tech/rss">http://blogs.law.harvard.edu/tech/rss</ulink>
+    </para>
+</sect1>
+
+<sect1 id="zend.feed.consuming-atom">
+<title>Consommer un flux Atom</title>
+
+    <para>
+    La classe <code>Zend_Feed_Atom</code> est utilisée pratiquement de la 
+    même manière que <code>Zend_Feed_Rss</code>. Tout comme 
+    <code>Zend_Feed_Rss</code>, elle offre aussi un accès aux propriétés du 
+    flux et elle permet d'itérer sur les entrées du flux. La différence 
+    principale réside dans la structure du protocole Atom lui-même. Atom est 
+    le successeur de RSS; c'est un protocole plus général et il est conçu 
+    pour prendre en charge plus facilement les flux qui incluent directement 
+    leur contenu, et ce en divisant la balise RSS <code>description</code> 
+    en deux éléments : <code>summary</code> (résumé) et <code>content</code> 
+    (contenu).
+    </para>
+
+    <example>
+        <title>Emploi basique de Zend_Feed_Atom</title>
+        <para>
+            Pour lire un flux Atom et afficher le titre (propriété 
+            <code>title</code>) et le résumé (propriété <code>summary</code>) de 
+            chaque entrée :
+        </para>
+        <programlisting role="php"><![CDATA[
+<?php
+
+$flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/');
+echo 'Le flux contient ' . $flux->count() . ' entrée(s).' . "\n\n";
+foreach ($flux as $entree) {
+    echo 'Titre : ' . $entree->title() . "\n";
+    echo 'Résumé : ' . $entree->summary() . "\n\n";
+}
+
+?>]]>   </programlisting>
+    </example>
+
+    <para>
+        Voici les propriétés liées au flux que vous pourrez trouver dans un flux Atom :
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para><code>title</code> (titre) - Le titre du flux, la même chose que le titre d'un canal RSS</para>
+            </listitem>
+            <listitem>
+                <para><code>id</code> (identifiant) - Avec Atom, chaque flux et entrée possède un identifiant unique</para>
+            </listitem>
+            <listitem>
+                <para><code>link</code> (lien) - Les flux peuvent posséder plusieurs liens, qui se distinguent les uns 
+                des autres par un attribut <code>type</code>
+                </para>
+                <para>
+                    Le lien équivalent au lien d'un canal RSS aurait pour type <code>"text/html"</code>. Si le lien désigne une version 
+                    alternative du contenu présent dans le flux, il possèdera un attribut <code>rel="alternate"</code>
+                </para>
+            </listitem>
+            <listitem>
+                <para><code>subtitle</code> (sous-titre) - La description du flux, qui équivaut à la description d'un canal RSS</para>
+                <para><code>author->name()</code> - Le nom de l'auteur du flux</para>
+                <para><code>author->email()</code> - L'adresse e-mail de l'auteur du flux</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+        Les entrées Atom possèdent généralement les propriétés suivantes :
+    </para>
+
+    <para>
+        <itemizedlist>
+            <listitem>
+                <para><code>id</code> (identifiant) - L'identifiant unique de 
+l'entrée</para>
+            </listitem>
+            <listitem>
+                <para><code>title</code> (titre) - Le titre de l'entrée, la même chose que le titre d'un élément RSS</para>
+            </listitem>
+            <listitem>
+                <para><code>link</code> (lien) - Un lien vers un autre format ou une vue alternative de l'entrée</para>
+            </listitem>
+            <listitem>
+                <para><code>summary</code> (résumé) - Un résumé du contenu de l'entrée</para>
+            </listitem>
+            <listitem>
+                <para><code>content</code> (contenu) - Le contenu de l'entrée dans son entier; vous pouvez l'ignorer si le flux ne contient que des résumés</para>
+            </listitem>
+            <listitem>
+                <para><code>author</code> (auteur) - Avec les sous-balises <code>name</code> (nom) et <code>email</code></para>
+            </listitem>
+            <listitem>
+                <para><code>published</code> (publié) - La date à laquelle l'entrée a été publiée, au format RFC 3339</para>
+            </listitem>
+            <listitem>
+                <para><code>updated</code> (publié) - La date à laquelle l'entrée a été mise à jour, au format RFC 3339</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+
+    <para>
+         Pour plus d'informations sur Atom ainsi qu'un grand nombre de ressources, voyez le site 
+        <ulink url="http://www.atomenabled.org/">http://www.atomenabled.org/</ulink>.
+    </para>
+</sect1>
+
+<sect1 id="zend.feed.consuming-atom-single-entry">
+    <title>Consommer une entrée Atom particulière</title>
+
+    <para>
+        Les éléments Atom <code>&lt;entry&gt;</code> sont aussi valides tout 
+        seuls. Généralement l'URL d'une entrée constitue l'URL du flux suivie de 
+        <code>/&lt;idEntree&gt;</code>, par exemple 
+        <code>http://atom.exemple.com/flux/1</code> si on reprend l'URL que nous 
+        avons utilisée ci-dessus.
+    </para>
+
+    <para>
+       Si vous lisez une entrée seule, vous obtiendrez toujours un objet 
+        <code>Zend_Feed_Atom</code> mais cette classe crééra automatiquement un 
+        flux "anonyme" pour contenir l'entrée.
+    </para>
+
+    <example>
+        <title>Lire un flux Atom constitué d'une seule entrée</title>
+        <programlisting role="php"><![CDATA[
+<?php
+
+$flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/1');
+echo 'Le flux possède : ' . $flux->count() . ' entrée(s).';
+
+$entree = $flux->current();
+
+?>]]>   </programlisting>
+    </example>
+
+    <para>
+        Vous pouvez aussi instancier directement la classe représentant les 
+entrées si vous êtes sûr que vous accédez à un document contenant une 
+seule balise <code>&lt;entry&gt;</code> :
+    </para>
+
+    <example>
+        <title>Utiliser directement l'objet Zend_Feed_EntryAtom</title>
+        <programlisting role="php"><![CDATA[
+<?php
+
+$entree = new Zend_Feed_EntryAtom('http://atom.exemple.com/flux/1');
+echo $entree->title();
+
+?>]]>   </programlisting>
+    </example>
+</sect1>
+
+<sect1 id="zend.feed.modifying-feed">
+    <title>Modifier la structure du flux ou des entrées</title>
+
+    <para>
+La syntaxe intuitive de <code>Zend_Feed</code> peut aussi bien servir à 
+lire des flux ou des entrées qu'à les construire et les modifier. Vous 
+pouvez facilement transformer vos nouveaux objets (ou objets modifiés) 
+en code XML bien formé et enregistrer ensuite ce code dans un fichier ou 
+le renvoyer au serveur.
+    </para>
+
+    <example>
+        <title>Modifier l'entrée existante d'un flux</title>
+        <programlisting role="php"><![CDATA[
+<?php
+
+$flux = new Zend_Feed_Atom('http://atom.exemple.com/flux/1');
+$entree = $flux->current();
+
+$entree->title = 'Ceci est un nouveau titre';
+$entree->author->email = 'mon_email@exemple.com';
+
+echo $entree->saveXML();
+
+?>]]>   </programlisting>
+        <para>
+           Ce code affichera une représentation XML complète (y compris le 
+            prologue <code>&lt;?xml ...&gt;</code>) de la nouvelle entrée, avec les 
+            espaces de noms XML nécessaires.
+        </para>
+        <para>
+Notez que le code ci-dessus fonctionnera même si l'entrée existante 
+ne possédait pas de balise <code>author</code>. Vous pouvez utiliser 
+autant de fois que vous le souhaitez l'opérateur d'accès 
+<code>-></code> dans une instruction d'affectation; si nécessaire, 
+les niveaux intermédiaires seront créés pour vous automatiquement.
+        </para>
+    </example>
+
+    <para>
+        Si vous souhaitez utiliser dans votre entrée un espace de noms autre que 
+<code>atom:</code>, <code>rss:</code> ou <code>osrss:</code>, vous devez 
+enregistrer cet espace de noms auprès de <code>Zend_Feed</code> à l'aide 
+de la méthode <code>Zend_Feed::registerNamespace()</code>. Lorsque vous 
+modifiez un élément existant, il gardera toujours son espace de noms 
+d'origine. Lorsque vous ajoutez un élément, il utilisera l'espace de 
+noms par défaut si vous ne spécifiez pas explicitement un autre espace 
+de noms.
+    </para>
+
+    <example>
+        <title>Créer une entrée Atom dont les éléments appartiennent à un espace de noms personnalisé</title>
+        <programlisting role="php"><![CDATA[
+<?php
+
+$entree = new Zend_Feed_EntryAtom();
+// en Atom, id est toujours affecté par le serveur
+$entree->title = 'mon entrée perso';
+$entree->author->name = 'Auteur';
+$entree->author->email = 'moi@exemple.com';
+
+// maintenant on s'occupe de la partie personnalisée
+Zend_Feed::registerNamespace('monen', 'http://www.exemple.com/monen/1.0');
+
+$entree->{'monen:monelement_un'} = 'ma première valeur personnalisée';
+$entree->{'monen:conteneur_elt'}->partie1 = 'première partie imbriquée personnalisée';
+$entree->{'monen:conteneur_elt'}->partie2 = 'deuxième partie imbriquée personnalisée';
+
+echo $entree->saveXML();
+
+?>]]>   </programlisting>
+    </example>
+</sect1>
+
+<sect1 id="zend.feed.custom-feed">
+    <title>Classes personnalisées pour les flux et entrées</title>
+
+    <para>
+                Pour finir, vous pouvez étendre les classes de <code>Zend_Feed</code> si 
+vous souhaitez créer votre propre format ou implémenter des gâteries 
+comme par exemple la gestion automatique des éléments situés dans un 
+espace de noms personnalisé.
+    </para>
+
+    <para>
+         Voici un exemple d'entrée Atom personnalisée qui gère son propre espace 
+        de noms <code>monen</code>. Notez aussi que la classe se charge 
+        d'appeler la méthode <code>registerNamespace()</code> pour que 
+        l'utilisateur n'ait au final pas du tout à se soucier des espaces de 
+        noms.
+    </para>
+
+    <example>
+        <title>Étendre la classe représentant les entrées Atom pour ajouter la gestion d'un espace de noms personnalisé</title>
+        <programlisting role="php"><![CDATA[
+<?php
+
+/**
+ * La classe personnalisée connaît automatiquement l'URI du flux (qui est
+ * optionnelle) et elle peut ajouter automatiquement des espaces de noms
+ * supplémentaires.
+ */
+class MonEntree extends Zend_Feed_EntryAtom
+{
+
+    public function __construct($uri = 'http://www.exemple.com/monflux/', $xml = null)
+    {
+        parent::__construct($uri, $xml);
+
+        Zend_Feed::registerNamespace('monen', 'http://www.exemple.com/monen/1.0');
+    }
+
+    public function __get($var)
+    {
+        switch ($var) {
+            case 'monPrenom':
+                // On traduit monPrenom en monen:prenom
+                return parent::__get('monen:prenom');
+
+            default:
+                return parent::__get($var);
+            }
+    }
+
+    public function __set($var, $valeur)
+    {
+        switch ($var) {
+            case 'monPrenom':
+                // On traduit monPrenom en monen:prenom
+                parent::__set('monen:prenom', $valeur);
+                break;
+
+            default:
+                parent::__set($var, $valeur);
+        }
+    }
+
+}
+
+?>]]>   </programlisting>
+        <para>
+            Puis pour utiliser cette classe, instanciez-la directement et définissez la propriété <code>monPrenom</code> :
+            <programlisting role="php"><![CDATA[
+<?php
+
+$entree = new MonEntree();
+$entree->monPrenom = 'Martin';
+
+?>]]>       </programlisting>
+        </para>
+    </example>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
