@@ -669,11 +669,14 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
             $dir    = $info['dir'];
             $prefix = $info['prefix'];
 
-            if (is_readable($dir . $file)) {
-                include $dir . $file;
+            $class = $prefix . ucfirst($name);
+            
+            if (class_exists($class, false)) {
+                $this->$classLoaded[$name] = $class;
+                return $class;
+            } elseif (is_readable($dir . $file)) {
+                include_once $dir . $file;
 
-                $class = $prefix . ucfirst($name);
-                
                 if (class_exists($class, false)) {
                     $this->$classLoaded[$name] = $class;
                     return $class;
