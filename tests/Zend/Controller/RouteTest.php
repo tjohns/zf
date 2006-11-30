@@ -27,6 +27,22 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame(array(), $values);
     }
 
+    public function testStaticUTFMatch()
+    {
+        $route = new Zend_Controller_Router_Route('żółć');
+        $values = $route->match('żółć');
+
+        $this->assertSame(array(), $values);
+    }
+
+    public function testURLDecode()
+    {
+        $route = new Zend_Controller_Router_Route('żółć');
+        $values = $route->match('%C5%BC%C3%B3%C5%82%C4%87');
+
+        $this->assertSame(array(), $values);
+    }
+
     public function testStaticPathShorterThanParts()
     {
         $route = new Zend_Controller_Router_Route('users/a/martel');
@@ -88,6 +104,27 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(null, $values['empty']);
     }
 
+    public function testWildcardWithUTF()
+    {
+        $route = new Zend_Controller_Router_Route('news/*', array('controller' => 'news', 'action' => 'view'));
+        $values = $route->match('news/klucz/wartość/wskaźnik/wartość');
+        
+        $this->assertEquals('news', $values['controller']);
+        $this->assertEquals('view', $values['action']);
+        $this->assertEquals('wartość', $values['klucz']);
+        $this->assertEquals('wartość', $values['wskaźnik']);
+    }
+
+    public function testWildcardURLDecode()
+    {
+        $route = new Zend_Controller_Router_Route('news/*', array('controller' => 'news', 'action' => 'view'));
+        $values = $route->match('news/wska%C5%BAnik/warto%C5%9B%C4%87');
+        
+        $this->assertEquals('news', $values['controller']);
+        $this->assertEquals('view', $values['action']);
+        $this->assertEquals('wartość', $values['wskaźnik']);
+    }
+
     public function testVariableValues()
     {
         $route = new Zend_Controller_Router_Route(':controller/:action/:year');
@@ -96,6 +133,14 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('ctrl', $values['controller']);
         $this->assertSame('act', $values['action']);
         $this->assertSame('2000', $values['year']);
+    }
+
+    public function testVariableUTFValues()
+    {
+        $route = new Zend_Controller_Router_Route('test/:param');
+        $values = $route->match('test/aä');
+
+        $this->assertSame('aä', $values['param']);
     }
 
     public function testOneVariableValue()
@@ -268,4 +313,24 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('author', $values['sort']);
     }
     
+    public function testGetDefaults()
+    {
+        $route = new Zend_Controller_Router_Route('users/all', 
+                    array('controller' => 'ctrl', 'action' => 'act'));
+
+        $values = $route->getDefaults();
+
+        $this->assertType('array', $values);
+        $this->assertSame('ctrl', $values['controller']);
+        $this->assertSame('act', $values['action']);
+    }
+
+    public function testGetDefault()
+    {
+        $route = new Zend_Controller_Router_Route('users/all', 
+                    array('controller' => 'ctrl', 'action' => 'act'));
+
+        $this->assertSame('ctrl', $route->getDefault('controller'));
+    }
+
 }

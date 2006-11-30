@@ -17,12 +17,13 @@
  * @subpackage Plugins
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- */ 
+ */
 
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
-/** Zend_Controller_Plugin_Interface */
-require_once 'Zend/Controller/Plugin/Interface.php';
-
+/** Zend_Controller_Response_Abstract */
+require_once 'Zend/Controller/Response/Abstract.php';
 
 /**
  * @category   Zend
@@ -31,86 +32,124 @@ require_once 'Zend/Controller/Plugin/Interface.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_Controller_Plugin_Abstract implements Zend_Controller_Plugin_Interface
+abstract class Zend_Controller_Plugin_Abstract
 {
-	/**
-	 * Called before Zend_Controller_Front begins evaluating the
-	 * request against its routes.
-	 *
-	 * @return void
-	 */
-	public function routeStartup()
-	{}
+    /**
+     * @var Zend_Controller_Request_Abstract
+     */
+    protected $_request;
 
-	/**
-	 * Called after Zend_Controller_Router exits.
-	 *
-	 * This callback allows for proxy or filter behavior.  The
-	 * $action must be returned for the Zend_Controller_Dispatcher_Token
-	 * to enter the dispatch loop.  To abort before the dispatch loop is
-	 * entered, return FALSE.
-	 *
-	 * @param  Zend_Controller_Dispatcher_Token|boolean $action
-	 * @return Zend_Controller_Dispatcher_Token|boolean
-	 */
-	public function routeShutdown($action)
-	{
-	    return $action;
-	}
+    /**
+     * @var Zend_Controller_Response_Abstract
+     */
+    protected $_response;
 
-	/**
-	 * Called before Zend_Controller_Front enters its dispatch loop.
-	 * During the dispatch loop.
-	 *
-	 * This callback allows for proxy or filter behavior.  The
-	 * $action must be returned for the Zend_Controller_Dispatcher_Token
-	 * to enter the dispatch loop.  To abort before the dispatch loop is
-	 * entered, return FALSE.
-	 *
-	 * @param  Zend_Controller_Dispatcher_Token|boolean $action
-	 * @return Zend_Controller_Dispatcher_Token|boolean
-	 */
-	public function dispatchLoopStartup($action)
-	{
-	    return $action;
-	}
+    /**
+     * Set request object
+     * 
+     * @param Zend_Controller_Request_Abstract $request 
+     * @return Zend_Controller_Plugin_Abstract
+     */
+    public function setRequest(Zend_Controller_Request_Abstract $request) 
+    {
+        $this->_request = $request;
+        return $this;
+    }
 
-	/**
-	 * Called before an action is dispatched by Zend_Controller_Dispatcher.
-	 *
-	 * This callback allows for proxy or filter behavior.  The
-	 * $action must be returned for the Zend_Controller_Dispatcher_Token
-	 * to be dispatched.  To abort the dispatch, return FALSE.
-	 *
-	 * @param  Zend_Controller_Dispatcher_Token|boolean $action
-	 * @return Zend_Controller_Dispatcher_Token|boolean
-	 */
-	public function preDispatch($action)
-	{
-	    return $action;
-	}
+    /**
+     * Get request object
+     * 
+     * @return Zend_Controller_Request_Abstract $request 
+     */
+    public function getRequest() 
+    {
+        return $this->_request;
+    }
 
-	/**
-	 * Called after an action is dispatched by Zend_Controller_Dispatcher.
-	 *
-	 * This callback allows for proxy or filter behavior.  The
-	 * $action must be returned, otherwise the next action
-	 * will not be dispatched.  To exit the dispatch loop without
-	 * dispatching the action, return FALSE.
-	 *
-	 * @param  Zend_Controller_Dispatcher_Token|boolean $action
-	 * @return Zend_Controller_Dispatcher_Token|boolean
-	 */
-	public function postDispatch($action)
-	{
-	    return $action;
-	}
+    /**
+     * Set response object
+     * 
+     * @param Zend_Controller_Response_Abstract $response 
+     * @return Zend_Controller_Plugin_Abstract
+     */
+    public function setResponse(Zend_Controller_Response_Abstract $response) 
+    {
+        $this->_response = $response;
+        return $this;
+    }
 
-	/**
-	 * Called before Zend_Controller_Front exists its dispatch loop.
-	 *
-	 * @return void
-	 */
-	public function dispatchLoopShutdown()
-	{}
+    /**
+     * Get response object
+     * 
+     * @return Zend_Controller_Response_Abstract $response 
+     */
+    public function getResponse() 
+    {
+        return $this->_response;
+    }
+
+    /**
+     * Called before Zend_Controller_Front begins evaluating the
+     * request against its routes.
+     *
+     * @return void
+     */
+    public function routeStartup()
+    {}
+
+    /**
+     * Called after Zend_Controller_Router exits.
+     *
+     * Called after Zend_Controller_Front exits from the router.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return void
+     */
+    public function routeShutdown($request)
+    {}
+
+    /**
+     * Called before Zend_Controller_Front enters its dispatch loop.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return void
+     */
+    public function dispatchLoopStartup($request)
+    {}
+
+    /**
+     * Called before an action is dispatched by Zend_Controller_Dispatcher.
+     *
+     * This callback allows for proxy or filter behavior.  By altering the
+     * request and resetting its dispatched flag (via
+     * {@link Zend_Controller_Request_Abstract::setDispatched() setDispatched(false)}),
+     * the current action may be skipped.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return void
+     */
+    public function preDispatch($request)
+    {}
+
+    /**
+     * Called after an action is dispatched by Zend_Controller_Dispatcher.
+     *
+     * This callback allows for proxy or filter behavior. By altering the
+     * request and resetting its dispatched flag (via
+     * {@link Zend_Controller_Request_Abstract::setDispatched() setDispatched(false)}),
+     * a new action may be specified for dispatching.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @return void
+     */
+    public function postDispatch($request)
+    {}
+
+    /**
+     * Called before Zend_Controller_Front exits its dispatch loop.
+     *
+     * @return void
+     */
+    public function dispatchLoopShutdown()
+    {}
 }

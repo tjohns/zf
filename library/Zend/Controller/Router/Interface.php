@@ -22,6 +22,8 @@
 /** Zend_Controller_Router_Exception */
 require_once 'Zend/Controller/Router/Exception.php';
 
+/** Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
 /**
  * @package    Zend_Controller
@@ -32,13 +34,56 @@ require_once 'Zend/Controller/Router/Exception.php';
 interface Zend_Controller_Router_Interface
 {
     /**
-     * Processes an HTTP request and routes to a Zend_Controller_Dispatcher_Token object.  If
+     * Processes a request and sets its controller and action.  If
      * no route was possible, an exception is thrown.
      *
-	 * @param  Zend_Controller_Dispatcher_Interface
+     * @param  Zend_Controller_Request_Abstract
      * @throws Zend_Controller_Router_Exception
-     * @return Zend_Controller_Dispatcher_Token|boolean
+     * @return Zend_Controller_Request_Abstract|boolean
      */
-    public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
-}
+    public function route(Zend_Controller_Request_Abstract $dispatcher);
 
+    /**
+     * Add or modify a parameter with which to instantiate any helper objects
+     * 
+     * @param string $name 
+     * @param mixed $param 
+     * @return Zend_Controller_Router_Interface
+     */
+    public function setParam($name, $value);
+
+    /**
+     * Set an array of a parameters to pass to helper object constructors
+     * 
+     * @param array $params 
+     * @return Zend_Controller_Router_Interface
+     */
+    public function setParams(array $params);
+
+    /**
+     * Retrieve a single parameter from the controller parameter stack
+     * 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getParam($name);
+
+    /**
+     * Retrieve the parameters to pass to helper object constructors
+     * 
+     * @return array
+     */
+    public function getParams();
+
+    /**
+     * Clear the controller parameter stack
+     *
+     * By default, clears all parameters. If a parameter name is given, clears 
+     * only that parameter; if an array of parameter names is provided, clears 
+     * each.
+     * 
+     * @param null|string|array single key or array of keys for params to clear
+     * @return Zend_Controller_Router_Interface
+     */
+    public function clearParams($name = null);
+}

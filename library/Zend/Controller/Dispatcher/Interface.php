@@ -18,6 +18,15 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
 
+/**
+ * Zend_Controller_Request_Abstract
+ */
+require_once 'Zend/Controller/Request/Abstract.php';
+
+/**
+ * Zend_Controller_Response_Abstract
+ */
+require_once 'Zend/Controller/Response/Abstract.php';
 
 /**
  * @package    Zend_Controller
@@ -29,7 +38,7 @@ interface Zend_Controller_Dispatcher_Interface
 {
     /**
      * Formats a string into a controller name.  This is used to take a raw
-     * controller name, such as one that would be packaged inside a Zend_Controller_Dispatcher_Token
+     * controller name, such as one that would be packaged inside a request
      * object, and reformat it to a proper class name that a class extending
      * Zend_Controller_Action would use.
      *
@@ -40,7 +49,7 @@ interface Zend_Controller_Dispatcher_Interface
 
     /**
      * Formats a string into an action name.  This is used to take a raw
-     * action name, such as one that would be packaged inside a Zend_Controller_Dispatcher_Token
+     * action name, such as one that would be packaged inside a request
      * object, and reformat into a proper method name that would be found
      * inside a class extending Zend_Controller_Action.
      *
@@ -52,17 +61,133 @@ interface Zend_Controller_Dispatcher_Interface
     /**
      * Returns TRUE if an action can be dispatched, or FALSE otherwise.
      *
-     * @param  Zend_Controller_Dispatcher_Token $route
+     * @param  Zend_Controller_Request_Abstract $request
      * @return boolean
      */
-	public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
+    public function isDispatchable(Zend_Controller_Request_Abstract $request);
 
-	/**
-	 * Dispatches a Zend_Controller_Dispatcher_Token object to a controller/action.  If the action
-	 * requests a forward to another action, a new Zend_Controller_Dispatcher_Token will be returned.
-	 *
-	 * @param  Zend_Controller_Dispatcher_Token $route
-	 * @return Zend_Controller_Dispatcher_Token|boolean
-	 */
-	public function dispatch(Zend_Controller_Dispatcher_Token $route);
+    /**
+     * Add or modify a parameter with which to instantiate an Action Controller
+     * 
+     * @param string $name 
+     * @param mixed $value 
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function setParam($name, $value);
+
+    /**
+     * Set an array of a parameters to pass to the Action Controller constructor
+     * 
+     * @param array $params 
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function setParams(array $params);
+
+    /**
+     * Retrieve a single parameter from the controller parameter stack
+     * 
+     * @param string $name 
+     * @return mixed
+     */
+    public function getParam($name);
+
+    /**
+     * Retrieve the parameters to pass to the Action Controller constructor
+     * 
+     * @return array
+     */
+    public function getParams();
+
+    /**
+     * Clear the controller parameter stack
+     *
+     * By default, clears all parameters. If a parameter name is given, clears 
+     * only that parameter; if an array of parameter names is provided, clears 
+     * each.
+     * 
+     * @param null|string|array single key or array of keys for params to clear
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function clearParams($name = null);
+
+    /**
+     * Set the response object to use, if any
+     * 
+     * @param Zend_Controller_Response_Abstract|null $response 
+     * @return void
+     */
+    public function setResponse(Zend_Controller_Response_Abstract $response = null);
+
+    /**
+     * Retrieve the response object, if any
+     * 
+     * @return Zend_Controller_Response_Abstract|null
+     */
+    public function getResponse();
+
+    /**
+     * Add a controller directory to the controller directory stack
+     * 
+     * @param string $path 
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function addControllerDirectory($path);
+
+    /**
+     * Set the directory where controller files are stored
+     *
+     * Specify a string or an array; if an array is specified, all paths will be 
+     * added.
+     * 
+     * @param string|array $dir 
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function setControllerDirectory($path);
+
+    /**
+     * Return the currently set directory(ies) for controller file lookup
+     * 
+     * @return array
+     */
+    public function getControllerDirectory();
+
+    /**
+     * Set default controller name (minus formatting)
+     * 
+     * @param string $controller 
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function setDefaultController($controller);
+
+    /**
+     * Retrieve the default controller name (minus formatting)
+     * 
+     * @return string
+     */
+    public function getDefaultController();
+
+    /**
+     * Set default action name (minus formatting)
+     * 
+     * @param string $action 
+     * @return Zend_Controller_Dispatcher_Interface
+     */
+    public function setDefaultAction($action);
+
+    /**
+     * Retrieve the default action name (minus formatting)
+     * 
+     * @return string
+     */
+    public function getDefaultAction();
+
+    /**
+     * Dispatches a request object to a controller/action.  If the action
+     * requests a forward to another action, a new request will be returned.
+     *
+     * @param  Zend_Controller_Request_Abstract $request
+     * @param  Zend_Controller_Response_Abstract $response
+     * @return Zend_Controller_Request_Abstract|boolean
+     */
+    public function dispatch(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response);
 }
