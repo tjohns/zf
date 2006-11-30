@@ -1,0 +1,129 @@
+<sect1 id="zend.cache.introduction">
+    <title>Introduction</title>
+    <para>
+        <code>Zend_Cache</code> founit un moyen g�n�rique des mettre en cache des donn�es.
+    </para>
+    <para>
+      Le cache dans le Framework Zend op�re via frontends alors que les caches d'enregistrements sont stock�s
+      gr�ce � des adapteurs de backend (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...)
+      � travers un syst�me souple d'IDs et de balises. En les utilisant, il est simple de supprimer des
+      types sp�cifiques d'enregistrements par la suite (par exemple: "supprime tous les enregistrement de
+      cache marqu� avec une balise donn�e")
+    </para>
+    <para>
+        Le coeur du module (<code>Zend_Cache_Core</code>) est g�n�rique, souple et configurable.
+        Pour le moment, pour vos besoins sp�cifiques, il y a des frontends qui �tendent <code>Zend_Cache_Core</code>.
+        pour votre confort : <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
+    </para>
+    <example>
+        <title>Cr�er un frontend avec <code>Zend_Cache::factory()</code></title>
+        <para>
+            <code>Zend_Cache::factory()</code> instancie les objets corrects et les lie ensemble.
+            Dans le premier exemple, nous allons utiliser le frontend <code>Core</code> avec le
+            backend <code>File</code>
+
+            <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Cache.php';
+
+$frontendOptions = array(
+   'lifeTime' => 7200, // temps de vie du cache de 2 heures
+   'automaticSerialization' => true
+);
+
+$backendOptions = array(
+    'cacheDir' => './tmp/' // R�pertoire o� stocker les fichiers de cache
+);
+
+// cr�er un objet Zend_Cache_Code
+$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+
+?>]]></programlisting>
+       </para>
+       <para>
+            Maintenant que nous avons un frontend, nous pouvons mettre en cache tout type de donn�es.
+            Nous avons activ� la serialisation. Par exemple nous pouvons mettre en cache le r�sultat
+            d'une requ�te SQL couteuse. Apr�s qu'il soit mis en cache, il n'y a plus besoin de se connecter
+            � la base de donn�es. Les enregistrement r�cup�r� depuis le cache sont d�s�rialis�s.
+            <programlisting role="php"><![CDATA[<?php
+
+// $cache initialis� dans l'exemple pr�c�dent
+
+// on regarde si un cache existe d�j�
+if(!$result = $cache->get('myresult')) {
+
+    // le cache est manquant, connexion � la base de donn�es
+    $db = Zend_Db::factory( [...] );
+
+    $result = $db->fetchAll('SELECT * FROM grosse_table');
+
+    $cache->save($result, 'myresult');
+
+} else {
+
+    // il y a un cache
+    echo "This one is from cache!\n\n";
+
+}
+
+print_r($result);
+
+?>]]></programlisting>
+       </para>
+    </example>
+    <example>
+        <title>Cache de sortie avec le frontend de sortie <code>Zend_Cache</code></title>
+        <para>
+            Nous marquons les sections dans lesquelles nous voulons une cache de sortie en ajoutant
+            de la logique conditionnelle, en encapsulant la section entre les m�thodes
+            <code>start()</code> et <code>end()</code> (cela ressemble au premier exemple
+            et est la core strategy de pour la mise en cache)
+        </para>
+        <para>
+            A l'int�reieur, affichez vous donn�es comme d'habitude toutes les sorties seront misent en cache
+            quans la m�thode <code>end()</code> est appel�e.
+            A la prochaine ex�cution, la section compl�te sera pass�e, au profit de la r�cup�ration de son cache
+            (si le cache est encore valide).
+            <programlisting role="php"><![CDATA[<?php
+
+$frontendOptions = array(
+   'lifeTime' => 30,                  // temps de vue du cache de 30 secondes
+   'automaticSerialization' => false  // par d�faut
+);
+
+$backendOptions = array('cacheDir' => './tmp/');
+
+$cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
+
+// nous passons un identifiant unique � la m�thode start()
+if(!$cache->start('mypage')) {
+    // output as usual:
+
+    echo 'Hello world! ';
+    echo 'Ceci est dy cache('.time().') ';
+
+    $cache->end(); // la sortie est sauvegard�e est envoy� au navigateur
+}
+
+echo 'Ceci n\' jamais mis en cache ('.time().').';
+
+?>]]>       </programlisting>
+       </para>
+       <para>
+           Notez que nous affichons le r�sultat de <code>time()</code> deux fois; c'est dans un but de
+           d�monstrations. Essayez de lancer la page est de la rafraichir plusieurs fois; you allez
+           constater que la premier nombre ne change pas alors que le second change � chaque actualisation.
+           C'est parce que le premier nombre a �t� mis en cache est sauvegard�.
+           Apr�s 30 secondes, le nombre devrait de nouveau correspondre au second nombre
+           parce que le cache a espir� -- seulement pour �tre cach� de nouveau.
+           Vous devriez essayer �a dans votre navigateur ou dans une console.
+       </para>
+    </example>
+    <note><para>
+        Lorsque vous utilisez Zend_Cache, faite attention � l'identifiant du cache (pass� � <code>save()</code>
+        et <code>start()</code>). Il doit �tre unique pour chaque ressource que vous mettez en cache, sinon il
+        est possible que des caches en efface d'autres, ou encore pire, s'affiche en lieu et place d'autres.
+    </para></note>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
