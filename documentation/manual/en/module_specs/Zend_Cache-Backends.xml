@@ -112,6 +112,21 @@
                           </entry>
                       </row>
                   </tbody>
+                  <tbody>
+                      <row>
+                          <entry><code>automaticVacuumFactor</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>10</code></entry>
+                          <entry>
+                              Disable / Tune the automatic vacuum process.
+                              The automatic vacuum process defragment the database file (and make it smaller)
+                              when a clean() or delete() is called :
+                              0 means no automatic vacuum ;
+                              1 means systematic vacuum (when delete() or clean() methods are called) ;
+                              x (integer) > 1 => automatic vacuum randomly 1 times on x clean() or delete().
+                          </entry>
+                      </row>
+                  </tbody>
               </tgroup>
           </table>
     </sect2>
