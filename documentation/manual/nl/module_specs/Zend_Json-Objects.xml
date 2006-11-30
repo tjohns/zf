@@ -1,36 +1,3 @@
-<sect1 id="zend.json.introduction">
-    <title>Inleiding</title>
-    <para>
-        <code>Zend_Json</code> verstrekt gemakkelijke methodes om PHP naar 
-		het JSON formaat te serializeren en JSON te decoderen naar PHP. Voor
-		meer informatie over JSON kan je terecht op 
-		<ulink url="http://www.json.org/">de website van het JSON project</ulink>.
-    </para>
-    <para>
-		JSON, JavaScript Object Notation, kan gebruikt worden als een lichtgewicht
-		data transporteur tussen javascript en andere programmeertalen. Omdat
-		JSON onmiddellijk in Javascript kan worden geëvalueerd is het een ideaal
-		formaat om te gebruiken met Web 2.0 interfaces; het is een eenvoudiger
-		alternatief dan XML voor AJAX interfaces.
-    </para>
-</sect1>
-
-<sect1 id="zend.json.basics">
-    <title>Basisgebruik</title>
-    <para>
-		Het gebruik van <code>Zend_Json</code> impliceert het gebruik van de
-		volgende twee publiek beschikbare methodes: <code>Zend_Json::encode()</code> 
-		en <code>Zend_Json::decode()</code>. 
-        <programlisting role="php"><![CDATA[<?php
-// Een waarde verkrijgen:
-$phpNative = Zend_Json::decode($encodedValue);
-
-// Encodering om het terug naar de klant te sturen:
-$json = Zend_Json::encode($phpNative);
-?>]]></programlisting>
-    </para>
-</sect1>
-
 <sect1 id="zend.json.objects">
     <title>JSON Objecten</title>
     <para>
@@ -66,7 +33,6 @@ $phpNative = Zend_Json::decode($encodedValue, Zend_Json::TYPE_OBJECT);
 		waarden die <code>Zend_Json</code> heeft gedecodeerd.
     </para>
 </sect1>
-        
 <!--
 vim:se ts=4 sw=4 et:
 -->

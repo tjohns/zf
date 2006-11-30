@@ -1,0 +1,28 @@
+<sect1 id="zend.log.advanced-logging">
+   <title>Geavanceerd Loggen: Meerdere Loggers</title>
+   <para>
+        <code>Zend_Log</code> ondersteunt het loggen naar meerdere log adapters. Het kan een bericht sturen
+		naar alle logs, of naar een specifieke log.
+   </para>
+
+   <para>
+		Wanneer je meerdere loggers maakt moet aan elke log een unieke naam worden gegeven. Loggers worden met de
+		<code>registerLogger()</code> methode geregistreerd, met de lognaam als optioneel tweede argument.
+   </para>
+
+   <para>
+		In het voorbeeld hierna worden twee loggers gemaakt: één voor de console, een andere voor een bestand.
+		Ze zullen respectievelijk <code>Console</code> en <code>File</code> worden genoemd.
+    </para>
+    <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                 // Zend_Log basis klasse
+require_once 'Zend/Log/Adapter/File.php';    // Bestand log adapter
+require_once 'Zend/Log/Adapter/Console.php'; // Console log adapter
+
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'File');
+Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Console');
+]]></programlisting>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
