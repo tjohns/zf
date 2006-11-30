@@ -197,11 +197,7 @@ class Zend_Console_Getopt
     public function __construct($rules, $argv = NULL, $getoptConfig = array())
     {
         $this->_progname = $_SERVER['argv'][0];
-        if (isset($getoptConfig)) {
-            foreach ($getoptConfig as $key => $value) {
-                $this->_getoptConfig[$key] = $value;
-            }
-        }
+        $this->setOptions($getoptConfig);
         $this->addRules($rules);
         if (!is_array($argv)) {
             $argv = array_slice($_SERVER['argv'], 1);
@@ -260,7 +256,7 @@ class Zend_Console_Getopt
      */
     public function __toString()
     {
-        return $this->dumpString();
+        return $this->toString();
     }
 
     /**
@@ -295,6 +291,38 @@ class Zend_Console_Getopt
     {
         $this->_argv = $argv;
         $this->_parsed = false;
+    }
+
+    /**
+     * Define multiple configuration options from an associative array.
+     * These are not program options, but properties to configure
+     * the behavior of Zend_Console_Getopt.
+     *
+     * @param array $getoptConfig
+     */
+    public function setOptions($getoptConfig)
+    {
+        if (isset($getoptConfig)) {
+            foreach ($getoptConfig as $key => $value) {
+                $this->_getoptConfig[$key] = $value;
+            }
+        }
+    }
+
+    /**
+     * Define one configuration option as a key/value pair.
+     * These are not program options, but properties to configure
+     * the behavior of Zend_Console_Getopt.
+     *
+     * @param string $configKey
+     * @param string $configValue
+     */
+    public function setOption($configKey, $configValue)
+    {
+        if ($configKey == null || $configKey == '') {
+            return;
+        }
+        $this->_getoptConfig[$configKey] = $configValue;
     }
 
     /**
@@ -336,7 +364,7 @@ class Zend_Console_Getopt
      * @throws Zend_Console_Getopt_Exception
      * @return string
      */
-    public function dumpString()
+    public function toString()
     {
         if (!$this->_parsed) {
             $this->parse();
@@ -358,7 +386,7 @@ class Zend_Console_Getopt
      * @throws Zend_Console_Getopt_Exception
      * @return array
      */
-    public function dumpOptions()
+    public function toArray()
     {
         if (!$this->_parsed) {
             $this->parse();
@@ -380,7 +408,7 @@ class Zend_Console_Getopt
      * @throws Zend_Console_Getopt_Exception
      * @return string
      */
-    public function dumpJson()
+    public function toJson()
     {
         if (!$this->_parsed) {
             $this->parse();
@@ -408,7 +436,7 @@ class Zend_Console_Getopt
      * @throws Zend_Console_Getopt_Exception
      * @return string
      */
-    public function dumpXml()
+    public function toXml()
     {
         if (!$this->_parsed) {
             $this->parse();
