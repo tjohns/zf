@@ -2,9 +2,7 @@
     <title>Zend::dump()</title>
 
     <para>
-    <code>Zend::dump()</code> prints and/or returns information about an expression.  It is a wrapper
-    for the PHP function <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>.  It
-    wraps the output with (X)HTML <code>&lt;pre&gt;</code> tags and optionally prepends a label.
+    <code>Zend::dump()</code> Zend::dump()打印和返回某个表达式或变量的信息。它是将var_dump()封装而成的。它默认带上了(X)HTML的pre标签，使输出更美观。 
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -14,19 +12,19 @@ Zend::dump($var, $label=null, $echo=true)
 ?>]]></programlisting>
 
     <para>
-    The <code>$var</code> argument specifies the expression or variable for which the information
-    will be obtained.
+    $var 参数指定要输出信息的变量或表达式。
     </para>
 
     <para>
-    The <code>$label</code> is any arbitrary text to be prepended to the output of
-    <code>Zend::dump()</code>.  This is useful when dumping many variables on a single screen.
+   $label标签参数是用来加在输出信息之前的一段文本。
     </para>
 
-    <para>The boolean <code>$echo</code> controls whether the output of <code>Zend::dump()</code> is echoed
-    or not.  If <code>TRUE</code>, the output will be echoed.  Regardless of the state of
-    <code>$echo</code>, the output is always be returned.
+    <para>dump()总会返回信息，但不一定会输出，这取决于$echo参数，指定是否要将信息输出到屏幕。
     </para>
+
+	<para>
+	(这非常有用，例如你一次要查看多个变量的信息，你可以为不同变量设置不同label，如“user”，“password”等等，这样不会弄乱--Haohappy注)
+	</para>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
