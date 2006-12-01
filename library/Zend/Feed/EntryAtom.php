@@ -74,12 +74,12 @@ class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
         $client->setUri($deleteUri);
         if (Zend_Feed::getHttpMethodOverride()) {
             $client->setHeaders(array('X-Method-Override: DELETE'));
-            $response = $client->post();
+            $client->post();
         } else {
-            $response = $client->delete();
+            $client->delete();
         }
-        if (!$response->isSuccessful()) {
-            throw new Zend_Feed_Exception('Delete failed, expected response code 204, got ' . $response->getStatus());
+        if ($client->responseCode !== 204) {
+            throw new Zend_Feed_Exception('Expected response code 204, got ' . $client->responseCode);
         }
 
         return true;
@@ -121,14 +121,20 @@ class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
             $client = Zend_Feed::getHttpClient();
             $client->setUri($editUri);
             if (Zend_Feed::getHttpMethodOverride()) {
-                $client->setHeaders(array('X-Method-Override: PUT', 'Content-type: application/atom+xml'));
-                $response = $client->post($this->saveXML());
+                $client->setHeaders(array('X-HTTP-Method-Override: PUT',
+                    'Content-Type: application/atom+xml'));
+                // @todo $response = return value
+                $client->post($this->saveXML());
             } else {
-                $client->setHeaders(array('X-Method-Override: PUT', 'Content-type: application/atom+xml'));
-                $response = $client->put($this->saveXML());
+                $client->setHeaders(array(
+                    'Content-Type: application/atom+xml'));
+                // @todo $response = return value
+                $client->put($this->saveXML());
             }
-            if ($response->getStatus() !== 200) {
-                throw new Zend_Feed_Exception('Expected response code 200, got ' . $response->getStatus());
+            // @todo use $response->getStatus() instead of $client->responseCode
+            if ($client->responseCode !== 200) {
+                // @todo use $response->getStatus() instead of $client->responseCode
+                throw new Zend_Feed_Exception('Expected response code 200, got ' . $client->responseCode);
             }
         } else {
             if ($postUri === null) {
@@ -136,16 +142,20 @@ class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
             }
             $client = Zend_Feed::getHttpClient();
             $client->setUri($postUri);
-            $response = $client->post($this->saveXML());
-            if ($response->getStatus() !== 201) {
+            // @todo $response = to return value
+            $client->post($this->saveXML());
+            // @todo use $response->getStatus()
+            if ($client->responseCode !== 201) {
+                // @todo use $response->getStatus() instead of $client->responseCode
                 throw new Zend_Feed_Exception('Expected response code 201, got '
-                                              . $response->getStatus());
+                                              . $client->responseCode);
             }
         }
 
         // Update internal properties using $client->responseBody;
         @ini_set('track_errors', 1);
-        $newEntry = @DOMDocument::loadXML($response->getBody());
+        // @todo use $response->getBody()
+        $newEntry = @DOMDocument::loadXML($client->responseBody);
         @ini_restore('track_errors');
         if (!$newEntry) {
             throw new Zend_Feed_Exception('XML cannot be parsed: ' . $php_errormsg);
