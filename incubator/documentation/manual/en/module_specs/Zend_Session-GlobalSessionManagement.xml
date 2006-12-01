@@ -167,44 +167,114 @@ remember_me_seconds = 864000
 
         <title>regenerateId()</title>
 
-        <para>
-            The safest and most secure way to regenerate session id's in user agent cookies would be to avoid using
-            conditional logic. Regenerating on every request prevents several possible avenues of attack, but at small
-            performance and bandwidth cost. Anytime there is 'privilege escalation' or session parameter change, use
-            <code>regenerateId()</code> to create a new session id. If you call the <code>rememberMe()</code> function,
-            then don't use <code>regenerateId()</code>, since the former calls the latter. If a user has successfully
-            logged into your website, use <code>rememberMe()</code> instead. Changing session ids helps protect against
-            session hijacking. Even if an attacker gains access to an old session id, <code>regenerateId()</code> also
-            moves the session data from the old session id "handle" to the new one, so no data remains accessible via
-            the old session id.
-        </para>
+        <sect3 id="zend.session.regenerateid.intro">
 
-        <para>
-            With XSS, an attacker does not need direct access to a victim's network traffic. If the victim already has a
-            session cookie, XSS might allow an attacker to read the cookie and steal the session. For victims with no
-            session cookies, using XSS to inject javascript, an attacker could create a session id cookie with a known
-            value, then set an identical cookie on his own system, in order to hijack the victim's session. If the
-            victim visited an attacker's website, then the attacker can also emulate most other identifiable
-            characteristics of the victim's user agent. However, the attacker can not arbitrarily alter the server-side
-            state of PHP sessions. Thus, developers should rely on <code>Zend_Session_Core</code>'s session handling
-            logic and <code>Zend_Session_Core::regenerateId()</code> to thwart attempts to use session fixation for
-            hijacking sessions.
-        </para>
+            <title>Introduction: Session Identifiers</title>
 
-        <para>
-            By itself, calling this function when the user's session is first used, does not prevent session fixation
-            attacks, unless you can distinguish between a session originated by an attacker emulating the victim. If
-            both originate from the same proxy (e.g. a large AOL proxy), there might not be any way to distinguish
-            between a victim using a cookie created through an XSS vulnerability on your website by the attacker, if the
-            attacker first initiates a session on your website. If you can distinguish between an attacker and victim
-            using the same session id (e.g. their IP's are from different countries), then session hijacking can be
-            dealt with directly. If the attacker has not already initiated a session, and fixed the victim's session id
-            to the attacker's session id (sort of reverse hijacking) using an XSS vulnerability, then the sample code
-            below makes it much harder for an attacker to know the current victim's session id.
-        </para>
+            <para>
+                Introduction: Best practice in relation to using sessions with ZF calls for using a browser cookie (i.e.
+                a normal cookie stored in your web browser), instead of embedding a unique session identifier in URLs as
+                a means to track individual users. By default this component uses only cookies to maintain session
+                identifiers. The cookie's value is the unique identifier of your browser's session. PHP's ext/session
+                uses this identifier to maintain a unique one-to-one relationship between website visitors, and
+                persistent session data storage unique to each visitor. Zend_Session* wraps this storage mechanism
+                (<code>$_SESSION</code>) with an object-oriented interface. Unfortunately, if an attacker gains access
+                to the value of the cookie (the session id), an attacker might be able to hijack a visitor's session.
+                This problem is not unique to PHP, or the Zend Framework. The <code>regenerateId()</code> method allows
+                an application to change the session id (stored in the visitor's cookie) to a new, random, unpredictable
+                value. Note: Although not the same, to make this section easier to read, we use the terms "user agent"
+                and "web browser" interchangeably.
+            </para>
 
-        <example>
-            <title>Anonymous Sessions and Session Fixation</title>
+            <para>
+                Why?: If an attacker obtains a valid session identifier, an attacker might be able to impersonate a
+                valid user (the victim), and then obtain access to confidential information or otherwise manipulate the
+                victim's data managed by your application. Changing session ids helps protect against session hijacking.
+                If the session id is changed, and an attacker does not know the new value, the attacker can not use the
+                new session id in their attempts to hijack the visitor's session. Even if an attacker gains access to an
+                old session id, <code>regenerateId()</code> also moves the session data from the old session id "handle"
+                to the new one, so no data remains accessible via the old session id.
+            </para>
+
+            <para>
+                When to use regenerateId(): Adding <code>Zend_Session_Core::regenerateId()</code> to your Zend Framework
+                bootstrap yields one of the safest and most secure ways to regenerate session id's in user agent
+                cookies. If there is no conditional logic to determine when to regenerate the session id, then there are
+                no flaws in that logic. Although regenerating on every request prevents several possible avenues of
+                attack, not everyone wants the associated small performance and bandwidth cost. Thus, applications
+                commonly try to dynamically determine situations of greater risk, and only regenerate the session ids in
+                those situations. Whenever a website visitor's session's privileges are "escalated" (e.g. a visitor
+                re-authenticates their identity before editing their personal "profile"), or whenever a security
+                "sensitive" session parameter change occurs, consider using <code>regenerateId()</code> to create a new
+                session id. If you call the <code>rememberMe()</code> function, then don't use
+                <code>regenerateId()</code>, since the former calls the latter. If a user has successfully logged into
+                your website, use <code>rememberMe()</code> instead of <code>regenerateId()</code>.
+            </para>
+
+        </sect3>
+
+        <sect3 id="zend.session.regenerateid.details">
+
+            <title>Session Hijacking and Fixation</title>
+
+            <para>
+                XSS problems occur frequently. Rather than expecting to never have a XSS problem with an application,
+                plan for it by following best practices to help minimize damage, if it occurs. With XSS, an attacker
+                does not need direct access to a victim's network traffic. If the victim already has a session cookie,
+                Javascript XSS might allow an attacker to read the cookie and steal the session. For victims with no
+                session cookies, using XSS to inject Javascript, an attacker could create a session id cookie on the
+                victim's browser with a known value, then set an identical cookie on the attacker's system, in order to
+                hijack the victim's session. If the victim visited an attacker's website, then the attacker can also
+                emulate most other identifiable characteristics of the victim's user agent. If your website has an XSS
+                vulnerability, the attacker might be able to insert an AJAX Javascript that secretly "visits" the
+                attacker's website, so that the attacker knows the victim's browser characteristics and becomes aware of
+                a compromised session at the victim website. However, the attacker can not arbitrarily alter the
+                server-side state of PHP sessions, provided the developer has correctly set the value for the
+                <code>save_path</code> option.
+            </para>
+
+            <para>
+                By itself, calling <code>Zend_Session_Core::regenerateId()</code> when the user's session is first used,
+                does not prevent session fixation attacks, unless you can distinguish between a session originated by an
+                attacker emulating the victim. At first, this might sound contradictory to previous statement above,
+                until we consider an attacker who first initiates a real session on your website. The session is "first
+                used" by the attacker, who then knows the result of the initialization (<code>regenerateId()</code>).
+                The attacker then uses the new session id in combination with an XSS vulnerability, or injects the
+                session id via a link on the attacker's website (works if <code>use_only_cookies = off</code>).
+            </para>
+
+            <para>
+                If you can distinguish between an attacker and victim using the same session id, then session hijacking
+                can be dealt with directly. However, such distinctions usually involve some form of usability tradeoffs,
+                because the methods of distinction are often imprecise. For example, if a request is received from an IP
+                in a different country than the IP of the request when the session was created, then the new request
+                probably belongs to an attacker. Under the following conditions, there might not be any way for a
+                website application to distinguish between a victim and an attacker:
+                <itemizedlist mark='opencircle'>
+                    <listitem>
+                        <para>
+                            - attacker first initiates a session on your website to obtain a valid session id
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            - attacker uses XSS vulnerability on your website to create a cookie on the victim's browser
+                            with the same, valid session id (i.e. session fixation)
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            - both the victim and attacker originate from the same proxy farm (e.g. both are behind the
+                            same firewall at a large company, like AOL)
+                        </para>
+                    </listitem>
+                </itemizedlist>
+                The sample code below makes it much harder for an attacker to know the current victim's session id,
+                unless the attacker has already performed the first two steps above.
+            </para>
+
+            <example>
+                <title>Anonymous Sessions and Session Fixation</title>
 <programlisting role="php"><![CDATA[<?php
 $session = new Zend_Session();
  
@@ -214,7 +284,9 @@ if (!isset($session->initialized))
     $session->initialized = true;
 } 
 ?>]]></programlisting>
-        </example>
+            </example>
+
+        </sect3>
 
     </sect2>
 
@@ -254,6 +326,16 @@ if (!isset($session->initialized))
             session. However, no variables in PHP are affected, so your namespaced sessions (instances of
             <code>Zend_Session</code>) remain readable. To complete a "logout", set the optional parameter to true to
             also delete the user agent's session id cookie.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.stop">
+
+        <title>stop(), shutdown()</title>
+
+        <para>
+            One is an alias of the other.  They simply perform a <code>session_write_close()</code> and disables further use of Zend_Session_Core.
         </para>
 
     </sect2>

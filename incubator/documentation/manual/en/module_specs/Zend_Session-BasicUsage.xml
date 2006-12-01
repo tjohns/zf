@@ -87,6 +87,7 @@
 <programlisting role="php">
 <![CDATA[<?php
     // Zend_Session is iteratable
+    $my_session = new Zend_Session();
     foreach ($my_session as $name => $value) {
         ....
     }
