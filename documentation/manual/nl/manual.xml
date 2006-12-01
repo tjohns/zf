@@ -118,7 +118,18 @@
     </chapter>
     <chapter id="zend.mail">
         <title>Zend_Mail</title>
-        &module_specs.Zend_Mail;
+        &module_specs.Zend_Mail-Introduction;
+        &module_specs.Zend_Mail-Sending;
+        &module_specs.Zend_Mail-MultipleEmails;
+        &module_specs.Zend_Mail-DifferentTransports;
+        &module_specs.Zend_Mail-HtmlMails;
+        &module_specs.Zend_Mail-Attachments;
+        &module_specs.Zend_Mail-AddingRecipients;
+        &module_specs.Zend_Mail-Boundary;
+        &module_specs.Zend_Mail-AdditionalHeaders;
+        &module_specs.Zend_Mail-CharacterSets;
+        &module_specs.Zend_Mail-Encoding;
+        &module_specs.Zend_Mail-SmtpAuthentication;
     </chapter>
     <chapter id="zend.mime">
         <title>Zend_Mime</title>
@@ -128,13 +139,19 @@
     </chapter>
     <chapter id="zend.pdf">
         <title>Zend_Pdf</title>
-        &module_specs.Zend_Pdf;
+        &module_specs.Zend_Pdf-Introduction;
+        &module_specs.Zend_Pdf-Create;
+        &module_specs.Zend_Pdf-Save;
+        &module_specs.Zend_Pdf-Pages;
+        &module_specs.Zend_Pdf-Drawing;
+        &module_specs.Zend_Pdf-Usage;
     </chapter>
 	<chapter id="zend.search">
         <title>Zend_Search</title>
         &module_specs.Zend_Search-Overview;
         &module_specs.Zend_Search-IndexCreation;
         &module_specs.Zend_Search-Searching;
+        &module_specs.Zend_Search-QueryLanguage;
         &module_specs.Zend_Search-Queries;
         &module_specs.Zend_Search-Charset;
         &module_specs.Zend_Search-Extending;
@@ -143,16 +160,28 @@
     <chapter id="zend.service">
         <title>Zend_Service</title>
         &module_specs.Zend_Service;
+        &module_specs.Zend_Service_Rest;
+        &module_specs.Zend_Service_Amazon;
+        &module_specs.Zend_Service_Flickr;
+        &module_specs.Zend_Service_Yahoo;
     </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
-        &module_specs.Zend_View;
+        &module_specs.Zend_View-Introduction;
+        &module_specs.Zend_View-Controllers;
+        &module_specs.Zend_View-Scripts;
+        &module_specs.Zend_View-Helpers;
     </chapter>
     <chapter id="zend.xmlrpc">
         <title>Zend_XmlRpc</title>
         &module_specs.Zend_XmlRpc;
         &module_specs.Zend_XmlRpc_Client;
-        <!-- &module_specs.Zend_XmlRpc_Server; -->
+        &module_specs.Zend_XmlRpc_Server;
+    </chapter>
+    <chapter id="zend.server">
+        <title>Zend_Server</title>
+        &module_specs.Zend_Server;
+        &module_specs.Zend_Server_Reflection;
     </chapter>
     <!-- &ref.faq; -->
     &ref.coding_standard;
