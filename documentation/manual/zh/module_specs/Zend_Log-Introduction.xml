@@ -1,0 +1,29 @@
+<sect1 id="zend.log.introduction">
+    <title>Introduction</title>
+    <para>
+        <code>Zend_Log</code> is a general purpose logging class.  <code>Zend_Log</code> is a static class that
+        can not be instantiated directly.  It holds an array of instances of <code>Zend_Log</code>, one for
+        each log used by the application.  Each logger instance uses an adapter that implements
+        <code>Zend_Log_Adapter_Interface</code>.
+    </para>
+
+    <para>
+        To use <code>Zend_Log</code>, <ulink url="http://php.net/include">include()</ulink> the
+        <code>Zend_Log</code> class and any adapter classes that will be used. For example, if an application
+        will log to both the console (PHP's output buffer) and text files, the following files would be
+        included:
+    </para>
+
+    <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                  // Zend_Log base class
+require_once 'Zend/Log/Adapter/Console.php';  // Console log adapter
+require_once 'Zend/Log/Adapter/File.php';     // File log adapter
+]]></programlisting>
+    <para>
+        <code>Zend_Log</code> can be used in a simplified way for a single log, can be configured for multiple
+        logs, and can also be used to log internal operations of many Zend Framework classes.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
