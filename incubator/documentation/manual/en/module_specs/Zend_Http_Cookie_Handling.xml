@@ -286,7 +286,7 @@ $cookie->match('http://www.example.com/', true, time() + (3 * 3600));
         </para>
     </sect2>
     
-    <sect2 id="zend.http.cookies.cookiejar_inst">
+    <sect2 id="zend.http.cookies.cookiejar">
         <title>The Zend_Http_CookieJar Class: Instantiation</title>
         <para>
             ...
