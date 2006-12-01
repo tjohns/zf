@@ -143,7 +143,19 @@ class Zend_Mail_Folder_Mbox extends Zend_Mail_Mbox implements Zend_Mail_Folder_I
     public function selectFolder($globalName)
     {
         $this->_currentFolder = (string)$globalName;
-        $this->_openMboxFile($this->_rootdir . $this->_currentFolder);
+        try {
+            $this->_openMboxFile($this->_rootdir . $this->_currentFolder);
+        } catch(Zend_Mail_Exception $e) {
+            // check what went wrong
+            // if folder does not exist getFolders() throws an exception
+            if(!$this->getFolders($this->_currentFolder)->isSelectable()) {
+                throw Zend::Exception('Zend_Mail_Exception', "{$this->_currentFolder} is not selectable");
+            }
+            // seems like file has vanished; rebuilding folder tree - but it's still an exception
+            $this->_buildFolderTree($this->_rootdir);
+            throw Zend::Exception('Zend_Mail_Exception', 'seems like the mbox file has vanished, I\'ve rebuild the ' .
+                                                         'folder tree, search for an other folder and try again');
+        }
     }
 
     /**
@@ -176,7 +188,7 @@ class Zend_Mail_Folder_Mbox extends Zend_Mail_Mbox implements Zend_Mail_Folder_I
      */
     public function __wakeup()
     {
-        // TODO: validate cache
+        // if cache is stall selectFolder() rebuilds the tree on error
         parent::__wakeup();
     }
 }
