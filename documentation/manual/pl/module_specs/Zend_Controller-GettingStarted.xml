@@ -4,66 +4,86 @@
 	<sect2 id="zend.controller.getting-started.introduction">
 		<title>Wprowadzenie</title>
 		<para>
-			Klasa <code>Zend_Controller</code> została zbudowana w sposób bardzo elastyczny.
-            Można ją rozwijać rozszerzając klasy istniejące lub pisząc nowe klasy implementujące
-			interfejsy <code>Zend_Controller_Router_Interface</code> oraz <code>Zend_Controller_Dispatcher_Interface</code>.
+			Klasa <code>Zend_Controller</code> została zbudowana w sposób bardzo 
+			elastyczny. Można ją rozwijać rozszerzając klasy istniejące lub 
+			pisząc nowe klasy implementujące różne interfejsy oraz klasy
+			abstrakcyjne, które są podstawą rodziny klas kontrolera.
 		</para>
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.server-configuration">
 		<title>Konfiguracja serwera</title>
 		<para>
-			Klasa Zend_Controller została zbudowana w celu zapewnienia nowoczesnym witrynom
-			estetycznych adresów URL (bez parametrów lub z ich małą ilością). Wymaga to
-			zmian w konfiguracji serwera www w kwestii przekierowania żądań do pojedynczego
-			pliku nazwanego "index.php". Ma on za zadanie ładować klasę <code>Zend_Controller_Front</code>.  
-			Na serwerach Apache funkcjonalność taka jest dostarczana przez opcjonalny moduł mod_rewrite.
+			Klasa Zend_Controller została zbudowana w celu zapewnienia 
+			nowoczesnym witrynom estetycznych adresów URL (bez parametrów lub 
+			z ich małą ilością). Wymaga to zmian w konfiguracji serwera www w 
+			kwestii przekierowania żądań do pojedynczego pliku nazwanego 
+			"index.php". Ma on za zadanie ładować klasę 
+			<code>Zend_Controller_Front</code>. Na serwerach Apache 
+			funkcjonalność taka jest dostarczana przez opcjonalny moduł mod_rewrite.
 		</para>
 
 		<para>
-		    Pierwszym krokiem w konfiguracji serwera jest instalacja i uaktywnienie mod_rewrite. Następnym krokiem
-			jest stworzenie dwóch plików w głównym katalogu serwera www: .htaccess oraz index.php. Plik .htaccess jest używany
-			przez serwer Apache i musi zawierać reguły mod_rewrite aby przekierować wszystkie żądania do pliku index.php.
-			Najprostszym rozwiązaniem jest napisanie reguły mod_rewrite, która przekieruje wszystkie żądania do pliku
-			index.php z wyjątkiem żądań do plików o wybranych rozszerzeniach. Oto przykład takiego pliku:
+		    Pierwszym krokiem w konfiguracji serwera jest instalacja i uaktywnienie 
+		    mod_rewrite. Następnym krokiem jest stworzenie dwóch plików w głównym 
+		    katalogu serwera www: .htaccess oraz index.php. Plik .htaccess jest 
+		    używany przez serwer Apache i musi zawierać reguły mod_rewrite aby 
+		    przekierować wszystkie żądania do pliku index.php. Najprostszym 
+		    rozwiązaniem jest napisanie reguły mod_rewrite, która przekieruje 
+		    wszystkie żądania do pliku index.php z wyjątkiem żądań do plików 
+		    o wybranych rozszerzeniach. Oto przykład takiego pliku:
         </para>
         <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 ]]></programlisting>
         <para>
-			W powyższym przykładzie wszystkie żądania do plików o rozszerzeniach innych niż
-			wymienione zostaną przekazane do pliku ładującego index.php. Jest to użyteczne podczas
-			tworzenia aplikacji, jednak potem reguły powinny wyłączać konkretne katalogi.
+			W powyższym przykładzie wszystkie żądania do plików o rozszerzeniach 
+			innych niż wymienione zostaną przekazane do pliku ładującego index.php. 
+			Jest to użyteczne podczas tworzenia aplikacji, jednak potem reguły 
+			powinny wyłączać konkretne katalogi.
 		</para>
-	</sect2>
+		
+		<note>	
+		    <title>Lokalizacja pliku ładującego</title>
+		    <para>
+    			Plik ładujący powinien być jedynym plikiem PHP umieszczonym w 
+    			głównym katalogu serwera www.
+			</para>
+		</note>
+
+        <para>
+            That said, the basic functionality of Zend_Controller also supports
+            URLs using query parameters -- as an example,
+            <code>index.php?controller=foo&amp;action=bar</code>. Additionally,
+            another shipped router, <code>Zend_Controller_RewriteRouter</code>,
+            works in a variety of environments, including many without
+            mod_rewrite-like capabilities. If you cannot use mod_rewrite or an
+            equivalent, you'll still be able to use Zend_Controller for your
+            site.
+        </para>
+    </sect2>
 	
 	<sect2 id="zend.controller.getting-started.bootstrap">
 		<title>Plik ładujący</title>
 		
 		<para>
-		    Po ustawieniu pliku .htaccess file, utwórz nowy plik o nazwie <code>index.php</code>.  
-		    Jest to plik ładujący. Jego zadaniem jest jedynie załadowanie klasy Zend_Controller_Front, 
-		    która powinna być umieszczona poza głównym katalogiem serwera.
-		</para>
-
-		<note>
-            <title>Lokalizacja pliku ładującego</title>
-		    <para>
-		        Plik ładujący powinien być jedynym plikiem PHP umieszczonym w głównym
-		        katalogu serwera www.
-		    </para>
-		</note>
-
-		<para>
-		    Ze względów bezpieczeństwa Zend odradza przechowywanie jakichkolwiek plików PHP
-		    w ścieżkach dostępnych poprzez serwer www (wewnątrz głównego katalogu serwera www).
-		    Jest to bardzo dobrą praktyką, powinna być ona stosowana zawsze gdy jest to możliwe.
+		    Po ustawieniu pliku .htaccess file, utwórz nowy plik o nazwie 
+		    <code>index.php</code>. Jest to plik ładujący. Jego zadaniem jest 
+		    jedynie załadowanie klasy Zend_Controller_Front, która powinna być 
+		    umieszczona poza głównym katalogiem serwera.
 		</para>
 
 		<para>
-			Utwórz plik ładujący o nazwie <code>index.php</code> w głównym katalogu serwera www aby
-			załadować klasę Zend_Controller_Front:
+		    Ze względów bezpieczeństwa Zend odradza przechowywanie jakichkolwiek 
+		    plików PHP w ścieżkach dostępnych poprzez serwer www (wewnątrz 
+		    głównego katalogu serwera www). Jest to bardzo dobrą praktyką, 
+		    powinna być ona stosowana zawsze gdy jest to możliwe.
+		</para>
+
+		<para>
+			Utwórz plik ładujący o nazwie <code>index.php</code> w głównym 
+			katalogu serwera www aby załadować klasę Zend_Controller_Front:
         </para>
 	    <programlisting role="php"><![CDATA[<?php
 				
@@ -73,40 +93,32 @@ Zend_Controller_Front::run('/sciezka/do/kontrolerow');
 
 ?>]]></programlisting>
         <para>
-			Przeczytaj następna sekcję odnośnie do <code>/path/to/your/controllers</code>.
+			Przeczytaj następna sekcję odnośnie do 
+			<code>/path/to/your/controllers</code>.
 
-			Jak napisano w pliku <code>README.txt</code>, ścieżka do katalogu zawierającego bibliotekę Zend Framework 
-			musi być podana w dyretywie <code>include_path</code>. Jeśli nie jest ona ustawiona
-			w pliku <code>php.ini</code>, możesz użyć funkcji <code>set_include_path()</code> 
-			w tym pliku, zanim użyjesz <code>require_once()</code>.
+			Jak napisano w pliku <code>README.txt</code>, ścieżka do katalogu 
+			zawierającego bibliotekę Zend Framework musi być podana w dyretywie 
+			<code>include_path</code>. Jeśli nie jest ona ustawiona w pliku 
+			<code>php.ini</code>, możesz użyć funkcji <code>set_include_path()</code> w tym pliku, zanim użyjesz <code>require_once()</code>.
 		</para>
-
-		<note>
-		    <title>Wymagania</title>
-		    <para>
-		        Obecnie szukamy sposobu nie wymagającego instalacji mod_rewrite. Chcemy zaproponować
-		        konfigurację zarówno dla systemów używających mod_rewrite jak i dla tych które tego modułu
-		        nie używają. Proszę także zwrócić uwagę na to, że ta funkcjonalność nie jest tylko przeznaczona
-		        dla serwera Apache, ale także dla każdego innego serwera posiadającego podobne możliwości
-		        w zakresie przekierowań żądań do plików.
-		    </para>
-		</note>
 	</sect2>	
 		
 	<sect2 id="zend.controller.getting-started.directory-structure">
 		<title>Struktura katalogów</title>
 		
 		<para>
-		    Zalecane jest aby witryny zbudowane w oparciu o Zend Framework miały podobną
-		    strukturę katalogów. Nie zawsze jest to możliwe, jednak w większości przypadków
-		    jest. Zgodność z tą strukturą spowoduje, że kod będzie bardziej zrozumiały
-		    dla osób zaznajomionych z konwencjami Zend Framework.
+		    Zalecane jest aby witryny zbudowane w oparciu o Zend Framework miały 
+		    podobną strukturę katalogów. Nie zawsze jest to możliwe, jednak w 
+		    większości przypadków jest. Zgodność z tą strukturą spowoduje, że 
+		    kod będzie bardziej zrozumiały dla osób zaznajomionych z konwencjami 
+		    Zend Framework.
 		</para>
 		
 		<para>	
-		    Zalecena struktura katalogów dotyczy zarówno bibliotek (Zend oraz wszystkich innych)
-		    jak i struktury katalogów samej aplikacji.
+		    Zalecena struktura katalogów dotyczy zarówno bibliotek (Zend oraz 
+		    wszystkich innych) jak i struktury katalogów samej aplikacji.
         </para>
+
         <programlisting role="php"><![CDATA[
 /application
   /models
@@ -121,30 +133,45 @@ Zend_Controller_Front::run('/sciezka/do/kontrolerow');
   /Zend
 ]]></programlisting>
 		
-		<note>
-		    <title>W trakcie budowy</title>
-		    <para>
-			    Ta sekcja nie jest jeszcze gotowa.
-			</para>
-		</note>
+        <note>
+            This section is not yet complete.  It is under heavy construction
+            and is subject to change.
+        </note>
 	</sect2>	
 		
-	<sect2 id="zend.controller.overview.indexcontroller">
-		<title>IndexController</title>
+	<sect2 id="zend.controller.overview.defaultcontroller">
+		<title>Domyślny kontroler</title>
 
 		<para>
-		    Każda witryna musi mieć zdefiniowany kontroler o nazwie <code>IndexController</code>. Jest to kontroler
-		    który jest wywoływany kiedy w adresie URL nie ma określonego kontrolera, np. w takim adresie:
+		    Każda witryna musi mieć zdefiniowany domyślny kontroler. Jest to 
+		    kontroler, który jest wywoływany kiedy w adresie URL nie ma 
+		    określonego kontrolera, np. w takim adresie:
         </para>
-	    <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 http://framework.zend.com/
 ]]></programlisting>
 
-		<para>
-			Klasa <code>IndexController</code> musi być umieszczona w pliku <code>IndexController.php</code>, a
-			plik musi być umieszczony w katalogu kontrolerów. Klasa <code>IndexController</code> musi rozszerzać
-			klasę <code>Zend_Controller_Action</code>. Oto przykład klasy <code>IndexController</code>:
+        <para>
+            In the shipped configuration, the default controller should be named
+            <code>IndexController</code>, and defined in a file named
+            <code>IndexController.php</code>. Internally, it will be referenced
+            as the controller 'index'.
         </para>
+
+        <para>
+            You may change the default controller prior to dispatching the front
+            controller by calling the <code>setDefaultController()</code> method
+            on either the front controller or dispatcher object. When doing so,
+            use the internal naming conventions. Thus, the class
+            <code>HomeController</code> (in the <code>HomeController.php</code>
+            file) would be referred to as <code>home</code>.
+        </para>
+
+        <para>
+            Controllers should extend the <code>Zend_Controller_Action</code>
+            class and be placed in the controllers directory.
+        </para>
+
 	    <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Action.php';
@@ -164,12 +191,17 @@ class IndexController extends Zend_Controller_Action
 
 ?>]]></programlisting>
 			
-		<note>
-		    <title>W trakcie budowy</title>
-		    <para>
-			    Ta sekcja nie jest jeszcze gotowa.
-			</para>
-        </note>			
+        <para>
+            More detail on the default controller and action, as well as writing
+            action controller classes, will be presented in later chapters.
+        </para>
 
+        <note>
+            This section is not yet complete.  It is under heavy construction
+            and is subject to change.
+        </note>
 	</sect2>			
 </sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

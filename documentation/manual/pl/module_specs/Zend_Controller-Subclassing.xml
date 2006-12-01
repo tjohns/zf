@@ -4,9 +4,14 @@
 	<sect2 id="zend.controller.subclassing.introduction">
 		<title>Wprowadzenie</title>
 		<para>
-			Klasa <code>Zend_Controller</code> została zbudowana w sposób bardzo elastyczny.
-            Można ją rozwijać rozszerzając klasy istniejące lub pisząc nowe klasy implementujące
-			interfejsy <code>Zend_Controller_Router_Interface</code> oraz <code>Zend_Controller_Dispatcher_Interface</code>.
+			Klasa <code>Zend_Controller</code> została zbudowana w sposób 
+			bardzo elastyczny. Można ją rozwijać rozszerzając klasy istniejące 
+			lub pisząc nowe klasy implementujące interfejsy 
+			<code>Zend_Controller_Router_Interface</code> oraz 
+			<code>Zend_Controller_Dispatcher_Interface</code> lub rozszerzając
+            klasy <code>Zend_Controller_Request_Abstract</code>,
+            <code>Zend_Controller_Response_Abstract</code>, oraz
+            <code>Zend_Controller_Action</code>.
 		</para>
 		
 		<para>
@@ -16,38 +21,59 @@
 				<listitem>
 					<para>
 					    Istniejący w Zend Framework system routingu URI nie jest 
-					    kompatybilny. Np. gdy chcemy go zintegrować z istniejącą witryną
-					    która używa swoich własnych konwencji routingu, które nie są
-					    kompatybilne z mechanizmem routingu dostarczanym przez Zend Framework.
+					    kompatybilny. Np. gdy chcemy go zintegrować z istniejącą 
+					    witryną która używa swoich własnych konwencji routingu, 
+					    które nie są kompatybilne z mechanizmem routingu 
+					    dostarczanym przez Zend Framework.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-					    Potrzebujesz zaimplementować routing dla czegoś zupełnie innego. Klasa <code>Zend_Controller_Router</code>
-						działa jedynie z adresami URI. Jest prawdopodobne że chciałbyś użyć wzorca MVC
-						do opracowania innego typu aplikacji, np. aplikacji konsolowej. W przypadku
-						aplikacji konsolowej własny router mógłby obrabiać argumenty linii poleceń w celu 
-						określenia nazw kontrolerów, nazw akcji oraz opcjonalnych parametrów.
+					    Potrzebujesz zaimplementować routing dla czegoś zupełnie 
+					    innego. Klasa <code>Zend_Controller_Router</code> działa 
+					    jedynie z adresami URI. Jest prawdopodobne że chciałbyś 
+					    użyć wzorca MVC do opracowania innego typu aplikacji, np. 
+					    aplikacji konsolowej lub aplikacji z GUI. W przypadku 
+					    aplikacji konsolowej własny obiekt żądania 
+					    mógłby obrabiać argumenty linii poleceń.
+
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Mechanizm dostarczany przez <code>Zend_Controller_Dispatcher</code> nie jest kompatybilny.  
-						Domyślna konfiguracja przyjmuje taką konwencję, że kontrolery są klasami, a akcje metodami
-						tych klas. Bądź co bądź, jest wiele innych sposobów wykonania tego. Przykładem może być takie
-						rozwiązanie, w którym kontrolery są katalogami a akcje plikami w tych katalogach.
+						Mechanizm dostarczany przez 
+						<code>Zend_Controller_Dispatcher</code> nie jest 
+						kompatybilny. Domyślna konfiguracja przyjmuje taką 
+						konwencję, że kontrolery są klasami, a akcje metodami
+						tych klas. Bądź co bądź, jest wiele innych sposobów 
+						wykonania tego. Przykładem może być takie rozwiązanie, 
+						w którym kontrolery są katalogami a akcje plikami w 
+						tych katalogach.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-					    Chciałbyś dostarczyć dodatkowe możliwości które będą odziedziczone
-					    przez wszystkie kontrolery. Na przykład <code>Zend_Controller_Action</code> 
-					    nie jest domyślnie zintegrowany z <code>Zend_View</code>. Jednak mógłbyś
-					    rozszerzyć swój własny kontroler aby to robił i zapewnienie takiej 
-					    funkcjonalności nie wymagałoby modyfikowania dostarczonych klas 
-						<code>Zend_Controller_Router</code> oraz <code>Zend_Controller_Dispatcher</code>.
+					    Chciałbyś dostarczyć dodatkowe możliwości które będą 
+					    odziedziczone przez wszystkie kontrolery. Na przykład 
+					    <code>Zend_Controller_Action</code> nie jest domyślnie 
+					    zintegrowany z <code>Zend_View</code>. Jednak mógłbyś
+					    rozszerzyć swój własny kontroler aby to robił i 
+					    zapewnienie takiej funkcjonalności nie wymagałoby 
+					    modyfikowania dostarczonych klas <code>Zend_Controller_Router</code> oraz 
+						<code>Zend_Controller_Dispatcher</code>.
 					</para>
 				</listitem>
+
+                <listitem>
+                    <para>
+                        You wish to log application exceptions when caught and
+                        redirect to a generic error page. Extending
+                        <code>Zend_Controller_Response_Http</code>, you could
+                        modify <code>__toString()</code> to check for registered
+                        exceptions, log them, and then redirect to an error
+                        page.
+                    </para>
+                </listitem>
 			</itemizedlist>
 				
 			Proszę być ostrożnym podczas nadpisywania znaczących części systemu, sczególnie
@@ -63,20 +89,22 @@
 		<title>Konwencje</title>
 		
 		<para>
-		    Kiedy rozszerzasz którekolwiek klasy Zend_Controller powinieneś użyć takich
-		    samych konwencji w nazywaniu i przechowywaniu plików. Takie postępowanie
-		    spowoduje to, że inny programista który jest zaznajomiony z Zend Framework 
-		    będzie w stanie łatwo zrozumieć Twój projekt.
+		    Kiedy rozszerzasz którekolwiek klasy Zend_Controller powinieneś użyć 
+		    takich samych konwencji w nazywaniu i przechowywaniu plików. Takie 
+		    postępowanie spowoduje to, że inny programista który jest 
+		    zaznajomiony z Zend Framework będzie w stanie łatwo zrozumieć Twój 
+		    projekt.
 		</para>
 		
 		<sect3 id="zend.controller.subclassing.prefix">
 			<title>Przedrostki</title>
 				
 			<para>
-			    Klasy ładowane przez Zend Framework są nazywane wg tej samej konwencji,
-			    każda z nich jest poprzedzona przedrostkiem "Zend_". Zalecamy abyś nazywał
-			    wszystkie swoje klasy w analogiczny sposób, np. jeśli Twoja firma nazywa
-			    się Widget Inc., to prefiksem mogłoby być "Widget_".
+			    Klasy ładowane przez Zend Framework są nazywane wg tej samej 
+			    konwencji, każda z nich jest poprzedzona przedrostkiem "Zend_". 
+			    Zalecamy abyś nazywał wszystkie swoje klasy w analogiczny sposób, 
+			    np. jeśli Twoja firma nazywa się Widget Inc., to prefiksem mogłoby 
+			    być "Widget_".
 			</para>
 		</sect3>
 		
@@ -84,7 +112,8 @@
 			<title>Struktura katalogów</title>
 			
 			<para>
-				Klasa <code>Zend_Controller</code> jest przechowywana w taki sposób:
+				Klasy <code>Zend_Controller</code> są przechowywane w taki 
+				sposób:
             </para>
     <programlisting role="php"><![CDATA[
 /library
@@ -95,15 +124,16 @@
       Router.php
 ]]></programlisting>			
             <para>
-				Kiedy rozszerzasz klasy <code>Zend_Controller</code>, zalecane jest aby
-				nowa klasa była przechowywana w identyczny sposób z uwzględnieniem własnego
-				prefiksu. To spowoduje że będą one łatwe do znalezienia i zrozumienia 
-				dla kogoś kto przegląda kod Twojego projektu.
+				Kiedy rozszerzasz klasy <code>Zend_Controller</code>, zalecane 
+				jest aby nowa klasa była przechowywana w identyczny sposób z 
+				uwzględnieniem własnego prefiksu. To spowoduje że będą one łatwe 
+				do znalezienia i zrozumienia dla kogoś kto przegląda kod Twojego 
+				projektu.
 			</para>
 			
 			<para>
-			    Na przykład struktura projektu firmy Widget Inc., który implementuje jedynie 
-			    własny router mogłaby wyglądać w ten sposób:
+			    Na przykład struktura projektu firmy Widget Inc., który 
+			    implementuje jedynie własny router mogłaby wyglądać w ten sposób:
 		    </para>
 <programlisting role="php"><![CDATA[
 /library
@@ -114,107 +144,440 @@
       README.txt
 ]]></programlisting>			
             <para>
-                Pamiętaj, że w tym przykładzie <code>Widget/Controller/</code> ma taką samą strukturę
-                jak <code>Zend/Controller/</code> kiedy tylko jest to możliwe. W tym przypadku definiuje 
-                on klasę <code>Widget_Controller_Router</code>, która może być klasa rozszerzającą lub
-                zastępującą klasę <code>Zend_Controller_Router</code> implementującą
-				<code>Zend_Controller_Router_Interface</code>.
+                Pamiętaj, że w tym przykładzie <code>Widget/Controller/</code> 
+                ma taką samą strukturę jak <code>Zend/Controller/</code> kiedy 
+                tylko jest to możliwe. W tym przypadku definiuje on klasę 
+                <code>Widget_Controller_Router</code>, która może być klasa 
+                rozszerzającą lub zastępującą klasę <code>Zend_Controller_Router</code> 
+                implementującą <code>Zend_Controller_Router_Interface</code>.
 			</para>
 			
 			<para>
-			    Zwróć także uwagę na to, że w powyższym przykładzie plik <code>README.txt</code> został
-			    umieszczony w katalogu <code>Widget/Controller/</code>. Zend zaleca abyś dokumentował
-			    swoje projekty dostarczając klientom osobne testy oraz dokumentację. Jakkolwiek, zalecamy
-			    Ci abyś także tworzył prosty plik <code>README.txt</code> w katalogu swojej klasy
+			    Zwróć także uwagę na to, że w powyższym przykładzie plik 
+			    <code>README.txt</code> został umieszczony w katalogu 
+			    <code>Widget/Controller/</code>. Zend zaleca abyś dokumentował
+			    swoje projekty dostarczając klientom osobne testy oraz dokumentację. 
+			    Jakkolwiek, zalecamy Ci abyś także tworzył prosty plik 
+			    <code>README.txt</code> w katalogu swojej klasy
 			    aby wyjaśnić zmiany oraz zasady jej działania.
 			</para>
 		</sect3>
 	</sect2>
-	
+
+    <sect2 id="zend.controller.request.abstract">
+        <title>Request Abstract</title>
+
+        <para>
+            The abstract <code>Zend_Controller_Request_Abstract</code> defines a
+            handful of methods:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * @return string
+     */
+    public function getControllerName();
+
+    /**
+     * @param string $value 
+     * @return self
+     */
+    public function setControllerName($value);
+
+    /**
+     * @return string
+     */
+    public function getActionName();
+
+    /**
+     * @param string $value 
+     * @return self
+     */
+    public function setActionName($value);
+
+    /**
+     * @return string
+     */
+    public function getControllerKey();
+
+    /**
+     * @param string $key 
+     * @return self
+     */
+    public function setControllerKey($key);
+
+    /**
+     * @return string
+     */
+    public function getActionKey();
+
+    /**
+     * @param string $key 
+     * @return self
+     */
+    public function setActionKey($key);
+
+    /**
+     * @param string $key 
+     * @return mixed
+     */
+    public function getParam($key);
+
+    /**
+     * @param string $key 
+     * @param mixed $value 
+     * @return self
+     */
+    public function setParam($key, $value);
+
+    /**
+     * @return array
+     */
+     public function getParams();
+
+    /**
+     * @param array $array 
+     * @return self
+     */
+    public function setParams(array $array);
+
+    /**
+     * @param boolean $flag 
+     * @return self
+     */
+    public function setDispatched($flag = true);
+
+    /**
+     * @return boolean
+     */
+    public function isDispatched();
+}
+]]></programlisting>
+
+        <para>
+            The request object is a container for the request environment. The
+            controller chain really only needs to know how to set and retrieve the
+            controller, action, optional parameters, and dispatched status. By
+            default, the request will search its own parameters using the
+            controller or action keys in order to determine the controller and
+            action.
+        </para>
+    </sect2>
+
 	<sect2 id="zend.controller.router.interface">
 		<title>Interfejs Routera</title>
 		
 		<para>
-			Interfejs <code>Zend_Controller_Router_Interface</code> definiuje jedynie jedną metodę:
+			Interfejs <code>Zend_Controller_Router_Interface</code> definiuje 
+			jedynie jedną metodę:
         </para>
 	    <programlisting role="php"><![CDATA[<?php
 				
-  /**				
-   * @param  Zend_Controller_Dispatcher_Interface
+  /**
+   * @param  Zend_Controller_Request_Abstract $request
    * @throws Zend_Controller_Router_Exception
-   * @return Zend_Controller_Dispatcher_Token|boolean
+   * @return Zend_Controller_Request_Abstract
    */
-  public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
+  public function route(Zend_Controller_Request_Abstract $request);
 
 ?>]]></programlisting>
 	    <para>		
-			Proces routingu ma miejsce tylko raz: wtedy gdy system po raz pierwszy otrzymuje żądanie.
-			Celem routera jest wygenerowanie obiektu <code>Zend_Controller_Dispatch_Token</code> który
-			określa kontroler oraz akcję z tego kontrolera. To jest przekazywane do dispatchera. Jeśli
-			nie jest możliwe określenie mapowanie trasy do tokena to zwracana jest wartość logiczna 
-			<code>FALSE</code>.
+			Proces routingu ma miejsce tylko raz: wtedy gdy system po raz pierwszy 
+			otrzymuje żądanie. Celeem routera jest określenie kontrolera, akcji,
+			opcjonalnych parametrów na podstawie żądania i przekazanie ich do
+			obiektu żądania. Obiekt żądania jest wtedy przekazywany do dispatchera.
+			Jeśli nie jest możliwe określenie mapowanie trasy do tokena to 
+			router nie powinien nic zrobić z obiektem żądania.
+
 		</para>
-		
-		<para>
-		    Niektóre routery mogą przetwarzać dynamiczne elementy i przed zwróceniem
-		    wygenerowanego tokena potrzebują możliwości sprawdzenia czy jest możliwe
-		    jego wykonanie. Z tego powodu, metoda <code>route()</code> routera otrzymuje 
-		    uchwyt obiektu dispatchera jako jedyny argument. Dispatcher posiada metodę 
-		    <code>isDispatchable()</code> do sprawdzania możliwości jego wykonania.
-		</para>
-	</sect2>
+    </sect2>
 	
 	<sect2 id="zend.controller.dispatcher.interface">
 		<title>Interfejs dispatchera</title>
 		
-		<para>
-			<code>Zend_Controller_Front</code> wpierw wywołuje router w celu otrzymania tokena, który
-			będzie przekazany do dispatchera. Dispatcher uruchomi akcję (tworząc instancję kontrolera 
-			i wywołując jego akcję) a następnie zwróci logiczną wartość FALSE lub kolejny token.
+        <para>
+            <code>Zend_Controller_Front</code> will first call the router to
+            determine the first dispatchable action in the request. It then
+            enters a dispatch loop.
+        </para>
 
-		</para>
+        <para>
+            In the loop, it first sets the request object's dispatched flag and
+            then dispatches the request (instantiate the controller, call its
+            action). If the action method (or a pre/postDispatch plugin) resets
+            the request object's dispatched flag, the front controller will do
+            another iteration of the dispatch loop with whatever action is
+            currently set in the request object. This allows for actions to be
+            processed sequentially until all work has been done.
+        </para>
 		
 		<para>
-			<code>Zend_Controller_Front</code> w pętli wywołuje dispatcher dopóki zwracany 
-			jest kolejny token. Nazywamy to pętlą uruchomieniową (dispatch loop). Pozwala ona
-			na sekwencyjne uruchamianie akcji aż wszystkie zostaną wykonane.
-		</para>
-		
-		<para>
-			Interfejs <code>Zend_Controller_Dispatcher_Interface</code> dostarcza definicje dwóch metod:
+			Interfejs <code>Zend_Controller_Dispatcher_Interface</code> 
+			dostarcza definicje dwóch metod:
 	    </para>
 	    <programlisting role="php"><![CDATA[<?php
 				
 /**
- * @param  Zend_Controller_Dispatcher_Token $route
+ * @param  Zend_Controller_Request_Abstract $request
  * @return boolean
  */
-public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
+public function isDispatchable(Zend_Controller_Request_Abstract $request);
 
 ?>]]></programlisting>
-     <para>
-		Metoda <code>isDispatchable()</code> sprawdza czy jest możliwe uruchomienie akcji
-		z tokena. Jeśli jest to możliwe, zwraca ona wartość <code>TRUE</code>. W przeciwnym
-		wypadku zwraca wartość <code>FALSE</code>. Decyzja o tym czy jest możliwe
-		uruchomienie akcji została pozostawiona klasie implementującej interfejs.
-		W domyślnej implementacji klasy <code>Zend_Controller_Dispatcher</code> oznacza to
-		sprawdzenie, czy plik kontrolera istnieje, czy klasa istnieje w tym pliku
-		oraz czy wewnątrz klasy istnieje żądana akcja.
-	 </para>
-	 <programlisting role="php"><![CDATA[<?php
+        <para>
+	        Metoda <code>isDispatchable()</code> sprawdza czy jest możliwe 
+	        uruchomienie akcji z żądania. Jeśli jest to możliwe, zwraca ona 
+	        wartość <code>TRUE</code>. W przeciwnym wypadku zwraca wartość 
+	        <code>FALSE</code>. Decyzja o tym czy jest możliwe uruchomienie 
+	        akcji została pozostawiona klasie implementującej interfejs. W 
+	        domyślnej implementacji klasy <code>Zend_Controller_Dispatcher</code> 
+	        oznacza to sprawdzenie, czy plik kontrolera istnieje, czy klasa 
+	        istnieje w tym pliku oraz czy wewnątrz klasy istnieje żądana akcja.
+	    </para>
+	    <programlisting role="php"><![CDATA[<?php
 			
 /**
- * @param  Zend_Controller_Dispatcher_Token $route
- * @return Zend_Controller_Dispatcher_Token|boolean
+ * @param  Zend_Controller_Request_Abstract $route
+ * @return Zend_Controller_Request_Abstract
  */
-public function dispatch(Zend_Controller_Dispatcher_Token $route);
+public function dispatch(Zend_Controller_Request_Abstract $request);
 
 ?>]]></programlisting>
 	    <para>	
-		<code>dispatch()</code> jest metodą, która wykonuje całą pracę. Ta metoda 
-		musi uruchomić akcję kontrolera. Musi zwrócić kolejny token lub wartość 
-		logiczną FALSE aby określić czy są jeszcze jakieś akcje do uruchomienia.
+		    <code>dispatch()</code> jest metodą, która wykonuje całą pracę. Ta 
+		    metoda musi uruchomić akcję kontrolera. Musi obiekt żądania.
+
 		</para>
 	</sect2>
-		
+
+    <sect2 id="zend.controller.action">
+        <title>Action Controller</title>
+
+        <para>
+            The Action Controller handles the various actions of an application.
+            This abstract class provides the following methods:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * @param Zend_Controller_Request_Abstract $request Request object
+     * @param Zend_Controller_Response_Abstract $response Response object
+     * @param array $args Optional associative array of
+     * configuration/environment settings
+     */
+    public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $args = array());
+
+    /**
+     * @return void
+     */
+    public function init();
+
+    /**
+     * @return Zend_Controller_Request_Abstract
+     */
+    public function getRequest();
+
+    /**
+     * @param Zend_Controller_Request_Abstract $request 
+     * @return self
+     */
+    public function setRequest(Zend_Controller_Request_Abstract $request);
+
+    /**
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function getResponse();
+
+    /**
+     * @param Zend_Controller_Response_Abstract $response 
+     * @return self
+     */
+    public function setResponse(Zend_Controller_Response_Abstract $response);
+
+    /**
+     * @return array
+     */
+    public function getInvokeArgs();
+
+    /**
+     * @return mixed
+     */
+    public function getInvokeArg($name);
+
+    public function preDispatch();
+
+    public function postDispatch();
+
+    /**
+     * @param string $methodName
+     * @param array $args
+     */
+    public function __call($methodName, $args);
+
+    /**
+     * @param null|Zend_Controller_Request_Abstract $request Optional request 
+     * object to use
+     * @param null|Zend_Controller_Response_Abstract $response Optional response 
+     * object to use
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function run(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null);
+]]></programlisting>
+
+        <para>
+            The constructor registers the request and response objects with the
+            object, as well as an array of any additional configuration
+            arguments. This last array consists of parameters registered with
+            the Front Controller's <code>setParam()</code> or 
+            <code>setParams()</code> methods. Once done, the constructor passes
+            handling to <code>init()</code>.
+        </para>
+
+        <para>
+            While you may override the constructor, we suggest putting any
+            initialization handling into <code>init()</code> to ensure the
+            request and response objects are properly registered.
+        </para>
+
+        <para>
+            Any configuration arguments passed to the constructor are later
+            accessible using <code>getInvokeArg()</code> and
+            <code>getInvokeArgs()</code>. The recommendation is to use such
+            invocation arguments to pass in objects such as view,
+            authentication/authorization, or registry objects. For example:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
+$front->setParam('view', new Zend_View())
+      ->setControllerDirectory($config->controller->directory);
+$response = $front->dispatch();
+
+// In a sample action controller:
+class FooController extends Zend_Controller_Action
+{
+    protected $_view = null;
+
+    public function init()
+    {
+        $this->_view = $this->getInvokeArg('view');
+    }
+}
+]]></programlisting>
+
+        <para>
+            When an action is dispatched, processing may be performed before and
+            after the action using the <code>preDispatch()</code> and
+            <code>postDispatch()</code> methods, respectively. By default, they
+            are empty and do nothing.
+        </para>
+
+        <para>
+            The <code>__call()</code> method will handle any unregistered
+            actions in the class. By default, it throws an exception if the
+            action is not defined. This should only ever occur if the default
+            action method is not defined.
+        </para>
+
+        <para>
+            The default naming convention for action methods is lowercaseAction,
+            where 'lowercase' specifies the name of the action, and 'Action'
+            specifies that the method is an action method. Thus,
+            <code>http://framework.zend.com/foo/bar</code> will call
+            <code>FooController::barAction()</code>.
+        </para>
+
+        <para>
+            Action controllers may also be used as Page Controllers. Most
+            typical usage would be as follows:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$controller = new FooController(
+    new Zend_Controller_Request_Abstract(),
+    new Zend_Controller_Response_Abstract()
+);
+$controller->run();
+]]></programlisting>
+        
+        <note>
+            <title>Use Front-/Action Controller</title>
+            <para>
+                We recommend using the Front Controller/Action Controller
+                combination instead of the Page Controller paradigm to encourage
+                writing applications that will inter-operate.
+            </para>
+        </note>
+    </sect2>
+    
+    <sect2 id="zend.controller.response.abstract">
+        <title>Response Object</title>
+
+        <para>
+            The Response Object collects content and headers from the various
+            actions called and returns them to the client. It has the following
+            methods:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * @param string $content
+     * @return self
+     */
+    public function setBody($content);
+
+    /**
+     * @param string $content
+     * @return self
+     */
+    public function appendBody($content);
+
+    /**
+     * @return string
+     */
+    public function getBody();
+
+    /**
+     * @param Exception $e 
+     * @return self
+     */
+    public function setException(Exception $e);
+
+    /**
+     * @return null|Exception
+     */
+    public function getException();
+
+    /**
+     * @return boolean
+     */
+    public function isException();
+
+    /**
+     * @param boolean $flag
+     * @return boolean
+     */
+    public function renderExceptions($flag = null);
+
+    /**
+     * @return string
+     */
+    public function __toString();
+]]></programlisting>
+
+        <para>
+            <code>setBody()</code> will replace all body content; we encourage using
+            <code>appendBody()</code> instead. <code>__toString()</code> should
+            render any content.
+        </para>
+
+        <para>
+            The response object is also where action controller exceptions are
+            finally caught and registered. <code>isException()</code> should
+            return a boolean indicating whether or not this has occurred.
+            <code>renderExceptions()</code> should be used to indicate whether
+            <code>__toString()</code> will render exception output if an
+            exception was trapped.
+        </para>
+    </sect2>		
 </sect1>

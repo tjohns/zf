@@ -8,7 +8,7 @@
         można uzyskać na stronie (<ulink url="http://www.xmlrpc.com/">XML-RPC</ulink>).
     </para>
     <para>
-      Implementacja klientów XML-RPC (i w przyszłości serwerów XML-RPC) w Zend 
+      Implementacja klientów i serwerów XML-RPC w Zend 
       Framework powoduje, że użycie XML-RPC jest prostsze. Ma być one bardzo
       podobne do tego w rozszerzeniu PHP5 <ulink url="http://www.php.net/soap">SOAP</ulink>.
     </para>
