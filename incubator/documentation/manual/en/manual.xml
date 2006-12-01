@@ -162,6 +162,10 @@
         &module_specs.Zend_Server;
         &module_specs.Zend_Server_Reflection;
     </chapter> -->
+    <chapter id="zend.cache">
+	<title>Zend_Cache</title>
+         &module_specs.Zend_Cache_Backend_ZendPlatform;
+    </chapter>	
     <appendix id="appendix.languages">
         <title>Appendix Zend_Locale Languages</title>
         &module_specs.Zend_Locale-AppendixLanguages;
@@ -170,7 +174,6 @@
         <title>Appendix Zend_Locale Regions</title>
         &module_specs.Zend_Locale-AppendixRegions;
     </appendix>
-    <!-- &module_specs.Zend_Cache_Backend_ZendPlatform; -->
     <!-- &ref.faq; -->
     <appendix id="appendix.codingstandard">
         <title>Zend Framework PHP Coding Standard</title>
