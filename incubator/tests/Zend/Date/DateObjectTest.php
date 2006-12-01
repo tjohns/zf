@@ -382,6 +382,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->date('m',-7000000000),'03');
         $this->assertSame($date->date('M',-7000000000),'Mar');
         $this->assertSame($date->date('n',-7000000000),'3');
+        $this->assertSame($date->date('t',-7000000000),'31');
         $this->assertSame($date->date('T',-7000000000),'CET');
         $this->assertSame($date->date('L',-7000000000),'1');
         $this->assertSame($date->date('o',-7000000000),'1748');
@@ -409,5 +410,6 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->date('.',-7000000000),'.');
         $this->assertSame($date->date('H:m:s',-7000000000),'11:03:20');
         $this->assertSame($date->date('d-M-Y',-7000000000),'16-Mar-1748');
+        $this->assertSame($date->date('U',6900000000,true),'6899996400');
     }
 }
