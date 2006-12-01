@@ -34,8 +34,7 @@
             To "automatically" configure this component using an ".ini" file with Zend_Config_Ini:
             <example>
                 <title>Using Zend_Config to Configure Zend_Session</title>
-<programlisting role="php">
-<![CDATA[<?php
+<programlisting role="php"><![CDATA[<?php
 $config = new Zend_Config_Ini('myapp.ini', 'sandbox');
 Zend_Session_Core::setOptions($config->asArray()); 
 ?>]]></programlisting>
@@ -117,15 +116,105 @@ remember_me_seconds = 864000
                     <note>
                         <title>Security Risk</title>
                         <para>
-                            If this path is shared with other users or PHP applications, various security issues might
-                            occur, including theft of session content, hijacking of sessions, and collision of garbage
-                            collection (e.g. another user's application might cause PHP to delete your application's
-                            session files).
+                            If the path is readable by other applications, then session hijacking might be possible. If
+                            the path is writable by other applications, then
+                            <ulink url="http://en.wikipedia.org/wiki/Session_poisoning">session poisoning</ulink>
+                            might be possible. If this path is shared with other users or other PHP applications,
+                            various security issues might occur, including theft of session content, hijacking of
+                            sessions, and collision of garbage collection (e.g. another user's application might cause
+                            PHP to delete your application's session files).
+                        </para>
+                        <para>
+                            For example, an attacker can visit the victim's website to obtain a session cookie. Then
+                            edit the cookie path to his own domain on the same server, before visiting his own website
+                            to execute <code>var_dump($_SESSION)</code>. Armed with detailed knowledge of the victim's
+                            use of data in their sessions, the attacker can then modify the session state (poisoning the
+                            session), alter the cookie path back to the victim's website, and then make requests from
+                            the victim's website using the poisoned session. Even if two applications on the same server
+                            do not have read/write access to the other application's save_path, if the save_path is
+                            guessable, and the attacker has control over one of these two websites, the attacker could
+                            alter their website's save_path to use the other's save_path, and thus accomplish session
+                            poisoning, under some common configurations of PHP. Thus, the value for save_path should not
+                            be made public knowledge, and should be altered to a secure location unique to each
+                            application.
                         </para>
                     </note>
                 </listitem>
+                <listitem>
+                    <para>
+                        boolean <code>use_only_cookies</code> - In order to avoid introducing additional security risks,
+                        do not alter the default value of this option.
+                        <note>
+                            <title>Security Risk</title>
+                            <para>
+                                If this setting is not enabled, an attacker can easily fix victim's session ids, using
+                                links on the attacker's website, such as
+                                <code>http://www.victim-website.com/index.php?PHPSESSID=fixed_session_id</code>. The
+                                fixation works, if the victim does not already have a session id cookie for
+                                victim-website.com. Once a victim is using a known session id, the attacker can then
+                                attempt to hijack the session by pretending to be the victim, and emulating the victim's
+                                user agent.
+                            </para>
+                        </note>
+                    </para>
+                </listitem>
             </itemizedlist>
         </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.regenerateid">
+
+        <title>regenerateId()</title>
+
+        <para>
+            The safest and most secure way to regenerate session id's in user agent cookies would be to avoid using
+            conditional logic. Regenerating on every request prevents several possible avenues of attack, but at small
+            performance and bandwidth cost. Anytime there is 'privilege escalation' or session parameter change, use
+            <code>regenerateId()</code> to create a new session id. If you call the <code>rememberMe()</code> function,
+            then don't use <code>regenerateId()</code>, since the former calls the latter. If a user has successfully
+            logged into your website, use <code>rememberMe()</code> instead. Changing session ids helps protect against
+            session hijacking. Even if an attacker gains access to an old session id, <code>regenerateId()</code> also
+            moves the session data from the old session id "handle" to the new one, so no data remains accessible via
+            the old session id.
+        </para>
+
+        <para>
+            With XSS, an attacker does not need direct access to a victim's network traffic. If the victim already has a
+            session cookie, XSS might allow an attacker to read the cookie and steal the session. For victims with no
+            session cookies, using XSS to inject javascript, an attacker could create a session id cookie with a known
+            value, then set an identical cookie on his own system, in order to hijack the victim's session. If the
+            victim visited an attacker's website, then the attacker can also emulate most other identifiable
+            characteristics of the victim's user agent. However, the attacker can not arbitrarily alter the server-side
+            state of PHP sessions. Thus, developers should rely on <code>Zend_Session_Core</code>'s session handling
+            logic and <code>Zend_Session_Core::regenerateId()</code> to thwart attempts to use session fixation for
+            hijacking sessions.
+        </para>
+
+        <para>
+            By itself, calling this function when the user's session is first used, does not prevent session fixation
+            attacks, unless you can distinguish between a session originated by an attacker emulating the victim. If
+            both originate from the same proxy (e.g. a large AOL proxy), there might not be any way to distinguish
+            between a victim using a cookie created through an XSS vulnerability on your website by the attacker, if the
+            attacker first initiates a session on your website. If you can distinguish between an attacker and victim
+            using the same session id (e.g. their IP's are from different countries), then session hijacking can be
+            dealt with directly. If the attacker has not already initiated a session, and fixed the victim's session id
+            to the attacker's session id (sort of reverse hijacking) using an XSS vulnerability, then the sample code
+            below makes it much harder for an attacker to know the current victim's session id.
+        </para>
+
+        <example>
+            <title>Anonymous Sessions and Session Fixation</title>
+<programlisting role="php"><![CDATA[<?php
+$session = new Zend_Session();
+ 
+if (!isset($session->initialized))
+{ 
+    Zend_Session_Core::regenerateId(); 
+    $session->initialized = true;
+} 
+?>]]></programlisting>
+        </example>
 
     </sect2>
 
@@ -139,7 +228,8 @@ remember_me_seconds = 864000
             for 24 hours, or even longer. Forum software commonly gives the user a choice for how long their session
             should last. Use <code>Zend_Session_Core::rememberMe()</code> to send an updated session cookie to the user
             agent with a lifetime defaulting to <code>remember_me_seconds</code>, which is set to 2 weeks, unless you
-            modify that value using <code>setOptions()</code>.
+            modify that value using <code>setOptions()</code>. To help thwart session fixation/hijacking, use this
+            function when a user successfully authenticates and you application performs a "login".
         </para>
 
     </sect2>
@@ -173,8 +263,10 @@ remember_me_seconds = 864000
         <title>setSaveHandler(Zend_Session_SaveHandler_Interface $interface)</title>
 
         <para>
-            Most developers will find the default save handler sufficient.  This method provides an object-oriented
-            wrapper for <code><ulink url="http://php.net/session_set_save_handler">session_set_save_handler()</ulink></code>.
+            Most developers will find the default save handler sufficient. This method provides an object-oriented
+            wrapper for <code>
+            <ulink url="http://php.net/session_set_save_handler">session_set_save_handler()</ulink>
+            </code>.
         </para>
 
     </sect2>
