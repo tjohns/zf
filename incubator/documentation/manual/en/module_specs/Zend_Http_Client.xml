@@ -267,7 +267,7 @@
 ?>]]></programlisting>
             </example>
         	For more information about Zend_Http_Cookie objects, see
-        	<xref linkend="zend.http.cookies.cookie" />.
+        	<xref linkend="zend.http.cookies" />.
         </para>
         <para>
             Zend_Http_Client also provides the means for cookie stickiness -
