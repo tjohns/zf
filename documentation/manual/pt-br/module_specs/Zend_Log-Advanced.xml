@@ -1,0 +1,29 @@
+<sect1 id="zend.log.advanced-logging">
+   <title>Registro avançado: Múltiplos Agentes de Registro</title>
+   <para>
+        <code>Zend_Log</code> oferece suporte de registro para diversos adaptadores de registro. Que podem enviar uma mensagem
+		para todos os registros, ou uma mensagem para um registro específico.
+   </para>
+
+   <para>
+		Quando são criados multiplos agentes de registro, cada registro deve receber um nome único. Agentes de registro 
+		são registrados com o método <code>registerLogger()</code>, com o nome do registro fornecido como o segundo argumento opcional.
+   </para>
+
+   <para>
+        No exemplo abaixo, dois agentes de registro são criados: um para o console, e outro para um arquivo. Eles irão 
+		receber os nomes <code>Console</code> e <code>File</code>, respectivamente.
+
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                 // Classe base do Zend_Log
+require_once 'Zend/Log/Adapter/File.php';    // Adaptador de log File
+require_once 'Zend/Log/Adapter/Console.php'; // Adaptador de log Console
+
+Zend_Log::registerLogger(new Zend_Log_Adapter_File('/logs/framework.txt'), 'File');
+Zend_Log::registerLogger(new Zend_Log_Adapter_Console(), 'Console');
+]]></programlisting>
+   </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

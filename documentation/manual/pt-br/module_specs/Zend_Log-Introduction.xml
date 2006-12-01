@@ -1,0 +1,29 @@
+<sect1 id="zend.log.introduction">
+    <title>Introdução</title>
+    <para>
+        <code>Zend_Log</code> é uma classe de geração de registros de uso geral. <code>Zend_Log</code> é uma classe estática que
+        não pode ser instanciada diretamente. Ele manipula uma matriz de instancias de <code>Zend_Log</code>, uma para
+        cada registro usado pela aplicação. Cada instância do agente de registro usa um adaptador que implementa uma
+	    <code>Zend_Log_Adapter_Interface</code>.
+    </para>
+
+    <para>
+        Para usar o <code>Zend_Log</code>, <ulink url="http://php.net/include">include()</ulink> a classe
+        <code>Zend_Log</code> e as suas classes adaptadoras que seram usadas. Por exemplo, se uma aplicação
+        irá registrar ambos, console (buffer de saída do PHP) e arquivos de texto, as seguintes linhas 
+		deverão ser incluídas:
+
+        <programlisting role="php"><![CDATA[
+require_once 'Zend/Log.php';                  // Classe base Zend_Log
+require_once 'Zend/Log/Adapter/Console.php';  // Adaptador de registro para console
+require_once 'Zend/Log/Adapter/File.php';     // Adaptador de registro para arquivos
+]]></programlisting>
+
+        <code>Zend_Log</code> pode ser usado de uma forma simplificada para um único registro, pode ser configurado
+		para diversos registros, e pode também, ser usado para registrar as operações internas de muitas classes do 
+		Framework Zend.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
