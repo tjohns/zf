@@ -431,7 +431,7 @@ class Zend_Date_DateObject {
 
                 case 'B':  // swatch internet time
                     $dayseconds = ($date['hours'] * 3600) + ($date['minutes'] * 60) + $date['seconds'];
-                    if ($gmt) {
+                    if ($gmt === true) {
                         $dayseconds += 3600;
                     }
                     $output .= (int) (($dayseconds % 86400) / 86.4); 
@@ -482,7 +482,7 @@ class Zend_Date_DateObject {
 
                 // timezone formats
                 case 'e':  // timezone identifier
-                    if ($gmt) {
+                    if ($gmt === true) {
                         $output .= gmdate('e', mktime($date['hours'], $date['minutes'], $date['seconds'], 
                                                       $date['mon'], $date['mday'], 2000));
                     } else {
@@ -492,7 +492,7 @@ class Zend_Date_DateObject {
                     break;
 
                 case 'I':  // daylight saving time or not
-                    if ($gmt) {
+                    if ($gmt === true) {
                         $output .= gmdate('I', mktime($date['hours'], $date['minutes'], $date['seconds'],
                                                       $date['mon'], $date['mday'], 2000));
                     } else {
@@ -502,18 +502,18 @@ class Zend_Date_DateObject {
                     break;
 
                 case 'O':  // difference to GMT in hours
-                    $gmt = ($gmt) ? 0 : $this->_gmtDifference();
-                    $output .= sprintf('%s%04d', ($gmt <= 0) ? '+' : '-', abs($gmt) / 36);
+                    $gmtstr = ($gmt === true) ? 0 : $this->_gmtDifference();
+                    $output .= sprintf('%s%04d', ($gmtstr <= 0) ? '+' : '-', abs($gmtstr) / 36);
                     break;
 
                 case 'P':  // difference to GMT with colon
-                    $gmt = ($gmt) ? 0 : $this->_gmtDifference();
-                    $gmt = sprintf('%s%04d', ($gmt <= 0) ? '+' : '-', abs($gmt) / 36);
-                    $output = $output . substr($gmt, 0, 3) . ':' . substr($gmt, 3);
+                    $gmtstr = ($gmt === true) ? 0 : $this->_gmtDifference();
+                    $gmtstr = sprintf('%s%04d', ($gmtstr <= 0) ? '+' : '-', abs($gmtstr) / 36);
+                    $output = $output . substr($gmtstr, 0, 3) . ':' . substr($gmtstr, 3);
                     break;
 
                 case 'T':  // timezone settings
-                    if ($gmt) {
+                    if ($gmt === true) {
                         $output .= gmdate('T', mktime($date['hours'], $date['minutes'], $date['seconds'],
                                                       $date['mon'], $date['mday'], 2000));
                     } else {
@@ -523,7 +523,7 @@ class Zend_Date_DateObject {
                     break;
 
                 case 'Z':  // timezone offset in seconds
-                    $output .= ($gmt) ? 0 : -$this->_gmtDifference();
+                    $output .= ($gmt === true) ? 0 : -$this->_gmtDifference();
                     break;
 
 
