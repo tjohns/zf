@@ -73,12 +73,16 @@ class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
         $client = Zend_Feed::getHttpClient();
         $client->setUri($deleteUri);
         if (Zend_Feed::getHttpMethodOverride()) {
-            $client->setHeaders(array('X-Method-Override: DELETE'));
+            $client->setHeaders(array('X-HTTP-Method-Override: DELETE'));
+            // @todo $response = return value
             $client->post();
         } else {
+            // @todo $response = return value
             $client->delete();
         }
+        // @todo use $response->getStatus() instead of $client->responseCode
         if ($client->responseCode !== 204) {
+            // @todo use $response->getStatus() instead of $client->responseCode
             throw new Zend_Feed_Exception('Expected response code 204, got ' . $client->responseCode);
         }
 
