@@ -82,7 +82,7 @@
                           <row>
                               <entry><code>automaticCleaningFactor</code></entry>
                               <entry><code>int</code></entry>
-                              <entry><code>0</code></entry>
+                              <entry><code>10</code></entry>
                               <entry>
                                 Disable / Tune the automatic cleaning process (garbage collector):
                                 0 means no automatic cache cleaning, 1 means systematic cache cleaning
@@ -109,7 +109,7 @@
 
 $id = 'myBigLoop'; // cache id of "what we want to cache"
 
-if (!($data = $cache->get($id))) {
+if (!($data = $cache->load($id))) {
     // cache miss
     
     $data = '';
@@ -134,7 +134,7 @@ $id1 = 'foo';
 $id2 = 'bar';
 
 // block 1
-if (!($data = $cache->get($id1))) {
+if (!($data = $cache->load($id1))) {
     // cache missed
     
     $data = '';
@@ -151,7 +151,7 @@ echo($data);
 echo('NEVER CACHED! ');
 
 // block 2
-if (!($data = $cache->get($id2))) {
+if (!($data = $cache->load($id2))) {
     // cache missed
     
     $data = '';
