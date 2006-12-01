@@ -1,0 +1,33 @@
+<sect1 id="zend.register">
+    <title>Zend::register()</title>
+
+    <para>
+    Registers an object in the object store.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::register($name, $object)
+
+?>]]></programlisting>
+
+    <para>
+    The registry is a mechanism for providing singleton instances of objects to the application space.  By
+    storing the object in the registry once, and then retrieving the object from the registry whenever it
+    is needed, the same instance is always returned.
+    </para>
+
+    <para>
+    The <code>$name</code> is an arbitrary string to name the object in the store.  This name will be
+    supplied to <code>Zend::registry()</code> to retrieve the object again.
+    </para>
+
+    <para>
+    The <code>$name</code> argument must be a string, only objects may be stored in the registry, an object
+    can never be removed from the registry, and an instance can only be stored once in the registry.
+    Failure to obey these rules will result in <code>Zend_Exception</code> being thrown.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

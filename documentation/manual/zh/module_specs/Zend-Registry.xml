@@ -1,0 +1,31 @@
+<sect1 id="zend.registry">
+    <title>Zend::registry()</title>
+
+    <para>
+    Returns an object in the registry or lists all objects in the registry.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::registry($name=null)
+
+?>]]></programlisting>
+
+    <para>
+    If the <code>$name</code> argument is <code>NULL</code>, an array will be returned where the keys to the array
+    are the names of the objects in the registry and the values are the class names of those objects.
+    </para>
+
+    <para>
+    If <code>$name</code> is a string, the object handle assigned to that name will be returned.  If
+    an object does not exist in the registry with that <code>$name</code>, a
+    <code>Zend_Exception</code> will be thrown.
+    </para>
+
+    <para>
+    To quickly determine if an object is present in the registry, use Zend::isRegistered().
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
