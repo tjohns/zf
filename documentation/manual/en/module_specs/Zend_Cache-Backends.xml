@@ -111,8 +111,6 @@
                               The complete path (filename included) of the SQLite database
                           </entry>
                       </row>
-                  </tbody>
-                  <tbody>
                       <row>
                           <entry><code>automaticVacuumFactor</code></entry>
                           <entry><code>int</code></entry>
