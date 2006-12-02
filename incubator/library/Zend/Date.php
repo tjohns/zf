@@ -353,14 +353,20 @@ class Zend_Date {
         }
 
         if ($format === false) {
-            $format  = Zend_Locale_Data::getContent($locale, 'defdateformat');
+            $date = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
+            $time = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
+            $date = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $date['default']));
+            $time = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian', $time['default']));
+            
+            $format  = $date['pattern'];
             $format .= " ";
-            $format .= Zend_Locale_Data::getContent($locale, 'deftimeformat');
+            $format .= $time['pattern'];
         }
 
         // get format tokens
         $j = 0;
         $comment = FALSE;
+        $output = array();
         for($i = 0; $i < strlen($format); ++$i) {
 
             if ($format[$i] == "'") {
@@ -377,7 +383,7 @@ class Zend_Date {
                 continue;
             }
 
-            if (($output[$j][0] == $format[$i]) or
+            if (isset($output[$j]) and ($output[$j][0] == $format[$i]) or
                 ($comment == TRUE)) { 
                 $output[$j] .= $format[$i];
             } else {
@@ -387,7 +393,7 @@ class Zend_Date {
         }
 
         // fill format tokens with date information
-        for($i = 0; $i < count($output); ++$i) {
+        for($i = 1; $i <= count($output); ++$i) {
 
             // fill fixed tokens
             switch ($output[$i]) {

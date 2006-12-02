@@ -404,7 +404,7 @@ class Zend_Date_DateObject {
 
                 case 'o':  // ISO 8601 year number
                     $firstday = $this->dayOfWeek($date['year'], 1, 1);
-                    if (($date['mon'] == 1) and (3 < $firstday) and ($firstday < (8 - $date['day']))) {
+                    if (($date['mon'] == 1) and (($firstday < 1) or ($firstday > 4)) and ($day < 4)) {
                         $output .= ($date['year'] - 1);
                     } else {
                         $output .= $date['year'];
@@ -804,18 +804,18 @@ class Zend_Date_DateObject {
         
         $dayofweek = $this->dayOfWeek($year, $month, $day);
         $firstday  = $this->dayOfWeek($year, 1, 1);
-        if (($month == 1) and (3 < $firstday) and ($firstday < 7) and ($day < 4)) {
-            $dayofweek = $firstday - 1;
+        if (($month == 1) and (($firstday < 1) or ($firstday > 4)) and ($day < 4)) {
             $firstday  = $this->dayOfWeek($year - 1, 1, 1);
             $month     = 12;
             $day       = 31;
 
-        } else if (($month == 12) and ($this->dayOfWeek($year + 1, 1, 1) < 4)) {
+        } else if (($month == 12) and (($this->dayOfWeek($year + 1, 1, 1) < 5) and 
+                   ($this->dayOfWeek($year + 1, 1, 1) > 0))) {
             return 1;
         }
 
-        return intval(($this->dayOfWeek($year, 1, 1) < 4) + 4 * ($month - 1) +
-               (2 * ($month - 1) + ($day - 1) + $firstday - $dayofweek + 6) * 36 / 256);
+        return intval ((($this->dayOfWeek($year, 1, 1) < 5) and ($this->dayOfWeek($year, 1, 1) > 0)) + 
+               4 * ($month - 1) + (2 * ($month - 1) + ($day - 1) + $firstday - $dayofweek + 6) * 36 / 256);
     }
 
 

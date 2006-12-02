@@ -201,7 +201,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->weekNumber(2005, 5, 15), (int) date('W',mktime(0, 0, 0, 5, 15, 2005)));
         $this->assertSame($date->weekNumber(1994, 11, 22), (int) date('W',mktime(0, 0, 0, 11, 22, 1994)));
         $this->assertSame($date->weekNumber(2000, 12, 31), (int) date('W',mktime(0, 0, 0, 12, 31, 2000)));
-        $this->assertSame($date->weekNumber(2050, 12, 31), 1);
+        $this->assertSame($date->weekNumber(2050, 12, 31), 52);
         $this->assertSame($date->weekNumber(2050, 6, 6), 23);
         $this->assertSame($date->weekNumber(2056, 1, 1), 52);
     }
@@ -426,13 +426,5 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->date('S',6900604800, true),'nd');
         $this->assertSame($date->date('S',6900691200, true),'rd');
         $this->assertSame($date->date('N',6900432000, true),'7');
-        
-print_r($date->getDate(6900518400));
-// 
-// S with day = 1
-// S with day = 2 & 22
-// S with day = 3
-// o with mon = 1 & day 
-
     }
 }
