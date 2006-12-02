@@ -684,14 +684,14 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
 
                 $timestamp += $this->_monthTable[$i] * 86400;
-                if ($leapyear === true) {
+                if (($leapyear === true) and ($i == 1)) {
                     $timestamp += 86400;
                 }
 
                 if ($timestamp >= 0) {
                     $month  = $i;
                     $numday = $this->_monthTable[$i];
-                    if ($leapyear === true) {
+                    if (($leapyear === true) and ($i == 1)) {
                         ++$numday;
                     }
                     break;
@@ -729,14 +729,14 @@ class Zend_Date_DateObject {
                 $day = $timestamp;
                 $timestamp -= $this->_monthTable[$i] * 86400;
 
-                if ($leapyear === true) {
+                if (($leapyear === true) and ($i == 1)) {
                     $timestamp -= 86400;
                 }
 
                 if ($timestamp < 0) {
                     $month  = $i;
                     $numday = $this->_monthTable[$i];
-                    if ($leapyear === true) {
+                    if (($leapyear === true) and ($i == 1)) {
                         ++$numday;
                     }
                     break;
