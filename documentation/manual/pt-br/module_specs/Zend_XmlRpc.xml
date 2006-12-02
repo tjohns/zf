@@ -14,8 +14,6 @@
   url="http://www.php.net/soap">extensão SOAP web service</ulink> do
   PHP5.</para>
 </sect1>
-&module_specs.Zend_XmlRpc_Client;
-<!--&module_specs.Zend_XmlRpc_Server;-->
 <!--
 vim:se ts=4 sw=4 et:
 -->
