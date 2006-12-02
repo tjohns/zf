@@ -1,8 +1,8 @@
 <sect1 id="zend.registry">
     <title>Zend::registry()</title>
 
-    <para>
-    Returns an object in the registry or lists all objects in the registry.
+    <para>    
+	从对象仓库中取出一个对象，或者列出所有已经注册的对象。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -11,19 +11,16 @@ Zend::registry($name=null)
 
 ?>]]></programlisting>
 
-    <para>
-    If the <code>$name</code> argument is <code>NULL</code>, an array will be returned where the keys to the array
-    are the names of the objects in the registry and the values are the class names of those objects.
+    <para>    
+	如果<code>$name</code>参数为空，会返回一个数组，键名为对象名称，键值为对象的类名称。
+    </para>
+
+    <para>    
+	如果<code>$name</code>参数为字符串，将返回相应的对象。如果对象不存在，抛出<code>Zend_Exception</code>异常。
     </para>
 
     <para>
-    If <code>$name</code> is a string, the object handle assigned to that name will be returned.  If
-    an object does not exist in the registry with that <code>$name</code>, a
-    <code>Zend_Exception</code> will be thrown.
-    </para>
-
-    <para>
-    To quickly determine if an object is present in the registry, use Zend::isRegistered().
+   想快速确定一个对象是否已经注册，可以使用Zend::isRegistered()。
     </para>
 </sect1>
 <!--

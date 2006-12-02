@@ -1,9 +1,12 @@
 <sect1 id="zend.loadclass">
     <title>Zend::loadClass()</title>
     <para>
-    <code>Zend::loadClass()</code> loads a PHP file whose filename is formatted like
-    "<code>$className.php</code>", and then checks for the existance of the class <code>$className</code>.
+	<code>Zend::loadClass()</code>用来加载一个PHP类文件，该文件名格式为“<code>$className.php</code>”（也就是说加载的文件名称必须和文件中的类同名）。loadClass()会检查文件中的类是否存在。
     </para>
+
+	<para>
+	(例：TestClass.php中有个类TestClass，使用Zend::loadClass("TestClass")就可加载这个类，这种作法类似于Java-- Haohappy注)
+	</para>
 
     <programlisting role="php"><![CDATA[<?php
 
@@ -11,17 +14,12 @@ Zend::loadClass($class, $dirs)
 
 ?>]]></programlisting>
 
-    <para>
-    If the file is not found or the class does not exist after the load, a <code>Zend_Exception</code> is
-    thrown. <code>Zend::loadFile()</code> is used for loading, and the <code>$dirs</code> argument is
-    passed directly to it..
+    <para>    
+	如果文件不存在或者文件中相应的类不存在，那么就会抛出一个Zend_Exception异常。<code>Zend::loadClass()</code>使用了<code>Zend::loadFile()</code>方法来加载文件，<code>$dirs</code> 参数将被作为参数直接传递给<code>Zend::loadFile()</code>。
     </para>
 
-    <para>
-    If you ask for a class with underscores in the name, and <code>$dirs</code> is null (the default),
-    <code>Zend::loadClass()</code> will auto-discover the <code>$dirs</code> from the class name
-    by converting underscores to directory separators.  For example, if <code>$class</code> is
-    <code>Zend_Example_Class</code>, that will map to a path of <code>Zend/Example/Class.php</code>.
+    <para>    
+	如果没有指定<code>$dirs</code>参数（默认情况下），而文件名中存在下划线，那么loadClass()会自动把下划线当成目录分隔符，去相应的目录中去查找文件。例如：loadClass("Zend_Example_Class") 没指定$dirs参数 ，则loadClass()会自动查找Zend/Example/Class.php文件。
     </para>
 </sect1>
 <!--

@@ -1,8 +1,8 @@
 <sect1 id="zend.register">
     <title>Zend::register()</title>
 
-    <para>
-    Registers an object in the object store.
+    <para>   
+	注册一个对象到对象仓库。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -12,20 +12,15 @@ Zend::register($name, $object)
 ?>]]></programlisting>
 
     <para>
-    The registry is a mechanism for providing singleton instances of objects to the application space.  By
-    storing the object in the registry once, and then retrieving the object from the registry whenever it
-    is needed, the same instance is always returned.
+	ZendFramework的"注册表"（registry，也可理解为对象仓库）是一个提供单件实例(singleton instances)给应用程序的机制. 通过注册一个对象,你可以在你需要时再取得这个对象.
     </para>
 
     <para>
-    The <code>$name</code> is an arbitrary string to name the object in the store.  This name will be
-    supplied to <code>Zend::registry()</code> to retrieve the object again.
+	<code>$name</code>是对象仓库中该对象的唯一名称,以后你可以把$name作为参数传递给<code>Zend::registry()</code>，就可以访问这个对象.
     </para>
 
     <para>
-    The <code>$name</code> argument must be a string, only objects may be stored in the registry, an object
-    can never be removed from the registry, and an instance can only be stored once in the registry.
-    Failure to obey these rules will result in <code>Zend_Exception</code> being thrown.
+	<code>$name</code>参数必须是一个字符串；在对象注册表中只能存储对象；注册表中的对象将不会被删除；一个对象只能有一个实例。如果不符合这几个条件其中之一，就会抛出一个<code>Zend_Exception</code>异常。
     </para>
 </sect1>
 <!--
