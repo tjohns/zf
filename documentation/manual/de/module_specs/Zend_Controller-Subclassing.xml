@@ -28,7 +28,7 @@
 				</listitem>
 				<listitem>
 					<para>
-					    Du benötigt das Routing für etwas völlig anderes. Die 
+					    Du benötigst das Routing für etwas völlig anderes. Die 
 					    <code>Zend_Controller_Router</code> Klasse arbeitet nur mit URIs. Es ist 
 					    möglich und wahrscheinlich, dass Du das MVC Entwurfsmuster für die 
 					    Entwicklung eines anderen Programmtyps verwenden möchtest, z.B. für eine
@@ -60,12 +60,11 @@
 				</listitem>
                 <listitem>
                     <para>
-                        You wish to log application exceptions when caught and
-                        redirect to a generic error page. Extending
-                        <code>Zend_Controller_Response_Http</code>, you could
-                        modify <code>__toString()</code> to check for registered
-                        exceptions, log them, and then redirect to an error
-                        page.
+                        Du möchtest abgefangene Ausnahmen deiner Applikation loggen und auf eine 
+                        generische Fehlerseite umleiten. Beim Erweitern von 
+                        <code>Zend_Controller_Response_Http</code> könntest du 
+                        <code>__toString()</code> ändern, um auf registrierte Ausnahmen zu prüfen,
+                        diese zu loggen und dann auf eine Fehlerseite umzuleiten.
                     </para>
                 </listitem>
 			</itemizedlist>
@@ -162,8 +161,8 @@
         <title>Request Abstract</title>
 
         <para>
-            The abstract <code>Zend_Controller_Request_Abstract</code> defines a
-            handful of methods:
+            Die abstrakte <code>Zend_Controller_Request_Abstract</code> Klasse definiert eine 
+            Hand voll Methoden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -249,12 +248,11 @@
 ]]></programlisting>
 
         <para>
-            The request object is a container for the request environment. The
-            controller chain really only needs to know how to set and retrieve the
-            controller, action, optional parameters, and dispatched status. By
-            default, the request will search its own parameters using the
-            controller or action keys in order to determine the controller and
-            action.
+            Das Request Objekt ist ein Container für die Anfrageumgebung. Die Controller Kette 
+            braucht wirklich nur zu wissen, wie Controller, Aktion, optionale Parameter und der
+            Verarbeitungsstatus zu setzen und abzufragen ist. Standardmäßig wird ein Request seine
+            eigenen Parameter durchsuchen und die Controller und Aktionsschlüssel verwenden, um
+            den Controller und die Aktion zu ermitteln.
         </para>
     </sect2>
 
@@ -279,14 +277,10 @@
 
 		<para>
 			Das Routing findet nur einmal statt, wenn die Anfrage das erste Mal vom System erhalten
-			wird. Der Zweck des Routers ist es, 
-			
-			The purpose of the router is to determine the
-            controller, action, and optional parameters based on the request
-            environment, and then set them in the request.  The request object
-            is then passed to the dispatcher.  If it is not possible to map a
-            route to a dispatch token, the router should do nothing to the
-            request object.
+			wird. Der Zweck des Routers ist es, Controller, Aktion und optionale Parameter auf Basis 
+			der Anfrageumgebung zu ermitteln und im Request zu setzen. Das Request Objekt wird dann
+			an den Dispatcher übergeben. Wenn es nicht möglich ist, eine Route auf einen Dispatch
+			Token abzubilden, soll der Router nichts mit dem Request Objekt machen.
 		</para>
 		
 	</sect2>
@@ -295,19 +289,18 @@
 		<title>Dispatcher Interface</title>
 		
         <para>
-            <code>Zend_Controller_Front</code> will first call the router to
-            determine the first dispatchable action in the request. It then
-            enters a dispatch loop.
+            <code>Zend_Controller_Front</code> ruft zuerst den Router auf, um die erste zu 
+            verarbeitende Aktion für den Request zu ermitteln. Danach startet es die Dispatch
+            Schleife.
         </para>
 
         <para>
-            In the loop, it first sets the request object's dispatched flag and
-            then dispatches the request (instantiate the controller, call its
-            action). If the action method (or a pre/postDispatch plugin) resets
-            the request object's dispatched flag, the front controller will do
-            another iteration of the dispatch loop with whatever action is
-            currently set in the request object. This allows for actions to be
-            processed sequentially until all work has been done.
+            In der Schleife setzt er zuerst den Verarbeitungsstatus und verarbeitet dann den Request
+            (instanziert den Controller, ruft die Aktion auf). Wenn die Aktionsmethode (oder ein 
+            pre/postDispatch Plugin) den Verarbeitungsstatus des Request Objektes zurück setzt, 
+            wird der Front Controller einen weiteren Durchlauf für die Dispatch Schleife mit der
+            gerade im Request Objekt gesetzten Aktion durchführen. Dies erlaubt esm Aktionen 
+            sequentiell abzuarbeiten, bis alle Arbeiten erledigt sind.
         </para>
         
 		<para>
@@ -355,16 +348,15 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
         <title>Action Controller</title>
 
         <para>
-            The Action Controller handles the various actions of an application.
-            This abstract class provides the following methods:
+            Der Action Controller verarbeitet die verschiedenen Aktionen einer Applikation. Diese
+            abstrakte Klasse stellt die folgenden Methoden bereit:
         </para>
 
         <programlisting role="php"><![CDATA[
     /**
-     * @param Zend_Controller_Request_Abstract $request Request object
-     * @param Zend_Controller_Response_Abstract $response Response object
-     * @param array $args Optional associative array of
-     * configuration/environment settings
+     * @param Zend_Controller_Request_Abstract $request Request Objekt
+     * @param Zend_Controller_Response_Abstract $response Response Objekt
+     * @param array $args Optionales assoziatives Array mit Konfigurations/Umgebungseinstellungen
      */
     public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $args = array());
 
@@ -416,36 +408,32 @@ public function dispatch(Zend_Controller_Request_Abstract $request);
     public function __call($methodName, $args);
 
     /**
-     * @param null|Zend_Controller_Request_Abstract $request Optional request 
-     * object to use
-     * @param null|Zend_Controller_Response_Abstract $response Optional response 
-     * object to use
+     * @param null|Zend_Controller_Request_Abstract $request Optional zu verwendenes Request Objekt
+     * @param null|Zend_Controller_Response_Abstract $response Optional zu verwendenes Response Objekt
      * @return Zend_Controller_Response_Abstract
      */
     public function run(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null);
 ]]></programlisting>
 
         <para>
-            The constructor registers the request and response objects with the
-            object, as well as an array of any additional configuration
-            arguments. This last array consists of parameters registered with
-            the Front Controller's <code>setParam()</code> or 
-            <code>setParams()</code> methods. Once done, the constructor passes
-            handling to <code>init()</code>.
+            Der Konstruktor registriert das Request und das Response Objekt sowie ein Array mit 
+            zusätzlichen Konfigurationsparametern innerhalb des Objektes. Dieses Array besteht aus 
+            Parametern, die mit den Methoden <code>setParam()</code> oder <code>setParams()</code> 
+            des Front Controllers registriert worden sind. Sobald fertig, übergibt der Konstruktur
+            die Verarbeitung an <code>init()</code>.
         </para>
 
         <para>
-            While you may override the constructor, we suggest putting any
-            initialization handling into <code>init()</code> to ensure the
-            request and response objects are properly registered.
+            Obwohl man den Konstruktor überschreiben kann, empfehlen wir dennoch alle 
+            Initialisierungsschritte in <code>init()</code> durchzuführen, um sicherzustellen, dass
+            die Request und Response Objekte richtig registriert wurden.
         </para>
 
         <para>
-            Any configuration arguments passed to the constructor are later
-            accessible using <code>getInvokeArg()</code> and
-            <code>getInvokeArgs()</code>. The recommendation is to use such
-            invocation arguments to pass in objects such as view,
-            authentication/authorization, or registry objects. For example:
+            Auf alle Konfigurationsparameter, die an den Konstruktor übergeben worden sind, kann 
+            später über <code>getInvokeArg()</code> und <code>getInvokeArgs()</code> zugegriffen 
+            werden. Es wird empfohlen, solche Aufrufparameter zu verwenden, um Objekte wie View,
+            Authentifikation/Autorisierung oder Registry Objekte zu übergeben. Zum Beispiel:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -454,7 +442,7 @@ $front->setParam('view', new Zend_View())
       ->setControllerDirectory($config->controller->directory);
 $response = $front->dispatch();
 
-// In a sample action controller:
+// Einem einem Beispiel Action Controller:
 class FooController extends Zend_Controller_Action
 {
     protected $_view = null;
@@ -467,30 +455,28 @@ class FooController extends Zend_Controller_Action
 ]]></programlisting>
 
         <para>
-            When an action is dispatched, processing may be performed before and
-            after the action using the <code>preDispatch()</code> and
-            <code>postDispatch()</code> methods, respectively. By default, they
-            are empty and do nothing.
+            Wenn eine Aktion verarbeitet wird, kann die Verarbeitung vor und nach der Aktion in den 
+            <code>preDispatch()</code> und <code>postDispatch()</code> Methoden durchgeführt werden.
+            Standardmäßig sind diese leer und machen nichts.
         </para>
 
         <para>
-            The <code>__call()</code> method will handle any unregistered
-            actions in the class. By default, it throws an exception if the
-            action is not defined. This should only ever occur if the default
-            action method is not defined.
+            Die <code>__call()</code> Methode verarbeitet alle nicht registrierten Aktionen in der
+            Klasse. Standardmäßig wird eine Ausnahme geworfen, wenn die Aktion nicht definiert
+            worden ist. Dies soll wirklich nur dann passieren, wenn die Standard Aktionsmethode 
+            nicht definiert worden ist.
         </para>
 
         <para>
-            The default naming convention for action methods is lowercaseAction,
-            where 'lowercase' specifies the name of the action, and 'Action'
-            specifies that the method is an action method. Thus,
-            <code>http://framework.zend.com/foo/bar</code> will call
-            <code>FooController::barAction()</code>.
+            Die standardmäßige Namenskonvetion für Aktionsmethoden ist lowercaseAction, wobei 
+            'lowercase' den Namen der Aktion angibt und 'Action', dass es eine Aktionsmethode
+            ist. Demnach wird <code>http://framework.zend.com/foo/bar</code> die Methode 
+            <code>FooController::barAction()</code> aufrufen.
         </para>
 
         <para>
-            Action controllers may also be used as Page Controllers. Most
-            typical usage would be as follows:
+            Action Controller können auch als Page Controller verwendet werden. Die gängigste 
+            Verwendung würde wie folgt aussehen:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -502,22 +488,21 @@ $controller->run();
 ]]></programlisting>
         
         <note>
-            <title>Use Front-/Action Controller</title>
+            <title>Verwende Front-/Action Controller</title>
             <para>
-                We recommend using the Front Controller/Action Controller
-                combination instead of the Page Controller paradigm to encourage
-                writing applications that will inter-operate.
+                Wir empfehlen die Verwendung der Front Controller/Action Controller Kombination 
+                anstelle des Page Controller Denkmusters, um das Schreiben von Applikationen, die
+                interagieren können, zu fördern.
             </para>
         </note>
     </sect2>
     
     <sect2 id="zend.controller.response.abstract">
-        <title>Response Object</title>
+        <title>Response Objekt</title>
 
         <para>
-            The Response Object collects content and headers from the various
-            actions called and returns them to the client. It has the following
-            methods:
+            Das Response Objekt sammelt Inhalt und Header von den verschiedenen aufgerufenen 
+            Aktionen und gibt diese an den Client zurück. Es beinhaltet die folgenden Methoden:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -567,18 +552,17 @@ $controller->run();
 ]]></programlisting>
 
         <para>
-            <code>setBody()</code> will replace all body content; we encourage using
-            <code>appendBody()</code> instead. <code>__toString()</code> should
-            render any content.
+            <code>setBody()</code> ersetzt den kompletten Inhaltsteil; wir empfehlen die Verwendung
+            von <code>appendBody()</code> stattdessen. <code>__toString()</code> gibt alle Inhalte
+            aus.
         </para>
 
         <para>
-            The response object is also where action controller exceptions are
-            finally caught and registered. <code>isException()</code> should
-            return a boolean indicating whether or not this has occurred.
-            <code>renderExceptions()</code> should be used to indicate whether
-            <code>__toString()</code> will render exception output if an
-            exception was trapped.
+            Das Response Objekt ist auch der Ort, in dem Ausnahmen aus dem Action Controller 
+            schlußendlich aufgefangen und registriert werden. <code>isException()</code> sollte
+            einen booleschen Wert zurückgeben und angeben, ob eine Ausnahme aufgetreten ist.
+            <code>renderExceptions()</code> sollte verwendet werden, um anzugeben, ob 
+            <code>__toString()</code> die Ausnahmen ausgeben soll, wenn welche gefangen werden.
         </para>
     </sect2>
 
