@@ -110,19 +110,28 @@ echo $view->render(...);
     </sect2>
 
     <sect2 id="zend.view.scripts.templates">
-    
-        <title>テンプレートシステム</title>
-        
+        <title>別のテンプレートシステムの使用</title>
+
         <para>
             PHP 自身も強力なテンプレートシステムではありますが、
-            開発者の多くは、テンプレートを設計するには高機能すぎる/複雑すぎる
-            と感じているようです。
-            そこでビュースクリプトでは、PHPLIB 形式のテンプレートのような
-            独立したテンプレートオブジェクトを使用できるようになっています。
-            この場合のビュースクリプトは、次のようなものになるでしょう。
+            開発者の多くは、デザイナにとっては高機能すぎる/複雑すぎる
+            と感じており、別のテンプレートエンジンをほしがっているようです。
+            Zend_View では、そのような目的のために二種類の仕組みを提供します。
+            ビュースクリプトを使用することによるものと、
+            Zend_View_Interface 実装することによるものです。
         </para>
-        
-        <programlisting role="php"><![CDATA[<?php
+    
+        <sect3 id="zend.view.scripts.templates.scripts">
+            <title>ビュースクリプトを使用したテンプレートシステム</title>
+            
+            <para>
+                ビュースクリプトを使用して、PHPLIB 形式のテンプレートのような
+                別のテンプレートオブジェクトのインスタンスを作成し、
+                それを操作することができます。ビュースクリプトをこのように使用する方法は、
+                以下のようになります。
+            </para>
+            
+            <programlisting role="php"><![CDATA[<?php
 include_once 'template.inc';
 $tpl = new Template();
 
@@ -143,14 +152,13 @@ if ($this->books) {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
 }
-?>]]>
-        </programlisting>
+?>]]></programlisting>
         
-        <para>
-            関連するテンプレートファイルは、このようになります。
-        </para>
+            <para>
+                関連するテンプレートファイルは、このようになります。
+            </para>
         
-        <programlisting role="html"><![CDATA[
+            <programlisting role="html"><![CDATA[
 <!-- booklist.tpl -->
 <table>
     <tr>
@@ -168,9 +176,228 @@ if ($this->books) {
 
 <!-- nobooks.tpl -->
 <p>表示する本がありません。</p>
-]]>
-        </programlisting>
-        
+]]></programlisting>
+
+        </sect3>
+
+        <sect3 id="zend.view.scripts.templates.interface">
+            <title>Zend_View_Interface を使用したテンプレート</title>
+
+            <para>
+                Zend_View 互換のテンプレートエンジンを使用するほうが簡単だという人もいるでしょう。
+                <code>Zend_View_Interface</code> では、
+                互換性を保つために最低限必要なインターフェイスを定義しています。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+/**
+ * テンプレートエンジンオブジェクトを返します
+ */
+public function getEngine();
+
+/**
+ * ビュースクリプト/テンプレートへのパスを設定します
+ */
+public function setScriptPath($path);
+
+/**
+ * テンプレート変数をオブジェクトのプロパティとして代入するためのオーバーロードメソッド
+ */
+public function __set($key, $value);
+public function __get($key);
+public function __isset($key);
+public function __unset($key);
+
+/**
+ * テンプレート変数を手動で代入したり、複数の変数を
+ * 一括設定したりします
+ */
+public function assign($spec, $value = null);
+
+/**
+ * 代入済みのテンプレート変数を削除します
+ */
+public function clearVars();
+
+/**
+ * $name というテンプレートをレンダリングします
+ */
+public function render($name);
+]]></programlisting>
+
+            <para>
+                このインターフェイスを使用すると、
+                サードパーティのテンプレートエンジンをラップして
+                Zend_View 互換のクラスを作成することが簡単になります。
+                例として、Smarty 用のラッパーはこのようになります。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+require_once 'Zend/View/Interface.php';
+require_once 'Smarty.class.php';
+
+class Zend_View_Smarty implements Zend_View_Interface
+{
+    /**
+     * Smarty object
+     * @var Smarty
+     */
+    protected $_smarty;
+
+    /**
+     * コンストラクタ
+     *
+     * @param string $tmplPath
+     * @param array $extraParams
+     * @return void
+     */
+    public function __construct($tmplPath = null, $extraParams = array())
+    {
+        $this->_smarty = new Smarty;
+
+        if (null !== $tmplPath) {
+            $this->setScriptPath($tmplPath);
+        }
+
+        foreach ($extraParams as $key => $value) {
+            $this->_smarty->$key = $value;
+        }
+    }
+
+    /**
+     * テンプレートエンジンオブジェクトを返します
+     *
+     * @return Smarty
+     */
+    public function getEngine()
+    {
+        return $this->_smarty;
+    }
+
+    /**
+     * テンプレートへのパスを設定します
+     *
+     * @param string $path パスとして設定するディレクトリ
+     * @return void
+     */
+    public function setScriptPath($path)
+    {
+        if (is_readable($path)) {
+            $this->_smarty->template_dir = $path;
+            return;
+        }
+
+        throw new Exception('無効なパスが指定されました');
+    }
+
+    /**
+     * 変数をテンプレートに代入します
+     *
+     * @param string $key 変数名
+     * @param mixed $val 変数の値
+     * @return void
+     */
+    public function __set($key, $val)
+    {
+        $this->_smarty->assign($key, $val);
+    }
+
+    /**
+     * 代入された変数を取得します
+     *
+     * @param string $key 変数名
+     * @return mixed 変数の値
+     */
+    public function __get($key)
+    {
+        return $this->_smarty->get_template_vars($key);
+    }
+
+    /**
+     * empty() や isset() のテストが動作するようにします
+     *
+     * @param string $key
+     * @return boolean
+     */
+    public function __isset($key)
+    {
+        $value = $this->_smarty->get_template_vars($key);
+        return null === $value;
+    }
+
+    /**
+     * オブジェクトのプロパティに対して unset() が動作するようにします
+     *
+     * @param string $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        $this->_smarty->clear_assign($key);
+    }
+
+    /**
+     * 変数をテンプレートに代入します
+     *
+     * 指定したキーを指定した値に設定します。あるいは、
+     * キー => 値 形式の配列で一括設定します
+     *
+     * @see __set()
+     * @param string|array $spec 使用する代入方式 (キー、あるいは キー => 値 の配列)
+     * @param mixed $value (オプション) 名前を指定して代入する場合は、ここで値を指定します
+     * @return void
+     */
+    public function assign($spec, $value = null)
+    {
+        if (is_array($spec)) {
+            $this->_smarty->assign($spec);
+            return;
+        }
+
+        $this->_smarty->assign($spec, $value);
+    }
+
+    /**
+     * 代入済みのすべての変数を削除します
+     *
+     * Zend_View に {@link assign()} やプロパティ
+     * ({@link __get()}/{@link __set()}) で代入された変数をすべて削除します
+     *
+     * @return void
+     */
+    public function clearVars()
+    {
+        $this->_smarty->clear_all_assign();
+    }
+
+    /**
+     * テンプレートを処理し、結果を出力します
+     *
+     * @param string $name 処理するテンプレート
+     * @return string 出力結果
+     */
+    public function render($name)
+    {
+        return $this->_smarty->fetch($name);
+    }
+}
+]]></programlisting>
+
+            <para>
+                この例では、<code>Zend_View</code> ではなく
+                <code>Zend_View_Smarty</code> クラスのインスタンスを作成し、
+                それを使用して <code>Zend_View</code> と同じようなことをしています。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$view = new Zend_View_Smarty();
+$view->setScriptPath('/path/to/templates');
+$view->book = 'Zend PHP 5 Certification Study Guide';
+$view->author = 'Davey Shafik and Ben Ramsey'
+$rendered = $view->render('bookinfo.tpl');
+]]></programlisting>
+
+        </sect3>
     </sect2>
     
 </sect1>

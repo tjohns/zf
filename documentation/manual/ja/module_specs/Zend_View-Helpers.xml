@@ -16,7 +16,8 @@
         オブジェクトのインスタンスは Zend_View インスタンスの中に残り続け、
         後で $this->helperName() がコールされたときには再利用されます。
     </para>
-    
+
+   
     <sect2 id="zend.view.helpers.initial">
     
         <title>付属のヘルパー</title>
@@ -158,13 +159,20 @@
             デフォルトでは、Zend_View は "Zend/View/Helper/*" からヘルパークラスを探します。
             Zend_View に別の場所を探すように指定するには
             setHelperPath() および addHelperPath() メソッドを使用します。
+            さらに、クラスプレフィックスを指定することもできます。
+            これにより、ヘルパークラスに名前空間を設定できるようになります。
+            デフォルトでクラスプレフィックスを指定しなかった場合は、
+            'Zend_View_Helper_' であると見なされます。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->setHelperPath('/path/to/more/helpers');
+
+// パスを /path/to/more/helpers 、プレフィックスを 'My_View_Helper' とします
+$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 ?>]]>
         </programlisting>
+
         
         <para>
             addHelperPath() メソッドを使用すると、検索パスを「積み重ねる」
@@ -176,13 +184,15 @@ $view->setHelperPath('/path/to/more/helpers');
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->addHelperPath('/path/to/some/helpers');
-$view->addHelperPath('/other/path/to/helpers');
+// /path/to/some/helpers をクラスプレフィックス 'My_View_Helper' で追加します
+$view->addHelperPath('/path/to/some/helpers', 'My_View_Helper);
+// /other/path/to/helpers をクラスプレフィックス 'Your_View_Helper' で追加します
+$view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // $this->helperName() をコールすると、Zend_View は
-// まず最初に "/other/path/to/helpers/HelperName.php" を探し、
-// 次に "/path/to/some/helpers/HelperName"、そして最後に
-// "Zend/View/Helpers/HelperName.php" を探します。
+// まず最初に "/other/path/to/helpers/HelperName.php" で "My_View_Helper_HelperName" という名前のクラスを探し、
+// 次に "/path/to/some/helpers/HelperName" で "Your_View_Helper_HelperName" という名前のクラスを探し、
+// そして最後に "Zend/View/Helpers/HelperName.php" で "Zend_View_Helper_HelperName" という名前のクラスを探します。
 ?>]]>
         </programlisting>
         
@@ -199,11 +209,16 @@ $view->addHelperPath('/other/path/to/helpers');
         <itemizedlist>
             
             <listitem><para>
-                クラス名は Zend_View_Helper_* でなければなりません。*
-                の部分はヘルパーの名前になります。例えば、"specialPurpose"
-                という名前のヘルパーを作成した場合は、そのクラス名は
-                "Zend_View_Helper_SpecialPurpose" となります
-                (大文字の使用法に注意してください)。
+                クラス名は、少なくとも最後はヘルパーの名前と同じである必要があります。
+                CamelCaps 方式を使用します。たとえば
+                "specialPurpose" という名前のヘルパーを作成した場合は、そのクラス名には
+                最低限 "SpecialPurpose" が含まれている必要があります。
+                このクラス名にプレフィックスを指定することができます。
+                プレフィックスの一部に 'View_Helper' を含めることを推奨します。たとえば
+                "My_View_Helper_SpecialPurpose" のようになります
+                (<code>addHelperPath()</code> や
+                <code>setHelperPath()</code> にはプレフィックスを指定する必要があります。
+                最後のアンダースコアは含めても含めなくてもかまいません)。
             </para></listitem>
             
             <listitem><para>
@@ -237,7 +252,7 @@ $view->addHelperPath('/other/path/to/helpers');
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-class Zend_View_Helper_SpecialPurpose {
+class My_View_Helper_SpecialPurpose {
     protected $_count = 0;
     public function specialPurpose()
     {
