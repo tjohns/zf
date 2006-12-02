@@ -232,7 +232,7 @@ final class Zend_Session_Core
      */
     static public function getInstance($instanceMustExist = false)
     {
-        if (self::$_instance === null)
+        if (self::$_instance === null) {
             if ($instanceMustExist === true) {
                 throw new Zend_Session_Exception(__CLASS__ . '::getInstance() A valid session must exist before calling getInstance() in this manner.');
             }
