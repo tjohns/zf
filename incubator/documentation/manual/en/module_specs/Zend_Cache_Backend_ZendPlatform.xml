@@ -1,3 +1,5 @@
+<sect1>
+    <title>Zend_Cache</title>
     <sect2 id="zend.cache.backends.platform">
         <title>Zend_Cache_Backend_ZendPlatform</title>
         <para>
@@ -10,4 +12,4 @@
             There is no options for this backend.
         </para>
     </sect2>
-
+</sect1>
