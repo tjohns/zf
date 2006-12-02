@@ -8,8 +8,8 @@
         (<ulink url="http://www.xmlrpc.com/">XML-RPC ホームページ</ulink> より)。
     </para>
     <para>
-      Zend Framework では XML-RPC クライアントを実装しています
-      (そして、今後 XML-RPC サーバも実装する予定です)。PHP 5 の
+      Zend Framework では XML-RPC クライアントを実装しています。
+      PHP 5 の
       <ulink url="http://www.php.net/soap">SOAP ウェブサービス拡張モジュール</ulink>
       と同じくらいにシンプルに XML-RPC を扱えるようにしています。
     </para>
