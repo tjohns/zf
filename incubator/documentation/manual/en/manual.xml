@@ -152,9 +152,8 @@
         &module_specs.Zend_Date-Simple;
     </chapter>
     <chapter id="zend.cache">
-	<title>Zend_Cache</title>
-	     <title>Zend_Cache_Backend</title>
-         &module_specs.Zend_Cache_Backend_ZendPlatform;
+        <title>Zend_Cache</title>
+        &module_specs.Zend_Cache_Backend_ZendPlatform;
     </chapter>	
     <appendix id="appendix.languages">
         <title>Appendix Zend_Locale Languages</title>
