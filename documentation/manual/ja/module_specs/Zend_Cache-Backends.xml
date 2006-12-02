@@ -117,6 +117,22 @@
                               SQLite データベースへの (ファイル名も含めた) フルパス。
                           </entry>
                       </row>
+                      <row>
+                          <entry><code>automaticVacuumFactor</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>10</code></entry>
+                          <entry>
+                              自動バキューム処理の設定を行います。
+                              自動バキューム処理とは、clean() や delete()
+                              がコールされた際に自動的にデータベースの断片化解消を行う
+                              (そしてサイズを縮小する) ことです。
+                              0 を指定すると、自動バキュームを行いません。
+                              1 を指定すると  (delete() や clean() がコールされると) そのたびにバキュームを行います。
+                              x (1 より大きな整数) を指定すると、
+                              clean() や delete() が x 回コールされるたびに
+                              1 回の頻度でランダムに自動バキュームを行います。
+                          </entry>
+                      </row>
                   </tbody>
               </tgroup>
           </table>

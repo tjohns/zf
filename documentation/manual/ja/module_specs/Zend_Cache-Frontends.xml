@@ -87,7 +87,7 @@
                           <row>
                               <entry><code>automaticCleaningFactor</code></entry>
                               <entry><code>int</code></entry>
-                              <entry><code>0</code></entry>
+                              <entry><code>10</code></entry>
                               <entry>
                                 自動クリーンアッププロセス (ガベージコレクタ) の設定を行います。
                                 0 を指定すると、自動キャッシュクリーニングを行いません。
