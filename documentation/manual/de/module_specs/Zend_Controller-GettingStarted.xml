@@ -6,9 +6,9 @@
 		<para>
 			Das <code>Zend_Controller</code> System wurde im Sinne der Erweiterungsmöglichkeiten 
 			entwickelt, entweder durch Erstellen von Subklassen, welche die bestehenden Klassen 
-			erweitern, oder durch Erstellen neuer Klassen, welche die Interfaces 
-			<code>Zend_Controller_Router_Interface</code> und 
-			<code>Zend_Controller_Dispatcher_Interface</code> implementieren.
+			erweitern, oder durch Erstellen neuer Klassen, welche die verschiedenen Interfaces 
+			und abstrakten Klassen implementieren, welche das Fundament der Controller 
+			Klassenfamilie bilden.
 		</para>
 	</sect2>
 	
@@ -44,6 +44,25 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 			allerdings sollten diese Regeln in der Produktionsumgebung so geändert werden, dass 
 			stattdessen Verzeichnise ausgeschlossen werden. 
 		</para>
+
+		<note>	
+		    <title>Ort der Ladedatei</title>
+		    <para>
+    			Die Ladedatei sollte die einzige PHP Datei sein, die im Hauptverzeichnis abgelegt ist.
+            </para>
+		</note>
+
+        <para>
+            That said, the basic functionality of Zend_Controller also supports
+            URLs using query parameters -- as an example,
+            <code>index.php?controller=foo&amp;action=bar</code>. Additionally,
+            another shipped router, <code>Zend_Controller_RewriteRouter</code>,
+            works in a variety of environments, including many without
+            mod_rewrite-like capabilities. If you cannot use mod_rewrite or an
+            equivalent, you'll still be able to use Zend_Controller for your
+            site.
+        </para>
+        
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.bootstrap">
@@ -57,7 +76,6 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		</para>
 
 		<note>	
-		    <title>Ort der Ladedatei</title>
 		    <para>
     			Die Ladedatei sollte die einzige PHP Datei sein, die im Hauptverzeichnis abgelegt ist.
             </para>
@@ -93,17 +111,6 @@ Zend_Controller_Front::run('/path/to/your/controllers');
             die Funktion <code>set_include_path()</code> vor der Anweisung <code>require_once()</code> 
             aufgerufen werden. 
 		</para>
-
-		<note>
-		    <title>Voraussetzungen</title>
-		    <para>
-	    	    Zur Zeit werden Lösungen untersucht, die keine Installation von mod_rewrite erfordern.
-    		    Wir beabsichtigen, eine Konfiguration für System mit und ohne mod_rewrite Möglichkeiten 
-		        vorzuschlagen. Außerdem beachte bitte, dass das System nicht speziell an Apache oder 
-		        mod_rewrite gebunden ist. Jeder Webserver mit ähnlichen Umleitungsmöglichkeiten sollte
-    		    ausreichen.
-    		</para>
-		</note>
 	</sect2>	
 		
 	<sect2 id="zend.controller.getting-started.directory-structure">
@@ -137,7 +144,6 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 ]]></programlisting>
 		
 		<note>
-		    <title>In Bearbeitung</title>
 		    <para>
     		    Dieser Abschnitt ist noch nicht fertig. Er ist in Bearbeitung und unterliegt laufenden 
 	    	    Änderungen.
@@ -145,11 +151,11 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		</note>
 	</sect2>	
 		
-	<sect2 id="zend.controller.overview.indexcontroller">
-		<title>IndexController</title>
+    <sect2 id="zend.controller.overview.defaultcontroller">
+        <title>Default Controller</title>
 
 		<para>
-		    Jede Website muss einen Controller mit Namen <code>IndexController</code> definieren.
+		    Jede Website muss einen Default Controller definieren.
 		    Dies ist der Controller, der aufgerufen wird, wenn kein Controller in der URI 
 		    angegeben ist, wie z.B. in dieser URI:
 		</para>
@@ -158,15 +164,28 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 http://framework.zend.com/
 ]]></programlisting>
 
-		<para>
-		    Die <code>IndexController</code> Klasse muss in einer Datei mit dem Namen 
-		    <code>IndexController.php</code> abgelegt werden und diese Datei muss im Controller
-		    Verzeichnis abgelegt werden. Der <code>IndexController</code> muss 
-		    <code>Zend_Controller_Action</code> erweitern. Hier ist ein Beispiel für einen 
-		    <code>IndexController</code>:
-		</para>
+        <para>
+            In the shipped configuration, the default controller should be named
+            <code>IndexController</code>, and defined in a file named
+            <code>IndexController.php</code>. Internally, it will be referenced
+            as the controller 'index'.
+        </para>
 
-			<programlisting role="php"><![CDATA[<?php
+        <para>
+            You may change the default controller prior to dispatching the front
+            controller by calling the <code>setDefaultController()</code> method
+            on either the front controller or dispatcher object. When doing so,
+            use the internal naming conventions. Thus, the class
+            <code>HomeController</code> (in the <code>HomeController.php</code>
+            file) would be referred to as <code>home</code>.
+        </para>
+
+        <para>
+            Controllers should extend the <code>Zend_Controller_Action</code>
+            class and be placed in the controllers directory.
+        </para>
+
+		<programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Action.php';
 
@@ -185,8 +204,12 @@ class IndexController extends Zend_Controller_Action
 
 ?>]]></programlisting>
 			
+        <para>
+            More detail on the default controller and action, as well as writing
+            action controller classes, will be presented in later chapters.
+        </para>
+
     	<note>
-	        <title>In Bearbeitung</title>
 		    <para>
     		    Dieser Abschnitt ist noch nicht fertig. Er ist in Bearbeitung und unterliegt laufenden 
 	    	    Änderungen.

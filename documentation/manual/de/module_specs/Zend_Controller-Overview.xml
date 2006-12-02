@@ -36,29 +36,84 @@
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Router</code> ist der Router. Routing ist der Prozess
-						der Übernahme und Zerteilung einer URI, um zu ermitteln, welcher 
-						Controller und welche Aktion des Controllers die Anfrage erhalten soll.
-						Die Definition des Controllers, der Aktion sowie weiterer Parameter wird in 
-						einem Objekt mit Namen <code>Zend_Controller_Dispatcher_Token</code>
-						gekapselt. Dieser wird dann vom <code>Zend_Controller_Dispatcher</code> 
-						verarbeitet. Das Routing geschieht nur einmal: wenn zu Beginn die Anfrage 
-						erhalten wird und bevor der erste Controller aufgerufen wird. 
+                        <code>Zend_Controller_Request_Abstract</code> represents
+                        the request environment and provides methods for setting
+                        and retrieving the controller and action names and any
+                        request parameters. Additionally it keeps track of
+                        whether or not the action it contains has been
+                        dispatched by <code>Zend_Controller_Dispatcher</code>.
+                        Extensions to the abstract request object can be used to
+                        encapsulate the entire request environment, allowing
+                        routers to pull information from the request environment
+                        in order to set the controller and action names.
+					</para>
+
+                    <para>
+                        By default, <code>Zend_Controller_Request_Http</code> is
+                        used, which provides access to the entire HTTP request
+                        environment.
+                    </para>
+				</listitem>
+
+				<listitem>
+					<para>
+                        <code>Zend_Controller_Router_Interface</code> is used to
+                        define routers.  Routing is the process of examining the
+                        request environment to determine which  to determine
+                        which controller, and action of that controller, should
+                        receive the request.  This controller, action, and
+                        optional parameters are then set in the request object
+                        to be processed by <code>Zend_Controller_Dispatcher</code>.  
+                        Routing occurs only once: when the request is initially
+                        received and before the first controller is dispatched.
+                    </para>
+
+                    <para>
+                        The default router, <code>Zend_Controller_Router</code>,
+                        takes a URI endpoint as specified in
+                        <code>Zend_Controller_Request_Http</code> and decomposes
+                        it into a controller, action, and parameters based on
+                        the path information in the url. As an example, the URL
+                        <code>http://localhost/foo/bar/key/value</code> would be
+                        decoded to use the <code>foo</code> controller,
+                        <code>bar</code> action, and specify a parameter
+                        <code>key</code> with a value of <code>value</code>.
 					</para>
 				</listitem>
 
 				<listitem>
 					<para>
-						<code>Zend_Controller_Dispatcher</code> ist der Dispatcher. Dispatching 
-						ist der Prozess, bei dem der <code>Zend_Controller_Dispatcher_Token</code>
-						übernommen, die entsprechende Controller Datei gefunden, die Controller 
-						Klasse (muß <code>Zend_Controller_Action</code> implementieren) in dieser 
-						Datei instanziiert und letztendlich die Methode für die Aktion in dem 
-						Controller Objekt aufgerufen wird. Anders als das Routing, das immer nur 
-						einmal vorkommt, erfolgt das Dispatching in einer Schleife. 
-						<code>Zend_Controller_Dispatcher</code> wird wiederholt von 
-						<code>Zend_Controller_Front</code> aufgerufen, bis alle Aktionen 
-						nacheinander ausgeführt worden sind. 
+                        <code>Zend_Controller_Dispatcher_Interface</code> is
+                        used to define dispatchers.
+                        Dispatching is the process of pulling the controller and
+                        action from the request object and mapping them to a
+                        controller file/class and action method in the controller
+                        class. If the controller or action do not exist, it
+                        handles determining default controllers and actions to
+                        dispatch.
+                    </para>
+
+                    <para>
+                        The actual dispatching process consists of instantiating
+                        the controller class and calling the action method in
+                        that class. Unlike rouing, which occurs only once,
+                        dispatching occurs in a loop. If the request object's
+                        dispatched status is reset at any point, the loop will
+                        be repeated, calling whatever action is currently set
+                        in the request object. The first time the loop finishes
+                        with the request object's dispatched status set (boolean
+                        true), it will finish processing.
+                    </para>
+
+                    <para>
+                        The default dispatcher is
+                        <code>Zend_Controller_Dispatcher</code>. It defines
+                        controllers as CamelCasedClasses ending in the word
+                        Controller, and action methods as camelCasedMethods
+                        ending in the word Action:
+                        <code>SomeFooController::barAction</code>. In this case,
+                        the controller would be referred to as
+                        <code>somefoo</code> and the action as <code>bar</code>.
 					</para>
 				</listitem>
 
@@ -70,22 +125,93 @@
 						Aktionen enthält. 
 					</para>
 				</listitem>
+
+                <listitem>
+                    <para>
+                        <code>Zend_Controller_Response_Abstract</code> defines a
+                        base response class used to collect and return responses
+                        from the action controllers. It collects both headers
+                        and body content, and, because it implements
+                        <code>__toString()</code>, can be directly echoed in
+                        order to send all headers and content at once.
+                    </para>
+
+                    <para>
+                        The default response class is
+                        <code>Zend_Controller_Response_Http</code>, which is
+                        suitable for use in an HTTP environment.
+                    </para>
+                </listitem>
 			</itemizedlist>
 
 			Der Ablauf vom <code>Zend_Controller</code> ist relativ einfach. Eine Anfrage wird vom
 			<code>Zend_Controller_Front</code> empfangen, der wiederum <code>Zend_Controller_Router</code>
 			aufruft, um zu ermitteln, welcher Controller (und welche Aktion in dem Controller) 
-			ausgeführt werden soll. <code>Zend_Controller_Router</code> zerteilt die URI in ein 
-			<code>Zend_Controller_Dispatcher_Token</code> Objekt, welches angibt, was 
-			auszuführen ist. <code>Zend_Controller_Front</code> durchläuft dann eine 
-			Dispatcher Schleife. Er ruft <code>Zend_Controller_Dispatcher</code> auf und übergibt 
-			den Token, um den aktuellen Controller und die aktuelle Aktion auszuführen. Wenn der
-			Controller fertig ist, wird die Kontrolle wieder an <code>Zend_Controller_Front</code>
-			übergeben. Wenn der erste Controller durch die Rückgabe eines neuen Tokens angezeigt 
-			hat, dass ein weiterer Controller ausgeführt werden soll, wird der Durchlauf 
-			fortgesetzt und ein weiterer Dispatcher Prozess wird durchlaufen. Andernfalls endet 
-			der Prozess.  
+			ausgeführt werden soll. <code>Zend_Controller_Router</code> zerteilt die URI um den
+			Namen des Controllers und der Aktion für den Request zu setzen. 
+			<code>Zend_Controller_Front</code> durchläuft dann eine Dispatcher Schleife. Er ruft 
+			<code>Zend_Controller_Dispatcher</code> auf und übergibt den Request, um den Controller 
+			und die Aktion auszuführen, die im Request spezifiziert wurden (oder verwendet die 
+			Standardwerte). Wenn der Controller fertig ist, wird die Kontrolle wieder an 
+			<code>Zend_Controller_Front</code> übergeben. Wenn der Controller durch das Zurücksetzen 
+			des Dispatch Status des Requests angezeigt hat, dass ein weiterer Controller ausgeführt 
+			werden soll, wird der Durchlauf fortgesetzt und ein weiterer Dispatcher Prozess wird 
+			durchlaufen. Andernfalls endet der Prozess.  
 		</para>
+	</sect2>
+
+	<sect2 id="zend.controller.overview.request">
+		<title>Request Object</title>
+
+		<para>
+            The request object is a simple value object that is passed between
+            <code>Zend_Controller_Front</code> and the router, dispatcher, and
+            controller classes.  It packages a definition of a controller, an
+            action, and parameters to be passed to the action, as well as the
+            rest of the request environment, be it HTTP, the CLI, or PHP-GTK.
+		</para>
+
+		<itemizedlist>
+			<listitem><para>
+                The controller name is accessed by
+                <code>getControllerName()</code> and
+                <code>setControllerName()</code>.
+			</para></listitem>
+			<listitem><para>
+                The name of the action to call within that controller is
+                accessed by <code>getActionName()</code> and
+                <code>setActionName()</code>.
+			</para></listitem>
+			<listitem><para>
+                Parameters to be passed to that action are an associative array
+                of key/value pairs that are accessed by <code>getParams()</code>
+                and <code>setParams()</code>, or individually by
+                <code>getParam()</code> and <code>setParam()</code>.
+			</para></listitem>
+		</itemizedlist>
+
+        <para>
+            Based on the type of request, there may be more methods available.
+            The default request used, <code>Zend_Controller_Request_Http</code>,
+            for instance, has methods for retrieving the request URI, path
+            information, $_GET and $_POST parameters, etc.
+        </para>
+
+        <para>
+            The request object is passed to the front controller, or if none is
+            provided, instantiated at the beginning of the dispatch process,
+            before routing occurs. It is passed through to every object in the
+            dispatch chain.
+        </para>
+
+        <para>
+            Additionally, the request object is particularly useful in testing.
+            The developer may craft the request environment, including
+            controller, action, parameters, URI, etc, and pass the request
+            object to the front controller to test application flow. When paired
+            with the response object, elaborate and precise unit testing of
+            MVC applications becomes possible.
+        </para>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.routing-process">
@@ -99,16 +225,20 @@
 		</para>
 
 		<para>
-		    <code>Zend_Controller_Front</code> ruft <code>Zend_Controller_Router</code> auf, um die
-		    URI auf einen Controller (und eine Aktion in diesem Controller) abzubilden. 
-		    <code>Zend_Controller_Router</code> nimmt die URI und zerteilt sie in ein 
-		    <code>Zend_Controller_Dispatcher_Token</code> Objekt, welches an den Dispatcher
-		    (<code>Zend_Controller_Dispatcher</code>) übergeben wird. 
+		    <code>Zend_Controller_Front</code> ruft <code>Zend_Controller_Router</code> (oder 
+		    ein anderer registrierter Router) auf, um die URI auf einen Controller (und eine Aktion 
+		    in diesem Controller) abzubilden. 
+		    
+		    <code>Zend_Controller_Router</code> retrieves the URI
+            from the request object and decomposes it to determine the
+            controller, action, and any other URL parameters passed in the path
+            and sets these in the request object.  
 		</para>
 
 		<para>
-		    Der Router verwendet eine sehr einfache Zuordnung, um den Namen des Controllers und
-		    den Namen der Aktion innerhalb dieses Controllers zu ermitteln.
+		    <code>Zend_Controller_Router</code> verwendet eine sehr einfache Zuordnung, um den 
+		    Namen des Controllers und den Namen der Aktion innerhalb dieses Controllers zu 
+		    ermitteln.
 		</para>
 			
 			<programlisting role="php"><![CDATA[
@@ -130,9 +260,11 @@ http://framework.zend.com/controller/action/key1/value1/]]>
 			</programlisting>
 
 		<para>
-		    Wenn im <code>/controller/</code> Teil der URI nichts enthalten ist, wird dieser Teil zu
-		    "<code>index</code>". Wenn im <code>/action/</code> Teil der URI nichts enthalten ist,
-		    wird dieser Teil ebenfalls zu <code>index</code>. Diese Beispiele erläutern dies:
+            If either the controller or action are missing from the URI path,
+            <code>Zend_Controller_Dispatcher</code> will try and grab the value
+            from the request object's parameters, and, if not found, use default
+            values. In both cases, the default values are "<code>index</code>".
+            These examples illustrate:
 		</para>
 
         <programlisting role="php"><![CDATA[
@@ -150,59 +282,123 @@ Action    : index]]>
         </programlisting>
 
 		<note>
-		    <title>Neue rewrite engine</title>
+		    <title>Flexibility</title>
 		    <para>
-			    Wir entwickeln momentan einen neuen Router mit einer Engine für das URI Rewriting,
-			    welche flexiblere Möglichkeiten bietet als die aktuell im Router vorhandene. Diese 
-			    wird in naher Zukunft in einer Vorschauversion enthalten sein. 
-			</para>
+                If you want more flexible capabilities, you may want to check out
+                <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>.
+            </para>
 		</note>
 
-			<para>
-			    Der Name des Controllers und der Aktion innerhalb dieses Controllers sowie weitere
-			    optionale Parameter werden in einem <code>Zend_Controller_Dispatcher_Token</code> 
-			    gekapselt. Dieser Token wird an <code>Zend_Controller_Front</code> zurückgegeben, 
-			    der in die Dispatcher Schleife übergeht. Einmal in der Dispatcher Schleife wird der 
-			    Token an den <code>Zend_Controller_Dispatcher</code> übergeben.
-			</para>
-	</sect2>
-
-	<sect2 id="zend.controller.overview.dispatch-token">
-		<title>Dispatcher Token</title>
-
 		<para>
-			Der Dispatcher Token ist ein einfaches Objekt, das zwischen <code>Zend_Controller_Front</code>
-			und den Klassen übergeben wird, welche die Router und Dispatcher Interfaces  
-			implementieren. Es enthalt eine Definition des Controllers, eine Aktion und Parameter, 
-			die an die Aktion übergeben werden.
+		    Der Name des Controllers und der Aktion innerhalb dieses Controllers sowie weitere
+		    optionale Parameter werden im Request Objekt gesetzt. Wenn 
+            <code>Zend_Controller_Front</code> die Dispatcher Schleife startet wird das Request 
+            Objekt an <code>Zend_Controller_Dispatcher</code> übergeben.
 		</para>
-
-		<itemizedlist>
-			<listitem><para>
-				Auf den Names des Controllers wird über <code>getControllerName()</code> und 
-				<code>setControllerName()</code> zurückgegriffen. 
-			</para></listitem>
-			<listitem><para>
-				Auf den Namen der Aktion innerhalb des Controllers wird über 
-				<code>getActionName()</code> und <code>setActionName()</code> zurückgegriffen.
-			</para></listitem>
-			<listitem><para>
-				Auf die Parameter, die an diese Aktion übergeben wurden und die sich in einem 
-				assoziativen Array mit Schlüssel/Wert Paaren befinden, kann über 
-				<code>getParams()</code> und <code>setParams()</code> zurückgegriffen werden.
-			</para></listitem>
-		</itemizedlist>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatching">
 		<title>Dispatcher Prozess</title>
 
 		<para>
-			Das Dispatching ist der Prozess, bei dem ein <code>Zend_Controller_Dispatcher_Token</code>
-			übernommen wird, die dort enthaltenen Informationen (der Name eines Controllers, einer
-			Aktion sowie optionaler Parameter) extrahiert werden und dann ein Controller 
-			instanziiert sowie eine Aktion dieses Controllers aufgerufen wird. 
+            Dispatching is the process of taking the request object,
+            <code>Zend_Controller_Request_Abstract</code>, extracting the
+            controller name, action name, and optional parameters contained in it,
+            and then instantiating a controller and calling an action of that
+            controller. If no controller or action are found, it will use
+            default values for them. <code>Zend_Controller_Dispatcher</code>
+            specifies <code>index</code> for each of these defaults, but allows
+            the developer to change them using the
+            <code>setDefaultController()</code> and
+            <code>setDefaultAction()</code> methods.
 		</para>
+
+        <para>
+            Dispatching happens in a loop in the front controller. Before
+            dispatching occurs, the front controller routes the request to find
+            user specified values for the controller, action, and optional
+            parameters. It then enters a dispatch loop, dispatching the request.
+        </para>
+
+        <para>
+            At the beginning of each iteration, it sets a flag in the request
+            object indicating that the action has been dispatched. If an action
+            or pre/postDispatch plugin resets that flag, the dispatch loop will
+            continue and attempt to dispatch the request again. By changing the
+            controller and/or action in the request and resetting the dispatched
+            flag, the developer may define a chain of requests to perform.
+        </para>
+
+        <para>
+            The action controller method that controlls such dispatching is
+            <code>_forward()</code>; call this method from any of the
+            pre/postDispatch() or action methods, providing a controller,
+            action, and optionally any additional parameters you may wish to
+            send to the new action:
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+public function myAction()
+{
+    // do some processing...
+    // forward to another action, FooController::barAction():
+    $this->_forward('foo', 'bar', array('baz' => 'bogus'));
+}
+]]></programlisting>
+	</sect2>
+
+	<sect2 id="zend.controller.overview.response">
+		<title>Response Object</title>
+
+		<para>
+            The response object is the logical pair to the request object. Its
+            purpose is to collate content and/or headers so that they may be
+            returned en masse. Additionally, the front controller will pass any
+            caught exceptions to the response object, allowing the developer to
+            gracefully handle exceptions.
+        </para>
+
+        <para>
+            Since the response object implements <code>__toString()</code>, it
+            may be safely echoed. This allows for the following usage:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+echo $controller->dispatch();
+]]></programlisting>
+        
+        <para>
+            Developers should make use of the response object in their action
+            controllers. Instead of directly rendering output and sending
+            headers, push them to the response object:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// Within an action controller action:
+// Set a header
+$this->getResponse()
+    ->setHeader('Content-Type', 'text/html')
+    ->appendBody($content);
+]]></programlisting>
+
+        <para>
+            By doing this, all headers get sent at once, just prior to
+            displaying the content.
+        </para>
+
+        <para>
+            Should an exception occur in an application, check the
+            response object's <code>isException()</code> flag, and retrieve the
+            exception using <code>getException()</code>. Additionally, one
+            may create custom response objects that redirect to error pages, log
+            exception messages, do pretty formatting of exception messages (for
+            development environments), etc.
+        </para>
+
+        <para>
+            By default, exception messages are not displayed. This behaviour may
+            be overridden by calling <code>renderException()</code>.
+        </para>
 	</sect2>
 </sect1>
 

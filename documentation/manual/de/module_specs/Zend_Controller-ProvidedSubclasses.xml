@@ -2,12 +2,12 @@
     <title>Provided Subclasses</title>
 
     <sect2 id="zend.controller.providedsubclasses.introduction">
-        <title>Introduction</title>
+        <title>Einführung</title>
 
         <para>
-            Zend Framework provides several alternatives to the default classes
-            provided, including alternate request objects, routers, and response
-            objects.
+            Das Zend Framework stellt verschiedene Alternativen zu den bereit gestellten 
+            Standardklassen zur Verfügung. Dies beinhaltet altive Request Objekte, Router und 
+            Response Objekte.
         </para>
     </sect2>
 
@@ -15,94 +15,90 @@
         <title>Zend_Controller_Request_Http</title>
 
         <sect3 id="zend.controller.providedsubclasses.request.http.introduction">
-            <title>Introduction</title>
+            <title>Einführung</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> provides a request object
-                for use in an HTTP environment. In addition to extending
-                <code>Zend_Controller_Request_Abstract</code>, it proxies to a
-                <code>Zend_Http_Request</code> object. <code>Zend_Controller_Request_Http</code>
-                is the default request class utilised by
-                <code>Zend_Controller_Dispatcher</code>.
+                <code>Zend_Controller_Request_Http</code> stellt ein Request Objekt für die 
+                Verwendung in einer HTTP Umgebung bereit. Zusätzlich zur Erweiterung von 
+                <code>Zend_Controller_Request_Abstract</code> ist es ein Proxy für ein 
+                <code>Zend_Http_Request</code> Objekt. <code>Zend_Controller_Request_Http</code>
+                ist die Standard Request Klasse, die von <code>Zend_Controller_Dispatcher</code>
+                verwendet wird.
             </para>
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.request.http.dataaccess">
-            <title>Accessing Request Data</title>
+            <title>Auf Request Daten zugreifen</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> encapsulates access
-                to relevant values such as the key name and value for the
-                controller and action router variables, and all additional
-                parameters parsed from the URI. By proxying to
-                <code>Zend_Http_Request</code> it additionally allows
-                access to values contained in the superglobals as public
-                members and manages the current Base URL and Request URI.
-                Superglobal values cannot be set on a request object, instead use
-                the setParam/getParam methods to set or retrieve user parameters.
+                <code>Zend_Controller_Request_Http</code> kapselt den Zugriff auf relevante Werte
+                wie der Schlüssel und Wert für Controller und Action Variablen des Routers und alle
+                zusätzlichen Parameter, die aus der URI ermittelt wurden. Durch den Proxy zu 
+                <code>Zend_Http_Request</code> erlaubt es zusätzlich den Zugriff auf superglobale 
+                Werte als öffentliche Eigenschaften und verwaltet die aktuelle Basis URL und 
+                Request URI. Superglobale Werte können in einem Request Objekt nicht gesetzt werden,
+                stattdessen verwendet man die setParam/getParam Methoden um Benutzerparameter zu
+                setzen oder zu erhalten.
             </para>
 
             <note>
-                <title>Superglobal data</title>
+                <title>Superglobale Daten</title>
                 <para>
-                    When accessing superglobal data through <code>Zend_Controller_Request_Http</code>
-                    as public member properties, it is necessary to keep in mind that
-                    the property name (superglobal array key) is matched to a superglobal
-                    in a specific order of precedence: 1. GET, 2. POST, 3. COOKIE, 4. SERVER, 5. ENV.
+                    Beim Zugriff auf superglobale Daten über die öffentlichen Eigenschaften von 
+                    <code>Zend_Controller_Request_Http</code> ist es notwendig, darauf zu achten, 
+                    dass der Eigenschaftsname (der superglobale Arrayschlüssel) einem superglobalen
+                    Wert in einer bestimmten Reihenfolge entspricht: 1. GET, 2. POST, 3. COOKIE, 
+                    4. SERVER, 5. ENV.
                 </para>
             </note>
 
             <para>
-                Specific superglobals can be accessed using a public method as an
-                alternative. For example, the raw value of <code>$_POST['user']</code>
-                can be accessed by calling <code>getPost('user')</code> on the
-                request object.
+                Auf spezifische superglobale Werte kann alternativ über eine öffentliche Methode 
+                zugegriffen werden. Zum Beispiel kann auf den unverarbeitete Wert von 
+                <code>$_POST['user']</code> durch Aufruf der <code>getPost('user')</code> Methode 
+                des Request Objekts zugegriffen werden. 
             </para>
 
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.request.http.baseurl">
-            <title>Base Url and subdirectories</title>
+            <title>Basis Url und Unterverzeichnisse</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> by proxying to
-                <code>Zend_Http_Request</code> allows Zend_Controller_RewriteBase
-                to be used in subdirectories. Zend_Http_Request will attempt to
-                automatically detect your base URL and set it accordingly.
+                <code>Zend_Controller_Request_Http</code> erlaubt durch den Proxy von 
+                <code>Zend_Http_Request</code>, daß Zend_Controller_RewriteBase in einem 
+                Unterverzeichnis verwendet werden kann. Zend_Http_Request versucht die Basis URL
+                automatisch zu erkennen und entsprechend zu setzen.
             </para>
 
             <para>
-                For example, if you keep your
-                <code>index.php</code> in a webserver subdirectory named
-                <code>/projects/myapp/index.php</code>, base URL (rewrite base)
-                should be set to <code>/projects/myapp</code>. This string will
-                then be stripped from the beginning of the path before
-                calculating any route matches. This frees one from the necessity
-                of prepending it to any of your routes. A route of
-                <code>'user/:username'</code> will match URIs like
-                <code>http://localhost/projects/myapp/user/martel</code> and
+                Wenn man zum Beispiel seine <code>index.php</code> in einem Webserverunterverzeichnis 
+                mit Namen <code>/projects/myapp/index.php</code> verwendet, sollte die Basis URL
+                (die Rewrite Basis) auf <code>/projects/myapp</code> gesetzt werden. Dieser String
+                wird dann vom Anfang des Pfades entfernt, bevor irgend welche Routingtreffer 
+                ermittelt werden. Dies befreit einem davon, es an den Anfang jeder Route setzen zu 
+                müssen. Eine Route <code>'user/:username'</code> passt auf URIs wie 
+                <code>http://localhost/projects/myapp/user/martel</code> und
                 <code>http://example.com/user/martel</code>.
             </para>
 
             <note>
-                <title>URL detection is case sensitive</title>
+                <title>URL Erkennung beachtet Groß- und Kleinschreibung</title>
                 <para>
-                    Automatic base URL detection is case sensitive, so make sure your URL
-                    will match a subdirectory name in a filesystem (even on Windows
-                    machines). If it doesn't you will get to noRoute action.
+                    Die automatische Erkennung der Basis URL beachtet die Groß- und Kleinschreibung,
+                    weshalb man sicherstellen sollte, dass die URL einem Unterverzeichnis im 
+                    Dateisystem entspricht (sogar auf einem Windows Rechner). Andernfalls wird auf 
+                    die noRoute aktion umgeleitet.
                 </para>
             </note>
 
             <para>
-                Should base URL be detected incorrectly you can override it
-                with your own base path with the help of the
-                <code>setBaseUrl()</code> method of either the
-                <code>Zend_Http_Request</code> class, the
-                <code>Zend_Controller_Request_Http</code> class, or the
-                <code>Zend_Controller_Front</code> class. The easiest
-                method is to set it in <code>Zend_Controller_Front</code>, 
-                which will proxy it into the request object. Example usage to
-                set a custom base URL:
+                Sollte die Basis URL falsch erkannt werden, kann man diese auch mit einem eigenen
+                Pfad mit Hilfe der <code>setBaseUrl()</code> Methode der 
+                <code>Zend_Http_Request</code> Klasse, der <code>Zend_Controller_Request_Http</code>
+                Klasse oder der <code>Zend_Controller_Front</code> Klasse überschreiben. Die 
+                einfachste Methode ist die von <code>Zend_Controller_Front</code>, welche es an
+                das Request Object weiter leitet. Beispiel, um eine eigene Basis URL zu setzen:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -122,29 +118,24 @@ $response   = $controller->dispatch();]]></programlisting>
         <title>Zend_Controller_RewriteRouter</title>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.introduction">
-            <title>Introduction</title>
-            <para>
-                <code>Zend_Controller_RewriteRouter</code> is a new
-                version of the framework
-                router. Routing is the process of taking a URI endpoint (that part
-                of the URI which comes after the base URL) and
-                decomposing it into parameters to determine which
-                controller and action of that
-                controller should receive the request. This value of the
-                controller, action and other parameters is packaged into a
-                <code>Zend_Controller_Request_Http</code> object which is
-                then processed by <code>Zend_Controller_Dispatcher</code>.
-                Routing occurs only once: when the request is initially
-                received and before the first controller is dispatched.
-            </para>
-
-            <para>
-                <code>Zend_Controller_RewriteRouter</code> is designed to allow for
-                mod_rewrite like functionality using pure php structures. It is
-                very loosely based on Ruby on Rails routing and does not require
-                any prior knowledge of webserver URL rewriting. It is designed
-                to work with a single Apache mod_rewrite rule (one of):
-            </para>
+            <title>Einführung</title>
+        	<para>
+        	    <code>Zend_Controller_RewriteRouter</code> ist eine neue Version des Framework 
+        	    Routers. Routing ist der Prozess der Übernahme und Zerteilung einer URI, um zu 
+        	    ermitteln, welcher Controller und welche Aktion des Controllers die Anfrage 
+        	    erhalten soll. Die Definition des Controllers, der Aktion sowie weiterer Parameter 
+        	    wird in einem Objekt mit Namen <code>Zend_Controller_Dispatcher_Token</code> 
+        	    gekapselt, das dann vom <code>Zend_Controller_Dispatcher</code> verarbeitet wird. 
+        	    Das Routing geschieht nur einmal: wenn zu Beginn die Anfrage erhalten wird und 
+        	    bevor der erste Controller aufgerufen wird. 
+        	</para>
+        	<para>
+        	    <code>Zend_Controller_RewriteRouter</code> wurde entwickelt, um mit reinen PHP 
+        	    Strukturen eine mod_rewrite ähnliche Funktionalität zu erlauben. Es richtet sich 
+        	    sehr frei nach dem Ruby on Rails Routing und benötigt kein tieferes Wissen über 
+        	    URL Weiterleitung des Webservers. Es wurde entwickelt, um mit einer einzigen 
+        	    mod_rewrite Regel zu arbeiten. 
+        	</para>
 
             <programlisting role="php"><![CDATA[
 RewriteEngine on
@@ -187,16 +178,16 @@ url.rewrite-once = ( ".*\.(js|ico|gif|jpg|png|css)$" => "$0", "" => "/index.php"
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.usage">
-            <title>Using a router</title>
+            <title>Einen Router verwenden</title>
 
             <para>
-                To properly use the RewriteRouter you have to instantiate it,
-                add some user defined routes and inject it into the controller.
-                The following code illustrates the procedure:
+        	    Um den RewriteRouter richtig zu verwenden, mußt du ihn instanziieren, einige 
+        	    benutzerdefinierte Routen hinzufügen und in den Controller einbinden. Der folgende 
+        	    Code veranschaulicht die Vorgehensweise:
             </para>
 
             <programlisting role="php"><![CDATA[
-/* Create a router */
+/* Erstelle einen Router */
 
 $router = new Zend_Controller_RewriteRouter();
 $router->addRoute(
@@ -204,82 +195,76 @@ $router->addRoute(
 	new Zend_Controller_Router_Route('user/:username', array('controller' => 'user', 'action' => 'info'))
 );
 
-/* Set it in a controller */
+/* binde ihn in den Controller ein */
 
 $ctrl = Zend_Controller_Front::getInstance();
 $ctrl->setRouter($router);]]></programlisting>
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.basic">
-            <title>Basic Routes</title>
+            <title>Einfache Routen</title>
 
             <para>
-                The heart of the RewriteRouter is the definition of user defined
-                routes. Routes are created by calling the addRoute method of
-                RewriteRouter and passing in a new instance of
-                <code>Zend_Controller_Router_Route</code>:
+                Das Herz des RewriteRouter ist die Definition der benutzerdefinierten Routen. 
+                Routen werden durch Aufruf der <code>addRoute</code> Methode des RewriteRouter 
+                und der Übergabe einer neuen Instanz von <code>Zend_Controller_Router_Route</code>
+                erstellt:
             </para>
 
             <programlisting role="php"><![CDATA[
 $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
 
             <para>
-                The first parameter is the name of the route. It is redundant at
-                the moment of writing but will be used in the future in a URL
-                view helper to allow for easy URL generation in your views.
-                Should you need to make use of a previously configured named
-                route, you can retrieve it with the getRoute method of the
-                RewriteRouter. The second parameter is an instance of
-                <code>Zend_Controller_Router_Route</code>.
+                Der erste Parameter ist der Name der Route. Zum derzeitigen Zeitpunkt ist er 
+                redundant aber wird in Zukunft in einem URL View Helper verwendet, um eine einfache 
+                Erstellung von URLs in deinen Views zu ermöglichen. Wenn du die vorher 
+                konfigurierte, benannte Route verwenden möchtest, kannst du sie mit den 
+                <code>getRoute</code> Methode des RewriteRouter  erhalten. Der zweite Parameter ist 
+                eine Instanz von <code>Zend_Controller_Router_Route</code>.
             </para>
 
             <para>
-                The first parameter for the
-                <code>Zend_Controller_Router_Route</code>
-                constructor is a route that will be matched to a URL -
-                for example, the above route will match
-                <code>http://example.com/user/martel</code>. The colon in a
-                route marks a URL variable. After the successful routing, values 
-                of all defined variables will be injected to the Zend_Controller_Request.
-                After that they will be accessible through a Zend_Controller_Request::getParam or 
-                Zend_Controller_Action::_getParam methods. In our example a
-                parameter named username will be set to a value of 'martel'.
+                The erste Parameter für den <code>Zend_Controller_Router_Route</code> Konstruktur 
+                ist eine Route, die auf eine URL passt - zum Beispiel passt die obige Route 
+                auf <code>http://example.com/user/martel</code>. Der Doppelpunkt in einer Route 
+	            markiert eine URL Variable, die durch die 
+	            <code>Zend_Controller_Action::_getParam</code> Methode zugänglich ist. In unserem 
+	            Beispiel wird der mit 'username' benannte Parameter auf den Wert 'martel' gesetzt. 
             </para>
 
+        	<note>
+        	    <title>Reihenfolge der Definitionen</title>
+        	    <para>
+            	    Routen werden in umgekehrter Reihenfolge abgeglichen, so dass man sicherstellen 
+            	    muss, dass die allgemeinste Route als erstes definiert ist.
+        	    </para>
+        	</note>
+        
+        	<note>
+        	    <title>Erlaubte Zeichen</title>
+        	    <para>
+            	    Fürs Erste erlaubt die aktuelle Implementation die Verwendung jedes Zeichens 
+            	    für den  Variablenbezeichner außer den Schrägstrich (/), es wird aber sehr 
+            	    empfohlen, dass du nur  Zeichen verwendest, die für PHP Variablen verwendet 
+            	    werden dürfen. In Zukunft wird die Implementation vermutlich angepasst und dies 
+            	    könnte Fehler in deinen Code einführen.
+        	    </para>
+        	</note>
+        
+        	<para>
+        	    Es gibt zwei besondere Variablen, die in deinen Routen verwendet werden können - 
+        	    'controller' und 'action'. Diese besonderen Variablen werden verwendet, um einen 
+        	    gewählten  Controller und/oder eine Aktion in der URL zu finden. Die 'action' 
+        	    Variable muß immer  entweder in der Route oder als Standardparameter definiert 
+        	    sein. Die 'controller' Variable wird standardmäßig auf IndexController verweisen, 
+        	    wenn sie nicht definiert wurde.
+        	</para>
             <note>
-                <title>Reverse matching</title>
+                <title>Spezielle Variablen</title>
                 <para>
-                    Routes are matched in reverse order so make sure your most
-                    generic routes are defined first.
-                </para>
-            </note>
-
-            <note>
-                <title>Character useage</title>
-                <para>
-                    For now the current implementation allows for use of any
-                    characters except a slash (/) as a variable identifier but it is
-                    strongly recommended that one uses only php variable friendly
-                    characters. In future the implementation will probably be
-                    altered and this may introduce bugs to your code.
-                </para>
-            </note>
-
-            <para>
-                There are two special variables which can be used in your routes
-                - ':controller' and ':action'. These special variables will be
-                used to find a controller and/or an action chosen in the URL.
-                The ':action' variable must always be defined either in the route
-                or as a default parameter. The ':controller' variable will
-                default to the IndexController if it is not defined.
-            </para>
-
-            <note>
-                <title>Special variables</title>
-                <para>
-                    Names of these special variables may be different if you choose to 
-                    alter the defaults in <code>Zend_Controller_Request_Http</code> 
-                    by the means of setControllerKey and setActionKey methods.
+                    Die Namen dieser speziellen Variablen können unterschiedlich sein, wenn man 
+                    die Standardwerte in <code>Zend_Controller_Request_Http</code> mit Hilfe der 
+                    setControllerKey und setActionKey Methoden verändert.
                 </para>
             </note>
 
@@ -288,23 +273,22 @@ $router->addRoute(
     'user', new Zend_Controller_Router_Route(':controller/:action')
 );]]></programlisting>
 
-            <para>
-                If you point your browser to 'http://example.com/news/latest'
-                with this route defined the <code>Zend_Controller_Dispatcher</code>
-                will invoke the latestAction method of your NewsController class.
-            </para>
+        	<para>
+        	    Wenn du deinen Browser mit dieser Route auf <code>http://example.com/news/latest</code> 
+        	    richtest, wird der <code>Zend_Controller_Dispatcher</code> die Aktion latestAction 
+        	    deines Controllers NewsController ausführen.
+        	</para>
 
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.variable-defaults">
-            <title>Variable defaults</title>
+            <title>Vorgegebene Variablenwerte</title>
 
             <para>
-                Every variable in the route can have a default. To provide it
-                you have to add a second parameter to the
-                <code>Zend_Controller_Router_Route</code> constructor. This
-                parameter is an array with keys as variable names and
-                values as desired defaults.
+        	    Jede Variable in der Route kann einen vorgegebenen Wert haben. Um diesen 
+        	    vorzugeben, mußt du einen dritten Parameter zur <code>addRoute</code> Methode 
+        	    hinzufügen. Dieser dritte Parameter ist ein Array mit den Variablennamen als 
+        	    Schlüssel und den vorgegebenen Werten als Werten.
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -312,19 +296,18 @@ $router->addRoute(
     'archive', new Zend_Controller_Router_Route('archive/:year', array('year' => 2006))
 );]]></programlisting>
 
-            <para>
-                What may not be clearly visible is that the above route will
-                match URLs like 'http://example.com/archive/2005' and
-                'http://example.com/archive'. In the latter case the variable
-                year will have a value of 2006.
-            </para>
-
-            <para>
-                The above example will only result in injecting a year variable 
-                to the request. No routing will take place since controller and 
-                action parameters are not set. To make it more usable you have to 
-                provide a valid controller and a valid action as defaults. 
-            </para>
+        	<para>
+        	    Was nicht sofort erkennbar sein mag, ist, dass die obige Route auf URLs wie 
+        		<code>http://example.com/archive/2005</code> und 
+        		<code>http://example.com/archive</code> passt. Im letzteren Fall hat die Variable 
+        		'year' den Wert 2006.
+        	</para>
+        
+        	<para>
+        	    Im obigen Beispiel haben wir keinen Controller angegeben, so dass immer auf die 
+        	    noRoute Aktion des IndexController verwiesen wird. Damit es anwendbar ist, musst du 
+        	    einen gültigen Controller und eine gültige Aktion als Standardwerte festlegen:
+        	</para>
 
             <programlisting role="php"><![CDATA[
 $router->addRoute(
@@ -342,10 +325,8 @@ $router->addRoute(
             <title>Variable requirements</title>
 
             <para>
-                One can add a third parameter to the 
-                <code>Zend_Controller_Router_Route</code>
-                constructor where variable requirements can
-                be set. These are defined as regular expressions:
+                Du kannst einen dritten Parameter hinzufügen, in dem Anforderungen an die Variablen 
+        	    angegeben werden können. Diese werden als reguläre Ausdrücke definiert:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -355,47 +336,47 @@ $router->addRoute(
 );]]></programlisting>
 
             <note>
-                <title>Routing behavior</title>
-                <para>
-                    Unlike Ruby on Rails, ZF RewriteRouter will match a route and
-                    use a default when a third parameter variable requirement is
-                    not met. So the URL of 'http://example.com/archive/test' will
-                    match the above route and set the year to 2006. This
-                    functionality may be altered in the future as it is being
-                    discussed at the moment of writing of this documentation.
-                </para>
+        	    <title>Routing Verhalten</title>
+        	    <para>
+        	        Im Gegensatz zu Ruby on Rails wird <code>Zend_Controller_RewriteRouter</code> 
+        	        für eine Route Standardwerte verwenden, wenn die Anforderungen an die Variablen 
+        	        im vierten Parameter nicht erfüllt werden. Also passt die URL 
+        	        <code>http://example.com/archive/test</code> auf die obige Route und setzt den 
+        	        Parameter 'year' auf 2006. Diese Funktionalität kann sich in Zukunft ändern, da 
+        	        sie im Moment beim Schreiben dieser Dokumentation noch diskutiert wird.
+        	    </para>
             </note>
 
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.rewritebase">
-            <title>Base URL and subdirectories</title>
+            <title>Basis URL und Unterverzeichnisse</title>
 
             <para>
-                Unlike the original Router, the current RewriteRouter can be used in
-                subdirectories. The original RewriteRouter's setRewriteBase()
-                method is no longer available however. Instead the base URL
-                will be automatically detected by Zend_Controller_Request_Http 
-                (which proxies to Zend_Http_Request).
+                Im Gegensatz zum ursprünglichen Route kann RewriteRouter auch in 
+                Unterverzeichnissen verwendet werden. Die Methode setRewriteBase() des 
+                ursprünglichen RewriteRouter existiert nicht mehr. Stattdessen wird die Basis URL
+                automatisch durch Zend_Controller_Request_Http ermittelt (welches 
+                Zend_Http_Request verwendet).
             </para>
 
             <para>
-                Should the base URL be detected incorrectly you can override it
-                with your own base path with the help of Zend_Http_Request
-                by calling the setBaseUrl() method (see <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
+                Sollte die Basis URL falsch erkannt werden, kannst du sie mit deinem eigenen Pfad 
+                mit Hilfe von Zend_Http_Request durch den Aufruf der setBaseUrl() Methode setzen 
+                (siehe <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
             </para>
 
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.default-routes">
-            <title>Default routes</title>
+            <title>Standardrouten</title>
 
             <para>
-                Zend_Controller_RewriteRouter is preconfigured with one default
-                route to provide compatibility with the first version of the 
-                router. It will match URIs in the shape of <code>'controller/action'</code> 
-                and will also match any additional parameters appended to the URI by default.
-                It is configured as:
+                <code>Zend_Controller_RewriteRouter</code> hat eine vordefinierte Standardroute, um 
+                Kompatibilität mit der ersten Version des Routers zu gewährleisten. Sie
+        	    passt auf URIs in Form von <code>'controller/action'</code> and erkennt außerdem 
+        	    jeden zusätzlichen Parameter, der an die URI angehängt wird. Sie ist wie folgt
+        	    konfiguiert:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -406,12 +387,12 @@ $this->addRoute('default', $compat);]]></programlisting>
             <note>
                 <title>Matching URIs</title>
                 <para>
-                    Zend_Controller_RewriteRouter is configured for backwards
-                    compatibility. It will automatically match <code>controller/action</code>
-                    URIs with additional parameters. The additional parameters do not
-                    require the addition of new routes unless they must have default values
-                    or variable requirements. These additional parameters will be accessible
-                    from the Zend_Controller_Action::_getParam method.
+                    Zend_Controller_RewriteRouter wurde für Rückwärtskompatibilität konfiguriert. 
+                    Es passt automatisch auf <code>controller/action</code> URIs mit zusätzlichen
+                    Parameter. Die zusätzlichen Parameter benötigen keine weiteren Routen, solange
+                    sie keine vorgegebenen Variablenwerte oder Variablenanforderungen benötigen.
+                    Auf diese zusätzlichen Parameter kann über die Zend_Controller_Action::_getParam()
+                    Methode zugegriffen werden.
                 </para>
             </note>
 
@@ -423,18 +404,16 @@ $this->addRoute('default', $compat);]]></programlisting>
         <title>Zend_Controller_Response_Http</title>
 
         <para>
-            <code>Zend_Controller_Response_Http</code> is a response object
-            suitable for use in an HTTP environment. It contains methods for
-            setting, retrieving, and clearing headers, and the
-            <code>__toString()</code> method sends all headers at once before
-            returning the response content.
+            <code>Zend_Controller_Response_Http</code> ist ein Response Objekt, das für die 
+            Verwendung in einer HTTP Umgebung geeignet ist. Es enthält Methoden für das Setzen,
+            Erhalten und Entfernen von Headern und die <code>__toString()</code> Methode sendet
+            alle Header auf einmal bevor die Reponse Inhalte zurückgegeben werden.
         </para>
 
         <para>
-            <code>setHeader()</code> takes two arguments, a header type and the
-            header value. A third, optional parameter, if passed and true, will
-            force the new header to replace any other headers registered with
-            that type.
+            <code>setHeader()</code> nimmt zwei Argumente entgegen, einen Header Typ und den 
+            Header Wert. Ein dritter, optionaler Parameter (wenn übergeben und true) erzwingt das 
+            Überschreiben des vorhandenen Headers gleichen Typs mit dem neuen Header.
         </para>
     </sect2>
 
@@ -442,10 +421,10 @@ $this->addRoute('default', $compat);]]></programlisting>
         <title>Zend_Controller_Response_Cli</title>
 
         <para>
-            <code>Zend_Controller_Response_Cli</code> is a response object
-            suitable for use in an CLI environment. It has no methods for
-            handling headers, and simply returns all body content when
-            <code>__toString()</code> is invoked.
+            <code>Zend_Controller_Response_Cli</code> is ein Response Object, das für die
+            Verwendung in einer CLI Umgebung geeignet ist. Es hat keine Methoden für die Behandlung
+            von Headern und gibt nur alle Inhalte zurück, wenn <code>__toString()</code> 
+            aufgerufen wird.
         </para>
     </sect2>
 </sect1>
