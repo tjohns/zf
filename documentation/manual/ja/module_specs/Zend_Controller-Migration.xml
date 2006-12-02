@@ -37,7 +37,7 @@ $ctrl->dispatch();
 ]]></programlisting>
 
         <para>
-            しかし、<xref linkend="zend.controller.overview.response">レスポンスオブジェクト</xref>
+            しかし、<xref linkend="zend.controller.overview.response" />
             が追加されたことにより、後者のサンプルの最後の行をこのようにしたくなることでしょう。
         </para>
 
@@ -68,14 +68,14 @@ echo $ctrl->dispatch();
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
                 は、ディスパッチャトークンではなく
-                <xref linkend="zend.controller.overview.request">Zend_Controller_Request_Abstract</xref>
+                <xref linkend="zend.controller.overview.request" />
                 オブジェクトを使用するようになりました。
             </para></listitem>
 
             <listitem><para>
                 <code>Zend_Controller_Router_Interface::route()</code>
                 は、ディスパッチャトークンではなく
-                <xref linkend="zend.controller.overview.request">Zend_Controller_Request_Abstract</xref>
+                <xref linkend="zend.controller.overview.request" />
                 オブジェクトを使用するようになりました。
             </para></listitem>
 
@@ -142,7 +142,7 @@ echo $ctrl->dispatch();
                 <code>Zend_Controller_Plugin_Interface</code> は
                 <code>Zend_Controller_Plugin_Abstract</code> に置き換えられました。
                 すべてのメソッドは、ディスパッチャトークンではなく
-                <xref linkend="zend.controller.overview.request">Zend_Controller_Request_Abstract</xref>
+                <xref linkend="zend.controller.overview.request" />
                 をやり取りするようになりました。
             </para></listitem>
         </itemizedlist>
