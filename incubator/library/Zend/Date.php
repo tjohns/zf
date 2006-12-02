@@ -260,15 +260,6 @@ class Zend_Date {
 
 
     /**
-     * Serialization Interface
-     */
-    public function serialize()
-    {
-        return serialize($this);
-    }
-
-
-    /**
      * Returns the unix timestamp
      *
      * @return timestamp
