@@ -1,18 +1,18 @@
 <sect1 id="zend.controller.migration">
-    <title>Migrating from Previous Versions</title>
+    <title>Migrieren von früheren Versionen</title>
 
     <para>
-        The API of the MVC components has changed over time. If you started
-        using Zend Framework in an early version, follow the guidelines below to
-        migrate your scripts to use the new architecture.
+        Die API der MVC Komponenten hat sich mit der Zeit verändert. Wer das Zend Framework bereits 
+        in einer früheren Version verwendet hat, folgt dem Leitfaden unten, damit die Skripte die
+        neue Archtitekur verwenden..
     </para>
 
     <sect2 id="zend.controller.migration.fromzerotwo">
-        <title>Migrating from 0.2.0 or before to 0.6.0</title>
+        <title>Migration von 0.2.0 oder früher nach 0.6.0</title>
 
         <para>
-            The most basic usage of the MVC components has not changed; you can
-            still do each of the following:
+            Die grundlegende Verwendung der MVC Komponenten hat sich nicht verändert; man kann immer
+            noch das folgende machen:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -21,23 +21,24 @@ Zend_Controller_Front::run('/path/to/controllers');
 ]]></programlisting>
 
         <programlisting role="php"><![CDATA[
-/* -- create a router -- */
+/* -- Erstelle einen Router -- */
 $router = new Zend_Controller_RewriteRouter();
 $router->addRoute('user', 'user/:username', array('controller' => 'user',
 'action' => 'info'));
 
-/* -- set it in a controller -- */
+/* -- Setze ihn im Controller -- */
 $ctrl = Zend_Controller_Front::getInstance();
 $ctrl->setRouter($router);
 
-/* -- set controller directory and dispatch -- */
+/* -- Setze da Controller Verzeichnis und starte die Verarbeitung -- */
 $ctrl->setControllerDirectory('/path/to/controllers');
 $ctrl->dispatch();
 ]]></programlisting>
 
         <para>
-            However, due to the addition of the <xref linkend="zend.controller.overview.response" />, 
-            you will want to change the last line of the latter example to read:
+            Dennoch sollte man wegen des Hinzufügens des 
+            <xref linkend="zend.controller.overview.response" /> die letzte Zeile des vorherigen
+            Beispiels wie folgt ändern:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -45,98 +46,95 @@ echo $ctrl->dispatch();
 ]]></programlisting>
         
         <para>
-            We encourage use of the Response object to aggregate content and
-            headers. This will allow for more flexible output format switching
-            (for instance, JSON or XML instead of XHTML) in your applications.
-            Echoing the return value of <code>dispatch()</code> ensures that any
-            content pushed to the response object will be returned, as well as
-            any headers pushed to it.
+            Wir empfehlen die Verwendung des Response Objektes, um Inhalte und Header zu sammeln.
+            Dies erlaubt den flexibleren Wechsel von Ausgabeformaten (z.B. JSON oder XML statt 
+            XHTML) in deiner Applikation. Das Ausgeben des Rückgabewertes von 
+            <code>dispatch()</code> stellt sicher, dass alle an das Response Objekt übergebenen 
+            Inhalte und Header ausgegeben werden.
         </para>
 
         <para>
-            There are many additional features that extend the existing API,
-            and these are noted in the documentation.
+            Es gibt viele weitere zusätzliche Funktionalitäten, welche die vorherige API erweitern. 
+            Diese sind in der Dokumentation aufgeführt.
         </para>
 
         <para>
-            The main changes you will need to be aware of will be found when
-            subclassing the various components. Key amongst these are:
+            Die meisten Änderungen, die man beachten muss, betreffen das Erweitern der diversen
+            Komponenten. Die wichtigsten davon sind:
         </para>
 
         <itemizedlist>
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
-                now accepts and returns a <xref linkend="zend.controller.overview.request" />
-                object instead of a dispatcher token.
+                akzeptiert und gibt nun ein <xref linkend="zend.controller.overview.request" />
+                Objekt anstelle eines Dispatcher Token zurück.
             </para></listitem>
 
             <listitem><para>
                 <code>Zend_Controller_Router_Interface::route()</code>
-                now accepts and returns a <xref linkend="zend.controller.overview.request" />
-                object instead of a dispatcher token.
+                akzeptiert und gibt nun ein <xref linkend="zend.controller.overview.request" />
+                Objekt anstelle eines Dispatcher Token zurück.
             </para></listitem>
 
             <listitem>
-                <para><code>Zend_Controller_Action</code> changes include:</para>
+                <para><code>Zend_Controller_Action</code> Änderungen beinhalten:</para>
 
                 <itemizedlist>
                     <listitem><para>
-                        The constructor now accepts exactly three arguments,
+                        Der Konstruktur akzeptiert nun genau drei Argumente, 
                         <code>Zend_Controller_Request_Abstract $request</code>, 
-                        <code>Zend_Controller_Response_Abstract $response</code>, 
-                        and <code>array $params (optional)</code>.
-                        <code>Zend_Controller_Action::__construct()</code> uses
-                        these to set the request, response, and invokeArgs
-                        properties of the object, and if overriding the
-                        constructor, you should do so as well. Better yet, use
-                        the <code>init()</code> method to do any instance
-                        configuration, as this method is called as the final
-                        action of the constructor.
+                        <code>Zend_Controller_Response_Abstract $response</code>, und 
+                        <code>array $params (optional)</code>.
+                        <code>Zend_Controller_Action::__construct()</code> verwendet diese, um die
+                        Request, Response und invokeArgs Eigenschaften für das Objekt zu setzen, und
+                        beim Überschreiben des Konstrukturs sollte man dies ebenfalls tun. Besser 
+                        ist es, die <code>init()</code> Methode zu verwenden, um jedwede 
+                        Instanzkonfiguration durchzuführen, weil diese Methode als letzte Methode 
+                        des Konstrukturs aufgerufen wird.
                     </para></listitem>
 
                     <listitem><para>
-                        <code>run()</code> is no longer defined as final, but is
-                        also no longer used by the front controller; it's sole
-                        purpose is for using the class as a page controller. It
-                        now takes two optional arguments, a
+                        <code>run()</code> ist nicht länger als final definiert, wird aber auch 
+                        nicht länger vom Front Controller verwendet; sein einziger Zweck ist, dass
+                        die Klasse auch als Page Controller verwendet werden kann. Sie nimmt nun 
+                        zwei optionale Argument an, ein 
                         <code>Zend_Controller_Request_Abstract $request</code> 
-                        and a <code>Zend_Controller_Response_Abstract $response</code>.
+                        und ein <code>Zend_Controller_Response_Abstract $response</code>.
                     </para></listitem>
 
                     <listitem><para>
-                        <code>indexAction()</code> no longer needs to be
-                        defined, but is encouraged as the default action. This
-                        allows using the RewriteRouter and action controllers to
-                        specify different default action methods.
+                        <code>indexAction()</code> muss nicht mehr länger definiert werden, aber 
+                        wird als Standardaktion empfohlen. Dies erlaubt dem RewriteRouter und den
+                        Action Controllern andere Standardaktionsmethoden zu definieren.
                     </para></listitem>
 
                     <listitem><para>
-                        <code>__call()</code> should be overridden to handle any
-                        undefined actions automatically.
+                        <code>__call()</code> sollte überschrieben werden, um jede undefinierte 
+                        Aktion automatisch verarbeiten zu können.
                     </para></listitem>
 
                     <listitem><para>
-                        <code>_redirect()</code> now takes an optional second
-                        argument, the HTTP code to return with the redirect, and
-                        an optional third argument, <code>$prependBase</code>,
-                        that can indicate that the base URL registered with the
-                        request object should be prepended to the url specified.
+                        <code>_redirect()</code> nimmt nun ein optionales zweites Argument entgegen,
+                        den HTTP Code, der mit dem Redirect zurückgegeben werden soll, und ein 
+                        optionales drittes Argument <code>$prependBase</code>, das angibt, dass die 
+                        im Request Objekt registrierte Basis URL der übergebenen URL voran gestellt
+                        werden soll.
                     </para></listitem>
                 </itemizedlist>
             </listitem>
 
             <listitem><para>
-                <code>Zend_Controller_RewriteRouter::setRewriteBase()</code> has
-                been removed. Use <code>Zend_Controller_Front::setBaseUrl()</code> 
-                instead (or Zend_Controller_Request_Http::setBaseUrl(), if using
-                that request class).
+                <code>Zend_Controller_RewriteRouter::setRewriteBase()</code> wurde entfernt. 
+                Stattdessen soll <code>Zend_Controller_Front::setBaseUrl()</code> verwendet werden
+                (oder Zend_Controller_Request_Http::setBaseUrl(), wenn die Request Klasse verwendet 
+                wird).
             </para></listitem>
 
             <listitem><para>
-                <code>Zend_Controller_Plugin_Interface</code> was replaced
-                by <code>Zend_Controller_Plugin_Abstract</code>. All methods now
-                accept and return a <xref linkend="zend.controller.overview.request" />
-                object instead of a dispatcher token.
+                <code>Zend_Controller_Plugin_Interface</code> wurde durch 
+                by <code>Zend_Controller_Plugin_Abstract</code> ersetzt. Alle Methoden nehmen nun
+                ein <xref linkend="zend.controller.overview.request" /> Objekt statt eines 
+                Dispatcher Tokens entgegen bzw. geben es zurück.
             </para></listitem>
         </itemizedlist>
     </sect2>
