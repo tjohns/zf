@@ -164,6 +164,7 @@
     </chapter> -->
     <chapter id="zend.cache">
 	<title>Zend_Cache</title>
+	     <title>Zend_Cache_Backend</title>
          &module_specs.Zend_Cache_Backend_ZendPlatform;
     </chapter>	
     <appendix id="appendix.languages">
