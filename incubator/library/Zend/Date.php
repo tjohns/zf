@@ -662,13 +662,17 @@ class Zend_Date {
     /**
      * Returns a timestamp or a part of a date
      *
-     * @param  $part   - datepart, if empty the timestamp will be returned
+     * @param  $part   - OPTIONAL, datepart, if empty the timestamp will be returned
      * @param  $locale - OPTIONAL, locale for output
      * @param  $gmt    - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return mixed   timestamp or datepart as string or integer
      */
-    public function get($part, $locale = false, $gmt = false)
+    public function get($part = false, $locale = false, $gmt = false)
     {
+        if ($part === false) {
+            $part = Zend_Date::TIMESTAMP;
+        }
+
         if ($locale === false) {
             $locale = $this->_Locale;
         }

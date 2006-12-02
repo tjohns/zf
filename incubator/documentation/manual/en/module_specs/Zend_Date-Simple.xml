@@ -128,7 +128,7 @@
 
     // Subtrahieren der zwei Zeiten
     $mydate = $date->sub($date2, Zend_Date::HOUR);
-    print $mydate();
+    print $mydate;
 ?>]]></programlisting>
             </example>
         </sect3>
@@ -178,8 +178,6 @@
     } else {
         print "Die Stunde ist NICHT identisch";
     }
-    
-    print $mydate();
 ?>]]></programlisting>
             </example>
         </sect3>

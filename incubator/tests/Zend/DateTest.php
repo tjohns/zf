@@ -78,7 +78,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGetTimestamp()
     {
         $locale = new Zend_Locale('de_AT');
-    	$date = new Zend_Date(10000000,Zend_Date::TIMESTAMP,$locale);
+    	$date = new Zend_Date(10000000);
     	$this->assertSame($date->getTimestamp(), 10000000);
     }
 
@@ -88,7 +88,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testGetTimestamp2()
     {
         $locale = new Zend_Locale('de_AT');
-    	$date = new Zend_Date(-100000000,Zend_Date::TIMESTAMP,$locale);
+    	$date = new Zend_Date(-100000000);
     	$this->assertSame($date->getTimestamp(), -100000000);
     }
 
