@@ -143,4 +143,30 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(true);
         }
     }
+
+	/**
+	 * Test for subTimestamp
+	 */
+    public function testSubTimestamp()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date = new Zend_Date(0,Zend_Date::TIMESTAMP,$locale);
+    	$result = $date->subTimestamp(10000000);
+    	$this->assertSame($result->getTimestamp(), '-10000000');
+    }
+
+	/**
+	 * Test for subTimestamp
+	 */
+    public function testSubTimestamp2()
+    {
+        try {
+            $locale = new Zend_Locale('de_AT');
+        	$date = new Zend_Date(0,Zend_Date::TIMESTAMP,$locale);
+    	    $result = $date->subTimestamp('notimestamp');
+        	$this->Fail();
+        } catch (Exception $e) {
+            $this->assertTrue(true);
+        }
+    }
 }

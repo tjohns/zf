@@ -321,6 +321,22 @@ class Zend_Date {
 
 
     /**
+     * Compares two timestamps, returning boolean true or false
+     *
+     * @param $timestamp timestamp to compare
+     * @return object
+     */
+    public function isTimestamp($timestamp)
+    {
+        if ($this->_Date->getTimestamp() == $timestamp) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+
+    /**
      * Returns a string representation of the object
      * Supported format tokens are
      * G - era, y - year, Y - ISO year, M - month, w - week of year, D - day of year, d - day of month
