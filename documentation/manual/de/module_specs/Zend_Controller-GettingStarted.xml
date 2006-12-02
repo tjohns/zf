@@ -48,19 +48,19 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		<note>	
 		    <title>Ort der Ladedatei</title>
 		    <para>
-    			Die Ladedatei sollte die einzige PHP Datei sein, die im Hauptverzeichnis abgelegt ist.
+    			Die Ladedatei sollte die einzige PHP Datei sein, die im Hauptverzeichnis abgelegt 
+    			ist.
             </para>
 		</note>
 
         <para>
-            That said, the basic functionality of Zend_Controller also supports
-            URLs using query parameters -- as an example,
-            <code>index.php?controller=foo&amp;action=bar</code>. Additionally,
-            another shipped router, <code>Zend_Controller_RewriteRouter</code>,
-            works in a variety of environments, including many without
-            mod_rewrite-like capabilities. If you cannot use mod_rewrite or an
-            equivalent, you'll still be able to use Zend_Controller for your
-            site.
+            Nichtsdestoweniger unterstützt die Basisfunktionalität von Zend_Controller auch URLs,
+            welche Abfrageparameter verwenden - wie z.B. 
+            <code>index.php?controller=foo&amp;action=bar</code>. Zusätzlich funktioniert ein 
+            weiterer mitgelieferter Router, <code>Zend_Controller_RewriteRouter</code>, in einer
+            Vielzahl von Umgebungen, inklusive vieler, die keine mod_rewrite ähnlichen 
+            Möglichkeiten bieten. Wenn du mod_rewrite oder etwas Entsprechendes nicht verwenden 
+            kannst, kannst du dennoch Zend_Controller für deine Site verwenden.
         </para>
         
 	</sect2>
@@ -155,9 +155,8 @@ Zend_Controller_Front::run('/path/to/your/controllers');
         <title>Default Controller</title>
 
 		<para>
-		    Jede Website muss einen Default Controller definieren.
-		    Dies ist der Controller, der aufgerufen wird, wenn kein Controller in der URI 
-		    angegeben ist, wie z.B. in dieser URI:
+		    Jede Website muss einen Default Controller definieren. Dies ist der Controller, der 
+		    aufgerufen wird, wenn kein Controller in der URI angegeben ist, wie z.B. in dieser URI:
 		</para>
 
 			<programlisting role="php"><![CDATA[
@@ -165,24 +164,23 @@ http://framework.zend.com/
 ]]></programlisting>
 
         <para>
-            In the shipped configuration, the default controller should be named
-            <code>IndexController</code>, and defined in a file named
-            <code>IndexController.php</code>. Internally, it will be referenced
-            as the controller 'index'.
+            In der mitgelieferten Konfiguration sollte der Default Controller 
+            <code>IndexController</code> genannt und in einer Datei mit Namen 
+            <code>IndexController.php</code> definiert werden. Intern wird er als der Controller
+            'index' referenziert.
         </para>
 
         <para>
-            You may change the default controller prior to dispatching the front
-            controller by calling the <code>setDefaultController()</code> method
-            on either the front controller or dispatcher object. When doing so,
-            use the internal naming conventions. Thus, the class
-            <code>HomeController</code> (in the <code>HomeController.php</code>
-            file) would be referred to as <code>home</code>.
+            Man kann den Default Controller vor dem Dispatching durch den Front Controller ändern,
+            indem die <code>setDefaultController()</code> Methode entweder vom Front Controller oder 
+            vom Dispatcher Objekt aufgerufen wird. Wenn man das tut, sollte man die internen
+            Namenskonventionen verwenden. Folglich wird die Klasse <code>HomeController</code> (in 
+            der <code>HomeController.php</code> Datei) referenziert als <code>home</code>.
         </para>
 
         <para>
-            Controllers should extend the <code>Zend_Controller_Action</code>
-            class and be placed in the controllers directory.
+            Controller sollten die <code>Zend_Controller_Action</code> Klasse erweitern und im
+            Controllerverzeichnis abgelegt werden.
         </para>
 
 		<programlisting role="php"><![CDATA[<?php
@@ -205,8 +203,8 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
         <para>
-            More detail on the default controller and action, as well as writing
-            action controller classes, will be presented in later chapters.
+            Weitere Details über den Default Controller und die Default Aktion sowie über das 
+            Schreiben von Aktioncontroller Klassen, werden in weiteren Kapiteln bereit gestellt.
         </para>
 
     	<note>
