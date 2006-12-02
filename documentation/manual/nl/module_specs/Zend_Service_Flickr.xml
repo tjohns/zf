@@ -97,7 +97,244 @@ echo "<a href=\"$image->clickUri\">Klik hier voor het beeld</a>\n";
 ?>]]>       </programlisting>
         </example>
     </sect2>
-    &module_specs.Zend_Service_Flickr_Classes;
+<sect2 id="zend.service.flickr.classes">
+    <title>Zend_Service_Flickr Klassen</title>
+    <para>
+        De volgende klassen worden alleen teruggegeven door <code>tagSearch()</code> en <code>userSearch()</code>:
+        <itemizedlist>
+            <listitem><para><link linkend="zend.service.flickr.classes.resultset"><code>Zend_Service_Flickr_ResultSet</code></link></para></listitem>
+            <listitem><para><link linkend="zend.service.flickr.classes.result"><code>Zend_Service_Flickr_Result</code></link></para></listitem>
+            <listitem><para><link linkend="zend.service.flickr.classes.image"><code>Zend_Service_Flickr_Image</code></link></para></listitem>
+        </itemizedlist>
+    </para>
+    <sect3 id="zend.service.flickr.classes.resultset">
+        <title>Zend_Service_Flickr_ResultSet</title>
+        <para>Vertegenwoordigt een set resultaten van een Flickr zoekopdracht.</para>
+        <note>
+            <para>
+                Implementeert de
+                <code>SeekableIterator</code>
+                voor gemakkelijke iteratie (bv., door
+                <code>foreach</code>
+                te gebruiken), evenals onmiddellijke toegang tot een specifiek resultaat door
+                <code>seek()</code> te gebruiken.
+            </para>
+        </note>
+        <sect4 id="zend.service.flickr.classes.resultset.properties">
+            <title>Eigenschappen</title>
+            <table>
+                <title>Zend_Service_Flickr_ResultSet Eigenschappen</title>
+                <tgroup cols="3">
+                    <thead>
+                        <row>
+                            <entry>Naam</entry>
+                            <entry>Type</entry>
+                            <entry>Beschrijving</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>totalResultsAvailable</entry>
+                            <entry>int</entry>
+                            <entry>Totaal aantal beschikbare resultaten</entry>
+                        </row>
+                        <row>
+                            <entry>totalResultsReturned</entry>
+                            <entry>int</entry>
+                            <entry>Totaal aantal teruggestuurde resultaten</entry>
+                        </row>
+                        <row>
+                            <entry>firstResultPosition</entry>
+                            <entry>int</entry>
+                            <entry>De offset in de totale set resultaten van deze set resultaten</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </sect4>
+        <sect4 id="zend.service.flickr.classes.resultset.totalResults">
+            <title>Zend_Service_Flickr_ResultSet::totalResults()</title>
+            <para>
+                <methodsynopsis>
+                    <type>int</type>
+                    <methodname>totalResults</methodname>
+                    <void />
+                </methodsynopsis>
+            </para>
+            <para>
+                Geeft het totaal aantal resultaten in deze set resultaten terug.
+            </para>
+        </sect4>
+        <para>
+            <link linkend="zend.service.flickr.classes">Terug naar de klasselijst</link>
+        </para>
+    </sect3>
+    <sect3 id="zend.service.flickr.classes.result">
+        <title>Zend_Service_Flickr_Result</title>
+        <para>
+			Een enkel beeldresultaat van een Flickr zoekopdracht
+        </para>
+        <sect4 id="zend.service.flickr.classes.result.properties">
+            <title>Eigenschappen</title>
+            <table>
+                <title>Zend_Service_Flickr_Result Eigenschappen</title>
+                <tgroup cols="3">
+                    <thead>
+                        <row>
+                            <entry>Naam</entry>
+                            <entry>Type</entry>
+                            <entry>Beschrijving</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>id</entry>
+                            <entry>int</entry>
+                            <entry>Beeld ID</entry>
+                        </row>
+                        <row>
+                            <entry>owner</entry>
+                            <entry>int</entry>
+                            <entry>Het NSID van de eigenaar van de foto.</entry>
+                        </row>
+                        <row>
+                            <entry>secret</entry>
+                            <entry>string</entry>
+                            <entry>Een key gebruikt in het bouwen van een URL.</entry>
+                        </row>
+                        <row>
+                            <entry>server</entry>
+                            <entry>string</entry>
+                            <entry>De servernaam om in het bouwen van een URL te gebruiken.</entry>
+                        </row>
+                        <row>
+                            <entry>title</entry>
+                            <entry>string</entry>
+                            <entry>De titel van de foto.</entry>
+                        </row>
+                        <row>
+                            <entry>ispublic</entry>
+                            <entry>boolean</entry>
+                            <entry>de foto is publiek.</entry>
+                        </row>
+                        <row>
+                            <entry>isfriend</entry>
+                            <entry>boolean</entry>
+                            <entry>Je kan de foto zien omdat je een vriend bent van de eigenaar.</entry>
+                        </row>
+                        <row>
+                            <entry>isfamily</entry>
+                            <entry>boolean</entry>
+                            <entry>Je kan de foto zien omdat je familie bent van de eigenaar.</entry>
+                        </row>
+                        <row>
+                            <entry>license</entry>
+                            <entry>string</entry>
+                            <entry>De licentie waaronder de foto beschikbaar is.</entry>
+                        </row>
+                        <row>
+                            <entry>date_upload</entry>
+                            <entry>string</entry>
+                            <entry>De datum waarop de foto werd geupload.</entry>
+                        </row>
+                        <row>
+                            <entry>date_taken</entry>
+                            <entry>string</entry>
+                            <entry>De datum waarop de foto werd genomen.</entry>
+                        </row>
+                        <row>
+                            <entry>owner_name</entry>
+                            <entry>string</entry>
+                            <entry>De schermnaam van de eigenaar.</entry>
+                        </row>
+                        <row>
+                            <entry>icon_server</entry>
+                            <entry>string</entry>
+                            <entry>De server die gebruikt werd om icon URLs te assembleren.</entry>
+                        </row>
+                        <row>
+                            <entry>Square</entry>
+                            <entry><link linkend="zend.service.flickr.classes.image">Zend_Service_Flickr_Image</link></entry>
+                            <entry>Een 75x75 thumbnailbeeld.</entry>
+                        </row>
+                        <row>
+                            <entry>Thumbnail</entry>
+                            <entry><link linkend="zend.service.flickr.classes.image">Zend_Service_Flickr_Image</link></entry>
+                            <entry>Een 100 pixel thumbnailbeeld.</entry>
+                        </row>
+                        <row>
+                            <entry>Small</entry>
+                            <entry><link linkend="zend.service.flickr.classes.image">Zend_Service_Flickr_Image</link></entry>
+                            <entry>Een 240 pixel thumbnailbeeld.</entry>
+                        </row>
+                        <row>
+                            <entry>Medium</entry>
+                            <entry><link linkend="zend.service.flickr.classes.image">Zend_Service_Flickr_Image</link></entry>
+                            <entry>Een 500 pixel thumbnailbeeld.</entry>
+                        </row>
+                        <row>
+                            <entry>Large</entry>
+                            <entry><link linkend="zend.service.flickr.classes.image">Zend_Service_Flickr_Image</link></entry>
+                            <entry>Een 640 pixel thumbnailbeeld.</entry>
+                        </row>
+                        <row>
+                            <entry>Original</entry>
+                            <entry><link linkend="zend.service.flickr.classes.image">Zend_Service_Flickr_Image</link></entry>
+                            <entry>Het oorspronkelijk beeld.</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </sect4>
+        <para>
+            <link linkend="zend.service.flickr.classes">Terug naar de klasselijst</link>
+        </para>
+    </sect3>
+    <sect3 id="zend.service.flickr.classes.image">
+        <title>Zend_Service_Flickr_Image</title>
+        <para>Representeert een beeld teruggegeven door een Flickr zoekopdracht.</para>
+        <sect4 id="zend.service.flickr.classes.image.properties">
+            <title>Eigenschappen</title>
+            <table>
+                <title>Zend_Service_Flickr_Image Eigenschappen</title>
+                <tgroup cols="3">
+                    <thead>
+                        <row>
+                            <entry>Naam</entry>
+                            <entry>Type</entry>
+                            <entry>Beschrijving</entry>
+                        </row>
+                    </thead>
+                    <tbody>
+                        <row>
+                            <entry>uri</entry>
+                            <entry>string</entry>
+                            <entry>URI voor het oorspronkelijk beeld</entry>
+                        </row>
+                        <row>
+                            <entry>clickUri</entry>
+                            <entry>string</entry>
+                            <entry>Een klikbaar URI (bv. de Flickr pagina) voor het beeld</entry>
+                        </row>
+                        <row>
+                            <entry>width</entry>
+                            <entry>int</entry>
+                            <entry>Breedte van het beeld</entry>
+                        </row>
+                        <row>
+                            <entry>height</entry>
+                            <entry>int</entry>
+                            <entry>Hoogte van het beeld</entry>
+                        </row>
+                    </tbody>
+                </tgroup>
+            </table>
+        </sect4>
+        <para>
+            <link linkend="zend.service.flickr.classes">Terug naar de klasselijst</link>
+        </para>
+    </sect3>
+</sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
