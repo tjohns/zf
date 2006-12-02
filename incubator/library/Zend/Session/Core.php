@@ -58,7 +58,7 @@ final class Zend_Session_Core
      *
      * @var int
      */
-    protected static $_regenerateIdState = 0;
+    static private $_regenerateIdState = 0;
     
     /**
      * Instance of Zend_Session_Core
@@ -232,11 +232,10 @@ final class Zend_Session_Core
      */
     static public function getInstance($instanceMustExist = false)
     {
-        if (self::$_instance === null && $instanceMustExist === true) {
-            throw new Zend_Session_Exception(__CLASS__ . '::getInstance() A valid session must exist before calling getInstance() in this manner.');
-        }
-        
-        if (self::$_instance === null) {
+        if (self::$_instance === null)
+            if ($instanceMustExist === true) {
+                throw new Zend_Session_Exception(__CLASS__ . '::getInstance() A valid session must exist before calling getInstance() in this manner.');
+            }
             self::$_singleton = true;
             self::$_instance = new self();
         }
