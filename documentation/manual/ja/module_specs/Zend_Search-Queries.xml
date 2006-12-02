@@ -1,18 +1,63 @@
-<sect1 id="zend.search.queries">
-    <title>クエリの形式</title>
+<sect1 id="zend.search.query-api">
+    <title>クエリ作成用の API</title>
+
+    <para>
+        クエリを自動的にパースするだけではなく、クエリを API で作成することもできます。
+    </para>
+
+    <para>
+        ユーザクエリは、API で作成したクエリを組み合わせて作成することができます。
+        クエリパーサを使用して、文字列からクエリを作成します。
+        <programlisting role="php"><![CDATA[<?php
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
+?>]]></programlisting>
+    </para>
+
+
+    <sect2 id="zend.search.queries.exceptions">
+        <title>クエリパーサの例外</title>
+        <para>
+        クエリパーサは、二種類の例外を発生させます。
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Search_Lucene_Exception</code> がスローされるのは、
+                    クエリパーサ自体に何らかの問題が発生した場合です。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>Zend_Search_Lucene_Search_QueryParserException</code> がスローされるのは、
+                    クエリの構文エラーが発生した場合です。
+                </para>
+            </listitem>
+        </itemizedlist>
+        つまり、Zend_Search_Lucene_Search_QueryParserException
+        を捕捉して適切なメッセージを表示させるようにしておくことが大切です。
+        <programlisting role="php"><![CDATA[<?php
+try {
+    $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
+} catch (Zend_Search_Lucene_Search_QueryParserException $e) {
+    echo "クエリの構文エラー: " . $e->getMessage() . "\n";
+}
+?>]]></programlisting>
+        </para>
+
+        <para>
+            Zend_Search_Lucene オブジェクトの find() メソッドでも同様のテクニックを使えます。
+        </para>
+    </sect2>
 
     <sect2 id="zend.search.queries.term-query">
         <title>単一の単語のクエリ</title>
         <para>
-        ひとつの単語を使用した検索を行うためのものです。
-        以下の両方の方法が使用可能です。
+            ひとつの単語を使用した検索を行うためのものです。
         </para>
 
         <para>
         文字列によるクエリ
         </para>
-        <programlisting role="php"><![CDATA[
-    $hits = $index->find('word1');]]>
+        <programlisting role="querystring"><![CDATA[word1]]>
         </programlisting>
 
         <para>あるいは</para>
@@ -25,7 +70,6 @@
     $term  = new Zend_Search_Lucene_Index_Term('word1');
     $query = new Zend_Search_Lucene_Search_Query_Term($term);
     $hits  = $index->find($query);
-
 ?>]]></programlisting>
     </sect2>
 
@@ -78,11 +122,7 @@
         <para>
             文字列によるクエリ
         </para>
-        <programlisting role="php"><![CDATA[<?php
-
-$hits = $index->find('+word1 author:word2 -word3');
-
-?>]]></programlisting>
+        <programlisting role="querystring"><![CDATA[+word1 author:word2 -word3]]></programlisting>
 
         <itemizedlist>
             <listitem>
@@ -158,7 +198,6 @@ $hits = $index->find('+word1 author:word2 -word3');
             (これは、解析器によって別の目的で作成されます。
             例えば、単語の重みを増すためにある単語を重複させたり、
             類義語をひとつの位置にまとめたりします)。
-            フレーズクエリは、現在は API によってのみ行うことができます。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -240,7 +279,7 @@ $query4 = new Zend_Search_Lucene_Search_Query_Phrase(
         </para>
 
         <programlisting role="php"><![CDATA[$query = new Zend_Search_Lucene_Search_Query_Phrase(array('zend', 'framework'), null, 'title');]]></programlisting>
-        
+
         <para>
             は 'title' フィールドから 'zend framework' を検索します。
         </para>

@@ -20,7 +20,7 @@
                        あいまい検索、範囲指定検索などなど
                         <footnote>
                            <para>
-                             現在サポートしているのは、単語検索および複数単語検索、そしてフレーズ検索のみです。
+                             現在サポートしているのは、単語検索および複数単語検索、そしてフレーズ検索、論理式およびサブクエリです。
                            </para>
                         </footnote>
                     </para>
@@ -36,8 +36,8 @@
         </para>
     </sect2>
     
-	<sect2 id="zend.search.index-creation.documents-and-fields">
-		<title>Document および Field オブジェクト</title>
+    <sect2 id="zend.search.index-creation.documents-and-fields">
+        <title>Document および Field オブジェクト</title>
             <para>
                 Zend_Search_Lucene は、ドキュメント単位でインデックスを作成します。
                 ドキュメントは名前つきのフィールドから構成され、
@@ -94,16 +94,21 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                                                   'My document content'));
 
 ?>]]></programlisting>
-        
+
             <para>
                 フィールドの名前は自由につけることができます。
-                検索の際にデフォルトで使用されるフィールド名は "contents" です。
-                ドキュメントの主要なデータを、この名前のフィールドに設定することをお勧めします。
             </para>
-	</sect2>
-	
-	<sect2 id="zend.search.index-creation.understanding-field-types">
-		<title>フィールド型について理解する</title>
+            <para>
+                Java Lucene は、検索の際にデフォルトで使用されるフィールド名として "contents" を使用します。
+                Zend_Search_Lucene は、デフォルトではすべてのフィールドを検索します。
+                しかし、この挙動を変更することもできます。詳細は
+                <link linkend="zend.search.query-language.fields">"デフォルトの検索フィールド"</link>
+                の章を参照ください。
+            </para>
+    </sect2>
+
+    <sect2 id="zend.search.index-creation.understanding-field-types">
+        <title>フィールド型について理解する</title>
         <itemizedlist>
             <listitem>
                 <para>
@@ -149,7 +154,7 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                     UnStored フィールドが実用的に使用できるでしょう。
                     大きなデータフィールドの内容の検索用に UnStored フィールドに保存し、
                     結果をデータベースから取得するために、もうひとつ別の ID フィールドを使用します。
-    		   </para>
+               </para>
 
                 <table>
                     <title>Zend_Search_Lucene_Field の型</title>
@@ -202,9 +207,9 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
                         </tbody>
                     </tgroup>
                 </table>
-    	   </listitem>
-	   </itemizedlist>
-	</sect2>    
+           </listitem>
+       </itemizedlist>
+    </sect2>    
 </sect1>
 
 <!--
