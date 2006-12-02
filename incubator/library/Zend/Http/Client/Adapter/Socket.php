@@ -23,7 +23,6 @@
 
 require_once 'Zend/Uri/Http.php';
 require_once 'Zend/Http/Client/Adapter/Interface.php';
-require_once 'Zend/Http/Client/Adapter/Exception.php';
 
 /**
  * A sockets based (fsockopen) adapter class for Zend_Http_Client. Can be used
@@ -74,7 +73,8 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
     public function setConfig($config = array()) 
     {
         if (! is_array($config))
-            throw new Zend_Http_Client_Adapter_Exception('$config expects an array, ' . gettype($config) . ' recieved.');
+            throw Zend::exception('Zend_Http_Client_Adapter_Exception', 
+                '$config expects an array, ' . gettype($config) . ' recieved.');
             
         foreach ($config as $k => $v) {
             $this->config[strtolower($k)] = $v;
@@ -104,8 +104,8 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         	$this->socket = @fsockopen($host, $port, $errno, $errstr, (int) $this->config['timeout']);
         	if (! $this->socket) {
             	$this->close();
-            	throw new Zend_Http_Client_Adapter_Exception('Unable to Connect to ' . 
-                	$host . ':' . $port . '. Error #' . $errno . ': ' . $errstr);
+            	throw Zend::exception('Zend_Http_Client_Adapter_Exception', 
+            	    'Unable to Connect to ' . $host . ':' . $port . '. Error #' . $errno . ': ' . $errstr);
         	}
         	
         	// Update connected_to
@@ -127,12 +127,12 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
     {
         // Make sure we're properly connected
         if (! $this->socket)
-            throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are not connected");
+            throw Zend::exception('Zend_Http_Client_Adapter_Exception', "Trying to write but we are not connected");
         
         $host = $uri->getHost();
             $host = (strtolower($uri->getScheme()) == 'https' ? 'sslv2://' . $host : $host);
         if ($this->connected_to[0] != $host || $this->connected_to[1] != $uri->getPort())
-            throw new Zend_Http_Client_Adapter_Exception("Trying to write but we are connected to the wrong host");
+            throw Zend::exception('Zend_Http_Client_Adapter_Exception', "Trying to write but we are connected to the wrong host");
 
         // Build request headers
         $path = $uri->getPath();
@@ -148,7 +148,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
         
         // Send the request
         if (! fwrite($this->socket, $request)) {
-        	throw new Zend_Http_Client_Adapter_Exception("Error writing request to server");
+        	throw Zend::exception('Zend_Http_Client_Adapter_Exception', "Error writing request to server");
         }
         
         return $request;
@@ -195,7 +195,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
 					$chunksize = hexdec(chop($line));
 					if (dechex($chunksize) != $hexchunksize) {			
 						fclose($this->socket);
-						throw new Zend_Http_Client_Adapter_Exception('Invalid chunk size "' . 
+						throw Zend::exception('Zend_Http_Client_Adapter_Exception', 'Invalid chunk size "' . 
 							$hexchunksize . '" unable to read chunked body');
 					}
 		
@@ -209,7 +209,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
 					$response .= $chunk;
 				} while ($chunksize > 0);
 			} else {
-				throw new Zend_Http_Client_Adapter_Exception("Can't handle '" .
+				throw Zend::exception('Zend_Http_Client_Adapter_Exception', "Can't handle '" .
 					$headers['transfer-encoding'] . "' transfer encoding");
 			}
 			

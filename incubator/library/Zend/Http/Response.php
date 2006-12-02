@@ -1,4 +1,4 @@
-<?php
+w<?php
 
 /**
  * Zend Framework
@@ -22,7 +22,6 @@
  */
 
 require_once 'Zend.php';
-require_once 'Zend/Http/Exception.php';
 
 /**
  * Zend_Http_Response represents an HTTP 1.0 / 1.1 response message. It 
@@ -95,13 +94,13 @@ class Zend_Http_Response
     {
         // Make sure the response code is valid and set it
         if (self::responseCodeAsText($code) === null)
-            throw new Zend_Http_Exception("{$code} is not a valid HTTP response code");
+            throw Zend::exception('Zend_Http_Exception', "{$code} is not a valid HTTP response code");
 
         $this->code = $code;
 
         // Make sure we got valid headers and set them
         if (! (is_array($headers) && count($headers) > 0))
-            throw new Zend_Http_Exception('No valid headers were passed');
+            throw Zend::exception('Zend_Http_Exception', 'No valid headers were passed');
 
         foreach ($headers as $name => $value) {
             if (is_int($name))
@@ -115,7 +114,7 @@ class Zend_Http_Response
 
         // Set the HTTP version
         if (! preg_match('|^\d\.\d$|', $version))
-            throw new Zend_Http_Exception("Invalid HTTP response version: $version");
+            throw Zend::exception('Zend_Http_Exception', "Invalid HTTP response version: $version");
 
         $this->version = $version;
 
@@ -525,7 +524,7 @@ class Zend_Http_Response
 
         while (trim($body)) {
             if (! preg_match("/^([\da-fA-F]+)[^\r\n]*\r\n/sm", $body, $m)) {
-                throw new Zend_Http_Exception("Error parsing body - doesn't seem to be a chunked message");
+                throw Zend::exception('Zend_Http_Exception', "Error parsing body - doesn't seem to be a chunked message");
             }
 
             $length = hexdec(trim($m[1]));
