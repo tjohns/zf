@@ -915,9 +915,9 @@ class Zend_Http_Client
      */
     static public function encodeFormData($boundary, $name, $value, $filename = null, $headers = array()) {
         $ret = "--{$boundary}\r\n" .
-            "Content-Disposition: form-data; name={$name}";
+            'Content-Disposition: form-data; name="' . $name .'"';
             
-        if ($filename) $ret .= "; filename={$filename}";
+        if ($filename) $ret .= '; filename="' . $filename . '"';
         $ret .= "\r\n";
         
         foreach ($headers as $hname => $hvalue) {
