@@ -24,8 +24,7 @@ require_once 'My/Service/Class.php';
 
 $server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
-echo $server->handle();
-?>]]></programlisting>
+echo $server->handle();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
@@ -98,6 +97,7 @@ echo $server->handle();
 * @param dateTime.iso8601 $val2 An ISO date
 * @param struct $val3 An associative array
 * @return struct
+*/
 function myFunc($val1, $val2, $val3)
 {
 }]]></programlisting>
@@ -126,6 +126,7 @@ function myFunc($val1, $val2, $val3)
 * @param string|dateTime.iso8601 $val2 String or an ISO date
 * @param array|struct $val3 Normal indexed array or an associative array
 * @return boolean|struct
+*/
 function myFunc($val1, $val2, $val3)
 {
 }]]></programlisting>
