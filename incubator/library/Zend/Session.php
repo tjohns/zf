@@ -99,7 +99,7 @@ class Zend_Session implements IteratorAggregate
         }
         
         if ($singleInstance === true) {
-            self::$_singleInstance[$namespace] = true;
+            self::$_singleInstances[$namespace] = true;
         }
         
         $this->_namespace = $namespace;
