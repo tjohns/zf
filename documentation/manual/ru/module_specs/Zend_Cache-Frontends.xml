@@ -110,7 +110,7 @@
                           <row>
                               <entry><code>automaticCleaningFactor</code></entry>
                               <entry><code>int</code></entry>
-                              <entry><code>0</code></entry>
+                              <entry><code>10</code></entry>
                               <entry>
                     					  Отключает / настраивает автоматический процесс очистки (сборщик мусора) :
                     					  <code>0</code> означает, что автоматическая чистка кэша не производится,

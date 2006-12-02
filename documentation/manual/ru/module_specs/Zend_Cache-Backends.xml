@@ -131,6 +131,31 @@
                               <!--The complete path (filename included) of the SQLite database-->
                           </entry>
                       </row>
+                      <row>
+                          <entry><code>automaticVacuumFactor</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>10</code></entry>
+                          <entry>
+                              Отклочение / настройка процесса автоматической чистки.
+                              Автоматическая чистка дефрагментирует
+                              файл данных (и делает его меньше) при вызове методов
+                              clean() и delete():
+                              0 - автоматическая чистка отключена;
+                              1 - систематическая чистка (при каждом вызове методов
+                              delete() и clean());
+                              x (целое число больше 1) - автоматическая чистка
+                              производится случайным образом 1 раз на x вызовов
+                              методов clean() и delete().
+<!--
+                              Disable / Tune the automatic vacuum process.
+                              The automatic vacuum process defragment the database file (and make it smaller)
+                              when a clean() or delete() is called :
+                              0 means no automatic vacuum ;
+                              1 means systematic vacuum (when delete() or clean() methods are called) ;
+                              x (integer) > 1 => automatic vacuum randomly 1 times on x clean() or delete().
+-->
+                          </entry>
+                      </row>
                   </tbody>
               </tgroup>
           </table>
