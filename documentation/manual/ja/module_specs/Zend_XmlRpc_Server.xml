@@ -2,20 +2,22 @@
     <title>Zend_XmlRpc_Server</title>
 
     <sect2 id="zend.xmlrpc.server.introduction">
-        <title>Introduction</title>
+        <title>導入</title>
 
-        <para>Zend_XmlRpc_Server is intended as a fully-featured XML-RPC server,
-            following <ulink url="http://www.xmlrpc.com/spec">the specifications
-            outlined at www.xmlrpc.com</ulink>. Additionally, it implements the
-            system.multicall() method, allowing boxcarring of requests.
+        <para>
+            Zend_XmlRpc_Server は、完全な機能を有した XML-RPC サーバです。
+            <ulink url="http://www.xmlrpc.com/spec">
+            www.xmlrpc.com で提示されている仕様</ulink> に準拠しています。
+            さらに system.multicall() メソッドを実装しており、
+            リクエストをまとめる (boxcarring of requests) ことができます。
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.usage">
-        <title>XML-RPC Server Basic Usage</title>
+        <title>XML-RPC サーバの基本的な使用法</title>
 
         <para>
-            An example of the most basic use case:
+            もっとも基本的な使用例は次のとおりです。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -24,128 +26,131 @@ require_once 'My/Service/Class.php';
 
 $server = new Zend_XmlRpc_Server();
 $server->setClass('My_Service_Class');
-echo $server->handle();
-?>]]></programlisting>
+echo $server->handle();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
-        <title>XML-RPC Server Structure</title>
+        <title>XML-RPC サーバの構造</title>
 
         <para>
-            Zend_XmlRpc_Server is composed of a variety of components, ranging
-            from the server itself to request, response, and fault objects.
+            Zend_XmlRpc_Server はさまざまなコンポーネントで構成されています。
+            サーバ自身からリクエスト、レスポンス、fault
+            オブジェクトなど広範囲に広がっています。
         </para>
 
         <para>
-            To bootstrap Zend_XmlRpc_Server, the developer must attach one or
-            more classes or functions to the server, via the
-            <code>setClass()</code> and <code>addFunction()</code> methods.
+            Zend_XmlRpc_Server を起動するには、
+            まずサーバにひとつ以上のクラスか関数をアタッチする必要があります。
+            アタッチするには <code>setClass()</code> メソッドおよび
+            <code>addFunction()</code> メソッドを使用します。
         </para>
 
         <para>
-            Once done, you may either pass a <code>Zend_XmlRpc_Request</code>
-            object to <code>Zend_XmlRpc_Server::handle()</code>, or it will
-            instantiate a <code>Zend_XmlRpc_Request_Http</code> object if none
-            is provided -- thus grabbing the request from
-            <code>php://input</code>.
+            起動させたら、次に <code>Zend_XmlRpc_Request</code> オブジェクトを
+            <code>Zend_XmlRpc_Server::handle()</code> に渡します。
+            もし渡さなかった場合は、<code>Zend_XmlRpc_Request_Http</code>
+            のインスタンスを作成して <code>php://input</code>
+            からの入力を受け取ります。
         </para>
 
         <para>
-            <code>Zend_XmlRpc_Server::handle()</code> then attempts to
-            dispatch to the appropriate handler based on the method
-            requested. It then returns either a
-            <code>Zend_XmlRpc_Response</code>-based object or a
-            <code>Zend_XmlRpc_Server_Fault</code>object. These objects both have
-            <code>__toString()</code> methods that create valid XML-RPC XML
-            responses, allowing them to be directly echoed.
+            <code>Zend_XmlRpc_Server::handle()</code> は、
+            リクエストメソッドに応じて適切なハンドラに処理を振り分けます。
+            そして、
+            <code>Zend_XmlRpc_Response</code> を継承したオブジェクトか
+            <code>Zend_XmlRpc_Server_Fault</code> オブジェクトを返します。
+            これらのオブジェクトはどちらも <code>__toString()</code>
+            メソッドを実装しており、妥当な XML-RPC XML レスポンスを直接出力することができます。
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.conventions">
-        <title>Conventions</title>
+        <title>規約</title>
         <para>
-            Zend_XmlRpc_Server allows the developer to attach functions and
-            class method calls as dispatchable XML-RPC methods. Via
-            Zend_Server_Reflection, it does introspection on all attached
-            methods, using the function and method docblocks to determine the
-            method help text and method signatures.
+            Zend_XmlRpc_Server では、開発者が関数やクラスメソッドを
+            XML-RPC メソッドとしてアタッチできるようになっています。
+            アタッチされるメソッドの情報は Zend_Server_Reflection
+            を使用して取得し、関数やメソッドのコメントブロックから
+            メソッドのヘルプ文とシグネチャを取得します。
         </para>
 
         <para>
-            XML-RPC types do not necessarily map one-to-one to PHP types.
-            However, the code will do its best to guess the appropriate type
-            based on the values listed in @param and @return lines. Some XML-RPC
-            types have no immediate PHP equivalent, however, and should be
-            hinted using the XML-RPC type in the phpdoc. These include:
+            XML-RPC の型は必ずしも PHP の型と一対一対応しているわけではありません。
+            しかし、@param や @return の行をもとに、できるだけ適切な型を推測しようとします。
+            XML-RPC の型の中には、直接対応する PHP の型がないものもありますが、
+            その場合は phpdoc の中で XML-RPC の型のヒントを指定します。
+            たとえば次のような型が該当します。
         </para>
 
         <itemizedlist>
-            <listitem><para>dateTime.iso8601, a string formatted as
-                    YYYYMMDDTHH:mm:ss</para></listitem>
-            <listitem><para>base64, base64 encoded data</para></listitem>
-            <listitem><para>struct, any associative array</para></listitem>
+            <listitem><para>dateTime.iso8601 ...
+                    YYYYMMDDTHH:mm:ss 形式の文字列</para></listitem>
+            <listitem><para>base64 ... base64 エンコードされたデータ</para></listitem>
+            <listitem><para>struct ... 任意の連想配列</para></listitem>
         </itemizedlist>
 
         <para>
-            An example of how to hint follows:
+            ヒントを指定するには、次のようにします。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 /**
-* This is a sample function
+* これはサンプル関数です
 *
-* @param base64 $val1 Base64-encoded data
-* @param dateTime.iso8601 $val2 An ISO date
-* @param struct $val3 An associative array
+* @param base64 $val1 Base64 エンコードされたデータ
+* @param dateTime.iso8601 $val2 ISO 日付
+* @param struct $val3 連想配列
 * @return struct
+*/
 function myFunc($val1, $val2, $val3)
 {
 }]]></programlisting>
 
         <para>
-            PhpDocumentor does no validation of the types specified for params
-            or return values, so this will have no impact on your API
-            documentation. Providing the hinting is necessary, however, when the
-            server is validating the parameters provided to the method call.
+            PhpDocumentor はパラメータや返り値の型を検証しません。
+            そのため、これが API ドキュメントに影響を及ぼすことはありません。
+            しかし、このヒントは必須です。メソッドがコールされた際に、
+            この情報をもとにサーバで検証を行うからです。
         </para>
 
         <para>
-            It is perfectly valid to specify multiple types for both params and
-            return values; the XML-RPC specification even suggests that
-            system.methodSignature should return an array of all possible method
-            signatures (i.e., all possible combinations of param and return
-            values). You may do so just as you normally would with
-            PhpDocumentor, using the '|' operator:
+            パラメータや返り値で複数の型を指定してもかまいません。
+            XML-RPC の仕様では、system.methodSignature は
+            すべてのメソッドシグネチャ
+            (すなわちパラメータと返り値の組み合わせ) の配列を返すことになっています。
+            複数指定する方法は、通常の PhpDocumentor の場合と同様に
+            '|' 演算子を使用します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 /**
 * This is a sample function
 *
-* @param string|base64 $val1 String or base64-encoded data
-* @param string|dateTime.iso8601 $val2 String or an ISO date
-* @param array|struct $val3 Normal indexed array or an associative array
+* @param string|base64 $val1 文字列あるいは base64 エンコードされたデータ
+* @param string|dateTime.iso8601 $val2 文字列あるいは ISO 日付
+* @param array|struct $val3 Normal 数値添字配列あるいは連想配列
 * @return boolean|struct
+*/
 function myFunc($val1, $val2, $val3)
 {
 }]]></programlisting>
 
         <para>
-            One note, however: allowing multiple signatures can lead to
-            confusion for developers using the services; generally speaking, an
-            XML-RPC method should only have a single signature.
+            しかし、注意すべきことがあります。複数のシグネチャを定義すると、
+            それを利用する開発者を混乱させてしまいます。
+            一般論として、XML-RPC のメソッドは複数のシグネチャを持たないほうがいいでしょう。
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.namespaces">
-        <title>Utilizing Namespaces</title>
+        <title>名前空間の活用</title>
 
         <para>
-            XML-RPC has a concept of namespacing; basically, it allows grouping
-            XML-RPC methods by dot-delimited namespaces. This helps prevent
-            naming collisions between methods served by different classes. As an
-            example, the XML-RPC server is expected to server several methods in
-            the 'system' namespace:
+            XML-RPC には名前空間の概念があります。基本的に、これは
+            複数の XML-RPC メソッドをドット区切りの名前空間でまとめるものです。
+            これにより、さまざまなクラスで提供されるメソッド名の衝突を避けることができます。
+            例として、XML-RPC サーバは 'system'
+            名前空間でこれらのメソッドを提供することが期待されています。
         </para>
 
         <itemizedlist>
@@ -155,110 +160,113 @@ function myFunc($val1, $val2, $val3)
         </itemizedlist>
 
         <para>
-            Internally, these map to the methods of the same name in
-            Zend_XmlRpc_Server.
+            内部的には、これらは
+            Zend_XmlRpc_Server の同名のメソッドに対応しています。
         </para>
 
         <para>
-            If you want to add namespaces to the methods you serve, simply
-            provide a namespace to the appropriate method when attaching a
-            function or class:
+            自分が提供するメソッドに名前空間を追加したい場合は、
+            関数やクラスをアタッチする際のメソッドで名前空間を指定します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// All public methods in My_Service_Class will be accessible as
-// myservice.METHODNAME
+// My_Service_Class のパブリックメソッドは、すべて
+// myservice.メソッド名 でアクセスできるようになります
 $server->setClass('My_Service_Class', 'myservice');
 
-// Function 'somefunc' will be accessible as funcs.somefunc
+// 関数 'somefunc' は funcs.somefunc としてアクセスするようにします
 $server->addFunction('somefunc', 'funcs');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.request">
-        <title>Custom Request Objects</title>
+        <title>独自のリクエストオブジェクト</title>
 
         <para>
-            Most of the time, you'll simply use the default request type
-            included with Zend_XmlRpc_Server, Zend_XmlRpc_Request_Http. However,
-            there may be times when you need XML-RPC to be available via the CLI,
-            a GUI, or other environment, or want to log incoming requests. To do
-            so, you may create a custom request object that extends
-            Zend_XmlRpc_Request. The most important thing to remember is to
-            ensure that the getMethod() and getParams() methods are implemented
-            so that the XML-RPC server can retrieve that information in order to
-            dispatch the request.
+            ほとんどの場合は、
+            Zend_XmlRpc_Server や Zend_XmlRpc_Request_Http
+            に含まれるデフォルトのリクエスト型を使用するでしょう。
+            しかし、XML-RPC を CLI や GUI 環境などで動かしたい場合もあるでしょうし、
+            リクエストの内容をログに記録したい場合もあるでしょう。
+            そのような場合には、Zend_XmlRpc_Request
+            を継承した独自のリクエストオブジェクトを作成します。
+            注意すべき点は、getMethod() メソッドと getParams()
+            メソッドを必ず実装しなければならないということです。
+            これらは、XML-RPC サーバがリクエストを処理する際に必要となります。
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.response">
-        <title>Custom Responses</title>
+        <title>独自のレスポンス</title>
 
         <para>
-            Similar to request objects, Zend_XmlRpc_Server can return custom
-            response objects; by default, a Zend_XmlRpc_Response_Http object is
-            returned, which sends an appropriate Content-Type HTTP header for
-            use with XML-RPC. Possible uses of a custom object would be to log
-            responses, or to send responses back to STDOUT.
+            リクエストオブジェクトと同様、Zend_XmlRpc_Server
+            は独自のレスポンスオブジェクトを返すこともできます。
+            デフォルトでは Zend_XmlRpc_Response_Http オブジェクトが返されます。
+            これは、XML-RPC で使用される適切な Content-Type HTTP
+            ヘッダを送信します。独自のオブジェクトを使用する場面としては、
+            レスポンスをログに記録したり、
+            あるいはレスポンスを標準出力に返したりといったことが考えられます。
         </para>
 
         <para>
-            To use a custom response class, use
-            Zend_XmlRpc_Server::setResponseClass() prior to calling handle().
+            独自のレスポンスクラスを使用するには、handle() をコールする前に
+            Zend_XmlRpc_Server::setResponseClass() を使用します。
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.fault">
-        <title>Handling Exceptions via Faults</title>
+        <title>Fault による例外の処理</title>
 
         <para>
-            Zend_XmlRpc_Server catches Exceptions generated by a dispatched
-            method, and generates an XML-RPC fault response when such an
-            exception is caught. By default, however, the exception messages and
-            codes are not used in a fault response. This is an intentional
-            decision to protect your code; many exceptions expose more
-            information about the code or environment than a developer would
-            necessarily intend (a prime example includes database abstraction or
-            access layer exceptions).
+            Zend_XmlRpc_Server は、配送先のメソッドで発生した例外を捕捉します。
+            例外を捕捉した場合は、XML-RPC の fault レスポンスを生成します。
+            しかし、デフォルトでは、例外メッセージとコードは fault
+            レスポンスで用いられません。これは、
+            あなたのコードを守るための判断によるものです。
+            たいていの例外は、コードや環境に関する情報を必要以上にさらけ出してしまいます
+            (わかりやすい例だと、データベースの抽象化レイヤの例外を想像してみてください)。
         </para>
 
         <para>
-            Exception classes can be whitelisted to be used as fault responses,
-            however. To do so, simply utilize
-            Zend_XmlRpc_Server_Fault::attachFaultException() to pass an
-            exception class to whitelist:
+            しかし、例外クラスをホワイトリストに登録することで、
+            fault レスポンス内で例外を使用することもできます。
+            そうするには、
+            Zend_XmlRpc_Server_Fault::attachFaultException()
+            を使用して例外クラスをホワイトリストに渡します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></programlisting>
 
         <para>
-            If you utilize an exception class that your other project exceptions
-            inherit, you can then whitelist a whole family of exceptions at a
-            time. Zend_XmlRpc_Server_Exceptions are always whitelisted, to
-            allow reporting specific internal errors (undefined methods, etc.).
+            他のプロジェクトの例外を継承した例外クラスを利用するのなら、
+            一連のクラス群を一度にホワイトリストに登録することもできます。
+            Zend_XmlRpc_Server_Exceptions は常にホワイトリストに登録されており、
+            固有の内部エラー (メソッドが未定義であるなど) を報告することができます。
         </para>
 
         <para>
-            Any exception not specifically whitelisted will generate a fault
-            response with a code of '404' and a message of 'Unknown error'.
+            ホワイトリストに登録されていない例外が発生した場合は、
+            コード '404'、メッセージ 'Unknown error' の falut
+            レスポンスを生成します。
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.caching">
-        <title>Caching Server Definitions Between Requests</title>
+        <title>リクエスト間でのサーバ定義のキャッシュ</title>
         <para>
-            Attaching many classes to an XML-RPC server instance can utilize a
-            lot of resources; each class must introspect using the Reflection
-            API (via Zend_Server_Reflection), which in turn generates a list of
-            all possible method signatures to provide to the server class.
+            たくさんのクラスを XML-RPC サーバインスタンスにアタッチすると、
+            リソースを大量に消費してしまいます。各クラスを調べるために
+            リフレクション API を (Zend_Server_Reflection 経由で) 使用する必要があり、
+            使用できるすべてのメソッドのシグネチャをサーバクラスに提供します。
         </para>
         <para>
-            To reduce this performance hit somewhat, Zend_XmlRpc_Server_Cache
-            can be used to cache the server definition between requests. When
-            combined with __autoload(), this can greatly increase performance.
+            使用するリソースの量を軽減するために、Zend_XmlRpc_Server_Cache
+            を用いてリクエスト間でサーバ定義をキャッシュすることができます。
+            __autoload() と組み合わせることで、これはパフォーマンスを劇的に向上させます。
         </para>
         <para>
-            An sample usage follows:
+            使用例は次のようになります。
         </para>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
@@ -278,46 +286,45 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     require_once 'My/Services/Paste.php';
     require_once 'My/Services/Tape.php';
 
-    $server->setClass('My_Services_Glue', 'glue');   // glue. namespace
-    $server->setClass('My_Services_Paste', 'paste'); // paste. namespace
-    $server->setClass('My_Services_Tape', 'tape');   // tape. namespace
+    $server->setClass('My_Services_Glue', 'glue');   // glue. 名前空間
+    $server->setClass('My_Services_Paste', 'paste'); // paste. 名前空間
+    $server->setClass('My_Services_Tape', 'tape');   // tape. 名前空間
 
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
 echo $server->handle();]]></programlisting>
         <para>
-            The above example attempts to retrieve a server definition from
-            xmlrpc.cache in the same directory as the script. If unsuccessful,
-            it loads the service classes it needs, attaches them to the server
-            instance, and then attempts to create a new cache file with the
-            server definition.
+            この例では、スクリプトと同じディレクトリにある xmlrpc.cache
+            からサーバの定義を取得しようとします。取得できなかった場合は、
+            必要なサービスクラスを読み込み、
+            それをサーバのインスタンスにアタッチし、
+            そしてその定義を新しいキャッシュファイルに記録します。
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.use">
-        <title>Usage Examples</title>
+        <title>使用例</title>
         <para>
-            Below are several usage examples, showing the full spectrum of
-            options available to developers. Usage examples will each build
-            on the previous example provided.
+            以下のいくつかの使用例で、開発者が使用できるオプションを説明します。
+            各使用例は、それまでに紹介した例に追加していく形式になります。
         </para>
         <sect3 id="zend.xmlrpc.server.use.case1">
-            <title>Basic Usage</title>
+            <title>基本的な使用法</title>
 
             <para>
-                The example below attaches a function as a dispatchable XML-RPC
-                method and handles incoming calls.
+                次の例は関数を XML-RPC メソッドとしてアタッチし、
+                受け取ったコールを処理します。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/XmlRpc/Server.php';
 
 /**
- * Return the MD5 sum of a value
+ * 値の MD5 sum を返します
  *
- * @param string $value Value to md5sum
- * @return string MD5 sum of value
+ * @param string $value md5sum を計算する値
+ * @return string 値の MD5 sum
  */
 function md5Value($value)
 {
@@ -330,11 +337,11 @@ echo $server->handle();]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case2">
-            <title>Attaching a class</title>
+            <title>クラスのアタッチ</title>
 
             <para>
-                The example below illustrates attaching a class' public methods
-                as dispatchable XML-RPC methods.
+                次の例は、クラスのパブリックメソッドを
+                XML-RPC メソッドとしてアタッチします。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -347,11 +354,10 @@ echo $server->handle();]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case3">
-            <title>Attaching several classes using namespaces</title>
+            <title>名前空間を用いた複数のクラスのアタッチ</title>
 
             <para>
-                The example below illustrates attaching several classes, each
-                with their own namespace.
+                次の例は、複数のクラスをそれぞれの名前空間でアタッチします。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -361,18 +367,18 @@ require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-$server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-$server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+$server->setClass('Services_Comb', 'comb');   // メソッドをコールするには comb.* とします
+$server->setClass('Services_Brush', 'brush'); // メソッドをコールするには brush.* とします
+$server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
 echo $server->handle();]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case4">
-            <title>Specifying exceptions to use as valid fault responses</title>
+            <title>fault レスポンス用に使用する例外の指定</title>
 
             <para>
-                The example below allows any Services_Exception-derived class to
-                report its code and message in the fault response.
+                次の例は、Services_Exception の派生クラスに対して
+                そのコードとメッセージを falut レスポンスで報告させるようにします。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -383,22 +389,22 @@ require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
-// Allow Services_Exceptions to report as fault responses
+// Services_Exceptions を fault レスポンスで報告させるようにします
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-$server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-$server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+$server->setClass('Services_Comb', 'comb');   // メソッドをコールするには comb.* とします
+$server->setClass('Services_Brush', 'brush'); // メソッドをコールするには brush.* とします
+$server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
 echo $server->handle();]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case5">
-            <title>Utilizing a custom request object</title>
+            <title>独自のリクエストオブジェクトの利用</title>
 
             <para>
-                The example below instantiates a custom request object and
-                passes it to the server to handle.
+                次の例は、独自のリクエストオブジェクトを作成し、
+                それをサーバに渡して処理します。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -410,26 +416,26 @@ require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
-// Allow Services_Exceptions to report as fault responses
+// Services_Exceptions を fault レスポンスで報告させるようにします
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-$server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-$server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+$server->setClass('Services_Comb', 'comb');   // メソッドをコールするには comb.* とします
+$server->setClass('Services_Brush', 'brush'); // メソッドをコールするには brush.* とします
+$server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
 
-// Create a request object
+// リクエストオブジェクトを作成します
 $request = new Services_Request();
 
 echo $server->handle($request);]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case6">
-            <title>Utilizing a custom response object</title>
+            <title>独自のレスポンスオブジェクトの利用</title>
 
             <para>
-                The example below illustrates specifying a custom response class
-                for the returned response.
+                次の例は、独自のレスポンスクラスを作成し、
+                それをレスポンスとして返します。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -442,29 +448,28 @@ require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
-// Allow Services_Exceptions to report as fault responses
+// Services_Exceptions を fault レスポンスで報告させるようにします
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-$server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-$server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+$server->setClass('Services_Comb', 'comb');   // メソッドをコールするには comb.* とします
+$server->setClass('Services_Brush', 'brush'); // メソッドをコールするには brush.* とします
+$server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
 
-// Create a request object
+// リクエストオブジェクトを作成します
 $request = new Services_Request();
 
-// Utilize a custom response
+// 独自のレスポンスを使用します
 $server->setResponseClass('Services_Response');
 
 echo $server->handle($request);]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case7">
-            <title>Cache server definitions between requests</title>
+            <title>リクエスト間でのサーバ定義のキャッシュ</title>
 
             <para>
-                The example below illustrates caching server definitions
-                between requests.
+                次の例は、リクエスト間でサーバ定義をキャッシュします。
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -478,28 +483,28 @@ require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
-// Specify a cache file
+// キャッシュファイルを指定します
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 
-// Allow Services_Exceptions to report as fault responses
+// Services_Exceptions を fault レスポンスで報告させるようにします
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
 
-// Attempt to retrieve server definition from cache
+// サーバ定義をキャッシュから取得しようとします
 if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
-    $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-    $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-    $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+    $server->setClass('Services_Comb', 'comb');   // メソッドをコールするには comb.* とします
+    $server->setClass('Services_Brush', 'brush'); // メソッドをコールするには brush.* とします
+    $server->setClass('Services_Pick', 'pick');   // メソッドをコールするには pick.* とします
 
-    // Save cache
+    // キャッシュに保存します
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server));
 }
 
-// Create a request object
+// リクエストオブジェクトを作成します
 $request = new Services_Request();
 
-// Utilize a custom response
+// 独自のレスポンスを使用します
 $server->setResponseClass('Services_Response');
 
 echo $server->handle($request);]]></programlisting>
