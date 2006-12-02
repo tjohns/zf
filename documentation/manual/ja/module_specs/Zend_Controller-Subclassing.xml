@@ -1,100 +1,113 @@
 <sect1 id="zend.controller.subclassing">
-	<title>サブクラス化</title>
-	
-	<sect2 id="zend.controller.subclassing.introduction">
-		<title>導入</title>
-		<para>
-			<code>Zend_Controller</code> システムは、拡張性を考慮して作成されています。
-			拡張方法としては、既存のクラスを継承する以外にも
-			<code>Zend_Controller_Router_Interface</code> および
-			<code>Zend_Controller_Dispatcher_Interface</code>
-			を実装した新しいクラスを作成する方法があります。
-		</para>
-		
-		<para>
-			新しいルータやディスパッチャを実装する理由としては、
-			以下のようなものが考えられるでしょう。
-			
-			<itemizedlist>
-				<listitem>
-					<para>
-						既存の URI ルーティングが何らかの理由で適用できない場合。
-						例えば、既存のウェブサイトと統合する予定であるが、
-						そこで採用している規約が Zend Framework
-						のルーティング機構と合致しないなど。
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						まったく別のルーティングを実装しなければならない場合。
-						<code>Zend_Controller_Router</code> クラスは URI のみを対象としています。
-						例えばコンソールアプリケーションなどの別の形式のプログラムにも
-						MVC パターンを使用したくなることもあるでしょう。
-						コンソールアプリケーションの場合なら、
-						独自のルータを実装してコマンドライン引数によるルーティングを行うことになるでしょう。
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<code>Zend_Controller_Dispatcher</code>
-						の提供する機能がうまく当てはまらない場合。
-						デフォルト設定では、コントローラはクラスであり、
-						アクションはクラスのメソッドであることを前提としています。
-						しかし、これ以外にもいろいろなやり方があるでしょう。
-						例えば、ディレクトリをコントローラ、
-						ディレクトリ内のファイルをアクションと考えることもできます。
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						すべてのコントローラで使用するための機能を追加したい場合。
-						例えば、デフォルトでは <code>Zend_Controller_Action</code> は
-						<code>Zend_View</code> と統合されていません。しかし、
-						コントローラを継承したクラスでこの機能を持たせることができます。
-						そうすれば、もとの <code>Zend_Controller_Router</code> や
-						<code>Zend_Controller_Dispatcher</code> に手を加えずにすみます。
-					</para>
-				</listitem>
-			</itemizedlist>
-				
-			システムの主要な部分、特にディスパッチャをオーバーライドする際には十分注意してください。
-			<code>Zend_Controller</code> を使用する利点のひとつに、
-			共通の規約に従ったアプリケーションを作成できるということがあります。
-			デフォルトの振る舞いをあまりにも変更してしまうと、この利点が失われてしまいます。
-			しかしながら、世の中にはさまざまな需要があるわけですし、
-			ひとつのソリューションですべて解決できるわけがありません。
-			そのために、必要なら変更できるようにしています。
-		</para>
-	</sect2>
-	
-	<sect2 id="zend.controller.subclassing.conventions">
-		<title>規約</title>
-		
-		<para>
-			Zend_Controller のクラスを継承する場合は、
-			その命名や保存場所はできるだけ次の規約に従うようにしてください。
-			そうすることで、Zend Framework になじみのある他のプログラマが、
-			あなたのプロジェクトの内容を簡単に理解できるようになります。
-		</para>
-		
-		<sect3 id="zend.controller.subclassing.prefix">
-			<title>プレフィックス</title>
-				
-			<para>
-				Zend Framework に含まれるクラスの名前は、すべて "Zend_"
-				で始まっています。これがプレフィックスです。
-				あなたが作成するクラスも同じようにしておくことを推奨します。
-				例えば、もしあなたの所属する会社名が Widget, Inc. なら、
-				プレフィックスを "Widget_" とします。
-			</para>
-		</sect3>
-		
-		<sect3 id="zend.controller.directory.layout">
-			<title>ディレクトリ構成</title>
-			
-			<para>
-				<code>Zend_Controller</code> クラスは、
-				ライブラリディレクトリに以下のように格納されます。
+    <title>サブクラス化</title>
+
+    <sect2 id="zend.controller.subclassing.introduction">
+        <title>導入</title>
+        <para>
+            <code>Zend_Controller</code> システムは、拡張性を考慮して作成されています。
+            拡張方法としては、既存のクラスを継承する以外にも
+            <code>Zend_Controller_Router_Interface</code> および
+            <code>Zend_Controller_Dispatcher_Interface</code>
+            を実装した新しいクラスを作成する方法があります。また、
+            <code>Zend_Controller_Request_Abstract</code> や
+            <code>Zend_Controller_Response_Abstract</code> そして
+            <code>Zend_Controller_Action</code> を継承したクラスを作成することもできます。
+        </para>
+
+        <para>
+            クラスを拡張する理由としては、以下のようなものが考えられるでしょう。
+
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        既存の URI ルーティングが何らかの理由で適用できない場合。
+                        例えば、既存のウェブサイトと統合する予定であるが、
+                        そこで採用している規約が Zend Framework
+                        のルーティング機構と合致しないなど。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        まったく別のルーティングを実装しなければならない場合。
+                        <code>Zend_Controller_Router</code> クラスは URI のみを対象としています。
+                        例えばコンソールアプリケーションや
+                        GUI アプリケーションなどの別の形式のプログラムにも
+                        MVC パターンを使用したくなることもあるでしょう。
+                        コンソールアプリケーションの場合なら、
+                        独自のルータを実装すればコマンドライン引数によるルーティングを行うこともできます。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Controller_Dispatcher</code>
+                        の提供する機能がうまく当てはまらない場合。
+                        デフォルト設定では、コントローラはクラスであり、
+                        アクションはクラスのメソッドであることを前提としています。
+                        しかし、これ以外にもいろいろなやり方があるでしょう。
+                        例えば、ディレクトリをコントローラ、
+                        ディレクトリ内のファイルをアクションと考えることもできます。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        すべてのコントローラで使用するための機能を追加したい場合。
+                        例えば、デフォルトでは <code>Zend_Controller_Action</code> は
+                        <code>Zend_View</code> と統合されていません。しかし、
+                        コントローラを継承したクラスでこの機能を持たせることができます。
+                        そうすれば、もとの <code>Zend_Controller_Router</code> や
+                        <code>Zend_Controller_Dispatcher</code> に手を加えずにすみます。
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        アプリケーションで発生した例外を記録し、
+                        共通のエラーページにリダイレクトさせたい場合。既存の
+                        <code>Zend_Controller_Response_Http</code> を拡張し、
+                        <code>__toString()</code> を変更することで、
+                        登録された例外のチェックとその記録、
+                        エラーページへのリダイレクトが可能となります。
+                    </para>
+                </listitem>
+            </itemizedlist>
+
+            システムの主要な部分、特にディスパッチャをオーバーライドする際には十分注意してください。
+            <code>Zend_Controller</code> を使用する利点のひとつに、
+            共通の規約に従ったアプリケーションを作成できるということがあります。
+            デフォルトの振る舞いをあまりにも変更してしまうと、この利点が失われてしまいます。
+            しかしながら、世の中にはさまざまな需要があるわけですし、
+            ひとつのソリューションですべて解決できるわけがありません。
+            そのために、必要なら変更できるようにしています。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.subclassing.conventions">
+        <title>規約</title>
+
+        <para>
+            Zend_Controller のクラスを継承する場合は、
+            その命名や保存場所はできるだけ次の規約に従うようにしてください。
+            そうすることで、Zend Framework になじみのある他のプログラマが、
+            あなたのプロジェクトの内容を簡単に理解できるようになります。
+        </para>
+
+        <sect3 id="zend.controller.subclassing.prefix">
+            <title>プレフィックス</title>
+
+            <para>
+                Zend Framework に含まれるクラスの名前は、すべて "Zend_"
+                で始まっています。これがプレフィックスです。
+                あなたが作成するクラスも同じようにしておくことを推奨します。
+                例えば、もしあなたの所属する会社名が Widget, Inc. なら、
+                プレフィックスを "Widget_" とします。
+            </para>
+        </sect3>
+
+        <sect3 id="zend.controller.directory.layout">
+            <title>ディレクトリ構成</title>
+
+            <para>
+                <code>Zend_Controller</code> クラスは、
+                ライブラリディレクトリに以下のように格納されます。
             </para>
     <programlisting role="php"><![CDATA[
 /library
@@ -103,18 +116,18 @@
       Action.php
       Dispatcher.php
       Router.php
-]]></programlisting>			
+]]></programlisting>
             <para>
-				<code>Zend_Controller</code> クラスを継承する場合は、
-				作成したクラスを (あなたのプレフィックスのもとで)
-				同じ構造で格納することを推奨します。こうすることで、
-				あなたのプロジェクトのコードをレビューする人たちがそれを見つけやすくなるでしょう。
-			</para>
-			
-			<para>
-				例えば Widget, Inc. のプロジェクトがルータのみを独自に実装した場合は、
-				次のようになるでしょう。
-			</para>	
+                <code>Zend_Controller</code> クラスを継承する場合は、
+                作成したクラスを (あなたのプレフィックスのもとで)
+                同じ構造で格納することを推奨します。こうすることで、
+                あなたのプロジェクトのコードをレビューする人たちがそれを見つけやすくなるでしょう。
+            </para>
+
+            <para>
+                例えば Widget, Inc. のプロジェクトがルータのみを独自に実装した場合は、
+                次のようになるでしょう。
+            </para>
 <programlisting role="php"><![CDATA[
 /library
   /Zend
@@ -122,121 +135,450 @@
     /Controller
       Router.php
       README.txt
-]]></programlisting>			
+]]></programlisting>
             <para>
-				この例では、<code>Widget/Controller/</code> ディレクトリが
-				<code>Zend/Controller/</code> ディレクトリと同じ構造になっていることに注意しましょう。
-				この場合、このファイルでは <code>Widget_Controller_Router</code>
-				というクラスが提供されます。このクラスは
-				<code>Zend_Controller_Router</code> を継承したものか、あるいは
-				<code>Zend_Controller_Router_Interface</code> を実装した独自のクラスとなります。
-			</para>
-			
-			<para>
-				また、上の例で <code>Widget/Controller/</code> ディレクトリに
-				<code>README.txt</code> があることにも注意してください。
-				あなたのプロジェクトを顧客に提供する際には、
-				それに関する単体テストや文書も作成するよう、Zend は強く推奨します。
-				そこまではいかなくても、同じディレクトリにシンプルな
-				<code>README.txt</code> ファイルを置き、
-				変更点や動作内容を簡単に説明しておくようにしましょう。
-			</para>
-		</sect3>
-	</sect2>
-	
-	<sect2 id="zend.controller.router.interface">
-		<title>ルータのインターフェイス</title>
-		
-		<para>
-			<code>Zend_Controller_Router_Interface</code> で定義されているメソッドは
-			1 つだけです。
+                この例では、<code>Widget/Controller/</code> ディレクトリが
+                <code>Zend/Controller/</code> ディレクトリと同じ構造になっていることに注意しましょう。
+                この場合、このファイルでは <code>Widget_Controller_Router</code>
+                というクラスが提供されます。このクラスは
+                <code>Zend_Controller_Router</code> を継承したものか、あるいは
+                <code>Zend_Controller_Router_Interface</code> を実装した独自のクラスとなります。
+            </para>
+
+            <para>
+                また、上の例で <code>Widget/Controller/</code> ディレクトリに
+                <code>README.txt</code> があることにも注意してください。
+                あなたのプロジェクトを顧客に提供する際には、
+                それに関する単体テストや文書も作成するよう、Zend は強く推奨します。
+                そこまではいかなくても、同じディレクトリにシンプルな
+                <code>README.txt</code> ファイルを置き、
+                変更点や動作内容を簡単に説明しておくようにしましょう。
+            </para>
+        </sect3>
+    </sect2>
+
+    <sect2 id="zend.controller.request.abstract">
+        <title>リクエストの抽象化</title>
+
+        <para>
+            抽象クラス <code>Zend_Controller_Request_Abstract</code>
+            で、いくつかのメソッドを定義しています。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * @return string
+     */
+    public function getControllerName();
+
+    /**
+     * @param string $value 
+     * @return self
+     */
+    public function setControllerName($value);
+
+    /**
+     * @return string
+     */
+    public function getActionName();
+
+    /**
+     * @param string $value 
+     * @return self
+     */
+    public function setActionName($value);
+
+    /**
+     * @return string
+     */
+    public function getControllerKey();
+
+    /**
+     * @param string $key 
+     * @return self
+     */
+    public function setControllerKey($key);
+
+    /**
+     * @return string
+     */
+    public function getActionKey();
+
+    /**
+     * @param string $key 
+     * @return self
+     */
+    public function setActionKey($key);
+
+    /**
+     * @param string $key 
+     * @return mixed
+     */
+    public function getParam($key);
+
+    /**
+     * @param string $key 
+     * @param mixed $value 
+     * @return self
+     */
+    public function setParam($key, $value);
+
+    /**
+     * @return array
+     */
+     public function getParams();
+
+    /**
+     * @param array $array 
+     * @return self
+     */
+    public function setParams(array $array);
+
+    /**
+     * @param boolean $flag 
+     * @return self
+     */
+    public function setDispatched($flag = true);
+
+    /**
+     * @return boolean
+     */
+    public function isDispatched();
+}
+]]></programlisting>
+
+        <para>
+            リクエストオブジェクトは、リクエストのコンテナとなります。
+            コントローラチェインが必要とするのは、
+            コントローラ、アクション、オプションパラメータ
+            およびディスパッチ状況を設定したり取得したりする方法だけとなります。
+            デフォルトでは、リクエストがパラメータを探す際には
+            コントローラあるいはアクションのキーを使用します。
+            探す順序はコントローラおよびアクションで定義されます。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.router.interface">
+        <title>ルータのインターフェイス</title>
+
+        <para>
+            <code>Zend_Controller_Router_Interface</code>
+            で定義されているメソッドはひとつだけです。
         </para>
         <programlisting role="php"><![CDATA[<?php
-				
-  /**				
-   * @param  Zend_Controller_Dispatcher_Interface
+
+  /**
+   * @param  Zend_Controller_Request_Abstract $request
    * @throws Zend_Controller_Router_Exception
-   * @return Zend_Controller_Dispatcher_Token|boolean
+   * @return Zend_Controller_Request_Abstract
    */
-  public function route(Zend_Controller_Dispatcher_Interface $dispatcher);
+  public function route(Zend_Controller_Request_Abstract $request);
 
 ?>]]></programlisting>
         <para>
-			ルーティングが発生するのは、システムが最初にリクエストを受け取ったときだけです。
-			ルータの役割は、<code>Zend_Controller_Dispatch_Token</code>
-			を生成してコントローラとアクションを指定することです。
-			その後、これをディスパッチャに渡します。
-			もしディスパッチトークンが作成できなかった場合は
-			<code>FALSE</code> を返さなければなりません。
-		</para>
-		
-		<para>
-			ディスパッチャの中には、生成されたディスパッチトークンが本当にディスパッチ可能なのかを、
-			動的な要因をもとにして事前に調べるものもあります。
-			このため、ルータは、<code>route()</code>
-			の唯一の引数としてディスパッチャのオブジェクトハンドルを受け取ります。
-			ディスパッチャは、これを確かめるためのメソッドとして
-			<code>isDispatchable()</code> を提供しています。
-		</para>
-	</sect2>
-	
-	<sect2 id="zend.controller.dispatcher.interface">
-		<title>ディスパッチャのインターフェイス</title>
-		
-		<para>
-			<code>Zend_Controller_Front</code> は、
-			まず最初にルータをコールしてディスパッチトークンを取得し、
-			それをディスパッチャに渡します。ディスパッチャはアクションを起動
-			(コントローラのインスタンスを作成し、そのアクションをコール)
-			し、論理型の FALSE あるいは別のディスパッチトークンのどちらかを返します。
-		</para>
-		
-		<para>
-			<code>Zend_Controller_Front</code> は、
-			ディスパッチトークンが返されなくなるまで、
-			ディスパッチャを繰り返しコールします。これが、いわゆるディスパッチループです。
-			これにより、アクションが処理を順にすすめていけるようになります。
-		</para>
-		
-		<para>
-			<code>Zend_Controller_Dispatcher_Interface</code> では
-			2 つのメソッドが定義されています。
+            ルーティングが発生するのは、システムが最初にリクエストを受け取ったときだけです。
+            ルータの役割は、コントローラやアクションそして
+            リクエスト内容に応じたオプションパラメータを決定し、
+            それをリクエストに設定することです。
+            その後、リクエストオブジェクトをディスパッチャに渡します。
+            ルートをディスパッチャトークンに関連付けることはできません。
+            この場合、ルータはリクエストオブジェクトに対して何もしません。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.dispatcher.interface">
+        <title>ディスパッチャのインターフェイス</title>
+
+        <para>
+            <code>Zend_Controller_Front</code> は、
+            まず最初にルータをコールして、
+            リクエスト内で最初にディスパッチできるアクションを決定します。
+            その後、ディスパッチャループに入ります。
+        </para>
+
+        <para>
+            ループ内では、まずリクエストオブジェクトでディスパッチフラグを設定し、
+            そしてリクエストを処理します (コントローラのインスタンスを作成し、
+            アクションをコールします)。アクションメソッド
+            (あるいは pre/postDispatch プラグイン)
+            がディスパッチフラグをリセットすると、リクエストオブジェクトの設定内容をもとにして
+            フロントコントローラがループ内の次の処理を実行します。
+            これにより、すべてのアクションを順に実行していくことができます。
+        </para>
+            
+        <para>
+            <code>Zend_Controller_Dispatcher_Interface</code> インターフェイスでは、
+            二つのメソッドが定義されています。
         </para>
         <programlisting role="php"><![CDATA[<?php
-				
+
 /**
- * @param  Zend_Controller_Dispatcher_Token $route
+ * @param  Zend_Controller_Request_Abstract $request
  * @return boolean
  */
-public function isDispatchable(Zend_Controller_Dispatcher_Token $route);
+public function isDispatchable(Zend_Controller_Request_Abstract $request);
 
 ?>]]></programlisting>
         <para>
-    		<code>isDispatchable()</code> は、
-    		ディスパッチトークンが実際にディスパッチ可能かどうかを調べます。
-    		ディスパッチ可能な場合に <code>TRUE</code>、それ以外の場合に
-    		<code>FALSE</code> を返します。ディスパッチ可能かどうかを判断する基準は、
-    		インターフェリスを実装したクラスで記述します。
-    		デフォルトの実装である <code>Zend_Controller_Dispatcher</code> では、
-    		コントローラのファイルが存在するかどうか、
-    		そのファイルでクラスが定義されているかどうか、
-    		そしてそのクラスでアクションメソッドが定義されているかどうかを調べます。
+            <code>isDispatchable()</code> は、
+            リクエストがディスパッチ可能かどうかを調べます。
+            ディスパッチ可能な場合に <code>TRUE</code>、それ以外の場合に
+            <code>FALSE</code> を返します。ディスパッチ可能かどうかを判断する基準は、
+            インターフェイスを実装したクラスで記述します。
+            デフォルトの実装である <code>Zend_Controller_Dispatcher</code> では、
+            コントローラのファイルが存在するかどうか、
+            そのファイルでクラスが定義されているかどうか、
+            そしてそのクラスでアクションメソッドが定義されているかどうかを調べます。
         </para>
-		<programlisting role="php"><![CDATA[<?php
-			
+        <programlisting role="php"><![CDATA[<?php
+
 /**
- * @param  Zend_Controller_Dispatcher_Token $route
- * @return Zend_Controller_Dispatcher_Token|boolean
+ * @param  Zend_Controller_Request_Abstract $route
+ * @return Zend_Controller_Request_Abstract
  */
-public function dispatch(Zend_Controller_Dispatcher_Token $route);
+public function dispatch(Zend_Controller_Request_Abstract $request);
 
 ?>]]></programlisting>
-		<para>
-    		<code>dispatch()</code> は、実際の処理を行うところです。
-    		このメソッドは、コントローラのアクションを実行しなければなりません。
-    		また、ディスパッチトークンあるいは論理型の FALSE のいずれかを返さなければなりません。
-    		FALSE は、この後でやるべきことがもうないということを意味します。
-		</para>
-	</sect2>
-		
+        <para>
+            <code>dispatch()</code> は、実際の処理を行うところです。
+            このメソッドは、コントローラのアクションを実行しなければなりません。
+            またリクエストオブジェクトを返す必要があります。
+        </para>
+    </sect2>
+
+    <sect2 id="zend.controller.action">
+        <title>アクションコントローラ</title>
+
+        <para>
+            アクションコントローラは、アプリケーションのさまざまなアクションを処理します。
+            この抽象クラスでは次のメソッドを提供します。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * @param Zend_Controller_Request_Abstract $request Request object
+     * @param Zend_Controller_Response_Abstract $response Response object
+     * @param array $args Optional associative array of
+     * configuration/environment settings
+     */
+    public function __construct(Zend_Controller_Request_Abstract $request, Zend_Controller_Response_Abstract $response, array $args = array());
+
+    /**
+     * @return void
+     */
+    public function init();
+
+    /**
+     * @return Zend_Controller_Request_Abstract
+     */
+    public function getRequest();
+
+    /**
+     * @param Zend_Controller_Request_Abstract $request 
+     * @return self
+     */
+    public function setRequest(Zend_Controller_Request_Abstract $request);
+
+    /**
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function getResponse();
+
+    /**
+     * @param Zend_Controller_Response_Abstract $response 
+     * @return self
+     */
+    public function setResponse(Zend_Controller_Response_Abstract $response);
+
+    /**
+     * @return array
+     */
+    public function getInvokeArgs();
+
+    /**
+     * @return mixed
+     */
+    public function getInvokeArg($name);
+
+    public function preDispatch();
+
+    public function postDispatch();
+
+    /**
+     * @param string $methodName
+     * @param array $args
+     */
+    public function __call($methodName, $args);
+
+    /**
+     * @param null|Zend_Controller_Request_Abstract $request Optional request 
+     * object to use
+     * @param null|Zend_Controller_Response_Abstract $response Optional response 
+     * object to use
+     * @return Zend_Controller_Response_Abstract
+     */
+    public function run(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null);
+]]></programlisting>
+
+        <para>
+            コンストラクタは、リクエストオブジェクトとレスポンスオブジェクトを登録し、
+            追加の設定引数の配列も登録します。この配列には、
+            フロントコントローラの <code>setParam()</code> メソッドや
+            <code>setParams()</code> メソッドで登録されたパラメータが含まれます。
+            登録を済ませたあとで、コンストラクタは処理を
+            <code>init()</code> に渡します。
+        </para>
+
+        <para>
+            コンストラクタをオーバーライドすることもできます。ただ、
+            初期化処理はすべて <code>init()</code> で行うようにし、
+            リクエストとレスポンスを適切に登録できるようにしておくことを推奨します。
+        </para>
+
+        <para>
+            コンストラクタに渡された設定引数へは、
+            <code>getInvokeArg()</code> および
+            <code>getInvokeArgs()</code> でアクセスできるようになります。
+            お勧めの方法は、これらの起動時引数として
+            ビューや認証情報、あるいはレジストリオブジェクトを渡すことです。
+            たとえば次のようになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$front = Zend_Controller_Front::getInstance();
+$front->setParam('view', new Zend_View())
+      ->setControllerDirectory($config->controller->directory);
+$response = $front->dispatch();
+
+// サンプルのアクションコントローラ
+class FooController extends Zend_Controller_Action
+{
+    protected $_view = null;
+
+    public function init()
+    {
+        $this->_view = $this->getInvokeArg('view');
+    }
+}
+]]></programlisting>
+
+        <para>
+            アクションがディスパッチされる際の前後に行われる処理が、それぞれ
+            <code>preDispatch()</code> メソッドおよび
+            <code>postDispatch()</code> メソッドです。
+            デフォルトではこれらのメソッドは空であり、何もしません。
+        </para>
+
+        <para>
+            <code>__call()</code> メソッドは、クラス内で登録されていないアクションを処理します。
+            デフォルトでは、これは未定義のアクションに対して例外をスローします。
+            これは、デフォルトのアクションメソッドが定義されていない場合にのみ発生します。
+        </para>
+
+        <para>
+            アクションメソッドのデフォルトの命名規約は lowercaseAction
+            のようになります。'lowercase' の部分でアクション名を指定し、
+            'Action' の部分でこれがアクションメソッドであることを指定します。
+            つまり、<code>http://framework.zend.com/foo/bar</code> は
+            <code>FooController::barAction()</code> をコールします。
+        </para>
+
+        <para>
+            アクションコントローラは、ページコントローラとして使用することもできます。
+            典型的な使用法は、このようになります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$controller = new FooController(
+    new Zend_Controller_Request_Abstract(),
+    new Zend_Controller_Response_Abstract()
+);
+$controller->run();
+]]></programlisting>
+        
+        <note>
+            <title>フロントコントローラ/アクションコントローラの使用</title>
+            <para>
+                ページコントローラ方式ではなく、
+                フロントコントローラ/ページコントローラ
+                を組み合わせた方式を使用することを推奨します。
+                これにより、相互運用可能なアプリケーションを書けるようになります。
+            </para>
+        </note>
+    </sect2>
+    
+    <sect2 id="zend.controller.response.abstract">
+        <title>レスポンスオブジェクト</title>
+
+        <para>
+            レスポンスオブジェクトは、コールされたアクションからの
+            内容やヘッダを収集し、それをクライアントに返します。
+            次のようなメソッドがあります。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * @param string $content
+     * @return self
+     */
+    public function setBody($content);
+
+    /**
+     * @param string $content
+     * @return self
+     */
+    public function appendBody($content);
+
+    /**
+     * @return string
+     */
+    public function getBody();
+
+    /**
+     * @param Exception $e 
+     * @return self
+     */
+    public function setException(Exception $e);
+
+    /**
+     * @return null|Exception
+     */
+    public function getException();
+
+    /**
+     * @return boolean
+     */
+    public function isException();
+
+    /**
+     * @param boolean $flag
+     * @return boolean
+     */
+    public function renderExceptions($flag = null);
+
+    /**
+     * @return string
+     */
+    public function __toString();
+]]></programlisting>
+
+        <para>
+            <code>setBody()</code> は、ボディ部の内容をすべて置き換えます。
+            このメソッドの代わりに <code>appendBody()</code> を使用することを推奨します。
+            <code>__toString()</code> は、内容をレンダリングします。
+        </para>
+
+        <para>
+            レスポンスオブジェクトはまた、
+            アクションコントローラで発生した例外が最終的に捕捉、登録されるところでもあります。
+            <code>isException()</code> は boolean 値を返します。
+            これは例外が発生したかどうかを表します。
+            <code>renderExceptions()</code> を使用すると、
+            例外を捕捉した際に <code>__toString()</code>
+            が例外出力をレンダリングしたのかどうかがわかります。
+        </para>
+    </sect2>
 </sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
