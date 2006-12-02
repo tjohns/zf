@@ -158,11 +158,16 @@
             w których Zend_View ma szukać klas pomocników. Domyślnie Zend_View 
             szuka klas pomocników w katalogu "Zend/View/Helper/*". Możesz wybrać
             inny katalog używając metod setHelperPath() oraz addHelperPath().
+            Additionally, you can indicate a class
+            prefix to use for helpers in the path provided, to allow namespacing
+            your helper classes. By default, if no class prefix is provided,
+            'Zend_View_Helper_' is assumed.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->setHelperPath('/path/to/more/helpers');
+// Set path to /path/to/more/helpers, with previs 'My_View_Helper'
+$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 ?>]]>
         </programlisting>
         
@@ -176,13 +181,15 @@ $view->setHelperPath('/path/to/more/helpers');
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
+// Add /path/to/some/helpers with class prefix 'My_View_Helper'
 $view->addHelperPath('/path/to/some/helpers');
+// Add /other/path/to/helpers with class prefix 'Your_View_Helper'
 $view->addHelperPath('/other/path/to/helpers');
 
 // teraz kiedy wywołasz $this->helperName(), Zend_View będzie wpierw szukał w
-// "/other/path/to/helpers/HelperName.php", potem w
-// "/path/to/some/helpers/HelperName" i ostatecznie w
-// "Zend/View/Helpers/HelperName.php".
+// "/other/path/to/helpers/HelperName.php" używając nazwy klasy "My_View_Helper_HelperName", 
+// następnie w "/path/to/some/helpers/HelperName" używając nazwy klasy "Your_View_Helper_HelperName", 
+// i ostatecznie w "Zend/View/Helper/HelperName.php" używając nazwy klasy "Zend_View_Helper_HelperName".
 ?>]]>
         </programlisting>
         
@@ -200,11 +207,15 @@ $view->addHelperPath('/other/path/to/helpers');
         <itemizedlist>
             
             <listitem><para>
-                Nazwa klasy musi być w postaci Zend_View_Helper_*, gdzie * oznacza
-                nazwę pomocnika. Na przykład jeśli chcesz napisać pomocnika
-                nazwanego "twojPomocnik", klasa powinna nazywać się 
-                "Zend_View_Helper_TwojPomocnik" (zwróć uwagę na początkowe
-                wielkie litery).
+                The class name must, at the very minimum, end with the helper
+                name itself, using CamelCaps.  E.g., if you were writing a
+                helper called "specialPurpose", the class name would minimally
+                need to be "SpecialPurpose". You may, and should, give the class
+                name a prefix, and it is recommended that you use 'View_Helper'
+                as part of that prefix: "My_View_Helper_SpecialPurpose". (You
+                will need to pass in the prefix, with or without the trailing
+                underscore, to <code>addHelperPath()</code> or
+                <code>setHelperPath()</code>).
             </para></listitem>
             
             <listitem><para>
@@ -239,7 +250,7 @@ $view->addHelperPath('/other/path/to/helpers');
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-class Zend_View_Helper_TwojPomocnik {
+class My_View_Helper_TwojPomocnik {
     protected $_count = 0;
     public function twojPomocnik()
     {
