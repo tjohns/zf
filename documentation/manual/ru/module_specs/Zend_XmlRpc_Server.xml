@@ -1,21 +1,27 @@
-<sect1 id="zend.xmlrpc.server">
+﻿<sect1 id="zend.xmlrpc.server">
     <title>Zend_XmlRpc_Server</title>
 
     <sect2 id="zend.xmlrpc.server.introduction">
-        <title>Introduction</title>
+        <title>Введение</title>
 
-        <para>Zend_XmlRpc_Server is intended as a fully-featured XML-RPC server,
+        <para>
+		Цель Zend_XmlRpc_Server - полная реализация сервера XML-RPC, как определено
+		<ulink url="http://www.xmlrpc.com/spec">спецификациями на www.xmlrpc.com</ulink>.
+		Вдобавок, он реализует метод system.multicall(), 
+<!--		Zend_XmlRpc_Server is intended as a fully-featured  XML-RPC server,
             following <ulink url="http://www.xmlrpc.com/spec">the specifications
             outlined at www.xmlrpc.com</ulink>. Additionally, it implements the
             system.multicall() method, allowing boxcarring of requests.
+-->
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.usage">
-        <title>XML-RPC Server Basic Usage</title>
+        <title>Основы использования сервера XML-RPC<!-- XML-RPC Server Basic Usage --></title>
 
         <para>
-            An example of the most basic use case:
+			Простейший пример использования сервера:
+            <!-- An example of the most basic use case: -->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -29,28 +35,50 @@ echo $server->handle();
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
-        <title>XML-RPC Server Structure</title>
+        <title>Структура сервера XML-RPC<!-- XML-RPC Server Structure --></title>
 
         <para>
+			Сервер XML-RPC состоит из набора компонентов, таких как сам сервер, 
+			обьекты запроса, ответа и ошибки.
+		<!--
             Zend_XmlRpc_Server is composed of a variety of components, ranging
             from the server itself to request, response, and fault objects.
+		-->
         </para>
 
         <para>
+			Для начала работы с Zend_XmlRpc_Server, разработчик связывает один или
+			несколько классов или функций с сервером, используя методы
+			<code>setClass()</code> и <code>addFunction()</code>.
+		<!--
             To bootstrap Zend_XmlRpc_Server, the developer must attach one or
             more classes or functions to the server, via the
             <code>setClass()</code> and <code>addFunction()</code> methods.
+			-->
         </para>
 
         <para>
+			После этого, следует или передать объект <code>Zend_XmlRpc_Request</code>
+			методу <code>Zend_XmlRpc_Server::handle()</code> или, если объект не передан,
+			метод создаст объект <code>Zend_XmlRpc_Request_Http</code>, получающий данные
+			запроса из <code>php://input</code>.
+		<!--	
             Once done, you may either pass a <code>Zend_XmlRpc_Request</code>
             object to <code>Zend_XmlRpc_Server::handle()</code>, or it will
             instantiate a <code>Zend_XmlRpc_Request_Http</code> object if none
             is provided -- thus grabbing the request from
             <code>php://input</code>.
+		-->
         </para>
 
         <para>
+			<code>Zend_XmlRpc_Server::handle()</code> передает запрос соответствующему обработчику, 
+			в зависимости от запрошеного метода. Он возрващает объект, наследующий или 
+			<code>Zend_XmlRpc_Response</code> или <code>Zend_XmlRpc_Server_Fault</code>. 
+			В обоих случаях	объект имеет метод <code>__toString()</code>, 
+			который создает XML-ответ, соответствущий стандарту XML-RPC, так что
+			его можно сразу вывести командой <code>echo</code>.
+		<!--	
             <code>Zend_XmlRpc_Server::handle()</code> then attempts to
             dispatch to the appropriate handler based on the method
             requested. It then returns either a
@@ -58,64 +86,96 @@ echo $server->handle();
             <code>Zend_XmlRpc_Server_Fault</code>object. These objects both have
             <code>__toString()</code> methods that create valid XML-RPC XML
             responses, allowing them to be directly echoed.
+			-->
         </para>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.conventions">
         <title>Conventions</title>
         <para>
+			<code>Zend_XmlRpc_Server</code> позволяет присоединять функции и методы, 
+			которым диспетчер будет передавать запросы. Он использует <code>Zend_Server_Reflection</code>,
+			чтобы обнаружить все присоедниенные методы, определяя с помощью блоков документации
+			функций и методов их описания и аргументы. 
+			<!--			
             Zend_XmlRpc_Server allows the developer to attach functions and
             class method calls as dispatchable XML-RPC methods. Via
             Zend_Server_Reflection, it does introspection on all attached
             methods, using the function and method docblocks to determine the
             method help text and method signatures.
+			-->
         </para>
 
         <para>
+			Типы XML-RPC не всегда однозначно соответствуют типам PHP. Поэтому код
+			сервера постарается угадать, какой именно тип подходит лучше всего, базируясь на
+			значениях, описаных в строках документации, обозначенных @param и @return.
+			Однако у некоторых типов XML-RPC нет прямого эквивалента в PHP, и поэтому они
+			должны быть описаны в блоке документации PHPDoc, используя типы XML-RPC. 
+			Пример подобных типов:
+			<!--
             XML-RPC types do not necessarily map one-to-one to PHP types.
             However, the code will do its best to guess the appropriate type
             based on the values listed in @param and @return lines. Some XML-RPC
             types have no immediate PHP equivalent, however, and should be
             hinted using the XML-RPC type in the phpdoc. These include:
+			-->
         </para>
 
         <itemizedlist>
-            <listitem><para>dateTime.iso8601, a string formatted as
-                    YYYYMMDDTHH:mm:ss</para></listitem>
-            <listitem><para>base64, base64 encoded data</para></listitem>
-            <listitem><para>struct, any associative array</para></listitem>
+            <listitem><para>dateTime.iso8601, строка даты в формате YYYYMMDDTHH:mm:ss
+			<!-- a string formatted as YYYYMMDDTHH:mm:ss --></para></listitem>
+            <listitem><para>base64, данные, закодированные в base64<!-- base64 encoded data -->></para></listitem>
+            <listitem><para>struct, любой ассоциативный массив<!-- any associative array -->></para></listitem>
         </itemizedlist>
 
         <para>
-            An example of how to hint follows:
+			Пример описания типов:
+            <!-- An example of how to hint follows: -->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-/**
+/*
 * This is a sample function
 *
-* @param base64 $val1 Base64-encoded data
-* @param dateTime.iso8601 $val2 An ISO date
-* @param struct $val3 An associative array
+* @param base64 $val1 Данные в кодировке base64
+* @param dateTime.iso8601 $val2 Дата в формате ISO
+* @param struct $val3 Ассоциативный массив
 * @return struct
+*/
 function myFunc($val1, $val2, $val3)
 {
-}]]></programlisting>
+}
+?>]]>
+</programlisting>
 
         <para>
+			PhpDocumentor не проверяет типы, указанные в описании параметров
+			и возвращаемого значения, так что это не повлияет на документацию API.
+			Однако документирование параметров необходимо серверу, чтобы проверить 
+			значения, получаемые при вызове метода.
+			<!--
             PhpDocumentor does no validation of the types specified for params
             or return values, so this will have no impact on your API
             documentation. Providing the hinting is necessary, however, when the
             server is validating the parameters provided to the method call.
+			-->
         </para>
 
         <para>
+			Вполне возможно приписать параметру или возвращаемому значению более одного типа;
+			из спецификации следует, что system.methodSignature должен возвращать список
+			всек возможных сигнатур (т.е. комбинаций типов параметров и возвращаемых значений)
+			метода. Вы можете описать эти типы обычным способом для PhpDocumentor, используя
+			оператор '|'.
+		<!--
             It is perfectly valid to specify multiple types for both params and
             return values; the XML-RPC specification even suggests that
             system.methodSignature should return an array of all possible method
             signatures (i.e., all possible combinations of param and return
             values). You may do so just as you normally would with
             PhpDocumentor, using the '|' operator:
+			-->
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -126,9 +186,11 @@ function myFunc($val1, $val2, $val3)
 * @param string|dateTime.iso8601 $val2 String or an ISO date
 * @param array|struct $val3 Normal indexed array or an associative array
 * @return boolean|struct
+*/
 function myFunc($val1, $val2, $val3)
 {
-}]]></programlisting>
+}
+?>]]></programlisting>
 
         <para>
             One note, however: allowing multiple signatures can lead to
@@ -171,7 +233,8 @@ function myFunc($val1, $val2, $val3)
 $server->setClass('My_Service_Class', 'myservice');
 
 // Function 'somefunc' will be accessible as funcs.somefunc
-$server->addFunction('somefunc', 'funcs');]]></programlisting>
+$server->addFunction('somefunc', 'funcs');
+?>]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.request">
@@ -229,7 +292,8 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></programlisting>
+Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');
+?>]]></programlisting>
 
         <para>
             If you utilize an exception class that your other project exceptions
@@ -285,7 +349,8 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
 
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+?>]]></programlisting>
         <para>
             The above example attempts to retrieve a server definition from
             xmlrpc.cache in the same directory as the script. If unsuccessful,
@@ -326,7 +391,8 @@ function md5Value($value)
 
 $server = new Zend_XmlRpc_Server();
 $server->addFunction('md5Value');
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+?>]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case2">
@@ -343,7 +409,8 @@ require_once 'Services/Comb.php';
 
 $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb');
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+?>]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case3">
@@ -364,7 +431,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
 $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
 $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+?>]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case4">
@@ -390,7 +458,8 @@ $server = new Zend_XmlRpc_Server();
 $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
 $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
 $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
-echo $server->handle();]]></programlisting>
+echo $server->handle();
+?>]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case5">
@@ -421,7 +490,8 @@ $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
 // Create a request object
 $request = new Services_Request();
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);
+?>]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case6">
@@ -456,7 +526,8 @@ $request = new Services_Request();
 // Utilize a custom response
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);
+?>]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case7">
@@ -502,7 +573,8 @@ $request = new Services_Request();
 // Utilize a custom response
 $server->setResponseClass('Services_Response');
 
-echo $server->handle($request);]]></programlisting>
+echo $server->handle($request);
+?>]]></programlisting>
         </sect3>
     </sect2>
 </sect1>
