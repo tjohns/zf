@@ -113,6 +113,19 @@
                               Der komplette Pfad (inklusive Dateiname) der SQLite Datenbank
                           </entry>
                       </row>
+                      <row>
+                          <entry><code>automaticVacuumFactor</code></entry>
+                          <entry><code>int</code></entry>
+                          <entry><code>10</code></entry>
+                          <entry>
+                              Deaktiviere / stelle den automatischen Vakuumprozess ein.
+                              Der automatische Vakuumprozess defragmentiert die Datenbankdatei (und
+                              verkleinert sie) wenn clean() oder delete() aufgerufen wird:
+                              0 bedeutet kein automatisches Vakuum;
+                              1 bedeutet systematisches Vakuum (wenn die delete() or clean() Methoden aufgerufen werden;
+                              x (integer) > 1 => automatisches Vakuum zufällig einmal pro x clean() oder delete() Aufrufe.
+                          </entry>
+                      </row>
                   </tbody>
               </tgroup>
           </table>

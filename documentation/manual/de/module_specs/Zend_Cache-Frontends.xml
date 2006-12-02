@@ -85,7 +85,7 @@
                           <row>
                               <entry><code>automaticCleaningFactor</code></entry>
                               <entry><code>int</code></entry>
-                              <entry><code>0</code></entry>
+                              <entry><code>10</code></entry>
                               <entry>
                                 Ausschalten / Abgleichen des automatischen Löschprozesses (Garbage Collector):
                                 0 heißt keine automatische Löschung des Caches, 1 heißt Systematische Cache

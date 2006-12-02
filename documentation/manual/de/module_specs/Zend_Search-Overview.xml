@@ -19,8 +19,8 @@
                         Bereichssuche und mehr
                         <footnote>
                            <para>
-                               Derzeit werden nur Abfragen für einzelne und mehrere Begriffe sowie für
-                               Phrasen unterstützt.
+                               Derzeit werden Abfragen für einzelne und mehrere Begriffe, für Phrasen, 
+                               für boolesche Ausdrücke und Unterabfragen unterstützt.
                            </para>
                         </footnote>
                     </para>
@@ -100,9 +100,13 @@ $doc->addField(Zend_Search_Lucene_Field::UnStored('contents',
 ?>]]></programlisting>
         
             <para>
-                Du kannst die Felder benennen, wie du möchtest. Standardmäßig wird für die Suche 
-                ein Feld mit dem Namen "contents" verwendet. Es ist eine gute Idee, wichtige Daten 
-                des Dokuments in einem Feld mit diesem Namen zu platzieren. 
+                Du kannst die Felder benennen, wie du möchtest. 
+            </para>
+            <para>
+                Java Lucene verwendet das "contents" Feld für die Suche als Standardfeld. 
+                Zend_Search_Lucene durchsucht standardmäßig alle Felder, aber dieses Verhalten kann
+                auch verändert werden. Für Details siehe das 
+                <link linkend="zend.search.query-language.fields">"Standradsuchfeld"</link> Kapitel.
             </para>
 	</sect2>
 	

@@ -45,6 +45,14 @@
                         wieder geparst wird, sondern eher als eine TermQuery Klausel hinzugefügt werden.
                     </para>
                 </listitem>
+                <listitem>
+                    <para>
+                        Boolesche Abfragen erlauben es, verschiedene Abfragen zu einer neuen 
+                        zusammenzufügen. Deshalb ist dies der beste Weg, um zusätzliche Kriterien
+                        zu einer Benutzersuche hinzuzufügen, die durch den Abfragestring definiert
+                        wird.
+                    </para>
+                </listitem>
             </orderedlist>
 
         </para>
@@ -69,16 +77,21 @@ $index->find($query);
             und verwendet den Query Parser, um ein entsprechendes Zend_Search_Lucene_Search_Query 
             Objekt aus dem String zu erstellen.
         </para>
-
         <para>
-            Es ist wichtig zu beachten, dass <code>find()</code> die Groß- und Kleinschreibung 
-            beachtet. Standardmäßig normalisiert LuceneIndexCreation.jar alle Dokumente in 
-            Kleinschrift. Dies kann mithilfe einer Kommandozeilen Weiche abgestellt werden (gebe 
-            LuceneIndexCreation.jar ohne Argumente für eine Hilfe ein). Die Schreibweise des Textes, 
-            der an <code>find()</code> übergeben wird, muss mit dem des Index übereinstimmen. Wenn
-            der Index in Kleinschrift normalisiert wurde, müssen alle Texte, die an 
-            <code>find()</code> übergeben werden, mittels <code>strtolower()</code> verkleinert 
-            werden. Andernfalls würde es keine Überstimmungen geben.
+            Es ist wichtig zu beachten, dass der Query Parser den Standard Analyzer verwendet, um 
+            verschiedene Teile des Abfragestrings in Token aufzuteilen. Dadurch werden alle 
+            Umwandlungen, die auf einen indizierten Text ausgeführt werden, auch für den 
+            Abfragestring durchgeführt.
+        </para>
+        <para>
+            Dies können die Umwandlung in Kleinbuchstaben, um die Suche unabhängig von Groß- und 
+            Kleinschreibung zu machen, das Entfernen von Stopwörtern, das Stemming und viele andere
+            Dinge sein.
+        </para>
+        <para>
+            Im Gegensatz dazu transformieren oder filtern die API Methoden die Eingabebegriffe 
+            nicht. Deshalb passen sie besser für computergenerierte und nicht in Token aufgeteilte 
+            Felder.
         </para>
 	</sect2>
 

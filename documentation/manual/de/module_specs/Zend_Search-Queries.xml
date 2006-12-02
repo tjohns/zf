@@ -1,18 +1,64 @@
-<sect1 id="zend.search.queries">
-	<title>Abfragearten</title>
+<sect1 id="zend.search.query-api">
+    <title>Query Construction API</title>
+
+    <para>
+        In addition to parsing query automatically it's also possible to constract them through API.
+    </para>
+
+    <para>
+        User query can be combined with queries created through API. Use query parser to construct 
+        query from a string:
+        <programlisting role="php"><![CDATA[<?php
+$query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
+?>]]></programlisting>
+    </para>
+
+
+    <sect2 id="zend.search.queries.exceptions">
+        <title>Query Parser Exceptions</title>
+        <para>
+        Query parser may generate two types of exceptions.
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Search_Lucene_Exception</code> is thrown if something wrong in a 
+                    query parser itself.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <code>Zend_Search_Lucene_Search_QueryParserException</code> is thrown in tha case of
+                    query syntax exception.
+                </para>
+            </listitem>
+        </itemizedlist>
+        Thus that's good idea to catch Zend_Search_Lucene_Search_QueryParserException and make 
+        appropriate message:
+        <programlisting role="php"><![CDATA[<?php
+try {
+    $query = Zend_Search_Lucene_Search_QueryParser::parse($queryString);
+} catch (Zend_Search_Lucene_Search_QueryParserException $e) {
+    echo "Query syntax error: " . $e->getMessage() . "\n";
+}
+?>]]></programlisting>
+        </para>
+
+        <para>
+            The same technique may (and should) be used for find() method of Zend_Search_Lucene 
+            object.
+        </para>
+    </sect2>
 
 	<sect2 id="zend.search.queries.term-query">
 		<title>Begriffsabfrage</title>
         <para>
-            Begriffsabfragen sind für Suchen nach einem einzelnen Begriff gedacht. Beide 
-            Suchmethoden können für Begriffsabfragen verwendet werden.
+            Begriffsabfragen sind für Suchen nach einem einzelnen Begriff gedacht.
         </para>
 
         <para>
             Abfragestring:
         </para>
-        <programlisting role="php"><![CDATA[
-    $hits = $index->find('word1');]]>
+        <programlisting role="querystring"><![CDATA[word1]]>
         </programlisting>
 
         <para>oder</para>
@@ -25,7 +71,6 @@
     $term  = new Zend_Search_Lucene_Index_Term('word1');
     $query = new Zend_Search_Lucene_Search_Query_Term($term);
     $hits  = $index->find($query);
-
 ?>]]></programlisting>
 	</sect2>
 
@@ -78,12 +123,8 @@
         <para>
             Abfragestring:
         </para>
-        <programlisting role="php"><![CDATA[<?php
-
-$hits = $index->find('+word1 author:word2 -word3');
-
-?>]]></programlisting>
-
+        <programlisting role="querystring"><![CDATA[+word1 author:word2 -word3]]></programlisting>
+        
         <itemizedlist>
             <listitem>
                 <para>
@@ -157,8 +198,7 @@ $hits = $index->find('+word1 author:word2 -word3');
             Phrasen können auch Lücken oder mehrere Begriffe an der selben Stelle enthalten. Diese 
             können mit Hilfe das Analysators für verschiedene Zwecke generiert werden, z.B. kann ein 
             Begriff verdoppelt werden, um das Gewicht des Begriffs zu erhöhen oder verschiedene 
-            Synonyme können an einer Stelle platziert werden. Dem entsprechend können Phrasenabfragen 
-            nur mit Hilfe der Programmierschnittstelle (API) erstellt werden. 
+            Synonyme können an einer Stelle platziert werden. 
         </para>
 
         <programlisting role="php"><![CDATA[<?php
