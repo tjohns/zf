@@ -21,9 +21,7 @@ $mail->send();  // use default again
     </example>
     <note>
         <title>外加的transports</title>
-        <para>
-            外加transport，需要实现<code>Zend_Mail_Transport_Interface</code>接口。
-        </para>
+        <para>外加transport，需要实现<code>Zend_Mail_Transport_Interface</code>接口。</para>
     </note>
 </sect1>
 <!--

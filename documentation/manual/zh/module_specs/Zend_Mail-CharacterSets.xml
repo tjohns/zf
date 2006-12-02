@@ -7,9 +7,7 @@
     </para>
     <note>
         <title>只限于文本(Text)格式</title>
-        <para>
-             字符集只适用于文本格式中的段。
-        </para>
+        <para>字符集只适用于文本格式中的段。</para>
     </note>
 </sect1>
 <!--

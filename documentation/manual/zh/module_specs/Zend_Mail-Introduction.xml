@@ -31,7 +31,8 @@ $mail->send();
         <code>getRecipients()</code>是一个特例，它返回一个含有所有先前被加入的收件人地址的数组。
     </para>
     <para>
-        出于安全原因，<code>Zend_Mail</code>了过滤邮件头中所有字段，以防止基于换行符(<code>\n</code>)邮件头注入(header injection)漏洞攻击。
+        出于安全原因，<code>Zend_Mail</code>了过滤邮件头中所有字段，
+        以防止基于换行符(<code>\n</code>)邮件头注入(header injection)漏洞攻击。
     </para>
 </sect1>
 <!--

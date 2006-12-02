@@ -6,7 +6,7 @@
 	    <para>
 	        <code>Zend_Mime</code>是一个用来处理多段MIME消息的辅助类，
 	         在<link linkend="zend.mail"><code>Zend_Mail</code></link>和<link linkend="zend.mime.message"><code>Zend_Mime_Message</code></link>中使用了它，
-				也可在需要MIME支持的应用程序中使用。
+             也可在需要MIME支持的应用程序中使用。
 	    </para>
 	</sect2>
 	

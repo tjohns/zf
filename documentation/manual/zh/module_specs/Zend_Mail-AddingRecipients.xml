@@ -1,7 +1,7 @@
 <sect1 id="zend.mail.adding-recipients">
     <title>增加收件人</title>
     <para>
-        有三种方法可以增加收件人：
+         有三种方法可以增加收件人：
         <itemizedlist>
         <listitem>
         <para><code>addTo()</code>：增加一个收件人到邮件头“To”（收件人）</para>

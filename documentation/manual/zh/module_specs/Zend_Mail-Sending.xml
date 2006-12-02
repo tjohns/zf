@@ -14,8 +14,8 @@ Zend_Mail::setDefaultTransport($tr);
     </example>
     <para>
         <code>setDefaultTransport()</code>方法的调用和<code>Zend_Mail_Transport_Smtp</code>对象的构造代价并不昂贵。
-         这两行可以添加在脚本程序的配置文件(例如 config.inc或者类似文件)中，从而为整个脚本程序配置<code>Zend_Mail</code>类的行为。
-         如此可以把配置信息从应用程序逻辑分离出来－邮件是通过SMTP还是<ulink url="http://php.net/mail"><code>mail()</code></ulink>发送，使用什么邮件服务器等等。
+         这两行可以添加在脚本程序的配置文件(例如config.inc或者类似文件)中，从而为整个脚本程序配置<code>Zend_Mail</code>类的行为。
+         如此可以把配置信息从应用程序逻辑分离出来邮件是通过SMTP还是<ulink url="http://php.net/mail"><code>mail()</code></ulink>发送，使用什么邮件服务器等等。
     </para>
 </sect1>
 <!--
