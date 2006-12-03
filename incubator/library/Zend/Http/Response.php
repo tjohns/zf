@@ -99,7 +99,7 @@ class Zend_Http_Response
         $this->code = $code;
 
         // Make sure we got valid headers and set them
-        if (! (is_array($headers) && count($headers) > 0))
+        if (! is_array($headers))
             throw Zend::exception('Zend_Http_Exception', 'No valid headers were passed');
 
         foreach ($headers as $name => $value) {

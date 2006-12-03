@@ -200,11 +200,6 @@ class Zend_Http_Client
     {
         if ($uri !== null) $this->setUri($uri);
         if ($config !== null) $this->setConfig($config);
-        
-        // Load adapter and pass configuration array
-        Zend::loadClass($this->config['adapter']);
-        $this->adapter = new $this->config['adapter'];
-        $this->adapter->setConfig($this->config);
     }
     
     /**
@@ -667,6 +662,11 @@ class Zend_Http_Client
         if ($method) $this->setMethod($method);
         $this->redirectCounter = 0;
         $response = null;
+        
+        // Load adapter and pass configuration array
+        Zend::loadClass($this->config['adapter']);
+        $this->adapter = new $this->config['adapter'];
+        $this->adapter->setConfig($this->config);
         
         // Send the first request. If redirected, continue.
         do {
