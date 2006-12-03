@@ -535,17 +535,82 @@ $res = $cache->foobar2('1', '2');
 	                          <entry>
 	                              un tableau associatif d'options par d�faut:
 	                              <itemizedlist>
-	                                  <listitem><code>(bool�en, true par d�faut) cache</code> : le cache est activ� si true</listitem>
-	                                  <listitem><code>(bool�en, false par d�faut) cacheWithGetVariables</code> : si true, le cache est toujours activ� m�me s'il y a des variables dans le tableau <code>$_GET</code></listitem>
-	                                  <listitem><code>(bool�en, false par d�faut) cacheWithPostVariables</code> : si true, le cache est toujours activ� m�me s'il y a des variables dans le tableau <code>$_POST</code></listitem>
-	                                  <listitem><code>(bool�en, false par d�faut) cacheWithSessionVariables</code> : si true, le cache est toujours activ� s'il y a des variables dans le tableau <code>$_SESSION</code></listitem>
-	                                  <listitem><code>(bool�en, false par d�faut) cacheWithFilesVariables</code> : si true, le cache est toujours activ� s'il y a des variables dans le tableau <code>$_FILES</code></listitem>
-	                                  <listitem><code>(bool�en, false par d�faut) cacheWithCookieVariables</code> : si true, le cache est toujours activ� s'il y a des variables dans le tableau <code>$_COOKIE</code></listitem>
-									  <listitem><code>(bool�en, true par d�faut) makeIdWithGetVariables</code> : si true, l'identifiant du cache sera ind�pendant du contenu du tableau<code>$_GET</code></listitem>
-	                                  <listitem><code>(bool�en, true par d�faut) makeIdWithPostVariables</code> : si true, l'identifiant du cache sera ind�pendant du contenu du tableau<code>$_POST</code></listitem>
-	                                  <listitem><code>(bool�en, true par d�faut) makeIdWithSessionVariables</code> : si true, l'identifiant du cache sera ind�pendant du contenu du tableau<code>$_SESSION</code></listitem>
-	                                  <listitem><code>(bool�en, true par d�faut) makeIdWithFilesVariables</code> : si true, l'identifiant du cache sera ind�pendant du contenu du tableau<code>$_FILES</code></listitem>
-	                                  <listitem><code>(bool�en, true par d�faut) makeIdWithCookieVariables</code> : si true, l'identifiant du cache sera ind�pendant du contenu du tableau<code>$_COOKIE</code></listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, true par d�faut) cache</code> : 
+	                                          le cache est activ� si true
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, false par d�faut) cacheWithGetVariables</code> : 
+	                                          si true, le cache est toujours activ� m�me s'il y a des variables 
+	                                          dans le tableau <code>$_GET</code>
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, false par d�faut) cacheWithPostVariables</code> : 
+	                                          si true, le cache est toujours activ� m�me s'il y a des variables 
+	                                          dans le tableau <code>$_POST</code>
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, false par d�faut) cacheWithSessionVariables</code> : 
+	                                          si true, le cache est toujours activ� s'il y a des variables dans le 
+	                                          tableau <code>$_SESSION</code>
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, false par d�faut) cacheWithFilesVariables</code> : 
+	                                          si true, le cache est toujours activ� s'il y a des variables dans le 
+	                                          tableau <code>$_FILES</code>
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, false par d�faut) cacheWithCookieVariables</code> : 
+	                                          si true, le cache est toujours activ� s'il y a des variables dans le 
+	                                          tableau <code>$_COOKIE</code>
+	                                      </para>
+	                                  </listitem>
+									  <listitem>
+									      <para>
+									          <code>(bool�en, true par d�faut) makeIdWithGetVariables</code> : 
+									          si true, l'identifiant du cache sera ind�pendant du contenu du 
+									          tableau <code>$_GET</code>
+									      </para>
+									  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, true par d�faut) makeIdWithPostVariables</code> : 
+	                                          si true, l'identifiant du cache sera ind�pendant du contenu du 
+	                                          tableau <code>$_POST</code>
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, true par d�faut) makeIdWithSessionVariables</code> : 
+	                                          si true, l'identifiant du cache sera ind�pendant du contenu du 
+	                                          tableau <code>$_SESSION</code>
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, true par d�faut) makeIdWithFilesVariables</code> : 
+	                                          si true, l'identifiant du cache sera ind�pendant du contenu du 
+	                                          tableau <code>$_FILES</code>
+	                                      </para>
+	                                  </listitem>
+	                                  <listitem>
+	                                      <para>
+	                                          <code>(bool�en, true par d�faut) makeIdWithCookieVariables</code> : 
+	                                          si true, l'identifiant du cache sera ind�pendant du contenu du 
+	                                          tableau <code>$_COOKIE</code>
+	                                      </para>
+	                                  </listitem>
 	                              </itemizedlist>
 	                          </entry>
 	                     </row>
