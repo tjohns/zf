@@ -14,18 +14,16 @@
  *
  * @package    Zend_View
  * @subpackage Helpers
- * @author     Michael Minicki aka Martel Valgoerad (martel@post.pl)
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id$
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-
 
 /**
  * Helper for making easy links and getting urls that depend on the routes and router
  * 
  * @package    Zend_View
  * @subpackage Helpers
- * @author     Michael Minicki aka Martel Valgoerad (martel@post.pl)
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
@@ -53,7 +51,9 @@ class Zend_View_Helper_Url {
             $route = $router->getRoute($name);
         }
         
-        $url = rtrim($router->getRewriteBase(), '/') . '/';
+        $request = $ctrl->getRequest();
+        
+        $url = rtrim($request->getBaseUrl(), '/') . '/';
         $url .= $route->assemble($urlOptions);
          
         return $url;
