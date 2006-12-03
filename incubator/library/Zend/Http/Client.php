@@ -93,7 +93,7 @@ class Zend_Http_Client
      *
      * @var Zend_Http_Client_Adapter_Interface
      */
-    protected $adapter;
+    protected $adapter = null;
     
     /**
      * Request URI
@@ -663,10 +663,8 @@ class Zend_Http_Client
         $this->redirectCounter = 0;
         $response = null;
         
-        // Load adapter and pass configuration array
-        Zend::loadClass($this->config['adapter']);
-        $this->adapter = new $this->config['adapter'];
-        $this->adapter->setConfig($this->config);
+        // Make sure the adapter is loaded
+        if ($this->adapter == null) $this->loadAdapter($this->config['adapter']);
         
         // Send the first request. If redirected, continue.
         do {
@@ -901,6 +899,35 @@ class Zend_Http_Client
         }
         
         return $parameters;
+    }
+    
+    /**
+     * Load the connection adapter
+     * 
+     * While this method is not called more than one for a client, it is 
+     * seperated from ->request() to preserve logic and readability
+     *
+     * @param Zend_Http_Client_Adapter_Interface|string $adapter
+     */
+    protected function loadAdapter($adapter)
+    {
+        if (is_string($adapter)) {
+        	try {
+        		Zend::loadClass($adapter);
+        	} catch (Zend_Exception $e) {
+        		throw Zend::exception('Zend_Http_Client_Exception', "Unable to load adapter '$adapter': {$e->getMessage()}");
+        	}
+        	
+        	$adapter = new $adapter;
+        }
+        
+        if (! $adapter instanceof Zend_Http_Client_Adapter_Interface) 
+        	throw Zend::exception('Zend_Http_Client_Exception', "Passed adapter is not a HTTP connection adapter");
+
+        $this->adapter = $adapter;
+        $config = $this->config;
+        unset($config['adapter']);       
+        $this->adapter->setConfig($config);
     }
     
     /**
