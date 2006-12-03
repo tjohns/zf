@@ -182,6 +182,11 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
      * route.archive.defaults.year = 2000
      * route.archive.reqs.year = "\d+"
      * 
+     * routes.news.type = "Zend_Controller_Router_StaticRoute"
+     * routes.news.route = "news"
+     * routes.news.defaults.controller = "news"
+     * routes.news.defaults.action = "list"
+     * 
      * And finally after you have created a Zend_Config with above ini:
      * $router = new Zend_Controller_RewriteRouter();
      * $router->addConfig($config, 'route');
@@ -196,9 +201,10 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
             throw Zend::exception('Zend_Controller_Router_Exception', "No route configuration in section '{$section}'");
         }
         foreach ($config->{$section} as $name => $info) {
+            $object = (isset($info->type)) ? $info->type : 'Zend_Controller_Router_Route';        
             $reqs = (isset($info->reqs)) ? $info->reqs->asArray() : null;
             $defs = (isset($info->defaults)) ? $info->defaults->asArray() : null;
-            $this->addRoute($name, new Zend_Controller_Router_Route($info->route, $defs, $reqs));
+            $this->addRoute($name, new $object($info->route, $defs, $reqs));
         }
     }
 
