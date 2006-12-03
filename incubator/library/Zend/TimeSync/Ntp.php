@@ -97,8 +97,9 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $clientreceived = time() + 2208988800;
         
         $this->_disconnect();
-
+        
         $leap = ($flags & 0xc0) >> 6; // Leap Indicator bit 1100 0000
+        
         // 0 = no warning, 1 = last min. 61 sec., 2 = last min. 59 sec., 3 = not synconised
         switch($leap) {
             case 0 :
@@ -143,6 +144,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
         $ntpserviceid = 'Unknown Stratum ' . $stratum . ' Service';
         $refid = strtoupper($referenceid);
+        
         switch($stratum) {
             case 0:
                 if (substr($refid, 0, 3) == 'DCN') {
@@ -215,6 +217,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $this->_info['offset'] = $offset / 2;
         
         $time = time() - $offset;
+        
         return $time;
     }
 }

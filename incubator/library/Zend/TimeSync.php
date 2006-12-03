@@ -48,7 +48,7 @@ class Zend_TimeSync implements IteratorAggregate
      * Set the default timeserver scheme to "ntp". This will be called when no, or
      * an invalid scheme is specified
      */
-    const DEFAULT_TIMESERVER_SCHEME = 'ntp';
+    const DEFAULT_SCHEME = 'ntp';
     
     /**
      * Contains array of timeservers
@@ -104,9 +104,9 @@ class Zend_TimeSync implements IteratorAggregate
      * The second parameter is $options, and it is optional. If not
      * specified, default options will be used.
      *
-     * @param mixed $server
-     * @param array $options
-     * @return Zend_TimeSync
+     * @param   mixed $server 
+     * @param   array $options
+     * @return  Zend_TimeSync
      */ 
     public function __construct($server, $options = array())
     {
@@ -130,24 +130,24 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Sets a single option. It replaces any currently defined.
      *
-     * @param mixed $key
-     * @param mixed $value
-     * @throws Zend_TimeSync_Exception
+     * @param   mixed $key
+     * @param   mixed $value
+     * @throws  Zend_TimeSync_Exception
      */ 
     public function setOption($key, $value) 
     {
         if ((bool) preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $key)) {
             Zend_TimeSync::$options[$key] = $value;
         } else {
-            throw new Zend_TimeSync_Exception("Invalid key: '$key'");
+            throw Zend::exception('Zend_TimeSync_Exception', "Invalid key: '$key'");
         }
     }
-        
+    
     /**
      * Set options. These replace any currently defined.
      *
-     * @param array $options
-     * @throws Zend_TimeSync_Exception
+     * @param   array $options
+     * @throws  Zend_TimeSync_Exception
      */ 
     public function setOptions($options = array()) 
     {
@@ -166,8 +166,8 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Mark a nameserver as current.
      *
-     * @param integer $flag
-     * @throws Zend_TimeSync_Exception
+     * @param   integer $flag
+     * @throws  Zend_TimeSync_Exception
      */
     public function setCurrent($flag)
     {
@@ -185,7 +185,7 @@ class Zend_TimeSync implements IteratorAggregate
      * Returns an array of options that have been set.
      *
      * @return array
-     */ 
+     */
     public function getOptions()
     {
         return Zend_TimeSync::$options;
@@ -195,9 +195,9 @@ class Zend_TimeSync implements IteratorAggregate
      * Returns the value to the option, if any.
      * If the option was not found, this function returns false.
      *
-     * @param integer $flag
-     * @return mixed
-     * @throws Zend_TimeSync_Exception
+     * @param   integer $flag
+     * @return  mixed
+     * @throws  Zend_TimeSync_Exception
      */
     public function getOption($flag)
     {
@@ -214,10 +214,10 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Receive a specified timeservers
      * 
-     * @param integer $flag
-     * @return object
-     * @throws Zend_TimeSync_Exception
-     */ 
+     * @param   integer $flag
+     * @return  object
+     * @throws  Zend_TimeSync_Exception
+     */
     public function get($flag)
     {
         if (isset($this->_timeservers[$flag])) {
@@ -274,9 +274,9 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Query the timeserver list using the fallback mechanism
      * 
-     * @param $locale optional locale
-     * @return object
-     * @throws Zend_TimeSync_Exception
+     * @param   $locale optional locale
+     * @return  object
+     * @throws  Zend_TimeSync_Exception
      */
     public function getDate($locale = false)
     {
@@ -310,23 +310,24 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Add a timeserver object to the timeserver list
      *
-     * @param string $server
-     * @return void
+     * @param   string $server
+     * @return  void
      */
     protected function _addServer($server)
     {
         $urlinfo = @parse_url($server);
-        $scheme  = self::DEFAULT_TIMESERVER_SCHEME;
+        $scheme  = self::DEFAULT_SCHEME;
         
         foreach ($urlinfo as $key => $value) {
             switch ($key) {
                 case 'scheme':
                     $scheme = strtolower($value);
-                    if (!in_array($value, $this->_allowedSchemes)) {
-                        $scheme = self::DEFAULT_TIMESERVER_SCHEME;
+                    if (!in_array($scheme, $this->_allowedSchemes)) {
+                        $scheme = self::DEFAULT_SCHEME;
                     }
                     break;
                     
+                case 'path':
                 case 'host':
                     $host = $value;
                     break;
@@ -335,14 +336,13 @@ class Zend_TimeSync implements IteratorAggregate
                     $port = $value;
                     break;
                     
-                case 'path':
-                    $host = $value;
-                    break;
+                default: 
+                    break; // break intentionally omitted
             }
         }
         
         $protocol = ($scheme == 'ntp') ? 'udp' : 'tcp';
-        $port     = $this->_getStandardPort($scheme);
+        $port     = (isset($port)) ? $port : $this->_getStandardPort($scheme);
         
         $className = 'Zend_TimeSync_' . ucfirst($scheme);
         Zend::loadClass($className);
@@ -354,8 +354,8 @@ class Zend_TimeSync implements IteratorAggregate
     /**
      * Return the default port number for a specified scheme
      *
-     * @param string $scheme
-     * @return integer
+     * @param   string $scheme
+     * @return  integer
      */
     protected function _getStandardPort($scheme)
     {

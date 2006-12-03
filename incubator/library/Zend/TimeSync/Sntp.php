@@ -41,7 +41,7 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         $this->_timeserver = $timeserver;
         $this->_port       = $port;
     }
-        
+    
     protected function _query()
     {
         $this->_connect();

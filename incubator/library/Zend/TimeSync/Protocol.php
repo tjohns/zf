@@ -31,12 +31,11 @@ abstract class Zend_TimeSync_Protocol
     protected $_socket;
     protected $_exceptions;
     
+    abstract protected function _query();
+    
     /**
-     * Connect to the specified NTP server. If called when the socket is
+     * Connect to the specified timeserver. If called when the socket is
      * already connected, it disconnects and connects again.
-     *
-     * @access protected
-     * @return boolean
      */
     protected function _connect()
     {
@@ -47,8 +46,10 @@ abstract class Zend_TimeSync_Protocol
         
         $socket = @fsockopen($this->_timeserver, $this->_port, $errno, $errstr, Zend_TimeSync::$options['timeout']);
         if (!$socket) {
-            throw Zend::exception('Zend_TimeSync_ProtocolException', "could not connect to '$this->_timeserver' " .
-                "on port '$this->_port', reason: '$errstr'");
+            throw Zend::exception(
+                'Zend_TimeSync_ProtocolException', 
+                "could not connect to '$this->_timeserver' on port '$this->_port', reason: '$errstr'"
+            );
         }
         
         $this->_socket = $socket;
@@ -56,21 +57,27 @@ abstract class Zend_TimeSync_Protocol
     
     /**
      * Disconnects from the peer, closes the socket.
-     *
-     * @access protected
-     * @return bool
      */
     protected function _disconnect()
     {
         if (!is_resource($this->_socket)) {
-            throw Zend::exception('Zend_TimeSync_ProtocolException', "could not close server connection from " .
-                "'$this->_timeserver' on port '$this->_port'");
+            throw Zend::exception(
+                'Zend_TimeSync_ProtocolException', 
+                "could not close server connection from '$this->_timeserver' on port '$this->_port'"
+            );
         }
         
         @fclose($this->_socket);
         $this->_socket = null;
     }
     
+    /**
+     * Query this timeserver without using the fallback mechanism
+     * 
+     * @param   $locale optional locale
+     * @return  Zend_Date
+     * @throws  Zend_TimeSync_Exception
+     */
     public function getDate($locale = false)
     {
         $timestamp = $this->_query();
