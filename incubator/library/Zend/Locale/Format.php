@@ -37,6 +37,35 @@ Zend::loadClass('Zend_Locale_Data');
  */
 class Zend_Locale_Format
 {
+
+    /**
+     * Number conversion table
+     */
+    private $_numbersystem = array (
+        'default'    => array( '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // 0030 - 0039
+        'arabic'     => array( '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'), // 0660 - 0669
+        'devanagali' => array( '०', '१', '२', '३', '४', '५', '६', '७', '८', '९'), // 0966 - 096F
+        'bengali'    => array( '০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'), // 09E6 - 09EF
+        'gurmukhi'   => array( '੦ ', '੧', '੨', '੩', '੪', '੫', '੬', '੭ ', '੮', '੯ '), // 0A66 - 0A6F
+        'gujarati'   => array( '૦', '૧', '૨', '૩', '૪', '૫', '૬', '૭', '૮', '૯'), // 0AE6 - 0AEF
+        'oriya'      => array( ), // 0B66 - 0B6F
+        'tamil'      => array( ௦ '', '௧', '௨', '௩', '௪', '௫', '௬', '௭', '௮', '௯'), // 0BE6 - 0BEF
+        'telugu'     => array( '౦', '౧', '౨', '౩', '౪', '౫', '౬', '౭', '౮', '౯'), // 0C66 - 0C6F
+        'kannada'    => array( '೦', '೧', '೨', '೩', '೪', '೫', '೬', '೭', '೮', '೯'), // 0CE6 - 0CEF
+        'malayalam'  => array( '൦', '൧', '൨', '൩', '൪', '൫', '൬', '൭', '൮', '൯'), // 0D66 - 0D6F
+        'thai'       => array( '๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙ '), // 0E50 - 0E59
+        'lao'        => array( '໐', '໑', '໒', '໓', '໔', '໕', '໖', '໗', '໘', '໙'), // 0ED0 - 0ED9
+        'tibetan'    => array( '༠', '༡', '༢', '༣', '༤', '༥', '༦', '༧', '༨', '༩ '), // 0F20 - 0F29
+        'myanmar'    => array( ), // 1040 - 1049
+        'khmer'      => array( ), // 17E0 - 17E9
+        'mongolian'  => array( ), // 1810 - 1819
+        'limbu'      => array( ), // 1946 - 194F
+        'osmanya'    => array( ), // 104A0-104A9
+        'tailue'     => array( ), // 19D0 - 19D9
+        'balinese'   => array( ), // 1B50 - 1B59
+        'nko'        => array( )  // 07C0 - 07C9
+    );
+
     /**
      * Returns the first found number from an string
      * Parsing depends on given locale (grouping and decimal)
