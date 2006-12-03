@@ -191,10 +191,6 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      */
     public function isDispatchable(Zend_Controller_Request_Abstract $request)
     {
-        if ($request->isDispatched()) {
-            return false;
-        }
-
         $dispatchable = $this->_getController($request);
 
         return is_string($dispatchable);
