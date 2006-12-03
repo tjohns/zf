@@ -11,9 +11,14 @@
 require_once 'Zend/Feed.php';
 
 /**
- * Zend_Http_Client_File
+ * Zend_Http_Client_Adapter_Test 
  */
-require_once 'Zend/Http/Client/File.php';
+require_once 'Zend/Http/Client/Adapter/Test.php';
+
+/**
+ * Zend_Http_Client
+ */
+require_once 'Zend/Http/Client.php';
 
 /**
  * PHPUnit Test Case
@@ -29,13 +34,21 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
 {
     protected $_client;
+    
     protected $_feedDir;
+    
+    /**
+     * HTTP client test adapter
+     *
+     * @var Zend_Http_Client_Adapter_Test
+     */
+    protected $_adapter;
 
     public function setUp()
     {
-        Zend_Feed::setHttpClient(new Zend_Http_Client_File());
+    	$this->_adapter = new Zend_Http_Client_Adapter_Test();
+        Zend_Feed::setHttpClient(new Zend_Http_Client(null, array('adapter' => $this->_adapter)));
         $this->_client = Zend_Feed::getHttpClient();
-
         $this->_feedDir = dirname(__FILE__) . '/_files';
     }
 
@@ -126,26 +139,31 @@ class Zend_Feed_ImportTest extends PHPUnit_Framework_TestCase
 
     protected function _importAtomValid($filename)
     {
-        $this->_client->setFilename("$this->_feedDir/$filename");
-        $feed = Zend_Feed::import('http');
+    	$response = new Zend_Http_Response(200, array(), file_get_contents("$this->_feedDir/$filename"));
+    	$this->_adapter->setResponse($response);
+
+        $feed = Zend_Feed::import('http://localhost');
         $this->assertTrue($feed instanceof Zend_Feed_Atom);
     }
 
     protected function _importRssValid($filename)
     {
-        $this->_client->setFilename("$this->_feedDir/$filename");
-        $feed = Zend_Feed::import('http');
+    	$response = new Zend_Http_Response(200, array(), file_get_contents("$this->_feedDir/$filename"));
+    	$this->_adapter->setResponse($response);
+
+        $feed = Zend_Feed::import('http://localhost');
         $this->assertTrue($feed instanceof Zend_Feed_Rss);
     }
 
     protected function _importInvalid($filename)
     {
-        $this->_client->setFilename("$this->_feedDir/$filename");
+    	$response = new Zend_Http_Response(200, array(), file_get_contents("$this->_feedDir/$filename"));
+    	$this->_adapter->setResponse($response);
+    	
         try {
-            $feed = Zend_Feed::import('http');
+            $feed = Zend_Feed::import('http://localhost');
         } catch (Exception $e) {
         }
         $this->assertTrue($e instanceof Zend_Feed_Exception, 'Expected Zend_Feed_Exception to be thrown');
     }
-
 }

@@ -98,13 +98,10 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 		}
 
 		$this->_uri->setPath($path);
-
-		if (!is_null($query) && is_string($query)) {
-			$this->_uri->setQueryString($query);
-		} elseif (is_array($query)) {
-			$this->_uri->setQueryArray($query);
+		if (!is_null($query)) {
+			$this->_uri->setQuery($query);
 		}
-
+		
 		/**
 		 * Get the HTTP client and configure it for the endpoint URI.  Do this each time
 		 * because the Zend_Http_Client instance is shared among all Zend_Service_Abstract subclasses.
@@ -121,7 +118,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	final public function restGet($path, $query = null)
 	{
 	   $this->_prepareRest($path, $query);
-	   return self::getHttpClient()->get();
+	   return self::getHttpClient()->request('GET');
 	}
 
 	/**
@@ -134,7 +131,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	final public function restPost($path, $data)
 	{
 	   $this->_prepareRest($path);
-	   return self::getHttpClient()->post($data);
+	   return self::getHttpClient()->request('POST');
 	}
 
 	/**
@@ -147,7 +144,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	final public function restPut($path, $data)
 	{
 	   $this->_prepareRest($path);
-	   return self::getHttpClient()->put($data);
+	   return self::getHttpClient()->request('PUT');;
 	}
 
 	/**
@@ -159,7 +156,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
 	final public function restDelete($path)
 	{
 	   $this->_prepareRest($path);
-	   return self::getHttpClient()->delete();
+	   return self::getHttpClient()->request('DELETE');
 	}
 	
 	/**

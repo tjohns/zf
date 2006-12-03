@@ -70,7 +70,7 @@ class Zend_XmlRpc_Client
     /**
      * The HTTP client object to use for connecting the XML-RPC server.
      *
-     * @var Zend_Http_client_Abstract
+     * @var Zend_Http_Client
      */
     protected $_httpClient = null;
 
@@ -306,7 +306,7 @@ class Zend_XmlRpc_Client
      *
      * @param Zend_Http_Client_Abstract $httpClient
      */
-    public function __setHttpClient(Zend_Http_Client_Abstract $httpClient)
+    public function __setHttpClient(Zend_Http_Client $httpClient)
     {
         $this->_httpClient = $httpClient;
     }
@@ -315,11 +315,11 @@ class Zend_XmlRpc_Client
     /**
 	 * Gets the HTTP client object.
 	 *
-	 * @return Zend_Http_Client_Abstract
+	 * @return Zend_Http_Client
 	 */
 	protected function __getHttpClient()
 	{
-		if (!$this->_httpClient instanceof Zend_Http_Client_Abstract) {
+		if (!$this->_httpClient instanceof Zend_Http_Client) {
             iconv_set_encoding('input_encoding', 'UTF-8');
             iconv_set_encoding('output_encoding', 'UTF-8');
             iconv_set_encoding('internal_encoding', 'UTF-8');
@@ -352,9 +352,10 @@ class Zend_XmlRpc_Client
             'User-Agent: Zend_XmlRpc_Client'
         ));
 
-        $response = $http->post($request_data);
+        $http->setRawData($request_data);
+        $response = $http->request(Zend_Http_Client::POST);
+        
         /* @var $response Zend_Http_Response */
-
         return $this->_parseResponse($response->getBody());
     }
 
@@ -594,6 +595,4 @@ class Zend_XmlRpc_Client
         return array();
     }
 
-
 }
-

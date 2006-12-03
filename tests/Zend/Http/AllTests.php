@@ -1,13 +1,15 @@
 <?php
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Zend_HttpClient_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Zend_Http_AllTests::main');
 }
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Http/ResponseTest.php';
-require_once 'Zend/Http/ClientTest.php';
+require_once 'Zend/Http/CookieTest.php';
+require_once 'Zend/Http/CookieJarTest.php';
+require_once 'Zend/Http/Client/AllTests.php';
 
 class Zend_Http_AllTests
 {
@@ -18,15 +20,17 @@ class Zend_Http_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_HttpClient');
+        $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
 
-        $suite->addTestSuite('Zend_Http_ClientTest');
-		$suite->addTestSuite('Zend_Http_Client_ResponseTest');
+        $suite->addTestSuite('Zend_Http_ResponseTest');
+        $suite->addTestSuite('Zend_Http_CookieTest');
+        $suite->addTestSuite('Zend_Http_CookieJarTest');
+        $suite->addTest(Zend_Http_Client_AllTests::suite());
 
         return $suite;
     }
 }
 
 if (PHPUnit_MAIN_METHOD == 'Zend_Http_AllTests::main') {
-    Zend_HttpClient_AllTests::main();
+    Zend_AllTests::main();
 }

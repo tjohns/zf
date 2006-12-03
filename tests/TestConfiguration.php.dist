@@ -60,14 +60,14 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_DATABASE', 'test');
 
 
 /**
- * Zend_HttpClient
- *
- * IMPORTANT: If this option is enabled, the Zend_HttpClient test suite
- * will attempt to retrieve a remote URI.  Do this only on development
- * servers or sites where you have approval to do so.
+ * Zend_Http_Client tests
+ * 
+ * To enable the dynamic Zend_Http_Client tests, you will need to symbolically
+ * link or copy the files in tests/Zend/Http/Client/_files to a directory 
+ * under your web server(s) document root and set this constant to point to the
+ * URL of this directory.
  */
-define('TESTS_ZEND_HTTPCLIENT_REMOTE_ENABLED', true);
-define('TESTS_ZEND_HTTPCLIENT_REMOTE_URI',     'http://zend.com');
+define('TESTS_ZEND_HTTP_CLIENT_BASEURI', false);
 
 
 /**

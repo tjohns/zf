@@ -41,7 +41,7 @@ abstract class Zend_Service_Abstract
     /**
      * HTTP Client used to query all web services
      *
-     * @var Zend_Http_Client_Abstract
+     * @var Zend_Http_Client
      */
     static protected $_httpClient = null;
 
@@ -50,9 +50,9 @@ abstract class Zend_Service_Abstract
      * Sets the HTTP client object to use for retrieving the feeds.  If none
      * is set, the default Zend_Http_Client will be used.
      *
-     * @param Zend_Http_Client_Abstract $httpClient
+     * @param Zend_Http_Client $httpClient
      */
-	final static public function setHttpClient(Zend_Http_Client_Abstract $httpClient)
+	final static public function setHttpClient(Zend_Http_Client $httpClient)
 	{
 		self::$_httpClient = $httpClient;
 	}
@@ -61,11 +61,11 @@ abstract class Zend_Service_Abstract
 	/**
 	 * Gets the HTTP client object.
 	 *
-	 * @return Zend_Http_Client_Abstract
+	 * @return Zend_Http_Client
 	 */
 	final static public function getHttpClient()
 	{
-		if (!self::$_httpClient instanceof Zend_Http_Client_Abstract) {
+		if (!self::$_httpClient instanceof Zend_Http_Client) {
 			self::$_httpClient = new Zend_Http_Client();
 		}
 

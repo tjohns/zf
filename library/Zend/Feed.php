@@ -57,7 +57,7 @@ class Zend_Feed
     /**
      * HTTP client object to use for retrieving feeds
      *
-     * @var Zend_Http_Client_Abstract
+     * @var Zend_Http_Client
      */
     protected static $_httpClient = null;
 
@@ -86,7 +86,7 @@ class Zend_Feed
      *
      * @param Zend_Http_Client_Abstract $httpClient
      */
-    public static function setHttpClient(Zend_Http_Client_Abstract $httpClient)
+    public static function setHttpClient(Zend_Http_Client $httpClient)
     {
         self::$_httpClient = $httpClient;
     }
@@ -95,11 +95,11 @@ class Zend_Feed
     /**
      * Gets the HTTP client object.
      *
-     * @return Zend_Http_Client_Abstract
+     * @return Zend_Http_Client
      */
     public static function getHttpClient()
     {
-        if (!self::$_httpClient instanceof Zend_Http_Client_Abstract) {
+        if (!self::$_httpClient instanceof Zend_Http_Client) {
             self::$_httpClient = new Zend_Http_Client();
         }
 
@@ -181,7 +181,7 @@ class Zend_Feed
     {
         $client = self::getHttpClient();
         $client->setUri($uri);
-        $response = $client->get();
+        $response = $client->request();
         if ($response->getStatus() !== 200) {
             throw new Zend_Feed_Exception('Feed failed to load, got response code ' . $response->getStatus());
         }
@@ -261,7 +261,7 @@ class Zend_Feed
         // Get the HTTP response from $uri and save the contents
         $client = self::getHttpClient();
         $client->setUri($uri);
-        $response = $client->get();
+        $response = $client->request();
         if ($response->getStatus() !== 200) {
             throw new Zend_Feed_Exception("Failed to access $uri, got response code " . $response->getStatus());
         }

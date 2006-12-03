@@ -83,30 +83,41 @@ class Zend_Feed_AtomPublishingTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('2005-05-23T16:27:00-08:00', $entry->updated(), 'New updated link is not correct');
         $this->assertEquals('http://fubar.com/myFeed/1/2/', $entry->link('edit'), 'New edit link is not correct');
     }
-
 }
 
-class TestClient extends Zend_Http_Client_File {
+/**
+ * A test wrapper around Zend_Http_Client, not actually performing
+ * the request.
+ * 
+ */
+class TestClient extends Zend_Http_Client 
+{
+	public function request($method = null) {
 
-    public function post($data)
-    {
-        $this->responseCode = 201;
-        $this->responseBody = file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-created-entry.xml');
-    }
-
-    public function put($data)
-    {
-        $doc1 = new DOMDocument();
-        $doc1->load(dirname(__FILE__) . '/_files/AtomPublishingTest-expected-update.xml');
-        $doc2 = new DOMDocument();
-        $doc2->loadXML($data);
-        if ($doc1->saveXML() != $doc2->saveXML()) {
-            $this->responseCode = 400;
-            $this->responseBody = false;
-            return null;
-        }
-        $this->responseCode = 200;
-        $this->responseBody = file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-updated-entry.xml');
-    }
-
+		$code = 400;
+		$body = '';
+		
+		switch ($method) {
+			case self::POST:
+				$code = 201;
+				$body = file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-created-entry.xml');
+				break;
+				
+			case self::PUT:
+				$doc1 = new DOMDocument();
+        		$doc1->load(dirname(__FILE__) . '/_files/AtomPublishingTest-expected-update.xml');
+        		$doc2 = new DOMDocument();
+        		$doc2->loadXML($this->raw_post_data);
+        		if ($doc1->saveXML() == $doc2->saveXML()) {
+        			$code = 200;
+        			$body = file_get_contents(dirname(__FILE__) . '/_files/AtomPublishingTest-updated-entry.xml');
+        		}
+				break;
+				
+			default:
+				break;
+		}
+		
+		return new Zend_Http_Response($code, array(), $body);
+	}
 }

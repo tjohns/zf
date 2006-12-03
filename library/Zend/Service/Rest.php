@@ -62,10 +62,8 @@ class Zend_Service_Rest extends Zend_Service_Abstract
 
 		$this->_uri->setPath($path);
 
-		if (!is_null($query) && is_string($query)) {
-			$this->_uri->setQueryString($query);
-		} elseif (is_array($query)) {
-			$this->_uri->setQueryArray($query);
+		if (!is_null($query)) {
+			$this->_uri->setQuery($query);
 		}
 
 		/**
@@ -101,7 +99,7 @@ class Zend_Service_Rest extends Zend_Service_Abstract
 	final public function restGet($path, $query = null)
 	{
 	   $this->_prepareRest($path, $query);
-	   return self::getHttpClient()->get();
+	   return self::getHttpClient()->request('GET');
 	}
 
 
@@ -115,8 +113,9 @@ class Zend_Service_Rest extends Zend_Service_Abstract
 	final public function restPost($path, $data)
 	{
 	   $this->_prepareRest($path);
-	   $this->_uri->queryArray($data);
-	   return self::getHttpClient()->post($data);
+	   $this->_uri->setQuery($data);
+	   self::getHttpClient()->setRawData($data);
+	   return self::getHttpClient()->request('POST');
 	}
 
 
@@ -130,8 +129,9 @@ class Zend_Service_Rest extends Zend_Service_Abstract
 	final public function restPut($path, $data)
 	{
 	   $this->_prepareRest($path);
-	   $this->_uri->queryArray($data);
-	   return self::getHttpClient()->put($data);
+	   $this->_uri->setQuery($data);
+	   self::getHttpClient()->setRawData($data);
+	   return self::getHttpClient()->request('PUT');
 	}
 
 
@@ -144,7 +144,7 @@ class Zend_Service_Rest extends Zend_Service_Abstract
 	final public function restDelete($path)
 	{
 	   $this->_prepareRest($path);
-	   return self::getHttpClient()->delete();
+	   return self::getHttpClient()->request('DELETE');
 	}
 
 }
