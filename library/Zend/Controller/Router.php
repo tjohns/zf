@@ -161,10 +161,10 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
          * Attempt to get from path_info; controller is first item, action 
          * second
          */
-        if (isset($pathSegs[0])) {
+        if (isset($pathSegs[0]) && !empty($pathSegs[0])) {
             $controller = array_shift($pathSegs);
         }
-        if (isset($pathSegs[0])) {
+        if (isset($pathSegs[0]) && !empty($pathSegs[0])) {
             $action = array_shift($pathSegs);
         }
 
