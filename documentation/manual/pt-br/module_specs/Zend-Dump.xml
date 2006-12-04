@@ -2,7 +2,7 @@
     <title>Zend::dump()</title>
 
     <para>
-    <code>Zend::dump()</code> imprime e/ou retorna informação sobre uma expressão. É um wrapper
+    <code>Zend::dump()</code> imprime e/ou retorna informação sobre uma expressão. É um <i>wrapper</i>
     para a função do PHP <ulink url="http://php.net/var_dump"><code>var_dump()</code></ulink>. Isso  
     envolve a saída com tags (X)HTML <code>&lt;pre&gt;</code> e opcionalmente adiciona um rótulo.
     </para>
