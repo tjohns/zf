@@ -1,7 +1,7 @@
 <sect1 id="zend.isreadable">
     <title>Zend::isReadable()</title>
 
-    <para>Returns <code>TRUE</code> if a file is readable, FALSE otherwise.</para>
+    <para>Retorna <code>TRUE</code> se for possível ler o arquivo, e <code>FALSE</code> se não.</para>
 
     <programlisting role="php"><![CDATA[<?php
 
@@ -9,10 +9,10 @@ Zend::isReadable($filename)
 
 ?>]]></programlisting>
 
-    <para>The <code>$filename</code> argument specifies the filename to check, which may
-    contain path information.  This method is a wrapper for the PHP function
-    <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.  The PHP function
-    does not search the <code>include_path</code>, while <code>Zend::isReadable()</code> does.
+    <para>O argumento <code>$filename</code> especifica o arquivo para checar, que pode 
+    conter a informação do caminho. Este método é um wrapper para a função do PHP 
+    <ulink url="http://php.net/is_readable"><code>is_readable()</code></ulink>.  A função do PHP 
+    não busca o <code>include_path</code>, enquanto <code>Zend::isReadable()</code> sim.
     </para>
 </sect1>
 <!--
