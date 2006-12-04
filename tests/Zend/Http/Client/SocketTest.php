@@ -561,6 +561,53 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
+	 * Make sure we can set an array of object cookies
+	 *
+	 */
+	public function testSetCookieObjectArray() 
+	{
+		$this->client->setUri($this->baseuri. 'testCookies.php');
+		$refuri = $this->client->getUri();
+		
+		$cookies = array(
+			Zend_Http_Cookie::fromString('chocolate=chips', $refuri),
+			Zend_Http_Cookie::fromString('crumble=apple', $refuri),
+			Zend_Http_Cookie::fromString('another=cookie', $refuri)
+		);
+		
+		$this->client->setCookie($cookies);
+
+		$strcookies = array();
+		foreach ($cookies as $c) {
+			$strcookies[$c->getName()] = $c->getValue();
+		}
+		
+		$res = $this->client->request();
+		$this->assertEquals($res->getBody(), serialize($strcookies), 'Response body does not contain the expected cookies');
+	}
+	
+	/**
+	 * Make sure we can set an array of string cookies
+	 *
+	 */
+	public function testSetCookieStringArray() 
+	{
+		$this->client->setUri($this->baseuri. 'testCookies.php');
+		$refuri = $this->client->getUri();
+		
+		$cookies = array(
+			'chocolate' => 'chips',
+			'crumble'   => 'apple',
+			'another'   => 'cookie'
+		);
+		
+		$this->client->setCookie($cookies);
+
+		$res = $this->client->request();
+		$this->assertEquals($res->getBody(), serialize($cookies), 'Response body does not contain the expected cookies');
+	}
+	
+	/**
 	 * Make sure we can set cookie objects with a jar
 	 *
 	 */
