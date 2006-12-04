@@ -1,4 +1,4 @@
-w<?php
+<?php
 
 /**
  * Zend Framework
@@ -16,7 +16,7 @@ w<?php
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Response
- * @version    $Id$
+ * @version    $Id: Response.php 2066 2006-12-03 08:51:14Z shahar $
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
