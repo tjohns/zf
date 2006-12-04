@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client
- * @version    $Id$
+ * @version    $Id: Client.php 2067 2006-12-03 09:51:05Z shahar $
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -518,6 +518,18 @@ class Zend_Http_Client
      */
     public function setCookie($cookie, $value = null)
     {
+    	if (is_array($cookie)) {
+    		foreach ($cookie as $c => $v) {
+    			if (is_string($c)) {
+    				$this->setCookie($c, $v);
+    			} else {
+    				$this->setCookie($v);
+    			}
+    		}
+    		
+    		return $this;
+    	}
+    	
         if ($value !== null) $value = urlencode($value);
         
         if (isset($this->cookiejar)) {
