@@ -1,8 +1,8 @@
 <sect1 id="zend.loadclass">
     <title>Zend::loadClass()</title>
     <para>
-    <code>Zend::loadClass()</code> loads a PHP file whose filename is formatted like
-    "<code>$className.php</code>", and then checks for the existance of the class <code>$className</code>.
+    <code>Zend::loadClass()</code> carrega um arquivo PHP cujo o nome seja formatado como
+    "<code>$className.php</code>", e então checa a existência da classe <code>$className</code>.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -12,16 +12,15 @@ Zend::loadClass($class, $dirs)
 ?>]]></programlisting>
 
     <para>
-    If the file is not found or the class does not exist after the load, a <code>Zend_Exception</code> is
-    thrown. <code>Zend::loadFile()</code> is used for loading, and the <code>$dirs</code> argument is
-    passed directly to it..
+    Se o arquivo não é encontrado ou a classe não existe após o carregar, uma <code>Zend_Exception</code> é jogada. <code>Zend::loadFile()</code> é usada para carregamento, e o argumento <code>$dirs</code> é passado 
+    diretamente para ela.
     </para>
 
     <para>
-    If you ask for a class with underscores in the name, and <code>$dirs</code> is null (the default),
-    <code>Zend::loadClass()</code> will auto-discover the <code>$dirs</code> from the class name
-    by converting underscores to directory separators.  For example, if <code>$class</code> is
-    <code>Zend_Example_Class</code>, that will map to a path of <code>Zend/Example/Class.php</code>.
+    Se você pedir por uma classe com <i>underscores</i> no nome, e <code>$dirs</code> for nulo (padrão),
+    <code>Zend::loadClass()</code> irá adivinhar o <code>$dirs</code> do nome da classe convertendo
+    <i>underscores</i> em separadores de diretório. Por exemplo, se <code>$class</code> é
+    <code>Zend_Example_Class</code>, isso irá traçar o caminho do <code>Zend/Example/Class.php</code>.
     </para>
 </sect1>
 <!--
