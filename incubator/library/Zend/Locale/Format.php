@@ -41,30 +41,55 @@ class Zend_Locale_Format
     /**
      * Number conversion table
      */
-    private $_numbersystem = array (
-        'default'    => array( '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), // 0030 - 0039
-        'arabic'     => array( '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'), // 0660 - 0669
-        'devanagali' => array( '०', '१', '२', '३', '४', '५', '६', '७', '८', '९'), // 0966 - 096F
-        'bengali'    => array( '০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'), // 09E6 - 09EF
-        'gurmukhi'   => array( '੦ ', '੧', '੨', '੩', '੪', '੫', '੬', '੭ ', '੮', '੯ '), // 0A66 - 0A6F
-        'gujarati'   => array( '૦', '૧', '૨', '૩', '૪', '૫', '૬', '૭', '૮', '૯'), // 0AE6 - 0AEF
-        'oriya'      => array( ), // 0B66 - 0B6F
-        'tamil'      => array( ௦ '', '௧', '௨', '௩', '௪', '௫', '௬', '௭', '௮', '௯'), // 0BE6 - 0BEF
-        'telugu'     => array( '౦', '౧', '౨', '౩', '౪', '౫', '౬', '౭', '౮', '౯'), // 0C66 - 0C6F
-        'kannada'    => array( '೦', '೧', '೨', '೩', '೪', '೫', '೬', '೭', '೮', '೯'), // 0CE6 - 0CEF
-        'malayalam'  => array( '൦', '൧', '൨', '൩', '൪', '൫', '൬', '൭', '൮', '൯'), // 0D66 - 0D6F
-        'thai'       => array( '๐', '๑', '๒', '๓', '๔', '๕', '๖', '๗', '๘', '๙ '), // 0E50 - 0E59
-        'lao'        => array( '໐', '໑', '໒', '໓', '໔', '໕', '໖', '໗', '໘', '໙'), // 0ED0 - 0ED9
-        'tibetan'    => array( '༠', '༡', '༢', '༣', '༤', '༥', '༦', '༧', '༨', '༩ '), // 0F20 - 0F29
-        'myanmar'    => array( ), // 1040 - 1049
-        'khmer'      => array( ), // 17E0 - 17E9
-        'mongolian'  => array( ), // 1810 - 1819
-        'limbu'      => array( ), // 1946 - 194F
-        'osmanya'    => array( ), // 104A0-104A9
-        'tailue'     => array( ), // 19D0 - 19D9
-        'balinese'   => array( ), // 1B50 - 1B59
-        'nko'        => array( )  // 07C0 - 07C9
+    private static $_numbers = array (
+        'Arab' => 1632, // 0660 - 0669 arabic
+        'Deva' => 2406, // 0966 - 096F devanagari
+        'Beng' => 2534, // 09E6 - 09EF bengali
+        'Guru' => 2662, // 0A66 - 0A6F gurmukhi
+        'Gujr' => 2790, // 0AE6 - 0AEF gujarati
+        'Orya' => 2918, // 0B66 - 0B6F orija
+        'Taml' => 3046, // 0BE6 - 0BEF tamil
+        'Telu' => 3174, // 0C66 - 0C6F telugu
+        'Knda' => 3302, // 0CE6 - 0CEF kannada
+        'Mlym' => 3430, // 0D66 - 0D6F malayalam
+        'Tale' => 3664, // 0E50 - 0E59 thai
+        'Laoo' => 3792, // 0ED0 - 0ED9 lao
+        'Tibt' => 3872, // 0F20 - 0F29 tibetan
+        'Mymr' => 4160, // 1040 - 1049 myanmar
+        'Khmr' => 6112, // 17E0 - 17E9 khmer
+        'Mong' => 6160, // 1810 - 1819 mongolian
+        'Limb' => 6470, // 1946 - 194F limbu
+        'Osma' => 66720,// 104A0-104A9 osmanya
+        'Talu' => 6608, // 19D0 - 19D9 tailue
+        'Bali' => 6992, // 1B50 - 1B59 balinese
+        'Nkoo' => 1984  // 07C0 - 07C9 nko
     );
+
+    public static function toNumberSystem($input, $from, $to)
+    {
+        if (isset(self::$_numbers[$from])) {
+            $source[0] = "/\x" . str_pad(dechex(self::$_numbers[$from]), 4, '0', STR_PAD_LEFT) . "/u";
+            for ($X = 1; $X < 10; ++$X) {
+                $source[$X] = "/\x" . str_pad(dechex(self::$_numbers[$from] + $X), 4, '0', STR_PAD_LEFT) . "/u";
+            }
+        } else {
+            for ($X = 0; $X < 10; ++$X) {
+                $source[$X] = "/" . $X . "/";
+            }
+        }
+        if (isset($numbers[$to])) {
+            $dest[0] = "\x" . str_pad(dechex(self::$_numbers[$to]), 4, '0', STR_PAD_LEFT);
+            for ($X = 1; $X < 10; ++$X) {
+                $dest[$X] = "\x" . str_pad(dechex(self::$_numbers[$to] + $X), 4, '0', STR_PAD_LEFT);
+            }
+        } else {
+            for ($X = 0; $X < 10; ++$X) {
+                $dest[$X] = $X;
+            }
+        }
+
+        return preg_replace($source, $dest, $input);
+    }
 
     /**
      * Returns the first found number from an string
