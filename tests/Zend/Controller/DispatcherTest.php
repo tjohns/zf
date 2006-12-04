@@ -157,4 +157,16 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $this->assertContains('postDispatch called', $body);
     }
 
+    /**
+     * Test defaults of controller and action pair 
+     */
+    public function testDispatch5()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $response = new Zend_Controller_Response_Cli();
+        $this->_dispatcher->dispatch($request, $response);
+
+        $this->assertSame('index', $request->getControllerName());
+        $this->assertSame('index', $request->getActionName());
+    }
 }

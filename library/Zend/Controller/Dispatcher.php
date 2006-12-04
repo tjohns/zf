@@ -431,6 +431,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $controllerName = $request->getControllerName();
         if (empty($controllerName)) {
             $controllerName = $this->getDefaultController();
+            $request->setControllerName($controllerName);
         }
         $className = $this->formatControllerName($controllerName);
 
