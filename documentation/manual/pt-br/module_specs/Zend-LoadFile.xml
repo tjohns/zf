@@ -2,8 +2,8 @@
     <title>Zend::loadFile()</title>
 
     <para>
-    <code>Zend::loadFile()</code> carrega um arquivo PHP, que possa conter algum cÛdigo PHP. … um <i>wrapper</i>
-    para a funÁ„o do PHP <ulink url="http://php.net/include"><code>include()</code></ulink> que joga 
+    <code>Zend::loadFile()</code> carrega um arquivo PHP, que possa conter algum c√≥digo PHP. √â um <i>wrapper</i>
+    para a fun√ß√£o do PHP <ulink url="http://php.net/include"><code>include()</code></ulink> que joga 
     <code>Zend_Exception</code> na falha.
     </para>
 
@@ -14,19 +14,19 @@ Zend::loadFile($filename, $dirs=null, $once=false)
 ?>]]></programlisting>
 
     <para>O argumento <code>$filename</code> especifica o nome do arquivo para carregar, 
-    que n„o deve conter nenhuma informaÁ„o do caminho. ma verificaÁ„o da seguranÁa È executada no 
-    <code>$filename</code>.  O <code>$filename</code> sÛ pode conter caracteres alfanumÈricos, 
-    hÌfens ("-"), <i>underscores</i> ("_"), ou pontos ("."). Tal restriÁ„o n„o È aplicada ao 
+    que n√£o deve conter nenhuma informa√ß√£o do caminho. ma verifica√ß√£o da seguran√ßa √© executada no 
+    <code>$filename</code>.  O <code>$filename</code> s√≥ pode conter caracteres alfanum√©ricos, 
+    h√≠fens ("-"), <i>underscores</i> ("_"), ou pontos ("."). Tal restri√ß√£o n√£o √© aplicada ao 
     argumento <code>$dirs</code>.</para>
 
-    <para>O argumento <code>$dirs</code> especifica os diretÛrios para procurar pelo arquivo.  Se
-    <code>NULL</code>, apenas o <code>include_path</code> ser· pesquisado. Se for uma <code>string</code>
-    ou um <code>array</code>, o diretÛrio ou diretÛrios especificados ser„o pesquisados, e ent„o
+    <para>O argumento <code>$dirs</code> especifica os diret√≥rios para procurar pelo arquivo.  Se
+    <code>NULL</code>, apenas o <code>include_path</code> ser√° pesquisado. Se for uma <code>string</code>
+    ou um <code>array</code>, o diret√≥rio ou diret√≥rios especificados ser√£o pesquisados, e ent√£o
     o <code>include_path</code>.
     </para>
 
     <para>
-    O argumento <code>$once</code> È um boleano que especifica que se usa as funÁıes do PHP <ulink url="http://php.net/include"><code>include()</code></ulink> ou <ulink
+    O argumento <code>$once</code> √© um boleano que especifica que se usa as fun√ß√µes do PHP <ulink url="http://php.net/include"><code>include()</code></ulink> ou <ulink
     url="http://php.net/include_once"><code>include_once()</code></ulink> para carregar um arquivo.
     </para>
 </sect1>
