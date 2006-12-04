@@ -1,10 +1,10 @@
 <sect1 id="zend.introduction">
-    <title>Introduction</title>
+    <title>Introdução</title>
     <para>
-    The Zend class is the foundation class of the Zend Framework.  This
-    class evolved out of the framework's adherence to the DRY principle (Don't Repeat
-    Yourself).  It contains only static methods, and these methods
-    contain functionality that is required by many components in the Zend Framework.
+    A classe Zend é a classe base do Zend Framework. Esta classe evoluiu 
+    fora da devoção do framework ao princípio DRY (Don't Repeat
+    Yourself). Contem apenas métodos estáticos, e estes métodos contêm funcionalidades 
+    que são requeridas por muitos componentes no Zend Framework.
     </para>
 </sect1>
 <!--
