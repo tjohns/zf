@@ -1,7 +1,7 @@
 <sect1 id="zend.exception">
     <title>Zend::exception()</title>
 
-    <para>Lazy loads an exception class, instantiates the exception, and returns it.</para>
+    <para>Faz a carga atrasada de uma classe, instanciando a exceção, e a retornando.</para>
 
     <programlisting role="php"><![CDATA[<?php
 
@@ -10,24 +10,21 @@ Zend::exception($class, $message, $code);
 ?>]]></programlisting>
 
     <para>
-        The <code>$class</code> argument specifies the exception class to load
-        and instantiate, and is loaded using 
-        <xref linkend="zend.loadclass" />; as such, it
-        must follow the framework class naming conventions and be somewhere in
-        the PHP <code>include_path</code>.
+        O argumento <code>$class</code> especifica a classe de exceção para carregar
+        e instânciar, e é carregada usando <xref linkend="zend.loadclass" />; como esta, deve seguir 
+        as convenções de nomenclatura de classe do framework e estar em algum lugar do 
+        <code>include_path</code> do PHP.
     </para>
 
     <para>
-        The <code>$message</code> and <code>$code</code> parameters are both
-        optional and passed as arguments to the exception class constructor.
+        Os parâmetros <code>$message</code> e <code>$code</code> são ambos
+        opcionais e são passados como argumentos para o construtor da classe de exceção.
     </para>
 
     <para>
-        If successful, it loads the exception class and creates an instance
-        using the <code>$message</code> and <code>$code</code> provided,
-        returning the newly created exception instance. If unable to load the
-        class or if the class does not extend <code>Exception</code>, it throws
-        an exception.
+        Se bem sucedido, é carregada a classe de exceção e criadas uma instância usando <code>$message</code>
+        e <code>$code</code> fornecidos, retornando a instancia da exceção criada recentemente.
+        Se incapaz de carregar ou a classe não herda <code>Exception</code>, dispara uma exceção.
     </para>
 </sect1>
 <!--

@@ -12,7 +12,7 @@ Zend::loadClass($class, $dirs)
 ?>]]></programlisting>
 
     <para>
-    Se o arquivo não é encontrado ou a classe não existe após o carregar, uma <code>Zend_Exception</code> é jogada. <code>Zend::loadFile()</code> é usada para carregamento, e o argumento <code>$dirs</code> é passado 
+    Se o arquivo não é encontrado ou a classe não existe após o carregar, uma <code>Zend_Exception</code> é disparada. <code>Zend::loadFile()</code> é usada para carregamento, e o argumento <code>$dirs</code> é passado 
     diretamente para ela.
     </para>
 
