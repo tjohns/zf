@@ -127,6 +127,38 @@ echo $ctrl->dispatch();
                         を使用すると、リクエストオブジェクトに登録したベース URL
                         を URL の前に連結することを指示できます。
                     </para></listitem>
+
+                    <listitem>
+                        <para>
+                            プロパティ <code>_action</code> は設定されなくなりました。
+                            このプロパティの内容は <code>Zend_Controller_Dispatcher_Token</code>
+                            でしたが、これは現在のバージョンにはもう存在しません。
+                            トークンの唯一の目的は、要求されたコントローラやアクション、
+                            URL パラメータについての情報を提供することでした。
+                            これらは現在はリクエストオブジェクトから次のようにして取得できるようになっています。
+                        </para>
+
+                        <programlisting role="php"><![CDATA[
+// 要求されたコントローラ名を取得します。
+// その際には $this->_action->getControllerName() を使用します。
+// 以下の例では getRequest() を使用していますが、直接 $_request プロパティに
+// アクセスしてもかまいません。ただ getRequest() を使用することを推奨します。
+// とういのは、親クラスがこのメソッドをオーバーライドして挙動を変更しているかもしれないからです。
+$controller = $this->getRequest()->getControllerName();
+
+// 要求されたアクション名を取得します。
+// その際には $this->_action->getActionName() を使用します。
+$action = $this->getRequest()->getActionName();
+
+// リクエストパラメータを取得します。
+// これは変わっていません。_getParams() メソッドおよび _getParam() メソッドは
+// 現在は単なるリクエストオブジェクトへのプロキシです。
+$params = $this->_getParams();
+$foo = $this->_getParam('foo', 'default'); // パラメータ 'foo' を取得します。見つからなかった場合は
+                                           // デフォルト値 'default' を設定します。
+
+]]></programlisting>
+                    </listitem>
                 </itemizedlist>
             </listitem>
 
