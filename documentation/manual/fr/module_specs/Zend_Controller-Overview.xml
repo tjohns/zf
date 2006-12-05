@@ -127,9 +127,11 @@ Action    : index]]>
 			</para>
 
 			<note>
-				Nous sommes actuellement en train de développer un nouveau routeur avec un moteur de ré-écriture d'URI, 
-				qui donnera plus de flexibilité que le routeur présenté actuellement. 
-				Celui-ci sera inclus dans une 'preview release' très bientôt.
+			    <para>
+    				Nous sommes actuellement en train de développer un nouveau routeur avec un moteur de ré-écriture d'URI, 
+	    			qui donnera plus de flexibilité que le routeur présenté actuellement. 
+		    		Celui-ci sera inclus dans une 'preview release' très bientôt.
+		        </para>
 			</note>
 
 			<para>

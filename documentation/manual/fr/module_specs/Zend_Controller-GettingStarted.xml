@@ -46,8 +46,10 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		    qui dans l'idéal, devrait être placé à l'extérieur du répertoire racine.
 		</para>
 
-		<note>	
-			 Le fichier d'amorçage doit être le seul fichier PHP du répertoire racine.	
+		<note>
+		    <para>	
+                Le fichier d'amorçage doit être le seul fichier PHP du répertoire racine.	
+            </para>
 		</note>
 
 		<para>
@@ -73,10 +75,12 @@ Zend_Controller_Front::run('/chemin/de/vos/controlleurs');
 		</para>
 
 		<note>
-			A ce stade, nous sommes en train de rechercher des solutions qui ne nécessite par l'installation de mod_rewrite. 
-			Nous envisageons de proposer une configuration pour les systèmes avec ou sans installation de mod_rewrite. 
-			Veuillez notez également que ce système n'est pas lié spécifiquement à Apache, tout autre serveur Web ayant des 
-			possibilités similaires de redirection devrait suffire.
+            <para>
+    			A ce stade, nous sommes en train de rechercher des solutions qui ne nécessite par l'installation de mod_rewrite. 
+	    		Nous envisageons de proposer une configuration pour les systèmes avec ou sans installation de mod_rewrite. 
+		    	Veuillez notez également que ce système n'est pas lié spécifiquement à Apache, tout autre serveur Web ayant des 
+			    possibilités similaires de redirection devrait suffire.
+			</para>
 		</note>
 	</sect2>	
 		
@@ -109,7 +113,9 @@ Zend_Controller_Front::run('/chemin/de/vos/controlleurs');
 		</para>
 		
 		<note>
-			 Cette section n'est pas encore complète. Elle est encore en construction, et est sujette à changements.
+		    <para>
+			    Cette section n'est pas encore complète. Elle est encore en construction, et est sujette à changements.
+			</para>
 		</note>
 	</sect2>	
 		
@@ -151,7 +157,9 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
 			<note>
-				 Cette section n'est pas encore terminée. Elle est encore en construction et est sujette aux changements.
+			    <para>
+				    Cette section n'est pas encore terminée. Elle est encore en construction et est sujette aux changements.
+				</para>
 			</note>			
 		</para>
 	</sect2>			
