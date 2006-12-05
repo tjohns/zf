@@ -53,6 +53,7 @@
     méthodes adhèrent à une règle simple - si les données sont valides, elles sont renvoyées sinon
     <literal>FALSE</literal> est renvoyé : simplicité extrême!
     </para>
+    </sect2>
     <sect2 id="zend.filter.input.introduction.whitelist">
         <title>Filtrage par liste blanche</title>
         <para>
