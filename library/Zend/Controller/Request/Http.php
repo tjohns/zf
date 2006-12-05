@@ -217,58 +217,88 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     /**
      * Retrieve a member of the $_GET superglobal
      * 
-     * @todo How to retrieve from nested arrays
-     * @param string $key 
-     * @return mixed Returns null if key does not exist
-     */
-    public function getQuery($key) 
-    { 
-        return (isset($_GET[$key])) ? $_GET[$key] : null; 
-    } 
-     
-    /**
-     * Retrieve a member of the $_POST superglobal
+     * If no $key is passed, returns the entire $_GET array.
      * 
      * @todo How to retrieve from nested arrays
      * @param string $key 
      * @return mixed Returns null if key does not exist
      */
-    public function getPost($key) 
+    public function getQuery($key = null) 
     { 
+        if (null === $key) {
+            return $_GET;
+        }
+
+        return (isset($_GET[$key])) ? $_GET[$key] : null; 
+    } 
+     
+    /**
+     * Retrieve a member of the $_POST superglobal
+     *
+     * If no $key is passed, returns the entire $_POST array.
+     * 
+     * @todo How to retrieve from nested arrays
+     * @param string $key 
+     * @return mixed Returns null if key does not exist
+     */
+    public function getPost($key = null) 
+    { 
+        if (null === $key) {
+            return $_POST;
+        }
+
         return (isset($_POST[$key])) ? $_POST[$key] : null; 
     } 
      
     /**
      * Retrieve a member of the $_COOKIE superglobal
      * 
+     * If no $key is passed, returns the entire $_COOKIE array.
+     * 
      * @todo How to retrieve from nested arrays
      * @param string $key 
      * @return mixed Returns null if key does not exist
      */
-    public function getCookie($key) 
+    public function getCookie($key = null) 
     { 
+        if (null === $key) {
+            return $_COOKIE;
+        }
+
         return (isset($_COOKIE[$key])) ? $_COOKIE[$key] : null; 
     } 
      
     /**
      * Retrieve a member of the $_SERVER superglobal
      * 
+     * If no $key is passed, returns the entire $_COOKIE array.
+     * 
      * @param string $key 
      * @return mixed Returns null if key does not exist
      */
-    public function getServer($key) 
+    public function getServer($key = null) 
     { 
+        if (null === $key) {
+            return $_SERVER;
+        }
+
         return (isset($_SERVER[$key])) ? $_SERVER[$key] : null; 
     } 
      
     /**
      * Retrieve a member of the $_ENV superglobal
      * 
+     * If no $key is passed, returns the entire $_COOKIE array.
+     * 
      * @param string $key 
      * @return mixed Returns null if key does not exist
      */
-    public function getEnv($key) 
+    public function getEnv($key = null) 
     { 
+        if (null === $key) {
+            return $_ENV;
+        }
+
         return (isset($_ENV[$key])) ? $_ENV[$key] : null; 
     } 
      
