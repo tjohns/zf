@@ -1,21 +1,16 @@
 <sect1 id="zend.view.controllers">
-    <title>Controller Scripts</title>
+    <title>控制器脚本</title>
     
-    <para>
-        The controller is where you instantiate and configure Zend_View.
-        You then assign variables to the view, and tell the view to 
-        render output using a particular script.
+    <para>        
+		控制器是你实例化和配置 Zend_View的地方。你可以分配变量给view，并让view显示输出。
     </para>
     
     <sect2 id="zend.view.controllers.assign">
     
-        <title>Assigning Variables</title>
+        <title>变量赋值</title>
         
         <para>
-            Your controller script should assign necessary variables to the view
-            before it hands over control to the view script.  Normally, you
-            can do assignments one at a time by assigning to property names
-            of the view instance:
+            控制器需要向视图传递必要的变量，在它处理view的代码之前。通常你可以一次一个地完成变量赋值的工作。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -27,22 +22,14 @@ $view->c = "Sea";
         </programlisting>
         
         <para>
-            However, this can be tedious when you have already collected the
-            values to be assigned into an array or object.
-        </para>
-        
-        <para>
-            The assign() method lets you assign from an array or object "in
-            bulk."  The following examples have the same effect as the above
-            one-by-one property assignments.
-        </para>
+           然而这样比较麻烦，那么可以将它们放进一个数组或对象中去。assign()方法允许你通过数组或对象进行赋值。下面这个例子和上例（一次一个赋值）的结果是一样的：
+        </para>              
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
 
-// assign an array of key-value pairs, where the
-// key is the variable name, and the value is
-// the assigned value.
+//以数组的形式进行赋值，键名为View的变量名，键值为变量值
+
 $array = array(
     'a' => "Hay",
     'b' => "Bee",
@@ -50,8 +37,7 @@ $array = array(
 );
 $view->assign($array);
 
-// do the same with an object's public properties;
-// note how we cast it to an array when assigning.
+//也可以通过对象来赋值，但要先把对象转型为数组
 $obj = new StdClass;
 $obj->a = "Hay";
 $obj->b = "Bee";
@@ -60,10 +46,8 @@ $view->assign((array) $obj);
 ?>]]>
         </programlisting>
         
-        <para>
-            Alternatively, you can use the assign method to assign
-            one-by-one by passing a string variable name, and then the
-            variable value.
+        <para>           
+			另外，你也可使用这样的方法： 第一个参数是变量名，第二个是变量的值。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -78,14 +62,10 @@ $view->assign('c', "Sea");
 
     <sect2 id="zend.view.controllers.render">
         
-        <title>Rendering a View Script</title>
+        <title>调用视图脚本并打印输出</title>
         
-        <para>
-            Once you have assigned all needed variables, the controller
-            should tell Zend_View to render a particular view script.
-            Do so by calling the render() method.  Note that the method will
-            return the rendered view, not print it, so you need to print or
-            echo it yourself at the appropriate time.
+        <para>       
+			完成所有变量赋值后，Controller通知Zend_View通过render()调用一段特定的视图代码。注意，这个方法将会返回处理后的视图，而不是直接输出，所以你要用print或echo来打印输出。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -101,20 +81,14 @@ echo $view->render('someView.php');
     
     <sect2 id="zend.view.controllers.script-paths">
         
-        <title>View Script Paths</title>
+        <title>视图脚本的路径</title>
         
-        <para>
-            By default, Zend_View expects your view scripts to be relative to
-            your calling script.  For example, if your controller script is at
-            "/path/to/app/controllers" and it calls
-            $view->render('someView.php'), Zend_View will look for
-            "/path/to/app/controllers/someView.php".
+        <para>  
+		默认地， Zend_View希望你的View脚本和Controller脚本在同一目录下。例如你的Controller文件在 “/path/to/app/controllers”目录下，并调用$view->render('someView.php')，则 Zend_View会查找"/path/to/app/controllers/someVire.php"文件。
         </para>
         
-        <para>
-            Obviously, your view scripts are probably located elsewhere.  To
-            tell Zend_View where it should look for view scripts, use the
-            setScriptPath() method.
+        <para>           
+			显然，你的View代码很可能放在其它地方，那么需要告诉 Zend_View去哪里找，使用 setScriptPath()方法。
         </para>
         
         <programlisting role="php"><![CDATA[<?php
@@ -124,8 +98,7 @@ $view->setScriptPath('/path/to/app/views');
         </programlisting>
         
         <para>
-            Now when you call $view->render('someView.php'), it will look
-            for "/path/to/app/views/someView.php".
+            现在当你调用$view->render('someView.php')，它会去找"/path/to/app/views/someView.php"。
         </para>
         
         <para>
@@ -135,6 +108,8 @@ $view->setScriptPath('/path/to/app/views');
             script.  This allows you override default views with custom
             views so that you may create custom "themes" or "skins" for
             some views, while leaving others alone.
+
+			事实上，你可以通过addScriptPath()增加路径。Zend_View会到最近增加的路径目录下找View脚本。这个方法允许你改变默认的外观，这样你可以定制和使用自己的皮肤或主题。
         </para>
         
         <programlisting role="php"><![CDATA[<?php

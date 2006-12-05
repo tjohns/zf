@@ -1,45 +1,29 @@
 <sect1 id="zend.view.introduction">
 
-    <title>Introduction</title>
+    <title>简介</title>
     
-    <para>
-        Zend_View is a class for working with the "view" portion of
-        the model-view-controller pattern.  That is, it exists to
-        help keep the view script separate from the model and
-        controller scripts.  It provides a system of helpers, output
-        filters, and variable escaping.
+    <para>   
+		Zend_View是用来在MVC模式中处理View（视图）部份的一个类。也就是说它用来使视图部份的代码与Model及controller部分分离。它提供了helper,output filter,variable escaping等几个功能组件。
     </para>
     
     <para>
-        Zend_View is template system agnostic; you may use PHP as
-        your template language, or create instances of other
-        template systems and manipulate them within your view
-        script.
+        Zend_View使用PHP本身作为你的模板，或者你也可以建立其它模板引擎的实例，并用你的view代码来对其进行操作。
     </para>
 
     <para>
-        Essentially, using Zend_View happens in two major steps:
-        
-        1.  Your controller script creates an instance of
-        Zend_View and assigns variables to that instance.
-        
-        2. The controller tells the Zend_View to render a particular
-        view, thereby handing control over the view script, which 
-        generates the view output.
+       使用Zend_View主要有两步： 1. 你的Controller建立一个Zend_View实例，并将需要的变量传递给它； 2. Controller告诉Zend_View显示一个特定的视图，生成View输出的内容。
     </para>
     
     <sect2 id="zend.view.introduction.controller">
         
-        <title>Controller Script</title>
+        <title>控制器脚本</title>
         
         <para>
-            As a simple example, let us say your controller has a list
-            of book data that it wants to have rendered by a view.  The
-            controller script might look something like this:
+            下面是一个简单的例子。假设你有一个书籍清单，想把它打印出来。控制器代码可能看起来是这样的：
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-// use a model to get the data for book authors and titles.
+//使用一个模型来获取书籍作者和标题相关数据
 $data = array(
     array(
         'author' => 'Hernando de Soto',
@@ -55,12 +39,12 @@ $data = array(
     )
 );
 
-// now assign the book data to a Zend_View instance
+//传递数据给Zend_View类的实例　
 Zend::loadClass('Zend_View');
 $view = new Zend_View();
 $view->books = $data;
 
-// and render a view script called "booklist.php"
+//调用一段View代码"booklist.php"来显示数据
 echo $view->render('booklist.php');
 ?>]]>
         </programlisting>
@@ -69,17 +53,10 @@ echo $view->render('booklist.php');
     
     <sect2 id="zend.view.introduction.view">
     
-        <title>View Script</title>
+        <title>视图脚本</title>
         
         <para>
-            Now we need the associated view script, "booklist.php". 
-            This is a PHP script like any other, with one exception:  it
-            executes inside the scope of the Zend_View instance, which
-            means that references to $this point to the Zend_View
-            instance properties and methods.  (Variables assigned to the
-            instance by the controller are public properties of the
-            Zend_View instance.)  Thus, a very basic view script could
-            look like this:
+            现在我们看看相关的视图代码"booklist.php"。这是一段普通的代码，但是有一点特别：它是在Zend_View实例的内部运行的。 (controller传递给Zend_View实例的变量是public的)。一段非常基本的视图代码看起来是这样的：
         </para>
         
         <programlisting role="php"><![CDATA[<?php if ($this->books): ?>
@@ -108,8 +85,7 @@ echo $view->render('booklist.php');
         </programlisting>
         
         <para>
-            Note how we use the "escape()" method to apply output
-            escaping to variables.
+            注意我们使用escapte()来转义输出。
         </para>
         
     </sect2>
