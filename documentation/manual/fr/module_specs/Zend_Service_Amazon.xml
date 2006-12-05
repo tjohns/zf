@@ -94,14 +94,14 @@ foreach ($results as $result) {
 require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'FR');
 ?>]]>       </programlisting>
-            <note>
-                <title>Country codes</title>
-                <para>
-                    Les codes de payx valides sont <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
-                    <code>UK</code>, et <code>US</code>.
-                </para>
-            </note>
         </example>
+        <note>
+            <title>Country codes</title>
+            <para>
+                Les codes de payx valides sont <code>CA</code>, <code>DE</code>, <code>FR</code>, <code>JP</code>,
+                <code>UK</code>, et <code>US</code>.
+            </para>
+        </note>
     </sect2>
     <sect2 id="zend.service.amazon.itemlookup">
         <title>Rechercher un produit Amazon spécifique avec son ASIN</title>
@@ -158,7 +158,9 @@ foreach($response as $r) {
             </ulink>
         </para>
         <tip>
-            La classe <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> est une enveloppe simple d'utilisation de cette méthode.
+            <para>
+                La classe <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> est une enveloppe simple d'utilisation de cette méthode.
+            </para>
         </tip>
     </sect2>
 <sect2 id="zend.service.amazon.query">
