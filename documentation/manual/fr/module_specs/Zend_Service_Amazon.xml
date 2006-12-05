@@ -13,19 +13,29 @@
             Les exemples incluent :
             <itemizedlist>
                 <listitem>
-                    Le stockage de données informatives, comme des images, des descriptions, le prix et plus
+                    <para>
+                        Le stockage de données informatives, comme des images, des descriptions, le prix et plus
+                    </para>
                 </listitem>
                 <listitem>
-                    Revues éditoriales et commerciales
+                    <para>
+                        Revues éditoriales et commerciales
+                    </para>
                 </listitem>
                 <listitem>
-                    Des produits et accessoires similaires
+                    <para>
+                        Des produits et accessoires similaires
+                    </para>
                 </listitem>
                 <listitem>
-                    Les offres Amazon.com
+                    <para>
+                        Les offres Amazon.com
+                    </para>
                 </listitem>
                 <listitem>
-                    Les listes ListMania
+                    <para>
+                        Les listes ListMania
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
