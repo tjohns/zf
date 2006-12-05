@@ -218,12 +218,11 @@ echo "&lt;a href=\"$image-&gt;clickUri\"&gt;Click for Image&lt;/a&gt;\n";
       </para>
 
       <para>Retorna o total de resultados deste conjunto de resultados.</para>
+      <para>
+        <link linkend="zend.service.flickr.classes">Retornar para a Lista de
+        Classes </link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.flickr.classes">Retornar para a Lista de
-      Classes </link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.flickr.classes.result">
@@ -423,12 +422,11 @@ echo "&lt;a href=\"$image-&gt;clickUri\"&gt;Click for Image&lt;/a&gt;\n";
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.flickr.classes">Retornar para a Lista de
+        Classes </link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.flickr.classes">Retornar para a Lista de
-      Classes </link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.flickr.classes.image">
@@ -488,12 +486,11 @@ echo "&lt;a href=\"$image-&gt;clickUri\"&gt;Click for Image&lt;/a&gt;\n";
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.flickr.classes">Retornar para a Lista de
+        Classes </link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.flickr.classes">Retornar para a Lista de
-      Classes </link>
-    </para>
   </sect3>
 </sect2>
 </sect1>
