@@ -16,7 +16,7 @@
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client
- * @version    $Id: Client.php 2067 2006-12-03 09:51:05Z shahar $
+ * @version    $Id$
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -863,7 +863,11 @@ class Zend_Http_Client
                 case self::ENC_URLENCODED:
                     // Encode body as application/x-www-form-urlencoded
                     $this->setHeaders('Content-type', self::ENC_URLENCODED);
-                    $body = http_build_query($this->paramsPost);
+                    $params = array();
+                    while (list($param, $value) = each($this->paramsPost)) {
+                        array_push($params, urlencode($param) . "=" . urlencode($value));
+                    }
+                    $body = implode('&', $params);
                     break;
                 
                 default:
