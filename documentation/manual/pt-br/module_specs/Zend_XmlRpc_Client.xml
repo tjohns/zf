@@ -147,16 +147,20 @@ $service-&gt;serviceProcedure($p1, $p2);
       para especificar o tipo XML-RPC exato dos seus parâmetros. As razões
       principais para especificar explicitamente os tipos XML-RPC são:
       <itemizedlist>
-          <listitem>
-             Quando você quer assegurar que o tipo correto do parâmetro seja passado ao procedimento (ex: o procedimento exige um inteiro e você pode receber o parâmetro do array $_GET como string) 
+        <listitem>
+            <para>
+                 Quando você quer assegurar que o tipo correto do parâmetro seja passado ao procedimento (ex: o procedimento exige um inteiro e você pode receber o parâmetro do array $_GET como string) 
+            </para>
           </listitem>
-
           <listitem>
-             Quando o procedimento exige um tipo datetime ou um base64 (que não são tipos nativos do PHP). 
+            <para>
+                 Quando o procedimento exige um tipo datetime ou um base64 (que não são tipos nativos do PHP). 
+            </para>
           </listitem>
-
           <listitem>
-             Quando a existe a possibilidade da conversão automática falhar (ex: você quer passar uma estrutura XML-RPC vazia como parâmetro. Estruturas vazias são representadas como arrays vazios em PHP, mas, se você fornecer um array vazio como parãmetro ele irá ser automaticamente convertido para um array XML-RPC, desde que não seja um array associativo) 
+            <para>
+                 Quando a existe a possibilidade da conversão automática falhar (ex: você quer passar uma estrutura XML-RPC vazia como parâmetro. Estruturas vazias são representadas como arrays vazios em PHP, mas, se você fornecer um array vazio como parãmetro ele irá ser automaticamente convertido para um array XML-RPC, desde que não seja um array associativo) 
+            </para>
           </listitem>
         </itemizedlist></para>
 
@@ -390,31 +394,24 @@ $service-&gt;serviceProcedure($param);
     recebe um parâmetro que indica o tipo do valor de retorno. As opções de
     resposta são: <itemizedlist>
         <listitem>
-           
-
-          <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code>
-
-           - Devolve o valor de retorno do procedimento convertido para um tipo nativo do PHP (converte o tipo XML-RPC em um tipo PHP). 
+            <para>
+                <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code>
+                - Devolve o valor de retorno do procedimento convertido para um tipo nativo do PHP (converte o tipo XML-RPC em um tipo PHP). 
+            </para>
         </listitem>
-
         <listitem>
-           
-
-          <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code>
-
-           - Retorna a string XML representando a resposta XML-RPC. 
+            <para>
+                <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code>
+                - Retorna a string XML representando a resposta XML-RPC. 
+            </para>
         </listitem>
-
         <listitem>
-           
-
-          <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code>
-
-           - Retorna um objeto 
-
-          <code>Zend_XmlRpc_Value</code>
-
-           object que representa o tipo XML-RPC retornado. 
+            <para>
+´               <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code>
+                - Retorna um objeto 
+                <code>Zend_XmlRpc_Value</code>
+                object que representa o tipo XML-RPC retornado. 
+            </para>
         </listitem>
       </itemizedlist></para>
 

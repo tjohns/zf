@@ -301,15 +301,21 @@ $service->serviceProcedure($param);
             Les options sont :
             <itemizedlist>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - Retourne la valeur de retour de la procédure en tant que type natif PHP
-                    (convertion d'un type XML-RPC dans un type PHP).
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - Retourne la valeur de retour de la procédure en tant que type natif PHP
+                        (convertion d'un type XML-RPC dans un type PHP).
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - Retourne la représentation sous forme de chaîne XML de la réponse XMl-RPC.
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - Retourne la représentation sous forme de chaîne XML de la réponse XMl-RPC.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Retourne un objet <code>Zend_XmlRpc_Value</code> qui représente le type
-                    XML-RPC retourné.
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - Retourne un objet <code>Zend_XmlRpc_Value</code> qui représente le type
+                        XML-RPC retourné.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
