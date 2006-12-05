@@ -111,6 +111,8 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals('val1', $this->_request->getQuery('var1'));
 
+        $this->assertEquals('foo', $this->_request->getQuery('BAR', 'foo'));
+
         $expected = array('var1' => 'val1', 'var2' => 'val2');
         $this->assertEquals( $expected, $this->_request->getQuery());
     }
@@ -120,6 +122,8 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     {
         $_POST['post1'] = 'val1';
         $this->assertEquals('val1', $this->_request->getPost('post1'));
+
+        $this->assertEquals('foo', $this->_request->getPost('BAR', 'foo'));
 
         $_POST['post2'] = 'val2';
         $expected = array('post1' => 'val1', 'post2' => 'val2');
@@ -201,20 +205,21 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     {
         $_COOKIE['foo'] = 'bar';
         $this->assertSame('bar', $this->_request->getCookie('foo'));
+        $this->assertEquals('foo', $this->_request->getCookie('BAR', 'foo'));
         $this->assertEquals($_COOKIE, $this->_request->getCookie());
     }
  
     public function testGetServer()
     {
         $this->assertEquals($_SERVER['REQUEST_METHOD'], $this->_request->getServer('REQUEST_METHOD'));
-
+        $this->assertEquals('foo', $this->_request->getServer('BAR', 'foo'));
         $this->assertEquals($_SERVER, $this->_request->getServer());
     }
  
     public function testGetEnv()
     {
         $this->assertEquals($_ENV['PATH'], $this->_request->getEnv('PATH'));
-
+        $this->assertEquals('foo', $this->_request->getEnv('BAR', 'foo'));
         $this->assertEquals($_ENV, $this->_request->getEnv());
     }
 }

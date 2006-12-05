@@ -221,15 +221,16 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * 
      * @todo How to retrieve from nested arrays
      * @param string $key 
+     * @param mixed $default Default value to use if key not found
      * @return mixed Returns null if key does not exist
      */
-    public function getQuery($key = null) 
+    public function getQuery($key = null, $default = null) 
     { 
         if (null === $key) {
             return $_GET;
         }
 
-        return (isset($_GET[$key])) ? $_GET[$key] : null; 
+        return (isset($_GET[$key])) ? $_GET[$key] : $default; 
     } 
      
     /**
@@ -239,15 +240,16 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * 
      * @todo How to retrieve from nested arrays
      * @param string $key 
+     * @param mixed $default Default value to use if key not found
      * @return mixed Returns null if key does not exist
      */
-    public function getPost($key = null) 
+    public function getPost($key = null, $default = null) 
     { 
         if (null === $key) {
             return $_POST;
         }
 
-        return (isset($_POST[$key])) ? $_POST[$key] : null; 
+        return (isset($_POST[$key])) ? $_POST[$key] : $default; 
     } 
      
     /**
@@ -257,15 +259,16 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * 
      * @todo How to retrieve from nested arrays
      * @param string $key 
+     * @param mixed $default Default value to use if key not found
      * @return mixed Returns null if key does not exist
      */
-    public function getCookie($key = null) 
+    public function getCookie($key = null, $default = null) 
     { 
         if (null === $key) {
             return $_COOKIE;
         }
 
-        return (isset($_COOKIE[$key])) ? $_COOKIE[$key] : null; 
+        return (isset($_COOKIE[$key])) ? $_COOKIE[$key] : $default; 
     } 
      
     /**
@@ -274,15 +277,16 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * If no $key is passed, returns the entire $_COOKIE array.
      * 
      * @param string $key 
+     * @param mixed $default Default value to use if key not found
      * @return mixed Returns null if key does not exist
      */
-    public function getServer($key = null) 
+    public function getServer($key = null, $default = null) 
     { 
         if (null === $key) {
             return $_SERVER;
         }
 
-        return (isset($_SERVER[$key])) ? $_SERVER[$key] : null; 
+        return (isset($_SERVER[$key])) ? $_SERVER[$key] : $default; 
     } 
      
     /**
@@ -291,15 +295,16 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * If no $key is passed, returns the entire $_COOKIE array.
      * 
      * @param string $key 
+     * @param mixed $default Default value to use if key not found
      * @return mixed Returns null if key does not exist
      */
-    public function getEnv($key = null) 
+    public function getEnv($key = null, $default = null) 
     { 
         if (null === $key) {
             return $_ENV;
         }
 
-        return (isset($_ENV[$key])) ? $_ENV[$key] : null; 
+        return (isset($_ENV[$key])) ? $_ENV[$key] : $default; 
     } 
      
     /**
@@ -564,9 +569,10 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      * If the $key is an alias, the actual key aliased will be used.
      * 
      * @param mixed $key 
+     * @param mixed $default Default value to use if key not found
      * @return mixed
      */
-    public function getParam($key) 
+    public function getParam($key, $default = null) 
     { 
         $keyName = (null !== ($alias = $this->getAlias($key))) ? $alias : $key; 
          
@@ -578,7 +584,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
             return $_POST[$keyName]; 
         } 
          
-        return null; 
+        return $default; 
     } 
      
     /**
