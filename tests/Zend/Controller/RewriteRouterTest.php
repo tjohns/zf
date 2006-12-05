@@ -139,15 +139,21 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
     {
         $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/ctrl/act');
 
-        $this->_router->addRoute('archive', new Zend_Controller_Router_Route('archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+')));
-        $this->_router->addRoute('register', new Zend_Controller_Router_Route('register/:action', array('controller' => 'profile', 'action' => 'register')));
-
         $token = $this->_router->route($request);
 
         $this->assertSame('ctrl', $token->getControllerName());
         $this->assertSame('act', $token->getActionName());
     }
 
+    public function testDefaultRouteMatchedWithControllerOnly()
+    {
+        $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/ctrl');
+
+        $token = $this->_router->route($request);
+
+        $this->assertSame('ctrl', $token->getControllerName());
+        $this->assertSame('index', $token->getActionName());
+    }
 
     public function testFirstRouteMatched()
     {
