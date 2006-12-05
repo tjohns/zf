@@ -142,7 +142,6 @@
         ?>]]>
         </programlisting>
     </sect2>
-  </sect2>
     <sect2 id="zend.filter.input.theoryofoperation">
         <title>Fonctionnement</title>
         <para>
