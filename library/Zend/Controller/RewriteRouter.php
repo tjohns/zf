@@ -176,11 +176,11 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
      * Create routes out of Zend_Config configuration
      * 
      * Example INI:
-     * route.archive.route = "archive/:year/*"
-     * route.archive.defaults.controller = archive
-     * route.archive.defaults.action = show
-     * route.archive.defaults.year = 2000
-     * route.archive.reqs.year = "\d+"
+     * routes.archive.route = "archive/:year/*"
+     * routes.archive.defaults.controller = archive
+     * routes.archive.defaults.action = show
+     * routes.archive.defaults.year = 2000
+     * routes.archive.reqs.year = "\d+"
      * 
      * routes.news.type = "Zend_Controller_Router_StaticRoute"
      * routes.news.route = "news"
@@ -189,7 +189,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
      * 
      * And finally after you have created a Zend_Config with above ini:
      * $router = new Zend_Controller_RewriteRouter();
-     * $router->addConfig($config, 'route');
+     * $router->addConfig($config, 'routes');
      * 
      * @param Zend_Config Configuration object
      * @param string Name of the config section containing route's definitions  
