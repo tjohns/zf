@@ -30,7 +30,7 @@ print_r( $server->system->listMethods() );
                     <code>Zend_XmlRpc_Client</code> tente de rendre les méthodes distantes le plus ressemblantes possible aux méthode natives.
                     Si une méthode contient des espaces de noms, comme <code>system.listMethods()</code> ci-dessus, l'appel est fait en utilisant
                     une chaîne d'objet dans PHP : <code>$server->system->listMethods()</code>.
-                </para
+                </para>
             </note>
         </para>
     </sect2>
@@ -242,7 +242,7 @@ $service->serviceProcedure($p1, $p2);
             <para>
                 Tout les serveurs XML-PRC ne supportenant pas la procédure spéciale <code>system.methodSignature</code>, les serveurs qui ne le supporte pas ne peuvent
                 pas supporter le type hinting.
-            </para
+            </para>
         </note>
         <para>
             <code>Zend_XmlRpc_Client</code> implémente une sorte de fichier 'WSDL' pour un serveur XML-RPC en utilisant la procédure <code>system.methodSignature</code>.
