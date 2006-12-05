@@ -62,24 +62,34 @@ $profileur = $db->getProfiler();
 
         <itemizedlist>
             <listitem>
-                <code>getTotalNumQueries()</code> retourne le nombre total de
-                requêtes profilées.
+                <para>
+                    <code>getTotalNumQueries()</code> retourne le nombre total de
+                    requêtes profilées.
+                </para>
             </listitem>
             <listitem>
-                <code>getTotalElapsedSecs()</code> retourne le nombre totale
-                de secondes écoulées pour chaque requête profilée.
+                <para>
+                    <code>getTotalElapsedSecs()</code> retourne le nombre totale
+                    de secondes écoulées pour chaque requête profilée.
+                </para>
             </listitem>
             <listitem>
-                <code>getQueryProfiles()</code> retourne un tableau de tous les
-                profils de requêtes.
+                <para>
+                    <code>getQueryProfiles()</code> retourne un tableau de tous les
+                    profils de requêtes.
+                </para>
             </listitem>
             <listitem>
-                <code>getLastQueryProfile()</code> retourne le plus récent profil
-                de requête, peut importe si la requête à fini de s'exécuter ou pas
-                (si l'exécution n'est pas finie, le temps de fin sera null).
+                <para>
+                    <code>getLastQueryProfile()</code> retourne le plus récent profil
+                    de requête, peut importe si la requête à fini de s'exécuter ou pas
+                    (si l'exécution n'est pas finie, le temps de fin sera null).
+                </para>
             </listitem>
             <listitem>
-                <code>clear()</code> nettoie tous les anciens profils de la pile.
+                <para>
+                    <code>clear()</code> nettoie tous les anciens profils de la pile.
+                </para>
             </listitem>
         </itemizedlist>
 
@@ -184,33 +194,47 @@ $profileur->setFilterElapsedSecs(null);
 
             <itemizedlist>
                 <listitem>
-                    <code>Zend_Db_Profiler::CONNECT</code> : opérations de connexion ou
-                    de sélection de base de données.
+                    <para>
+                        <code>Zend_Db_Profiler::CONNECT</code> : opérations de connexion ou
+                        de sélection de base de données.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::QUERY</code> : requête générale qui ne
-                    correspond pas aux autres types.
+                    <para>
+                        <code>Zend_Db_Profiler::QUERY</code> : requête générale qui ne
+                        correspond pas aux autres types.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::INSERT</code> : toute requête qui ajoute
-                    des données dans la base de données, généralement INSERT.
+                    <para>
+                        <code>Zend_Db_Profiler::INSERT</code> : toute requête qui ajoute
+                        des données dans la base de données, généralement INSERT.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::UPDATE</code> : toute requête qui met à jour
-                    des données, généralement UPDATE.
+                    <para>
+                        <code>Zend_Db_Profiler::UPDATE</code> : toute requête qui met à jour
+                        des données, généralement UPDATE.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::DELETE</code> : toute requête qui efface des
-                    données, généralement DELETE.
+                    <para>
+                        <code>Zend_Db_Profiler::DELETE</code> : toute requête qui efface des
+                        données, généralement DELETE.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::SELECT</code> : toute requête qui récupère
-                    des données, généralement SELECT.
+                    <para>
+                        <code>Zend_Db_Profiler::SELECT</code> : toute requête qui récupère
+                        des données, généralement SELECT.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Db_Profiler::TRANSACTION</code> : toute requête qui concerne
-                    des opérations de transaction, comme start transaction, commit,
-                    ou rollback.
+                    <para>
+                        <code>Zend_Db_Profiler::TRANSACTION</code> : toute requête qui concerne
+                        des opérations de transaction, comme start transaction, commit,
+                        ou rollback.
+                    </para>
                 </listitem>
             </itemizedlist>
 
