@@ -81,11 +81,21 @@ $hits = $index->find('+mot1 auteur:mot2 -mot3');
 ?>]]></programlisting>
 
         <itemizedlist>
-            <listitem>'+' est utilisé pour définir un terme comme requis.</listitem>
-            <listitem>'-' est utilisé pour définir un terme comme interdit.</listitem>
             <listitem>
-                Le préfixe 'field:' est utilisé pour indiquer un champ du document lors de la recherche. 
-                Si ce n'est pas indiqué, alors le champs 'contents' est utilisé.
+                <para>
+                    '+' est utilisé pour définir un terme comme requis.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    '-' est utilisé pour définir un terme comme interdit.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Le préfixe 'field:' est utilisé pour indiquer un champ du document lors de la recherche. 
+                    Si ce n'est pas indiqué, alors le champs 'contents' est utilisé.
+                </para>
             </listitem>
         </itemizedlist>
         </para>
@@ -110,9 +120,21 @@ $hits = $index->find('+mot1 auteur:mot2 -mot3');
         <para>
             Le tableau <code>$signs</code> contient des informations sur le type du terme :
             <itemizedlist>
-                <listitem>true est utilisé pour un terme définis comme requis.</listitem>
-                <listitem>false est utilisé pour un terme définis comme interdit.</listitem>
-                <listitem>null est utilisé pour définir un terme comme ni requis, ni interdit.</listitem>
+                <listitem>
+                    <para>
+                        true est utilisé pour un terme définis comme requis.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        false est utilisé pour un terme définis comme interdit.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        null est utilisé pour définir un terme comme ni requis, ni interdit.
+                    </para>
+                </listitem>
             </itemizedlist>
         </para>
 	</sect2>
