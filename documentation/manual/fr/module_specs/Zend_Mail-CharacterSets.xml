@@ -7,7 +7,10 @@
         Lors de la création d'une nouvelle partie de l'email, un jeu de caractères différent peut-être définit pour chaque partie.
     </para>
     <note>
-        Les jeux de caractères ne s'appliquent que pour les parties au format texte.
+        <title>Only in text format</title>
+        <para>
+            Les jeux de caractères ne s'appliquent que pour les parties au format texte.
+        </para>
     </note>
 </sect1>
 <!--
