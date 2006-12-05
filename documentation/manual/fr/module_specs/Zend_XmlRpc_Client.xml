@@ -25,9 +25,12 @@ print_r( $server->system->listMethods() );
         </example>
         <para>
             <note>
-                <code>Zend_XmlRpc_Client</code> tente de rendre les méthodes distantes le plus ressemblantes possible aux méthode natives.
-                Si une méthode contient des espaces de noms, comme <code>system.listMethods()</code> ci-dessus, l'appel est fait en utilisant
-                une chaîne d'objet dans PHP : <code>$server->system->listMethods()</code>.
+                <title>Object chaining</title>
+                <para>
+                    <code>Zend_XmlRpc_Client</code> tente de rendre les méthodes distantes le plus ressemblantes possible aux méthode natives.
+                    Si une méthode contient des espaces de noms, comme <code>system.listMethods()</code> ci-dessus, l'appel est fait en utilisant
+                    une chaîne d'objet dans PHP : <code>$server->system->listMethods()</code>.
+                </para
             </note>
         </para>
     </sect2>
@@ -200,8 +203,11 @@ $service->serviceProcedure($p1, $p2);
             </programlisting>
             <para>
                 <note>
-                    La valeur du paramètre est quand même donnée dans une variable PHP, mais sera convertie dans le type spécifié, en utilisant les techniques de convertion de PHP.
-                    (i.e si une chaine est donnée en tant que valeur à l'objet <code>Zend_XmlRpc_Value_Integer</code>, elle sera convertie en utilisant <code>(int)$value</code>).
+                    <title>Automatic conversion</title>
+                    <para>
+                        La valeur du paramètre est quand même donnée dans une variable PHP, mais sera convertie dans le type spécifié, en utilisant les techniques de convertion de PHP.
+                        (i.e si une chaine est donnée en tant que valeur à l'objet <code>Zend_XmlRpc_Value_Integer</code>, elle sera convertie en utilisant <code>(int)$value</code>).
+                    </para>
                 </note>
             </para>
         </sect3>
@@ -232,8 +238,11 @@ $service->serviceProcedure($p1, $p2);
             type de la valeur de retour de cette procédure.
         </para>
         <note>
-            Tout les serveurs XML-PRC ne supportenant pas la procédure spéciale <code>system.methodSignature</code>, les serveurs qui ne le supporte pas ne peuvent
-            pas supporter le type hinting.
+            <title>Support of methodSignature</title>
+            <para>
+                Tout les serveurs XML-PRC ne supportenant pas la procédure spéciale <code>system.methodSignature</code>, les serveurs qui ne le supporte pas ne peuvent
+                pas supporter le type hinting.
+            </para
         </note>
         <para>
             <code>Zend_XmlRpc_Client</code> implémente une sorte de fichier 'WSDL' pour un serveur XML-RPC en utilisant la procédure <code>system.methodSignature</code>.
