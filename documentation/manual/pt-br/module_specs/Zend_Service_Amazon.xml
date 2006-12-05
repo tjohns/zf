@@ -43,7 +43,10 @@
     Services</ulink>.</para>
 
     <note>
-       Sua chave de desenvolvedor Amazon API está ligada à sua identificação Amazon, então, tome medidas de segurança apropriadas para garantir a privacidade de sua chave. 
+        <title>Attention</title>
+        <para>
+            Sua chave de desenvolvedor Amazon API está ligada à sua identificação Amazon, então, tome medidas de segurança apropriadas para garantir a privacidade de sua chave. 
+        </para>
     </note>
 
     <example>
@@ -98,9 +101,14 @@ require_once 'Zend/Service/Amazon.php';
 $amazon = new Zend_Service_Amazon('AMAZON_API_KEY', 'JP');
 ?&gt;       </programlisting>
 
-      <note>Códigos válidos podem ser: <code>CA</code>, <code>DE</code>,
-      <code>FR</code>, <code>JP</code>, <code>UK</code>, e
-      <code>US</code>.</note>
+        <note>
+            <title>Country codes</title>
+            <para>
+                Códigos válidos podem ser: <code>CA</code>, <code>DE</code>,
+                <code>FR</code>, <code>JP</code>, <code>UK</code>, e
+                <code>US</code>.
+            </para>
+        </note>
     </example>
   </sect2>
 
@@ -529,10 +537,13 @@ foreach ($results as $result) {
     e permitem a você manusear facilmente os múltiplos resultados
     retornados.</para>
 
-    <note>
-      <para>Implemente o <code>SeekableIterator</code> para fácil iteração
-      (ex: usando <code>foreach</code>), bem como, acesso direto a uma string
-      específica de resultados usando <code>seek()</code>.</para>
+      <note>
+        <title>Image information</title>
+        <para>
+            Implemente o <code>SeekableIterator</code> para fácil iteração
+            (ex: usando <code>foreach</code>), bem como, acesso direto a uma string
+            específica de resultados usando <code>seek()</code>.
+        </para>
     </note>
 
     <sect4 id="zend.service.amazon.classes.resultset.totalresults">
