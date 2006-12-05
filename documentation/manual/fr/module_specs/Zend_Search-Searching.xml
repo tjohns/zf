@@ -17,27 +17,33 @@
             
             <orderedlist>
                 <listitem>
-                    Si vous programmez la génération de la requête, et qu'ensuite vous la parsez
-                    avec le Query Parser, dans ce cas vous devriez utiliser la génération de requêtes
-                    avec l'API de requêtes. Autrement dit, le Query Parser est créé pour du texte
-                    &quot;human-entered&quot;, pas pour du texte &quot;program-generated&quot;.
+                    <para>
+                        Si vous programmez la génération de la requête, et qu'ensuite vous la parsez
+                        avec le Query Parser, dans ce cas vous devriez utiliser la génération de requêtes
+                        avec l'API de requêtes. Autrement dit, le Query Parser est créé pour du texte
+                        &quot;human-entered&quot;, pas pour du texte &quot;program-generated&quot;.
+                    </para>
                 </listitem>
                 <listitem>                
-                    Untokenized fields are best added directly to queries, and not through
-                    the query parser. If a field's values are generated programmatically
-                    by the application, then so should query clauses for this field.
+                    <para>
+                        Untokenized fields are best added directly to queries, and not through
+                        the query parser. If a field's values are generated programmatically
+                        by the application, then so should query clauses for this field.
                     
-                    Un analyseur utilisé par le Query Parser est créé pour convertir le texte
-                    &quot;human-entered&quot; en termes. Les valeurs générées par le programme, 
-                    comme des dates, des mots-clés, etc, devraient être constamment générée par le programme.
+                        Un analyseur utilisé par le Query Parser est créé pour convertir le texte
+                        &quot;human-entered&quot; en termes. Les valeurs générées par le programme, 
+                        comme des dates, des mots-clés, etc, devraient être constamment générée par le programme.
+                    </para>
                 </listitem>
                 <listitem>
-                    Dans la formulation d'une requête, les champs généralement texte devraient
-                    utiliser le Query Parser. Il est mieux d'ajouter tous les autres, 
-                    comme les dates, les mots-clés, etc au traver de l'API que requête.
-                    Un champ avec un jeu de valeurs limites, qui peut-être défini via un menu déroulant,
-                    ne devrait pas être ajouté à la requête qui sera ensuite parsée, mais devrait
-                    plutôt être ajouté à la clause TermQuery.
+                    <para>
+                        Dans la formulation d'une requête, les champs généralement texte devraient
+                        utiliser le Query Parser. Il est mieux d'ajouter tous les autres, 
+                        comme les dates, les mots-clés, etc au traver de l'API que requête.
+                        Un champ avec un jeu de valeurs limites, qui peut-être défini via un menu déroulant,
+                        ne devrait pas être ajouté à la requête qui sera ensuite parsée, mais devrait
+                        plutôt être ajouté à la clause TermQuery.
+                    </para>
                 </listitem>
             </orderedlist>
 
