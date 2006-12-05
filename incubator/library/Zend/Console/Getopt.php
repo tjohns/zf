@@ -141,9 +141,9 @@ class Zend_Console_Getopt
      * ignoreCase is not enabled.
      */
     protected $_getoptConfig = array(
-        Zend_Console_Getopt::CONFIG_RULEMODE   => Zend_Console_Getopt::MODE_ZEND,
-        Zend_Console_Getopt::CONFIG_DASHDASH   => true,
-        Zend_Console_Getopt::CONFIG_IGNORECASE => false
+        self::CONFIG_RULEMODE   => self::MODE_ZEND,
+        self::CONFIG_DASHDASH   => true,
+        self::CONFIG_IGNORECASE => false
     );
 
     /**
@@ -336,14 +336,14 @@ class Zend_Console_Getopt
     {
         $ruleMode = $this->_getoptConfig['ruleMode'];
         switch ($this->_getoptConfig['ruleMode']) {
-            case Zend_Console_Getopt::MODE_ZEND:
+            case self::MODE_ZEND:
                 if (is_array($rules)) {
                     $this->addRulesModeZend($rules);
                     break;
                 }
-                $this->_getoptConfig['ruleMode'] = Zend_Console_Getopt::MODE_GNU;
+                $this->_getoptConfig['ruleMode'] = self::MODE_GNU;
                 // intentional fallthrough
-            case Zend_Console_Getopt::MODE_GNU:
+            case self::MODE_GNU:
                 $this->addRulesModeGnu($rules);
                 break;
             default:
@@ -486,7 +486,7 @@ class Zend_Console_Getopt
         if (!$this->_parsed) {
             $this->parse();
         }
-        if ($this->_getoptConfig[Zend_Console_Getopt::CONFIG_IGNORECASE]) {
+        if ($this->_getoptConfig[self::CONFIG_IGNORECASE]) {
             $flag = strtolower($flag);
         }
         $flag = $this->_ruleMap[$flag];
@@ -575,7 +575,7 @@ class Zend_Console_Getopt
     {
         foreach ($aliasMap as $flag => $alias)
         {
-            if ($this->_getoptConfig[Zend_Console_Getopt::CONFIG_IGNORECASE]) {
+            if ($this->_getoptConfig[self::CONFIG_IGNORECASE]) {
                 $flag = strtolower($flag);
                 $alias = strtolower($alias);
             }
@@ -626,7 +626,7 @@ class Zend_Console_Getopt
         while (count($argv) > 0) {
             if ($argv[0] == '--') {
                 array_shift($argv);
-                if ($this->_getoptConfig[Zend_Console_Getopt::CONFIG_DASHDASH]) {
+                if ($this->_getoptConfig[self::CONFIG_DASHDASH]) {
                     $this->_remainingArgs = array_merge($this->_remainingArgs, $argv);
                     break;
                 }
@@ -687,7 +687,7 @@ class Zend_Console_Getopt
      */
     protected function parseSingleOption($flag, &$argv)
     {
-        if ($this->_getoptConfig[Zend_Console_Getopt::CONFIG_IGNORECASE]) {
+        if ($this->_getoptConfig[self::CONFIG_IGNORECASE]) {
             $flag = strtolower($flag);
         }
         if (!isset($this->_ruleMap[$flag])) {
@@ -788,7 +788,7 @@ class Zend_Console_Getopt
         foreach ($ruleArray[1] as $rule) {
             $r = array();
             $flag = substr($rule, 0, 1);
-            if ($this->_getoptConfig[Zend_Console_Getopt::CONFIG_IGNORECASE]) {
+            if ($this->_getoptConfig[self::CONFIG_IGNORECASE]) {
                 $flag = strtolower($flag);
             }
             $r['alias'][] = $flag;
@@ -818,7 +818,7 @@ class Zend_Console_Getopt
             $flagList = array_shift($tokens);
             $delimiter = array_shift($tokens);
             $paramType = array_shift($tokens);
-            if ($this->_getoptConfig[Zend_Console_Getopt::CONFIG_IGNORECASE]) {
+            if ($this->_getoptConfig[self::CONFIG_IGNORECASE]) {
                 $flagList = strtolower($flagList);
             }
             $flags = explode('|', $flagList);
@@ -847,21 +847,21 @@ class Zend_Console_Getopt
             }
             if (isset($delimiter)) {
                 switch ($delimiter) {
-                    case Zend_Console_Getopt::PARAM_REQUIRED:
+                    case self::PARAM_REQUIRED:
                         $rule['param'] = 'required';
                         break;
-                    case Zend_Console_Getopt::PARAM_OPTIONAL:
+                    case self::PARAM_OPTIONAL:
                     default:
                         $rule['param'] = 'optional';
                 }
                 switch (substr($paramType, 0, 1)) {
-                    case Zend_Console_Getopt::TYPE_WORD:
+                    case self::TYPE_WORD:
                         $rule['paramType'] = 'word';
                         break;
-                    case Zend_Console_Getopt::TYPE_INTEGER:
+                    case self::TYPE_INTEGER:
                         $rule['paramType'] = 'integer';
                         break;
-                    case Zend_Console_Getopt::TYPE_STRING:
+                    case self::TYPE_STRING:
                     default:
                         $rule['paramType'] = 'string';
                 }
