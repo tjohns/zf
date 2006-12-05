@@ -17,9 +17,9 @@ Zend::loadClass($class, $dirs)
     </para>
 
     <para>
-    Se você pedir por uma classe com <i>underscores</i> no nome, e <code>$dirs</code> for nulo (padrão),
+    Se você pedir por uma classe com <code>underscores</code> no nome, e <code>$dirs</code> for nulo (padrão),
     <code>Zend::loadClass()</code> irá adivinhar o <code>$dirs</code> do nome da classe convertendo
-    <i>underscores</i> em separadores de diretório. Por exemplo, se <code>$class</code> é
+    <code>underscores</code> em separadores de diretório. Por exemplo, se <code>$class</code> é
     <code>Zend_Example_Class</code>, isso irá traçar o caminho do <code>Zend/Example/Class.php</code>.
     </para>
 </sect1>
