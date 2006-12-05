@@ -52,20 +52,30 @@ public $charset;
 	    this method is called. 
 	    <itemizedlist>
 	        <listitem>
-	          <code>$charset</code> doit être définit dans le charset actuel du contenu, si c'est un type text (Text ou HTML).
+                <para>
+                    <code>$charset</code> doit être définit dans le charset actuel du contenu, si c'est un type text (Text ou HTML).
+                </para>
 	        </listitem>
 	        <listitem>
-	          <code>$id</code> doit être définit pour identifier un content-id pour les images d'une mail HTML.
+                <para>
+                    <code>$id</code> doit être définit pour identifier un content-id pour les images d'une mail HTML.
+                </para>
 	        </listitem>
 	        <listitem>
-	          <code>$filename</code> contient le nom que le fichier aura lors du téléchargement.
+                <para>
+	                <code>$filename</code> contient le nom que le fichier aura lors du téléchargement.
+                </para>
 	        </listitem>
 	        <listitem>
-	          <code>$disposition</code> définit si le fichier doit être traité comme une pièce jointe ou s'il est utilisé
-	          dans le mail (HTML).
+                <para>
+	                <code>$disposition</code> définit si le fichier doit être traité comme une pièce jointe ou s'il est utilisé
+	                dans le mail (HTML).
+                </para>
 	        </listitem>
 	        <listitem>
-	          <code>$description</code> sert uniquement pour information.
+                <para>
+	                <code>$description</code> sert uniquement pour information.
+                </para>
 	        </listitem>
 	      </itemizedlist>
       </para>

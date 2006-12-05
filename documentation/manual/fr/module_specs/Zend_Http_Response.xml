@@ -7,22 +7,34 @@
             Elle offre un ensemble de méthodes intuitives permettant de manipuler les données d'une réponse HTTP reçue suite à une requête :
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Renvoie TRUE si un code HTTP d'erreur a été reçu; FALSE sinon
+                    <para>
+                        <code>isError()</code>: Renvoie TRUE si un code HTTP d'erreur a été reçu; FALSE sinon
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Renvoie TRUE si un code HTTP de succès a été reçu; FALSE sinon
+                    <para>
+                        <code>isSuccessful()</code>: Renvoie TRUE si un code HTTP de succès a été reçu; FALSE sinon
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Renvoie TRUE si un code HTTP de redirection a été reçu; FALSE sinon
+                    <para>
+                        <code>isRedirect()</code>: Renvoie TRUE si un code HTTP de redirection a été reçu; FALSE sinon
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Renvoie le code d'état HTTP
+                    <para>
+                        <code>getStatus()</code>: Renvoie le code d'état HTTP
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Renvoie un tableau des en-têtes HTTP de la réponse, sous forme de chaîne
+                    <para>
+                        <code>getHeaders()</code>: Renvoie un tableau des en-têtes HTTP de la réponse, sous forme de chaîne
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Renvoie le corps de la réponse HTTP sous forme de chaîne
+                    <para>
+                        <code>getBody()</code>: Renvoie le corps de la réponse HTTP sous forme de chaîne
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>

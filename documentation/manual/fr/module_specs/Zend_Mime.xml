@@ -17,15 +17,21 @@
         <code>Zend_Mime</code> fournit un jeu simple de méthodes statiques pour fonctionner avec MIME : 
         <itemizedlist>
             <listitem>
-                <code>Zend_Mime::isPrintable()</code>: Retourne TRUE si la chaine données contient des 
-                caractères non imprimables. FALSE dans les autres cas.
+                <para>
+                    <code>Zend_Mime::isPrintable()</code>: Retourne TRUE si la chaine données contient des 
+                    caractères non imprimables. FALSE dans les autres cas.
+                </para>
             </listitem>
 
             <listitem>
-                <code>Zend_Mime::encodeBase64()encodeBase64()</code>: Encoe une chaîne en utilisant base64.
+                <para>
+                    <code>Zend_Mime::encodeBase64()encodeBase64()</code>: Encoe une chaîne en utilisant base64.
+                </para>
             </listitem>
             <listitem>
-                <code>Zend_Mime::encodeQuotedPrintable()</code>: Encode une chaîne avec le mécanisme quoted-printable.
+                <para>
+                    <code>Zend_Mime::encodeQuotedPrintable()</code>: Encode une chaîne avec le mécanisme quoted-printable.
+                </para>
             </listitem>
         </itemizedlist>
     </para>
@@ -33,31 +39,49 @@
         <code>Zend_Mime</code> définit un jeu de constantes communément utilisé avec des messages MIME : 
         <itemizedlist>
             <listitem>
-                <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
+                <para>
+                    <code>Zend_Mime::TYPE_OCTETSTREAM</code>: 'application/octet-stream'
+                </para>
 			</listitem>
 			<listitem>
-                <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+                <para>
+                    <code>Zend_Mime::TYPE_TEXT</code>: 'text/plain'
+                </para>
 			</listitem>
 			<listitem>
-                <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
+                <para>
+                    <code>Zend_Mime::TYPE_HTML</code>: 'text/html'
+                </para>
 			</listitem>
 			<listitem>
-                <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
+                <para>
+                    <code>Zend_Mime::ENCODING_7BIT</code>: '7bit'
+                </para>
 			</listitem>
 			<listitem>
-                <code>Zend_Mime::ENCODING_8BIT</code>: '8bit'
+                <para>
+                    <code>Zend_Mime::ENCODING_8BIT</code>: '8bit'
+                </para>
 			</listitem>
 			<listitem>
-                <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
+                <para>
+                    <code>Zend_Mime::ENCODING_QUOTEDPRINTABLE</code>: 'quoted-printable'
+                </para>
 			</listitem>
 			<listitem>
-                <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
+                <para>
+                    <code>Zend_Mime::ENCODING_BASE64</code>: 'base64'
+                </para>
 			</listitem>
 			<listitem>
-                <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
+                <para>
+                    <code>Zend_Mime::DISPOSITION_ATTACHMENT</code>: 'attachment'
+                </para>
 			</listitem>
 			<listitem>
-                <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+                <para>
+                    <code>Zend_Mime::DISPOSITION_INLINE</code>: 'inline'
+                </para>
             </listitem>
         </itemizedlist>
     </para>
@@ -76,13 +100,19 @@
         Un objet <code>Zend_Mime</code> contient les méthodes suivantes :
         <itemizedlist>
             <listitem>
-                <code>boundary()</code>: Retourne la frontière MIME.
+                <para>
+                    <code>boundary()</code>: Retourne la frontière MIME.
+                </para>
             </listitem>
             <listitem>
-                <code>boundaryLine()</code>: Retourne la ligne complète de la frontière MIME.
+                <para>
+                    <code>boundaryLine()</code>: Retourne la ligne complète de la frontière MIME.
+                </para>
             </listitem>
             <listitem>
-                <code>mimeEnd()</code>: Retourne la fin de la frontière MIME complète.
+                <para>
+                    <code>mimeEnd()</code>: Retourne la fin de la frontière MIME complète.
+                </para>
             </listitem>
         </itemizedlist>
     </para>

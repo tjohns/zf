@@ -102,12 +102,16 @@ $profileur = $db->getProfiler();
 
         <itemizedlist>
             <listitem>
-                <code>getQuery()</code> retourne le SQL de la requête
-                sous forme de texte.
+                <para>
+                    <code>getQuery()</code> retourne le SQL de la requête
+                    sous forme de texte.
+                </para>
             </listitem>
             <listitem>
-                <code>getElapsedSecs()</code> retourn le nombre de seconde
-                d'exécution de la requête.
+                <para>
+                    <code>getElapsedSecs()</code> retourn le nombre de seconde
+                    d'exécution de la requête.
+                </para>
             </listitem>
         </itemizedlist>
 
