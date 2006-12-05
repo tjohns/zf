@@ -1,7 +1,8 @@
 <sect1 id="zend.filter.filter">
     <title>Zend_Filter</title>
 
-  <sect2 id="zend.filter.filter.introduction">
+    <sect2 id="zend.filter.filter.introduction">
+        <title>Introduction</title>
     <para>
      <literal>Zend_Filter</literal> fournit une bibliothèque de méthodes statiques permettant de filtrer des données.
      Pour le filtrage des données passées en entrée, voyez plutôt le <xref linkend="zend.filter.input" />
