@@ -119,8 +119,8 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         
         $token = $this->_router->route($request);
 
-        $this->assertSame('index', $token->getControllerName());
-        $this->assertSame('index', $token->getActionName());
+        $this->assertSame(null, $token->getControllerName());
+        $this->assertSame(null, $token->getActionName());
     }
 
     public function testRouteNotMatched()
