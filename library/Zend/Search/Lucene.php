@@ -369,6 +369,7 @@ class Zend_Search_Lucene
      *
      * @param mixed $query
      * @return array ZSearchHit
+     * @throws Zend_Search_Lucene_Exception
      */
     public function find($query)
     {
@@ -401,9 +402,83 @@ class Zend_Search_Lucene
                 $scores[] = $docScore;
             }
         }
-        array_multisort($scores, SORT_DESC, SORT_NUMERIC,
-                        $ids,    SORT_ASC,  SORT_NUMERIC,
-                        $hits);
+
+        if (count($hits) == 0) {
+            // skip sorting, which may cause a error on empty index
+        	return array();
+        }
+
+        if (func_num_args() == 1) {
+            // sort by scores
+            array_multisort($scores, SORT_DESC, SORT_NUMERIC,
+                            $ids,    SORT_ASC,  SORT_NUMERIC,
+                            $hits);
+        } else {
+            // sort by given field names
+
+            $argList    = func_get_args();
+            $fieldNames = $this->getFieldNames();
+            $sortArgs   = array();
+
+            for ($count = 1; $count < count($argList); $count++) {
+                $fieldName = $argList[$count];
+
+                if (!is_string($fieldName)) {
+                    throw new Zend_Search_Lucene_Exception('Field name must be a string.');
+                }
+
+                if (!in_array($fieldName, $fieldNames)) {
+                    throw new Zend_Search_Lucene_Exception('Wrong field name.');
+                }
+
+                $valuesArray = array();
+                foreach ($hits as $hit) {
+                    try {
+                        $value = $hit->getDocument()->getFieldValue($fieldName);
+                    } catch (Zend_Search_Lucene_Exception $e) {
+                        if (strpos($e->getMessage(), 'not found') === false) {
+                            throw $e;
+                        } else {
+                            $value = null;
+                        }
+                    }
+
+                    $valuesArray[] = $value;
+                }
+
+                $sortArgs[] = $valuesArray;
+
+                if ($count + 1 < count($argList)  &&  is_integer($argList[$count+1])) {
+                    $count++;
+                    $sortArgs[] = $argList[$count];
+
+                    if ($count + 1 < count($argList)  &&  is_integer($argList[$count+1])) {
+                        $count++;
+                        $sortArgs[] = $argList[$count+1];
+                    } else {
+                        if ($argList[$count] == SORT_ASC  || $argList[$count] == SORT_DESC) {
+                            $sortArgs[] = SORT_REGULAR;
+                        } else {
+                            $sortArgs[] = SORT_ASC;
+                        }
+                    }
+                } else {
+                    $sortArgs[] = SORT_ASC;
+                    $sortArgs[] = SORT_REGULAR;
+                }
+            }
+
+            // Sort by id's if values are equal
+            $sortArgs[] = $ids;
+            $sortArgs[] = SORT_ASC;
+            $sortArgs[] = SORT_NUMERIC;
+
+            // Array to be sorted
+            $sortArgs[] = $hits;
+
+            // Do sort
+            call_user_func_array('array_multisort', $sortArgs);
+        }
 
         $query->reset();
 
@@ -684,7 +759,6 @@ class Zend_Search_Lucene
             throw new Zend_Search_Lucene_Exception('Document id is out of the range.');
         }
 
-        $segCount = 0;
         $segmentStartId = 0;
         foreach ($this->_segmentInfos as $segmentInfo) {
             if ($segmentStartId + $segmentInfo->count() > $id) {
@@ -774,7 +848,7 @@ class Zend_Search_Lucene
 
         $segmentInfoQueue = new Zend_Search_Lucene_Index_SegmentInfoPriorityQueue();
 
-        foreach ($this->_segmentInfos as $segName => $segmentInfo) {
+        foreach ($this->_segmentInfos as $segmentInfo) {
             $segmentInfo->reset();
 
             // Skip "empty" segments
