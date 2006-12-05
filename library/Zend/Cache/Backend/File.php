@@ -360,25 +360,23 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         }
         
         $result = true;
-        @chdir($dir);
-        $glob = @glob('cache_*');
+        $glob = @glob($dir . 'cache_*');
         foreach ($glob as $file)  {
-            $file2 = $dir . $file;
-            if (is_file($file2)) {
+            if (is_file($file)) {
                 if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
-                    $result = ($result) && ($this->_remove($file2));
+                    $result = ($result) && ($this->_remove($file));
                 }
                 if ($mode==Zend_Cache::CLEANING_MODE_OLD) {
                     // files older than lifeTime get deleted from cache
                     if (!is_null($this->_directives['lifeTime'])) {
-                        if ((time() - @filemtime($file2)) > $this->_directives['lifeTime']) {
-                            $result = ($result) && ($this->_remove($file2));
+                        if ((time() - @filemtime($file)) > $this->_directives['lifeTime']) {
+                            $result = ($result) && ($this->_remove($file));
                         }
                     }
                 }
                 if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
                     $matching = true;
-                    $id = self::_fileNameToId($file);
+                    $id = self::_fileNameToId(basename($file)); 
                     if (strlen($id) > 0) {
                         foreach ($tags as $tag) {
                             if (!($this->_testTag($id, $tag))) {
@@ -393,7 +391,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                 }
                 if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
                     $matching = false;
-                    $id = self::_fileNameToId($file);
+                    $id = self::_fileNameToId(basename($file));
                     if (strlen($id) > 0) {
                         foreach ($tags as $tag) {
                             if ($this->_testTag($id, $tag)) {
@@ -407,12 +405,12 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                     }                               
                 }
             }
-            if ((is_dir($file2)) and ($this->_options['hashedDirectoryLevel']>0)) {
+            if ((is_dir($file)) and ($this->_options['hashedDirectoryLevel']>0)) {
                 // Recursive call
-                $result = ($result) && ($this->_clean($file2 . DIRECTORY_SEPARATOR, $mode, $tags));
+                $result = ($result) && ($this->_clean($file . DIRECTORY_SEPARATOR, $mode, $tags));
                 if ($mode=='all') {
                     // if mode=='all', we try to drop the structure too                    
-                    @rmdir($file2);
+                    @rmdir($file);
                 }
             }
         }
