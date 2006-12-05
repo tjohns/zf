@@ -156,6 +156,28 @@ $foo = $this->_getParam('foo', 'default'); // request 'foo' parameter, using
 
 ]]></programlisting>
                     </listitem>
+
+                    <listitem>
+                        <para>
+                            <code>noRouteAction()</code> has been removed. The
+                            appropriate way to handle non-existent action
+                            methods should you wish to route them to a default
+                            action is using <code>__call()</code>:
+                        </para>
+
+                        <programlisting role="php"><![CDATA[
+public function __call($method, $args)
+{
+    // If an unmatched 'Action' method was requested, pass on to the default
+    // action method:
+    if ('Action' == substr($method, -6)) {
+        return $this->defaultAction();
+    }
+    
+    throw new Zend_Controller_Exception('Invalid method called');
+}
+]]></programlisting>
+                    </listitem>
                 </itemizedlist>
             </listitem>
 
