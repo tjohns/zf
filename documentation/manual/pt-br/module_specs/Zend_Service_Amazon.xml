@@ -462,12 +462,11 @@ foreach ($results as $result) {
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.amazon.classes.image">
@@ -520,12 +519,11 @@ foreach ($results as $result) {
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.amazon.classes.resultset">
@@ -558,12 +556,11 @@ foreach ($results as $result) {
       </methodsynopsis>
 
       <para>Número total de resultados retornados pela pesquisa</para>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.amazon.classes.offerset">
@@ -671,12 +668,11 @@ foreach ($results as $result) {
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.amazon.classes.offer">
@@ -769,12 +765,11 @@ foreach ($results as $result) {
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.amazon.classes.similarproduct">
@@ -824,12 +819,11 @@ foreach ($results as $result) {
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.amazon.classes.accessories">
@@ -874,12 +868,11 @@ foreach ($results as $result) {
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.amazon.classes.customerreview">
@@ -964,12 +957,11 @@ foreach ($results as $result) {
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.amazon.classes.editorialreview">
@@ -1014,12 +1006,11 @@ foreach ($results as $result) {
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 
   <sect3 id="zend.service.amazon.classes.listmania">
@@ -1064,12 +1055,11 @@ foreach ($results as $result) {
           </tbody>
         </tgroup>
       </table>
+      <para>
+        <link linkend="zend.service.amazon.classes">Retornar para a Lista de
+        Classes</link>
+      </para>
     </sect4>
-
-    <para>
-      <link linkend="zend.service.amazon.classes">Retornar para a Lista de
-      Classes</link>
-    </para>
   </sect3>
 </sect2>
 </sect1>

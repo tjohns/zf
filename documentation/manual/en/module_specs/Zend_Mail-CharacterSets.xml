@@ -10,7 +10,7 @@
     <note>
         <title>Only in text format</title>
         <para>
-        Character sets are only applicable for message parts in text format.
+            Character sets are only applicable for message parts in text format.
         </para>
     </note>
 </sect1>
