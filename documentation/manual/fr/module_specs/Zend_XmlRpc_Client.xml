@@ -107,17 +107,23 @@ $service->serviceProcedure($p1, $p2);
                 Les principales raisons pour spécifier explicitement les types XML-RPC peuvent être :
                 <itemizedlist>
                     <listitem>
-                        Lorsque vous voulez être certain que le type correct de paramètre est passé à la procédure
-                        (i.e la procédure requiert un entier et vous souhaitez recevoir le paramètres comme une chaîne issue de $_GET).
+                        <para>
+                            Lorsque vous voulez être certain que le type correct de paramètre est passé à la procédure
+                            (i.e la procédure requiert un entier et vous souhaitez recevoir le paramètres comme une chaîne issue de $_GET).
+                        </para>
                     </listitem>
                     <listitem>
-                        Lorsque la procédure requiert un type base64 ou dateTime.iso8601 (ce qui n'existe pas en tant que type PHP natif).
+                        <para>
+                            Lorsque la procédure requiert un type base64 ou dateTime.iso8601 (ce qui n'existe pas en tant que type PHP natif).
+                        </para>
                     </listitem>
                     <listitem>
-                        Lorsque l'auto convetion peut échouer
-                        (i.e vous voulez passer une structure XML-RPC vide comme paramètre, une structure vide est représentée comme un tableau PHP vide, mais
-                        si vous lui donnez un tableau vide comme paramètre, il sera automatiquement converti en un tableau XMl-RPC, vu que ce n'est pas
-                        un tableau associatif).
+                        <para>
+                            Lorsque l'auto convetion peut échouer
+                            (i.e vous voulez passer une structure XML-RPC vide comme paramètre, une structure vide est représentée comme un tableau PHP vide, mais
+                            si vous lui donnez un tableau vide comme paramètre, il sera automatiquement converti en un tableau XMl-RPC, vu que ce n'est pas
+                            un tableau associatif).
+                        </para>
                     </listitem>
                 </itemizedlist>
             </para>
