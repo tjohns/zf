@@ -48,31 +48,23 @@ foreach ($results as $result) {
 
     <itemizedlist>
       <listitem>
-         
-
-        <code>userSearch()</code>
-
-        : Aceita uma string de busca com tags delimitadas por espaços e um array de opções como segundo parâmetro opcional, retornando um objeto 
-
-        <code>Zend_Service_Flickr_ResultSet</code>
-
-        . 
+          <para>
+              <code>userSearch()</code>
+              : Aceita uma string de busca com tags delimitadas por espaços e um array de opções como segundo parâmetro opcional, retornando um objeto 
+              <code>Zend_Service_Flickr_ResultSet</code>.
+          </para>
       </listitem>
-
       <listitem>
-         
-
-        <code>getIdByUsername()</code>
-
-        : Retorna um user ID associado ao nome de usuário informado. 
+          <para>
+              <code>getIdByUsername()</code>
+              : Retorna um user ID associado ao nome de usuário informado. 
+          </para>
       </listitem>
-
       <listitem>
-         
-
-        <code>getIdByEmail()</code>
-
-        : Retorna um user ID associado ao endereço de email informado. 
+          <para>
+              <code>getIdByEmail()</code>
+              : Retorna um user ID associado ao endereço de email informado. 
+          </para>
       </listitem>
     </itemizedlist>
 
