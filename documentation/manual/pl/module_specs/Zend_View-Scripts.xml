@@ -180,7 +180,7 @@ if ($this->books) {
 <p>Nie ma żadnych książek do wyświetlenia.</p>
 ]]></programlisting>
 
-        </sect>
+        </sect3>
 
         <sect3 id="zend.view.scripts.templates.interface">
             <title>Template Systems Using Zend_View_Interface</title>
