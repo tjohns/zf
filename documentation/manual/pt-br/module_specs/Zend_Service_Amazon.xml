@@ -16,23 +16,29 @@
     diretamente através da Amazon Web Services API. Exemplos incluídos:
     <itemizedlist>
         <listitem>
-           Armazenar informações de ítens, como imagens, descrições, preços, entre outros. 
+            <para>
+                Armazenar informações de ítens, como imagens, descrições, preços, entre outros. 
+            </para>
         </listitem>
-
         <listitem>
-           Revisões editoriais e por parte do cliente. 
+            <para>
+                Revisões editoriais e por parte do cliente. 
+            </para>
         </listitem>
-
         <listitem>
-           Produtos similares e acessórios.
+            <para>
+                Produtos similares e acessórios.
+            </para>
         </listitem>
-
         <listitem>
-           Ofertas do Amazon.com. 
+            <para>
+                Ofertas do Amazon.com. 
+            </para>
         </listitem>
-
         <listitem>
-           Listas do tipo ListMania. 
+            <para>
+                Listas do tipo ListMania. 
+            </para>
         </listitem>
       </itemizedlist></para>
 
