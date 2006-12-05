@@ -2261,7 +2261,7 @@ class Zend_Date {
      */
     private function _checkLocation($location)
     {
-        if (!is_set($location['longitude']) or !is_set($location['latitude'])) {
+        if (!isset($location['longitude']) or !is_set($location['latitude'])) {
             throw Zend::exception('Zend_Date_Exception','Location must include \'longitude\' and \'latitude\'');
         }
         if (($location['longitude'] > 180) or ($location['longitude'] < -180)) {
@@ -2271,7 +2271,7 @@ class Zend_Date {
             throw Zend::exception('Zend_Date_Exception','Latitude must be between -90 and 90');
         }
 
-        if (!is_set($location['horizon'])){
+        if (!isset($location['horizon'])){
             $location['horizon'] = 'effective';
         }
 
@@ -2326,7 +2326,7 @@ class Zend_Date {
      */
     public function getSunInfo($location)
     {
-        if (is_set($location['horizon'])) {
+        if (isset($location['horizon'])) {
             $horizon = $this->_checkLocation($location);
             $suninfo = array(
                 'sunrise' => $this->_Date->calcSun($location, $horizon, true),

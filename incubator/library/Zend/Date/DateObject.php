@@ -304,11 +304,11 @@ class Zend_Date_DateObject {
     {
 
         if ($timestamp === false) {
-            return ($gmt === false) ? @date($format) : @gmdate($format);
+            return ($gmt) ? @gmdate($format) : @date($format);
         }
 
         if (abs($timestamp) <= 0x7FFFFFFF) {
-            return ($gmt === false) ? @gmdate($format, $timestamp) : @date($format, $timestamp);
+            return ($gmt) ? @gmdate($format, $timestamp) : @date($format, $timestamp);
         }
 
         if ($gmt === true) {
