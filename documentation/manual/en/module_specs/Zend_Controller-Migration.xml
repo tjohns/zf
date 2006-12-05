@@ -122,6 +122,40 @@ echo $ctrl->dispatch();
                         that can indicate that the base URL registered with the
                         request object should be prepended to the url specified.
                     </para></listitem>
+
+                    <listitem>
+                        <para>
+                            The <code>_action</code> property is no longer set.
+                            This property was a <code>Zend_Controller_Dispatcher_Token</code>, 
+                            which no longer exists in the current incarnation.
+                            The sole purpose of the token was to provide
+                            information about the requested controller, action,
+                            and URL parameters. This information is now
+                            available in the request object, and can be accessed
+                            as follows:
+                        </para>
+
+                        <programlisting role="php"><![CDATA[
+// Retrieve the requested controller name
+// Access used to be via: $this->_action->getControllerName().
+// The example below uses getRequest(), though you may also directly access the
+// $_request property; using getRequest() is recommended as a parent class may
+// override access to the request object.
+$controller = $this->getRequest()->getControllerName();
+
+// Retrieve the requested action name
+// Access used to be via: $this->_action->getActionName().
+$action = $this->getRequest()->getActionName();
+
+// Retrieve the request parameters
+// This hasn't changed; the _getParams() and _getParam() methods simply proxy to
+// the request object now.
+$params = $this->_getParams();
+$foo = $this->_getParam('foo', 'default'); // request 'foo' parameter, using
+                                           // 'default' as default value if not found
+
+]]></programlisting>
+                    </listitem>
                 </itemizedlist>
             </listitem>
 
