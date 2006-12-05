@@ -863,15 +863,11 @@ class Zend_Http_Client
                 case self::ENC_URLENCODED:
                     // Encode body as application/x-www-form-urlencoded
                     $this->setHeaders('Content-type', self::ENC_URLENCODED);
-                    $params = array();
-                    while (list($param, $value) = each($this->paramsPost)) {
-                        array_push($params, urlencode($param) . "=" . urlencode($value));
-                    }
-                    $body = implode('&', $params);
+                    $body = http_build_query($this->paramsPost, '', '&');
                     break;
                 
                 default:
-                    throw Zend::exception('Zend_Http_Client_Exception', "Cannot handle content type '{$this->enctype} automaically." . 
+                    throw Zend::exception('Zend_Http_Client_Exception', "Cannot handle content type '{$this->enctype}' automatically." . 
                         " Please use Zend_Http_Client::setRawData to send this kind of content.");
                     break;
             }
