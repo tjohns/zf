@@ -32,10 +32,13 @@
     </para>
 
     <note>
-        Beaucoup de flux RSS ont à leur disposition différentes propriétés, pour 
-        les canaux comme pour les éléments. La spécification RSS spécifie 
-        beaucoup de propriétés optionnelles et gardez donc cela à l'esprit 
-        lorsque vous écrivez du code qui manipule des données RSS.
+        <title>Be aware</title>
+        <para>
+            Beaucoup de flux RSS ont à leur disposition différentes propriétés, pour 
+            les canaux comme pour les éléments. La spécification RSS spécifie 
+            beaucoup de propriétés optionnelles et gardez donc cela à l'esprit 
+            lorsque vous écrivez du code qui manipule des données RSS.
+        </para>
     </note>
 
     <example>
