@@ -2,7 +2,7 @@
     <title>Zend::loadFile()</title>
 
     <para>
-    <code>Zend::loadFile()</code> carrega um arquivo PHP, que possa conter algum código PHP. É um <i>wrapper</i>
+    <code>Zend::loadFile()</code> carrega um arquivo PHP, que possa conter algum código PHP. É um <code>wrapper</code>
     para a função do PHP <ulink url="http://php.net/include"><code>include()</code></ulink> que joga 
     <code>Zend_Exception</code> na falha.
     </para>
