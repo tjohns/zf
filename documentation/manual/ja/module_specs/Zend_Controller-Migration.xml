@@ -159,6 +159,27 @@ $foo = $this->_getParam('foo', 'default'); // パラメータ 'foo' を取得し
 
 ]]></programlisting>
                     </listitem>
+
+                    <listitem>
+                        <para>
+                            <code>noRouteAction()</code> は削除されました。
+                            存在しないアクションメソッドを扱うには、
+                            <code>__call()</code> を使用してデフォルトのアクションに誘導します。
+                        </para>
+
+                        <programlisting role="php"><![CDATA[
+public function __call($method, $args)
+{
+    // 存在しない 'Action' メソッドが要求された場合に、
+    // それをデフォルトのアクションに渡します。
+    if ('Action' == substr($method, -6)) {
+        return $this->defaultAction();
+    }
+    
+    throw new Zend_Controller_Exception('無効なメソッド呼び出しです');
+}
+]]></programlisting>
+                    </listitem>
                 </itemizedlist>
             </listitem>
 
