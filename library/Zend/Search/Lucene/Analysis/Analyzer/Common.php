@@ -58,7 +58,7 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_L
     }
 
     /**
-     * Apply filters to the token.
+     * Apply filters to the token. Can return null when the token was removed.
      *
      * @param Zend_Search_Lucene_Analysis_Token $token
      * @return Zend_Search_Lucene_Analysis_Token
@@ -67,6 +67,11 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_L
     {
         foreach ($this->_filters as $filter) {
             $token = $filter->normalize($token);
+
+            // resulting token can be null if the filter removed it
+            if (is_null($token)) {
+                return null;
+            }
         }
 
         return $token;

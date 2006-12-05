@@ -69,7 +69,10 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum extends Zend_Search_Lu
                                              $position-$termStartPosition),
                                       $termStartPosition,
                                       $position);
-            $tokenStream[] = $this->normalize($token);
+            $token = $this->normalize($token);
+            if (! is_null($token)) {
+                $tokenStream[] = $token;
+            }
         }
 
         return $tokenStream;
