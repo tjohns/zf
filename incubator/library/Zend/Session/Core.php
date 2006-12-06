@@ -499,9 +499,10 @@ final class Zend_Session_Core
      * shutdown() - Shutdown the sesssion, close writing and remove the instance.
      * This will complete the internal data transformation on this request.
      *
+     * @param bool $readonly - OPTIONAL remove write access (i.e. throw error if Zend_Session's attempt writes)
      * @return void
      */
-    static public function shutdown()
+    static public function shutdown($readonly = true)
     {
         if (self::$_writeClosed) {
             return;
@@ -520,9 +521,10 @@ final class Zend_Session_Core
      * destroy() - This is used to destroy session data, and optionally, the session cookie itself
      *
      * @param bool $remove_cookie - OPTIONAL remove session id cookie, defaults to true (remove cookie)
+     * @param bool $readonly - OPTIONAL remove write access (i.e. throw error if Zend_Session's attempt writes)
      * @return void
      */
-    static public function destroy($remove_cookie = true)
+    static public function destroy($remove_cookie = true, $readonly = true)
     {
         if (self::$_destroyed) {
             return;
