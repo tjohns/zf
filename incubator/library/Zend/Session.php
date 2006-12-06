@@ -32,7 +32,7 @@ require_once 'Zend/Session/Exception.php';
 
 /**
  * Zend_Session
- * 
+ *
  * @category Zend
  * @package Zend_Session
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -40,7 +40,7 @@ require_once 'Zend/Session/Exception.php';
  */
 class Zend_Session implements IteratorAggregate
 {
-    
+
     /**
 	 * used as option to constructor to prevent additional instances to the same namespace
 	 */
@@ -65,59 +65,62 @@ class Zend_Session implements IteratorAggregate
      *
      * @var array
      */
-    protected static $_namespaceLocks = array();
-    
+    static protected $_namespaceLocks = array();
+
     /**
      * Single instance namespace array to ensure data security.
      *
      * @var array
      */
-    protected static $_singleInstances = array();
+    static protected $_singleInstances = array();
 
     /**
-     * __construct() - This will create an instance that saves to/gets from an 
+     * __construct() - This will create an instance that saves to/gets from an
      * instantiated core.  An optional namespace allows for saving/getting
      * to isolated sections of the session.  An optional argument $singleInstance
      * will prevent any futured attempts of getting a Zend_Session object in the
      * same namespace that is provided.
      *
-     * @param string $namespace
-     * @param bool $singleInstance
+     * @param string $namespace       - programmatic name of the requested namespace
+     * @param bool $singleInstance    - prevent creation of additional instances for this namespace
+     * @param Zend_Session_Core $core - OPTIONAL instance of Zend_Session_Core, used only for testing purposes
+     * @return void
      */
-    public function __construct($namespace = 'Default', $singleInstance = false)
+    public function __construct($namespace = 'Default', $singleInstance = false, Zend_Session_Core $core = null)
     {
         if ($namespace === '') {
-            throw new Zend_Session_Exception("Session namespace must be a non-empty string.");
+            throw Zend::exception('Zend_Session_Exception', 'Session namespace must be a non-empty string.');
         }
-               
+
         if ($namespace[0] == "_") {
-            throw new Zend_Session_Exception("Session namespace must not start with an underscore.");
+            throw Zend::exception('Zend_Session_Exception', 'Session namespace must not start with an underscore.');
         }
-        
+
         if (isset(self::$_singleInstances[$namespace])) {
-            throw new Zend_Session_Exception("A session namespace '$namespace' already exists and is set to be the only instance of this namespace.");
+            throw Zend::exception('Zend_Session_Exception', 'A session namespace "'
+                . $namespace . '" already exists and has been set as the only instance of this namespace.');
         }
-        
+
         if ($singleInstance === true) {
             self::$_singleInstances[$namespace] = true;
         }
-        
+
         $this->_namespace = $namespace;
-        $this->_sessionCore = Zend_Session_Core::getInstance();
+        $this->_sessionCore = $core ? $core : Zend_Session_Core::getInstance();
         $this->_sessionCore->_startNamespace($namespace);
     }
-    
-    
+
+
     /**
      * getIterator() - return an iteratable object for use in foreach and the like,
      * this completes the IteratorAggregate interface
      *
-     * @return ArrayObject
+     * @return ArrayObject - iteratable container of the namespace contents
      */
     public function getIterator()
     {
         $name_values = $this->_sessionCore->namespaceGet($this->_namespace);
-        
+
         return new ArrayObject($name_values);
     }
 
@@ -126,33 +129,31 @@ class Zend_Session implements IteratorAggregate
      * setExpirationSeconds() - expire the namespace, or specific variables after a specified
      * number of seconds
      *
-     * @param int $seconds
-     * @param mixed $variables
+     * @param int $seconds     - expires in this many seconds
+     * @param mixed $variables - OPTIONAL list of variables to expire (defaults to all)
      * @return void
      */
     public function setExpirationSeconds($seconds, $variables = null)
     {
         $this->_sessionCore->namespaceSetExpirationSeconds($this->_namespace, $seconds, $variables);
-        return;
     }
-    
-    
+
+
     /**
-     * setExpirationHops() - expire the namespace, or specific variables after a specified 
+     * setExpirationHops() - expire the namespace, or specific variables after a specified
      * number of page hops
      *
-     * @param int $hops
-     * @param mixed $variables
+     * @param int $hops        - how many "hops" (number of subsequent requests) before expiring
+     * @param mixed $variables - OPTIONAL list of variables to expire (defaults to all)
      * @param boolean $hop_count_on_usage_only
      * @return void
      */
     public function setExpirationHops($hops, $variables = null, $hopCountOnUsageOnly = false)
     {
         $this->_sessionCore->namespaceSetExpirationHops($this->_namespace, $hops, $variables, $hopCountOnUsageOnly);
-        return;
     }
-    
-    
+
+
     /**
      * lock() - mark a session/namespace as readonly
      *
@@ -161,7 +162,6 @@ class Zend_Session implements IteratorAggregate
     public function lock()
     {
         self::$_namespaceLocks[$this->_namespace] = true;
-        return;
     }
 
 
@@ -173,7 +173,17 @@ class Zend_Session implements IteratorAggregate
     public function unLock()
     {
         unset(self::$_namespaceLocks[$this->_namespace]);
-        return;
+    }
+
+
+    /**
+     * unLockAll() - unmark all session/namespaces to enable read & write
+     *
+     * @return void
+     */
+    static public function unLockAll()
+    {
+        self::$_namespaceLocks = array();
     }
 
 
@@ -187,87 +197,88 @@ class Zend_Session implements IteratorAggregate
         return isset(self::$_namespaceLocks[$this->_namespace]);
     }
 
-    
+
     /**
      * unsetAll() - unset all variables in this namespace
      *
-     * @return void
+     * @return true
      */
     public function unsetAll()
     {
-        foreach ($this as $name => $value) {
-            unset($this->{$name});
-        }
-        
-        return;
+        return $this->_sessionCore->namespaceUnset($this->_namespace);
     }
-    
+
     /**
      * __get() - method to get a variable in this objects current namespace
      *
-     * @param string $name
+     * @param string $name - programmatic name of a key, in a <key,value> pair in the current namespace
      * @return mixed
      */
     protected function __get($name)
     {
         if ($name === '') {
-            throw new Zend_Session_Exception(get_class($this) . "::__get() the '$name' key must be a non-empty string");
+            throw Zend::exception('Zend_Session_Exception', __CLASS__
+                .  "::__get() the '$name' key must be a non-empty string");
         }
-        
+
         return $this->_sessionCore->namespaceGet($this->_namespace, $name);
     }
-    
-    
+
+
     /**
      * __set() - method to set a variable/value in this objects namespace
      *
-     * @param string $name
-     * @param mixed $value
+     * @param string $name - programmatic name of a key, in a <key,value> pair in the current namespace
+     * @param mixed $value - value in the <key,value> pair to assign to the $name key
      * @return true
      */
-    protected function __set($name, $value) 
+    protected function __set($name, $value)
     {
         if (isset(self::$_namespaceLocks[$this->_namespace])) {
-            throw new Zend_Session_Exception("This session/namespace has been marked as read-only.");
+            throw Zend::exception('Zend_Session_Exception', __CLASS__
+                . "This session/namespace has been marked as read-only.");
         }
-        
+
         if ($name === '') {
-            throw new Zend_Session_Exception(get_class($this) . "::__set() the '$name' key must be a non-empty string");
+            throw Zend::exception('Zend_Session_Exception', __CLASS__
+            . "::__set() the '$name' key must be a non-empty string");
         }
-        
+
         return $this->_sessionCore->namespaceSet($this->_namespace, $name, $value);
     }
-    
-    
+
+
     /**
      * __isset() - determine if a variable in this objects namespace is set
      *
-     * @param string $name
+     * @param string $name - programmatic name of a key, in a <key,value> pair in the current namespace
      * @return bool
      */
-    protected function __isset($name) 
+    protected function __isset($name)
     {
         if ($name === '') {
-            throw new Zend_Session_Exception(get_class($this) . "::__isset() the '$name' key must be a non-empty string");
+            throw Zend::exception('Zend_Session_Exception', __CLASS__
+            . "::__isset() the '$name' key must be a non-empty string");
         }
-        
+
         return $this->_sessionCore->namespaceIsset($this->_namespace, $name);
     }
-    
-    
+
+
     /**
      * __unset() - unset a variable in this objects namespace.
      *
-     * @param string $name
+     * @param string $name - programmatic name of a key, in a <key,value> pair in the current namespace
      * @return true
      */
     protected function __unset($name)
     {
         if ($name === '') {
-            throw new Zend_Session_Exception(get_class($this) . "::__unset() the '$name' key must be a non-empty string");
+            throw Zend::exception('Zend_Session_Exception', __CLASS__
+            . "::__unset() the '$name' key must be a non-empty string");
         }
-        
+
         return $this->_sessionCore->namespaceUnset($this->_namespace, $name);
     }
-  
+
 }
