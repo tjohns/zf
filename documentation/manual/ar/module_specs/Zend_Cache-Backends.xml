@@ -111,8 +111,6 @@
                               المسار الكامل (مع اسم الملف) التى توجد به قاعدة بيانات SQLite.
                           </entry>
                       </row>
-                  </tbody>
-                  <tbody>
                         <row>
                           <entry><code>automaticVacuumFactor</code></entry>
                           <entry><code>int</code></entry>
