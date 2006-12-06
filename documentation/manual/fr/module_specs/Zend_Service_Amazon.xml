@@ -520,6 +520,7 @@ foreach ($results as $result) {
             Chaque offre pour un article est retourné sous la forme d'un objet <code>Zend_Service_Amazon_Offer</code>.
         </para>
         <sect4 id="zend.service.amazon.classes.offer.properties">
+            <title>Zend_Service_Amazon_Offer Properties</title>
             <table>
                 <title>Propriétés de Zend_Service_Amazon_Offer </title>
                 <tgroup cols="3">

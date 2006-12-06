@@ -95,7 +95,9 @@ Zend_Search_Lucene::setDefaultSearchField('contents');
         <para>
             Zend_Search_Lucene supports "~" modifier only for phrases now
             <footnote>
-                "~" for terms is used for fuzzy search, but fuzzy search queries are not supported yet.
+                <para>
+                    "~" for terms is used for fuzzy search, but fuzzy search queries are not supported yet.
+                </para>
             </footnote>
         </para>
     </sect2>

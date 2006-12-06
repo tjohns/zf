@@ -27,7 +27,10 @@ foreach ($results as $result) {
 ?>]]>       </programlisting>
         </example>
         <note>
-            <code>tagSearch()</code> accepte un tableau d'options comme second paramètre optionnel.
+            <title>Optional parameter</title>
+            <para>
+                <code>tagSearch()</code> accepte un tableau d'options comme second paramètre optionnel.
+            </para>
         </note>
     </sect2>
     <sect2 id="zend.service.flickr.finding-users">
@@ -75,8 +78,10 @@ foreach ($results as $result) {
     </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Récupérer les détails d'une image</title>
-        <code>Zend_Service_Flickr</code> permet de récupérer facilement et rapidement, les détails d'une image 
-        grâce à son ID. Utilisez simplement la méthode <code>getImageDetails()</code>, comme dans l'exemple suivant :
+        <para>
+            <code>Zend_Service_Flickr</code> permet de récupérer facilement et rapidement, les détails d'une image 
+            grâce à son ID. Utilisez simplement la méthode <code>getImageDetails()</code>, comme dans l'exemple suivant :
+        </para>
         <example>
             <title>Récupérer les détails d'une image</title>
             <para>
