@@ -84,7 +84,7 @@ control ممتاز )
                           <row>
                               <entry><code>automaticCleaningFactor</code></entry>
                               <entry><code>int</code></entry>
-                              <entry><code>0</code></entry>
+                              <entry><code>10</code></entry>
                               <entry>
                                 تقوم بتشغيل او ايقاف عملية التنظيف (garbage collector): 
 القيمة 0 تعنى إيقاف عملية التنظيف التلقائى للـ cache , 
