@@ -2261,7 +2261,7 @@ class Zend_Date {
      */
     private function _checkLocation($location)
     {
-        if (!isset($location['longitude']) or !is_set($location['latitude'])) {
+        if (!isset($location['longitude']) or !isset($location['latitude'])) {
             throw Zend::exception('Zend_Date_Exception','Location must include \'longitude\' and \'latitude\'');
         }
         if (($location['longitude'] > 180) or ($location['longitude'] < -180)) {
