@@ -43,6 +43,13 @@
                         that is subsequently parsed but instead should be added as a TermQuery clause.
                     </para>
                 </listitem>
+                <listitem>
+                    <para>
+                        Boolean queries allow to mix several other queries into new one.
+                        Thus it's the best way to add some additional criteria to user search, defined by
+                        a query string.
+                    </para>
+                </listitem>
             </orderedlist>
 
         </para>
@@ -67,13 +74,16 @@ $index->find($query);
         </para>
 
         <para>
-            It is important to note that <code>find()</code> IS case sensitive.  By default,
-            LuceneIndexCreation.jar normalizes all documents to lowercase.  This can be turned
-            off with a command line switch (type LuceneIndexCreation.jar with no arguments
-            for help).  The case of the text supplied to <code>find()</code> must match that
-            of the index.  If the index is normalized to lowercase, then all text supplied
-            to <code>find()</code> must pass through <code>strtolower()</code>, or else it
-            may not match.
+            It is important to note that query parser uses standard analyzer to tokenize separate parts of query string.
+            Thus all transformations, whech are done on indexed text are also done on query string entries.
+        </para>
+        <para>
+            It may be transforming to lower case to make search case-insensitive, removing stop-words, stamming and
+            mauch more other things.
+        </para>
+        <para>
+            As opposed to it, API method doesn't transform or filter input terms. Thus it's more suitable for
+            computer generated or untokenized fields.
         </para>
     </sect2>
 
