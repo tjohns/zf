@@ -1,58 +1,66 @@
 <sect1 id="zend.controller.plugins">
-    <title>Plugins</title>
+    <title>Wtyczki</title>
 
     <sect2 id="zend.controller.plugins.introduction">
-        <title>Introduction</title>
+        <title>Wprowadzenie</title>
 
         <para>
-            The controller architecture includes a plugin system that allows user code to
-            be called when certain events occur in the controller process lifetime.
-            The front controller uses a plugin broker as a registry for user plugins,
-            and the plugin broker ensures that event methods are called on each plugin
-            registered with the front controller.
+            Architektura kontrolera zawiera także system wtyczek, który pozwala
+            programiście na wykonanie własnego kodu, gdy następują określone
+            zdarzenia w trakcie trwania procesu kontrolera. Kontroler frontowy
+            używa agenta wtyczek jako rejeestru dla wtyczek programisty,
+            a agent wtyczek jest odpowiedzialny za to, że metody zdarzeń są
+            wywoływane dla każdej wtyczki zarejestrowanej w kontrolerze 
+            frontowym.
         </para>
 
         <para>
-            The event methods are defined in the abstract class
-            <code>Zend_Controller_Plugin_Abstract</code>,
-            from which user plugin classes inherit:
+            Metody zdarzeń są zdefiniowane w klasie abstrakcyjnej
+            <code>Zend_Controller_Plugin_Abstract</code>, z której dziedziczy
+            każda klasa wtyczki:
 
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>routeStartup()</code> is called before <code>Zend_Controller_Front</code>
-                        begins evaluating the request against its routes.
+                        <code>routeStartup()</code> jest wywoływana zanim <code>Zend_Controller_Front</code>
+                        zacznie określać parametry żądania na podstawie tras.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>routeShutdown()</code> is called after <code>Zend_Controller_Router</code>
-                        exits, when Zend_Controller_Front exits from the router.
+                        <code>routeShutdown()</code> jest wywoływana gdy <code>Zend_Controller_Router</code>
+                        kończy pracę, gdy Zend_Controller_Front wychodzi z routera.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>dispatchLoopStartup()</code> is called before <code>Zend_Controller_Front</code>
-                        enters its dispatch loop.
+                        <code>dispatchLoopStartup()</code> jest wywoływana zanim <code>Zend_Controller_Front</code>
+                        wejdzie w pętlę uruchomieniową.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>preDispatch()</code> is called before an action is dispatched by
-                        <code>Zend_Controller_Dispatcher</code>. This callback allows for proxy
-                        or filter behavior. By altering the request and resetting its dispatched
-                        flag (via <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
-                        the current action may be skipped.
+                        <code>preDispatch()</code> jest wywoływana przed uruchomieniem 
+                        akcji przez <code>Zend_Controller_Dispatcher</code>. Pozwala
+                        to na uzyskanie funkcjonalności proxy lub filtra. Przez
+                        nadpisanie żądania i zresetowanie flagi uruchomienia (poprzez 
+                        <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>),
+                        obecna akcja może zostać ominięta.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>postDispatch()</code> is called after an action is dispatched by <code>Zend_Controller_Dispatcher</code>. This callback allows for proxy or filter behavior. By altering the request and resetting its dispatched flag (via <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), a new action may be specified for dispatching.
+                        <code>postDispatch()</code> jest wywoływana po uruchomieniu
+                        akcji przez <code>Zend_Controller_Dispatcher</code>. Pozwala
+                        to na uzyskanie funkcjonalności proxy lub filtra. Przez
+                        nadpisanie żądania i zresetowanie flagi uruchomienia (poprzez 
+                        <code>Zend_Controller_Request_Abstract::setDispatched(false)</code>), 
+                        może zostać określona nowa akcja do uruchomienia.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>dispatchLoopShutdown()</code> is called before <code>Zend_Controller_Front</code> exits its dispatch loop.
+                        <code>dispatchLoopShutdown()</code> jest wywoływana gdy <code>Zend_Controller_Front</code> zakończy pętlę uruchomieniową.
                     </para>
                 </listitem>
         </itemizedlist>
@@ -60,10 +68,11 @@
     </sect2>
 
     <sect2 id="zend.controller.plugins.writing">
-        <title>Writing Plugins</title>
+        <title>Pisanie wtyczek</title>
 
         <para>
-        In order to write a plugin class, simply include and extend the abstract class <code>Zend_Controller_Plugin_Abstract</code>:
+        W celu napisania klasy wtyczki, w prosty sposób rozszerz klasę 
+        abstrakcyjną <code>Zend_Controller_Plugin_Abstract</code>:
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Plugin/Abstract.php';
 
@@ -73,17 +82,25 @@ class MyPlugin extends Zend_Controller_Plugin_Abstract
 }]]></programlisting>
         </para>
         <para>
-        None of the methods of <code>Zend_Controller_Plugin_Abstract</code> are abstract, and this means that plugin classes are not forced to implement any of the available event methods listed above. Plugin writers can implement whatever even methods may suit their particular needs.
+        Żadna z metod klasy <code>Zend_Controller_Plugin_Abstract</code> nie jest
+        abstrakcyjna, co oznacza, że nie jest konieczne implementowanie wszystkich
+        dostępnych metod zdarzeń opisanych powyżej. Autor wtyczki może 
+        zaimplementować tylko te metody zdarzeń, które są mu rzeczywiście potrzebne.
         </para>
         <para>
-        <code>Zend_Controller_Plugin_Abstract</code> also makes the request and response objects available to controller plugins via the <code>getRequest()</code> and <code>getResponse()</code> methods, respectively.
+        <code>Zend_Controller_Plugin_Abstract</code> udostępnia także obiekty 
+        żądania i odpowiedzi wtyczkom kontrolera za pomocą metod 
+        <code>getRequest()</code> oraz <code>getResponse()</code>, odpowiednio.
         </para>
     </sect2>
 
     <sect2 id="zend.controller.plugins.using">
-        <title>Using Plugins</title>
+        <title>Użycie wtyczek</title>
         <para>
-        Plugin classes are registered with <code>Zend_Controller_Front::registerPlugin()</code> prior to dispatching. The following snippet illustrates how a plugin may be used in the controller chain:
+        Klasy wtyczek są rejestrowane za pomocą metody 
+        <code>Zend_Controller_Front::registerPlugin()</code>, aż do momentu 
+        uruchomienia. Poniższy kod pokazuje w jaki sposób wtyczka może być użyta
+        przez kontroler:
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Controller/Front.php';
 require_once 'Zend/Controller/Router.php';
