@@ -477,7 +477,7 @@ switch ($numPeople) {
                 </para>
             </sect3>
 
-            <sect3 id="coding-standards.inline-documetnation.functions">
+            <sect3 id="coding-standards.inline-documentation.functions">
                 <title>Functions</title>
 
                 <para>
