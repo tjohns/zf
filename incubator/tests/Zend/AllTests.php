@@ -18,6 +18,7 @@ require_once 'Zend/Mail/AllTests.php';
 require_once 'Zend/MeasureTest.php';
 require_once 'Zend/Measure/AllTests.php';
 require_once 'Zend/Registry/AllTests.php';
+//require_once 'Zend/Session/AllTests.php';
 
 class Zend_AllTests
 {
@@ -44,6 +45,7 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_MeasureTest');
         $suite->addTest(Zend_Measure_AllTests::suite());
         $suite->addTest(Zend_Registry_AllTests::suite());
+        //$suite->addTest(Zend_Session_AllTests::suite());
 
         return $suite;
     }
