@@ -28,7 +28,7 @@ interface Zend_Mail_Folder_Interface
     /**
      * get root folder or given folder
      *
-     * @params string $rootFolder get folder structure for given folder, else root
+     * @param string $rootFolder get folder structure for given folder, else root
      * @return Zend_Mail_Folder root or wanted folder
      */
     public function getFolders($rootFolder = null);
@@ -38,7 +38,7 @@ interface Zend_Mail_Folder_Interface
      *
      * folder must be selectable!
      *
-     * @params Zend_Mail_Folder|string global name of folder or instance for subfolder
+     * @param Zend_Mail_Folder|string global name of folder or instance for subfolder
      * @throws Zend_Mail_Exception
      */
     public function selectFolder($globalName);

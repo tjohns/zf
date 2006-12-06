@@ -53,10 +53,10 @@ class Zend_Mail_Folder implements RecursiveIterator
     /**
      * create a new mail folder instance
      *
-     * @params string $localName  name of folder in current subdirectory
-     * @params string $globalName absolute name of folder
-     * @params bool   $selectable if true folder holds messages, if false it's just a parent for subfolders
-     * @params array  $folders    init with given instances of Zend_Mail_Folder as subfolders
+     * @param string $localName  name of folder in current subdirectory
+     * @param string $globalName absolute name of folder
+     * @param bool   $selectable if true folder holds messages, if false it's just a parent for subfolders
+     * @param array  $folders    init with given instances of Zend_Mail_Folder as subfolders
      */
     public function __construct($localName, $globalName = '', $selectable = true, array $folders = array())
     {
@@ -136,7 +136,7 @@ class Zend_Mail_Folder implements RecursiveIterator
     /**
      * get subfolder named $name
      *
-     * @params string $name wanted subfolder
+     * @param string $name wanted subfolder
      * @return Zend_Mail_Folder folder named $folder
      * @throws Zend_Mail_Exception
      */
@@ -152,8 +152,8 @@ class Zend_Mail_Folder implements RecursiveIterator
     /**
      * add or replace subfolder named $name
      *
-     * @params string $name local name of subfolder
-     * @params Zend_Mail_Folder instance for new subfolder
+     * @param string $name local name of subfolder
+     * @param Zend_Mail_Folder instance for new subfolder
      */
     public function __set($name, Zend_Mail_Folder $folder)
     {

@@ -195,8 +195,8 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
      *
      * if $file is a resource its file pointer is moved after the first line
      *
-     * @params resource|string $file stream resource of name of file
-     * @params bool $fileIsString file is string or resource
+     * @param resource|string $file stream resource of name of file
+     * @param bool $fileIsString file is string or resource
      * @return bool file is mbox file
      */
     protected function _isMboxFile($file, $fileIsString = true)
@@ -227,7 +227,7 @@ class Zend_Mail_Mbox extends Zend_Mail_Abstract
     /**
      * open given file as current mbox file
      *
-     * @params string $filename filename of mbox file
+     * @param string $filename filename of mbox file
      * @throws Zend_Mail_Exception
      */
     protected function _openMboxFile($filename)
