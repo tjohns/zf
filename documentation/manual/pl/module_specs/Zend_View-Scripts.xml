@@ -123,13 +123,13 @@ echo $view->render(...);
         </para>
 
         <sect3 id="zend.view.scripts.templates.scripts">
-            <title>Template Systems Using View Scripts</title>
+            <title>Systemy szablonów używające skryptów widoku</title>
 
             <para>
-                A view script may be used to instantiate and manipulate a
-                separate template object, such as a PHPLIB-style template.  The
-                view script for that kind of activity might look something like
-                this:
+                Skrypt widoku może być użyty w celu utworzenia instancji
+                i manipulowania osobnym obiektem szablonu, takim jak np. 
+                szablon PHPLIB. Skrypt widoku w takim przypadku mógłby wyglądać
+                mniej więcej tak:
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -183,27 +183,27 @@ if ($this->books) {
         </sect3>
 
         <sect3 id="zend.view.scripts.templates.interface">
-            <title>Template Systems Using Zend_View_Interface</title>
+            <title>Systemy szablonów używające interfejsu Zend_View_Interface</title>
 
             <para>
-                Some may find it easier to simply provide a Zend_View-compatible
-                template engine. <code>Zend_View_Interface</code> defines the
-                minimum interface needed for compatability:
+                Niektórzy mogą zrobić to łatwiej zapewniając w prosty sposób system 
+                szablonów kompatybilny z Zend_View. <code>Zend_View_Interface</code> 
+                definiuje minimalny interfejs potrzebny dla kompatybilności.
             </para>
 
             <programlisting role="php"><![CDATA[
 /**
- * Return the actual template engine object
+ * Zwraca aktualny obiekt systemu szablonów
  */
 public function getEngine();
 
 /**
- * Set the path to view scripts/templates
+ * Ustawia ścieżkę do skryptów/szablonów widoku
  */
 public function setScriptPath($path);
 
 /**
- * Overloading methods for assigning template variables as object properties
+ * Nadpisanie metod do przypisywania zmiennych szablonów jako właściwości obiektu
  */
 public function __set($key, $value);
 public function __get($key);
@@ -211,26 +211,26 @@ public function __isset($key);
 public function __unset($key);
 
 /**
- * Manual assignment of template variables, or ability to assign multiple
- * variables en masse.
+ * Ręczne przypisywanie zmiennych szablonu, lub możliwość przypisania wielu
+ * zmiennych na raz.
  */
 public function assign($spec, $value = null);
 
 /**
- * Unset all assigned template variables
+ * Czyści wszystkie przypisane zmienne.
  */
 public function clearVars();
 
 /**
- * Render the template named $name
+ * Renderowanie szablonu o nazwie $name
  */
 public function render($name);
 ]]></programlisting>
 
             <para>
-                Using this interface, it becomes relatively easy to wrap a
-                third-party template engine as a Zend_View-compatible class. As
-                an example, the following is one potential wrapper for Smarty:
+                Używając tego interfejsu, relatywnie proste staje się podpięcie 
+                zewnętrznego systemu szablonów jako klasy kompatybilnej z 
+                Zend_View. Przykładowo, poniższy przyklad to podpięcie systemu Smarty:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -240,13 +240,13 @@ require_once 'Smarty.class.php';
 class Zend_View_Smarty implements Zend_View_Interface
 {
     /**
-     * Smarty object
+     * Obiekt Smarty
      * @var Smarty
      */
     protected $_smarty;
 
     /**
-     * Constructor
+     * Konstruktor
      *
      * @param string $tmplPath
      * @param array $extraParams
@@ -266,7 +266,7 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Return the template engine object
+     * Zwraca aktualny obiekt systemu szablonów
      *
      * @return Smarty
      */
@@ -276,9 +276,9 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Set the path to the templates
+     * Ustawia ścieżkę do szablonów
      *
-     * @param string $path The directory to set as the path.
+     * @param string $path Ścieżka.
      * @return void
      */
     public function setScriptPath($path)
@@ -288,14 +288,14 @@ class Zend_View_Smarty implements Zend_View_Interface
             return;
         }
 
-        throw new Exception('Invalid path provided');
+        throw new Exception('Nieprawidłowa ścieżka');
     }
 
     /**
-     * Assign a variable to the template
+     * Przypisanie zmiennej do szablonu
      *
-     * @param string $key The variable name.
-     * @param mixed $val The variable value.
+     * @param string $key Nazwa zmiennej.
+     * @param mixed $val Wartość zmiennej.
      * @return void
      */
     public function __set($key, $val)
@@ -304,10 +304,10 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Retrieve an assigned variable
+     * Pobiera przypisaną zmienną
      *
-     * @param string $key The variable name.
-     * @return mixed The variable value.
+     * @param string $key Nazwa zmiennej
+     * @return mixed Wartość zmiennej.
      */
     public function __get($key)
     {
@@ -315,7 +315,7 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Allows testing with empty() and isset() to work
+     * Pozwala działać funkcjom empty() oraz isset() na właściwościach obiektu
      *
      * @param string $key
      * @return boolean
@@ -327,7 +327,7 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Allows unset() on object properties to work
+     * Pozwala działać funkcji unset() na właściwości obiektu
      *
      * @param string $key
      * @return void
@@ -338,16 +338,16 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Assign variables to the template
+     * Przypisywanie zmiennych do szablonu
      *
-     * Allows setting a specific key to the specified value, OR passing an array
-     * of key => value pairs to set en masse.
+     * Pozwala przypisać określoną wartość do określonego klucza, LUB przekazać
+     * tablicę par klucz => wartość aby przypisać je wszystkie na raz.
      *
      * @see __set()
-     * @param string|array $spec The assignment strategy to use (key or array of key
-     * => value pairs)
-     * @param mixed $value (Optional) If assigning a named variable, use this
-     * as the value.
+     * @param string|array $spec Strategia przypisania (klucz lub tablica
+     * par klucz=> wartość)
+     * @param mixed $value (Opcjonalny) Gdy przypisujesz nazwaną zmienną, użyj
+     * go jako wartości.
      * @return void
      */
     public function assign($spec, $value = null)
@@ -361,10 +361,10 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Clear all assigned variables
+     * Czyści wszystkie przypisane zmienne.
      *
-     * Clears all variables assigned to Zend_View either via {@link assign()} or
-     * property overloading ({@link __get()}/{@link __set()}).
+     * Czyści wszystkie zmienne przypisane do Zend_View za pomocą {@link assign()} lub
+     * przeładowania właściwości ({@link __get()}/{@link __set()}).
      *
      * @return void
      */
@@ -374,10 +374,10 @@ class Zend_View_Smarty implements Zend_View_Interface
     }
 
     /**
-     * Processes a template and returns the output.
+     * Renderuje szablon i zwraca dane wyjściowe.
      *
-     * @param string $name The template to process.
-     * @return string The output.
+     * @param string $name Nazwa szablonu do renderowania.
+     * @return string Dane wyjściowe.
      */
     public function render($name)
     {
@@ -387,10 +387,10 @@ class Zend_View_Smarty implements Zend_View_Interface
 ]]></programlisting>
 
             <para>
-                In this example, you would instantiate the
-                <code>Zend_View_Smarty</code> class instead of
-                <code>Zend_View</code>, and then use it in roughly the same
-                fashion as <code>Zend_View</code>:
+                W tym przykładzie powinieneś utworzyć instancję klasy
+                <code>Zend_View_Smarty</code> zamiast <code>Zend_View</code>, 
+                a następnie używać jej w dokładnie w ten sam sposób jak 
+                <code>Zend_View</code>:
             </para>
 
             <programlisting role="php"><![CDATA[

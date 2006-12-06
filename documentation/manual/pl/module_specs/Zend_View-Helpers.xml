@@ -158,15 +158,15 @@
             w których Zend_View ma szukać klas pomocników. Domyślnie Zend_View 
             szuka klas pomocników w katalogu "Zend/View/Helper/*". Możesz wybrać
             inny katalog używając metod setHelperPath() oraz addHelperPath().
-            Additionally, you can indicate a class
-            prefix to use for helpers in the path provided, to allow namespacing
-            your helper classes. By default, if no class prefix is provided,
-            'Zend_View_Helper_' is assumed.
+            Dodatkowo możesz określić przedrostek klas pomocników znajdujących 
+            się w podanej ścieżce aby utworzyć przestrzenie nazw dla klas pomocników.
+            Domyślnie, gdy żaden przedrostek nie zostanie określony, przyjęty
+            zostanie przedrostek 'Zend_View_Helper_'.
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-// Set path to /path/to/more/helpers, with previs 'My_View_Helper'
+// Ustaw ścieżkę na /path/to/more/helpers, z przedrostkiem 'My_View_Helper'
 $view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 ?>]]>
         </programlisting>
@@ -207,14 +207,14 @@ $view->addHelperPath('/other/path/to/helpers');
         <itemizedlist>
             
             <listitem><para>
-                The class name must, at the very minimum, end with the helper
-                name itself, using CamelCaps.  E.g., if you were writing a
-                helper called "specialPurpose", the class name would minimally
-                need to be "SpecialPurpose". You may, and should, give the class
-                name a prefix, and it is recommended that you use 'View_Helper'
-                as part of that prefix: "My_View_Helper_SpecialPurpose". (You
-                will need to pass in the prefix, with or without the trailing
-                underscore, to <code>addHelperPath()</code> or
+                Minimalna nazwa klasy musi kończyć się nazwą pomocnika przy
+                użyciu CamelCaps. Przykładowo, jeśli piszesz klasę pomocnika
+                zwaną "specialPurpose", minimalną nazwą klasy musi być 
+                "SpecialPurpose". Możesz, a nawet powinieneś nadać nazwie klasy
+                przedrostek i jest zalecane, abyś użył 'View_Helper' jako
+                części przedrostka: "My_View_Helper_SpecialPurpose". (Przedrostek
+                będziesz musiał przekazać wraz z końcowym znakiem podkreślenia
+                lub bez niego, do metod <code>addHelperPath()</code> oraz
                 <code>setHelperPath()</code>).
             </para></listitem>
             

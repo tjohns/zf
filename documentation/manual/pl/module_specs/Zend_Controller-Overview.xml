@@ -51,16 +51,16 @@
 					</para>
 					
                     <para>
-                        By default, <code>Zend_Controller_Request_Http</code> is
-                        used, which provides access to the entire HTTP request
-                        environment.
+                        Domyślnie używany jest obiekt, 
+                        <code>Zend_Controller_Request_Http</code>, ktory zapewnia
+                        dostęp do całości środowiska żądania HTTP.
                     </para>
 				</listitem>
 
 				<listitem>
 					<para>
                         <code>Zend_Controller_Router_Interface</code> is used to
-                        define routers.  Routing is the process of examining the
+                        define routers. Routing is the process of examining the
                         request environment to determine which  to determine
                         which controller, and action of that controller, should
                         receive the request.  This controller, action, and
@@ -139,9 +139,9 @@
                     </para>
 
                     <para>
-                        The default response class is
-                        <code>Zend_Controller_Response_Http</code>, which is
-                        suitable for use in an HTTP environment.
+                        Domyślną klasą odpowiedzi jest 
+                        <code>Zend_Controller_Response_Http</code>, która jest
+                        odpowiednia do użycia w środowisku HTTP.
                     </para>
                 </listitem>
 			</itemizedlist>
@@ -165,7 +165,7 @@
 	</sect2>
 
 	<sect2 id="zend.controller.overview.request">
-		<title>Request Object</title>
+		<title>Obiekt żądania</title>
 
 		<para>
             The request object is a simple value object that is passed between
@@ -177,13 +177,13 @@
 
 		<itemizedlist>
 			<listitem><para>
-                The controller name is accessed by
-                <code>getControllerName()</code> and
+                Nazwa kontrolera jest dostępna za pomocą metod
+                <code>getControllerName()</code> oraz 
                 <code>setControllerName()</code>.
 			</para></listitem>
 			<listitem><para>
-                The name of the action to call within that controller is
-                accessed by <code>getActionName()</code> and
+                Nazwa akcji kontrolera która ma być wywołana jest dostępna za
+                pomocą metod <code>getActionName()</code> oraz
                 <code>setActionName()</code>.
 			</para></listitem>
 			<listitem><para>
@@ -232,11 +232,11 @@
 		<para>
 			<code>Zend_Controller_Front</code> wywołuje 
 			<code>Zend_Controller_Router</code> (lub inny zarejestrowany router)
-			aby zmapować adres URI do kontrolera oraz do akcji wewnątrz kontrolera. 
-			<code>Zend_Controller_Router</code> pobiera adres URI z obiektu żądania
-			a następnie rozkłada go na części aby determine the
-            controller, action, and any other URL parameters passed in the path
-            and sets these in the request object. 
+			aby zmapować adres URI do kontrolera oraz do akcji wewnątrz 
+			kontrolera. <code>Zend_Controller_Router</code> pobiera adres URI z 
+			obiektu żądania a następnie rozkłada go na części aby określić nazwę 
+			kontrolera, akcji i inne parametry z adresu URL a następnie ustawia 
+			je w obiekcie żądania.
 		</para>
 
 		<para>
@@ -282,18 +282,18 @@ Akcja    : index]]>
 	    </programlisting>
 
 	    <note>
-		    <title>Flexibility</title>
+		    <title>Elastyczność</title>
 		    <para>
-                If you want more flexible capabilities, you may want to check out
+                Jeśli chcesz bardziej elastyczne możliwości, możesz sprawdzić
                 <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>.
             </para>
 		</note>
 
 		<para>
-            The controller name, the action name within that controller, and any
-            optional parameters are set in the request object.  When
-            <code>Zend_Controller_Front</code> enters the dispatch loop, the
-            request object will be passed to
+            Nazwa kontrolera, nazwa akcji w kontrolerze i parametry opcjonalne
+            są ustawione w obiekcie żądania. Kiedy kontroler frontowy
+            <code>Zend_Controller_Front</code> wchodzi w pętlę uruchomieniową, 
+            obiekt żądania będzie przekazany do obiektu
             <code>Zend_Controller_Dispatcher</code>.
 		</para>
 	</sect2>
@@ -341,15 +341,15 @@ Akcja    : index]]>
         <programlisting role="php"><![CDATA[
 public function myAction()
 {
-    // do some processing...
-    // forward to another action, FooController::barAction():
+    // coś przetwarzaj...
+    // przenieś do innej akcji, FooController::barAction():
     $this->_forward('foo', 'bar', array('baz' => 'bogus'));
 }
 ]]></programlisting>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.response">
-		<title>Response Object</title>
+		<title>Obiekt odpowiedzi</title>
 
 		<para>
             The response object is the logical pair to the request object. Its
@@ -375,16 +375,16 @@ echo $controller->dispatch();
         </para>
 
         <programlisting role="php"><![CDATA[
-// Within an action controller action:
-// Set a header
+// Wewnątrz akcji kontrolera:
+// Ustaw nagłówek
 $this->getResponse()
     ->setHeader('Content-Type', 'text/html')
     ->appendBody($content);
 ]]></programlisting>
 
         <para>
-            By doing this, all headers get sent at once, just prior to
-            displaying the content.
+            Dzięki temu wszystkie nagłówki są wysyłane na raz, zaraz przed
+            wyświetleniem zawartości.
         </para>
 
         <para>
@@ -397,8 +397,8 @@ $this->getResponse()
         </para>
 
         <para>
-            By default, exception messages are not displayed. This behaviour may
-            be overridden by calling <code>renderException()</code>.
+            Domyślnie komunikaty wyjątków nie są wyświetlane. Te zachowanie może
+            być zmienione przez wywołanie metody <code>renderException()</code>.
         </para>
 	</sect2>
 </sect1>

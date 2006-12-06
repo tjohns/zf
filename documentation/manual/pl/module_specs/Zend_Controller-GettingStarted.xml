@@ -53,14 +53,14 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
 		</note>
 
         <para>
-            That said, the basic functionality of Zend_Controller also supports
-            URLs using query parameters -- as an example,
-            <code>index.php?controller=foo&amp;action=bar</code>. Additionally,
-            another shipped router, <code>Zend_Controller_RewriteRouter</code>,
-            works in a variety of environments, including many without
-            mod_rewrite-like capabilities. If you cannot use mod_rewrite or an
-            equivalent, you'll still be able to use Zend_Controller for your
-            site.
+            Podstawowa funkcjonalność Zend_Controller także obsługuje adresy
+            URL zawierające parametry -- na przykład jak w adresie 
+            <code>index.php?controller=foo&amp;action=bar</code>. Dodatkowo,
+            inny dołączony router, <code>Zend_Controller_RewriteRouter</code>,
+            działa w różnych środowiskach, włączając w to wiele środowisk
+            nie posiadających możliwości takich jakie ma mod_rewrite.
+            Jeśli nie możesz użyć mod_rewrite lub odpowiednika, wciąż będziesz 
+            mógł użyć Zend_Controller dla swojego serwisu.
         </para>
     </sect2>
 	
@@ -135,8 +135,8 @@ Zend_Controller_Front::run('/sciezka/do/kontrolerow');
 		
         <note>
             <para>
-                This section is not yet complete.  It is under heavy construction
-                and is subject to change.
+                Ta sekcja nie jest jeszcze gotowa. Jest ona w trakcie tworzenia
+                i w przyszłości będzie zmieniona.
             </para>
         </note>
 	</sect2>	
@@ -154,24 +154,24 @@ http://framework.zend.com/
 ]]></programlisting>
 
         <para>
-            In the shipped configuration, the default controller should be named
-            <code>IndexController</code>, and defined in a file named
-            <code>IndexController.php</code>. Internally, it will be referenced
-            as the controller 'index'.
+            W dołączonej konfiguracji domyślny kontroler powinien nazywać się
+            <code>IndexController</code>, i powinien być zdefiniowany w pliku
+            <code>IndexController.php</code>. Wewnętrznie odpowiada to
+            kontrolerowi o nazwie 'index'.
         </para>
 
         <para>
-            You may change the default controller prior to dispatching the front
-            controller by calling the <code>setDefaultController()</code> method
-            on either the front controller or dispatcher object. When doing so,
-            use the internal naming conventions. Thus, the class
-            <code>HomeController</code> (in the <code>HomeController.php</code>
-            file) would be referred to as <code>home</code>.
+            Możesz zmienić nazwę domyślnego kontrolera przed uruchomieniem
+            kontrolera frontowego wywołując metodę <code>setDefaultController()</code> 
+            obiektu kontrolera frontowego lub obiektu dispatchera. Kiedy to
+            robisz, używaj wewnętrznych konwencji nazewnictwa. Dlatego klasa
+            <code>HomeController</code> (w pliku <code>HomeController.php</code>) 
+            odpowiadałaby kontrolerowi <code>home</code>.
         </para>
 
         <para>
-            Controllers should extend the <code>Zend_Controller_Action</code>
-            class and be placed in the controllers directory.
+            Kontrolery powinny rozszerzać klasę <code>Zend_Controller_Action</code>
+            i powinny być umieszczone w ścieżce kontrolerów.
         </para>
 
 	    <programlisting role="php"><![CDATA[<?php
@@ -194,14 +194,14 @@ class IndexController extends Zend_Controller_Action
 ?>]]></programlisting>
 			
         <para>
-            More detail on the default controller and action, as well as writing
-            action controller classes, will be presented in later chapters.
+            Więcej szczegółów na temat domyślnego kontrolera i akcji, jak
+            i tworzenia akcji klas kontrolera będzie w następnych rozdziałach.
         </para>
 
         <note>
             <para>
-                This section is not yet complete.  It is under heavy construction
-                and is subject to change.
+                Ta sekcja nie jest jeszcze gotowa. Jest ona w trakcie tworzenia
+                i w przyszłości będzie zmieniona.
             </para>
         </note>
 	</sect2>			
