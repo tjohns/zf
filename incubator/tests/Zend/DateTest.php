@@ -110,7 +110,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         try {
             $locale = new Zend_Locale('de_AT');
-        	$date = new Zend_Date(0,Zend_Date::TIMESTAMP,$locale);
+        	$date = new Zend_Date(0,false,$locale);
     	    $result = $date->setTimestamp('notimestamp');
         	$this->Fail();
         } catch (Exception $e) {
@@ -124,7 +124,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testAddTimestamp()
     {
         $locale = new Zend_Locale('de_AT');
-    	$date = new Zend_Date(0,Zend_Date::TIMESTAMP,$locale);
+    	$date = new Zend_Date(0,false,$locale);
     	$result = $date->addTimestamp(10000000);
     	$this->assertSame($result->getTimestamp(), '10000000');
     }
@@ -136,7 +136,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         try {
             $locale = new Zend_Locale('de_AT');
-        	$date = new Zend_Date(0,Zend_Date::TIMESTAMP,$locale);
+        	$date = new Zend_Date(0,false,$locale);
     	    $result = $date->addTimestamp('notimestamp');
         	$this->Fail();
         } catch (Exception $e) {
@@ -150,7 +150,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSubTimestamp()
     {
         $locale = new Zend_Locale('de_AT');
-    	$date = new Zend_Date(0,Zend_Date::TIMESTAMP,$locale);
+    	$date = new Zend_Date(0,false,$locale);
     	$result = $date->subTimestamp(10000000);
     	$this->assertSame($result->getTimestamp(), '-10000000');
     }
@@ -162,11 +162,75 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     {
         try {
             $locale = new Zend_Locale('de_AT');
-        	$date = new Zend_Date(0,Zend_Date::TIMESTAMP,$locale);
+        	$date = new Zend_Date(0,false,$locale);
     	    $result = $date->subTimestamp('notimestamp');
         	$this->Fail();
         } catch (Exception $e) {
             $this->assertTrue(true);
         }
+    }
+
+	/**
+	 * Test for compareTimestamp
+	 */
+    public function testCompareTimestamp()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date1 = new Zend_Date(0,false,$locale);
+    	$date2 = new Zend_Date(0,false,$locale);
+    	$this->assertSame($date1->compareTimestamp($date2), '0');
+    }
+
+	/**
+	 * Test for compareTimestamp
+	 */
+    public function testCompareTimestamp2()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date1 = new Zend_Date(0,false,$locale);
+    	$date2 = new Zend_Date(100,false,$locale);
+    	$this->assertSame($date1->compareTimestamp($date2), '-100');
+    }
+
+	/**
+	 * Test for isTimestamp
+	 */
+    public function testIsTimestamp()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date1 = new Zend_Date(0,false,$locale);
+    	$date2 = new Zend_Date(0,false,$locale);
+    	$this->assertTrue($date1->isTimestamp($date2));
+    }
+
+	/**
+	 * Test for isTimestamp
+	 */
+    public function testIsTimestamp2()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date1 = new Zend_Date(0,false,$locale);
+    	$date2 = new Zend_Date(100,false,$locale);
+    	$this->assertFalse($date1->isTimestamp($date2));
+    }
+
+	/**
+	 * Test for __toString
+	 */
+    public function test_ToString()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date = new Zend_Date(0,false,$locale);
+    	$this->assertSame($date->__toString(),'01.01.1970 01:00:00');
+    }
+    
+	/**
+	 * Test for toString
+	 */
+    public function testToString()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date = new Zend_Date(0,false,$locale);
+    	$this->assertSame($date->toString(),'01.01.1970 01:00:00');
     }
 }
