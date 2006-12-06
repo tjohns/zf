@@ -346,7 +346,6 @@ abstract function getFileObject($filename);
         Only two methods of <code>Zend_Search_Lucene_Storage_File</code> must be overloaded in your
         implementation:
         </para>
-
         <programlisting><![CDATA[<?php
 
 class MyFile extends Zend_Search_Lucene_Storage_File {
