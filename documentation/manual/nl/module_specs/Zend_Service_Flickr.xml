@@ -285,10 +285,10 @@ echo "<a href=\"$image->clickUri\">Klik hier voor het beeld</a>\n";
                     </tbody>
                 </tgroup>
             </table>
+            <para>
+                <link linkend="zend.service.flickr.classes">Terug naar de klasselijst</link>
+            </para>
         </sect4>
-        <para>
-            <link linkend="zend.service.flickr.classes">Terug naar de klasselijst</link>
-        </para>
     </sect3>
     <sect3 id="zend.service.flickr.classes.image">
         <title>Zend_Service_Flickr_Image</title>
@@ -329,10 +329,10 @@ echo "<a href=\"$image->clickUri\">Klik hier voor het beeld</a>\n";
                     </tbody>
                 </tgroup>
             </table>
+            <para>
+                <link linkend="zend.service.flickr.classes">Terug naar de klasselijst</link>
+            </para>
         </sect4>
-        <para>
-            <link linkend="zend.service.flickr.classes">Terug naar de klasselijst</link>
-        </para>
     </sect3>
 </sect2>
 </sect1>

@@ -381,6 +381,7 @@ public function setLineDashingPattern($pattern, $phase = 0);]]>
                 <para>
                 <citetitle>De PDF referentie</citetitle> beschrijft deze regel als volgt (originele tekst):
                 <blockquote>
+                    <para>
 An alternative to the nonzero winding number rule is the even-odd rule. This rule
 determines the "insideness" of a point by drawing a ray from that point in any
 direction and simply counting the number of path segments that cross the ray,
@@ -394,6 +395,7 @@ to complex paths. For the five-pointed star, the rule considers the triangular
 points to be inside the path, but not the pentagon in the center. For the two
 concentric circles, only the "doughnut" shape between the two circles is considered inside,
 regardless of the directions in which the circles are drawn.
+                    </para>
                 </blockquote>
             </para>
             </listitem>
