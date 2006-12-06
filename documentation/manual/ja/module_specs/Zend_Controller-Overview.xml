@@ -110,6 +110,43 @@
                         <code>somefoo</code>、アクションは <code>bar</code>
                         となります。
                     </para>
+
+                    <para>
+                        さらに、コントローラを読み込む際に使用する <code>module</code>
+                        を指定することができます。モジュールは単に、
+                        コントローラを読み込む際に
+                        サブディレクトリやクラスプレフィックスを指定するためだけに使用されます。
+                        簡単に言うと、コントローラディレクトリを設定する際に、
+                        このようにモジュールを指定します。
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+    'default' => '/path/to/controllers',
+    'user'    => '/path/to/controllers/user',
+    'admin'   => '/path/to/controllers/admin'
+));
+]]></programlisting>
+                    
+                    <para>
+                        この例では、コントローラ 'news' に対してモジュール 'user'
+                        が設定された場合に、まず
+                        <code>/path/to/controllers/user</code> の中の
+                        <code>NewsController.php</code> を探し、それから他のパスを探します。
+                        さらに、クラス名もまず <code>User_NewsController</code> を探し、それから
+                        <code>NewsController</code> を探すようになります。
+                        このようなリソースにアクセスするには、デフォルトのルータの場合は
+                        <code>http://localhost/news/action/module/user</code>、
+                        そして RewriteRouter の場合は
+                        <code>http://localhost/module/news/action</code>
+                        のようになります。
+                    </para>
+
+                    <para>
+                        モジュールは、関連するコードをディレクトリごとに分けて管理したい場合に便利です。
+                        また、サードパーティのコードを使用したり、
+                        同一コントローラをさまざまなアプリケーションで再利用したりする場合にも便利です。
+                    </para>
                 </listitem>
 
                 <listitem>
