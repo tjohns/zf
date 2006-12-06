@@ -44,6 +44,12 @@ require_once 'Zend/Controller/Action.php';
 class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 {
     /**
+     * Current dispatchable directory
+     * @var string
+     */
+    protected $_curDirectory;
+
+    /**
      * Default action name; defaults to 'index'
      * @var string 
      */
@@ -368,8 +374,21 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
 
         /**
          * Load the controller class file
+         *
+         * Attempts to load the controller class file from {@link getDispatchDirectory()}, 
+         * using the module prefix if a module was requested.
          */
-        Zend::loadClass($className, $directories);
+        $moduleClass = $this->_getModuleClass($request, $className);
+        if ($className != $moduleClass) {
+            $classLoaded = $this->loadClass($moduleClass, $this->getDispatchDirectory());
+            if (!$classLoaded) {
+                Zend::loadClass($className, $this->getDispatchDirectory());
+            } else {
+                $className = $classLoaded;
+            }
+        } else {
+            Zend::loadClass($className, $this->getDispatchDirectory());
+        }
 
         /**
          * Instantiate controller with request, response, and invocation 
@@ -433,16 +452,30 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
             $controllerName = $this->getDefaultController();
             $request->setControllerName($controllerName);
         }
+
         $className = $this->formatControllerName($controllerName);
 
         /**
          * Determine if controller is dispatchable
+         *
+         * Checks to see if a module name is present in the request; if so, 
+         * checks for class file existing in module directory. Otherwise, loops through 
+         * directories in FIFO order to find it.
          */
         $dispatchable = false;
-        foreach ($directories as $directory) {
-            $dispatchable = Zend::isReadable($directory . DIRECTORY_SEPARATOR . $className . '.php');
+        $module = (string) $request->getParam('module', false);
+        if ($module && isset($directories[$module])) {
+            $dispatchable = Zend::isReadable($directories[$module] . DIRECTORY_SEPARATOR . $className . '.php');
             if ($dispatchable) {
-                break;
+                $this->_curDirectory = $directories[$module];
+            }
+        } else {
+            foreach ($directories as $directory) {
+                $dispatchable = Zend::isReadable($directory . DIRECTORY_SEPARATOR . $className . '.php');
+                if ($dispatchable) {
+                    $this->_curDirectory = $directory;
+                    break;
+                }
             }
         }
 
@@ -469,5 +502,75 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         }
 
         return $this->formatActionName($action);
+    }
+
+    /**
+     * Return a class name prefixed with the module name, if a module was specified
+     * 
+     * @param Zend_Controller_Request_Abstract $request 
+     * @param string $className 
+     * @return string
+     */
+    protected function _getModuleClass(Zend_Controller_Request_Abstract $request, $className)
+    {
+        if (false !== ($module = $request->getParam('module', false))) {
+            $className = $this->_formatName($module) . '_' . $className;
+        }
+
+        return $className;
+    }
+
+    /**
+     * Dispatcher class loader
+     *
+     * Allows loading prefixed classes from a specific directory; used when 
+     * modules are utilized.
+     * 
+     * @param string $class 
+     * @param string $dir 
+     * @return false|string Returns false if unable to load class, class name 
+     * of class loaded otherwise
+     */
+    public function loadClass($class, $dir)
+    {
+        if (class_exists($class)) {
+            return true;
+        }
+
+        $path = str_replace('_', DIRECTORY_SEPARATOR, $class);
+        if (strstr($path, DIRECTORY_SEPARATOR)) {
+            $file = substr($path, strrpos($path, DIRECTORY_SEPARATOR));
+            $spec = $dir . DIRECTORY_SEPARATOR . $file . '.php';
+            if (is_readable($spec)) {
+                include_once $spec;
+                if (!class_exists($class)) {
+                    while (strstr($class, '_')) {
+                        $class = substr($class, strpos($class, '_'));
+                        if (class_exists($class)) {
+                            return $class;
+                        }
+                    }
+                    return false;
+                }
+
+                return $class;
+            }
+        } else {
+            Zend::loadClass($class, $dir);
+            return $class;
+        }
+
+        return false;
+    }
+
+    /**
+     * Return the value of the currently selected dispatch directory (as set by 
+     * {@link _getController()})
+     * 
+     * @return string
+     */
+    public function getDispatchDirectory()
+    {
+        return $this->_curDirectory;
     }
 }

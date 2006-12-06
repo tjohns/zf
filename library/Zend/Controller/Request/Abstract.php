@@ -142,16 +142,17 @@ abstract class Zend_Controller_Request_Abstract
      * Get an action parameter
      * 
      * @param string $key 
+     * @param mixed $default Default value to use if key not found
      * @return mixed
      */
-    public function getParam($key)
+    public function getParam($key, $default = null)
     {
         $key = (string) $key;
         if (isset($this->_params[$key])) {
             return $this->_params[$key];
         }
 
-        return null;
+        return $default;
     }
 
     /**

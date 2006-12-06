@@ -49,37 +49,44 @@ class Zend_Controller_Front
      * Instance of Zend_Controller_Plugin_Broker
      * @var Zend_Controller_Plugin_Broker
      */
-    private $_plugins = null;
+    protected $_plugins = null;
 
     /**
      * Instance of Zend_Controller_Request_Abstract
      * @var Zend_Controller_Request_Abstract
      */
-    private $_request = null;
+    protected $_request = null;
 
     /**
      * Instance of Zend_Controller_Router_Interface
      * @var Zend_Controller_Router_Interface
      */
-    private $_router = null;
+    protected $_router = null;
 
     /**
      * Base URL
      * @var string 
      */
-    private $_baseUrl = null;
+    protected $_baseUrl = null;
+
+    /**
+     * Directory|ies where controllers are stored
+     * 
+     * @var string|array
+     */
+    protected $_controllerDir = null;
 
     /**
      * Instance of Zend_Controller_Dispatcher_Interface
      * @var Zend_Controller_Dispatcher_Interface
      */
-    private $_dispatcher = null;
+    protected $_dispatcher = null;
 
     /**
      * Instance of Zend_Controller_Response_Abstract
      * @var Zend_Controller_Response_Abstract
      */
-    private $_response = null;
+    protected $_response = null;
 
     /**
      * Array of invocation parameters to use when instantiating action
@@ -186,7 +193,9 @@ class Zend_Controller_Front
     }
 
     /**
-     * Convenience method, passthru to Zend_Controller_Dispatcher::setControllerDirectory()
+     * Set controller directory
+     *
+     * Stores controller directory to pass to dispatcher
      *
      * @param string|array $directory Path to Zend_Controller_Action controller 
      * classes or array of such paths
@@ -194,18 +203,20 @@ class Zend_Controller_Front
      */
     public function setControllerDirectory($directory)
     {
-        $this->getDispatcher()->setControllerDirectory($directory);
+        $this->_controllerDir = $directory;
         return $this;
     }
 
     /**
-     * Convenience method, passthru to Zend_Controller_Dispatcher::getControllerDirectory()
+     * Retrieve controller directory
      *
-     * @return array
+     * Retrieves stored controller directory
+     *
+     * @return string|array
      */
     public function getControllerDirectory()
     {
-        return $this->getDispatcher()->getControllerDirectory();
+        return $this->_controllerDir;
     }
 
     /**
@@ -616,6 +627,7 @@ class Zend_Controller_Front
 
             $dispatcher = $this->getDispatcher();
             $dispatcher->setParams($this->getParams());
+            $dispatcher->setControllerDirectory($this->getControllerDirectory());
 
             /**
              *  Attempt to dispatch the controller/action. If the $request
