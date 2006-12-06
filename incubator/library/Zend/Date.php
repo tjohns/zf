@@ -316,6 +316,10 @@ class Zend_Date {
      */
     public function compareTimestamp($timestamp)
     {
+        if (is_object($timestamp)) {
+            $timestamp = $timestamp->getTimestamp();
+        }
+
         return bcsub($this->_Date->getTimestamp(), $timestamp);
     }
 
@@ -328,7 +332,11 @@ class Zend_Date {
      */
     public function isTimestamp($timestamp)
     {
-        if ($this->_Date->getTimestamp() == $timestamp) {
+        if (is_object($timestamp)) {
+            $timestamp = $timestamp->getTimestamp();
+        }
+
+        if ($this->getTimestamp() == $timestamp) {
             return true;
         }
         
@@ -381,7 +389,7 @@ class Zend_Date {
                     $comment = TRUE;
                     ++$j;
                     $output[$j] = "'";
-                } else if ($format[$i+1] == "'") {
+                } else if (isset($format[$i+1]) and ($format[$i+1] == "'")) {
                     $output[$j] .= "'";
                     ++$i;
                 } else {
@@ -407,7 +415,7 @@ class Zend_Date {
 
                 // eras
                 case 'GGGGG' :
-                    $output[i] = substr($this->get(Zend_Date::ERA, $locale, $gmt), 0, 1);
+                    $output[$i] = substr($this->get(Zend_Date::ERA, $locale, $gmt), 0, 1);
                     break;
 
                 case 'GGGG' :
@@ -435,7 +443,7 @@ class Zend_Date {
 
                 // months
                 case 'MMMMM' :
-                    $output[i] = substr($this->get(Zend_Date::MONTH_NARROW, $locale, $gmt), 0, 1);
+                    $output[$i] = substr($this->get(Zend_Date::MONTH_NARROW, $locale, $gmt), 0, 1);
                     break;
 
                 case 'MMMM' :
@@ -612,7 +620,7 @@ class Zend_Date {
                 $month      = $this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt);
                 $day        = $this->get(Zend_Date::DAY_SHORT,   $locale, $gmt);
                 $year       = $this->get(Zend_Date::YEAR,        $locale, $gmt);
-                $seconds   -= $this->mktime(0, 0, 0, $month, $day, $year, FALSE, $gmt);
+                $seconds   -= $this->_Date->mktime(0, 0, 0, $month, $day, $year, FALSE, $gmt);
                 $output[$i] = str_pad($seconds, $length, '0', STR_PAD_LEFT);
             }
         }

@@ -223,14 +223,41 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     	$date = new Zend_Date(0,false,$locale);
     	$this->assertSame($date->__toString(),'01.01.1970 01:00:00');
     }
-    
+
 	/**
 	 * Test for toString
 	 */
     public function testToString()
     {
         $locale = new Zend_Locale('de_AT');
-    	$date = new Zend_Date(0,false,$locale);
-    	$this->assertSame($date->toString(),'01.01.1970 01:00:00');
+    	$date = new Zend_Date(1234567890,false,$locale);
+    	$this->assertSame($date->toString(),'14.02.2009 00:31:30');
+    	$this->assertSame($date->toString('en_US'),'Feb 14, 2009 12:31:30 1890');
+    	$this->assertSame($date->toString(false, 'yyyy'),'2009');
+    	$this->assertSame($date->toString(false, false, true),'13.02.2009 23:31:30');
+    	$this->assertSame($date->toString('en_US', false, true),'Feb 13, 2009 11:31:30 PM');
+//    	$this->assertSame($date->toString(false, "'yyyy'"),'1970');
+    	$this->assertSame($date->toString(false, "GGGGG"),'n');
+    	$this->assertSame($date->toString(false, "GGGG"),'n. Chr.');
+    	$this->assertSame($date->toString(false, "GGG"),'n. Chr.');
+    	$this->assertSame($date->toString(false, "GG"),'n. Chr.');
+    	$this->assertSame($date->toString(false, "G"),'n. Chr.');
+    	$this->assertSame($date->toString(false, "yyyyy"),'02009');
+    	$this->assertSame($date->toString(false, "yyyy"),'2009');
+    	$this->assertSame($date->toString(false, "yyy"),'2009');
+    	$this->assertSame($date->toString(false, "yy"),'09');
+    	$this->assertSame($date->toString(false, "y"),'2009');
+    	$this->assertSame($date->toString(false, "YYYYY"),'02009');
+    	$this->assertSame($date->toString(false, "YYYY"),'2009');
+    	$this->assertSame($date->toString(false, "YYY"),'2009');
+    	$this->assertSame($date->toString(false, "YY"),'09');
+    	$this->assertSame($date->toString(false, "Y"),'2009');
+    	$this->assertSame($date->toString(false, "MMMMM"),'F');
+    	$this->assertSame($date->toString(false, "MMMM"),'Februar');
+    	$this->assertSame($date->toString(false, "MMM"),'Feb');
+    	$this->assertSame($date->toString(false, "MM"),'02');
+    	$this->assertSame($date->toString(false, "M"),'2');
+    	$this->assertSame($date->toString(false, "ww"),'07');
+    	$this->assertSame($date->toString(false, "w"),'07');
     }
 }
