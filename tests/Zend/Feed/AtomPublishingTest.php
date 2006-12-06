@@ -13,7 +13,7 @@ require_once 'Zend/Feed/EntryAtom.php';
 /**
  * Zend_Http_Client_File
  */
-require_once 'Zend/Http/Client/File.php';
+require_once 'Zend/Http/Client.php';
 
 
 /**
