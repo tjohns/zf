@@ -13,11 +13,13 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
      * Original request URI
      * @var string 
      */
-    protected $_origRequestUri;
+    protected $_origRequestUri = '';
 
     public function setUp()
     {
-        $this->_origRequestUri = $_SERVER['REQUEST_URI'];
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $this->_origRequestUri = $_SERVER['REQUEST_URI'];
+        }
         $this->_request = new Zend_Controller_Request_Http();
         $this->_request = new Zend_Controller_Request_Http('http://framework.zend.com/news/3?var1=val1&var2=val2#anchor');
     }
@@ -218,7 +220,9 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
  
     public function testGetEnv()
     {
-        $this->assertEquals($_ENV['PATH'], $this->_request->getEnv('PATH'));
+        if (isset($_ENV['PATH'])) {
+            $this->assertEquals($_ENV['PATH'], $this->_request->getEnv('PATH'));
+        }
         $this->assertEquals('foo', $this->_request->getEnv('BAR', 'foo'));
         $this->assertEquals($_ENV, $this->_request->getEnv());
     }
