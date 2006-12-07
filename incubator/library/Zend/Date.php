@@ -574,6 +574,7 @@ class Zend_Date {
 
                 case 'S' :
                     $output[$i] = $this->get(Zend_Date::MILLISECOND, $locale, $gmt);
+                    break;
 
 
                 // zone
@@ -599,22 +600,21 @@ class Zend_Date {
                     $output[$i] = $this->get(Zend_Date::GMT_DIFF, $locale, $gmt);
                     break;
             }
-            
 
             // fill variable tokens
-            if (preg_match('/y+/', $output[$i])) {
+            if (($output[$i][0] !== "'") and (preg_match('/y+/', $output[$i]))) {
                 $length     = strlen($output[$i]);
                 $output[$i] = $this->get(Zend_Date::YEAR, $locale, $gmt);
                 $output[$i] = str_pad($output[$i], $length, '0', STR_PAD_LEFT);
             }
 
-            if (preg_match('/Y+/', $output[$i])) {
+            if (($output[$i][0] !== "'") and (preg_match('/Y+/', $output[$i]))) {
                 $length     = strlen($output[$i]);
                 $output[$i] = $this->get(Zend_Date::YEAR_8601, $locale, $gmt);
                 $output[$i] = str_pad($output[$i], $length, '0', STR_PAD_LEFT);
             }
 
-            if (preg_match('/A+/', $output[$i])) {
+            if (($output[$i][0] !== "'") and (preg_match('/A+/', $output[$i]))) {
                 $length     = strlen($output[$i]);
                 $seconds    = $this->get(Zend_Date::TIMESTAMP,   $locale, $gmt);
                 $month      = $this->get(Zend_Date::MONTH_DIGIT, $locale, $gmt);
@@ -622,6 +622,10 @@ class Zend_Date {
                 $year       = $this->get(Zend_Date::YEAR,        $locale, $gmt);
                 $seconds   -= $this->_Date->mktime(0, 0, 0, $month, $day, $year, FALSE, $gmt);
                 $output[$i] = str_pad($seconds, $length, '0', STR_PAD_LEFT);
+            }
+            
+            if ($output[$i][0] === "'") {
+                $output[$i] = substr($output[$i], 1);
             }
         }
         
@@ -846,7 +850,7 @@ class Zend_Date {
                 break;
 
             case Zend_Date::MILLISECOND :
-                return (int) $this->getFractional();
+                return (int) $this->_Fractional;
                 break;
 
 
