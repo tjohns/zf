@@ -30,12 +30,9 @@ class Zend_Http_Client_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend');
 
         $suite->addTestSuite('Zend_Http_Client_StaticTest');
-        
-        if (defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') && TESTS_ZEND_HTTP_CLIENT_BASEURI) {
-            $suite->addTestSuite('Zend_Http_Client_SocketTest');
-            $suite->addTestSuite('Zend_Http_Client_SocketKeepaliveTest');
-            //$suite->addTestSuite('Zend_Http_Client_CurlTest');
-        }
+        $suite->addTestSuite('Zend_Http_Client_SocketTest');
+        $suite->addTestSuite('Zend_Http_Client_SocketKeepaliveTest');
+        //$suite->addTestSuite('Zend_Http_Client_CurlTest');
 
         return $suite;
     }

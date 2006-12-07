@@ -63,16 +63,17 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 		if (defined('TESTS_ZEND_HTTP_CLIENT_BASEURI') && 
-			Zend_Uri_Http::check(TESTS_ZEND_HTTP_CLIENT_BASEURI)) {
-				
+			Zend_Uri_Http::check(TESTS_ZEND_HTTP_CLIENT_BASEURI)) {		
+			
 			$this->baseuri = TESTS_ZEND_HTTP_CLIENT_BASEURI;
+			if (substr($this->baseuri, -1) != '/') $this->baseuri .= '/';
+			$uri = $this->baseuri . $this->getName() . '.php';
+			$this->client = new Zend_Http_Client($uri, $this->config);
+			
 		} else {
-			$this->markTestSkipped('Set to skip Zend_Http_Client dynamic tests');
+			// Skip tests
+			$this->markTestSkipped('Set to skip Zend_Http_Client dynamic tests. Please see TestConfiguration.php.dist if you want to enable dynamic tests.');
 		}
-		
-		if (substr($this->baseuri, -1) != '/') $this->baseuri .= '/';
-		$uri = $this->baseuri . $this->getName() . '.php';
-		$this->client = new Zend_Http_Client($uri, $this->config);
 	}
 	
 	/**
