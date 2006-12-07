@@ -292,6 +292,7 @@ http://framework.zend.com/controller/action/key1/value1/]]>
             デフォルト値は、コントローラもアクションも "<code>index</code>"
             となります。以下に例を示します。
         </para>
+
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
 コントローラ: roadmap
@@ -306,6 +307,41 @@ http://framework.zend.com/
 アクション  : index]]>
         </programlisting>
 
+        <para>
+            さらに、サブディレクトリ内のコントローラやモジュールもいくつかの方法で指定できます。
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    コントローラの名前にハイフン (-) あるいはアンダースコア (_)
+                    を使用できます。たとえば
+                    <code>http://framework.zend.com/admin-roadmap/future</code>
+                    は、コントローラクラス Admin_RoadmapController に対応します。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    フロントコントローラで <code>useModules</code>
+                    パラメータを設定すると、これをサブディレクトリを使用した
+                    きれいな URI に対応させることができます。上の例の URL は
+                    <code>http://framework.zend.com/admin/roadmap/future</code>
+                    となります。こうするには、<code>useModules</code>
+                    パラメータをフロントコントローラかルータで設定します。
+                </para>
+
+                <programlisting><![CDATA[
+$front->setParam('useModules', true);
+// あるいは
+$router->setParam('useModules', true);
+]]></programlisting>
+
+                <para>
+                    これは、基本ルータおよび RewriteRouter のどちらでも動作します。
+                </para>
+            </listitem>
+        </itemizedlist>
+
         <note>
             <title>柔軟性</title>
             <para>
@@ -317,7 +353,8 @@ http://framework.zend.com/
 
         <para>
             コントローラの名前、コントローラ内のアクションの名前、
-            そしてオプションのパラメータの内容が、リクエストオブジェクトにまとめられます。
+            そしてオプションのパラメータ (モジュールの名前を含む) の内容が、
+            リクエストオブジェクトにまとめられます。
             <code>Zend_Controller_Front</code> がディスパッチループに入ると、
             リクエストオブジェクトが <code>Zend_Controller_Dispatcher</code> に渡されます。
         </para>
