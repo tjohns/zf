@@ -33,32 +33,53 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         unset($this->_router);
     }
 
-    public function testDefaultRoute()
+    public function testAddRoutes()
     {
+        $this->_router->addRoute('archive', new Zend_Controller_Router_Route('archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+')));
         $routes = $this->_router->getRoutes();
-        $this->assertType('Zend_Controller_Router_Route', $routes['default']);
+
+        $this->assertSame(1, count($routes));
+        $this->assertType('Zend_Controller_Router_Route', $routes['archive']);
+
+        $this->_router->addRoute('register', new Zend_Controller_Router_Route('register/:action', array('controller' => 'profile', 'action' => 'register')));
+        $routes = $this->_router->getRoutes();
+
+        $this->assertSame(2, count($routes));
+        $this->assertType('Zend_Controller_Router_Route', $routes['register']);
+    }
+
+    public function testHasRoute()
+    {
+        $this->_router->addRoute('archive', new Zend_Controller_Router_Route('archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+')));
+    
+        $this->assertSame(true, $this->_router->hasRoute('archive'));
+        $this->assertSame(false, $this->_router->hasRoute('bogus'));
     }
 
     public function testGetRoute()
     {
-        $route = $this->_router->getRoute('default');
-        $routes = $this->_router->getRoutes();
+        $archive = new Zend_Controller_Router_Route('archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+'));
+        $this->_router->addRoute('archive', $archive);
+
+        $route = $this->_router->getRoute('archive');
     
         $this->assertType('Zend_Controller_Router_Route', $route);
-        $this->assertSame($route, $routes['default']);
+        $this->assertSame($route, $archive);
     }
 
     public function testRemoveRoute()
     {
-        $route = $this->_router->getRoute('default');
+        $this->_router->addRoute('archive', new Zend_Controller_Router_Route('archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+')));
+
+        $route = $this->_router->getRoute('archive');
         
-        $this->_router->removeRoute('default');
+        $this->_router->removeRoute('archive');
     
         $routes = $this->_router->getRoutes();
         $this->assertSame(0, count($routes));
 
         try {
-            $route = $this->_router->getRoute('default');
+            $route = $this->_router->getRoute('archive');
         } catch (Zend_Controller_Router_Exception $e) {
             return true;
         }
@@ -77,21 +98,6 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $this->fail();
     }
 
-    public function testAddRoutes()
-    {
-        $this->_router->addRoute('archive', new Zend_Controller_Router_Route('archive/:year', array('year' => '2006', 'controller' => 'archive', 'action' => 'show'), array('year' => '\d+')));
-        $routes = $this->_router->getRoutes();
-
-        $this->assertSame(2, count($routes));
-        $this->assertType('Zend_Controller_Router_Route', $routes['archive']);
-
-        $this->_router->addRoute('register', new Zend_Controller_Router_Route('register/:action', array('controller' => 'profile', 'action' => 'register')));
-        $routes = $this->_router->getRoutes();
-
-        $this->assertSame(3, count($routes));
-        $this->assertType('Zend_Controller_Router_Route', $routes['register']);
-    }
-
     public function testRoute()
     {
         $request = new Zend_Controller_RewriteRouterTest_Request();
@@ -101,11 +107,20 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_Controller_Request_Http', $token);
     }
 
+    public function testDefaultRoute()
+    {
+        $request = new Zend_Controller_RewriteRouterTest_Request();
+
+        $token = $this->_router->route($request);
+        
+        $routes = $this->_router->getRoutes();
+        $this->assertType('Zend_Controller_Router_Route', $routes['default']);
+    }
+
     public function testEmptyRoute()
     {
         $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/');
         
-        $this->_router->removeRoute('default');
         $this->_router->addRoute('empty', new Zend_Controller_Router_Route(':year', array('year' => '2006')));
         
         $token = $this->_router->route($request);

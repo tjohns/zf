@@ -42,6 +42,8 @@ require_once 'Zend/Controller/Router/Route.php';
  */
 class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
 {
+    
+    protected $useDefaultRoutes = true;
 
     /**
      * Array of invocation parameters to use when instantiating action 
@@ -61,7 +63,6 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     public function __construct(array $params = array())
     {
         $this->setParams($params);
-        $this->addDefaultRoutes();
     }
 
     /**
@@ -147,8 +148,15 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
      */
     protected function addDefaultRoutes()
     {
-        $compat = new Zend_Controller_Router_Route(':controller/:action/*', array('action' => 'index'));
-        $this->addRoute('default', $compat); 
+        if (!$this->hasRoute('default')) {
+            if ($this->getParam('useModules', false)) {
+                $path = ':module/:controller/:action/*';
+            } else {
+                $path = ':controller/:action/*';
+            }
+            $compat = new Zend_Controller_Router_Route($path, array('action' => 'index'));
+            $this->_routes = array_merge(array('default' => $compat), $this->_routes);
+        }
     }
 
     /** 
@@ -228,7 +236,18 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
      * @param Zend_Controller_Router_Route_Interface Route
      */
     public function removeDefaultRoutes() {
-        $this->removeRoute('default');
+        $this->useDefaultRoutes = false;
+    }
+
+    /** 
+     * Check if named route exists 
+     * 
+     * @param string Name of the route
+     * @return boolean
+     */
+    public function hasRoute($name)
+    {
+        return isset($this->_routes[$name]);
     }
 
     /** 
@@ -296,6 +315,10 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
         
         if (!$request instanceof Zend_Controller_Request_Http) {
             throw Zend::exception('Zend_Controller_Router_Exception', 'Zend_Controller_RewriteRouter requires a Zend_Controller_Request_Http-based request object');
+        }
+
+        if ($this->useDefaultRoutes) {
+            $this->addDefaultRoutes();
         }
 
         $pathInfo = $request->getPathInfo();
