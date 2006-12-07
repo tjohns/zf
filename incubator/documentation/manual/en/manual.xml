@@ -138,6 +138,7 @@
         &module_specs.Zend_Locale-Introduction;
         &module_specs.Zend_Locale-Functions;
         &module_specs.Zend_Locale-Parsing;
+        &module_specs.Zend_Locale-NumberSystems;
     </chapter>
     <chapter id="zend.date">
         <title>Zend_Date</title>

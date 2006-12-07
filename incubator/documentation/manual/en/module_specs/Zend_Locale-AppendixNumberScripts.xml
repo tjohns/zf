@@ -1,10 +1,10 @@
-    <sect1 id="zend.locale.appendix.numberscripts.intro">
+    <sect1 id="zend.locale.appendix.numberscripts">
         <title>Supported number notations in Zend_Locale_Format::toNumberSystem()</title>
         <para>
             <code>Zend_Locale_Format::toNumberSystem()</code> 
             can normalize, localize and convert numbers between different scripts.
         </para>
-        <sect2 id="zend.locale.languages.support">
+        <sect2 id="zend.locale.appendix.numberscripts.supported">
             <title>List of all supported scripts</title>
             <para>
                 <segmentedlist>

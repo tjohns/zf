@@ -1,0 +1,70 @@
+<sect1 id="zend.locale.numbersystems">
+    <title>Number system normalization</title>
+    <para>
+        Normaly the computer is only captable of working with numbers in english
+        notation. These are the numbers from 0 to 9. But this is not always enough.
+        So we spend <code>Zend_Locale</code> the function 
+        <code>toNumbersystem</code> which can convert between numbers of different
+        scripts. 
+    </para>
+    <para>
+        What does this mean for you ? 
+    </para>
+    <para>
+        Let's expect you have an input in arabic "١‎٠٠". Normaly you would not be
+        able to do something with it. With <code>toNumberSystem</code> you are
+        able to convert this arabic number to the english corresponding "100".
+    </para>
+    <example>
+        <title>Normalize a number system</title>
+        <programlisting role="php"><![CDATA[<?php
+require_once('Zend/Locale.php');
+$string = "١‎٠٠";   // Arabic for 100
+$normal = Zend_Locale_Format::toNumberSystem($string, 'Arab', 'Engl');
+
+print "\nOriginal: ".$string;
+print "\nNormalized:".$normal;
+?>]]></programlisting>
+    </example>
+    <para>
+        Of course it works also the other way round. So if you want to
+        localize a number to arabic you can also use the <code>toNumberSystem</code>
+        function.
+    </para>
+    <example>
+        <title>Localize a number systems</title>
+        <programlisting role="php"><![CDATA[<?php
+require_once('Zend/Locale.php');
+$string = "١‎٠٠";   // Arabic for 100
+$local = Zend_Locale_Format::toNumberSystem($string, 'Arab', 'Engl');
+
+print "\nOriginal: ".$string;
+print "\nLocalize:".$local;
+?>]]></programlisting>
+    </example>
+    <para>
+        The function takes as first parameter the origin script, and as second 
+        the target script. So you can also convert between two scripts for 
+        example from arabic to kannada.
+    </para>
+    <example>
+        <title>Convert between number systems</title>
+        <programlisting role="php"><![CDATA[<?php
+require_once('Zend/Locale.php');
+$string = "١‎٠٠";   // Arabic for 100
+$local = Zend_Locale_Format::toNumberSystem($string, 'Arab', 'Knda');
+
+print "\nOriginal: ".$string;
+print "\nLocalize:".$local;
+?>]]></programlisting>
+    </example>
+    <para>
+        All supported scripts can be found in the appendix 
+        <xref linkend="zend.locale.appendix.numberscripts" />.
+        Scripts which are not supported use automatically the standard
+        number system from 0-9.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
