@@ -34,6 +34,19 @@ class Zend_Controller_RouterTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $route->getControllerName(), $request->getPathInfo());
         $this->assertEquals('baz', $route->getActionName(), $request->getPathInfo());
     }
+
+    public function testWithModules()
+    {
+        $request = new Zend_Controller_RouterTest_Request('http://framework.zend.com/module/controller/action/var/value');
+        $router = new Zend_Controller_Router();
+        $router->setParam('useModules', true);
+        $route = $router->route($request);
+
+        $this->assertEquals('module', $request->getParam('module'));
+        $this->assertEquals('controller', $request->getControllerName());
+        $this->assertEquals('action', $request->getActionName());
+        $this->assertEquals('value', $request->getParam('var'));
+    }
 }
 
 /**

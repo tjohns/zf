@@ -305,6 +305,7 @@ http://framework.zend.com/controller/action/key1/value1/]]>
             values. In both cases, the default values are "<code>index</code>".
             These examples illustrate:
         </para>
+
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
 Controller: roadmap
@@ -319,6 +320,43 @@ Controller: index
 Action    : index]]>
         </programlisting>
 
+        <para>
+            Additionally, you can specify controllers in subdirectories or
+            modules through several means:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Controller names that have a hyphen (-) or underscore (_)
+                    can be used. As an example,
+                    <code>http://framework.zend.com/admin-roadmap/future</code>
+                    would map to the Admin_RoadmapController controller class.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    By setting the <code>useModules</code> parameter in the front
+                    controller, you can map to subdirectories using clean URIs.
+                    The previous example URL would read
+                    <code>http://framework.zend.com/admin/roadmap/future</code>.
+                    To do so, set the <code>useModules</code> parameter in the
+                    front controller or the router:
+                </para>
+
+                <programlisting><![CDATA[
+$front->setParam('useModules', true);
+// or
+$router->setParam('useModules', true);
+]]></programlisting>
+
+                <para>
+                    This will work for both the basic router as well as the
+                    RewriteRouter.
+                </para>
+            </listitem>
+        </itemizedlist>
+
 		<note>
 		    <title>Flexibility</title>
 		    <para>
@@ -329,9 +367,9 @@ Action    : index]]>
 
 		<para>
             The controller name, the action name within that controller, and any
-            optional parameters are set in the request object.  When
-            <code>Zend_Controller_Front</code> enters the dispatch loop, the
-            request object will be passed to
+            optional parameters (including the module) are set in the request
+            object.  When <code>Zend_Controller_Front</code> enters the dispatch
+            loop, the request object will be passed to
             <code>Zend_Controller_Dispatcher</code>.
 		</para>
 	</sect2>

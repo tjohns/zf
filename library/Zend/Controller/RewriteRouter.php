@@ -149,7 +149,7 @@ class Zend_Controller_RewriteRouter implements Zend_Controller_Router_Interface
     protected function addDefaultRoutes()
     {
         if (!$this->hasRoute('default')) {
-            if ($this->getParam('useModules', false)) {
+            if ($this->getParam('useModules')) {
                 $path = ':module/:controller/:action/*';
             } else {
                 $path = ':controller/:action/*';

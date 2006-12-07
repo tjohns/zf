@@ -143,6 +143,15 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
 
     /**
      * Route a request
+     *
+     * Routes requests of the format /controller/action by default (action may 
+     * be omitted). Additional parameters may be specified as key/value pairs
+     * separated by the directory separator: 
+     * /controller/action/key/value/key/value. 
+     *
+     * To specify a module to use (basically, subdirectory) when routing the 
+     * request, set the 'useModules' parameter via the front controller or 
+     * {@link setParam()}: $router->setParam('useModules', true)
      * 
      * @param Zend_Controller_Request_Abstract $request 
      * @return void
@@ -155,6 +164,16 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
 
         $pathInfo = $request->getPathInfo();
         $pathSegs = explode('/', trim($pathInfo, '/'));
+
+        /**
+         * Retrieve module if useModules is set in object
+         */
+        $useModules = $this->getParam('useModules');
+        if (!empty($useModules)) {
+            if (isset($pathSegs[0]) && !empty($pathSegs[0])) {
+                $module = array_shift($pathSegs);
+            }
+        }
 
         /**
          * Get controller and action from request
@@ -191,8 +210,12 @@ class Zend_Controller_Router implements Zend_Controller_Router_Interface
         $request->setParams($params);
 
         /**
-         * Set controller and action, now that params are set
+         * Set module, controller and action, now that params are set
          */
+        if (isset($module)) {
+            $request->setParam('module', urldecode($module));
+        }
+
         if (isset($controller)) {
             $request->setControllerName(urldecode($controller));
         }
