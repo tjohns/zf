@@ -38,12 +38,12 @@
 
 				<listitem>
 					<para>
-                        <code>Zend_Controller_Request_Abstract</code> represents
-                        the request environment and provides methods for setting
-                        and retrieving the controller and action names and any
-                        request parameters. Additionally it keeps track of
-                        whether or not the action it contains has been
-                        dispatched by <code>Zend_Controller_Dispatcher</code>.
+                        <code>Zend_Controller_Request_Abstract</code> 
+                        reprezentuje środowisko żądania i zapewnia metody do
+                        ustawienia i odebrania nazw kontrolera i akcji oraz
+                        parametrów żądania. Dodatkowo przechowuje informacje o
+                        tym, czy akcja z tego żądania została uruchomiona przez
+                        <code>Zend_Controller_Dispatcher</code> czy nie.
                         Extensions to the abstract request object can be used to
                         encapsulate the entire request environment, allowing
                         routers to pull information from the request environment
@@ -59,15 +59,16 @@
 
 				<listitem>
 					<para>
-                        <code>Zend_Controller_Router_Interface</code> is used to
-                        define routers. Routing is the process of examining the
-                        request environment to determine which  to determine
-                        which controller, and action of that controller, should
-                        receive the request.  This controller, action, and
-                        optional parameters are then set in the request object
-                        to be processed by <code>Zend_Controller_Dispatcher</code>.  
-                        Routing occurs only once: when the request is initially
-                        received and before the first controller is dispatched.
+                        Interfejs <code>Zend_Controller_Router_Interface</code> 
+                        jest używany do definiowania tras. Routing jest procesem
+                        badania środowiska żądania w celu określenia który
+                        kontroler i która akcja tego kontrolera powinny odebrać
+                        żądanie. Nazwa tego kontrolera, akcji oraz opcjonalnych
+                        parametrów są ustawione w obiekcie żądania a następnie
+                        przetwarzane przez <code>Zend_Controller_Dispatcher</code>.  
+                        Routing przeprowadzany jest tylko raz: wtedy kiedy
+                        żądanie jest po raz pierwszy odebrane, a przed 
+                        uruchomieniem pierwszego kontrolera.
                     </para>
 
                     <para>
@@ -117,6 +118,45 @@
                         the controller would be referred to as
                         <code>somefoo</code> and the action as <code>bar</code>.
 					</para>
+					
+                    <para>
+                        Dodatkowo możesz określić moduł, który ma zostać użyty
+                        gdy ładowany jest kontroler. Moduł jest używany aby
+                        określić podkatalog oraz/lub przedrostek klasy, które
+                        mają być użyte gdy ładowany jest kontroler. Najprościej
+                        możesz to zrobić wtedy kiedy ustawiasz ścieżki 
+                        kontrolera:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+    'default' => '/path/to/controllers',
+    'user'    => '/path/to/controllers/user',
+    'admin'   => '/path/to/controllers/admin'
+));
+]]></programlisting>
+                    
+                    <para>
+                        W powyższym przykładzie jeśli określony jest moduł 'user' 
+                        z kontrolerem 'news', będzie on wpierw poszukiwany w 
+                        pliku <code>NewsController.php</code> w katalogu
+                        <code>/path/to/controllers/user</code>, zanim będą
+                        przeszukane inne ścieżki. Dodatkowo wpierw założone 
+                        zostanie, że klasa jest nazwana
+                        <code>User_NewsController</code>, a dopiero potem
+                        <code>NewsController</code>. Żądaniem do takich zasobów
+                        może być: 
+                        <code>http://localhost/news/action/module/user</code>
+                        dla domyślnego routera, a 
+                        <code>http://localhost/module/news/action</code> dla
+                        routera RewriteRouter.
+                    </para>
+
+                    <para>
+                        Modules are useful when you wish to segregate code into
+                        related subdirectories, use third party code, or re-use
+                        the same controller library in different applications.
+                    </para>
 				</listitem>
 
 				<listitem>
@@ -280,6 +320,43 @@ http://framework.zend.com/
 Kontroler: index
 Akcja    : index]]>
 	    </programlisting>
+	    
+        <para>
+            Dodatkowo możesz określić kontrolery w podkatalogach lub modułach
+            na kilka sposobów:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    W nazwach kontrolera może być użyty myślnik (-) lub podkreślnik 
+                    (_). Na przykład adres
+                    <code>http://framework.zend.com/admin-roadmap/future</code>
+                    wskazywałby na klasę kontrolera Admin_RoadmapController.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    By setting the <code>useModules</code> parameter in the front
+                    controller, you can map to subdirectories using clean URIs.
+                    The previous example URL would read
+                    <code>http://framework.zend.com/admin/roadmap/future</code>.
+                    To do so, set the <code>useModules</code> parameter in the
+                    front controller or the router:
+                </para>
+
+                <programlisting><![CDATA[
+$front->setParam('useModules', true);
+// lub
+$router->setParam('useModules', true);
+]]></programlisting>
+
+                <para>
+                    To będzie działało zarówno dla podstawowego routera jaki
+                    i dla routera RewriteRouter.
+                </para>
+            </listitem>
+        </itemizedlist>
 
 	    <note>
 		    <title>Elastyczność</title>
@@ -352,7 +429,7 @@ public function myAction()
 		<title>Obiekt odpowiedzi</title>
 
 		<para>
-            The response object is the logical pair to the request object. Its
+            Obiekt odpowiedzi jest logiczną parą dla obiektu żądania.  Its
             purpose is to collate content and/or headers so that they may be
             returned en masse. Additionally, the front controller will pass any
             caught exceptions to the response object, allowing the developer to
@@ -360,8 +437,8 @@ public function myAction()
         </para>
 
         <para>
-            Since the response object implements <code>__toString()</code>, it
-            may be safely echoed. This allows for the following usage:
+            Z tego względu, że obiekt odpowiedzi implementuje <code>__toString()</code>, 
+            może on być bezpiecznie wyświetlony. To pozwala na takie użycie:
         </para>
 
         <programlisting role="php"><![CDATA[
