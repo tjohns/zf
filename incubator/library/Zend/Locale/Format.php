@@ -39,7 +39,7 @@ class Zend_Locale_Format
 {
 
     private static $_signs = array(
-        'Arab' => array( '٠', '١‎', '٢', '٣', '٤', '٥', '٦', '٧' ,'٨', '٩'), // 0660 - 0669 arabic
+        'Arab' => array( '٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'), // 0660 - 0669 arabic
         'Deva' => array( '०', '१', '२', '३', '४', '५', '६', '७', '८', '९'), // 0966 - 096F devanagari
         'Beng' => array( '০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'), // 09E6 - 09EF bengali
         'Guru' => array( '੦', '੧', '੨', '੩', '੪', '੫', '੬', '੭', '੮', '੯'), // 0A66 - 0A6F gurmukhi
