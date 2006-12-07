@@ -157,6 +157,10 @@
         <title>Appendix Zend_Locale Regions</title>
         &module_specs.Zend_Locale-AppendixRegions;
     </appendix>
+    <appendix id="appendix.numbersystems">
+        <title>Appendix Zend_Locale Number Systems</title>
+        &module_specs.Zend_Locale-NumberScripts;
+    </appendix>
     <!-- &ref.faq; -->
     <appendix id="appendix.codingstandard">
         <title>Zend Framework PHP Coding Standard</title>
