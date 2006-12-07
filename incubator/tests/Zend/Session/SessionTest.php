@@ -490,21 +490,29 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $s->p = 'pear';
         $s->o = 'orange';
         $s->setExpirationSeconds(5);
-        $result = '';
-        foreach ($s->getIterator() as $key => $val) {
-            $result .= "$key === $val;";
-        }
-        $this->assertTrue($result === 'a === apple;p === pear;o === orange;','iteration over default Zend_Session namespace failed');
+
+        $id = session_id();
+        session_write_close(); // release session so process below can use it
+        sleep(4); // not long enough for things to expire
+        exec("/usr/bin/php SessionTestHelper.php expireAll $id expireAll", $result);
+        $result = array_pop($result);
+        session_start(); // resume session
+        file_put_contents('result.txt', $result);
+        $this->assertTrue($result === 'a === apple;p === pear;o === orange;',"iteration over default Zend_Session namespace failed (result=$result)");
+
         $s = new Zend_Session('expireGuava');
         $s->setExpirationSeconds(5, 'g');
         $s->g = 'guava';
         $s->p = 'peach';
         $s->p = 'plum';
-        $result = '';
-        foreach ($s->getIterator() as $key => $val) {
-            $result .= "$key === $val;";
-        }
-        $this->assertTrue($result === 'p === plum;','iteration over named Zend_Session namespace failed');
+
+        session_write_close(); // release session so process below can use it
+        sleep(6); // not long enough for things to expire
+        exec("/usr/bin/php SessionTestHelper.php expireAll $id expireGuava", $result);
+        $result = array_pop($result);
+        session_start(); // resume session
+        file_put_contents('result.txt', $result);
+        $this->assertTrue($result === 'p === plum;',"iteration over named Zend_Session namespace failed (result=$result)");
     }
 
     /**
@@ -518,32 +526,41 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         $s->p = 'pear';
         $s->o = 'orange';
         $s->setExpirationHops(5);
-        $result = '';
-        foreach ($s->getIterator() as $key => $val) {
-            $result .= "$key === $val;";
-        }
-        $this->assertTrue($result === 'a === apple;p === pear;o === orange;','iteration over default Zend_Session namespace failed');
+
+        $id = session_id();
+        session_write_close(); // release session so process below can use it
+        sleep(4); // not long enough for things to expire
+        exec("/usr/bin/php SessionTestHelper.php expireAll $id expireAll", $result);
+        $result = array_pop($result);
+        session_start(); // resume session
+        file_put_contents('result.txt', $result);
+        $this->assertTrue($result === 'a === apple;p === pear;o === orange;',"iteration over default Zend_Session namespace failed (result=$result)");
 
         $s = new Zend_Session('expireGuava');
         $s->setExpirationHops(5, 'g');
         $s->g = 'guava';
         $s->p = 'peach';
         $s->p = 'plum';
-        $result = '';
-        foreach ($s->getIterator() as $key => $val) {
-            $result .= "$key === $val;";
-        }
-        $this->assertTrue($result === 'p === plum;','iteration over named Zend_Session namespace failed');
 
+        session_write_close(); // release session so process below can use it
+        sleep(6); // not long enough for things to expire
+        exec("/usr/bin/php SessionTestHelper.php expireAll $id expireGuava", $result);
+        $result = array_pop($result);
+        session_start(); // resume session
+        file_put_contents('result.txt', $result);
+        $this->assertTrue($result === 'p === plum;',"iteration over named Zend_Session namespace failed (result=$result)");
         $s = new Zend_Session('expireGuava');
         $s->setExpirationHops(5, 'g', true);
         $s->g = 'guava';
         $s->p = 'peach';
         $s->p = 'plum';
-        $result = '';
-        foreach ($s->getIterator() as $key => $val) {
-            $result .= "$key === $val;";
-        }
-        $this->assertTrue($result === 'p === plum;','iteration over named Zend_Session namespace failed');
+
+        session_write_close(); // release session so process below can use it
+        sleep(6); // not long enough for things to expire
+        exec("/usr/bin/php SessionTestHelper.php expireAll $id expireGuava", $result);
+        $result = array_pop($result);
+        session_start(); // resume session
+        file_put_contents('result.txt', $result);
+        $this->assertTrue($result === 'p === plum;',"iteration over named Zend_Session namespace failed (result=$result)");
     }
 }
