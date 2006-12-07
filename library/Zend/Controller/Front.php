@@ -181,21 +181,30 @@ class Zend_Controller_Front
     }
 
     /**
-     * Convenience method, passthru to Zend_Controller_Dispatcher::addControllerDirectory()
+     * Add a controller directory to the controller directory stack
      * 
      * @param string $directory 
+     * @param string $module Optional; module name (key) under which to store 
+     * directory
      * @return Zend_Controller_Front
      */
-    public function addControllerDirectory($directory)
+    public function addControllerDirectory($directory, $module = null)
     {
-        $this->getDispatcher()->addControllerDirectory($directory);
+        if (null === $module) {
+            $this->_controllerDir[] = (string) $directory;
+        } else {
+            $this->_controllerDir[(string) $module] = (string) $directory;
+        }
+
         return $this;
     }
 
     /**
      * Set controller directory
      *
-     * Stores controller directory to pass to dispatcher
+     * Stores controller directory to pass to dispatcher. May be an array or a 
+     * string; if an array, string keys may be used to indicated modules 
+     * (subdirectories).
      *
      * @param string|array $directory Path to Zend_Controller_Action controller 
      * classes or array of such paths
@@ -203,7 +212,7 @@ class Zend_Controller_Front
      */
     public function setControllerDirectory($directory)
     {
-        $this->_controllerDir = $directory;
+        $this->_controllerDir = (array) $directory;
         return $this;
     }
 
@@ -627,7 +636,9 @@ class Zend_Controller_Front
 
             $dispatcher = $this->getDispatcher();
             $dispatcher->setParams($this->getParams());
-            $dispatcher->setControllerDirectory($this->getControllerDirectory());
+            foreach ($this->getControllerDirectory() as $module => $directory) {
+                $dispatcher->addControllerDirectory($directory, $module);
+            }
 
             /**
              *  Attempt to dispatch the controller/action. If the $request

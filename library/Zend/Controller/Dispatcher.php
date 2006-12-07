@@ -146,13 +146,19 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * @param string $path 
      * @return Zend_Controller_Dispatcher
      */
-    public function addControllerDirectory($path)
+    public function addControllerDirectory($path, $module = null)
     {
         if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
             throw Zend::exception('Zend_Controller_Dispatcher_Exception', "Directory \"$path\" not found or not readable");
         }
 
-        return $this->_directories[] = rtrim($path, '/\\');
+        if (null === $module) {
+            $this->_directories[] = rtrim($path, '\//');
+        } else {
+            $this->_directories[(string) $module] = rtrim($path, '\//');
+        }
+
+        return $this;
     }
 
     /**
