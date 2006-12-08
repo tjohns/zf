@@ -43,7 +43,8 @@ class Zend_Session_AllTests extends Zend_Session_PathHelper
 
     public static function suite()
     {
-        self::buildSessionTestFile('Core.php');
+        // whitebox testing will be added at a later date
+        // self::buildSessionTestFile('Core.php');
 
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Session');
 
