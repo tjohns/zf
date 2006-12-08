@@ -109,13 +109,17 @@ class Zend_Mail_Folder_Mbox extends Zend_Mail_Mbox implements Zend_Mail_Folder_I
             throw Zend::Exception('Zend_Mail_Exception', "can't read dir $currentDir");
         }
         while(($entry = readdir($dh)) !== false) {
+            // ignore hidden files for mbox
+            if($entry[0] == '.') {
+                continue;
+            }
             $absoluteEntry = $currentDir . $entry;
             $globalName = $parentGlobalName . DIRECTORY_SEPARATOR . $entry;
             if(is_file($absoluteEntry) && $this->_isMboxFile($absoluteEntry)) {
                 $parentFolder->$entry = new Zend_Mail_Folder($entry, $globalName);
                 continue;
             }
-            if(!is_dir($absoluteEntry) || $entry == '.' || $entry == '..') {
+            if(!is_dir($absoluteEntry) /* || $entry == '.' || $entry == '..' */) {
                 continue;
             }
             $folder = new Zend_Mail_Folder($entry, $globalName, false);
@@ -164,7 +168,7 @@ class Zend_Mail_Folder_Mbox extends Zend_Mail_Mbox implements Zend_Mail_Folder_I
      */
     public function selectFolder($globalName)
     {
-    	// TODO: check $globalName for ..! could be user submitted data
+        // TODO: check $globalName for ..! could be user submitted data
         $this->_currentFolder = (string)$globalName;
         try {
             $this->_openMboxFile($this->_rootdir . $this->_currentFolder);
