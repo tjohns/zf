@@ -283,6 +283,26 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertSame('authors/martel', $url);
     }
 
+    public function testAssembleWithReset()
+    {
+        $route = new Zend_Controller_Router_Route('archive/:year/*', array('controller' => 'archive', 'action' => 'show'));
+        $values = $route->match('archive/2006/show/all/sort/name');
+
+        $url = $route->assemble(array('year' => '2005'), true);
+
+        $this->assertSame('archive/2005', $url);
+    }
+    
+    public function testAssembleWithReset2()
+    {
+        $route = new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'archive', 'action' => 'show'));
+        $values = $route->match('users/list');
+
+        $url = $route->assemble(array(), true);
+
+        $this->assertSame('users/list', $url);
+    }
+    
     public function testAssembleWithWildcardAndAdditionalParameters()
     {
         $route = new Zend_Controller_Router_Route('authors/:name/*');
@@ -331,6 +351,7 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
                     array('controller' => 'ctrl', 'action' => 'act'));
 
         $this->assertSame('ctrl', $route->getDefault('controller'));
+        $this->assertSame(null, $route->getDefault('bogus'));
     }
 
 }
