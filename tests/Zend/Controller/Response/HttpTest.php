@@ -99,4 +99,17 @@ class Zend_Controller_Response_HttpTest extends PHPUnit_Framework_TestCase
             $this->assertTrue($found, var_export($headers, 1));
         }
     }
+
+    public function testGetBodyAsArray()
+    {
+        $string1 = 'content for the response body';
+        $string2 = 'more content for the response body';
+        $string3 = 'even more content for the response body';
+        $this->_response->appendBody($string1);
+        $this->_response->appendBody($string2);
+        $this->_response->appendBody($string3);
+
+        $expected = array($string1, $string2, $string3);
+        $this->assertEquals($expected, $this->_response->getBody(true));
+    }
 }

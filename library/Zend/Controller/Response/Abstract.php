@@ -31,9 +31,9 @@ abstract class Zend_Controller_Response_Abstract
 {
     /**
      * Body content
-     * @var string
+     * @var array
      */
-    protected $_body = '';
+    protected $_body = array();
 
     /**
      * Exception stack
@@ -117,7 +117,7 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function setBody($content)
     {
-        $this->_body = (string) $content;
+        $this->_body = array((string) $content);
         return $this;
     }
 
@@ -129,18 +129,39 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function appendBody($content)
     {
-        $this->_body .= (string) $content;
+        $this->_body[] = (string) $content;
         return $this;
     }
 
     /**
      * Return the body content
      *
+     * @param boolean $asArray Whether or not to return the body content as an 
+     * array of strings or as a single string; defaults to false
+     * @return string|array
+     */
+    public function getBody($asArray = false)
+    {
+        if ($asArray) {
+            return $this->_body;
+        }
+
+        return $this->_concatenateBody();
+    }
+
+    /**
+     * Concatenate the various body segments into a single string
+     * 
      * @return string
      */
-    public function getBody()
+    public function _concatenateBody()
     {
-        return $this->_body;
+        ob_start();
+        foreach ($this->_body as $content) {
+            echo $content;
+        }
+
+        return ob_get_clean();
     }
 
     /**
@@ -222,6 +243,6 @@ abstract class Zend_Controller_Response_Abstract
             return $exceptions;
         }
 
-        return $this->_body;
+        return $this->_concatenateBody();
     }
 }
