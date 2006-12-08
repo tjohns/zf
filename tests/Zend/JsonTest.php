@@ -339,4 +339,38 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
             // sucess
         }
     }
+
+    /**
+     * Tests for ZF-461
+     * 
+     * Check to see that cycling detection works properly
+     */
+    public function testZf461()
+    {
+        $item1 = new Zend_JsonTest_Item() ;
+        $item2 = new Zend_JsonTest_Item() ;
+        $everything = array() ;
+        $everything['allItems'] = array($item1, $item2) ;
+        $everything['currentItem'] = $item1 ;
+
+        try {
+            $encoded = Zend_Json_Encoder::encode($everything);
+        } catch (Exception $e) {
+            $this->fail('Object cycling checks should check for recursion, not duplicate usage of an item');
+        }
+
+        try {
+            $encoded = Zend_Json_Encoder::encode($everything, true);
+            $this->fail('Object cycling not allowed when cycleCheck parameter is true');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+}
+
+/**
+ * Zend_JsonTest_Item: test item for use with testZf461()
+ */
+class Zend_JsonTest_Item 
+{ 
 }

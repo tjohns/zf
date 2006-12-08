@@ -36,6 +36,13 @@ require_once 'Zend/Json/Exception.php';
 class Zend_Json_Encoder
 {
     /**
+     * Whether or not to check for possible cycling
+     * 
+     * @var boolean
+     */
+    protected $_cycleCheck;
+
+    /**
      * Array of visited objects; used to prevent cycling.
      *
      * @var array
@@ -44,20 +51,25 @@ class Zend_Json_Encoder
 
     /**
      * Constructor
+     *
+     * @param boolean $cycleCheck Whether or not to check for recursion when encoding
+     * @return void
      */
-    protected function __construct()
+    protected function __construct($cycleCheck = false)
     {
+        $this->_cycleCheck = $cycleCheck;
     }
 
     /**
      * Use the JSON encoding scheme for the value specified
      *
-     * @param mixed $value  value the object to be encoded
+     * @param mixed $value The value to be encoded
+     * @param boolean $cycleCheck Whether or not to check for possible object recursion when encoding
      * @return string  The encoded value
      */
-    public static function encode($value)
+    public static function encode($value, $cycleCheck = false)
     {
-        $encoder = new Zend_Json_Encoder();
+        $encoder = new Zend_Json_Encoder(($cycleCheck) ? true : false);
 
         return $encoder->_encodeValue($value);
     }
@@ -94,18 +106,20 @@ class Zend_Json_Encoder
      *
      * @param $value object
      * @return string
-     * @throws Zend_Json_Exception
+     * @throws Zend_Json_Exception If recursive checks are enabled and the object has been serialized previously
      */
     protected function _encodeObject(&$value)
     {
-        if ($this->_wasVisited($value)) {
-    	    throw new Zend_Json_Exception(
-                'Cycles not supported in JSON encoding, cycle introduced by '
-                . 'class "' . get_class($value) . '"'
-            );
-    	}
+        if ($this->_cycleCheck) {
+            if ($this->_wasVisited($value)) {
+                throw new Zend_Json_Exception(
+                    'Cycles not supported in JSON encoding, cycle introduced by '
+                    . 'class "' . get_class($value) . '"'
+                );
+            }
 
-        $this->_visited[] = $value;
+            $this->_visited[] = $value;
+        }
 
     	$props = '';
     	foreach (get_object_vars($value) as $name => $propValue) {
@@ -125,7 +139,6 @@ class Zend_Json_Encoder
     /**
      * Determine if an object has been serialized already
      *
-     * @access protected
      * @param mixed $value
      * @return boolean
      */

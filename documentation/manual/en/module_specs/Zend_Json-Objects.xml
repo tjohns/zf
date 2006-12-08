@@ -5,7 +5,15 @@
         will be encoded in a JSON object.
     </para>
     <para>
-        Decoding JSON objects poses a slight difficulty, however, since
+        JSON does not allow object references, so care should be taken not to
+        encode objects with recursive references. If you have issues with
+        recursion, <code>Zend_Json::encode()</code> and
+        <code>Zend_Json_Encoder::encode()</code> allow an optional second
+        parameter to check for recursion; if an object is serialized twice, an
+        exception will be thrown.
+    </para>
+    <para>
+        Decoding JSON objects poses an additional difficulty, however, since
         Javascript objects correspond most closesly to PHP's associative array.
         Some suggest that a class identifier should be passed, and an object
         instance of that class should be created and populated with the

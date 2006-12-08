@@ -70,16 +70,17 @@ class Zend_Json
      * NOTE: Only public variables will be encoded
      *
      * @param mixed $valueToEncode
+     * @param boolean $cycleCheck Optional; whether or not to check for object recursion; off by default
      * @return string JSON encoded object
      */
-    static public function encode($valueToEncode)
+    static public function encode($valueToEncode, $cycleCheck = false)
     {
         if (function_exists('json_encode')) {
             return json_encode($valueToEncode);
         }
 
         include_once 'Zend/Json/Encoder.php';
-    	return Zend_Json_Encoder::encode($valueToEncode);
+    	return Zend_Json_Encoder::encode($valueToEncode, $cycleCheck);
     }
 }
 
