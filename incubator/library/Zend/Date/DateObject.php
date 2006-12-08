@@ -541,14 +541,15 @@ class Zend_Date_DateObject {
 
                 case 'r':  // RFC 2822 date format
                     $difference = $this->_gmtDifference();
+                    $difference = sprintf('%s%04d', ($difference <= 0) ? '+' : '-', abs($difference) / 36);
                     $output .= gmdate('D', 86400 * (3 + $this->dayOfWeek($date['year'], $date['mon'], $date['mday']))) .
-                               ', '.(($date['mday'] < 10) ? '0'.$date['mday'] : $date['mday']).
-                               ' '.date('M',mktime(0, 0, 0, $date['mon'], 2, 1971)).
-                               ' '.$date['year'].
-                               ' '.(($date['hours'] < 10) ? '0'.$date['hours'] : $date['hours']).
-                               ':'.(($date['minutes'] < 10) ? '0'.$date['minutes'] : $date['minutes']).
-                               ':'.(($date['seconds'] < 10) ? '0'.$date['seconds'] : $date['seconds']).
-                               ' '.sprintf('%s%04d',($difference < 0) ? '+' : '-', abs($difference)/36);
+                               ', ' . (($date['mday'] < 10) ? '0' . $date['mday'] : $date['mday']) .
+                               ' ' . date('M',mktime(0, 0, 0, $date['mon'], 2, 1971)) .
+                               ' ' . $date['year'] .
+                               ' ' . (($date['hours'] < 10) ? '0'.$date['hours'] : $date['hours']) .
+                               ':' . (($date['minutes'] < 10) ? '0'.$date['minutes'] : $date['minutes']) .
+                               ':' . (($date['seconds'] < 10) ? '0'.$date['seconds'] : $date['seconds']) .
+                               ' ' . $difference;
                     break;
 
                 case 'U':  // Unix timestamp

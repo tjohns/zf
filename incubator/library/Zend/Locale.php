@@ -25,6 +25,7 @@
  */
 require_once 'Zend.php';
 Zend::loadClass('Zend_Locale_Data');
+Zend::loadClass('Zend_Locale_Format');
 
 
 /**
