@@ -27,7 +27,7 @@ require_once 'Zend/Exception.php';
 
 /**
  * Zend_Session_Exception
- * 
+ *
  * @category Zend
  * @package Zend_Session
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -35,5 +35,5 @@ require_once 'Zend/Exception.php';
  */
 class Zend_Session_Exception extends Zend_Exception
 {
-    
+
 }

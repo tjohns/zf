@@ -496,13 +496,13 @@ final class Zend_Session_Core
 
 
     /**
-     * shutdown() - Shutdown the sesssion, close writing and remove the instance.
+     * writeClose() - Shutdown the sesssion, close writing and detach $_SESSION from the back-end storage mechanism.
      * This will complete the internal data transformation on this request.
      *
      * @param bool $readonly - OPTIONAL remove write access (i.e. throw error if Zend_Session's attempt writes)
      * @return void
      */
-    static public function shutdown($readonly = true)
+    static public function writeClose($readonly = true)
     {
         if (self::$_writeClosed) {
             return;
@@ -556,7 +556,7 @@ final class Zend_Session_Core
 
         self::$_sessionCookieDeleted = true;
 
-        if ($remove_cookie && isset($_COOKIE[session_name()])) {
+        if (isset($_COOKIE[session_name()])) {
             $cookie_params = session_get_cookie_params();
 
             setcookie(
