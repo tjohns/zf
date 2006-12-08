@@ -157,7 +157,7 @@ class Zend_Json_Encoder
         $tmpArray = array();
 
         // Check for associative array
-        if (array_keys($array) !== range(0, count($array) - 1)) {
+        if (!empty($array) && (array_keys($array) !== range(0, count($array) - 1))) {
             // Associative array
             $result = '{';
             foreach ($array as $key => $value) {

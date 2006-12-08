@@ -305,4 +305,38 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         $json = '{"data":[1,2,3,4 ]}';
         $this->assertEquals($expected, Zend_Json::decode($json));
     }
+
+    /**
+     * Tests for ZF-504
+     *
+     * Three confirmed issues reported:
+     * - encoder improperly encoding empty arrays as structs
+     * - decoder happily decoding clearly borked JSON
+     * - decoder decoding octal values improperly (shouldn't decode them at all, as JSON does not support them)
+     */
+    public function testZf504()
+    {
+        $test = array();
+        $this->assertSame('[]', Zend_Json::encode($test));
+
+        try {
+            $json = '[a"],["a],[][]';
+            $test = Zend_Json::decode($json);
+            $this->fail("Should not be able to decode '$json'");
+
+            $json = '[a"],["a]';
+            $test = Zend_Json::decode($json);
+            $this->fail("Should not be able to decode '$json'");
+        } catch (Exception $e) {
+            // success
+        }
+
+        try {
+            $expected = 010;
+            $test = Zend_Json::decode('010');
+            $this->fail('Octal values are not supported in JSON notation');
+        } catch (Exception $e) {
+            // sucess
+        }
+    }
 }
