@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<!--
+
+ Zend Framework
+
+ LICENSE
+
+ This source file is subject to the new BSD license that is bundled
+ with this package in the file LICENSE.txt.
+ It is also available through the world-wide-web at this URL:
+ http://framework.zend.com/license/new-bsd
+ If you did not receive a copy of the license and are unable to
+ obtain it through the world-wide-web, please send an email
+ to license@zend.com so we can send you a copy immediately.
+
+ @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ @license    http://framework.zend.com/license/new-bsd     New BSD License
+
+-->
+<project name="ZendFramework" default="dist" basedir=".">
+
+  <path id="zf.class.path">
+    <pathelement dir="${project.basedir}/phing/tasks" />
+  </path>
+  <taskdef name="entitynames" classname="zend.docbook.EntityNamesTask">
+    <classpath refid="zf.class.path" />
+  </taskdef>
+
+  <property name="zf.product.name" value="Zend Framework" />
+  <property name="zf.productname" value="ZendFramework" />
+  <property name="zf.version" value="0.6.0" />
+  <property name="svn.url" value="http://framework.zend.com/svn" />
+  <property name="zf.svn.url" value="${svn.url}/framework/trunk" />
+  <property name="zf.svn.tag" value="HEAD" />
+  <property name="zf.export.dir" value="${project.basedir}/${zf.productname}-${zf.version}-${zf.svn.tag}" />
+  <property name="stage.home" value="${project.basedir}/stage" />
+  <property name="zf.stage.dir" value="${stage.home}/${zf.productname}-${zf.version}" />
+  <property name="zf.tarball" value="${stage.home}/${zf.productname}-${zf.version}.tar" />
+  <property name="zf.zipball" value="${stage.home}/${zf.productname}-${zf.version}.zip" />
+  <property name="lang" value="en,ar,de,es,fr,ja,nl,pl,pt-br,ru,zh" />
+
+  <target name="prepare" depends="prepare.source">
+    <mkdir dir="${zf.stage.dir}" />
+  </target>
+
+  <target name="prepare.source">
+    <available file="${project.basedir}/../library/Zend.php" property="zf.dir" value="${project.basedir}/.." />
+    <phingcall target="export" />
+  </target>
+
+  <target name="export" unless="zf.dir">
+    <!-- @TODO
+    svnexport repositoryurl="${zf.svn.url}" todir="${zf.export.dir}" /
+    -->
+  </target>
+
+  <target name="stage" depends="prepare">
+    <echo>Staging files from ${zf.dir} to ${zf.stage.dir}</echo>
+    <copy todir="${zf.stage.dir}">
+      <fileset dir="${zf.dir}">
+        <exclude name="**/.svn/**" />
+        <exclude name="build-tools/**" />
+        <exclude name="documentation/**" />
+        <exclude name="incubator/documentation/**" />
+      </fileset>
+    </copy>
+    <echo file="${zf.stage.dir}/VERSION.txt">
+${zf.product.name} Preview Release ${zf.version} (build ${zf.svn.tag})
+    </echo>
+  </target>
+
+  <target name="build" depends="prepare,stage">
+    <echo>Building...</echo>
+    <phingcall target="build.docs">
+      <property name="zf.doc.label" value="" />
+      <property name="zf.doc.src" value="" />
+      <property name="zf.doc.dest" value="core" />
+    </phingcall>
+    <phingcall target="build.docs">
+      <property name="zf.doc.label" value="Incubator" />
+      <property name="zf.doc.src" value="incubator/" />
+      <property name="zf.doc.dest" value="incubator" />
+    </phingcall>
+  </target>
+
+  <target name="build.docs">
+    <phingcall target="build.manual">
+      <property name="zf.manual.src.home" value="${zf.dir}/${zf.doc.src}documentation/manual" />
+      <property name="zf.manual.dest.home" value="${zf.stage.dir}/documentation/end-user/${zf.doc.dest}" />
+    </phingcall>
+    <phingcall target="build.apidoc">
+      <property name="zf.apidoc.src.dir" value="${zf.dir}/${zf.doc.src}library" />
+      <property name="zf.apidoc.dest.dir" value="${zf.stage.dir}/documentation/api/${zf.doc.dest}" />
+    </phingcall>
+  </target>
+
+  <target name="build.manual">
+    <echo>lang = "${lang}"</echo>
+    <foreach list="${lang}" param="zf.manual.lang" target="build.manual.language.check" />
+  </target>
+
+  <target name="build.manual.language.check">
+    <available file="${zf.manual.src.home}/${zf.manual.lang}" property="lang.exists" />
+    <phing target="build.manual.language" dir="${zf.manual.src.home}/${zf.manual.lang}" phingFile="${project.basedir}/build.xml">
+      <property name="zf.manual.src.dir" value="${zf.manual.src.home}/${zf.manual.lang}" />
+      <property name="zf.manual.dest.dir" value="${zf.manual.dest.home}/${zf.manual.lang}" />
+    </phing>
+  </target>
+
+  <target name="build.manual.language">
+    <echo>Building manual for ${zf.doc.dest}, language "${zf.manual.lang}"...</echo>
+    <entitynames property="zf.manual.entities">
+      <filelist dir="${zf.manual.src.dir}" files="ref,module_specs" />
+    </entitynames>
+    <echo file="${zf.manual.src.dir}/entities.ent" message="${zf.manual.entities}" />
+
+    <mkdir dir="${zf.manual.dest.dir}" />
+    <!-- NOT WORKING YET
+    <xslt todir="${zf.manual.dest.dir}" style="${zf.manual.src.dir}/../.build/html.xsl">
+      <fileset dir=".">
+        <include name="manual.xml" />
+      </fileset>
+    </xslt>
+    -->
+  </target>
+
+  <target name="build.apidoc">
+    <echo>Building API documentation for ${zf.doc.dest}...</echo>
+    <mkdir dir="${zf.apidoc.dest.dir}" />
+    <phpdoc title="${zf.product.name} ${zf.doc.label} API Documentation"
+      destdir="${zf.apidoc.dest.dir}"
+      sourcepath="${zf.apidoc.src.dir}"
+      output="HTML:frames:DOM/earthli"/>
+  </target>
+
+  <target name="dist" depends="build">
+    <echo message="Creating tar and zip archives..." />
+    <tar destfile="${zf.tarball}.gz" basedir="${zf.stage.dir}" compression="gzip" />
+    <zip destfile="${zf.zipball}" basedir="${zf.stage.dir}" />
+  </target>
+
+  <target name="clean">
+    <echo msg="Cleaning up..."/>
+    <!-- @TODO -->
+  </target>
+
+</project>
