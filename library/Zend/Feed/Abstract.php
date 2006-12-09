@@ -73,7 +73,7 @@ abstract class Zend_Feed_Abstract extends Zend_Feed_Element implements Iterator
             // Retrieve the feed via HTTP
             $client = Zend_Feed::getHttpClient();
             $client->setUri($uri);
-            $response = $client->get();
+            $response = $client->request('GET');
             if ($response->getStatus() !== 200) {
                 throw new Zend_Feed_Exception('Feed failed to load, got response code ' . $response->getStatus());
             }
