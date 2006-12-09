@@ -5,7 +5,14 @@
         Objektes im JSON Objekt kodiert.
     </para>
     <para>
-        Das Dekodieren von JSON Objekten stellt eine leichte Schwierigkeit dar, allerdings 
+        JSON erlaubt keine Objektreferenzen, deshalb sollte dafür Sorge getragen werden, dass keine
+        Objekte mit rekursiver Referenz kodiert werden. Wenn man Probleme mit Rekursion hat, 
+        erlauben <code>Zend_Json::encode()</code> und <code>Zend_Json_Encoder::encode()</code> die
+        Angabe eines optionalen, zweiten Parameters, um auf Rekursion zu prüfen; wenn ein Objekt 
+        doppelt serialisiert wird, wird eine Ausnahme geworfen.
+    </para>
+    <para>
+        Das Dekodieren von JSON Objekten stellt eine weitere Schwierigkeit dar, allerdings 
         entsprechen Javascript Objekte sehr einem assoziativen Array in PHP. Einige schlagen vor,
         dass ein Klassenbezeichner übergeben werden soll und eine Objektinstanz dieser Klasse 
         erstellt und mit den Schlüssel/Wert Paaren des JSON Objektes bestückt werden soll; andere
