@@ -12,6 +12,16 @@
 require_once 'Zend/Json.php';
 
 /**
+ * Zend_Json_Encoder
+ */
+require_once 'Zend/Json/Encoder.php';
+
+/**
+ * Zend_Json_Decoder
+ */
+require_once 'Zend/Json/Decoder.php';
+
+/**
  * PHPUnit Test Case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
@@ -44,8 +54,8 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
      */
     public function testBoolean()
     {
-        $this->assertTrue(Zend_Json::decode(Zend_Json::encode(true)));
-        $this->assertFalse(Zend_Json::decode(Zend_Json::encode(false)));
+        $this->assertTrue(Zend_Json_Decoder::decode(Zend_Json_Encoder::encode(true)));
+        $this->assertFalse(Zend_Json_Decoder::decode(Zend_Json_Encoder::encode(false)));
     }
 
 
@@ -60,8 +70,8 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 		$this->_testEncodeDecode(array(-2));
 		$this->_testEncodeDecode(array(-1));
 
-        $zero = Zend_Json::decode(Zend_Json::encode(0));
-		$this->assertEquals(0, $zero, 'Failed 0 integer test. Encoded: ' . serialize(Zend_Json::encode(0)));
+        $zero = Zend_Json_Decoder::decode(Zend_Json_Encoder::encode(0));
+		$this->assertEquals(0, $zero, 'Failed 0 integer test. Encoded: ' . serialize(Zend_Json_Encoder::encode(0)));
 	}
 
 
@@ -86,7 +96,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 	public function testString()
 	{
 		$this->_testEncodeDecode(array('string'));
-		$this->assertEquals('', Zend_Json::decode(Zend_Json::encode('')), 'Empty string encoded: ' . serialize(Zend_Json::encode('')));
+		$this->assertEquals('', Zend_Json_Decoder::decode(Zend_Json_Encoder::encode('')), 'Empty string encoded: ' . serialize(Zend_Json_Encoder::encode('')));
 	}
 
     /**
@@ -99,9 +109,9 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     {
         $string   = 'INFO: Path \\\\test\\123\\abc';
         $expected = '"INFO: Path \\\\\\\\test\\\\123\\\\abc"';
-        $encoded = Zend_Json::encode($string);
+        $encoded = Zend_Json_Encoder::encode($string);
 		$this->assertEquals($expected, $encoded, 'Backslash encoding incorrect: expected: ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
-        $this->assertEquals($string, Zend_Json::decode($encoded));
+        $this->assertEquals($string, Zend_Json_Decoder::decode($encoded));
     }
 	
     /**
@@ -114,9 +124,9 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     {
         $expected = '"INFO: Path\nSome more"';
         $string   = "INFO: Path\nSome more";
-        $encoded  = Zend_Json::encode($string);
+        $encoded  = Zend_Json_Encoder::encode($string);
 		$this->assertEquals($expected, $encoded, 'Newline encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
-        $this->assertEquals($string, Zend_Json::decode($encoded));
+        $this->assertEquals($string, Zend_Json_Decoder::decode($encoded));
     }
 
     /**
@@ -129,9 +139,9 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     {
         $expected = '"INFO: Path\\t\\\\tSome more"';
         $string   = "INFO: Path\t\\tSome more";
-        $encoded  = Zend_Json::encode($string);
+        $encoded  = Zend_Json_Encoder::encode($string);
 		$this->assertEquals($expected, $encoded, 'Tab encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
-        $this->assertEquals($string, Zend_Json::decode($encoded));
+        $this->assertEquals($string, Zend_Json_Decoder::decode($encoded));
     }
 
     /**
@@ -144,9 +154,9 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     {
         $expected = '"INFO: Path \"Some more\""';
         $string   = 'INFO: Path "Some more"';
-        $encoded  = Zend_Json::encode($string);
+        $encoded  = Zend_Json_Encoder::encode($string);
 		$this->assertEquals($expected, $encoded, 'Quote encoding incorrect: expected ' . serialize($expected) . '; received: ' . serialize($encoded) . "\n");
-        $this->assertEquals($string, Zend_Json::decode($encoded));
+        $this->assertEquals($string, Zend_Json_Decoder::decode($encoded));
     }
 
     /**
@@ -158,8 +168,8 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 	public function testArray()
 	{
         $array = array(1, 'one', 2, 'two');
-        $encoded = Zend_Json::encode($array);
-        $this->assertSame($array, Zend_Json::decode($encoded), 'Decoded array does not match: ' . serialize($encoded));
+        $encoded = Zend_Json_Encoder::encode($array);
+        $this->assertSame($array, Zend_Json_Decoder::decode($encoded), 'Decoded array does not match: ' . serialize($encoded));
 	}
 
     /**
@@ -209,8 +219,8 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
         $array = array('__className' => 'stdClass', 'one' => 1, 'two' => 2);
 
-        $encoded = Zend_Json::encode($value);
-        $this->assertSame($array, Zend_Json::decode($encoded));
+        $encoded = Zend_Json_Encoder::encode($value);
+        $this->assertSame($array, Zend_Json_Decoder::decode($encoded));
 	}
 
     /**
@@ -225,8 +235,8 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         $value->one = 1;
         $value->two = 2;
 
-        $encoded = Zend_Json::encode($value);
-        $decoded = Zend_Json::decode($encoded, Zend_Json::TYPE_OBJECT);
+        $encoded = Zend_Json_Encoder::encode($value);
+        $decoded = Zend_Json_Decoder::decode($encoded, Zend_Json::TYPE_OBJECT);
         $this->assertTrue(is_object($decoded), 'Not decoded as an object');
         $this->assertTrue($decoded instanceof StdClass, 'Not a StdClass object');
         $this->assertTrue(isset($decoded->one), 'Expected property not set');
@@ -243,7 +253,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     {
         $value = '[{"id":1},{"foo":2}]';
         $expect = array(array('id' => 1), array('foo' => 2));
-        $this->assertEquals($expect, Zend_Json::decode($value));
+        $this->assertEquals($expect, Zend_Json_Decoder::decode($value));
     }
 
     /**
@@ -264,7 +274,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
             346 => array(64, 'francois'),
             21  => array(12, 'paul')
         );
-        $this->assertEquals($expect, Zend_Json::decode($value));
+        $this->assertEquals($expect, Zend_Json_Decoder::decode($value));
     }
 	
 	/**
@@ -275,8 +285,8 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 	protected function _testEncodeDecode($values) 
 	{
 		foreach ($values as $value) {
-			$encoded = Zend_Json::encode($value);
-			$this->assertEquals($value, Zend_Json::decode($encoded));
+			$encoded = Zend_Json_Encoder::encode($value);
+			$this->assertEquals($value, Zend_Json_Decoder::decode($encoded));
 		}
 	}
 
@@ -300,10 +310,10 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
         $expected = array('data' => array(1, 2, 3, 4));
 
         $json = '{"data":[1,2,3,4' . "\n]}";
-        $this->assertEquals($expected, Zend_Json::decode($json));
+        $this->assertEquals($expected, Zend_Json_Decoder::decode($json));
 
         $json = '{"data":[1,2,3,4 ]}';
-        $this->assertEquals($expected, Zend_Json::decode($json));
+        $this->assertEquals($expected, Zend_Json_Decoder::decode($json));
     }
 
     /**
@@ -317,15 +327,15 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
     public function testZf504()
     {
         $test = array();
-        $this->assertSame('[]', Zend_Json::encode($test));
+        $this->assertSame('[]', Zend_Json_Encoder::encode($test));
 
         try {
             $json = '[a"],["a],[][]';
-            $test = Zend_Json::decode($json);
+            $test = Zend_Json_Decoder::decode($json);
             $this->fail("Should not be able to decode '$json'");
 
             $json = '[a"],["a]';
-            $test = Zend_Json::decode($json);
+            $test = Zend_Json_Decoder::decode($json);
             $this->fail("Should not be able to decode '$json'");
         } catch (Exception $e) {
             // success
@@ -333,7 +343,7 @@ class Zend_JsonTest extends PHPUnit_Framework_TestCase
 
         try {
             $expected = 010;
-            $test = Zend_Json::decode('010');
+            $test = Zend_Json_Decoder::decode('010');
             $this->fail('Octal values are not supported in JSON notation');
         } catch (Exception $e) {
             // sucess
