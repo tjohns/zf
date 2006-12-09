@@ -105,6 +105,41 @@
                         den Controller über <code>somefoo</code> und auf die Aktion über 
                         <code>bar</code> zugegriffen.
 					</para>
+					
+                    <para>
+                        Zusätzlich kann man ein <code>Modul</code> angeben, das beim Laden eines
+                        Controllers verwendet wird. Ein Modul wird lediglich dazu verwendet, um
+                        ein Unterverzeichnis und/oder einen Klassenprefix beim Laden eines 
+                        Controllers zu verwenden. Man gibt das Modul ganz einfach an, wenn man die
+                        Controller Verzeichnisse setzt:
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+    'default' => '/path/to/controllers',
+    'user'    => '/path/to/controllers/user',
+    'admin'   => '/path/to/controllers/admin'
+));
+]]></programlisting>
+                    
+                    <para>
+                        Wenn das Modul 'user' beim Controller 'news' angegeben wird, wird im obigen 
+                        Beispiel zuerst nach <code>NewsController.php</code> in 
+                        <code>/path/to/controllers/user</code> gesucht, bevor in anderen 
+                        Verzeichnissen gesucht wird. Zusätzlich wird zuerst angenommen, dass die 
+                        Klasse <code>User_NewsController</code> heißt und danach erst
+                        <code>NewsController</code>. Eine Anfrage für solch eine Ressource würde 
+                        aussehen wie <code>http://localhost/news/action/module/user</code> bei 
+                        Verwendung des Standardrouters und 
+                        <code>http://localhost/module/news/action</code> bei Verwendung des 
+                        RewriteRouters.
+                    </para>
+
+                    <para>
+                        Module sind nützlich, wenn man den Code in zugehörige Unterverzeichnisse
+                        trennen möchte, fremden Code verwendet oder die selben Controllerbibliotheken
+                        in verschiedenen Applikationen verwenden möchte.
+                    </para>
 				</listitem>
 
 				<listitem>
@@ -265,17 +300,52 @@ Controller: index
 Action    : index]]>
         </programlisting>
 
+        <para>
+            Zusätzlich kann man Controller in Unterverzeichnissen oder Modulen auf verschiedene
+            Weisen angeben:
+        </para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    Controller Namen, die einen Bindestrich (-) oder Unterstrich (_) haben, können
+                    verwendet werden. <code>http://framework.zend.com/admin-roadmap/future</code> 
+                    würde zum Beispiel auf der Controllerklasse Admin_RoadmapController abgebildet 
+                    werden.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Durch Angabe des <code>useModules</code> Parameters im Frontcontroller, können
+                    Unterverzeichnisse durch saubere URIs abgebildet werden. Das vorherige Beispiel
+                    würde <code>http://framework.zend.com/admin/roadmap/future</code> lauten. Um
+                    dies zu erreichen, setze den <code>useModules</code> Parameter im 
+                    Frontcontroller oder im Router:
+                </para>
+
+                <programlisting><![CDATA[
+$front->setParam('useModules', true);
+// oder
+$router->setParam('useModules', true);
+]]></programlisting>
+
+                <para>
+                    Dies funktioniert sowohl beim Standardrouter als auch beim RewriteRouter.
+                </para>
+            </listitem>
+        </itemizedlist>
+
 		<note>
-		    <title>Flexibility</title>
+		    <title>Flexibilität</title>
 		    <para>
-                Wenn mann flexiblere Möglichkeiten benötigt, sollte man den 
+                Wenn man flexiblere Möglichkeiten benötigt, sollte man den 
                 <xref linkend="zend.controller.providedsubclasses.rewriterouter"/> ausprobieren.
             </para>
 		</note>
 
 		<para>
 		    Der Name des Controllers und der Aktion innerhalb dieses Controllers sowie weitere
-		    optionale Parameter werden im Request Objekt gesetzt. Wenn 
+		    optionale Parameter (einschließlich des Moduls) werden im Request Objekt gesetzt. Wenn 
             <code>Zend_Controller_Front</code> die Dispatcher Schleife startet wird das Request 
             Objekt an <code>Zend_Controller_Dispatcher</code> übergeben.
 		</para>

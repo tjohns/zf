@@ -120,6 +120,60 @@ echo $ctrl->dispatch();
                         im Request Objekt registrierte Basis URL der übergebenen URL voran gestellt
                         werden soll.
                     </para></listitem>
+                    
+                    <listitem>
+                        <para>
+                            Die <code>_action</code> Eigenschaft wird nicht mehr gesetzt. Diese
+                            Eigenschaft war ein <code>Zend_Controller_Dispatcher_Token</code>, der
+                            in der aktuellen Inkarnation nicht mehr länger existiert. Der einzige
+                            Zweck des Tokens war, Informationen über angeforderte Controller,
+                            Aktion und URL Parameter bereit zu stellen. Diese Infrmationen ist nun
+                            im Request Objekt verfügbar und kann wie folgt abgerufen werden:
+                        </para>
+
+                        <programlisting role="php"><![CDATA[
+// Hole den angeforderten Controllernamen
+// Der Zugriff erfolgte bisher über: $this->_action->getControllerName().
+// Das Beispiel unten verwendet getRequest(), obwohl man auch direkt auf die 
+// $_request Eigenschaft zugreifen kann; die Verwendung von getRequest() wird empfohlen, da
+// eine Elternklasse den Zugriff auf das Request Objekt überschreiben könnte
+$controller = $this->getRequest()->getControllerName();
+
+// Hole den angeforderten Aktionsnamen
+// Der Zugriff erfolgte bisher über: $this->_action->getActionName().
+$action = $this->getRequest()->getActionName();
+
+// Hole die Anfrageparameter
+// Dies hat sich nicht verändert; die _getParams() und _getParam() Methoden leiten nun
+// einfach auf das Request Objekt weiter.
+$params = $this->_getParams();
+$foo = $this->_getParam('foo', 'default'); // fordere den 'foo' Parameter an und verwende
+                                           // 'default', wenn kein Standardwert gefunden werden kann
+
+]]></programlisting>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            <code>noRouteAction()</code> wurde entfernt. Der geeignete Weg, um 
+                            nicht vorhandene Aktionsmethoden abzufangen, wenn man sie an eine
+                            Standardaktion weiter leiten möchte, sollte die Verwendung von 
+                            <code>__call()</code> sein:
+                        </para>
+
+                        <programlisting role="php"><![CDATA[
+public function __call($method, $args)
+{
+    // Wenn eine nicht vorhandene 'Action' Methode angefordert wurde, leite auf die Standard
+    // Aktionsmethode um:
+    if ('Action' == substr($method, -6)) {
+        return $this->defaultAction();
+    }
+    
+    throw new Zend_Controller_Exception('Invalid method called');
+}
+]]></programlisting>
+                    </listitem>
                 </itemizedlist>
             </listitem>
 
