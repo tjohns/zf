@@ -79,6 +79,7 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $this->_twodots = array('..' => 'dot-test');
         $this->_threedots = array('...' => 'dot-test');
         $this->_trailingdot = array('test.' => 'dot-test');
+        $this->_invalidkey = array(' ' => 'test', ''=>'test2');
 
     }
 
@@ -170,7 +171,9 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $config = new Zend_Config($this->_all);
         $var = '';
         foreach ($config as $key=>$value) {
-            $var .= "\nkey = $key, value = $value";
+            if (is_string($value)) {
+                $var .= "\nkey = $key, value = $value";
+            }
         }
         $this->assertContains('key = name, value = thisname', $var);
 
@@ -195,11 +198,12 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         $config = new Zend_Config($this->_all);
 
         ob_start();
-        print_r($config->db->asArray());
+        print_r($config->asArray());
         $contents = ob_get_contents();
         ob_end_clean();
 
         $this->assertContains('Array', $contents);
+        $this->assertContains('[hostname] => all', $contents);
         $this->assertContains('[user] => username', $contents);
     }
 
@@ -309,6 +313,16 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
         }
         $this->assertTrue($count === 4);
     }
-
+    
+    public function testErrorInvalidKey()
+    {
+        try {
+            $config = new Zend_Config($this->_invalidkey);
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('Invalid key', $expected->getMessage());
+            return;
+        }
+        $this->fail('An expected Zend_Config_Exception has not been raised');
+    }
 }
 

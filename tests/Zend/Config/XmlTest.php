@@ -77,6 +77,13 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Config_Exception $expected) {
             $this->assertContains('cannot be found in', $expected->getMessage());
         }
+        
+        try {
+            $config = @new Zend_Config_Xml($this->_xmlFileConfig, array('notthere', 'all'));
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('cannot be found in', $expected->getMessage());
+        }        
     }
 
     public function testErrorNoExtendsSection()
@@ -128,5 +135,14 @@ class Zend_Config_XmlTest extends PHPUnit_Framework_TestCase
             $this->assertContains('circular inheritance', $expected->getMessage());
         }
     }
-
+    
+    public function testErrorNoFile()
+    {
+        try {
+            $config = new Zend_Config_Xml('',null);
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('Filename is not set', $expected->getMessage());
+        }
+    }
 }

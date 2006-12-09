@@ -34,6 +34,7 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         $this->_iniFileConfig = dirname(__FILE__) . '/_files/config.ini';
         $this->_iniFileAllSectionsConfig = dirname(__FILE__) . '/_files/allsections.ini';
         $this->_iniFileCircularConfig = dirname(__FILE__) . '/_files/circular.ini';
+        $this->_iniFileMultipleInheritanceConfig = dirname(__FILE__) . '/_files/multipleinheritance.ini';
     }
 
     public function testLoadSingleSection()
@@ -166,4 +167,42 @@ class Zend_Config_IniTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    public function testErrorNoFile()
+    {
+        try {
+            $config = new Zend_Config_Ini('','');
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('Filename is not set', $expected->getMessage());
+        }
+    }
+    
+    public function testErrorMultipleExensions()
+    {
+        try {
+            $config = new Zend_Config_Ini($this->_iniFileMultipleInheritanceConfig, 'three');
+            zend::dump($config);
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('may not extend multiple sections', $expected->getMessage());
+        }
+    }
+    
+    public function testErrorNoSectionFound()
+    {
+        try {
+            $config = new Zend_Config_Ini($this->_iniFileConfig,array('all', 'notthere'));
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('cannot be found', $expected->getMessage());
+        }
+
+        try {
+            $config = new Zend_Config_Ini($this->_iniFileConfig,'notthere');
+            $this->fail('An expected Zend_Config_Exception has not been raised');
+        } catch (Zend_Config_Exception $expected) {
+            $this->assertContains('cannot be found', $expected->getMessage());
+        }
+
+    }
 }
