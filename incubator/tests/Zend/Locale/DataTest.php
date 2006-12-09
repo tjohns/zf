@@ -41,9 +41,9 @@ class Zend_Locale_DataTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = Zend_Locale_Data::getContent('nolocale','languagelist');
-            $this->assertTrue(false,'locale should throw exception');
-        } catch (Exception $e) {
-            return true;
+            $this->fail('locale should throw exception');
+        } catch (Zend_Locale_Exception $e) {
+            // success
         }
     }
 

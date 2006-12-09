@@ -382,9 +382,9 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = Zend_Locale_Format::getFloat('nocontent');
-            $this->assertTrue(false, "exception expected");
-        } catch (Exception $e) {
-            return true;
+            $this->fail("exception expected");
+        } catch (Zend_Locale_Exception $e) {
+            // success
         }
     }
 
@@ -1256,9 +1256,9 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = Zend_Locale_Format::getDate('no content');
-            $this->assertFalse(true, "no date expected");
-        } catch (Exception $e) {
-            return true;
+            $this->fail("no date expected");
+        } catch (Zend_Locale_Exception $e) {
+            // success
         }
     }
     
@@ -1636,9 +1636,9 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = Zend_Locale_Format::getTime('no content');
-            $this->assertFalse(true, "no time expected");
-        } catch (Exception $e) {
-            return true;
+            $this->fail("no time expected");
+        } catch (Zend_Locale_Exception $e) {
+            // success
         }
     }
 
@@ -1673,9 +1673,9 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = Zend_Locale_Format::getTime('13:14:55', 'nocontent');
-            $this->assertFalse(true, "no time expected");
-        } catch (Exception $e) {
-            return true;
+            $this->fail("no time expected");
+        } catch (Zend_Locale_Exception $e) {
+            // success
         }
     }
     
