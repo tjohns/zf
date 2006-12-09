@@ -352,68 +352,64 @@
     </sect2>
     
     <sect2 id="zend.http.client.file_uploads">
-        <title>File Uploads</title>
+        <title>Dateiuploads</title>
         <para>
-            You can upload files through HTTP using the setFileUpload method. 
-            This method takes a file name as the first parameter, a form name 
-            as the second parameter, and data as a third optional parameter. 
-            If the third data parameter is null, the first file name parameter
-            is considered to be a real file on disk, and Zend_Http_Client will
-            try to read this file and upload it. If the data parameter is not
-            null, the first file name parameter will be sent as the file name,
-            but no actual file needs to exist on the disk.
-            The second form name parameter is always required, and is equivalent
-            to the "name" attribute of an &gt;input&lt; tag, if the file was to
-            be uploaded through an HTML form.
-            A fourth optional parameter provides the file's content-type. If
-            not specified, and Zend_Http_Client reads the file from the disk,
-            the mime_content_type function will be used to guess the file's 
-            content type, if it is available. In any case, the default MIME
-            type will be application/octet-stream.
+            Man kann Dateien über HTTP hochladen, indem man die setFileUpload Methode verwendet.
+            Diese Methode nimmt einen Dateinamen als ersten Parameter, einen Formularnamen als
+            zweiten Parameter und Daten als einen dritten, optionalen Parameter entgegen. Wenn der
+            dritte Parameter null ist, wird angenommen, dass der erste Dateinamen Parameter auf 
+            eine echte Datei auf der Platte verweist, und Zend_Http_Client wird versuchen die Datei
+            zu lesen und hochzuladen. Wenn der Daten Parameter nicht null ist, wird der erste 
+            Dateinamen Parameter als der Dateiname versendet, aber die Datei muss nicht wirklich auf
+            der Platte existieren. Der zweite Formularnamen Parameter wird immer benötigt und ist 
+            gleichbedeutend mit dem "name" Attribut eines &gt;input&lt; Tags, wenn die Datei durch 
+            ein HTML Formular hochgeladen worden ist. Ein vierter optionaler Parameter gibt den 
+            Content-type der Datei an. Wenn er nicht angegeben wird, liest Zend_Http_Client die
+            Datei von der Platte und verwendet die mime_content_type Funktion, um den Content-type 
+            der Datei zu erraten, wenn er verfügbar ist. Auf jeden Fall ist der Standard MIME Typ
+            'application/octet-stream'.
             <example>
-                <title>Using setFileUpload to Upload Files</title>
+                <title>Verwendung von setFileUpload um Dateien hochzuladen</title>
                 <programlisting role="php">
 <![CDATA[<?php
-    // Uploading arbitrary data as a file
+    // Hochladen beliebiger Daten als Datei
     $text = 'this is some plain text';
     $client->setFileUpload('some_text.txt', 'upload', $text, 'text/plain');
     
-    // Uploading an existing file 
+    // Hochladen einer vorhandenen Datei
     $client->setFileUpload('/tmp/Backup.tar.gz', 'bufile');
     
-    // Send the files
+    // Dateien absenden
     $client->submit('POST');
 ?>]]></programlisting>
             </example>
-            In the first example, the $text variable is uploaded and will be
-            available as $_FILES['upload'] on the server side. In the second
-            example, the existing file /tmp/Backup.tar.gz is uploaded to the 
-            server and will be available as $_FILES['bufile']. The content type
-            will be guesses automatically if possible - and if not, the content
-            type will be set to 'application/octet-stream'. 
+            Im ersten Beispiel, wird die Variable $text hochgeladen und als $_FILES['upload'] auf
+            der Serverseite verfügbar sein. Im zweiten Beispiel wird die vorhandene Datei 
+            /tmp/Backup.tar.gz auf den Server geladen und als $_FILES['bufile'] verfügbar sein. Der
+            Content-type wird automatisch erraten, wenn möglich - und wenn nicht, wird der 
+            Content-type auf 'application/octet-stream' gesetzt. 
         </para>
         <note>
-            <title>Uploading files</title>
+            <title>Dateien hochladen</title>
             <para>
-                When uploading files, the HTTP request content-type is 
-                automatically set to multipart/form-data. Keep in mind that
-                you must send a POST or PUT request in order to upload files. 
-                Most servers will ignore the requests body on other request
-                methods.
+                Beim Hochladen von Dateien wird der Content-type der HTTP Anfrage automatisch auf
+                'multipart/form-data' gesetzt. Man sollte beachten, dass man eine POST oder PUT
+                Anfrage absenden muss, um Dateien hochzuladen. Die meisten Server werden den 
+                Hauptteil der Anfrage bei anderen Anfragetypen ignorieren.
             </para>
         </note>
     </sect2>
     <sect2 id="zend.http.client.raw_post_data">
-        <title>Sending Raw POST Data</title>
+        <title>Unverarbeitete POST Daten versenden</title>
         <para>
-            You can use a Zend_Http_Client to send raw POST data using the
-            setRawData() method. This method takes two parameters: the first
-            is the data to send in the request body. The second optional
-            parameter is the content-type of the data. While this parameter is
-            optional, you should usually set it before sending the request - 
-            either using setRawData(), or with another method: setEncType().
+            Man kann Zend_Http_Client verwenden, um mit der setRawData() Methode unverarbeitete POST 
+            Daten zu versenden. Diese Methode nimmt zwei Parameter entgegen: der erste ist die im
+            Anfrage Hauptteil zu versendenen Daten. Der zweite optionale Parameter ist der 
+            Content-type der Daten. Obwohl dieser Parameter optional ist, sollte man ihn
+            normalerweise vor dem Absenden der Anfrage setzen - entweder durch Verwendung von 
+            setRawData() oder durch eine andere Methode: setEncType().
             <example>
-                <title>Sending Raw POST Data</title>
+                <title>Unverarbeitete POST Daten versenden</title>
                 <programlisting role="php">
 <![CDATA[<?php
     $xml = '<book>' . 
@@ -424,41 +420,41 @@
            
     $client->setRawData($xml, 'text/xml')->request('POST');
     
-    // Another way to do the same thing:
+    // Ein anderer Weg, um das selbe zu tun:
     $client->setRawData($xml)->setEncType('text/xml')->request('POST');
 ?>]]></programlisting>
             </example>
-            The data should be available on the server side through PHP's 
-            $HTTP_RAW_POST_DATA variable or through the php://input stream.
+            Die Daten sollten auf der Serverseite über die PHP Variable $HTTP_RAW_POST_DATA 
+            oder über den php://input stream verfügbar sein.
         </para>
         <note>
-            <title>Using raw POST data</title>
+            <title>Unverarbeitete POST Daten verwenden</title>
             <para>
-                Setting raw POST data for a request will override any POST
-                parameters or file uploads. You should not try to use both on
-                the same request. Keep in mind that most servers will ignore 
-                the request body unless you send a POST request.
+                Das Setzen von unverarbeiteten POST Daten für eine Anfrage überschreibt jeden POST
+                Parameter oder Dateiuploads. Man sollte nicht beides in der selben Anfrage 
+                verwenden. Es ist zu beachten, dass die meisten Server den Hauptteil der Anfrage
+                ignorieren, wenn keine POST Anfrage gesendet wird.
             </para>
         </note>
     </sect2>
     
     <sect2 id="zend.http.client.http_authentication">
-        <title>HTTP Authentication</title>
+        <title>HTTP Authentifizierung</title>
         <para>
-            Currently, Zend_Http_Client only supports basic HTTP authentication.
-            This feature is utilized using the setAuth() method. The method 
-            takes 3 parameters: The user name, the password and an optional
-            authentication type parameter. As mentioned, currently only basic
-            authentication is supported (digest authentication support is
-            planned).
+            Derzeit unterstützt Zend_Http_Client nur die Basis HTTP Authentifizierung. Diese 
+            Funktion kann durch Verwendung der setAuth() Methode genutzt werden. Diese Methode
+            nimmt 3 Parameter entgegen: den Benutzernamen, das Passwort und einen optionalen 
+            Authentifizierungstyp Parameter. Wie gesagt, wird derzeit nur die Basis 
+            Authentifizierung unterstützt (Unterstützung für eine Digest Authentifizierung ist 
+            geplant).
             <example>
-                <title>Setting HTTP Authentication User and Password</title>
+                <title>Setzen von Benutzer und Password für eine HTTP Authentifizierung</title>
                 <programlisting role="php">
 <![CDATA[<?php
-    // Using basic authentication
+    // Verwende die Basis Authentifizierung
     $client->setAuth('shahar', 'myPassword!', Zend_Http_Client::AUTH_BASIC);
     
-    // Since basic auth is default, you can just do this:
+    // Da Basis Authentifizierung Standard ist, kann man auch dies verwenden:
     $client->setAuth('shahar', 'myPassword!');
 ?>]]></programlisting>
             </example>
