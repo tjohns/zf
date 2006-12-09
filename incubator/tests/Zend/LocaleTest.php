@@ -554,4 +554,43 @@ class Zend_LocaleTest extends PHPUnit_Framework_TestCase
         $list = $value->getQuestion('de');
         $this->assertTrue(isset($list['yes']), 'Question not returned');
     }
+
+
+    /**
+     * test getBrowser
+     * expected true
+     */
+    public function testgetBrowser()
+    {
+        putenv("HTTP_ACCEPT_LANGUAGE=,de,en-UK-US;q=0.5,fr_FR;q=0.2");
+        $value = new Zend_Locale();
+        $list = $value->getBrowser();
+        $this->assertTrue(isset($list['de']), 'language array not returned');
+    }
+
+
+    /**
+     * test getHttpCharset
+     * expected true
+     */
+    public function testgetHttpCharset()
+    {
+        putenv("HTTP_ACCEPT_CHARSET=,iso-8859-1, utf-8, utf-16, *;q=0.1");
+        $value = new Zend_Locale();
+        $list = $value->getHTTPCharset();
+        $this->assertTrue(isset($list['utf-8']), 'language array not returned');
+    }
+
+
+    /**
+     * test getHttpCharset
+     * expected true
+     */
+    public function testgetEmptyHttpCharset()
+    {
+        putenv("HTTP_ACCEPT_CHARSET=");
+        $value = new Zend_Locale();
+        $list = $value->getHTTPCharset();
+        $this->assertTrue(empty($list), 'language array must be empty');
+    }
 }

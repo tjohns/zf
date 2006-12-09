@@ -694,24 +694,28 @@ class Zend_Locale {
         $httpcharsets = getenv("HTTP_ACCEPT_CHARSET");
 
         $charsets = array();
-        if (empty($httpcharsets)) {
+        if ($httpcharsets === false) {
             return $charsets;
         }
 
         $accepted = preg_split('/,\s*/', $httpcharsets);
-
         foreach ($accepted as $accept)
         {
+            if (empty($accept)) {
+                continue;
+            }
 
             if (strpos($accept, ';'))
             {
-                $quality = (float) strstr($accept, '=');
+                $quality = (float) substr($accept, strpos($accept, '=') + 1);
+                $charsets[substr($accept, 0, strpos($accept, ';'))] = $quality;
             } else {
                 $quality = 1.0;
+                $charsets[$accept] = $quality;
             } 
 
-            $charsets[substr($accept, 0, strpos($accept, ';'))] = $quality;
         }
+
         return $charsets;
     }
 
