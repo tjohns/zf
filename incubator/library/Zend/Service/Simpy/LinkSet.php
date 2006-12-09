@@ -1,0 +1,84 @@
+<?php
+/**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
+ * @package    Zend_Service
+ * @subpackage Simpy
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+
+
+/**
+ * Zend_Service_Simpy_Link
+ */
+require_once 'Zend/Service/Simpy/Link.php';
+
+/**
+ * @category   Zend
+ * @package    Zend_Service
+ * @subpackage Simpy
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ */
+class Zend_Service_Simpy_LinkSet implements IteratorAggregate
+{
+    /**
+     * List of links
+     *
+     * @var Zend_Service_Simpy_Link
+     */
+    protected $_links;
+    
+    /**
+     * Returns the number of links in the set
+     * 
+     * @return int
+     */
+    private function __get($name)
+    {
+        if ($name == 'length') {
+            return count($this->_links);
+        } else {
+            return null;
+        } 
+    }
+    
+    /**
+     * Constructor to initialize the object with data
+     *
+     * @param DOMDocument $doc Parsed response from a GetLinks operation
+     */
+    function __construct(DOMDocument $doc)
+    {
+        $xpath = new DOMXPath($doc);
+        $list = $xpath->query('//links/link');
+        $this->_links = array();
+        
+        for ($x = 0; $x < $list->length; $x++) {
+            $this->_links[$x] = new Zend_Service_Simpy_Link($list->item($x));
+        }
+    }
+    
+    /**
+     * Returns an iterator for the link set
+     *
+     * @return IteratorIterator
+     */
+    public function getIterator()
+    {
+        $array = new ArrayObject($this->_links);
+        return $array->getIterator();
+    }
+}
