@@ -141,7 +141,12 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
     public function load($id, $doNotTestCacheValidity = false)
     {
 	// doNotTestCacheValidity implemented by giving zero lifetime to the cache
-        return output_cache_get($id, $doNotTestCacheValidity?0:$this->_directives['lifeTime']);
+        $res = output_cache_get($id, $doNotTestCacheValidity?0:$this->_directives['lifeTime']);
+	if($res) {
+	    return $res[0];
+        } else {
+            return false;
+        }
     }
 
 
@@ -155,7 +160,7 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
     {
         $result = output_cache_get($id, $this->_directives['lifeTime']);
         if ($result) {
-            return true;
+            return $result[1];
         }
         return false;
     }
@@ -175,20 +180,17 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
      */
     public function save($data, $id, $tags = array())
     {
-        $result = output_cache_put($id, $data);
+        $result = output_cache_put($id, array($data, time()));
         if (count($tags) > 0) {
 		foreach($tags as $tag) {
 			$tagid = self::TAGS_PREFIX.$tag;
 			$old_tags = output_cache_get($tagid, $this->_directives['lifeTime']);
-			if(!$old_tags) {
+			if($old_tags === false) {
 				$old_tags = array();
 			}
-			$old_tags[$id] = 1;
+			$old_tags[$id] = $id;
 			output_cache_put($tagid, $old_tags);
 		}
-/*            if ($this->_directives['logging']) {
-                Zend_Log::log("Zend_Cache_Backend_ZendPlatform::save() : tags are unsupported by the Zend Platform backend", Zend_Log::LEVEL_WARNING);
-		}*/
         }
         return $result;
     }
@@ -228,12 +230,14 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
     {
         if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
 		foreach($tags as $tag) {
-			$idlist = output_cache_get(self::TAGS_PREFIX.$tag);
+			$idlist = output_cache_get(self::TAGS_PREFIX.$tag, $this->_directives['lifeTime']);
 			if($idlist) {
 				foreach($idlist as $id) {
 					output_cache_remove_key($id);
 				}
 			}
+			// since we cleaned it, nothing belongs to this tag anymore
+			output_cache_put(self::TAGS_PREFIX.$tag, array());
 		}
 		return true;
         }
