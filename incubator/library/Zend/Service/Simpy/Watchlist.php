@@ -90,7 +90,7 @@ class Zend_Service_Simpy_Watchlist
      *                      response from a GetWatchlists or GetWatchlist 
      *                      operation
      */
-    function __construct($node)
+    public function __construct($node)
     {
         $map =& $node->attributes;
         
@@ -120,7 +120,8 @@ class Zend_Service_Simpy_Watchlist
      * 
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->_id;
     }
     
@@ -129,7 +130,8 @@ class Zend_Service_Simpy_Watchlist
      * 
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->_name;
     }
     
@@ -138,7 +140,8 @@ class Zend_Service_Simpy_Watchlist
      * 
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->_description;
     }
     
@@ -147,7 +150,8 @@ class Zend_Service_Simpy_Watchlist
      * 
      * @return string
      */
-    public function getAddDate() {
+    public function getAddDate()
+    {
         return $this->_addDate;
     }
     
@@ -156,7 +160,8 @@ class Zend_Service_Simpy_Watchlist
      * 
      * @return int
      */
-    public function getNewLinks() {
+    public function getNewLinks()
+    {
         return $this->_newLinks;
     }
     
@@ -165,7 +170,8 @@ class Zend_Service_Simpy_Watchlist
      * 
      * @return array
      */
-    public function getUsers() {
+    public function getUsers()
+    {
         return $this->_users;
     }
     
@@ -174,7 +180,8 @@ class Zend_Service_Simpy_Watchlist
      * 
      * @return Zend_Service_Simpy_WatchlistFilterSet
      */
-    public function getFilters() {
+    public function getFilters()
+    {
         return $this->_filters;
     }
 }

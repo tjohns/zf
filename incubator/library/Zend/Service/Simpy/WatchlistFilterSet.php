@@ -40,25 +40,11 @@ class Zend_Service_Simpy_WatchlistFilterSet implements IteratorAggregate
 	 * @var array
 	 */
 	protected $_filters;
-    
-    /**
-     * Returns the number of filters in the set
-     * 
-     * @return int
-     */
-    private function __get($name)
-    {
-        if ($name == 'length') {
-            return count($this->_filters);
-        } else {
-            return null;
-        }
-    }
 
     /**
      * Constructor to initialize class members
      */
-    function __construct()
+    public function __construct()
     {
         $this->_filters = array();
     }
@@ -82,5 +68,15 @@ class Zend_Service_Simpy_WatchlistFilterSet implements IteratorAggregate
     {
         $array = new ArrayObject($this->_filters);
         return $array->getIterator();
+    }
+    
+    /**
+     * Returns the number of filters in the set
+     * 
+     * @return int
+     */
+    public function getLength()
+    {
+        return count($this->_filters);
     }
 }

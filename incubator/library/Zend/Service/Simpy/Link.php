@@ -105,7 +105,7 @@ class Zend_Service_Simpy_Link
      * @param DOMNode $node Individual <link> node from a parsed response from 
      *                      a GetLinks operation
      */
-    function __construct($node)
+    public function __construct($node)
     {
         $this->_accessType = $node->attributes->getNamedItem('accessType')->nodeValue;
                 

@@ -42,25 +42,11 @@ class Zend_Service_Simpy_NoteSet implements IteratorAggregate
     protected $_notes;
     
     /**
-     * Returns the number of notes in the set
-     * 
-     * @return int
-     */
-    private function __get($name)
-    {
-        if ($name == 'length') {
-            return count($this->_notes);
-        } else {
-            return null;
-        } 
-    }
-    
-    /**
      * Constructor to initialize the object with data
      *
      * @param DOMDocument $doc Parsed response from a GetNotes operation
      */
-    function __construct(DOMDocument $doc)
+    public function __construct(DOMDocument $doc)
     {
         $xpath = new DOMXPath($doc);
         $list = $xpath->query('//notes/note');
@@ -80,5 +66,15 @@ class Zend_Service_Simpy_NoteSet implements IteratorAggregate
     {
         $array = new ArrayObject($this->_notes);
         return $array->getIterator();
+    }
+    
+    /**
+     * Returns the number of notes in the set
+     * 
+     * @return int
+     */
+    public function getLength()
+    {
+        return count($this->_notes);
     }
 }

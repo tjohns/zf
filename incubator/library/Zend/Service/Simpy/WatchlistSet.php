@@ -42,25 +42,11 @@ class Zend_Service_Simpy_WatchlistSet implements IteratorAggregate
     protected $_watchlists;
     
     /**
-     * Returns the number of watchlists in the set
-     * 
-     * @return int
-     */
-    private function __get($name)
-    {
-        if ($name == 'length') {
-            return count($this->_watchlists);
-        } else {
-            return null;
-        }
-    }
-    
-    /**
      * Constructor to initialize the object with data
      *
      * @param DOMDocument $doc Parsed response from a GetWatchlists operation
      */
-    function __construct(DOMDocument $doc)
+    public function __construct(DOMDocument $doc)
     {
         $xpath = new DOMXPath($doc);
         $list = $xpath->query('//watchlists/watchlist');
@@ -80,5 +66,15 @@ class Zend_Service_Simpy_WatchlistSet implements IteratorAggregate
     {
         $array = new ArrayObject($this->_watchlists);
         return $array->getIterator();
+    }
+    
+    /**
+     * Returns the number of watchlists in the set
+     * 
+     * @return int
+     */
+    public function getLength()
+    {
+        return count($this->_watchlists);
     }
 }

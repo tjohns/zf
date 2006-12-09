@@ -49,7 +49,7 @@ class Zend_Service_Simpy_Tag
      * @param DOMNode $node Individual <tag> node from a parsed response from 
      *                      a GetTags operation
      */
-    function __construct($node)
+    public function __construct($node)
     {
         $map =& $node->attributes;
         $this->_tag = $map->getNamedItem('name')->nodeValue;

@@ -49,7 +49,7 @@ class Zend_Service_Simpy_WatchlistFilter
      * @param DOMNode $node Individual <filter> node from a parsed response from 
      *                      a GetWatchlists or GetWatchlist operation
      */
-    function __construct($node)
+    public function __construct($node)
     {
         $map =& $node->attributes;
         $this->_name = $map->getNamedItem('name')->nodeValue;

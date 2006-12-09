@@ -42,25 +42,11 @@ class Zend_Service_Simpy_LinkSet implements IteratorAggregate
     protected $_links;
     
     /**
-     * Returns the number of links in the set
-     * 
-     * @return int
-     */
-    private function __get($name)
-    {
-        if ($name == 'length') {
-            return count($this->_links);
-        } else {
-            return null;
-        } 
-    }
-    
-    /**
      * Constructor to initialize the object with data
      *
      * @param DOMDocument $doc Parsed response from a GetLinks operation
      */
-    function __construct(DOMDocument $doc)
+    public function __construct(DOMDocument $doc)
     {
         $xpath = new DOMXPath($doc);
         $list = $xpath->query('//links/link');
@@ -80,5 +66,15 @@ class Zend_Service_Simpy_LinkSet implements IteratorAggregate
     {
         $array = new ArrayObject($this->_links);
         return $array->getIterator();
+    }
+    
+    /**
+     * Returns the number of links in the set
+     * 
+     * @return int
+     */
+    public function getLength()
+    {
+        return count($this->_links);
     }
 }

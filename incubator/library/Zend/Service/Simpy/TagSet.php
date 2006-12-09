@@ -42,25 +42,11 @@ class Zend_Service_Simpy_TagSet implements IteratorAggregate
     protected $_tags;
     
     /**
-     * Returns the number of tags in the set
-     * 
-     * @return int
-     */
-    private function __get($name)
-    {
-        if ($name == 'length') {
-            return count($this->_tags);
-        } else {
-            return null;
-        } 
-    }
-    
-    /**
      * Constructor to initialize the object with data
      *
      * @param DOMDocument $doc Parsed response from a GetTags operation
      */
-    function __construct(DOMDocument $doc)
+    public function __construct(DOMDocument $doc)
     {
         $xpath = new DOMXPath($doc);
         $list = $xpath->query('//tags/tag');
@@ -80,5 +66,15 @@ class Zend_Service_Simpy_TagSet implements IteratorAggregate
     {
         $array = new ArrayObject($this->_tags);
         return $array->getIterator();
+    }
+    
+    /**
+     * Returns the number of tags in the set
+     * 
+     * @return int
+     */
+    public function getLength()
+    {
+        return count($this->_tags);
     }
 }
