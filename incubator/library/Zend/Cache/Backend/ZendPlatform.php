@@ -57,6 +57,7 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
         'lifeTime' => 3600,
         'logging' => false
     );
+    private $_options = array();
 
     const TAGS_PREFIX = "internal_ZPtag:";
     // ----------------------
@@ -72,7 +73,7 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
      */
     public function __construct($options = array())
     {
-        if (!extension_loaded('zend platform') || !function_exists('accelerator_license_info')) {
+        if (!function_exists('accelerator_license_info')) {
             Zend_Cache::throwException('The Zend Platform extension must be loaded for using this backend !');
         }
         if (!function_exists('accelerator_get_configuration')) {
