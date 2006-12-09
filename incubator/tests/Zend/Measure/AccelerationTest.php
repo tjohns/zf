@@ -42,9 +42,9 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = new Zend_Measure_Acceleration('100','Acceleration::UNKNOWN','de');
-            $this->assertTrue(false,'Exception expected because of unknown type');
-        } catch (Exception $e) {
-            return true; // Test OK
+            $this->fail('Exception expected because of unknown type');
+        } catch (Zend_Measure_Exception $e) {
+            // success
         }
     }
 
@@ -57,9 +57,9 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = new Zend_Measure_Acceleration('novalue',Zend_Measure_Acceleration::STANDARD,'de');
-            $this->assertTrue(false,'Exception expected because of empty value');
-        } catch (Exception $e) {
-            return true; // Test OK
+            $this->fail('Exception expected because of empty value');
+        } catch (Zend_Measure_Exception $e) {
+            // success
         }
     }
 
@@ -72,9 +72,9 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'nolocale');
-            $this->assertTrue(false,'Exception expected because of unknown locale');
-        } catch (Exception $e) {
-            return true; // Test OK
+            $this->fail('Exception expected because of unknown locale');
+        } catch (Zend_Measure_Exception $e) {
+            // success
         }
     }
 
@@ -263,9 +263,9 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
         try {
             $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'de');
             $value->setValue('otherstring -200.200,200','Acceleration::UNKNOWN','de');
-            $this->assertTrue(false,'Exception expected because of unknown type');
-        } catch (Exception $e) {
-            return true; // Test OK
+            $this->fail('Exception expected because of unknown type');
+        } catch (Zend_Measure_Exception $e) {
+            // success
         }
     }
 
@@ -279,9 +279,9 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
         try {
             $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'de');
             $value->setValue('novalue',Zend_Measure_Acceleration::STANDARD,'de');
-            $this->assertTrue(false,'Exception expected because of empty value');
-        } catch (Exception $e) {
-            return; // Test OK
+            $this->fail('Exception expected because of empty value');
+        } catch (Zend_Measure_Exception $e) {
+            // success
         }
     }
 
@@ -295,9 +295,9 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
         try {
             $value = new Zend_Measure_Acceleration('100',Zend_Measure_Acceleration::STANDARD,'de');
             $value->setValue('200',Zend_Measure_Acceleration::STANDARD,'nolocale');
-            $this->assertTrue(false,'Exception expected because of unknown locale');
-        } catch (Exception $e) {
-            return true; // Test OK
+            $this->fail('Exception expected because of unknown locale');
+        } catch (Zend_Measure_Exception $e) {
+            // success
         }
     }
 
@@ -359,9 +359,9 @@ class Zend_Measure_AccelerationTest extends PHPUnit_Framework_TestCase
         try {
             $value = new Zend_Measure_Acceleration('-100',Zend_Measure_Acceleration::STANDARD,'de');
             $value->setType('Acceleration::UNKNOWN');
-            $this->assertTrue(false,'Exception expected because of unknown type');
-        } catch (Exception $e) {
-            return true; // OK
+            $this->fail('Exception expected because of unknown type');
+        } catch (Zend_Measure_Exception $e) {
+            // success
         }
     }
 

@@ -123,7 +123,12 @@ class Zend_Measure_Cooking_Weight extends Zend_Measure_Abstract
             $locale = $this->_Locale;
         }
 
-        $value = Zend_Locale_Format::getNumber($value, $locale);
+        try {
+            $value = Zend_Locale_Format::getNumber($value, $locale);
+        } catch(Exception $e) {
+            throw Zend::exception('Zend_Measure_Exception', $e->getMessage());
+        }
+
         if (empty(self::$_UNITS[$type])) {
             throw Zend::exception('Zend_Measure_Exception', 'unknown type of weight-cooking:' . $type);
         }

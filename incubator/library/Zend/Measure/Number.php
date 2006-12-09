@@ -232,7 +232,11 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                 $value = $ergebnis[0];
                 break;
             default:
-                $value = Zend_Locale_Format::getInteger($value, $locale);
+                try {
+                    $value = Zend_Locale_Format::getInteger($value, $locale);
+                } catch (Exception $e) {
+                    throw Zend::exception('Zend_Measure_Exception', $e->getMessage());
+                }
                 if (bccomp($value, 0) < 0) {
                     $value =  bcsqrt(bcpow($value, 2));
                 }

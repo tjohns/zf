@@ -47,7 +47,7 @@ class Zend_Measure_LengthTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = new Zend_Measure_Length('100','Length::UNKNOWN','de');
-            $this->assertTrue(false,'Exception expected because of unknown type');
+            $this->fail('Exception expected because of unknown type');
         } catch (Exception $e) {
             return true; // Test OK
         }
@@ -62,7 +62,7 @@ class Zend_Measure_LengthTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = new Zend_Measure_Length('novalue',Zend_Measure_Length::STANDARD,'de');
-            $this->assertTrue(false,'Exception expected because of empty value');
+            $this->fail('Exception expected because of empty value');
         } catch (Exception $e) {
             return true; // Test OK
         }
@@ -77,7 +77,7 @@ class Zend_Measure_LengthTest extends PHPUnit_Framework_TestCase
     {
         try {
             $value = new Zend_Measure_Length('100',Zend_Measure_Length::STANDARD,'nolocale');
-            $this->assertTrue(false,'Exception expected because of unknown locale');
+            $this->fail('Exception expected because of unknown locale');
         } catch (Exception $e) {
             return true; // Test OK
         }
@@ -268,7 +268,7 @@ class Zend_Measure_LengthTest extends PHPUnit_Framework_TestCase
         try {
             $value = new Zend_Measure_Length('100',Zend_Measure_Length::STANDARD,'de');
             $value->setValue('otherstring -200.200,200','Length::UNKNOWN','de');
-            $this->assertTrue(false,'Exception expected because of unknown type');
+            $this->fail('Exception expected because of unknown type');
         } catch (Exception $e) {
             return true; // Test OK
         }
@@ -284,7 +284,7 @@ class Zend_Measure_LengthTest extends PHPUnit_Framework_TestCase
         try {
             $value = new Zend_Measure_Length('100',Zend_Measure_Length::STANDARD,'de');
             $value->setValue('novalue',Zend_Measure_Length::STANDARD,'de');
-            $this->assertTrue(false,'Exception expected because of empty value');
+            $this->fail('Exception expected because of empty value');
         } catch (Exception $e) {
             return; // Test OK
         }
@@ -300,7 +300,7 @@ class Zend_Measure_LengthTest extends PHPUnit_Framework_TestCase
         try {
             $value = new Zend_Measure_Length('100',Zend_Measure_Length::STANDARD,'de');
             $value->setValue('200',Zend_Measure_Length::STANDARD,'nolocale');
-            $this->assertTrue(false,'Exception expected because of unknown locale');
+            $this->fail('Exception expected because of unknown locale');
         } catch (Exception $e) {
             return true; // Test OK
         }
@@ -364,9 +364,9 @@ class Zend_Measure_LengthTest extends PHPUnit_Framework_TestCase
         try {
             $value = new Zend_Measure_Length('-100',Zend_Measure_Length::STANDARD,'de');
             $value->setType('Length::UNKNOWN');
-            $this->assertTrue(false,'Exception expected because of unknown type');
-        } catch (Exception $e) {
-            return true; // OK
+            $this->fail('Exception expected because of unknown type');
+        } catch (Zend_Measure_Exception $e) {
+            // success
         }
     }
 
