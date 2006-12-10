@@ -2,18 +2,20 @@
 /**
  * @package UnitTests
  *
- * This file defines configuration for running the unit tests for the Zend Framework Incubator.
- * Some tests have dependencies to PHP extensions or databases which may not necessary
- * installed on the target system.  For these cases, the ability to disable or configure
- * testing is provided below.  Tests for components which should run universally, such
- * as "Zend" or "Zend_InputFilter", are always run by the master suite and cannot be disabled.
+ * This file defines configuration for running the unit tests for the Zend
+ * Framework Incubator.  Some tests have dependencies to PHP extensions or
+ * databases which may not necessary * installed on the target system.
+ * For these cases, the ability to disable or configure testing is provided
+ * below.  Tests for components which should run universally, such as "Zend"
+ * or "Zend_InputFilter", are always run by the master suite and cannot be
+ * disabled.
  */
 
 /**
  * Zend_Mail_Pop3 / Zend_Mail_Transport_Pop3
  *
- * IMPORTANT: you need to copy tests/Zend/Mail/_files/test.mbox to your mail directory
- * for the tests to work.
+ * IMPORTANT: you need to copy tests/Zend/Mail/_files/test.mbox to your mail
+ * directory for the tests to work.
  */
 define('TESTS_ZEND_MAIL_POP3_ENABLED', false);
 define('TESTS_ZEND_MAIL_POP3_HOST', 'localhost');
@@ -29,8 +31,8 @@ define('TESTS_ZEND_MAIL_POP3_INVALID_PORT', 3141);
 /**
  * Zend_Mail_Imap / Zend_Mail_Transport_Imap
  *
- * IMPORTANT: you need to copy tests/Zend/Mail/_files/test.mbox to your mail directory
- * for the tests to work.
+ * IMPORTANT: you need to copy tests/Zend/Mail/_files/test.mbox to your mail
+ * directory for the tests to work.
  */
 define('TESTS_ZEND_MAIL_IMAP_ENABLED', false);
 define('TESTS_ZEND_MAIL_IMAP_HOST', 'localhost');
@@ -47,9 +49,10 @@ define('TESTS_ZEND_MAIL_IMAP_INVALID_PORT', 3141);
 /**
  * Zend_Mail_Maildir test
  *
- * Before enabling this test you have to unpack messages.tar in Zend/Mail/_files/test.maildir/cur/
- * and remove the tar for this test to work. That's because the messages files have a colon in the
- * filename and that's a forbidden character on Windows.
+ * Before enabling this test you have to unpack messages.tar in
+ * Zend/Mail/_files/test.maildir/cur/ and remove the tar for this test to work.
+ * That's because the messages files have a colon in the filename and that's a
+ * forbidden character on Windows.
  */
 define('TESTS_ZEND_MAIL_MAILDIR_ENABLED', false);
 
@@ -62,27 +65,17 @@ define('TESTS_ZEND_MAIL_MAILDIR_ENABLED', false);
 define('TESTS_ZEND_REST_CLIENT_FLICKR_APIKEY', false);
 
 /**
- * Zend_Http_Client tests
- * 
- * To enable the dynamic Zend_Http_Client tests, you will need to symbolically
- * link or copy the files in tests/Zend/Http/Client/_files to a directory 
- * under your web server(s) document root and set the constants to point to the
- * URL of this directory.
- */
-define('TESTS_ZEND_HTTP_CLIENT_BASEURI', false);
-
-/**
  * Zend_Gdata tests
  *
- * If the CLIENTLOGIN property below is false, the authenticated tests
- * are reported Skipped in the test run.  Set this property to true to
- * enable tests that require ClientLogin authentication.  Enter your
+ * If the CLIENTLOGIN_ENABLED property below is false, the authenticated
+ * tests are reported Skipped in the test run.  Set this property to true
+ * to enable tests that require ClientLogin authentication.  Enter your
  * Google login credentials in the EMAIL and PASSWORD properties below.
  *
  * Edit TestConfiguration.php, not TestConfiguration.php.dist.
  * Never commit plaintext passwords to the source code repository.
  */
-define('TESTS_ZEND_GDATA_CLIENTLOGIN', false);
+define('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED', false);
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL', 'example@example.com');
 define('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD', 'xxxxxxxx');
 

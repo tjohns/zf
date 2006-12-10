@@ -11,14 +11,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
          . PATH_SEPARATOR . get_include_path());
 }
 
-if (!defined('TESTS_ZEND_GDATA_CLIENTLOGIN')) {
-    if (is_readable('TestConfiguration.php')) {
-        require_once 'TestConfiguration.php';
-    } else {
-        require_once 'TestConfiguration.php.dist';
-    }
-}
-
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
