@@ -53,10 +53,11 @@ require_once("phing/util/FileUtils.php");
 
 class EntityNamesTask extends Task
 {
-    private $filelists = array();
-    private $filesets = array();
-    private $propertyName = null;
-    private $output = '';
+    protected $filelists = array();
+    protected $filesets = array();
+    protected $propertyName = null;
+    protected $outputFile = null;
+    protected $output = '';
 
     public function createFileList() {
         $num = array_push($this->filelists, new FileList());
@@ -73,6 +74,11 @@ class EntityNamesTask extends Task
         $this->propertyName = (string) $property;
     }
 
+    public function setOutputfile($filename) 
+    {
+        $this->outputFile = (string) $filename;
+    }
+
     public function init() 
     {
         $this->output = "<!-- auto-generated -->\n";
@@ -80,8 +86,8 @@ class EntityNamesTask extends Task
 
     public function main()
     {
-        if ($this->propertyName == null) {
-            throw new BuildException('You must specify a "property" attribute.');
+        if ($this->propertyName == null && $this->outputFile == null) {
+            throw new BuildException('You must specify either the "property" or "outputfile" attribute.');
         }
 
         // append the files in the filelists
@@ -103,7 +109,14 @@ class EntityNamesTask extends Task
                 $this->log($be->getMessage(), PROJECT_MSG_WARN);
             }
         }
-        $this->project->setProperty($this->propertyName, $this->output);
+        if ($this->propertyName != null) {
+            $this->project->setProperty($this->propertyName, $this->output);
+        }
+        if ($this->outputFile != null) {
+            $handle = fopen($this->outputFile, 'w');
+            fwrite($handle, $this->output);
+            fclose($handle);
+        }
     }
 
     private function makeEntityNames($dirnames, PhingFile $rootDir)
