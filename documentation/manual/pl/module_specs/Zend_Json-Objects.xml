@@ -3,9 +3,16 @@
     <para>
         Kiedy kodujemy obiekt PHP jako JSON, wszystkie publiczne właściwości
         tego obiektu zostaną zakodowane w obiekcie JSON.
+    <para>
+        JSON nie pozwala na referencje obiektów, więc musisz uważać abyś
+        nie próbował kodować obiektów z rekurencyjnymi referencjami. Jeśli masz 
+        problemy z rekurencją, metody <code>Zend_Json::encode()</code> oraz
+        <code>Zend_Json_Encoder::encode()</code> przyjmują opcjonalny drugi
+        parametr, określający czy ma być sprawdzana rekurencja; jeśli obiekt 
+        jest kodowany drugi raz, zostanie wyrzucony wyjątek.
     </para>
     <para>
-        Odkodowanie obiektów JSON sprawia już lekką trudność, ponieważ obiekty
+        Odkodowanie obiektów JSON sprawia dodatkową trudność, ponieważ obiekty
         Javascript prawie dokładnie odpowiadają tablicom asocjacyjnym PHP.
         Jedni proponują aby przekazywać identyfikator klasy, a następnie 
         tworzyć instancję obiektu tej klasy i wypełniać ją parami klucz/wartość
