@@ -131,7 +131,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
 
     public function getComments()
     {
-        return $this->comments
+        return $this->comments;
     }
 
     public function getEvent()
