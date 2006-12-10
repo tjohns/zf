@@ -62,9 +62,9 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     {
         try {
         	$date = new Zend_Date_DateObject("notimestamp");
-        	$this->assertFalse($date instanceof Zend_Date_DateObject, "exception expected");
-        } catch (Exception $e) {
-            return true;
+        	$this->fail("exception expected");
+        } catch (Zend_Date_Exception $e) {
+            // success
         }
     }
 
@@ -86,9 +86,9 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         try {
         	$date = new Zend_Date_DateObject();
         	$date->setTimestamp("notimestamp");
-        	$this->assertFalse($date instanceof Zend_Date_DateObject, "exception expected");
-        } catch (Exception $e) {
-            return true;
+        	$this->fail("exception expected");
+        } catch (Zend_Date_Exception $e) {
+            // success
         }
     }
 

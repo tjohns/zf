@@ -27,7 +27,6 @@ require_once 'Zend.php';
 
 Zend::loadClass('Zend_Date_DateObject');
 Zend::loadClass('Zend_Locale');
-Zend::loadClass('Zend_Locale_Data');
 
 
 /**
@@ -45,9 +44,9 @@ class Zend_Date {
     const WEEKDAY_SHORT  = 'Zend_Date::WEEKDAY_SHORT';  // D - 3 letter day of week - locale aware, Mon-Sun
     const DAY_SHORT      = 'Zend_Date::DAY_SHORT';      // j - 1,2 digit day of month, 1-31
     const WEEKDAY        = 'Zend_Date::WEEKDAY';        // l - full day name - locale aware, Monday - Sunday
-    const WEEKDAY_8601   = 'Zend_Date::WEEKDAY_8601';   // N - digit weekday ISO 8601, 1-7
+    const WEEKDAY_8601   = 'Zend_Date::WEEKDAY_8601';   // N - digit weekday ISO 8601, 1-7 1 = monday, 7=sunday
     const DAY_SUFFIX     = 'Zend_Date::DAY_SUFFIX';     // S - english suffix day of month, st-th
-    const WEEKDAY_DIGIT  = 'Zend_Date::WEEKDAY_DIGIT';  // w - weekday, 0-6
+    const WEEKDAY_DIGIT  = 'Zend_Date::WEEKDAY_DIGIT';  // w - weekday, 0-6 0=sunday, 6=saturday
     const DAY_OF_YEAR    = 'Zend_Date::DAY_OF_YEAR';    // z - Number of day of year
 
     const WEEKDAY_NARROW = 'Zend_Date::WEEKDAY_NARROW'; // --- 1 letter day name - locale aware, M-S
@@ -291,6 +290,10 @@ class Zend_Date {
      */
     public function addTimestamp($timestamp)
     {
+        if (!is_numeric($timestamp)) {
+            throw Zend::exception('Zend_Date_Exception', 'timestamp excepted');
+        }
+
         $stamp = bcadd($this->_Date->getTimestamp(), $timestamp);
         return new Zend_Date($stamp);
     }
@@ -304,6 +307,10 @@ class Zend_Date {
      */
     public function subTimestamp($timestamp)
     {
+        if (!is_numeric($timestamp)) {
+            throw Zend::exception('Zend_Date_Exception', 'timestamp excepted');
+        }
+
         return new Zend_Date($this->compareTimestamp($timestamp));
     }
 
@@ -694,7 +701,7 @@ class Zend_Date {
 
             case Zend_Date::WEEKDAY_SHORT :
                 $weekday = strtolower($this->_Date->date('D', $this->_Date->getTimestamp(), $gmt));
-                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'abbreviated', $weekday));
+                $day = Zend_Locale_Data::getContent($locale, 'day', array('gregorian', 'wide', $weekday));
                 return substr($day[$weekday], 0, 3);
                 break;
 
@@ -1055,15 +1062,15 @@ class Zend_Date {
     /**
      * Sets the given date as new date
      *
-     * @param $date string   - date which shall be our new date object
+     * @param  $date string  - date which shall be our new date object
      * @param  $part         - datepart, if empty the timestamp will be returned
      * @param  $locale       - OPTIONAL, locale for output
      * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return timestamp
      */
-    public function set($date, $part, $locale = FALSE, $gmt = FALSE)
+    public function set($date, $part = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        $this->_calculate('set', $date, $part, $locale, $gmt);
+        return $this->_calculate('set', $date, $part, $gmt, $locale);
     }
     
 
@@ -1076,9 +1083,10 @@ class Zend_Date {
      * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return timestamp
      */
-    public function add($date, $part = '', $locale = FALSE, $gmt = FALSE)
+    public function add($date, $part = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        $this->_calculate('add', $date, $part, $locale, $gmt);
+        $this->_calculate('add', $date, $part, $gmt, $locale);
+        return $this->get($part, $gmt, $locale);
     }
 
 
@@ -1091,9 +1099,10 @@ class Zend_Date {
      * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return timestamp
      */
-    public function sub($date, $part = '', $locale = FALSE, $gmt = FALSE)
+    public function sub($date, $part = FALSE, $gmt = FALSE, $locale = FALSE)
     {
         $this->_calculate('sub', $date, $part, $locale, $gmt);
+        return $this->get($part, $gmt, $locale);
     }
 
 
@@ -1106,9 +1115,10 @@ class Zend_Date {
      * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return timestamp
      */
-    public function compare($date, $part = '', $locale = FALSE, $gmt = FALSE)
+    public function compare($date, $part = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        $this->_calculate('sub', $date, $part, $locale, $gmt);
+        $this->_calculate('sub', $date, $part, $gmt, $locale);
+        return $this->get($part, $gmt, $locale);
     }
 
 
@@ -1118,7 +1128,7 @@ class Zend_Date {
      * @param $part datepart - OPTIONAL the part of date to clone
      * @return object
      */
-    public function cloneIt($part = '')
+    public function cloneIt($part = FALSE)
     {
         $this->_calculate('clone', $this, $part, FALSE, FALSE);
     }
@@ -1150,8 +1160,14 @@ class Zend_Date {
                 return new Zend_Date($comp);
                 break;
             case 'set' :
-                $this->subTimestamp($comp);
-                return $this->addTimestamp($date);
+//print "\nCOMP:".$comp;
+//print "\nDATE:".$date;
+                $this->_Date->setTimestamp(bcsub($this->_Date->getTimestamp(), $comp));
+//print "\nDATE2:".$this->get(Zend_Date::RSS);
+                
+                $this->_Date->setTimestamp(bcadd($this->_Date->getTimestamp(), $date));
+//print "\nDATE3:".$this->get(Zend_Date::RSS);
+                return $this->_Date->getTimestamp();
                 break;
         }
     }
@@ -1167,7 +1183,7 @@ class Zend_Date {
      * @param  $gmt          - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
      * @return timestamp
      */
-    private function _calculate($calc, $date, $part, $locale = FALSE, $gmt = FALSE)
+    private function _calculate($calc, $date, $part = FALSE, $gmt = FALSE, $locale = FALSE)
     {
         if ($locale === FALSE) {
             $locale = $this->_Locale;
@@ -1185,14 +1201,14 @@ class Zend_Date {
         if (is_object($date)) {
             $date = $date->get($part, $gmt, $locale);
         }
-
+        
         // $date as object, part of foreign date as own date
-        switch(substr($part, 0, 3)) {
+        switch($part) {
 
             // day formats
             case Zend_Date::DAY :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 0, -1, $gmt), 
-                                             $this->_Date->mktime(0, 0, 0, 1, intval($day),  0, -1, $gmt));
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 1970, -1, $gmt), 
+                                             $this->_Date->mktime(0, 0, 0, 1, intval($day),  1970, -1, $gmt));
                 break;
 
             case Zend_Date::WEEKDAY_SHORT :
@@ -1202,7 +1218,7 @@ class Zend_Date {
 
                 foreach ($daylist as $key => $value) {
                     if (strtoupper(substr($value, 0, 3)) == strtoupper($date)) {
-                         $found = $cnt + 1;
+                         $found = $cnt;
                         break;
                     }
                     ++$cnt;
@@ -1210,17 +1226,17 @@ class Zend_Date {
 
                 // Weekday found
                 if ($cnt < 7) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found,   0, -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday, 0, -1, $gmt));
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found,   1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday, 1970, -1, $gmt));
                 }
 
                 // Weekday not found
-                return FALSE; 
+                throw Zend::exception('Zend_Date_Exception', 'weekday expected');
                 break;
 
             case Zend_Date::DAY_SHORT :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 0, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, 1, intval($day), 0, -1, $gmt));
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 1970, -1, $gmt),
+                                             $this->_Date->mktime(0, 0, 0, 1, intval($day), 1970, -1, $gmt));
                 break;
 
             case Zend_Date::WEEKDAY :
@@ -1230,7 +1246,7 @@ class Zend_Date {
 
                 foreach ($daylist as $key => $value) {
                     if (strtoupper($value) == strtoupper($date)) {
-                        $found = $cnt + 1;
+                        $found = $cnt;
                         break;
                     }
                     ++$cnt;
@@ -1238,43 +1254,43 @@ class Zend_Date {
 
                 // Weekday found
                 if ($cnt < 7) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found,   0, -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday, 0, -1, $gmt));
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found,   1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday, 1970, -1, $gmt));
                 }
 
                 // Weekday not found
-                return FALSE; 
+                throw Zend::exception('Zend_Date_Exception', 'weekday expected');
                 break;
 
             case Zend_Date::WEEKDAY_8601 :
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $gmt, $locale);
                 if ((intval($date) > 0) and (intval($date) < 8)) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 0, -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday,      0, -1, $gmt));
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday,      1970, -1, $gmt));
                 }
 
                 // Weekday not found
-                return FALSE; 
+                throw Zend::exception('Zend_Date_Exception', 'weekday expected');
                 break;
 
             case Zend_Date::DAY_SUFFIX :
-                return FALSE;
+                throw Zend::exception('Zend_Date_Exception', 'day suffix can not be calculated with');
                 break;
 
             case Zend_Date::WEEKDAY_DIGIT :
                 $weekday = (int) $this->get(Zend_Date::WEEKDAY_DIGIT, $gmt, $locale);
                 if ((intval($date) > 0) and (intval($date) < 8)) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, ($date + 1), 0, -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday,    0, -1, $gmt));
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, ($date + 1), 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday,    1970, -1, $gmt));
                 }
 
                 // Weekday not found
-                return FALSE; 
+                throw Zend::exception('Zend_Date_Exception', 'weekday expected');
                 break;
 
             case Zend_Date::DAY_OF_YEAR :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1,      $date, 0, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, $month, $day,  0, -1, $gmt));
+                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1,      $date, 1970, -1, $gmt),
+                                             $this->_Date->mktime(0, 0, 0, $month, $day,  1970, -1, $gmt));
                 break;
 
             case Zend_Date::WEEKDAY_NARROW :
@@ -1283,7 +1299,7 @@ class Zend_Date {
                 $cnt = 0;
                 foreach ($daylist as $key => $value) {
                     if (strtoupper(substr($value, 0, 1)) == strtoupper($date)) {
-                        $found = $cnt + 1;
+                        $found = $cnt;
                         break;
                     }
                     ++$cnt;
@@ -1296,7 +1312,7 @@ class Zend_Date {
                 }
 
                 // Weekday not found
-                return FALSE; 
+                throw Zend::exception('Zend_Date_Exception', 'weekday expected');
                 break;
 
             case Zend_Date::WEEKDAY_NAME :
@@ -1305,7 +1321,7 @@ class Zend_Date {
                 $cnt = 0;
                 foreach ($daylist as $key => $value) {
                     if (strtoupper($value) == strtoupper($date)) {
-                        $found = $cnt + 1;
+                        $found = $cnt;
                         break;
                     }
                     ++$cnt;
@@ -1318,7 +1334,7 @@ class Zend_Date {
                 }
 
                 // Weekday not found
-                return FALSE; 
+                throw Zend::exception('Zend_Date_Exception', 'weekday expected');
                 break;
 
 
@@ -1816,8 +1832,10 @@ class Zend_Date {
                 break;
 
             default :
-                return $this->_assign($calc, $this->getTimestamp(),
-                                             $this->_Date->mktime($hour,  $minute,  $second,  $month,  $day,  $year,  -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $date, $this->getTimestamp());
+                }
+                return FALSE;
                 break;
         }
     }

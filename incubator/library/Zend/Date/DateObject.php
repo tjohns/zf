@@ -636,6 +636,8 @@ class Zend_Date_DateObject {
         }
 
         $otimestamp = $timestamp;
+        $numday = 0;
+        $month = 0;
         // gregorian correction
         if ($timestamp < -12219321600) {
             $timestamp -= 864000;
