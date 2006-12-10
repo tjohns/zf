@@ -33,22 +33,6 @@ require_once 'Zend/Feed.php';
 class Zend_Gdata
 {
 
-    // Gdata-general request parameters:
-    // @todo: request parameter 'q'
-    // @todo: request parameter category, e.g. '/feeds/jo/-/Fritz'
-    // @todo: request parameter entryId, e.g. '/feeds/jo/entry1
-    // @todo: request parameter 'max-results'
-    // @todo: request parameter 'start-index'
-    // @todo: request parameter 'author'
-    // @todo: request parameter 'alt' ('atom' or 'rss')
-    // @todo: request parameter 'updated-min'
-    // @todo: request parameter 'updated-max'
-    // @todo: request parameter 'published-min'
-    // @todo: request parameter 'published-max'
-
-    const AUTH_SUB     = 'AuthSub';
-    const CLIENT_LOGIN = 'ClientLogin';
-
     /**
      * Client object used to communicate
      *
@@ -65,8 +49,6 @@ class Zend_Gdata
 
     protected $developerKey = null;
 
-    protected $authMethod;
-
     protected static $defaultTokenName = 'xapi_token';
 
     protected static $tokenName = null;
@@ -81,40 +63,6 @@ class Zend_Gdata
         $this->client = $client;
     }
 
-    /*
-    static public function authSub($tokenName = null)
-    {
-        if ($tokenName == null) {
-            $tokenName = self::$defaultTokenName;
-        }
-        $this->authMethod = Zend_Gdata::AUTH_SUB;
-        session_start();
-        if (!isset($_SESSION[$tokenName])) {
-            if (!isset($_GET['token'])) {
-                // display link to generate single-use token
-                $authSubUrl = Zend_Gdata_AuthSub::getAuthSubTokenUri('http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'], $uri, 0, 1);
-                return $authSubUrl;
-            }
-            // convert the single-use token to a session token
-            $sessionToken =  Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
-            $_SESSION[$tokenName] = $sessionToken;
-        }
-        $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION[$tokenName]);
-        $this->authSubTokenName = $tokenName;
-        return $client;
-    }
-
-    public static function clientLogin($email, $password, $service = 'xapi')
-    {
-        echo "Gdata email = $email\n";
-        echo "Gdata password = $password\n";
-        $client = Zend_Gdata_ClientLogin::getHttpClient($email, $password, $service);
-        $gdata = self::__construct($client);
-        $gdata->authMethod = self::CLIENT_LOGIN;
-        return $gdata;
-    }
-     */
-
     /**
      * Sets developer key
      *
@@ -125,6 +73,14 @@ class Zend_Gdata
         $this->developerKey = substr($key, 0, strcspn($key, "\n\r"));
         $headers['X-Google-Key'] = 'key=' . $this->developerKey;
         $this->client->setHeaders($headers);
+    }
+
+    /**
+     * @return string developerKey
+     */
+    public function getKey()
+    {
+        return $this->developerKey;
     }
 
     /**
@@ -146,6 +102,9 @@ class Zend_Gdata
         }
     }
 
+    /**
+     *
+     */
     public function resetParameters()
     {
         $this->params = array();
@@ -208,19 +167,100 @@ class Zend_Gdata
         return true;
     }
 
-    protected function __get($var)
+    /**
+     * @param int $value
+     */
+    public function setMaxResults($value)
     {
-        return isset($this->params[$var]) ? $this->params[$var] : null;
+        $this->maxResults = $value;
     }
 
-    protected function __isset($var)
+    /**
+     * @param int $value
+     */
+    public function setPublishedMax($value)
     {
-        return isset($this->params[$var]);
+        $this->publishedMax = $value;
     }
 
-    protected function __unset($var)
+    /**
+     * @param int $value
+     */
+    public function setPublishedMin($value)
     {
-        unset($this->params[$var]);
+        $this->publishedMin = $value;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function setStartIndex($value)
+    {
+        $this->startIndex = $value;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function setUpdatedMax($value)
+    {
+        $this->updatedMax = $value;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function setUpdatedMin($value)
+    {
+        $this->updatedMin = $value;
+    }
+
+    /**
+     * @return int maxResults
+     */
+    public function getMaxResults()
+    {
+        return $this->maxResults;
+    }
+
+    /**
+     * @return int publishedMax
+     */
+    public function getPublishedMax()
+    {
+        return $this->publishedMax;
+    }
+
+    /**
+     * @return int publishedMin
+     */
+    public function getPublishedMin()
+    {
+        return $this->publishedMin;
+    }
+
+    /**
+     * @return int startIndex
+     */
+    public function getStartIndex()
+    {
+        return $this->startIndex;
+    }
+
+    /**
+     * @return int updatedMax
+     */
+    public function getUpdatedMax()
+    {
+        return $this->updatedMax;
+    }
+
+    /**
+     * @return int updatedMin
+     */
+    public function getUpdatedMin()
+    {
+        return $this->updatedMin;
     }
 
     /**
@@ -267,7 +307,7 @@ class Zend_Gdata
      *
      * @param int $timestamp
      */
-    private function formatTimestamp($timestamp)
+    protected function formatTimestamp($timestamp)
     {
         if (ctype_digit($timestamp)) {
             return date('Y-m-d\TH:i:s', $timestamp);
@@ -280,4 +320,100 @@ class Zend_Gdata
         }
     }
 
+    /**
+     * @param string $var
+     * @return mixed property value
+     */
+    protected function __get($var)
+    {
+        switch ($var) {
+            case 'maxResults':
+                $var = 'max-results';
+                break;
+            case 'startIndex':
+                $var = 'start-index';
+                break;
+            case 'updatedMin':
+                $var = 'updated-min';
+                break;
+            case 'updatedMax':
+                $var = 'updated-max';
+                break;
+            case 'publishedMin':
+                $var = 'published-min';
+                break;
+            case 'publishedMax':
+                $var = 'published-max';
+                break;
+            default:
+                // other params may be set by subclasses
+                break;
+        }
+        return isset($this->params[$var]) ? $this->params[$var] : null;
+    }
+
+    /**
+     * @param string $var
+     * @return bool
+     */
+    protected function __isset($var)
+    {
+        switch ($var) {
+            case 'maxResults':
+                $var = 'max-results';
+                break;
+            case 'startIndex':
+                $var = 'start-index';
+                break;
+            case 'updatedMin':
+                $var = 'updated-min';
+                break;
+            case 'updatedMax':
+                $var = 'updated-max';
+                break;
+            case 'publishedMin':
+                $var = 'published-min';
+                break;
+            case 'publishedMax':
+                $var = 'published-max';
+                break;
+            default:
+                // other params may be set by subclasses
+                break;
+        }
+        return isset($this->params[$var]);
+    }
+
+    /**
+     * @param string $var
+     */
+    protected function __unset($var)
+    {
+        switch ($var) {
+            case 'maxResults':
+                $var = 'max-results';
+                break;
+            case 'startIndex':
+                $var = 'start-index';
+                break;
+            case 'updatedMin':
+                $var = 'updated-min';
+                break;
+            case 'updatedMax':
+                $var = 'updated-max';
+                break;
+            case 'publishedMin':
+                $var = 'published-min';
+                break;
+            case 'publishedMax':
+                $var = 'published-max';
+                break;
+            default:
+                // other params may be set by subclasses
+                break;
+        }
+        unset($this->params[$var]);
+    }
+
 }
+

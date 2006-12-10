@@ -18,6 +18,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once('Zend/Gdata/Data.php');
+
 /**
  * Gdata Calendar
  *
@@ -28,61 +30,10 @@
  */
 class Zend_Gdata_Calendar extends Zend_Gdata
 {
-    // Calendar-specific query structure:
-    // @todo: www.google.com/calendar/feeds/_userID_/_visibility_/_projection_/_eventID_
-    // @todo: www.google.com/calendar/feeds/_userID_/_visibility_/_projection_/_eventID_/comments/_subfeedEntryID_
-    // @todo: visibility -> public, private, private-magicCookie
-    // @todo: projection -> full, full-noattendees, composite, attendees-only, free-busy, basic
-
-    // Calendar operations:
-    // @todo: get a feed
-    // @todo: get a feed with deleted events
-    // @todo: add an event
-    // @todo: send a date-range query
-    // @todo: get a list of the user's calendars
-    // @todo: get a comment subfeed
-
-    // Calendar-specific response content:
-    // @todo: <gCal:accesslevel> -> none, read, freebusy, contributor, owner
-    // @todo: <gCal:color> -> #RRGGBB
-    // @todo: <gCal:hidden> -> boolean
-    // @todo: <gCal:selected> -> boolean
-    // @todo: <gCal:timezone> -> string
-    // @todo: <gCal:webContent> 
-
-    const CAL_FEED_URI = 'http://www.google.com/calendar/feeds';
-    const CAL_POST_URI = 'http://www.google.com/calendar/feeds/default/private/full';
+    const CALENDAR_FEED_URI = 'http://www.google.com/calendar/feeds';
+    const CALENDAR_POST_URI = 'http://www.google.com/calendar/feeds/default/private/full';
 
     protected static $defaultTokenName = 'cal_token';
-
-    const PROJ_FULL                    = 'full';
-    const PROJ_FULL_NOATTENDEES        = 'full-noattendees';
-    const PROJ_COMPOSITE               = 'composite';
-    const PROJ_ATTENDEES_ONLY          = 'attendees-only';
-    const PROJ_FREE_BUSY               = 'free-busy';
-    const PROJ_BASIC                   = 'basic';
-    protected static $projectionValues = array(
-        self::PROJ_FULL,
-        self::PROJ_FULL_NOATTENDEES,
-        self::PROJ_COMPOSITE,
-        self::PROJ_ATTENDEES_ONLY,
-        self::PROJ_FREE_BUSY,
-        self::PROJ_BASIC
-    );
-
-    const VIS_PUBLIC                   = 'public';
-    const VIS_PRIVATE                  = 'private';
-    const VIS_PRIVATE_MAGIC_COOKIE     = 'private-';
-    protected static $visibilityValues = array(
-        self::VIS_PUBLIC,
-        self::VIS_PRIVATE,
-        self::VIS_PRIVATE_MAGIC_COOKIE
-    );
-
-    const ORDER_STARTTIME              = 'starttime';
-    protected static $orderbyValues    = array(
-        self::ORDER_STARTTIME
-    );
 
     /**
      * Create Gdata_Calendar object
@@ -99,7 +50,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
      */
     public function getFeed()
     {
-        $uri = self::CAL_FEED_URI;
+        $uri = self::CALENDAR_FEED_URI;
         if (isset($this->params['_user'])) {
             $uri .= '/' . $this->params['_user'];
         } else {
@@ -118,8 +69,8 @@ class Zend_Gdata_Calendar extends Zend_Gdata
             }
             if (isset($this->params['_event'])) {
                 $uri .= '/' . $this->params['_event'];
-                if (isset($this->params['_subfeed'])) {
-                    $uri .= '/comments/' . $this->params['_subfeed'];
+                if (isset($this->params['_comments'])) {
+                    $uri .= '/comments/' . $this->params['_comments'];
                 }
             }
         }
@@ -135,14 +86,94 @@ class Zend_Gdata_Calendar extends Zend_Gdata
      */
     public function post($xml)
     {
-        return parent::post($xml, self::CAL_POST_URI);
+        return parent::post($xml, self::CALENDAR_POST_URI);
+    }
+
+    public function setComments($value)
+    {
+        $this->comments = $value;
+    }
+
+    public function setEvent($value)
+    {
+        $this->event = $value;
+    }
+
+    public function setStartMax($value)
+    {
+        $this->startMax = $value;
+    }
+
+    public function setStartMin($value)
+    {
+        $this->startMin = $value;
+    }
+
+    public function setOrderby($value)
+    {
+        $this->orderby = $value;
+    }
+
+    public function setProjection($value)
+    {
+        $this->projection = $value;
+    }
+
+    public function setUser($value)
+    {
+        $this->user = $value;
+    }
+
+    public function setVisibility($value)
+    {
+        $this->visibility = $value;
+    }
+
+    public function getComments()
+    {
+        return $this->comments
+    }
+
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    public function getStartMax()
+    {
+        return $this->startMax;
+    }
+
+    public function getStartMin()
+    {
+        return $this->startMin;
+    }
+
+    public function getOrderby()
+    {
+        return $this->orderby;
+    }
+
+    public function getProjection()
+    {
+        return $this->projection;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function getVisibility()
+    {
+        return $this->visibility;
     }
 
     protected function __set($var, $value)
     {
         switch ($var) {
             case 'q':
-                // @todo: throw exception for invalid param
+                // @todo: throw exception for invalid param?
                 break;
             case 'startMin':
                 $var = 'start-min';
@@ -153,20 +184,15 @@ class Zend_Gdata_Calendar extends Zend_Gdata
                 $value = $this->formatTimestamp($value);
                 break;
             case 'visibility':
-                $var = '_visibility';
-                if (!(in_array($value, self::$visibilityValues) || strncmp($value, self::VIS_PRIVATE_MAGIC_COOKIE, strlen(self::VIS_PRIVATE_MAGIC_COOKIE)))) {
-                    throw Zend::exception('Zend_Gdata_Exception', "Illegal visibility value: '$value', supported values are " .implode(',', self::visibilityValues));
-                }
-                break;
             case 'projection':
-                $var = '_projection';
-                if (!in_array($value, self::$projectionValues)) {
-                    throw Zend::exception('Zend_Gdata_Exception', "Illegal projection value: '$value', supported values are " . implode(',', self::$projectionValues));
+                if (!Zend_Gdata_Data::validateValue($value, $var)) {
+                    throw Zend::exception('Zend_Gdata_Exception', "Unsupported $var value: '$value'");
                 }
+                $var = "_$var";
                 break;
             case 'orderby':
-                if (!in_array($value, self::$orderbyValues)) {
-                    throw Zend::exception('Zend_Gdata_Exception', "Illegal orderby value: '$value', supported values are " . implode(',', self::$orderbyValues));
+                if (!Zend_Gdata_Data::validateValue($value, $var)) {
+                    throw Zend::exception('Zend_Gdata_Exception', "Unsupported $var value: '$value'");
                 }
                 break;
             case 'user':
@@ -178,8 +204,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
                 // @todo: validate event value
                 break;
             case 'comments':
-            case 'subfeed':
-                $var = '_subfeed';
+                $var = '_comments';
                 // @todo: validate comments subfeed value
                 break;
             default:
@@ -211,8 +236,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
                 $var = '_event';
                 break;
             case 'comments':
-            case 'subfeed':
-                $var = '_subfeed';
+                $var = '_comments';
                 break;
             default:
                 break;
@@ -242,8 +266,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
                 $var = '_event';
                 break;
             case 'comments':
-            case 'subfeed':
-                $var = '_subfeed';
+                $var = '_comments';
                 break;
             default:
                 break;
@@ -273,8 +296,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
                 $var = '_event';
                 break;
             case 'comments':
-            case 'subfeed':
-                $var = '_subfeed';
+                $var = '_comments';
                 break;
             default:
                 break;
