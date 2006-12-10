@@ -5,14 +5,15 @@
         <title>Введение</title>
         <para>
             Система <code>Zend_Controller</code> построена с расчетом на
-            расширение посредством либо создания подклассов от существующих,
-            либо написания новых классов, которые реализуют интерфейсы
-            <code>Zend_Controller_Router_Interface</code> и
-            <code>Zend_Controller_Dispatcher_Interface</code>.
+            расширение посредством создания подклассов от существующих классов
+            или написания новых классов, реализующих различные
+            интерфейсы и абстрактные классы, которые представляют собой основу
+            семейства классов контроллера.
 <!--
-            The <code>Zend_Controller</code> system was built with extensibility in mind, either
-            by subclassing the existing classes or writing new classes that implement
-            the interfaces <code>Zend_Controller_Router_Interface</code> and <code>Zend_Controller_Dispatcher_Interface</code>.
+            The <code>Zend_Controller</code> system was built with extensibility
+            in mind, either by subclassing the existing classes or writing new
+            classes that implement the various interfaces and abstract classes
+            that form the foundation of the controller family of classes.
 -->
         </para>
     </sect2>
@@ -20,19 +21,22 @@
     <sect2 id="zend.controller.getting-started.server-configuration">
         <title>Конфигурация сервера</title>
         <para>
-            <code>Zend_Controller</code> написан для поддержки современных
+            <code>Zend_Controller</code> создан для поддержки современных
             веб-сайтов с "чистыми" URI (с небольшим количеством или полным
             отсутствием параметров запроса). Предлагаемая конфигурация требует
             поддержки со стороны веб-сервера в виде перезаписи URI (URI rewriting)
-            для перенаправления всех запросов одному файлу, здесь называемому
+            для перенаправления всех запросов одному файлу, называемому здесь
             "<code>index.php</code>", который будет просто загружать
             <code>Zend_Controller_Front</code>. На веб-сервере Apache это
             осуществляется дополнительным модулем, называемом mod_rewrite.
 <!--
-            Zend_Controller is built to support modern websites with clean URIs (few or no query parameters).  As such,
-            the suggested configuration requires support from the webserver in the form of URI rewriting to redirect
-            all requests to a single file, here called "index.php", which will simply bootstrap <code>Zend_Controller_Front</code>.
-            On Apache webservers, this is handled by an optional module called mod_rewrite.
+            Zend_Controller is built to support modern websites with clean URIs
+            (few or no query parameters).  As such, the suggested configuration
+            requires support from the webserver in the form of URI rewriting to
+            redirect all requests to a single file, here called "index.php",
+            which will simply bootstrap <code>Zend_Controller_Front</code>.  On
+            Apache webservers, this is handled by an optional module called
+            mod_rewrite.
 -->
         </para>
 
@@ -48,56 +52,39 @@
             <code>index.php</code>, за исключением
             определенных расширений файлов. Ниже пример такого файла:
 <!--
-            The first step in configuring the server is to sucessfully install and enable mod_rewrite.  The next step
-            is to put two files in the document root: .htaccess and index.php.  The .htaccess file is used by Apache
-            and must contain a mod_rewrite rule to redirect all requests to index.php.  For development purposes, it
-            is often simplest to write a mod_rewrite rule that will redirect all requests to index.php except for certain
-            file extensions.  Here is an example of such a file:
+            The first step in configuring the server is to sucessfully install
+            and enable mod_rewrite.  The next step is to put two files in the
+            document root: .htaccess and index.php.  The .htaccess file is used
+            by Apache and must contain a mod_rewrite rule to redirect all
+            requests to index.php.  For development purposes, it is often
+            simplest to write a mod_rewrite rule that will redirect all requests
+            to index.php except for certain file extensions.  Here is an example
+            of such a file:
 -->
          </para>
-         
-         <programlisting role="php"><![CDATA[
+        <programlisting role="php"><![CDATA[
 RewriteEngine on
 RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
-]]>      </programlisting>
-
+]]></programlisting>
          <para>
-
-            В вышеприведенном примере все запросы, не содержащие ни одного
-            из указанных расширений, должны быть переданы
-            <code>index.php</code>. Это полезно для разработки, но в
-            производственной версии вместо этого должны быть написаны
-            правила перезаписи, исключающие директории.
+            В приведенном выше примере все запросы, не содержащие ни одного
+            из указанных расширений, будут переданы <code>index.php</code>. Это
+            полезно для разработки, но в производственной версии правила
+            пререзаписи должны быть составлены таким образом, чтобы исключать
+            директории.
 <!--
-            In the example above, all requests not containing one of the above file extensions will be passed to index.php.
-            This is useful for development, however in production the rewrite rules should be
+            In the example above, all requests not containing one of the above
+            file extensions will be passed to index.php.  This is useful for
+            development, however in production the rewrite rules should be
             written to exclude directories instead.
--->
-        </para>
-    </sect2>
-
-    <sect2 id="zend.controller.getting-started.bootstrap">
-        <title>Файл загрузки</title>
-
-        <para>
-            После настройки файла <code>.htaccess</code>, создайте новый файл
-            с именем <code>index.php</code>. Это загрузочный файл.
-            Назначением файла является только загрузка <code>Zend_Controller_Front</code>,
-            который в идеале должен быть расположен вне корневого каталога сайта.
-<!--
-            After setting up the .htaccess file, create a new file called <code>index.php</code>.  This is a bootstrap file.
-            The purpose of the index.php file is only to bootstrap Zend_Controller_Front, which should ideally be
-            located outside of the document root.
 -->
         </para>
 
         <note>
-            <title>
-                Местонахождение загрузочного файла 
-                <!--Location of the bootstrap file-->
+            <title>Местонахождение файла загрузки<!--Location of the bootstrap file-->
             </title>
             <para>
-                Загузочный файл должен быть единственным PHP-файлом, хранящимся в
+                Файл загрузки должен быть единственным PHP-файлом, хранящимся в
                 корневом каталоге сайта.
 <!--
                 The bootstrap file should be the only PHP file stored in the document root.
@@ -106,23 +93,78 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
         </note>
 
         <para>
-            В целях безопасности Zend крайне не рекомендует хранить какие-либо
-            файлы PHP в каталогах, которые доступны через веб-сервер
-            (те, что в корневом каталоге сайта). Несмотря на то, что это
-            возможно не во всех ситуациях (таких, как соместно используемый хостинг),
+            Основной набор функциональных возможностей Zend_Controller также
+            поддерживает URL-ы вида
+            <code>index.php?controller=foo&amp;action=bar</code>,
+            использующие параметры запроса. Кроме того, другой shipped
+            маршрутизатор, <code>Zend_Controller_RewriteRouter</code>,
+            может работать в различных окружениях, включая те, в которых
+            отсутствует возможность перезаписи запросов.
+            Вы можете использовать Zend_Controller в своем сайте даже если 
+            не можете использовать mod_rewrite или его аналог.
+<!--
+            That said, the basic functionality of Zend_Controller also supports
+            URLs using query parameters - as an example,
+            <code>index.php?controller=foo&amp;action=bar</code>. Additionally,
+            another shipped router, <code>Zend_Controller_RewriteRouter</code>,
+            works in a variety of environments, including many without
+            mod_rewrite-like capabilities. If you cannot use mod_rewrite or an
+            equivalent, you'll still be able to use Zend_Controller for your
+            site.
+-->
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.controller.getting-started.bootstrap">
+        <title>Файл загрузки</title>
+
+        <para>
+            После настройки файла <code>.htaccess</code>, создайте новый файл
+            с именем <code>index.php</code>. Это файл загрузки.
+            Назначением файла является только загрузка <code>Zend_Controller_Front</code>,
+            который в идеале должен быть расположен вне корневого каталога сайта.
+<!--
+            After setting up the .htaccess file, create a new file called
+            <code>index.php</code>.  This is a bootstrap file.  The purpose of
+            the index.php file is only to bootstrap Zend_Controller_Front, which
+            should ideally be located outside of the document root.
+-->
+        </para>
+
+        <note>
+            <title>Местонахождение файла загрузки<!--Location of the bootstrap file-->
+            </title>
+            <para>
+                Файл загрузки должен быть единственным PHP-файлом, хранящимся в
+                корневом каталоге сайта.
+<!--
+                The bootstrap file should be the only PHP file stored in the document root.
+-->
+            </para>
+        </note>
+
+        <para>
+            Из соображений безопасности Zend крайне не рекомендует хранить
+            какие-либо файлы PHP в каталогах, которые доступны через веб-сервер
+            (те, что находятся в корневом каталоге сайта). Несмотря на то, что это
+            возможно не во всех ситуациях (таких, как разделяемый хостинг),
             это должно считаться наилучшей практикой и по возможности соблюдаться.
 <!--
-            For security purposes, Zend very strong recommends not storing any PHP files in directories that are
-            accessible by the webserver (those that are beneath the document root).  While this is not possible in
-            every scenario, such as shared hosting, this should be considered a best practice and observed whenever possible.
+            For security purposes, Zend very strongly recommends not storing any
+            PHP files in directories that are accessible by the webserver (those
+            that are beneath the document root).  While this is not possible in
+            every scenario, such as shared hosting, this should be considered a
+            best practice and observed whenever possible.
 -->
         </para>
 
         <para>
-            Создайте загрузочный файл <code>index.php</code> в корневом каталоге
+            Создайте файл загрузки <code>index.php</code> в корневом каталоге
             сайта для загрузки <code>Zend_Controller_Front</code>:
 <!--
-            Create the bootstrap file, <code>index.php</code>, in the document root to bootstrap Zend_Controller_Front:
+            Create the bootstrap file, <code>index.php</code>, in the document
+            root to bootstrap Zend_Controller_Front:
 -->
         </para>
         
@@ -132,43 +174,26 @@ require_once 'Zend/Controller/Front.php';
 
 Zend_Controller_Front::run('/path/to/your/controllers');
 
-?>]]>   </programlisting>
+?>]]></programlisting>
 
         <para>
-            Подробнее про <code>/path/to/your/controllers</code> см. следующий раздел.
+            Подробнее про <code>/path/to/your/controllers</code> см. следующий
+            за этим раздел.
 <!--
             See the next section regarding the <code>/path/to/your/controllers</code>.
 -->
-
             Как написано в <code>README.txt</code>, каталог с библиотекой Zend
             Framework должен быть прописан в <code>include_path</code>. Если
             <code>include_path</code> не установлен в <code>php.ini</code>,
             можно вызывать функцию <code>set_include_path()</code> перед
             <code>require_once()</code> в этом файле.
 <!--
-            As instructed in <code>README.txt</code>, the directory of the Zend Framework library must be in the
-            <code>include_path</code>.  If this is not set in <code>php.ini</code>, <code>set_include_path()</code>
+            As instructed in <code>README.txt</code>, the directory of the Zend
+            Framework library must be in the <code>include_path</code>.  If this
+            is not set in <code>php.ini</code>, <code>set_include_path()</code>
             can be called in this file before the <code>require_once()</code>.
 -->
         </para>
-
-        <note>
-            <title>Требования к системе<!--Requirements--></title>
-            <para>
-                Сейчас мы рассматриваем решения, которые не будут требовать
-                установки mod_rewrite. Мы намереваемся предложить конфигурацию
-                для систем как с поддержкой mod_rewrite, так и без нее. Еще,
-                пожалуйста, обратите внимание на то, что эта система не завязана
-                конкретно на Apache или модуле mod_rewrite, должен подойти любой
-                веб-сервер с возможностью перенаправления.
-<!--
-                At this time, we are presently investigating solutions will not require mod_rewrite installation.  We
-                intend to suggest a configuration for systems both with and without mod_rewrite capabilities.  Also,
-                please note this system is not bound to Apache or mod_rewrite specifically, any webserver with similar
-                redirection capabilities should be sufficient.
--->
-            </para>
-        </note>
     </sect2>
 
     <sect2 id="zend.controller.getting-started.directory-structure">
@@ -177,23 +202,25 @@ Zend_Controller_Front::run('/path/to/your/controllers');
         <para>
             Рекомендуется, чтобы сайты, построенные с Zend Framework,
             использовали общую структуру каталогов. Несмотря на то, что это
-            возможно не во всех случаях, это возможно для многих или, возможно,
-            большинства случаев. Следование данной структуре сделает ваш код
+            возможно не во всех случаях, это реализуемо для многих (или скорее
+            большинства) случаев. Следование данной структуре сделает ваш код
             более легким для понимания теми, кто знаком с соглашениями
             Zend Framework.
 <!--
-            It is recommended that websites built with the Zend Framework share a common directory structure.  While
-            this is not possible in every case, it is for many or perhaps most.  Choosing to conform to this structure
-            will make your code more easily understandable by someone familiar with the conventions of the Zend Framework.
+            It is recommended that websites built with the Zend Framework share
+            a common directory structure.  While this is not possible in every
+            case, it is for many or perhaps most.  Choosing to conform to this
+            structure will make your code more easily understandable by someone
+            familiar with the conventions of the Zend Framework.
 -->
         </para>
 
         <para>
             Предлагаемая структура каталогов состоит из каталогов библиотек
-            (от Zend и откуда-либо еще) и каталогов приложений.
+            (от Zend и каких-либо других) и каталогов приложений.
 <!--
-            The suggested directory structure consists of both library directories (from Zend and elsewhere)
-            and application directories.
+            The suggested directory structure consists of both library
+            directories (from Zend and elsewhere) and application directories.
 -->
         </para>
         
@@ -216,42 +243,74 @@ Zend_Controller_Front::run('/path/to/your/controllers');
             <para>
                 Этот раздел еще не завершен. Он на стадии интенсивной разработки и
                 подвержен изменениям.
-            </para>
 <!--
-            This section is not yet complete.  It is under heavy construction and is subject to change.
+                This section is not yet complete.  It is under heavy construction
+                and is subject to change.
 -->
+            </para>
         </note>
     </sect2>
 
     <sect2 id="zend.controller.overview.indexcontroller">
-        <title>IndexController</title>
+        <title>Контроллер по умолчанию<!--Default Controller--></title>
 
         <para>
-            Любой сайт должен определять контроллер с именем
-            <code>IndexController</code>. Это контроллер, который вступает в
-            действие, когда в URI не определены контроллеры, как в этом URI:
+            Каждый сайт должен определять контроллер по умолчанию. Это
+            контроллер, который вступает в действие, когда в URI не
+            определен контроллер, как в этом URI:
 <!--
-            Every site must define a controller named <code>IndexController</code>.  This is the controller
-            that is reached when no controller is specified in the URI, such as in this URI:
+            Every site must define a default controller.  This is the controller
+            that is reached when no controller is specified in the URI, such as
+            in this URI:
 -->
         </para>
         
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/
-]]>     </programlisting>
+]]></programlisting>
 
         <para>
-            Класс <code>IndexController</code> должен быть храниться в файле
-            с именем <code>IndexController.php</code>, и этот файл должен
-            находиться в каталоге для контроллеров. <code>IndexController</code>
-            должен быть подклассом <code>Zend_Controller_Action</code>. Ниже
-            приведен пример <code>IndexController</code>:
+            В поставляемой конфигурации используемый по умолчанию контроллер
+            должен называться <code>IndexController</code> и должен быть
+            определен в файле <code>IndexController.php</code>. В коде на него
+            ссылаются как на контроллер 'index'.
 <!--
-            The <code>IndexController</code> class must be stored in a file named <code>IndexController.php</code>, and
-            this must be stored in the controllers directory.  The <code>IndexController</code> must subclass
-            <code>Zend_Controller_Action</code>.  Here is a sample <code>IndexController</code>:
+            In the shipped configuration, the default controller should be named
+            <code>IndexController</code>, and defined in a file named
+            <code>IndexController.php</code>. Internally, it will be referenced
+            as the controller 'index'.
 -->
         </para>
+
+        <para>
+            Вы можете изменить контроллер по умолчанию до начала диспетчеризации
+            посредством вызова метода <code>setDefaultController()</code>
+            объектов <code>Zend_Controller_Front</code> или
+            <code>Zend_Controller_Dispatcher</code>. При этом соблюдайте
+            внутренние соглашения по именованию. В соотвествии с этими
+            соглашениями на класс <code>HomeController</code> (в файле
+            <code>HomeController.php</code>) нужно ссылаться как на
+            <code>home</code>.  
+<!--
+            You may change the default controller prior to dispatching the front
+            controller by calling the <code>setDefaultController()</code> method
+            on either the front controller or dispatcher object. When doing so,
+            use the internal naming conventions. Thus, the class
+            <code>HomeController</code> (in the <code>HomeController.php</code>
+            file) would be referred to as <code>home</code>.
+-->
+        </para>
+
+        <para>
+            Все контроллеры должны наследовать от класса
+            <code>Zend_Controller_Action</code> и размещаться в каталоге
+            контроллеров.
+<!--
+            Controllers should extend the <code>Zend_Controller_Action</code>
+            class and be placed in the controllers directory.
+-->
+        </para>
+
         <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/Controller/Action.php';
@@ -269,17 +328,30 @@ class IndexController extends Zend_Controller_Action
     }
 }
 
-?>]]>   </programlisting>
+?>]]></programlisting>
+
+        <para>
+            Подробнее о контроллере и действии по умолчанию и о написании
+            классов контроллеров будет изложено в следующих разделах.  
+<!--
+            More detail on the default controller and action, as well as writing
+            action controller classes, will be presented in later chapters.
+-->
+        </para>
 
         <note>
             <title>В стадии разработки</title>
             <para>
                 Этот раздел еще не завершен. Он на стадии интенсивной разработки
-                и подвержен изменениям.
+                и подвержен изменениям. 
 <!--
-                This section is not yet complete.  It is under heavy construction and is subject to change.
--->
-            </para>
+                This section is not yet complete.  It is under heavy
+                construction and is subject to change.
+--> 
+          </para>
         </note>
     </sect2>
 </sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

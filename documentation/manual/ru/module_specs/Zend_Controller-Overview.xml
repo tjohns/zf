@@ -4,210 +4,574 @@
     <sect2 id="zend.controller.overview.introduction">
         <title>Введение</title>
         <para>
-            <code>Zend_Controller</code> предоставляет основу для построения веб-сайта, базирующегося на паттерне
-            Model-View-Controller (MVC).
+            <code>Zend_Controller</code> предоставляет основу для построения
+            веб-сайта, базирующегося на паттерне Model-View-Controller (MVC).
 <!--
-            <code>Zend_Controller</code> provides the foundation for building a website based
-            on the Model-View-Controller (MVC) pattern.
+            <code>Zend_Controller</code> provides the foundation for building a
+            website based on the Model-View-Controller (MVC) pattern.
 -->
         </para>
 
         <para>
-            Система <code>Zend_Controller</code> задумана как легковесная, модульная и расширяемая. Минималистский
-            дизайн обеспечивает гибкость и некоторую свободу пользователям и в то же время предоставляет
-            достаточно структуры, чтобы системы, построенные вокруг <code>Zend_Controller</code> делили некоторые
-            общие соглашения и сходный код.
+            Система <code>Zend_Controller</code> задумана как легковесная,
+            модульная и расширяемая. Минималистский дизайн обеспечивает
+            гибкость и некоторую свободу пользователям и в то же время
+            предоставляет достаточно структуры, чтобы системы, построенные
+            вокруг <code>Zend_Controller</code> разделяли некоторые общие
+            соглашения и имели сходный код.
 <!--
-            The <code>Zend_Controller</code> system is designed to be lightweight, modular,
-            and extensible.  It is a minimalist design to permit flexibility and some freedom to users
-            while providing enough structure so that systems built around <code>Zend_Controller</code> share
-            some common conventions and similar code layout.
+            The <code>Zend_Controller</code> system is designed to be
+            lightweight, modular, and extensible.  It is a minimalist design to
+            permit flexibility and some freedom to users while providing enough
+            structure so that systems built around <code>Zend_Controller</code>
+            share some common conventions and similar code layout.
 -->
         </para>
 
         <para>
-            Рабочий процесс <code>Zend_Controller</code> осуществляется несколькими компонентами. Несмотря на то,
-            что для использования этой системы нет необходимости в совершенном понимании внутренней работы всех
-            компонент, полезно иметь практические знания данного процесса.
+            Рабочий процесс <code>Zend_Controller</code> осуществляется
+            несколькими компонентами. Несмотря на то, что для использования
+            этой системы нет необходимости в совершенном понимании внутренней
+            работы всех компонент, полезно иметь практические знания данного
+            процесса.
 <!--
-            The <code>Zend_Controller</code> workflow is implemented by several components.  While
-            it is not necessary to completely understand the underpinnings of all of these components
-            to use the system, having a working knowledge of the process is helpful.
+            The <code>Zend_Controller</code> workflow is implemented by several
+            components.  While it is not necessary to completely understand the
+            underpinnings of all of these components to use the system, having a
+            working knowledge of the process is helpful.
 -->
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Zend_Controller_Front</code> управляет всем рабочим процессом системы
-                        <code>Zend_Controller</code>. Это интерпретация паттерна FrontController.
-                        <code>Zend_Controller_Front</code> обрабатывает все запросы, полученные сервером,
-                        и в конечном счете овечает за делегацию запросов "контроллерам действий"
+                        <code>Zend_Controller_Front</code> (далее:
+                        фронт-контроллер) управляет всем рабочим процессом
+                        системы <code>Zend_Controller</code>. Это интерпретация
+                        паттерна FrontController.
+                        <code>Zend_Controller_Front</code> обрабатывает все
+                        запросы, полученные сервером, и в конечном счете овечает
+                        за делегацию запросов контроллерам действий
                         (<code>Zend_Controller_Action</code>).
 <!--
-                        <code>Zend_Controller_Front</code>
-                        orchestrates the entire workflow of the <code>Zend_Controller</code> system.  It
-                        is an interpretation of the FrontController pattern.  <code>Zend_Controller_Front</code>
-                        processes all requests received by the server and is ultimately responsible for
-                        delegating requests to ActionControllers (<code>Zend_Controller_Action</code>).
+						            <code>Zend_Controller_Front</code>
+                        orchestrates the entire workflow of the
+                        <code>Zend_Controller</code> system.  It is an
+                        interpretation of the FrontController pattern.
+                        <code>Zend_Controller_Front</code> processes all
+                        requests received by the server and is ultimately
+                        responsible for delegating requests to ActionControllers
+                        (<code>Zend_Controller_Action</code>).
 -->
                     </para>
                 </listitem>
 
-                <listitem>
-                    <para>
-                        <code>Zend_Controller_Router</code> является маршрутизатором. Маршрутизация — это
-                        процесс приема конечной точки URI и ее декомпозиции для определения, какой
-                        контроллер и какое действие данного контроллера должны получить запрос. Определение
-                        контроллера, действия и необязательных параметров упаковано в объект значений,
-                        называемый <code>Zend_Controller_Dispatcher_Token</code> (маркер диспетчеризации).
-                        Далее идет обработка посредством <code>Zend_Controller_Dispatcher</code>.
-                        Маршрутизация выполняется только один раз: когда вначале получен запрос и перед
-                        тем, как первый контроллер будет запущен.
+				        <listitem>
+					          <para>
+					              <code>Zend_Controller_Request_Abstract</code>
+					              представляет переменные запроса и предоставляет
+                        методы для установки и получения имен контроллера,
+                        действия и любых параметров запроса. Кроме того, он
+                        отслеживает, было ли обработано представляемое им
+                        действие диспетчером
+                        <code>Zend_Controller_Dispatcher</code>.
+                        Расширения абстрактного объекта запроса могут
+                        использоваться для инкапсуляции всех переменных
+                        запроса, позволяя роутерам извлекать информацию
+                        из переменных запроса для того, чтобы устанавливать имена
+                        контроллера и действия.
 <!--
-                        <code>Zend_Controller_Router</code> is the router.  Routing is
-                        the process of taking a URI endpoint and decomposing it to
-                        determine which controller, and action of that controller, should receive
-                        the request.  This definition of controller, action, and optional parameters,
-                        is packaged into a value object called <code>Zend_Controller_Dispatcher_Token</code>.
-                        This is then processed by <code>Zend_Controller_Dispatcher</code>.  Routing occurs
-                        only once: when the request is initially received and before the first controller is dispatched.
+                        <code>Zend_Controller_Request_Abstract</code> represents
+                        the request environment and provides methods for setting
+                        and retrieving the controller and action names and any
+                        request parameters. Additionally it keeps track of
+                        whether or not the action it contains has been
+                        dispatched by <code>Zend_Controller_Dispatcher</code>.
+                        Extensions to the abstract request object can be used to
+                        encapsulate the entire request environment, allowing
+                        routers to pull information from the request environment
+                        in order to set the controller and action names.
+-->
+					         </para>
+
+                   <para>
+                       По умолчанию используется
+                       <code>Zend_Controller_Request_Http</code>. Он
+                       предоставляет доступ ко всем переменным HTTP-запроса.
+<!--
+                       By default, <code>Zend_Controller_Request_Http</code> is
+                       used, which provides access to the entire HTTP request
+                       environment.
+-->
+                   </para>
+				        </listitem>
+				        
+        				<listitem>
+        					  <para>
+        					      <code>Zend_Controller_Router_Interface</code>
+        					      используется для определения маршрутизаторов.
+        					      Маршрутизащия — это процесс исследования переменных
+                        запроса для определения того, какой контроллер и какое
+                        действие в этом контроллере должны получить этот запрос.
+                        Эти контроллер, действие и опциональные параметры
+                        уставнавливаются в объекте запроса для обработки
+                        диспетчером <code>Zend_Controller_Dispatcher</code>.
+                        Маршрутизация производится только один раз: когда
+                        вначале получен запрос и до того, как первый контроллер
+                        примет управление.
+<!--
+                        <code>Zend_Controller_Router_Interface</code> is used to
+                        define routers.  Routing is the process of examining the
+                        request environment to determine which  to determine
+                        which controller, and action of that controller, should
+                        receive the request.  This controller, action, and
+                        optional parameters are then set in the request object
+                        to be processed by <code>Zend_Controller_Dispatcher</code>.  
+                        Routing occurs only once: when the request is initially
+                        received and before the first controller is dispatched.
 -->
                     </para>
-                </listitem>
 
-                <listitem>
                     <para>
-                        <code>Zend_Controller_Dispatcher</code> является диспетчером. Диспетчеризация — процесс
-                        получения объекта <code>Zend_Controller_Dispatcher_Token</code>, нахождения соответствующего
-                        файла контроллера, инициализации класса контроллера в этом файле (должен выполнять
-                        <code>Zend_Controller_Action</code>) и, наконец, запуска метода действия в объекте
-                        контроллера. В отличие от маршрутизации, которая выполняется только один раз, диспетчеризация
-                        выполняется циклически.<code> Zend_Controller_Dispatcher</code> повторно вызывается
-                        <code>Zend_Controller_Front</code> до тех пор, все действия не будут последовательно выполнены.
+                        Используемый по умолчанию маршрутизатор
+                        <code>Zend_Controller_Router</code> принимает конечную
+                        точку URI так, как она определена в
+                        <code>Zend_Controller_Request_Http</code>, и
+                        разлагает ее на контроллер, действие и парамеры,
+                        основываясь на пути в URL. Например, URL
+                        <code>http://localhost/foo/bar/key/value</code>
+                        будет расшифрован слудующим образом: контроллер
+                        <code>foo</code>, действие <code>bar</code> и
+                        параметр <code>key</code> со значением
+                        <code>value</code>.      
 <!--
-                        <code>Zend_Controller_Dispatcher</code> is the dispatcher.  Dispatching is
-                        the process of taking the <code>Zend_Controller_Dispatcher_Token</code>, finding
-                        the appropriate controller file, instantiating a controller class in that file
-                        (must implement <code>Zend_Controller_Action</code>), and finally running the action method in
-                        that controller object.  Unlike routing, which occurs only once, dispatching occurs
-                        in a loop.  <code>Zend_Controller_Dispatcher</code> is repeatedly called by
-                        <code>Zend_Controller_Front</code> until all actions have been dispatched sequentially.
+                        The default router, <code>Zend_Controller_Router</code>,
+                        takes a URI endpoint as specified in
+                        <code>Zend_Controller_Request_Http</code> and decomposes
+                        it into a controller, action, and parameters based on
+                        the path information in the url. As an example, the URL
+                        <code>http://localhost/foo/bar/key/value</code> would be
+                        decoded to use the <code>foo</code> controller,
+                        <code>bar</code> action, and specify a parameter
+                        <code>key</code> with a value of <code>value</code>.
+-->
+        					  </para>
+        				</listitem>
+
+        				<listitem>
+				          	<para>
+				          	    <code>Zend_Controller_Dispatcher_Interface</code>
+				          	    используется для определения диспетчеров.
+				          	    Диспетчеризация — это процесс извлечения контроллера и
+				          	    действия из объекта запроса, нахождения соответствующих
+                        файла/класса контроллера и метода действия в
+                        классе контроллера. Ситуации, когда соответствующие
+                        контроллер или действие не найдены, решаются
+                        определением контроллеров и действий по умолчанию.
+<!--
+                        <code>Zend_Controller_Dispatcher_Interface</code> is
+                        used to define dispatchers.
+                        Dispatching is the process of pulling the controller and
+                        action from the request object and mapping them to a
+                        controller file/class and action method in the controller
+                        class. If the controller or action do not exist, it
+                        handles determining default controllers and actions to
+                        dispatch.
 -->
                     </para>
-                </listitem>
 
+                    <para>
+                        Фактически процесс диспетчеризации состоит из
+                        инстанцирования класса контроллера и вызова метода
+                        действия в этом классе. В отличие от маршрутизации,
+                        которая производится только один раз, диспетчеризация
+                        производится циклически. Если флаг диспетчеризации
+                        объекта запроса сбрасывается, то цикл будет
+                        повторяться, при этом вызывается действие, которое будет
+                        установлено на данный момент в объекте запроса.
+                        Если цикл завершится с установленным флагом
+                        диспетчеризации (значение <code>true</code>) в объекте
+                        запроса, то этим завершается процесс диспетчеризации. 
+                         
+<!--
+                        The actual dispatching process consists of instantiating
+                        the controller class and calling the action method in
+                        that class. Unlike rouing, which occurs only once,
+                        dispatching occurs in a loop. If the request object's
+                        dispatched status is reset at any point, the loop will
+                        be repeated, calling whatever action is currently set
+                        in the request object. The first time the loop finishes
+                        with the request object's dispatched status set (boolean
+                        true), it will finish processing.
+-->
+                    </para>
+
+                    <para>
+                        По умолчанию используется диспетчер
+                        <code>Zend_Controller_Dispatcher</code>. Он определяет
+                        контроллеры как классы с именами, завершающимися
+                        словом Controller, и в которых все "слова" начинаются
+                        со сточной буквы, методы действий — как методы с
+                        именами, завершающимися словом Action, и в которых все
+                        "слова", кроме первого, начинаются со строчной буквы:
+                        <code>SomeFooController::barAction</code>.
+                        В этом случае на контроллер нужно ссылаться как на
+                        <code>somefoo</code>, а на действие как на
+                        <code>bar</code>.
+<!--
+                        The default dispatcher is
+                        <code>Zend_Controller_Dispatcher</code>. It defines
+                        controllers as CamelCasedClasses ending in the word
+                        Controller, and action methods as camelCasedMethods
+                        ending in the word Action:
+                        <code>SomeFooController::barAction</code>. In this case,
+                        the controller would be referred to as
+                        <code>somefoo</code> and the action as <code>bar</code>.
+-->
+        				    </para>
+        				    
+                    <para>
+                        Кроме этого, вы можете определять модуль
+                        (<code>module</code>), который используется при загрузке
+                        контроллера. Модуль используется только для определения
+                        поддиректории и/или префикса класса для использования
+                        при загрузке контроллера. В наиболее простом варианте
+                        вы определяете модуль, когда устанавливаете директории
+                        контроллеров:
+<!--
+                        Additionally, you can specify a <code>module</code> to
+                        use when loading a controller. A module is merely used
+                        to specify a subdirectory and/or class prefix to use
+                        when loading the controller. Most simply, you specify
+                        the module when setting the controller directories:
+-->
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+    'default' => '/path/to/controllers',
+    'user'    => '/path/to/controllers/user',
+    'admin'   => '/path/to/controllers/admin'
+));
+]]></programlisting>
+                    
+                    <para>
+                        В приведенном выше примере, если модуль 'user'
+                        определен с контроллером 'news', то диспетчер сначала
+                        будет искать файл <code>NewsController.php</code> в
+                        <code>/path/to/controllers/user</code> до того, как
+                        будет искать его по другим путям. Кроме того, он
+                        сначала удостоверится, что класс называется
+                        <code>User_NewsController</code>, и затем
+                        <code>NewsController</code>. Запрос для этого ресурса
+                        будет выглядеть как
+                        <code>http://localhost/news/action/module/user</code>
+                        при использовании маршрутизатора по умолчанию и как
+                        <code>http://localhost/module/news/action</code>
+                        при использовании RewriteRouter. 
+<!--
+                        In the above example, if the module 'user' is specified
+                        with the controller 'news', it will look for 
+                        <code>NewsController.php</code> in
+                        <code>/path/to/controllers/user</code> first, before
+                        looking in the other paths. Additionally, it will first
+                        assume that the class is called
+                        <code>User_NewsController</code>, and then
+                        <code>NewsController</code>. A request for such a
+                        resource would look like
+                        <code>http://localhost/news/action/module/user</code>
+                        using the default router, and
+                        <code>http://localhost/module/news/action</code> using
+                        the RewriteRouter.
+-->
+                    </para>
+
+                    <para>
+                        Модули полезны, если вы хотите разбивать код по
+                        связанным поддиректориям, использовать код сторонних
+                        разработчиков или повторно использовать одну и ту же
+                        библиотеку контроллеров для различных приложений.
+<!--
+                        Modules are useful when you wish to segregate code into
+                        related subdirectories, use third party code, or re-use
+                        the same controller library in different applications.
+-->
+                    </para>
+        				</listitem>
+
+        				<listitem>
+				          	<para>
+				          	    <code>Zend_Controller_Action</code> — базовая
+				          	    составляющая контроллера. Каждый контроллер является
+				          	    отдельным классом, наследующим от класса 
+				          	    <code>Zend_Controller_Action</code>, и этот класс
+				          	    имеет методы действия.
+<!--
+                        <code>Zend_Controller_Action</code> is the base
+                        controller component.  Each controller is a single class
+                        that extends the <code>Zend_Controller_Action
+                        class</code>, and this class has action methods.
+-->
+					          </para>
+                </listitem>
+                
                 <listitem>
                     <para>
-                        <code>Zend_Controller_Action</code> является базовой компонентой контроллера. Каждый
-                        контроллер — отдельный класс, который наследует от класса <code>Zend_Controller_Action</code>,
-                        и этот класс имеет методы, реализующие действия.
+                        <code>Zend_Controller_Response_Abstract</code>
+                        определяет основной класс ответа, используемый для
+                        сбора и возвращения ответов из действий контроллеров.
+                        Он собирает заголовки и содержимое и, поскольку
+                        реализует метод <code>__toString()</code>, может
+                        выводиться конструкцией echo для отправки всех
+                        заголовков и содержимого одновременно.
 <!--
-                        <code>Zend_Controller_Action</code> is the base controller component.  Each
-                        controller is a single class that extends the <code>Zend_Controller_Action class</code>,
-                        and this class has action methods.
+                        <code>Zend_Controller_Response_Abstract</code> defines a
+                        base response class used to collect and return responses
+                        from the action controllers. It collects both headers
+                        and body content, and, because it implements
+                        <code>__toString()</code>, can be directly echoed in
+                        order to send all headers and content at once.
+-->
+                    </para>
+
+                    <para>
+                        По умолчанию используется класс
+                        <code>Zend_Controller_Response_Http</code>, который
+                        пригоден для использования в среде HTTP. 
+<!--
+                        The default response class is
+                        <code>Zend_Controller_Response_Http</code>, which is
+                        suitable for use in an HTTP environment.
 -->
                     </para>
                 </listitem>
             </itemizedlist>
 
-            Рабочий процесс <code>Zend_Controller</code> относительно простой. Запрос принимается
-            объектом <code>Zend_Controller_Front</code>, который по очереди вызывает
-            <code>Zend_Controller_Router</code> для определения, какой контроллер (и какое действие в этом
-            контроллере) запускать. <code>Zend_Controller_Router</code> декомпозирует URI в объект
-            <code>Zend_Controller_Dispatcher_Token</code>, который описывает, что запускать.
-            Затем <code>Zend_Controller_Front</code> входит в цикл диспетчеризации. Он вызывает
-            <code>Zend_Controller_Dispatcher</code>, переданный в объекте
-            <code>Zend_Controller_Dispatcher_Token</code>, для запуска нужного контроллера и действия.
-            После того, как контроллер завершит работу, управление возвращается <code>Zend_Controller_Front</code>.
-            Если предыдущий контроллер посредством возвращения нового маркера указал, что должен быть
-            запущен другой контроллер, то цикл продолжается и выполняется другой запуск. В противном случае
-            процесс завершается.
+            Рабочий процесс <code>Zend_Controller</code> относительно простой.
+            Запрос получается объектом <code>Zend_Controller_Front</code>,
+            который по очереди вызывает <code>Zend_Controller_Router</code> для
+            определения, какой контроллер (и какое действие в этом контроллере)
+            следует использовать. <code>Zend_Controller_Router</code>
+            анализирует URI для установки имен контроллера и действия в запросе.
+            Затем <code>Zend_Controller_Front</code> входит в цикл
+            диспетчеризации. Он вызывает <code>Zend_Controller_Dispatcher</code>
+            и передает ему запрос для запуска контроллера и действия,
+            определенных в запросе (или тех, которые используются по умолчанию).
+            После того, как контроллер завершит работу, управление возвращается
+            <code>Zend_Controller_Front</code>. Если предыдущий контроллер
+            посредством переустановки статуса диспетчеризации в запросе
+            указал, что должен быть запущен другой контроллер, то цикл
+            продолжается и выполняется запуск другого контроллера. В противном
+            случае процесс завершается.
 <!--
-            The workflow of <code>Zend_Controller</code> is relatively simple.  A request is received by
-            <code>Zend_Controller_Front</code>, which in turn calls <code>Zend_Controller_Router</code> to determine which
-            controller (and action in that controller) to dispatch.  <code>Zend_Controller_Router</code> decomposes the URI
-            into a <code>Zend_Controller_Dispatcher_Token</code> object that describes where to dispatch.
-            <code>Zend_Controller_Front</code> then enters a dispatch loop.  It calls <code>Zend_Controller_Dispatcher</code>,
-            passing it the token, to dispatch to the actual controller and action.  After the controller has finished,
-            control returns to <code>Zend_Controller_Front</code>.  If the controller has indicated that another controller
-            should be dispatched by returning a new token, the loop continues and another dispatch is performed.
-            Otherwise, the process ends.
+            The workflow of <code>Zend_Controller</code> is relatively simple.
+            A request is received by <code>Zend_Controller_Front</code>, which
+            in turn calls <code>Zend_Controller_Router</code> to determine which
+            controller (and action in that controller) to dispatch.
+            <code>Zend_Controller_Router</code> decomposes the URI in order to
+            set the controller and action names in the request.
+            <code>Zend_Controller_Front</code> then enters a dispatch loop.  It
+            calls <code>Zend_Controller_Dispatcher</code>, passing it the
+            request, to dispatch to the controller and action specified in the
+            request (or use defaults).  After the controller has finished,
+            control returns to <code>Zend_Controller_Front</code>.  If the
+            controller has indicated that another controller should be
+            dispatched by resetting the dispatched status of the request, the
+            loop continues and another dispatch is performed.  Otherwise, the
+            process ends.
 -->
         </para>
     </sect2>
+
+    <sect2 id="zend.controller.overview.request">
+    		<title>Объект запроса<!--Request Object--></title>
+    
+    		<para>
+    		    Объект запроса является простым объектом значений, который
+    		    передается между <code>Zend_Controller_Front</code>, роутером,
+            диспетчером и контроллерами. Он включает в себя определение
+            контроллера, действия и параметров, которые нужно передать
+            действию, а также остальные переменные запроса, будь это HTTP, CLI
+            или PHP-GTK.
+<!--
+            The request object is a simple value object that is passed between
+            <code>Zend_Controller_Front</code> and the router, dispatcher, and
+            controller classes.  It packages a definition of a controller, an
+            action, and parameters to be passed to the action, as well as the
+            rest of the request environment, be it HTTP, the CLI, or PHP-GTK.
+-->
+    		</para>
+    
+    		<itemizedlist>
+    		    <listitem>
+                <para>
+                    Имя контроллера получается посредством методов
+                    <code>getControllerName()</code> и
+                    <code>setControllerName()</code>.  
+<!--
+                    The controller name is accessed by
+                    <code>getControllerName()</code> and
+                    <code>setControllerName()</code>.
+-->
+    			      </para>
+            </listitem>
+    			  <listitem>
+                <para>
+                    Имя действия, вызываемого внутри контроллера получается
+                    посредством методов <code>getActionName()</code> и
+                    <code>setActionName()</code>.
+<!--
+                    The name of the action to call within that controller is
+                    accessed by <code>getActionName()</code> and
+                    <code>setActionName()</code>.
+-->
+    			      </para>
+            </listitem>
+    			  <listitem>
+                <para>
+                    Параметры для передачи вызываемому действию являются
+                    ассоциативным массивом пар ключ/значение, который
+                    получается через методы <code>getParams()</code>
+                    и <code>setParams()</code>, или, если требуется получить
+                    отдельное значение, через <code>getParam()</code> и
+                    <code>setParam()</code>.
+<!--
+                    Parameters to be passed to that action are an associative array
+                    of key/value pairs that are accessed by <code>getParams()</code>
+                    and <code>setParams()</code>, or individually by
+                    <code>getParam()</code> and <code>setParam()</code>.
+-->
+    			      </para>
+            </listitem>
+    		</itemizedlist>
+
+        <para>
+            Методов может быть больше, в зависимости от типа запроса.
+            Например, используемый по умолчанию запрос
+            <code>Zend_Controller_Request_Http</code> имеет методы для
+            получения URI запроса, пути, параметры $_GET и $_POST и т.д.  
+<!--
+            Based on the type of request, there may be more methods available.
+            The default request used, <code>Zend_Controller_Request_Http</code>,
+            for instance, has methods for retrieving the request URI, path
+            information, $_GET and $_POST parameters, etc.
+-->
+        </para>
+
+        <para>
+            Объект запроса передается Zend_Controller_Front либо, если
+            ничего не было передано, инициализируется в начале процесса
+            диспетчеризации до того, как будет запущен прощесс маршрутизации.
+            Он передается каждому объекту в цепочке диспетчеризации.
+<!--
+            The request object is passed to the front controller, or if none is
+            provided, instantiated at the beginning of the dispatch process,
+            before routing occurs. It is passed through to every object in the
+            dispatch chain.
+-->
+        </para>
+
+        <para>
+            Кроме этого, объект запроса особенно полезен в тестировании.
+            Разработчики могут имитировать переменные запроса, включая в объект
+            запроса контроллер, действие, параметры, URI и т.д., и затем
+            передавая его фронт-контроллеру для проверки работы приложения.
+            Если комбинируется с объектом ответа, становится возможным
+            тщательное и точное юнит-тестирование приложений на основе MVC.  
+<!--
+            Additionally, the request object is particularly useful in testing.
+            The developer may craft the request environment, including
+            controller, action, parameters, URI, etc, and pass the request
+            object to the front controller to test application flow. When paired
+            with the response object, elaborate and precise unit testing of
+            MVC applications becomes possible.
+-->
+        </para>
+  	</sect2>
 
     <sect2 id="zend.controller.overview.routing-process">
         <title>Процесс маршрутизации</title>
 
         <para>
-            Перед тем, как писать свой первый контроллер, надо сначала понять, как работает процесс
-            маршрутизации, и как это реализовано в <code>Zend_Controller_Router</code>. Помните,
-            что рабочий процесс разделен на маршрутизацию, которая выполняется только один раз, и
-            диспетчеризацию, которая впоследствии выполняется в цикле.
+            Перед тем, как начать писать свой первый контроллер, надо сначала
+            понять, как работает процесс маршрутизации, и как это реализовано в
+            <code>Zend_Controller_Router</code>. Помните, что рабочий процесс
+            разделен на маршрутизацию, которая выполняется только один раз, и
+            диспетчеризацию, которая выполняется после маршрутизации в цикле.
 <!--
-            Before your first controller can be built, you need to understand how the routing
-            process works as it is implemented in <code>Zend_Controller_Router</code>.  Remember that the
-            workflow is divided into routing, which occurs only once, and dispatching, which
+            Before your first controller can be built, you need to understand
+            how the routing process works as it is implemented in
+            <code>Zend_Controller_Router</code>.  Remember that the workflow is
+            divided into routing, which occurs only once, and dispatching, which
             occurs thereafter in a loop.
 -->
         </para>
 
         <para>
-            <code>Zend_Controller_Front</code> вызывает <code>Zend_Controller_Router</code> для
-            установки того, какой контроллер (и какое действие внутри этого контроллера) соответствует
-            данному URI. <code>Zend_Controller_Router</code> принимает URI и декомпозирует его в объект
-            значений <code>Zend_Controller_Dispatcher_Token</code>, который будет передан диспетчеру
-            (<code>Zend_Controller_Dispatcher</code>).
+            <code>Zend_Controller_Front</code> вызывает
+            <code>Zend_Controller_Router</code> (или другой зарегистрированный
+            маршрутизатор) для определения того, какой контроллер (и какое
+            действие внутри этого контроллера) соответствует данному URI.
+            <code>Zend_Controller_Router</code> извлекает URI из объекта запроса
+            и анализирует его для определения контроллера, действия
+            и других параметров URL, переданных в пути, и устанавливает
+            их в объекте запроса.
 <!--
-            <code>Zend_Controller_Front</code> calls <code>Zend_Controller_Router</code> to map a URI
-            to a controller - and an action within that controller.  <code>Zend_Controller_Router</code>
-            takes the URI and decomposes it into a value object, <code>Zend_Controller_Dispatcher_Token</code>,
-            which will be passed to the dispatcher (<code>Zend_Controller_Dispatcher</code>).
+            <code>Zend_Controller_Front</code> calls
+            <code>Zend_Controller_Router</code> (or another registered router)
+            to map a URI to a controller - and an action within that
+            controller.  <code>Zend_Controller_Router</code> retrieves the URI
+            from the request object and decomposes it to determine the
+            controller, action, and any other URL parameters passed in the path
+            and sets these in the request object. 
 -->
         </para>
 
         <para>
-            Маршрутизатор использует очень простую схему для определения имени контроллера и имени
-            действия в контроллере:
+            <code>Zend_Controller_Router</code> использует очень простую схему
+            для определения имени контроллера и имени действия в этом
+            контроллере:
 <!--
-            The router uses a very simple mapping to determine the name of the controller and
-            the name of the action within that controller:
+            <code>Zend_Controller_Router</code> uses a very simple mapping to
+            determine the name of the controller and the name of the action
+            within that controller:
 -->
         </para>
-        
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
         </programlisting>
-        
         <para>
-            Обратите внимание, что первый сегмент всегда является именем контроллера, а второй сегмент —
-            именем действия.
+            Обратите внимание, что первый сегмент всегда является именем
+            контроллера, а второй сегмент — именем действия.
 <!--
-            Notice above that the first segment is always the name of the controller and the
-            second segment is always the name of the action.
+            Notice above that the first segment is always the name of the
+            controller and the second segment is always the name of the action.
 -->
         </para>
 
         <para>
-            В URI могут быть определены параметры, которые будут переданы контроллеру. Они имеют вид пары
-            ключ/значение:
+            В URI могут быть определены параметры, которые будут переданы
+            контроллеру. Они имеют вид пар ключ/значение:
 <!--
-            Optionally, parameters may be defined in the URI that will be passed to the controller.
-            These take the form of key/value pairs:
+            Optionally, parameters may be defined in the URI that will be passed
+            to the controller.  These take the form of key/value pairs:
 -->
         </para>
-        
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/key1/value1/]]>
         </programlisting>
 
         <para>
-            Если ничего не размещено в части URI <code>/controller/</code>, то это будет
-            "<code>index</code>". Если ничего не размещено в части URI <code>/action/</code>,
-            то это также будет "<code>index</code>". Следующие примеры иллюстрируют это:
+            Если в пути URI отсутствуют контроллер и действие, то
+            <code>Zend_Controller_Dispatcher</code> попытается получить
+            значения из параметров объекта запроса и, если ничего не найдено,
+            использовать значения по умолчанию. В обоих случаях значениями по
+            умолчанию будет "<code>index</code>". Следующие примеры иллюстрируют
+            это:
 <!--
-            If nothing is present in the <code>/controller/</code> part of the URI, then this will become
-            "<code>index</code>".  If nothing is present in the <code>/action/</code> part of the URI, then
-            this will also become "<code>index</code>".  These examples illustrate:
+            If either the controller or action are missing from the URI path,
+            <code>Zend_Controller_Dispatcher</code> will try and grab the value
+            from the request object's parameters, and, if not found, use default
+            values. In both cases, the default values are "<code>index</code>".
+            These examples illustrate:
 -->
         </para>
         
@@ -225,88 +589,272 @@ Controller: index
 Action    : index]]>
         </programlisting>
 
-        <note>
-            <title>Новый механизм перезаписи<!--New rewrite engine--></title>
-            <para>
-                В настоящее время мы разрабатываем новый маршрутизатор, с механизмом
-                перезаписи URI (URI rewriting), который даст намного более
-                гибкие возможности, что сейчас доступны в маршрутизаторе. Это
-                будет включено в предварительном релизе в ближайшем будущем.
-<!--
-                We are currently developing a new router with a URI rewriting engine that will give
-                much more flexible capabilities than are presently available in the router.
-                This will be included in a preview release in the very near future.
--->
-            </para>
-        </note>
-
         <para>
-            Имя контроллера, имя действия в этом контроллере и необязательные параметры упакованы
-            в маркер <code>Zend_Controller_Dispatcher_Token</code>. Этот маркер возвращается для
-            <code>Zend_Controller_Front</code>, который тогда входит в цикл "диспетчеризации".
-            Один раз за весь цикл диспетчеризации маркер будет передан <code>Zend_Controller_Dispatcher</code>.
+            Кроме этого, вы можете определять контроллеры в поддиректориях или
+            модулях следующими способами:
 <!--
-            The controller name, the action name within that controller, and any optional parameters
-            are packaged into a token, <code>Zend_Controller_Dispatcher_Token</code>.  This token
-            is returned to <code>Zend_Controller_Front</code>, which will then enter the dispatch loop.
-            Once in the dispatch loop, the token will be passed to <code>Zend_Controller_Dispatcher</code>.
--->
-        </para>
-    </sect2>
-
-    <sect2 id="zend.controller.overview.dispatch-token">
-        <title>Маркер диспетчеризации</title>
-
-        <para>
-            Маркер диспетчеризации (dispatch token) — простой объект значений, который передается между
-            <code>Zend_Controller_Front</code> и классами, которые реализуют интерфейсы маршрутизатора и диспетчера.
-            Он упаковывает в себе определение контроллера, действия и параметров, передаваемых действию.
-<!--
-            The dispatch token is a simple value object that is passed between <code>Zend_Controller_Front</code>
-            and classes that implement the router and dispatcher interfaces.  It packages a definition of a controller,
-            an action, and parameters to be passed to the action.
+            Additionally, you can specify controllers in subdirectories or
+            modules through several means:
 -->
         </para>
 
         <itemizedlist>
-            <listitem><para>
-                Имя контроллера доступно через <code>getControllerName()</code> и <code>setControllerName()</code>.
+            <listitem>
+                <para>
+                    Могут использоваться имена контроллеров со знаком тире (-)
+                    или подчеркивания (_). Например,
+                    <code>http://framework.zend.com/admin-roadmap/future</code>
+                    должен соответствовать классу контроллера
+                    Admin_RoadmapController. 
 <!--
-                The controller name is accessed by <code>getControllerName()</code> and <code>setControllerName()</code>.
+                    Controller names that have a hyphen (-) or underscore (_)
+                    can be used. As an example,
+                    <code>http://framework.zend.com/admin-roadmap/future</code>
+                    would map to the Admin_RoadmapController controller class.
 -->
-            </para></listitem>
-            <listitem><para>
-                Имя действия, вызываемого внутри контроллера, доступно через <code>getActionName()</code>
-                и <code>setActionName()</code>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    После установки параметра <code>useModules</code> во
+                    фронт-контроллере вы можете указывать соответствие
+                    поддиректориям, используя чистый URI. URL в предыдущем
+                    примере может быть преобразован в
+                    <code>http://framework.zend.com/admin/roadmap/future</code>.
+                    Для этого установите параметр <code>useModules</code> во
+                    фронт-контроллере или маршрутизаторе: 
 <!--
-                The name of the action to call within that controller is accessed by <code>getActionName()</code> and <code>setActionName()</code>.
+                    By setting the <code>useModules</code> parameter in the front
+                    controller, you can map to subdirectories using clean URIs.
+                    The previous example URL would read
+                    <code>http://framework.zend.com/admin/roadmap/future</code>.
+                    To do so, set the <code>useModules</code> parameter in the
+                    front controller or the router:
 -->
-            </para></listitem>
-            <listitem><para>
-                Параметры, передаваемые данному действию, заключены в ассоциативный массив из пар ключ/значение,
-                который доступен через <code>getParams()</code> и <code>setParams()</code>.
-<!--
-                Parameters to be passed to that action are an associative array of key/value pairs that are accessed by <code>getParams()</code>
-                and <code>setParams()</code>.
--->
-            </para></listitem>
-        </itemizedlist>
-    </sect2>
+                </para>
 
-    <sect2 id="zend.controller.overview.dispatching">
-        <title>Процесс диспетчеризации</title>
+                <programlisting><![CDATA[
+$front->setParam('useModules', true);
+// или
+$router->setParam('useModules', true);
+]]></programlisting>
+
+                <para>
+                    Это будет работать как основного маршрутизатора, так и
+                    для RewriteRouter.
+<!--
+                    This will work for both the basic router as well as the
+                    RewriteRouter.
+-->
+                </para>
+            </listitem>
+        </itemizedlist>
+
+		    <note>
+		        <title>Гибкость<!--Flexibility--></title>
+		        <para>
+		            Если вы хотите большей гибкости, то можете обратиться к разделу
+                <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>.
+<!--
+                If you want more flexible capabilities, you may want to check out
+                <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>.
+-->
+            </para>
+		    </note>
+
+		    <para>
+		        Имя контроллера, имя действия в этом контроллере и любые
+            необязательные параметры (включая модуль) устанавливаются в объекте
+            запроса. Когда <code>Zend_Controller_Front</code> входит в цикл
+            диспетчеризации, объект запроса передается
+            <code>Zend_Controller_Dispatcher</code>. 
+<!--
+            The controller name, the action name within that controller, and any
+            optional parameters (including the module) are set in the request
+            object.  When <code>Zend_Controller_Front</code> enters the dispatch
+            loop, the request object will be passed to
+            <code>Zend_Controller_Dispatcher</code>.
+-->
+		    </para>
+  	</sect2>
+
+	  <sect2 id="zend.controller.overview.dispatching">
+		    <title>Процесс диспетчеризации<!--Dispatch Process--></title>
+
+		    <para>
+		        Диспетчеризация — это процесс принятия объекта запроса
+            (<code>Zend_Controller_Request_Abstract</code>), извлечения
+            содержащихся в нем имени контроллера, имени действия и
+            необязательных параметров, и затем инстанцирования контроллера,
+            вызова действия в нем. Если не найдены контроллер и действие,
+            то будут использоваться значения, принятые для них по умолчанию.
+            Для обоих <code>Zend_Controller_Dispatcher</code> использует
+            <code>index</code> как значение по умолчанию, но позволяет
+            изменять значения по умолчанию через методы
+            <code>setDefaultController()</code> и
+            <code>setDefaultAction()</code>. 
+<!--
+            Dispatching is the process of taking the request object,
+            <code>Zend_Controller_Request_Abstract</code>, extracting the
+            controller name, action name, and optional parameters contained in it,
+            and then instantiating a controller and calling an action of that
+            controller. If no controller or action are found, it will use
+            default values for them. <code>Zend_Controller_Dispatcher</code>
+            specifies <code>index</code> for each of these defaults, but allows
+            the developer to change them using the
+            <code>setDefaultController()</code> and
+            <code>setDefaultAction()</code> methods.
+-->
+		    </para>
 
         <para>
-            Диспетчеризация — процесс получения маркера <code>Zend_Controller_Dispatcher_Token</code>,
-            извлечения информации, заключенной в нем: имени контроллера, имени действия и необязательных
-            параметров, затем инициализации контроллера и вызова действия в этом контроллере.
+            Диспетчеризация производится в цикле во фронт-контроллере.
+            До того, как будет запущен процесс диспетчеризации,
+            фронт-контроллер выполняет маршрутизацию запроса для нахождения
+            определенных пользователем значений контроллера, действия и
+            необязательных параметров. Затем он входит в цикл диспетчеризации,
+            обрабатывая запрос.
 <!--
-            Dispatching is the process of taking a token, <code>Zend_Controller_Dispatcher_Token</code>, extracting
-            the information contained in it: a controller name, an action name, and option parameters,
-            and then instantiating a controller and calling an action of that controller.
+            Dispatching happens in a loop in the front controller. Before
+            dispatching occurs, the front controller routes the request to find
+            user specified values for the controller, action, and optional
+            parameters. It then enters a dispatch loop, dispatching the request.
 -->
         </para>
+
+        <para>
+            В начале каждой итерации цикла он устанавливает флаг в объекте
+            запроса, означающий, что действие было запущено. Если
+            действие или методы pre/postDispatch установленного плагина сбросят
+            этот флаг, то цикл диспетчеризации продолжится и попытается
+            обработать запрос снова. Изменяя контроллер и/или действие в
+            запросе и сбрасывая флаг диспетчеризации, разработчик может
+            определять цепочку запросов для обработки.       
+<!--
+            At the beginning of each iteration, it sets a flag in the request
+            object indicating that the action has been dispatched. If an action
+            or pre/postDispatch plugin resets that flag, the dispatch loop will
+            continue and attempt to dispatch the request again. By changing the
+            controller and/or action in the request and resetting the dispatched
+            flag, the developer may define a chain of requests to perform.
+-->
+        </para>
+
+        <para>
+            Метод действия контроллера, который таким образом управляет
+            диспетчеризацией, называется <code>_forward()</code>; вызывайте
+            этот метод из любого метода pre/postDispatch() или действия,
+            указывая контроллер, действие и необязательные параметры,
+            которые вы, возможно, захотите передать новому действию.
+<!--
+            The action controller method that controlls such dispatching is
+            <code>_forward()</code>; call this method from any of the
+            pre/postDispatch() or action methods, providing a controller,
+            action, and optionally any additional parameters you may wish to
+            send to the new action:
+-->
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+public function myAction()
+{
+    // выполнение каких-либо действий...
+    // передача управления другому действию, FooController::barAction():
+    $this->_forward('foo', 'bar', array('baz' => 'bogus'));
+}
+]]></programlisting>
     </sect2>
+
+	  <sect2 id="zend.controller.overview.response">
+		    <title>Объект ответа<!--Response Object--></title>
+
+		    <para>
+		        Объект ответа составляет логичную пару объекту запроса. Его
+            назначение — объединение содержимого и/или заголовков, таким образом
+            они могут возвращаться вместе. Кроме этого, фронт-контроллер
+            будет передавать любые пойманные исключения объекту ответа,
+            давая разработчику возможность должным образом обрабатывать
+            исключения.
+<!--
+            The response object is the logical pair to the request object. Its
+            purpose is to collate content and/or headers so that they may be
+            returned en masse. Additionally, the front controller will pass any
+            caught exceptions to the response object, allowing the developer to
+            gracefully handle exceptions.
+-->
+        </para>
+
+        <para>
+            Так как объект запроса реализует метод <code>__toString()</code>,
+            он может быть безопасно выведен через конструкцию echo. Это делает
+            возможным следующее использование: 
+<!--
+            Since the response object implements <code>__toString()</code>, it
+            may be safely echoed. This allows for the following usage:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+echo $controller->dispatch();
+]]></programlisting>
+        
+        <para>
+            Разработчики должны использовать объекты ответа в своих контроллерах.
+            Вместо непосредственного вывода и отправки заголовков, следует
+            помещать их в объект запроса: 
+<!--
+            Developers should make use of the response object in their action
+            controllers. Instead of directly rendering output and sending
+            headers, push them to the response object:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// В действии контроллера:
+// Установка заголовка
+$this->getResponse()
+    ->setHeader('Content-Type', 'text/html')
+    ->appendBody($content);
+]]></programlisting>
+
+        <para>
+            Посредством таких операций вы добьетесь того, что все заголовки
+            будут выведены одновременно до того, как будет выведено содержимое.
+<!--
+            By doing this, all headers get sent at once, just prior to
+            displaying the content.
+-->
+        </para>
+
+        <para>
+            Для проверки того, произошло ли исключение в приложении,
+            проверяйте флаг <code>isException()</code> в объекте ответа и
+            извлекайте объект исключения, используя метод
+            <code>getException()</code>. Кроме этого, можно создавать
+            объекты ответа, которые перенаправляют на страницы
+            сообщений об ошибке, журналируют сообщения исключения, обеспечивают
+            привлекательный формат сообщений исключения (для среды разработки)
+            и т.п.
+<!--
+            Should an exception occur in an application, check the
+            response object's <code>isException()</code> flag, and retrieve the
+            exception using <code>getException()</code>. Additionally, one
+            may create custom response objects that redirect to error pages, log
+            exception messages, do pretty formatting of exception messages (for
+            development environments), etc.
+-->
+        </para>
+
+        <para>
+            По умолчанию сообщения исключений не отображаются. Это поведение
+            может быть переопределено вызовом метода
+            <code>renderException()</code>.
+<!--
+            By default, exception messages are not displayed. This behaviour may
+            be overridden by calling <code>renderException()</code>.
+-->
+        </para>
+	  </sect2>
 </sect1>
 
 <!--

@@ -5,11 +5,22 @@
         <title>Введение</title>
         <para>
             Система <code>Zend_Controller</code> построена с расчетом на
-            расширение посредством либо создания подклассов от существующих,
-            либо написания новых классов, которые реализуют интерфейсы
-            <code>Zend_Controller_Router_Interface</code> и
-            <code>Zend_Controller_Dispatcher_Interface</code>.
+            расширение посредством написания новых классов, которые реализуют 
+            интерфейсы <code>Zend_Controller_Router_Interface</code> и
+            <code>Zend_Controller_Dispatcher_Interface</code>, либо расширения
+            классов <code>Zend_Controller_Request_Abstract</code>,
+            <code>Zend_Controller_Response_Abstract</code>, and
+            <code>Zend_Controller_Action</code>.
 <!--
+            The <code>Zend_Controller</code> system was built with extensibility
+            in mind, either by subclassing the existing classes or writing new
+            classes that implement the interfaces
+            <code>Zend_Controller_Router_Interface</code> and
+            <code>Zend_Controller_Dispatcher_Interface</code> or extend the
+            classes <code>Zend_Controller_Request_Abstract</code>,
+            <code>Zend_Controller_Response_Abstract</code>, and
+            <code>Zend_Controller_Action</code>.
+
             The <code>Zend_Controller</code> system was built with extensibility in mind, either
             by subclassing the existing classes or writing new classes that implement
             the interfaces <code>Zend_Controller_Router_Interface</code> and <code>Zend_Controller_Dispatcher_Interface</code>.
@@ -17,59 +28,69 @@
         </para>
 
         <para>
-            Возможными причинами для реализации нового маршрутизатора или
-            диспетчера могут быть:
+            Возможные причины для создания своих классов:
 <!--
-            Possible reasons for implementing a new router or dispatcher might be:
+            Possible reasons for subclassing include:
 -->
             <itemizedlist>
                 <listitem>
                     <para>
                         Существующая система маршрутизации URI не подходит в
                         некоторых сиуациях, таких, как интеграция в существующий
-                        веб-сайт, который использует свои собственные соглашения для
-                        марршрутизации, которые не совместимы с механизмом маршрутизации,
-                        предоставляемым Zend Framework.
+                        веб-сайт, который использует свои собственные соглашения
+                        по маршрутизации, которые не совместимы с механизмом
+                        маршрутизации, предоставляемым Zend Framework.
 <!--
-                        The existing URI routing system is not suitable in some way, such as integrating
-                        into an existing website that uses its own conventions for routing that do not
-                        mesh with the routing mechanism provided with the Zend Framework.
+                        The existing URI routing system is not suitable in some
+                        way, such as integrating into an existing website that
+                        uses its own conventions for routing that do not mesh
+                        with the routing mechanism provided with the Zend
+                        Framework.
 -->
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Вам нужно реализовать маршрутизацию для чего-либо совершенно
-                        иного. Класс <code>Zend_Controller_Router</code>
+                        Вам нужно реализовать маршрутизацию для чего-либо 
+                        совершенно иного. Класс
+                        <code>Zend_Controller_Router</code>
                         работает только с URI. Возможно, вы захотите
                         использовать паттерн MVC для разработки других типов
-                        программ — таких, как консольное приложение. В случае
-                        консольного приложения специализированный маршрутизатор
-                        может обрабатывать аргументы в командной строке для
-                        определения маршрута.
+                        программ — таких, как консольное или CGI приложение. В
+                        случае консольного приложения специализированный
+                        объект запроса может обрабатывать аргументы в командной
+                        строке.
 <!--
-                        You need to implement routing for something completely different.  The <code>Zend_Controller_Router</code>
-                        class only deals with URIs.  It's possible and likely that you might want to use the MVC
-                        pattern for developing another type of program, such as a console application.  In the case of
-                        a console application, a custom router could process command line arguments to determine
-                        the route.
+                        You need to implement routing for something completely
+                        different.  The <code>Zend_Controller_Router</code>
+                        class only deals with URIs.  It's possible and likely
+                        that you might want to use the MVC pattern for
+                        developing another type of program, such as a console or
+                        GUI application.  In the case of a console application,
+                        a custom request object could process command line
+                        arguments.
 -->
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        Механизм, предоставляемый <code>Zend_Controller_Dispatcher</code>
+                        Механизм, предоставляемый
+                        <code>Zend_Controller_Dispatcher</code>
                         является неподходящим. Конфигурация по умолчанию
-                        предполагает, что контроллеры являются классами, а действия —
-                        методами этих классов. Однако есть много других стратегий
-                        для реализации этого. Примером такой стратегии может быть
-                        та, где контроллеры являются каталогами, а действия —
-                        файлами внутри этих каталогов.
+                        предполагает, что контроллеры являются классами, а
+                        действия — методами в этих классах. Однако есть много
+                        других стратегий для реализации этого. Примером такой
+                        стратегии может быть та, где контроллеры являются
+                        каталогами, а действия — файлами внутри этих каталогов.
 <!--
-                        The mechanism provided by <code>Zend_Controller_Dispatcher</code> is not suitable.  The default configuration
-                        assumes a convention that controllers are classes and actions are methods of those classes.
-                        However, there are many other strategies for doing this.  One example would be where controllers
-                        are directories and actions are files within those directories.
+                        The mechanism provided by
+                        <code>Zend_Controller_Dispatcher</code> is not suitable.
+                        The default configuration assumes a convention that
+                        controllers are classes and actions are methods of those
+                        classes.  However, there are many other strategies for
+                        doing this.  One example would be where controllers are
+                        directories and actions are files within those
+                        directories.
 -->
                     </para>
                 </listitem>
@@ -79,32 +100,58 @@
                         будут унаследованы всеми вашими контроллерами. Например,
                         <code>Zend_Controller_Action</code> по умолчанию не
                         интегрирован с <code>Zend_View</code>. Однако вы можете
-                        расширить свой собственный контроллер для реализации этого,
-                        и его использование не потребует изменения находящегося
-                        в поставке <code>Zend_Controller_Router</code> или
-                        <code>Zend_Controller_Dispatcher</code>
+                        расширить свой собственный контроллер для реализации 
+                        этого, и его использование не потребует изменения
+                        находящегося в поставке <code>Zend_Controller_Router
+                        </code> или <code>Zend_Controller_Dispatcher</code>
 <!--
-                        You wish to provide additional capabilities that will be inherited by all of your controllers.
-                        For example, <code>Zend_Controller_Action</code> does not integrate with <code>Zend_View</code> by default.
-                        However, you could extend your own controller to do this, and using it would not require modifying the
-                        supplied <code>Zend_Controller_Router</code> or <code>Zend_Controller_Dispatcher</code>.
+                        You wish to provide additional capabilities that will be
+                        inherited by all of your controllers.  For example,
+                        <code>Zend_Controller_Action</code> does not integrate
+                        with <code>Zend_View</code> by default.  However, you
+                        could extend your own controller to do this, and using
+                        it would not require modifying the supplied
+                        <code>Zend_Controller_Router</code> or
+                        <code>Zend_Controller_Dispatcher</code>.
+-->
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Вы хотите журналировать исключения в приложении, которые
+                        пойманы и перенаправлены к общей странице ошибок.
+                        Расширяя <code>Zend_Controller_Response_Http</code>,
+                        вы можете переопределить метод <code>__toString()</code>
+                        для проверки зарегистрированных исключений, добавления
+                        их в журнал и затем перенаправления на страницу ошибки.
+<!--
+                        You wish to log application exceptions when caught and
+                        redirect to a generic error page. Extending
+                        <code>Zend_Controller_Response_Http</code>, you could
+                        modify <code>__toString()</code> to check for registered
+                        exceptions, log them, and then redirect to an error
+                        page.
 -->
                     </para>
                 </listitem>
             </itemizedlist>
 
-            Пожалуйста, будьте осторожны при переписывании важных частей системы,
-            особенно диспетчера. Одним из преимуществ <code>Zend_Controller</code>
-            является то, что он устанавливает общие соглашения для
-            разрабатываемых приложений. Если изменено слишком многое из поведения
-            по умолчанию, нетоторые из этих преимуществ будут потеряны. Тем не
-            менее, есть много разных потребностей, и одно решение не может
-            соответствовать им всем, поэтому некоторая свобода допустима, если нужно.
+            Пожалуйста, будьте осторожны при переписывании важных частей
+            системы, особенно диспетчера. Одним из преимуществ
+            <code>Zend_Controller</code> является то, что он устанавливает
+            общие соглашения для разрабатываемых приложений. Если изменено
+            слишком многое из поведения по умолчанию, нетоторые из этих
+            преимуществ будут потеряны. Тем не менее, есть много разных
+            потребностей, и одно решение не может соответствовать им всем,
+            поэтому некоторая свобода допустима, если нужно.
 <!--
-            Please be careful when overriding significant parts of the system, particularly the dispatcher.  One of
-            the advantages of <code>Zend_Controller</code> is that it establishes common conventions for building applications.  If
-            too much of this default behavior is changed, some of these advantages are lost.  However, there are many
-            different needs and one solution can't fit them all, so the freedom is provided if needed.
+            Please be careful when overriding significant parts of the system,
+            particularly the dispatcher.  One of the advantages of
+            <code>Zend_Controller</code> is that it establishes common
+            conventions for building applications.  If too much of this default
+            behavior is changed, some of these advantages are lost.  However,
+            there are many different needs and one solution can't fit them all,
+            so the freedom is provided if needed.
 -->
         </para>
     </sect2>
@@ -120,9 +167,11 @@
             с Zend Framework.
 <!--
 
-            When subclassing any of the Zend_Controller classes, you are strongly encouraged to follow these
-            conventions for naming or storing files.  Doing so will ensure that another programmer who is familiar
-            with the Zend Framework will be able to understand your project easily.
+            When subclassing any of the Zend_Controller classes, you are
+            strongly encouraged to follow these conventions for naming or
+            storing files.  Doing so will ensure that another programmer who is
+            familiar with the Zend Framework will be able to understand your
+            project easily.
 -->
         </para>
 
@@ -130,14 +179,17 @@
             <title>Префикс</title>
 
             <para>
-                Классы, входящие в Zend Framework, следуют соглашению, по которому
-                имя каждого класса начинается с "Zend_". Это префикс. Мы рекомендуем
-                называть все свои классы аналогичным образом, т.е. если
-                ваша компания называется Widget Inc., "Widget_" должен быть префиксом.
+                Классы, входящие в Zend Framework, следуют соглашению, по 
+                которому имя каждого класса начинается с "Zend_". Это префикс.
+                Мы рекомендуем называть все свои классы аналогичным образом,
+                т.е. если ваша компания называется Widget Inc., префиксом должен
+                быть"Widget_".
 <!--
-                Classes included with the Zend Framework follow a convention where every class is prefixed by
-                "Zend_".  This is the prefix.  We recommend that you name all of your classes in the same way,
-                e.g. if your company name is Widget, Inc., the prefix might be "Widget_".
+                Classes included with the Zend Framework follow a convention
+                where every class is prefixed by "Zend_".  This is the prefix.
+                We recommend that you name all of your classes in the same way,
+                e.g. if your company name is Widget, Inc., the prefix might be
+                "Widget_".
 -->
             </para>
         </sect3>
@@ -146,10 +198,11 @@
             <title>Структура категорий</title>
 
             <para>
-                Классы <code>Zend_Controller</code> хранятся в каталоге библиотек,
-                как приведено ниже:
+                Классы <code>Zend_Controller</code> хранятся в каталоге
+                библиотек, как показано ниже:
 <!--
-                The <code>Zend_Controller</code> classes are stored in the library directory as follows:
+                The <code>Zend_Controller</code> classes are stored in the
+                library directory as follows:
 -->
             </para>
             
@@ -160,15 +213,19 @@
       Action.php
       Dispatcher.php
       Router.php
-]]>        </programlisting>
+]]></programlisting>
 
             <para>
-                Когда создаете наследников от классов <code>Zend_Controller</code>,
-                то рекомендуется сохранять их в такой же структуре под вашим префиксом.
+                Когда создаете наследников от классов
+                <code>Zend_Controller</code>, то рекомендуется сохранять их в
+                такой же структуре под вашим префиксом. Это облегчит их поиск
+                для тех, кто просматривает код вашего приложения.
 <!--
-                When subclassing <code>Zend_Controller</code> classes, it is recommended that the new classes
-                be stored in an identical structure under your prefix.  This will make them easy to find for
-                someone during that learning process of reviewing the code for your project.
+                When subclassing <code>Zend_Controller</code> classes, it is
+                recommended that the new classes be stored in an identical
+                structure under your prefix.  This will make them easy to find
+                for someone during that learning process of reviewing the code
+                for your project.
 -->
             </para>
 
@@ -176,7 +233,8 @@
                 Например, проект компании Widget Inc., который реализует только
                 свой маршрутизатор, может выглядеть следующим образом:
 <!--
-                For example, a project from Widget, Inc. which implements only a custom router might look like this:
+                For example, a project from Widget, Inc. which implements only a
+                custom router might look like this:
 -->
             </para>
             
@@ -198,31 +256,138 @@
                 либо замещать его, реализуя интерфейс
                 <code>Zend_Controller_Router_Interface</code>.
 <!--
-                Notice in this example that the <code>Widget/Controller/</code> directory mirrors the <code>Zend/Controller/</code>
-                directory wherever possible.  In this case, it provides the class <code>Widget_Controller_Router</code>,
-                which would be either a subclass or replacement for <code>Zend_Controller_Router</code> implementing
-                <code>Zend_Controller_Router_Interface</code>.
+                Notice in this example that the <code>Widget/Controller/</code>
+                directory mirrors the <code>Zend/Controller/</code> directory
+                wherever possible.  In this case, it provides the class
+                <code>Widget_Controller_Router</code>, which would be either a
+                subclass or replacement for <code>Zend_Controller_Router</code>
+                implementing <code>Zend_Controller_Router_Interface</code>.
 -->
             </para>
 
             <para>
                 Еще обратите внимание на то, что в вышеприведенном примере в
                 каталоге <code>Widget/Controller/</code> размещен файл
-                <code>README.txt</code>. Zend сильно приветствует документирование
-                проектов посредством отдельных тестов и документации для клиентов.
-                Несмотря на это, рекомендуется еще размещать простой файл
-                <code>README.txt</code>, в котором кратко описываются изменения
-                и как они работают.
+                <code>README.txt</code>. Zend сильно приветствует
+                документирование проектов посредством отдельных тестов и
+                документации для клиентов. Несмотря на это, рекомендуется еще
+                размещать простой файл <code>README.txt</code>, в котором кратко
+                описываются изменения и то, как они работают.
 <!--
-                Also, notice in the example above that a <code>README.txt</code> file has been placed in <code>Widget/Controller/</code>.
-                Zend strongly encourages you to document your projects through supplying separate tests and
-                documentation for customers.  However, we encourage you to also place a simple <code>README.txt</code> file
-                right in the directory to briefly explain your changes and how they work.
+                Also, notice in the example above that a <code>README.txt</code>
+                file has been placed in <code>Widget/Controller/</code>.  Zend
+                strongly encourages you to document your projects through
+                supplying separate tests and documentation for customers.
+                However, we encourage you to also place a simple
+                <code>README.txt</code> file right in the directory to briefly
+                explain your changes and how they work.
 -->
             </para>
         </sect3>
     </sect2>
 
+    <sect2 id="zend.controller.request.abstract">
+        <title>Request Abstract</title>
+
+        <para>
+<!--
+            The abstract <code>Zend_Controller_Request_Abstract</code> defines a
+            handful of methods:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+    /**
+     * @return string
+     */
+    public function getControllerName();
+
+    /**
+     * @param string $value 
+     * @return self
+     */
+    public function setControllerName($value);
+
+    /**
+     * @return string
+     */
+    public function getActionName();
+
+    /**
+     * @param string $value 
+     * @return self
+     */
+    public function setActionName($value);
+
+    /**
+     * @return string
+     */
+    public function getControllerKey();
+
+    /**
+     * @param string $key 
+     * @return self
+     */
+    public function setControllerKey($key);
+
+    /**
+     * @return string
+     */
+    public function getActionKey();
+
+    /**
+     * @param string $key 
+     * @return self
+     */
+    public function setActionKey($key);
+
+    /**
+     * @param string $key 
+     * @return mixed
+     */
+    public function getParam($key);
+
+    /**
+     * @param string $key 
+     * @param mixed $value 
+     * @return self
+     */
+    public function setParam($key, $value);
+
+    /**
+     * @return array
+     */
+     public function getParams();
+
+    /**
+     * @param array $array 
+     * @return self
+     */
+    public function setParams(array $array);
+
+    /**
+     * @param boolean $flag 
+     * @return self
+     */
+    public function setDispatched($flag = true);
+
+    /**
+     * @return boolean
+     */
+    public function isDispatched();
+}
+]]></programlisting>
+
+        <para>
+            The request object is a container for the request environment. The
+            controller chain really only needs to know how to set and retrieve the
+            controller, action, optional parameters, and dispatched status. By
+            default, the request will search its own parameters using the
+            controller or action keys in order to determine the controller and
+            action.
+        </para>
+    </sect2>
+    
     <sect2 id="zend.controller.router.interface">
         <title>Интерфейс маршрутизатора</title>
 
