@@ -174,7 +174,7 @@
     </appendix>
     <appendix id="appendix.numbersystems">
         <title>Appendix Zend_Locale Number Systems</title>
-        &module_specs.Zend_Locale-NumberScripts;
+        &module_specs.Zend_Locale-AppendixNumberScripts;
     </appendix>
     <!-- &ref.faq; -->
     <appendix id="appendix.codingstandard">
