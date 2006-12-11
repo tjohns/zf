@@ -1,5 +1,7 @@
 <?php
 
+if (! isset($_GET['redirect'])) $_GET['redirect'] = null;
+
 switch ($_GET['redirect']) {
 	case 'abpath':
 		header("Location: /path/to/fake/file.ext?redirect=abpath");
