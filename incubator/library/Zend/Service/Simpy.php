@@ -36,6 +36,11 @@ require_once 'Zend/Service/Rest.php';
 require_once 'Zend/Service/Exception.php';
 
 /**
+ * Zend_Service_Simpy_LinkQuery
+ */
+require_once 'Zend/Service/Simpy/LinkQuery.php';
+
+/**
  * Zend_Service_Simpy_LinkSet
  */
 require_once 'Zend/Service/Simpy/LinkSet.php';
@@ -242,34 +247,19 @@ class Zend_Service_Simpy
 	}
 
 	/**
-	 * Returns either most recent links, links added on or between given
-	 * dates, links matching a given query, or links with a given tag.
+	 * Performs a query on existing links and returns the results
 	 *
-	 * @param string $q Query string formatted using Simpy search syntax
-	 *                  and search fields (optional)
-	 * @param string $limit Limits the number of links returned (optional)
-	 * @param string $date Limits the links returned to links added on the
-	 *                     given date (optional)
-	 * @param string $afterDate Limits the links returned to links added
-	 *                          after (and excluding) the given date
-	 *                          (optional)
-	 * @param string $beforeDate Limits the links returned to links added
-	 *                           before (and excluding) the given date
-	 *                           (optional)
-	 * @see http://www.simpy.com/simpy/service/api/rest/GetLinks.jsp
-	 * @see http://www.simpy.com/simpy/FAQ.do#searchSyntax
-	 * @see http://www.simpy.com/simpy/FAQ.do#searchFieldsLinks
+	 * @param Zend_Service_Simpy_LinkQuery $q Query object to use
 	 * @return Zend_Service_Simpy_LinkSet
 	 */
-	public function getLinks($q = null, $limit = null, $date = null,
-		$afterDate = null, $beforeDate = null)
+	public function getLinks(Zend_Service_Simpy_LinkQuery $q)
 	{
 		$query = array(
-			'q'          => $q,
-			'limit'      => $limit,
-			'date'       => $date,
-			'afterDate'  => $afterDate,
-			'beforeDate' => $beforeDate
+			'q'          => $q->getQueryString(),
+			'limit'      => $q->getLimit(),
+			'date'       => $q->getDate(),
+			'afterDate'  => $q->getAfterDate(),
+			'beforeDate' => $q->getBeforeDate()
 		);
 
 		$doc = $this->_makeRequest('GetLinks', $query);

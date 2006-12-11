@@ -40,6 +40,12 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
 	protected function setUp()
 	{
 	    $this->_simpy = new Zend_Service_Simpy('syapizend', 'mgt37ge');
+        
+        /* clear any previous test data */
+        $linkSet = $this->_simpy->getLinks(new Zend_Service_Simpy_LinkQuery());
+        foreach ($linkSet as $link) {
+            $this->_simpy->deleteLink($link->getUrl());
+        }
 	}
 	
 	public function testLinks()
@@ -59,7 +65,9 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
         }
 	    
         /* getLinks */
-	    $linkSet = $this->_simpy->getLinks($title);
+        $linkQuery = new Zend_Service_Simpy_LinkQuery();
+        $linkQuery->setQueryString($title);
+	    $linkSet = $this->_simpy->getLinks($linkQuery);
 	    $link = $linkSet->getIterator()->current();
         $test = ($link->getTitle() == $title 
                 && $link->getUrl() == $href);	    
@@ -67,8 +75,8 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
         
         /* deleteLink */
         $this->_simpy->deleteLink($href);        
-        $linkSet = $this->_simpy->getLinks($title);
-        $test = ($linkSet->length == 0);
+        $linkSet = $this->_simpy->getLinks($linkQuery);
+        $test = ($linkSet->getLength() == 0);
         $this->assertTrue($test, 'Link was not deleted');
 	}
     
@@ -134,19 +142,19 @@ class Zend_Service_SimpyTest extends PHPUnit_Framework_TestCase
         /* splitTags */
         $this->_simpy->splitTag($tags, 'split1', 'split2');
         $tagSet = $this->_simpy->getTags();
-        $test = ($tagSet->length == 2);
+        $test = ($tagSet->getLength() == 2);
         $this->assertTrue($test, 'splitTag failed');
         
         /* mergeTags */
         $this->_simpy->mergeTags('split1', 'split2', $tags);
         $tagSet = $this->_simpy->getTags();
-        $test = ($tagSet->length == 1);
+        $test = ($tagSet->getLength() == 1);
         $this->assertTrue($test, 'mergeTags failed');
         
         /* removeTag */
         $this->_simpy->removeTag($tags);
         $tagSet = $this->_simpy->getTags();
-        $test = ($tagSet->length == 0);
+        $test = ($tagSet->getLength() == 0);
         $this->assertTrue($test, 'removeTag failed');
         
         /* cleanup */
