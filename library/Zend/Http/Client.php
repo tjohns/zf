@@ -22,10 +22,9 @@
  */
 
 require_once 'Zend.php';
+require_once 'Zend/Uri.php';
 require_once 'Zend/Http/Client/Adapter/Interface.php';
 require_once 'Zend/Http/Response.php';
-require_once 'Zend/Http/Cookie.php';
-require_once 'Zend/Http/CookieJar.php';
 
 /**
  * Zend_Http_Client is an implemetation of an HTTP client in PHP. The client 
@@ -485,6 +484,9 @@ class Zend_Http_Client
      */
     public function setCookieJar($cookiejar = true)
     {
+    	if (! class_exists('Zend_Http_CookieJar')) 
+    		require_once 'Zend/Http/CookieJar.php';
+    	
         if ($cookiejar instanceof Zend_Http_CookieJar) {
             $this->cookiejar = $cookiejar;
         } elseif ($cookiejar === true) {
@@ -518,6 +520,9 @@ class Zend_Http_Client
      */
     public function setCookie($cookie, $value = null)
     {
+    	if (! class_exists('Zend_Http_Cookie')) 
+    		require_once 'Zend/Http/Cookie.php';
+    	
     	if (is_array($cookie)) {
     		foreach ($cookie as $c => $v) {
     			if (is_string($c)) {
