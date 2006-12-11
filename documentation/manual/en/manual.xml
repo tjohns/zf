@@ -158,6 +158,10 @@
         &module_specs.Zend_Service_Flickr;
         &module_specs.Zend_Service_Yahoo;
     </chapter>
+    <chapter id="zend.uri">
+        <title>Zend_Uri</title>
+        &module_specs.Zend_Uri;
+    </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
         &module_specs.Zend_View-Introduction;
