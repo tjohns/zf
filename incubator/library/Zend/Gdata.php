@@ -168,6 +168,14 @@ class Zend_Gdata
     }
 
     /**
+     * @param string $ale
+     */
+    public function setAlt($value)
+    {
+        $this->alt = $value;
+    }
+
+    /**
      * @param int $value
      */
     public function setMaxResults($value)
@@ -189,6 +197,14 @@ class Zend_Gdata
     public function setPublishedMin($value)
     {
         $this->publishedMin = $value;
+    }
+
+    /**
+     * @param string $value
+     */
+    public function setQuery($value)
+    {
+        $this->query = $value;
     }
 
     /**
@@ -216,11 +232,27 @@ class Zend_Gdata
     }
 
     /**
+     * @return string rss or atom
+     */
+    public function getAlt()
+    {
+        return $this->alt;
+    }
+
+    /**
      * @return int maxResults
      */
     public function getMaxResults()
     {
         return $this->maxResults;
+    }
+
+    /**
+     * @return string query
+     */
+    public function getQuery()
+    {
+        return $this->query;
     }
 
     /**
@@ -307,7 +339,7 @@ class Zend_Gdata
      *
      * @param int $timestamp
      */
-    protected function formatTimestamp($timestamp)
+    public function formatTimestamp($timestamp)
     {
         if (ctype_digit($timestamp)) {
             return date('Y-m-d\TH:i:s', $timestamp);
