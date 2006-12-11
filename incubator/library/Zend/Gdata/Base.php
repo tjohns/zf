@@ -31,28 +31,9 @@ require_once 'Zend/Gdata.php';
 class Zend_Gdata_Base extends Zend_Gdata
 {
     const BASE_FEED_URI ='http://www.google.com/base/feeds/snippets';
-    const BASE_POST_URI ='http://www.google.com/base/feeds/snippets';
-
-    // Base operations:
-    // @todo: attribute queries
-    // @todo: attribute types
-    // @todo: location queries
-    // @todo: date queries
-    // @todo: url queries
-    // @todo: list of item types 
-    // @todo: item types metadata
-    // @todo: attribute statistics
-
-    // Base-specific response content:
-    // @todo: <gm:item_type>
-    // @todo: <gm:attributes>
-    // @todo: <gm:attribute>
-    // @todo: <gm:value>
-    // @todo: querying "content=attributes,meta" statistics
-    // @todo: <gm:impressions>
-    // @todo: <gm:clicks>
-    // @todo: <gm:page_views>
-    // @todo: <gm:impressions>
+    const BASE_METADATA_TYPES_URI ='http://www.google.com/base/feeds/itemtypes';
+    const BASE_METADATA_ATTRIBUTES_URI ='http://www.google.com/base/feeds/attributes';
+    const BASE_POST_URI ='http://www.google.com/base/feeds/items';
 
     protected static $defaultTokenName = 'base_token';
 
@@ -81,15 +62,45 @@ class Zend_Gdata_Base extends Zend_Gdata
     public function getFeed()
     {
         $uri = self::BASE_FEED_URI;
+        /*
         if (isset($this->params['_entry'])) {
             $uri .= '/' . $this->params['_entry'];
-        } else if (isset($this->params['_category'])) {
+        } else
+        */
+        if (isset($this->params['_category'])) {
             $uri .= '/-/' . $this->params['_category'];
         }
         $uri .= $this->getQueryString();
         return parent::getFeed($uri);
     }
 
+    /**
+     * @param string locale
+     * @return array item types
+     */
+    public function getItemTypeFeed($locale, $itemType = null)
+    {
+        $uri = self::BASE_METADATA_TYPES_URI;
+        $uri .= '/' . $locale;
+        if (isset($itemType)) {
+            $uri .= '/' . $itemType;
+        }
+        return parent::getFeed($uri);
+    }
+
+    /**
+     * @param string $value
+     */
+    public function getItemTypeAttributesFeed($itemType)
+    {
+        $uri = self::BASE_METADATA_ATTRIBUTES_URI;
+        $this->query = $itemType;
+        return parent::getFeed($uri);
+    }
+
+    /**
+     * @return string querystring
+     */
     protected function getQueryString()
     {
         $queryArray = array();
@@ -97,9 +108,14 @@ class Zend_Gdata_Base extends Zend_Gdata
             $bq = $this->query;
             $queryArray[] = $bq;
         }
-        foreach (array_keys($this->attributeQueryTerms) as $attributeName) {
-            foreach ($this->attributeQueryTerms[$attributeName] as $attributeValue) {
-                $queryArray[] = "[$attributeName: $attributeValue]";
+        foreach (array_keys($this->attributeQueryTerms) as $name) {
+            foreach ($this->attributeQueryTerms[$name] as $attr) {
+                $op = ':';
+                if (isset($attr['op'])) {
+                    $op = $attr['op'];
+                }
+                $value = $attr['value'];
+                $queryArray[] = "[$name $op $value]";
             }
         }
         $this->query = implode(' ', $queryArray);
@@ -121,12 +137,25 @@ class Zend_Gdata_Base extends Zend_Gdata
         return parent::post($xml, Zend_Gdata_Base::BASE_POST_URI);
     }
 
-    public function addAttributeQuery($attributeName, $attributeValue)
+    /**
+     * @param string $attributeName
+     * @param string $attributeValue
+     * @param string $op
+     */
+    public function addAttributeQuery($attributeName, $attributeValue, $op = ':')
     {
-        // @todo: validate attribute name?
-        $this->attributeQueryTerms[$attributeName][] = $attributeValue;
+        if (!in_array($op, array(':', '==', '<', '>', '<=', '>=', '<<'))) {
+            throw Zend::exception('Zend_Gdata_Exception', "Unsupported attribute query comparison operator '$op'.\n");
+        }
+        $this->attributeQueryTerms[$attributeName][] = array(
+            'op' => $op,
+            'value' => $attributeValue
+        );
     }
 
+    /**
+     * @param string $attributeName
+     */
     public function unsetAttributeQuery($attributeName = null)
     {
         if ($attributeName == null) {
@@ -136,6 +165,26 @@ class Zend_Gdata_Base extends Zend_Gdata
         }
     }
 
+    /**
+     * @param string $value
+     */
+    public function setCategory($value)
+    {
+        $this->category = $value;
+    }
+
+    /**
+     * @return string category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param string $var
+     * @param mixed $value
+     */
     protected function __set($var, $value)
     {
         switch ($var) {
@@ -146,16 +195,6 @@ class Zend_Gdata_Base extends Zend_Gdata
                 $var = '_category';
                 // @todo: validate category value
                 break;
-            case 'entry':
-                $var = '_entry';
-                // @todo: validate entry value
-                break;
-            case 'updatedMin':
-            case 'updatedMax':
-            case 'publishedMin':
-            case 'publishedMax':
-                // @todo: throw exception for unsupported params?
-                break;
             default:
                 // other params are handled by the parent
                 break;
@@ -164,6 +203,10 @@ class Zend_Gdata_Base extends Zend_Gdata
         parent::__set($var, $value);
     }
 
+    /**
+     * @param string $var
+     * @return mixed value
+     */
     protected function __get($var)
     {
         switch ($var) {
@@ -173,9 +216,6 @@ class Zend_Gdata_Base extends Zend_Gdata
             case 'category':
                 $var = '_category';
                 break;
-            case 'entry':
-                $var = '_entry';
-                break;
             default:
                 // other params are handled by the parent
                 break;
@@ -183,6 +223,10 @@ class Zend_Gdata_Base extends Zend_Gdata
         return parent::__get($var);
     }
 
+    /**
+     * @param string $var
+     * @return bool
+     */
     protected function __isset($var)
     {
         switch ($var) {
@@ -192,9 +236,6 @@ class Zend_Gdata_Base extends Zend_Gdata
             case 'category':
                 $var = '_category';
                 break;
-            case 'entry':
-                $var = '_entry';
-                break;
             default:
                 // other params are handled by the parent
                 break;
@@ -202,6 +243,9 @@ class Zend_Gdata_Base extends Zend_Gdata
         return parent::__isset($var);
     }
 
+    /**
+     * @param string $var
+     */
     protected function __unset($var)
     {
         switch ($var) {
@@ -210,9 +254,6 @@ class Zend_Gdata_Base extends Zend_Gdata
                 break;
             case 'category':
                 $var = '_category';
-                break;
-            case 'entry':
-                $var = '_entry';
                 break;
             default:
                 // other params are handled by the parent

@@ -135,6 +135,9 @@ class Zend_Gdata_Data
         'link#gdata' => array(
             self::LINK_ONLINE_LOCATION
         ),
+        'orderby' => array(
+            self::ORDERBY_STARTTIME
+        ),
         'phoneNumber' => array(
             self::PHONE_CAR,
             self::PHONE_FAX,

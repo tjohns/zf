@@ -56,25 +56,40 @@ class Zend_Gdata_Calendar extends Zend_Gdata
         } else {
             $uri .= '/default';
         }
-        if (isset($this->params['_visibility']) || isset($this->params['_projection']) || isset($this->params['_event'])) {
-            if (isset($this->params['_visibility'])) {
-                $uri .= '/' . $this->params['_visibility'];
-            } else {
-                $uri .= '/private';
-            }
-            if (isset($this->params['_projection'])) {
-                $uri .= '/' . $this->params['_projection'];
-            } else {
-                $uri .= '/full';
-            }
-            if (isset($this->params['_event'])) {
-                $uri .= '/' . $this->params['_event'];
-                if (isset($this->params['_comments'])) {
-                    $uri .= '/comments/' . $this->params['_comments'];
-                }
+        if (isset($this->params['_visibility'])) {
+            $uri .= '/' . $this->params['_visibility'];
+        } else {
+            $uri .= '/public';
+        }
+        if (isset($this->params['_projection'])) {
+            $uri .= '/' . $this->params['_projection'];
+        } else {
+            $uri .= '/full';
+        }
+        if (isset($this->params['_event'])) {
+            $uri .= '/' . $this->params['_event'];
+            if (isset($this->params['_comments'])) {
+                $uri .= '/comments/' . $this->params['_comments'];
             }
         }
+
         $uri .= $this->getQueryString();
+        return parent::getFeed($uri);
+    }
+
+    /**
+     * Retreive feed object
+     *
+     * @return Zend_Feed
+     */
+    public function getCalendarListFeed()
+    {
+        $uri = self::CALENDAR_FEED_URI;
+        if (isset($this->params['_user'])) {
+            $uri .= '/' . $this->params['_user'];
+        } else {
+            $uri .= '/default';
+        }
         return parent::getFeed($uri);
     }
 
@@ -172,9 +187,6 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     protected function __set($var, $value)
     {
         switch ($var) {
-            case 'q':
-                // @todo: throw exception for invalid param?
-                break;
             case 'startMin':
                 $var = 'start-min';
                 $value = $this->formatTimestamp($value);
