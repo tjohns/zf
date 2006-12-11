@@ -704,6 +704,12 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->set($d2),'1010101010');
         $this->assertSame($date->set(1234567891),'1234567891');
 
+        try {
+            $date->set('noday', Zend_Date::DAY);
+            $this->fail('exception expected');
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
         $date->set($d2, Zend_Date::DAY);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-04T00:31:31+01:00');
         $date->set( 10, Zend_Date::DAY);
@@ -726,18 +732,18 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-01-03T00:31:31+01:00');
 
         $date->set(1234567890);
-        $date->set($d2, Zend_Date::WEEKDAY_SHORT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
-        $date->set('Son', Zend_Date::WEEKDAY_SHORT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-08T00:31:30+01:00');
-        $date->set('Mon', Zend_Date::WEEKDAY_SHORT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
         try {
             $date->set('noday', Zend_Date::WEEKDAY_SHORT);
             $this->fail('exception expected');
         } catch (Zend_Date_Exception $e) {
             // success
         }
+        $date->set($d2, Zend_Date::WEEKDAY_SHORT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
+        $date->set('Son', Zend_Date::WEEKDAY_SHORT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-08T00:31:30+01:00');
+        $date->set('Mon', Zend_Date::WEEKDAY_SHORT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
         $date->set('Fre', Zend_Date::WEEKDAY_SHORT, TRUE);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
         $date->set($d2, Zend_Date::WEEKDAY_SHORT, TRUE);
@@ -752,6 +758,12 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
 
         $date->set(1234567890);
+        try {
+            $date->set('xxx', Zend_Date::DAY_SHORT);
+            $this->fail('exception expected');
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
         $date->set($d2, Zend_Date::DAY_SHORT);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-04T00:31:30+01:00');
         $date->set( 10, Zend_Date::DAY_SHORT);
@@ -774,18 +786,18 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-01-03T00:31:30+01:00');
 
         $date->set(1234567890);
-        $date->set($d2, Zend_Date::WEEKDAY);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
-        $date->set('Sonntag', Zend_Date::WEEKDAY);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-08T00:31:30+01:00');
-        $date->set('Montag', Zend_Date::WEEKDAY);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
         try {
             $date->set('noday', Zend_Date::WEEKDAY);
             $this->fail('exception expected');
         } catch (Zend_Date_Exception $e) {
             // success
         }
+        $date->set($d2, Zend_Date::WEEKDAY);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
+        $date->set('Sonntag', Zend_Date::WEEKDAY);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-08T00:31:30+01:00');
+        $date->set('Montag', Zend_Date::WEEKDAY);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
         $date->set('Freitag', Zend_Date::WEEKDAY, TRUE);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
         $date->set($d2, Zend_Date::WEEKDAY, TRUE);
@@ -800,18 +812,24 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
 
         $date->set(1234567890);
-        $date->set($d2, Zend_Date::WEEKDAY_8601);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
-        $date->set(1, Zend_Date::WEEKDAY_8601);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
-        $date->set(5, Zend_Date::WEEKDAY_8601);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
         try {
             $date->set(0, Zend_Date::WEEKDAY_8601);
             $this->fail('exception expected');
         } catch (Zend_Date_Exception $e) {
             // success
         }
+        try {
+            $date->set('noday', Zend_Date::WEEKDAY_8601);
+            $this->fail('exception expected');
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+        $date->set($d2, Zend_Date::WEEKDAY_8601);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
+        $date->set(1, Zend_Date::WEEKDAY_8601);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
+        $date->set(5, Zend_Date::WEEKDAY_8601);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
         $date->set(2, Zend_Date::WEEKDAY_8601, TRUE);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-11T00:31:30+01:00');
         $date->set($d2, Zend_Date::WEEKDAY_8601, TRUE);
@@ -834,18 +852,24 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         }
 
         $date->set(1234567890);
-        $date->set($d2, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
-        $date->set(1, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-10T00:31:30+01:00');
-        $date->set(5, Zend_Date::WEEKDAY_DIGIT);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
         try {
             $date->set(0, Zend_Date::WEEKDAY_DIGIT);
             $this->fail();
         } catch (Zend_Date_Exception $e) {
             // success
         }
+        try {
+            $date->set('noday', Zend_Date::WEEKDAY_DIGIT);
+            $this->fail();
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+        $date->set($d2, Zend_Date::WEEKDAY_DIGIT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
+        $date->set(1, Zend_Date::WEEKDAY_DIGIT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-10T00:31:30+01:00');
+        $date->set(5, Zend_Date::WEEKDAY_DIGIT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
         $date->set(2, Zend_Date::WEEKDAY_DIGIT, TRUE);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-12T00:31:30+01:00');
         $date->set($d2, Zend_Date::WEEKDAY_DIGIT, TRUE);
@@ -859,6 +883,13 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->set($d2, Zend_Date::WEEKDAY_DIGIT, TRUE , 'en_US');
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
 
+        $date->set(1234567890);
+        try {
+            $date->set('noday', Zend_Date::DAY_OF_YEAR);
+            $this->fail();
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
         $date->set($d2, Zend_Date::DAY_OF_YEAR);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-01-03T00:31:30+01:00');
         $date->set( 124, Zend_Date::DAY_OF_YEAR);
@@ -881,18 +912,18 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-01-02T00:31:30+01:00');
 
         $date->set(1234567890);
-        $date->set($d2, Zend_Date::WEEKDAY_NARROW);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
-        $date->set('S', Zend_Date::WEEKDAY_NARROW);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-08T00:31:30+01:00');
-        $date->set('M', Zend_Date::WEEKDAY_NARROW);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
         try {
             $date->set('noday', Zend_Date::WEEKDAY_NARROW);
             $this->fail('exception expected');
         } catch (Zend_Date_Exception $e) {
             // success
         }
+        $date->set($d2, Zend_Date::WEEKDAY_NARROW);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
+        $date->set('S', Zend_Date::WEEKDAY_NARROW);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-08T00:31:30+01:00');
+        $date->set('M', Zend_Date::WEEKDAY_NARROW);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
         $date->set('F', Zend_Date::WEEKDAY_NARROW, TRUE);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
         $date->set($d2, Zend_Date::WEEKDAY_NARROW, TRUE);
@@ -907,18 +938,18 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-11T00:31:30+01:00');
 
         $date->set(1234567890);
-        $date->set($d2, Zend_Date::WEEKDAY_NAME);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
-        $date->set('So', Zend_Date::WEEKDAY_NAME);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-08T00:31:30+01:00');
-        $date->set('Mo', Zend_Date::WEEKDAY_NAME);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
         try {
             $date->set('noday', Zend_Date::WEEKDAY_NAME);
             $this->fail();
         } catch (Zend_Date_Exception $e) {
             // success
         }
+        $date->set($d2, Zend_Date::WEEKDAY_NAME);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
+        $date->set('So', Zend_Date::WEEKDAY_NAME);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-08T00:31:30+01:00');
+        $date->set('Mo', Zend_Date::WEEKDAY_NAME);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-09T00:31:30+01:00');
         $date->set('Fr', Zend_Date::WEEKDAY_NAME, TRUE);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
@@ -932,9 +963,36 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
         $date->set($d2, Zend_Date::WEEKDAY_NAME, TRUE , 'en_US');
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-13T00:31:30+01:00');
+
+        $date->set(1234567890);
+        try {
+            $date->set('noday', Zend_Date::WEEK);
+            $this->fail();
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+        $date->set($d2, Zend_Date::WEEK);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-03T00:31:30+01:00');
+        $date->set( 1, Zend_Date::WEEK);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-03T00:31:30+01:00');
+        $date->set( 55, Zend_Date::WEEK);
+        $this->assertSame($date->get(Zend_Date::W3C),'2010-01-16T00:31:30+01:00');
+        $date->set(-57, Zend_Date::WEEK);
+        $this->assertSame($date->get(Zend_Date::W3C),'2008-11-29T00:31:30+01:00');
+        $date->set( 50, Zend_Date::WEEK, TRUE);
+        $this->assertSame($date->get(Zend_Date::W3C),'2008-12-13T00:31:30+01:00');
+        $date->set($d2, Zend_Date::WEEK, TRUE);
+        $this->assertSame($date->get(Zend_Date::W3C),'2008-01-05T00:31:30+01:00');
+        $date->set( 10, Zend_Date::WEEK, FALSE, 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2008-03-08T00:31:30+01:00');
+        $date->set($d2, Zend_Date::WEEK, FALSE, 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2008-01-05T00:31:30+01:00');
+        $date->set(-25, Zend_Date::WEEK, TRUE , 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2007-07-07T01:31:30+02:00');
+        $date->set($d2, Zend_Date::WEEK, TRUE , 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2007-01-06T00:31:30+01:00');
         
 /**
-    	$this->assertSame($date->get(Zend_Date::WEEK),'07');
     	$this->assertSame($date->get(Zend_Date::MONTH),'Februar');
     	$this->assertSame($date->get(Zend_Date::MONTH_SHORT),'02');
     	$this->assertSame($date->get(Zend_Date::MONTH_NAME),'Feb');

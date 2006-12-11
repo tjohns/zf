@@ -1207,8 +1207,11 @@ class Zend_Date {
 
             // day formats
             case Zend_Date::DAY :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 1970, -1, $gmt), 
-                                             $this->_Date->mktime(0, 0, 0, 1, intval($day),  1970, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 1970, -1, $gmt), 
+                                                 $this->_Date->mktime(0, 0, 0, 1, intval($day),  1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'day expected');
                 break;
 
             case Zend_Date::WEEKDAY_SHORT :
@@ -1235,8 +1238,11 @@ class Zend_Date {
                 break;
 
             case Zend_Date::DAY_SHORT :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 1970, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, 1, intval($day), 1970, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, intval($date), 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, intval($day), 1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'day expected');
                 break;
 
             case Zend_Date::WEEKDAY :
@@ -1274,7 +1280,7 @@ class Zend_Date {
                 break;
 
             case Zend_Date::DAY_SUFFIX :
-                throw Zend::exception('Zend_Date_Exception', 'day suffix can not be calculated with');
+                throw Zend::exception('Zend_Date_Exception', 'day suffix not supported');
                 break;
 
             case Zend_Date::WEEKDAY_DIGIT :
@@ -1289,8 +1295,11 @@ class Zend_Date {
                 break;
 
             case Zend_Date::DAY_OF_YEAR :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1,      $date, 1970, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, $month, $day,  1970, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1,      $date, 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, $month, $day,  1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'day expected');
                 break;
 
             case Zend_Date::WEEKDAY_NARROW :
@@ -1307,8 +1316,8 @@ class Zend_Date {
 
                 // Weekday found
                 if ($cnt < 7) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found,   0, -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday, 0, -1, $gmt));
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found,   1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday, 1970, -1, $gmt));
                 }
 
                 // Weekday not found
@@ -1329,8 +1338,8 @@ class Zend_Date {
 
                 // Weekday found
                 if ($cnt < 7) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found,   0, -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday, 0, -1, $gmt));
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, $found,   1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, $weekday, 1970, -1, $gmt));
                 }
 
                 // Weekday not found
@@ -1340,9 +1349,12 @@ class Zend_Date {
 
             // week formats
             case Zend_Date::WEEK :
-                $week = (int) $this->get(Zend_Date::WEEK, $gmt, $locale);
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, ($week * 7), 0, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, 1, ($date * 7), 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    $week = (int) $this->get(Zend_Date::WEEK, $gmt, $locale);
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, ($date * 7), 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, ($week * 7), 1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'week expected');
                 break;
 
 
