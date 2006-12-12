@@ -24,9 +24,8 @@
  * Include needed Date classes
  */
 require_once 'Zend.php';
-
-Zend::loadClass('Zend_Date_DateObject');
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Date/DateObject.php';
+require_once 'Zend/Locale.php';
 
 
 /**

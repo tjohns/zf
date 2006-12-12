@@ -24,7 +24,7 @@
  * Implement date class
  */
 require_once 'Zend.php';
-Zend::loadClass('Zend_Date');
+require_once 'Zend/Date.php';
 
 
 /**
