@@ -313,13 +313,19 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
     public function testClearScriptPath()
     {
         $view = new Zend_View();
-        $view->setScriptPath(dirname(__FILE__) . '/View/_templates');
-        $paths = $view->getScriptPaths();
-        $test  = str_replace('/', DIRECTORY_SEPARATOR, dirname(__FILE__) . '/View/_templates/');
-        $this->assertEquals($test, $paths[0]);
+        
+        // paths should be initially empty
+        $this->assertSame(array(), $view->getScriptPaths());
+
+        // add a path
+        $view->setScriptPath('foo');
+        $scriptPaths = $view->getScriptPaths();
+        $this->assertType('array', $scriptPaths);
+        $this->assertEquals(1, count($scriptPaths));
+        
+        // clear paths
         $view->setScriptPath(null);
-        $paths = $view->getScriptPaths();
-        $this->assertTrue(empty($paths));
+        $this->assertSame(array(), $view->getScriptPaths());
     }
 
     /**
