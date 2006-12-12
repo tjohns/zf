@@ -44,10 +44,10 @@
                         parametrów żądania. Dodatkowo przechowuje informacje o
                         tym, czy akcja z tego żądania została uruchomiona przez
                         <code>Zend_Controller_Dispatcher</code> czy nie.
-                        Extensions to the abstract request object can be used to
-                        encapsulate the entire request environment, allowing
-                        routers to pull information from the request environment
-                        in order to set the controller and action names.
+                        Rozszerzenia do abstrakcyjnego obiektu żądania mogą być
+                        użyte aby obudować całe środowisko żądania, pozwalając
+                        routerom na wyciągnięcie informacji ze środowiska 
+                        żądania w celu ustawienia nazwy kontrolera i akcji.
 					</para>
 					
                     <para>
@@ -72,51 +72,52 @@
                     </para>
 
                     <para>
-                        The default router, <code>Zend_Controller_Router</code>,
-                        takes a URI endpoint as specified in
-                        <code>Zend_Controller_Request_Http</code> and decomposes
-                        it into a controller, action, and parameters based on
-                        the path information in the url. As an example, the URL
-                        <code>http://localhost/foo/bar/key/value</code> would be
-                        decoded to use the <code>foo</code> controller,
-                        <code>bar</code> action, and specify a parameter
-                        <code>key</code> with a value of <code>value</code>.
+                        Domyślny router, <code>Zend_Controller_Router</code>,
+                        pobiera adres URI, który jest określony w obiekcie
+                        <code>Zend_Controller_Request_Http</code> i wyciąga z
+                        niego informacje o kontrolerze, akcji oraz parametrach
+                        w oparciu o informacje z adresu url. Na przykład, adres 
+                        URL <code>http://localhost/foo/bar/key/value</code> 
+                        może być zdekodowany jako kontroler <code>foo</code>,
+                        akcja <code>bar</code>, i parametr <code>key</code> 
+                        o wartości <code>value</code>.
 					</para>
 				</listitem>
 				
 				<listitem>
 					<para>
-                        <code>Zend_Controller_Dispatcher_Interface</code> is
-                        used to define dispatchers.
-                        Dispatching is the process of pulling the controller and
-                        action from the request object and mapping them to a
-                        controller file/class and action method in the controller
-                        class. If the controller or action do not exist, it
-                        handles determining default controllers and actions to
-                        dispatch.
+                        <code>Zend_Controller_Dispatcher_Interface</code> jest
+                        używany do definiowania klas uruchamiających.
+                        Uruchamianie jest procesem pobierania kontrolera i akcji
+                        z obiektu żądania, określania na ich podstawie pliku
+                        kontrolera, klasy oraz metody akcji w klasie kontrolera.
+                        Jeśli kontroler lub akcja nie istnieje, obsługuje on
+                        określanie domyślnych kontrolerów i akcji do 
+                        uruchomienia.
                     </para>
 
                     <para>
-                        The actual dispatching process consists of instantiating
-                        the controller class and calling the action method in
-                        that class. Unlike rouing, which occurs only once,
-                        dispatching occurs in a loop. If the request object's
-                        dispatched status is reset at any point, the loop will
-                        be repeated, calling whatever action is currently set
-                        in the request object. The first time the loop finishes
-                        with the request object's dispatched status set (boolean
-                        true), it will finish processing.
+                        Aktualny proces uruchamiania składa się z tworzenia 
+                        instancji klasy kontrolera i wywoływania metody akcji 
+                        tej klasy. W przeciwieństwie do routingu, który występuje
+                        raz, uruchamianie występuje w pętli. Jeśli status 
+                        uruchomienia w obiekcie żądania zostanie w którymkolwiek
+                        momencie zresetowany, pętla zostanie powtórzona, wywołując
+                        akcję która jest obecnie ustawiona w obiekcie żądania.
+                        Za pierwszym razem pętla kończy się z ustawioną flagą 
+                        statusu uruchomienia obiektu żądania (jako wartość 
+                        logiczna true), co kończy uruchamianie.
                     </para>
 
                     <para>
-                        The default dispatcher is
-                        <code>Zend_Controller_Dispatcher</code>. It defines
-                        controllers as CamelCasedClasses ending in the word
-                        Controller, and action methods as camelCasedMethods
-                        ending in the word Action:
-                        <code>SomeFooController::barAction</code>. In this case,
-                        the controller would be referred to as
-                        <code>somefoo</code> and the action as <code>bar</code>.
+                        Domyślną klasą uruchamiającą jest
+                        <code>Zend_Controller_Dispatcher</code>. Definiuje ona
+                        kontroler jako CamelCasedClasses zakończone słowem
+                        Controller, oraz metody akcji jako camelCasedMethods
+                        zakończone słowem Action:
+                        <code>SomeFooController::barAction</code>. W tym przypadku,
+                        odpowiadałoby to kontrolerowi o nazwie <code>somefoo</code> 
+                        oraz akcji o nazwie <code>bar</code>.
 					</para>
 					
                     <para>
@@ -153,9 +154,9 @@ $front->setControllerDirectory(array(
                     </para>
 
                     <para>
-                        Modules are useful when you wish to segregate code into
-                        related subdirectories, use third party code, or re-use
-                        the same controller library in different applications.
+                        Moduły są użyteczne gdy chcesz oddzielić kod w powiązanych
+                        katalogach, użyć kodu z innej aplikacji, lub użyć tej
+                        samej biblioteki kontrolera w różnych aplikacjach.
                     </para>
 				</listitem>
 
@@ -170,12 +171,13 @@ $front->setControllerDirectory(array(
 
                 <listitem>
                     <para>
-                        <code>Zend_Controller_Response_Abstract</code> defines a
-                        base response class used to collect and return responses
-                        from the action controllers. It collects both headers
-                        and body content, and, because it implements
-                        <code>__toString()</code>, can be directly echoed in
-                        order to send all headers and content at once.
+                        <code>Zend_Controller_Response_Abstract</code> definiuje
+                        podstawową klasę odpowiedzi używaną do zbierania i 
+                        zwracania odpowiedzi z kontrolerów akcji. Zbiera ona 
+                        zarówno nagłówki jak i zawartość treści, oraz z tego 
+                        względu, że implementuje metodę <code>__toString()</code>,
+                        może być bezpośrednio wyświetlona w celu wysłania wszystkich
+                        nagłówków i całej zawartości na raz.
                     </para>
 
                     <para>
@@ -208,11 +210,12 @@ $front->setControllerDirectory(array(
 		<title>Obiekt żądania</title>
 
 		<para>
-            The request object is a simple value object that is passed between
-            <code>Zend_Controller_Front</code> and the router, dispatcher, and
-            controller classes.  It packages a definition of a controller, an
-            action, and parameters to be passed to the action, as well as the
-            rest of the request environment, be it HTTP, the CLI, or PHP-GTK.
+            Obiekt żądania jest prostym obiektem przekazywanym pomiędzy 
+            obiektem <code>Zend_Controller_Front</code>, routerem, dispatcherem
+            i klasami kontrolerów. Przechowuje on nazwę kontrolera, akcji 
+            oraz parametrów, które mają być przekazane do akcji, tak samo jak
+            resztę środowiska żądania, które mogą być w środowisku HTTP, CLI
+            lub PHP-GTK.
 		</para>
 
 		<itemizedlist>
@@ -227,34 +230,35 @@ $front->setControllerDirectory(array(
                 <code>setActionName()</code>.
 			</para></listitem>
 			<listitem><para>
-                Parameters to be passed to that action are an associative array
-                of key/value pairs that are accessed by <code>getParams()</code>
-                and <code>setParams()</code>, or individually by
-                <code>getParam()</code> and <code>setParam()</code>.
+			    Parametry, które mają być przekazane do tej akcji są asocjacyjną
+			    tablicą par klucz/wartość, ktore są dostępne za pomocą metod 
+                <code>getParams()</code> oraz <code>setParams()</code>, lub
+                pojedynczo za pomocą metod <code>getParam()</code> oraz 
+                <code>setParam()</code>.
 			</para></listitem>
 		</itemizedlist>
 
         <para>
-            Based on the type of request, there may be more methods available.
-            The default request used, <code>Zend_Controller_Request_Http</code>,
-            for instance, has methods for retrieving the request URI, path
-            information, $_GET and $_POST parameters, etc.
+            Zależnie od typu żądania, może być dostępnych więcej metod.
+            Domyślny obiekt żądania, <code>Zend_Controller_Request_Http</code>,
+            ma na przykład metody do pobierania zażądanego adresu URI, 
+            informacji o ścieżce, parametrów $_GET oraz $_POST itp.
         </para>
 
         <para>
-            The request object is passed to the front controller, or if none is
-            provided, instantiated at the beginning of the dispatch process,
-            before routing occurs. It is passed through to every object in the
-            dispatch chain.
+            Obiekt żądania jest przekazywany do kontrolera frontowego, lub jeśli
+            nie istnieje zostaje utworzona jego instancja na początku procesu
+            uruchomiania, zanim przeprowadzany jest routing. Jest on przekazywany
+            przez każdy obiekt w łańcuchu uruchamiania.
         </para>
 
         <para>
-            Additionally, the request object is particularly useful in testing.
-            The developer may craft the request environment, including
-            controller, action, parameters, URI, etc, and pass the request
-            object to the front controller to test application flow. When paired
-            with the response object, elaborate and precise unit testing of
-            MVC applications becomes possible.
+            Dodatkowo obiekt żądania jest użyteczny przy testowaniu. Programista
+            może utworzyć środowisko żądania, włączając w to kontroler, akcję, 
+            parametry, URI itp. i przekazać obiekt żądania do kontrolera 
+            frontowego aby testować działanie aplikacji. Gdy do tego dołożymy 
+            obiekt odpowiedzi, precyzyjne testowanie jednostkowe aplikacji MVC
+            staje się możliwe.
         </para>
 	</sect2>
 
@@ -301,11 +305,11 @@ http://framework.zend.com/controller/action/key1/value1/]]>
 		</programlisting>
 
 		<para>
-			If either the controller or action are missing from the URI path,
-            <code>Zend_Controller_Dispatcher</code> will try and grab the value
-            from the request object's parameters, and, if not found, use default
-            values. In both cases, the default values are "<code>index</code>".
-            These examples illustrate:
+			Jeśli w adresie URI brakuje informacji o kontrolerze lub akcji
+			<code>Zend_Controller_Dispatcher</code> spróbuje pobrać wartości
+			z parametrów obiektu żądania i jeśli nie zostaną w nim znalezione, 
+			użyje domyślnych wartości. Zarówno dla kontrolera jak i dla akcji
+			domyślną wartością jest "<code>index</code>". Pokazuje to ten przykład:
         </para>
 	    <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
@@ -337,12 +341,13 @@ Akcja    : index]]>
             </listitem>
             <listitem>
                 <para>
-                    By setting the <code>useModules</code> parameter in the front
-                    controller, you can map to subdirectories using clean URIs.
-                    The previous example URL would read
+                    Określając parametr <code>useModules</code> w kontrolerze
+                    frontowym, możesz wskazwać na podkatalogi używając czystych
+                    adresów URI. Poprzedni przykładowy adres URL mógłby być
+                    zamieniony na 
                     <code>http://framework.zend.com/admin/roadmap/future</code>.
-                    To do so, set the <code>useModules</code> parameter in the
-                    front controller or the router:
+                    Aby to zrobić, określ parametr <code>useModules</code> w
+                    kontrolerze frontowym lub w routerze:
                 </para>
 
                 <programlisting><![CDATA[
@@ -376,43 +381,43 @@ $router->setParam('useModules', true);
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatching">
-		<title>Dispatch Process</title>
+		<title>Proces uruchamiania</title>
 
 		<para>
-            Dispatching is the process of taking the request object,
-            <code>Zend_Controller_Request_Abstract</code>, extracting the
-            controller name, action name, and optional parameters contained in it,
-            and then instantiating a controller and calling an action of that
-            controller. If no controller or action are found, it will use
-            default values for them. <code>Zend_Controller_Dispatcher</code>
-            specifies <code>index</code> for each of these defaults, but allows
-            the developer to change them using the
-            <code>setDefaultController()</code> and
-            <code>setDefaultAction()</code> methods.
+            Uruchamianie jest procesem pobierania obiektu żądania,
+            <code>Zend_Controller_Request_Abstract</code>, wyciągania z niego
+            nazwy kontrolera, nazwy akcji oraz opcjonalnych parametrów zawartych
+            w nim, następnie tworzenia instancji kontrolera i uruchamiania akcji
+            tego kontrolera. Jeśli kontroler lub akcja nie zostaną znalezione,
+            zostaną użyte wartości domyślne. <code>Zend_Controller_Dispatcher</code>
+            ustawi wartość <code>index</code> zarówno dla kontrolera jak i akcji,
+            ale pozwala programiście zmienić domyślne wartości używając metod 
+            <code>setDefaultController()</code> oraz
+            <code>setDefaultAction()</code>.
 		</para>
 
         <para>
-            Dispatching happens in a loop in the front controller. Before
-            dispatching occurs, the front controller routes the request to find
-            user specified values for the controller, action, and optional
-            parameters. It then enters a dispatch loop, dispatching the request.
+            Uruchamianie działa w pętli w kontrolerze frontowym. Zanim zacznie 
+            się uruchamianie, kontroler frontowy sprawdza żądanie aby określić
+            nazwę kontrolera, akcji oraz opcjonalne parametry. Wtedy wchodzi w 
+            pętlę urchomieniową, uruchamiając żądanie.
         </para>
 
         <para>
-            At the beginning of each iteration, it sets a flag in the request
-            object indicating that the action has been dispatched. If an action
-            or pre/postDispatch plugin resets that flag, the dispatch loop will
-            continue and attempt to dispatch the request again. By changing the
-            controller and/or action in the request and resetting the dispatched
-            flag, the developer may define a chain of requests to perform.
+            Na początku każdej iteracji, w obiekcie żądania ustawiana jest
+            flaga określająca czy akcja została uruchomiona. Jeśli akcja lub
+            metoda pre/postDispatch plugina zresetuje tę flagę, pętla uruchamiania
+            będzie kontynuowana i spróbuje uruchomić żądanie ponownie. Zmieniając
+            nazwę kontrolera oraz/lub akcji w żądaniu i resetując flagę, programista
+            może zdefiniować łańcuch żądań do uruchomienia.
         </para>
 
         <para>
-            The action controller method that controlls such dispatching is
-            <code>_forward()</code>; call this method from any of the
-            pre/postDispatch() or action methods, providing a controller,
-            action, and optionally any additional parameters you may wish to
-            send to the new action:
+            Metodą kontrolera akcji, która kontroluje takie uruchamianie jest 
+            <code>_forward()</code>; wywołaj tę metodę w metodach
+            pre/postDispatch() lub w metodach akcji podając nazwę kontrolera,
+            akcji i opcjonalnie dodatkowe parametry które chcesz wysłać do
+            nowej akcji:
         </para>
         
         <programlisting role="php"><![CDATA[
@@ -429,11 +434,11 @@ public function myAction()
 		<title>Obiekt odpowiedzi</title>
 
 		<para>
-            Obiekt odpowiedzi jest logiczną parą dla obiektu żądania.  Its
-            purpose is to collate content and/or headers so that they may be
-            returned en masse. Additionally, the front controller will pass any
-            caught exceptions to the response object, allowing the developer to
-            gracefully handle exceptions.
+            Obiekt odpowiedzi jest logiczną parą dla obiektu żądania. Jego
+            zadaniem jest zebranie zawartości oraz/lub nagłówków aby mogły
+            być one zwrócone wszystkie na raz. Dodatkowo, kontroler frontowy
+            przekaże wszystkie złapane wyjątki do obiektu odpowiedzi, pozwalając
+            programiście wdzięcznie obsłużyć wyjątki.
         </para>
 
         <para>
@@ -446,9 +451,9 @@ echo $controller->dispatch();
 ]]></programlisting>
         
         <para>
-            Developers should make use of the response object in their action
-            controllers. Instead of directly rendering output and sending
-            headers, push them to the response object:
+            Programiści powinni użyć obiektu odpowiedzi w ich kontrolerach 
+            akcji. Zamiast bezpośrednio wyświetlać dane wyjściowe i wysyłać
+            nagłowki powinni przekazywać je do obiektu odpowiedzi:
         </para>
 
         <programlisting role="php"><![CDATA[
@@ -465,12 +470,12 @@ $this->getResponse()
         </para>
 
         <para>
-            Should an exception occur in an application, check the
-            response object's <code>isException()</code> flag, and retrieve the
-            exception using <code>getException()</code>. Additionally, one
-            may create custom response objects that redirect to error pages, log
-            exception messages, do pretty formatting of exception messages (for
-            development environments), etc.
+            To czy wyjątek wystąpił w aplikacji możesz sprawdzić za pomocą metody 
+            <code>isException()</code>, a odebrać wyjątek możesz używając
+            metody <code>getException()</code>. Dodatkowo możesz
+            stworzyć własny obiekt odpowiedzi, który może przekierowywać do
+            stron błędów, zapisywać informacje o wyjątku, ładnie formatować
+            informacje o wyjątku (dla potrzeb programistycznych) itp.
         </para>
 
         <para>
