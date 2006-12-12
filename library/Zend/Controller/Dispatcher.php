@@ -539,7 +539,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      */
     public function loadClass($class, $dir)
     {
-        if (class_exists($class)) {
+        if (class_exists($class, false)) {
             return true;
         }
 
