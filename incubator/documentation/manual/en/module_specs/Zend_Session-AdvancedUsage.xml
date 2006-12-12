@@ -50,8 +50,12 @@ Zend_Session_Core::start();
             <listitem>
                 <para>
                     2. Wrong: Do not use <code>session_start()</code> directly (see <code>
-                    <ulink url="http://www.php.net/session_start">session_start()</ulink>
-                    </code>).
+                        <ulink url="http://www.php.net/session_start">session_start()</ulink></code>).
+                    If you use <code>session_start()</code> directly, and then start using
+                    Zend_Session, an exception will be thrown by <code>Zend_Session::start()</code>
+                    ("session has already been started"). If you call <code>session_start()</code>,
+                    after starting Zend_Session, an error of level E_NOTICE will be generated, and the
+                    call will be ignored.
                 </para>
             </listitem>
             <listitem>
