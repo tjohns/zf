@@ -24,7 +24,7 @@
  * Include needed Measure classes
  */
 require_once 'Zend.php';
-Zend::loadClass('Zend_Locale');
+require_once 'Zend/Locale.php';
 
 
 /**

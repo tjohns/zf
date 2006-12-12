@@ -19,14 +19,13 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+
 /**
  * Implement needed classes
  */
 require_once 'Zend.php';
-Zend::loadClass('Zend_Measure_Abstract');
-Zend::loadClass('Zend_Locale');
-Zend::loadClass('Zend_Locale_Data');
-Zend::loadClass('Zend_Locale_Format');
+require_once 'Zend/Measure/Abstract.php';
+require_once 'Zend/Locale.php';
 
 
 /**
