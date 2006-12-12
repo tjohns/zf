@@ -1,5 +1,5 @@
 <sect1 id="zend.controller.providedsubclasses">
-    <title><!--Provided Subclasses--></title>
+    <title>Готовые подклассы<!--Provided Subclasses--></title>
 
     <sect2 id="zend.controller.providedsubclasses.introduction">
         <title>Введение</title>
@@ -50,9 +50,9 @@
                 к релевантным значениям, таким, как ключевое имя и значение
                 для переменных маршрутизатора и все дополнительные параметры,
                 полученные из URI. Посредством передачи к
-                <code>Zend_Http_Request</code>, он также пердоставяет доступ к
+                <code>Zend_Http_Request</code>, он также предоставяет доступ к
                 значениям, содержащимся в суперглобальных переменных как к
-                открытым членам и управляет текущим основноым URL и URI запроса.
+                открытым членам и управляет текущим основным URL и URI запроса.
                 Суперглобальные значения не могут быть установлены в объекте
                 запроса, за исключением методов setParam/getParam methods для
                 установки или извлечения пользовательских переменных. 
@@ -91,7 +91,10 @@
             </note>
 
             <para>
-                К определенным суперглобальным переменным можно также обращаться через открытые методы. Например, можно получить необработанное значение <code>$_POST['user']</code> посредством вызова метода <code>getPost('user')</code> в объекте запроса.
+                К определенным суперглобальным массивам можно также обращаться
+                через открытые методы. Например, можно получить необработанное
+                значение <code>$_POST['user']</code> посредством вызова метода
+                <code>getPost('user')</code> в объекте запроса.
 <!--
                 Specific superglobals can be accessed using a public method as an
                 alternative. For example, the raw value of <code>$_POST['user']</code>
@@ -106,7 +109,11 @@
             <title>Основной URL и поддиректории<!--Base Url and subdirectories--></title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> ...
+                <code>Zend_Controller_Request_Http</code>, являясь посредником
+                для класса <code>Zend_Http_Request</code>, позволяет
+                использовать в поддиректориях Zend_Controller_RewriteBase.
+                Zend_Http_Request будет пытаться автоматически определить ваш
+                основной URL и установить его.   
 <!--
                 <code>Zend_Controller_Request_Http</code> by proxying to
                 <code>Zend_Http_Request</code> allows Zend_Controller_RewriteBase
@@ -116,7 +123,17 @@
             </para>
 
             <para>
-                Например, если вы храните свой <code>index.php</code> в поддиректории веб-сервера, которая называется <code>/projects/myapp/index.php</code>, основной URL (основа перезаписи) должен быть установлен в <code>/projects/myapp</code>. Эта стока будет исключаться из начала пути перед любыми вычислениями соответствий маршрутов. Это освобождает от необходимости ее указывания в начале каждого маршрута. Маршрут <code>'user/:username'</code> будет соответствовать URI вроде <code>http://localhost/projects/myapp/user/martel</code> и <code>http://example.com/user/martel</code>.
+                Например, если вы храните файл загрузки <code>index.php</code> в
+                поддиректории веб-сервера, которая называется
+                <code>/projects/myapp/index.php</code>, то основной URL
+                (базовый адрес перезаписи) должен быть установлен в
+                <code>/projects/myapp</code>. Эта стока будет исключаться из
+                начала пути перед любыми вычислениями соответствий маршрутов.
+                Это освобождает от необходимости ее указывания в начале каждого
+                маршрута. Маршрут <code>'user/:username'</code> будет
+                соответствовать URI вида
+                <code>http://localhost/projects/myapp/user/martel</code> и
+                <code>http://example.com/user/martel</code>.
 <!--
                 For example, if you keep your
                 <code>index.php</code> in a webserver subdirectory named
@@ -134,7 +151,11 @@
             <note>
                 <title>Определение URL чувствительно к регистру<!--URL detection is case sensitive--></title>
                 <para>
-                    Автоматическое определение основгого URL является чувствительным к регистру, поэтому убедитесь, что ваш URL соответствует имени поддиректории в файловой системе (даже на платформе Windows). Если не соответствует, то всегда будет вызываться действие <code>noRoute</code>. 
+                    Автоматическое определение основного URL является
+                    чувствительно к регистру, поэтому убедитесь, что ваш URL
+                    соответствует имени поддиректории в файловой системе (даже
+                    на платформе Windows). Если не соответствует, то будет
+                    вызываться действие <code>noRoute</code>. 
 <!--
                     Automatic base URL detection is case sensitive, so make sure
                     your URL will match a subdirectory name in a filesystem
@@ -145,7 +166,14 @@
             </note>
 
             <para>
-                Если основной URL определяется некорректно, вы можете эаменить его своим основным путем с помощью метода <code>setBaseUrl()</code>, который есть в классах <code>Zend_Http_Request</code>, <code>Zend_Controller_Request_Http</code> и <code>Zend_Controller_Front</code>. Легче всего установить его в <code>Zend_Controller_Front</code>, который передаст его объекту запроса. Пример установки своего основного URL: 
+                Если основной URL определяется некорректно, вы можете заменить
+                его своим основным путем с помощью метода
+                <code>setBaseUrl()</code>, который есть в классах
+                <code>Zend_Http_Request</code>,
+                <code>Zend_Controller_Request_Http</code> и
+                <code>Zend_Controller_Front</code>. Легче всего установить его
+                через  <code>Zend_Controller_Front</code>, который передаст его
+                объекту запроса. Пример установки своего основного URL: 
 <!--
                 Should base URL be detected incorrectly you can override it
                 with your own base path with the help of the
@@ -160,9 +188,6 @@
             </para>
 
             <programlisting role="php"><![CDATA[
-/** 
- * Dispatch Request with custom base URL with Zend_Controller_Front.
- */
 $router     = new Zend_Controller_RewriteRouter();
 $controller = Zend_Controller_Front::getInstance();
 $controller->setControllerDirectory('./application/controllers')
@@ -256,7 +281,7 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
             <note>
                 <title>IIS Isapi_Rewrite</title>
                 <para>
-                    В случае, когда используется IIS,
+                    Если используется IIS, то
                     <code>$_SERVER['REQUEST_URI']</code>
                     не будет существовать, либо будет установлен как пустая
                     строка. В этом случае <code>Zend_Http_Request</code>
@@ -335,7 +360,7 @@ $ctrl->setRouter($router);]]></programlisting>
 $router->addRoute('user', new Zend_Controller_Router_Route('user/:username'));]]></programlisting>
 
             <para>
-	              Первым параметром является имя маршрута. На данный момент он
+	              Первым параметром является имя маршрута. Сейчас он
                 является избыточным, но в будущем будет использоваться в
                 вспомогательном классе вида (view) для легкой генерации URL
                 в ваших видах. Если нужно воспользоваться ранее
@@ -472,7 +497,7 @@ $router->addRoute(
             <title>Значения по умолчанию<!--Variable defaults--></title>
 
             <para>
-                Каждая переменная в маршруте может иметь значение по умолчанию.
+                Любая переменная в маршруте может иметь значение по умолчанию.
                 Для его определения вы должны добавить второй параметр для
                 конструктора <code>Zend_Controller_Router_Route</code>. Этот
                 параметр является массивом с ключами, соответствующими именам
@@ -493,7 +518,7 @@ $router->addRoute(
 );]]></programlisting>
 
             <para>
-                Этот маршрут будет соответствовавать таким URL, как
+                Этот маршрут будет соответствовать таким URL, как
                 'http://example.com/archive/2005' и
                 'http://example.com/archive'. В последнем случае переменная
                 ':year' будет иметь значение 2006. 
@@ -510,7 +535,7 @@ $router->addRoute(
                 ':year' в запрос. Маршрутизация не будет выполняться корректно
                 до тех пор, пока не будут установлены параметры контроллера и
                 действия. Для того, чтобы сделать этот код более полезным, вы
-                должны указать конкректные контроллер и действие как значения по
+                должны указать конкретные контроллер и действие как значения по
                 умолчанию.
 <!--
                 The above example will only result in injecting a year variable 
@@ -527,7 +552,7 @@ $router->addRoute(
 );]]></programlisting>
 
             <para>
-                Реультатом будет вызов действия showAction в классе контроллера
+                Результатом будет вызов действия showAction в классе контроллера
                 ArchiveController. 
 <!--
       				  This route will then result in dispatching to showAction of

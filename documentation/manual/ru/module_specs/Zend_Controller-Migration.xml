@@ -3,7 +3,7 @@
 
     <para>
         API компонент системы MVC изменялся от версии к версии. Если вы начали
-        использовать Zend Framework с его ранних версий, то следуйте дальнейшим
+        использование Zend Framework с его ранних версий, то следуйте дальнейшим
         рекомендациям по переводу вашего кода на новую архитектуру.
 <!--
         The API of the MVC components has changed over time. If you started
@@ -190,8 +190,8 @@ echo $ctrl->dispatch();
                     </para></listitem>
 
                     <listitem><para>
-                        <code>__call()</code> должен замещаться для приема
-                        обращений к несуществующим действиям.  
+                        <code>__call()</code> должен замещаться для обработки
+                        вызовов не определенных в классе действий.  
 <!--
                         <code>__call()</code> should be overridden to handle any
                         undefined actions automatically.
