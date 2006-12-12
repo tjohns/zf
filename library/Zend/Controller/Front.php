@@ -579,7 +579,7 @@ class Zend_Controller_Front
          * Instantiate default request object (HTTP version) if none provided
          */
         if ((null === $request) && (null === ($request = $this->getRequest()))) {
-            require_once 'Zend/Controller/Request_Http';
+            require_once 'Zend/Controller/Request/Http.php';
             $request = new Zend_Controller_Request_Http();
             $this->setRequest($request);
         }
@@ -597,7 +597,7 @@ class Zend_Controller_Front
          * Instantiate default response object (HTTP version) if none provided
          */
         if ((null === $response) && (null === ($response = $this->getResponse()))) {
-            require_once 'Zend/Controller/Response/Http';
+            require_once 'Zend/Controller/Response/Http.php';
             $response = new Zend_Controller_Response_Http();
             $this->setResponse($response);
         }
