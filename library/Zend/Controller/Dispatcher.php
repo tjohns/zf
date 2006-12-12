@@ -117,7 +117,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      */
     public function formatActionName($unformatted)
     {
-        $formatted = $this->_formatName($unformatted);
+        $formatted = $this->_formatName($unformatted, false);
         return strtolower(substr($formatted, 0, 1)) . substr($formatted, 1) . 'Action';
     }
 
@@ -127,12 +127,20 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
      * separated by "-", "_", or "." with camelCaps and removes any characters
      * that are not alphanumeric.
      *
+     * If $preserveUnderscores is true, underscores are retained, and the word 
+     * following Title-cased.
+     *
      * @param string $unformatted
+     * @param boolean $preserveUnderscores Defaults to true
      * @return string
      */
-    protected function _formatName($unformatted)
+    protected function _formatName($unformatted, $preserveUnderscores = true)
     {
-        $unformatted = str_replace(array('-', '.'), ' ', strtolower($unformatted));
+        if ($preserveUnderscores) {
+            $unformatted = str_replace(array('-', '.'), ' ', strtolower($unformatted));
+        } else {
+            $unformatted = str_replace(array('-', '.', '_'), ' ', strtolower($unformatted));
+        }
         $unformatted = preg_replace('/[^a-z0-9_ ]/', '', $unformatted);
         $unformatted = str_replace(' ', '', ucwords($unformatted));
 

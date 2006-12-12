@@ -217,4 +217,13 @@ class Zend_Controller_DispatcherTest extends PHPUnit_Framework_TestCase
         $body = $this->_dispatcher->getResponse()->getBody();
         $this->assertContains("Admin_Foo::bar action called", $body, $body);
     }
+
+    /**
+     * Tests ZF-637 -- action names with underscores not being correctly changed to camelCase
+     */
+    public function testZf637()
+    {
+        $test = $this->_dispatcher->formatActionName('view_entry');
+        $this->assertEquals('viewEntryAction', $test);
+    }
 }
