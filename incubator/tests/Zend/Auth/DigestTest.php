@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Auth
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
@@ -22,34 +23,38 @@
 
 
 /**
+ * PHPUnit_Framework_TestCase
+ */
+require_once 'PHPUnit/Framework/TestCase.php';
+
+
+/**
+ * Zend_Auth_Digest_Adapter
+ */
+require_once 'Zend/Auth/Digest/Adapter.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Auth
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Auth_Token_Interface
+class Zend_Auth_DigestTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Returns whether the authentication token is currently valid (i.e., whether it
-     * represents a successful authentication attempt)
+     * Ensures that an exception is thrown upon authenticating against a nonexistent file
      *
-     * @return boolean
+     * @return void
      */
-    public function isValid();
-
-    /**
-     * Returns the identity represented by the authentication token
-     *
-     * @return mixed
-     */
-    public function getIdentity();
-
-    /**
-     * Returns a message about why the authentication token is not valid
-     * or null if the authentication token is valid
-     *
-     * @return string|null
-     */
-    public function getMessage();
-
+    public function testFileNonExistentException()
+    {
+        try {
+            $token = Zend_Auth_Digest_Adapter::staticAuthenticate('nonexistent', 'realm', 'username', 'password');
+            $this->fail('Expected Zend_Auth_Digest_Exception not thrown upon authenticating against nonexistent file');
+        } catch (Zend_Auth_Digest_Exception $e) {
+            $this->assertContains('Cannot open', $e->getMessage());
+        }
+    }
 }

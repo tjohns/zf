@@ -15,6 +15,7 @@
  *
  * @category   Zend
  * @package    Zend_Auth
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  * @version    $Id$
@@ -22,34 +23,30 @@
 
 
 /**
+ * Zend_Auth
+ */
+require_once 'Zend/Auth.php';
+
+
+/**
+ * PHPUnit_Framework_TestCase
+ */
+require_once 'PHPUnit/Framework/TestCase.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Auth
+ * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Auth_Token_Interface
+class Zend_AuthTest extends PHPUnit_Framework_TestCase
 {
-    /**
-     * Returns whether the authentication token is currently valid (i.e., whether it
-     * represents a successful authentication attempt)
-     *
-     * @return boolean
-     */
-    public function isValid();
-
-    /**
-     * Returns the identity represented by the authentication token
-     *
-     * @return mixed
-     */
-    public function getIdentity();
-
-    /**
-     * Returns a message about why the authentication token is not valid
-     * or null if the authentication token is valid
-     *
-     * @return string|null
-     */
-    public function getMessage();
-
+    public function testToDo()
+    {
+        /**
+         * @todo unit tests
+         */
+    }
 }
