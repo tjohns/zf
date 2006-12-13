@@ -88,6 +88,7 @@ class Zend_Auth_Digest_Adapter extends Zend_Auth_Adapter
             );
 
         while ($line = fgets($fileHandle)) {
+            $line = trim($line);
             if (substr($line, 0, $idLength) === $id) {
                 if (substr($line, -32) === md5("$username:$realm:$password")) {
                     $tokenValid   = true;

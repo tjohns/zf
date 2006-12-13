@@ -44,6 +44,23 @@ require_once 'Zend/Auth/Digest/Adapter.php';
 class Zend_Auth_DigestTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Path to test files
+     *
+     * @var string
+     */
+    protected $_filesPath;
+
+    /**
+     * Sets the path to test files
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->_filesPath = dirname(__FILE__) . '/_files';
+    }
+
+    /**
      * Ensures that an exception is thrown upon authenticating against a nonexistent file
      *
      * @return void
@@ -52,9 +69,30 @@ class Zend_Auth_DigestTest extends PHPUnit_Framework_TestCase
     {
         try {
             $token = Zend_Auth_Digest_Adapter::staticAuthenticate('nonexistent', 'realm', 'username', 'password');
-            $this->fail('Expected Zend_Auth_Digest_Exception not thrown upon authenticating against nonexistent file');
+            $this->fail('Expected Zend_Auth_Digest_Exception not thrown upon authenticating against nonexistent '
+                      . 'file');
         } catch (Zend_Auth_Digest_Exception $e) {
             $this->assertContains('Cannot open', $e->getMessage());
         }
     }
+
+    /**
+     * Ensures that static digest authentication succeeds as expected
+     *
+     * @return void
+     */
+    public function testStaticAuthenticate()
+    {
+        $realm    = 'Some Realm';
+        $username = 'someUser';
+        $password = 'somePassword';
+
+        $token = Zend_Auth_Digest_Adapter::staticAuthenticate("$this->_filesPath/.htdigest.1", $realm, $username,
+                                                              $password);
+        $this->assertTrue($token->isValid());
+        $identity = $token->getIdentity();
+        $this->assertTrue($identity['realm'] === $realm);
+        $this->assertTrue($identity['username'] === $username);
+    }
+
 }
