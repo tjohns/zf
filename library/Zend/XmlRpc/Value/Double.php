@@ -54,7 +54,7 @@ class Zend_XmlRpc_Value_Double extends Zend_XmlRpc_Value_Scalar
      */
     public function getValue()
     {
-        return $this->_value;
+        return (float)$this->_value;
     }
 
 }
