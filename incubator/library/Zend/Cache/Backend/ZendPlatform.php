@@ -229,15 +229,24 @@ class Zend_Cache_Backend_ZendPlatform implements Zend_Cache_Backend_Interface
     public function clean($mode = Zend_Cache::CLEANING_MODE_ALL, $tags = array())
     {
         if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
+		$idlist = null;
 		foreach($tags as $tag) {
-			$idlist = output_cache_get(self::TAGS_PREFIX.$tag, $this->_directives['lifeTime']);
+			$next_idlist = output_cache_get(self::TAGS_PREFIX.$tag, $this->_directives['lifeTime']);
 			if($idlist) {
-				foreach($idlist as $id) {
-					output_cache_remove_key($id);
-				}
+				$idlist = array_intersect_assoc($idlist, $next_idlist);
+			} else {
+				$idlist = $next_idlist;
 			}
-			// since we cleaned it, nothing belongs to this tag anymore
-			output_cache_put(self::TAGS_PREFIX.$tag, array());
+			if(count($idlist) == 0) {
+				// if ID list is already empty - we may skip checking other IDs
+				$idlist = null;
+				break;
+			}
+		}
+		if($idlist) {
+		        foreach($idlist as $id) {
+				output_cache_remove_key($id);
+			}
 		}
 		return true;
         }
