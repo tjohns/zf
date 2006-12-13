@@ -35,6 +35,11 @@ class Zend_Cache_ZendPlatformBackendTest extends Zend_Cache_CommonBackendTest {
        
     public function setUp()
     {        
+	if(!function_exists('output_cache_get')) {
+		$this->markTestSkipped('Zend Platform is not installed, skipping test');
+		return;
+	}
+
         $this->_instance = new Zend_Cache_Backend_ZendPlatform(array());
         parent::setUp();          
     }
