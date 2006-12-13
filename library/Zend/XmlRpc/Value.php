@@ -151,7 +151,7 @@ abstract class Zend_XmlRpc_Value
     public function getAsDOM()
     {
         if (!$this->_as_dom) {
-            $doc = new DOMDocument();
+            $doc = new DOMDocument('1.0', 'UTF-8');
             $doc->loadXML($this->getAsXML());
             $this->_as_dom = $doc->documentElement;
         }
