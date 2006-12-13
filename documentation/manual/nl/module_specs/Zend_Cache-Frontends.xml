@@ -134,7 +134,7 @@ if (!($data = $cache->get($id1))) {
 } 
 echo($data);
 
-// Dit wordt niet door de cache beinvloed
+// Dit wordt niet door de cache beïnvloed
 echo('NOOIT GECACHED! ');
 
 // blok 2
@@ -158,44 +158,44 @@ echo($data);
     <sect2 id="zend.cache.frontend.output">
         <title>Zend_Cache_Frontend_Output</title>
         <sect3 id="zend.cache.frontend.output.introduction">
-            <title>Introduction</title>
+            <title>Inleiding</title>
             <para>
-                <code>Zend_Cache_Frontend_Output</code> is an output-capturing frontend. It utilizes
-                output buffering in PHP to capture everything between its <code>start()</code> and
-                <code>end()</code> methods.
+                <code>Zend_Cache_Frontend_Output</code> is een output-vangend frontend. Het gebruikt
+                output buffering in PHP om alles tussen zijn <code>start()</code> en
+                <code>end()</code> methodes te vangen.
             </para>
         </sect3>
         <sect3 id="zend.cache.frontend.output.options">
-            <title>Available options</title>
+            <title>Beschikbare opties</title>
             <para>
-                This frontend doesn't have any specific options other than those of
+                Dit frontend heeft geen specifieke opties andere dan deze van
                 <code>Zend_Cache_Core</code>.
             </para>
         </sect3>
         
         <sect3 id="zend.cache.frontend.output.examples">
-            <title>Examples</title>
+            <title>Voorbeelden</title>
             <para>
-                An example is given in the manual at the very beginning. Here it is with minor changes:
+                Een voorbeeld is in het begin van de handleiding gegeven. Hier is het met enkele kleine veranderingen:
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-// if it is a cache miss, output buffering is triggered
-if(!$cache->start('mypage')):
+// indien het een cache miss is, output buffering inroepen
+if(!$cache->start('mijnpagina')):
 
-// output everything as usual
-echo 'Hello world! ';
-echo 'This is cached ('.time().') ';
+// alles weergeven zoals gewoonlijk
+echo 'Dag wereld! ';
+echo 'Dit is gecached ('.time().') ';
 
-$cache->end(); // output buffering ends
+$cache->end(); // einde van output buffering
 endif;
 
-echo 'This is never cached ('.time().').';
+echo 'Dit is nooit gecached ('.time().').';
 
 ?>]]>       </programlisting>
             <para>
-                Using this form it is fairly easy to set up output caching in your already working project
-                with little or no code refactoring.
+                Deze vorm gebruiken maakt het eenvoudig om output caching op te zetten in je reeds werkende projekt
+                met geen of weinig herschrijven van de code.
             </para>
         </sect3>   
     </sect2>
@@ -203,24 +203,24 @@ echo 'This is never cached ('.time().').';
     <sect2 id="zend.cache.frontend.function">
         <title>Zend_Cache_Frontend_Function</title>
         <sect3 id="zend.cache.frontend.function.introduction">
-            <title>Introduction</title>
+            <title>Inleiding</title>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> caches the results of function calls. It has
-                a single main method named <code>call()</code> which takes a function name and parameters
-                for the call in an array.
+                <code>Zend_Cache_Frontend_Function</code> cached het resultaat van functie oproepen. Het heeft één
+                enkele hoofdmethode genaam <code>call()</code> die de functienaam en parameters voor de oproep in een
+                array aanvaard.
             </para>
         </sect3>
         <sect3 id="zend.cache.frontend.function.options">
-            <title>Available options</title>
+            <title>Beschikbare opties</title>
             <table>
-                <title>Available options</title>
+                <title>Beschikbare opties</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
-                            <entry>Option</entry>
+                            <entry>Optie</entry>
                             <entry>Data Type</entry>
-                            <entry>Default Value</entry>
-                            <entry>Description</entry>
+                            <entry>Standaard Waarde</entry>
+                            <entry>Omschrijving</entry>
                         </row>
                      </thead>
                      <tbody>
@@ -229,7 +229,7 @@ echo 'This is never cached ('.time().').';
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                  if true, function calls will be cached by default                
+                                indien true zullen functie oproepen standaard worden gecached
                               </entry>
                          </row>
                          <row>
@@ -237,7 +237,7 @@ echo 'This is never cached ('.time().').';
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  function names which will always be cached               
+                                functienamen die altijd zullen worden gecached
                               </entry>
                          </row>
                          <row>
@@ -245,7 +245,7 @@ echo 'This is never cached ('.time().').';
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  function names which must never be cached               
+                                functienamen die nooit mogen worden gecached
                               </entry>
                          </row>
                       </tbody>
@@ -254,26 +254,25 @@ echo 'This is never cached ('.time().').';
         </sect3>
         
         <sect3 id="zend.cache.frontend.function.examples">
-            <title>Examples</title>
+            <title>Voorbeelden</title>
             <para>
-                Using the <code>call()</code> function is the same as using
-                <code>call_user_func_array()</code> in PHP:
+                De <code>call()</code> functie gebruiken is hetzelfde als <code>call_user_func_array()</code> in PHP:
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-$cache->call('veryExpensiveFunc', $params);
+$cache->call('heelZwareFunctie', $params);
 
-# $params is an array
-# for example to call (with caching) veryExpensiveFunc(1, 'foo', 'bar'), you will use
-# $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
+# $params is een array
+# bijvoorbeeld om heelZwareFunctie(1, 'foo', 'bar') op te roepen (met caching), zal je
+# $cache->call('heelZwareFunctie', array(1, 'foo', 'bar')) gebruiken
 
 ?>]]>       </programlisting>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the
-                return value of the function and its internal output.
+                <code>Zend_Cache_Frontend_Function</code> is slim genoeg om zowel de return waarde van de functie als
+                zijn interne output te cachen.
             </para>
             <note><para>
-                You can pass any builtin or user defined function with the exception of
+                Je kan eender welke ingebouwde of gebruikerfunctie doorgeven, behalve
                 <code>array()</code>, <code>echo()</code>, <code>empty()</code>, <code>eval()</code>,
                 <code>exit()</code>, <code>isset()</code>, <code>list()</code>, <code>print()</code>
                 and <code>unset()</code>. 
@@ -284,33 +283,34 @@ $cache->call('veryExpensiveFunc', $params);
     <sect2 id="zend.cache.frontend.class">
         <title>Zend_Cache_Frontend_Class</title>
         <sect3 id="zend.cache.frontend.class.introduction">
-            <title>Introduction</title>
+            <title>Inleiding</title>
             <para>
-                <code>Zend_Cache_Frontend_Class</code> is different from <code>Zend_Cache_Frontend_Function</code>
-                because it allows caching of object and static method calls.
+                <code>Zend_Cache_Frontend_Class</code> verschilt van <code>Zend_Cache_Frontend_Function</code>
+                omdat het toelaat een object en statische methode oproepen te cachen.
             </para>
         </sect3>
         <sect3 id="zend.cache.frontend.class.options">
-            <title>Available options</title>
+            <title>Beschikbare opties</title>
             <table>
-                <title>Available options</title>
+                <title>Beschikbare opties</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
-                            <entry>Option</entry>
+                            <entry>Optie</entry>
                             <entry>Data Type</entry>
-                            <entry>Default Value</entry>
-                            <entry>Description</entry>
+                            <entry>Standaard Waarde</entry>
+                            <entry>Omschrijving</entry>
                         </row>
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>cachedEntity</code> (required)</entry>
+                              <entry><code>cachedEntity</code> (vereist)</entry>
                               <entry><code>mixed</code></entry>
                               <entry></entry>
                               <entry>
-                                  if set to a class name, we will cache an abstract class and will use
-                                  only static calls; if set to an object, we will cache this object methods             
+                                Indien je een klassenaam doorgeeft, zullen we een abstracte klasse cachen en alleen
+                                statische oproepen gebruiken; indien je een object doorgeeft, zullen we de methodes
+                                van het object cachen.
                               </entry>
                          </row>
                          <row>
@@ -318,7 +318,7 @@ $cache->call('veryExpensiveFunc', $params);
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                  if true, calls will be cached by default                
+                                  Indien true zullen oproepen standaard worden gecached
                               </entry>
                          </row>
                          <row>
@@ -326,7 +326,7 @@ $cache->call('veryExpensiveFunc', $params);
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  method names which will always be cached               
+                                  namen van methodes die altijd zullen worden gecached               
                               </entry>
                          </row>
                          <row>
@@ -334,7 +334,7 @@ $cache->call('veryExpensiveFunc', $params);
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  method names which must never be cached               
+                                  namen van methodes die nooit zullen worden gecached               
                               </entry>
                          </row>
                       </tbody>
@@ -343,15 +343,15 @@ $cache->call('veryExpensiveFunc', $params);
         </sect3>
         
         <sect3 id="zend.cache.frontend.class.examples">
-            <title>Examples</title>
+            <title>Voorbeelden</title>
             <para>
-                For example, to cache static calls :
+                Bijvoorbeeld, om statische oproepen te cachen :
             </para>
             <programlisting role="php"><![CDATA[<?php
 
 class test {
    
-    # Static method
+    # Statische methode
     public static function foobar($param1, $param2) {
         echo "foobar_output($param1, $param2)";
         return "foobar_return($param1, $param2)";   
@@ -361,22 +361,22 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => 'test' // The name of the class
+    'cachedEntity' => 'test' // De naam van de klasse
 );
 // [...]
 
-# The cached call
+# De gecachte oproep
 $res = $cache->foobar('1', '2');
 
 ?>]]>       </programlisting>
             <para>
-                To cache classic method calls :
+                Om klassieke methode oproepen te cachen :
             </para>
             <programlisting role="php"><![CDATA[<?php
 
 class test {
    
-    private $_string = 'hello !';
+    private $_string = 'hoi !';
       
     public function foobar2($param1, $param2) {
         echo($this->_string);
@@ -388,11 +388,11 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => new test() // An instance of the class
+    'cachedEntity' => new test() // Een instantie van de klasse
 );
 // [...]
 
-# The cached call
+# De gecachte oproep
 $res = $cache->foobar2('1', '2');
 
 ?>]]>       </programlisting>
@@ -402,41 +402,41 @@ $res = $cache->foobar2('1', '2');
     <sect2 id="zend.cache.frontends.file">
         <title>Zend_Cache_Frontend_File</title>
         <sect3 id="zend.cache.frontends.file.introduction">
-            <title>Introduction</title>
+            <title>Inleiding</title>
             <para>
-                <code>Zend_Cache_Frontend_File</code> is a frontend driven by the 
-                modification time of a "master file". It's really interesting for examples
-                in configuration or templates issues.
+                <code>Zend_Cache_Frontend_File</code> is een frontend dat bestuurd word door de
+                wijzigingstijd van een "meesterbestand". Het is zeer interessant voor voorbeelden
+                in configuratie of template problemen.
             </para>
             <para> 
-            	For instance, you have an XML configuration file which is parsed by a function 
-            	which returns a "config object" (like with <code>Zend_Config</code>). With
-            	<code>Zend_Cache_Frontend_File</code>, you can store the "config object" into
-            	cache (to avoid the parsing of the XML config file at each time) but with a
-            	sort of strong dependency on the "master file". So, if the XML config file
-            	is modified, the cache is immediatly invalidated.
+                Bijvoorbeeld, je hebt een XML configuratiebestand dat door een functie wordt ingelezen
+                die een "config object" teruggeeft (zoals met <code>Zend_Config</code>). Met
+            	<code>Zend_Cache_Frontend_File</code> kan je "config object" in de cache opslaan
+                (om te vermijden dat je het XML bestand elke keer inleest) maar met een soort van
+                sterke afhankelijkheid met het "meesterbestand". Dus, indien het XML configuratiebestand
+                wordt gewijzigd wordt de cache onmiddellijk invalide.
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
-            <title>Available options</title>
+            <title>Beschikbare opties</title>
             <table>
-                <title>Available options</title>
+                <title>Beschikbare opties</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
-                            <entry>Option</entry>
+                            <entry>Optie</entry>
                             <entry>Data Type</entry>
-                            <entry>Default Value</entry>
-                            <entry>Description</entry>
+                            <entry>Standaard Waarde</entry>
+                            <entry>Omschrijving</entry>
                         </row>
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>masterFile (mandatory)</code></entry>
+                              <entry><code>masterFile (vereist)</code></entry>
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
-                                  the complete path and name of the master file                 
+                                het complete pad en naam van het meesterbestand                
                               </entry>
                          </row>
                       </tbody>
@@ -444,11 +444,11 @@ $res = $cache->foobar2('1', '2');
               </table>
         </sect3>   
         <sect3 id="zend.cache.frontends.file.examples">
-            <title>Examples</title>
+            <title>Voorbeelden</title>
             <para>
-                Use of this frontend is the same than of <code>Zend_Cache_Core</code>. There
-                is no need of a specific example - the only thing to do is to 
-                define the <code>masterFile</code> when using the factory.
+                Het gebruik van dit frontend is hetzelfde als dat van <code>Zend_Cache_Core</code>. Er is geen
+                nood aan een specifiek voorbeeld - het enige dat er te doen is, is het definiëren van
+                <code>masterFile</code> bij het gebruik van de factory.
             </para>
         </sect3>
     </sect2>
@@ -456,39 +456,39 @@ $res = $cache->foobar2('1', '2');
     <sect2 id="zend.cache.frontends.page">
     	<title>Zend_Cache_Frontend_Page</title>
     	<sect3 id="zend.cache.frontends.page.introduction">
-        	<title>Introduction</title>
+        	<title>inleiding</title>
         	<para>
-	            <code>Zend_Cache_Frontend_Page</code> is like <code>Zend_Cache_Frontend_Output</code>
-	            but designed for a complete page. It's impossible to use <code>Zend_Cache_Frontend_Page</code>
-	            for caching only a single block.
+	            <code>Zend_Cache_Frontend_Page</code> is net als <code>Zend_Cache_Frontend_Output</code>
+	            maar werd ontworpen voor een volledige pagina. Het is onmogelijk om <code>Zend_Cache_Frontend_Page</code>
+	            te gebruiken om een enkel blok te cachen.
 	        </para>
 	        <para>
-	        	On the other hand, the "cache id" is calculated automatically with
-	        	<code>$_SERVER['REQUEST_URI']</code> and (depending on options) 
+                Anderzijds word "cache id" automatisch berekend met
+	        	<code>$_SERVER['REQUEST_URI']</code> en (afhankelijk van de opties) 
 	        	<code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_FILES</code>.
-	        	More over, you have only one method to call (<code>start()</code>) because the
-	        	<code>end()</code> call is fully automatic when the page is ended.
+                Bovendien hoef je slechts één methode op te roepen (<code>start()</code>) want de 
+                <code>end()</code> oproep is volledig automatisch bij het einde van de pagina.
 	        </para>
 	        <para>
-	        	For the moment, it's not implemented but we plan to add a HTTP conditional system
-	        	to save bandwith (the system will send a HTTP 304 Not Modified if the cache is hit
-	        	and if the browser has already the good version).
+                Het is niet geïmplementeerd voor het ogenblik, maar we hebben plannen om een HTTP conditioneel
+                systeem bij te voegen om bandbreedte te sparen (het systeem zal een HTTP 304 Not Modified header
+                zenden indien de browser cache word aangesproken en indien de browser reeds de goede versie heeft).
 	        </para>
-	        <note><para>
-                Zend_Cache_Frontend_Page is really "alpha stuff" and is meant to be improved further down the road.
+	        <note><para>)
+                Zend_Cache_Frontend_Page is echt "alpha stuff" en moet later verder worden verbeterd.
 	        </para></note>
     	</sect3>
     	<sect3 id="zend.cache.frontends.page.options">
-	        <title>Available options (for this frontend in Zend_Cache factory)</title>
+	        <title>Beschikbare opties (voor deze frontend van de Zend_Cache factory)</title>
 	        <table>
-	            <title>Available options</title>
+	            <title>Beschikbare opties</title>
 	            <tgroup cols="4">
 	                 <thead>
 	                      <row>
-	                        <entry>Option</entry>
+	                        <entry>Optie</entry>
 	                        <entry>Data Type</entry>
-	                        <entry>Default Value</entry>
-	                        <entry>Description</entry>
+	                        <entry>Standaard Waarde</entry>
+	                        <entry>Omschrijving</entry>
 	                    </row>
 	                 </thead>
 	                 <tbody>
@@ -497,7 +497,7 @@ $res = $cache->foobar2('1', '2');
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
-	                              use the httpConditional system (not implemented for the moment)                 
+                                gebruik het httpConditional systeem (momenteel niet geïmplementeerd)
 	                          </entry>
 	                     </row>
 	                     <row>
@@ -505,8 +505,11 @@ $res = $cache->foobar2('1', '2');
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
-	                                if true,  cache is still on even if there are some variables in the corresponding superglobal array ;
-	                                if false,  cache is off if there are some variables in the corresponding superglobal array             
+                                indien true blijft de cache aan zelfs indien er enige variabelen in de overeenkomende
+                                superglobal array zijn
+
+                                indien false is de cache af indien er enige variabelen in de overeenkomende
+                                superglobal array zijn
 	                          </entry>
 	                     </row>
 	                     <row>
@@ -514,8 +517,11 @@ $res = $cache->foobar2('1', '2');
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>true</code></entry>
 	                          <entry>
-	                                if true, we have to use the content of the corresponding superglobal array to make a cache id
-	                                if false, the cache id won't be dependent of the content of the corresponding superglobal array
+                                indien true moeten we de inhoud van de overeenkomstige superglobal array gebruiken om
+                                een cache id aan te maken
+
+                                indien false zal de cache id niet afhankelijk zijn van de inhoud van de overeenkomstige
+                                superglobal array
 	                          </entry>
 	                     </row>
 	                  </tbody>
@@ -523,18 +529,18 @@ $res = $cache->foobar2('1', '2');
 	          </table>
 	    </sect3>   
     	<sect3 id="zend.cache.frontends.page.examples">
-        	<title>Examples</title>
+        	<title>Voorbeelden</title>
 	        <para>
-	            Use of Zend_Cache_Frontend_Page is really trivial :
+	            Het gebruik van Zend_Cache_Frontend_Page is echt eenvoudig :
 	        </para>
             <programlisting role="php"><![CDATA[<?php
 	           
-// [...] // require, configuration and factory
+// [...] // require, configuratie en factory
 	
 $cache->start();
-# if the cache is hit, the result is sent to the browser and the script stop here
+# indien de cache wordt aangesproken wordt het resultaat naar de browser gestuurd en stopt het script hier
 	
-// rest of the page ...
+// rest van de pagina ...
 	
 ?>]]>       </programlisting>
     	</sect3>

@@ -49,7 +49,7 @@ $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 // $cache die in het vorige voorbeeld werd geïnitialiseerd
 
 // nagaan of de cache reeds bestaat:
-if(!$result = $cache->get('myresult')) {
+if(!$result = $cache->get('mijnresultaat')) {
 
     // geen cache; verbind met de database
     
