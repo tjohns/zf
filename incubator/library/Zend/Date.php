@@ -1428,8 +1428,8 @@ class Zend_Date {
                 $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $gmt, $locale));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
-                    if (strtoupper(substr($value, 0, 1)) == strtoupper(substr($date, 0, 1))) {
-                        $found = $cnt + 1;
+                    if (strtoupper(substr($value, 0, 1)) == strtoupper($date)) {
+                        $found = $key;
                         break;
                     }
                     ++$cnt;
@@ -1452,13 +1452,19 @@ class Zend_Date {
                 break;
 
             case Zend_Date::YEAR_8601 :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, 1, 1, $year,         -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, 1, $year,         -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'year expected');
                 break;
 
             case Zend_Date::YEAR :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, 1, 1, $year,         -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, 1, $year,         -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'year expected');
                 break;
 
             case Zend_Date::YEAR_SHORT :
@@ -1475,7 +1481,11 @@ class Zend_Date {
 
 
             case Zend_Date::YEAR_SHORT_8601 :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, 1, 1, $year,         -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'year expected');
                 break;
 
 
