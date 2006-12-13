@@ -105,7 +105,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $transmitstamp  = ord(fread($this->_socket, 4));
         $transmitmicro  = ord(fread($this->_socket, 4));
 
-        $clientreceived = time() + 2208988800;
+        $clientreceived = 0;
         
         $this->_disconnect();
         
@@ -219,7 +219,6 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $received += (float) $receivemicro / 4294967296;
         $transmit  = (float) $transmitstamp;
         $transmit += (float) $transmitmicro / 4294967296;
-        
         $roundtrip  = ($clientreceived - $original) - ($transmit - $received);
         $this->_info['roundtrip'] = $roundtrip / 2;
 
