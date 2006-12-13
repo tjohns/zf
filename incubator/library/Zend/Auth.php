@@ -89,17 +89,23 @@ class Zend_Auth
      *
      * All parameters are passed along to the adapter's authenticate() method.
      *
-     * @param  boolean $useSession
+     * @param  array $options
+     * @uses   Zend_Auth_Adapter::authenticate()
      * @return Zend_Auth_Token_Interface
      */
-    public function authenticate()
+    public function authenticate($options)
     {
-        $args = func_get_args();
-        $token = call_user_func_array(array($this->_adapter, __FUNCTION__), $args);
+        $token = $this->_adapter->authenticate($options);
 
-        /**
-         * @todo persist token in session if $this->_useSession === true
-         */
+        if ($this->_useSession) {
+            require_once 'Zend/Session/Core.php';
+            if (!Zend_Session_Core::isStarted()) {
+                Zend_Session_Core::start();
+            }
+            Zend_Session_Core::setOptions(array('strict' => true));
+            $session = new Zend_Session($this->_sessionNamespace, Zend_Session::SINGLE_INSTANCE);
+            $session->$this->_sessionTokenName = $token;
+        }
 
         return $token;
     }
@@ -169,6 +175,14 @@ class Zend_Auth
         $this->_sessionTokenName = (string) $sessionTokenName;
 
         return $this;
+    }
+
+
+    public function getToken()
+    {
+        /**
+         * @todo
+         */
     }
 
     public function isLoggedIn()
