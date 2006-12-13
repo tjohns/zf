@@ -103,4 +103,102 @@ class Zend_Auth_DigestTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($identity['username'] === $options['username']);
     }
 
+    /**
+     * Ensures expected behavior upon incorrect password
+     *
+     * @return void
+     */
+    public function testIncorrectPassword()
+    {
+        $options = array(
+            'filename' => "$this->_filesPath/.htdigest.1",
+            'realm'    => 'Some Realm',
+            'username' => 'someUser',
+            'password' => 'incorrectPassword'
+            );
+
+        $token = Zend_Auth_Digest_Adapter::staticAuthenticate($options);
+        $this->assertFalse($token->isValid());
+        $this->assertContains('Password incorrect', $token->getMessage());
+        $identity = $token->getIdentity();
+        $this->assertTrue($identity['realm'] === $options['realm']);
+        $this->assertTrue($identity['username'] === $options['username']);
+    }
+
+    /**
+     * Ensures expected behavior upon user not found in existing realm
+     *
+     * @return void
+     */
+    public function testUserNonexistentRealmExists()
+    {
+        $options = array(
+            'filename' => "$this->_filesPath/.htdigest.1",
+            'realm'    => 'Some Realm',
+            'username' => 'nonexistentUser',
+            'password' => 'somePassword'
+            );
+
+        $token = Zend_Auth_Digest_Adapter::staticAuthenticate($options);
+        $this->assertFalse($token->isValid());
+        $this->assertContains('combination not found', $token->getMessage());
+        $identity = $token->getIdentity();
+        $this->assertTrue($identity['realm'] === $options['realm']);
+        $this->assertTrue($identity['username'] === $options['username']);
+    }
+
+    /**
+     * Ensures expected behavior upon realm not found for existing user
+     *
+     * @return void
+     */
+    public function testUserExistsRealmNonexistent()
+    {
+        $options = array(
+            'filename' => "$this->_filesPath/.htdigest.1",
+            'realm'    => 'Nonexistent Realm',
+            'username' => 'someUser',
+            'password' => 'somePassword'
+            );
+
+        $token = Zend_Auth_Digest_Adapter::staticAuthenticate($options);
+        $this->assertFalse($token->isValid());
+        $this->assertContains('combination not found', $token->getMessage());
+        $identity = $token->getIdentity();
+        $this->assertTrue($identity['realm'] === $options['realm']);
+        $this->assertTrue($identity['username'] === $options['username']);
+    }
+
+    /**
+     * Ensures that the authenticate method works as expected
+     *
+     * @return void
+     */
+    public function testAuthenticate()
+    {
+        $options1 = array(
+            'realm'    => 'Some Realm',
+            'username' => 'someUser',
+            'password' => 'somePassword'
+            );
+        $auth1 = new Zend_Auth_Digest_Adapter("$this->_filesPath/.htdigest.1");
+        $token1 = $auth1->authenticate($options1);
+        $this->assertTrue($token1->isValid());
+        $identity1 = $token1->getIdentity();
+        $this->assertTrue($identity1['realm'] === $options1['realm']);
+        $this->assertTrue($identity1['username'] === $options1['username']);
+
+        $options2 = array(
+            'realm'    => 'Another Realm',
+            'username' => 'anotherUser',
+            'password' => 'anotherPassword'
+            );
+        $auth2 = new Zend_Auth_Digest_Adapter("$this->_filesPath/.htdigest.2");
+        $token2 = $auth2->authenticate($options2);
+        $this->assertTrue($token2->isValid());
+        $identity1 = $token2->getIdentity();
+        $this->assertTrue($identity1['realm'] === $options2['realm']);
+        $this->assertTrue($identity1['username'] === $options2['username']);
+    }
+
 }
