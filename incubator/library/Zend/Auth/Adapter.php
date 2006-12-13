@@ -39,10 +39,11 @@ abstract class Zend_Auth_Adapter
      * Extending classes may implement this method, accepting authentication
      * credentials as parameters, and returning the authentication results
      *
+     * @param  array $options
      * @throws Zend_Auth_Adapter_Exception
      * @return Zend_Auth_Token_Interface
      */
-    public static function staticAuthenticate()
+    public static function staticAuthenticate(array $options)
     {
         throw Zend::exception('Zend_Auth_Adapter_Exception',
                               __METHOD__ . '() must be implemented by a concrete adapter class');
@@ -52,10 +53,11 @@ abstract class Zend_Auth_Adapter
      * Extending classes should implement this method, accepting authentication
      * credentials as parameters, and returning the authentication results
      *
+     * @param  $options
      * @throws Zend_Auth_Adapter_Exception
      * @return Zend_Auth_Token_Interface
      */
-    public function authenticate()
+    public function authenticate(array $options)
     {
         throw Zend::exception('Zend_Auth_Adapter_Exception',
                               __METHOD__ . '() must be implemented by a concrete adapter class');

@@ -63,33 +63,45 @@ class Zend_Auth_Digest_Adapter extends Zend_Auth_Adapter
     /**
      * Authenticates against the given parameters
      *
-     * @param  string $filename
-     * @param  string $realm
-     * @param  string $username
-     * @param  string $password
+     * $options requires the following key-value pairs:
+     *
+     *      'filename' => path to digest authentication file
+     *      'realm'    => digest authentication realm
+     *      'username' => digest authentication user
+     *      'password' => password for the user of the realm
+     *
+     * @param  array $options
      * @throws Zend_Auth_Digest_Exception
      * @return Zend_Auth_Digest_Token
      */
-    public static function staticAuthenticate($filename, $realm, $username, $password)
+    public static function staticAuthenticate(array $options)
     {
-        if (false === ($fileHandle = @fopen($filename, 'r'))) {
-            throw Zend::exception('Zend_Auth_Digest_Exception', "Cannot open '$filename' for reading");
+        $optionsRequired = array('filename', 'realm', 'username', 'password');
+        foreach ($optionsRequired as $optionRequired) {
+            if (!isset($options[$optionRequired]) || !is_string($options[$optionRequired])) {
+                throw Zend::exception('Zend_Auth_Digest_Exception', "Option '$optionRequired' is required to be "
+                                    . 'provided as a string');
+            }
+        }
+
+        if (false === ($fileHandle = @fopen($options['filename'], 'r'))) {
+            throw Zend::exception('Zend_Auth_Digest_Exception', "Cannot open '{$options['filename']}' for reading");
         }
 
         require_once 'Zend/Auth/Digest/Token.php';
 
-        $id       = "$username:$realm";
+        $id       = "{$options['username']}:{$options['realm']}";
         $idLength = strlen($id);
 
         $tokenValid    = false;
         $tokenIdentity = array(
-            'realm'    => $realm,
-            'username' => $username
+            'realm'    => $options['realm'],
+            'username' => $options['username']
             );
 
         while ($line = trim(fgets($fileHandle))) {
             if (substr($line, 0, $idLength) === $id) {
-                if (substr($line, -32) === md5("$username:$realm:$password")) {
+                if (substr($line, -32) === md5("{$options['username']}:{$options['realm']}:{$options['password']}")) {
                     $tokenValid   = true;
                     $tokenMessage = null;
                 } else {
@@ -99,22 +111,28 @@ class Zend_Auth_Digest_Adapter extends Zend_Auth_Adapter
             }
         }
 
-        $tokenMessage = "Username '$username' and realm '$realm' combination not found";
+        $tokenMessage = "Username '{$options['username']}' and realm '{$options['realm']}' combination not found";
         return new Zend_Auth_Digest_Token($tokenValid, $tokenIdentity, $tokenMessage);
     }
 
     /**
      * Authenticates the realm, username and password given
      *
-     * @param  string $realm
-     * @param  string $username
-     * @param  string $password
+     * $options requires the following key-value pairs:
+     *
+     *      'realm'    => digest authentication realm
+     *      'username' => digest authentication user
+     *      'password' => password for the user of the realm
+     *
+     * @param  array $options
      * @uses   Zend_Auth_Digest_Adapter::staticAuthenticate()
      * @return Zend_Auth_Digest_Token
      */
-    public function authenticate($realm, $username, $password)
+    public function authenticate(array $options)
     {
-        return self::staticAuthenticate($this->_filename, $realm, $username, $password);
+        $options['filename'] = $this->_filename;
+
+        return self::staticAuthenticate($options);
     }
 
 }
