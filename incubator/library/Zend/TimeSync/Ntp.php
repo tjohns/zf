@@ -77,8 +77,19 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $this->_connect();
 
         fwrite($this->_socket, $ntppacket);
-
-        $flags          = ord(fread($this->_socket, 1));
+        stream_set_timeout($this->_socket, 1);
+        
+        $flags = ord(fread($this->_socket, 1));
+        $info  = stream_get_meta_data($this->_socket);
+        
+        if ($info['timed_out']) {
+            fclose($this->disconnect);
+            throw Zend::exception(
+                'Zend_TimeSync_ProtocolException', 
+                "could not connect to '$this->_timeserver' on port '$this->_port', reason: '$errstr'"
+            );
+        }
+        
         $stratum        = ord(fread($this->_socket, 1));
         $this->_info['poll']      = ord(fread($this->_socket, 1));
         $this->_info['precision'] = ord(fread($this->_socket, 1));

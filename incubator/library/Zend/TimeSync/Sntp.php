@@ -41,7 +41,7 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         $this->_timeserver = $timeserver;
         $this->_port       = $port;
     }
-    
+
     protected function _query()
     {
         $this->_connect();
@@ -54,7 +54,10 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         $this->_disconnect();
         
         if (!$result) {
-            return false;
+            throw Zend::exception(
+                'Zend_TimeSync_ProtocolException',
+                'invalid result returned from server'
+            );
         } else {
             $time  = abs(hexdec('7fffffff') - hexdec(bin2hex($result)) - hexdec('7fffffff'));
             $time -= 2208988800;

@@ -82,7 +82,7 @@ abstract class Zend_TimeSync_Protocol
     {
         $timestamp = $this->_query();
         
-        return new Zend_Date($timestamp, false, $locale);
+        return new Zend_Date($timestamp, Zend_Date::TIMESTAMP, $locale);
     }
     
     public function getExceptions()

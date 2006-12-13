@@ -81,7 +81,7 @@ class Zend_TimeSync implements IteratorAggregate
      * @var array
      */
     public static $options = array(
-        'timeout' => 3
+        'timeout' => 1
     );
 
     /**
