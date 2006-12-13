@@ -81,7 +81,7 @@ class Zend_TimeSync implements IteratorAggregate
      * @var array
      */
     public static $options = array(
-        'timeout' => 5
+        'timeout' => 3
     );
 
     /**
@@ -282,9 +282,9 @@ class Zend_TimeSync implements IteratorAggregate
     {
         foreach ($this->_timeservers as $key => $server) {
             try {
-                return $this->_current->getDate($locale);
+                return $server->getDate($locale);
             } catch (Zend_TimeSync_ProtocolException $e) {
-                $this->_current->addException($e);
+                $server->addException($e);
             }
         }
         
