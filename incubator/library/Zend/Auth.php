@@ -95,7 +95,7 @@ class Zend_Auth
     public function authenticate()
     {
         $args = func_get_args();
-        $token = call_user_func_array(array($this->_adapter, __METHOD__), $args);
+        $token = call_user_func_array(array($this->_adapter, __FUNCTION__), $args);
 
         /**
          * @todo persist token in session if $this->_useSession === true
