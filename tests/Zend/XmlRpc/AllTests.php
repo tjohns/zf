@@ -10,6 +10,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+require_once 'Zend/XmlRpc/ValueTest.php';
 require_once 'Zend/XmlRpc/ServerTest.php';
 require_once 'Zend/XmlRpc/Server/CacheTest.php';
 require_once 'Zend/XmlRpc/Server/FaultTest.php';
@@ -25,6 +26,7 @@ class Zend_XmlRpc_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_XmlRpc');
 
+        $suite->addTestSuite('Zend_XmlRpc_ValueTest');
         $suite->addTestSuite('Zend_XmlRpc_ServerTest');
         $suite->addTestSuite('Zend_XmlRpc_Server_CacheTest');
         $suite->addTestSuite('Zend_XmlRpc_Server_FaultTest');
