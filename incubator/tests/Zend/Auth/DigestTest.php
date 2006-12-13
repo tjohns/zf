@@ -196,9 +196,9 @@ class Zend_Auth_DigestTest extends PHPUnit_Framework_TestCase
         $auth2 = new Zend_Auth_Digest_Adapter("$this->_filesPath/.htdigest.2");
         $token2 = $auth2->authenticate($options2);
         $this->assertTrue($token2->isValid());
-        $identity1 = $token2->getIdentity();
-        $this->assertTrue($identity1['realm'] === $options2['realm']);
-        $this->assertTrue($identity1['username'] === $options2['username']);
+        $identity2 = $token2->getIdentity();
+        $this->assertTrue($identity2['realm'] === $options2['realm']);
+        $this->assertTrue($identity2['username'] === $options2['username']);
     }
 
 }
