@@ -110,14 +110,6 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
         $this->setScriptPath(null);
         $this->setHelperPath(null);
         $this->setFilterPath(null);
-        $this->_file = null;
-        $this->_helper = array();
-        $this->_helperLoaded = array();
-        $this->_filter = array();
-        $this->_filterLoaded = array();
-        $this->_escape = 'htmlspecialchars';
-        $this->_encoding = 'ISO-8859-1';
-
 
         // user-defined escaping callback
         if (array_key_exists('escape', $config)) {

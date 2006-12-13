@@ -126,8 +126,8 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $prefix = 'Zend_View_' . ucfirst($pathType) . '_';
 
     	// introspect default paths and build expected results.
-		$reflector = (array)$view; 
-		$expectedPaths = $reflector["\0Zend_View_Abstract\0_path"][$pathType];
+		$reflector     = $view->getAllPaths(); 
+		$expectedPaths = $reflector[$pathType];
 
         if ('script' == $pathType) {
             array_unshift($expectedPaths, 'baz' . DIRECTORY_SEPARATOR);
@@ -146,8 +146,8 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 		$view->$func('foo/');   // unix		
 		
     	// introspect script paths after adding two new paths
-		$reflector = (array)$view; 
-		$actualPaths = $reflector["\0Zend_View_Abstract\0_path"][$pathType];
+		$reflector   = $view->getAllPaths(); 
+		$actualPaths = $reflector[$pathType];
 
         $this->assertSame($expectedPaths, $actualPaths);
     }
@@ -303,8 +303,8 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('content', $view->content);
 
         $view->clearVars();
-        $this->assertTrue(null === $view->foo);
-        $this->assertTrue(null === $view->content);
+        $this->assertFalse(isset($view->foo));
+        $this->assertFalse(isset($view->content));
     }
 
     /**
