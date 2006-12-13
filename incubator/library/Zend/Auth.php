@@ -178,25 +178,61 @@ class Zend_Auth
     }
 
 
+    /**
+     * Returns an existing authentication token from the session, or null if there is no token
+     * in the session
+     *
+     * The location in the session of the token determined by the session namespace and token
+     * member name currently set for this object.
+     *
+     * @return Zend_Auth_Token_Interface|null
+     */
     public function getToken()
     {
-        /**
-         * @todo
-         */
+        require_once 'Zend/Session/Core.php';
+        if (!Zend_Session_Core::isStarted()) {
+            Zend_Session_Core::start();
+        }
+        Zend_Session_Core::setOptions(array('strict' => true));
+        $session = new Zend_Session($this->_sessionNamespace, Zend_Session::SINGLE_INSTANCE);
+        if (!isset($session->$this->_sessionTokenName)) {
+            return $session->$this->_sessionTokenName;
+        }
+        return null;
     }
 
+    /**
+     * Returns true if and only if an existing authentication token exists at the location
+     * determined by the session namespace and token member name currently set for this object
+     * and the token represents a successful authentication attempt
+     *
+     * @return boolean
+     */
     public function isLoggedIn()
     {
-        /**
-         * @todo
-         */
+        if (null !== ($token = $this->getToken())) {
+            return $token->isValid();
+        }
+        return false;
     }
 
+    /**
+     * Removes an existing authentication token from the location determined by the session
+     * namespace and token member name currently set for this object
+     *
+     * @return void
+     */
     public function logout()
     {
-        /**
-         * @todo
-         */
+        require_once 'Zend/Session/Core.php';
+        if (!Zend_Session_Core::isStarted()) {
+            Zend_Session_Core::start();
+        }
+        Zend_Session_Core::setOptions(array('strict' => true));
+        $session = new Zend_Session($this->_sessionNamespace, Zend_Session::SINGLE_INSTANCE);
+        if (!isset($session->$this->_sessionTokenName)) {
+            unset($session->$this->_sessionTokenName);
+        }
     }
 
 }
