@@ -92,8 +92,8 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
     {
     	$view = new Zend_View();
     	
-		$reflector = (array)$view; 
-		$paths     = $reflector["\0Zend_View_Abstract\0_path"][$pathType];
+		$reflector = $view->getAllPaths();
+        $paths     = $reflector[$pathType];
 			
 		// test default helper path
 		$this->assertType('array', $paths);
@@ -191,8 +191,8 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 								   dirname(__FILE__) . '/View/_stubs/HelperDir2'));
 								   
 
-		$this->assertEquals( 'bar', $view->stub2() );	
-		$this->assertEquals( 'foo', $view->stub1() );	
+		$this->assertEquals('foo', $view->stub1());
+		$this->assertEquals('bar', $view->stub2());
 
 		// erase the paths to the helper stubs
 		$view->setHelperPath(null);
