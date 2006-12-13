@@ -195,12 +195,17 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         $this->gdata->unsetAttributeQuery();
     }
 
-    public function testUnsetAttributeQuery()
+    public function testExceptionInvalidAttributeQueryOperator()
     {
-    }
-
-    public function testMetadataQuery()
-    {
+        $this->gdata->resetParameters();
+        $attrib = 'price';
+        $op = '?';
+        $attribValue = '50 USD';
+        try {
+            $this->gdata->addAttributeQuery($attrib, $attribValue, $op);
+        } catch (Zend_Gdata_Exception $e) {
+            $this->assertEquals("Unsupported attribute query comparison operator '?'.", $e->getMessage());
+        }
     }
 
 }

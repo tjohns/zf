@@ -21,6 +21,8 @@
 /**
  * Gdata CodeSearch
  *
+ * @link http://code.google.com/apis/gdata/codesearch.html
+ *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -28,24 +30,33 @@
  */
 class Zend_Gdata_CodeSearch extends Zend_Gdata
 {
+    const CODESEARCH_FEED_URI = 'http://www.google.com/codesearch/feeds/search';
 
-    // Gdata-general request parameters:
-    // @todo: request parameter 'q'
-    // @todo: request parameter 'max-results'
-    // @todo: request parameter 'start-index'
+    /**
+     * Retreive feed object
+     *
+     * @return Zend_Feed
+     */
+    public function getFeed()
+    {
+        $uri = self::CODESEARCH_FEED_URI;
+        $uri .= $this->getQueryString();
+        return parent::getFeed($uri);
+    }
 
-    // CodeSearch-specific request parameters:
-    // @todo: request parameter 'q'
+    /**
+     * @param string $var
+     * @param string $value
+     */
+    protected function __set($var, $value)
+    {
+        switch ($var) {
+            case 'updatedMin':
+            case 'updatedMax':
+                throw Zend::exception('Zend_Gdata_Exception', "Parameter '$var' is not currently supported in CodeSearch.");
+                break;
+        }
+        parent::__set($var, $value);
+    }
 
-    // CodeSearch-specific query structure:
-    // @todo: request parameter 'q' is a series of regular expressions
-
-    // CodeSearch operations:
-    // @todo: send a query
-
-    // CodeSearch-specific response content:
-    // @todo: <gcs:file>
-    // @todo: <gcs:match>
-    // @todo: <gcs:package>
 }
-

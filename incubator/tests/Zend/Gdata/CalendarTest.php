@@ -66,44 +66,6 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->assertFalse(isset($this->gdata->updatedMax));
     }
 
-    /*
-     * @todo: Calendar does not seem to recognize the published-min parameter
-     *
-    public function testPublishedMinParam()
-    {
-        $publishedMin = '2006-10-27T11:03';
-        $this->gdata->resetParameters();
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
-        $this->gdata->setPublishedMin($publishedMin);
-        $this->assertTrue(isset($this->gdata->publishedMin));
-        $this->assertEquals($this->gdata->formatTimestamp($publishedMin), $this->gdata->getPublishedMin());
-        $feed = $this->gdata->getFeed();
-        $this->assertEquals(3, $feed->count());
-        foreach ($feed as $feedItem) {
-            // echo $this->xml->formatString($feedItem->saveXML());
-        }
-        unset($this->gdata->publishedMin);
-        $this->assertFalse(isset($this->gdata->publishedMin));
-    }
-
-    public function testPublishedMaxParam()
-    {
-        $publishedMax = '2006-10-27T11:02';
-        $this->gdata->resetParameters();
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
-        // $this->gdata->setPublishedMax($publishedMax);
-        // $this->assertTrue(isset($this->gdata->publishedMax));
-        // $this->assertEquals($this->gdata->formatTimestamp($publishedMax), $this->gdata->getPublishedMax());
-        $feed = $this->gdata->getFeed();
-        // $this->assertEquals(1, $feed->count());
-        foreach ($feed as $feedItem) {
-            // echo $this->xml->formatString($feedItem->saveXML());
-        }
-        unset($this->gdata->publishedMax);
-        $this->assertFalse(isset($this->gdata->publishedMax));
-    }
-     */
-
     public function testUserParam()
     {
         $this->gdata->resetParameters();

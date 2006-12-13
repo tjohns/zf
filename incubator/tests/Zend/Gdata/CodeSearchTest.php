@@ -21,6 +21,7 @@
 
 require_once 'Zend/Gdata/CodeSearch.php';
 require_once 'Zend/Http/Client.php';
+// require_once 'XML/Beautifier.php';
 
 /**
  * @package Zend_Gdata
@@ -32,11 +33,72 @@ class Zend_Gdata_CodeSearchTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->gdata = new Zend_Gdata_CodeSearch(new Zend_Http_Client());
+        // $this->xml = new XML_Beautifier();
+   }
+
+    public function testMaxResultsParam()
+    {
+        $this->gdata->resetParameters();
+        $query = 'malloc';
+        $this->gdata->setQuery($query);
+        $max = 3;
+        $this->gdata->setMaxResults($max);
+        $this->assertTrue(isset($this->gdata->maxResults));
+        $this->assertEquals($max, $this->gdata->getMaxResults());
+        $feed = $this->gdata->getFeed();
+        $this->assertEquals($max, $feed->count());
+        foreach ($feed as $feedEntry) {
+            // echo $this->xml->formatString($feedEntry->saveXML());
+            $gcs = 'gcs:package';
+            $gcsPackage = $feedEntry->$gcs;
+            $gcs = 'gcs:file';
+            $gcsFile = $feedEntry->$gcs;
+            $gcs = 'gcs:match';
+            $gcsMatch = $feedEntry->$gcs;
+            $this->assertTrue(isset($gcsPackage) && isset($gcsFile) && isset($gcsMatch));
+        }
+        unset($this->gdata->maxResults);
+        $this->assertFalse(isset($this->gdata->maxResults));
     }
 
-    public function testCodeSearch()
+    public function testStartIndexParam()
     {
-        $this->assertTrue(true);
+        $this->gdata->resetParameters();
+        $query = 'malloc';
+        $this->gdata->setQuery($query);
+        $start = 3;
+        $this->gdata->setStartIndex($start);
+        $this->assertTrue(isset($this->gdata->startIndex));
+        $this->assertEquals($start, $this->gdata->getStartIndex());
+        $feed = $this->gdata->getFeed();
+        foreach ($feed as $feedEntry) {
+            // echo $this->xml->formatString($feedEntry->saveXML());
+            $gcs = 'gcs:package';
+            $gcsPackage = $feedEntry->$gcs;
+            $gcs = 'gcs:file';
+            $gcsFile = $feedEntry->$gcs;
+            $gcs = 'gcs:match';
+            $gcsMatch = $feedEntry->$gcs;
+            $this->assertTrue(isset($gcsPackage) && isset($gcsFile) && isset($gcsMatch));
+        }
+        unset($this->gdata->startIndex);
+        $this->assertFalse(isset($this->gdata->startIndex));
+    }
+
+    public function testExceptionUpdatedMinMaxParam()
+    {
+        $this->gdata->resetParameters();
+        try {
+            $feed = $this->gdata->updatedMin = 'string';
+        } catch (Zend_Gdata_Exception $e) {
+            $this->assertEquals("Parameter 'updatedMin' is not currently supported in CodeSearch.", $e->getMessage());
+        }
+        $this->gdata->resetParameters();
+        try {
+            $feed = $this->gdata->updatedMax = 'string';
+        } catch (Zend_Gdata_Exception $e) {
+            $this->assertEquals("Parameter 'updatedMax' is not currently supported in CodeSearch.", $e->getMessage());
+        }
     }
 
 }

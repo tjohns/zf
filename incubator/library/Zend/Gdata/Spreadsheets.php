@@ -62,5 +62,21 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     // @todo: <gs:colCount>
     // @todo: <gs:cell>
     // @todo: <gsx:_columnName_>
+
+    /**
+     * @param string $var
+     * @param string $value
+     */
+    protected function __set($var, $value)
+    {
+        switch ($var) {
+            case 'updatedMin':
+            case 'updatedMax':
+                throw Zend::exception('Zend_Gdata_Exception', "Parameter '$var' is not currently supported in Spreadsheets.");
+                break;
+        }
+        parent::__set($var, $value);
+    }
+
 }
 

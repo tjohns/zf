@@ -126,11 +126,11 @@ class Zend_Gdata_Data
             self::EVENT_STATUS_TENTATIVE
         ),
         'link' => array(
-            self::LINK_ATOM_ALTERNATE,
-            self::LINK_ATOM_ENCLOSURE,
-            self::LINK_ATOM_RELATED,
-            self::LINK_ATOM_SELF,
-            self::LINK_ATOM_VIA
+            self::LINK_ALTERNATE,
+            self::LINK_ENCLOSURE,
+            self::LINK_RELATED,
+            self::LINK_SELF,
+            self::LINK_VIA
         ),
         'link#gdata' => array(
             self::LINK_ONLINE_LOCATION
@@ -201,21 +201,11 @@ class Zend_Gdata_Data
     );
 
     /**
-     * Constructor is private for now, because we use this class statically only.
-     *
-     * @param array $data
-     * @param string $kind
-     */
-    private function __construct()
-    {
-    }
-
-    /**
      *
      * @param string $value
      * @param string $key
      */
-    public static function validateValue($value, $key)
+    public static function isValid($value, $key)
     {
         if (!array_key_exists($key, self::$supportedValues)) {
             return false;
@@ -223,7 +213,7 @@ class Zend_Gdata_Data
         if (in_array($value, self::$supportedValues[$key])) {
             return true;
         }
-        switch ($parameter) {
+        switch ($key) {
             case 'visibility':
                 if (!strncmp($value, self::VIS_PRIVATE_MAGIC_COOKIE, strlen(self::VIS_PRIVATE_MAGIC_COOKIE))) {
                     return true;
@@ -231,6 +221,19 @@ class Zend_Gdata_Data
                 break;
         }
         return false;
+    }
+
+    /**
+     *
+     * @param string $key
+     * @return array values
+     */
+    public static function getValues($key)
+    {
+        if (!array_key_exists($key, self::$supportedValues)) {
+            return false;
+        }
+        return self::$supportedValues[$key];
     }
 
 }

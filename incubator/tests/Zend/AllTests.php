@@ -33,18 +33,18 @@ class Zend_AllTests
 
         // place other tests here for incubator suite
 
-        $suite->addTestSuite('Zend_AclTest');
-        $suite->addTestSuite('Zend_Console_GetoptTest');
-        $suite->addTest(Zend_Currency_AllTests::suite());
-        $suite->addTestSuite('Zend_DateTest');
-        $suite->addTest(Zend_Date_AllTests::suite());
+        // $suite->addTestSuite('Zend_AclTest');
+        // $suite->addTestSuite('Zend_Console_GetoptTest');
+        // $suite->addTest(Zend_Currency_AllTests::suite());
+        // $suite->addTestSuite('Zend_DateTest');
+        // $suite->addTest(Zend_Date_AllTests::suite());
         $suite->addTest(Zend_Gdata_AllTests::suite());
-        $suite->addTestSuite('Zend_LocaleTest');
-        $suite->addTest(Zend_Locale_AllTests::suite());
-        $suite->addTest(Zend_Mail_AllTests::suite());
-        $suite->addTestSuite('Zend_MeasureTest');
-        $suite->addTest(Zend_Measure_AllTests::suite());
-        $suite->addTest(Zend_Registry_AllTests::suite());
+        // $suite->addTestSuite('Zend_LocaleTest');
+        // $suite->addTest(Zend_Locale_AllTests::suite());
+        // $suite->addTest(Zend_Mail_AllTests::suite());
+        // $suite->addTestSuite('Zend_MeasureTest');
+        // $suite->addTest(Zend_Measure_AllTests::suite());
+        // $suite->addTest(Zend_Registry_AllTests::suite());
         //$suite->addTest(Zend_Session_AllTests::suite());
 
         return $suite;

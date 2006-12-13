@@ -23,6 +23,8 @@ require_once('Zend/Gdata/Data.php');
 /**
  * Gdata Calendar
  *
+ * @link http://code.google.com/apis/gdata/calendar.html
+ *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -197,13 +199,13 @@ class Zend_Gdata_Calendar extends Zend_Gdata
                 break;
             case 'visibility':
             case 'projection':
-                if (!Zend_Gdata_Data::validateValue($value, $var)) {
+                if (!Zend_Gdata_Data::isValid($value, $var)) {
                     throw Zend::exception('Zend_Gdata_Exception', "Unsupported $var value: '$value'");
                 }
                 $var = "_$var";
                 break;
             case 'orderby':
-                if (!Zend_Gdata_Data::validateValue($value, $var)) {
+                if (!Zend_Gdata_Data::isValid($value, $var)) {
                     throw Zend::exception('Zend_Gdata_Exception', "Unsupported $var value: '$value'");
                 }
                 break;

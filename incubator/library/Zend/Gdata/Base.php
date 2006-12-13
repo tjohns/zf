@@ -23,6 +23,8 @@ require_once 'Zend/Gdata.php';
 /**
  * Gdata Base
  *
+ * @link http://code.google.com/apis/base/
+ *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -145,7 +147,7 @@ class Zend_Gdata_Base extends Zend_Gdata
     public function addAttributeQuery($attributeName, $attributeValue, $op = ':')
     {
         if (!in_array($op, array(':', '==', '<', '>', '<=', '>=', '<<'))) {
-            throw Zend::exception('Zend_Gdata_Exception', "Unsupported attribute query comparison operator '$op'.\n");
+            throw Zend::exception('Zend_Gdata_Exception', "Unsupported attribute query comparison operator '$op'.");
         }
         $this->attributeQueryTerms[$attributeName][] = array(
             'op' => $op,

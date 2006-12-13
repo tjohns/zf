@@ -23,8 +23,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'Zend_Gdata_AllTests::main');
 
     /**
-     * Prepend library/ to the include_path.  This allows the tests to run out of the box and
-     * helps prevent finding other copies of the framework that might be present.
+     * Prepend library/ to the include_path.  This allows the tests to run out
+     * of the box and helps prevent finding other copies of the framework that
+     * might be present.
      */
     $zf_top = dirname(dirname(dirname(dirname(__FILE__))));
     set_include_path($zf_top . DIRECTORY_SEPARATOR . 'library'
@@ -39,10 +40,16 @@ require_once 'Zend/Gdata/BaseTest.php';
 require_once 'Zend/Gdata/BloggerTest.php';
 require_once 'Zend/Gdata/CalendarTest.php';
 require_once 'Zend/Gdata/CodeSearchTest.php';
-require_once 'Zend/Gdata/SpreadsheetsTest.php';
+require_once 'Zend/Gdata/DataTest.php';
+// require_once 'Zend/Gdata/SpreadsheetsTest.php';
 
 // Tests that require authentication
-require_once 'Zend/Gdata/BaseClientLoginTest.php';
+// require_once 'Zend/Gdata/BaseClientLoginTest.php';
+// require_once 'Zend/Gdata/BloggerClientLoginTest.php';
+// require_once 'Zend/Gdata/CalendarClientLoginTest.php';
+// require_once 'Zend/Gdata/SpreadsheetsClientLoginTest.php';
+
+error_reporting(E_ALL);
 
 class Zend_Gdata_AllTests
 {
@@ -60,10 +67,14 @@ class Zend_Gdata_AllTests
         $suite->addTestSuite('Zend_Gdata_BloggerTest');
         $suite->addTestSuite('Zend_Gdata_CalendarTest');
         $suite->addTestSuite('Zend_Gdata_CodeSearchTest');
-        $suite->addTestSuite('Zend_Gdata_SpreadsheetsTest');
+        $suite->addTestSuite('Zend_Gdata_DataTest');
+        // $suite->addTestSuite('Zend_Gdata_SpreadsheetsTest');
 
         // Tests that require authentication
-        $suite->addTestSuite('Zend_Gdata_BaseClientLoginTest');
+        // $suite->addTestSuite('Zend_Gdata_BaseClientLoginTest');
+        // $suite->addTestSuite('Zend_Gdata_BloggerClientLoginTest');
+        // $suite->addTestSuite('Zend_Gdata_CalendarClientLoginTest');
+        // $suite->addTestSuite('Zend_Gdata_SpreadsheetsClientLoginTest');
 
         return $suite;
     }

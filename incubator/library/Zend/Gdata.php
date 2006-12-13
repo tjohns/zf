@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend Framework
  *
@@ -25,6 +24,9 @@
 require_once 'Zend/Feed.php';
 
 /**
+ *
+ * @link http://code.google.com/apis/gdata/overview.html
+ *
  * @category   Zend
  * @package    Zend_Gdata
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -184,22 +186,6 @@ class Zend_Gdata
     }
 
     /**
-     * @param int $value
-     */
-    public function setPublishedMax($value)
-    {
-        $this->publishedMax = $value;
-    }
-
-    /**
-     * @param int $value
-     */
-    public function setPublishedMin($value)
-    {
-        $this->publishedMin = $value;
-    }
-
-    /**
      * @param string $value
      */
     public function setQuery($value)
@@ -256,22 +242,6 @@ class Zend_Gdata
     }
 
     /**
-     * @return int publishedMax
-     */
-    public function getPublishedMax()
-    {
-        return $this->publishedMax;
-    }
-
-    /**
-     * @return int publishedMin
-     */
-    public function getPublishedMin()
-    {
-        return $this->publishedMin;
-    }
-
-    /**
      * @return int startIndex
      */
     public function getStartIndex()
@@ -302,6 +272,9 @@ class Zend_Gdata
     protected function __set($var, $value)
     {
         switch ($var) {
+            case 'query':
+                $var = 'q';
+                break;
             case 'maxResults':
                 $var = 'max-results';
                 $value = intval($value);
@@ -316,14 +289,6 @@ class Zend_Gdata
                 break;
             case 'updatedMax':
                 $var = 'updated-max';
-                $value = $this->formatTimestamp($value);
-                break;
-            case 'publishedMin':
-                $var = 'published-min';
-                $value = $this->formatTimestamp($value);
-                break;
-            case 'publishedMax':
-                $var = 'published-max';
                 $value = $this->formatTimestamp($value);
                 break;
             default:
@@ -359,6 +324,9 @@ class Zend_Gdata
     protected function __get($var)
     {
         switch ($var) {
+            case 'query':
+                $var = 'q';
+                break;
             case 'maxResults':
                 $var = 'max-results';
                 break;
@@ -370,12 +338,6 @@ class Zend_Gdata
                 break;
             case 'updatedMax':
                 $var = 'updated-max';
-                break;
-            case 'publishedMin':
-                $var = 'published-min';
-                break;
-            case 'publishedMax':
-                $var = 'published-max';
                 break;
             default:
                 // other params may be set by subclasses
@@ -391,6 +353,9 @@ class Zend_Gdata
     protected function __isset($var)
     {
         switch ($var) {
+            case 'query':
+                $var = 'q';
+                break;
             case 'maxResults':
                 $var = 'max-results';
                 break;
@@ -402,12 +367,6 @@ class Zend_Gdata
                 break;
             case 'updatedMax':
                 $var = 'updated-max';
-                break;
-            case 'publishedMin':
-                $var = 'published-min';
-                break;
-            case 'publishedMax':
-                $var = 'published-max';
                 break;
             default:
                 // other params may be set by subclasses
@@ -422,6 +381,9 @@ class Zend_Gdata
     protected function __unset($var)
     {
         switch ($var) {
+            case 'query':
+                $var = 'q';
+                break;
             case 'maxResults':
                 $var = 'max-results';
                 break;
@@ -433,12 +395,6 @@ class Zend_Gdata
                 break;
             case 'updatedMax':
                 $var = 'updated-max';
-                break;
-            case 'publishedMin':
-                $var = 'published-min';
-                break;
-            case 'publishedMax':
-                $var = 'published-max';
                 break;
             default:
                 // other params may be set by subclasses
