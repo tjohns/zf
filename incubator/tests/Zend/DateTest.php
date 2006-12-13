@@ -991,11 +991,88 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2007-07-07T01:31:30+02:00');
         $date->set($d2, Zend_Date::WEEK, TRUE , 'en_US');
         $this->assertSame($date->get(Zend_Date::W3C),'2007-01-06T00:31:30+01:00');
-        
+
+        $date->set(1234567890);
+        try {
+            $date->set('noday', Zend_Date::MONTH);
+            $this->fail('exception expected');
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+        $date->set($d2, Zend_Date::MONTH);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+        $date->set('März', Zend_Date::MONTH);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-03-14T00:31:30+01:00');
+        $date->set('Dezember', Zend_Date::MONTH);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-12-14T00:31:30+01:00');
+        $date->set('August', Zend_Date::MONTH, TRUE);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-08-14T01:31:30+02:00');
+        $date->set($d2, Zend_Date::MONTH, TRUE);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+        $date->set('April', Zend_Date::MONTH, FALSE, 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-04-14T01:31:30+02:00');
+        $date->set($d2, Zend_Date::MONTH, FALSE, 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+        $date->set('July', Zend_Date::MONTH, TRUE , 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-07-14T01:31:30+02:00');
+        $date->set($d2, Zend_Date::MONTH, TRUE , 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+
+        $date->set(1234567890);
+        try {
+            $date->set('noday', Zend_Date::MONTH_SHORT);
+            $this->fail();
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+        $date->set($d2, Zend_Date::MONTH_SHORT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+        $date->set('03', Zend_Date::MONTH_SHORT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-03-14T00:31:30+01:00');
+        $date->set( 14, Zend_Date::MONTH_SHORT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2010-02-14T00:31:30+01:00');
+        $date->set(-6, Zend_Date::MONTH_SHORT);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-06-14T01:31:30+02:00');
+        $date->set( 10, Zend_Date::MONTH_SHORT, TRUE);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-10-14T01:31:30+02:00');
+        $date->set($d2, Zend_Date::MONTH_SHORT, TRUE);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+        $date->set( 9, Zend_Date::MONTH_SHORT, FALSE, 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-09-14T01:31:30+02:00');
+        $date->set($d2, Zend_Date::MONTH_SHORT, FALSE, 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+        $date->set(-20, Zend_Date::MONTH_SHORT, TRUE , 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2007-04-15T01:31:30+02:00');
+        $date->set($d2, Zend_Date::MONTH_SHORT, TRUE , 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2007-01-15T00:31:30+01:00');
+
+        $date->set(1234567890);
+        try {
+            $date->set('noday', Zend_Date::MONTH_NAME);
+            $this->fail('exception expected');
+        } catch (Zend_Date_Exception $e) {
+            // success
+        }
+        $date->set($d2, Zend_Date::MONTH_NAME);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+        $date->set('Mär', Zend_Date::MONTH_NAME);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-03-14T00:31:30+01:00');
+        $date->set('Dez', Zend_Date::MONTH_NAME);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-12-14T00:31:30+01:00');
+        $date->set('Aug', Zend_Date::MONTH_NAME, TRUE);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-08-14T01:31:30+02:00');
+        $date->set($d2, Zend_Date::MONTH_NAME, TRUE);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+        $date->set('Apr', Zend_Date::MONTH_NAME, FALSE, 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-04-14T01:31:30+02:00');
+        $date->set($d2, Zend_Date::MONTH_NAME, FALSE, 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+        $date->set('Jul', Zend_Date::MONTH_NAME, TRUE , 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-07-14T01:31:30+02:00');
+        $date->set($d2, Zend_Date::MONTH_NAME, TRUE , 'en_US');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-01-14T00:31:30+01:00');
+
 /**
-    	$this->assertSame($date->get(Zend_Date::MONTH),'Februar');
-    	$this->assertSame($date->get(Zend_Date::MONTH_SHORT),'02');
-    	$this->assertSame($date->get(Zend_Date::MONTH_NAME),'Feb');
     	$this->assertSame($date->get(Zend_Date::MONTH_DIGIT),'2');
     	$this->assertSame($date->get(Zend_Date::MONTH_DAYS),'28');
     	$this->assertSame($date->get(Zend_Date::MONTH_NARROW),'F');

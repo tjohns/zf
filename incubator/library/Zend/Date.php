@@ -1159,8 +1159,8 @@ class Zend_Date {
                 return new Zend_Date($comp);
                 break;
             case 'set' :
-//print "\nCOMP:".$comp;
-//print "\nDATE:".$date;
+//print "\nCOMP:".$comp."::".$this->_Date->date('D\, d M Y H\:i\:s O',$comp);
+//print "\nDATE:".$date."::".$this->_Date->date('D\, d M Y H\:i\:s O',$date);
                 $this->_Date->setTimestamp(bcsub($this->_Date->getTimestamp(), $comp));
 //print "\nDATE2:".$this->get(Zend_Date::RSS);
                 
@@ -1360,11 +1360,11 @@ class Zend_Date {
             // month formats
             case Zend_Date::MONTH :
                 $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
-                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $gmt, $locale)) - 1;
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $gmt, $locale));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
                     if (strtoupper($value) == strtoupper($date)) {
-                        $found = $cnt + 1;
+                        $found = $key;
                         break;
                     }
                     ++$cnt;
@@ -1372,26 +1372,29 @@ class Zend_Date {
 
                 // Monthname found
                 if ($cnt < 12) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $found,   1, 0, -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, $monthnr, 1, 0, -1, $gmt));
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $found,   1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, $monthnr, 1, 1970, -1, $gmt));
                 }
 
                 // Monthname not found
-                return FALSE; 
+                throw Zend::exception('Zend_Date_Exception', 'month expected');
                 break;
 
             case Zend_Date::MONTH_SHORT :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, intval($date), 1, 0, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, $month,        1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, intval($date), 1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, $month,        1, 1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'month expected');
                 break;
 
             case Zend_Date::MONTH_NAME :
                 $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
-                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $gmt, $locale)) - 1;
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $gmt, $locale));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
                     if (strtoupper($value) == strtoupper($date)) {
-                        $found = $cnt + 1;
+                        $found = $key;
                         break;
                     }
                     ++$cnt;
@@ -1399,27 +1402,30 @@ class Zend_Date {
 
                 // Monthname found
                 if ($cnt < 12) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $found,   1, 0, -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, $monthnr, 1, 0, -1, $gmt));
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $found,   1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, $monthnr, 1, 1970, -1, $gmt));
                 }
 
                 // Monthname not found
-                return FALSE; 
+                throw Zend::exception('Zend_Date_Exception', 'month expected');
                 break;
 
             case Zend_Date::MONTH_DIGIT :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, intval($date), 1, 0, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, $month,        1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, intval($date), 1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, $month,        1, 1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'month expected');
                 break;
 
             case Zend_Date::MONTH_DAYS :
-                return FALSE;
+                throw Zend::exception('Zend_Date_Exception', 'month days not supported');
                 break;
 
 
             case Zend_Date::MONTH_NARROW :
                 $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
-                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $gmt, $locale)) - 1;
+                $monthnr = (int) ($this->get(Zend_Date::MONTH_DIGIT, $gmt, $locale));
                 $cnt = 0;
                 foreach ($monthlist as $key => $value) {
                     if (strtoupper(substr($value, 0, 1)) == strtoupper(substr($date, 0, 1))) {
@@ -1431,18 +1437,18 @@ class Zend_Date {
 
                 // Monthname found
                 if ($cnt < 12) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $found,   1, 0, -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, $monthnr, 1, 0, -1, $gmt));
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, $found,   1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, 0, $monthnr, 1, 1970, -1, $gmt));
                 }
 
                 // Monthname not found
-                return FALSE; 
+                throw Zend::exception('Zend_Date_Exception', 'month expected');
                 break;
 
 
             // year formats
             case Zend_Date::LEAPYEAR :
-                return FALSE;
+                throw Zend::exception('Zend_Date_Exception', 'month days not supported');
                 break;
 
             case Zend_Date::YEAR_8601 :
