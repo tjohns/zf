@@ -89,7 +89,7 @@
                     <para>
                         Der aktuelle Dispatcher Prozess besteht aus dem Instanzieren der Controller
                         Klasse und dem Aufrufen der Aktionsmethode in dieser Klasse. Anders als das 
-                        Routing, das immer nur einmal vorkommt, erfolgt das Dispatching in einer 
+                        Routing, welches immer nur einmal vorkommt, erfolgt das Dispatching in einer 
                         Schleife. Wenn der Verarbeitungsstatus des Request Objektes irgendwann zurück
                         gesetzt wird, wird die Schleife wiederholt und die Aktion aufgerufen, die 
                         zu diesem Zeitpunkt im Request Objekt gesetzt ist. Das erste Mal, wenn ein

@@ -462,70 +462,67 @@
     </sect2>
     
     <sect2 id="zend.http.client.multiple_requests">
-        <title>Sending Multiple Requests With the Same Client</title>
+        <title>Versenden mehrerer Anfragen mit dem selben Client</title>
         <para>
-            Zend_Http_Client was also designed specifically to handle several
-            consecutive requests with the same object. This is useful in cases
-            where a script requires data to be fetched from several places, or
-            when accessing a specific HTTP resource requires logging in and 
-            obtaining a session cookie, for example. 
+            Zend_Http_Client wurde zusätzlich besonders dafür entwickelt, um mehrere, aufeinander
+            folgende Abfragen durch das selbe Objekt verarbeiten zu können. Dies ist nützlich, wenn
+            z.B. ein Skript es erfordert, Daten von verschiedenen Stellen abzurufen, oder wenn eine
+            spezielle HTTP Ressource das Einloggen und Erhalten eines Session Cookies erfordert.
         </para>
         <para>
-            When performing several requests to the same host, it is highly 
-            recommended to enable the 'keepalive' configuration flag. This way,
-            if the server supports keep-alive connections, the connection to the
-            server will only be closed once all requests are done and the Client
-            object is destroyed. This prevents the overhead of opening and 
-            closing TCP connections to the server.
+            Beim Ausführen mehrere Anfrage an den selben Host, wird es besonders empfohlen, den
+            Konfigurationsschalter 'keepalive' zu aktivieren. Wenn der Server keep-alive 
+            Verbindungen unterstützt, wird auf diesem Weg die Verbindung zum Server nur beendet, 
+            sobald alle Anfragen abgeschlossen sind und das Client Objekt zerstört wird. Dies 
+            verhindert den Overhead beim Öffnen und Schließen von TCP Verbindungen zum Server.
         </para>
         <para>
-            When you perform several requests with the same client, but want
-            to make sure all the request-specific parameters are cleared, you
-            should use the resetParameters() method. This ensures that GET and
-            POST parameters, request body and request-specific headers are 
-            reset and are not reused in the next request.
+            Wenn man verschiedene Anfragen mit dem selben Client durchführt, aber sicherstellen 
+            möchte, dass alle anfragespezifischen Parameter entfernt werden, sollte man die 
+            resetParameters() Methode verwenden. Dies stellt sicher, dass GET und POST Parameter,
+            Anfragehauptteil und anfragespezifischen Header zurückgesetzt und nicht bei der nächsten
+            Anfrage wiederverwendet werden.
         </para>
         <note>
-            <title>Reseting parameters</title>
+            <title>Parameter zurück setzen</title>
             <para>
-                Note that non-request specific headers are not reset when the 
-                resetParameters method is used. As a matter of fact, only the
-                'Content-length' and 'Content-type' headers are reset. This 
-                allows you to set-and-forget headers like 'Accept-language' and
-                'Accept-encoding'
+                Bitte beachten, dass Header, die nicht anfragespezifisch sind, nicht zurück gesetzt
+                werden, wenn die resetParameters Methode verwendet wird. Tatsächlich werden nur
+                die 'Content-length' und 'Content-type' Header zurück gesetzt. Dies erlaubt das 
+                Setzen und Vergessen von Headern wie 'Accept-language' und 'Accept-encoding'.
             </para>
         </note>
         <para>
-            Another feature designed specifically for consecutive requests is 
-            the Cookie Jar object. Cookie Jars allow you to automatically save
-            cookies set by the server in the first request, and send them on
-            consecutive requests transparently. This allows, for example, going
-            through an authentication request before sending the actual data
-            fetching request.
+            Ein weiteres Feature, welches speziell für aufeinander folgende Anfragen entwickelt 
+            worden ist, ist das Cookie Jar Objekt (Keksdose). Cookie Jars erlauben das automatische
+            Speichern von Cookies, die vom Server bei der ersten Anfrage gesetzt worden sind, und
+            das Versenden bei nachfolgenden Anfragen. Dies erlaubt es z.B. eine 
+            Authentifizierungsanfrage zu durchlaufen, bevor die eigentliche Anfrage zum 
+            Erhalten der Daten gesendet wird. 
         </para>
         <para>
-            If your application requires one authentication request per user,
-            and consecutive requests might be performed in more than one script
-            in your application, it might be a good idea to store the Cookie Jar
-            object in the user's session. This way, you will only need to 
-            authenticate the user once every session.
+            Wenn die Applikation eine Authentifizierungsanfrage pro Benutzer erfordert und 
+            nachfolgende Anfragen in mehr als einem Skript in der Applikation durchgeführt werden 
+            könnten, könnte es eine gute Idee sein, das Cookie Jar Objekt in der Benutzersession zu
+            speichern. Auf diese Weise muß der Benutzer nur einmal pro Session authentifiziert 
+            werden.
         </para>
         <example>
-            <title>Performing consecutive requests with one client</title>
+            <title>Durchführen von aufeinander folgenden Anfrage mit einem Client</title>
             <programlisting role="php">
 <![CDATA[<?php
-    // First, instantiate the client 
+    // Zuerst den Client instanzieren
     $client = new Zend_Http_Client('http://www.example.com/fetchdata.php', array(
         'keepalive' => true
     ));
     
-    // Do we have the cookies stored in our session?
+    // Haben wir die Cookies in unserer Session gespeichert?
     if (isset($_SESSION['cookiejar']) && 
         $_SESSION['cookiejar'] instanceof Zend_Http_CookieJar)) {
         
         $client->setCookieJar($_SESSION['cookiejar']);
     } else {
-        // If we don't, authenticate and store cookies
+        // Falls nicht, authentifiziere und speichere die Cookies
         $client->setCookieJar();
         $client->setUri('http://www.example.com/login.php');
         $client->setParameterPost(array(
@@ -534,60 +531,57 @@
         ));
         $client->request(Zend_Http_Client::POST);
         
-        // Now, clear parameters and set the URI to the original one
-        // (note that the cookies that were set by the server are now
-        // stored in the jar)
+        // Nun entferne die Parameter und setze die URI auf das Original
+        // (Bitte beachten, dass der Cookie, der vom Server gesetzt worden ist,
+        // nun in der Dose ist)
         $client->resetParameters();
         $client->setUri('http://www.example.com/fetchdata.php');
     }
     
     $response = $client->request(Zend_Http_Client::GET);
     
-    // Store cookies in session, for next page
+    // Speichere die Cookies in der Session für die nächste Seite
     $_SESSION['cookiejar'] = $client->getCookieJar();
 ?>]]></programlisting>
         </example>
     </sect2>
     
     <sect2 id="zend.http.client.adapters">
-        <title>Connection Adapters</title>
+        <title>Verbindungsadapter</title>
         <para>
-            Zend_Http_Client is based on a connection adapter design. The
-            connection adapter is the object in charge of performing the 
-            actual connection to the server, as well as writing requests 
-            and writing responses.
-            This connection adapter can be replaced, and you can create and
-            extend the default connection adapter to suite your special needs,
-            without the need to extend or replace the entire HTTP client
-            class, and with the same interface.
+            Zend_Http_Client basiert auf einem Design mit Verbindungsadaptern. Der 
+            Verbindungsadapter ist das Objekt, welches für die Ausführung der aktuellen Verbindung 
+            zum Server sowie für das Schreiben der Anfragen und Antworten verantwortlich ist. 
+            Dieser Verbindungsadapter kann ersetzt werden und man kann den Standard 
+            Verbindungsadapter durch seinen eigenen Adapter erweitern, um ihn mit dem selben 
+            Interface auf seine eigenen Bedürfnisse anzupassen, ohne dass man die gesamte HTTP 
+            Client Klasse erweitern oder ersetzen muss.
         </para>
         <para>
-            Currently, the Zend_Http_Client class provides two built-in 
-            connection adapters: 
+            Derzeit stellt die Zend_Http_Client Klass zwei eingebaute Verbindungsadapter bereit: 
             <itemizedlist>
                 <listitem>
-                    <para><code>Zend_Http_Client_Adapter_Socket</code>: The 
-                    default adapter, which is a plain socket based adapter, 
-                    and does not require any special PHP extension to use.
+                    <para><code>Zend_Http_Client_Adapter_Socket</code>: Der Standard 
+                    Verbindungsadapter, der ein einfacher, Socket basierter Adapter ist und keine
+                    spezielle PHP Erweiterung benötigt, um verwendet zu werden.
                     </para>
                 </listitem>
                 <listitem>
-                    <para><code>Zend_Http_Client_Adapter_Test</code>: This is a
-                    dummy adapter, that should be used for testing purposes only.
-                    It does not perform any real connections, and returns a 
-                    predefined response.
+                    <para><code>Zend_Http_Client_Adapter_Test</code>: Dies ist ein Dummy Adapter, 
+                    der nur für Testzwecke verwendet werden soll. Er führt keine wirklichen 
+                    Verbindungen aus und gibt eine vordefinierte Antwort zurück.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-            The Zend_Http_Client object's adapter connection adapter is set 
-            using the 'adapter' configuartion option. When instantiating the
-            client object, you can set the 'adapter' configuration option to
-            a string containing the adapter's name (eg. 'Zend_Http_Client_Adapter_Socket')
-            or to a variable holding an adapter object (eg <code>
-            new Zend_Http_Client_Adapter_test</code>). You can also set the 
-            adapter later, using the Zend_Http_Client->setConfig() method.
+            Der Verbindungsadapter für das Zend_Http_Client Objekt wird durch Verwendung der 
+            'adapter' Konfigurationsoption gesetzt. Beim Instanzieren des Client Objektes kann man
+            die 'adapter' Konfigurationsoption setzen mit einem String, der den Adapternamen (z.B. 
+            'Zend_Http_Client_Adapter_Socket') enthält, oder mit eine Variable, die ein 
+            Adapterobjekt (z.B. <code>new Zend_Http_Client_Adapter_test</code>) enthält. Man kann 
+            den Adapter auch danach setzen, indem man die Zend_Http_Client->setConfig() Methode 
+            verwendet.
         </para>
         <para>
             You can create your own connection adapters and use them. In order
