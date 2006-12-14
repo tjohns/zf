@@ -224,7 +224,7 @@ class Zend_XmlRpc_Client
             'User-Agent: Zend_XmlRpc_Client'
         ));
 
-        $xml = (string)$this->_lastRequest;
+        $xml = $this->_lastRequest->__toString();
         $http->setRawData($xml);
         $httpResponse = $http->request(Zend_Http_Client::POST);
 

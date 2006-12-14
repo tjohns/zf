@@ -140,7 +140,7 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         $message = 'foo';
         
         $fault = new Zend_XmlRpc_Fault($code, $message);
-        $xml = (string)$fault;
+        $xml = $fault->__toString();
 
         $response = $this->makeHttpResponseFrom($xml);
         $this->httpAdapter->setResponse($response);        
@@ -391,7 +391,7 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
 
         // system.multicall() will return a fault
         $fault = new Zend_XmlRpc_Fault(7, 'bad method');
-        $xml = (string)$fault;
+        $xml = $fault->__toString();
         $response = $this->makeHttpResponseFrom($xml);
         $this->httpAdapter->addResponse($response);  
 
@@ -428,7 +428,7 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
     {
         $response = new Zend_XmlRpc_Response();
         $response->setReturnValue($nativeVars);
-        $xml = (string)$response;
+        $xml = $response->__toString();
 
         $response = $this->makeHttpResponseFrom($xml);
         return $response;
