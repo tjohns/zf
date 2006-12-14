@@ -9,11 +9,11 @@
 		</para>
 
 		<para>
-			System <code>Zend_Controller</code> został zaprojektowany aby być lekkim, modułowym
-			i rozszerzalnym. Projekt jest minimalistyczny w celu zapewnienia elastyczności 
-		    i wolności użytkownikom, jednak zapewniając wystarczającą strukturę powoduje, że
-		    systemy zbudowane w oparciu o <code>Zend_Controller</code> będą napisane
-		    w podobnych konwencjach.
+			System <code>Zend_Controller</code> został zaprojektowany aby być lekkim, 
+			modułowym i rozszerzalnym. Projekt jest minimalistyczny w celu zapewnienia 
+			elastyczności i wolności użytkownikom, jednak zapewniając wystarczającą 
+			strukturę powoduje, że systemy zbudowane w oparciu o 
+			<code>Zend_Controller</code> będą napisane w podobnych konwencjach.
 		</para>
 
 		<para>

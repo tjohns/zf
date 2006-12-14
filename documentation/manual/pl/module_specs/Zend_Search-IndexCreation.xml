@@ -172,6 +172,18 @@ $index->optimize();
             </para>
         </sect3>
     </sect2>
+
+    <sect2 id="zend.search.index-creation.limitations">
+        <title>Limitationas</title>
+
+        <para>
+            Limitations are platform dependent.
+        </para>
+
+        <para>
+            Maximum index size is 2GB for 32-bit platforms.
+        </para>
+    </sect2>
 </sect1>
 
 <!--
