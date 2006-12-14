@@ -38,7 +38,7 @@
         
         <para>
             <code>Zend_View</code> снабжен начальным набором вспомогательных
-            классов, все они имеют отношение к генерации элемнетов форм.
+            классов, все они имеют отношение к генерации элементов форм.
             Каждый из них автоматически выполняет соответствующую экранизацию
             выходных данных. Это:   
 <!--
@@ -252,22 +252,30 @@
             Как и для скриптов вида, ваш контроллер может задать
             стек путей, в которых <code>Zend_View</code> должен искать
             вспомогательные классы. По умолчанию <code>Zend_View</code>
-            ищет вспомогательные классы в <code>Zend/View/Helper/*</code>. Вы можете
-            приказать <code>Zend_View</code> искать в других местах,
+            ищет вспомогательные классы в <code>Zend/View/Helper/*</code>. Вы
+            можете приказать <code>Zend_View</code> искать в других местах,
             используя методы <code>setHelperPath()</code> и
-            <code>addHelperPath()</code>. 
+            <code>addHelperPath()</code>. Кроме этого, вы можете указать префикс
+            класса, используемый для вспомогательных классов, он
+            обеспечивает пространство имен. Если префикс не указан, то по
+            умолчанию используется 'Zend_View_Helper_'. 
 <!--
-            As with view scripts, your controller can specify a stack of
-            paths for Zend_View to search for helper classes. By
-            default, Zend_View looks in "Zend/View/Helper/*" for helper
-            classes. You can tell Zend_View to look in other locations
-            using the setHelperPath() and addHelperPath() methods.
+            As with view scripts, your controller can specify a stack of paths
+            for Zend_View to search for helper classes. By default, Zend_View
+            looks in "Zend/View/Helper/*" for helper classes. You can tell
+            Zend_View to look in other locations using the setHelperPath() and
+            addHelperPath() methods.  Additionally, you can indicate a class
+            prefix to use for helpers in the path provided, to allow namespacing
+            your helper classes. By default, if no class prefix is provided,
+            'Zend_View_Helper_' is assumed.
 -->
         </para>
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->setHelperPath('/path/to/more/helpers');
+
+// Устанавливает путь /path/to/more/helpers с префиксом 'My_View_Helper'
+$view->setHelperPath('/path/to/more/helpers', 'My_View_Helper');
 ?>]]>
         </programlisting>
         
@@ -290,16 +298,18 @@ $view->setHelperPath('/path/to/more/helpers');
         
         <programlisting role="php"><![CDATA[<?php
 $view = new Zend_View();
-$view->addHelperPath('/path/to/some/helpers');
-$view->addHelperPath('/other/path/to/helpers');
+// Добавить /path/to/some/helpers с префиксом для классов 'My_View_Helper'
+$view->addHelperPath('/path/to/some/helpers', 'My_View_Helper);
+// Добавить /other/path/to/helpers с префиксом для классов 'Your_View_Helper'
+$view->addHelperPath('/other/path/to/helpers', 'Your_View_Helper');
 
 // теперь, когда вы вызываете $this->helperName(), Zend_View будет искать
-// сначала "/other/path/to/helpers/HelperName.php",
-// затем "/path/to/some/helpers/HelperName", и под конец
-// "Zend/View/Helpers/HelperName.php".
+// "/other/path/to/helpers/HelperName.php" с классом "My_View_Helper_HelperName", 
+// затем "/path/to/some/helpers/HelperName" с классом "Your_View_Helper_HelperName", 
+// и под конец "Zend/View/Helper/HelperName.php" с классом "Zend_View_Helper_HelperName".
 ?>]]>
         </programlisting>
-        
+
     </sect2>
     
     <sect2 id="zend.view.helpers.custom">
@@ -321,13 +331,25 @@ $view->addHelperPath('/other/path/to/helpers');
                 где * является именем самого "помощника". Например, если
                 вы написали "помощника", называющегося "specialPurpose",
                 имя класса должно быть "Zend_View_Helper_SpecialPurpose"
-                (обратите внимание на использование главных букв). 
+                (обратите внимание на использование главных букв).
+                
+                Имя класса должно быть, как минимум, заканчиваться именем
+                "помощника", в котором имена начинаются с заглавной буквы. Т.е.
+                если вы написали "помощника" с именем "specialPurpose", то
+                минимальное имя класса должно быть "SpecialPurpose". Вы можете
+                (и должны) давать классам имена с префиксом, рекомендуется
+                использовать 'View_Helper' как часть этого префикса с или без
+                завершающего знака подчеркивания.
 <!--
-                The class name must be Zend_View_Helper_*, where * is
-                the helper name itself.  E.g., if you were writing a
-                helper called "specialPurpose", the class name would be
-                "Zend_View_Helper_SpecialPurpose" (note the
-                capitalization).
+                The class name must, at the very minimum, end with the helper
+                name itself, using CamelCaps.  E.g., if you were writing a
+                helper called "specialPurpose", the class name would minimally
+                need to be "SpecialPurpose". You may, and should, give the class
+                name a prefix, and it is recommended that you use 'View_Helper'
+                as part of that prefix: "My_View_Helper_SpecialPurpose". (You
+                will need to pass in the prefix, with or without the trailing
+                underscore, to <code>addHelperPath()</code> or
+                <code>setHelperPath()</code>).
 -->
             </para></listitem>
             
@@ -390,7 +412,7 @@ $view->addHelperPath('/other/path/to/helpers');
         </para>
         
         <programlisting role="php"><![CDATA[<?php
-class Zend_View_Helper_SpecialPurpose {
+class My_View_Helper_SpecialPurpose {
     protected $_count = 0;
     public function specialPurpose()
     {

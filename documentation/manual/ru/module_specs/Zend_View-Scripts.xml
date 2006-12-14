@@ -160,27 +160,40 @@ echo $view->render(...);
 
     <sect2 id="zend.view.scripts.templates">
     
-        <title>Шаблонизатор<!--Template Systems--></title>
+        <title>Использование других шаблонизаторов<!--Using Alternate Template Systems--></title>
         
         <para>
             Хотя PHP сам по себе представляет собой мощный шаблонизатор,
-            многие разработчики считают его слишком мощным или сложным для
-            верстальщиков. Как таковой, скрипт представления может
-            использоваться для инстанцирования и манипулирования различными
-            объектами шаблонов, такими, как шаблоны в стиле PHPLIB. Скрипты
-            представления для такого рода действий должны выглядеть
-            наподобие этого:
+            многие разработчики считают его избыточным или слишком сложным для
+            верстальщиков и поэтому предпочитают использовать другие
+            шаблонизаторы. Zend_View предоставляет 2 пути для этого: первый –
+            через скрипты вида, второй - посредством реализации интерфейса
+            Zend_View_Interface. 
 <!--
-            Although PHP is itself a powerful template system, many
-            developers feel it is too powerful or complex for their
-            template designers.  As such, the view script may be used to
-            instantiate and manipulate a separate template object, such
-            as a PHPLIB-style template.  The view script for that kind
-            of activity might look something like this:
+            Although PHP is itself a powerful template system, many developers
+            feel it is too powerful or complex for their template designers and
+            will want to use an alternate template engine. Zend_View provides
+            two mechanisms for doing so, the first through view scripts, the
+            second by implementing Zend_View_Interface.
 -->
         </para>
         
-        <programlisting role="php"><![CDATA[<?php
+        <sect3 id="zend.view.scripts.templates.scripts">
+            <title>Шаблонизаторы c использованием скриптов видов<!--Template Systems Using View Scripts--></title>
+            
+            <para>
+                Скрипт вида может использоваться для инстанцирования и
+                манипулирования отдельным объектом шаблона (это могут быть
+                шаблоны в стиле PHPLIB).
+<!--
+                A view script may be used to instantiate and manipulate a
+                separate template object, such as a PHPLIB-style template.  The
+                view script for that kind of activity might look something like
+                this:
+-->
+            </para>
+            
+            <programlisting role="php"><![CDATA[<?php
 include_once 'template.inc';
 $tpl = new Template();
 
@@ -201,17 +214,16 @@ if ($this->books) {
     $tpl->setFile("nobooks", "nobooks.tpl")
     $tpl->pparse("output", "nobooks");
 }
-?>]]>
-        </programlisting>
+?>]]></programlisting>
         
-        <para>
-            Это могло бы быть соответствующим файлом шаблона:
+            <para>
+                Это может соответствовать следующему файлу шаблона:
 <!--
-            These would be the related template files:
+                These would be the related template files:
 -->
-        </para>
+            </para>
         
-        <programlisting role="html"><![CDATA[
+            <programlisting role="html"><![CDATA[
 <!-- booklist.tpl -->
 <table>
     <tr>
@@ -229,8 +241,244 @@ if ($this->books) {
 
 <!-- nobooks.tpl -->
 <p>Нет книг для отображения.</p>
-]]>
-        </programlisting>
+]]></programlisting>
+
+        </sect3>
+
+        <sect3 id="zend.view.scripts.templates.interface">
+            <title>Шаблонизаторы с использованием Zend_View_Interface<!--Template Systems Using Zend_View_Interface--></title>
+
+            <para>
+                Некоторым может быть удобнее использовать совместимый с
+                Zend_View шаблонизатор. <code>Zend_View_Interface</code>
+                предоставляет минимальный интерфейс, необходимый для
+                совместимости: 
+<!--
+                Some may find it easier to simply provide a Zend_View-compatible
+                template engine. <code>Zend_View_Interface</code> defines the
+                minimum interface needed for compatability:
+-->
+            </para>
+
+            <programlisting role="php"><![CDATA[
+/**
+ * Возвращает объект используемого шаблонизатора
+ */
+public function getEngine();
+
+/**
+ * Устанавливает путь к шаблонам или скриптам вида
+ */
+public function setScriptPath($path);
+
+/**
+ * Переопределение методов для присвоения значений переменным шаблонов как
+ * свойствам объекта
+ */
+public function __set($key, $value);
+public function __get($key);
+public function __isset($key);
+public function __unset($key);
+
+/**
+ * "Ручная" установка значения переменной шаблона или одновременное присвоение
+ * значений нескольким переменным
+ */
+public function assign($spec, $value = null);
+
+/**
+ * Удаление всех переменных шаблона
+ */
+public function clearVars();
+
+/**
+ * Вывод шаблона с именем $name
+ */
+public function render($name);
+]]></programlisting>
+
+            <para>
+                Используя этот интерфейс, можно легко сделать "обертку" для
+                шаблонизаторов сторонних разработчиков. В примере показан
+                вариант "обертки" для Smarty:
+<!--
+                Using this interface, it becomes relatively easy to wrap a
+                third-party template engine as a Zend_View-compatible class. As
+                an example, the following is one potential wrapper for Smarty:
+-->
+            </para>
+
+            <programlisting role="php"><![CDATA[
+require_once 'Zend/View/Interface.php';
+require_once 'Smarty.class.php';
+
+class Zend_View_Smarty implements Zend_View_Interface
+{
+    /**
+     * Объект Smarty 
+     * @var Smarty
+     */
+    protected $_smarty;
+
+    /**
+     * Конструктор
+     *
+     * @param string $tmplPath
+     * @param array $extraParams
+     * @return void
+     */
+    public function __construct($tmplPath = null, $extraParams = array())
+    {
+        $this->_smarty = new Smarty;
+
+        if (null !== $tmplPath) {
+            $this->setScriptPath($tmplPath);
+        }
+
+        foreach ($extraParams as $key => $value) {
+            $this->_smarty->$key = $value;
+        }
+    }
+
+    /**
+     * Возвращение объекта шаблонизатора
+     *
+     * @return Smarty
+     */
+    public function getEngine()
+    {
+        return $this->_smarty;
+    }
+
+    /**
+     * Установка пути к шаблонам
+     *
+     * @param string $path Директория, устанавливаемая как путь к шаблонам
+     * @return void
+     */
+    public function setScriptPath($path)
+    {
+        if (is_readable($path)) {
+            $this->_smarty->template_dir = $path;
+            return;
+        }
+
+        throw new Exception('Invalid path provided');
+    }
+
+    /**
+     * Присвоение значения переменной шаблона
+     *
+     * @param string $key The variable name.
+     * @param mixed $val The variable value.
+     * @return void
+     */
+    public function __set($key, $val)
+    {
+        $this->_smarty->assign($key, $val);
+    }
+
+    /**
+     * Получение значения переменной
+     *
+     * @param string $key The variable name.
+     * @return mixed The variable value.
+     */
+    public function __get($key)
+    {
+        return $this->_smarty->get_template_vars($key);
+    }
+
+    /**
+     * Позволяет проверять переменные через empty() и isset()
+     *
+     * @param string $key
+     * @return boolean
+     */
+    public function __isset($key)
+    {
+        $value = $this->_smarty->get_template_vars($key);
+        return null === $value;
+    }
+
+    /**
+     * Позволяет удалять свойства объекта через unset()
+     *
+     * @param string $key
+     * @return void
+     */
+    public function __unset($key)
+    {
+        $this->_smarty->clear_assign($key);
+    }
+
+    /**
+     * Присвоение переменных шаблону
+     *
+     * Позволяет установить значение к определенному ключу или передать массив
+     * пар ключ => значение
+     *
+     * @see __set()
+     * @param string|array $spec Ключ или массив пар ключ => значение 
+     * @param mixed $value (необязательный) Если присваивается значение одной
+     * переменной, то через него передается значение переменной
+     * @return void
+     */
+    public function assign($spec, $value = null)
+    {
+        if (is_array($spec)) {
+            $this->_smarty->assign($spec);
+            return;
+        }
+
+        $this->_smarty->assign($spec, $value);
+    }
+
+    /**
+     * Удаление всех переменных
+     *
+     * @return void
+     */
+    public function clearVars()
+    {
+        $this->_smarty->clear_all_assign();
+    }
+
+    /**
+     * Обрабатывает шаблон и возвращает вывод
+     *
+     * @param string $name Шаблон для обработки
+     * @return string Вывод
+     */
+    public function render($name)
+    {
+        return $this->_smarty->fetch($name);
+    }
+}
+]]></programlisting>
+
+            <para>
+                В этом примере вы можете инстанцировать класс
+                <code>Zend_View_Smarty</code> вместо <code>Zend_View</code> и 
+                использовать его подобно тому, как используется
+                <code>Zend_View</code>.  
+<!--
+                In this example, you would instantiate the
+                <code>Zend_View_Smarty</code> class instead of
+                <code>Zend_View</code>, and then use it in roughly the same
+                fashion as <code>Zend_View</code>:
+-->
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$view = new Zend_View_Smarty();
+$view->setScriptPath('/path/to/templates');
+$view->book = 'Zend PHP 5 Certification Study Guide';
+$view->author = 'Davey Shafik and Ben Ramsey'
+$rendered = $view->render('bookinfo.tpl');
+]]></programlisting>
+
+        </sect3>
         
     </sect2>
     
