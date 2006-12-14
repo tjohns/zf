@@ -27,8 +27,8 @@ require_once 'Zend/XmlRpc/Client/Exception.php';
 
 
 /**
- * ZXmlRpcClientException add 2 functions for handling the fault response of failed XML-RPC requests
- * The fault response has 2 parameters, the fault code and fault string
+ * Thrown by Zend_XmlRpc_Client when an HTTP error occurs during an
+ * XML-RPC method call.
  *
  * @category   Zend
  * @package    Zend_XmlRpc
