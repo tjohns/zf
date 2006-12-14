@@ -40,7 +40,7 @@ class Zend_Gdata
      *
      * @var Zend_Http_Client
      */
-    protected $client;
+    protected $_httpClient;
 
     /**
      * Query parameters.
@@ -60,9 +60,9 @@ class Zend_Gdata
      *
      * @param Zend_Http_Client $client
      */
-    public function __construct(Zend_Http_Client $client)
+    public function __construct($client = null)
     {
-        $this->client = $client;
+        $this->setHttpClient($client);
     }
 
     /**
@@ -70,17 +70,17 @@ class Zend_Gdata
      *
      * @param string $key
      */
-    public function setKey($key)
+    public function setDeveloperKey($key)
     {
         $this->developerKey = substr($key, 0, strcspn($key, "\n\r"));
         $headers['X-Google-Key'] = 'key=' . $this->developerKey;
-        $this->client->setHeaders($headers);
+        $this->_httpClient->setHeaders($headers);
     }
 
     /**
      * @return string developerKey
      */
-    public function getKey()
+    public function getDeveloperKey()
     {
         return $this->developerKey;
     }
@@ -121,9 +121,31 @@ class Zend_Gdata
     public function getFeed($uri)
     {
         $feed = new Zend_Feed();
-        $this->client->resetParameters();
-        $feed->setHttpClient($this->client);
+        $this->_httpClient->resetParameters();
+        $feed->setHttpClient($this->_httpClient);
         return $feed->import($uri);
+    }
+
+    /**
+     * @return Zend_Http_Client
+     */
+    public function getHttpClient()
+    {
+        return $this->_httpClient;
+    }
+
+    /**
+     * @param Zend_Http_Client $client
+     */
+    public function setHttpClient($client)
+    {
+        if ($client == null) {
+            $client = new Zend_Http_Client();
+        }
+        if (!$client instanceof Zend_Http_Client) {
+            throw Zend::exception('Zend_Gdata_Exception', 'Argument is not an instance of Zend_Http_Client.');
+        }
+        $this->_httpClient = $client;
     }
 
     /**
@@ -135,19 +157,19 @@ class Zend_Gdata
      */
     public function post($xml, $uri)
     {
-        $this->client->setUri($uri);
-        $this->client->setConfig(array('maxredirects' => 0));
-        $this->client->setRawData($xml,'application/atom+xml');
-        $response = $this->client->request('POST');
+        $this->_httpClient->setUri($uri);
+        $this->_httpClient->setConfig(array('maxredirects' => 0));
+        $this->_httpClient->setRawData($xml,'application/atom+xml');
+        $response = $this->_httpClient->request('POST');
         //set "S" cookie to avoid future redirects.
         if($cookie = $response->getHeader('Set-cookie')) {
-            $this->client->setCookie($cookie);
+            $this->_httpClient->setCookie($cookie);
         }
         if ($response->isRedirect()) {
             //this usually happens. Re-POST with redirected URI.
-            $this->client->setUri($response->getHeader('Location'));
-            $this->client->setRawData($xml,'application/atom+xml');
-            $response = $this->client->request('POST');
+            $this->_httpClient->setUri($response->getHeader('Location'));
+            $this->_httpClient->setRawData($xml,'application/atom+xml');
+            $response = $this->_httpClient->request('POST');
         }
         
         if (!$response->isSuccessful()) {
@@ -311,7 +333,7 @@ class Zend_Gdata
         } else {
             $ts = strtotime($timestamp);
             if ($ts === false) {
-                throw Zend::exception('Zend_Gdata_Exception', "Invalid timestamp: $timestamp");
+                throw Zend::exception('Zend_Gdata_Exception', "Invalid timestamp: $timestamp.");
             }
             return date('Y-m-d\TH:i:s', $ts);
         }

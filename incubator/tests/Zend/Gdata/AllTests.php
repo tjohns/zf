@@ -36,6 +36,7 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 // Tests that do not require authentication
+require_once 'Zend/Gdata/GdataTest.php';
 require_once 'Zend/Gdata/BaseTest.php';
 require_once 'Zend/Gdata/BloggerTest.php';
 require_once 'Zend/Gdata/CalendarTest.php';
@@ -63,6 +64,7 @@ class Zend_Gdata_AllTests
         $suite = new PHPUnit_Framework_TestSuite('Zend Framework - Zend_Gdata');
 
         // Tests that do not require authentication
+        $suite->addTestSuite('Zend_Gdata_GdataTest');
         $suite->addTestSuite('Zend_Gdata_BaseTest');
         $suite->addTestSuite('Zend_Gdata_BloggerTest');
         $suite->addTestSuite('Zend_Gdata_CalendarTest');
