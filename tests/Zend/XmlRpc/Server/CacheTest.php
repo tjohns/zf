@@ -32,7 +32,7 @@ class Zend_XmlRpc_Server_CacheTest extends PHPUnit_Framework_TestCase
     {
         $this->_file = realpath(dirname(__FILE__)) . '/xmlrpc.cache';
         $this->_server = new Zend_XmlRpc_Server();
-        $this->_server->setClass('Zend_XmlRpc_Server_CacheTest', 'cache');
+        $this->_server->setClass('Zend_XmlRpc_Server_Cache', 'cache');
     }
 
     /**
@@ -51,7 +51,6 @@ class Zend_XmlRpc_Server_CacheTest extends PHPUnit_Framework_TestCase
      */
     public function testGetSave()
     {
-        // Remove this line once the test has been written
         if (!is_writeable('./')) {
             throw new PHPUnit_Framework_IncompleteTestError('Directory not writeable');
         }
@@ -70,7 +69,6 @@ class Zend_XmlRpc_Server_CacheTest extends PHPUnit_Framework_TestCase
      */
     public function testDelete()
     {
-        // Remove this line once the test has been written
         if (!is_writeable('./')) {
             throw new PHPUnit_Framework_IncompleteTestError('Directory not writeable');
         }
