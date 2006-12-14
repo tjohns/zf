@@ -22,21 +22,39 @@
  */
 
 require_once 'Zend/Uri/Http.php';
+require_once 'Zend/Http/Client.php';
 require_once 'Zend/Http/Client/Adapter/Socket.php';
 
 /**
- * A sockets based (fsockopen) adapter class for Zend_Http_Client. Can be used
- * on almost every PHP environment, and does not require any special extensions.
- *
+ * HTTP Proxy-supporting Zend_Http_Client adapter class, based on the default
+ * socket based adapter. 
+ * 
+ * Should be used if proxy HTTP access is required. If no proxy is set, will
+ * fall back to Zend_Http_Client_Adapter_Socket behavior. Just like the 
+ * default Socket adapter, this adapter does not require any special extensions
+ * installed.
+ * 
  * @category   Zend
  * @package    Zend_Http
  * @subpackage Client_Adapter
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @todo       Add proxy authentication support
  */
 class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket 
 {
+	/**
+     * Parameters array
+     *
+     * @var array
+     */
+	protected $config = array(
+		'proxy_host' => '',
+		'proxy_port' => 8080,
+		'proxy_user' => '',
+		'proxy_pass' => '',
+		'proxy_auth' => Zend_Http_Client::AUTH_BASIC 
+	);
+	
     /**
      * Connect to the remote server
      * 
@@ -57,7 +75,7 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
     	$host = $this->config['proxy_host'];
     	$port = $this->config['proxy_port'];
 
-    	// If we are connected to the wrong host, disconnect first
+    	// If we are connected to the wrong proxy, disconnect first
     	if (($this->connected_to[0] != $host || $this->connected_to[1] != $port)) {
     		if (is_resource($this->socket)) $this->close();
     	}
@@ -75,11 +93,10 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
     		$this->connected_to = array($host, $port);
     	}
     }
-    
+
     /**
-     * Send request to the remote server
+     * Send request to the proxy server
      *
-     * @todo  add proxy authentication support
      * @param string $method
      * @param Zend_Uri_Http $uri
      * @param float $http_ver
@@ -104,6 +121,14 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
 
         // Build request headers
         $request = "{$method} {$uri->__toString()} HTTP/{$http_ver}\r\n";
+        
+        // Add Proxy-Authorization header
+        if ($this->config['proxy_user'] && ! isset($headers['proxy-authorization']))
+        	$headers['proxy-authorization'] = Zend_Http_Client::encodeAuthHeader(
+        		$this->config['proxy_user'], $this->config['proxy_pass'], $this->config['proxy_auth']
+        	);
+        
+        // Add all headers to the request string
         foreach ($headers as $k => $v) {
             if (is_string($k)) $v = ucfirst($k) . ": $v";
             $request .= "$v\r\n";
