@@ -148,6 +148,16 @@ class Zend_XmlRpc_Response
     }
 
     /**
+     * Returns the fault, if any.
+     *
+     * @return null|Zend_XmlRpc_Fault
+     */
+    public function getFault()
+    {
+        return $this->_fault;
+    }
+
+    /**
      * Load a response from an XML response
      *
      * Attempts to load a response from an XMLRPC response, autodetecting if it 

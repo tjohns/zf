@@ -69,6 +69,16 @@ class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests getFault() returns NULL (no fault) or the fault object
+     */
+    public function testGetFault()
+    {
+        $this->assertNull($this->_response->getFault());
+        $this->_response->loadXml('foo');
+        $this->assertType('Zend_XmlRpc_Fault', $this->_response->getFault());
+    }
+    
+    /**
      * loadXml() test
      *
      * Call as method call 
@@ -125,7 +135,7 @@ class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase
     public function testSetGetEncoding()
     {
         $this->assertEquals('UTF-8', $this->_response->getEncoding());
-        $this->_fault->setEncoding('ISO-8859-1');
+        $this->_response->setEncoding('ISO-8859-1');
         $this->assertEquals('ISO-8859-1', $this->_response->getEncoding());
     }
 }
