@@ -1468,22 +1468,32 @@ class Zend_Date {
                 break;
 
             case Zend_Date::YEAR_SHORT :
-                $date = intval($date);
-                if (($date > 0) and ($date < 100)) {
-                    $date += 1900;
-                    if ($date < 70) {
-                        $date += 100;
+                if (is_numeric($date)) {
+                    $date = intval($date);
+                    if (($date >= 0) and ($date <= 100)) {
+                        $date += 1900;
+                        if ($date < 1970) {
+                            $date += 100;
+                        }
+                        return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, $date, -1, $gmt),
+                                                     $this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt));
                     }
                 }
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, $date, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt));
+                throw Zend::exception('Zend_Date_Exception', 'year expected');
                 break;
 
 
             case Zend_Date::YEAR_SHORT_8601 :
                 if (is_numeric($date)) {
-                    return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, intval($date), -1, $gmt),
-                                                 $this->_Date->mktime(0, 0, 0, 1, 1, $year,         -1, $gmt));
+                    $date = intval($date);
+                    if (($date >= 0) and ($date <= 100)) {
+                        $date += 1900;
+                        if ($date < 1970) {
+                            $date += 100;
+                        }
+                        return $this->_assign($calc, $this->_Date->mktime(0, 0, 0, 1, 1, $date, -1, $gmt),
+                                                     $this->_Date->mktime(0, 0, 0, 1, 1, $year, -1, $gmt));
+                    }
                 }
                 throw Zend::exception('Zend_Date_Exception', 'year expected');
                 break;

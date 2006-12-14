@@ -311,8 +311,8 @@ class Zend_Date_DateObject {
             return ($gmt) ? @gmdate($format, $timestamp) : @date($format, $timestamp);
         }
 
-        if ($gmt === true) {
-            $timestamp += $this->_gmtDifference();
+        if ($gmt === false) {
+            $timestamp -= $this->_gmtDifference();
         }
         
         $date = $this->getDate($timestamp, true);
@@ -664,7 +664,8 @@ class Zend_Date_DateObject {
             }
 
             // iterate the max last 10 years
-            for (; --$i >= 0; ) {
+            do {
+                --$i;
                 $day = $timestamp;
 
                 $timestamp += 31536000;
@@ -677,7 +678,7 @@ class Zend_Date_DateObject {
                     $year = $i;
                     break;
                 }
-            }
+            } while ($timestamp < 0);
 
             $secondsPerYear = 86400 * ($leapyear ? 366 : 365) + $day;
 
