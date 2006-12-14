@@ -88,6 +88,60 @@ $index->find($query);
         </para>
     </sect2>
 
+    <sect2 id="zend.search.searching.sorting">
+        <title>検索結果の並べ替え</title>
+        <para>
+            検索結果のデフォルトの表示順は、スコア順となります。
+            これを変更するには、並べ替え用の (ひとつあるいは複数の) フィールド、
+            並べ替えの形式と並べ替えの方向をパラメータで指定します。
+        </para>
+
+        <para>
+            <code>$index->find()</code> のコール時にオプションのパラメータを指定することができます。
+            <programlisting role="php"><![CDATA[
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);
+]]></programlisting>
+        </para>
+
+        <para>
+            <code>$sortField</code> は、結果の並べ替えの対象となるフィールド名です。
+        </para>
+
+        <para>
+            <code>$sortType</code> は省略可能です。
+            <code>SORT_REGULAR</code> (通常の並べ替え。デフォルト)、
+            <code>SORT_NUMERIC</code> (数値として並べ替え)、
+            <code>SORT_STRING</code> (文字列として並べ替え)
+            のいずれかとなります。
+        </para>
+
+        <para>
+            <code>$sortOrder</code> は省略可能です。
+            <code>SORT_ASC</code> (昇順で並べ替え。デフォルト)、
+            <code>SORT_DESC</code> (降順で並べ替え)
+            のいずれかとなります。
+        </para>
+
+        <para>
+            例:
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);
+]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]></programlisting>
+        </para>
+
+        <para>
+            デフォルト以外の並べ替えを使用する際には注意しましょう。
+            並べ替えのためにはドキュメント全体をインデックスから読み込む必要があり、
+            検索のパフォーマンスが著しく低下してしまいます。
+        </para>
+</sect2>
+
     <sect2 id="zend.search.searching.results">
         <title>検索結果</title>
         <para>
