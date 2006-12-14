@@ -51,7 +51,7 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      * Buffer of responses to be returned by the read() method.  Can be
      * set using setResponse() and addResponse().
      *
-     * @var string
+     * @var array
      */
     protected $responses = array("HTTP/1.1 400 Bad Request\r\n\r\n");
 
