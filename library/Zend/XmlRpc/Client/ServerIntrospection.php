@@ -62,14 +62,14 @@ class Zend_XmlRpc_Client_ServerIntrospection
 
         try {
             $signatures = $this->getSignatureForEachMethodByMulticall($methods);
-        } catch (Zend_XmlRpc_Server_IntrospectException $e) {
+        } catch (Zend_XmlRpc_Client_FaultException $e) {
             // degrade to looping
         }
         
         if (empty($signatures)) {
             $signatures = $this->getSignatureForEachMethodByLooping($methods);
         }
-
+        
         return $signatures;
     }
 

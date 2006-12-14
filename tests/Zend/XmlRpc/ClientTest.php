@@ -358,6 +358,64 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         }
     }
     
+    public function testGettingAllMethodSignaturesDefaultsToMulticall()
+    {
+        // system.listMethods() will return ['foo', 'bar']
+        $whatListMethodsReturns = array('foo', 'bar');
+        $response = $this->getServerResponseFor($whatListMethodsReturns);
+        $this->httpAdapter->setResponse($response);
+
+        // system.multicall() will then return [fooSignatures, barSignatures]
+        $fooSignatures = array(array('int'), array('int', 'string'));
+        $barSignatures = array(array('boolean'));
+        $whatMulticallReturns = array($fooSignatures, $barSignatures);
+        $response = $this->getServerResponseFor($whatMulticallReturns);
+        $this->httpAdapter->addResponse($response);
+
+        $i = $this->xmlrpcClient->getIntrospector();
+        
+        $expected = array('foo' => $fooSignatures,
+                          'bar' => $barSignatures);
+        $this->assertEquals($expected, $i->getSignatureForEachMethod());
+        
+        $request = $this->xmlrpcClient->getLastRequest();
+        $this->assertEquals('system.multicall', $request->getMethod());
+    }
+    
+    public function testGettingAllMethodSignaturesDegradesToLooping()
+    {
+        // system.listMethods() will return ['foo', 'bar']
+        $whatListMethodsReturns = array('foo', 'bar');
+        $response = $this->getServerResponseFor($whatListMethodsReturns);
+        $this->httpAdapter->setResponse($response);
+
+        // system.multicall() will return a fault
+        $fault = new Zend_XmlRpc_Fault(7, 'bad method');
+        $xml = (string)$fault;
+        $response = $this->makeHttpResponseFrom($xml);
+        $this->httpAdapter->addResponse($response);  
+
+        // system.methodSignature('foo') will return [['int'], ['int', 'string']]
+        $fooSignatures = array(array('int'), array('int', 'string'));
+        $response = $this->getServerResponseFor($fooSignatures);
+        $this->httpAdapter->addResponse($response);
+
+        // system.methodSignature('bar') will return [['boolean']]
+        $barSignatures = array(array('boolean'));
+        $response = $this->getServerResponseFor($barSignatures);
+        $this->httpAdapter->addResponse($response);
+        
+        $i = $this->xmlrpcClient->getIntrospector();
+        
+        $expected = array('foo' => $fooSignatures,
+                          'bar' => $barSignatures);
+        $this->assertEquals($expected, $i->getSignatureForEachMethod());
+        
+        $request = $this->xmlrpcClient->getLastRequest();
+        $this->assertEquals('system.methodSignature', $request->getMethod());
+    }
+    
+    
     // Helpers
     
     public function setServerResponseTo($nativeVars)
