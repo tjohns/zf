@@ -48,12 +48,19 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
     protected $config = array();
     
     /**
-     * Response string to be returned by this adapter. Can be set using
-     * setResponse().
+     * Buffer of responses to be returned by the read() method.  Can be
+     * set using setResponse() and addResponse().
      *
      * @var string
      */
-    protected $response = "HTTP/1.1 400 Bad Request\r\n\r\n";
+    protected $responses = array("HTTP/1.1 400 Bad Request\r\n\r\n");
+
+    /**
+     * Current position in the response buffer
+     *
+     * @var integer
+     */
+    protected $responseIndex = 0;
     
     /**
      * Adapter constructor, currently empty. Config is set using setConfig()
@@ -128,7 +135,10 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
      */
     public function read()
     {
-        return $this->response;
+        if ($this->responseIndex >= count($this->responses)) {
+            $this->responseIndex = 0;
+        }
+        return $this->responses[$this->responseIndex++];
     }
     
     /**
@@ -139,14 +149,42 @@ class Zend_Http_Client_Adapter_Test implements Zend_Http_Client_Adapter_Interfac
     { }
     
     /**
-     * Set the HTTP response to be returned by this adapter
+     * Set the HTTP response(s) to be returned by this adapter
      *
-     * @param Zend_Http_Response|string $response
+     * @param Zend_Http_Response|array|string $response
      */
     public function setResponse($response)
     {
-    	if ($response instanceof Zend_Http_Response) $response = $response->asString();
+    	if ($response instanceof Zend_Http_Response) {
+    	    $response = $response->asString();
+    	}
     	
-    	$this->response = $response;
+    	$this->responses = (array)$response;
+    	$this->responseIndex = 0;
+    }
+    
+    /**
+     * Add another response to the response buffer.
+     *
+     * @param string $response
+     */
+    public function addResponse($response)
+    {
+        $this->responses[] = $response;
+    }    
+    
+    /**
+     * Sets the position of the response buffer.  Selects which
+     * response will be returned on the next call to read().
+     *
+     * @param integer $index 
+     */
+    public function setResponseIndex($index)
+    {
+        if ($index < 0 || $index >= count($this->responses)) {
+            throw Zend::exception('Zend_Http_Client_Adapter_Exception', 
+                'Index out of range of response buffer size');
+        }
+        $this->responseIndex = $index;
     }
 }
