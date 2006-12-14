@@ -106,7 +106,7 @@ class Zend_Service_Simpy_Watchlist
 		$childNode = $node->firstChild;
 		while (is_null($childNode) == false) {
 			if ($childNode->nodeName == 'user') {
-			    $this->_users = $childNode->attributes->getNamedItem('username')->nodeValue;
+			    $this->_users[] = $childNode->attributes->getNamedItem('username')->nodeValue;
 			} elseif ($childNode->nodeName == 'filter') {
 			    $filter = new Zend_Service_Simpy_WatchlistFilter($childNode);
 			    $this->_filters->add($filter);
