@@ -21,9 +21,9 @@
 
 
 /**
- * Zend_XmlRpc_Exception
+ * Zend_XmlRpc_Client_Exception
  */
-require_once 'Zend/XmlRpc/Exception.php';
+require_once 'Zend/XmlRpc/Client/Exception.php';
 
 
 /**
@@ -36,29 +36,5 @@ require_once 'Zend/XmlRpc/Exception.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_XmlRpc_Client_Exception extends Zend_XmlRpc_Exception
-{
-
-    /**
-     * In case there was a failure in the request, this function gets the failure code
-     *
-     * @return int The error code
-     */
-    public function faultCode()
-    {
-        return $this->getCode();
-    }
-
-
-    /**
-     * In case there was a failure in the request, this function gets the failure string
-     *
-     * @return string The error string
-     */
-    public function faultString()
-    {
-        return $this->getMessage();
-    }
-
-}
-
+class Zend_XmlRpc_Client_IntrospectException extends Zend_XmlRpc_Client_Exception
+{}

@@ -31,24 +31,23 @@
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_XmlRpc_Client_NamespaceDecorator
+class Zend_XmlRpc_Client_ServerProxy
 {
     /**
      * @var Zend_XmlRpc_Client
      */
-    protected $_client = null;
+    private $_client = null;
 
     /**
-     * XML-RPC namespace for this decorator
      * @var string
      */
-    protected $_namespace = '';
+    private $_namespace = '';
+
     
     /**
-     * Cached namespace decorators
-     * @var array 
+     * @var array of Zend_XmlRpc_Client_ServerProxy
      */
-    protected $_cache = array();
+    private $_cache = array();
 
     
     /**
@@ -57,7 +56,7 @@ class Zend_XmlRpc_Client_NamespaceDecorator
      * @param string             $namespace
      * @param Zend_XmlRpc_Client $client
      */
-    public function __construct($namespace, Zend_XmlRpc_Client $client)
+    public function __construct($client, $namespace = '')
     {
         $this->_namespace = $namespace;
         $this->_client    = $client;
@@ -68,28 +67,28 @@ class Zend_XmlRpc_Client_NamespaceDecorator
      * Get the next successive namespace
      *
      * @param string $name
-     * @return Zend_XmlRpc_Client_NamespaceDecorator
+     * @return Zend_XmlRpc_Client_ServerProxy
      */
-    public function __get($name)
+    public function __get($namespace)
     {
-        if (!isset($this->_cache[$name])) {
-            $this->_cache[$name] = new $this("$this->_namespace.$name", 
-                                             $this->_client);
+        $namespace = ltrim("$this->_namespace.$namespace", '.');
+        if (!isset($this->_cache[$namespace])) {
+            $this->_cache[$namespace] = new $this($this->_client, $namespace);
         }
-        
-        return $this->_cache[$name];
+        return $this->_cache[$namespace];
     }
 
     
     /**
      * Call a method in this namespace.
      *
-     * @param  string $methodName
+     * @param  string $methodN
      * @param  array $args
      * @return mixed
      */
-    public function __call($methodName, $args)
+    public function __call($method, $args)
     {
-        return $this->_client->__call("$this->_namespace.$methodName", $args);
+        $method = ltrim("$this->_namespace.$method", '.');
+        return $this->_client->call($method, $args);
     }
 }
