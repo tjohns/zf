@@ -32,16 +32,25 @@ require_once 'Zend/TimeSync/Protocol.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
-{    
-    protected $_timeserver;
-    protected $_port;
-    
+{
+	/**
+	 * Class constructor, sets the timeserver and port number
+	 *
+	 * @param  string $timeserver
+	 * @param  int    $port
+	 * @return void
+	 */
     public function __construct($timeserver, $port)
     {
         $this->_timeserver = $timeserver;
         $this->_port       = $port;
     }
 
+    /**
+     * Writes/receives data to/from the timeserver
+     * 
+     * @return int unix timestamp
+     */
     protected function _query()
     {
         $this->_connect();
@@ -50,9 +59,9 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         fputs($this->_socket, "\n");
         $result = fread($this->_socket, 49);
         $end = time();
-        
+
         $this->_disconnect();
-        
+
         if (!$result) {
             throw Zend::exception(
                 'Zend_TimeSync_ProtocolException',
@@ -63,7 +72,7 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
             $time -= 2208988800;
             // socket delay
             $time -= (($end - $begin) / 2);
-            
+
             return $time;
         }
     }

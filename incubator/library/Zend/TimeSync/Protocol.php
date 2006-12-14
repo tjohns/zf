@@ -28,14 +28,46 @@
  */
 abstract class Zend_TimeSync_Protocol
 {
+    /**
+     * Holds the current socket connection
+     *
+     * @var array
+     */
     protected $_socket;
+    
+    /**
+     * Exceptions that might have occured
+     *
+     * @var array
+     */
     protected $_exceptions;
     
+    /**
+     * Hostname for timeserver
+     *
+     * @var string
+     */
+    protected $_timeserver;
+    
+    /**
+     * Port number for this timeserver
+     *
+     * @var int
+     */
+    protected $_port;
+    
+    /**
+     * Abstract method that writes/receives data to/from the timeserver
+     * 
+     * @return int unix timestamp
+     */
     abstract protected function _query();
     
     /**
      * Connect to the specified timeserver. If called when the socket is
      * already connected, it disconnects and connects again.
+     * 
+     * @return void
      */
     protected function _connect()
     {
@@ -57,6 +89,8 @@ abstract class Zend_TimeSync_Protocol
     
     /**
      * Disconnects from the peer, closes the socket.
+     * 
+     * @return void
      */
     protected function _disconnect()
     {
@@ -85,6 +119,12 @@ abstract class Zend_TimeSync_Protocol
         return new Zend_Date($timestamp, Zend_Date::TIMESTAMP, $locale);
     }
     
+    /**
+     * Return the exceptions that have occured while trying to write/receive data
+     * to/from the current timeserver
+     * 
+     * @return  mixed
+     */
     public function getExceptions()
     {
         if (isset($this->_exceptions)) {
@@ -94,6 +134,12 @@ abstract class Zend_TimeSync_Protocol
         return false;
     }
     
+    /**
+     * Stores an internal exception, used by the facade Zend_TimeSync
+     * 
+     * @param   $exception
+     * @return  void
+     */
     public function addException(Zend_TimeSync_ProtocolException $exception)
     {
         $this->_exceptions[] = $exception;

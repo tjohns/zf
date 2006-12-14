@@ -32,17 +32,27 @@ require_once 'Zend/TimeSync/Protocol.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
-{    
-    protected $_timeserver;
-    protected $_port;
+{
     protected $_info;
     
+	/**
+	 * Class constructor, sets the timeserver and port number
+	 *
+	 * @param  string $timeserver
+	 * @param  int    $port
+	 * @return void
+	 */
     public function __construct($timeserver, $port)
     {
         $this->_timeserver = $timeserver;
         $this->_port       = $port;
     }
     
+    /**
+     * Writes/receives data to/from the timeserver
+     * 
+     * @return int unix timestamp
+     */
     protected function _query()
     {
         $frac   = microtime();
@@ -77,7 +87,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $this->_connect();
 
         fwrite($this->_socket, $ntppacket);
-        stream_set_timeout($this->_socket, 1);
+        stream_set_timeout($this->_socket, Zend_TimeSync::$options['timeout']);
         
         $flags = ord(fread($this->_socket, 1));
         $info  = stream_get_meta_data($this->_socket);
@@ -86,7 +96,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
             fclose($this->disconnect);
             throw Zend::exception(
                 'Zend_TimeSync_ProtocolException', 
-                "could not connect to '$this->_timeserver' on port '$this->_port', reason: '$errstr'"
+                "could not connect to '$this->_timeserver' on port '$this->_port', reason: 'server timed out'"
             );
         }
         

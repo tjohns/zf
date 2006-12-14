@@ -287,7 +287,7 @@ class Zend_TimeSync implements IteratorAggregate
                 $server->addException($e);
             }
         }
-        
+
         $masterException = Zend::exception(
             'Zend_TimeSync_Exception',
             'all the provided servers are bogus'
@@ -315,7 +315,7 @@ class Zend_TimeSync implements IteratorAggregate
     {
         $urlinfo = @parse_url($server);
         $scheme  = self::DEFAULT_SCHEME;
-        
+
         foreach ($urlinfo as $key => $value) {
             switch ($key) {
                 case 'scheme':
@@ -338,10 +338,12 @@ class Zend_TimeSync implements IteratorAggregate
             }
         }
 
-        $protocol = ($scheme == 'ntp') ? 'udp' : 'tcp';
-        $port     = (isset($port)) ? $port : $this->_getStandardPort($scheme);
-
+        $protocol  = ($scheme == 'ntp') ? 'udp' : 'tcp';
         $className = 'Zend_TimeSync_' . ucfirst($scheme);
+        if (!isset($port)) {
+            $port = $this->_getStandardPort($scheme);
+        }
+
         Zend::loadClass($className);
 
         $server = new $className($protocol . '://' . $host, $port);
@@ -353,6 +355,7 @@ class Zend_TimeSync implements IteratorAggregate
      *
      * @param   string $scheme
      * @return  integer
+     * @throws  Zend_TimeSync_Exception
      */
     protected function _getStandardPort($scheme)
     {
@@ -360,12 +363,17 @@ class Zend_TimeSync implements IteratorAggregate
             case 'ntp':
                 return self::DEFAULT_NTP_PORT;
                 break;
+                
             case 'sntp':
                 return self::DEFAULT_SNTP_PORT;
                 break;
-            
+
             default:
-                break; // break intentionally omitted
+                throw Zend::exception(
+                    'Zend_TimeSync_Exception',
+                    'an unsupported protocol name was received'
+                );
+                break;
         }
     }
 }
