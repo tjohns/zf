@@ -69,6 +69,21 @@ class Zend_AuthTest extends PHPUnit_Framework_TestCase
         $this->assertTrue('someIdentity' === $token->getIdentity());
         $this->assertTrue(null === $token->getMessage());
     }
+
+    /**
+     * Ensure expected behavior upon authentication failure
+     *
+     * @return void
+     */
+    public function testFailure()
+    {
+        $auth = new Zend_Auth(new Zend_AuthTest_Failure_Adapter(), false);
+        $options = array();
+        $token = $auth->authenticate($options);
+        $this->assertFalse($token->isValid());
+        $this->assertTrue('someIdentity' === $token->getIdentity());
+        $this->assertTrue('Failure Message' === $token->getMessage());
+    }
 }
 
 
@@ -77,6 +92,15 @@ class Zend_AuthTest_Success_Adapter extends Zend_Auth_Adapter
     public function authenticate(array $options)
     {
         return new Zend_AuthTest_Simple_Token(true, 'someIdentity');
+    }
+}
+
+
+class Zend_AuthTest_Failure_Adapter extends Zend_Auth_Adapter
+{
+    public function authenticate(array $options)
+    {
+        return new Zend_AuthTest_Simple_Token(false, 'someIdentity', 'Failure Message');
     }
 }
 
