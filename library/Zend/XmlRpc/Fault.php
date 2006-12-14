@@ -278,7 +278,7 @@ class Zend_XmlRpc_Fault
      * 
      * @return string
      */
-    public function __toString()
+    public function saveXML()
     {
         // Create fault value
         $faultStruct = array(
@@ -287,7 +287,7 @@ class Zend_XmlRpc_Fault
         );
         $value = Zend_XmlRpc_Value::getXmlRpcValue($faultStruct);
         $valueDOM = new DOMDocument('1.0', $this->getEncoding());
-        $valueDOM->loadXML($value->getAsXML());
+        $valueDOM->loadXML($value->saveXML());
 
         // Build response XML
         $dom  = new DOMDocument('1.0', 'ISO-8859-1');
@@ -296,5 +296,15 @@ class Zend_XmlRpc_Fault
         $f->appendChild($dom->importNode($valueDOM->documentElement, 1));
 
         return $dom->saveXML();
+    }
+
+    /**
+     * Return XML fault response
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->saveXML();
     }
 }

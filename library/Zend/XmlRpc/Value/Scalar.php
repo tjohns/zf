@@ -41,7 +41,7 @@ abstract class Zend_XmlRpc_Value_Scalar extends Zend_XmlRpc_Value
      *
      * @return string
      */
-    public function getAsXML()
+    public function saveXML()
     {
         if (!$this->_as_xml) {   // The XML code was not calculated yet
             $dom   = new DOMDocument('1.0', 'UTF-8');

@@ -217,15 +217,15 @@ class Zend_XmlRpc_Response
     }
 
     /**
-     * Create XML response
+     * Return response as XML
      * 
      * @return string
      */
-    public function __toString()
+    public function saveXML()
     {
         $value = $this->_getXmlRpcReturn();
         $valueDOM = new DOMDocument('1.0', $this->getEncoding());
-        $valueDOM->loadXML($value->getAsXML());
+        $valueDOM->loadXML($value->saveXML());
 
         $dom      = new DOMDocument('1.0', $this->getEncoding());
         $response = $dom->appendChild($dom->createElement('methodResponse'));
@@ -235,5 +235,15 @@ class Zend_XmlRpc_Response
         $param->appendChild($dom->importNode($valueDOM->documentElement, true));
 
         return $dom->saveXML();
+    }
+
+    /**
+     * Return XML response
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->saveXML();
     }
 }

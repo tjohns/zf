@@ -40,7 +40,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('boolean', $val->getType());
         $this->assertSame(true, $val->getValue());
         $this->assertType('DomElement', $val->getAsDOM());
-        $this->assertEquals($this->wrapXml($xml), $val->getAsXML());
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());
     }    
 
     // Integer
@@ -78,7 +78,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
             $this->assertEquals('int', $val->getType());
             $this->assertSame($native, $val->getValue());
             $this->assertType('DomElement', $val->getAsDOM());
-            $this->assertEquals($this->wrapXml($xml), $val->getAsXML());
+            $this->assertEquals($this->wrapXml($xml), $val->saveXML());
         }
     }
 
@@ -111,7 +111,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('double', $val->getType());
         $this->assertSame($native, $val->getValue());
         $this->assertType('DomElement', $val->getAsDOM());
-        $this->assertEquals($this->wrapXml($xml), $val->getAsXML());        
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());        
     }
 
     // String
@@ -144,7 +144,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('string', $val->getType());
         $this->assertSame($native, $val->getValue());
         $this->assertType('DomElement', $val->getAsDOM());
-        $this->assertEquals($this->wrapXml($xml), $val->getAsXML());        
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());        
     }
 
     // Array
@@ -178,7 +178,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('array', $val->getType());
         $this->assertSame($native, $val->getValue());
         $this->assertType('DomElement', $val->getAsDOM());
-        $this->assertEquals($this->wrapXml($xml), $val->getAsXML());   
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());   
     }
     
     // Struct
@@ -218,7 +218,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('struct', $val->getType());
         $this->assertSame($native, $val->getValue());
         $this->assertType('DomElement', $val->getAsDOM());
-        $this->assertEquals($this->wrapXml($xml), $val->getAsXML());         
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());         
     }
     
     // DateTime
@@ -255,7 +255,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('dateTime.iso8601', $val->getType());
         $this->assertSame(strtotime($iso8601), $val->getValue());
         $this->assertType('DomElement', $val->getAsDOM());
-        $this->assertEquals($this->wrapXml($xml), $val->getAsXML());                    
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());                    
     }
 
     // Base64
@@ -282,7 +282,7 @@ class Zend_XmlRpc_ValueTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('base64', $val->getType());
         $this->assertSame($native, $val->getValue());
         $this->assertType('DomElement', $val->getAsDOM());
-        $this->assertEquals($this->wrapXml($xml), $val->getAsXML());                    
+        $this->assertEquals($this->wrapXml($xml), $val->saveXML());                    
     }    
     
     // Exceptions

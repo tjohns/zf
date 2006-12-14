@@ -324,7 +324,7 @@ class Zend_XmlRpc_Request
      * 
      * @return string
      */
-    public function __toString()
+    public function saveXML()
     {
         $args   = $this->_getXmlRpcParams();
         $method = $this->getMethod();
@@ -339,7 +339,7 @@ class Zend_XmlRpc_Request
             foreach ($args as $arg) {
                 /* @var $arg Zend_XmlRpc_Value */
                 $argDOM = new DOMDocument('1.0', $this->getEncoding());
-                $argDOM->loadXML($arg->getAsXML());
+                $argDOM->loadXML($arg->saveXML());
 
                 $param = $params->appendChild($dom->createElement('param'));
                 $param->appendChild($dom->importNode($argDOM->documentElement, 1));
@@ -347,5 +347,15 @@ class Zend_XmlRpc_Request
         }
 
         return $dom->saveXML();
+    }
+
+    /**
+     * Return XML request
+     * 
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->saveXML();
     }
 }

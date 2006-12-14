@@ -105,17 +105,13 @@ class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * __toString() test
-     *
-     * Call as method call 
-     *
-     * Returns: string 
+     * helper for saveXML() and __toString() tests
+     * 
+     * @param string $xml 
+     * @return void
      */
-    public function test__toString()
+    protected function _testXmlResponse($xml)
     {
-        $this->_response->setReturnValue('return value');
-        $xml = $this->_response->__toString();
-
         try {
             $sx = new SimpleXMLElement($xml);
         } catch (Exception $e) {
@@ -127,6 +123,26 @@ class Zend_XmlRpc_ResponseTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($sx->params->param->value ? true : false);
         $this->assertTrue($sx->params->param->value->string ? true : false);
         $this->assertEquals('return value', (string) $sx->params->param->value->string);
+    }
+
+    /**
+     * saveXML() test
+     */
+    public function testSaveXML()
+    {
+        $this->_response->setReturnValue('return value');
+        $xml = $this->_response->saveXML();
+        $this->_testXmlResponse($xml);
+    }
+
+    /**
+     * __toString() test
+     */
+    public function test__toString()
+    {
+        $this->_response->setReturnValue('return value');
+        $xml = $this->_response->__toString();
+        $this->_testXmlResponse($xml);
     }
 
     /**

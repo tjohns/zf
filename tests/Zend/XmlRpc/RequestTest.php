@@ -153,15 +153,13 @@ class Zend_XmlRpc_RequestTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * __toString() test
+     * helper for saveXML() and __toString() tests
+     * 
+     * @param string $xml 
+     * @return void
      */
-    public function test__toString()
+    protected function _testXmlRequest($xml, $argv)
     {
-        $argv = array('string', true);
-        $this->_request->setMethod('do.Something');
-        $this->_request->setParams($argv);
-        $xml = $this->_request->__toString();
-
         try {
             $sx = new SimpleXMLElement($xml);
         } catch (Exception $e) {
@@ -194,6 +192,30 @@ class Zend_XmlRpc_RequestTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('do.Something', $methodName);
         $this->assertSame($argv, $params, $xml);
+    }
+
+    /**
+     * testSaveXML() test
+     */
+    public function testSaveXML()
+    {
+        $argv = array('string', true);
+        $this->_request->setMethod('do.Something');
+        $this->_request->setParams($argv);
+        $xml = $this->_request->saveXML();
+        $this->_testXmlRequest($xml, $argv);
+    }
+
+    /**
+     * __toString() test
+     */
+    public function test__toString()
+    {
+        $argv = array('string', true);
+        $this->_request->setMethod('do.Something');
+        $this->_request->setParams($argv);
+        $xml = $this->_request->__toString();
+        $this->_testXmlRequest($xml, $argv);
     }
 
     /**

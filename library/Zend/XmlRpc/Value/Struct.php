@@ -52,7 +52,7 @@ class Zend_XmlRpc_Value_Struct extends Zend_XmlRpc_Value_Collection
      *
      * @return string
      */
-    public function getAsXML()
+    public function saveXML()
     {
         if (!$this->_as_xml) {   // The XML code was not calculated yet
             $dom    = new DOMDocument('1.0', 'ISO-8859-1');

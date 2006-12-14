@@ -141,7 +141,7 @@ abstract class Zend_XmlRpc_Value
      *
      * @return string
      */
-    abstract public function getAsXML();
+    abstract public function saveXML();
 
     /**
      * Return DOMElement representation of object
@@ -152,7 +152,7 @@ abstract class Zend_XmlRpc_Value
     {
         if (!$this->_as_dom) {
             $doc = new DOMDocument('1.0', 'UTF-8');
-            $doc->loadXML($this->getAsXML());
+            $doc->loadXML($this->saveXML());
             $this->_as_dom = $doc->documentElement;
         }
 

@@ -121,14 +121,13 @@ class Zend_XmlRpc_FaultTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * __toString() test
+     * helper for saveXML() and __toString() tests
+     * 
+     * @param string $xml 
+     * @return void
      */
-    public function test__toString()
+    protected function _testXmlFault($xml)
     {
-        $this->_fault->setCode(1000);
-        $this->_fault->setMessage('Fault message');
-        $xml = $this->_fault->__toString();
-
         try {
             $sx = new SimpleXMLElement($xml);
         } catch (Exception $e) {
@@ -154,6 +153,28 @@ class Zend_XmlRpc_FaultTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals(2, $count, $xml);
+    }
+
+    /**
+     * saveXML() test
+     */
+    public function testSaveXML()
+    {
+        $this->_fault->setCode(1000);
+        $this->_fault->setMessage('Fault message');
+        $xml = $this->_fault->saveXML();
+        $this->_testXmlFault($xml);
+    }
+
+    /**
+     * __toString() test
+     */
+    public function test__toString()
+    {
+        $this->_fault->setCode(1000);
+        $this->_fault->setMessage('Fault message');
+        $xml = $this->_fault->__toString();
+        $this->_testXmlFault($xml);
     }
 
     /**
