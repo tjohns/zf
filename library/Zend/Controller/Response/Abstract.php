@@ -108,6 +108,26 @@ abstract class Zend_Controller_Response_Abstract
     }
 
     /**
+     * Send all headers
+     * 
+     * @return void
+     */
+    public function sendHeaders()
+    {
+        if (!headers_sent()) {
+            foreach ($this->_headers as $header) {
+                if ('status' == strtolower($header['name'])) {
+                    // 'status' headers indicate an HTTP status, and need to be 
+                    // handled slightly differently
+                    header(ucfirst(strtolower($header['name'])) . ': ' . $header['value'], null, (int) $header['value']);
+                } else {
+                    header($header['name'] . ': ' . $header['value']);
+                }
+            }
+        }
+    }
+
+    /**
      * Set body content
      *
      * If body content already defined, this will replace it.
@@ -146,22 +166,21 @@ abstract class Zend_Controller_Response_Abstract
             return $this->_body;
         }
 
-        return $this->_concatenateBody();
+        ob_start();
+        $this->outputBody();
+        return ob_get_clean();
     }
 
     /**
-     * Concatenate the various body segments into a single string
+     * Echo the body segments
      * 
-     * @return string
+     * @return void
      */
-    public function _concatenateBody()
+    public function outputBody()
     {
-        ob_start();
         foreach ($this->_body as $content) {
             echo $content;
         }
-
-        return ob_get_clean();
     }
 
     /**
@@ -223,17 +242,7 @@ abstract class Zend_Controller_Response_Abstract
      */
     public function __toString()
     {
-        if (!headers_sent()) {
-            foreach ($this->_headers as $header) {
-                if ('status' == strtolower($header['name'])) {
-                    // 'status' headers indicate an HTTP status, and need to be 
-                    // handled slightly differently
-                    header(ucfirst(strtolower($header['name'])) . ': ' . $header['value'], null, (int) $header['value']);
-                } else {
-                    header($header['name'] . ': ' . $header['value']);
-                }
-            }
-        }
+        $this->sendHeaders();
 
         if ($this->isException() && $this->renderExceptions()) {
             $exceptions = '';
@@ -243,6 +252,8 @@ abstract class Zend_Controller_Response_Abstract
             return $exceptions;
         }
 
-        return $this->_concatenateBody();
+        ob_start();
+        $this->outputBody();
+        return ob_get_clean();
     }
 }

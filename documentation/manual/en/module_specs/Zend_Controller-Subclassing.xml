@@ -521,6 +521,31 @@ $controller->run();
 
         <programlisting role="php"><![CDATA[
     /**
+     * @param string $name Header name
+     * @param string $value Header value
+     * @param boolean $replace Whether or not to replace headers with the same
+     * name already registered with the object
+     * @return self
+     */
+    public function setHeader($name, $value, $replace = false);
+
+    /**
+     * @return array
+     */
+    public function getHeaders();
+
+    /**
+     * @return void
+     */
+    public function clearHeaders();
+
+    /**
+     * Sends all headers
+     * @return void
+     */
+    public function sendHeaders();
+
+    /**
      * @param string $content
      * @return self
      */
@@ -536,6 +561,12 @@ $controller->run();
      * @return string
      */
     public function getBody();
+
+    /**
+     * echoes body content
+     * @return void
+     */
+    public function outputBody();
 
     /**
      * @param Exception $e 
@@ -568,13 +599,15 @@ $controller->run();
         <para>
             <code>setBody()</code> will replace all body content; we encourage using
             <code>appendBody()</code> instead. <code>__toString()</code> should
-            render any content.
+            render any content and send all headers.
         </para>
 
         <para>
             The response object is also where action controller exceptions are
-            finally caught and registered. <code>isException()</code> should
-            return a boolean indicating whether or not this has occurred.
+            finally caught and registered (unless
+            <code>Zend_Controller_Front::throwExceptions()</code> has been
+            enabled. <code>isException()</code> should return a boolean
+            indicating whether or not this has occurred.
             <code>renderExceptions()</code> should be used to indicate whether
             <code>__toString()</code> will render exception output if an
             exception was trapped.

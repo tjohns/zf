@@ -432,8 +432,14 @@ public function myAction()
             purpose is to collate content and/or headers so that they may be
             returned en masse. Additionally, the front controller will pass any
             caught exceptions to the response object, allowing the developer to
-            gracefully handle exceptions.
+            gracefully handle exceptions. This functionality may be overridden
+            by setting
+            <code>Zend_Controller_Front::throwExceptions(true)</code>:
         </para>
+
+        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
 
         <para>
             Since the response object implements <code>__toString()</code>, it
@@ -441,7 +447,11 @@ public function myAction()
         </para>
 
         <programlisting role="php"><![CDATA[
-echo $controller->dispatch();
+echo $controller->getResponse();
+
+// or
+$response = $controller->getResponse();
+echo $response;
 ]]></programlisting>
         
         <para>
@@ -473,9 +483,49 @@ $this->getResponse()
         </para>
 
         <para>
-            By default, exception messages are not displayed. This behaviour may
-            be overridden by calling <code>renderException()</code>.
+            You may retrieve the response object following the front controller
+            dispatch(), or request the front controller to return the response
+            object instead of rendering output.
         </para>
+
+        <programlisting role="php"><![CDATA[
+// retrieve post-dispatch:
+$front->dispatch();
+$response = $front->getResponse();
+if ($response->isException()) {
+    // log, mail, etc...
+}
+
+// Or, have the front controller dispatch() process return it
+$front->returnResponse(true);
+$response = $front->dispatch();
+
+// do some processing...
+
+// finally, echo the response
+echo $response;
+]]></programlisting>
+
+        <para>
+            By default, exception messages are not displayed. This behaviour may
+            be overridden by calling <code>renderExceptions()</code>, or enabling
+            the front controller to throwExceptions(), as shown above:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->dispatch($request, $response);
+
+// or:
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions();
+echo $response;
+
+// or:
+$front->throwExceptions(true);
+$front->dispatch();
+]]></programlisting>
 	</sect2>
 </sect1>
 

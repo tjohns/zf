@@ -16,6 +16,8 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->_controller = Zend_Controller_Front::getInstance();
         $this->_controller->resetInstance();
         $this->_controller->setControllerDirectory(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+        $this->_controller->returnResponse(true);
+        $this->_controller->throwExceptions(false);
     }
 
     public function tearDown()
@@ -257,7 +259,7 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
     /**
      * Test that run() throws exception when called from object instance
      */
-    public function testRunThrowsException()
+    public function _testRunThrowsException()
     {
         try {
             $this->_controller->run(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
@@ -289,5 +291,64 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $response = $this->_controller->dispatch($request, $response);
 
         $this->assertContains('index.php', $request->getBaseUrl());
+    }
+
+    /**
+     * Test that throwExceptions() sets and returns value properly
+     */
+    public function testThrowExceptions()
+    {
+        $this->_controller->throwExceptions(true);
+        $this->assertTrue($this->_controller->throwExceptions());
+        $this->_controller->throwExceptions(false);
+        $this->assertFalse($this->_controller->throwExceptions());
+    }
+
+    /**
+     * Test that with throwExceptions() set, an exception is thrown
+     */
+    public function testThrowExceptionsThrows()
+    {
+        $this->_controller->throwExceptions(true);
+        $this->_controller->setControllerDirectory(dirname(__FILE__));
+        $request = new Zend_Controller_Request_Http('http://framework.zend.com/bogus/baz');
+        $this->_controller->setResponse(new Zend_Controller_Response_Cli());
+        $this->_controller->setRouter(new Zend_Controller_Router());
+
+        try {
+            $response = $this->_controller->dispatch($request);
+            $this->fail('Invalid controller should throw exception');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
+    /**
+     * Test that returnResponse() sets and returns value properly
+     */
+    public function testReturnResponse()
+    {
+        $this->_controller->returnResponse(true);
+        $this->assertTrue($this->_controller->returnResponse());
+        $this->_controller->returnResponse(false);
+        $this->assertFalse($this->_controller->returnResponse());
+    }
+
+    /**
+     * Test that with returnResponse set to false, output is echoed and equals that in the response
+     */
+    public function testReturnResponseReturnsResponse()
+    {
+        $request = new Zend_Controller_Request_Http('http://framework.zend.com/foo/bar/var1/baz');
+        $this->_controller->setResponse(new Zend_Controller_Response_Cli());
+        $this->_controller->setRouter(new Zend_Controller_Router());
+        $this->_controller->returnResponse(false);
+
+        ob_start();
+        $this->_controller->dispatch($request);
+        $body = ob_get_clean();
+
+        $actual = $this->_controller->getResponse()->getBody();
+        $this->assertEquals($actual, $body);
     }
 }

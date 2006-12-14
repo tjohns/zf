@@ -46,24 +46,6 @@ require_once 'Zend/Controller/Response/Abstract.php';
 class Zend_Controller_Front
 {
     /**
-     * Instance of Zend_Controller_Plugin_Broker
-     * @var Zend_Controller_Plugin_Broker
-     */
-    protected $_plugins = null;
-
-    /**
-     * Instance of Zend_Controller_Request_Abstract
-     * @var Zend_Controller_Request_Abstract
-     */
-    protected $_request = null;
-
-    /**
-     * Instance of Zend_Controller_Router_Interface
-     * @var Zend_Controller_Router_Interface
-     */
-    protected $_router = null;
-
-    /**
      * Base URL
      * @var string 
      */
@@ -83,10 +65,10 @@ class Zend_Controller_Front
     protected $_dispatcher = null;
 
     /**
-     * Instance of Zend_Controller_Response_Abstract
-     * @var Zend_Controller_Response_Abstract
+     * Singleton instance
+     * @var self 
      */
-    protected $_response = null;
+    private static $_instance = null;
 
     /**
      * Array of invocation parameters to use when instantiating action
@@ -96,10 +78,42 @@ class Zend_Controller_Front
     protected $_invokeParams = array();
 
     /**
-     * Singleton instance
-     * @var self 
+     * Instance of Zend_Controller_Plugin_Broker
+     * @var Zend_Controller_Plugin_Broker
      */
-    private static $_instance = null;
+    protected $_plugins = null;
+
+    /**
+     * Instance of Zend_Controller_Request_Abstract
+     * @var Zend_Controller_Request_Abstract
+     */
+    protected $_request = null;
+
+    /**
+     * Instance of Zend_Controller_Response_Abstract
+     * @var Zend_Controller_Response_Abstract
+     */
+    protected $_response = null;
+
+    /**
+     * Whether or not to return the response prior to rendering output while in 
+     * {@link dispatch()}; default is to send headers and render output.
+     * @var boolean
+     */
+    protected $_returnResponse = false;
+
+    /**
+     * Instance of Zend_Controller_Router_Interface
+     * @var Zend_Controller_Router_Interface
+     */
+    protected $_router = null;
+
+    /**
+     * Whether or not exceptions encountered in {@link dispatch()} should be 
+     * thrown or trapped in the response object
+     * @var boolean
+     */
+    protected $_throwExceptions = false;
 
     /**
      * Constructor
@@ -151,6 +165,10 @@ class Zend_Controller_Front
                 case '_plugins':
                     $this->{$name} = new Zend_Controller_Plugin_Broker();
                     break;
+                case '_throwExceptions':
+                case '_returnResponse':
+                    $this->{$name} = false;
+                    break;
                 default:
                     $this->{$name} = null;
                     break;
@@ -170,11 +188,12 @@ class Zend_Controller_Front
     {
         if (isset($this)) {
             throw Zend::exception('Zend_Controller_Exception', 'Zend_Controller_Front::run() should only be called statically');
+            return;
         }
 
         require_once 'Zend/Controller/Router.php';
         $frontController = self::getInstance();
-        echo $frontController
+        $frontController
             ->setControllerDirectory($controllerDirectory)
             ->setRouter(new Zend_Controller_Router())
             ->dispatch();
@@ -567,11 +586,51 @@ class Zend_Controller_Front
     }
 
     /**
+     * Set whether exceptions encounted in the dispatch loop should be thrown 
+     * or caught and trapped in the response object
+     *
+     * Default behaviour is to trap them in the response object; call this 
+     * method to have them thrown.
+     * 
+     * @param boolean $flag Defaults to true
+     * @return boolean Returns current setting
+     */
+    public function throwExceptions($flag = null)
+    {
+        if (true === $flag) {
+            $this->_throwExceptions = true;
+        } elseif (false === $flag) {
+            $this->_throwExceptions = false;
+        }
+
+        return $this->_throwExceptions;
+    }
+
+    /**
+     * Set whether {@link dispatch()} should return the response without first 
+     * rendering output. By default, output is rendered and dispatch() returns 
+     * nothing.
+     * 
+     * @param boolean $flag 
+     * @return boolean Returns current setting
+     */
+    public function returnResponse($flag = null)
+    {
+        if (true === $flag) {
+            $this->_returnResponse = true;
+        } elseif (false === $flag) {
+            $this->_returnResponse = false;
+        }
+
+        return $this->_returnResponse;
+    }
+
+    /**
      * Dispatch an HTTP request to a controller/action.
      *
      * @param Zend_Controller_Request_Abstract|null $request
      * @param Zend_Controller_Response_Abstract|null $response
-     * @return Zend_Controller_Response_Abstract
+     * @return void|Zend_Controller_Response_Abstract Returns response object if returnResponse() is true
      */
     public function dispatch(Zend_Controller_Request_Abstract $request = null, Zend_Controller_Response_Abstract $response = null)
     {
@@ -671,6 +730,10 @@ class Zend_Controller_Front
                 $this->_plugins->postDispatch($request);
             } while (!$request->isDispatched());
         } catch (Exception $e) {
+            if ($this->throwExceptions()) {
+                throw $e;
+            }
+
             $response->setException($e);
         }
 
@@ -680,9 +743,18 @@ class Zend_Controller_Front
         try {
             $this->_plugins->dispatchLoopShutdown();
         } catch (Exception $e) {
+            if ($this->throwExceptions()) {
+                throw $e;
+            }
+
             $response->setException($e);
         }
 
-        return $response;
+        if ($this->returnResponse()) {
+            return $response;
+        }
+
+        $response->sendHeaders();
+        $response->outputBody();
     }
 }
