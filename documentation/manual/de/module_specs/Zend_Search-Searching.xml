@@ -95,6 +95,58 @@ $index->find($query);
         </para>
 	</sect2>
 
+    <sect2 id="zend.search.searching.sorting">
+        <title>Sortierung der Suchergebnisse</title>
+        <para>
+            Die Suchergebnisse werden standardmäßig nach dem Punktwert sortiert. Man kann dies durch
+            Setzen von Parametern für das Sortierfeld (oder -felder), den Sortiertyp und der 
+            Sortierreihenfolge ändern.
+        </para>
+
+        <para>
+            <code>$index->find()</code> Aufruf kann verschiedene optionale Parameter entgegen nehmen:
+            <programlisting role="php"><![CDATA[
+$index->find($query [, $sortField [, $sortType [, $sortOrder]]] [, $sortField2 [, $sortType [, $sortOrder]]] ...);
+]]></programlisting>
+        </para>
+
+        <para>
+            <code>$sortField</code> ist ein Name eines gespeicherten Feldes für das Suchergebnis
+        </para>
+
+        <para>
+            <code>$sortType</code> kann ausgelassen werden oder folgende Werte annehmen
+            <code>SORT_REGULAR</code> (vergleiche Items normal, Standardwert),
+            <code>SORT_NUMERIC</code> (vergleiche Items numerisch),
+            <code>SORT_STRING</code> (vergleiche items als Strings).
+        </para>
+
+        <para>
+            <code>$sortOrder</code> kann ausgelassen werden oder folgende Werte annehmen
+            <code>SORT_ASC</code> (sortiere in aufsteigender Folge, Standardwert),
+            <code>SORT_DESC</code> (sortiere in absteigender Folge).
+        </para>
+
+        <para>
+            Beispiele:
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'fname', SORT_STRING, 'lname', SORT_STRING);
+]]></programlisting>
+            <programlisting role="php"><![CDATA[
+$index->find($query, 'name', SORT_STRING, 'quantity', SORT_NUMERIC, SORT_DESC);
+]]></programlisting>
+        </para>
+
+        <para>
+            Bitte beim Verwenden von nicht standardmäßigen Sortierreihenfolgen. Es erfordert die
+            komplette Übernahme der Dokumente aus dem Index und kann die Suchperformance dramatisch
+            verlangsamen.
+        </para>
+    </sect2>
+
 	<sect2 id="zend.search.searching.results">
 		<title>Suchergebnisse</title>
         <para>

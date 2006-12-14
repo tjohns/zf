@@ -5,7 +5,7 @@
     <sect2 id="zend.db.profiler.introduction">
 
         <title>Einführung</title>
-
+        
         <para>
             <code>Zend_Db_Profiler</code> kann aktiviert werden, um das Erstellen von Profilen für 
             Abfragen zu erlauben. Die Profile enthalten die Abfragen, die durch den Adapter 
