@@ -105,7 +105,7 @@ class Zend_Auth
             Zend_Session_Core::setOptions(array('strict' => true));
             require_once 'Zend/Session.php';
             $session = new Zend_Session($this->_sessionNamespace, Zend_Session::SINGLE_INSTANCE);
-            $session->$this->_sessionTokenName = $token;
+            $session->{$this->_sessionTokenName} = $token;
         }
 
         return $token;
@@ -197,8 +197,8 @@ class Zend_Auth
         Zend_Session_Core::setOptions(array('strict' => true));
         require_once 'Zend/Session.php';
         $session = new Zend_Session($this->_sessionNamespace, Zend_Session::SINGLE_INSTANCE);
-        if (!isset($session->$this->_sessionTokenName)) {
-            return $session->$this->_sessionTokenName;
+        if (!isset($session->{$this->_sessionTokenName})) {
+            return $session->{$this->_sessionTokenName};
         }
         return null;
     }
@@ -233,8 +233,8 @@ class Zend_Auth
         Zend_Session_Core::setOptions(array('strict' => true));
         require_once 'Zend/Session.php';
         $session = new Zend_Session($this->_sessionNamespace, Zend_Session::SINGLE_INSTANCE);
-        if (!isset($session->$this->_sessionTokenName)) {
-            unset($session->$this->_sessionTokenName);
+        if (!isset($session->{$this->_sessionTokenName})) {
+            unset($session->{$this->_sessionTokenName});
         }
     }
 
