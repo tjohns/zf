@@ -62,7 +62,7 @@ class Zend_AuthTest extends PHPUnit_Framework_TestCase
      */
     public function testSuccess()
     {
-        $auth = new Zend_Auth(new Zend_AuthTest_Success_Adapter());
+        $auth = new Zend_Auth(new Zend_AuthTest_Success_Adapter(), false);
         $options = array();
         $token = $auth->authenticate($options);
         $this->assertTrue($token->isValid());
