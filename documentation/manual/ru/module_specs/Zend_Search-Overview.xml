@@ -37,10 +37,10 @@
 -->
                         <footnote>
                            <para>
-                             Сейчас поддерживается поиск только по одному
-                             или нескольким ключевым словам и фразам.
+                             Сейчас поддерживается поиск по одному и нескольким
+                             элементам, фразам, булевы операторы и подзапросы.
 <!--
-                             Only term, multi term and phrase queries are supported at this time.
+                             Term, multi term, phrase queries, boolean expressions and subqueries are supported at this time.
 -->
                            </para>
                         </footnote>
