@@ -142,11 +142,11 @@ echo $response;
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
                 теперь принимает и возвращает объект запроса
-                <xref linkend="zend.controller.overview.request">Zend_Controller_Request_Abstract</xref>
+                <xref linkend="zend.controller.overview.request" />
                 вместо метки <code>Zend_Controller_Dispatcher_Token</code>.
 <!--
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
-                now accepts and returns a <xref linkend="zend.controller.overview.request">Zend_Controller_Request_Abstract</xref>
+                now accepts and returns a <xref linkend="zend.controller.overview.request" />
                 object instead of a dispatcher token.
 -->
             </para></listitem>
@@ -154,11 +154,11 @@ echo $response;
             <listitem><para>
                 <code>Zend_Controller_Router_Interface::route()</code>
                 теперь принимает и возвращает объект ответа
-                <xref linkend="zend.controller.overview.request">Zend_Controller_Request_Abstract</xref>
+                <xref linkend="zend.controller.overview.request" />
                 вместо метки <code>Zend_Controller_Dispatcher_Token</code>
 <!--
                 <code>Zend_Controller_Router_Interface::route()</code>
-                now accepts and returns a <xref linkend="zend.controller.overview.request">Zend_Controller_Request_Abstract</xref>
+                now accepts and returns a <xref linkend="zend.controller.overview.request" />
                 object instead of a dispatcher token.
 -->
             </para></listitem>
@@ -278,12 +278,12 @@ echo $response;
                 Интерфейс <code>Zend_Controller_Plugin_Interface</code> заменен
                 классом <code>Zend_Controller_Plugin_Abstract</code>. Все его
                 методы теперь принимают и возвращают
-                <xref linkend="zend.controller.overview.request">Zend_Controller_Request_Abstract</xref>
+                <xref linkend="zend.controller.overview.request" />
                 вместо метки диспетчеризации.
 <!--
                 <code>Zend_Controller_Plugin_Interface</code> was replaced
                 by <code>Zend_Controller_Plugin_Abstract</code>. All methods now
-                accept and return a <xref linkend="zend.controller.overview.request">Zend_Controller_Request_Abstract</xref>
+                accept and return a <xref linkend="zend.controller.overview.request" />
                 object instead of a dispatcher token.
 -->
             </para></listitem>
