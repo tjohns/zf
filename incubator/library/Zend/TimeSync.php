@@ -154,7 +154,7 @@ class Zend_TimeSync implements IteratorAggregate
         if (!is_array($options)) {
             throw Zend::exception(
                 'Zend_TimeSync_Exception',
-                '$options is expected to be an array, ' . gettype($config) . ' given'
+                '$options is expected to be an array, ' . gettype($options) . ' given'
             );
         }
 
