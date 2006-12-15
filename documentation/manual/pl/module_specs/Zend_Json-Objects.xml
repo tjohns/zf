@@ -3,6 +3,7 @@
     <para>
         Kiedy kodujemy obiekt PHP jako JSON, wszystkie publiczne właściwości
         tego obiektu zostaną zakodowane w obiekcie JSON.
+    </para>
     <para>
         JSON nie pozwala na referencje obiektów, więc musisz uważać abyś
         nie próbował kodować obiektów z rekurencyjnymi referencjami. Jeśli masz 
