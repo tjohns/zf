@@ -37,21 +37,16 @@ $ctrl->dispatch();
 ]]></programlisting>
 
         <para>
-            しかし、<xref linkend="zend.controller.overview.response" />
-            が追加されたことにより、後者のサンプルの最後の行をこのようにしたくなることでしょう。
-        </para>
-
-        <programlisting role="php"><![CDATA[
-echo $ctrl->dispatch();
-]]></programlisting>
-        
-        <para>
             レスポンスオブジェクトを使用して、コンテンツとヘッダを取得することを推奨します。
             これにより、アプリケーション内で
             より柔軟な出力書式の切り替え (たとえば XHTML ではなく
             JSON や XML を使用するなど) ができるようになります。
-            <code>dispatch()</code> の返り値には、
-            レスポンスオブジェクトの内容とヘッダが含まれます。
+            デフォルトでは、<code>dispatch()</code> はレスポンスのレンダリングを行い、
+            ヘッダとレンダリングされた内容の両方を送信します。
+            フロントコントローラから <code>returnResponse()</code>
+            を使用してレスポンスを返し、レスポンスのレンダリングを独自に行うこともできます。
+            将来のバージョンのフロントコントローラでは、
+            レスポンスオブジェクトに出力バッファリングを使用する予定です。
         </para>
 
         <para>
@@ -65,6 +60,46 @@ echo $ctrl->dispatch();
         </para>
 
         <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Front::dispatch()</code>
+                    は、デフォルトでレスポンスオブジェクトの例外をトラップします。
+                    例外の内容はレンダリングしません。これにより、
+                    システムについての機密情報がレンダリングされてしまうことを防ぎます。
+                    この挙動を変更するにはいくつかの方法があります。
+                </para>
+
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            フロントコントローラで <code>throwExceptions()</code>
+                            を設定します。
+                        </para>
+                        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            レスポンスオブジェクトで <code>renderExceptions()</code>
+                            を設定します。
+                        </para>
+                        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->setResponse($response);
+$front->dispatch();
+
+// あるいは
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions(true);
+echo $response;
+]]></programlisting>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
                 は、ディスパッチャトークンではなく

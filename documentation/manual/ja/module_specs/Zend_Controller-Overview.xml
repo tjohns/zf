@@ -417,7 +417,13 @@ public function myAction()
             その目的は、コンテンツやヘッダを収集し、それを返すことです。
             さらに、フロントコントローラで捕捉した例外はすべてレスポンスオブジェクトに渡されます。
             これにより、例外の処理がやりやすくなります。
+            この挙動を変更するには
+            <code>Zend_Controller_Front::throwExceptions(true)</code> を設定します。
         </para>
+
+        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
 
         <para>
             レスポンスオブジェクトは <code>__toString()</code> を実装しているので、
@@ -425,7 +431,11 @@ public function myAction()
         </para>
 
         <programlisting role="php"><![CDATA[
-echo $controller->dispatch();
+echo $controller->getResponse();
+
+// あるいは
+$response = $controller->getResponse();
+echo $response;
 ]]></programlisting>
         
         <para>
@@ -457,10 +467,51 @@ $this->getResponse()
         </para>
 
         <para>
-            デフォルトでは、例外メッセージは表示されません。
-            この挙動をオーバーライドするには <code>renderException()</code>
-            メソッドを使用します。
+            レスポンスオブジェクトは、フロントコントローラの
+            dispatch() から受け取ることになります。あるいは、
+            出力のレンダリングを行わない状態のレスポンスオブジェクトを
+            フロントコントローラから受け取ることもできます。
         </para>
+
+        <programlisting role="php"><![CDATA[
+// dispatch の後に取得します
+$front->dispatch();
+$response = $front->getResponse();
+if ($response->isException()) {
+    // ログへの記録、メール送信など...
+}
+
+// あるいは、フロントコントローラの dispatch() の返り値を使用します
+$front->returnResponse(true);
+$response = $front->dispatch();
+
+// 何かの処理...
+
+// 最後に結果を表示します
+echo $response;
+]]></programlisting>
+
+        <para>
+            デフォルトでは、例外メッセージは表示されません。
+            この挙動をオーバーライドするには <code>renderExceptions()</code>
+            メソッドを使用するか、あるいは上で示したようにフロントコントローラで
+            throwExceptions() を有効にします。
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->dispatch($request, $response);
+
+// あるいは
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions();
+echo $response;
+
+// あるいは
+$front->throwExceptions(true);
+$front->dispatch();
+]]></programlisting>
     </sect2>
 </sect1>
 

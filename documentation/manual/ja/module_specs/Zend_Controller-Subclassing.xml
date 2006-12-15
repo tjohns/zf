@@ -518,6 +518,31 @@ $controller->run();
 
         <programlisting role="php"><![CDATA[
     /**
+     * @param string $name Header name
+     * @param string $value Header value
+     * @param boolean $replace Whether or not to replace headers with the same
+     * name already registered with the object
+     * @return self
+     */
+    public function setHeader($name, $value, $replace = false);
+
+    /**
+     * @return array
+     */
+    public function getHeaders();
+
+    /**
+     * @return void
+     */
+    public function clearHeaders();
+
+    /**
+     * Sends all headers
+     * @return void
+     */
+    public function sendHeaders();
+
+    /**
      * @param string $content
      * @return self
      */
@@ -533,6 +558,12 @@ $controller->run();
      * @return string
      */
     public function getBody();
+
+    /**
+     * echoes body content
+     * @return void
+     */
+    public function outputBody();
 
     /**
      * @param Exception $e 
@@ -565,12 +596,14 @@ $controller->run();
         <para>
             <code>setBody()</code> は、ボディ部の内容をすべて置き換えます。
             このメソッドの代わりに <code>appendBody()</code> を使用することを推奨します。
-            <code>__toString()</code> は、内容をレンダリングします。
+            <code>__toString()</code> は、内容をレンダリングしてすべてのヘッダを送信します。
         </para>
 
         <para>
             レスポンスオブジェクトはまた、
-            アクションコントローラで発生した例外が最終的に捕捉、登録されるところでもあります。
+            アクションコントローラで発生した例外が最終的に捕捉、登録されるところでもあります
+            (<code>Zend_Controller_Front::throwExceptions()</code>
+            が有効になっている場合を除く)。
             <code>isException()</code> は boolean 値を返します。
             これは例外が発生したかどうかを表します。
             <code>renderExceptions()</code> を使用すると、
