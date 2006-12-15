@@ -25,7 +25,7 @@
             </listitem>
         </itemizedlist>
 
-        Put simply, <emphasis role="strong">AROs request access to ACOs</emphasis>. 
+        Put simply, <emphasis role="strong">AROs request access to ACOs</emphasis>.
         For example, if a person requests access to a car, then the person is the requesting ARO,
         and the car is the ACO, since access to the car is under control.
     </para>
@@ -33,12 +33,62 @@
     <para>
         Through the specification and use of an access control list (ACL), an application may control
         how requesting objects (AROs) are granted access to protected objects (ACOs).
-
-        Zend_Acl provides a tree-based structure to which multiple 'areas' (also known as ACOs)
-        can be added. These 'areas' within the ACL can be assigned either generic or specific
-        'actions' (known as Contexts) that determine access privileges for user-defined 'groups' (or AROs).
-        These actions are assigned to ACOs ad hoc when calling <code>allow()</code> or <code>deny()</code>.
     </para>
+
+    <sect2 id="zend.acl.introduction.acos">
+        <title>About ACOs</title>
+        <para>
+            In Zend_Acl, creating an ACO is very simple. Zend_Acl provides
+            <code>Zend_Acl_Aco_Interface</code> to facilitate developers' creating ACOs. A class need only
+            implement this interface, which consists of a single method, <code>getAcoId()</code>, in order
+            for Zend_Acl to consider the object to be an ACO. Additionally, <code>Zend_Acl_Aco</code> is
+            included with Zend_Acl as a basic ACO implementation for developers to extend where desirable.
+        </para>
+        <para>
+            Zend_Acl provides a tree structure to which multiple ACOs (or "areas under access control")
+            can be added. Since ACOs are stored in such a tree structure, they can be organized from the
+            general (toward the tree root) to the specific (toward the tree leaves). Queries upon
+            a specific ACO will automatically search the ACO's hierarchy for rules assigned to ancestor
+            ACOs, allowing for simple inheritance of rules. For example, if a default rule is to be
+            applied to each building in a city, one would simply assign the rule to the city, instead of
+            assigning the same rule to each building. Some buildings may require exceptions to such a
+            rule, however, and this is achieved easily in Zend_Acl by assigning such exception rules to
+            each such building that requires an exception to the rule. An ACO may inherit from only one
+            parent ACO, though this parent ACO can have its own parent ACO, and so on.
+        </para>
+        <para>
+            Zend_Acl also supports privileges upon ACOs (e.g., "create", "read", "update", "delete"), and
+            the developer can assign rules that affect all privileges or specific privileges upon an ACO.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.acl.introduction.aros">
+        <title>About AROs</title>
+        <para>
+            Like with ACOs, creating an ARO is also very simple. Zend_Acl provides
+            <code>Zend_Acl_Aro_Interface</code> to facilitate developers' creating AROs. A class need only
+            implement this interface, which consists of a single method, <code>getAroId()</code>, in order
+            for Zend_Acl to consider the object to be an ARO. Additionally, <code>Zend_Acl_Aro</code> is
+            included with Zend_Acl as a basic ARO implementation for developers to extend where desirable.
+        </para>
+        <para>
+            In Zend_Acl, an ARO may inherit from one or more AROs. This is to support inheritance of rules
+            among AROs. For example, a user ARO, such as "sally", may belong to one or more role AROs,
+            such as "editor" and "administrator". The developer can assign rules to "editor" and
+            "administrator" separately, and "sally" would inherit such rules from both, without having to
+            assign rules directly to "sally".
+        </para>
+        <note>
+            <para>
+                Since Zend_Acl supports inheriting rules from multiple AROs, which may possibly
+                conflict with each other, a way to unambiguously resolve such conflicts is necessary. Zend_Acl
+                resolves such potential conflicts by considering the most recently inherited ARO as highest
+                priority. That is, once a rule is found for a "parent" ARO, starting at the most recently
+                inherited ARO, no other rules are considered, since the highest priority rule has already been
+                reached.
+            </para>
+        </note>
+    </sect2>
 
     <sect2 id="zend.acl.introduction.creating">
         <title>Creating the Access Control List (ACL)</title>
@@ -54,6 +104,14 @@
 require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();]]></programlisting>
+
+        <note>
+            <para>
+                Zend_Acl is a "whitelist" implementation by default, which means that unless otherwise
+                specified by the developer, Zend_Acl denies access to every privilege upon every ACO by
+                every ARO.
+            </para>
+        </note>
     </sect2>
 
     <sect2 id="zend.acl.introduction.aro_registry">
@@ -65,10 +123,10 @@ $acl = new Zend_Acl();]]></programlisting>
             allow limited access for demonstrations, a 'Staff' group for the majority of CMS users
             who perform most of the day-to-day operations, an 'Editor' group for those responsible for publishing,
             reviewing, archiving and deleting content, and finally an 'Administrator' group whose tasks may
-            include all of those of the other groups as well as maintenance of sensitive information, 
+            include all of those of the other groups as well as maintenance of sensitive information,
             user management, back-end configuration data and backup/export. This set of permissions can be
             represented in an ARO registry, allowing each group to inherit privileges from 'parent' groups,
-            as well as providing distinct privileges for their unique group only. 
+            as well as providing distinct privileges for their unique group only.
             The permissions may be expressed as follows:
         </para>
 
@@ -108,7 +166,9 @@ $acl = new Zend_Acl();]]></programlisting>
         </table>
 
         <para>
-            These groups can be added to the ARO registry as follows:
+            For this example, <code>Zend_Acl_Aro</code> is used, but any object that implements
+            <code>Zend_Acl_Aro_Interface</code> is acceptable. These groups can be added to the
+            ARO registry as follows:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -116,23 +176,25 @@ require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
 
-// Retrieve an instance of the ARO registry
-$aro = $acl->aroRegistry();
-
-// Add groups to the ARO registry
+// Add groups to the ARO registry using Zend_Acl_Aro
+require_once 'Zend/Acl/Aro.php';
 
 // Guest does not inherit access controls
-$aro->add('guest');
+$aroGuest = new Zend_Acl_Aro('guest');
+$acl->addAro($aroGuest);
 
 // Staff inherits from guest
-$aro->add('staff', $aro->guest);
-// alternatively, $aro->add('staff', 'guest');
+$acl->addAro(new Zend_Acl_Aro('staff'), $aroGuest);
+
+/* alternatively, the above could be written:
+$aroGuest = $acl->addAro(new Zend_Acl_Aro('staff'), 'guest');
+//*/
 
 // Editor inherits from staff
-$aro->add('editor', $aro->staff);
+$acl->addAro(new Zend_Acl_Aro('editor'), 'staff');
 
 // Administrator does not inherit access controls
-$aro->add('administrator');]]></programlisting>
+$acl->addAro(new Zend_Acl_Aro('administrator'));]]></programlisting>
 
     </sect2>
 
@@ -140,22 +202,16 @@ $aro->add('administrator');]]></programlisting>
         <title>Defining Access Controls</title>
 
         <para>
-            Now that the ARO registry contains the groups, permissions can be assigned to areas
-            within the ACL. Zend_Acl provides an extremely flexible implementation whereby ACOs need
-            only be created for those areas that require specific permissions. 
-            All descendant ACOs - even undeclared ACOs - inherit permissions defined for their ancestor ACOs.
+            Now that the ACL contains the relevant AROs, rules can be established that define how
+            ACOs may be accessed by AROs. You may have noticed that we have not defined any particular
+            ACOs for this example, which is simplified to illustrate that the rules apply to all ACOs.
+            Zend_Acl provides an implementation whereby rules need only be assigned from general to specific,
+            minimizing the number of rules needed, because ACOs and AROs inherit rules that are defined upon
+            their ancestors.
         </para>
 
         <para>
-            For example, if we assign access controls to <code><![CDATA[$acl->newsletters]]></code>,
-            then descendant ACOs such as <code><![CDATA[$acl->newsletters->archive]]></code> and
-            <code><![CDATA[$acl->newsletters->pending]]></code> inherit access controls from the parent ACO,
-            <code><![CDATA[$acl->newsletters]]></code>, despite that they have not been specifically 
-            defined for either child ACO.
-        </para>
-
-        <para>
-            Consequently, we can define a reasonably complex set of permissions with a minimum amount of code.
+            Consequently, we can define a reasonably complex set of rules with a minimum amount of code.
             To apply the base permissions as defined above:
         </para>
 
@@ -164,29 +220,35 @@ require_once 'Zend/Acl.php';
 
 $acl = new Zend_Acl();
 
-$aro = $acl->aroRegistry();
+require_once 'Zend/Acl/Aro.php';
 
-$aro->add('guest');
-$aro->add('staff', $aro->guest);
-$aro->add('editor', $aro->staff);
-$aro->add('administrator', $aro->editor);
-
-// Whitelist implementation; ACL denies access by default
-$acl->deny();
+$aroGuest = new Zend_Acl_Aro('guest');
+$acl->addAro($aroGuest);
+$acl->addAro(new Zend_Acl_Aro('staff'), $aroGuest);
+$acl->addAro(new Zend_Acl_Aro('editor'), 'staff');
+$acl->addAro(new Zend_Acl_Aro('administrator'));
 
 // Guest may only view content
-$acl->allow($aro->guest, 'view');
-// alternatively, $acl->allow('guest, 'view');
+$acl->allow($aroGuest, null, 'view');
+
+/* alternatively, the above could be written:
+$acl->allow('guest', null, 'view');
+//*/
 
 // Staff inherits view privilege from guest, but also needs additional privileges
-$acl->allow($aro->staff, array('edit', 'submit', 'revise'));
+$acl->allow('staff', null, array('edit', 'submit', 'revise'));
 
 // Editor inherits view, edit, submit, and revise privileges from staff,
 // but also needs additional privileges
-$acl->allow($aro->editor, array('publish', 'archive', 'delete'));
+$acl->allow('editor', null, array('publish', 'archive', 'delete'));
 
 // Administrator inherits nothing, but is allowed all privileges
-$acl->allow($aro->administrator);]]></programlisting>
+$acl->allow('administrator');]]></programlisting>
+
+        <para>
+            The <code>null</code> values in the above <code>allow()</code> calls are used to indicate
+            that the allow rules apply to all ACOs.
+        </para>
 
     </sect2>
 
@@ -195,34 +257,34 @@ $acl->allow($aro->administrator);]]></programlisting>
 
         <para>
             We now have a flexible ACL that can be used to determine whether requesters have permission
-            to access areas and perform functions throughout the web application. Performing queries
-            can be as flexible as you require:
+            to perform functions throughout the web application. Performing queries is quite simple using
+            the <code>isAllowed()</code> method:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Querying the ACL at the root ACO
-
-echo $acl->valid($aro->guest, 'view') ?
+echo $acl->isAllowed('guest', null, 'view') ?
      "allowed" : "denied"; // allowed
 
-echo $acl->valid($aro->staff, 'publish') ?
+echo $acl->isAllowed('staff', null, 'publish') ?
      "allowed" : "denied"; // denied
 
-// Permission checks on more specific ACOs
-
-echo $acl->newsletter->pending->valid($aro->guest, 'view') ?
+echo $acl->isAllowed('staff', null, 'revise') ?
      "allowed" : "denied"; // allowed
 
-echo $acl->gallery->profiles->valid($aro->staff, 'revise') ?
-     "allowed" : "denied"; // allowed because of inheritance
+echo $acl->isAllowed('editor', null, 'view') ?
+     "allowed" : "denied"; // allowed because of inheritance from guest
 
-echo $acl->config->hosts->valid($aro->editor, 'update') ?
-     "allowed" : "denied"; // denied because 'update' is undefined
+echo $acl->isAllowed('editor', null, 'update') ?
+     "allowed" : "denied"; // denied because no allow rule for 'update'
 
-// Querying permissions from the perspective of an ARO
+echo $acl->isAllowed('administrator', null, 'view') ?
+     "allowed" : "denied"; // allowed because administrator is allowed all privileges
 
-echo $aro->staff->canAccess($acl->newsletter->pending, 'view') ?
-     "allowed" : "denied"; // allowed]]></programlisting>
+echo $acl->isAllowed('administrator') ?
+     "allowed" : "denied"; // allowed because administrator is allowed all privileges
+
+echo $acl->isAllowed('administrator', null, 'update') ?
+     "allowed" : "denied"; // allowed because administrator is allowed all privileges]]></programlisting>
 
     </sect2>
 </sect1>
