@@ -32,6 +32,7 @@ class Zend_Controller_Plugin_BrokerTest extends PHPUnit_Framework_TestCase
         $controller->setRouter(new Zend_Controller_Router());
         $plugin = new Zend_Controller_Plugin_BrokerTest_TestPlugin();
         $controller->registerPlugin($plugin);
+        $controller->returnResponse(true);
         $response = $controller->dispatch($request);
         $this->assertEquals('123456', $response->getBody());
         $this->assertEquals('123456', $plugin->getResponse()->getBody());
