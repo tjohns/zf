@@ -22,15 +22,15 @@
 
 
 /**
- * Zend_Acl
+ * Zend
  */
-require_once 'Zend/Acl.php';
+require_once 'Zend.php';
 
 
 /**
- * Zend_Acl_Aro
+ * Zend_Acl_Aro_Interface
  */
-require_once 'Zend/Acl/Aro.php';
+require_once 'Zend/Acl/Aro/Interface.php';
 
 
 /**
@@ -42,115 +42,221 @@ require_once 'Zend/Acl/Aro.php';
 class Zend_Acl_Aro_Registry
 {
     /**
-     * ARO registry
+     * Internal ARO registry data storage
+     *
      * @var array
      */
-    protected $_aro = array();
+    protected $_aros = array();
 
     /**
-     * Registry instance
-     * @var Zend_Acl_Aro_Registry
-     */
-    static protected $_instance = null;
-
-    /**
-     * Class constructor
+     * Adds an ARO having an identifier unique to the registry
      *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->add('_default');
-    }
-
-    /**
-     * Public access to ARO registry
+     * The $parents parameter may be a reference to, or the string identifier for,
+     * an ARO existing in the registry, or $parents may be passed as an array of
+     * these - mixing string identifiers and objects is ok - to indicate the AROs
+     * from which the newly added ARO will directly inherit.
      *
-     * @return void
-     */
-    public function __get($aro)
-    {
-        return $this->find($aro);
-    }
-
-    /**
-     * Add unique ARO to registry
+     * In order to resolve potential ambiguities with conflicting rules inherited
+     * from different parents, the most recently added parent takes precedence over
+     * parents that were previously added. In other words, the first parent added
+     * will have the least priority, and the last parent added will have the
+     * highest priority.
      *
-     * @param Zend_Acl_Aro $aro
-     * @return Zend_Acl_Aro_Registry for fluent interface
+     * @param  Zend_Acl_Aro_Interface              $aro
+     * @param  Zend_Acl_Aro_Interface|string|array $parents
+     * @throws Zend_Acl_Aro_Registry_Exception
+     * @return Zend_Acl_Aro_Registry Provides a fluent interface
      */
-    public function add($aro, $inherit = null)
+    public function add(Zend_Acl_Aro_Interface $aro, $parents = null)
     {
-        if (!($aro instanceof Zend_Acl_Aro)) {
-            $aro = new Zend_Acl_Aro($this, $aro, $inherit);
+        $aroId = $aro->getAroId();
+
+        if ($this->has($aroId)) {
+            throw Zend::exception('Zend_Acl_Aro_Registry_Exception',
+                                  "ARO id '$aroId' already exists in the registry");
         }
 
-        if (array_key_exists($aro->getId(), $this->_aro)) {
-            throw new Zend_Acl_Exception('aro ' . $aro->getId() . ' already registered');
+        $aroParents = array();
+
+        if (null !== $parents) {
+            if (!is_array($parents)) {
+                $parents = array($parents);
+            }
+            if (count($parents) > 0) {
+                Zend::loadClass('Zend_Acl_Aro_Registry_Exception');
+            }
+            foreach ($parents as $parent) {
+                try {
+                    if ($parent instanceof Zend_Acl_Aro_Interface) {
+                        $aroParentId = $parent->getAroId();
+                    } else {
+                        $aroParentId = $parent;
+                    }
+                    $aroParent = $this->get($aroParentId);
+                } catch (Zend_Acl_Aro_Registry_Exception $e) {
+                    throw new Zend_Acl_Aro_Registry_Exception("Parent ARO id '$aroParentId' does not exist");
+                }
+                $aroParents[$aroParentId] = $aroParent;
+                $this->_aros[$aroParentId]['children'][$aroId] = $aro;
+            }
         }
 
-        $this->_aro[$aro->getId()] = $aro;
+        $this->_aros[$aroId] = array(
+            'instance' => $aro,
+            'parents'  => $aroParents,
+            'children' => array()
+            );
+
         return $this;
     }
 
     /**
-     * Remove ARO from registry
+     * Returns the identified ARO
      *
-     * @param Zend_Acl_Aro $aro
-     * @return boolean
+     * The $aro parameter can either be an ARO or an ARO identifier.
+     *
+     * @param  Zend_Acl_Aro_Interface|string $aro
+     * @throws Zend_Acl_Aro_Registry_Exception
+     * @return Zend_Acl_Aro_Interface
      */
-    public function remove($aro, Zend_Acl $acl)
+    public function get($aro)
     {
-        $id = $this->find($aro)->getId();
-
-        if ($id == Zend_Acl::ARO_DEFAULT) {
-            return false;
+        if ($aro instanceof Zend_Acl_Aro_Interface) {
+            $aroId = $aro->getAroId();
+        } else {
+            $aroId = (string) $aro;
         }
 
-        $children = array($id => $id);
+        if (!$this->has($aro)) {
+            throw Zend::exception('Zend_Acl_Aro_Registry_Exception',
+                                  "ARO '$aroId' not found");
+        }
 
-        foreach($this->_aro as $aro) {
-            if (in_array($id, $aro->getParent())) {
-                $children[$aro->getId()] =  $aro->getId();
-                $acl->removeAro($aro, $acl);
+        return $this->_aros[$aroId]['instance'];
+    }
+
+    /**
+     * Returns true if and only if the ARO exists in the registry
+     *
+     * The $aro parameter can either be an ARO or an ARO identifier.
+     *
+     * @param  Zend_Acl_Aro_Interface|string $aro
+     * @return boolean
+     */
+    public function has($aro)
+    {
+        if ($aro instanceof Zend_Acl_Aro_Interface) {
+            $aroId = $aro->getAroId();
+        } else {
+            $aroId = (string) $aro;
+        }
+
+        return isset($this->_aros[$aroId]);
+    }
+
+    /**
+     * Returns an array of an existing ARO's parents
+     *
+     * The array keys are the identifiers of the parent AROs, and the values are
+     * the parent ARO instances. The parent AROs are ordered in this array by
+     * ascending priority. The highest priority parent ARO, last in the array,
+     * corresponds with the parent ARO most recently added.
+     *
+     * If the ARO does not have any parents, then an empty array is returned.
+     *
+     * @param  Zend_Acl_Aro_Interface|string $aro
+     * @uses   Zend_Acl_Aro_Registry::get()
+     * @return array
+     */
+    public function getParents($aro)
+    {
+        $aroId = $this->get($aro)->getAroId();
+
+        return $this->_aros[$aroId]['parents'];
+    }
+
+    /**
+     * Returns true if and only if $aro inherits from $inherit
+     *
+     * Both parameters may be either an ARO or an ARO identifier. If
+     * $onlyParents is true, then $aro must inherit directly from
+     * $inherit in order to return true. By default, this method looks
+     * through the entire inheritance DAG to determine whether $aro
+     * inherits from $inherit through its ancestor AROs.
+     *
+     * @param  Zend_Acl_Aro_Interface|string $aro
+     * @param  Zend_Acl_Aro_Interface|string $inherit
+     * @param  boolean                       $onlyParents
+     * @throws Zend_Acl_Aro_Registry_Exception
+     * @return boolean
+     */
+    public function inherits($aro, $inherit, $onlyParents = false)
+    {
+        Zend::loadClass('Zend_Acl_Aro_Registry_Exception');
+
+        try {
+            $aroId     = $this->get($aro)->getAroId();
+            $inheritId = $this->get($inherit)->getAroId();
+        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            throw $e;
+        }
+
+        $inherits = isset($this->_aros[$aroId]['parents'][$inheritId]);
+
+        if ($inherits || $onlyParents) {
+            return $inherits;
+        }
+
+        foreach ($this->_aros[$aroId]['parents'] as $parentId => $parent) {
+            if ($this->inherits($parentId, $inheritId)) {
+                return true;
             }
         }
 
-        foreach($children as $aro) {
-            unset($this->_aro[$aro]);
-        }
-
-        return true;
+        return false;
     }
 
     /**
-     * FInd group in registry
+     * Removes the ARO from the registry
      *
-     * If the named group does not exist, the default ARO is returned
+     * The $aro parameter can either be an ARO or an ARO identifier.
      *
-     * @param string $aro
-     * @return Zend_Acl_Aro
+     * @param  Zend_Acl_Aro_Interface|string $aro
+     * @throws Zend_Acl_Aro_Registry_Exception
+     * @return Zend_Acl_Aro_Registry Provides a fluent interface
      */
-    public function find($aro)
+    public function remove($aro)
     {
-        if ($aro instanceof Zend_Acl_Aro) {
-            $aro = $aro->getId();
-           }
+        Zend::loadClass('Zend_Acl_Aro_Registry_Exception');
 
-        if (isset($this->_aro[$aro])) {
-            return $this->_aro[$aro];
+        try {
+            $aroId = $this->get($aro)->getAroId();
+        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            throw $e;
         }
 
-        return $this->_aro[Zend_Acl::ARO_DEFAULT];
+        foreach ($this->_aros[$aroId]['children'] as $childId => $child) {
+            unset($this->_aros[$childId]['parents'][$aroId]);
+        }
+        foreach ($this->_aros[$aroId]['parents'] as $parentId => $parent) {
+            unset($this->_aros[$parentId]['children'][$aroId]);
+        }
+
+        unset($this->_aros[$aroId]);
+
+        return $this;
     }
 
     /**
-     * Return registry as an array of ARO objects
+     * Removes all AROs from the registry
      *
-     * @return array
+     * @return Zend_Acl_Aro_Registry Provides a fluent interface
      */
-    public function toArray()
+    public function removeAll()
     {
-        return $this->_aro;
+        $this->_aros = array();
+
+        return $this;
     }
+
 }
