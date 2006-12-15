@@ -5,9 +5,8 @@
 		<title>مقدمة</title>
     		<para>
                 تم بناء <code>Zend_Controller</code> و فى اعتبارنا ان يكون قابل للتمدد بسهولة, سواء عن طريق إن شاء 
-                subclasses ترث من الـ class الموجودة او إنشاء classes جديدة تعتمد على الـ interfaces المسمى 
-                <code>Zend_Controller_Router_Interface</code> و 
-                <code>Zend_Controller_Dispatcher_Interface</code>.
+                subclasses ترث من الـ class الموجودة او إنشاء classes جديدة تعتمد على الـ interfaces 
+                أو الـ abstract classes العدبدة التى تتكون منها عائلة الـ controller .
 		</para>
 	</sect2>
 	
@@ -62,6 +61,24 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
             هذا مفيد فى اثناء عملية التطوير, بينما فى مرحلة الإنتاج  يجب ان يتم كتابة اوامر اعادة التوجيه بحيث يتم 
             إستثناء مجلدات معينة و ليس  امتدادات ملفات.
 		</para>
+        
+        <note>	
+            <title> مكان ملف الـ bootstrap</title>
+            <para>
+    			ملف الـ bootstrap يجب ان يكون ملف الـ PHP الوحيد المحفوظ فى الـ document root.			
+    		</para>
+        </note>
+        
+        <para>
+            الوظائف الأساسية لـ Zend_Controller ايضا تدعم الـ URLs 
+            التى تستخدم البرامترات العادية -- على سبيل المثال , 
+            <code>index.php?controller=foo&amp;action=bar</code>.
+            ايضاً, هناك router أخر و هو <code>Zend_Controller_RewriteRouter</code> 
+            و الذى يعمل فى العديد من البيئات , حتى الكثير من التى لا تحتوى امكانيات تتشابه مع 
+            ما تقوم به mod_rewrite , فإن كنت لا تستطيع أن تستخدم mod_rewrite أو 
+            ما يعادلها , فمازال بأمكانك أن تستخدم Zend_Controller فى موقعك.
+        </para>
+        
 	</sect2>
 	
 	<sect2 id="zend.controller.getting-started.bootstrap">
@@ -75,7 +92,7 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
             <footnoteref linkend="document-root" />document root.
 		</para>
 
-		<note>	
+        <note>	
             <title> مكان ملف الـ bootstrap</title>
             <para>
     			ملف الـ bootstrap يجب ان يكون ملف الـ PHP الوحيد المحفوظ فى الـ document root.			
@@ -107,16 +124,8 @@ Zend_Controller_Front::run('/path/to/your/controllers');
             ان يكون فى الـ <code>include_path</code>. إذا لم تقم بعمل هذا فى ملف php.ini , يمكنك أستخدام 
             <code>()set_include_path</code> فى بداية الملف قبل <code>()require_once</code>.
 		</para>
-
-		<note>
-            <title>المتطلبات</title>
-            <para>
-                فى هذا الوقت, نحن نقوم بالبحث عن حل لا يتطلب توافر mod_rewrite . ربما سنقوم بتوفير اعدادات للأنظمة التى تعمل 
-                مع او بدون امكانيات الـ mod_rewrite . ايضا يرجى ملاحظة ان هذا النظام ليس مرتبط بـ Apache و mod_rewrite 
-                تحديداً, و لكن اى webserver  لديه هذه القدرة على اعادة التوجيه يجب ان يفى بالغرض.
-    		</para>
-        </note>
-	</sect2>	
+      </sect2>
+      	
 		
 	<sect2 id="zend.controller.getting-started.directory-structure">
 		<title>هيكلة المجلدات</title>
@@ -153,24 +162,40 @@ Zend_Controller_Front::run('/path/to/your/controllers');
 		</note>
 	</sect2>	
 		
-	<sect2 id="zend.controller.overview.indexcontroller">
-		<title>IndexController</title>
+	<sect2 id="zend.controller.overview.defaultcontroller">
+		<title>الـ Controller الأساسى</title>
 
 		<para>
-			كل تطبيق يجب ان يوفر controller بإسم <code>IndexController</code>. هذا هو الـ controller الذى سيتم 
-            الوصول إليه عندما لا يتم تحديد controller معين فى الـ URI, مثال على URI مماثل يمكن ان نراه هنا:
+			كل تطبيق يجب ان يوفر controller أساسى. هذا هو الـ controller الذى سيتم 
+            إستخدامه إن لم يتم تحديد controller معين فى الـ URI, مثال على URI مماثل يمكن ان نراه هنا:
         </para>
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/
 ]]></programlisting>
 
-		<para>
-            الـ class المسمى <code>IndexController</code> يجب ان يتم حفظه فى ملف بإسم 
-            <code>IndexController.php</code>, و هذا الملف يجب ان يوضع فى مجلد الـ controllers .
-            يجب ان يرث <code>IndexController</code> من <code>Zend_Controller_Action</code> , 
-            و هنا مثال على إنشاء <code>IndexController</code> :
-
+        <para>
+            طبقاً للأعدادات الأساسية , الـ controller الأساسى يجب أن يحمل 
+            الأسم <code>IndexController</code> و أن يكن فى ملف 
+            يحمل الأسم <code>IndexController.php</code> , 
+            داخلياً, سيتم تعريفه على انه الـ controller صاحب الأسم 'index' .
         </para>
+        
+        <para>
+            يمكنك أن تغير الـ controller الأساسى قبل عمل dispatch للـ 
+            front controller عن طريق إستدعاء <code>setDefaultController()</code> 
+            من خلال كائن الـ front controller أو كائن الـ dispatcher , عند قيامك بهذا ,
+            إستخدم قواعد التسمية الداخلية للـ controllers , أى أن , الـ class المسمى 
+            <code>HomeController</code> (الموجود فى الملف 
+            <code>HomeController.php</code> ) سيتم الأشارة إليه على 
+            انه <code>home</code>.
+        </para>
+        
+        <para>
+            الـ controllers يجب أن يرثوا من <code>Zend_Controller_Action</code> 
+            و أن يوضعوا فى مجلد الـ controllers .
+        </para>
+        
+
         <programlisting role="php"><![CDATA[<?php
 				
 require_once 'Zend/Controller/Action.php';
@@ -190,6 +215,12 @@ class IndexController extends Zend_Controller_Action
 
 ?>]]></programlisting>
 			
+            
+        <para>
+            المزيد من المعلومات عن الـ controllers و الـ actions الأساسية , 
+            مع كيفية كتابة action controller classes , سيتم عرضها فى 
+            فصول أخرى.
+        </para>
 		<note>
             <title>تحت الإنشاء</title>
             <para>

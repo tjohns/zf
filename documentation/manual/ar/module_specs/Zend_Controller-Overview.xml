@@ -32,84 +32,289 @@
 
 				<listitem>
 					<para>
-                        <code>Zend_Controller_Router</code> هو الموجه(router) . التوجيه او الـ routing هو عملية استلام URI 
-                        ثم تقسيم مكوناته إلى اجزاء لمعرفة أى Controller و أى Action فى هذا الـ Controller يجب ان يستقبل الطلب. 
-                        يتم تجميع التعريفات الخاصة بالـ Controller و الـ Action و اى متغيرات اخرى ممررة , و توضع فى object يسمى 
-                        <code>Zend_Controller_Dispatcher_Token</code>. و تحدث عملية التحويل مرة واحدة فقط و ذلك بمجرد 
-                        إستلام الطلب و قبل تشغيل اول Controller .
+                        <code>Zend_Controller_Request_Abstract</code>  يمثل 
+                        بيئة الطلب "request environment" و يوفر methods لتحديد و جلب 
+                        أسماء الـ controller و الـ action و أى بارامترات request أخرى, 
+                        إضافة إلى ذلك يقم بتعقب إن ما كان الـ controller الذى يحويه قد تم 
+                        تنفيذه من قبل <code>Zend_Controller_Dispatcher</code>, 
+                        و امتدادات للـ abstract request object يمكنك أن تستخدم لكبسلة 
+                        الـ request environment بالكامل, بما يسمح للـ routers أن تسحب 
+                        معلومات من الـ request environment لكى تقوم بتحديد أسماء الـ 
+                        controller و الـ action .
 					</para>
+                    
+                    <para>
+                        حسب الإعدادات الأساسية, يتم إستخدام 
+                        <code>Zend_Controller_Request_Http</code> ,
+                        و الذى يوفر امكانية الوصول إلى الـ HTTP request environment 
+                        بالكامل.
+                    </para>
 				</listitem>
 
 				<listitem>
 					<para>
-                        <code>Zend_Controller_Dispatcher</code> هو المنفذ "Dispatcher". عملية التنفيذ هى عملية اخذ 
-                        <code>Zend_Controller_Dispatcher_Token</code> ثم إيجاد ملف الـ controller المحدد, ثم إنشاء instance 
-                        جديد من الـ class الخاص بهذا الـ controller (يجب ان يرث من <code>Zend_Controller_Action</code>) . 
-                        و اخر خطوة هى إستدعاء الـ method الخاص بهذا الـ action من الـ object الخاص بالـ controller . 
-                        على عكس عملية التوجيه "الـ routing" و التى تحدث مرة واحدة , تحدث عملية التنفيذ "dispatching" بشكل متكرر. 
-                        يتم إستدعاء <code>Zend_Controller_Dispatcher</code> بشكل متكرر من قبل 
-                        <code>Zend_Controller_Front</code> إلى ان يتم تنفيذ كل الـ actions و ذلك بتسلسل منطقى.
+                        يتم إستخدام <code>Zend_Controller_Router_Interface</code> 
+                        لتعريف الـ routers, عملية الـ routing هى عملية تحليل الـ request environment 
+                        لمعرفة أى controller و أى action تابع للـ controller , يجب أن يستلم 
+                        الـ request , هذا الـ controller و الـ action و أى بارامترات أخرى سيتم 
+                        تحديدها فى كائن الـ request و الذى سيتم معالجته بعدها بواسطة 
+                        <code>Zend_Controller_Dispatcher</code>, 
+                        تحدث عملية الـ routing مرة واحدة: عند إستلام الطلب الأساسى 
+                        و قبل أن يتم تنفيذ أول controller .
 					</para>
+                    
+                    <para>
+                        الـ router الأساسى , <code>Zend_Controller_Router</code> ,
+                        يستلم الجزء الأخير من URI كما هو محدد فى 
+                        <code>Zend_Controller_Request_Http</code> و يقوم 
+                        بفك محتوياته إلى controller و action و أى باريمترات أخرى تم تمريرها 
+                        فى الـ url , فعلى سبيل المثال, الـ URL هذا 
+                        <code>http://localhost/foo/bar/key/value</code> سيتم فك محتوياته 
+                        ليتم إستخدام الـ controller المسمى foo و الـ action المسمى bar و سيتم تحديد
+                        باراميتر بالأسم key سيحمل القيمة value.
+                    </para>
+                    
 				</listitem>
 
 				<listitem>
 					<para>
-                        <code>Zend_Controller_Action</code> هو العنصر الأساسى فى تكوين controller . كل controller هو 
-                        عبارة عن class يرث من <code>Zend_Controller_Action</code> , و هذا الـ class يحتوى على methods 
-                        تعمل كـ actions .
+                        يُستخدم <code>Zend_Controller_Dispatcher_Interface</code> 
+                        لتعريف الـ dispatchers, عملية الـ dispatching هى جلب أسم الـ controller 
+                        و الـ action من كائن الـ request و على أساسهما يتم تحديد ملف/class الـ 
+                        controller و الـ action method فى الـ controller , و إن لم يتم إيجاد 
+                        الـ controller أو أن الـ action غير موجود , سيتم القيام بالعمليات الازمة 
+                        لمعرفة الـ controllers و الـ actions الأساسية الواجب تنفيذها.
 					</para>
+                    
+                    <para>
+                        عملية الـ dispatching الفعلية تتكون من إنشاء نسخة من 
+                        الـ controller class و إستدعاء الـ action method فى 
+                        هذا الـ class, و عكس الـ routing الذى يحدث مرة واحدة,
+                        الـ dispatching يحدث فى حلقة متكررة, و إن تم تغيير 
+                        حالة الـ dispatch الخاصة بكائن الـ request عند أى نقطة,
+                        سيتم تكرار الحلقة من جديد, و إستدعاء أى action يوجد فى 
+                        كائن الـ request, و فى أول مرة تنتهى الحلقة التكرارية مع 
+                         أن تكون حالة الـ dispatch الخاصة بكائن الـ request 
+                        (قيمتها true), سيتم إنهاء العملية.
+                    </para>
+                    
+                    <para>
+                        الـ dispatcher الأساسى هو 
+                        <code>Zend_Controller_Dispatcher</code>,
+                        و هو يُعرِف الـ controllers على انهم CamelCasedClasses 
+                        ينتهون بالكلمة Controller , و الـ action methods على انهم 
+                        camelCasedMethods تنتهى بالكلمة Action : كما فى 
+                        <code>SomeFooController::barAction</code>,
+                        سيتم الأشارة للـ controller على انه somefoo و الـ action 
+                        هو bar.
+                    </para>
+                    
+                    <para>
+                        ايضاً, يمكنك تحديد <code>module</code> ليتم 
+                        إستخدامه عند تحميل الـ controller, الـ module يتم 
+                        إستخدامه لتحديد مجلد فرعى و/أو class prefix ليتم إستخدامه
+                        عند تحميل الـ controller , و بسهولة , يمكنك تحديد الـ module 
+                        عند تحديد مجلدات الـ controllers .
+                    </para>
+
+                    <programlisting role="php"><![CDATA[
+$front->setControllerDirectory(array(
+    'default' => '/path/to/controllers',
+    'user'    => '/path/to/controllers/user',
+    'admin'   => '/path/to/controllers/admin'
+));
+]]></programlisting>
+
+
+                    <para>
+                        فى المثال بالأعلى, إن تم إختيار الـ module المسمى 'user'
+                        مع الـ controller المسمى 'news' , سيتم البحث عن 
+                        <code>NewsController.php</code> فى
+                        <code>/path/to/controllers/user</code> أولاً قبل البحث 
+                        فى المسارات الأخرى. أيضاً, اولاً سيتم أعتبار أن الـ class 
+                        يسمى <code>User_NewsController</code> و بعدها 
+                        <code>NewsController</code>. و سيكون الـ request 
+                        بهذا الشكل مثلاً ,
+                        <code>http://localhost/news/action/module/user</code>
+                        بإستخدام الـ router الأساسى, و 
+                        <code>http://localhost/module/news/action</code> بإستخدام
+                        الـ RewriteRouter.
+                    </para>
+                    
+                    <para>
+                        تعتبر الـ modules مفيدة فى حالة أنك تريد فصل الكود 
+                        إلى مجلدات فرعية أو إستخدام أكواد من مصدر أخر "third party" 
+                        أو إعادة إستخدام نفس الـ controller library فى تطبيقات مختلفة.
+                    </para>
+                    
 				</listitem>
+                
+                <listitem>
+                    <para>
+                        <code>Zend_Controller_Action</code>
+                        هو الجزء الأساسى فى الـ controller component,
+                        كل controller عبارة عن class يرث من 
+                        <code>Zend_Controller_Action</code>,
+                        و هذا الـ class لديه action methods.
+                    </para>
+                </listitem>
+                
+                <listitem>
+                    <para>
+                        <code>Zend_Controller_Response_Abstract</code>
+                        يُعرِف الـ response class الأساسى الذى يُستخدم لتجميع و إرجاع 
+                        الردود "responses" من الـ action controllers, و هو يقوم بتجميع 
+                        كل من الـ headers و محتويات جسم الصفحة, و حيث أنه يُطبِق 
+                        <code>__toString()</code> , فيمكن طباعته مباشرة 
+                        لإرسال كل الـ headers و المحتويات مرة واحدة.
+                    </para>
+                    
+                    <para>
+                        الـ response class الأساسى هو 
+                        <code>Zend_Controller_Response_Http</code>,
+                        و الذى يتوافق مع العمل فى بيئة الـ HTTP.
+                    </para>
+                </listitem>
+                
 			</itemizedlist>
 
-            كيفية عمل <code>Zend_Controller</code> تعتبر بسيطة نسبياً . حيث يتم إستلام طلب "request" عن 
+            كيفية عمل <code>Zend_Controller</code> تعتبر بسيطة نسبياً . 
+            حيث يتم إستلام طلب "request" عن 
             طريق <code>Zend_Controller_Front</code>, و الذى بدوره يستدعى 
-            <code>Zend_Controller_Router</code> ليعرف أى Controller (و أى action فى هذا الـ controller ) سيتم 
+            <code>Zend_Controller_Router</code> ليعرف أى 
+            Controller (و أى action فى هذا الـ controller ) سيتم 
             تنفيذه . 
             
-            ثم يقوم <code>Zend_Controller_Router</code> بتقسيم الـ URI إلى اجزاء صغيرة و يضعها فى object من 
-            <code>Zend_Controller_Dispatcher_Token</code> و الذى بدوره يصف اين ستتم عملية التنفيذ . 
-            بعدها يقوم <code>Zend_Controller_Front</code> بتشغيل عملية تنفيذ متكرر "dispatch loop". 
+            ثم يقوم <code>Zend_Controller_Router</code> بتقسيم الـ URI إلى اجزاء صغيرة 
+            ليحدد اسم الـ controller و الـ action فى الـ request.
+ 
+            بعدها يقوم <code>Zend_Controller_Front</code> بتشغيل حلقة تنفيذ متكررة 
+            "dispatch loop". 
 
-            حيث يقوم بإستدعاء <code>Zend_Controller_Dispatcher</code> و تمرير الـ Token إليه , ليقوم بتنفيذ 
-            الـ controller و الـ action المحددين. و بعد إنتهاء الـ controller من عمله , يعود التحكم إلى 
+            حيث يقوم بإستدعاء <code>Zend_Controller_Dispatcher</code> و تمرير الـ 
+            request إليه , ليقوم بتنفيذ 
+            الـ controller و الـ action المحددين فى الـ request (أو الأساسيين). 
+            و بعد إنتهاء الـ controller من عمله , يعود التحكم إلى 
             <code>Zend_Controller_Front</code> .
 
-
-            إذا قام الـ controller بتوضيح انه يجب تنفيذ controller اخر و ذلك عن طريق إرجاعه لـ token جديد , 
-            سيتم إستكمال الدورة التنفيذية و سيتم تنفيذ الـ controller الجديد , و ذلك إلى ان تنتهى العملية .
+            إذا قام الـ controller بتوضيح انه يجب تنفيذ controller اخر و ذلك عن طر
+            يق تغييره لحالة الـ dispatch الخاصة بالـ request , 
+            سيتم إستكمال الحلقة التنفيذية و سيتم تنفيذ الـ controller الجديد , أو 
+            تنتهى العملية .
 		</para>
 	</sect2>
 
+    <sect2 id="zend.controller.overview.request">
+		<title>الـ Request Object</title>
+        
+        <para>
+            الـ request object هو عبارة عن value object بسيط يتم تمريره
+            ما بين <code>Zend_Controller_Front</code> و الـ router 
+            و الـ dispatcher "المنفذ" و الـ controller classes , و يحمل هذا الكائن 
+            بيانات الـ controller و الـ action و البارامترات التى سيتم تمريرها إلى 
+            الـ action , بالأضافة إلى بيانات الـ request environment أى كانت ..
+            سواء HTTP او CLI او PHP-GTK .
+        </para>
+        
+		<itemizedlist>
+        	<listitem>
+                <para>
+                    يمكن الوصول إلى إسم الـ controller بواسطة 
+                    <code>getControllerName()</code> و 
+                    <code>setControllerName()</code>.
+                </para>
+        	</listitem>
+            
+            <listitem>
+                <para>
+                    يمكن الوصول إلى إسم الـ action الذى سيتم إستدعائه من الـ controller بواسطة
+                    <code>getActionName()</code> و 
+                    <code>setActionName()</code>.
+                </para>
+        	</listitem>
+            
+            <listitem>
+                <para>
+                    البارامترات التى سيتم تمريرها إلى الـ action هى عبارة عن 
+                    associative array تتكون من أزواج من key/value يمكن 
+                    الوصول إليهم من خلال <code>getParams()</code> و 
+                    <code>setParams()</code> , أو يمكن الوصول إلى كل 
+                    براميتر على حدى بواسطة <code>getParam()</code> و 
+                    <code>setParam()</code> .
+                </para>
+        	</listitem>
+		</itemizedlist>
+        
+        <para>
+            إعتماداً على نوع الـ request, من الممكن أن يكن هناك methods 
+            اخرى متوفرة , الـ request الأساسى الذى يتم إستخدامه 
+            <code>Zend_Controller_Request_Http</code> , 
+            على سبيل المثال, يوفر methods لإرجاع الـ request URI و 
+            معلومات الـ path و بارامترات <code>$_POST</code> و 
+            <code>$_GET</code> .. إلخ.
+        </para>
+        
+        <para>
+            يتم تمرير الـ request object إلى الـ front controller ,
+            أو إذا لم يتم توفير واحد , يتم إنشاء واحد فى بداية عملية 
+            التنفيذ "dispatch" و قبل أن يحدث الـ routing , و يتم 
+            تمريره إلى كل كائن فى سلسلة التنفيذ "dispatch chain".
+        </para>
+        
+        <para>
+            ايضاً, يكن الـ request object مفيد إلى حد ما فى الـ testing , 
+            حيث أنه من الممكن أن يقوم المطور بالتعديل فى قيم الـ request environment 
+            بما فيها أسم الـ controller و الـ action و البارمترات و الـ URI ..إلخ,
+            ثم يمرر الـ request object إلى الـ front controller ليختبر كيف سيتعامل 
+            برنامجه مع هذه البيانات, و عند جمعه مع إستخدام الـ response object , 
+            يصبح من الممكن عمل unit testing لتطبيقات الـ MVC بشكل موسع و دقيق.
+        </para>
+        
+        <para>
+        
+        </para>
+        
+    </sect2>
+    
 	<sect2 id="zend.controller.overview.routing-process">
 		<title> عملية التحويل - routing</title>
 
 		<para>
-            قبل أن تتمكن من إنشاء اول controller بنفسك, يجب ان تفهم كيف تعمل عملية التوجيه "routing" كما هى مطبقة فى 
-            <code>Zend_Controller_Router</code>. تذكر أن كيفية العمل مقسمة الى عمليه توجيه و التى تحدث مرة واحدة , 
+            قبل أن تتمكن من إنشاء اول controller بنفسك, يجب ان تفهم كيف تعمل عملية ال
+            توجيه "routing" كما هى مطبقة فى 
+            <code>Zend_Controller_Router</code>. تذكر أن كيفية العمل مقسمة الى عمل
+            يه توجيه و التى تحدث مرة واحدة , 
             و عملية تنفيذ "dispatching" و التى تحدث بعدها فى حلقة تكرارية.
 		</para>
 
 		<para>
-            يقوم <code>Zend_Controller_Front</code> بإستدعاء <code>Zend_Controller_Router</code> 
-            ليقوم بترجمة محتوى الـ URI و يستخرج اسم الـ controller و اسم الـ action فى هذا الـ controller . 
-            يقوم <code>Zend_Controller_Router</code> بأخذ الـ URI و تقسيمه إلى اجزاء و يضعها فى object يقوم بحفظ 
-            هذه القيم و يسمى <code>Zend_Controller_Dispatcher_Token</code> و الذى سيتم تمريره إلى المنفذ 
-            "الـ dispatcher" و هو (<code>Zend_Controller_Dispatcher</code>).
+            يقوم <code>Zend_Controller_Front</code> بإستدعاء 
+            <code>Zend_Controller_Router</code>
+            (أو أى router أخر متوافر) 
+            ليقوم بترجمة محتوى الـ URI و يستخرج اسم الـ controller و اسم الـ 
+            action فى هذا الـ controller . 
+            يقوم <code>Zend_Controller_Router</code> بجلب الـ URI من الـ request object 
+            ثم يقوم بتفكيكه ليعرف أسم كل من الـ controller و الـ action و 
+            أى بارمترات URL ممررة فى المسار ثم يقوم بوضع كل هذه البيانات
+            فى الـ request object.
 		</para>
 
 		<para>
-            يقوم المحول "الـ router" بعملية بسيطة ليتعرف على اسم الـ controller و اسم الـ action التابع لهذا الـ controller :
-
+            يقوم <code>Zend_Controller_Router</code>  بعملية بسيطة ليتعرف على اسم 
+            الـ controller و اسم الـ action التابع لهذا الـ controller :
         </para>
+        
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/controller/action/]]>
         </programlisting>
         <para>
-            لاحظ بالأعلى ان اول قسم دائما هو اسم الـ controller و أن القسم التانى دائما يحمل أسم الـ action.
+            لاحظ بالأعلى ان اول قسم دائما هو اسم الـ controller و أن الق
+            سم التانى دائما يحمل أسم الـ action.
 		</para>
 
 		<para>
-            اختيارياً, يمكنك تمرير قيم فى الـ URI و التى سيتم تمريرها بعدها الى الـ controller , و هذا يكون على شكل زوج من 
+            اختيارياً, يمكنك تمرير قيم فى الـ URI و التى سيتم تمريرها بعدها الى الـ
+            controller , و هذا يكون على شكل زوج من 
             key/value  : 
         </para>
         <programlisting role="php"><![CDATA[
@@ -117,9 +322,12 @@ http://framework.zend.com/controller/action/key1/value1/]]>
         </programlisting>
 
 		<para>
-            إذا لم يتم تمرير قيمة فى مكان الـ <code>/controller/</code> فى الـ URI, سيتم اعتبار أن قيمته هى 
-            "<code>index</code>". و إذا لم يتم تمرير قيمة فى مكان الـ <code>/action/</code> فى الـ URI , سيتم 
-            اعتبار ان قيمته هى "<code>index</code>" ايضاً. هذا المثال يوضح أكثر :
+            إذا لم يتم إيجاد إى من الـ controller أو الـ action فى مسار الـ URI, 
+            فسيقوم <code>Zend_Controller_Dispatcher</code> بمحاولة 
+            جلب هذه القيم من بارامترات الـ request object , و إن لم يتم إيجادهم , 
+            فسيستخدم القيم الأفتراضية , و فى كلا الحالتين , القيم الأفتراضية هى 
+            "<code>index</code>".
+            و المثال التالى يوضح ذلك:
         </para>
         <programlisting role="php"><![CDATA[
 http://framework.zend.com/roadmap/future/
@@ -135,55 +343,221 @@ Controller: index
 Action    : index]]>
         </programlisting>
 
+        <para>
+            ايضاً, يمكنك تحديد controllers موجودة فى مجلدات فرعية 
+            أو modules بعدة طرق :
+        </para>
+        
+        <itemizedlist>
+            <listitem>
+                <para>
+                    أسماء الـ controllers التى تحتوى شرطة (-) أو شرطة منخفضة (_)
+                    يمكن إستخدامها, على سبيل المثال, 
+                    <code>http://framework.zend.com/admin-roadmap/future</code>
+                    من المفترض أن تشير إلى الـ controller 
+                    المسمى  Admin_RoadmapController .
+                </para>
+            </listitem>
+            
+            <listitem>
+                <para>
+                    عن طريق تفعيل الباراميتر <code>useModules</code> فى 
+                    الـ front controller , ستتمكن من إستخدام مجلدات فرعية عن طريق 
+                    URIs افضل, حينها الـ URL الخاص بالمثال السابق سيبدو مثل 
+                    <code>http://framework.zend.com/admin/roadmap/future</code>.
+                    , لعمل ذلك, قم بتفعيل الباراميتر <code>useModules</code> 
+                    فى الـ front controller أو الـ router :
+                </para>
+
+                <programlisting><![CDATA[
+$front->setParam('useModules', true);
+// or
+$router->setParam('useModules', true);
+]]></programlisting>
+
+                <para>
+                    هذا سيعمل مع إستخدام سواء أى من الـ router الأساسى 
+                    أو الـ RewriteRouter.
+                </para>
+            </listitem>
+        
 		<note>
-            <title>rewrite engine جديد</title>
+            <title>المرونة</title>
             <para>
-                نحن نقوم حالياً بتطوير محول "router" جديد يحتوى على محرك اعادة كتابة للـ URI , و الذى سيعطى امكانيات 
-                أكثر مرونة من الموجودة فى المحول الحالى. و هذا سيكون متوافر بإصدار تجريبى فى القريب العاجل .
+                إن كنت تريد المزيد من الأمكانيات المرنة, فربما ستود إلقاء نظرة على 
+                <xref linkend="zend.controller.providedsubclasses.rewriterouter"/>.
     		</para>
         </note>
 
 		<para>
-            اسم الـ controller و اسم الـ action التابع له و أى قيم ختيارية اخرى ممررة يتم تجميعها فى token او "موصِف" 
-            يسمى <code>Zend_Controller_Dispatcher_Token</code>. يتم إرجاع هذا الـ token إلى 
-            <code>Zend_Controller_Front</code> و الذى بعدها سيقوم بالدخول فى مرحلة التنفيذ , بمجرد الدخول فى 
-            عملية التنفيذ "dispatching" , سيتم تمرير الـ token إلى <code>Zend_Controller_Dispatcher</code> . 
+            أسم الـ controller و أسم الـ action فى هذا الـ controller و 
+            أى بارامترات اختيارية أخرى (تشمل الـ module), توجد فى الـ request object , 
+            و عندما يدخل <code>Zend_Controller_Front</code> 
+            دورة التنفيذ "dispatch loop" , سيتم تمرير الـ request object 
+            إلى <code>Zend_controller_Dispatcher</code>.
 		</para>
-	</sect2>
-
-	<sect2 id="zend.controller.overview.dispatch-token">
-		<title>Dispatch Token</title>
-
-		<para>
-            Token التنفيذ أو "Dispatch Token" عبارة عن كائن قيم أو "value object" يتم تمريره بين 
-            <code>Zend_Controller_Front</code> و الـ calsses التى تطبق الـ interfaces الخاصة بالمحول "router" 
-            و المنفذ "dispatcher" . و يحوى تعريف لأسم الـ controller و أسم الـ action و القيم التى سيتم تمريرها إلى الـ action.
-		</para>
-
-		<itemizedlist>
-			<listitem><para>
-                يتم الوصول إلى اسم الـ controller بإستخدام <code>()getControllerName</code> و 
-                <code>()setControllerName</code> . 
-			</para></listitem>
-			<listitem><para>
-                اسم الـ action الذى سيتم إستدعائه من الـ controller يمكن الوصول إليه بإستخدام 
-                <code>()getActionName</code> و <code>()setActionName</code>.
-			</para></listitem>
-			<listitem><para>
-                القيم التى ستمرر إلى الـ action عبارة عن associative array تتكون من زوج من key/value و الذى يمكن الوصول 
-                إليهم بإستخدام <code>()getParams</code> و <code>()setParams</code> .
-			</para></listitem>
-		</itemizedlist>
 	</sect2>
 
 	<sect2 id="zend.controller.overview.dispatching">
-		<title>عملية التنفيذ - dispatching</title>
+		<title>عملية الـ Dispatch</title>
 
 		<para>
-            عملية التنفيذ هى عملية أخذ token أو <code>Zend_Controller_Dispatcher_Token</code> , 
-            ثم إستخراج المعلومات الموجودة به : أسم الـ controller و أسم الـ action و القيم الإختيارية الممررة , 
-            و بعدها يتم إنشاء instance جديد من الـ controller ثم إستدعاء الـ action من هذا الـ controller.
+            عملية الـ dispatching هى أخذ الـ request object ,
+            (الذى يرث <code>Zend_Controller_Request_Abstract</code>),
+            و إستخراج أسم الـ controller و الـ action و أى بارامترات اختيارية 
+            موجودة به, ثم إنشاء نسخة من هذا الـ Controller و إستدعاء الـ Action 
+            من هذا الـ controller , و فى حالة أنه لم يتم إيجاد قيم لأسماء الـ controller 
+            أو الـ action, سيتم إستخدام القيم الأفتراضية الخاصة بهم, 
+            و القيمة الأفتراضية التى يحددها <code>Zend_Controller_Dispatcher</code>
+            لهما هى <code>index</code>, لكن يمكن للمطور أن يقوم بتغيير هذا بأستخدام 
+            <code>setDefaultController()</code> و 
+            <code>setDefaultAction()</code> .
 		</para>
+
+        <para>
+            عملية الـ dispatching تحدث فى حلقة تكرارية داخل الـ front controller 
+            , و قبل حدوث الـ dispatching , يقوم الـ front controller بعمل route 
+            للـ request ليجلب أى قيم حددها المستخدم للـ controller و الـ action و 
+            أى بارمترات أخرى, ثم يدخل بعد ذلك فى الـ dispatch loop , لينفذ 
+            الـ request.
+        </para>
+        
+        <para>
+            عند بداية كل دورة , يتم وضع علامة "flag" فى الـ request object 
+            توضح أن الـ action قد تم تنفيذه , و إن قام action أو plugin ماقبل/بعد 
+            التنفيذ بتعديل قيمة الـ flag, الـ dispatch loop ستستمر و ستحاول 
+            تنفيذ الـ request مرة أخرى, و عن طريق تغيير الـ controller و/أو 
+            الـ action فى الـ request و إعادة تعديل قيمة الـ dispatch flag , 
+            يمكن للمطور أن يُعرِف سلسلة من الـ requests ليتم تنفيذها.
+        </para>
+        
+        <para>
+            الـ action controller method الذى يتحكم فى التنفيذ هو 
+            <code>_forward()</code>; إستدعى هذا الـ method من أى 
+            <code>pre/postDispatch()</code> أو action methods, 
+            مع توفير أسم controller و action و اختيارياً أى باراميترات إضافية 
+            تريد أن يتم إرسالها للـ action الجديد:
+        </para>
+
+        <programlisting role="php"><![CDATA[
+public function myAction()
+{
+    // do some processing...
+    // forward to another action, FooController::barAction():
+    $this->_forward('foo', 'bar', array('baz' => 'bogus'));
+}
+]]></programlisting>
+    
+	</sect2>
+
+	<sect2 id="zend.controller.overview.response">
+		<title>الـ Response Object</title>
+
+		<para>
+            الـ response object هو الزوج المنطقى للـ request object, 
+            و ظيفته هى جمع المحتوى و/أو الـ headers ليتم إخراجهم ككلتة واحدة, 
+            و ايضاً, سيقوم الـ front controller بتمرير أى exceptions تم التقاطها 
+            إلى الـ response object , و بهذا يسمح للمطور بأن يعالج الـ exceptions 
+            بشكل أفضل, و يمكن إلغاء هذا السلوك بإستخدام 
+            <code>Zend_Controller_Front::throwExceptions(true)</code>:
+		</para>
+
+        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
+        
+        <para>
+        حيث أن الـ response object يطبق 
+        <code>__toString()</code>, فيمكن أن يتم طباعته مباشرة 
+        بدون مشاكل , و هذا يسمح بالأستخدامات التالية :
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+echo $controller->getResponse();
+
+// or
+$response = $controller->getResponse();
+echo $response;
+        ]]></programlisting>
+        
+        <para>
+            يجب على المطورين إستخدام الـ response object فى 
+            الـ action controllers خاصتهم , فبدلا من طباعة الخرج مباشرة 
+            و إرسال الـ headers , قم بتمريرهم إلى الـ response object :
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+// Within an action controller action:
+// Set a header
+$this->getResponse()
+    ->setHeader('Content-Type', 'text/html')
+    ->appendBody($content);
+]]></programlisting>
+
+        <para>
+            عن طريق عمل هذا, كل الـ headers سيتم إرسالها 
+            مرة واحدة , و قبل عرض المحتوى .
+        </para>
+        
+        <para>
+            يجب أن يحدث exception فى أى تطبيق, لذلك تحقق 
+            من الـ exception flag الخاصة بالـ response object 
+            بأستخدام <code>isException()</code>, و يمكنك 
+            جلب الـ exception بأستخدام <code>getException</code>, 
+            ايضاً, من الممكن أن تقوم بإنشاء response objects تقوم بالتحويل 
+            إلى error pages أو تقوم بعمل log لرسائل الـ exception أو أن تقوم 
+            بعمل formating جميل لرسائل الـ exception (لبيئات التطوير) .. إلخ.        
+        </para>
+
+        <para>
+            يمكنك جلب الـ response object بعد عملية الـ 
+            <code>dispatch()</code> للـ front controller , 
+            أو تطلب من الـ front controller أن يرجع الـ response object 
+            بدلاً من إرسال الخرج.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// retrieve post-dispatch:
+$front->dispatch();
+$response = $front->getResponse();
+if ($response->isException()) {
+    // log, mail, etc...
+}
+
+// Or, have the front controller dispatch() process return it
+$front->returnResponse(true);
+$response = $front->dispatch();
+
+// do some processing...
+
+// finally, echo the response
+echo $response;
+]]></programlisting>
+
+        
+        <para>
+            حسب الأعدادات الأساسية, رسائل الـ exception لا يتم 
+            عرضها, هذا السلوك يمكن تغييره بإستدعاء 
+            <code>renderException</code>, أو السماح للـ front controller 
+            ان يلقى Exceptions كما موضح بالمثال بالأعلى بإستخدام 
+            <code>throwExceptions()</code>.
+        </para>
+        
+        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->dispatch($request, $response);
+
+// or:
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions();
+echo $response;
+
+// or:
+$front->throwExceptions(true);
+$front->dispatch();
+]]></programlisting>
+
 	</sect2>
 </sect1>
 
