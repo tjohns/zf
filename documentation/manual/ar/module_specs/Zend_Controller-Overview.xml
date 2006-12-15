@@ -380,6 +380,7 @@ $router->setParam('useModules', true);
                     أو الـ RewriteRouter.
                 </para>
             </listitem>
+        </itemizedlist>
         
 		<note>
             <title>المرونة</title>
