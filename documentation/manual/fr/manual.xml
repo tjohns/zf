@@ -93,6 +93,7 @@
         <title>Zend_Http</title>
         &module_specs.Zend_Http_Client;
         &module_specs.Zend_Http_Response;
+        &module_specs.Zend_Http_Cookie_Handling;
     </chapter>
     <chapter id="zend.json">
         <title>Zend_Json</title>
