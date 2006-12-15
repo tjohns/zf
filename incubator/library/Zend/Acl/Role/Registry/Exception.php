@@ -22,17 +22,16 @@
 
 
 /**
+ * Zend_Acl_Exception
+ */
+require_once 'Zend/Acl/Exception.php';
+
+
+/**
  * @category   Zend
  * @package    Zend_Acl
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Acl_Aco_Interface
-{
-    /**
-     * Returns the string identifier of the ACO
-     *
-     * @return string
-     */
-    public function getAcoId();
-}
+class Zend_Acl_Role_Registry_Exception extends Zend_Acl_Exception
+{}

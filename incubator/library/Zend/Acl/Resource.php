@@ -22,9 +22,9 @@
 
 
 /**
- * Zend_Acl_Exception
+ * Zend_Acl_Resource_Interface
  */
-require_once 'Zend/Acl/Exception.php';
+require_once 'Zend/Acl/Resource/Interface.php';
 
 
 /**
@@ -33,5 +33,34 @@ require_once 'Zend/Acl/Exception.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Acl_Aro_Registry_Exception extends Zend_Acl_Exception
-{}
+class Zend_Acl_Resource implements Zend_Acl_Resource_Interface
+{
+    /**
+     * Unique id of Resource
+     *
+     * @var string
+     */
+    protected $_resourceId;
+
+    /**
+     * Sets the Resource identifier
+     *
+     * @param  string $id
+     * @return void
+     */
+    public function __construct($resourceId)
+    {
+        $this->_resourceId = (string) $resourceId;
+    }
+
+    /**
+     * Defined by Zend_Acl_Resource_Interface; returns the Resource identifier
+     *
+     * @return string
+     */
+    public function getResourceId()
+    {
+        return $this->_resourceId;
+    }
+
+}

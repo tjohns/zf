@@ -22,45 +22,17 @@
 
 
 /**
- * Zend_Acl_Aco_Interface
- */
-require_once 'Zend/Acl/Aco/Interface.php';
-
-
-/**
  * @category   Zend
  * @package    Zend_Acl
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Acl_Aco implements Zend_Acl_Aco_Interface
+interface Zend_Acl_Resource_Interface
 {
     /**
-     * Unique id of ACO
-     *
-     * @var string
-     */
-    protected $_acoId;
-
-    /**
-     * Sets the ACO identifier
-     *
-     * @param  string $id
-     * @return void
-     */
-    public function __construct($acoId)
-    {
-        $this->_acoId = (string) $acoId;
-    }
-
-    /**
-     * Defined by Zend_Acl_Aco_Interface; returns the ACO identifier
+     * Returns the string identifier of the Resource
      *
      * @return string
      */
-    public function getAcoId()
-    {
-        return $this->_acoId;
-    }
-
+    public function getResourceId();
 }

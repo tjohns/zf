@@ -27,12 +27,12 @@
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-interface Zend_Acl_Aro_Interface
+interface Zend_Acl_Role_Interface
 {
     /**
-     * Returns the string identifier of the ARO
+     * Returns the string identifier of the Role
      *
      * @return string
      */
-    public function getAroId();
+    public function getRoleId();
 }

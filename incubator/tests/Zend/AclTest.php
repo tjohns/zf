@@ -29,15 +29,15 @@ require_once 'Zend/Acl.php';
 
 
 /**
- * Zend_Acl_Aco
+ * Zend_Acl_Resource
  */
-require_once 'Zend/Acl/Aco.php';
+require_once 'Zend/Acl/Resource.php';
 
 
 /**
- * Zend_Acl_Aro
+ * Zend_Acl_Role
  */
-require_once 'Zend/Acl/Aro.php';
+require_once 'Zend/Acl/Role.php';
 
 
 /**
@@ -73,264 +73,264 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that basic addition and retrieval of a single ARO works
+     * Ensures that basic addition and retrieval of a single Role works
      *
      * @return void
      */
-    public function testARORegistryAddAndGetOne()
+    public function testRoleRegistryAddAndGetOne()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
+        $roleGuest = new Zend_Acl_Role('guest');
 
-        $aro = $this->_acl->addAro($aroGuest)
-                          ->getAro($aroGuest->getAroId());
-        $this->assertTrue($aroGuest === $aro);
-        $aro = $this->_acl->getAro($aroGuest);
-        $this->assertTrue($aroGuest === $aro);
+        $role = $this->_acl->addRole($roleGuest)
+                          ->getRole($roleGuest->getRoleId());
+        $this->assertTrue($roleGuest === $role);
+        $role = $this->_acl->getRole($roleGuest);
+        $this->assertTrue($roleGuest === $role);
     }
 
     /**
-     * Ensures that basic removal of a single ARO works
+     * Ensures that basic removal of a single Role works
      *
      * @return void
      */
-    public function testARORegistryRemoveOne()
+    public function testRoleRegistryRemoveOne()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest)
-                   ->removeAro($aroGuest);
-        $this->assertFalse($this->_acl->hasAro($aroGuest));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest)
+                   ->removeRole($roleGuest);
+        $this->assertFalse($this->_acl->hasRole($roleGuest));
     }
 
     /**
-     * Ensures that an exception is thrown when a non-existent ARO is specified for removal
+     * Ensures that an exception is thrown when a non-existent Role is specified for removal
      *
      * @return void
      */
-    public function testARORegistryRemoveOneNonExistent()
+    public function testRoleRegistryRemoveOneNonExistent()
     {
         try {
-            $this->_acl->removeAro('nonexistent');
-            $this->fail('Expected Zend_Acl_Aro_Registry_Exception not thrown upon removing a non-existent ARO');
-        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            $this->_acl->removeRole('nonexistent');
+            $this->fail('Expected Zend_Acl_Role_Registry_Exception not thrown upon removing a non-existent Role');
+        } catch (Zend_Acl_Role_Registry_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
     }
 
     /**
-     * Ensures that removal of all AROs works
+     * Ensures that removal of all Roles works
      *
      * @return void
      */
-    public function testARORegistryRemoveAll()
+    public function testRoleRegistryRemoveAll()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest)
-                   ->removeAroAll();
-        $this->assertFalse($this->_acl->hasAro($aroGuest));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest)
+                   ->removeRoleAll();
+        $this->assertFalse($this->_acl->hasRole($roleGuest));
     }
 
     /**
-     * Ensures that an exception is thrown when a non-existent ARO is specified as a parent upon ARO addition
+     * Ensures that an exception is thrown when a non-existent Role is specified as a parent upon Role addition
      *
      * @return void
      */
-    public function testARORegistryAddInheritsNonExistent()
+    public function testRoleRegistryAddInheritsNonExistent()
     {
         try {
-            $this->_acl->addAro(new Zend_Acl_Aro('guest'), 'nonexistent');
-            $this->fail('Expected Zend_Acl_Aro_Registry_Exception not thrown upon specifying a non-existent parent');
-        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            $this->_acl->addRole(new Zend_Acl_Role('guest'), 'nonexistent');
+            $this->fail('Expected Zend_Acl_Role_Registry_Exception not thrown upon specifying a non-existent parent');
+        } catch (Zend_Acl_Role_Registry_Exception $e) {
             $this->assertContains('does not exist', $e->getMessage());
         }
     }
 
     /**
-     * Ensures that an exception is thrown when a non-existent ARO is specified to each parameter of inherits()
+     * Ensures that an exception is thrown when a non-existent Role is specified to each parameter of inherits()
      *
      * @return void
      */
-    public function testARORegistryInheritsNonExistent()
+    public function testRoleRegistryInheritsNonExistent()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest);
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest);
         try {
-            $this->_acl->inheritsAro('nonexistent', $aroGuest);
-            $this->fail('Expected Zend_Acl_Aro_Registry_Exception not thrown upon specifying a non-existent child ARO');
-        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            $this->_acl->inheritsRole('nonexistent', $roleGuest);
+            $this->fail('Expected Zend_Acl_Role_Registry_Exception not thrown upon specifying a non-existent child Role');
+        } catch (Zend_Acl_Role_Registry_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
         try {
-            $this->_acl->inheritsAro($aroGuest, 'nonexistent');
-            $this->fail('Expected Zend_Acl_Aro_Registry_Exception not thrown upon specifying a non-existent parent ARO');
-        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            $this->_acl->inheritsRole($roleGuest, 'nonexistent');
+            $this->fail('Expected Zend_Acl_Role_Registry_Exception not thrown upon specifying a non-existent parent Role');
+        } catch (Zend_Acl_Role_Registry_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
     }
 
     /**
-     * Tests basic ARO inheritance
+     * Tests basic Role inheritance
      *
      * @return void
      */
-    public function testARORegistryInherits()
+    public function testRoleRegistryInherits()
     {
-        $aroGuest  = new Zend_Acl_Aro('guest');
-        $aroMember = new Zend_Acl_Aro('member');
-        $aroEditor = new Zend_Acl_Aro('editor');
-        $aroRegistry = new Zend_Acl_Aro_Registry();
-        $aroRegistry->add($aroGuest)
-                    ->add($aroMember, $aroGuest->getAroId())
-                    ->add($aroEditor, $aroMember);
-        $this->assertTrue(0 === count($aroRegistry->getParents($aroGuest)));
-        $aroMemberParents = $aroRegistry->getParents($aroMember);
-        $this->assertTrue(1 === count($aroMemberParents));
-        $this->assertTrue(isset($aroMemberParents['guest']));
-        $aroEditorParents = $aroRegistry->getParents($aroEditor);
-        $this->assertTrue(1 === count($aroEditorParents));
-        $this->assertTrue(isset($aroEditorParents['member']));
-        $this->assertTrue($aroRegistry->inherits($aroMember, $aroGuest, true));
-        $this->assertTrue($aroRegistry->inherits($aroEditor, $aroMember, true));
-        $this->assertTrue($aroRegistry->inherits($aroEditor, $aroGuest));
-        $this->assertFalse($aroRegistry->inherits($aroGuest, $aroMember));
-        $this->assertFalse($aroRegistry->inherits($aroMember, $aroEditor));
-        $this->assertFalse($aroRegistry->inherits($aroGuest, $aroEditor));
-        $aroRegistry->remove($aroMember);
-        $this->assertTrue(0 === count($aroRegistry->getParents($aroEditor)));
-        $this->assertFalse($aroRegistry->inherits($aroEditor, $aroGuest));
+        $roleGuest  = new Zend_Acl_Role('guest');
+        $roleMember = new Zend_Acl_Role('member');
+        $roleEditor = new Zend_Acl_Role('editor');
+        $roleRegistry = new Zend_Acl_Role_Registry();
+        $roleRegistry->add($roleGuest)
+                    ->add($roleMember, $roleGuest->getRoleId())
+                    ->add($roleEditor, $roleMember);
+        $this->assertTrue(0 === count($roleRegistry->getParents($roleGuest)));
+        $roleMemberParents = $roleRegistry->getParents($roleMember);
+        $this->assertTrue(1 === count($roleMemberParents));
+        $this->assertTrue(isset($roleMemberParents['guest']));
+        $roleEditorParents = $roleRegistry->getParents($roleEditor);
+        $this->assertTrue(1 === count($roleEditorParents));
+        $this->assertTrue(isset($roleEditorParents['member']));
+        $this->assertTrue($roleRegistry->inherits($roleMember, $roleGuest, true));
+        $this->assertTrue($roleRegistry->inherits($roleEditor, $roleMember, true));
+        $this->assertTrue($roleRegistry->inherits($roleEditor, $roleGuest));
+        $this->assertFalse($roleRegistry->inherits($roleGuest, $roleMember));
+        $this->assertFalse($roleRegistry->inherits($roleMember, $roleEditor));
+        $this->assertFalse($roleRegistry->inherits($roleGuest, $roleEditor));
+        $roleRegistry->remove($roleMember);
+        $this->assertTrue(0 === count($roleRegistry->getParents($roleEditor)));
+        $this->assertFalse($roleRegistry->inherits($roleEditor, $roleGuest));
     }
 
     /**
-     * Tests basic ARO multiple inheritance
+     * Tests basic Role multiple inheritance
      *
      * @return void
      */
-    public function testARORegistryInheritsMultiple()
+    public function testRoleRegistryInheritsMultiple()
     {
-        $aroParent1 = new Zend_Acl_Aro('parent1');
-        $aroParent2 = new Zend_Acl_Aro('parent2');
-        $aroChild   = new Zend_Acl_Aro('child');
-        $aroRegistry = new Zend_Acl_Aro_Registry();
-        $aroRegistry->add($aroParent1)
-                    ->add($aroParent2)
-                    ->add($aroChild, array($aroParent1, $aroParent2));
-        $aroChildParents = $aroRegistry->getParents($aroChild);
-        $this->assertTrue(2 === count($aroChildParents));
+        $roleParent1 = new Zend_Acl_Role('parent1');
+        $roleParent2 = new Zend_Acl_Role('parent2');
+        $roleChild   = new Zend_Acl_Role('child');
+        $roleRegistry = new Zend_Acl_Role_Registry();
+        $roleRegistry->add($roleParent1)
+                    ->add($roleParent2)
+                    ->add($roleChild, array($roleParent1, $roleParent2));
+        $roleChildParents = $roleRegistry->getParents($roleChild);
+        $this->assertTrue(2 === count($roleChildParents));
         $i = 1;
-        foreach ($aroChildParents as $aroParentId => $aroParent) {
-            $this->assertTrue("parent$i" === $aroParentId);
+        foreach ($roleChildParents as $roleParentId => $roleParent) {
+            $this->assertTrue("parent$i" === $roleParentId);
             $i++;
         }
-        $this->assertTrue($aroRegistry->inherits($aroChild, $aroParent1));
-        $this->assertTrue($aroRegistry->inherits($aroChild, $aroParent2));
-        $aroRegistry->remove($aroParent1);
-        $aroChildParents = $aroRegistry->getParents($aroChild);
-        $this->assertTrue(1 === count($aroChildParents));
-        $this->assertTrue(isset($aroChildParents['parent2']));
-        $this->assertTrue($aroRegistry->inherits($aroChild, $aroParent2));
+        $this->assertTrue($roleRegistry->inherits($roleChild, $roleParent1));
+        $this->assertTrue($roleRegistry->inherits($roleChild, $roleParent2));
+        $roleRegistry->remove($roleParent1);
+        $roleChildParents = $roleRegistry->getParents($roleChild);
+        $this->assertTrue(1 === count($roleChildParents));
+        $this->assertTrue(isset($roleChildParents['parent2']));
+        $this->assertTrue($roleRegistry->inherits($roleChild, $roleParent2));
     }
 
     /**
-     * Ensures that the same ARO cannot be registered more than once to the registry
+     * Ensures that the same Role cannot be registered more than once to the registry
      *
      * @return void
      */
-    public function testARORegistryDuplicate()
+    public function testRoleRegistryDuplicate()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $aroRegistry = new Zend_Acl_Aro_Registry();
+        $roleGuest = new Zend_Acl_Role('guest');
+        $roleRegistry = new Zend_Acl_Role_Registry();
         try {
-            $aroRegistry->add($aroGuest)
-                        ->add($aroGuest);
-            $this->fail('Expected exception not thrown upon adding same ARO twice');
-        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            $roleRegistry->add($roleGuest)
+                        ->add($roleGuest);
+            $this->fail('Expected exception not thrown upon adding same Role twice');
+        } catch (Zend_Acl_Role_Registry_Exception $e) {
             $this->assertContains('already exists', $e->getMessage());
         }
     }
 
     /**
-     * Ensures that two AROs having the same ID cannot be registered
+     * Ensures that two Roles having the same ID cannot be registered
      *
      * @return void
      */
-    public function testARORegistryDuplicateId()
+    public function testRoleRegistryDuplicateId()
     {
-        $aroGuest1 = new Zend_Acl_Aro('guest');
-        $aroGuest2 = new Zend_Acl_Aro('guest');
-        $aroRegistry = new Zend_Acl_Aro_Registry();
+        $roleGuest1 = new Zend_Acl_Role('guest');
+        $roleGuest2 = new Zend_Acl_Role('guest');
+        $roleRegistry = new Zend_Acl_Role_Registry();
         try {
-            $aroRegistry->add($aroGuest1)
-                        ->add($aroGuest2);
-            $this->fail('Expected exception not thrown upon adding two AROs with same ID');
-        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            $roleRegistry->add($roleGuest1)
+                        ->add($roleGuest2);
+            $this->fail('Expected exception not thrown upon adding two Roles with same ID');
+        } catch (Zend_Acl_Role_Registry_Exception $e) {
             $this->assertContains('already exists', $e->getMessage());
         }
     }
 
     /**
-     * Ensures that basic addition and retrieval of a single ACO works
+     * Ensures that basic addition and retrieval of a single Resource works
      *
      * @return void
      */
-    public function testACOAddAndGetOne()
+    public function testResourceAddAndGetOne()
     {
-        $acoArea = new Zend_Acl_Aco('area');
-        $aco = $this->_acl->add($acoArea)
-                          ->get($acoArea->getAcoId());
-        $this->assertTrue($acoArea === $aco);
-        $aco = $this->_acl->get($acoArea);
-        $this->assertTrue($acoArea === $aco);
+        $resourceArea = new Zend_Acl_Resource('area');
+        $resource = $this->_acl->add($resourceArea)
+                          ->get($resourceArea->getResourceId());
+        $this->assertTrue($resourceArea === $resource);
+        $resource = $this->_acl->get($resourceArea);
+        $this->assertTrue($resourceArea === $resource);
     }
 
     /**
-     * Ensures that basic removal of a single ACO works
+     * Ensures that basic removal of a single Resource works
      *
      * @return void
      */
-    public function testACORemoveOne()
+    public function testResourceRemoveOne()
     {
-        $acoArea = new Zend_Acl_Aco('area');
-        $this->_acl->add($acoArea)
-                   ->remove($acoArea);
-        $this->assertFalse($this->_acl->has($acoArea));
+        $resourceArea = new Zend_Acl_Resource('area');
+        $this->_acl->add($resourceArea)
+                   ->remove($resourceArea);
+        $this->assertFalse($this->_acl->has($resourceArea));
     }
 
     /**
-     * Ensures that an exception is thrown when a non-existent ACO is specified for removal
+     * Ensures that an exception is thrown when a non-existent Resource is specified for removal
      *
      * @return void
      */
-    public function testACORemoveOneNonExistent()
+    public function testResourceRemoveOneNonExistent()
     {
         try {
             $this->_acl->remove('nonexistent');
-            $this->fail('Expected Zend_Acl_Exception not thrown upon removing a non-existent ACO');
+            $this->fail('Expected Zend_Acl_Exception not thrown upon removing a non-existent Resource');
         } catch (Zend_Acl_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
     }
 
     /**
-     * Ensures that removal of all ACOs works
+     * Ensures that removal of all Resources works
      *
      * @return void
      */
-    public function testACORemoveAll()
+    public function testResourceRemoveAll()
     {
-        $acoArea = new Zend_Acl_Aco('area');
-        $this->_acl->add($acoArea)
+        $resourceArea = new Zend_Acl_Resource('area');
+        $this->_acl->add($resourceArea)
                    ->removeAll();
-        $this->assertFalse($this->_acl->has($acoArea));
+        $this->assertFalse($this->_acl->has($resourceArea));
     }
 
     /**
-     * Ensures that an exception is thrown when a non-existent ACO is specified as a parent upon ACO addition
+     * Ensures that an exception is thrown when a non-existent Resource is specified as a parent upon Resource addition
      *
      * @return void
      */
-    public function testACOAddInheritsNonExistent()
+    public function testResourceAddInheritsNonExistent()
     {
         try {
-            $this->_acl->add(new Zend_Acl_Aco('area'), 'nonexistent');
+            $this->_acl->add(new Zend_Acl_Resource('area'), 'nonexistent');
             $this->fail('Expected Zend_Acl_Exception not thrown upon specifying a non-existent parent');
         } catch (Zend_Acl_Exception $e) {
             $this->assertContains('does not exist', $e->getMessage());
@@ -338,88 +338,88 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that an exception is thrown when a non-existent ACO is specified to each parameter of inherits()
+     * Ensures that an exception is thrown when a non-existent Resource is specified to each parameter of inherits()
      *
      * @return void
      */
-    public function testACOInheritsNonExistent()
+    public function testResourceInheritsNonExistent()
     {
-        $acoArea = new Zend_Acl_Aco('area');
-        $this->_acl->add($acoArea);
+        $resourceArea = new Zend_Acl_Resource('area');
+        $this->_acl->add($resourceArea);
         try {
-            $this->_acl->inherits('nonexistent', $acoArea);
-            $this->fail('Expected Zend_Acl_Exception not thrown upon specifying a non-existent child ACO');
+            $this->_acl->inherits('nonexistent', $resourceArea);
+            $this->fail('Expected Zend_Acl_Exception not thrown upon specifying a non-existent child Resource');
         } catch (Zend_Acl_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
         try {
-            $this->_acl->inherits($acoArea, 'nonexistent');
-            $this->fail('Expected Zend_Acl_Exception not thrown upon specifying a non-existent parent ACO');
+            $this->_acl->inherits($resourceArea, 'nonexistent');
+            $this->fail('Expected Zend_Acl_Exception not thrown upon specifying a non-existent parent Resource');
         } catch (Zend_Acl_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
     }
 
     /**
-     * Tests basic ACO inheritance
+     * Tests basic Resource inheritance
      *
      * @return void
      */
-    public function testACOInherits()
+    public function testResourceInherits()
     {
-        $acoCity     = new Zend_Acl_Aco('city');
-        $acoBuilding = new Zend_Acl_Aco('building');
-        $acoRoom     = new Zend_Acl_Aco('room');
-        $this->_acl->add($acoCity)
-                   ->add($acoBuilding, $acoCity->getAcoId())
-                   ->add($acoRoom, $acoBuilding);
-        $this->assertTrue($this->_acl->inherits($acoBuilding, $acoCity, true));
-        $this->assertTrue($this->_acl->inherits($acoRoom, $acoBuilding, true));
-        $this->assertTrue($this->_acl->inherits($acoRoom, $acoCity));
-        $this->assertFalse($this->_acl->inherits($acoCity, $acoBuilding));
-        $this->assertFalse($this->_acl->inherits($acoBuilding, $acoRoom));
-        $this->assertFalse($this->_acl->inherits($acoCity, $acoRoom));
-        $this->_acl->remove($acoBuilding);
-        $this->assertFalse($this->_acl->has($acoRoom));
+        $resourceCity     = new Zend_Acl_Resource('city');
+        $resourceBuilding = new Zend_Acl_Resource('building');
+        $resourceRoom     = new Zend_Acl_Resource('room');
+        $this->_acl->add($resourceCity)
+                   ->add($resourceBuilding, $resourceCity->getResourceId())
+                   ->add($resourceRoom, $resourceBuilding);
+        $this->assertTrue($this->_acl->inherits($resourceBuilding, $resourceCity, true));
+        $this->assertTrue($this->_acl->inherits($resourceRoom, $resourceBuilding, true));
+        $this->assertTrue($this->_acl->inherits($resourceRoom, $resourceCity));
+        $this->assertFalse($this->_acl->inherits($resourceCity, $resourceBuilding));
+        $this->assertFalse($this->_acl->inherits($resourceBuilding, $resourceRoom));
+        $this->assertFalse($this->_acl->inherits($resourceCity, $resourceRoom));
+        $this->_acl->remove($resourceBuilding);
+        $this->assertFalse($this->_acl->has($resourceRoom));
     }
 
     /**
-     * Ensures that the same ACO cannot be added more than once
+     * Ensures that the same Resource cannot be added more than once
      *
      * @return void
      */
-    public function testACODuplicate()
+    public function testResourceDuplicate()
     {
         try {
-            $acoArea = new Zend_Acl_Aco('area');
-            $this->_acl->add($acoArea)
-                       ->add($acoArea);
-            $this->fail('Expected exception not thrown upon adding same ACO twice');
+            $resourceArea = new Zend_Acl_Resource('area');
+            $this->_acl->add($resourceArea)
+                       ->add($resourceArea);
+            $this->fail('Expected exception not thrown upon adding same Resource twice');
         } catch (Zend_Acl_Exception $e) {
             $this->assertContains('already exists', $e->getMessage());
         }
     }
 
     /**
-     * Ensures that two ACOs having the same ID cannot be added
+     * Ensures that two Resources having the same ID cannot be added
      *
      * @return void
      */
-    public function testACODuplicateId()
+    public function testResourceDuplicateId()
     {
         try {
-            $acoArea1 = new Zend_Acl_Aco('area');
-            $acoArea2 = new Zend_Acl_Aco('area');
-            $this->_acl->add($acoArea1)
-                       ->add($acoArea2);
-            $this->fail('Expected exception not thrown upon adding two ACOs with same ID');
+            $resourceArea1 = new Zend_Acl_Resource('area');
+            $resourceArea2 = new Zend_Acl_Resource('area');
+            $this->_acl->add($resourceArea1)
+                       ->add($resourceArea2);
+            $this->fail('Expected exception not thrown upon adding two Resources with same ID');
         } catch (Zend_Acl_Exception $e) {
             $this->assertContains('already exists', $e->getMessage());
         }
     }
 
     /**
-     * Ensures that an exception is thrown when a non-existent ARO and ACO parameters are specified to isAllowed()
+     * Ensures that an exception is thrown when a non-existent Role and Resource parameters are specified to isAllowed()
      *
      * @return void
      */
@@ -427,13 +427,13 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     {
         try {
             $this->_acl->isAllowed('nonexistent');
-            $this->fail('Expected Zend_Acl_Aro_Registry_Exception not thrown upon non-existent ARO');
-        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            $this->fail('Expected Zend_Acl_Role_Registry_Exception not thrown upon non-existent Role');
+        } catch (Zend_Acl_Role_Registry_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
         try {
             $this->_acl->isAllowed(null, 'nonexistent');
-            $this->fail('Expected Zend_Acl_Exception not thrown upon non-existent ACO');
+            $this->fail('Expected Zend_Acl_Exception not thrown upon non-existent Resource');
         } catch (Zend_Acl_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
@@ -462,7 +462,7 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that ACL-wide rules (all AROs, ACOs, and privileges) work properly
+     * Ensures that ACL-wide rules (all Roles, Resources, and privileges) work properly
      *
      * @return void
      */
@@ -498,7 +498,7 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that a privilege allowed for all AROs upon all ACOs works properly
+     * Ensures that a privilege allowed for all Roles upon all Resources works properly
      *
      * @return void
      */
@@ -509,7 +509,7 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that a privilege denied for all AROs upon all ACOs works properly
+     * Ensures that a privilege denied for all Roles upon all Resources works properly
      *
      * @return void
      */
@@ -553,120 +553,120 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that by default, Zend_Acl denies access to everything for a particular ARO
+     * Ensures that by default, Zend_Acl denies access to everything for a particular Role
      *
      * @return void
      */
-    public function testARODefaultDeny()
+    public function testRoleDefaultDeny()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest);
-        $this->assertFalse($this->_acl->isAllowed($aroGuest));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest);
+        $this->assertFalse($this->_acl->isAllowed($roleGuest));
     }
 
     /**
-     * Ensures that ACL-wide rules (all ACOs and privileges) work properly for a particular ARO
+     * Ensures that ACL-wide rules (all Resources and privileges) work properly for a particular Role
      *
      * @return void
      */
-    public function testARODefaultRuleSet()
+    public function testRoleDefaultRuleSet()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest)
-                   ->allow($aroGuest);
-        $this->assertTrue($this->_acl->isAllowed($aroGuest));
-        $this->_acl->deny($aroGuest);
-        $this->assertFalse($this->_acl->isAllowed($aroGuest));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest)
+                   ->allow($roleGuest);
+        $this->assertTrue($this->_acl->isAllowed($roleGuest));
+        $this->_acl->deny($roleGuest);
+        $this->assertFalse($this->_acl->isAllowed($roleGuest));
     }
 
     /**
-     * Ensures that by default, Zend_Acl denies access to a privilege on anything for a particular ARO
+     * Ensures that by default, Zend_Acl denies access to a privilege on anything for a particular Role
      *
      * @return void
      */
-    public function testARODefaultPrivilegeDeny()
+    public function testRoleDefaultPrivilegeDeny()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest);
-        $this->assertFalse($this->_acl->isAllowed($aroGuest, null, 'somePrivilege'));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest);
+        $this->assertFalse($this->_acl->isAllowed($roleGuest, null, 'somePrivilege'));
     }
 
     /**
-     * Ensures that ACL-wide rules apply to privileges for a particular ARO
+     * Ensures that ACL-wide rules apply to privileges for a particular Role
      *
      * @return void
      */
-    public function testARODefaultRuleSetPrivilege()
+    public function testRoleDefaultRuleSetPrivilege()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest)
-                   ->allow($aroGuest);
-        $this->assertTrue($this->_acl->isAllowed($aroGuest, null, 'somePrivilege'));
-        $this->_acl->deny($aroGuest);
-        $this->assertFalse($this->_acl->isAllowed($aroGuest, null, 'somePrivilege'));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest)
+                   ->allow($roleGuest);
+        $this->assertTrue($this->_acl->isAllowed($roleGuest, null, 'somePrivilege'));
+        $this->_acl->deny($roleGuest);
+        $this->assertFalse($this->_acl->isAllowed($roleGuest, null, 'somePrivilege'));
     }
 
     /**
-     * Ensures that a privilege allowed for a particular ARO upon all ACOs works properly
+     * Ensures that a privilege allowed for a particular Role upon all Resources works properly
      *
      * @return void
      */
-    public function testAROPrivilegeAllow()
+    public function testRolePrivilegeAllow()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest)
-                   ->allow($aroGuest, null, 'somePrivilege');
-        $this->assertTrue($this->_acl->isAllowed($aroGuest, null, 'somePrivilege'));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest)
+                   ->allow($roleGuest, null, 'somePrivilege');
+        $this->assertTrue($this->_acl->isAllowed($roleGuest, null, 'somePrivilege'));
     }
 
     /**
-     * Ensures that a privilege denied for a particular ARO upon all ACOs works properly
+     * Ensures that a privilege denied for a particular Role upon all Resources works properly
      *
      * @return void
      */
-    public function testAROPrivilegeDeny()
+    public function testRolePrivilegeDeny()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest)
-                   ->allow($aroGuest)
-                   ->deny($aroGuest, null, 'somePrivilege');
-        $this->assertFalse($this->_acl->isAllowed($aroGuest, null, 'somePrivilege'));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest)
+                   ->allow($roleGuest)
+                   ->deny($roleGuest, null, 'somePrivilege');
+        $this->assertFalse($this->_acl->isAllowed($roleGuest, null, 'somePrivilege'));
     }
 
     /**
-     * Ensures that multiple privileges work properly for a particular ARO
+     * Ensures that multiple privileges work properly for a particular Role
      *
      * @return void
      */
-    public function testAROPrivileges()
+    public function testRolePrivileges()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest)
-                   ->allow($aroGuest, null, array('p1', 'p2', 'p3'));
-        $this->assertTrue($this->_acl->isAllowed($aroGuest, null, 'p1'));
-        $this->assertTrue($this->_acl->isAllowed($aroGuest, null, 'p2'));
-        $this->assertTrue($this->_acl->isAllowed($aroGuest, null, 'p3'));
-        $this->assertFalse($this->_acl->isAllowed($aroGuest, null, 'p4'));
-        $this->_acl->deny($aroGuest, null, 'p1');
-        $this->assertFalse($this->_acl->isAllowed($aroGuest, null, 'p1'));
-        $this->_acl->deny($aroGuest, null, array('p2', 'p3'));
-        $this->assertFalse($this->_acl->isAllowed($aroGuest, null, 'p2'));
-        $this->assertFalse($this->_acl->isAllowed($aroGuest, null, 'p3'));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest)
+                   ->allow($roleGuest, null, array('p1', 'p2', 'p3'));
+        $this->assertTrue($this->_acl->isAllowed($roleGuest, null, 'p1'));
+        $this->assertTrue($this->_acl->isAllowed($roleGuest, null, 'p2'));
+        $this->assertTrue($this->_acl->isAllowed($roleGuest, null, 'p3'));
+        $this->assertFalse($this->_acl->isAllowed($roleGuest, null, 'p4'));
+        $this->_acl->deny($roleGuest, null, 'p1');
+        $this->assertFalse($this->_acl->isAllowed($roleGuest, null, 'p1'));
+        $this->_acl->deny($roleGuest, null, array('p2', 'p3'));
+        $this->assertFalse($this->_acl->isAllowed($roleGuest, null, 'p2'));
+        $this->assertFalse($this->_acl->isAllowed($roleGuest, null, 'p3'));
     }
 
     /**
-     * Ensures that assertions on privileges work properly for a particular ARO
+     * Ensures that assertions on privileges work properly for a particular Role
      *
      * @return void
      */
-    public function testAROPrivilegeAssert()
+    public function testRolePrivilegeAssert()
     {
-        $aroGuest = new Zend_Acl_Aro('guest');
-        $this->_acl->addAro($aroGuest)
-                   ->allow($aroGuest, null, 'somePrivilege', new Zend_AclTest_AssertTrue());
-        $this->assertTrue($this->_acl->isAllowed($aroGuest, null, 'somePrivilege'));
-        $this->_acl->allow($aroGuest, null, 'somePrivilege', new Zend_AclTest_AssertFalse());
-        $this->assertFalse($this->_acl->isAllowed($aroGuest, null, 'somePrivilege'));
+        $roleGuest = new Zend_Acl_Role('guest');
+        $this->_acl->addRole($roleGuest)
+                   ->allow($roleGuest, null, 'somePrivilege', new Zend_AclTest_AssertTrue());
+        $this->assertTrue($this->_acl->isAllowed($roleGuest, null, 'somePrivilege'));
+        $this->_acl->allow($roleGuest, null, 'somePrivilege', new Zend_AclTest_AssertFalse());
+        $this->assertFalse($this->_acl->isAllowed($roleGuest, null, 'somePrivilege'));
     }
 
     /**
@@ -731,17 +731,17 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that for a particular ARO, a deny rule on a specific ACO is honored before an allow rule
+     * Ensures that for a particular Role, a deny rule on a specific Resource is honored before an allow rule
      * on the entire ACL
      *
      * @return void
      */
-    public function testARODefaultAllowRuleWithACODenyRule()
+    public function testRoleDefaultAllowRuleWithResourceDenyRule()
     {
-        $this->_acl->addAro(new Zend_Acl_Aro('guest'))
-                   ->addAro(new Zend_Acl_Aro('staff'), 'guest')
-                   ->add(new Zend_Acl_Aco('area1'))
-                   ->add(new Zend_Acl_Aco('area2'))
+        $this->_acl->addRole(new Zend_Acl_Role('guest'))
+                   ->addRole(new Zend_Acl_Role('staff'), 'guest')
+                   ->add(new Zend_Acl_Resource('area1'))
+                   ->add(new Zend_Acl_Resource('area2'))
                    ->deny()
                    ->allow('staff')
                    ->deny('staff', array('area1', 'area2'));
@@ -749,15 +749,15 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that for a particular ARO, a deny rule on a specific privilege is honored before an allow
+     * Ensures that for a particular Role, a deny rule on a specific privilege is honored before an allow
      * rule on the entire ACL
      *
      * @return void
      */
-    public function testARODefaultAllowRuleWithPrivilegeDenyRule()
+    public function testRoleDefaultAllowRuleWithPrivilegeDenyRule()
     {
-        $this->_acl->addAro(new Zend_Acl_Aro('guest'))
-                   ->addAro(new Zend_Acl_Aro('staff'), 'guest')
+        $this->_acl->addRole(new Zend_Acl_Role('guest'))
+                   ->addRole(new Zend_Acl_Role('staff'), 'guest')
                    ->deny()
                    ->allow('staff')
                    ->deny('staff', null, array('privilege1', 'privilege2'));
@@ -781,86 +781,86 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that removal of an ARO results in its rules being removed
+     * Ensures that removal of a Role results in its rules being removed
      *
      * @return void
      */
-    public function testRuleARORemove()
+    public function testRuleRoleRemove()
     {
-        $this->_acl->addAro(new Zend_Acl_Aro('guest'))
+        $this->_acl->addRole(new Zend_Acl_Role('guest'))
                    ->allow('guest');
         $this->assertTrue($this->_acl->isAllowed('guest'));
-        $this->_acl->removeAro('guest');
+        $this->_acl->removeRole('guest');
         try {
             $this->_acl->isAllowed('guest');
-            $this->fail('Expected Zend_Acl_Aro_Registry_Exception not thrown upon isAllowed() on non-existent ARO');
-        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            $this->fail('Expected Zend_Acl_Role_Registry_Exception not thrown upon isAllowed() on non-existent Role');
+        } catch (Zend_Acl_Role_Registry_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
-        $this->_acl->addAro(new Zend_Acl_Aro('guest'));
+        $this->_acl->addRole(new Zend_Acl_Role('guest'));
         $this->assertFalse($this->_acl->isAllowed('guest'));
     }
 
     /**
-     * Ensures that removal of all AROs results in ARO-specific rules being removed
+     * Ensures that removal of all Roles results in Role-specific rules being removed
      *
      * @return void
      */
-    public function testRuleARORemoveAll()
+    public function testRuleRoleRemoveAll()
     {
-        $this->_acl->addAro(new Zend_Acl_Aro('guest'))
+        $this->_acl->addRole(new Zend_Acl_Role('guest'))
                    ->allow('guest');
         $this->assertTrue($this->_acl->isAllowed('guest'));
-        $this->_acl->removeAroAll();
+        $this->_acl->removeRoleAll();
         try {
             $this->_acl->isAllowed('guest');
-            $this->fail('Expected Zend_Acl_Aro_Registry_Exception not thrown upon isAllowed() on non-existent ARO');
-        } catch (Zend_Acl_Aro_Registry_Exception $e) {
+            $this->fail('Expected Zend_Acl_Role_Registry_Exception not thrown upon isAllowed() on non-existent Role');
+        } catch (Zend_Acl_Role_Registry_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
-        $this->_acl->addAro(new Zend_Acl_Aro('guest'));
+        $this->_acl->addRole(new Zend_Acl_Role('guest'));
         $this->assertFalse($this->_acl->isAllowed('guest'));
     }
 
     /**
-     * Ensures that removal of an ACO results in its rules being removed
+     * Ensures that removal of a Resource results in its rules being removed
      *
      * @return void
      */
-    public function testRulesACORemove()
+    public function testRulesResourceRemove()
     {
-        $this->_acl->add(new Zend_Acl_Aco('area'))
+        $this->_acl->add(new Zend_Acl_Resource('area'))
                    ->allow(null, 'area');
         $this->assertTrue($this->_acl->isAllowed(null, 'area'));
         $this->_acl->remove('area');
         try {
             $this->_acl->isAllowed(null, 'area');
-            $this->fail('Expected Zend_Acl_Exception not thrown upon isAllowed() on non-existent ACO');
+            $this->fail('Expected Zend_Acl_Exception not thrown upon isAllowed() on non-existent Resource');
         } catch (Zend_Acl_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
-        $this->_acl->add(new Zend_Acl_Aco('area'));
+        $this->_acl->add(new Zend_Acl_Resource('area'));
         $this->assertFalse($this->_acl->isAllowed(null, 'area'));
     }
 
     /**
-     * Ensures that removal of all ACOs results in ACO-specific rules being removed
+     * Ensures that removal of all Resources results in Resource-specific rules being removed
      *
      * @return void
      */
-    public function testRulesACORemoveAll()
+    public function testRulesResourceRemoveAll()
     {
-        $this->_acl->add(new Zend_Acl_Aco('area'))
+        $this->_acl->add(new Zend_Acl_Resource('area'))
                    ->allow(null, 'area');
         $this->assertTrue($this->_acl->isAllowed(null, 'area'));
         $this->_acl->removeAll();
         try {
             $this->_acl->isAllowed(null, 'area');
-            $this->fail('Expected Zend_Acl_Exception not thrown upon isAllowed() on non-existent ACO');
+            $this->fail('Expected Zend_Acl_Exception not thrown upon isAllowed() on non-existent Resource');
         } catch (Zend_Acl_Exception $e) {
             $this->assertContains('not found', $e->getMessage());
         }
-        $this->_acl->add(new Zend_Acl_Aco('area'));
+        $this->_acl->add(new Zend_Acl_Resource('area'));
         $this->assertFalse($this->_acl->isAllowed(null, 'area'));
     }
 
@@ -871,11 +871,11 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
      */
     public function testCMSExample()
     {
-        // Add some roles to the ARO registry
-        $this->_acl->addAro(new Zend_Acl_Aro('guest'))
-                   ->addAro(new Zend_Acl_Aro('staff'), 'guest')  // staff inherits permissions from guest
-                   ->addAro(new Zend_Acl_Aro('editor'), 'staff') // editor inherits permissions from staff
-                   ->addAro(new Zend_Acl_Aro('administrator'));
+        // Add some roles to the Role registry
+        $this->_acl->addRole(new Zend_Acl_Role('guest'))
+                   ->addRole(new Zend_Acl_Role('staff'), 'guest')  // staff inherits permissions from guest
+                   ->addRole(new Zend_Acl_Role('editor'), 'staff') // editor inherits permissions from staff
+                   ->addRole(new Zend_Acl_Role('administrator'));
 
         // Guest may only view content
         $this->_acl->allow('guest', null, 'view');
@@ -932,12 +932,12 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_acl->isAllowed('administrator'));
 
         // Some checks on specific areas, which inherit access controls from the root ACL node
-        $this->_acl->add(new Zend_Acl_Aco('newsletter'))
-                   ->add(new Zend_Acl_Aco('pending'), 'newsletter')
-                   ->add(new Zend_Acl_Aco('gallery'))
-                   ->add(new Zend_Acl_Aco('profiles', 'gallery'))
-                   ->add(new Zend_Acl_Aco('config'))
-                   ->add(new Zend_Acl_Aco('hosts'), 'config');
+        $this->_acl->add(new Zend_Acl_Resource('newsletter'))
+                   ->add(new Zend_Acl_Resource('pending'), 'newsletter')
+                   ->add(new Zend_Acl_Resource('gallery'))
+                   ->add(new Zend_Acl_Resource('profiles', 'gallery'))
+                   ->add(new Zend_Acl_Resource('config'))
+                   ->add(new Zend_Acl_Resource('hosts'), 'config');
         $this->assertTrue($this->_acl->isAllowed('guest', 'pending', 'view'));
         $this->assertTrue($this->_acl->isAllowed('staff', 'profiles', 'revise'));
         $this->assertTrue($this->_acl->isAllowed('staff', 'pending', 'view'));
@@ -948,7 +948,7 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($this->_acl->isAllowed('administrator', 'pending'));
 
         // Add a new group, marketing, which bases its permissions on staff
-        $this->_acl->addAro(new Zend_Acl_Aro('marketing'), 'staff');
+        $this->_acl->addRole(new Zend_Acl_Role('marketing'), 'staff');
 
         // Refine the privilege sets for more specific needs
 
@@ -956,15 +956,15 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
         $this->_acl->allow('marketing', 'newsletter', array('publish', 'archive'));
 
         // Allow marketing to publish and archive latest news
-        $this->_acl->add(new Zend_Acl_Aco('news'))
-                   ->add(new Zend_Acl_Aco('latest'), 'news');
+        $this->_acl->add(new Zend_Acl_Resource('news'))
+                   ->add(new Zend_Acl_Resource('latest'), 'news');
         $this->_acl->allow('marketing', 'latest', array('publish', 'archive'));
 
         // Deny staff (and marketing, by inheritance) rights to revise latest news
         $this->_acl->deny('staff', 'latest', 'revise');
 
         // Deny everyone access to archive news announcements
-        $this->_acl->add(new Zend_Acl_Aco('announcement'), 'news');
+        $this->_acl->add(new Zend_Acl_Resource('announcement'), 'news');
         $this->_acl->deny(null, 'announcement', 'archive');
 
         // Access control checks for the above refined permission sets
@@ -1036,7 +1036,7 @@ class Zend_AclTest extends PHPUnit_Framework_TestCase
 
 class Zend_AclTest_AssertFalse implements Zend_Acl_Assert_Interface
 {
-    public function assert(Zend_Acl $acl, Zend_Acl_Aro_Interface $aro = null, Zend_Acl_Aco_Interface $aco = null,
+    public function assert(Zend_Acl $acl, Zend_Acl_Role_Interface $role = null, Zend_Acl_Resource_Interface $resource = null,
                            $privilege = null)
     {
        return false;
@@ -1046,7 +1046,7 @@ class Zend_AclTest_AssertFalse implements Zend_Acl_Assert_Interface
 
 class Zend_AclTest_AssertTrue implements Zend_Acl_Assert_Interface
 {
-    public function assert(Zend_Acl $acl, Zend_Acl_Aro_Interface $aro = null, Zend_Acl_Aco_Interface $aco = null,
+    public function assert(Zend_Acl $acl, Zend_Acl_Role_Interface $role = null, Zend_Acl_Resource_Interface $resource = null,
                            $privilege = null)
     {
        return true;
