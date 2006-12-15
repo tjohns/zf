@@ -770,6 +770,31 @@ $controller->run();
 
         <programlisting role="php"><![CDATA[
     /**
+     * @param string $name Имя заголовка
+     * @param string $value Значение заголовка
+     * @param boolean $replace Должен ли или нет заменять собой уже
+     * зарегистрированный в объекте заголовок с тем же именем
+     * @return self
+     */
+    public function setHeader($name, $value, $replace = false);
+
+    /**
+     * @return array
+     */
+    public function getHeaders();
+
+    /**
+     * @return void
+     */
+    public function clearHeaders();
+
+    /**
+     * Отправляет все заголовки
+     * @return void
+     */
+    public function sendHeaders();
+
+    /**
      * @param string $content
      * @return self
      */
@@ -785,6 +810,12 @@ $controller->run();
      * @return string
      */
     public function getBody();
+
+    /**
+     * Выводит контент
+     * @return void
+     */
+    public function outputBody();
 
     /**
      * @param Exception $e 
@@ -817,22 +848,30 @@ $controller->run();
         <para>
             Метод <code>setBody()</code> заменяет весь контент; мы советуем
             использовать вместо него метод <code>appendBody()</code>.
-            <code>__toString()</code> должен выводить весь добавленный контент. 
+            <code>__toString()</code> должен выводить весь контент и отправлять
+            все заголовки. 
 <!--
             <code>setBody()</code> will replace all body content; we encourage using
             <code>appendBody()</code> instead. <code>__toString()</code> should
-            render any content.
+            render any content and send all headers.
 -->
         </para>
 
         <para>
             В объекте ответа также отлавливаются и регистрируются исключения
-            из контроллера действий. Метод <code>isException()</code> должен
-            возвращать булево значение, показывающее, было ли сгенерировано
-            исключение или нет. <code>renderExceptions()</code> используется для
-            определения того, должен ли метод <code>__toString()</code> выводить
-            исключение, если оно было поймано.  
+            из контроллера действий (до тех пор, пока не будет включено
+            <code>Zend_Controller_Front::throwExceptions()</code>). Метод
+            <code>isException()</code> должен возвращать булево значение,
+            показывающее, было ли сгенерировано исключение или нет.
+            <code>renderExceptions()</code> используется для определения того,
+            должен ли метод <code>__toString()</code> выводить исключение, если
+            оно было поймано.  
 <!--
+            The response object is also where action controller exceptions are
+            finally caught and registered (unless
+            <code>Zend_Controller_Front::throwExceptions()</code> has been
+            enabled. <code>isException()</code> should return a boolean
+
             The response object is also where action controller exceptions are
             finally caught and registered. <code>isException()</code> should
             return a boolean indicating whether or not this has occurred.

@@ -774,15 +774,22 @@ public function myAction()
             они могут возвращаться вместе. Кроме этого, фронт-контроллер
             будет передавать любые пойманные исключения объекту ответа,
             давая разработчику возможность должным образом обрабатывать
-            исключения.
+            исключения. Эта возможность может быть отключена установкой
+            <code>Zend_Controller_Front::throwExceptions(true)</code>: 
 <!--
             The response object is the logical pair to the request object. Its
             purpose is to collate content and/or headers so that they may be
             returned en masse. Additionally, the front controller will pass any
             caught exceptions to the response object, allowing the developer to
-            gracefully handle exceptions.
+            gracefully handle exceptions. This functionality may be overridden
+            by setting
+            <code>Zend_Controller_Front::throwExceptions(true)</code>:
 -->
         </para>
+
+        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
 
         <para>
             Так как объект запроса реализует метод <code>__toString()</code>,
@@ -795,7 +802,11 @@ public function myAction()
         </para>
 
         <programlisting role="php"><![CDATA[
-echo $controller->dispatch();
+echo $controller->getResponse();
+
+// или
+$response = $controller->getResponse();
+echo $response;
 ]]></programlisting>
         
         <para>
@@ -846,14 +857,61 @@ $this->getResponse()
         </para>
 
         <para>
-            По умолчанию сообщения исключений не отображаются. Это поведение
-            может быть переопределено вызовом метода
-            <code>renderException()</code>.
+            Вы можете получить объект ответа после вызова метода dispatch()
+            фронт-контроллера или указать фронт-контроллеру, чтобы он возвращал
+            объект ответа вместо его вывода.   
 <!--
-            By default, exception messages are not displayed. This behaviour may
-            be overridden by calling <code>renderException()</code>.
+            You may retrieve the response object following the front controller
+            dispatch(), or request the front controller to return the response
+            object instead of rendering output.
 -->
         </para>
+
+        <programlisting role="php"><![CDATA[
+// получение объекта ответа после диспетчеризации
+$front->dispatch();
+$response = $front->getResponse();
+if ($response->isException()) {
+    // log, mail, etc...
+}
+
+// или dispatch() возвращает объект ответа 
+$front->returnResponse(true);
+$response = $front->dispatch();
+
+// делаем что-либо...
+
+// вывод ответа
+echo $response;
+]]></programlisting>
+
+        <para>
+            По умолчанию сообщения исключений не отображаются. Это поведение
+            может быть переопределено вызовом метода
+            <code>renderExceptions()</code> или включением возможности генерации
+            исключений throwExceptions() фронт-контроллером, как показано ниже: 
+<!--
+            By default, exception messages are not displayed. This behaviour may
+            be overridden by calling <code>renderExceptions()</code>, or enabling
+            the front controller to throwExceptions(), as shown above:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->dispatch($request, $response);
+
+// или:
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions();
+echo $response;
+
+// или:
+$front->throwExceptions(true);
+$front->dispatch();
+]]></programlisting>
+
 	  </sect2>
 </sect1>
 

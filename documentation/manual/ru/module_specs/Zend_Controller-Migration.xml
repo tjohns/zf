@@ -45,36 +45,25 @@ $ctrl->dispatch();
 ]]></programlisting>
 
         <para>
-            Тем не менее, из-за добавления
-            <xref linkend="zend.controller.overview.response">объекта ответа</xref>,
-            вы можете захотеть изменить последнюю строку из последнего примера:
-<!--
-            However, due to the addition of the <xref
-                linkend="zend.controller.overview.response">Response
-                object</xref>, you will want to change the last line of the
-            latter example to read:
--->
-        </para>
-
-        <programlisting role="php"><![CDATA[
-echo $ctrl->dispatch();
-]]></programlisting>
-        
-        <para>
             Рекомендуется использовать объект ответа для сбора содержимого и
             заголовков. Это предоставляет большую гибкость при переключении
             между разными форматами вывода (например, JSON или XML вместо XHTML)
-            в ваших приложениях. При выводе возвращаемого методом
-            <code>dispatch()</code> значения можно быть уверенным, что любой
-            контент, добавленный в объект ответа, будет возвращен, так же будут
-            возвращены и заголовки, добавленные в объект ответа.
+            в приложениях. По умолчанию <code>dispatch()</code> будет выводить
+            ответ, отправляя заголовки и выводя весь контент. Можно также
+            сделать так, чтобы фронт-контроллер возвращал ответ, используя метод
+            <code>returnResponse()</code>, и затем выводить ответ так, как нужно
+            вам. Будущая версия фронт-контроллер может принуждать к
+            использованию объекта ответа посредством буферизации вывода.
 <!--
             We encourage use of the Response object to aggregate content and
             headers. This will allow for more flexible output format switching
             (for instance, JSON or XML instead of XHTML) in your applications.
-            Echoing the return value of <code>dispatch()</code> ensures that any
-            content pushed to the response object will be returned, as well as
-            any headers pushed to it.
+            By default, <code>dispatch()</code> will render the response, sending both
+            headers and rendering any content. You may also have the front
+            controller return the response using <code>returnResponse()</code>,
+            and then render the response using your own logic. A future version
+            of the front controller may enforce use of the response object via
+            output buffering.
 -->
         </para>
 
@@ -97,6 +86,59 @@ echo $ctrl->dispatch();
         </para>
 
         <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Front::dispatch()</code> по умолчанию
+                    отлавливает все исключения в объекте ответа и не отображает
+                    их для предотвращения раскрытия данных о системе. Вы
+                    можете переопределить это поведение несколькими способами:
+<!--
+                    <code>Zend_Controller_Front::dispatch()</code> by default
+                    traps exceptions in the response object, and does not render
+                    them, in order to prevent sensitive system information from
+                    being rendered. You can override this in several ways:
+-->
+                </para>
+
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            Установка <code>throwExceptions()</code> во
+                            фронт-контроллере:
+<!--
+                            Set <code>throwExceptions()</code> in the front
+                            controller:
+-->
+                        </para>
+                        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            Установка <code>renderExceptions()</code> в объекте
+                            ответа:
+<!--
+                            Set <code>renderExceptions()</code> in the response
+                            object:
+-->
+                        </para>
+                        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->setResponse($response);
+$front->dispatch();
+
+// или:
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions(true);
+echo $response;
+]]></programlisting>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
                 теперь принимает и возвращает объект запроса
