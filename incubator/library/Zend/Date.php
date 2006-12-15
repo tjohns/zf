@@ -1145,12 +1145,12 @@ class Zend_Date {
     {
         switch ($calc) {
             case 'add' :
-                $this->addTimestamp($date);
-                return $this->getTimestamp();
+                $this->_Date->setTimestamp(bcadd($this->_Date->getTimestamp(), $date));
+                return $this->_Date->getTimestamp();
                 break;
             case 'sub' :
-                $this->subTimestamp($date);
-                return $this->getTimestamp();
+                $this->_Date->setTimestamp(bcsub($this->_Date->getTimestamp(), $date));
+                return $this->_Date->getTimestamp();
                 break;
             case 'cmp' :
                 return bcsub($comp, $date);
@@ -1501,7 +1501,7 @@ class Zend_Date {
 
             // time formats
             case Zend_Date::MERIDIEM :
-                throw Zend::exception('Zend_Date_Exception', 'day suffix not supported');
+                throw Zend::exception('Zend_Date_Exception', 'meridiem not supported');
                 break;
 
             case Zend_Date::SWATCH :
