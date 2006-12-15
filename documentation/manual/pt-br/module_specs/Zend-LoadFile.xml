@@ -16,7 +16,7 @@ Zend::loadFile($filename, $dirs=null, $once=false)
     <para>O argumento <code>$filename</code> especifica o nome do arquivo para carregar, 
     que não deve conter nenhuma informação do caminho. ma verificação da segurança é executada no 
     <code>$filename</code>.  O <code>$filename</code> só pode conter caracteres alfanuméricos, 
-    hífens ("-"), <i>underscores</i> ("_"), ou pontos ("."). Tal restrição não é aplicada ao 
+    hífens ("-"), underscores ("_"), ou pontos ("."). Tal restrição não é aplicada ao 
     argumento <code>$dirs</code>.</para>
 
     <para>O argumento <code>$dirs</code> especifica os diretórios para procurar pelo arquivo.  Se
