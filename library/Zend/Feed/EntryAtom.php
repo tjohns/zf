@@ -55,8 +55,9 @@ class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
      * does not contain a link rel="edit", we throw an error (either
      * the entry does not yet exist or this is not an editable
      * feed). If we have a link rel="edit", we do the empty-body
-     * HTTP DELETE to that URI and check for a response of 204 No
-     * Content.
+     * HTTP DELETE to that URI and check for a response of 2xx.
+     * Usually the response would be 204 No Content, but the Atom
+     * Publishing Protocol permits it to be 200 OK.
      *
      * @throws Zend_Feed_Exception If an error occurs, an Zend_Feed_Exception will
      * be thrown.
@@ -78,8 +79,8 @@ class Zend_Feed_EntryAtom extends Zend_Feed_EntryAbstract
         } else {
             $response = $client->request('DELETE');
         }
-        if ($response->getStatus() !== 204) {
-            throw new Zend_Feed_Exception('Expected response code 204, got ' . $response->getStatus());
+        if (!($response->getStatus() >= 200 && $response->getStatus() <= 299)) {
+            throw new Zend_Feed_Exception('Expected response code 2xx, got ' . $response->getStatus());
         }
 
         return true;

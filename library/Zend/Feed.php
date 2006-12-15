@@ -181,7 +181,7 @@ class Zend_Feed
     {
         $client = self::getHttpClient();
         $client->setUri($uri);
-        $response = $client->request();
+        $response = $client->request('GET');
         if ($response->getStatus() !== 200) {
             throw new Zend_Feed_Exception('Feed failed to load, got response code ' . $response->getStatus());
         }
