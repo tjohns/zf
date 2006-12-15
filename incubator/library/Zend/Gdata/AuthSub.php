@@ -43,13 +43,13 @@ require_once 'Zend/Http/Client.php';
 class Zend_Gdata_AuthSub
 {
     
-    const AUTHSUBREQUEST_URI      = 'https://www.google.com/accounts/AuthSubRequest';
+    const AUTHSUB_REQUEST_URI      = 'https://www.google.com/accounts/AuthSubRequest';
     
-    const AUTHSUBSESSIONTOKEN_URI = 'https://www.google.com/accounts/AuthSubSessionToken';
+    const AUTHSUB_SESSION_TOKEN_URI = 'https://www.google.com/accounts/AuthSubSessionToken';
     
-    const AUTHSUBREVOKETOKEN_URI  = 'https://www.google.com/accounts/AuthSubRevokeToken';
+    const AUTHSUB_REVOKE_TOKEN_URI  = 'https://www.google.com/accounts/AuthSubRevokeToken';
     
-    const AUTHSUBTOKENINFO_URI    = 'https://www.google.com/accounts/AuthSubTokenInfo';
+    const AUTHSUB_TOKEN_INFO_URI    = 'https://www.google.com/accounts/AuthSubTokenInfo';
 
      /**
       * Creates a URI to request a single-use AuthSub token.
@@ -72,7 +72,7 @@ class Zend_Gdata_AuthSub
              . '&scope=' . urldecode($scope)
              . '&secure=' . urlencode($secure)
              . '&session=' . urlencode($session);
-         return self::AUTHSUBREQUEST_URI.$querystring;
+         return self::AUTHSUB_REQUEST_URI.$querystring;
      } 
     
     
@@ -81,9 +81,15 @@ class Zend_Gdata_AuthSub
      *
      * @param string $token
      */
-    static public function getAuthSubSessionToken($token)
+    static public function getAuthSubSessionToken($token, $client = null)
     {
-        $client = new Zend_Http_Client(self::AUTHSUBSESSIONTOKEN_URI );
+        if ($client == null) {
+            $client = new Zend_Http_Client();
+        }
+        if (!$client instanceof Zend_Http_Client) {
+            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+        }
+        $client->setUri(self::AUTHSUB_SESSION_TOKEN_URI);
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
         $client->setHeaders($headers);
         ob_start();
@@ -111,9 +117,15 @@ class Zend_Gdata_AuthSub
      * @param string $token
      * @return boolean
      */
-    static public function AuthSubRevokeToken($token)
+    static public function AuthSubRevokeToken($token, $client = null)
     {
-        $client = new Zend_Http_Client(self::AUTHSUBREVOKETOKEN_URI  );
+        if ($client == null) {
+            $client = new Zend_Http_Client();
+        }
+        if (!$client instanceof Zend_Http_Client) {
+            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+        }
+        $client->setUri(self::AUTHSUB_REVOKE_TOKEN_URI);
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
         $client->setHeaders($headers);
         ob_start();
@@ -133,9 +145,15 @@ class Zend_Gdata_AuthSub
      *
      * @param string $token
      */
-    static public function getAuthSubTokenInfo($token)
+    static public function getAuthSubTokenInfo($token, $client = null)
     {
-        $client = new Zend_Http_Client(self::AUTHSUBTOKENINFO_URI );
+        if ($client == null) {
+            $client = new Zend_Http_Client();
+        }
+        if (!$client instanceof Zend_Http_Client) {
+            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+        }
+        $client->setUri(self::AUTHSUB_TOKEN_INFO_URI);
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
         $client->setHeaders($headers);
         ob_start();
@@ -144,9 +162,15 @@ class Zend_Gdata_AuthSub
         return $response->getBody();
     }
 
-    static public function getHttpClient($token)
+    static public function getHttpClient($token, $client = null)
     {
-        $client = new Zend_Http_Client();
+        if ($client == null) {
+            $client = new Zend_Http_Client();
+        }
+        if (!$client instanceof Zend_Http_Client) {
+            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+        }
+        $client->setConfig(array('strictredirects' => true));
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
         $client->setHeaders($headers);
         return $client;

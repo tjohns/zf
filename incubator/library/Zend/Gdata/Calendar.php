@@ -35,14 +35,13 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     const CALENDAR_FEED_URI = 'http://www.google.com/calendar/feeds';
     const CALENDAR_POST_URI = 'http://www.google.com/calendar/feeds/default/private/full';
 
-    protected static $defaultTokenName = 'cal_token';
-
     /**
      * Create Gdata_Calendar object
      */
-    public function __construct(Zend_Http_Client $client)
+    public function __construct($client = null)
     {
         parent::__construct($client);
+        $this->_httpClient->setParameterPost('service', 'cl');
     }
 
     /**
@@ -53,25 +52,25 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     public function getFeed()
     {
         $uri = self::CALENDAR_FEED_URI;
-        if (isset($this->params['_user'])) {
-            $uri .= '/' . $this->params['_user'];
+        if (isset($this->_params['_user'])) {
+            $uri .= '/' . $this->_params['_user'];
         } else {
             $uri .= '/default';
         }
-        if (isset($this->params['_visibility'])) {
-            $uri .= '/' . $this->params['_visibility'];
+        if (isset($this->_params['_visibility'])) {
+            $uri .= '/' . $this->_params['_visibility'];
         } else {
             $uri .= '/public';
         }
-        if (isset($this->params['_projection'])) {
-            $uri .= '/' . $this->params['_projection'];
+        if (isset($this->_params['_projection'])) {
+            $uri .= '/' . $this->_params['_projection'];
         } else {
             $uri .= '/full';
         }
-        if (isset($this->params['_event'])) {
-            $uri .= '/' . $this->params['_event'];
-            if (isset($this->params['_comments'])) {
-                $uri .= '/comments/' . $this->params['_comments'];
+        if (isset($this->_params['_event'])) {
+            $uri .= '/' . $this->_params['_event'];
+            if (isset($this->_params['_comments'])) {
+                $uri .= '/comments/' . $this->_params['_comments'];
             }
         }
 
@@ -87,8 +86,8 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     public function getCalendarListFeed()
     {
         $uri = self::CALENDAR_FEED_URI;
-        if (isset($this->params['_user'])) {
-            $uri .= '/' . $this->params['_user'];
+        if (isset($this->_params['_user'])) {
+            $uri .= '/' . $this->_params['_user'];
         } else {
             $uri .= '/default';
         }

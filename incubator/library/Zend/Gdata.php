@@ -34,7 +34,6 @@ require_once 'Zend/Feed.php';
  */
 class Zend_Gdata
 {
-
     /**
      * Client object used to communicate
      *
@@ -47,13 +46,7 @@ class Zend_Gdata
      *
      * @var array
      */
-    protected $params = array();
-
-    protected $developerKey = null;
-
-    protected static $defaultTokenName = 'xapi_token';
-
-    protected static $tokenName = null;
+    protected $_params = array();
 
     /**
      * Create Gdata object
@@ -66,32 +59,12 @@ class Zend_Gdata
     }
 
     /**
-     * Sets developer key
-     *
-     * @param string $key
-     */
-    public function setDeveloperKey($key)
-    {
-        $this->developerKey = substr($key, 0, strcspn($key, "\n\r"));
-        $headers['X-Google-Key'] = 'key=' . $this->developerKey;
-        $this->_httpClient->setHeaders($headers);
-    }
-
-    /**
-     * @return string developerKey
-     */
-    public function getDeveloperKey()
-    {
-        return $this->developerKey;
-    }
-
-    /**
      * @return string querystring
      */
     protected function getQueryString()
     {
         $queryArray = array();
-        foreach ($this->params as $name => $value) {
+        foreach ($this->_params as $name => $value) {
             if (substr($name, 0, 1) == '_') {
                 continue;
             }
@@ -109,7 +82,7 @@ class Zend_Gdata
      */
     public function resetParameters()
     {
-        $this->params = array();
+        $this->_params = array();
     }
 
     /**
@@ -143,7 +116,7 @@ class Zend_Gdata
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            throw Zend::exception('Zend_Gdata_Exception', 'Argument is not an instance of Zend_Http_Client.');
+            throw Zend::exception('Zend_Http_Exception', 'Argument is not an instance of Zend_Http_Client.');
         }
         $this->_httpClient = $client;
     }
@@ -317,7 +290,7 @@ class Zend_Gdata
                 // other params may be set by subclasses
                 break;
         }
-        $this->params[$var] = $value;
+        $this->_params[$var] = $value;
     }
 
     /**
@@ -365,7 +338,7 @@ class Zend_Gdata
                 // other params may be set by subclasses
                 break;
         }
-        return isset($this->params[$var]) ? $this->params[$var] : null;
+        return isset($this->_params[$var]) ? $this->_params[$var] : null;
     }
 
     /**
@@ -394,7 +367,7 @@ class Zend_Gdata
                 // other params may be set by subclasses
                 break;
         }
-        return isset($this->params[$var]);
+        return isset($this->_params[$var]);
     }
 
     /**
@@ -422,7 +395,7 @@ class Zend_Gdata
                 // other params may be set by subclasses
                 break;
         }
-        unset($this->params[$var]);
+        unset($this->_params[$var]);
     }
 
 }

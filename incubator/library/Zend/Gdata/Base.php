@@ -32,14 +32,14 @@ require_once 'Zend/Gdata.php';
  */
 class Zend_Gdata_Base extends Zend_Gdata
 {
-    const BASE_FEED_URI ='http://www.google.com/base/feeds/snippets';
-    const BASE_METADATA_TYPES_URI ='http://www.google.com/base/feeds/itemtypes';
-    const BASE_METADATA_ATTRIBUTES_URI ='http://www.google.com/base/feeds/attributes';
-    const BASE_POST_URI ='http://www.google.com/base/feeds/items';
+    const BASE_FEED_URI = 'http://www.google.com/base/feeds/snippets';
+    const BASE_METADATA_TYPES_URI = 'http://www.google.com/base/feeds/itemtypes';
+    const BASE_METADATA_ATTRIBUTES_URI = 'http://www.google.com/base/feeds/attributes';
+    const BASE_POST_URI = 'http://www.google.com/base/feeds/items';
 
-    protected static $defaultTokenName = 'base_token';
+    protected $_developerKey = null;
 
-    protected $attributeQueryTerms = array();
+    protected $_attributeQueryTerms = array();
 
     /**
      * Create Gdata_Calendar object
@@ -48,12 +48,32 @@ class Zend_Gdata_Base extends Zend_Gdata
      * @param string $password
      *
      */
-    public function __construct(Zend_Http_Client $client, $key = null)
+    public function __construct($client = null, $key = null)
     {
         parent::__construct($client);
         if ($key != null) {
-            $this->setKey($key);
+            $this->setDeveloperKey($key);
         }
+    }
+
+    /**
+     * Sets developer key
+     *
+     * @param string $key
+     */
+    public function setDeveloperKey($key)
+    {
+        $this->_developerKey = substr($key, 0, strcspn($key, "\n\r"));
+        $headers['X-Google-Key'] = 'key=' . $this->_developerKey;
+        $this->_httpClient->setHeaders($headers);
+    }
+
+    /**
+     * @return string developerKey
+     */
+    public function getDeveloperKey()
+    {
+        return $this->_developerKey;
     }
 
     /**
@@ -65,12 +85,12 @@ class Zend_Gdata_Base extends Zend_Gdata
     {
         $uri = self::BASE_FEED_URI;
         /*
-        if (isset($this->params['_entry'])) {
-            $uri .= '/' . $this->params['_entry'];
+        if (isset($this->_params['_entry'])) {
+            $uri .= '/' . $this->_params['_entry'];
         } else
         */
-        if (isset($this->params['_category'])) {
-            $uri .= '/-/' . $this->params['_category'];
+        if (isset($this->_params['_category'])) {
+            $uri .= '/-/' . $this->_params['_category'];
         }
         $uri .= $this->getQueryString();
         return parent::getFeed($uri);
@@ -110,8 +130,8 @@ class Zend_Gdata_Base extends Zend_Gdata
             $bq = $this->query;
             $queryArray[] = $bq;
         }
-        foreach (array_keys($this->attributeQueryTerms) as $name) {
-            foreach ($this->attributeQueryTerms[$name] as $attr) {
+        foreach (array_keys($this->_attributeQueryTerms) as $name) {
+            foreach ($this->_attributeQueryTerms[$name] as $attr) {
                 $op = ':';
                 if (isset($attr['op'])) {
                     $op = $attr['op'];
@@ -149,7 +169,7 @@ class Zend_Gdata_Base extends Zend_Gdata
         if (!in_array($op, array(':', '==', '<', '>', '<=', '>=', '<<'))) {
             throw Zend::exception('Zend_Gdata_Exception', "Unsupported attribute query comparison operator '$op'.");
         }
-        $this->attributeQueryTerms[$attributeName][] = array(
+        $this->_attributeQueryTerms[$attributeName][] = array(
             'op' => $op,
             'value' => $attributeValue
         );
@@ -161,9 +181,9 @@ class Zend_Gdata_Base extends Zend_Gdata
     public function unsetAttributeQuery($attributeName = null)
     {
         if ($attributeName == null) {
-            $this->attributeQueryTerms = array();
+            $this->_attributeQueryTerms = array();
         } else {
-            unset($this->attributeQueryTerms[$attributeName]);
+            unset($this->_attributeQueryTerms[$attributeName]);
         }
     }
 

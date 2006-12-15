@@ -46,7 +46,7 @@ class Zend_Gdata_ClientLogin
      * The Google client login URI
      *
      */
-    const CLIENTLOGINURI = 'https://www.google.com/accounts/ClientLogin';
+    const CLIENTLOGIN_URI = 'https://www.google.com/accounts/ClientLogin';
 
     /**
      * The default 'source' parameter to send to Google
@@ -55,25 +55,40 @@ class Zend_Gdata_ClientLogin
     const DEFAULT_SOURCE = 'Zend-ZendFramework';
 
     /**
-     * Set Google authentication data. Must be done before accessing any Google
-     * service
+     * Set Google authentication credentials.
+     * Must be done before trying to do any Google Data operations that
+     * require authentication.
+     * For example, viewing private data, or posting or deleting entries.
      *
      * @param string $email
      * @param string $password
      * @param string $service
+     * @param Zend_Http_Client $client
      * @param string $source
      * @return Zend_Http_Client
      */
     public function getHttpClient($email, $password, $service = 'xapi',
+        $client = null,
         $source = self::DEFAULT_SOURCE)
     {
         if (! ($email && $password)) {
             throw Zend::exception('Zend_Http_Exception', 'Please set your Google credentials before trying to authenticate');
         }
 
+        if ($client == null) {
+            $client = new Zend_Http_Client();
+        }
+        if (!$client instanceof Zend_Http_Client) {
+            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+        }
+
         // Build the HTTP client for authentication
-        $client = new Zend_Http_Client(self::CLIENTLOGINURI);
-        $client->setConfig(array('maxredirects' => 0));
+        $client->setUri(self::CLIENTLOGIN_URI);
+        $client->setConfig(array(
+                'maxredirects'    => 0,
+                'strictredirects' => true
+            )
+        );
         $client->setParameterPost('accountType', 'HOSTED_OR_GOOGLE');
         $client->setParameterPost('Email', (string) $email);
         $client->setParameterPost('Passwd', (string) $password);
