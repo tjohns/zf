@@ -584,47 +584,45 @@
             verwendet.
         </para>
         <para>
-            You can create your own connection adapters and use them. In order
-            to do so, you must create your own class that implements the 
-            Zend_Http_Client_Adapter_Interface interface. You could, for 
-            example, create a connection adapter that uses persistent sockets,
-            or a connection adapter with caching abilities, and use them as 
-            needed in your application.
+            Man kann seine eigenen Verbindungsadapter erstellen und verwenden. Um dies zu erreichen,
+            muss man eine eigene Klasse erstellen, die das Zend_Http_Client_Adapter_Interface 
+            Interface implementiert. Man könnte z.B. einen Verbindungsadapter, der persistente 
+            Sockets verwendet, oder einen Verbindungsadapter mit Cachingfähigkeiten erstellen und 
+            bei Bedarf in der Applikation verwenden.
         </para>
     </sect2>
     
     <sect2 id="zend.http.client.testing">
-        <title>Writing Tests With Zend_Http_Client Objects</title>
+        <title>Schreiben von Tests mit Zend_Http_Client Objekten</title>
         <para>
-            Sometimes, it is very hard to test code that relys on HTTP connections.
-            For example, testing an application that pulls an RSS feed from a remote 
-            server will require a network connection, which is not always available.
+            Manchmal ist es sehr schwer Code tu testen, der von HTTP Verbindungen abhängig ist. 
+            Zum Beispiel verlangt das Testen einer Applikation, die einen RSS Feed von einem fremden
+            Server anfordert, eine Netzwerkverbindung, die nicht immer verfügbar ist.
         </para>
         <para>
-            For this reason, the Zend_Http_Client_Adapter_Test adapter is provided.
-            You can write your application to use Zend_Http_Client, and just for 
-            testing purposes, for example in your unit testing suite, you can replace
-            the default adapter with a Test adapter, allowing you to run tests 
-            without actually performing server connections.
+            Aus diesem Grund wird der Zend_Http_Client_Adapter_Test Adapter bereit gestellt. Man
+            kann seine eigenen Applikationen schreiben, um Zend_Http_Client zu verwenden, und nur
+            zu Testzwecken, z.B. in der Unit Test Suite, den Standardadapter durch den Testadapter
+            austauschen, um Tests ohne direkte Serverbindungen auszuführen.
         </para>
         <para>
-            The Zend_Http_Client_Adapter_Test adapter provides an additional 
-            method, setResponse() method. This method takes one parameter,
-            which represents an HTTP response as either text or a Zend_Http_Response
-            object. Once set, your Test adapter will always return this response,
-            without even performing an actual HTTP request.         
+            Der Zend_Http_Client_Adapter_Test Adapter stellt die zusätzliche Methode setResponse() 
+            bereit. Diese Methode nimmt einen Parameter entgegen, der eine HTTP Antwort entweder als
+            Text oder als Zend_Http_Response Objekt repräsentiert. Einmal eingerichtet, wird der
+            Testadapter immer diese Antwort zurückgeben, ohne tatsächlich eine HTTP Anfrage 
+            auszuführen.         
         </para>
         <example>
-            <title>Testing Your Code Without Accessing The Network</title>
+            <title>Code testen ohne auf ein Netzwerk zuzugreifen</title>
             <programlisting role="php">
 <![CDATA[<?php
-    // Instantiate a new adapter and client
+    // Instanziere einen neuen Adapter und Client
     $adapter = new Zend_Http_Client_Adapter_Test();
     $client = Zend_Http_Client('http://www.example.com', array(
         'adapter' => $adapter
     ));
     
-    // Set the expected response
+    // Setze die erwartete Antwort
     $adapter->setResponse(
         "HTTP/1.1 200 OK"        . "\r\n" .
         "Content-type: text/xml" . "\r\n" .
@@ -635,19 +633,19 @@
 	    '     xmlns:dc="http://purl.org/dc/elements/1.1/">' . 
         '  <channel>' . 
         '    <title>Premature Optimization</title>' . 
-        // and so on...
+        // und so weiter...
         '</rss>');
     
     $response = $client->request('GET');
-    // .. continue parsing $response..
+    // .. setze die Verarbeitung von $response fort...
 ?>]]></programlisting>
         </example>
         <para>
-            The above example shows how you can preset your HTTP client to 
-            return the response you need. Then, you can continue testing your
-            own code, without being dependent on a network connection, the server's
-            response, etc. In this case, the test would continue to check how 
-            the application parses the XML in the response body.
+            Das obere Beispiel zeigt, wie man einen HTTP Client voreinstellen kann, damit er die
+            benötigte Antwort zurückgibt. Danach kann man mit den Testen des eigenen Codes weiter
+            machen, ohne von einer Netzwerkverbindung, der Serverantwort, etc. abhängig zu sein. In
+            diesem Fall würde der Test mit der Prüfung fortfahren, wie die Applikation das XML aus
+            der Antwort verarbeitet..
         </para>
     </sect2>
 </sect1>

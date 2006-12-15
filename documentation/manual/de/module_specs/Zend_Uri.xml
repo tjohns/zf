@@ -2,45 +2,44 @@
   <title>Zend_Uri</title>
 
   <sect2 id="zend.uri.overview">
-    <title>Overview</title>
+    <title>Überblick</title>
 
     <para>
-      <code>Zend_Uri</code> is a component that aids in manipulating and
-      validating <ulink url="http://www.w3.org/Addressing/">Uniform Resource
-      Identifiers</ulink> (URIs). <code>Zend_Uri</code> exists primarily to
-      service other components such as <code>Zend_Http_Client</code> but is
-      also useful as a standalone utility.
+        <code>Zend_Uri</code> ist eine Komponente, die das Verändern und Validieren von 
+        <ulink url="http://www.w3.org/Addressing/">Uniform Resource Identifiers</ulink> (URIs)
+        unterstützt. <code>Zend_Uri</code> existiert hauptsächlich, um andere Komponenten wie z.B. 
+        <code>Zend_Http_Client</code> zu unterstützen, aber ist auch als eigenständiges Hilfsmittel
+        nützlich.
     </para>
   
     <para>
-      URIs always begin with a scheme, followed by a colon. The construction
-      of the many different schemes varies significantly.  The
-      <code>Zend_Uri</code> class provides a factory that returns a subclass of
-      itself which specializes in each scheme.  The subclass
-      will be named <code>Zend_Uri_&lt;scheme&gt;</code>, where
-      <code>&lt;scheme&gt;</code> is the scheme lowercased with the first
-      letter capitalized. An exception to this rule is HTTPS, which is also
-      handled by <code>Zend_Uri_Http</code>.
+        URIs beginnen immer mit einem Schema, gefolgt von einem Doppelpunkt. Der Aufbau der vielen
+        unterschiedlichen Schemata unterscheidet sich erheblich. Die <code>Zend_Uri</code> stellt
+        eine Fabrik (Factory) bereit, die eine Unterklasse von sich selber zurück gibt, die auf das 
+        entsprechende Schema spezialisiert ist. Diese Unterklasse heißt 
+        <code>Zend_Uri_&lt;scheme&gt;</code>, wobei <code>&lt;scheme&gt;</code> das Schema in 
+        Kleinbuchstaben mit einem Großbuchstaben am Anfang darstellt. Eine Ausnahme dieser Regel ist
+        HTTPS, das auch von <code>Zend_Uri_Http</code> verarbeitet wird.
     </para>
   </sect2>
 
   <sect2 id="zend.uri.creation">
-    <title>Creating a New URI</title>
+    <title>Eine neue URI erstellen</title>
 
     <para>
-      <code>Zend_Uri</code> will build a new URI from scratch if only a scheme
-      is passed to <code>Zend_Uri::factory()</code>.
+        <code>Zend_Uri</code> erstellt eine neue URI von Grund auf, wenn nur das Schema an 
+        <code>Zend_Uri::factory()</code> übergeben wurde.
     </para>
     
     <example>
-      <title>Creating a New URI with <code>Zend_Uri::factory()</code></title>
+      <title>Erstellen einer neuen URI mit <code>Zend_Uri::factory()</code></title>
       
       <programlisting role="php"><![CDATA[
 <?php
 
 require_once 'Zend/Uri.php';
 
-// To create a new URI from scratch, pass only the scheme.
+// Um eine neue URI von Grund auf zu erstellen, übergebe nur das Schema.
 $uri = Zend_Uri::factory('http');
 
 // $uri instanceof Zend_Uri_Http
@@ -49,37 +48,36 @@ $uri = Zend_Uri::factory('http');
     </example>
 
     <para>
-      To create a new URI from scratch, pass only the scheme to
-      <code>Zend_Uri::factory()</code><footnote><para>At the time of writing,
-      Zend_Uri only supports the HTTP and HTTPS schemes.</para></footnote> .
-      If an unsupported scheme is passed, a <code>Zend_Uri_Exception</code>
-      will be thrown.
+        Um eine neue URI von Grund auf zu erstellen, übergibt man nur das Schema an 
+        <code>Zend_Uri::factory()</code><footnote><para>Zum Zeitpunkt des Schreiben unterstützt 
+        Zend_Uri nur HTTP uznd HTTPS Schemata</para></footnote> . Wenn eine nicht unterstütztes 
+        Schema übergeben wird, wird eine <code>Zend_Uri_Exception</code> ausgeworfen.
     </para>
 
     <para>
-      If the scheme or URI passed is supported,
-      <code>Zend_Uri::factory()</code> will return a subclass of itself that
-      specializes in the scheme to be created.
+        Wenn das Schema oder die übergebene URI unterstützt wird, gibt 
+        <code>Zend_Uri::factory()</code> eine Unterklasse von sich selbst zurück, die auf das zu
+        erstellende Schema spezialisiert ist.
     </para>
   </sect2>
   
   <sect2 id="zend.uri.manipulation">
-    <title>Manipulating an Existing URI</title>
+    <title>Verändern einer vorhandenen URI</title>
     
     <para>
-      To manipulate an existing URI, pass the entire URI to
-      <code>Zend_Uri::factory()</code>. 
+        Um eine vorhandene URI zu verändern, übergibt man die komplett URI an 
+        <code>Zend_Uri::factory()</code>. 
     </para>
 
     <example>
-      <title>Manipulating an Existing URI with <code>Zend_Uri::factory()</code></title>
+      <title>Verändern einer vorhandenen URI mit <code>Zend_Uri::factory()</code></title>
       
     <programlisting role="php"><![CDATA[
 <?php
 
 require_once 'Zend/Uri.php';
 
-// To manipulate an existing URI, pass it in.
+// Um eine vorhandene URI zu verändern, übergibt man sie.
 $uri = Zend_Uri::factory('http://www.zend.com');
 
 // $uri instanceof Zend_Uri_Http
@@ -88,63 +86,61 @@ $uri = Zend_Uri::factory('http://www.zend.com');
     </example>
 
     <para>
-      The URI will be parsed and validated. If it is found to be invalid, a
-      <code>Zend_Uri_Exception</code> will be thrown immediately. Otherwise,
-      <code>Zend_Uri::factory()</code> will return a subclass of itself that
-      specializes in the scheme to be manipulated.
+        Die URI wird analysiert und validiert. Wenn sie als ungültig erkannt wird, wird sofort eine
+        <code>Zend_Uri_Exception</code> geworfen. Andernfalls gibt <code>Zend_Uri::factory()</code>
+        eine Unterklasse von sich selbst zurück, die auf das zu verändernde Schema spezialisiert 
+        ist.
     </para>
   </sect2>
   
   <sect2 id="zend.uri.validation">
-    <title>URI Validation</title>
+    <title>URI Validierung</title>
 
     <para>
-      The <code>Zend_Uri::check()</code> function can be used if only
-      validation of an existing URI is needed.
+        Die <code>Zend_Uri::check()</code> Methode kann verwendet werden, wenn nur das Validieren
+        einer vorhandenen URI benötigt wird.
     </para>
     
     <example>
-      <title>URI Validation with <code>Zend_Uri::check()</code></title>
+      <title>URI Validierung mit <code>Zend_Uri::check()</code></title>
       
     <programlisting role="php"><![CDATA[
 <?php
 
 require_once 'Zend/Uri.php';
 
-// Validate whether a given URI is well formed
+// Überprüfe, ob eine übergebe URI wohlgeformt ist
 $valid = Zend_Uri::check('http://uri.in.question');
 
-// $valid is TRUE for a valid URI, or FALSE otherwise.
+// $valid ist TRUE für eine valide URI, andernfalls FALSE
  
 ?>]]></programlisting>    
     </example>
 
     <para>
-      <code>Zend_Uri::check()</code> returns a boolean,
-      which is more convenient than using <code>Zend_Uri::factory()</code>
-      and catching the exception.
+        <code>Zend_Uri::check()</code> gibt ein Boolean zurück, was einfacher ist, als 
+        <code>Zend_Uri::factory()</code> zu verwenden und eine Ausnahme abzufangen.
     </para>
   </sect2>
 
   <sect2 id="zend.uri.instance-methods">
-    <title>Common Instance Methods</title>
+    <title>Allgemeine Instanzmethoden</title>
     
     <para>
-      Every instance of a <code>Zend_Uri</code> subclass (e.g.
-      <code>Zend_Uri_Http</code>) has several instance methods that are useful
-      for working with any kind of URI.
+        Jede Instant einer <code>Zend_Uri</code> Unterklasse (z.B. <code>Zend_Uri_Http</code>) hat
+        verschiedene Instanzmethoden, die für die Verwendung mit jeglicher URI nützlich sind.
     </para>
     
     <sect3 id="zend.uri.instance-methods.getscheme">
-      <title>Getting the Scheme of the URI</title>
+      <title>Das Schema der URI erhalten</title>
       
       <para>
-        The scheme of the URI is the part of the URI that precedes the colon.  For example,
-        the scheme of <code>http://www.zend.com</code> is <code>http</code>.
+          Das Schema der URI ist der Teil der URI vor dem Doppelpunkt. Zum Beispiel ist 
+          <code>http</code> das Schema von <code>http://www.zend.com</code>.
       </para>
       
       <example>
-        <title>Getting the Scheme from a <code>Zend_Uri_*</code> Object</title>
+        <title>Das Schema eines <code>Zend_Uri_*</code> Objektes erhalten</title>
         
         <programlisting role="php"><![CDATA[
 <?php
@@ -159,17 +155,17 @@ $scheme = $uri->getScheme();  // "http"
     </example>
 
       <para>
-        The <code>getScheme()</code> instance method returns only the scheme part of
-        the URI object.
+          Die <code>getScheme()</code> Instanzmethode gibt nur das Schema des URI Objektes 
+          zurück.
       </para>
 
     </sect3>
     
     <sect3 id="zend.uri.instance-methods.geturi">
-      <title>Getting the Entire URI</title>
+      <title>Die komplette URI erhalten</title>
 
       <example>
-        <title>Getting the Entire URI from a <code>Zend_Uri_*</code> Object</title>
+        <title>Die komplette URI eines <code>Zend_Uri_*</code> Objektes erhalten</title>
         
         <programlisting role="php"><![CDATA[
 <?php
@@ -184,25 +180,24 @@ echo $uri->getUri();  // "http://www.zend.com"
       </example>
 
       <para>
-        The <code>getUri()</code> method returns the string representation
-        of the entire URI.
+          Die <code>getUri()</code> Methode gibt den String zurück, der die komplette URI 
+          repräsentiert.
       </para>
     </sect3>
     
     <sect3 id="zend.uri.instance-methods.valid">
-      <title>Validating the URI</title>
+      <title>Die URI validieren</title>
       
       <para>
-        <code>Zend_Uri::factory()</code> will always validate any URI passed
-        to it and will not instantiate a new <code>Zend_Uri</code> subclass
-        if the given URI is found to be invalid. However, after the
-        <code>Zend_Uri</code> subclass is instantiated for a new URI or a
-        valid existing one, it is possible that the URI can then later become
-        invalid after it is manipulated.
+          <code>Zend_Uri::factory()</code> validiert immer jede übergebene URI und wird keine 
+          <code>Zend_Uri</code> Unterklasse instantieren, wenn die übergebene URI ungültig ist. 
+          Dennoch ist es nach der Instanzierung der <code>Zend_Uri</code> Unterklasse für eine neue
+          oder eine bestehende URI möglich, dass die URI später ungültig wird, nachdem sie verändert
+          worden ist.
       </para>
 
       <example>
-        <title>Validating a <code>Zend_Uri_*</code> Object</title>
+        <title>Ein <code>Zend_Uri_*</code> Object validieren</title>
         
         <programlisting role="php"><![CDATA[
 <?php
@@ -217,8 +212,8 @@ $isValid = $uri->valid();  // TRUE
       </example>
 
       <para>
-        The <code>valid()</code> instance method provides a means to check that the
-        URI object is still valid.
+          Die <code>valid()</code> Instanzmethode ermöglicht es, das URI Objekt auf Gültigkeit zu
+          überprüfen.
       </para>
     </sect3>
 
