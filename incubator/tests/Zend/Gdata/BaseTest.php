@@ -192,6 +192,8 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         }
 
         $this->gdata->unsetAttributeQuery($attrib);
+        $op = '>';
+        $this->gdata->addAttributeQuery($attrib, $attribValue, $op);
         $feed = $this->gdata->getFeed();
         $prices = array();
         foreach ($feed as $feedEntry) {
