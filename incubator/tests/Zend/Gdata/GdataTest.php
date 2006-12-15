@@ -51,18 +51,6 @@ class Zend_Gdata_GdataTest extends PHPUnit_Framework_TestCase
         }
     }
 
-    public function testDeveloperKey()
-    {
-        $gdata = new Zend_Gdata();
-        $key = "foo";
-        $gdata->setDeveloperKey($key);
-        $this->assertEquals($key, $gdata->getDeveloperKey());
-
-        $key = "split-header\nattack";
-        $gdata->setDeveloperKey($key);
-        $this->assertEquals("split-header", $gdata->getDeveloperKey());
-    }
-
     public function testFormatTimestampFromString()
     {
         $gdata = new Zend_Gdata();

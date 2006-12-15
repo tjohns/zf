@@ -34,6 +34,17 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         $this->gdata = new Zend_Gdata_Base(new Zend_Http_Client());
     }
 
+    public function testDeveloperKey()
+    {
+        $key = "foo";
+        $this->gdata->setDeveloperKey($key);
+        $this->assertEquals($key, $this->gdata->getDeveloperKey());
+
+        $key = "split-header\nattack";
+        $this->gdata->setDeveloperKey($key);
+        $this->assertEquals("split-header", $this->gdata->getDeveloperKey());
+    }
+
     public function testQueryParam()
     {
         $this->gdata->resetParameters();
