@@ -223,6 +223,9 @@ class Zend_Search_Lucene_Index_Writer
     }
 
 
+    /**
+     * Merge segments if necessary
+     */
     private function _maybeMergeSegments()
     {
         $segmentSizes = array();
@@ -269,6 +272,14 @@ class Zend_Search_Lucene_Index_Writer
      */
     private function _mergeSegments($segments)
     {
+        // Try to get exclusive non-blocking lock to the 'index.optimization.lock'
+        // Skip optimization if it's performed by other process right now
+        $optimizationLock = $this->_directory->createFile('index.optimization.lock');
+        if (!$optimizationLock->lock(LOCK_EX,true)) {
+            return;
+        }
+//        echo "optimization started... " . microtime(true) . "\n";
+
         $newName = $this->_newSegmentName();
         $merger = new Zend_Search_Lucene_Index_SegmentMerger($this->_directory,
                                                              $newName);
@@ -283,17 +294,45 @@ class Zend_Search_Lucene_Index_Writer
         }
 
         $this->commit();
+/*
+        for ($count = 1; $count < 3; $count++) {
+            echo '.';
+            sleep(1);
+        }
+        echo "\n";
+*/
+        $optimizationLock->unlock();
+//        echo "optimization finished " . microtime(true) . "\n";
     }
 
     /**
      * Update segments file by adding current segment to a list
      *
-     * @todo !!!! locks should be processed to prevent concurrent access errors
-     *
      * @throws Zend_Search_Lucene_Exception
      */
     private function _updateSegments()
     {
+//        echo "Exclusive Index Lock...  ";
+        // Get exclusive index lock
+        // Wait, until all parallel searchers or indexers won't stop
+        // and stop all next searchers, while we are updating segments file
+        $lock = $this->_directory->getFileObject('index.lock');
+        if (!$lock->lock(LOCK_EX)) {
+            throw new Zend_Search_Lucene_Exception('Can\'t obtain exclusive index lock');
+        }
+//        echo "obtained " . microtime(true) . "\n";
+
+
+        if (count($this->_segmentsToDelete) != 0) {
+/*
+            for ($count = 1; $count < 15; $count++) {
+                echo '.';
+                sleep(1);
+            }
+            echo "\n";
+*/
+        }
+
         $segmentsFile   = $this->_directory->getFileObject('segments');
         $newSegmentFile = $this->_directory->createFile('segments.new');
 
@@ -355,6 +394,12 @@ class Zend_Search_Lucene_Index_Writer
         $this->_segmentsToDelete = array();
 
         $this->_directory->renameFile('segments.new', 'segments');
+
+//        echo "Exclusive Index Lock...  ";
+        // Switch back to shared lock mode
+        $lock->lock(LOCK_SH);
+//        echo "removed " . microtime(true) . "\n";
+
     }
 
 
@@ -411,12 +456,22 @@ class Zend_Search_Lucene_Index_Writer
     private function _newSegmentName()
     {
         $segmentsFile = $this->_directory->getFileObject('segments');
+
+        // Get exclusive segments file lock
+        // We have guarantee, that we will not intersect with _updateSegments() call
+        // of other process, because it needs exclusive index lock and waits
+        // until all other searchers won't stop
+        if (!$segmentsFile->lock(LOCK_EX)) {
+            throw new Zend_Search_Lucene_Exception('Can\'t obtain exclusive index lock');
+        }
+
         $segmentsFile->seek(12); // 12 = 4 (int, file format marker) + 8 (long, index version)
         $segmentNameCounter = $segmentsFile->readInt();
 
         $segmentsFile->seek(12); // 12 = 4 (int, file format marker) + 8 (long, index version)
         $segmentsFile->writeInt($segmentNameCounter + 1);
 
+        $segmentsFile->unlock();
 
         return '_' . base_convert($segmentNameCounter, 10, 36);
     }

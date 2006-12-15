@@ -117,6 +117,13 @@ class Zend_Search_Lucene
 
 
     /**
+     * Index lock object
+     *
+     * @var Zend_Search_Lucene_Storage_File
+     */
+    private $_lock;
+
+    /**
      * Opens the index.
      *
      * IndexReader constructor needs Directory as a parameter. It should be
@@ -138,6 +145,16 @@ class Zend_Search_Lucene
             $this->_directory      = new Zend_Search_Lucene_Storage_Directory_Filesystem($directory);
             $this->_closeDirOnExit = true;
         }
+
+
+//        echo "Shared lock.... " . microtime(true) . " ";
+        // Get shared lock to the index
+        // Wait if index is under switching from one set of segments to another (Index_Writer::_updateSegments())
+        $this->_lock = $this->_directory->createFile('index.lock');
+        if (!$this->_lock->lock(LOCK_SH)) {
+            throw new Zend_Search_Lucene_Exception('Can\'t obtain shared index lock');
+        }
+//        echo "OK \n";
 
         $this->_segmentInfos = array();
 
@@ -185,6 +202,13 @@ class Zend_Search_Lucene
     public function __destruct()
     {
         $this->commit();
+
+//        echo "Shared lock...... " . microtime(true) . " ";
+        // Free shared lock
+        $this->_lock->unlock();
+//        echo "removed\n";
+
+
 
         if ($this->_closeDirOnExit) {
             $this->_directory->close();
@@ -831,8 +855,15 @@ class Zend_Search_Lucene
         $this->commit();
 
         if (count($this->_segmentInfos) > 1 || $this->hasDeletions()) {
-            $this->getIndexWriter()->optimize();
-            $this->_updateDocCount();
+            // Try to get exclusive non-blocking lock to the 'index.optimization.lock'
+            // Skip optimization if it's performed by other process right now
+            $optimizationLock = $this->_directory->createFile('index.optimization.lock');
+            if ($optimizationLock->lock(LOCK_EX,true)) {
+                $this->getIndexWriter()->optimize();
+                $this->_updateDocCount();
+
+                $optimizationLock->unlock();
+            }
         }
     }
 
