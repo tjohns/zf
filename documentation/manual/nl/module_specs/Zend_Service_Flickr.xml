@@ -78,8 +78,10 @@ foreach ($results as $result) {
     </sect2>
     <sect2 id="zend.service.flickr.getimagedetails">
         <title>Flickr beelddetails opvragen</title>
-        <code>Zend_Service_Flickr</code> maakt het snel en eenvoudig om details van een beeld te verkrijgen via zijn ID.
-        Gebruik gewoon de <code>getImageDetails()</code> methode zoals in het volgende voorbeeld:
+        <para>
+            <code>Zend_Service_Flickr</code> maakt het snel en eenvoudig om details van een beeld te verkrijgen via zijn ID.
+            Gebruik gewoon de <code>getImageDetails()</code> methode zoals in het volgende voorbeeld:
+        </para>
         <example>
             <title>Flickr beelddetails verkrijgen</title>
             <para>
@@ -164,10 +166,10 @@ echo "<a href=\"$image->clickUri\">Klik hier voor het beeld</a>\n";
             <para>
                 Geeft het totaal aantal resultaten in deze set resultaten terug.
             </para>
+            <para>
+                <link linkend="zend.service.flickr.classes">Terug naar de klasselijst</link>
+            </para>
         </sect4>
-        <para>
-            <link linkend="zend.service.flickr.classes">Terug naar de klasselijst</link>
-        </para>
     </sect3>
     <sect3 id="zend.service.flickr.classes.result">
         <title>Zend_Service_Flickr_Result</title>

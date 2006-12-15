@@ -122,7 +122,9 @@ $item = $amazon->itemLookup('B0000A432X');
             <ulink
                 url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemLookupOperation">relevante Amazon documentatie</ulink>.
 		<note>
-			Om informatie over de beelden te verkrijgen voor je zoekresultaten, moet je de optie <code>ResponseGroup</code> tot <code>Medium</code> of <code>Large</code> zetten.
+		    <para>
+    			Om informatie over de beelden te verkrijgen voor je zoekresultaten, moet je de optie <code>ResponseGroup</code> tot <code>Medium</code> of <code>Large</code> zetten.
+			</para>
 		</note>
         </para>
     </sect2>
@@ -530,8 +532,9 @@ foreach ($results as $result) {
             object.
         </para>
         <sect4 id="zend.service.amazon.classes.offer.properties">
+            <title>Zend_Service_Amazon_Offer Eigenschappen</title>
             <table>
-                <title>Zend_Service_Amazon_Offer Eigenschappen</title>
+                <title>Eigenschappen</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
