@@ -507,6 +507,31 @@ $controller->run();
 
         <programlisting role="php"><![CDATA[
     /**
+     * @param string $name Header Name
+     * @param string $value Header Wert
+     * @param boolean $replace Ob Header mit den selben Namen, die bereits im Objekt registriert
+     * sind, ersetzt werden sollen oder nicht
+     * @return self
+     */
+    public function setHeader($name, $value, $replace = false);
+
+    /**
+     * @return array
+     */
+    public function getHeaders();
+
+    /**
+     * @return void
+     */
+    public function clearHeaders();
+
+    /**
+     * Versende alle Header
+     * @return void
+     */
+    public function sendHeaders();
+
+    /**
      * @param string $content
      * @return self
      */
@@ -522,6 +547,12 @@ $controller->run();
      * @return string
      */
     public function getBody();
+
+    /**
+     * Gibt Hauptteilinhalte aus
+     * @return void
+     */
+    public function outputBody();
 
     /**
      * @param Exception $e 
@@ -554,15 +585,17 @@ $controller->run();
         <para>
             <code>setBody()</code> ersetzt den kompletten Inhaltsteil; wir empfehlen die Verwendung
             von <code>appendBody()</code> stattdessen. <code>__toString()</code> gibt alle Inhalte
-            aus.
+            aus und sendet alle Header.
         </para>
 
         <para>
             Das Response Objekt ist auch der Ort, in dem Ausnahmen aus dem Action Controller 
-            schlußendlich aufgefangen und registriert werden. <code>isException()</code> sollte
-            einen booleschen Wert zurückgeben und angeben, ob eine Ausnahme aufgetreten ist.
-            <code>renderExceptions()</code> sollte verwendet werden, um anzugeben, ob 
-            <code>__toString()</code> die Ausnahmen ausgeben soll, wenn welche gefangen werden.
+            schlußendlich aufgefangen und registriert werden (solange
+            <code>Zend_Controller_Front::throwExceptions()</code> aktiviert wurde). 
+            <code>isException()</code> sollte einen booleschen Wert zurückgeben und angeben, ob 
+            eine Ausnahme aufgetreten ist. <code>renderExceptions()</code> sollte verwendet werden, 
+            um anzugeben, ob  <code>__toString()</code> die Ausnahmen ausgeben soll, wenn welche 
+            gefangen werden.
         </para>
     </sect2>
 

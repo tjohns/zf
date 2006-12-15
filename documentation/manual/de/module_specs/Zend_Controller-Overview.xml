@@ -406,8 +406,14 @@ public function myAction()
 		    Das Response Objekt ist das logische Gegenstück zum Request Objekt. Sein Zweck ist es, 
 		    Inhalte und / oder Header zu vereinigen, um sie in einem Rutsch zu versenden. 
 		    Zusätzlich übergibt der Front Controller alle aufgefangenen Ausnahmen an das Response
-		    Objekt, um dem Entwickler das Verarbeiten von Ausnahmen zu ermöglichen.
+		    Objekt, um dem Entwickler das Verarbeiten von Ausnahmen zu ermöglichen. Dies 
+		    Funktionalität kann durch Setzen von 
+		    <code>Zend_Controller_Front::throwExceptions(true)</code> überschrieben werden.
         </para>
+
+        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
 
         <para>
             Da das Response Objekt <code>__toString()</code> implementiert, kann es einfach 
@@ -415,7 +421,11 @@ public function myAction()
         </para>
 
         <programlisting role="php"><![CDATA[
-echo $controller->dispatch();
+echo $controller->getResponse();
+
+// or
+$response = $controller->getResponse();
+echo $response;
 ]]></programlisting>
         
         <para>
@@ -445,9 +455,49 @@ $this->getResponse()
         </para>
 
         <para>
-            Stanardmäßig werden Ausnahmennachrichten nicht ausgegeben. Dieses Verhalten kann durch 
-            den Aufruf von <code>renderException()</code> überschrieben werden. 
+            Man kann das Response Objekt im Anschluß an die dispatch() Methode des Front Controllers
+            erhalten oder den Front Controller auffordern, dass Response Objekt zurückzugeben
+            statt den Inhalt auszugeben.
         </para>
+
+        <programlisting role="php"><![CDATA[
+// Erhalten nach dem Dispatch:
+$front->dispatch();
+$response = $front->getResponse();
+if ($response->isException()) {
+    // log, mail, etc...
+}
+
+// Oder den Front Controller dispatch Prozess auffordern, es zurück zu geben
+$front->returnResponse(true);
+$response = $front->dispatch();
+
+// mache irgend was...
+
+// zum Schluß, gebe die Antwort aus
+echo $response;
+]]></programlisting>
+
+        <para>
+            Standardmäßig werden Ausnahmennachrichten nicht ausgegeben. Dieses Verhalten kann durch 
+            den Aufruf von <code>renderException()</code> überschrieben werden oder indem der 
+            Front Controller aufgefordert wird, die Exceptions durch throwExceptions() auszuwerfen,
+            wie oben gezeigt: 
+        </para>
+        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->dispatch($request, $response);
+
+// oder:
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions();
+echo $response;
+
+// oder:
+$front->throwExceptions(true);
+$front->dispatch();
+]]></programlisting>
 	</sect2>
 </sect1>
 
