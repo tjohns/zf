@@ -19,9 +19,7 @@
 
             <para>
                 <code>Zend_Controller_Request_Http</code> は、HTTP
-                環境で使用するリクエストオブジェクトです。これは
-                <code>Zend_Controller_Request_Abstract</code> を拡張したもので、
-                さらに <code>Zend_Http_Request</code> オブジェクトのプロキシでもあります。
+                環境で使用するリクエストオブジェクトです
                 <code>Zend_Controller_Request_Http</code> はデフォルトのリクエストクラスであり、
                 <code>Zend_Controller_Dispatcher</code> で用いられます。
             </para>
@@ -34,7 +32,7 @@
                 <code>Zend_Controller_Request_Http</code> は、関連する値へのアクセスをカプセル化します。
                 たとえばコントローラやアクションルータの変数のキー名や値、
                 URI からパースした追加のパラメータの値などにアクセスできます。
-                <code>Zend_Http_Request</code> のプロキシとして動作することで、
+                <code>Zend_Controller_Request_Http</code> のプロキシとして動作することで、
                 スーパーグローバルの値にパブリックメンバとしてアクセスしたり、
                 現在のベース URL やリクエスト URI を管理することもできます。
                 スーパーグローバルの値はリクエストオブジェクトに設定することはできません。
@@ -66,10 +64,10 @@
             <title>ベース URL およびサブディレクトリ</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> は
-                <code>Zend_Http_Request</code> のプロキシとして動作するので、
-                Zend_Controller_RewriteBase を使用してサブディレクトリを扱うことができます。
-                Zend_Http_Request は、自動的にベース URL を検出し、それを適切に設定します。
+                <code>Zend_Controller_Request_Http</code> は、
+                サブディレクトリで Zend_Controller_RewriteRouter を使用することができます。
+                Zend_Controller_Request_Http は自動的にベース URL を検出し、
+                それを適切に設定します。
             </para>
 
             <para>
@@ -95,7 +93,6 @@
 
             <para>
                 ベース URL の検出に失敗する場合は、
-                <code>Zend_Http_Request</code> クラスか
                 <code>Zend_Controller_Request_Http</code> クラス、あるいは
                 <code>Zend_Controller_Front</code> クラスの
                 <code>setBaseUrl()</code> メソッドを使用して
@@ -171,7 +168,7 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
                 <para>
                     IIS を使用すると、<code>$_SERVER['REQUEST_URI']</code>
                     が存在しないか空の文字列に設定されます。このような場合、
-                    <code>Zend_Http_Request</code> は
+                    <code>Zend_Controller_Request_Http</code> は
                     <code>$_SERVER['HTTP_X_REWRITE_URL']</code> の値を使用します。これは
                     Isapi_Rewrite 拡張モジュールが設定します。
                 </para>
@@ -373,12 +370,12 @@ $router->addRoute(
                 もとのルータとは異なり、現在の RewriteRouter はサブディレクトリ内でも使用可能です。
                 もとのルータの setRewriteBase() メソッドは、現在は使用できなくなっています。
                 そのかわりに、ベース URL の自動検出が Zend_Controller_Request_Http
-                (Zend_Http_Request のプロキシとして動作します) によって行われます。
+                によって行われます。
             </para>
 
             <para>
                 ベース URL の検出に失敗する場合は、
-                Zend_Http_Request のメソッド setBaseUrl()
+                Zend_Controller_Request_Http のメソッド setBaseUrl()
                 を使用してベースパスを上書き指定することができます
                 (<xref linkend="zend.controller.providedsubclasses.request.http.baseurl" /> を参照ください)。
             </para>
@@ -406,15 +403,87 @@ $this->addRoute('default', $compat);]]></programlisting>
                     Zend_Controller_RewriteRouter は、過去との互換性を考慮して設定されています。
                     <code>controller/action</code> 形式の URI
                     にパラメータが付加されたパターンにも自動的にマッチします。
-                    The additional parameters do not
-                    require the addition of new routes unless they must have default values
-                    or variable requirements. 
+                    デフォルト値や必須値を持っている限り、
+                    パラメータを付加したからといって新しいルートを追加する必要はありません。
                     これらの追加パラメータにアクセスするには
                     Zend_Controller_Action::_getParam メソッドを使用します。
                 </para>
             </note>
 
+            <para>
+                デフォルトのルートを使用したくない場合は、
+                <code>removeDefaultRoutes()</code> で削除します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// 互換性のためのデフォルトルートを削除します
+$router->removeDefaultRoutes();]]></programlisting>
+
         </sect3>    
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.static-routes">
+            <title>静的なルート</title>
+
+            <para>
+                これまでの例では、すべて動的なルートを使用していました。
+                つまり、特定のパターンにマッチするものについてのルートです。
+                しかし、時には特定のルートを固定してしまい、
+                わざわざ正規表現エンジンを動かしたくない場合もあるでしょう。
+                そんなときには静的なルートを使用します。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$loginRoute = new Zend_Controller_Router_StaticRoute('login', array('controller' => 'login', 'action' => 'form'));
+$router->addRoute('login', $static);
+]]></programlisting>
+        </sect3>
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.add-config">
+            <title>RewriteRouter での Zend_Config の使用法</title>
+
+            <para>
+                新しいルートを追加する際に、
+                いちいちコードを書き換えるのではなく設定ファイルの変更で対応できると便利でしょう。
+                そんなときには <code>addConfig()</code> メソッドを使用します。基本的な使用法は、
+                まず Zend_Config 互換の設定を作成し、それをコードに読み込み、
+                そして RewriteRouter に渡すことです。
+            </para>
+
+            <programlisting role="php"><![CDATA[
+/**
+ * サンプルの INI ファイル
+ * routes.archive.route = "archive/:year/*"
+ * routes.archive.defaults.controller = archive
+ * routes.archive.defaults.action = show
+ * routes.archive.defaults.year = 2000
+ * routes.archive.reqs.year = "\d+"
+ * 
+ * routes.news.type = "Zend_Controller_Router_StaticRoute"
+ * routes.news.route = "news"
+ * routes.news.defaults.controller = "news"
+ * routes.news.defaults.action = "list"
+ */
+$config = new Zend_Config_Ini($file);
+$router = new Zend_Controller_RewriteRouter();
+$router->addConfig($config, 'routes');
+]]></programlisting>
+
+            <para>
+                上の例では、INI ファイルの 'routes' セクションを使用してルートを決めるよう、
+                ルータに指定しています。このセクションの第一レベルのキーがルート名に対応します。
+                上の例だと 'archive' と 'news' がこれにあたります。
+                ルートの各エントリには、最低限 'route' エントリとひとつ以上の 'defaults'
+                エントリが必要となります。また、オプションでひとつ以上の 'reqs'
+                ('required' の略) も指定できます。ここで指定したものが、それぞれ
+                <code>Zend_Controller_Router_Route_Interface</code>
+                オブジェクトに対する引数となります。オプションのキー 'type' を使用すると、
+                特定のルートで使用するルートクラスの型を指定できます。デフォルトでは、これは
+                <code>Zend_Controller_Router_Route</code> となります。上の例では、
+                'news' ルートで
+                <code>Zend_Controller_Router_StaticRoute</code>
+                を使用するようにしています。
+            </para>
+        </sect3>
     
     </sect2>
 
