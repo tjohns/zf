@@ -45,23 +45,22 @@
         &module_specs.Zend_Acl_Advanced;
     </chapter>
 
-    <!--
     <chapter id="zend.auth">
         <title>Zend_Auth</title>
         &module_specs.Zend_Auth;
+        &module_specs.Zend_Auth_Digest;
     </chapter>
-    -->
 
     <chapter id="zend.cache">
         <title>Zend_Cache</title>
         &module_specs.Zend_Cache_Backend_ZendPlatform;
-    </chapter>	
+    </chapter>
 
     <!--
     <chapter id="zend.console">
         <title>Zend_Console_Getopt</title>
         &module_specs.Zend_Console_Getopt;
-    </chapter>	
+    </chapter>
     -->
 
     <chapter id="zend.date">
@@ -87,14 +86,14 @@
     <chapter id="zend.http.server">
         <title>Zend_Http_Server</title>
         &module_specs.Zend_Http_Server;
-    </chapter>	
+    </chapter>
     -->
 
     <!--
     <chapter id="zend.json.server">
         <title>Zend_Json_Server</title>
         &module_specs.Zend_Json_Server;
-    </chapter>	
+    </chapter>
     -->
 
     <chapter id="zend.locale">
