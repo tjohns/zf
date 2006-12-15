@@ -2,19 +2,19 @@
     <title>Zend_Http_Response</title>
 
     <sect2 id="zend.http.response.introduction">
-        <title>Introduction</title>
+        <title>Einführung</title>
         <para>
-            Zend_Http_Response provides easy access to an HTTP responses 
-            message, as well as a set of static methods for parsing HTTP 
-            response messages. Usually, Zend_Http_Response is used as an object
-            returned by a Zend_Http_Client request.
+            Zend_Http_Response stellt den einfachen Zugriff auf eine HTTP Rückantwort sowie einige
+            statische Methoden zum Analysieren der HTTP Rückantworten bereit. Normalerweise wird
+            Zend_Http_Response als ein Objekt verwendet, dass von einer Zend_Http_Client Anfrage
+            zurückgegeben wurde.
         </para>
         <para>
-            In most cases, a Zend_Http_Response object will be instantiated
-            using the factory() method, which reads a string containing an HTTP
-            response message, and returns a new Zend_Http_Response object:
+            In den meisten Fällen wird ein Zend_Http_Response Objekt über die factory() Methode
+            instanziert, die einen String liest, der eine HTTP Rückantwort enthält und ein 
+            Zend_Http_Response Objekt zurückgibt. 
             <example>
-                <title>Instantiating a Zend_Http_Response object using the factory method</title>
+                <title>Ein Zend_Http_Response Object über die factory Methode instanzieren</title>
                 <programlisting role="php"><![CDATA[<?php
 $str = '';
 $sock = fsockopen('www.example.com', 80);
@@ -32,8 +32,8 @@ $response = Zend_Http_Response::factory($str);
             </example>
         </para>
         <para>
-            You can also use the contractor method to create a new response
-            object, by specifying all the parameters of the response:
+            Man kann auch die Konstruktormethode verwenden, um ein neues Response Objekt zu 
+            erstellen, indem man alle Parameter für die Antwort angibt:
         </para>
         <para>
             <code>
@@ -43,127 +43,133 @@ $response = Zend_Http_Response::factory($str);
         <itemizedlist>
             <listitem>
                 <para>
-                    <code>$code</code>: The HTTP response code (eg. 200, 404, etc.)
+                    <code>$code</code>: Der HTTP Antwortcode(eg. 200, 404, etc.)
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>$headers</code>: An associative array of HTTP response headers (eg. 'Host' => 'example.com')
+                    <code>$headers</code>: Ein assoziatives Array mit HTTP Antwort Headers (z.B. 'Host' => 'example.com')
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>$body</code>: The response body as a string
+                    <code>$body</code>: Der Hauptteil der Antwort als String
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>$version</code>: The HTTP response version (usually 1.0 or 1.1)
+                    <code>$version</code>: Der Version der HTTP Antwort (normalerweise 1.0 oder 1.1)
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <code>$message</code>: The HTTP response message (eg 'OK', 'Internal Server Error'). 
-                    If not specified, the message will be set according to the response code
+                    <code>$message</code>: Die HTTP Rückantwort (z.B. 'OK', 'Internal Server Error'). 
+                    Falls nicht angegeben, wird die Rückantwort anhand des Antwortcode gesetzt.
                 </para>
             </listitem>      
         </itemizedlist>
     </sect2>
     <sect2 id="zend.http.response.testers">
-        <title>Boolean Tester Methods</title>
+        <title>Boolesche Testmethoden</title>
         <para>
-            Once a Zend_Http_Response object is instantiated, it provides several
-            methods that can be used to test the type of the response. These all
-            return Boolean true or false:
+            Sobald ein Zend_Http_Response Objekt instantiert ist, stellt es mehrere Methoden bereit,
+            die zum Testen des Typs der Antwort verwendet werden können. Diese geben alle ein
+            boolesches true oder false zurück:
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>Boolean isSuccessful()</code>: Whether the request was successful or not. Returns
-                        TRUE for HTTP 1xx and 2xx response codes
+                        <code>Boolean isSuccessful()</code>: Ob die Anfrage erfolgreoch war oder 
+                        nicht. Gibt TRUE für HTTP 1xx und 2xx Antwortcodes zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Boolean isError()</code>: Whether the response code implies an error or not. Returns
-                        TRUE for HTTP 4xx (client errors) and 5xx (server errors) response codes
+                        <code>Boolean isError()</code>: Ob der Antwortcode auf einen Fehler 
+                        rückschließen lässt oder nicht. Gibt TRUE für HTTP 4xx (Client Fehler) und 
+                        5xx (Server Fehler) Antwortcodes zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>Boolean isRedirect()</code>: Whether the response is a redirection response or not. Returns
-                        TRUE for HTTP 3xx response codes
+                        <code>Boolean isRedirect()</code>: Ob die Antwort eine Weiterleitung ist
+                        oder nicht. Gibt TRUE für HTTP 3xx Antwortcodes zurück.
                     </para>
                 </listitem>
             </itemizedlist>
             <example>
-                <title>Using the isError() method to validate a response</title>
+                <title>Die isError() Method verwenden, um eine Antwort zu validieren</title>
                 <programlisting role="php"><![CDATA[<?php
 if ($response->isError()) {
   echo "Error transmitting data.\n"
   echo "Server reply was: " . $response->getStatus() . " " . $response->getMessage() . "\n";
 }
-// .. process the response here...
+// .. verarbeite die Antwort hier...
 ?>]]></programlisting>
             </example>
         </para>
     </sect2>
     <sect2 id="zend.http.response.acessors">
-        <title>Accessor Methods</title>
+        <title>Zugriffsmethoden</title>
         <para>
-            The main goal of the response object is to provide easy access to
-            various response parameters. 
+            Der Hauptzweck eines Response Okjektes ist der einfache Zugriff auf diverse 
+            Antwortparameter. 
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>int getStatus()</code>: Get the HTTP response status code (eg. 200, 504, etc.)
+                        <code>int getStatus()</code>: Erhalte den HTTP Antwortstatuscode (z.B. 
+                        200, 504, etc.) zurück
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string getMessage()</code>: Get the HTTP response status message (eg. "Not Found",
-                        "Authorization Required")
+                        <code>string getMessage()</code>: Erhalte die HTTP Antwortstatus Meldung 
+                        (z.B. "Not Found", "Authorization Required") zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string getBody()</code>: Get the fully decoded HTTP response body
+                        <code>string getBody()</code>: Erhalte den kompletten dekodierten Hauptteil 
+                        der HTTP Antwort zurück
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string getRawBody()</code>: Get the raw, possibly encoded HTTP response body. If
-                        the body was decoded using GZIP encoding for example, it will not be decoded.
+                        <code>string getRawBody()</code>: Erhalte die rohen, möglicherweise 
+                        kodierten Hauptteil der HTTP Antwort zurück. Wenn der Hauptteil z.B. mittels
+                        GZIP kodiert wurde, wird er nicht dekodiert.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>array getHeaders()</code>: Get the HTTP response headers as an associative array
-                        (eg. 'Content-type' => 'text/html')
+                        <code>array getHeaders()</code>: Erhalte die HTTP Antwort Header als 
+                        assoziatives Array (z.B. 'Content-type' => 'text/html') zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string|array getHeader($header)</code>: Get a specific HTTP response header, specified 
-                        by $header
+                        <code>string|array getHeader($header)</code>: Erhalte einen spezifischen 
+                        HTTP Antwort Header zurück, der durch $header angegeben wird.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string getHeadersAsString($status_line = true, $br = "\n")</code>: Get the entire
-                        set of headers as a string. If $status_line is true (default), the first status
-                        line (eg. "HTTP/1.1 200 OK") will also be returned. Lines are broken with the
-                        $br parameter (Can be, for example, "&lt;br /&gt;")
+                        <code>string getHeadersAsString($status_line = true, $br = "\n")</code>: 
+                        Erhalte den kompletten Header Satz als String zurück. Wenn $status_line 
+                        auf true gesetzt ist (Standardwert), wird die erste Statuszeile (z.B. 
+                        "HTTP/1.1 200 OK") ebenfalls zurück gegeben. Die Zeilen werden durch den
+                        $br Parameter umgebrochen (kann z.B. "&lt;br /&gt;" sein).
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string asString($br = "\n")</code>: Get the entire response message as a string.
-                        Lines are broken with the $br parameter (Can be, for example, "&lt;br /&gt;")
+                        <code>string asString($br = "\n")</code>: Erhalte die komplette Rückantwort 
+                        als String zurück. Die Zeilen werden durch den $br Parameter umgebrochen 
+                        (kann z.B. "&lt;br /&gt;" sein).
                     </para>
                 </listitem>
             </itemizedlist>
             <example>
-                <title>Using Zend_Http_Response Accessor Methods</title>
+                <title>Zend_Http_Response Zugriffsmethoden verwenden</title>
                 <programlisting role="php"><![CDATA[<?php
 if ($response->getStatus() == 200) {
   echo "The request returned the following information:<br />";
@@ -175,16 +181,16 @@ if ($response->getStatus() == 200) {
 ?>]]></programlisting>
             </example>
             <note>
-                <title>Always check return value</title>
+                <title>Immer die Rückgabewerte prüfen</title>
                 <para>
-                    Since a response can contain several instances of the same header,
-                    the getHeader() method and getHeaders() method may return either a
-                    single string, or an array of strings for each header. You should
-                    always check whether the returned value is a string or array.
+                	Weil eine Antwort mehrere Instanzen des selben Headers beinhalten kann, können
+                	die getHeader() Methode und getHeaders() Methode entweder einen einzelnen String
+                	oder ein Array mit Strings für jeden Header zurückgeben. Man sollte immer 
+                	prüfen, ob der Rückgabewert ein String oder ein Array ist.
                 </para>
             </note>
             <example>
-                <title>Accessing Response Headers</title>
+                <title>Auf Antwort Header zugreifen</title>
                 <programlisting role="php"><![CDATA[<?php
 $ctype = $response->getHeader('Content-type');
 if (is_array($ctype)) $ctype = $ctype[0];
@@ -201,74 +207,79 @@ echo $body;
     </sect2>
     
     <sect2 id="zend.http.response.static_parsers">
-        <title>Static HTTP Response Parsers</title>
+        <title>Statische HTTP Antwortanalysierer</title>
         <para>
-            The Zend_Http_Response class also includes several internally-used 
-            methods for processing and parsing HTTP response messages. These 
-            methods are all exposed as static methods, which means they can be
-            used externally, even if you do not need to instantiate a response
-            object, and just want to extract a specific part of the response.
+        	Die Zend_Http_Response Klasse beinhaltet auch verschiedene, intern verwendete Methoden
+        	für die Verarbeitung und Analyse der HTTP Rückantworten bereit. Diese Methoden sind 
+        	alle als statische Methoden eingerichtet, so dass man sie extern verwenden kann, ohne 
+        	dass man ein Response Objekt instanzierebn muss und nur einen bestimmten Teil der
+        	Antwort extrahieren möchte.
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>int Zend_Http_Response::extractCode($response_str)</code>: Extract 
-                        and return the HTTP response code (eg. 200 or 404) from $response_str
+                        <code>int Zend_Http_Response::extractCode($response_str)</code>: Extrahiere 
+                        den HTTP Antwortcode (z.B. 200 oder 404) von $response_str und gebe ihn 
+                        zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::extractMessage($response_str)</code>: Extract 
-                        and return the HTTP response message (eg. "OK" or "File Not Found") from $response_str
+                        <code>string Zend_Http_Response::extractMessage($response_str)</code>: 
+                        Extrahiere die HTTP Rückantwort (z.B. "OK" oder "File Not Found") von 
+                        $response_str und gebe sie zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::extractVersion($response_str)</code>: : Extract 
-                        and return the HTTP version (eg. 1.1 or 1.0) from $response_str
+                        <code>string Zend_Http_Response::extractVersion($response_str)</code>: : 
+                        Extrahiere die HTTP Version (z.B. 1.1 oder 1.0) von $response_str und gebe
+                        sie zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>array Zend_Http_Response::extractHeaders($response_str)</code>: Extract 
-                        and return the HTTP response headers from $response_str as an array
+                        <code>array Zend_Http_Response::extractHeaders($response_str)</code>: 
+                        Extrahiere die HTTP Antwort Header von response_str und gebe sie in einem
+                        Array zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::extractBody($response_str)</code>: Extract 
-                        and return the HTTP response body from $response_str
+                        <code>string Zend_Http_Response::extractBody($response_str)</code>: 
+                        Extrahiere den HTTP Antworthauptteil aus $response_str und gebe ihn zurück.
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::responseCodeAsText($code, $http11 = true)</code>: Get
-                        the standard HTTP response message for a response code $code. For example, 
-                        will return "Internal Server Error" if $code is 500. If $http11 is true (default),
-                        will return HTTP/1.1 standard messages - otherwise HTTP/1.0 messages will be returned.
+                        <code>string Zend_Http_Response::responseCodeAsText($code, $http11 = true)</code>: 
+                        Erhalte die Standard HTTP Rückantwort für einen Antwortcode code. Zum 
+                        Beispiel wird "Internal Server Error" zurückgegeben, wenn $code gleich 500 
+                        ist. Wenn $http11 gleich true ist (Standard), werden die HTTP/1.1 
+                        Standardantworten zurück gegeben, andernfalls die HTTP/1.0 Antworten.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
         <para>
-            Apart from parser methods, the class also includes a set of decoders for common HTTP 
-            response transfer encodings:
+            Neben der Analysemethoden beinhaltet die Klasse auch einen Satz von Dekodieren für
+            allgemein HTTP Antwort Transferkodierungen:
             <itemizedlist>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::decodeChunkedBody($body)</code>: Decode
-                        a complete "Content-Transfer-Encoding: Chunked" body
+                        <code>string Zend_Http_Response::decodeChunkedBody($body)</code>: Dekodiere
+                        einen kompletten "Content-Transfer-Encoding: Chunked" Hauptteil
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::decodeGzip($body)</code>: Decode
-                        a "Content-Encoding: gzip" body
+                        <code>string Zend_Http_Response::decodeGzip($body)</code>: Dekodiere
+                        einen "Content-Encoding: gzip" Hauptteil
                     </para>
                 </listitem>
                 <listitem>
                     <para>
-                        <code>string Zend_Http_Response::decodeDeflate($body)</code>: Decode 
-                        a "Content-Encoding: deflate" body
+                        <code>string Zend_Http_Response::decodeDeflate($body)</code>: Dekodiere 
+                        einen "Content-Encoding: deflate" Hauptteil
                     </para>
                 </listitem>
             </itemizedlist>
