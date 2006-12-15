@@ -1448,7 +1448,7 @@ class Zend_Date {
 
             // year formats
             case Zend_Date::LEAPYEAR :
-                throw Zend::exception('Zend_Date_Exception', 'month days not supported');
+                throw Zend::exception('Zend_Date_Exception', 'leap year not supported');
                 break;
 
             case Zend_Date::YEAR_8601 :
@@ -1501,62 +1501,69 @@ class Zend_Date {
 
             // time formats
             case Zend_Date::MERIDIEM :
-                $meridiemlist = Zend_Locale_Data::getContent($locale, 'daytime', 'gregorian');
-                $meridiem = strtoupper($this->get(Zend_Date::MERIDIEM, $gmt, $locale));
-
-                if (($meridiem == strtoupper($meridiemlist['am'])) && 
-                    (strtoupper($date) == strtoupper($meridiemlist['pm']))) {
-                    $date = 12;
-                } else if (($meridiem == strtoupper($meridiemlist['pm'])) && 
-                           (strtoupper($date) == strtoupper($meridiemlist['am']))) {
-                    $date = -12;
-                }
-                
-                if ($hour > 12)
-                    $hour = -12;
-                    
-                return $this->_assign($calc, $this->_Date->mktime($date, 0, 0, 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime($hour, 0, 0, 1, 1, 0, -1, $gmt));
+                throw Zend::exception('Zend_Date_Exception', 'day suffix not supported');
                 break;
 
             case Zend_Date::SWATCH :
-                $rest = intval($date);
-                $hours = floor($rest / 3600);
-                $rest = $rest - ($hours * 3600);
-                $minutes = floor($rest / 60);
-                $seconds = $rest - ($minutes * 60); 
-                return $this->_assign($calc, $this->_Date->mktime($hours, $minutes, $seconds, 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime($hour,  $minute,  $second,  1, 1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    $rest = intval($date);
+                    $hours = floor($rest * 24 / 1000);
+                    $rest = $rest - ($hours * 1000 / 24);
+                    $minutes = floor($rest * 1440 / 1000);
+                    $rest = $rest - ($minutes * 1000 / 1440);
+                    $seconds = floor($rest * 86400 / 1000); 
+                    return $this->_assign($calc, $this->_Date->mktime($hours, $minutes, $seconds, 1, 1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime($hour,  $minute,  $second,  1, 1, 1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'swatchstamp expected');
                 break;
 
             case Zend_Date::HOUR_SHORT_AM :
-                return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime($hour,         0, 0, 1, 1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime($hour,         0, 0, 1, 1, 1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'hour expected');
                 break;
 
             case Zend_Date::HOUR_SHORT :
-                return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime($hour,         0, 0, 1, 1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime($hour,         0, 0, 1, 1, 1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'hour expected');
                 break;
 
             case Zend_Date::HOUR_AM :
-                return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime($hour,         0, 0, 1, 1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime($hour,         0, 0, 1, 1, 1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'hour expected');
                 break;
 
             case Zend_Date::HOUR :
-                return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime($hour,         0, 0, 1, 1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(intval($date), 0, 0, 1, 1, 1970, -1, $gmt),
+                                                 $this->_Date->mktime($hour,         0, 0, 1, 1, 1970, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'hour expected');
                 break;
 
             case Zend_Date::MINUTE :
-                return $this->_assign($calc, $this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime(0, $minute,       0, 1, 1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt),
+                                                 $this->_Date->mktime(0, $minute,       0, 1, 1, 0, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'minute expected');
                 break;
 
             case Zend_Date::SECOND :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, $second,       1, 1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, $second,       1, 1, 0, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'second expected');
                 break;
 
             case Zend_Date::MILLISECOND :
@@ -1575,13 +1582,19 @@ class Zend_Date {
                 break;
 
             case Zend_Date::MINUTE_SHORT :
-                return $this->_assign($calc, $this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime(0, $minute,       0, 1, 1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, intval($date), 0, 1, 1, 0, -1, $gmt),
+                                                 $this->_Date->mktime(0, $minute,       0, 1, 1, 0, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'minute expected');
                 break;
 
             case Zend_Date::SECOND_SHORT :
-                return $this->_assign($calc, $this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt),
-                                             $this->_Date->mktime(0, 0, $second,       1, 1, 0, -1, $gmt));
+                if (is_numeric($date)) {
+                    return $this->_assign($calc, $this->_Date->mktime(0, 0, intval($date), 1, 1, 0, -1, $gmt),
+                                                 $this->_Date->mktime(0, 0, $second,       1, 1, 0, -1, $gmt));
+                }
+                throw Zend::exception('Zend_Date_Exception', 'second expected');
                 break;
 
 
