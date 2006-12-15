@@ -522,6 +522,31 @@ $controller->run();
 
         <programlisting role="php"><![CDATA[
     /**
+     * @param string $name Nazwa nagłówka
+     * @param string $value Wartość nagłówka
+     * @param boolean $replace Określa czy nagłówki o nazwie takiej samej jak 
+     * zarejestrowane mają być zastępowane
+     * @return self
+     */
+    public function setHeader($name, $value, $replace = false);
+
+    /**
+     * @return array
+     */
+    public function getHeaders();
+
+    /**
+     * @return void
+     */
+    public function clearHeaders();
+
+    /**
+     * Sends all headers
+     * @return void
+     */
+    public function sendHeaders();
+
+    /**
      * @param string $content
      * @return self
      */
@@ -537,6 +562,12 @@ $controller->run();
      * @return string
      */
     public function getBody();
+
+    /**
+     * echoes body content
+     * @return void
+     */
+    public function outputBody();
 
     /**
      * @param Exception $e 
@@ -569,12 +600,15 @@ $controller->run();
         <para>
             Metoda <code>setBody()</code> zastąpi całość zawartości strony; 
             zalecamy używanie zamiast niej metody <code>appendBody()</code>. 
-            Metoda <code>__toString()</code> powinna renderować całą zawartość.
+            Metoda <code>__toString()</code> powinna renderować całą zawartość
+            i wysyłać wszystkie nagłówki.
         </para>
 
         <para>
             Obiekt odpowiedzi jest także miejscem w którym wyjątki kontrolera 
-            akcji są ostatecznie wyłapywane i rejestrowane. Metoda 
+            akcji są ostatecznie wyłapywane i rejestrowane (o ile zostało
+            to włączone za pomocą 
+            <code>Zend_Controller_Front::throwExceptions()</code>). Metoda 
             <code>isException()</code> powinna zwrócić wartość logiczną
             oznaczającą czy to się zdarzyło czy nie. Metoda
             <code>renderExceptions()</code> powinna być użyta aby sprawdzić

@@ -48,10 +48,13 @@ echo $ctrl->dispatch();
             Zalecamy użycie obiektu odpowiedzi (Response) do łączenia zawartości 
             i nagłówków. To pozwala na bardziej elastyczne zmiany formatu danych
             wyjściowych (na przykład JSON lub XML zamiast XHTML) w twoich
-            aplikacjach. Konieczność wyświetlenia wartości zwróconej przez 
-            <code>dispatch()</code> gwarantuje, że żadna zawartość przekazana 
-            do obiektu odpowiedzi nie będzie zwrócona tak samo jak i wszystkie 
-            nagłówki przekazane do tego obiektu.
+            aplikacjach. Domyślnie metoda <code>dispatch()</code> zrenderuje
+            całą odpowiedź, wyśle nagłówki i cała zawartość. Możesz także
+            użyć kontrolera frontowego aby zwrócił zawartość za pomocą metody
+            <code>returnResponse()</code>, a potem zrenderować odpowiedź używając
+            twojej własnej logiki. Przyszłe wersje kontrolera frontowego mogą 
+            forsować użycie obiektu odpowiedzi przez wyświetlenie danych 
+            wyjściowych.
         </para>
 
         <para>
@@ -65,6 +68,45 @@ echo $ctrl->dispatch();
         </para>
 
         <itemizedlist>
+            <listitem>
+                <para>
+                    <code>Zend_Controller_Front::dispatch()</code> domyślnie
+                    łapie wyjątki w obiekcie odpowiedzi i nie renderuje ich
+                    aby zapobiec wyświetleniu ważnych informacji systemowych.
+                    Możesz nadpisać to na kilka sposobów:
+                </para>
+
+                <itemizedlist>
+                    <listitem>
+                        <para>
+                            Ustaw <code>throwExceptions()</code> w kontrolerze
+                            frontowym:
+                        </para>
+                        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
+                    </listitem>
+
+                    <listitem>
+                        <para>
+                            Ustaw <code>renderExceptions()</code> w obiekcie
+                            odpowiedzi:
+                        </para>
+                        <programlisting role="php"><![CDATA[
+$response->renderExceptions(true);
+$front->setResponse($response);
+$front->dispatch();
+
+// lub:
+$front->returnResponse(true);
+$response = $front->dispatch();
+$response->renderExceptions(true);
+echo $response;
+]]></programlisting>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+
             <listitem><para>
                 <code>Zend_Controller_Dispatcher_Interface::dispatch()</code>
                 teraz przyjmuje i zwraca obiekt <xref linkend="zend.controller.overview.request" />

@@ -438,8 +438,14 @@ public function myAction()
             zadaniem jest zebranie zawartości oraz/lub nagłówków aby mogły
             być one zwrócone wszystkie na raz. Dodatkowo, kontroler frontowy
             przekaże wszystkie złapane wyjątki do obiektu odpowiedzi, pozwalając
-            programiście wdzięcznie obsłużyć wyjątki.
+            programiście wdzięcznie obsłużyć wyjątki. Ta funkcjonalność może
+            być nadpisana przez ustawienie 
+            <code>Zend_Controller_Front::throwExceptions(true)</code>:
         </para>
+
+        <programlisting role="php"><![CDATA[
+$front->throwExceptions(true);
+]]></programlisting>
 
         <para>
             Z tego względu, że obiekt odpowiedzi implementuje <code>__toString()</code>, 
@@ -447,7 +453,11 @@ public function myAction()
         </para>
 
         <programlisting role="php"><![CDATA[
-echo $controller->dispatch();
+echo $controller->getResponse();
+
+// lub
+$response = $controller->getResponse();
+echo $response;
 ]]></programlisting>
         
         <para>
@@ -477,6 +487,30 @@ $this->getResponse()
             stron błędów, zapisywać informacje o wyjątku, ładnie formatować
             informacje o wyjątku (dla potrzeb programistycznych) itp.
         </para>
+
+        <para>
+            Możesz odebrać obiekt odpowiedzi po wywołaniu metody
+            dispatch(), lub powodując aby kontroler frontowy zwrócił obiekt 
+            odpowiedzi zamiast renderowania danych wyjściowych.
+        </para>
+
+        <programlisting role="php"><![CDATA[
+// odbierz obiekt po uruchomieniu:
+$front->dispatch();
+$response = $front->getResponse();
+if ($response->isException()) {
+    // zaloguj, wyślij mailem itp.
+}
+
+// lub spowoduj aby metoda dispatch() zwróciła obiekt odpowiedzi
+$front->returnResponse(true);
+$response = $front->dispatch();
+
+// coś przetwarzaj...
+
+// ostatecznie wyświetl odpowiedź
+echo $response;
+]]></programlisting>
 
         <para>
             Domyślnie komunikaty wyjątków nie są wyświetlane. Te zachowanie może
