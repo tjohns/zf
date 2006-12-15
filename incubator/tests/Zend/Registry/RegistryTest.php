@@ -1,250 +1,177 @@
 <?php
 /**
+ * Zend Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
+ *
+ * @category   Zend
  * @package    Zend_Registry
  * @subpackage UnitTests
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
-/**
- * Zend_Registry
- */
 require_once 'Zend.php';
-require_once 'Zend/Registry.php';
-
-/**
- * PHPUnit test case
- */
 require_once 'PHPUnit/Framework/TestCase.php';
 
-/**
- * @package    Zend_Registry
- * @subpackage UnitTests
- */
-class Zend_Registry_RegistryTest extends PHPUnit_Framework_TestCase
+class Zend_RegistryTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-    	Zend_Registry::setInstance(NULL);
 	}
+
     public function tearDown()
     {
+        $registry = Zend::registry();
+        if ($registry !== false) {
+            $keys = array();
+            foreach ($registry as $key => $value) {
+                $keys[] = $key;
+            }
+            foreach ($keys as $key) {
+                $registry->offsetUnset($key);
+            }
+        }
     }
-    /**
-     * Tests that a registry object is automatically created
-     * when getInstance is called for the first time
-     */
+
+    public function testBeforeInit()
+    {
+        $this->assertFalse(Zend::isRegistered('not'));
+        $this->assertFalse(Zend::registry('not'));
+    }
+
+    public function testManualInit()
+    {
+        try {
+            $registry = Zend::initRegistry('classdoesnotexist');
+            $this->fail('Expected exception, because we cannot initialize the registry using a non-existent class.');
+        } catch (Zend_Exception $e) {
+            $this->assertRegexp('/class.not.found/i', $e->getMessage());
+        }
+
+        try {
+            $registry = Zend::initRegistry('Zend');
+            $this->fail('Expected exception, because we can only initialize the registry using an instance of '
+                . 'Zend_Registry (or a subclass).');
+        } catch (Zend_Exception $e) {
+            $this->assertRegexp('/not.*instanceof.*Zend_Registry/i', $e->getMessage());
+        }
+    }
+
+    // make sure that the registry can be used without a userland call to create it
     public function testInstance()
     {
-    	/* Make sure get a Zend_Registry object */
-    	$registry1 = Zend_Registry::getInstance();	
-    	$this->assertEquals(get_class($registry1),'Zend_Registry');
+        //echo __LINE__, "\n";	
+
+    	// Make sure we get a Zend_Registry object
+        #$registry1 = Zend::initRegistry();
+    	Zend::register('foo', 'bar');
+        $this->assertTrue(Zend::isRegistered('foo'));
+
+        $registry1 = Zend::registry();
+    	$this->assertEquals(get_class($registry1), 'Zend_Registry');
+
+    	// should receive a reference to the same object
+    	$registry2 = Zend::registry();
+    	$this->assertSame($registry1, $registry2);
     	
-    	/* And should get the same object again */
-    	$registry2 = Zend_Registry::getInstance();    	
-    	$this->assertSame($registry1,$registry2);
+        // compare existing registry with a duplicate
+        $registry4 = new Zend_Registry(array('foo'=>'bar'));
+    	$this->assertTrue($registry2 == $registry4);
     	
-    	/* Change the registry instance */
-    	$registry3 = new Zend_Registry();
-    	Zend_Registry::setInstance($registry3);
-    	
-    	$registry4 = Zend_Registry::getInstance();    	
-    	$this->assertSame($registry3,$registry4);
-    	
-    	/* Just to be sure have a different object */
-    	$this->assertNotSame($registry1,$registry4);
-    	
+    	// make sure these are not the same, since one is empty, and the other is not
+    	$this->assertNotSame($registry1, new Zend_Registry());
     }
-    /**
-     * Tests that register() throws an exception when the name of
-     * the object to register is not a string.
-     */
-    public function testRegisterNameNotString()
+
+    public function testInit()
     {
-    	$registry = new Zend_Registry();
-    	
+        // re-initialization is not permitted
         try {
-            $registry->set(new stdClass(), 'test');
-        } catch (Zend_Registry_Exception $e) {
-            $this->assertRegExp('/must be a string/i', $e->getMessage());
-            return;
+        	$registry3 = Zend::initRegistry(new Zend_Registry());
+            $this->fail('Expected exception, because re-initialization is not permitted.');
+        } catch (Zend_Exception $e) {
+            $this->assertRegexp('/already.initializ/i', $e->getMessage());
         }
-        $this->fail('No exception thrown, expected Zend_Registry_Exception.');
     }
 
-    /**
-     * Tests that register() throws an exception when the second
-     * argument (the object) is not an object.
-     */
-    public function testRegisterObjNotObject()
+    public function testBadIndex()
     {
-    	$registry = new Zend_Registry();
-
         try {
-            $registry->set('test', null);
-        } catch (Zend_Registry_Exception $e) {
-            $this->assertRegExp('/only objects/i', $e->getMessage());
-            return;
+        	Zend::registry('foobar');
+            $this->fail('Expected exception when trying to fetch a non-existent key.');
+        } catch (Zend_Exception $e) {
+            $this->assertRegexp('/no.key/i', $e->getMessage());
         }
-        $this->fail('No exception thrown, expected Zend_Registry_Exception.');
     }
 
-    /**
-     * Tests that registry() with no arguments return array()
-     * when the registry is empty.
-     */
+    // test tearDown()
+    public function testTearDown()
+    {
+        $empty = new Zend_Registry();
+        $this->assertTrue(Zend::registry() == $empty);
+        $this->assertTrue(Zend::registry()->count() === 0);
+    }
+
+    // make sure registry is not the same as a different instance
     public function testRegistryEmptyReturnsArray()
     {
     	$registry = new Zend_Registry();
-    	
-        $this->assertSame($registry->get(), array());
+        $this->assertNotSame($registry, new ArrayObject());
+
+    	$registry = new Zend_Registry(array('foo', 'bar'));
+        $this->assertNotSame($registry, Zend::registry());
+
+        Zend::register('foo', 'bar');
+        $this->assertNotSame($registry, Zend::registry());
     }
+
     /**
      * Tests that:
      *   1. an object can be registered with register().
-     *   2. attempting to register the same object throws an exception.
-     *   3. the object is returned by registry('objectName').
-     *   4. the object is listed in the array returned by registry().
-     *   5. isRegistered() returns correct states.
+     *   2. the object is returned by registry('objectName').
+     *   3. the object is listed in the ArrayObject returned by registry().
+     *   4. isRegistered() returns correct states.
      */    
     public function testRegistry()
     {
-    	$registry = new Zend_Registry();
+    	$registry = Zend::registry();
     	
-        $this->assertFalse($registry->has('objectName'));
+        $this->assertFalse($registry->offsetExists('objectName'));
         
-        /**
-         * Register an object
-         */
-        $obj = new stdClass();
-        //$obj->name = 'Name1';
+        $subregistry = new Zend_Registry(array('option1' => 'setting1', 'option2' => 'setting2'));
         
         // throws exception on failure
-        $registry->set('objectName', $obj);
+        Zend::register('componentOptions', $subregistry);
 
-        $this->assertTrue($registry->has('objectName'));
+        $this->assertTrue($registry->offsetExists('componentOptions'));
         
-        /**
-         * Attempt to register the same object again
-         */
-        $e = null;
-        try {
-            $registry->set('another', $obj);
-        } catch (Zend_Registry_Exception $e) {
-            $this->assertRegExp('/duplicate(.*)objectName/i', $e->getMessage());
-        }
+        // compare fetched value with the expected value
+        $this->assertSame(Zend::registry('componentOptions'), $subregistry);
 
-        if ($e === null) {
-            $this->fail('No exception thown during registration of duplicate object.');
-        }
-
-        /**
-         * Attempt to retrieve the object with registry()
-         */
-        $this->assertSame($registry->get('objectName'), $obj);
-
-        /**
-         * Check registry listing
-         */
-        $this->assertEquals($registry->get(), array('objectName' => 'stdClass'));
+        $this->assertTrue($registry->offsetGet('componentOptions') 
+            == new Zend_Registry(array('option1' => 'setting1', 'option2' => 'setting2')));
         
-        /**
-         * Make sure a second object can be registered
-         */
-        $obj2 = new stdClass();
-        //$obj2->name = 'Name1';
-        $this->assertNotSame($obj,$obj2);
+        // Make sure a second object can be registered
+        $object2 = new stdClass();
+        $this->assertNotSame($subregistry,$object2);
         
         // throws exception on failure
-        $registry->set('objectName2', $obj2);
+        $registry->offsetSet('componentOptions', $object2);
 
-        $this->assertTrue($registry->has('objectName2'));
-    	
-    }
-    /* -----------------------------------------------------------
-     * Same tests using static interface
-     */
-     
-    /**
-     * Tests that register() throws an exception when the name of
-     * the object to register is not a string.
-     */
-    public function testStaticRegisterNameNotString()
-    {
-        try {
-            Zend::register(new stdClass(), 'test');
-        } catch (Zend_Registry_Exception $e) {
-            $this->assertRegExp('/must be a string/i', $e->getMessage());
-            return;
-        }
-        $this->fail('No exception thrown, expected Zend_Registry_Exception.');
+        $this->assertTrue($registry->offsetExists('componentOptions'));
+
+        $this->assertNotSame(Zend::registry('componentOptions'), $subregistry);
+
+        $this->assertSame(Zend::registry('componentOptions'), $object2);
     }
 
-    /**
-     * Tests that register() throws an exception when the second
-     * argument (the object) is not an object.
-     */
-    public function testStaticRegisterObjNotObject()
-    {
-        try {
-            Zend::register('test', null);
-        } catch (Zend_Registry_Exception $e) {
-            $this->assertRegExp('/only objects/i', $e->getMessage());
-            return;
-        }
-        $this->fail('No exception thrown, expected Zend_Registry_Exception.');
-    }
-
-    /**
-     * Tests that registry() with no arguments return array()
-     * when the registry is empty.
-     */
-    public function testStaticRegistryEmptyReturnsArray()
-    {
-        $this->assertSame(Zend::registry(), array());
-    }
-
-    /**
-     * Tests that:
-     *   1. an object can be registered with register().
-     *   2. attempting to register the same object throws an exception.
-     *   3. the object is returned by registry('objectName').
-     *   4. the object is listed in the array returned by registry().
-     *   5. isRegistered() returns correct states.
-     */
-    public function testStaticRegistry()
-    {
-        $this->assertFalse(Zend::isRegistered('objectName'));
-        
-        /**
-         * Register an object
-         */
-        $obj = new stdClass();
-        // throws exception on failure
-        Zend::register('objectName', $obj);
-
-        $this->assertTrue(Zend::isRegistered('objectName'));
-        
-        /**
-         * Attempt to register the same object again
-         */
-        $e = null;
-        try {
-            Zend::register('another', $obj);
-        } catch (Zend_Registry_Exception $e) {
-            $this->assertRegExp('/duplicate(.*)objectName/i', $e->getMessage());
-        }
-
-        if ($e === null) {
-            $this->fail('No exception thown during registration of duplicate object.');
-        }
-
-        /**
-         * Attempt to retrieve the object with registry()
-         */
-        $this->assertSame(Zend::registry('objectName'), $obj);
-
-        /**
-         * Check registry listing
-         */
-        $this->assertEquals(Zend::registry(), array('objectName' => 'stdClass'));
-    }
 }
