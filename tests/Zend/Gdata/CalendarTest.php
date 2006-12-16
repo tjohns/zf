@@ -29,8 +29,8 @@ require_once 'Zend/Http/Client.php';
  */
 class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
 {
-    const ZEND_CONFERENCE_GROUP = 'ogr93sav88fmf2ssnv851osqm4@group.calendar.google.com';
-    const ZEND_CONFERENCE_EVENT_PIRATE_RECEPTION = 'turhun9osc2ajfoie57gb7tcs4';
+    const GOOGLE_DEVELOPER_CALENDAR = 'developer-calendar@google.com';
+    const ZEND_CONFERENCE_EVENT = 'bn2h4o4mc3a03ci4t48j3m56pg';
 
     public function setUp()
     {
@@ -38,81 +38,57 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         // $this->xml = new XML_Beautifier();
     }
 
-    public function testUpdatedMinParam()
+    public function testUpdatedMinMaxParam()
     {
-        $updatedMin = '2006-10-27T11:03';
+        $updatedMin = '2006-09-20';
+        $updatedMax = '2006-11-05';
         $this->gdata->resetParameters();
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
+        $this->gdata->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->gdata->setUpdatedMin($updatedMin);
+        $this->gdata->setUpdatedMax($updatedMax);
         $this->assertTrue(isset($this->gdata->updatedMin));
+        $this->assertTrue(isset($this->gdata->updatedMax));
         $this->assertEquals($this->gdata->formatTimestamp($updatedMin), $this->gdata->getUpdatedMin());
+        $this->assertEquals($this->gdata->formatTimestamp($updatedMax), $this->gdata->getUpdatedMax());
+
         $feed = $this->gdata->getFeed();
-        $this->assertEquals(3, $feed->count());
+        $this->assertEquals(7, $feed->count());
+
         unset($this->gdata->updatedMin);
         $this->assertFalse(isset($this->gdata->updatedMin));
-    }
-
-    public function testUpdatedMaxParam()
-    {
-        $updatedMax = '2006-10-27T11:02';
-        $this->gdata->resetParameters();
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
-        $this->gdata->setUpdatedMax($updatedMax);
-        $this->assertTrue(isset($this->gdata->updatedMax));
-        $this->assertEquals($this->gdata->formatTimestamp($updatedMax), $this->gdata->getUpdatedMax());
-        $feed = $this->gdata->getFeed();
-        $this->assertEquals(1, $feed->count());
         unset($this->gdata->updatedMax);
         $this->assertFalse(isset($this->gdata->updatedMax));
     }
 
-    public function testUserParam()
+    public function testStartMinMaxParam()
     {
         $this->gdata->resetParameters();
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
-        $this->assertTrue(isset($this->gdata->user));
-        $this->assertEquals(self::ZEND_CONFERENCE_GROUP, $this->gdata->getUser());
-        $feed = $this->gdata->getFeed();
-        $this->assertEquals(6, $feed->count());
-        unset($this->gdata->user);
-        $this->assertFalse(isset($this->gdata->user));
-    }
-
-    public function testStartMinParam()
-    {
-        $this->gdata->resetParameters();
-        $startMin = '2006-10-31';
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
+        $startMin = '2006-10-30';
+        $startMax = '2006-11-01';
+        $this->gdata->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->gdata->setStartMin($startMin);
-        $this->assertTrue(isset($this->gdata->startMin));
-        $this->assertEquals($this->gdata->formatTimestamp($startMin), $this->gdata->getStartMin());
-        $feed = $this->gdata->getFeed();
-        $this->assertEquals(6, $feed->count());
-        unset($this->gdata->startMin);
-        $this->assertFalse(isset($this->gdata->startMin));
-        unset($this->gdata->user);
-        $this->assertFalse(isset($this->gdata->user));
-    }
-
-    public function testStartMaxParam()
-    {
-        $this->gdata->resetParameters();
-        $startMax = '2006-10-31';
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
         $this->gdata->setStartMax($startMax);
+        $this->assertTrue(isset($this->gdata->startMin));
         $this->assertTrue(isset($this->gdata->startMax));
+        $this->assertEquals($this->gdata->formatTimestamp($startMin), $this->gdata->getStartMin());
         $this->assertEquals($this->gdata->formatTimestamp($startMax), $this->gdata->getStartMax());
+
         $feed = $this->gdata->getFeed();
         $this->assertEquals(1, $feed->count());
+
+        unset($this->gdata->startMin);
+        $this->assertFalse(isset($this->gdata->startMin));
         unset($this->gdata->startMax);
         $this->assertFalse(isset($this->gdata->startMax));
+        unset($this->gdata->user);
+        $this->assertFalse(isset($this->gdata->user));
     }
 
     public function testVisibilityParam()
     {
         $this->gdata->resetParameters();
         $visibility = 'private';
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
+        $this->gdata->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->gdata->setVisibility($visibility);
         $this->assertTrue(isset($this->gdata->visibility));
         $this->assertEquals($visibility, $this->gdata->getVisibility());
@@ -129,7 +105,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
     {
         $this->gdata->resetParameters();
         $projection = 'composite';
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
+        $this->gdata->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->gdata->setProjection($projection);
         $this->assertTrue(isset($this->gdata->projection));
         $this->assertEquals($projection, $this->gdata->getProjection());
@@ -152,7 +128,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
     {
         $this->gdata->resetParameters();
         $orderby = 'starttime';
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
+        $this->gdata->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
         $this->gdata->setOrderby($orderby);
         $this->assertTrue(isset($this->gdata->orderby));
         $this->assertEquals($orderby, $this->gdata->getOrderby());
@@ -175,38 +151,17 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
     public function testEventParam()
     {
         $this->gdata->resetParameters();
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
-        $this->gdata->setEvent(self::ZEND_CONFERENCE_EVENT_PIRATE_RECEPTION);
+        $this->gdata->setUser(self::GOOGLE_DEVELOPER_CALENDAR);
+        $this->gdata->setEvent(self::ZEND_CONFERENCE_EVENT);
         $this->assertTrue(isset($this->gdata->event));
-        $this->assertEquals(self::ZEND_CONFERENCE_EVENT_PIRATE_RECEPTION, $this->gdata->getEvent());
+        $this->assertEquals(self::ZEND_CONFERENCE_EVENT, $this->gdata->getEvent());
         $feed = $this->gdata->getFeed();
         foreach ($feed as $feedItem) {
             // echo $this->xml->formatString($feedItem->saveXML());
-            $this->assertContains(self::ZEND_CONFERENCE_EVENT_PIRATE_RECEPTION, $feedItem->id());
+            $this->assertContains(self::ZEND_CONFERENCE_EVENT, $feedItem->id());
         }
         unset($this->gdata->event);
         $this->assertFalse(isset($this->gdata->event));
     }
-
-    /*
-     * @todo: Need a calendar entry with comments for test data.
-     *
-    public function testCommentSubfeed()
-    {
-        $this->gdata->resetParameters();
-        $this->gdata->setUser(self::ZEND_CONFERENCE_GROUP);
-        $this->gdata->setEvent(self::ZEND_CONFERENCE_EVENT_PIRATE_RECEPTION);
-        $commentId = '???';
-        $this->gdata->setComments($commentId);
-        $this->assertTrue(isset($this->gdata->comments));
-        $this->assertEquals($commentId, $this->gdata->getComments());
-        $feed = $this->gdata->getFeed();
-        foreach ($feed as $feedItem) {
-            // echo $this->xml->formatString($feedItem->saveXML());
-        }
-        unset($this->gdata->comments);
-        $this->assertFalse(isset($this->gdata->comments));
-    }
-     */
 
 }
