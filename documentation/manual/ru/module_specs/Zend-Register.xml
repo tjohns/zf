@@ -2,7 +2,7 @@
     <title>Zend::register()</title>
 
     <para>
-        Регистрирует объект в хранилище объектов.
+        Регистрирует объект в реестре.
 <!--
         Registers an object in the object store.
 -->
@@ -10,40 +10,37 @@
 
     <programlisting role="php"><![CDATA[<?php
 
-Zend::register($name, $object)
+Zend::register($index, $value)
 
 ?>]]></programlisting>
 
     <para>
         Реестр является механизмом для предоставления экземпляров-синглетонов
-        в среде приложения. Посредством единичного сохранения объекта в реестре и
-        дальнейшего извлечения его из реестра каждый раз, когда он понадобится, всегда
-        возвращается один и тот же экземпляр объекта.
+        в среде приложения. Посредством единичного сохранения значения в реестре
+        и дальнейшего извлечения его из реестра каждый раз, когда оно
+        понадобится, всегда возвращается один и тот же экземпляр.
 <!--
-        The registry is a mechanism for providing singleton instances of objects to the application space.  By
-        storing the object in the registry once, and then retrieving the object from the registry whenever it
-        is needed, the same instance is always returned.
+    The registry is a mechanism for providing singleton instances of values to the application space.  By
+    storing the value in the registry once, and then retrieving the value from the registry whenever it
+    is needed, the same instance is always returned.
 -->
     </para>
 
     <para>
-        <code>$name</code> — произвольная строка для наименования объекта в хранилище.
-        Это имя передается <code>Zend::registry()</code> для получения того же объекта.
+        <code>$index</code> — произвольная строка для наименования значения в
+        реестре. Это имя передается <code>Zend::registry()</code> для получения
+        значения.
 <!--
-        The <code>$name</code> is an arbitrary string to name the object in the store.  This name will be
-        supplied to <code>Zend::registry()</code> to retrieve the object again.
+    The <code>$index</code> is an arbitrary string to name the value in the store.  This name will be
+    supplied to <code>Zend::registry()</code> to retrieve the value again.
 -->
     </para>
 
     <para>
-        Аргумент <code>$name</code> дожен быть строкой, в реестре могут храниться
-        только объекты, объект не может удаляться из реестра, экземпляр может быть
-        сохранен в реестре только один раз. Нарушение этих правил вызовет
-        исключение <code>Zend_Exception</code>.
+    Семантика реестра аналогична семантике ArrayObject. 
 <!--
-        The <code>$name</code> argument must be a string, only objects may be stored in the registry, an object
-        can never be removed from the registry, and an instance can only be stored once in the registry.
-        Failure to obey these rules will result in <code>Zend_Exception</code> being thrown.-->
+    The semantics of the registry adhere to those of ArrayObject.
+-->
     </para>
 </sect1>
 <!--
