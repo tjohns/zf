@@ -16,6 +16,7 @@
  * @package    Zend
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
+ * @version    $Id$
  */
 
 
@@ -37,16 +38,9 @@ final class Zend
 {
     /**
      * Object registry provides storage for shared objects
-     * @var array
+     * @var Zend_Registry
      */
-    static private $_registry = array();
-
-
-    /**
-     * Singleton Pattern
-     */
-    private function __construct()
-    {}
+    static private $_registry = null;
 
 
     /**
@@ -64,7 +58,7 @@ final class Zend
      * it will attempt to load it from PHP's include_path.
      *
      * @param string $class
-     * @param string $dirs
+     * @param string|array $dirs
      * @throws Zend_Exception
      * @return void
      */
@@ -94,46 +88,13 @@ final class Zend
 
 
     /**
-     * Loads an interface from a PHP file.  The filename must be formatted
-     * as "$interface.php".
+     * Loads an interface from a PHP file.  See 
      *
-     * If $dirs is a string or an array, it will search the directories
-     * in the order supplied, and attempt to load the first matching file.
-     *
-     * If $dirs is null, it will split the interface name at underscores to
-     * generate a path hierarchy (e.g., "Zend_Example_Interface" will map
-     * to "Zend/Example/Interface.php").
-     *
-     * If the file was not found in the $dirs, or if no $dirs were specified,
-     * it will attempt to load it from PHP's include_path.
-     *
-     * @param string $interface
-     * @param string $dirs
-     * @throws Zend_Exception
-     * @return void
+     * @deprecated Since 0.6
      */
     static public function loadInterface($interface, $dirs = null)
     {
-        if (interface_exists($interface, false)) {
-            return;
-        }
-
-        // autodiscover the path from the interface name
-        $path = str_replace('_', DIRECTORY_SEPARATOR, $interface);
-        if ($dirs === null && $path != $interface) {
-            // use the autodiscovered path
-            $dirs = dirname($path);
-            $file = basename($path) . '.php';
-        } else {
-            $file = $interface . '.php';
-        }
-
-        self::loadFile($file, $dirs, true);
-
-        if (!interface_exists($interface, false)) {
-            throw new Zend_Exception("File \"$file\" was loaded "
-                               . "but interface \"$interface\" was not found within.");
-        }
+        throw new Zend_Exception(__FUNCTION__ . " has been removed. Please use require_once().");
     }
 
 
@@ -154,10 +115,10 @@ final class Zend
      * If $once is TRUE, it will use include_once() instead of include().
      *
      * @param  string        $filename
-     * @param  string|null   $directory
+     * @param  string|array  $dirs
      * @param  boolean       $once
      * @throws Zend_Exception
-     * @return void
+     * @return mixed
      */
     static public function loadFile($filename, $dirs=null, $once=false)
     {
@@ -200,11 +161,12 @@ final class Zend
          * Always set display_errors = Off on production servers!
          */
         if ($once) {
-            include_once($filespec);
+            return include_once $filespec;
         } else {
-            include($filespec);
+            return include $filespec ;
         }
     }
+
 
     /**
      * Returns TRUE if the $filename is readable, or FALSE otherwise.  This
@@ -236,22 +198,23 @@ final class Zend
         return false;
     }
 
+
     /**
      * Return a new exception
      *
-     * Loads an exceptoin class as specified by $class, and then passes the 
-     * message and code arguments to the Exception's constructor, returning the 
-     * new Exception object. 
+     * Loads an exceptoin class as specified by $class, and then passes the
+     * message and code arguments to the Exception's constructor, returning the
+     * new Exception object.
      *
-     * If the exception created is not a true Exception, throws a Zend_Exception 
+     * If the exception created is not a true Exception, throws a Zend_Exception
      * indicating an invalid exception class was passed.
      *
      * Usage:
      * <code>
      *     throw Zend::exception('Some_Exception', 'exception message');
      * </code>
-     * 
-     * @param string $class 
+     *
+     * @param string $class
      * @param string $message Defaults to empty string
      * @param int $code Defaults to 0
      * @return Exception
@@ -271,6 +234,103 @@ final class Zend
 
         return $exception;
     }
+
+
+    /**
+     * offsetSet stores $newval at key $index
+     *
+     * @param mixed $index  index to set
+     * @param $newval new value to store at offset $index
+     * @return  void
+     */
+    static public function register($index, $newval)
+    {
+        if (self::$_registry === null) {
+            self::initRegistry();
+        }
+
+        self::$_registry[$index] = $newval;
+    }
+
+
+    /**
+     * registry() retrieves the value stored at an index.
+     *
+     * If the $index argument is NULL, an array will be returned where
+     * the keys to the array are the names of the objects in the registry
+     * and the values are the class names of those objects.
+     *
+     * @see     register()
+     * @param   string      $index The name for the object.
+     * @throws  Zend_Registry_Exception
+     * @return  object      The registered object.
+     */
+    static public function registry($index = null)
+    {
+        if (self::$_registry === null) {
+            return false;
+        }
+
+        return self::$_registry->get($index);
+    }
+
+
+    /**
+     * Returns TRUE if the $index is a named object in the
+     * registry, or FALSE if $index was not found in the registry.
+     *
+     * @param  string $index
+     * @return boolean
+     */
+    static public function isRegistered($index)
+    {
+        if (self::$_registry === null) {
+            return false;
+        }
+
+        return self::$_registry->offsetExists($index);
+    }
+
+
+    /**
+     * Initialize the registry. Invoking this method more than once will generate an exception.
+     *
+     * @param mixed $registry - Either a name of the registry class (Zend_Registry, or a subclass)
+     *                          or an instance of Zend_Registry (or subclass)
+     *
+     * @return Zend_Registry
+     */
+    static public function initRegistry($registry = 'Zend_Registry')
+    {
+        // prevent multiple calls to this method
+        if (self::$_registry !== null) {
+            throw new Zend_Exception( __CLASS__ . '::' . __FUNCTION__ . '()' . '::' . __LINE__ . ' registry already initialized.');
+        }
+
+        if ($registry === 'Zend_Registry') {
+            require_once 'Zend/Registry.php';
+        }
+
+        if (is_string($registry)) {
+            if (!class_exists($registry, false)) {
+                throw new Zend_Exception( __CLASS__ . '::' . __FUNCTION__ . '()' . '::' . __LINE__ . " $registry' class not found.");
+            } else {
+                self::initRegistry(new $registry());
+            }
+        } else {
+            if (!class_exists('Zend_Registry', false)) {
+                require_once 'Zend/Registry.php';
+            }
+            if (!($registry instanceof Zend_Registry)) {
+                throw new Zend_Exception( __CLASS__ . '::' . __FUNCTION__ . '()' . '::' . __LINE__ . " $registry' is not an \""
+                    . "instanceof\" Zend_Registry (or subclass)");
+            }
+            self::$_registry = $registry;
+        }
+
+        return self::$_registry;
+    }
+
 
     /**
      * Debug helper function.  This is a wrapper for var_dump() that adds
@@ -295,7 +355,7 @@ final class Zend
         $output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
         if (PHP_SAPI == 'cli') {
             $output = PHP_EOL . $label
-                    . PHP_EOL . $output 
+                    . PHP_EOL . $output
                     . PHP_EOL;
         } else {
             $output = '<pre>'
@@ -310,100 +370,4 @@ final class Zend
         return $output;
     }
 
-
-    /**
-     * Registers a shared object.
-     *
-     * @todo use SplObjectStorage if ZF minimum PHP requirement moves up to at least PHP 5.1.0
-     *
-     * @param   string      $name The name for the object.
-     * @param   object      $obj  The object to register.
-     * @throws  Zend_Exception
-     * @return  void
-     */
-    static public function register($name, $obj)
-    {
-        if (!is_string($name)) {
-            throw new Zend_Exception('First argument $name must be a string.');
-        }
-
-        // don't register the same name twice
-        if (array_key_exists($name, self::$_registry)) {
-           throw new Zend_Exception("Object named '$name' already registered.  Did you mean to call registry()?");
-        }
-
-        // only objects may be stored in the registry
-        if (!is_object($obj)) {
-           throw new Zend_Exception("Only objects may be stored in the registry.");
-        }
-
-        $e = '';
-        // an object can only be stored in the registry once
-        foreach (self::$_registry as $dup=>$registeredObject) {
-            if ($obj === $registeredObject) {
-                $e = "Duplicate object handle already exists in the registry as \"$dup\".";
-                break;
-            }
-        }
-
-        /**
-         * @todo throwing exceptions inside foreach could cause leaks, use a workaround
-         *       like this until a fix is available
-         *
-         * @link http://bugs.php.net/bug.php?id=34065
-         */
-        if ($e) {
-            throw new Zend_Exception($e);
-        }
-
-        self::$_registry[$name] = $obj;
-    }
-
-
-    /**
-     * Retrieves a registered shared object, where $name is the
-     * registered name of the object to retrieve.
-     *
-     * If the $name argument is NULL, an array will be returned where 
-	 * the keys to the array are the names of the objects in the registry 
-	 * and the values are the class names of those objects.
-     *
-     * @see     register()
-     * @param   string      $name The name for the object.
-     * @throws  Zend_Exception
-     * @return  object      The registered object.
-     */
-    static public function registry($name=null)
-    {
-        if ($name === null) {
-            $registry = array();
-            foreach (self::$_registry as $name=>$obj) {
-                $registry[$name] = get_class($obj);
-            }
-            return $registry;
-        }
-
-        if (!is_string($name)) {
-            throw new Zend_Exception('First argument $name must be a string, or null to list registry.');
-        }
-
-        if (!array_key_exists($name, self::$_registry)) {
-           throw new Zend_Exception("No object named \"$name\" is registered.");
-        }
-
-        return self::$_registry[$name];
-    }
-
-    
-    /**
-     * Returns TRUE if the $name is a named object in the
-     * registry, or FALSE if $name was not found in the registry.
-     *
-     * @param  string $name
-     * @return boolean
-     */
-    static public function isRegistered($name)
-    {
-        return isset(self::$_registry[$name]);
-    }
 }

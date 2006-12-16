@@ -94,120 +94,12 @@ class ZendTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests that a class can be loaded from a well-formed PHP file
-     */
-    public function testLoadInterfaceValid()
-    {
-        $dir = implode(array(dirname(__FILE__), 'Zend', '_files', '_testDir1'), DIRECTORY_SEPARATOR);
-
-        Zend::loadInterface('Interface1', $dir);
-    }
-
-    /**
-     * Tests that an exception is thrown when a file is loaded but the
-     * class is not found within the file
-     */
-    public function testLoadInterfaceNonexistent()
-    {
-        $dir = implode(array(dirname(__FILE__), 'Zend', '_files', '_testDir1'), DIRECTORY_SEPARATOR);
-
-        try {
-            Zend::loadInterface('ClassNonexistent', $dir);
-        } catch (Zend_Exception $e) {
-            $this->assertRegExp('/file(.*)loaded but interface(.*)not found/i', $e->getMessage());
-            return;
-        }
-        $this->fail('Zend_Exception was expected but never thrown.');
-    }
-
-    /**
      * @todo testing for Zend::dump()
      */
 
     /**
-     * Tests that register() throws an exception when the name of
-     * the object to register is not a string.
+     * Registry related tests are found in Zend/Registry/.
      */
-    public function testRegisterNameNotString()
-    {
-        try {
-            Zend::register(new stdClass(), 'test');
-        } catch (Zend_Exception $e) {
-            $this->assertRegExp('/must be a string/i', $e->getMessage());
-            return;
-        }
-        $this->fail('No exception thrown, expected Zend_Exception.');
-    }
-
-    /**
-     * Tests that register() throws an exception when the second
-     * argument (the object) is not an object.
-     */
-    public function testRegisterObjNotObject()
-    {
-        try {
-            Zend::register('test', null);
-        } catch (Zend_Exception $e) {
-            $this->assertRegExp('/only objects/i', $e->getMessage());
-            return;
-        }
-        $this->fail('No exception thrown, expected Zend_Exception.');
-    }
-
-    /**
-     * Tests that registry() with no arguments return array()
-     * when the registry is empty.
-     */
-    public function testRegistryEmptyReturnsArray()
-    {
-        $this->assertSame(Zend::registry(), array());
-    }
-
-    /**
-     * Tests that:
-     *   1. an object can be registered with register().
-     *   2. attempting to register the same object throws an exception.
-     *   3. the object is returned by registry('objectName').
-     *   4. the object is listed in the array returned by registry().
-     *   5. isRegistered() returns correct states.
-     */
-    public function testRegistry()
-    {
-        $this->assertFalse(Zend::isRegistered('objectName'));
-        
-        /**
-         * Register an object
-         */
-        $obj = new stdClass();
-        // throws exception on failure
-        Zend::register('objectName', $obj);
-
-        $this->assertTrue(Zend::isRegistered('objectName'));
-        
-        /**
-         * Attempt to register the same object again
-         */
-        $e = null;
-        try {
-            Zend::register('another', $obj);
-        } catch (Zend_Exception $e) {
-            $this->assertRegExp('/duplicate(.*)objectName/i', $e->getMessage());
-        }
-
-        if ($e === null) {
-            $this->fail('No exception thown during registration of duplicate object.');
-        }
-
-        /**
-         * Attempt to retrieve the object with registry()
-         */
-        $this->assertSame(Zend::registry('objectName'), $obj);
-
-        /**
-         * Check registry listing
-         */
-        $this->assertEquals(Zend::registry(), array('objectName' => 'stdClass'));
-    }
 
     /**
      * Tests that isReadable works
