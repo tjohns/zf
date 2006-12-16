@@ -18,10 +18,8 @@
             <title>Wprowadzenie</title>
 
             <para>
-                <code>Zend_Controller_Request_Http</code> zapewnia obiekt żądania
-                do użycia w środowisku HTTP. Oprócz tego, że rozszerza klasę
-                <code>Zend_Controller_Request_Abstract</code>, posiada także
-                funkcjonalność klasy <code>Zend_Http_Request</code>. Klasa 
+                <code>Zend_Controller_Request_Http</code> zapewnia obiekt 
+                żądania do użycia w środowisku HTTP. Klasa  
                 <code>Zend_Controller_Request_Http</code> jest domyślną klasą
                 żądania używaną przez <code>Zend_Controller_Dispatcher</code>.
             </para>
@@ -35,13 +33,13 @@
                 do odpowiednich wartości takich jak nazwa klucza i wartość
                 dla zmiennych kontrolera i akcji routera, oraz do dodatkowych
                 parametrów pobranych z adresu URI. Rozszerzając
-                <code>Zend_Http_Request</code> dodatkowo pozwala na uzyskanie
-                dostępu do wartości zawartych w superglobalnych tablicach
-                jako do publicznych właściwości obiektu i zarządza obecnym
-                bazowym adresem URL oraz adresem URL żądania. Superglobalne 
-                wartości nie mogą być ustawione w obiekcie żądania,  zamiast 
-                tego użyj metod setParam/getParam aby ustawić lub odebrać
-                parametry użytkownika.
+                <code>Zend_Controller_Request_Http</code> dodatkowo pozwala na 
+                uzyskanie dostępu do wartości zawartych w superglobalnych 
+                tablicach jako do publicznych właściwości obiektu i zarządza 
+                obecnym bazowym adresem URL oraz adresem URL żądania. 
+                Superglobalne wartości nie mogą być ustawione w obiekcie 
+                żądania, zamiast tego użyj metod setParam/getParam aby ustawić 
+                lub odebrać parametry użytkownika.
             </para>
 
             <note>
@@ -68,10 +66,10 @@
             <title>Bazowy Url oraz podkatalogi</title>
 
             <para>
-                Klasa <code>Zend_Controller_Request_Http</code> dzięki temu, że posiada
-                funkcjonalność klasy <code>Zend_Http_Request</code> pozwala na użycie 
-                klasy Zend_Controller_RewriteBase w podkatalogach. Zend_Http_Request spróbuje
-                automatycznie wykryć twój bazowy adres URL i ustawi go odpowiednio.
+                Klasa <code>Zend_Controller_Request_Http</code> pozwala na użycie 
+                klasy Zend_Controller_RewriteRouter w podkatalogach. 
+                Zend_Controller_Request_Http spróbuje automatycznie wykryć twój 
+                bazowy adres URL i ustawi go odpowiednio.
             </para>
 
             <para>
@@ -100,8 +98,7 @@
                 Jeśli bazowy adres URL jest wykrywany nieprawidłowo, możesz
                 go nadpisać w obiekcie Zend_Http_Request wywołując metodę
                 <code>setBaseUrl()</code> lub tą samą metodę klasy
-                <code>Zend_Http_Request</code>, klasy
-                <code>Zend_Controller_Request_Http</code>, lub klasy
+                <code>Zend_Controller_Request_Http</code> lub klasy
                 <code>Zend_Controller_Front</code>. Najłatwiejszy sposób
                 to ustawienie tego w klasie <code>Zend_Controller_Front</code>, 
                 która przekaże to do obiektu żądania. Przykładowe użycie
@@ -177,7 +174,7 @@ RewriteRule ^[\w/\%]*(?:\.(?!(?:js|ico|gif|jpg|png|css)$)[\w\%]*$)? /index.php [
                     Jeśli używasz serwera IIS, to wartość 
                     <code>$_SERVER['REQUEST_URI']</code> nie istnieje lub jest 
                     pustym łańcuchem znaków. W takim wypadku, 
-                    <code>Zend_Http_Request</code> spróbuje użyć wartości 
+                    <code>Zend_Controller_Request_Http</code> spróbuje użyć wartości 
                     <code>$_SERVER['HTTP_X_REWRITE_URL']</code> ustawionej przez 
                     rozszerzenie Isapi_Rewrite.
                 </para>
@@ -383,13 +380,12 @@ $router->addRoute(
                 może być użyty w podkatalogach. Jednak oryginalna metoda 
                 RewriteRoutera setRewriteBase() nie jest już dostępna. Zamiast
                 niej, bazowy adres URL zostanie automatycznie wykryty przez
-                obiekt Zend_Controller_Request_Http (co przenosi się
-                na obiekt Zend_Http_Request).
+                obiekt Zend_Controller_Request_Http.
             </para>
 
             <para>
                 Jeśli bazowy adres URL jest wykrywany nieprawidłowo, możesz
-                go nadpisać w obiekcie Zend_Http_Request wywołując metodę
+                go nadpisać w obiekcie Zend_Controller_Request_Http wywołując metodę
                 setBaseUrl() (zobacz <xref linkend="zend.controller.providedsubclasses.request.http.baseurl" />).
             </para>
 
@@ -424,8 +420,81 @@ $this->addRoute('default', $compat);]]></programlisting>
                 </para>
             </note>
 
-        </sect3>    
-    
+            <para>
+                If you do not want the default route in your routing schema, you
+                may remove it using <code>removeDefaultRoutes()</code>:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+// Remove default compatability route
+$router->removeDefaultRoutes();]]></programlisting>
+
+        </sect3>
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.static-routes">
+            <title>Static Routes</title>
+
+            <para>
+                The examples above all use dynamic routes -- routes that contain
+                patterns to match against. Sometimes, however, a particular
+                route is set in stone, and firing up the regular expression
+                engine would be overkill. The answer to this situation is to use
+                static routes:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+$loginRoute = new Zend_Controller_Router_StaticRoute('login', array('controller' => 'login', 'action' => 'form'));
+$router->addRoute('login', $static);
+]]></programlisting>
+        </sect3>
+
+        <sect3 id="zend.controller.providedsubclasses.rewriterouter.add-config">
+            <title>Using Zend_Config with the RewriteRouter</title>
+
+            <para>
+                Sometimes its more convenient to update a configuration file
+                with new routes than to change the code. This is possible via
+                the <code>addConfig()</code> method. Basically, you create a
+                Zend_Config-compatible configuration, and in your code read it
+                in and pass it to the RewriteRouter:
+            </para>
+
+            <programlisting role="php"><![CDATA[
+/**
+ * Example INI:
+ * routes.archive.route = "archive/:year/*"
+ * routes.archive.defaults.controller = archive
+ * routes.archive.defaults.action = show
+ * routes.archive.defaults.year = 2000
+ * routes.archive.reqs.year = "\d+"
+ * 
+ * routes.news.type = "Zend_Controller_Router_StaticRoute"
+ * routes.news.route = "news"
+ * routes.news.defaults.controller = "news"
+ * routes.news.defaults.action = "list"
+ */
+$config = new Zend_Config_Ini($file);
+$router = new Zend_Controller_RewriteRouter();
+$router->addConfig($config, 'routes');
+]]></programlisting>
+
+            <para>
+                In the above example, we tell the router to use the 'routes'
+                section of the INI file to use for its routes. Each first-level
+                key under that section will be used to define a route name; the
+                above example defines the routes 'archive' and 'news'. Each
+                route then requires, minimally a 'route' entry and one or more
+                'defaults' entries; optionally one or more 'reqs' (short for
+                'required') may be provided. All told, these correspond to the
+                three arguments provided to a <code>Zend_Controller_Router_Route_Interface</code> 
+                object. An option key, 'type', can be used to specify the route
+                class type to use for that particular route; by default, it uses
+                <code>Zend_Controller_Router_Route</code>. In the example above,
+                the 'news' route is defined to use
+                <code>Zend_Controller_Router_StaticRoute</code>.
+            </para>
+        </sect3>
+
     </sect2>
 
     <sect2 id="zend.controller.providedsubclasses.response.http">

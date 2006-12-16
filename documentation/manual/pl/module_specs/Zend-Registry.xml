@@ -2,23 +2,23 @@
     <title>Zend::registry()</title>
 
     <para>
-    Zwraca z rejestru obiekt lub listę obiektów.
+    Zwraca z rejestru wartość lub sam rejestr.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 
-Zend::registry($name=null)
+Zend::registry($index=null)
 
 ?>]]></programlisting>
 
     <para>
-    Jeśli parametr <code>$name</code> ma wartość <code>NULL</code>, zostaje zwrócona
-    tablica której kluczami są nazwy obiektów a wartościami nazwy ich klas.
+    Jeśli parametr <code>$index</code> ma wartość <code>NULL</code>, zostaje 
+    zwrócony sam rejestr (podklasa ArrayObject).
     </para>
 
     <para>
-    Jeśli parametr <code>$name</code> jest łańcuchem znaków, zostaje zwrócony
-    uchwyt obiektu przypisanego do tej nazwy. Jeśli obiekt o nazwie <code>$name</code>
+    Jeśli parametr <code>$index</code> jest łańcuchem znaków, zostaje zwrócona
+    wartość przypisana do tego indeksu. Jeśli wartość o indeksie <code>$index</code>
     nie istnieje w rejestrze zostaje wyrzucony wyjątek <code>Zend_Exception</code>.
     </para>
 

@@ -2,7 +2,7 @@
     <title>Zend_XmlRpc_Server</title>
 
     <sect2 id="zend.xmlrpc.server.introduction">
-        <title>Introduction</title>
+        <title>Wprowadzenie</title>
 
         <para>Zend_XmlRpc_Server is intended as a fully-featured XML-RPC server,
             following <ulink url="http://www.xmlrpc.com/spec">the specifications
@@ -12,10 +12,10 @@
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.usage">
-        <title>XML-RPC Server Basic Usage</title>
+        <title>Podstawowe użycie</title>
 
         <para>
-            An example of the most basic use case:
+            Przykład najbardziej podstawowego przypadku użycia:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -28,7 +28,7 @@ echo $server->handle();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
-        <title>XML-RPC Server Structure</title>
+        <title>Struktura serwera</title>
 
         <para>
             Zend_XmlRpc_Server is composed of a variety of components, ranging
@@ -61,7 +61,7 @@ echo $server->handle();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.conventions">
-        <title>Conventions</title>
+        <title>Konwencje</title>
         <para>
             Zend_XmlRpc_Server allows the developer to attach functions and
             class method calls as dispatchable XML-RPC methods. Via
@@ -79,10 +79,10 @@ echo $server->handle();]]></programlisting>
         </para>
 
         <itemizedlist>
-            <listitem><para>dateTime.iso8601, a string formatted as
+            <listitem><para>dateTime.iso8601, łańcuch znaków sformatowany jako
                     YYYYMMDDTHH:mm:ss</para></listitem>
-            <listitem><para>base64, base64 encoded data</para></listitem>
-            <listitem><para>struct, any associative array</para></listitem>
+            <listitem><para>base64, dane zakodowane jako base64</para></listitem>
+            <listitem><para>struct, dowolna tablica asocjacyjna</para></listitem>
         </itemizedlist>
 
         <para>
@@ -91,11 +91,11 @@ echo $server->handle();]]></programlisting>
 
         <programlisting role="php"><![CDATA[<?php
 /**
-* This is a sample function
+* To jest przykładowa funkcja
 *
-* @param base64 $val1 Base64-encoded data
-* @param dateTime.iso8601 $val2 An ISO date
-* @param struct $val3 An associative array
+* @param base64 $val1 Dane zakodowane jako Base64
+* @param dateTime.iso8601 $val2 Data ISO
+* @param struct $val3 Tablica asocjacyjna
 * @return struct
 */
 function myFunc($val1, $val2, $val3)
@@ -120,11 +120,11 @@ function myFunc($val1, $val2, $val3)
 
         <programlisting role="php"><![CDATA[<?php
 /**
-* This is a sample function
+* To jest przykładowa funkcja
 *
-* @param string|base64 $val1 String or base64-encoded data
-* @param string|dateTime.iso8601 $val2 String or an ISO date
-* @param array|struct $val3 Normal indexed array or an associative array
+* @param string|base64 $val1 Łańcuch znaków lub dane zakodowane jako base64
+* @param string|dateTime.iso8601 $val2 Łańcuch znaków lub data ISO
+* @param array|struct $val3 Normalnie indeksowana tablica lub tablica asocjacyjna
 * @return boolean|struct
 */
 function myFunc($val1, $val2, $val3)
@@ -167,16 +167,16 @@ function myFunc($val1, $val2, $val3)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// All public methods in My_Service_Class will be accessible as
+// Wszystkie publiczne metody klasy My_Service_Class będą dostępne jako
 // myservice.METHODNAME
 $server->setClass('My_Service_Class', 'myservice');
 
-// Function 'somefunc' will be accessible as funcs.somefunc
+// Funkcja 'somefunc' będzie dostępna jako funcs.somefunc
 $server->addFunction('somefunc', 'funcs');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.request">
-        <title>Custom Request Objects</title>
+        <title>Własny obiekt żądania</title>
 
         <para>
             Most of the time, you'll simply use the default request type
@@ -192,7 +192,7 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.response">
-        <title>Custom Responses</title>
+        <title>Własne odpowiedzi</title>
 
         <para>
             Similar to request objects, Zend_XmlRpc_Server can return custom
@@ -203,8 +203,8 @@ $server->addFunction('somefunc', 'funcs');]]></programlisting>
         </para>
 
         <para>
-            To use a custom response class, use
-            Zend_XmlRpc_Server::setResponseClass() prior to calling handle().
+            Aby użyć własnej klasy odpowiedzi, użyj metody
+            Zend_XmlRpc_Server::setResponseClass() przed wywołaniem handle().
         </para>
     </sect2>
 
@@ -246,7 +246,7 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></prog
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.caching">
-        <title>Caching Server Definitions Between Requests</title>
+        <title>Buforowanie definicjami serwera pomiędzy żądaniami</title>
         <para>
             Attaching many classes to an XML-RPC server instance can utilize a
             lot of resources; each class must introspect using the Reflection
@@ -259,7 +259,7 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></prog
             combined with __autoload(), this can greatly increase performance.
         </para>
         <para>
-            An sample usage follows:
+            Przykładowe użycie:
         </para>
         <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
@@ -279,9 +279,9 @@ if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
     require_once 'My/Services/Paste.php';
     require_once 'My/Services/Tape.php';
 
-    $server->setClass('My_Services_Glue', 'glue');   // glue. namespace
-    $server->setClass('My_Services_Paste', 'paste'); // paste. namespace
-    $server->setClass('My_Services_Tape', 'tape');   // tape. namespace
+    $server->setClass('My_Services_Glue', 'glue');   // przestrzeń nazwa glue
+    $server->setClass('My_Services_Paste', 'paste'); // przestrzeń nazwa paste
+    $server->setClass('My_Services_Tape', 'tape');   // przestrzeń nazwa tape
 
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server);
 }
@@ -297,14 +297,14 @@ echo $server->handle();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.use">
-        <title>Usage Examples</title>
+        <title>Przykład użycia</title>
         <para>
             Below are several usage examples, showing the full spectrum of
             options available to developers. Usage examples will each build
             on the previous example provided.
         </para>
         <sect3 id="zend.xmlrpc.server.use.case1">
-            <title>Basic Usage</title>
+            <title>Podstawowe użycie</title>
 
             <para>
                 The example below attaches a function as a dispatchable XML-RPC
@@ -315,10 +315,10 @@ echo $server->handle();]]></programlisting>
 require_once 'Zend/XmlRpc/Server.php';
 
 /**
- * Return the MD5 sum of a value
+ * Zwraca sumę MD5 zadanej wartości
  *
- * @param string $value Value to md5sum
- * @return string MD5 sum of value
+ * @param string $value wartość do obliczenia sumy md5
+ * @return string MD5 suma wartości
  */
 function md5Value($value)
 {
@@ -331,7 +331,7 @@ echo $server->handle();]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case2">
-            <title>Attaching a class</title>
+            <title>Dołączanie klasy</title>
 
             <para>
                 The example below illustrates attaching a class' public methods
@@ -348,7 +348,7 @@ echo $server->handle();]]></programlisting>
         </sect3>
 
         <sect3 id="zend.xmlrpc.server.use.case3">
-            <title>Attaching several classes using namespaces</title>
+            <title>Dołączanie wielu klas używając przestrzeni nazw</title>
 
             <para>
                 The example below illustrates attaching several classes, each
@@ -362,9 +362,9 @@ require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-$server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-$server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+$server->setClass('Services_Comb', 'comb');   // metody wywoływane jako comb.*
+$server->setClass('Services_Brush', 'brush'); // metody wywoływane jako brush.*
+$server->setClass('Services_Pick', 'pick');   // metody wywoływane jako pick.*
 echo $server->handle();]]></programlisting>
         </sect3>
 
@@ -388,9 +388,9 @@ require_once 'Services/Pick.php';
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-$server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-$server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+$server->setClass('Services_Comb', 'comb');   // metody wywoływane jako comb.*
+$server->setClass('Services_Brush', 'brush'); // metody wywoływane jako brush.*
+$server->setClass('Services_Pick', 'pick');   // metody wywoływane jako pick.*
 echo $server->handle();]]></programlisting>
         </sect3>
 
@@ -415,11 +415,11 @@ require_once 'Services/Pick.php';
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-$server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-$server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+$server->setClass('Services_Comb', 'comb');   // metody wywoływane jako comb.*
+$server->setClass('Services_Brush', 'brush'); // metody wywoływane jako brush.*
+$server->setClass('Services_Pick', 'pick');   // metody wywoływane jako pick.*
 
-// Create a request object
+// Tworzenie obiektu żądania
 $request = new Services_Request();
 
 echo $server->handle($request);]]></programlisting>
@@ -447,11 +447,11 @@ require_once 'Services/Pick.php';
 Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
-$server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-$server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-$server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+$server->setClass('Services_Comb', 'comb');   // metody wywoływane jako comb.*
+$server->setClass('Services_Brush', 'brush'); // metody wywoływane jako brush.*
+$server->setClass('Services_Pick', 'pick');   // metody wywoływane jako pick.*
 
-// Create a request object
+// Utwórz obiekt żądania
 $request = new Services_Request();
 
 // Utilize a custom response
@@ -479,7 +479,7 @@ require_once 'Services/Comb.php';
 require_once 'Services/Brush.php';
 require_once 'Services/Pick.php';
 
-// Specify a cache file
+// Określ plik cache
 $cacheFile = dirname(__FILE__) . '/xmlrpc.cache';
 
 // Allow Services_Exceptions to report as fault responses
@@ -487,17 +487,17 @@ Zend_XmlRpc_Server_Fault::attachFaultException('Services_Exception');
 
 $server = new Zend_XmlRpc_Server();
 
-// Attempt to retrieve server definition from cache
+// Spróbuj pobrać definicje serwera z bufora
 if (!Zend_XmlRpc_Server_Cache::get($cacheFile, $server)) {
-    $server->setClass('Services_Comb', 'comb');   // methods called as comb.*
-    $server->setClass('Services_Brush', 'brush'); // methods called as brush.*
-    $server->setClass('Services_Pick', 'pick');   // methods called as pick.*
+    $server->setClass('Services_Comb', 'comb');   // metody wywoływane jako comb.*
+    $server->setClass('Services_Brush', 'brush'); // metody wywoływane jako brush.*
+    $server->setClass('Services_Pick', 'pick');   // metody wywoływane jako pick.*
 
-    // Save cache
+    // Zapisz cache
     Zend_XmlRpc_Server_Cache::save($cacheFile, $server));
 }
 
-// Create a request object
+// Utwórz obiekt żądania
 $request = new Services_Request();
 
 // Utilize a custom response
