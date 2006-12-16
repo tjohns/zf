@@ -316,10 +316,10 @@ class Zend_Search_Lucene_Index_Writer
         // Get exclusive index lock
         // Wait, until all parallel searchers or indexers won't stop
         // and stop all next searchers, while we are updating segments file
-        $lock = $this->_directory->getFileObject('index.lock');
-        if (!$lock->lock(LOCK_EX)) {
-            throw new Zend_Search_Lucene_Exception('Can\'t obtain exclusive index lock');
-        }
+//        $lock = $this->_directory->getFileObject('index.lock');
+//        if (!$lock->lock(LOCK_EX)) {
+//            throw new Zend_Search_Lucene_Exception('Can\'t obtain exclusive index lock');
+//        }
 //        echo "obtained " . microtime(true) . "\n";
 
 
@@ -397,7 +397,7 @@ class Zend_Search_Lucene_Index_Writer
 
 //        echo "Exclusive Index Lock...  ";
         // Switch back to shared lock mode
-        $lock->lock(LOCK_SH);
+//        $lock->lock(LOCK_SH);
 //        echo "removed " . microtime(true) . "\n";
 
     }

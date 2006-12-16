@@ -151,7 +151,7 @@ class Zend_Search_Lucene
         // Get shared lock to the index
         // Wait if index is under switching from one set of segments to another (Index_Writer::_updateSegments())
         $this->_lock = $this->_directory->createFile('index.lock');
-        if (!$this->_lock->lock(LOCK_SH)) {
+        if (!$this->_lock->lock(LOCK_EX)) {
             throw new Zend_Search_Lucene_Exception('Can\'t obtain shared index lock');
         }
 //        echo "OK \n";
@@ -855,15 +855,8 @@ class Zend_Search_Lucene
         $this->commit();
 
         if (count($this->_segmentInfos) > 1 || $this->hasDeletions()) {
-            // Try to get exclusive non-blocking lock to the 'index.optimization.lock'
-            // Skip optimization if it's performed by other process right now
-            $optimizationLock = $this->_directory->createFile('index.optimization.lock');
-            if ($optimizationLock->lock(LOCK_EX,true)) {
-                $this->getIndexWriter()->optimize();
-                $this->_updateDocCount();
-
-                $optimizationLock->unlock();
-            }
+            $this->getIndexWriter()->optimize();
+            $this->_updateDocCount();
         }
     }
 
