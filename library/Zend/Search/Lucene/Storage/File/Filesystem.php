@@ -100,6 +100,17 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
         return ftell($this->_fileHandle);
     }
 
+    /**
+     * Flush output.
+     *
+     * Returns true on success or false on failure.
+     *
+     * @return boolean
+     */
+    public function flush()
+    {
+        return fflush($this->_fileHandle);
+    }
 
     /**
      * Close File object

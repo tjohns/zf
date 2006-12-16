@@ -70,6 +70,15 @@ abstract class Zend_Search_Lucene_Storage_File
     abstract public function tell();
 
     /**
+     * Flush output.
+     *
+     * Returns true on success or false on failure.
+     *
+     * @return boolean
+     */
+    abstract public function flush();
+
+    /**
      * Writes $length number of bytes (all, if $length===null) to the end
      * of the file.
      *

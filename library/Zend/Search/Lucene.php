@@ -147,14 +147,12 @@ class Zend_Search_Lucene
         }
 
 
-//        echo "Shared lock.... " . microtime(true) . " ";
-        // Get shared lock to the index
+        // Get a shared lock to the index
         // Wait if index is under switching from one set of segments to another (Index_Writer::_updateSegments())
         $this->_lock = $this->_directory->createFile('index.lock');
-        if (!$this->_lock->lock(LOCK_EX)) {
+        if (!$this->_lock->lock(LOCK_SH)) {
             throw new Zend_Search_Lucene_Exception('Can\'t obtain shared index lock');
         }
-//        echo "OK \n";
 
         $this->_segmentInfos = array();
 
@@ -203,12 +201,8 @@ class Zend_Search_Lucene
     {
         $this->commit();
 
-//        echo "Shared lock...... " . microtime(true) . " ";
         // Free shared lock
         $this->_lock->unlock();
-//        echo "removed\n";
-
-
 
         if ($this->_closeDirOnExit) {
             $this->_directory->close();

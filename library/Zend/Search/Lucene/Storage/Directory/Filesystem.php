@@ -228,12 +228,12 @@ class Zend_Search_Lucene_Storage_Directory_Filesystem extends Zend_Search_Lucene
      */
     public function renameFile($from, $to)
     {
-        if ($this->_fileHandlers[$from] !== null) {
+        if (isset($this->_fileHandlers[$from])) {
             $this->_fileHandlers[$from]->close();
         }
         unset($this->_fileHandlers[$from]);
 
-        if ($this->_fileHandlers[$to] !== null) {
+        if (isset($this->_fileHandlers[$to])) {
             $this->_fileHandlers[$to]->close();
         }
         unset($this->_fileHandlers[$to]);
