@@ -196,11 +196,27 @@ class Zend_Gdata_Base extends Zend_Gdata
     }
 
     /**
+     * @param string $value
+     */
+    public function setOrderby($value)
+    {
+        $this->orderby = $value;
+    }
+
+    /**
      * @return string category
      */
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * @return string category
+     */
+    public function getOrderby()
+    {
+        return $this->orderby;
     }
 
     /**

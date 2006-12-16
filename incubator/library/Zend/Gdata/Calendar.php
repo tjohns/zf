@@ -100,9 +100,12 @@ class Zend_Gdata_Calendar extends Zend_Gdata
      * @param string $xml
      * @return Zend_Http_Response
      */
-    public function post($xml)
+    public function post($xml, $uri = null)
     {
-        return parent::post($xml, self::CALENDAR_POST_URI);
+        if ($uri == null) {
+            $uri = self::CALENDAR_POST_URI;
+        }
+        return parent::post($xml, $uri);
     }
 
     public function setComments($value)
@@ -204,7 +207,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
                 $var = "_$var";
                 break;
             case 'orderby':
-                if (!Zend_Gdata_Data::isValid($value, $var)) {
+                if (!Zend_Gdata_Data::isValid($value, 'orderby#calendar')) {
                     throw Zend::exception('Zend_Gdata_Exception', "Unsupported $var value: '$value'");
                 }
                 break;

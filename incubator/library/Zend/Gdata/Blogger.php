@@ -32,7 +32,7 @@ require_once 'Zend/Gdata.php';
  */
 class Zend_Gdata_Blogger extends Zend_Gdata
 {
-    const BLOG_LIST_URI = 'http://www.blogger.com/feeds/default/blogs';
+    const BLOGGER_LIST_URI = 'http://www.blogger.com/feeds/default/blogs';
 
     /**
      * @return string blogname
@@ -61,8 +61,25 @@ class Zend_Gdata_Blogger extends Zend_Gdata
      */
     public function getBlogListFeed()
     {
-        $uri = self::BLOG_LIST_URI;
+        $uri = self::BLOGGER_LIST_URI;
         return parent::getFeed($uri);
+    }
+
+    /**
+     * POST xml data to Google with authorization headers set
+     *
+     * @param string $xml
+     * @return Zend_Http_Response
+     */
+    public function post($xml, $uri = null)
+    {
+        if (!isset($this->blogName)) {
+            throw Zend::exception('Zend_Gdata_Exception', 'You must specify a blog name.');
+        }
+        if ($uri == null) {
+            $uri = "http://www.blogger.com/feeds/{$this->blogName}/posts/default";
+        }
+        return parent::post($xml, $uri);
     }
 
     /**

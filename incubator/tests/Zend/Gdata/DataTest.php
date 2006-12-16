@@ -53,7 +53,11 @@ class Zend_Gdata_DataTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue(Zend_Gdata_Data::isValid(Zend_Gdata_Data::LINK_ONLINE_LOCATION, 'link#gdata'));
 
-        $this->assertTrue(Zend_Gdata_Data::isValid(Zend_Gdata_Data::ORDERBY_STARTTIME, 'orderby'));
+        $this->assertTrue(Zend_Gdata_Data::isValid(Zend_Gdata_Data::ORDERBY_MODIFICATION_TIME, 'orderby#base'));
+        $this->assertTrue(Zend_Gdata_Data::isValid(Zend_Gdata_Data::ORDERBY_NAME, 'orderby#base'));
+        $this->assertTrue(Zend_Gdata_Data::isValid(Zend_Gdata_Data::ORDERBY_RELEVANCY, 'orderby#base'));
+
+        $this->assertTrue(Zend_Gdata_Data::isValid(Zend_Gdata_Data::ORDERBY_STARTTIME, 'orderby#calendar'));
 
         $this->assertTrue(Zend_Gdata_Data::isValid(Zend_Gdata_Data::PHONE_CAR, 'phoneNumber'));
         $this->assertTrue(Zend_Gdata_Data::isValid(Zend_Gdata_Data::PHONE_FAX, 'phoneNumber'));
@@ -133,7 +137,10 @@ class Zend_Gdata_DataTest extends PHPUnit_Framework_TestCase
         $array = Zend_Gdata_Data::getValues('link#gdata');
         $this->assertTrue(is_array($array) && count($array) == 1);
 
-        $array = Zend_Gdata_Data::getValues('orderby');
+        $array = Zend_Gdata_Data::getValues('orderby#base');
+        $this->assertTrue(is_array($array) && count($array) == 3);
+
+        $array = Zend_Gdata_Data::getValues('orderby#calendar');
         $this->assertTrue(is_array($array) && count($array) == 1);
 
         $array = Zend_Gdata_Data::getValues('phoneNumber');

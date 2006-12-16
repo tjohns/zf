@@ -51,6 +51,9 @@ class Zend_Gdata_Data
     const LINK_SELF                    = 'self';
     const LINK_VIA                     = 'via';
 
+    const ORDERBY_MODIFICATION_TIME    = 'modification-time';
+    const ORDERBY_NAME                 = 'name';
+    const ORDERBY_RELEVANCY            = 'relevancy';
     const ORDERBY_STARTTIME            = 'starttime';
 
     const PHONE_CAR                    = 'car';
@@ -135,7 +138,12 @@ class Zend_Gdata_Data
         'link#gdata' => array(
             self::LINK_ONLINE_LOCATION
         ),
-        'orderby' => array(
+        'orderby#base' => array(
+            self::ORDERBY_MODIFICATION_TIME,
+            self::ORDERBY_NAME,
+            self::ORDERBY_RELEVANCY
+        ),
+        'orderby#calendar' => array(
             self::ORDERBY_STARTTIME
         ),
         'phoneNumber' => array(

@@ -36,7 +36,6 @@ require_once 'Zend/Console/GetoptTest.php';
 require_once 'Zend/Currency/AllTests.php';
 require_once 'Zend/DateTest.php';
 require_once 'Zend/Date/AllTests.php';
-require_once 'Zend/Gdata/AllTests.php';
 require_once 'Zend/LocaleTest.php';
 require_once 'Zend/Locale/AllTests.php';
 require_once 'Zend/Mail/AllTests.php';
@@ -73,7 +72,6 @@ class Zend_AllTests
         $suite->addTest(Zend_Currency_AllTests::suite());
         $suite->addTestSuite('Zend_DateTest');
         $suite->addTest(Zend_Date_AllTests::suite());
-        $suite->addTest(Zend_Gdata_AllTests::suite());
         $suite->addTestSuite('Zend_LocaleTest');
         $suite->addTest(Zend_Locale_AllTests::suite());
         $suite->addTest(Zend_Mail_AllTests::suite());
