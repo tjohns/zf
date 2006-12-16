@@ -1,6 +1,30 @@
 Zend Framework                                                             NEWS
 |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 
+=RELEASE 0.6.0 / 16-Dec-2006=
+- Zend_Acl: new architecture (incubator).
+- Zend_Auth: new component (incubator).
+- Zend_Cache_Backend_ZendPlatform: new class (incubator).
+- Zend_Console_Getopt: new component (incubator).
+- Zend_Db_Adapter_Oci: new database adapter.
+- Zend_Gdata: new component integrated into core library.
+- Zend_Http_Client: new architecture, cookie support.
+- Zend_Http_Client: proxy server support (incubator)
+- Zend_Http_Server: new tool (incubator).
+- New I18N components Zend_Date, Zend_Locale, Zend_Measure (incubator).
+- Zend_Mail_Folder: new component (incubator).
+- MVC: improvements, documentation, moved to core library.
+- Zend_Registry: improvements, moved to core library.
+- Zend_Search_Lucene: new search query language, many improvements.
+- Zend_Service_Simpy: new component (incubator).
+- Zend_Session: new implementation (incubator).
+- Zend_TimeSync: new component (incubator).
+- Zend_Uri: new documentation.
+- Zend_XmlRpc_Client,Server: improvements, documentation, moved to core library.
+- Many improvements to documentation and testing coverage.
+- 135 issues resolved; for a detailed list, see the changelog
+  in the issue tracker at http://framework.zend.com/issues
+
 =RELEASE 0.2.0 / 29-Oct-2006=
 - New MVC implementation
 - New HTTP request and response objects make it easy to automate unit
