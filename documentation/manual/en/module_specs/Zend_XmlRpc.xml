@@ -3,7 +3,7 @@
 
     <para>
         From its <ulink url="http://www.xmlrpc.com/">home page</ulink>,
-        XML-RPC described as a "...remote procedure calling using HTTP as the
+        XML-RPC is described as a "...remote procedure calling using HTTP as the
         transport and XML as the encoding. XML-RPC is designed to be as simple
         as possible, while allowing complex data structures to be transmitted,
         processed and returned."

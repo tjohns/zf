@@ -82,11 +82,11 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
         </example>
         
         <para>
-            The remote method doesn't require parameters, this optional
+            If the remote method doesn't require parameters, this optional
             parameter may either be left out or an empty <code>array()</code>
             passed to it. The array of parameters for the remote method can
             contain native PHP types, <code>Zend_XmlRpc_Value</code>
-            objects, or a mix each.
+            objects, or a mix of each.
         </para>
 
         <para>
@@ -104,7 +104,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
         <para>
             Some remote method calls require parameters.  These are given to
             the <code>call()</code> method of <code>Zend_XmlRpc_Client</code>
-            as an array in the second parameter.  They each parameter may be
+            as an array in the second parameter.  Each parameter may be
             given as either a native PHP type which will be automatically
             converted, or as an object representing a specific XML-RPC type
             (one of the <code>Zend_XmlRpc_Value</code> objects).
