@@ -90,6 +90,20 @@
         &module_specs.Zend_Filter;
         &module_specs.Zend_Filter_Input;
     </chapter>
+    <chapter id="zend.gdata">
+        <title>Zend_Gdata</title>
+        &module_specs.Zend_Gdata-Introduction;
+        &module_specs.Zend_Gdata_AuthSub;
+        &module_specs.Zend_Gdata_ClientLogin;
+        &module_specs.Zend_Gdata_Base;
+        &module_specs.Zend_Gdata_Blogger;
+        &module_specs.Zend_Gdata_Calendar;
+        &module_specs.Zend_Gdata_CodeSearch;
+        <!--
+        &module_specs.Zend_Gdata_Spreadsheets;
+        -->
+        &module_specs.Zend_Gdata_Data;
+    </chapter>
     <chapter id="zend.http">
         <title>Zend_Http</title>
         &module_specs.Zend_Http_Client;

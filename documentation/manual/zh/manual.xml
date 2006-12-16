@@ -63,6 +63,7 @@
         &module_specs.Zend_Controller-Subclassing;
         &module_specs.Zend_Controller-ProvidedSubclasses;
         &module_specs.Zend_Controller-Plugins;
+        &module_specs.Zend_Controller-Migration;
     </chapter>
     <chapter id="zend.db">
         <title>Zend_Db</title>
@@ -89,10 +90,25 @@
         &module_specs.Zend_Filter;
         &module_specs.Zend_Filter_Input;
     </chapter>
+    <chapter id="zend.gdata">
+        <title>Zend_Gdata</title>
+        &module_specs.Zend_Gdata-Introduction;
+        &module_specs.Zend_Gdata_AuthSub;
+        &module_specs.Zend_Gdata_ClientLogin;
+        &module_specs.Zend_Gdata_Base;
+        &module_specs.Zend_Gdata_Blogger;
+        &module_specs.Zend_Gdata_Calendar;
+        &module_specs.Zend_Gdata_CodeSearch;
+        <!--
+        &module_specs.Zend_Gdata_Spreadsheets;
+        -->
+        &module_specs.Zend_Gdata_Data;
+    </chapter>
     <chapter id="zend.http">
         <title>Zend_Http</title>
         &module_specs.Zend_Http_Client;
         &module_specs.Zend_Http_Response;
+        &module_specs.Zend_Http_Cookie_Handling;
     </chapter>
     <chapter id="zend.json">
         <title>Zend_Json</title>
@@ -155,6 +171,10 @@
         &module_specs.Zend_Service_Amazon;
         &module_specs.Zend_Service_Flickr;
         &module_specs.Zend_Service_Yahoo;
+    </chapter>
+    <chapter id="zend.uri">
+        <title>Zend_Uri</title>
+        &module_specs.Zend_Uri;
     </chapter>
     <chapter id="zend.view">
         <title>Zend_View</title>
