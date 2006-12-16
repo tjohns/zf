@@ -2,28 +2,28 @@
     <title>Zend::registry()</title>
 
     <para>
-    Returns an object in the registry or lists all objects in the registry.
+    Returns a value in the registry or the registry itself.
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 
-Zend::registry($name=null)
+Zend::registry($index=null)
 
 ?>]]></programlisting>
 
     <para>
-    If the <code>$name</code> argument is <code>NULL</code>, an array will be returned where the keys to the array
-    are the names of the objects in the registry and the values are the class names of those objects.
+    If the <code>$index</code> argument is <code>NULL</code>, the registry will be returned (a subclass
+    ArrayObject.
     </para>
 
     <para>
-    If <code>$name</code> is a string, the object handle assigned to that name will be returned.  If
-    an object does not exist in the registry with that <code>$name</code>, a
+    If <code>$index</code> is a string, the value assigned to that index will be returned.  If
+    an object does not exist in the registry with that <code>$index</code>, a
     <code>Zend_Exception</code> will be thrown.
     </para>
 
     <para>
-    To quickly determine if an object is present in the registry, use Zend::isRegistered().
+    To quickly determine if an index is present in the registry, use Zend::isRegistered().
     </para>
 </sect1>
 <!--
