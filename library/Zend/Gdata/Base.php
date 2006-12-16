@@ -81,9 +81,11 @@ class Zend_Gdata_Base extends Zend_Gdata
      *
      * @return Zend_Feed
      */
-    public function getFeed()
+    public function getFeed($uri = null)
     {
-        $uri = self::BASE_FEED_URI;
+        if ($uri == null) {
+            $uri = self::BASE_FEED_URI;
+        }
         /*
         if (isset($this->_params['_entry'])) {
             $uri .= '/' . $this->_params['_entry'];

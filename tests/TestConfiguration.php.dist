@@ -2,11 +2,13 @@
 /**
  * @package UnitTests
  *
- * This file defines configuration for running the unit tests for the Zend Framework.
- * Some tests have dependencies to PHP extensions or databases which may not necessary
- * installed on the target system.  For these cases, the ability to disable or configure
- * testing is provided below.  Tests for components which should run universally, such
- * as "Zend" or "Zend_InputFilter", are always run by the master suite and cannot be disabled.
+ * This file defines configuration for running the unit tests for the Zend
+ * Framework.  Some tests have dependencies to PHP extensions or databases
+ * which may not necessary installed on the target system.  For these cases,
+ * the ability to disable or configure testing is provided below.  Tests for
+ * components which should run universally, such as "Zend" or
+ * "Zend_InputFilter", are always run by the master suite and cannot be
+ * disabled.
  */
 
 /**
@@ -69,6 +71,20 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_DATABASE', 'test');
  */
 define('TESTS_ZEND_HTTP_CLIENT_BASEURI', false);
 
+/**
+ * Zend_Gdata tests
+ *
+ * If the CLIENTLOGIN_ENABLED property below is false, the authenticated
+ * tests are reported Skipped in the test run.  Set this property to true
+ * to enable tests that require ClientLogin authentication.  Enter your
+ * Google login credentials in the EMAIL and PASSWORD properties below.
+ *
+ * Edit TestConfiguration.php, not TestConfiguration.php.dist.
+ * Never commit plaintext passwords to the source code repository.
+ */
+define('TESTS_ZEND_GDATA_CLIENTLOGIN_ENABLED', false);
+define('TESTS_ZEND_GDATA_CLIENTLOGIN_EMAIL', 'example@example.com');
+define('TESTS_ZEND_GDATA_CLIENTLOGIN_PASSWORD', 'xxxxxxxx');
 
 /**
  * PHPUnit Code Coverage / Test Report
