@@ -145,7 +145,7 @@ class Zend_Session implements IteratorAggregate
      *
      * @param int $hops        - how many "hops" (number of subsequent requests) before expiring
      * @param mixed $variables - OPTIONAL list of variables to expire (defaults to all)
-     * @param boolean $hop_count_on_usage_only
+     * @param boolean $hopCountOnUsageOnly - OPTIONAL if set, only count a hop/request if this namespace is used
      * @return void
      */
     public function setExpirationHops($hops, $variables = null, $hopCountOnUsageOnly = false)

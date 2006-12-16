@@ -17,8 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Session.php 2060 2006-12-02 19:41:07Z gavin $
- * @since      Preview Release 0.2
+ * @version    $Id$
  */
 
 // http://en.wikipedia.org/wiki/White_box_testing
@@ -26,28 +25,6 @@
 require_once 'PathHelper.php';
 require_once 'Zend.php';
 require_once 'Zend/Session.php';
-
-/*
-ob_start();
-    var_dump(headers_sent());
-if (headers_sent($filename, $linenum)) echo __FILE__,__LINE__, "Headers sent: $filename/$linenum\n";
-    
-if (headers_sent($filename, $linenum)) echo __FILE__,__LINE__, "Headers sent: $filename/$linenum\n";
-require_once 'Zend.php';
-if (headers_sent($filename, $linenum)) echo __FILE__,__LINE__, "Headers sent: $filename/$linenum\n";
-require 'Zend/Session.php';
-if (headers_sent($filename, $linenum)) echo __FILE__,__LINE__, "Headers sent: $filename/$linenum\n";
-    var_dump(headers_sent());
-echo "nowtime=",time();
-       $s = new Zend_Session('expireAll');
-       echo "time1=",$s->time,"\n";
-       $s->time = time();
-       echo "time2=",$s->time,"\n";
-if (headers_sent($filename, $linenum)) echo __FILE__,__LINE__, "Headers sent: $filename/$linenum\n";
-ob_end_flush();
-echo "done";
-exit;
-*/
 
 if ($argc < 2) {
     echo "usage: $argv[0] <test name>\n";

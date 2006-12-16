@@ -17,8 +17,7 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Session.php 2060 2006-12-02 19:41:07Z gavin $
- * @since      Preview Release 0.2
+ * @version    $Id$
  */
 
 class Zend_Session_PathHelper
@@ -47,12 +46,13 @@ class Zend_Session_PathHelper
 
         self::$pathIncubatorTests = self::$pathIncubator . DIRECTORY_SEPARATOR . 'tests';
 
-        set_include_path( self::$pathCwd . PATH_SEPARATOR
+        $path=self::$pathCwd . PATH_SEPARATOR
             . self::$pathIncubatorTests . PATH_SEPARATOR
             . self::$pathIncubatorLibrary .  PATH_SEPARATOR
             . self::$pathLibrary .  PATH_SEPARATOR
-            . get_include_path()
-        );
+            . get_include_path();
+
+        set_include_path($path);
 
     }
 }

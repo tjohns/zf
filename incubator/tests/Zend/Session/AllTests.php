@@ -17,11 +17,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Session.php 2060 2006-12-02 19:41:07Z gavin $
- * @since      Preview Release 0.2
+ * @version    $Id$
  */
-
-require_once 'PathHelper.php';
 
 define('TESTS_GENERATE_REPORT_TARGET', '/var/www/html/tests');
 
@@ -33,6 +30,9 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 error_reporting ( E_ALL | E_STRICT );
+
+#class Zend_Session_PathHelper {}
+require_once 'PathHelper.php';
 
 class Zend_Session_AllTests extends Zend_Session_PathHelper
 {
@@ -53,11 +53,17 @@ class Zend_Session_AllTests extends Zend_Session_PathHelper
 
         $suite->addTestSuite('Zend_SessionTest');
         #$suite->addTestSuite('Zend_Session_CoreTest');
-        #$suite->addTestSuite('Zend_Session_Test');
 
         return $suite;
     }
 
+    /*
+     * Enable whitebox testing by making class extendable,
+     * and converting private members to protected.
+     *
+     * @param string $filename - enable whitebox testing on code in $filename
+     * @return bool            - successfully created whitebox test file?
+     */
     protected static function buildSessionTestFile($filename)
     {
         $filename = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Core.php';
@@ -79,18 +85,13 @@ class Zend_Session_AllTests extends Zend_Session_PathHelper
     	    $line = rtrim($line);
     	
     	    if ($line === 'final class Zend_Session_Core') {
-    	
     	        fputs($out, "class Zend_Session_Core\n");
-    	
     	    } else {
-    
-    	        if (false === fputs($out, (preg_replace('/^(\s*)static private\s/', '\1static protected ', $line)."\n"))) {
-
+    	        if (false === fputs($out, (preg_replace('/^(\s*)static private\s/',
+                    '\1static protected ', $line)."\n"))) {
                     return false;
-    	
     	        }
     	    }
-    	
         }
 
         return true;
