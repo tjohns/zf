@@ -37,8 +37,6 @@ require_once 'Zend/Gdata/ClientLogin.php';
  */
 $email = 'example@example-domain.com';
 $passwd = 'xxxxxxxx';
-$email = 'bill@karwin.com';
-$passwd = 'Leilaa2';
 if ($passwd == 'xxxxxxxx') {
     echo "<h1>Configuration incomplete</h1>\n";
     echo "<p>You need to edit the script for this demo and enter your Google account credentials to make this demo work.</p>\n";
