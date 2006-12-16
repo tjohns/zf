@@ -103,7 +103,7 @@
 
     </sect2>
 
-    <sect2 id="zend.gdata.introduction.parameters">
+    <sect2 id="zend.gdata.introduction.creation">
         <title>Creating a new Gdata client</title>
 
         <para>

@@ -79,7 +79,7 @@ $cal = new Zend_Gdata_Calendar($client);
 
     </sect2>
 
-    <sect2 id="zend.gdata.clientlogin.login">
+    <sect2 id="zend.gdata.clientlogin.terminating">
         <title>Terminating a ClientLogin authenticated Http Client</title>
 
         <para>

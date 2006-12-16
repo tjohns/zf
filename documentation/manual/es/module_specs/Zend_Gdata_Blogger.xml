@@ -15,7 +15,7 @@
         for more information about the Google Blogger API.
     </para>
 
-    <sect2 id="zend.gdata.blogger.query">
+    <sect2 id="zend.gdata.blogger.compatibility">
         <title>Understanding Blogger version compatibility</title>
 
         <para>
@@ -96,7 +96,7 @@
             Use the <code>setBlogName()</code> method to specify the name of
             a blog.  This is the name that appears in a blogspot URL,
             for example:
-            <code>http://<emphasis>blogname</emphasis>.blogspot.com.</code>
+            <code>http://blogname.blogspot.com.</code>
             You can also specify the name of the blog when you request
             a feed.
         </para>
