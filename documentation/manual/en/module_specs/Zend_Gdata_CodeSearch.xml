@@ -24,7 +24,7 @@
 $gdataCode = new Zend_Gdata_CodeSearch();
 $gdataCode->setQuery('malloc');
 $gdataCode->setMaxResults(20);
-$feed = $gdataCode->getFeed();
+$feed = $gdataCode->getCodeSearchFeed();
 ?>]]></programlisting>
 
     <para>

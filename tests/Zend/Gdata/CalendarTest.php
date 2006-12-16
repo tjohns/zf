@@ -51,7 +51,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->gdata->formatTimestamp($updatedMin), $this->gdata->getUpdatedMin());
         $this->assertEquals($this->gdata->formatTimestamp($updatedMax), $this->gdata->getUpdatedMax());
 
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getCalendarFeed();
         $this->assertEquals(7, $feed->count());
 
         unset($this->gdata->updatedMin);
@@ -73,7 +73,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->gdata->formatTimestamp($startMin), $this->gdata->getStartMin());
         $this->assertEquals($this->gdata->formatTimestamp($startMax), $this->gdata->getStartMax());
 
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getCalendarFeed();
         $this->assertEquals(1, $feed->count());
 
         unset($this->gdata->startMin);
@@ -93,7 +93,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($this->gdata->visibility));
         $this->assertEquals($visibility, $this->gdata->getVisibility());
         try {
-            $feed = $this->gdata->getFeed();
+            $feed = $this->gdata->getCalendarFeed();
         } catch (Zend_Feed_Exception $e) {
             $this->assertContains('response code 401', $e->getMessage());
         }
@@ -109,7 +109,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->gdata->setProjection($projection);
         $this->assertTrue(isset($this->gdata->projection));
         $this->assertEquals($projection, $this->gdata->getProjection());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getCalendarFeed();
         foreach ($feed as $feedItem) {
             // echo $this->xml->formatString($feedItem->saveXML());
             $gdc = 'gd:comments';
@@ -132,7 +132,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->gdata->setOrderby($orderby);
         $this->assertTrue(isset($this->gdata->orderby));
         $this->assertEquals($orderby, $this->gdata->getOrderby());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getCalendarFeed();
         $prevTs = time();
         foreach ($feed as $feedItem) {
             // echo $this->xml->formatString($feedItem->saveXML());
@@ -155,7 +155,7 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->gdata->setEvent(self::ZEND_CONFERENCE_EVENT);
         $this->assertTrue(isset($this->gdata->event));
         $this->assertEquals(self::ZEND_CONFERENCE_EVENT, $this->gdata->getEvent());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getCalendarFeed();
         foreach ($feed as $feedItem) {
             // echo $this->xml->formatString($feedItem->saveXML());
             $this->assertContains(self::ZEND_CONFERENCE_EVENT, $feedItem->id());

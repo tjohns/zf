@@ -18,6 +18,7 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+require_once('Zend/Gdata.php');
 require_once('Zend/Gdata/Data.php');
 
 /**
@@ -35,6 +36,8 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     const CALENDAR_FEED_URI = 'http://www.google.com/calendar/feeds';
     const CALENDAR_POST_URI = 'http://www.google.com/calendar/feeds/default/private/full';
 
+    protected $_defaultPostUri = self::CALENDAR_POST_URI;
+
     /**
      * Create Gdata_Calendar object
      */
@@ -49,9 +52,11 @@ class Zend_Gdata_Calendar extends Zend_Gdata
      *
      * @return Zend_Feed
      */
-    public function getFeed()
+    public function getCalendarFeed($uri = null)
     {
-        $uri = self::CALENDAR_FEED_URI;
+        if ($uri == null) {
+            $uri = self::CALENDAR_FEED_URI;
+        }
         if (isset($this->_params['_user'])) {
             $uri .= '/' . $this->_params['_user'];
         } else {
@@ -92,20 +97,6 @@ class Zend_Gdata_Calendar extends Zend_Gdata
             $uri .= '/default';
         }
         return parent::getFeed($uri);
-    }
-
-    /**
-     * POST xml data to Google with authorization headers set
-     *
-     * @param string $xml
-     * @return Zend_Http_Response
-     */
-    public function post($xml, $uri = null)
-    {
-        if ($uri == null) {
-            $uri = self::CALENDAR_POST_URI;
-        }
-        return parent::post($xml, $uri);
     }
 
     public function setComments($value)

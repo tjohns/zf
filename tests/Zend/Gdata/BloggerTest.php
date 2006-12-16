@@ -43,7 +43,7 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
         $this->gdata->setBlogName($blog);
         $this->assertTrue(isset($this->gdata->blogName));
         $this->assertEquals($blog, $this->gdata->getBlogName());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBloggerFeed();
         foreach ($feed as $feedEntry) {
             // echo $this->xml->formatString($feedEntry->saveXML());
             $author = $feedEntry->author;
@@ -57,7 +57,7 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
     {
         $this->gdata->resetParameters();
         $blog = 'karwin';
-        $feed = $this->gdata->getFeed($blog);
+        $feed = $this->gdata->getBloggerFeed($blog);
         $this->assertTrue(isset($this->gdata->blogName));
         $this->assertEquals($blog, $this->gdata->getBlogName());
         foreach ($feed as $feedEntry) {
@@ -78,7 +78,7 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
         $this->gdata->setMaxResults($max);
         $this->assertTrue(isset($this->gdata->maxResults));
         $this->assertEquals($max, $this->gdata->getMaxResults());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBloggerFeed();
         $this->assertEquals($max, $feed->count());
         foreach ($feed as $feedEntry) {
             // echo $this->xml->formatString($feedEntry->saveXML());
@@ -98,7 +98,7 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
         $this->gdata->setStartIndex($start);
         $this->assertTrue(isset($this->gdata->startIndex));
         $this->assertEquals($start, $this->gdata->getStartIndex());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBloggerFeed();
         foreach ($feed as $feedEntry) {
             // echo $this->xml->formatString($feedEntry->saveXML());
             $author = $feedEntry->author;
@@ -121,7 +121,7 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
         $this->gdata->setPublishedMax($max);
         $this->assertTrue(isset($this->gdata->publishedMax));
         $this->assertEquals($this->gdata->formatTimestamp($max), $this->gdata->getPublishedMax());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBloggerFeed();
         $this->assertEquals(1, $feed->count());
         foreach ($feed as $feedEntry) {
             // echo $this->xml->formatString($feedEntry->saveXML());
@@ -141,7 +141,7 @@ class Zend_Gdata_BloggerTest extends PHPUnit_Framework_TestCase
     {
         $this->gdata->resetParameters();
         try {
-            $feed = $this->gdata->getFeed();
+            $feed = $this->gdata->getBloggerFeed();
         } catch (Zend_Gdata_Exception $e) {
             $this->assertEquals('You must specify a blog name.', $e->getMessage());
         }

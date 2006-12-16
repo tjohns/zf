@@ -37,7 +37,7 @@ class Zend_Gdata_Blogger extends Zend_Gdata
     /**
      * @return string blogname
      */
-    public function getFeed($blogName = null)
+    public function getBloggerFeed($blogName = null)
     {
         if ($blogName != null) {
             $this->blogName = $blogName;
@@ -59,7 +59,7 @@ class Zend_Gdata_Blogger extends Zend_Gdata
     /**
      * @return string blogname
      */
-    public function getBlogListFeed()
+    public function getBloggerListFeed()
     {
         $uri = self::BLOGGER_LIST_URI;
         return parent::getFeed($uri);

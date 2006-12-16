@@ -52,7 +52,7 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         $this->gdata->setQuery($query);
         $this->assertTrue(isset($this->gdata->query));
         $this->assertEquals($query, $this->gdata->getQuery());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBaseFeed();
         foreach ($feed as $feedEntry) {
             $linkList = $feedEntry->link();
             $href = $linkList[0]->getAttribute('href');
@@ -71,7 +71,7 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         $this->gdata->setAlt($alt);
         $this->assertTrue(isset($this->gdata->alt));
         $this->assertEquals($alt, $this->gdata->getAlt());
-        $channel = $this->gdata->getFeed();
+        $channel = $this->gdata->getBaseFeed();
         foreach ($channel as $item) {
             $link = $item->link();
             $this->assertRegExp('|http://.*|', $link);
@@ -89,7 +89,7 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         $this->gdata->setCategory($category);
         $this->assertTrue(isset($this->gdata->category));
         $this->assertEquals($category, $this->gdata->getCategory());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBaseFeed();
         foreach ($feed as $feedEntry) {
             $linkList = $feedEntry->link();
             $href = $linkList[0]->getAttribute('href');
@@ -108,7 +108,7 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         $this->gdata->setMaxResults($max);
         $this->assertTrue(isset($this->gdata->maxResults));
         $this->assertEquals($max, $this->gdata->getMaxResults());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBaseFeed();
         $this->assertEquals($max, $feed->count());
         foreach ($feed as $feedEntry) {
             $linkList = $feedEntry->link();
@@ -128,7 +128,7 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         $this->gdata->setStartIndex($start);
         $this->assertTrue(isset($this->gdata->startIndex));
         $this->assertEquals($start, $this->gdata->getStartIndex());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBaseFeed();
         foreach ($feed as $feedEntry) {
             $linkList = $feedEntry->link();
             $href = $linkList[0]->getAttribute('href');
@@ -185,7 +185,7 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         $this->gdata->setQuery('digital camera');
         $this->gdata->addAttributeQuery($attrib, $attribValue, $op);
         $this->gdata->maxResults = 25;
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBaseFeed();
         foreach ($feed as $feedEntry) {
             $g = 'g:price';
             $this->assertThat(intval($feedEntry->$g()), $this->lessThan(intval($attribValue)));
@@ -194,7 +194,7 @@ class Zend_Gdata_BaseTest extends PHPUnit_Framework_TestCase
         $this->gdata->unsetAttributeQuery($attrib);
         $op = '>';
         $this->gdata->addAttributeQuery($attrib, $attribValue, $op);
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getBaseFeed();
         $prices = array();
         foreach ($feed as $feedEntry) {
             $g = 'g:price';

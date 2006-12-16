@@ -25,7 +25,7 @@
     <programlisting role="php"><![CDATA[<?php
 $gdataBase = new Zend_Gdata_Base();
 $gdataBase->setQuery('digital camera');
-$feed = $gdataBase->getFeed();
+$feed = $gdataBase->getBaseFeed();
 ?>]]></programlisting>
 
         <para>
@@ -46,7 +46,7 @@ $feed = $gdataBase->getFeed();
 $gdataBase = new Zend_Gdata_Base();
 $gdataBase->setQuery('digital camera');
 $gdataBase->addAttributeQuery('price', '50 USD', '<');
-$feed = $gdataBase->getFeed();
+$feed = $gdataBase->getBaseFeed();
 ?>]]></programlisting>
 
         <para>
@@ -73,7 +73,7 @@ $feed = $gdataBase->getFeed();
     <programlisting role="php"><![CDATA[<?php
 $gdataBase = new Zend_Gdata_Base();
 $gdataBase->setQuery('digital camera ( [price < 50 USD] | [location: @"Mountain View, CA 94043"] )');
-$feed = $gdataBase->getFeed();
+$feed = $gdataBase->getBaseFeed();
 ?>]]></programlisting>
 
         <para>

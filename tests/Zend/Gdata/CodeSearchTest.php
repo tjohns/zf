@@ -45,7 +45,7 @@ class Zend_Gdata_CodeSearchTest extends PHPUnit_Framework_TestCase
         $this->gdata->setMaxResults($max);
         $this->assertTrue(isset($this->gdata->maxResults));
         $this->assertEquals($max, $this->gdata->getMaxResults());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getCodeSearchFeed();
         $this->assertEquals($max, $feed->count());
         foreach ($feed as $feedEntry) {
             // echo $this->xml->formatString($feedEntry->saveXML());
@@ -70,7 +70,7 @@ class Zend_Gdata_CodeSearchTest extends PHPUnit_Framework_TestCase
         $this->gdata->setStartIndex($start);
         $this->assertTrue(isset($this->gdata->startIndex));
         $this->assertEquals($start, $this->gdata->getStartIndex());
-        $feed = $this->gdata->getFeed();
+        $feed = $this->gdata->getCodeSearchFeed();
         foreach ($feed as $feedEntry) {
             // echo $this->xml->formatString($feedEntry->saveXML());
             $gcs = 'gcs:package';

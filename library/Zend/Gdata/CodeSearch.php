@@ -37,11 +37,25 @@ class Zend_Gdata_CodeSearch extends Zend_Gdata
      *
      * @return Zend_Feed
      */
-    public function getFeed()
+    public function getCodeSearchFeed($uri = null)
     {
-        $uri = self::CODESEARCH_FEED_URI;
+        if ($uri == null) {
+            $uri = self::CODESEARCH_FEED_URI;
+        }
         $uri .= $this->getQueryString();
         return parent::getFeed($uri);
+    }
+
+    /**
+     * There are no POST operations for CodeSearch.
+     *
+     * @param string $xml
+     * @param string $uri 
+     * @throws Zend_Gdata_Exception
+     */
+    public function post($xml, $uri = null)
+    {
+        throw Zend::exception('Zend_Gdata_Exception', 'There are no post operations for CodeSearch.');
     }
 
     /**

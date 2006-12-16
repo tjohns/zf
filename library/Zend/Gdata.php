@@ -49,6 +49,13 @@ class Zend_Gdata
     protected $_params = array();
 
     /**
+     * Default URI to which to POST.
+     *
+     * @var string
+     */
+    protected $_defaultPostUri = null;
+
+    /**
      * Create Gdata object
      *
      * @param Zend_Http_Client $client
@@ -128,15 +135,22 @@ class Zend_Gdata
      * @param string $uri POST URI
      * @return Zend_Http_Response
      */
-    public function post($xml, $uri)
+    public function post($xml, $uri = null)
     {
+        if ($uri == null) {
+            $uri = $this->_defaultPostUri;
+        }
+        if ($uri == null) {
+            throw Zend::exception('Zend_Gdata_Exception', 'You must specify an URI to which to post.');
+        }
         $this->_httpClient->setUri($uri);
         $this->_httpClient->setConfig(array('maxredirects' => 0));
         $this->_httpClient->setRawData($xml,'application/atom+xml');
         $response = $this->_httpClient->request('POST');
         //set "S" cookie to avoid future redirects.
         if($cookie = $response->getHeader('Set-cookie')) {
-            $this->_httpClient->setCookie($cookie);
+            list($cookieName, $cookieValue) = explode('=', $cookie, 2);
+            $this->_httpClient->setCookie($cookieName, $cookieValue);
         }
         if ($response->isRedirect()) {
             //this usually happens. Re-POST with redirected URI.

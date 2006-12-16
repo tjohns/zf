@@ -41,6 +41,8 @@ class Zend_Gdata_Base extends Zend_Gdata
 
     protected $_attributeQueryTerms = array();
 
+    protected $_defaultPostUri = self::BASE_POST_URI;
+
     /**
      * Create Gdata_Calendar object
      *
@@ -81,7 +83,7 @@ class Zend_Gdata_Base extends Zend_Gdata
      *
      * @return Zend_Feed
      */
-    public function getFeed($uri = null)
+    public function getBaseFeed($uri = null)
     {
         if ($uri == null) {
             $uri = self::BASE_FEED_URI;
@@ -148,17 +150,6 @@ class Zend_Gdata_Base extends Zend_Gdata
             $this->query = $bq;
         }
         return $queryString;
-    }
-
-    /**
-     * POST xml data to Google with authorization headers set
-     *
-     * @param string $xml
-     * @return Zend_Http_Response
-     */
-    public function post($xml)
-    {
-        return parent::post($xml, Zend_Gdata_Base::BASE_POST_URI);
     }
 
     /**

@@ -265,8 +265,8 @@ $gdata->resetParameters();      // clears all parameters
 
         <para>
             Use the <code>getFeed()</code> function to retrieve
-            a feed based on a URI.  This function returns an object
-            of class Zend_Feed.
+            a feed from a specified URI.
+            This function returns an object of class Zend_Feed.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -277,6 +277,13 @@ $uri = 'http://www.google.com/base/feeds/snippets'
     . $gdata->getQueryString();
 $feed = $gdata->getFeed($uri);
 ?>]]></programlisting>
+
+        <para>
+            See later sections for special functions in each
+            helper class for Google Data services.  These
+            functions help you to get feeds from the URI that is
+            appropriate for the respective service.
+        </para>
 
     </sect2>
 
