@@ -156,13 +156,43 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
             throw Zend::exception('Zend_Mail_Exception', 'no valid dirname given in params');
         }
 
-        if(!is_dir($params['dirname'] . '/cur')) {
+        if(!$this->_isMaildir($params['dirname'])) {
             throw Zend::exception('Zend_Mail_Exception', 'invalid maildir given');
         }
 
-        $dh = opendir($params['dirname'] . '/cur/');
+        $this->_has['top'] = true;
+        $this->_openMaildir($params['dirname']);
+    }
+
+    /**
+     * check if a given dir is a valid maildir
+     *
+     * @param string $dirname name of dir
+     * @return bool dir is valid maildir
+     */
+    protected function _isMaildir($dirname)
+    {
+        return is_dir($dirname . '/cur');
+    }
+
+    /**
+     * open given dir as current maildir
+     *
+     * @param string $dirname name of maildir
+     * @throws Zend_Mail_Exception
+     */
+    protected function _openMaildir($dirname)
+    {
+        if($this->_files) {
+            $this->close();
+        }
+
+        $dh = @opendir($dirname . '/cur/');
+        if(!$dh) {
+            throw Zend::exception('Zend_Mail_Exception', 'cannot open maildir');
+        }
         while(($entry = readdir($dh)) !== false) {
-            if($entry[0] == '.' || !is_file($params['dirname'] . '/cur/' . $entry)) {
+            if($entry[0] == '.' || !is_file($dirname . '/cur/' . $entry)) {
                 continue;
             }
             list($uniq, $info) = explode(':', $entry, 2);
@@ -180,11 +210,9 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
 
             $this->_files[] = array('uniq'     => $uniq,
                                     'flags'    => $named_flags,
-                                    'filename' => $params['dirname'] . '/cur/' . $entry);
+                                    'filename' => $dirname . '/cur/' . $entry);
         }
         closedir($dh);
-
-        $this->_has['top'] = true;
     }
 
 

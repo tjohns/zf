@@ -15,7 +15,9 @@ require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Zend/Mail/MboxTest.php';
+require_once 'Zend/Mail/MboxFolderTest.php';
 require_once 'Zend/Mail/MaildirTest.php';
+require_once 'Zend/Mail/MaildirFolderTest.php';
 require_once 'Zend/Mail/Pop3Test.php';
 require_once 'Zend/Mail/ImapTest.php';
 require_once 'Zend/Mail/InterfaceTest.php';
@@ -33,6 +35,7 @@ class Zend_Mail_AllTests
 
         $suite->addTestSuite('Zend_Mail_InterfaceTest');
         $suite->addTestSuite('Zend_Mail_MboxTest');
+        $suite->addTestSuite('Zend_Mail_MboxFolderTest');
         if(TESTS_ZEND_MAIL_POP3_ENABLED) {
             $suite->addTestSuite('Zend_Mail_Pop3Test');
         }
@@ -40,15 +43,16 @@ class Zend_Mail_AllTests
             $suite->addTestSuite('Zend_Mail_ImapTest');
         }
         if(TESTS_ZEND_MAIL_MAILDIR_ENABLED) {
-            if(file_exists(dirname(__FILE__) . '/_files/test.maildir/cur/messages.tar')) {
+            if(file_exists(dirname(__FILE__) . '/_files/test.maildir/maildir.tar')) {
                 // TODO: I couldn't find a method to add an error or warning in TestSuite. But
                 // I also don't like throwing this simple exception and make the whole suite fail.
-                throw new Exception('You have to unpack and remove messages.tag in the maildir '. 
-                                    'directory before enabling the maildir test');
+                throw new Exception('You have to unpack and remove maildir.tar in the maildir '.
+                                    'directory before enabling the maildir tests');
             }
             $suite->addTestSuite('Zend_Mail_MaildirTest');
+            $suite->addTestSuite('Zend_Mail_MaildirFolderTest');
         }
-        
+
         return $suite;
     }
 }
