@@ -1,0 +1,57 @@
+<sect1 id="zend.gdata.calendar">
+    <title>Using Google Calendar</title>
+
+    <para>
+        Specifying the user for the calendar (to be written)
+    </para>
+
+    <para>
+        See
+        <ulink url="http://code.google.com/apis/gdata/calendar.html">http://code.google.com/apis/gdata/calendar.html</ulink>
+        for more information about the Google Calendar API.
+    </para>
+
+    <sect2 id="zend.gdata.calendar.query">
+        <title>Querying Google Calendar</title>
+
+        <para>
+            Visibility public/private (to be written)
+        </para>
+
+        <para>
+            Projection
+                full/etc. (to be written)
+        </para>
+
+        <para>
+            Date ranges
+                startMin/startMax (to be written)
+        </para>
+
+        <para>
+            Viewing a user's list of calendars
+                Requires authentication (to be written)
+        </para>
+
+        <para>
+            Viewing deleted events
+                Requires authentication (to be written)
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.gdata.calendar.post">
+        <title>Posting to Google Calendar</title>
+
+        <para>
+            Posting a new event
+                Requires authentication (to be written)
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$gdata = new Zend_Gdata_Calendar();
+?>]]></programlisting>
+
+    </sect2>
+
+</sect1>
