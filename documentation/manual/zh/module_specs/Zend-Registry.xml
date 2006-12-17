@@ -7,16 +7,16 @@
 
     <programlisting role="php"><![CDATA[<?php
 
-Zend::registry($name=null)
+Zend::registry($index=null)
 
 ?>]]></programlisting>
 
     <para>    
-	如果<code>$name</code>参数为空，会返回一个数组，键名为对象名称，键值为对象的类名称。
+	如果<code>$index</code>参数为NULL，会返回一个对象数组，键名为对象名称，键值为对象的类名称。
     </para>
 
     <para>    
-	如果<code>$name</code>参数为字符串，将返回相应的对象。如果对象不存在，抛出<code>Zend_Exception</code>异常。
+	如果<code>$index</code>参数为字符串，将返回相应的对象。如果对象不存在，抛出<code>Zend_Exception</code>异常。
     </para>
 
     <para>

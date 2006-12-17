@@ -7,7 +7,7 @@
 
     <programlisting role="php"><![CDATA[<?php
 
-Zend::register($name, $object)
+Zend::register($index, $value)
 
 ?>]]></programlisting>
 
@@ -16,11 +16,11 @@ Zend::register($name, $object)
     </para>
 
     <para>
-	<code>$name</code>是对象仓库中该对象的唯一名称,以后你可以把$name作为参数传递给<code>Zend::registry()</code>，就可以访问这个对象.
+	<code>$index</code>是对象仓库中该对象的唯一名称,以后你可以把$index作为参数传递给<code>Zend::registry()</code>，就可以访问这个对象.
     </para>
 
     <para>
-	<code>$name</code>参数必须是一个字符串；在对象注册表中只能存储对象；注册表中的对象将不会被删除；一个对象只能有一个实例。如果不符合这几个条件其中之一，就会抛出一个<code>Zend_Exception</code>异常。
+	<code>$index</code>参数必须是一个字符串；在对象注册表中只能存储对象；注册表中的对象将不会被删除；一个对象只能有一个实例。如果不符合这几个条件其中之一，就会抛出一个<code>Zend_Exception</code>异常。
     </para>
 </sect1>
 <!--
