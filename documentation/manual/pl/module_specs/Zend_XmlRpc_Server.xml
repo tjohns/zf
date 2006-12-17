@@ -246,7 +246,7 @@ Zend_XmlRpc_Server_Fault::attachFaultException('My_Project_Exception');]]></prog
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.caching">
-        <title>Buforowanie definicjami serwera pomiędzy żądaniami</title>
+        <title>Buforowanie definicji serwera pomiędzy żądaniami</title>
         <para>
             Attaching many classes to an XML-RPC server instance can utilize a
             lot of resources; each class must introspect using the Reflection

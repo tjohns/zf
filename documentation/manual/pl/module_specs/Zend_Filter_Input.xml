@@ -47,7 +47,7 @@
         jest wartość <literal>FALSE</literal>. Jest to maksymalnie proste.</para>
     </sect2>
         <sect2 id="zend.filter.input.introduction.whitelist">
-            <title>Filtrowanie Whitelist</title>
+            <title>Filtrowanie whitelist</title>
             <para>Metody filtrowania whitelist poprzedzone są przedrostkiem 
             <literal>test</literal>, na przykład <literal>testAlpha()</literal> czy
             <literal>testEmail()</literal>. Te metody sprawdzają dane według 
