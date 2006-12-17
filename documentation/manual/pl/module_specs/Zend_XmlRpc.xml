@@ -8,7 +8,7 @@
         przetwarzania i zwracania zaawansowanych struktur danych."
     </para>
     <para>
-        Zend Framework zapewnia obsługę zarówno używania zdalnych serwisów 
+        Zend Framework zapewnia zarówno obsługę zdalnych serwisów 
         XML-RPC jak i budowania nowych serwerów XML-RPC.
     </para>
 </sect1>

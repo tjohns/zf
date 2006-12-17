@@ -2,7 +2,7 @@
     <title>Zend_XmlRpc_Client</title>
 
     <sect2 id="zend.xmlrpc.client.introduction">
-        <title>Introduction</title>
+        <title>Wprowadzenie</title>
         
         <para>
             The Zend Framework provides support for consuming remote XML-RPC
@@ -16,7 +16,7 @@
     
     
     <sect2 id="zend.xmlrpc.client.method-calls">
-        <title>Method Calls</title>
+        <title>Wywołania metod</title>
         
         <para>
             The constructor of <code>Zend_XmlRpc_Client</code> receives the
@@ -34,7 +34,7 @@
         </para>
 
         <example>
-            <title>XML-RPC Method Call</title>
+            <title>Wywołanie metody XML-RPC</title>
             <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/XmlRpc/Client.php';
@@ -64,7 +64,7 @@ echo $client->call('test.sayHello');
         </para>
 
         <example>
-            <title>XML-RPC Method Call with Parameters</title>
+            <title>Wywołanie metody XML-RPC z parametrem</title>
             <programlisting role="php"><![CDATA[<?php
 
 require_once 'Zend/XmlRpc/Client.php';
@@ -76,17 +76,17 @@ $arg2 = 'foo';
 
 $result = $client->call('test.sayHello', array($arg1, $arg2)); 
 
-// $result is a native PHP type
+// zmienna $result jest natywnego typu PHP
 
 ?>]]></programlisting>
         </example>
         
         <para>
-            The remote method doesn't require parameters, this optional
+            If the remote method doesn't require parameters, this optional
             parameter may either be left out or an empty <code>array()</code>
             passed to it. The array of parameters for the remote method can
             contain native PHP types, <code>Zend_XmlRpc_Value</code>
-            objects, or a mix each.
+            objects, or a mix of each.
         </para>
 
         <para>
@@ -100,18 +100,18 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
     </sect2>
 
     <sect2 id="zend.xmlrpc.value.parameters">
-        <title>Types and Conversions</title>
+        <title>Typy i konwersje</title>
         <para>
             Some remote method calls require parameters.  These are given to
             the <code>call()</code> method of <code>Zend_XmlRpc_Client</code>
-            as an array in the second parameter.  They each parameter may be
+            as an array in the second parameter. Each parameter may be
             given as either a native PHP type which will be automatically
             converted, or as an object representing a specific XML-RPC type
             (one of the <code>Zend_XmlRpc_Value</code> objects).
         </para>
 
         <sect3 id="zend.xmlrpc.value.parameters.php-native">
-            <title>PHP Native Types as Parameters</title>
+            <title>Natywne typy PHP jako parametry</title>
             <para>
                 Parameters may be passed to <code>call()</code> as native PHP
                 variables, meaning as a <code>string</code>,
@@ -123,12 +123,12 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
             </para>
             
             <table>
-                <title>PHP and XML-RPC Type Conversions</title>
+                <title>Konwersje między typami PHP oraz XML-RPC</title>
                 <tgroup cols="2">
                     <thead>
                         <row>
-                            <entry>PHP Native Type</entry>
-                            <entry>XML-RPC Type</entry>
+                            <entry>Natywny typ PHP</entry>
+                            <entry>Typ XML-RPC</entry>
                         </row>
                     </thead>
                     <tbody>
@@ -166,7 +166,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
         </sect3>
         
         <sect3 id="zend.xmlrpc.value.parameters.xmlrpc-value">
-            <title><code>Zend_XmlRpc_Value</code> Objects as Parameters</title>
+            <title>Obiekty <code>Zend_XmlRpc_Value</code> jako parametry</title>
             <para>
                 Parameters may also be created as <code>Zend_XmlRpc_Value</code>
                 instances to specify an exact XML-RPC type.  The primary reasons
@@ -213,9 +213,9 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
                 <tgroup cols="3">
                     <thead>
                         <row>
-                            <entry>XML-RPC Type</entry>
-                            <entry><code>Zend_XmlRpc_Value</code> Constant</entry>
-                            <entry><code>Zend_XmlRpc_Value</code> Object</entry>
+                            <entry>Typ XML-RPC</entry>
+                            <entry>Stała <code>Zend_XmlRpc_Value</code></entry>
+                            <entry>Obiekt <code>Zend_XmlRpc_Value</code> Object</entry>
                         </row>
                     </thead>
                     <tbody>
@@ -265,7 +265,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
 
             <para>
                 <note>
-                    <title>Automatic Conversion</title>
+                    <title>Automatyczna konwersja</title>
                     <para>
                         When building a new <code>Zend_XmlRpc_Value</code>
                         object, its value is set by a PHP type. The PHP type
@@ -308,7 +308,7 @@ $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $server = $client->getProxy();           // Proxy the default namespace
 
-$hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) returns "hello"
+$hello = $server->test->sayHello(1, 2);  // test.Hello(1, 2) zwraca "hello"
 
 ?>]]>
             </programlisting>
@@ -332,7 +332,7 @@ $client = new Zend_XmlRpc_Client('http://framework.zend.com/xmlrpc');
 
 $test  = $client->getProxy('test');     // Proxy the "test" namespace
 
-$hello = $test->sayHello(1, 2);         // test.Hello(1,2) returns "hello"
+$hello = $test->sayHello(1, 2);         // test.Hello(1,2) zwraca "hello"
 
 ?>]]></programlisting>
         </example>
@@ -348,7 +348,7 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) returns "hello"
     
 
     <sect2 id="zend.xmlrpc.client.error-handling">
-        <title>Error Handling</title>
+        <title>Obsługa błędów</title>
         <para>
             Two kinds of errors can occur during an XML-RPC method call: HTTP
             errors and XML-RPC faults. The <code>Zend_XmlRpc_Client</code>
@@ -357,7 +357,7 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) returns "hello"
         </para>
 
         <sect3 id="zend.xmlrpc.client.error-handling.http">
-            <title>HTTP Errors</title>
+            <title>Błędy HTTP</title>
 
             <para>
                 If any HTTP error occurs, such as the remote HTTP server
@@ -366,7 +366,7 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) returns "hello"
             </para>
 
             <example>
-                <title>Handling HTTP Errors</title>
+                <title>Obsługa błędów HTTP</title>
                 
                 <programlisting role="php"><![CDATA[<?php
 
@@ -380,8 +380,8 @@ try {
 
 } catch (Zend_XmlRpc_HttpException $e) {
     
-    // $e->getCode() returns 404
-    // $e->getMessage() returns "Not Found"
+    // $e->getCode() zwraca 404
+    // $e->getMessage() zwraca "Not found"
     
 }
 
@@ -431,8 +431,8 @@ try {
 
 } catch (Zend_XmlRpc_FaultException $e) {
     
-    // $e->getCode() returns 1
-    // $e->getMessage() returns "Unknown method"
+    // $e->getCode() zwraca 1
+    // $e->getMessage() zwraca "Unknown method"
     
 }
 
@@ -455,7 +455,7 @@ try {
     </sect2>
 
     <sect2 id="zend.xmlrpc.client.introspection">
-        <title>Server Introspection</title>
+        <title>Introspekcja serwerów</title>
         <para>
             Some XML-RPC servers support the de facto introspection methods under the XML-RPC
             <code>system.</code> namespace.  <code>Zend_XmlRpc_Client</code> provides special
@@ -496,8 +496,8 @@ $request->setParams(array('foo', 'bar'));
 
 $client->doRequest($request);
 
-// $server->getLastRequest() returns instanceof Zend_XmlRpc_Request
-// $server->getLastResponse() returns instanceof Zend_XmlRpc_Response
+// $server->getLastRequest() zwraca instancję Zend_XmlRpc_Request
+// $server->getLastResponse() zwraca instancję Zend_XmlRpc_Response
 
 ?>]]></programlisting>
         </example>
@@ -513,7 +513,7 @@ $client->doRequest($request);
     </sect2>
 
     <sect2 id="zend.xmlrpc.client.http-client">
-        <title>HTTP Client and Testing</title>
+        <title>Klient HTTP i testowanie</title>
 
         <para>
             In all of the prior examples, an HTTP client was never specified.
