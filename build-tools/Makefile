@@ -42,22 +42,22 @@ PHPDOC=php C:/xampp/php/phpdoc
 # ZF_TAG is the subversion tag to use to export the files.
 # Typically use 'HEAD' until the tree is tagged for a release
 # candidate, then use that tag.
-ZF_TAG=HEAD
+ZF_TAG=2408
 
 # ZF_VERSION is the release version string to build.  This is added
 # to the VERSION.txt file, and is also used for the name of the 
 # staging directory and the names of the zip and tarball files.
 ZF_VERSION=0.6.0
 
-# For DOCBOOK_LANG_PATTERN, use '*' if you want to build all manual
+# For LANG, use '*' if you want to build all manual
 # translations.  If you want to build one language, use one of the
 # names of language directories, e.g. 'en', 'de', etc.  You also can
 # use any file-globbing pattern.
-DOCBOOK_LANG_PATTERN=*
+LANG=*
 
 # -- end of parameters you are likely to want to change --
 
-SVN=/usr/bin/svn
+SVN=svn
 SVN_USER=
 SVN_PASS=
 
@@ -65,7 +65,7 @@ ZF_SVN_URL=http://framework.zend.com/svn/framework/trunk/
 ZF_PRODUCT_NAME=Zend Framework
 ZF_PRODUCTNAME=ZendFramework
 ZF_PRODUCT=$(ZF_PRODUCTNAME)-$(ZF_VERSION)
-ZF_EXPORT_DIR=./$(ZF_PRODUCT)-export-$(ZF_TAG)
+ZF_EXPORT_DIR=./$(ZF_PRODUCTNAME)-export-$(ZF_TAG)
 STAGE_HOME=stage
 ZF_STAGE_DIR=$(STAGE_HOME)/$(ZF_PRODUCT)
 
@@ -98,7 +98,6 @@ stage-files:
 	-mkdir -p $(ZF_STAGE_DIR)
 	@(cd $(ZF_EXPORT_DIR) && rsync --quiet --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR))
 
-
 checkout: export
 export:
 	@echo "== EXPORTING SVN FILES =="
@@ -110,7 +109,7 @@ docbook: docbook-core docbook-incubator
 
 docbook-core:
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/end-user/core
-	@for language in $(ZF_EXPORT_DIR)/documentation/manual/$(DOCBOOK_LANG_PATTERN)/ ; do \
+	@for language in $(ZF_EXPORT_DIR)/documentation/manual/$(LANG)/ ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
 	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) ) ; \
@@ -119,7 +118,7 @@ docbook-core:
 
 docbook-incubator:
 	-mkdir -p $(ZF_STAGE_DIR)/documentation/end-user/incubator
-	@for language in $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(DOCBOOK_LANG_PATTERN)/ ; do \
+	@for language in $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(LANG)/ ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
 	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) ) ; \
@@ -160,7 +159,7 @@ clean:
 	-rm -f $(ZF_TARBALL)
 
 clean-docbook:
-	for language in $(ZF_EXPORT_DIR)/documentation/manual/$(DOCBOOK_LANG_PATTERN)/ $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(DOCBOOK_LANG_PATTERN)/ ; do \
+	for language in $(ZF_EXPORT_DIR)/documentation/manual/$(LANG)/ $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(LANG)/ ; do \
 	    rm -rf $$language/autom4te.cache $$language/build/docbook-xsl $$language/html/*.html $$language/html/HTML.manifest $$language/config.* $$language/configure $$language/entities.ent $$language/Makefile ; \
 	done
 
