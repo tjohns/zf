@@ -62,20 +62,21 @@ SVN_USER=
 SVN_PASS=
 
 ZF_SVN_URL=http://framework.zend.com/svn/framework/trunk/
-ZF_PRODUCT_NAME=Zend Framework
 ZF_PRODUCTNAME=ZendFramework
-ZF_PRODUCT=$(ZF_PRODUCTNAME)-$(ZF_VERSION)
-ZF_EXPORT_DIR=./$(ZF_PRODUCTNAME)-export-$(ZF_TAG)
+ZF_EXPORT_DIR=./ZendFramework-export-$(ZF_TAG)
+GDATA_PRODUCT_NAME=Zend Gdata
+GDATA_PRODUCTNAME=ZendGdata
+GDATA_PRODUCT=$(GDATA_PRODUCTNAME)-$(ZF_VERSION)
+GDATA_EXPORT_DIR=./$(GDATA_PRODUCTNAME)-export-$(ZF_TAG)
 STAGE_HOME=stage
-ZF_STAGE_DIR=$(STAGE_HOME)/$(ZF_PRODUCT)
+GDATA_STAGE_DIR=$(STAGE_HOME)/$(GDATA_PRODUCT)
 
 ZIP=zip
-ZF_ZIPBALL=$(ZF_PRODUCT).zip
+GDATA_ZIPBALL=$(GDATA_PRODUCT).zip
 TAR=tar
-ZF_TARBALL=$(ZF_PRODUCT).tar.gz
+GDATA_TARBALL=$(GDATA_PRODUCT).tar.gz
 
-API_DOC_TITLE_CORE=Zend Framework API Documentation
-API_DOC_TITLE_INCUBATOR=Zend Framework Incubator API Documentation
+API_DOC_TITLE_CORE=Zend Gdata API Documentation
 API_DOC_OUTPUT_STYLE=HTML:frames:DOM/earthli
 
 .PHONY: clean clean-docbook clean-export
@@ -84,19 +85,53 @@ dist: export stage zip tarball
 
 zip: stage
 	@echo "== CREATING ZIP ARCHIVE =="
-	(cd $(STAGE_HOME) && $(ZIP) -rq $(ZF_ZIPBALL) ./$(ZF_PRODUCT))
+	(cd $(STAGE_HOME) && $(ZIP) -rq $(GDATA_ZIPBALL) ./$(GDATA_PRODUCT))
 
 tarball: stage
 	@echo "== CREATING TAR.GZ ARCHIVE =="
-	(cd $(STAGE_HOME) && $(TAR) -czf $(ZF_TARBALL) ./$(ZF_PRODUCT))
+	(cd $(STAGE_HOME) && $(TAR) -czf $(GDATA_TARBALL) ./$(GDATA_PRODUCT))
 
 stage: stage-files stage-docs
-	@echo "$(ZF_PRODUCT_NAME) Preview Release $(ZF_VERSION) (build $(ZF_TAG))" > $(ZF_STAGE_DIR)/VERSION.txt
+	@echo "$(GDATA_PRODUCT_NAME) Preview Release $(GDATA_VERSION) (build $(ZF_TAG))" > $(GDATA_STAGE_DIR)/VERSION.txt
 
 stage-files:
 	@echo "== STAGING FILES =="
-	-mkdir -p $(ZF_STAGE_DIR)
-	@(cd $(ZF_EXPORT_DIR) && rsync --quiet --archive --delete --exclude-from="../exclude-files" ./ ../$(ZF_STAGE_DIR))
+	-mkdir -p $(GDATA_STAGE_DIR)
+	@echo "...copying set of files for Zend Gdata distribution..."
+	@(cd $(ZF_EXPORT_DIR) && rsync --quiet --archive --delete \
+	    --files-from="../include-files-gdata" \
+	    ./ ../$(GDATA_EXPORT_DIR))
+	@echo "...altering documentation/manual/en/manual.xml..."
+	@mv $(GDATA_EXPORT_DIR)/documentation/manual/en/manual.xml \
+	    $(GDATA_EXPORT_DIR)/documentation/manual/en/manual-orig.xml 
+	@awk '{ \
+	    if ($$0 ~ /chapter|title|module_specs/ && $$0 !~ /[Gg]data|subtitle|Reference Guide/ && gdata == 0) \
+		{ print "<!--", $$0, "-->"; } \
+	    else \
+		{ sub(/Zend Framework/, "Zend Gdata", $$0); print; } \
+	    if ($$0 ~ /[Gg]data/) gdata = 1; else gdata = 0; \
+	    }' \
+	    $(GDATA_EXPORT_DIR)/documentation/manual/en/manual-orig.xml > \
+	    $(GDATA_EXPORT_DIR)/documentation/manual/en/manual.xml
+	@echo "...altering tests/Zend/AllTests.php..."
+	@mv $(GDATA_EXPORT_DIR)/tests/Zend/AllTests.php \
+	    $(GDATA_EXPORT_DIR)/tests/Zend/AllTests-orig.php
+	@awk '{ \
+	    if ($$0 ~ /require_once .Zend|addTest/ && $$0 !~ /[Gg]data/) \
+		{ } \
+	    else \
+		{ print; } \
+	    }' \
+	    $(GDATA_EXPORT_DIR)/tests/Zend/AllTests-orig.php > \
+	    $(GDATA_EXPORT_DIR)/tests/Zend/AllTests.php
+	@echo "...altering README.txt..." 
+	@mv $(GDATA_EXPORT_DIR)/README.txt \
+	    $(GDATA_EXPORT_DIR)/README-orig.txt
+	@sed -e 's/Zend Framework/Zend Gdata/' -e 's/ZEND FRAMEWORK/ZEND GDATA/' \
+	    $(GDATA_EXPORT_DIR)/README-orig.txt > \
+	    $(GDATA_EXPORT_DIR)/README.txt
+	@echo "...staging files..." 
+	@(cd $(GDATA_EXPORT_DIR) && rsync --quiet --archive --delete --exclude-from="../exclude-files-gdata" ./ ../$(GDATA_STAGE_DIR))
 
 checkout: export
 export:
@@ -105,63 +140,41 @@ export:
 
 stage-docs: docbook phpdoc
 
-docbook: docbook-core docbook-incubator
+docbook: docbook-core 
 
 docbook-core:
-	-mkdir -p $(ZF_STAGE_DIR)/documentation/end-user/core
-	@for language in $(ZF_EXPORT_DIR)/documentation/manual/$(LANG)/ ; do \
+	-mkdir -p $(GDATA_STAGE_DIR)/documentation/end-user/core
+	@for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(LANG) ; do \
 	    lang=`basename $$language` ; \
 	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [CORE] (language: $$lang) ==" ; \
 	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) ) ; \
-	    rsync --archive --delete $$language/html/ $(ZF_STAGE_DIR)/documentation/end-user/core/$$lang ; \
+	    rsync --archive --delete $$language/html/ $(GDATA_STAGE_DIR)/documentation/end-user/core/$$lang ; \
 	done
 
-docbook-incubator:
-	-mkdir -p $(ZF_STAGE_DIR)/documentation/end-user/incubator
-	@for language in $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(LANG)/ ; do \
-	    lang=`basename $$language` ; \
-	    echo "== BUILDING AND STAGING END-USER DOCUMENTATION [INCUBATOR] (language: $$lang) ==" ; \
-	    ( cd $$language ; autoconf ; sh ./configure ; $(MAKE) ) ; \
-	    rsync --archive --delete $$language/html/ $(ZF_STAGE_DIR)/documentation/end-user/incubator/$$lang ; \
-	done
-
-phpdoc: phpdoc-core phpdoc-incubator
+phpdoc: phpdoc-core 
 
 phpdoc-core:
 	@echo "== BUILDING AND STAGING API DOCUMENTATION (CORE) =="
-	-mkdir -p $(ZF_STAGE_DIR)/documentation/api/core
-	@if [ ! -f $(ZF_STAGE_DIR)/documentation/api/core/index.html -o `find $(ZF_STAGE_DIR)/library -newer $(ZF_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
+	-mkdir -p $(GDATA_STAGE_DIR)/documentation/api/core
+	@if [ ! -f $(GDATA_STAGE_DIR)/documentation/api/core/index.html -o `find $(GDATA_STAGE_DIR)/library -newer $(GDATA_STAGE_DIR)/documentation/api/core/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
 	    $(PHPDOC) --quiet off \
-	      --target $(ZF_STAGE_DIR)/documentation/api/core \
-	      --directory $(ZF_STAGE_DIR)/library \
+	      --target $(GDATA_STAGE_DIR)/documentation/api/core \
+	      --directory $(GDATA_STAGE_DIR)/library \
 	      --title "$(API_DOC_TITLE_CORE)" \
 	      --output $(API_DOC_OUTPUT_STYLE) ; \
 	else \
 	    echo "...core API documentation is up to date." ; \
 	fi
 
-phpdoc-incubator:
-	@echo "== BUILDING AND STAGING API DOCUMENTATION (INCUBATOR) =="
-	-mkdir -p $(ZF_STAGE_DIR)/documentation/api/incubator
-	@if [ ! -f $(ZF_STAGE_DIR)/documentation/api/incubator/index.html -o `find $(ZF_STAGE_DIR)/incubator/library -newer $(ZF_STAGE_DIR)/documentation/api/incubator/index.html 2>/dev/null | wc -l` -gt 0 ] ; then \
-	    $(PHPDOC) --quiet off \
-	      --target $(ZF_STAGE_DIR)/documentation/api/incubator \
-	      --directory $(ZF_STAGE_DIR)/incubator/library \
-	      --title "$(API_DOC_TITLE_INCUBATOR)" \
-	      --output $(API_DOC_OUTPUT_STYLE) ; \
-	else \
-	    echo "...incubator API documentation is up to date." ; \
-	fi
-
 clean:
-	-rm -rf $(ZF_STAGE_DIR)
-	-rm -f $(ZF_ZIPBALL)
-	-rm -f $(ZF_TARBALL)
+	-rm -rf $(GDATA_STAGE_DIR)
+	-rm -f $(GDATA_ZIPBALL)
+	-rm -f $(GDATA_TARBALL)
 
 clean-docbook:
-	for language in $(ZF_EXPORT_DIR)/documentation/manual/$(LANG)/ $(ZF_EXPORT_DIR)/incubator/documentation/manual/$(LANG)/ ; do \
+	for language in $(GDATA_EXPORT_DIR)/documentation/manual/$(LANG)/ ; do \
 	    rm -rf $$language/autom4te.cache $$language/build/docbook-xsl $$language/html/*.html $$language/html/HTML.manifest $$language/config.* $$language/configure $$language/entities.ent $$language/Makefile ; \
 	done
 
 clean-export:
-	-rm -rf $(ZF_EXPORT_DIR)
+	-rm -rf $(GDATA_EXPORT_DIR)
