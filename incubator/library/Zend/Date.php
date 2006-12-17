@@ -1567,18 +1567,21 @@ class Zend_Date {
                 break;
 
             case Zend_Date::MILLISECOND :
-                switch($calc) {
-                    case 'set' :
-                        return $this->setMillisecond(intval($date));
-                        break;
-                    case 'add' :
-                        return $this->addMillisecond(intval($date));
-                        break;
-                    case 'sub' :
-                        return $this->subMillisecond(intval($date));
-                        break;
+                if (is_numeric($date)) {
+                    switch($calc) {
+                        case 'set' :
+                            return $this->setMillisecond(intval($date));
+                            break;
+                        case 'add' :
+                            return $this->addMillisecond(intval($date));
+                            break;
+                        case 'sub' :
+                            return $this->subMillisecond(intval($date));
+                            break;
+                    }
+                    return $this->compareMillisecond(intval($date));
                 }
-                return $this->compareMillisecond(intval($date));
+                throw Zend::exception('Zend_Date_Exception', 'milliseconds expected');
                 break;
 
             case Zend_Date::MINUTE_SHORT :
@@ -1601,28 +1604,129 @@ class Zend_Date {
             // timezone formats
             // break intentionally omitted
             case Zend_Date::TIMEZONE_NAME :
-            case Zend_Date::DAYLIGHT :
-            case Zend_Date::GMT_DIFF :
-            case Zend_Date::GMT_DIFF_SEP :
             case Zend_Date::TIMEZONE :
             case Zend_Date::TIMEZONE_SECS :
-                return FALSE;
+                throw Zend::exception('Zend_Date_Exception', 'timezone not supported');
+                break;
+
+            case Zend_Date::DAYLIGHT :
+                throw Zend::exception('Zend_Date_Exception', 'daylight not supported');
+                break;
+
+            case Zend_Date::GMT_DIFF :
+            case Zend_Date::GMT_DIFF_SEP :
+                throw Zend::exception('Zend_Date_Exception', 'gmtdiff not supported');
                 break;
 
 
             // date strings
             case Zend_Date::ISO_8601 :
-                $result = preg_match('/\d{4}-\d{2}-\d{2}[T\s]{1}\d{2}:\d{2}:\d{2}/', $date, $match);
-                if (!$result) {
-                    return FALSE;
+
+                $next = 0;
+                if (preg_match('/-\d{4}-\d{2}-\d{2}/', $date, $datematch)) {
+                    // -yyyy-mm-dd
+                    $minus = true;
+                    $result = array('Y' => 1, 'M' => 6, 'd' => 9);
+                    $next = 11;
+                } else if (preg_match('/\d{4}-\d{2}-\d{2}/', $date, $datematch)) {
+                    // yyyy-mm-dd
+                    $result = array('Y' => 0, 'M' => 5, 'd' => 8);
+                    $next = 10;
+                } else if (preg_match('/-\d{2}-\d{2}-\d{2}/', $date, $datematch)) {
+                    // -yy-mm-dd
+                    $minus = true;
+                    $result = array('y' => 1, 'M' => 4, 'd' => 7);
+                    $next = 9;
+                } else if (preg_match('/\d{2}-\d{2}-\d{2}/', $date, $datematch)) {
+                    // yy-mm-dd
+                    $result = array('y' => 0, 'M' => 3, 'd' => 6);
+                    $next = 8;
+                } else if (preg_match('/-\d{8}/', $date, $datematch)) {
+                    // -yyyymmdd
+                    $minus = true;
+                    $result = array('Y' => 1, 'M' => 5, 'd' => 7);
+                    $next = 9;
+                } else if (preg_match('/\d{8}/', $date, $datematch)) {
+                    // yyyymmdd
+                    $result = array('Y' => 0, 'M' => 4, 'd' => 6);
+                    $next = 8;
+                } else if (preg_match('/-\d{6}/', $date, $datematch)) {
+                    // -yymmdd
+                    $minus = true;
+                    $result = array('y' => 1, 'M' => 3, 'd' => 5);
+                    $next = 7;
+                } else if (preg_match('/\d{6}/', $date, $datematch)) {
+                    // yymmdd
+                    $result = array('y' => 0, 'M' => 2, 'd' => 4);
+                    $next = 6;
+                }
+                if (strlen($date) > $next) {
+                    $date = substr($date, $next);
+                    // Thh:mm:ss
+                    if (preg_match('/[T,\s]{1}\d{2}:\d{2}:\d{2}/', $date, $timematch)) {
+                        // Thh:mm:ss | _hh:mm:ss
+                        $result['h'] = 1;
+                        $result['m'] = 4;
+                        $result['s'] = 7;
+                        $next += 9;
+                    } else if (preg_match('/\d{2}:\d{2}:\d{2}/', $date, $timematch)) {
+                        // hh:mm:ss
+                        $result['h'] = 0;
+                        $result['m'] = 3;
+                        $result['s'] = 6;
+                        $next += 8;
+                    } else if (preg_match('/[T,\s]{1}\d{2}\d{2}\d{2}/', $date, $timematch)) {
+                        // Thhmmss | _hhmmss
+                        $result['h'] = 1;
+                        $result['m'] = 3;
+                        $result['s'] = 5;
+                        $next += 7;
+                    } else if (preg_match('/\d{2}\d{2}\d{2}/', $date, $timematch)) {
+                        // hhmmss | hhmmss
+                        $result['h'] = 0;
+                        $result['m'] = 2;
+                        $result['s'] = 4;
+                        $next += 6;
+                    }
                 }
 
-                $years   = substr($match[0], 0, 4);
-                $months  = substr($match[0], 5, 2);
-                $days    = substr($match[0], 8, 2);
-                $hours   = substr($match[0], 11, 2);
-                $minutes = substr($match[0], 14, 2);
-                $seconds = substr($match[0], 17, 2);
+                if (!isset($result)) {
+                    throw Zend::exception('Zend_Date_Exception', 'unsupported ISO8601 format');
+                }
+
+                if(isset($result['M'])) {
+                    if (isset($result['Y'])) {
+                        $years = substr($datematch[0], $result['Y'], 4);
+                        if (isset($minus)) {
+                            $years = 0 - $years;
+                        }
+                    } else {
+                        $years = substr($datematch[0], $result['y'], 2);
+                        if (isset($minus)) {
+                            $years = 0 - $years;
+                        }
+                        if ($years >= 0) {
+                            $years += 1900;
+                            if ($years < 1970)
+                                $years += 100;
+                        } 
+                    }
+                    $months  = substr($datematch[0], $result['M'], 2);
+                    $days    = substr($datematch[0], $result['d'], 2);
+                } else {
+                    $years  = 1970;
+                    $months = 1;
+                    $days   = 1;
+                }
+                if (isset($result['h'])) {
+                    $hours   = substr($timematch[0], $result['h'], 2);
+                    $minutes = substr($timematch[0], $result['m'], 2);
+                    $seconds = substr($timematch[0], $result['s'], 2);
+                } else {
+                    $hours   = 0;
+                    $minutes = 0;
+                    $seconds = 0;
+                }
 
                 return $this->_assign($calc, $this->_Date->mktime($hours, $minutes, $seconds, $months, $days, $years, -1, $gmt),
                                              $this->_Date->mktime($hour,  $minute,  $second,  $month,  $day,  $year,  -1, $gmt));
@@ -1631,7 +1735,7 @@ class Zend_Date {
             case Zend_Date::RFC_2822 :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
                 if (!$result) {
-                    return FALSE;
+                    throw Zend::exception('Zend_Date_Exception', 'no RFC 2822 format');
                 }
 
                 $days    = substr($match[0], 5, 2);
@@ -1649,7 +1753,7 @@ class Zend_Date {
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $date, $this->getTimestamp());
                 }
-                return FALSE;
+                throw Zend::exception('Zend_Date_Exception', 'timestamp expected');
                 break;
 
 
@@ -1657,7 +1761,7 @@ class Zend_Date {
             // break intentionally omitted
             case Zend_Date::ERA :
             case Zend_Date::ERA_NAME :
-                return FALSE;
+                throw Zend::exception('Zend_Date_Exception', 'era not supported');
                 break;
 
             case Zend_Date::DATES :
