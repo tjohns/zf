@@ -101,14 +101,7 @@ $view->setScriptPath('/path/to/app/views');
             现在当你调用$view->render('someView.php')，它会去找"/path/to/app/views/someView.php"。
         </para>
         
-        <para>
-            In fact, you can "stack" paths using the addScriptPath()
-            method. As you add paths to the stack, Zend_View will look
-            at the most-recently-added path for the requested view
-            script.  This allows you override default views with custom
-            views so that you may create custom "themes" or "skins" for
-            some views, while leaving others alone.
-
+        <para> 
 			事实上，你可以通过addScriptPath()增加路径。Zend_View会到最近增加的路径目录下找View脚本。这个方法允许你改变默认的外观，这样你可以定制和使用自己的皮肤或主题。
         </para>
         
