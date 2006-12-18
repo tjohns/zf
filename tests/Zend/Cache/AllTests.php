@@ -20,6 +20,7 @@ require_once 'FileFrontendTest.php';
 require_once 'ApcBackendTest.php';
 require_once 'MemcachedBackendTest.php';
 require_once 'PageFrontendTest.php';
+require_once 'ZendPlatformBackendTest.php';
 
 // Zend_Log        
 require_once 'Zend/Log.php';
@@ -61,6 +62,9 @@ class Zend_Cache_AllTests
                 define('TESTS_ZEND_CACHE_MEMCACHED_PERSISTENT', true);
             }
             $suite->addTestSuite('Zend_Cache_MemcachedBackendTest');
+        }
+        if (!defined('TESTS_ZEND_CACHE_PLATFORM_ENABLED') || (defined('TESTS_ZEND_CACHE_PLATFORM_ENABLED') && TESTS_ZEND_CACHE_PLATFORM_ENABLED)) {
+            $suite->addTestSuite('Zend_Cache_ZendPlatformBackendTest');
         }
         return $suite;
     }
