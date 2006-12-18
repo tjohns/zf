@@ -1891,7 +1891,7 @@ class Zend_Date {
             case Zend_Date::ATOM :
                 $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
                 if (!$result) {
-                    return FALSE;
+                    throw Zend::exception('Zend_Date_Exception', 'ATOM format expected');
                 }
 
                 $years   = substr($match[0], 0, 4);
@@ -1908,9 +1908,9 @@ class Zend_Date {
             case Zend_Date::COOKIE :
                 $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
                 if (!$result) {
-                    return FALSE;
+                    throw Zend::exception('Zend_Date_Exception', 'COOKIE format expected');
                 }
-                $match[0] = substr($match[0], strpos(' '+1));
+                $match[0] = substr($match[0], strpos($match[0], ' ')+1);
                 
                 $days    = substr($match[0], 0, 2);
                 $months  = $this->getDigitFromName(substr($match[0], 3, 3));
@@ -1927,7 +1927,7 @@ class Zend_Date {
             case Zend_Date::RFC_822 :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
                 if (!$result) {
-                    return FALSE;
+                    throw Zend::exception('Zend_Date_Exception', 'RFC 822 format expected');
                 }
                 
                 $days    = substr($match[0], 5, 2);
@@ -1945,10 +1945,10 @@ class Zend_Date {
             case Zend_Date::RFC_850 :
                 $result = preg_match('/\w{6,9},\s\d{2}-\w{3}-\d{2}\s\d{2}:\d{2}:\d{2}\s\w{3}/', $date, $match);
                 if (!$result) {
-                    return FALSE;
+                    throw Zend::exception('Zend_Date_Exception', 'RFC 850 format expected');
                 }
 
-                $match[0] = substr($match[0], strpos(' '+1));
+                $match[0] = substr($match[0], strpos($match[0], ' ')+1);
                 
                 $days    = substr($match[0], 0, 2);
                 $months  = $this->getDigitFromName(substr($match[0], 3, 3));
@@ -1965,7 +1965,7 @@ class Zend_Date {
             case Zend_Date::RFC_1036 :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{2}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
                 if (!$result) {
-                    return FALSE;
+                    throw Zend::exception('Zend_Date_Exception', 'RFC 1036 format expected');
                 }
                 
                 $days    = substr($match[0], 5, 2);
@@ -1983,7 +1983,7 @@ class Zend_Date {
             case Zend_Date::RFC_1123 :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
                 if (!$result) {
-                    return FALSE;
+                    throw Zend::exception('Zend_Date_Exception', 'RFC 1123 format expected');
                 }
 
                 $days    = substr($match[0], 5, 2);
@@ -2000,7 +2000,7 @@ class Zend_Date {
             case Zend_Date::RSS :
                 $result = preg_match('/\w{3},\s\d{2}\s\w{3}\s\d{4}\s\d{2}:\d{2}:\d{2}\s\+\d{4}/', $date, $match);
                 if (!$result) {
-                    return FALSE;
+                    throw Zend::exception('Zend_Date_Exception', 'RSS format expected');
                 }
 
                 $days    = substr($match[0], 5, 2);
@@ -2017,7 +2017,7 @@ class Zend_Date {
             case Zend_Date::W3C :
                 $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
                 if (!$result) {
-                    return FALSE;
+                    throw Zend::exception('Zend_Date_Exception', 'W3C format expected');
                 }
 
                 $years   = substr($match[0], 0, 4);
@@ -2035,7 +2035,7 @@ class Zend_Date {
                 if (is_numeric($date)) {
                     return $this->_assign($calc, $date, $this->getTimestamp());
                 }
-                return FALSE;
+                throw Zend::exception('Zend_Date_Exception', 'timestamp expected');
                 break;
         }
     }
