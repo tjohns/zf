@@ -256,14 +256,13 @@ final class Zend
     /**
      * registry() retrieves the value stored at an index.
      *
-     * If the $index argument is NULL, an array will be returned where
-     * the keys to the array are the names of the objects in the registry
-     * and the values are the class names of those objects.
+     * If the $index argument is NULL or not specified,
+     * this method returns the registry object (iterable).
      *
      * @see     register()
-     * @param   string      $index The name for the object.
+     * @param   string      $index The name for the value.
      * @throws  Zend_Registry_Exception
-     * @return  object      The registered object.
+     * @return  mixed       The registered value for $index.
      */
     static public function registry($index = null)
     {
@@ -276,7 +275,7 @@ final class Zend
 
 
     /**
-     * Returns TRUE if the $index is a named object in the
+     * Returns TRUE if the $index is a named value in the
      * registry, or FALSE if $index was not found in the registry.
      *
      * @param  string $index
