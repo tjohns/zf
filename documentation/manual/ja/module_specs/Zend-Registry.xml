@@ -2,30 +2,29 @@
     <title>Zend::registry()</title>
 
     <para>
-    レジストリ内のオブジェクトを返すか、レジストリ内のオブジェクトの一覧を返します。
+    レジストリ内の値、あるいはレジストリ自身を返します。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 
-Zend::registry($name=null)
+Zend::registry($index=null)
 
 ?>]]></programlisting>
 
     <para>
-    引数 <code>$name</code> が <code>NULL</code> の場合は配列が返されます。
-    レジストリ内のオブジェクトの名前が配列のキー、
-    対応するオブジェクトのクラス名が配列の値となります。
+    引数 <code>$index</code> が <code>NULL</code> の場合は、
+    レジストリ自身 (ArrayObject のサブクラス) が返されます。
     </para>
 
     <para>
-    <code>$name</code> が文字列の場合は、
-    その名前に関連付けられたオブジェクトハンドルが返されます。
-    <code>$name</code> という名前に対応するオブジェクトがレジストリに存在しない場合は
+    <code>$index</code> が文字列の場合は、
+    そのインデックスに関連付けられた値が返されます。
+    <code>$index</code> という名前に対応するオブジェクトがレジストリに存在しない場合は
     <code>Zend_Exception</code> がスローされます。
     </para>
 
     <para>
-    オブジェクトがレジストリに登録されているかどうかを手っ取り早く調べるには、
+    インデックスがレジストリに登録されているかどうかを手っ取り早く調べるには、
     Zend::isRegistered() を使用します。
     </para>
 </sect1>

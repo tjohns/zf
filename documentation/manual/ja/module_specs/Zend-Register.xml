@@ -2,34 +2,30 @@
     <title>Zend::register()</title>
 
     <para>
-    オブジェクトをレジストリに登録します。
+    値をレジストリに登録します。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
 
-Zend::register($name, $object)
+Zend::register($index, $value)
 
 ?>]]></programlisting>
 
     <para>
     レジストリとは、
-    オブジェクトのシングルトンインスタンスをアプリケーション空間に提供する仕組みのことです。
-    オブジェクトをレジストリに保存すると、
+    値のシングルトンインスタンスをアプリケーション空間に提供する仕組みのことです。
+    値をレジストリに保存すると、
     必要なときにいつでもそれを取り出して使用できます。
     その際、常に同一のインスタンスが返されます。
     </para>
 
     <para>
-    <code>$name</code> には、保存するオブジェクトの名前を任意の文字列で指定します。
-    <code>Zend::registry()</code> でオブジェクトを取得する際に、この名前を使用します。
+    <code>$index</code> には、保存する値の名前を任意の文字列で指定します。
+    <code>Zend::registry()</code> で値を取得する際に、この名前を使用します。
     </para>
 
     <para>
-    引数 <code>$name</code> は文字列でなければなりません。
-    レジストリに保存できるのはオブジェクトだけです。
-    オブジェクトをレジストリから削除することはできません。
-    また、同一インスタンスを複数回レジストリに保存することはできません。
-    これらの規則に違反すると <code>Zend_Exception</code> がスローされます。
+    このレジストリは、ArrayObject となります。
     </para>
 </sect1>
 <!--
