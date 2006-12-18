@@ -390,7 +390,7 @@ class Zend_Locale_Format
         if ($hour === false) {
             $hour = iconv_strpos($format, 'h');
         }
-        
+
         if ($day !== false) {
             $parse[$day]   = 'd';
             $parse[$month] = 'M';
@@ -399,7 +399,9 @@ class Zend_Locale_Format
         if ($hour !== false) {
             $parse[$hour] = 'H';
             $parse[$min]  = 'm';
-            $parse[$sec]  = 's';
+            if ($sec !== false) {
+                $parse[$sec]  = 's';
+            }
         }
 
         // format unknown wether date nor time
@@ -408,12 +410,31 @@ class Zend_Locale_Format
         }
         ksort($parse);
 
+        // erase day string
+        if (iconv_strpos($format, 'EEEE') !== false) {
+            $daylist = Zend_Locale_Data::getContent($locale, 'daylist', array('gregorian', 'wide'));
+            foreach($daylist as $key => $name) {
+                if (iconv_strpos($number, $name) !== false) {
+                    $number   = str_replace($name, "EEEE", $number);
+                    break;
+                }
+            }
+        }
+
         // convert month string to number
-        $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+        if (iconv_strpos($format, 'MMMM') !== false) {
+            $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
+        } else {
+            $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+        }
+
         $position = false;
         foreach($monthlist as $key => $name) {
             if (iconv_strpos($number, $name) !== false) {
                 $position = iconv_strpos($number, $name);
+                if ($key < 10) {
+                    $key = "0" . $key;
+                }
                 $number   = str_replace($name, $key, $number);
                 break;
             }
@@ -426,11 +447,12 @@ class Zend_Locale_Format
         if (count($splitted[0]) == 0) {
             throw Zend::exception('Zend_Locale_Exception', 'No date part in ' . $number . ' found');
         }
-        
+
         if (count($splitted[0]) == 1) {
             $split = 0;
         }
         $cnt = 0;
+
         foreach($parse as $key => $value) {
 
             switch($value) {
@@ -569,7 +591,6 @@ class Zend_Locale_Format
         }
 
         $date = self::_parseDate($date, $format, $locale);
-
         return $date;
     }
 
