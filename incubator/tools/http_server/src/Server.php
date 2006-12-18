@@ -40,6 +40,10 @@ class Server
 	public $handler = "DefaultHandler";
 	public $document_root = "";
 
+	private $connection_timeout = 30; // Connection timeout in seconds
+
+	private $packet_size = 2048;
+
 	public function __construct( $address = '127.0.0.1', $port = 8000 )
 	{
 		if( !function_exists( "socket_create" ) )
@@ -66,8 +70,7 @@ class Server
 
 		if( !( $nonblock_result = socket_set_nonblock( $this->socket ) ) )
 		{
-			throw new Zend_Http_Server_Exception( "socket_set_nonblock() failed: Reason: " .
-				socket_strerror( $nonblock_result ) );
+			throw new Zend_Http_Server_Exception( "socket_set_nonblock() failed: Reason: " . socket_strerror( $nonblock_result ) );
 		}
 	}
 
@@ -91,6 +94,15 @@ class Server
 		return $this->handler;
 	}
 
+	public function setTimeout( $timeout )
+	{
+		$this->timeout = $timeout;
+	}
+
+	public function getTimeout()
+	{
+		return $this->connection_timeout;
+	}
 
 	public function listen()
 	{
@@ -103,27 +115,9 @@ class Server
 
 		while( true )
 		{
-			$sockets = array( $this->socket );
-			$client = null;
-
-			if( socket_select( $sockets, $w = NULL, $e = NULL, 0 ) )
-			{
-				// Waiting for connections...
-
-				if( ( $client = socket_accept( $this->socket ) ) < 0 )
-				{
-					throw new Zend_Http_Server_Exception( "socket_accept() failed: Reason: " .
-						socket_strerror( $client ) );
-				}
-			}
-			else
-			{
-				// Without this, the server will use 100% of available CPU constantly!
-				usleep( 100 ); // The only sensible place to sleep.  Sleep for 0.0001 seconds if no new connections have arrived. Still allows a potential 10000 requests a second :)
-			}
+			$client = $this->getNewConnection();
 
 			// New connection, forking.
-
 			if( $client )
 			{
 				$pid = pcntl_fork();
@@ -134,77 +128,103 @@ class Server
 				}
 				else if( $pid )
 				{
-//					print "Storing socket for $pid\n";
+					// Parent: Storing socket for $pid
 					$this->connections[ $pid ] = $client;
 				}
 				else
 				{
-					$raw_request = "";
-
-					$i = 1;
-
-					while( $i < 10 )
-					{
-	//					print "Read attempt: $i\n";
-						$i++;
-						// Child: reading
-						$buffer = socket_read( $client, 2048, PHP_BINARY_READ );
-	//					print strlen( $buffer ) . " bytes read\n";
-
-
-						if( $buffer === false )
-						{
-							// Child: Error or EOF.  Exiting.
-							exit;
-						}
-						else
-						{
-							$raw_request .= $buffer;
-
-							if( $buffer === "" || strlen( $buffer ) < 2048 )
-							{
-								$request = new Request( $raw_request );
-								$request->document_root = $this->document_root;
-								socket_getpeername( $client, $request->remote_ip );
-
-								if( $request->isComplete() )
-								{
-									$handler = new $this->handler( $request );
-
-									$response = $handler->handle();
-									socket_write( $client, $response->asString() );
-
-									print( $request->remote_ip . " - - [" . date( "d/M/Y:H:i:s O" ) . "] \"" . 
-										$request->method . " " . $request->uri . " " . $request->protocol_version .
-										"\" " . $response->getStatus() . " " . strlen( $response->getBody() ) . " \"" .
-										trim( $request->headers[ "Referer" ] ) . "\" \"" .
-										trim( $request->headers[ "User-Agent" ] ) . "\"\n" );
-									exit;
-								}
-								else
-								{
-									unset( $request );
-								}
-							}
-						}
-					}
-//					print "Here!\n";
-					print( "Read more than ten times for request and still incomplete - bailing out" );
+					$this->processRequest( $client );
 					exit;
 				}
 			}
 
 			// Parent: Check for finished children
+			$this->cleanupChildren();
+		}
+	}
 
-			while( ( $child = pcntl_wait( $status, WNOHANG ) ) > 0 )
+	protected function getNewConnection()
+	{
+		$sockets = array( $this->socket );
+		$client = null;
+
+		if( socket_select( $sockets, $w = NULL, $e = NULL, 0 ) )
+		{
+			// Waiting for connections...
+
+			if( ( $client = socket_accept( $this->socket ) ) < 0 )
 			{
-//				print "Closing socket for $child\n";
-
-				socket_close( $this->connections[ $child ] );
-
-				unset( $this->connections[ $child ] );
-//				print "Connection count: " . count( $this->connections ) . "\n";
+				throw new Zend_Http_Server_Exception( "socket_accept() failed: Reason: " . socket_strerror( $client ) );
 			}
+		}
+		else
+		{
+			// Without this, the server will use 100% of available CPU constantly!
+			usleep( 100 ); // The only sensible place to sleep.  Sleep for 0.0001 seconds if no new connections have arrived. Still allows a potential 10000 requests a second :)
+		}
+
+		return $client;
+	}
+
+	protected function logAccess( $request, $response )
+	{
+		error_log( $request->remote_ip . " - - [" . date( "d/M/Y:H:i:s O" ) . "] \"" . $request->method . " " . $request->uri . " " . $request->protocol_version . "\" " . $response->getStatus() . " " . strlen( $response->getBody() ) . " \"" . trim( $request->headers[ "Referer" ] ) . "\" \"" . trim( $request->headers[ "User-Agent" ] ) . "\"" );
+	}
+
+	protected function processRequest( $socket )
+	{
+		$raw_request = "";
+
+		$connection_time = time();
+
+		while( time() < $connection_time + $this->getTimeout() )
+		{
+			// Child: reading
+			$buffer = socket_read( $socket, $this->packet_size, PHP_BINARY_READ );
+
+			if( $buffer === false )
+			{
+				// Child: Error or EOF.  Exiting.
+				return false;
+			}
+			else
+			{
+				$raw_request .= $buffer;
+
+				if( $buffer === "" || strlen( $buffer ) < $this->packet_size )
+				{
+					$request = new Request( $raw_request );
+					$request->document_root = $this->document_root;
+					socket_getpeername( $socket, $request->remote_ip );
+
+					if( $request->isComplete() )
+					{
+						$handler = new $this->handler( $request );
+
+						$response = $handler->handle();
+						socket_write( $socket, $response->asString() );
+
+						$this->logAccess( $request, $response );
+						return true;
+					}
+					else
+					{
+						unset( $request );
+					}
+				}
+			}
+		}
+		error_log( "Request was not complete after connection timeout reached ({$this->getTimeout()} seconds)" );
+		return false;
+	}
+
+	protected function cleanupChildren()
+	{
+		while( ( $child = pcntl_wait( $status, WNOHANG ) ) > 0 )
+		{
+			socket_close( $this->connections[ $child ] );
+
+			unset( $this->connections[ $child ] );
 		}
 	}
 }
