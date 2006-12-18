@@ -202,7 +202,7 @@ final class Zend
     /**
      * Return a new exception
      *
-     * Loads an exceptoin class as specified by $class, and then passes the
+     * Loads an exception class as specified by $class, and then passes the
      * message and code arguments to the Exception's constructor, returning the
      * new Exception object.
      *
