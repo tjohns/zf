@@ -14,7 +14,7 @@
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.usage">
-        <title>XML-RPC サーバの基本的な使用法</title>
+        <title>基本的な使用法</title>
 
         <para>
             もっとも基本的な使用例は次のとおりです。
@@ -30,7 +30,7 @@ echo $server->handle();]]></programlisting>
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.structure">
-        <title>XML-RPC サーバの構造</title>
+        <title>サーバの構造</title>
 
         <para>
             Zend_XmlRpc_Server はさまざまなコンポーネントで構成されています。
