@@ -121,66 +121,55 @@ class Request
 	 */
 	public $cookies = array();
 
-	private $complete = true;
-
 	public function isComplete()
 	{
-		return $this->complete;
+		$request_not_set = $this->method == "";
+		$uri_not_set = $this->uri == "";
+		$not_enough_data = isset( $this->headers[ "Content-Length" ] ) && ( strlen( $this->data ) < $this->headers[ "Content-Length" ] );
+		$no_data = !isset( $this->headers[ "Content-Length" ] ) && $this->data === null;
+		$data_expected = $this->method == "POST" || $this->method == "PUT";
+
+		return !( $request_not_set || $uri_not_set || ( $data_expected && ( $not_enough_data || $no_data ) ) );
 	}
 
 	public function __construct( $raw_request )
 	{
-		$lines = explode( "\r\n", $raw_request );
-
-		if( array_pop( $lines ) !== "" )
+		if( !preg_match( "/\r\n\r\n$/", $raw_request ) )
 		{
-			$this->complete = false;
 			return;
 		}
-
-		list( $this->method, $uri, $this->protocol_version ) = explode( " ", array_shift( $lines ) );
-
-		$this->setURI( $uri );
-
-		$headers = array();
-
-		do
+		else
 		{
-			if( count( $lines ) == 0 )
-			{
-				$this->complete = false;
-				return;
-			}
-			else
-			{
-				$line = array_shift( $lines );
-
-				if( $line !== "" )
-				{
-					$header = explode( ":", $line );
-					$headers[ trim( array_shift( $header ) ) ] = trim( join( ":", $header ) );
-				}
-			}
-		} while( $line !== "" );
-
-		if( !isset( $headers[ "Referer" ] ) )
-		{
-			$headers[ "Referer" ] = "-";
+			$raw_request = preg_replace( "/\r\n\r\n$/", "", $raw_request );
 		}
 
-		$this->headers = $headers;
+		$lines = explode( "\r\n", $raw_request );
+
+		$this->setRequestLine( array_shift( $lines ) );
+
+		while( ( $line = array_shift( $lines ) ) != "" )
+		{
+			$this->setHeader( $line );
+		}
 
 		if( count( $lines ) > 0 )
 		{
 			$this->setData( array_shift( $lines ) );
 		}
-
-		if( ( $this->method == "POST" || $this->method == "PUT" ) && ( ( !isset( $this->headers[ "Content-Length" ] ) && $this->data === null ) || strlen( $this->data ) < $this->headers[ "Content-Length" ] ) )
-		{
-			$this->complete = false;
-		}
 	}
 
+	protected function setRequestLine( $request_line )
+	{
+		list( $this->method, $uri, $this->protocol_version ) = explode( " ", $request_line );
+
+		$this->setUri( $uri );
+	}
+
+	protected function setHeader( $header_line )
+	{
+		$header = explode( ":", $header_line );
+		$this->headers[ trim( array_shift( $header ) ) ] = trim( join( ":", $header ) );
+	}
 
 	/**
 	 * Extract the path, file and query string from the URI
