@@ -53,18 +53,6 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
         $this->fail('no exception raised with empty params');
     }
 
-    public function testFilenameParam()
-    {
-        try {
-            // filename is not allowed in this subclass
-            $mail = new Zend_Mail_Folder_Maildir(array('filename' => 'foobar'));
-        } catch (Exception $e) {
-            return; // test ok
-        }
-
-        $this->fail('no exception raised with filename as param');
-    }
-
     public function testLoadFailure()
     {
         try {
@@ -98,18 +86,6 @@ class Zend_Mail_MaildirFolderTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals($mail->getCurrentFolder(), 'subfolder.test');
-    }
-
-    public function testChangeFolderUnselectable()
-    {
-        $mail = new Zend_Mail_Folder_Maildir($this->_params);
-        try {
-            $mail->selectFolder('/subfolder');
-        } catch (Exception $e) {
-            return; // test ok
-        }
-
-        $this->fail('no exception raised while selecting unselectable folder');
     }
 
     public function testUnknownFolder()

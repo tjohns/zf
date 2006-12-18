@@ -174,9 +174,9 @@ class Zend_Mail_Transport_Imap
                 $token = substr($token, 1);
             }
             if($token[0] == '"') {
-                if(preg_match('%^"((.|\\\\|\\")*)"%', $line, $matches)) {
+                if(preg_match('%^"((.|\\\\|\\")*?)"%', $line, $matches)) {
                     $tokens[] = $matches[1];
-                    $line = substr($line, $pos + strlen($matches[1]) + 1);
+                    $line = substr($line, strlen($matches[0]) + 1);
                     continue;
                 }
             }
@@ -548,6 +548,33 @@ class Zend_Mail_Transport_Imap
 
         if($to === null) {
             throw Zend::exception('Zend_Mail_Transport_Exception', 'the single id was not found in response');
+        }
+
+        return $result;
+    }
+
+    /**
+     * get mailbox list
+     *
+     * this method can't be named after the IMAP command 'LIST', as list is a reserved keyword
+     *
+     * @params string $reference mailbox reference for list
+     * @params string $mailbox   mailbox name match with wildcards
+     * @return array mailboxes that matched $mailbox as array(globalName => array('delim' => .., 'flags' => ..))
+     */
+    public function listMailbox($reference = '', $mailbox = '*')
+    {
+        $result = array();
+        $list = $this->requestAndResponse('LIST', $this->escapeString($reference, $mailbox));
+        if(!$list) {
+            return $result;
+        }
+
+        foreach($list as $item) {
+            if(count($item) != 4 || $item[0] != 'LIST') {
+                continue;
+            }
+            $result[$item[3]] = array('delim' => $item[2], 'flags' => $item[1]);
         }
 
         return $result;

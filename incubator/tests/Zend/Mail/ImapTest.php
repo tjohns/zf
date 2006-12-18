@@ -295,4 +295,120 @@ class Zend_Mail_ImapTest extends PHPUnit_Framework_TestCase
 
         $this->fail('no exception raised while counting messages on closed connection');
     }
+
+    public function testLoadUnkownFolder()
+    {
+        $this->_params['folder'] = 'UnknownFolder';
+        try {
+            $mail = new Zend_Mail_Imap($this->_params);
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception raised while loading unknown folder');
+    }
+
+    public function testChangeFolder()
+    {
+        $mail = new Zend_Mail_Imap($this->_params);
+        try {
+            $mail->selectFolder('subfolder/test');
+        } catch (Exception $e) {
+            $this->fail('exception raised while selecting existing folder');
+        }
+
+        $this->assertEquals($mail->getCurrentFolder(), 'subfolder/test');
+    }
+
+    public function testUnknownFolder()
+    {
+        $mail = new Zend_Mail_Imap($this->_params);
+        try {
+            $mail->selectFolder('/Unknown/Folder/');
+        } catch (Exception $e) {
+            return; // test ok
+        }
+
+        $this->fail('no exception raised while selecting unknown folder');
+    }
+
+    public function testGlobalName()
+    {
+        $mail = new Zend_Mail_Imap($this->_params);
+        try {
+            $this->assertEquals((string)$mail->getFolders()->subfolder, 'subfolder');
+        } catch (Exception $e) {
+            $this->fail('exception raised while selecting existing folder and getting global name');
+        }
+    }
+
+    public function testLocalName()
+    {
+        $mail = new Zend_Mail_Imap($this->_params);
+        try {
+            $this->assertEquals($mail->getFolders()->subfolder->key(), 'test');
+        } catch (Exception $e) {
+            $this->fail('exception raised while selecting existing folder and getting local name');
+        }
+    }
+
+    public function testKeyLocalName()
+    {
+        $mail = new Zend_Mail_Imap($this->_params);
+        $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
+        // we search for this folder because we can't assume a order while iterating
+        $search_folders = array('subfolder'      => 'subfolder',
+                                'subfolder/test' => 'test',
+                                'INBOX'          => 'INBOX');
+        $found_folders = array();
+
+        foreach($iterator as $localName => $folder) {
+            if(!isset($search_folders[$folder->getGlobalName()])) {
+                continue;
+            }
+
+            $found_folders[(string)$folder] = $localName;
+        }
+
+        $this->assertEquals($search_folders, $found_folders);
+    }
+
+    public function testSelectable()
+    {
+        $mail = new Zend_Mail_Imap($this->_params);
+        $iterator = new RecursiveIteratorIterator($mail->getFolders(), RecursiveIteratorIterator::SELF_FIRST);
+
+        foreach($iterator as $localName => $folder) {
+            $this->assertEquals($localName, $folder->getLocalName());
+        }
+    }
+
+
+    public function testCountFolder()
+    {
+        $mail = new Zend_Mail_Imap($this->_params);
+
+        $mail->selectFolder('subfolder/test');
+        $count = $mail->countMessages();
+        $this->assertEquals(1, $count);
+    }
+
+    public function testSizeFolder()
+    {
+        $mail = new Zend_Mail_Imap($this->_params);
+
+        $mail->selectFolder('subfolder/test');
+        $sizes = $mail->getSize();
+        $this->assertEquals(array(1 => 410), $sizes);
+    }
+
+    public function testFetchHeaderFolder()
+    {
+        $mail = new Zend_Mail_Imap($this->_params);
+
+        $mail->selectFolder('subfolder/test');
+        $subject = $mail->getHeader(1)->subject;
+        $this->assertEquals('Message in subfolder', $subject);
+    }
+
 }

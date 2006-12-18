@@ -29,6 +29,16 @@ require_once 'Zend/Mail/Abstract.php';
 require_once 'Zend/Mail/Transport/Imap.php';
 
 /**
+ * Zend_Mail_Folder_Interface
+ */
+require_once 'Zend/Mail/Folder/Interface.php';
+
+/**
+ * Zend_Mail_Folder
+ */
+require_once 'Zend/Mail/Folder.php';
+
+/**
  * Zend_Mail_Message
  */
 require_once 'Zend/Mail/Message.php';
@@ -43,7 +53,7 @@ require_once 'Zend.php';
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
  */
-class Zend_Mail_Imap extends Zend_Mail_Abstract
+class Zend_Mail_Imap extends Zend_Mail_Abstract implements Zend_Mail_Folder_Interface
 {
     private $_protocol;
     private $_currentFolder = '';
@@ -129,8 +139,9 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
     {
         if($params instanceof Zend_Mail_Transport_Imap) {
             $this->_protocol = $params;
-            $this->_currentFolder = 'INBOX';
-            if(!$this->_protocol->select($this->_currentFolder)) {
+            try {
+                $this->selectFolder('INBOX');
+            } catch(Zend_Mail_Exception $e) {
                 throw Zend::exception('Zend_Mail_Exception', 'cannot select INBOX, is this a valid transport?');
             }
             return;
@@ -148,10 +159,7 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
         if(!$this->_protocol->login($params['user'], $params['password'])) {
             throw Zend::exception('Zend_Mail_Exception', 'cannot login, user or password wrong');
         }
-        $this->_currentFolder = isset($params['folder']) ? $params['folder'] : 'INBOX';
-        if(!$this->_protocol->select($this->_currentFolder)) {
-            throw Zend::exception('Zend_Mail_Exception', 'cannot change folder, maybe it does not exist');
-        }
+        $this->selectFolder(isset($params['folder']) ? $params['folder'] : 'INBOX');
     }
 
 
@@ -213,5 +221,85 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract
     public function __get($var)
     {
         return parent::__get($var);
+    }
+
+    /**
+     * get root folder or given folder
+     *
+     * @param string $rootFolder get folder structure for given folder, else root
+     * @return Zend_Mail_Folder root or wanted folder
+     */
+    public function getFolders($rootFolder = null)
+    {
+        $folders = $this->_protocol->listMailbox((string)$rootFolder);
+        if(!$folders) {
+            throw new Zend_Mail_Exception('folder not found');
+        }
+
+        ksort($folders, SORT_STRING);
+        $root = new Zend_Mail_Folder('/', '/', false);
+        $stack = array(null);
+        $folderStack = array(null);
+        $parentFolder = $root;
+        $parent = '';
+
+        foreach($folders as $globalName => $data) {
+            do {
+                if(!$parent || strpos($globalName, $parent) === 0) {
+                    $pos = strrpos($globalName, $data['delim']);
+                    if($pos === false) {
+                        $localName = $globalName;
+                    } else {
+                        $localName = substr($globalName, $pos + 1);
+                    }
+                    $selectable = !$data['flags'] || !in_array('\\Noselect', $data['flags']);
+
+                    array_push($stack, $parent);
+                    $parent = $globalName . $data['delim'];
+                    $folder = new Zend_Mail_Folder($localName, $globalName, $selectable);
+                    $parentFolder->$localName = $folder;
+                    array_push($folderStack, $parentFolder);
+                    $parentFolder = $folder;
+                    break;
+                } else if($stack) {
+                    $parent = array_pop($stack);
+                    $parentFolder = array_pop($folderStack);
+                }
+            } while($stack);
+            if(!$stack) {
+                throw Zend::Exception('Zend_Mail_Exception', 'error while constructing folder tree');
+            }
+        }
+
+        return $root;
+    }
+
+    /**
+     * select given folder
+     *
+     * folder must be selectable!
+     *
+     * @param Zend_Mail_Folder|string global name of folder or instance for subfolder
+     * @throws Zend_Mail_Exception
+     */
+    public function selectFolder($globalName)
+    {
+        $this->_currentFolder = $globalName;
+        if(!$this->_protocol->select($this->_currentFolder)) {
+            $this->_currentFolder = '';
+            throw Zend::exception('Zend_Mail_Exception', 'cannot change folder, maybe it does not exist');
+        }
+    }
+
+
+    /**
+     * get Zend_Mail_Folder instance for current folder
+     *
+     * @return Zend_Mail_Folder instance of current folder
+     * @throws Zend_Mail_Exception
+     */
+    public function getCurrentFolder()
+    {
+        return $this->_currentFolder;
     }
 }
