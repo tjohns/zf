@@ -192,6 +192,18 @@
             There is no option for this backend.
         </para>
     </sect2>
+    <sect2 id="zend.cache.backends.platform">
+        <title>Zend_Cache_Backend_ZendPlatform</title>
+        <para>
+            This backend uses content caching API of the <ulink url="http://www.zend.com/products/platform">Zend Platform</ulink> product. Naturally, to use this backend you need to have Zend Platform installed.
+        </para>
+        <para>
+	This backend supports tags, but does not support <code>CLEANING_MODE_NOT_MATCHING_TAG</code> cleaning mode.
+        </para>
+        <para>
+            There is no options for this backend.
+        </para>
+    </sect2>
 </sect1> 
 <!--
 vim:se ts=4 sw=4 et:
