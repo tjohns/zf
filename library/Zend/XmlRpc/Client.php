@@ -59,7 +59,7 @@ require_once 'Zend/XmlRpc/Request.php';
 /**
  * XML-RPC Response
  */
-require_once 'Zend/XmlRpc/Request.php';
+require_once 'Zend/XmlRpc/Response.php';
 
 /**
  * XML-RPC Fault
