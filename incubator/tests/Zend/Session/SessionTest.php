@@ -65,7 +65,12 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         // unset all namespaces
         $core = Zend_Session_Core::getInstance();
         foreach(Zend_Session_Core::getIterator() as $space) {
-            $core->namespaceUnset($space);
+            try {
+                $core->namespaceUnset($space);
+            } catch (Zend_Session_Exception $e) {
+                $this->assertRegexp('/read.only/i', $e->getMessage());
+                return;
+            }
         }
 	}
 
@@ -811,11 +816,11 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
     /**
      * test expiration of namespace variables by hops
      * expect expiration of specified keys in the proper number of hops
+     */
     public function testSetExpireSessionVarsByHopsOnUse()
     {
         $s = new Zend_Session('expireGuava');
         $expireBeforeHop = 2;
-        echo "\n\n****************************************\n testSetExpireSessionVarsByHopsOnUse($expireBeforeHop, 'g', true)\n";
         $s->setExpirationHops($expireBeforeHop, 'g', true); // only count a hop, when namespace is used
         $s->g = 'guava';
         $s->p = 'peach';
@@ -826,16 +831,13 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         // we are not accessing (using) the "expireGuava" namespace, so these hops should have no effect
         for ($i = 1; $i <= ($expireBeforeHop +2); $i++) {
             exec($this->script . "expireAll $id notused", $result);
-            echo "\nHOP #$i = ", print_r($result, true);
             $result = $this->sortResult($result);
             $this->assertTrue($result === '',
                     "iteration over named Zend_Session namespace failed (result='$result'; hop #$i)");
         }
 
-        echo "\n- - - - - Hops Count / Namespace Used - - - - - -\n";
         for ($i = 1; $i <= ($expireBeforeHop +2); $i++) {
             exec($this->script . "expireAll $id expireGuava", $result);
-            echo "\nHOP #$i = ", print_r($result, true);
             $result = $this->sortResult($result);
             if ($i > $expireBeforeHop) {
                 $expect = ';p === plum';
@@ -849,8 +851,7 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
         }
 
         session_start(); // resume artificially suspended session
-        //$core = Zend_Session_Core::getInstance();
-        //$core->destroy();
+        $core = Zend_Session_Core::getInstance();
+        $core->destroy();
     }
-    */
 }

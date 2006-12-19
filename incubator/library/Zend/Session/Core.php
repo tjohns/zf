@@ -681,7 +681,7 @@ final class Zend_Session_Core
 
                     if ($_SESSION['__ZF'][$namespace]['ENVNH'][$variable] === 0) {
                         if (isset($_SESSION[$namespace][$variable])) {
-                            self::$_expiringData = $_SESSION[$namespace][$variable];
+                            self::$_expiringData[$namespace][$variable] = $_SESSION[$namespace][$variable];
                             unset($_SESSION[$namespace][$variable]);
                         }
                         unset($_SESSION['__ZF'][$namespace]['ENVNH'][$variable]);
