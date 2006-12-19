@@ -4,17 +4,18 @@
  *
  * LICENSE
  *
- * This source file is subject to version 1.0 of the Zend Framework
- * license, that is bundled with this package in the file LICENSE, and
- * is available through the world-wide-web at the following URL:
- * http://www.zend.com/license/framework/1_0.txt. If you did not receive
- * a copy of the Zend Framework license and are unable to obtain it
- * through the world-wide-web, please send a note to license@zend.com
- * so we can mail you a copy immediately.
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Mime
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 
@@ -34,20 +35,19 @@ require_once 'Zend/Mime/Part.php';
 require_once 'Zend/Mime/Decode.php';
 
 /**
+ * @category   Zend
  * @package    Zend_Mime
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mime_Message {
+class Zend_Mime_Message
+{
 
     protected $_parts = array();
-
     protected $_mime = null;
 
-
     /**
-     * Returns the list of all Zend_Mime_Parts in this Mail
-     * as an Array.
+     * Returns the list of all Zend_Mime_Parts in the message
      *
      * @return array of Zend_Mime_Part
      */
@@ -56,10 +56,8 @@ class Zend_Mime_Message {
         return $this->_parts;
     }
 
-
     /**
-     * sets the given Array of Zend_Mime_Parts as the Array
-     * for this eMail.
+     * Sets the given array of Zend_Mime_Parts as the array for the message
      *
      * @param array $parts
      */
@@ -68,9 +66,8 @@ class Zend_Mime_Message {
         $this->_parts = $parts;
     }
 
-
     /**
-     * Append a new Zend_Mime_Part to the current eMail
+     * Append a new Zend_Mime_Part to the current message
      *
      * @param Zend_Mime_Part $part
      */
@@ -83,10 +80,10 @@ class Zend_Mime_Message {
     }
 
     /**
-     * check if message needs to be sent as multipart
-     * mime message of if it has only one part.
+     * Check if message needs to be sent as multipart
+     * MIME message or if it has only one part.
      *
-     * @return bool
+     * @return boolean
      */
     public function isMultiPart()
     {
@@ -94,9 +91,10 @@ class Zend_Mime_Message {
     }
 
     /**
-     * set mime Object for this Message. This can be used
-     * to set the Boundary specifically or to use a SubClass
-     * of Zend_Mime for generating the boundary.
+     * Set Zend_Mime object for the message
+     *
+     * This can be used to set the boundary specifically or to use a subclass of
+     * Zend_Mime for generating the boundary.
      *
      * @param Zend_Mime $mime
      */
@@ -106,69 +104,86 @@ class Zend_Mime_Message {
     }
 
     /**
-     * returns the Zend_Mime object in use by this Message.
-     * If the object was not present, it is created and
-     * returned. Can be used to determine the boundary
-     * used in this message.
+     * Returns the Zend_Mime object in use by the message
+     *
+     * If the object was not present, it is created and returned. Can be used to
+     * determine the boundary used in this message.
      *
      * @return Zend_Mime
      */
     public function getMime()
     {
-        if ($this->_mime === null) $this->_mime = new Zend_Mime();
+        if ($this->_mime === null) {
+            $this->_mime = new Zend_Mime();
+        }
+
         return $this->_mime;
     }
 
     /**
-     * Generate Mime Compliant Message from the current configuration
-     * This can be a multipart message if more than one mimeParts were
-     * added. If only one Part is present, the content of this part
-     * is returned. If no part had been added, an empty string is returned.
-     * Parts are seperated by the mime boundary as defined in Zend_Mime. If
-     * setMime has been called before this method, the Zend_Mime object set
-     * by this call will be used. Otherwise, a new Zend_Mime Object is generated
-     * and used.
+     * Generate MIME-compliant message from the current configuration
      *
-     * @return String
+     * This can be a multipart message if more than one MIME part was added. If
+     * only one part is present, the content of this part is returned. If no
+     * part had been added, an empty string is returned.
+     *
+     * Parts are seperated by the mime boundary as defined in Zend_Mime. If
+     * {@link setMime()} has been called before this method, the Zend_Mime
+     * object set by this call will be used. Otherwise, a new Zend_Mime object
+     * is generated and used.
+     *
+     * @param string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
+     * @return string
      */
-    public function generateMessage()
+    public function generateMessage($EOL = Zend_Mime::LINEEND)
     {
         if (! $this->isMultiPart()) {
-            if (! array_key_exists(0, $this->_parts)) {
-                $body = '';
-            } else {
-                $body = $this->_parts[0]->getContent();
-            }
+            $body = array_shift($this->_parts);
+            $body = $body->getContent();
         } else {
             $mime = $this->getMime();
-            $boundaryLine = $mime->boundaryLine();
-            $body = 'This is a message in Mime Format.  If you see this, '
-                  . "your mail reader does not support this format." . Zend_Mime::LINEEND;
 
-            for ($p=0; $p < count($this->_parts); $p++) {
-                $body .= $boundaryLine . $this->getPartHeaders($p)
-                      . Zend_Mime::LINEEND . $this->getPartContent($p);
+            $boundaryLine = $mime->boundaryLine($EOL);
+            $body = 'This is a message in Mime Format.  If you see this, '
+                  . "your mail reader does not support this format." . $EOL;
+
+            foreach (array_keys($this->_parts) as $p) {
+                $body .= $boundaryLine
+                       . $this->getPartHeaders($p, $EOL)
+                       . $EOL
+                       . $this->getPartContent($p);
             }
 
-            $body .= $mime->mimeEnd();
+            $body .= $mime->mimeEnd($EOL);
         }
-        return $body;
+
+        return trim($body);
     }
 
     /**
-     * get the headers of a given part as a string
+     * Get the headers of a given part as an array
+     *
+     * @param int $partnum
+     * @return array
+     */
+    public function getPartHeadersArray($partnum)
+    {
+        return $this->_parts[$partnum]->getHeadersArray();
+    }
+
+    /**
+     * Get the headers of a given part as a string
      *
      * @param int $partnum
      * @return string
      */
-    public function getPartHeaders($partnum)
+    public function getPartHeaders($partnum, $EOL = Zend_Mime::LINEEND)
     {
-        return $this->_parts[$partnum]->getHeaders();
+        return $this->_parts[$partnum]->getHeaders($EOL);
     }
 
     /**
-     * get the (encoded) content of a given part as
-     * a string
+     * Get the (encoded) content of a given part as a string
      *
      * @param int $partnum
      * @return string
@@ -179,20 +194,20 @@ class Zend_Mime_Message {
     }
 
     /**
-     * decodes a mime encoded String and returns a MimeMessage
-     * object with all the mime parts set according to the given
-     * string
+     * Decodes a MIME encoded string and returns a Zend_Mime_Message object with
+     * all the MIME parts set according to the given string
      *
      * @param string $message
      * @param string $boundary
+     * @param string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
      * @return Zend_Mime_Message
      */
-    public static function createFromMessage($message, $boundary)
+    public static function createFromMessage($message, $boundary, $EOL = Zend_Mime::LINEEND)
     {
-        $parts = Zend_Mime_Decode::splitMessageStruct($message, $boundary);
-		
+        $parts = Zend_Mime_Decode::splitMessageStruct($message, $boundary, $EOL);
+
         $res = new Zend_Mime_Message();
-        foreach ($parts as $part) {            
+        foreach ($parts as $part) {
             // now we build a new MimePart for the current Message Part:
             $newPart = new Zend_Mime_Part($part['body']);
             foreach ($part['header'] as $key => $value) {
@@ -216,7 +231,7 @@ class Zend_Mime_Message {
                         $newPart->description = $value;
                         break;
                     default:
-                        throw new Zend_Exception('Unknown header ignored for MimePart:'.$key);
+                        throw new Zend_Exception('Unknown header ignored for MimePart:' . $key);
                 }
             }
             $res->addPart($newPart);

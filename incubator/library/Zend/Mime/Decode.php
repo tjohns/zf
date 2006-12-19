@@ -4,17 +4,18 @@
  *
  * LICENSE
  *
- * This source file is subject to version 1.0 of the Zend Framework
- * license, that is bundled with this package in the file LICENSE, and
- * is available through the world-wide-web at the following URL:
- * http://www.zend.com/license/framework/1_0.txt. If you did not receive
- * a copy of the Zend Framework license and are unable to obtain it
- * through the world-wide-web, please send a note to license@zend.com
- * so we can mail you a copy immediately.
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.zend.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@zend.com so we can send you a copy immediately.
  *
+ * @category   Zend
  * @package    Zend_Mime
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
@@ -23,11 +24,12 @@
 require_once 'Zend/Mime.php';
 
 /**
- * @package    Zend_Mime_Decode
- * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
+ * @category   Zend
+ * @package    Zend_Mime
+ * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Mime_Decode 
+class Zend_Mime_Decode
 {
     private static $qpFrom = array('=20', '=20', '=21', '=21', '=22', '=22', '=23', '=23', '=24',
                     '=24', '=25', '=25', '=26', '=26', '=27', '=27', '=28', '=28', '=29',
@@ -74,7 +76,7 @@ class Zend_Mime_Decode
                     '=F2', '=f3', '=F3', '=f4', '=F4', '=f5', '=F5', '=f6', '=F6', '=f7',
                     '=F7', '=f8', '=F8', '=f9', '=F9', '=fa', '=FA', '=fb', '=FB', '=fc',
                     '=FC', '=fd', '=FD', '=fe', '=FE', '=ff', '=FF');
-                    
+
     private static $qpTo = array("\x20", "\x20", "\x21", "\x21", "\x22", "\x22", "\x23", "\x23",
                   "\x24", "\x24", "\x25", "\x25", "\x26", "\x26", "\x27", "\x27",
                   "\x28", "\x28", "\x29", "\x29", "\x2A", "\x2A", "\x2B", "\x2B",
@@ -133,9 +135,9 @@ class Zend_Mime_Decode
                   "\xFD", "\xFD", "\xFE", "\xFE", "\xFF", "\xFF");
 
     /**
-     * explode mime multipart string into seperate parts
-     * the parts consist of the header and the body of the
-     * mime part.
+     * Explode MIME multipart string into seperate parts
+     *
+     * Parts consist of the header and the body of each MIME part.
      *
      * @param string $body
      * @param string $boundary
@@ -145,45 +147,47 @@ class Zend_Mime_Decode
     {
         // TODO: we're ignoring \r for now - is this function fast enough and is it safe to asume noone needs \r?
         $body = str_replace("\r", '', $body);
-    
+
         $start = 0;
         $res = array();
         // find every mime part limiter and cut out the
         // string before it.
         // the part before the first boundary string is discarded:
-        $p = strpos($body, '--'.$boundary."\n", $start);
+        $p = strpos($body, '--' . $boundary . "\n", $start);
         if ($p === false) {
             // no parts found!
-            return array();  
+            return array();
         }
-        
+
         // position after first boundary line
-        $start = $p + 3 + strlen($boundary); 
+        $start = $p + 3 + strlen($boundary);
 
         while (($p = strpos($body, '--' . $boundary . "\n", $start)) !== false) {
             $res[] = substr($body, $start, $p-$start);
             $start = $p + 3 + strlen($boundary);
         }
-        
+
         // no more parts, find end boundary
         $p = strpos($body, '--' . $boundary . '--', $start);
         if ($p===false) {
             throw new Zend_Exception('Not a valid Mime Message: End Missing');
         }
-        
+
         // the remaining part also needs to be parsed:
         $res[] = substr($body, $start, $p-$start);
         return $res;
     }
-    
+
     /**
-     * decodes a mime encoded String and returns a 
+     * decodes a mime encoded String and returns a
      * struct of parts with header and body
      *
      * @param string $message
+     * @param string $boundary
+     * @param string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
      * @return array
      */
-    public static function splitMessageStruct($message, $boundary)
+    public static function splitMessageStruct($message, $boundary, $EOL = Zend_Mime::LINEEND)
     {
         $parts = self::splitMime($message, $boundary);
         if (count($parts) <= 0) {
@@ -191,13 +195,13 @@ class Zend_Mime_Decode
         }
         $result = array();
         foreach($parts as $part) {
-            self::splitMessage($part, $headers, $body);
+            self::splitMessage($part, $headers, $body, $EOL);
             $result[] = array('header' => $headers,
-                              'body'   => $body    );    
+                              'body'   => $body    );
         }
         return $result;
     }
-    
+
     /**
      * split a message in header and body part, if no header or an
      * invalid header is found $headers is empty
@@ -205,8 +209,9 @@ class Zend_Mime_Decode
      * @param string $message
      * @param mixed $headers, output param, out type is array
      * @param mixed $body, output param, out type is string
+     * @param string $EOL EOL string; defaults to {@link Zend_Mime::LINEEND}
      */
-    public static function splitMessage($message, &$headers, &$body)
+    public static function splitMessage($message, &$headers, &$body, $EOL = Zend_Mime::LINEEND)
     {
         // separate header and body
         $inHeader = true;  // expecting header lines first
@@ -214,11 +219,11 @@ class Zend_Mime_Decode
         $body = '';
         $lastheader = ''; // TODO: need to make that a direct reference to last header, doesn't work with multiple multiline headers
         $lines = explode("\n", $message);
-        
+
         // read line by line
         foreach ($lines as $line) {
             if (!$inHeader) {
-                $body .= $line . Zend_Mime::LINEEND;
+                $body .= $line . $EOL;
             } else if (!trim($line)) {
                 $inHeader = false;
             } else if ($line[0] === ' ' || $line[0] === "\t") {
@@ -227,8 +232,8 @@ class Zend_Mime_Decode
                     // then assume no headers at all
                     $inHeader = false;
                 } else {
-                    $headers[$lastheader] .= Zend_Mime::LINEEND . trim($line);
-                }    
+                    $headers[$lastheader] .= $EOL . trim($line);
+                }
             } else if(!strpos($line, ':')) {
                 // headers do not start with an ordinary header line?
                 // then assume no headers at all
@@ -240,7 +245,7 @@ class Zend_Mime_Decode
                     if(is_array($headers[$key])) {
                         $headers[$key][] = trim($value);
                     } else {
-                        $headers[$key] = array($headers[$key], trim($value));     
+                        $headers[$key] = array($headers[$key], trim($value));
                     }
                 } else {
                     $headers[$key] = trim($value);
@@ -248,7 +253,7 @@ class Zend_Mime_Decode
                 $lastheader = $key;
             }
         }
-        
+
         foreach($headers as $name => $value) {
             if(is_array($value)) {
                 foreach($value as $key => $subvalue) {
@@ -259,9 +264,9 @@ class Zend_Mime_Decode
             }
         }
     }
-    
+
     /**
-     * split a content type in its different parts - maybe that could 
+     * split a content type in its different parts - maybe that could
      * get a more generic name and code as many fields use this format
      *
      * @param string content-type
@@ -269,13 +274,13 @@ class Zend_Mime_Decode
      *
      * @return string|array wanted part or all parts
      */
-    public static function splitContentType($type, $wantedPart = null) 
+    public static function splitContentType($type, $wantedPart = null)
     {
         return self::splitHeaderField($type, $wantedPart, 'type');
     }
-    
+
     /**
-     * split a header field like content type in its different parts 
+     * split a header field like content type in its different parts
      *
      * @param string header field
      * @param string the wanted part, else an array with all parts is returned
@@ -283,11 +288,11 @@ class Zend_Mime_Decode
      *
      * @return string|array wanted part or all parts
      */
-    public static function splitHeaderField($type, $wantedPart = null, $firstName = 0) 
+    public static function splitHeaderField($type, $wantedPart = null, $firstName = 0)
     {
         $split = array();
         $type = explode(';', $type);
-        // this is already prepared for a 
+        // this is already prepared for a
         $split[$firstName] = array_shift($type);
         foreach($type as $part) {
             $part = trim($part);
@@ -297,13 +302,13 @@ class Zend_Mime_Decode
             }
             $split[$key] = $value;
         }
-        
+
         if($wantedPart) {
             return isset($split[$wantedPart]) ? $split[$wantedPart] : null;
         }
         return $split;
     }
-    
+
     /**
      *
      * decode a quoted printable encoded string
@@ -311,7 +316,7 @@ class Zend_Mime_Decode
      * @param string encoded string
      * @return string decoded string
      */
-    public static function decodeQuotedPrintable($string) 
+    public static function decodeQuotedPrintable($string)
     {
         // avoid calling expensive regex
         if(strpos($string, '=') === false) {
@@ -326,7 +331,7 @@ class Zend_Mime_Decode
             // TODO: charset conversion - charset is matches in $matches[1]
             $string = str_replace($wholeMatch, $replace, $string);
         }
-        
+
         return str_replace('=3D', '=', $string);
     }
 }
