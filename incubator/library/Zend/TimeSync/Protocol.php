@@ -34,48 +34,49 @@ abstract class Zend_TimeSync_Protocol
      * @var array
      */
     protected $_socket;
-    
+
     /**
      * Exceptions that might have occured
      *
      * @var array
      */
     protected $_exceptions;
-    
+
     /**
      * Hostname for timeserver
      *
      * @var string
      */
     protected $_timeserver;
-    
+
     /**
      * Port number for this timeserver
      *
      * @var int
      */
     protected $_port;
-    
+
+    /**
+     * Holds information passed/returned from timeserver
+     *
+     * @var array
+     */
+    protected $_info = array();
+
     /**
      * Abstract method that writes/receives data to/from the timeserver
      * 
      * @return int unix timestamp
      */
     abstract protected function _query();
-    
+
     /**
-     * Connect to the specified timeserver. If called when the socket is
-     * already connected, it disconnects and connects again.
+     * Connect to the specified timeserver.
      * 
      * @return void
      */
     protected function _connect()
     {
-        if (is_resource($this->_socket)) {
-            @fclose($this->_socket);
-            $this->_socket = null;
-        }
-        
         $socket = @fsockopen($this->_timeserver, $this->_port, $errno, $errstr, Zend_TimeSync::$options['timeout']);
         if (!$socket) {
             throw Zend::exception(
@@ -83,10 +84,10 @@ abstract class Zend_TimeSync_Protocol
                 "could not connect to '$this->_timeserver' on port '$this->_port', reason: '$errstr'"
             );
         }
-        
+
         $this->_socket = $socket;
     }
-    
+
     /**
      * Disconnects from the peer, closes the socket.
      * 
@@ -94,17 +95,20 @@ abstract class Zend_TimeSync_Protocol
      */
     protected function _disconnect()
     {
-        if (!is_resource($this->_socket)) {
-            throw Zend::exception(
-                'Zend_TimeSync_ProtocolException', 
-                "could not close server connection from '$this->_timeserver' on port '$this->_port'"
-            );
-        }
-        
         @fclose($this->_socket);
         $this->_socket = null;
     }
-    
+
+    /**
+     * Return information sent/returned from the timeserver
+     * 
+     * @return  array
+     */
+    public function getInfo()
+    {
+        return $this->_info;
+    }
+
     /**
      * Query this timeserver without using the fallback mechanism
      * 
@@ -115,33 +119,7 @@ abstract class Zend_TimeSync_Protocol
     public function getDate($locale = false)
     {
         $timestamp = $this->_query();
-        
+
         return new Zend_Date($timestamp, Zend_Date::TIMESTAMP, $locale);
-    }
-    
-    /**
-     * Return the exceptions that have occured while trying to write/receive data
-     * to/from the current timeserver
-     * 
-     * @return  mixed
-     */
-    public function getExceptions()
-    {
-        if (isset($this->_exceptions)) {
-            return $this->_exceptions;
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Stores an internal exception, used by the facade Zend_TimeSync
-     * 
-     * @param   $exception
-     * @return  void
-     */
-    public function addException(Zend_TimeSync_ProtocolException $exception)
-    {
-        $this->_exceptions[] = $exception;
     }
 }

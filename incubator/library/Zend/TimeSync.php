@@ -108,7 +108,7 @@ class Zend_TimeSync implements IteratorAggregate
      * @param   array $options
      * @return  Zend_TimeSync
      */
-    public function __construct($server, $options = array())
+    public function __construct($server = array(), $options = array())
     {
         $this->addServer($server);
         $this->setOptions($options);
@@ -125,6 +125,29 @@ class Zend_TimeSync implements IteratorAggregate
     public function getIterator()
     {
         return new ArrayObject($this->_timeservers);
+    }
+
+    /**
+     * Add a timeserver to the server list
+     *
+     * @param $server server name including scheme specification
+     * @return void
+     * @throws Zend_TimeSync_Exception
+     */
+    public function addServer($server)
+    {
+        if (is_array($server)) {
+            foreach ($server as $key => $timeServer) {
+                $this->_addServer($timeServer);
+            }
+        } elseif (is_string($server)) {
+            $this->_addServer($server);
+        } else {
+            throw Zend::exception(
+                'Zend_TimeSync_Exception',
+                '$server should be an array or string, ' . gettype($server) . ' given'
+            );
+        }
     }
 
     /**
@@ -169,7 +192,7 @@ class Zend_TimeSync implements IteratorAggregate
      * @param   integer $flag
      * @throws  Zend_TimeSync_Exception
      */
-    public function setCurrent($flag)
+    public function setCurrent($flag = null)
     {
         if (isset($this->_timeservers[$flag])) {
             $this->_current = $this->_timeservers[$flag];
@@ -218,7 +241,7 @@ class Zend_TimeSync implements IteratorAggregate
      * @return  object
      * @throws  Zend_TimeSync_Exception
      */
-    public function get($flag)
+    public function get($flag = null)
     {
         if (isset($this->_timeservers[$flag])) {
             return $this->_timeservers[$flag];
@@ -238,7 +261,7 @@ class Zend_TimeSync implements IteratorAggregate
      */
     public function getCurrent()
     {
-        if (isset($this->_current)) {
+        if (isset($this->_current) && $this->_current !== false) {
             return $this->_current;
         } else {
             throw Zend::exception(
@@ -249,26 +272,13 @@ class Zend_TimeSync implements IteratorAggregate
     }
 
     /**
-     * Add a timeserver to the server list
-     *
-     * @param $server server name including scheme specification
-     * @return void
-     * @throws Zend_TimeSync_Exception
+     * Return information sent/returned from the current timeserver
+     * 
+     * @return  array
      */
-    public function addServer($server)
+    public function getInfo()
     {
-        if (is_array($server)) {
-            foreach ($server as $key => $timeServer) {
-                $this->_addServer($timeServer);
-            }
-        } elseif (is_string($server)) {
-            $this->_addServer($server);
-        } else {
-            throw Zend::exception(
-                'Zend_TimeSync_Exception',
-                '$server should be an array or string, ' . gettype($server) . ' given'
-            );
-        }
+        return $this->getCurrent()->getInfo();   
     }
 
     /**
@@ -281,24 +291,17 @@ class Zend_TimeSync implements IteratorAggregate
     public function getDate($locale = false)
     {
         foreach ($this->_timeservers as $key => $server) {
+            $this->_current = $server;
             try {
                 return $server->getDate($locale);
             } catch (Zend_TimeSync_ProtocolException $e) {
-                $server->addException($e);
-            }
-        }
-
-        $masterException = Zend::exception(
-            'Zend_TimeSync_Exception',
-            'all the provided servers are bogus'
-        );
-
-        foreach ($this->_timeservers as $key => $server) {
-            $exceptions = $server->getExceptions();
-            if (is_array($exceptions)) {
-                foreach ($exceptions as $index => $exception) {
-                    $masterException->add($exception);
+                if (!isset($masterException)) {
+                    $masterException = Zend::exception(
+                        'Zend_TimeSync_Exception',
+                        'all the provided servers are bogus'
+                    );
                 }
+                $masterException->addException($e);
             }
         }
 
@@ -340,40 +343,18 @@ class Zend_TimeSync implements IteratorAggregate
 
         $protocol  = ($scheme == 'ntp') ? 'udp' : 'tcp';
         $className = 'Zend_TimeSync_' . ucfirst($scheme);
+        
         if (!isset($port)) {
-            $port = $this->_getStandardPort($scheme);
+            if ($scheme == 'ntp') {
+                $port = self::DEFAULT_NTP_PORT;
+            } elseif ($scheme == 'sntp') {
+                $port = self::DEFAULT_SNTP_PORT;
+            }
         }
 
         Zend::loadClass($className);
 
         $server = new $className($protocol . '://' . $host, $port);
         array_push($this->_timeservers, $server);
-    }
-
-    /**
-     * Return the default port number for a specified scheme
-     *
-     * @param   string $scheme
-     * @return  integer
-     * @throws  Zend_TimeSync_Exception
-     */
-    protected function _getStandardPort($scheme)
-    {
-        switch ($scheme) {
-            case 'ntp':
-                return self::DEFAULT_NTP_PORT;
-                break;
-                
-            case 'sntp':
-                return self::DEFAULT_SNTP_PORT;
-                break;
-
-            default:
-                throw Zend::exception(
-                    'Zend_TimeSync_Exception',
-                    'an unsupported protocol name was received'
-                );
-                break;
-        }
     }
 }

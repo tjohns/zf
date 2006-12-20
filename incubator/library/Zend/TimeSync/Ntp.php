@@ -32,9 +32,7 @@ require_once 'Zend/TimeSync/Protocol.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
-{
-    protected $_info;
-    
+{    
 	/**
 	 * Class constructor, sets the timeserver and port number
 	 *
@@ -47,7 +45,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $this->_timeserver = $timeserver;
         $this->_port       = $port;
     }
-    
+
     /**
      * Writes/receives data to/from the timeserver
      * 
@@ -88,18 +86,18 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
         fwrite($this->_socket, $ntppacket);
         stream_set_timeout($this->_socket, Zend_TimeSync::$options['timeout']);
-        
+
         $flags = ord(fread($this->_socket, 1));
         $info  = stream_get_meta_data($this->_socket);
-        
+
         if ($info['timed_out']) {
-            fclose($this->disconnect);
+            fclose($this->_socket);
             throw Zend::exception(
                 'Zend_TimeSync_ProtocolException', 
                 "could not connect to '$this->_timeserver' on port '$this->_port', reason: 'server timed out'"
             );
         }
-        
+
         $stratum        = ord(fread($this->_socket, 1));
         $this->_info['poll']      = ord(fread($this->_socket, 1));
         $this->_info['precision'] = ord(fread($this->_socket, 1));
@@ -116,11 +114,11 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $transmitmicro  = ord(fread($this->_socket, 4));
 
         $clientreceived = 0;
-        
+
         $this->_disconnect();
-        
+
         $leap = ($flags & 0xc0) >> 6; // Leap Indicator bit 1100 0000
-        
+
         // 0 = no warning, 1 = last min. 61 sec., 2 = last min. 59 sec., 3 = not synconised
         switch($leap) {
             case 0 :
@@ -165,7 +163,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
         $ntpserviceid = 'Unknown Stratum ' . $stratum . ' Service';
         $refid = strtoupper($referenceid);
-        
+
         switch($stratum) {
             case 0:
                 if (substr($refid, 0, 3) == 'DCN') {
@@ -221,7 +219,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $this->_info['rootdelayfrac'] = ($rootdelay << 17) >> 17;
         $this->_info['rootdispersion']     = $rootdispersion >> 15;
         $this->_info['rootdispersionfrac'] = ($rootdispersion << 17) >> 17;
-        
+
         // seconds for message to the server
         $original  = (float) $originatestamp;
         $original += (float) $originatemicro / 4294967296;
@@ -235,9 +233,9 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         // seconds to add for local clock
         $offset = $received - $original + $transmit - $clientreceived;
         $this->_info['offset'] = $offset / 2;
-        
+
         $time = time() - $offset;
-        
+
         return $time;
     }
 }
