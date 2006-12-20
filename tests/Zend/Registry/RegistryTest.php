@@ -65,6 +65,14 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
         } catch (Zend_Exception $e) {
             $this->assertRegexp('/not.*instanceof.*Zend_Registry/i', $e->getMessage());
         }
+
+        try {
+            $registry = Zend::initRegistry(new Zend());
+            $this->fail('Expected exception, because we can only initialize the registry using an instance of '
+                . 'Zend_Registry (or a subclass).');
+        } catch (Zend_Exception $e) {
+            $this->assertRegexp('/not.*instanceof.*Zend_Registry/i', $e->getMessage());
+        }
     }
 
     // make sure that the registry can be used without a userland call to create it

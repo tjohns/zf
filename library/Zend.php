@@ -303,7 +303,8 @@ final class Zend
     {
         // prevent multiple calls to this method
         if (self::$_registry !== null) {
-            throw new Zend_Exception( __CLASS__ . '::' . __FUNCTION__ . '()' . '::' . __LINE__ . ' registry already initialized.');
+            throw new Zend_Exception( __CLASS__ . '::' . __FUNCTION__ . '()' . '::' . __LINE__
+                . ' registry already initialized.');
         }
 
         if ($registry === 'Zend_Registry') {
@@ -312,7 +313,8 @@ final class Zend
 
         if (is_string($registry)) {
             if (!class_exists($registry, false)) {
-                throw new Zend_Exception( __CLASS__ . '::' . __FUNCTION__ . '()' . '::' . __LINE__ . " $registry' class not found.");
+                throw new Zend_Exception( __CLASS__ . '::' . __FUNCTION__ . '()' . '::' . __LINE__
+                    . " '$registry' class not found.");
             } else {
                 self::initRegistry(new $registry());
             }
@@ -320,9 +322,11 @@ final class Zend
             if (!class_exists('Zend_Registry', false)) {
                 require_once 'Zend/Registry.php';
             }
-            if (!($registry instanceof Zend_Registry)) {
-                throw new Zend_Exception( __CLASS__ . '::' . __FUNCTION__ . '()' . '::' . __LINE__ . " $registry' is not an \""
-                    . "instanceof\" Zend_Registry (or subclass)");
+            $type = gettype($registry);
+            if ($type !== 'object' || !($registry instanceof Zend_Registry)) {
+                throw new Zend_Exception( __CLASS__ . '::' . __FUNCTION__ . '()' . '::' . __LINE__ 
+                    . " '" . ($type === 'object' ? get_class($registry) : $type)
+                    . "' is not an \"instanceof\" Zend_Registry (or subclass)");
             }
             self::$_registry = $registry;
         }
