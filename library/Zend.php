@@ -267,7 +267,7 @@ final class Zend
     static public function registry($index = null)
     {
         if (self::$_registry === null) {
-            return false;
+            self::initRegistry();
         }
 
         return self::$_registry->get($index);
