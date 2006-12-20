@@ -100,19 +100,6 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($response->isFault());
     }
     
-    public function testResponseFromRpcMethodCallAsNativeOrResponseObject()
-    {
-        $expected = 1.1;
-        
-        $this->setServerResponseTo($expected);
-        $return = $this->xmlrpcClient->call('foo');
-        $this->assertSame($expected, $return);
-
-        $response = $this->xmlrpcClient->call('foo', array(), true);
-        $this->assertType('Zend_XmlRpc_Response', $response);
-        $this->assertSame($expected, $response->getReturnValue());
-    }
-    
     // Faults
     
     public function testRpcMethodCallThrowsOnHttpFailure()
@@ -140,7 +127,7 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
         $message = 'foo';
         
         $fault = new Zend_XmlRpc_Fault($code, $message);
-        $xml = $fault->__toString();
+        $xml = $fault->saveXML();
 
         $response = $this->makeHttpResponseFrom($xml);
         $this->httpAdapter->setResponse($response);        
@@ -391,7 +378,7 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
 
         // system.multicall() will return a fault
         $fault = new Zend_XmlRpc_Fault(7, 'bad method');
-        $xml = $fault->__toString();
+        $xml = $fault->saveXML();
         $response = $this->makeHttpResponseFrom($xml);
         $this->httpAdapter->addResponse($response);  
 
@@ -428,13 +415,14 @@ class Zend_XmlRpc_ClientTest extends PHPUnit_Framework_TestCase
     {
         $response = new Zend_XmlRpc_Response();
         $response->setReturnValue($nativeVars);
-        $xml = $response->__toString();
+        $xml = $response->saveXML();
 
         $response = $this->makeHttpResponseFrom($xml);
         return $response;
     }
 
-    public function makeHttpResponseFrom($data, $status=200, $message='OK') {
+    public function makeHttpResponseFrom($data, $status=200, $message='OK') 
+    {
         $headers = array("HTTP/1.1 $status $message",
                          "Status: $status",
                          'Content_Type: text/xml; charset=utf-8',

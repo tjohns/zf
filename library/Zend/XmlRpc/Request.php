@@ -82,6 +82,25 @@ class Zend_XmlRpc_Request
      */
     protected $_fault = null;
 
+    
+    /**
+     * Create a new XML-RPC request
+     *
+     * @param string method (optional)
+     * @param array params  (optional)
+     */
+    public function __construct($method = null, $params = null)
+    {
+        if ($method !== null) {
+            $this->setMethod($method);
+        }
+        
+        if ($params !== null) {
+            $this->setParams($params);
+        }
+    }
+
+
     /**
      * Set encoding to use in request
      * 

@@ -50,6 +50,24 @@ class Zend_XmlRpc_RequestTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('test/method', $this->_request->getMethod());
     }
 
+
+    /**
+     * __construct() test
+     */
+    public function testConstructorOptionallySetsMethodAndParams()
+    {
+        $r = new Zend_XmlRpc_Request();
+        $this->assertEquals('', $r->getMethod());
+        $this->assertEquals(array(), $r->getParams());
+        
+        $method = 'foo.bar';
+        $params = array('baz', 1, array('foo' => 'bar'));
+        $r = new Zend_XmlRpc_Request($method, $params);
+        $this->assertEquals($method, $r->getMethod());
+        $this->assertEquals($params, $r->getParams());
+    }
+    
+
     /**
      * addParam()/getParams() test
      */

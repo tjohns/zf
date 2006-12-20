@@ -250,24 +250,18 @@ class Zend_XmlRpc_Client
      * @param boolean $asResponseObject Return it as a response object instead of PHP native?
      * @throws Zend_Http_Client_FaultException
      */
-    public function call($method, $params=array(), $asResponseObject = false)
+    public function call($method, $params=array())
     {
-        $request = new Zend_XmlRpc_Request();
-        $request->setMethod($method);
-        $request->setParams($params);
+        $request = new Zend_XmlRpc_Request($method, $params);
         
         $this->doRequest($request);
 
-        if ($asResponseObject) {
-            return $this->_lastResponse;
-        } else {
-            if ($this->_lastResponse->isFault()) {
-                $fault = $this->_lastResponse->getFault();
-                throw new Zend_XmlRpc_Client_FaultException($fault->getMessage(),
-                                                            $fault->getCode());
-            }
-            
-            return $this->_lastResponse->getReturnValue();
+        if ($this->_lastResponse->isFault()) {
+            $fault = $this->_lastResponse->getFault();
+            throw new Zend_XmlRpc_Client_FaultException($fault->getMessage(),
+                                                        $fault->getCode());
         }
+        
+        return $this->_lastResponse->getReturnValue();
     }    
 }
