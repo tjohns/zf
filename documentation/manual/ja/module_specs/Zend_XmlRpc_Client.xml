@@ -90,12 +90,10 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
         </para>
 
         <para>
-            最後に、<code>call()</code> のオプションの第三パラメータでは、
-            メソッドの返り値をネイティブ PHP 型で受け取るか Response
-            オブジェクトで受け取るかを選択します。このパラメータを
-            <code>TRUE</code> にした場合は <code>Zend_XmlRpc_Response</code>
-            オブジェクトが返され、それ以外の場合は
-            オブジェクトが自動的に同等な PHP 型に変換されて返されます。
+            <code>call()</code> メソッドは自動的に XML-RPC のレスポンスを変換し、
+            同等な PHP ネイティブ型にして返します。返り値を
+            <code>Zend_XmlRpc_Response</code> オブジェクトとして取得するには、
+            このメソッドの後で <code>getLastResponse()</code> をコールします。
         </para>
     </sect2>
 
@@ -405,9 +403,8 @@ try {
             </para>
             
             <para>
-                レスポンスが自動的に PHP の型に変換される場所で
-                <code>call()</code> メソッドを使用した場合、
-                あるいはサーバプロキシオブジェクトを使用している場合には、
+                <code>call()</code> メソッドや
+                サーバプロキシオブジェクトを使用している場合には、
                 XML-RPC の fault が発生すると
                 <code>Zend_XmlRpc_Client_FaultException</code> がスローされます。
                 この例外のコードとメッセージは、もとの XML-RPC の fault
@@ -438,16 +435,20 @@ try {
             </example>
 
             <para>
-                <code>call()</code> メソッドのオプションの第三パラメータで
-                <code>TRUE</code> を指定して
-                <code>Zend_XmlRpc_Response</code> オブジェクトを返すようにした場合、
-                あるいは <code>doRequest()</code> メソッドを使用して
-                リクエストオブジェクトやレスポンスオブジェクトを直接扱った場合などは、
-                この例外はスローされません。その代わりに、
-                返される <code>Zend_XmlRpc_Response</code>
-                オブジェクトの中に fault が含まれるようになります。
-                これを確認するには、<code>Zend_XmlRpc_Response</code>
-                のインスタンスメソッド <code>isFault</code> を使用します。
+                <code>call()</code> メソッドを使用してリクエストを作成した場合は、
+                fault の際に <code>Zend_XmlRpc_FaultException</code>
+                がスローされます。fault を含む <code>Zend_XmlRpc_Response</code>
+                オブジェクトを取得するには
+                <code>getLastResponse()</code> をコールします。
+            </para>
+            
+            <para>
+                <code>doRequest()</code> メソッドでリクエストを作成した場合は、
+                例外はスローされません。そのかわりに、falut を含む
+                <code>Zend_XmlRpc_Response</code> オブジェクトを返します。
+                これを調べるには、
+                <code>Zend_XmlRpc_Response</code> のインスタンスメソッド
+                <code>isFault()</code> を使用します。
             </para>
         </sect3>        
 
