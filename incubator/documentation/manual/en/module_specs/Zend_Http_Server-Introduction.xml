@@ -1,0 +1,13 @@
+<sect1 id="zend.http.server.introduction">
+
+    <title>Introduction</title>
+
+    <para>
+		Any good web application requires a good web server to allow its users to access it, package up all of the data that is to be communicated in each direction and start the application itself.  The best web servers are incredibly powerful and flexible, but consequently very complicated.
+    </para>
+
+    <para>
+		The Zend Http Server tool is a simple web server intended to allow rapid debugging and testing of Zend Framework applications without the complication.  By reducing power and flexibilty, Zend Http Server aims to be a simple solution that "just works".
+    </para>
+
+</sect1>
