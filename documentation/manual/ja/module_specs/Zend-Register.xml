@@ -1,31 +1,44 @@
 <sect1 id="zend.register">
-    <title>Zend::register()</title>
+
+    <title>Zend::register($index, $newval)</title>
 
     <para>
-    値をレジストリに登録します。
+        値 $newval を、レジストリのオフセット $index に登録します。
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <example>
+        <title>register() / offsetSet() の例</title>
+<programlisting role="php"><![CDATA[<?php
+Zend::register($index, $value);
 
-Zend::register($index, $value)
+// あるいは
+
+$registry = Zend::registry();
+$registry->offsetSet($index, $newval);
 
 ?>]]></programlisting>
+    </example>
 
     <para>
-    レジストリとは、
-    値のシングルトンインスタンスをアプリケーション空間に提供する仕組みのことです。
-    値をレジストリに保存すると、
-    必要なときにいつでもそれを取り出して使用できます。
-    その際、常に同一のインスタンスが返されます。
+        レジストリとは、
+        値のシングルトンインスタンスをアプリケーション空間に提供する仕組みのことです。
+        値をレジストリに保存すると、
+        必要なときにいつでもそれを取り出して使用できます。
+        その際、常に同一のインスタンスが返されます。
     </para>
 
     <para>
-    <code>$index</code> には、保存する値の名前を任意の文字列で指定します。
-    <code>Zend::registry()</code> で値を取得する際に、この名前を使用します。
+        <code>$index</code> には、レジストリ内のインデックスを任意の文字列で指定します。
+        <code>Zend::registry()</code> で値を取得する際に、同じインデックスを使用します。
     </para>
 
     <para>
-    このレジストリは、ArrayObject となります。
+        このレジストリの考え方は
+        <ulink
+        url="http://www.php.net/~helly/php/ext/spl/classArrayObject.html">ArrayObject</ulink>
+        と同じです。このメソッドは、
+        <ulink url="http://www.php.net/manual/ja/function.arrayobject-offsetset.php">
+        offsetSet() メソッド</ulink> を単にラップしたものです。
     </para>
 </sect1>
 <!--
