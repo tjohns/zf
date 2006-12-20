@@ -1125,17 +1125,17 @@ class Zend_Date {
         }
         return 0;
     }
-
+    
 
     /**
-     * Returns a duplicate date object
+     * Returns a new copy of the date object
      *
-     * @param $part datepart - OPTIONAL the part of date to clone
+     * @param  $part datepart - OPTIONAL datepart to dublicate
      * @return object
      */
-    public function dublicate($part = FALSE)
+    public function copy($part = FALSE)
     {
-        $this->_calculate('clone', $this, $part, FALSE, FALSE);
+        return $this->_calculate('copy', $this, $part, FALSE, FALSE);
     }
 
 
@@ -1161,7 +1161,7 @@ class Zend_Date {
             case 'cmp' :
                 return bcsub($comp, $date);
                 break;
-            case 'clone' :
+            case 'copy' :
                 return new Zend_Date($date);
                 break;
             case 'set' :
@@ -2207,24 +2207,55 @@ class Zend_Date {
      * Returns TRUE when both date objects have equal dates set
      *
      * @param $date object
+     * @param  $part datepart - OPTIONAL datepart to compare only
+     * @param  $locale        - OPTIONAL, locale for output
+     * @param  $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @return boolean
      */
-    public function equals($date, $part = '')
+    public function equals($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
     {
-        $locale = $this->_Locale;
-
-        // if object extract value
-        if (is_object($date)) {
-            $date = $date->get($part, $gmt, $locale);
+        if ($this->compare($date, $part, $gmt, $locale) == 0) {
+            return true;
         }
-
-        if (empty($part)) {
-            return ($date->getTimestamp() == $this->getTimestamp);
-        }
-
-        return ($date == $date->get($part));
+        return false;
     }
 
+
+    /**
+     * Returns if the given date is earlier
+     *
+     * @param  $date object   - date which shall be compared with our actual date object
+     * @param  $part datepart - OPTIONAL datepart to compare only
+     * @param  $locale        - OPTIONAL, locale for output
+     * @param  $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @return boolean
+     */
+    public function isEarlier($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
+    {
+        if ($this->compare($date, $part, $gmt, $locale) == -1) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Returns if the given date is later
+     *
+     * @param  $date object   - date which shall be compared with our actual date object
+     * @param  $part datepart - OPTIONAL datepart to compare only
+     * @param  $locale        - OPTIONAL, locale for output
+     * @param  $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @return boolean
+     */
+    public function isLater($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
+    {
+        if ($this->compare($date, $part, $gmt, $locale) == 1) {
+            return true;
+        }
+        return false;
+    }
+    
 
     /**
      * Returns the maximum date or datepart for the set date object

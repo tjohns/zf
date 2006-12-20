@@ -2774,4 +2774,83 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->compare('Mon',Zend_Date::WEEKDAY_SHORT),1);
         $this->assertSame($date->compare('Sam',Zend_Date::WEEKDAY_SHORT),-1);
     }
+
+	/**
+	 * Test for copy
+	 */
+    public function testCopy()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date = new Zend_Date(0,false,$locale);
+    	$d2   = new Zend_Date(1010101010,false,$locale);
+
+    	$date->set(1234567890);
+    	$newdate = $date->copy();
+        $this->assertSame($date->get(),$newdate->get());
+
+    	$date->set($d2);
+    	$newdate = $date->copy(Zend_Date::DAY);
+        $this->assertSame($newdate->get(Zend_Date::W3C), '1970-01-05T00:00:00+01:00');
+    }
+
+	/**
+	 * Test for equals
+	 */
+    public function testEquals()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date = new Zend_Date(0,false,$locale);
+    	$d2   = new Zend_Date(1010101010,false,$locale);
+
+    	$retour = $date->set(1234567890);
+        $this->assertSame($retour,'1234567890');
+        $this->assertSame($date->equals(1234567890),TRUE);
+        $this->assertSame($date->equals(1234567800),FALSE);
+
+        $date->set($d2);
+        $this->assertSame($date->equals(3,Zend_Date::DAY),FALSE);
+        $this->assertSame($date->equals(4,Zend_Date::DAY),TRUE);
+    }
+
+	/**
+	 * Test for isEarlier
+	 */
+    public function testIsEarlier()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date = new Zend_Date(0,false,$locale);
+    	$d2   = new Zend_Date(1010101010,false,$locale);
+
+    	$retour = $date->set(1234567890);
+        $this->assertSame($retour,'1234567890');
+        $this->assertSame($date->isEarlier(1234567890),FALSE);
+        $this->assertSame($date->isEarlier(1234567800),FALSE);
+        $this->assertSame($date->isEarlier(1234567899),TRUE);
+        
+        $date->set($d2);
+        $this->assertSame($date->isEarlier(3,Zend_Date::DAY),FALSE);
+        $this->assertSame($date->isEarlier(4,Zend_Date::DAY),FALSE);
+        $this->assertSame($date->isEarlier(5,Zend_Date::DAY),TRUE);
+    }
+
+	/**
+	 * Test for isLater
+	 */
+    public function testIsLater()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date = new Zend_Date(0,false,$locale);
+    	$d2   = new Zend_Date(1010101010,false,$locale);
+
+    	$retour = $date->set(1234567890);
+        $this->assertSame($retour,'1234567890');
+        $this->assertSame($date->isLater(1234567890),FALSE);
+        $this->assertSame($date->isLater(1234567800),TRUE);
+        $this->assertSame($date->isLater(1234567899),FALSE);
+        
+        $date->set($d2);
+        $this->assertSame($date->isLater(3,Zend_Date::DAY),TRUE);
+        $this->assertSame($date->isLater(4,Zend_Date::DAY),FALSE);
+        $this->assertSame($date->isLater(5,Zend_Date::DAY),FALSE);
+    }
 }
