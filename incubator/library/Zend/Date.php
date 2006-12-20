@@ -1081,7 +1081,7 @@ class Zend_Date {
      * @param  $part         - OPTIONAL, datepart, if empty the timestamp will be returned
      * @param  $locale       - OPTIONAL, locale for output
      * @param  $gmt          - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @return timestamp
+     * @return mixed
      */
     public function add($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
     {
@@ -1097,7 +1097,7 @@ class Zend_Date {
      * @param  $part         - OPTIONAL, datepart, if empty the timestamp will be returned
      * @param  $locale       - OPTIONAL, locale for output
      * @param  $gmt          - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @return timestamp
+     * @return mixed
      */
     public function sub($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
     {
@@ -1107,18 +1107,23 @@ class Zend_Date {
 
 
     /**
-     * Compares a date with another date. Returns a date object with the difference date
+     * Compares a date with another date. Returns -1 if smaller, 0 if equal and 1 if greater
      *
      * @param  $date object   - date which shall be compared with our actual date object
-     * @param  $part datepart - OPTIONAL datepart to set
-     * @param  $locale       - OPTIONAL, locale for output
-     * @param  $gmt          - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @return timestamp
+     * @param  $part datepart - OPTIONAL datepart to compare only
+     * @param  $locale        - OPTIONAL, locale for output
+     * @param  $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @return mixed
      */
     public function compare($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
     {
-        $this->_calculate('sub', $date, $part, $gmt, $locale);
-        return $this->get($part, $gmt, $locale);
+        $compare = $this->_calculate('cmp', $date, $part, $gmt, $locale);
+        if ($compare > 0) {
+            return 1;
+        } else if ($compare < 0) {
+            return -1;
+        }
+        return 0;
     }
 
 
@@ -1128,7 +1133,7 @@ class Zend_Date {
      * @param $part datepart - OPTIONAL the part of date to clone
      * @return object
      */
-    public function cloneIt($part = FALSE)
+    public function dublicate($part = FALSE)
     {
         $this->_calculate('clone', $this, $part, FALSE, FALSE);
     }
@@ -1157,7 +1162,7 @@ class Zend_Date {
                 return bcsub($comp, $date);
                 break;
             case 'clone' :
-                return new Zend_Date($comp);
+                return new Zend_Date($date);
                 break;
             case 'set' :
                 $this->_Date->setTimestamp(bcsub($this->_Date->getTimestamp(), $comp));

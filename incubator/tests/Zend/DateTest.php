@@ -2750,4 +2750,28 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->sub('1000', 'xx');
         $this->assertSame($date->get(Zend_Date::W3C),'2002-01-04T00:20:10+01:00');
     }
+
+	/**
+	 * Test for compare
+	 */
+    public function testCompare()
+    {
+        $locale = new Zend_Locale('de_AT');
+    	$date = new Zend_Date(0,false,$locale);
+    	$d2   = new Zend_Date(1010101010,false,$locale);
+
+    	$retour = $date->set(1234567890);
+        $this->assertSame($retour,'1234567890');
+        $this->assertSame($date->compare(1234567890),0);
+        $this->assertSame($date->compare(1234567800),1);
+        $this->assertSame($date->compare(1234567899),-1);
+
+        $date->set($d2);
+        $this->assertSame($date->compare(3,Zend_Date::DAY),1);
+        $this->assertSame($date->compare(4,Zend_Date::DAY),0);
+        $this->assertSame($date->compare(5,Zend_Date::DAY),-1);
+
+        $this->assertSame($date->compare('Mon',Zend_Date::WEEKDAY_SHORT),1);
+        $this->assertSame($date->compare('Sam',Zend_Date::WEEKDAY_SHORT),-1);
+    }
 }
