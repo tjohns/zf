@@ -500,7 +500,7 @@ class Zend_Search_Lucene_Index_SegmentInfo
      *
      * @param integer $id
      * @param string $fieldName
-     * @return string
+     * @return float
      */
     public function norm($id, $fieldName)
     {

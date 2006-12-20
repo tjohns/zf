@@ -718,7 +718,7 @@ class Zend_Search_Lucene
      *
      * @param integer $id
      * @param string $fieldName
-     * @return Zend_Search_Lucene_Document
+     * @return float
      */
     public function norm( $id, $fieldName )
     {
