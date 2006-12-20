@@ -390,7 +390,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
                       $reader->norm($docId, $term->field);
         }
 
-        return $score * $this->_coord;
+        return $score * $this->_coord * $this->getBoost();
     }
 
 
@@ -433,7 +433,7 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
             }
         }
 
-        return $score * $this->_coord[$matchedTerms];
+        return $score * $this->_coord[$matchedTerms] * $this->getBoost();
     }
 
     /**

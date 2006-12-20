@@ -481,6 +481,10 @@ class Zend_Search_Lucene_Index_Writer
         $segmentsFile->seek(12); // 12 = 4 (int, file format marker) + 8 (long, index version)
         $segmentsFile->writeInt($segmentNameCounter + 1);
 
+        // Flash output to guarantee that wrong value will not be loaded between unlock and
+        // return (which calls $segmentsFile destructor)
+        $segmentsFile->flush();
+
         $segmentsFile->unlock();
 
         return '_' . base_convert($segmentNameCounter, 10, 36);

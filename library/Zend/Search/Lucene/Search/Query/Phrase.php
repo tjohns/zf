@@ -445,7 +445,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
                 $weight = $this->_weight->getValue();
                 $norm = $reader->norm($docId, reset($this->_terms)->field);
 
-                return $tf*$weight*$norm;
+                return $tf * $weight * $norm * $this->getBoost();
             }
 
             // Included in result, but culculated freq is sero

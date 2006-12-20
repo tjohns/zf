@@ -98,7 +98,9 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
                     $tokenList[] = new Zend_Search_Lucene_Analysis_Token($field->stringValue, 0, strlen($field->stringValue));
                 }
                 $docNorms[$field->name] = chr($similarity->encodeNorm( $similarity->lengthNorm($field->name,
-                                                                                               count($tokenList)) ));
+                                                                                               count($tokenList))*
+                                                                       $document->boost*
+                                                                       $field->boost ));
 
                 $position = 0;
                 foreach ($tokenList as $token) {

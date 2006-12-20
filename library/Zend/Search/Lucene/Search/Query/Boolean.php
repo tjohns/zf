@@ -197,7 +197,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             $score += $subquery->score($docId, $reader) * $this->_coord;
         }
 
-        return $score * $this->_coord;
+        return $score * $this->_coord * $this->getBoost();
     }
 
 
@@ -246,7 +246,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             }
         }
 
-        return $score * $this->_coord[$matchedSubqueries];
+        return $score * $this->_coord[$matchedSubqueries] * $this->getBoost();
     }
 
     /**

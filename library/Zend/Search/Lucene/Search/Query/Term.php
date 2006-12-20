@@ -135,7 +135,8 @@ class Zend_Search_Lucene_Search_Query_Term extends Zend_Search_Lucene_Search_Que
         if ($match) {
             return $reader->getSimilarity()->tf(count($this->_termPositions[$docId]) ) *
                    $this->_weight->getValue() *
-                   $reader->norm($docId, $this->_term->field);
+                   $reader->norm($docId, $this->_term->field) *
+                   $this->getBoost();
         } else {
             return 0;
         }

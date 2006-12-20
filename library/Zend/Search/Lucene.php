@@ -386,7 +386,7 @@ class Zend_Search_Lucene
      * Input is a string or Zend_Search_Lucene_Search_Query.
      *
      * @param mixed $query
-     * @return array ZSearchHit
+     * @return array Zend_Search_Lucene_Search_QueryHit
      * @throws Zend_Search_Lucene_Exception
      */
     public function find($query)
