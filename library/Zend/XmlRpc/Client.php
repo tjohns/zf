@@ -247,7 +247,6 @@ class Zend_XmlRpc_Client
      * 
      * @param string $method Name of the method we want to call
      * @param array $params Array of parameters for the method
-     * @param boolean $asResponseObject Return it as a response object instead of PHP native?
      * @throws Zend_Http_Client_FaultException
      */
     public function call($method, $params=array())
