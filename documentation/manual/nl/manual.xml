@@ -41,6 +41,7 @@
         &module_specs.Zend-Dump;
         &module_specs.Zend-Register;
         &module_specs.Zend-Registry;
+        &module_specs.Zend-InitRegistry;
     </chapter>
     <chapter id="zend.cache">
 	    <title>Zend_Cache</title>
