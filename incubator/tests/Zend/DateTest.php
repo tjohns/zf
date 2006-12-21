@@ -2773,6 +2773,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($date->compare('Mon',Zend_Date::WEEKDAY_SHORT),1);
         $this->assertSame($date->compare('Sam',Zend_Date::WEEKDAY_SHORT),-1);
+
+        $date->set($d2);
+        $this->assertSame($date->compare(0,Zend_Date::MILLISECOND),0);
     }
 
 	/**

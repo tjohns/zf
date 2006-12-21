@@ -230,9 +230,10 @@ class Zend_Date {
      * @param $date string   - OPTIONAL date string depending on $parameter
      * @param $locale string - OPTIONAL locale for parsing input
      * @param $part mixed    - OPTIONAL defines the input format of $date
+     * @param  $gmt     boolean - OPTIONAL, FALSE = actual timezone time, TRUE = UTC time
      * @return object
      */
-    public function __construct($date = FALSE, $part = FALSE, $locale = FALSE)
+    public function __construct($date = FALSE, $part = FALSE, $gmt = FALSE, $locale = FALSE)
     {
         // set locale
         if ($locale === FALSE) {
@@ -250,7 +251,7 @@ class Zend_Date {
         if (($part !== FALSE) or (!is_numeric($date))) {
 
             $this->_Date = new Zend_Date_DateObject(0);
-            $this->set($date, $part, $this->_Locale, FALSE);
+            $this->set($date, $part, $gmt, $this->_Locale);
 
         } else {
             $this->_Date = new Zend_Date_DateObject($date);
@@ -2255,61 +2256,18 @@ class Zend_Date {
         }
         return false;
     }
-    
-
-    /**
-     * Returns the maximum date or datepart for the set date object
-     *
-     * @todo  implement function
-     * @param $part  datepart / string - OPTIONAL
-     * @return object / datepart
-     */
-    public function getMaximum($part)
-    {
-        throw Zend::exception('Zend_Date_Exception','function yet not implemented');
-    }
-
-
-    /**
-     * Returns the minimum date or datepart for the set date object/calendar type
-     *
-     * @todo  implement function
-     * @param $part  datepart / string - OPTIONAL
-     * @return object / datepart
-     */
-    public function getMinimum($part)
-    {
-        throw Zend::exception('Zend_Date_Exception','function yet not implemented');
-    }
-
-
-    /**
-     * Returns the first day of the week
-     *
-     * @todo  implement function
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @param $format string   - OPTIONAL how to return the day (Number, Name, DateObject)
-     * @return mixed - object / datepart / integer
-     */
-    public function getFirstDayOfWeek($locale, $format)
-    {
-        throw Zend::exception('Zend_Date_Exception','function yet not implemented');
-    }
 
 
     /**
      * Returns the time
      *
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string - OPTIONAL locale for parsing input
      * @return object
      */
-    public function getTime($locale = FALSE)
+    public function getTime($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        $time = $this->get(Zend_Date::TIMES, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime($time['hour'], $time['minute'], $time['second'], 1, 1, 0, $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::TIMES, $gmt, $locale), Zend_Date::TIMES, $gmt, $locale);
     }
 
 
@@ -2324,10 +2282,6 @@ class Zend_Date {
      */
     private function _time($time, $format, $locale, $calculation)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (empty($time)) {
             $format = 'HH:mm:ss';
             $time = $this->_Date->date($format);
@@ -2418,16 +2372,13 @@ class Zend_Date {
     /**
      * Returns the date part
      *
+     * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function getDate($locale = FALSE)
+    public function getDate($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        $date = $this->get(Zend_Date::DATES, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime(0, 0, 0, $date['month'], $date['day'], $date['year'], $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::DATES, $gmt, $locale), Zend_Date::DATES, $gmt, $locale);
     }
 
 
@@ -2855,38 +2806,6 @@ class Zend_Date {
 
 
     /**
-     * Returns if the date is after this date
-     *
-     * @param $date object     - date to compare
-     * @return boolean
-     */
-    public function isAfter($date)
-    {
-        if ($this->get() < $date->get()) {
-            return TRUE;
-        }
-
-        return FALSE;
-    }
-
-
-    /**
-     * Returns if the date is before this date
-     *
-     * @param $date object     - date to compare
-     * @return boolean
-     */
-    public function isBefore($date)
-    {
-        if ($this->get() > $date->get()) {
-            return TRUE;
-        }
-
-        return FALSE;
-    }
-
-
-    /**
      * Returns actual date as object
      *
      * @return object
@@ -2919,16 +2838,13 @@ class Zend_Date {
     /**
      * Returns the year
      *
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
-    public function getYear($locale = FALSE)
+    public function getYear($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        $year = $this->get(Zend_Date::YEAR, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, 1, $year, $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::YEAR, $gmt, $locale), Zend_Date::YEAR, $gmt, $locale);
     }
 
     /**
@@ -3023,16 +2939,13 @@ class Zend_Date {
     /**
      * Returns the month
      *
-     * @param $locale string   - OPTIONAL locale for parsing input
+     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string  - OPTIONAL locale for parsing input
      * @return object
      */
-    public function getMonth($locale = FALSE)
+    public function getMonth($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        $month = $this->get(Zend_Date::MONTH_DIGIT, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime(0, 0, 0, $month, 1, 0, $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::MONTH_SHORT, $gmt, $locale), Zend_Date::MONTH_SHORT, $gmt, $locale);
     }
 
 
@@ -3144,16 +3057,13 @@ class Zend_Date {
     /**
      * Returns the day
      *
+     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function getDay($locale = FALSE)
+    public function getDay($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        $day = $this->get(Zend_Date::DAY_SHORT, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, $day, 0, $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::DAY_SHORT, $gmt, $locale), Zend_Date::DAY_SHORT, $gmt, $locale);
     }
 
 
@@ -3266,16 +3176,13 @@ class Zend_Date {
     /**
      * Returns the weekday
      *
+     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale string   - OPTIONAL locale for parsing input
      * @return object
      */
-    public function getWeekday($locale = FALSE)
+    public function getWeekday($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        $day = $this->get(Zend_Date::DAY_SHORT, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, $day, 0, $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::WEEKDAY, $gmt, $locale), Zend_Date::WEEKDAY, $gmt, $locale);
     }
 
 
@@ -3390,16 +3297,13 @@ class Zend_Date {
     /**
      * Returns the day of year
      *
+     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale locale   - OPTIONAL locale for parsing
      * @return object
      */
-    public function getDayOfYear($locale = FALSE)
+    public function getDayOfYear($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        $day = $day->get(Zend_Date::DAY_OF_YEAR, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime(0, 0, 0, 1, $day, 0, $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::DAY_OF_YEAR, $gmt, $locale), Zend_Date::DAY_OF_YEAR, $gmt, $locale);
     }
 
 
@@ -3495,16 +3399,13 @@ class Zend_Date {
     /**
      * Returns the hour
      *
+     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale locale   - OPTIONAL locale for parsing input
      * @return string
      */
-    public function getHour($locale = FALSE)
+    public function getHour($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        $hour = $hour->get(Zend_Date::HOUR_SHORT, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime($hour, 0, 0, 1, 1, 0, $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::HOUR, $gmt, $locale), Zend_Date::HOUR, $gmt, $locale);
     }
 
 
@@ -3600,16 +3501,13 @@ class Zend_Date {
     /**
      * Returns the minute
      *
+     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale locale   - OPTIONAL locale for parsing input
      * @return string
      */
-    public function getMinute($locale = FALSE)
+    public function getMinute($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-        $minute = $minute->get(Zend_Date::MINUTE_SHORT, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime(0, $minute, 0, 1, 1, 0, $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::MINUTE, $gmt, $locale), Zend_Date::MINUTE, $gmt, $locale);
     }
 
 
@@ -3705,17 +3603,13 @@ class Zend_Date {
     /**
      * Returns the second
      *
+     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale locale   - OPTIONAL locale for parsing input
      * @return string
      */
-    public function getSecond($locale = FALSE)
+    public function getSecond($gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
-        $second = $second->get(Zend_Date::SECOND_SHORT, FALSE, $locale);
-        return new Zend_Date($this->_Date->mktime(0, 0, $second, 1, 1, 0, $locale, FALSE), $locale);
+        return new Zend_Date($this->get(Zend_Date::SECOND, $gmt, $locale), Zend_Date::SECOND, $gmt, $locale);
     }
 
 
@@ -3937,10 +3831,11 @@ class Zend_Date {
     /**
      * Returns the week
      *
+     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale locale  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function getWeek($locale = FALSE)
+    public function getWeek($gmt = FALSE, $locale = FALSE)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
