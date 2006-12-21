@@ -45,12 +45,19 @@ class Zend_RegistryTest extends PHPUnit_Framework_TestCase
 
     public function testBeforeInit()
     {
-        $this->assertFalse(Zend::isRegistered('not'));
-        $this->assertFalse(Zend::registry('not'));
+        //$this->assertFalse(Zend::isRegistered('this_should_not_exist'));
+
+        try {
+            $this->assertFalse(Zend::registry('this_should_not_exist'));
+            $this->fail('Expected exception, because we cannot fetch a value for a non-existent index.');
+        } catch (Zend_Exception $e) {
+            $this->assertRegexp('/no.key/i', $e->getMessage());
+        }
     }
 
     public function testManualInit()
     {
+        Zend::__unsetRegistry();
         try {
             $registry = Zend::initRegistry('classdoesnotexist');
             $this->fail('Expected exception, because we cannot initialize the registry using a non-existent class.');

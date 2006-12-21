@@ -336,6 +336,15 @@ final class Zend
 
 
     /**
+     * primarily for tearDown() in unit tests
+     */
+    static public function __unsetRegistry()
+    {
+        self::$_registry = null;
+    }
+
+
+    /**
      * Debug helper function.  This is a wrapper for var_dump() that adds
      * the <pre /> tags, cleans up newlines and indents, and runs
      * htmlentities() before output.
