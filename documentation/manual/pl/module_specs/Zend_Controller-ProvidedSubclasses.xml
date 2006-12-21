@@ -421,25 +421,25 @@ $this->addRoute('default', $compat);]]></programlisting>
             </note>
 
             <para>
-                If you do not want the default route in your routing schema, you
-                may remove it using <code>removeDefaultRoutes()</code>:
+                Jeśli nie potrzebujesz domyślnych tras w swoim schemacie 
+                routingu, możesz je usunąć używając metody <code>removeDefaultRoutes()</code>:
             </para>
 
             <programlisting role="php"><![CDATA[
-// Remove default compatability route
+// Usuwa domyślną trasę
 $router->removeDefaultRoutes();]]></programlisting>
 
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.static-routes">
-            <title>Static Routes</title>
+            <title>Trasy statyczne</title>
 
             <para>
-                The examples above all use dynamic routes -- routes that contain
-                patterns to match against. Sometimes, however, a particular
-                route is set in stone, and firing up the regular expression
-                engine would be overkill. The answer to this situation is to use
-                static routes:
+                Wszystkie powyższe przykłady używają dynamicznych tras -- tras,
+                które są dopasowywane do szablonów. Czasem jakaś trasa jest 
+                niezmienna, a ciągłe sprawdzanie wyrażenia regularnego może
+                być zabójcze dla serwera. Rozwiązaniem takiej sytuacji jest 
+                użycie statycznych tras:
             </para>
 
             <programlisting role="php"><![CDATA[
@@ -449,19 +449,19 @@ $router->addRoute('login', $static);
         </sect3>
 
         <sect3 id="zend.controller.providedsubclasses.rewriterouter.add-config">
-            <title>Using Zend_Config with the RewriteRouter</title>
+            <title>Użycie Zend_Config z RewriteRouterem</title>
 
             <para>
-                Sometimes its more convenient to update a configuration file
-                with new routes than to change the code. This is possible via
-                the <code>addConfig()</code> method. Basically, you create a
-                Zend_Config-compatible configuration, and in your code read it
-                in and pass it to the RewriteRouter:
+                Czasem wygodniej jest uaktualnić plik konfiguracyjny z nowymi
+                trasami niż zmieniać kod. Jest to możliwe za pomocą metody
+                <code>addConfig()</code>. Zasadniczo tworzysz konfigurację
+                kompatybilną z Zend_Config, a w kodzie odczytujesz ją i 
+                przekazujesz ją do RewriteRoutera.
             </para>
 
             <programlisting role="php"><![CDATA[
 /**
- * Example INI:
+ * Przykładowy plik INI:
  * routes.archive.route = "archive/:year/*"
  * routes.archive.defaults.controller = archive
  * routes.archive.defaults.action = show
@@ -479,18 +479,19 @@ $router->addConfig($config, 'routes');
 ]]></programlisting>
 
             <para>
-                In the above example, we tell the router to use the 'routes'
-                section of the INI file to use for its routes. Each first-level
-                key under that section will be used to define a route name; the
-                above example defines the routes 'archive' and 'news'. Each
-                route then requires, minimally a 'route' entry and one or more
-                'defaults' entries; optionally one or more 'reqs' (short for
-                'required') may be provided. All told, these correspond to the
-                three arguments provided to a <code>Zend_Controller_Router_Route_Interface</code> 
-                object. An option key, 'type', can be used to specify the route
-                class type to use for that particular route; by default, it uses
-                <code>Zend_Controller_Router_Route</code>. In the example above,
-                the 'news' route is defined to use
+                W powyższym przykładzie, nakazujemy routerowi użyć sekcji 'routes'
+                pliku INI aby użyć tras zdefiniowanych w tym pliku. Każdy element
+                pierwszego poziomu w tej sekcji będzie użyty do zdefiiniowania
+                nazwy trasy; powyższy przekład definiuje trasy 'archive' oraz 
+                'news'. Wymagane jest aby każda trasa miała określony przynajmniej 
+                parametr 'route' i jeden lub więcej parametrów 'defaults'; 
+                opcjonalnie mogą być zdeiniowane parametry 'reqs' (skrót
+                'required'). Wszystkie te parametry odpowiadają trzem argumentom
+                przekazywanym do obiektu <code>Zend_Controller_Router_Route_Interface</code> 
+                Klucz opcji 'type' może być użyty aby określić typ
+                klasy, która ma być użyta dla danej trasy; domyślnie używana jest
+                klasa <code>Zend_Controller_Router_Route</code>. W powyższym 
+                przykładzie, trasa 'news' jest zdefiniowana aby używała
                 <code>Zend_Controller_Router_StaticRoute</code>.
             </para>
         </sect3>

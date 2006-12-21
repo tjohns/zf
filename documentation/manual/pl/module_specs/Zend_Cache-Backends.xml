@@ -1,23 +1,23 @@
 <sect1 id="zend.cache.backends">
-    <title>Zend_Cache backends</title>
+    <title>Backendy Zend_Cache</title>
     
     <sect2 id="zend.cache.backends.file">
         <title>Zend_Cache_Backend_File</title>
         <para>
-            This backends stores cache records into files (in a choosen directory). 
+            Ten backend przechowuje rekordy bufora w plikach (w wybranym katalogu). 
         </para>
         <para>
-            Available options are :
+            Dostępne opcje to :
         </para>          
         <table>
-            <title>Available options</title>
+            <title>Dostępne opcje</title>
             <tgroup cols="4">
                  <thead>
                       <row>
-                        <entry>Option</entry>
-                        <entry>Data Type</entry>
-                        <entry>Default Value</entry>
-                        <entry>Description</entry>
+                        <entry>Opcja</entry>
+                        <entry>Typ danych</entry>
+                        <entry>Domyślna wartość</entry>
+                        <entry>Opis</entry>
                     </row>
                  </thead>
                  <tbody>
@@ -26,7 +26,7 @@
                           <entry><code>string</code></entry>
                           <entry><code>'/tmp/'</code></entry>
                           <entry>
-                              Directory where to store cache files    
+                              Katalog w którym mają być przechowywane pliki bufora.
                           </entry>
                       </row>
                       <row>
@@ -34,9 +34,9 @@
                           <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
-                            Enable / disable fileLocking : Can avoid cache corruption under 
-                            bad circumstances but it doesn't help on multithread webservers 
-                            or on NFS filesystems...
+                            Włącza / wyłącza fileLocking: Może zapobiec uszkodzeniu 
+                            bufora, ale nie ma to znaczenia w serwerach
+                            wielowątkowych lub systemach NFS...
                           </entry>
                       </row>
                       <row>
@@ -44,9 +44,9 @@
                           <entry><code>boolean</code></entry>
                           <entry><code>true</code></entry>
                           <entry>
-                            Enable / disable read control : if enabled, a control key is 
-                            embeded in the cache file and this key is compared with the 
-                            one calculated after the reading.        
+                            Włącza / wyłącza kontrolę odczytu: jeśli włączona, klucz kontrolny
+                            jest załączany w pliku bufora i ten klucz jest porównywany 
+                            z tym obliczonym podczas odczytywania bufora.
                           </entry>
                       </row>
                       <row>
@@ -54,9 +54,9 @@
                           <entry><code>string</code></entry>
                           <entry><code>'crc32'</code></entry>
                           <entry>
-                            Type of read control (only if read control is enabled). Available values are :
-                            'md5' (best but slowest), 'crc32' (lightly less safe but faster, better choice),
-                            'strlen' for a length only test (fastest).
+                            Typ kontroli odczytu (tylko jeśli kontrola odczytu jest włączona). Dostępne wartości to:
+                            'md5' (najlepszy, ale najwolniejszy), 'crc32' (odrobinę mniej bezpieczny, ale szybszy, lepszy wybór),
+                            'strlen' tylko dla testu długości (najszybszy).
                         </entry>
                       </row>
                       <row>
@@ -64,11 +64,12 @@
                           <entry><code>int</code></entry>
                           <entry><code>0</code></entry>
                           <entry>
-                            Hashed directory structure level :     0 means "no hashed directory 
-                             structure", 1 means "one level of directory", 2 means "two levels"... 
-                             This option can speed up the cache only when you have many thousands of 
-                             cache files. Only specific benchs can help you to choose the perfect 
-                             value for you. Maybe, 1 or 2 is a good start.
+                              Poziom haszowanej struktury katalogów: 0 oznacza "brak
+                              haszowanej struktury", 1 oznacza "jeden poziom katalogów",
+                              2 oznacza "dwa poziomy"... Ta opcja może przyspieszyć
+                              buforowanie tylko wtedy gdy masz tysiące plików bufora.
+                              Tylko specyficzne testy pomogą Ci wybrać perfekcyjną
+                              wartość. Możliwe, że 1 lub 2 jest dobre na początek.
                           </entry>
                       </row>
                       <row>
@@ -76,7 +77,7 @@
                           <entry><code>int</code></entry>
                           <entry><code>0700</code></entry>
                           <entry>
-                              Umask for the hashed directory structure
+                              Maska Umask dla haszowanej struktury katalogów.
                         </entry>
                       </row>
                   </tbody>
@@ -86,20 +87,20 @@
     <sect2 id="zend.cache.backends.sqlite">
         <title>Zend_Cache_Backend_Sqlite</title>
         <para>
-            This backends stores cache records into a SQLite database.
+            Ten backend przechowuje rekordy bufora w bazie SQLite.
         </para>
         <para>
-            Available options are :
+            Dostępne opcje to :
         </para>
         <table>
-            <title>Available options</title>
+            <title>Dostępne opcje</title>
             <tgroup cols="4">
                  <thead>
                       <row>
-                           <entry>Option</entry>
-                        <entry>Data Type</entry>
-                        <entry>Default Value</entry>
-                        <entry>Description</entry>
+                        <entry>Opcja</entry>
+                        <entry>Typ danych</entry>
+                        <entry>Domyślna wartość</entry>
+                        <entry>Opis</entry>
                     </row>
                  </thead>
                  <tbody>
@@ -108,7 +109,7 @@
                           <entry><code>string</code></entry>
                           <entry><code>null</code></entry>
                           <entry>
-                              The complete path (filename included) of the SQLite database
+                              Kompletna ścieżka (wraz z nazwą pliku) bazy danych SQLite
                           </entry>
                       </row>
                       <row>
@@ -116,12 +117,12 @@
                           <entry><code>int</code></entry>
                           <entry><code>10</code></entry>
                           <entry>
-                              Disable / Tune the automatic vacuum process.
-                              The automatic vacuum process defragment the database file (and make it smaller)
-                              when a clean() or delete() is called :
-                              0 means no automatic vacuum ;
-                              1 means systematic vacuum (when delete() or clean() methods are called) ;
-                              x (integer) > 1 => automatic vacuum randomly 1 times on x clean() or delete().
+                              Włącza / ustawia proces automatycznego czyszczenia
+                              Proces automatycznego czyszczenia defragmentuje plik bazy (i zmniejsza jego rozmiar)
+                              gdy wywoływane są metody clean() lub delete():
+                              0 oznacza brak automatycznego czyszczenia ;
+                              1 oznacza systematyczne czyszczenie (gdy wywoływane są metody delete() lub clean()) ;
+                              x (integer) > 1 => automatyczne czyszczenie losow 1 raz na x wywołań clean() lub delete().
                           </entry>
                       </row>
                   </tbody>
@@ -131,26 +132,26 @@
     <sect2 id="zend.cache.backends.memcached">
         <title>Zend_Cache_Backend_Memcached</title>
         <para>
-            This backends stores cache records into a memcached server. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
-            is a high-performance, distributed memory object caching system. To use this backend, 
-            you need a memcached daemon and <ulink url="http://pecl.php.net/package/memcache">the memcache PECL extension</ulink>.
+            Ten backend przechowuje rekordy bufora w serwerze memcached. <ulink url="http://www.danga.com/memcached/">memcached</ulink>
+            jest systemem buforowania w pamięci rozdzielonej o wysokiej wydajności. Aby użyć tego backendu, 
+            potrzebujesz działającego serwera memcached oraz <ulink url="http://pecl.php.net/package/memcache">rozszerzenia PECL memcache</ulink>.
         </para>
         <para>
-        	Be careful : with this backend, "tags" are not supported for the moment as 
-        	the "doNotTestCacheValidity=true" argument.
+        	Bądź odstrożny: w tym backendzie nie są obecnie obsługiwane etykiety, 
+        	tak samo jak argument "doNotTestCacheValidity=true".
         </para>
         <para>
-            Available options are :
+            Dostępne opcje to :
         </para>
         <table>
-            <title>Available options</title>
+            <title>Dostępne opcje</title>
             <tgroup cols="4">
                  <thead>
                       <row>
-                        <entry>Option</entry>
-                        <entry>Data Type</entry>
-                        <entry>Default Value</entry>
-                        <entry>Description</entry>
+                        <entry>Opcja</entry>
+                        <entry>Typ danych</entry>
+                        <entry>Domyślna wartość</entry>
+                        <entry>Opis</entry>
                     </row>
                  </thead>
                  <tbody>
@@ -159,10 +160,10 @@
                           <entry><code>array</code></entry>
                           <entry><code>array(array('host' => 'localhost','port' => 11211, 'persistent' => true))</code></entry>
                           <entry>
-                              An array of memcached servers ; each memcached server is described by an associative array :
-                              'host' => (string) : the name of the memcached server, 
-                              'port' => (int) : the port of the memcached server, 
-                              'persistent' => (bool) : use or not persistent connections to this memcached server
+                              Tablica serwerów memcached ; każdy serwer memcached jest opisany przez asocjacyjną tablicę :
+                              'host' => (string) : nazwa serwera memcached, 
+                              'port' => (int) : port serwera memcached, 
+                              'persistent' => (bool) : używać czy nie używać stałych połączeń do tego serwera memcached
                           </entry>
                       </row>
                       <row>
@@ -170,7 +171,7 @@
                           <entry><code>boolean</code></entry>
                           <entry><code>flase</code></entry>
                           <entry>
-                             true if you want to use on-the-fly compression
+                             wartość true jeśli chcesz użyć kompresji w locie
                           </entry>
                       </row>
                   </tbody>
@@ -180,16 +181,29 @@
     <sect2 id="zend.cache.backends.apc">
         <title>Zend_Cache_Backend_APC</title>
         <para>
-            This backends stores cache records in shared memory through 
-            the <ulink url="http://pecl.php.net/package/APC">APC</ulink> (Alternative PHP Cache) extension
-            (which is of course need for using this backend).
+            Ten backend przechowuje rekordy bufora we współdzielonej pamięci za
+            pomocą rozszerzenia <ulink url="http://pecl.php.net/package/APC">APC</ulink> 
+            (Alternatywny bufor PHP), które oczywiście jest wymagane jeśli chcemy 
+            użyć tego backendu.
         </para>
         <para>
-        	Be careful : with this backend, "tags" are not supported for the moment as 
-        	the "doNotTestCacheValidity=true" argument.
+            Bądź odstrożny: w tym backendzie nie są obecnie obsługiwane etykiety, 
+        	tak samo jak argument "doNotTestCacheValidity=true".
         </para>
         <para>
-            There is no option for this backend.
+            Ten backend nie ma żadnych opcji.
+        </para>
+    </sect2>
+    <sect2 id="zend.cache.backends.platform">
+        <title>Zend_Cache_Backend_ZendPlatform</title>
+        <para>
+            Ten backend używa API produktu <ulink url="http://www.zend.com/products/platform">Zend Platform</ulink> do buforowania zawartości. Oczywiście aby użyć tego backendu, musisz mieć zainstalowaną aplikację Zend Platform.
+        </para>
+        <para>
+	        Ten backend obsługuje etykiety, ale nie obsługuje trybu <code>CLEANING_MODE_NOT_MATCHING_TAG</code> czyszczenia bufora.
+        </para>
+        <para>
+            Ten backend nie ma żadnych opcji.
         </para>
     </sect2>
 </sect1> 

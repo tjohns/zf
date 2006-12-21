@@ -1,55 +1,60 @@
 <sect1 id="zend.cache.introduction">
-    <title>Introduction</title>
+    <title>Wprowadzenie</title>
     <para>
-        <code>Zend_Cache</code> provides a generic way to cache any data.
+        <code>Zend_Cache</code> zapewnia ogólny sposób buforowania danych.
     </para>
     <para>
-      Caching in Zend Framework is operated by frontends while cache records are stored through backend adapters
-      (<code>File</code>, <code>Sqlite</code>, <code>Memcache</code>...) through a flexible
-      system of IDs and tags. Using those, it is easy to delete specific types of records afterwards
-      (for example: "delete all cache records marked with a given tag").
+      Buforowanie w Zend Framework jest przeprowadzane przez frontendy, a
+      rekordy bufora są przechowywane za pomocą backendów (<code>File</code>, 
+      <code>Sqlite</code>, <code>Memcache</code>...) przy użyciu uniwersalnego
+      systemu identyfikatorów ID oraz etykiet. Używając ich, łatwe jest
+      kasowanie specyficznych typów rekordów (na przykład: "usuń wszystkie 
+      rekordy bufora oznaczone podaną etykietą").
     </para>
     <para>
-        The core of the module (<code>Zend_Cache_Core</code>) is generic, flexible and configurable.
-        Yet, for your specific needs there are cache frontends that extend <code>Zend_Cache_Core</code>
-        for convinience: <code>Output</code>, <code>File</code>, <code>Function</code> and <code>Class</code>.
+        Jądro modułu (<code>Zend_Cache_Core</code>) jest proste, uniwersalne i
+        konfigurowalne. Obecnie, dla twoich specyficznych potrzeb dostępne są
+        frontendy rozszerzające <code>Zend_Cache_Core</code> na przykład:
+        <code>Output</code>, <code>File</code>, <code>Function</code> oraz <code>Class</code>.
     </para>
     <example>
-        <title>Getting a frontend with <code>Zend_Cache::factory()</code></title>
+        <title>Pobieranie frontendu za pomocą <code>Zend_Cache::factory()</code></title>
         <para>
-            <code>Zend_Cache::factory()</code> instantiates correct objects and ties them together.
-            In this first example, we will use <code>Core</code> frontend together with <code>File</code>
-            backend.
+            <code>Zend_Cache::factory()</code> tworzy instancję odpowiedniego
+            obiektu łączy je razem. W tym pierwszym przykładzie użyjemy
+            frontendu <code>Core</code> wraz z backendem <code>File</code>.
         </para>
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
-   'lifeTime' => 7200, // cache lifetime of 2 hours 
+   'lifeTime' => 7200, // okres ważności bufora 2 godziny
    'automaticSerialization' => true
 );
 
 $backendOptions = array(
-    'cacheDir' => './tmp/' // Directory where to put the cache files
+    'cacheDir' => './tmp/' // Katalog w którym mają być składowane pliku bufora
 );
 
-// getting a Zend_Cache_Core object
+// pobieranie obiektu Zend_Cache_Core
 $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
 ?>]]></programlisting>
        <para>
-            Now that we have a frontend, we can cache any type of data (we turned on serialization). For
-            example, we can cache a result from a very expensive database query. After it is cached, there
-            is no need to even connect to the database; records are fetched from cache and unserialized.
+            Teraz gdy mamy frontend, możemy buforować dowolny typ danych 
+            (włączyliśmy serializację). Na przykład, możemy buforować rezultat 
+            bardzo obciążającego zapytania do bazy danych. Kiedy jest buforowane, 
+            nie ma nawet potrzeby aby łączyć się z bazą; rekordy są pobierane z
+            bufora, a następnie odserializowane.
         </para>
             <programlisting role="php"><![CDATA[<?php
 
-// $cache initialized in previous example
+// obiekt $cache zainicjalizowany jak w poprzednim przykładzie
 
-// see if a cache already exists:
+// sprawdzamy czy bufor istnieje:
 if(!$result = $cache->load('myresult')) {
 
-    // cache miss; connect to the database
+    // bufor nie istnieje; łączymy się z bazą
     
     $db = Zend_Db::factory( [...] );
     
@@ -59,8 +64,8 @@ if(!$result = $cache->load('myresult')) {
     
 } else {
 
-    // cache hit! shout so that we know
-    echo "This one is from cache!\n\n";
+    // bufor istnieje! dajmy o tym znać
+    echo "To pochodzi z bufora!\n\n";
     
 }
 
@@ -69,54 +74,60 @@ print_r($result);
 ?>]]></programlisting>
     </example>
     <example>
-        <title>Caching output with <code>Zend_Cache</code> output frontend</title>
+        <title>Buforowanie danych wyjściowych przy użyciu frontendu <code>Zend_Cache</code></title>
         <para>
-            We 'mark up' sections in which we want to cache output by adding some conditional logic,
-            encapsulating the section within <code>start()</code> and <code>end()</code> methods (this
-            resembles the first example and is the core strategy for caching).
+            Sekcje w których chcemy buforować dane wyjściowe oznaczamy dodając
+            pewną warunkową logikę, ograniczającą sekcję za pomocą metod 
+            <code>start()</code> oraz <code>end()</code> (to odpowiada 
+            pierwszemu przykładowi i jest główną strategią buforowania).
         </para><para>
-            Inside, output your data as usual - all output will be cached when execution hits the <code>end()</code>
-            method. On the next run, the whole section will be skipped in favor of fetching data from cache 
-            (as long as the cache record is valid).
+            Wewnątrz wyświetlaj dane jak zawsze - wszystkie dane wyjściowe będą
+            buforowane aż do napotkania metody <code>end()</code>. Podczas 
+            następnego wywołania, cała sekcja będzie ominięta, a użyte zostaną
+            dane z bufora. (tak długo jak rekord bufora jest prawidłowy).
         </para>
             <programlisting role="php"><![CDATA[<?php
 
 $frontendOptions = array(
-   'lifeTime' => 30,                  // cache lifetime of half a minute
-   'automaticSerialization' => false  // this is default anyway
+   'lifeTime' => 30,                  // okres ważności bufora pół minuty
+   'automaticSerialization' => false  // to i tak jest domyślna wartość
 );
 
 $backendOptions = array('cacheDir' => './tmp/');
 
 $cache = Zend_Cache::factory('Output', 'File', $frontendOptions, $backendOptions);
 
-// we pass a unique identifier to the start() method
+// przekazujemy unikalny identyfikator do metody start()
 if(!$cache->start('mypage')) {
-    // output as usual:
+    // wyświetlamy jak zawsze:
     
-    echo 'Hello world! ';
-    echo 'This is cached ('.time().') ';
+    echo 'Witajcie! ';
+    echo 'To jest buforowane ('.time().') ';
     
-    $cache->end(); // the output is saved and sent to the browser
+    $cache->end(); // dane wyjściowe są zapisywane i wysyłane do przeglądarki
 }
 
-echo 'This is never cached ('.time().').';
+echo 'To nie jest nigdy buforowane ('.time().').';
 
 ?>]]>       </programlisting>
        <para>
-           Notice that we output the result of <code>time()</code> twice; this is something dynamic
-           for demonstration purposes. Try running this and then refreshing several times; you will notice
-           that the first number doesn't change while second changes as time passes. That is because the first
-           number was output in the cached section and is saved among other output.
-           After half a minute (we've set lifetime to 30 seconds) the
-           numbers should match again because the cache record expired -- only to be cached again. You
-           should try this in your brower or console.
+           Zauważ, że wyświetlamy rezultat funkcji <code>time()</code> dwa razy; 
+           jest to coś dynamicznego, aby zademenstrować przeznaczenie. Spróbuj
+           uruchomić to i odświeżyć kilka razy; zauważysz, że pierwsza liczba
+           się nie zmienia, a druga za każdym razem jest inna. Tak jest ponieważ
+           pierwsza liczba była wyświetlona w sekcji buforowanej więc została
+           zapisana. Po upływie pół minuty (ustawiliśmy okres ważności bufora na 
+           30 sekund) powinny ponownie się zgadzać ponieważ bufor wygasł -- i
+           został zapisany ponownie. Powinieneś to sprawdzić w swojej 
+           przeglądarce lub w konsoli.
        </para>
     </example>
     <note><para>
-        When using Zend_Cache, pay attention to the important cache identifier (passed to <code>save()</code>
-        and <code>start()</code>). It must be unique for every resource you cache, otherwise unrelated
-        cache records may wipe each other or, even worse, be displayed in place of the other.
+        Kiedy używasz Zend_Cache, zwracaj uwagę na ważny identyfikator bufora
+        (przekazany do metod <code>save()</code> oraz <code>start()</code>). 
+        Musi być unikalny dla każdego zasobum, który buforujesz, inaczej nie
+        powiązane buforowane rekordy mogą się nawzajem ścierać, lub gorzej, 
+        jeden może wyświetlić się w miejscu drugiego.
     </para></note>
 </sect1>
 <!--

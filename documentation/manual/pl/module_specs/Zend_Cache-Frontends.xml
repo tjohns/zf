@@ -1,34 +1,36 @@
 <sect1 id="zend.cache.frontends">
-    <title>Zend_Cache frontends</title>
+    <title>Frontendy Zend_Cache</title>
     
     <sect2 id="zend.cache.core">
         <title>Zend_Cache_Core</title>
         <sect3 id="zend.cache.core.introduction">
-            <title>Introduction</title>
+            <title>Wprowadzenie</title>
             <para>
-                <code>Zend_Cache_Core</code> is a special frontend because it is the core
-                of the module. It is a generic cache frontend and is extended by other classes.
+                <code>Zend_Cache_Core</code> jest specjalnym frontendem ponieważ
+                jest on jądrem modułu. Jest on podstawowym frontendem bufora i 
+                jest rozszerzany przez inne klasy.
             </para>
             <note><para>
-                All frontends inherit from <code>Zend_Cache_Core</code> so that its methods and options
-                (described below) would also be available in other frontends, therefore they won't be
-                documented there.
+                Wszystkie frontendy dziedziczą z klasy <code>Zend_Cache_Core</code> więc jej metody i opcje
+                (opisane niżej) są także dostępne w innych frontendach, dlatego nie
+                będą tu opisane.
             </para></note>
         </sect3>
         <sect3 id="zend.cache.core.options">
-            <title>Available options</title>
+            <title>Dostępne opcje</title>
             <para>
-                These options are passed to the factory method as demonstrated in previous examples.
+                Te opcje są przekazywane do metody fabryki jako pokazano w 
+                poprzednich przykładach.
             </para>
             <table>
-                <title>Available options</title>
+                <title>Dostępne opcje</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
-                            <entry>Option</entry>
-                            <entry>Data Type</entry>
-                            <entry>Default Value</entry>
-                            <entry>Description</entry>
+                            <entry>Opcja</entry>
+                            <entry>Typ danych</entry>
+                            <entry>Domyślna wartość</entry>
+                            <entry>Opis</entry>
                         </row>
                      </thead>
                      <tbody>
@@ -37,8 +39,8 @@
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                  enable / disable caching (can be very usefull for the debug of 
-                                  cached scripts)                
+                                  włącza / wyłącza buforowanie (może być użyteczne do
+                                  sprawdzania buforowanych skryptów)
                               </entry>
                           </row>
                           <row>
@@ -46,8 +48,8 @@
                               <entry><code>int</code></entry>
                               <entry><code>3600</code></entry>
                               <entry>
-                                cache lifetime (in seconds), if set to <code>null</code>, the 
-                                cache is valid forever.       
+                                okres ważności bufora (w sekundach), jeśli ustawiony na 
+                                <code>null</code>, bufor będzie ważny na zawsze
                               </entry>
                           </row>
                           <row>
@@ -55,8 +57,8 @@
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                                if set to true, logging through <code>Zend_Log</code> is activated 
-                                (but the system is slower)         
+                                jeśli ma wartość true, aktywowane jest logowanie za pomocą  
+                                <code>Zend_Log</code> is activated (ale system jest wolniejszy)
                               </entry>
                           </row>
                           <row>
@@ -64,10 +66,11 @@
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                Enable / disable write control (the cache is read 
-                                just after writing to detect corrupt entries), enabling writeControl
-                                will lightly slow the cache writing but not the cache reading (it 
-                                can detect some corrupt cache files but it's not a perfect control)        
+                                Włącza / wyłącza kontrolę zapisu (bufor jest odczytywany zaraz
+                                po zapisaniu aby wykryć uszkodzone wpisy), włączając kontrolę
+                                zapisu lekko zwolniesz zapisywanie bufora, ale nie będzie to
+                                miało wpływu na jego odczytywanie (może to wykryć niektóre
+                                uszkodzone pliki bufora, ale nie jest to perfekcyjna kontrola)
                               </entry>
                           </row>
                           <row>
@@ -75,8 +78,8 @@
                               <entry><code>boolean</code></entry>
                               <entry><code>false</code></entry>
                               <entry>
-                                Enable / disable automatic serialization, it can be used to save directly datas
-                                which aren't strings (but it's slower)            
+                                Włącza / wyłącza serializację, może być użyte do bezpośredniego
+                                zapisywania danych, które nie są łańcuchami znaków (ale jest to wolniejsze)
                               </entry>
                           </row>
                           <row>
@@ -95,22 +98,22 @@
         </sect3>
         
         <sect3 id="zend.cache.core.examples">
-            <title>Examples</title>
+            <title>Przykłady</title>
             <para>
-                An example is given in the manual at the very beginning.
+                Przykład jest podany w dokumentacji na samym początku.
             </para>
             <para>
-                If you store only strings into cache (because with "automaticSerialization" option, it's possible
-                to store some booleans), you can use a more compact construction like:
+                Jeśli w buforze przechowujesz tylko łańcuchy znakow (ponieważ z opcją "automaticSerialization" option możliwe
+                jest przechowywanie wartości logicznych), możesz użyć bardziej kompaktowej konstrukcji:
             </para>
             <programlisting role="php"><![CDATA[<?php  
              
-// we assume you already have $cache
+// zakładamy, że mamy już obiekt $cache
 
-$id = 'myBigLoop'; // cache id of "what we want to cache"
+$id = 'myBigLoop'; // id bufora czyli "tego co chcemy buforować"
 
 if (!($data = $cache->load($id))) {
-    // cache miss
+    // brak bufora
     
     $data = '';
     for ($i = 0; $i < 10000; $i++) {
@@ -121,21 +124,22 @@ if (!($data = $cache->load($id))) {
     
 } 
 
-// [...] do something with $data (echo it, pass it on etc.)
+// [...] przetwarzaj dane $data (wyświetl je, przekaż itp.)
              
 ?>]]>       </programlisting> 
             <para>
-                If you want to cache multiple blocks or data instances, the idea is the same:
+                Jeśli chcesz buforować wiele bloków lub instancji danych, idea
+                jest ta sama:
             </para>
             <programlisting role="php"><![CDATA[<?php  
              
-// make sure you use unique identifiers:
+// upewnij się, że używasz unikalnych identyfiikatorów:
 $id1 = 'foo';
 $id2 = 'bar';
 
-// block 1
+// blok 1
 if (!($data = $cache->load($id1))) {
-    // cache missed
+    // brak bufora
     
     $data = '';
     for ($i=0;$i<10000;$i++) {
@@ -147,12 +151,12 @@ if (!($data = $cache->load($id1))) {
 } 
 echo($data);
 
-// this isn't affected by caching
+// to nigdy nie jest buforowane
 echo('NEVER CACHED! ');
 
-// block 2
+// blok 2
 if (!($data = $cache->load($id2))) {
-    // cache missed
+    // brak bufora
     
     $data = '';
     for ($i=0;$i<10000;$i++) {
@@ -171,7 +175,7 @@ echo($data);
     <sect2 id="zend.cache.frontend.output">
         <title>Zend_Cache_Frontend_Output</title>
         <sect3 id="zend.cache.frontend.output.introduction">
-            <title>Introduction</title>
+            <title>Wprowadzenie</title>
             <para>
                 <code>Zend_Cache_Frontend_Output</code> is an output-capturing frontend. It utilizes
                 output buffering in PHP to capture everything between its <code>start()</code> and
@@ -179,36 +183,37 @@ echo($data);
             </para>
         </sect3>
         <sect3 id="zend.cache.frontend.output.options">
-            <title>Available options</title>
+            <title>Dostępne opcje</title>
             <para>
-                This frontend doesn't have any specific options other than those of
-                <code>Zend_Cache_Core</code>.
+                Ten frontend nie ma żadnych specyficznych opcji innych niż te
+                z <code>Zend_Cache_Core</code>.
             </para>
         </sect3>
         
         <sect3 id="zend.cache.frontend.output.examples">
-            <title>Examples</title>
+            <title>Przykłady</title>
             <para>
-                An example is given in the manual at the very beginning. Here it is with minor changes:
+                Przykład jest podany w dokumentacji na samym początku. To są główne różnice:
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-// if it is a cache miss, output buffering is triggered
+// jeśli bufor nie istnieje, przechwytywane są dane wyjściowe
 if(!$cache->start('mypage')):
 
-// output everything as usual
-echo 'Hello world! ';
-echo 'This is cached ('.time().') ';
+// wyświetlaj jak zawsze
+echo 'Witaj! ';
+echo 'To jest buforowane ('.time().') ';
 
-$cache->end(); // output buffering ends
+$cache->end(); // kończy się wyświetlanie danych
 endif;
 
-echo 'This is never cached ('.time().').';
+echo 'To nie jest nigdy buforowane ('.time().').';
 
 ?>]]>       </programlisting>
             <para>
-                Using this form it is fairly easy to set up output caching in your already working project
-                with little or no code refactoring.
+                Używając tej formy bardzo łatwe jest ustawienie buforowania
+                danych wyjściowych w twoim aktualnie działającym projekcie przy
+                małej ilości przeróbek w kodzie lub przy ich braku.
             </para>
         </sect3>   
     </sect2>
@@ -216,24 +221,25 @@ echo 'This is never cached ('.time().').';
     <sect2 id="zend.cache.frontend.function">
         <title>Zend_Cache_Frontend_Function</title>
         <sect3 id="zend.cache.frontend.function.introduction">
-            <title>Introduction</title>
+            <title>Wprowadzenie</title>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> caches the results of function calls. It has
-                a single main method named <code>call()</code> which takes a function name and parameters
-                for the call in an array.
+                Frontend <code>Zend_Cache_Frontend_Function</code> buforuje 
+                rezultaty wywołań funkcji. Posiada on jedną metodą nazwaną
+                <code>call()</code>, ktora przyjmuje nazwę funkcji oraz 
+                parametry do wywołania w tablicy.
             </para>
         </sect3>
         <sect3 id="zend.cache.frontend.function.options">
-            <title>Available options</title>
+            <title>Dostępne opcje</title>
             <table>
-                <title>Available options</title>
+                <title>Dostępne opcje</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
-                            <entry>Option</entry>
-                            <entry>Data Type</entry>
-                            <entry>Default Value</entry>
-                            <entry>Description</entry>
+                            <entry>Opcja</entry>
+                            <entry>Typ danych</entry>
+                            <entry>Domyślna wartość</entry>
+                            <entry>Opis</entry>
                         </row>
                      </thead>
                      <tbody>
@@ -242,7 +248,8 @@ echo 'This is never cached ('.time().').';
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                  if true, function calls will be cached by default                
+                                  jeśli ma wartość true, wywołania funkcji będą
+                                  domyślnie buforowane
                               </entry>
                          </row>
                          <row>
@@ -250,7 +257,7 @@ echo 'This is never cached ('.time().').';
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  function names which will always be cached               
+                                  nazwy funkcji które mają być zawsze buforowane
                               </entry>
                          </row>
                          <row>
@@ -258,7 +265,7 @@ echo 'This is never cached ('.time().').';
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  function names which must never be cached               
+                                  nazwy funkcji które nigdy nie mają być buforowane
                               </entry>
                          </row>
                       </tbody>
@@ -267,29 +274,31 @@ echo 'This is never cached ('.time().').';
         </sect3>
         
         <sect3 id="zend.cache.frontend.function.examples">
-            <title>Examples</title>
+            <title>Przykłady</title>
             <para>
-                Using the <code>call()</code> function is the same as using
-                <code>call_user_func_array()</code> in PHP:
+                Użycie funkcji <code>call()</code> jest takie samo jak użycie
+                funkcji <code>call_user_func_array()</code> w PHP:
             </para>
             <programlisting role="php"><![CDATA[<?php
 
 $cache->call('veryExpensiveFunc', $params);
 
-# $params is an array
-# for example to call (with caching) veryExpensiveFunc(1, 'foo', 'bar'), you will use
+# $params jest tablicą
+# przykładowo aby wywołać (z buforowaniem) funkcję veryExpensiveFunc(1, 'foo', 'bar'), użyj
 # $cache->call('veryExpensiveFunc', array(1, 'foo', 'bar'))
 
 ?>]]>       </programlisting>
             <para>
-                <code>Zend_Cache_Frontend_Function</code> is smart enough to cache both the
-                return value of the function and its internal output.
+                Frontend <code>Zend_Cache_Frontend_Function</code> jest na tyle sprytny,
+                że buforuje zarówno wartość zwracaną przez funkcję, jak i wszystkie
+                dane wyjściowe, które ona wypisuje.
             </para>
             <note><para>
-                You can pass any builtin or user defined function with the exception of
-                <code>array()</code>, <code>echo()</code>, <code>empty()</code>, <code>eval()</code>,
-                <code>exit()</code>, <code>isset()</code>, <code>list()</code>, <code>print()</code>
-                and <code>unset()</code>. 
+                Możesz przekazać dowolną wbudowaną funkcję lub zdefiniowną przez 
+                użytkownika z wyjątkiem <code>array()</code>, <code>echo()</code>, 
+                <code>empty()</code>, <code>eval()</code>, <code>exit()</code>, 
+                <code>isset()</code>, <code>list()</code>, <code>print()</code>
+                oraz <code>unset()</code>. 
             </para></note>
         </sect3>   
     </sect2>
@@ -297,33 +306,35 @@ $cache->call('veryExpensiveFunc', $params);
     <sect2 id="zend.cache.frontend.class">
         <title>Zend_Cache_Frontend_Class</title>
         <sect3 id="zend.cache.frontend.class.introduction">
-            <title>Introduction</title>
+            <title>Wprowadzenie</title>
             <para>
-                <code>Zend_Cache_Frontend_Class</code> is different from <code>Zend_Cache_Frontend_Function</code>
-                because it allows caching of object and static method calls.
+                Frontend <code>Zend_Cache_Frontend_Class</code> różnie się od
+                frontendu <code>Zend_Cache_Frontend_Function</code> tym, że
+                umożliwia buforowanie wywołań metod obiektów (także statycznych)
             </para>
         </sect3>
         <sect3 id="zend.cache.frontend.class.options">
-            <title>Available options</title>
+            <title>Dostępne opcje</title>
             <table>
-                <title>Available options</title>
+                <title>Dostępne opcje</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
-                            <entry>Option</entry>
-                            <entry>Data Type</entry>
-                            <entry>Default Value</entry>
-                            <entry>Description</entry>
+                            <entry>Opcja</entry>
+                            <entry>Typ danych</entry>
+                            <entry>Domyślna wartość</entry>
+                            <entry>Opis</entry>
                         </row>
                      </thead>
                      <tbody>
                           <row>
-                              <entry><code>cachedEntity</code> (required)</entry>
+                              <entry><code>cachedEntity</code> (wymagane)</entry>
                               <entry><code>mixed</code></entry>
                               <entry></entry>
                               <entry>
-                                  if set to a class name, we will cache an abstract class and will use
-                                  only static calls; if set to an object, we will cache this object methods             
+                                  jeśli ustawiona jest nazwa klasy, będziemy buforować klasę
+                                  abstrakcyjną i używać tylko statycznych wywołań; jeśli ustawiony
+                                  jest obiekt będziemy buforować metody tego obiektu
                               </entry>
                          </row>
                          <row>
@@ -331,7 +342,7 @@ $cache->call('veryExpensiveFunc', $params);
                               <entry><code>boolean</code></entry>
                               <entry><code>true</code></entry>
                               <entry>
-                                  if true, calls will be cached by default                
+                                  jeśli ma wartość true, wywołania będą domyślnie buforowane
                               </entry>
                          </row>
                          <row>
@@ -339,7 +350,7 @@ $cache->call('veryExpensiveFunc', $params);
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  method names which will always be cached               
+                                  nazwy metod które mają być zawsze buforowane
                               </entry>
                          </row>
                          <row>
@@ -347,7 +358,7 @@ $cache->call('veryExpensiveFunc', $params);
                               <entry><code>array</code></entry>
                               <entry></entry>
                               <entry>
-                                  method names which must never be cached               
+                                  nazwy metod które nie mają być nigdy buforowane
                               </entry>
                          </row>
                       </tbody>
@@ -356,15 +367,15 @@ $cache->call('veryExpensiveFunc', $params);
         </sect3>
         
         <sect3 id="zend.cache.frontend.class.examples">
-            <title>Examples</title>
+            <title>Przykłady</title>
             <para>
-                For example, to cache static calls :
+                Na przykład, aby buforować statyczne wywołania:
             </para>
             <programlisting role="php"><![CDATA[<?php
 
 class test {
    
-    # Static method
+    # metoda statyczna
     public static function foobar($param1, $param2) {
         echo "foobar_output($param1, $param2)";
         return "foobar_return($param1, $param2)";   
@@ -374,16 +385,16 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => 'test' // The name of the class
+    'cachedEntity' => 'test' // Nazwa klasy
 );
 // [...]
 
-# The cached call
+# buforowane wywołanie
 $res = $cache->foobar('1', '2');
 
 ?>]]>       </programlisting>
             <para>
-                To cache classic method calls :
+                Aby buforować klasyczne wywołania metod:
             </para>
             <programlisting role="php"><![CDATA[<?php
 
@@ -401,11 +412,11 @@ class test {
 
 // [...]
 $frontendOptions = array(
-    'cachedEntity' => new test() // An instance of the class
+    'cachedEntity' => new test() // instancja klasy
 );
 // [...]
 
-# The cached call
+# buforowane wywołanie
 $res = $cache->foobar2('1', '2');
 
 ?>]]>       </programlisting>
@@ -415,14 +426,14 @@ $res = $cache->foobar2('1', '2');
     <sect2 id="zend.cache.frontends.file">
         <title>Zend_Cache_Frontend_File</title>
         <sect3 id="zend.cache.frontends.file.introduction">
-            <title>Introduction</title>
+            <title>Wprowadzenie</title>
             <para>
                 <code>Zend_Cache_Frontend_File</code> is a frontend driven by the 
                 modification time of a "master file". It's really interesting for examples
                 in configuration or templates issues.
             </para>
             <para> 
-            	For instance, you have an XML configuration file which is parsed by a function 
+            	Na przykład, you have an XML configuration file which is parsed by a function 
             	which returns a "config object" (like with <code>Zend_Config</code>). With
             	<code>Zend_Cache_Frontend_File</code>, you can store the "config object" into
             	cache (to avoid the parsing of the XML config file at each time) but with a
@@ -431,16 +442,16 @@ $res = $cache->foobar2('1', '2');
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
-            <title>Available options</title>
+            <title>Dostępne opcje</title>
             <table>
-                <title>Available options</title>
+                <title>Dostępne opcje</title>
                 <tgroup cols="4">
                      <thead>
                           <row>
-                            <entry>Option</entry>
-                            <entry>Data Type</entry>
-                            <entry>Default Value</entry>
-                            <entry>Description</entry>
+                            <entry>Opcja</entry>
+                            <entry>Typ danych</entry>
+                            <entry>Domyślna wartość</entry>
+                            <entry>Opis</entry>
                         </row>
                      </thead>
                      <tbody>
@@ -449,7 +460,7 @@ $res = $cache->foobar2('1', '2');
                               <entry><code>string</code></entry>
                               <entry><code></code></entry>
                               <entry>
-                                  the complete path and name of the master file                 
+                                  kompletna ścieżka i nazwa głównego pliku
                               </entry>
                          </row>
                       </tbody>
@@ -457,11 +468,12 @@ $res = $cache->foobar2('1', '2');
               </table>
         </sect3>   
         <sect3 id="zend.cache.frontends.file.examples">
-            <title>Examples</title>
+            <title>Przykłady</title>
             <para>
-                Use of this frontend is the same than of <code>Zend_Cache_Core</code>. There
-                is no need of a specific example - the only thing to do is to 
-                define the <code>masterFile</code> when using the factory.
+                Użycie tego frontendu jest takie same jak <code>Zend_Cache_Core</code>. 
+                Nie ma potrzeby zamieszczania specyficznego przykładu - jedyną rzeczą
+                do zrobienia jest zdefiniowanie pliku <code>masterFile</code> gdy 
+                używamy metody fabryki.
             </para>
         </sect3>
     </sect2>
@@ -469,39 +481,41 @@ $res = $cache->foobar2('1', '2');
     <sect2 id="zend.cache.frontends.page">
     	<title>Zend_Cache_Frontend_Page</title>
     	<sect3 id="zend.cache.frontends.page.introduction">
-        	<title>Introduction</title>
+        	<title>Wprowadzenie</title>
         	<para>
-	            <code>Zend_Cache_Frontend_Page</code> is like <code>Zend_Cache_Frontend_Output</code>
-	            but designed for a complete page. It's impossible to use <code>Zend_Cache_Frontend_Page</code>
-	            for caching only a single block.
+	            Frontend <code>Zend_Cache_Frontend_Page</code> działa jak <code>Zend_Cache_Frontend_Output</code>
+	            ale jest zaprojektowany dla kompletnej strony. Nie jest możliwe użycie <code>Zend_Cache_Frontend_Page</code>
+	            do buforowania pojedynczego bloku.
 	        </para>
 	        <para>
-	        	On the other hand, the "cache id" is calculated automatically with
-	        	<code>$_SERVER['REQUEST_URI']</code> and (depending on options) 
+	        	Z drugiej strony, identyfikator bufora jest obliczany na podstawie
+	        	<code>$_SERVER['REQUEST_URI']</code> oraz (zależnie od opcji) 
 	        	<code>$_GET</code>, <code>$_POST</code>, <code>$_SESSION</code>, <code>$_COOKIE</code>, <code>$_FILES</code>.
-	        	More over, you have only one method to call (<code>start()</code>) because the
-	        	<code>end()</code> call is fully automatic when the page is ended.
+	        	Jeszcze lepiej, masz tylko jedną metodę do wywołania (<code>start()</code>) 
+	        	ponieważ metoda <code>end()</code> jest wywoływana w pełni automatycznie
+	        	na końcu strony.
 	        </para>
 	        <para>
-	        	For the moment, it's not implemented but we plan to add a HTTP conditional system
-	        	to save bandwith (the system will send a HTTP 304 Not Modified if the cache is hit
-	        	and if the browser has already the good version).
+	        	Obecnie nie jest to zaimplementowane, ale planujemy dodać warunkowy system HTTP 
+	        	w celu oszczędzania transferu (system wyśle nagłówek HTTP 304 Not Modified jeśli 
+	        	bufor istnieje i gdy przeglądarka ma aktualną wersję bufora).
 	        </para>
 	        <note><para>
-                Zend_Cache_Frontend_Page is really "alpha stuff" and is meant to be improved further down the road.
+                Zend_Cache_Frontend_Page jest jeszcze w wersji "alpha" i z 
+                biegiem czasu ma być ulepszany.
 	        </para></note>
     	</sect3>
     	<sect3 id="zend.cache.frontends.page.options">
-	        <title>Available options (for this frontend in Zend_Cache factory)</title>
+	        <title>Dostępne opcje (for this frontend in Zend_Cache factory)</title>
 	        <table>
-	            <title>Available options</title>
+	            <title>Dostępne opcje</title>
 	            <tgroup cols="4">
 	                 <thead>
 	                      <row>
-	                        <entry>Option</entry>
-	                        <entry>Data Type</entry>
-	                        <entry>Default Value</entry>
-	                        <entry>Description</entry>
+	                        <entry>Opcja</entry>
+	                        <entry>Typ danych</entry>
+	                        <entry>Domyślna wartość</entry>
+	                        <entry>Opis</entry>
 	                    </row>
 	                 </thead>
 	                 <tbody>
@@ -510,7 +524,7 @@ $res = $cache->foobar2('1', '2');
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
-	                              use the httpConditional system (not implemented for the moment)                 
+	                              użyj systemu httpConditional (obecnie jeszcze nie zaimplementowane)
 	                          </entry>
 	                     </row>
 	                     <row>
@@ -518,90 +532,90 @@ $res = $cache->foobar2('1', '2');
 	                          <entry><code>boolean</code></entry>
 	                          <entry><code>false</code></entry>
 	                          <entry>
-	                              if true, a debug text is added before each cached pages                 
+	                              jeśli ma wartość true, testowy tekst jest dodawany przed każdą buforowaną stroną
 	                          </entry>
 	                     </row>
 	                     <row>
 	                     	  <entry><code>defaultOptions</code></entry>
 	                          <entry><code>array</code></entry>
-	                          <entry><code>array(...see below...)</code></entry>
+	                          <entry><code>array(...zobacz niżej...)</code></entry>
 	                          <entry>
-	                              an associative array of default options : 
+	                              asocjacyjna tablica domyślnych opcji: 
 	                              <itemizedlist>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(boolean, true by default) cache</code> : 
-	                                          cache is on if true
+	                                          <code>(boolean, domyślnie wartość true) cache</code> : 
+	                                          bufor jest włączony jeśli ma wartość true
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(boolean, false by default) cacheWithGetVariables</code> : 
-	                                          if true, cache is still on even if there are some variables in 
-	                                          <code>$_GET</code> array
+	                                          <code>(boolean, domyślnie wartość false) cacheWithGetVariables</code> : 
+	                                          jeśli ma wartość true, buforowanie jest włączone nawet wtedy gdy są jakieś
+	                                          zmienne w tablicy <code>$_GET</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-                                              <code>(boolean, false by default) cacheWithPostVariables</code> : 
-                                              if true, cache is still on even if there are some variables in 
-                                              <code>$_POST</code> array
+                                              <code>(boolean, domyślnie wartość false) cacheWithPostVariables</code> : 
+                                              jeśli ma wartość true, buforowanie jest włączone nawet wtedy gdy są jakieś
+                                              zmienne w tablicy <code>$_POST</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-        	                                  <code>(boolean, false by default) cacheWithSessionVariables</code> : 
-        	                                  if true, cache is still on even if there are some variables in 
-        	                                  <code>$_SESSION</code> array
+        	                                  <code>(boolean, domyślnie wartość false) cacheWithSessionVariables</code> : 
+        	                                  jeśli ma wartość true, buforowanie jest włączone nawet wtedy gdy są jakieś
+        	                                  zmienne w tablicy <code>$_SESSION</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(boolean, false by default) cacheWithFilesVariables</code> : 
-	                                          if true, cache is still on even if there are some variables in 
-	                                          <code>$_FILES</code> array
+	                                          <code>(boolean, domyślnie wartość false) cacheWithFilesVariables</code> : 
+	                                          jeśli ma wartość true, buforowanie jest włączone nawet wtedy gdy są jakieś
+	                                          zmienne w tablicy <code>$_FILES</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(boolean, false by default) cacheWithCookieVariables</code> : 
-	                                          if true, cache is still on even if there are some variables in 
-	                                          <code>$_COOKIE</code> array
+	                                          <code>(boolean, domyślnie wartość false) cacheWithCookieVariables</code> : 
+	                                          jeśli ma wartość true, buforowanie jest włączone nawet wtedy gdy są jakieś
+	                                          zmienne w tablicy <code>$_COOKIE</code>
 	                                      </para>
 	                                  </listitem>
 									  <listitem>
 	                                      <para>
-						        			  <code>(boolean, true by default) makeIdWithGetVariables</code> : 
-						        			  if true, the cache id will be dependent of the content of the 
-						        			  <code>$_GET</code> array
+						        			  <code>(boolean, domyślnie wartość true) makeIdWithGetVariables</code> : 
+						        			  jeśli ma wartość true, identyfikator bufora będzie zależał od
+						        			  zawartości tablicy <code>$_GET</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(boolean, true by default) makeIdWithPostVariables</code> : 
-	                                          if true, the cache id will be dependent of the content of the 
-	                                          <code>$_POST</code> array
+	                                          <code>(boolean, domyślnie wartość true) makeIdWithPostVariables</code> : 
+	                                          jeśli ma wartość true, identyfikator bufora będzie zależał od
+						        			  zawartości tablicy <code>$_POST</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-        	                                  <code>(boolean, true by default) makeIdWithSessionVariables</code> : 
-        	                                  if true, the cache id will be dependent of the content of the 
-        	                                  <code>$_SESSION</code> array
+        	                                  <code>(boolean, domyślnie wartość true) makeIdWithSessionVariables</code> : 
+        	                                  jeśli ma wartość true, identyfikator bufora będzie zależał od
+						        			  zawartości tablicy <code>$_SESSION</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(boolean, true by default) makeIdWithFilesVariables</code> : 
-	                                          if true, the cache id will be dependent of the content of the 
-	                                          <code>$_FILES</code> array
+	                                          <code>(boolean, domyślnie wartość true) makeIdWithFilesVariables</code> : 
+	                                          jeśli ma wartość true, identyfikator bufora będzie zależał od
+						        			  zawartości tablicy <code>$_FILES</code>
 	                                      </para>
 	                                  </listitem>
 	                                  <listitem>
 	                                      <para>
-	                                          <code>(boolean, true by default) makeIdWithCookieVariables</code> : 
-	                                          if true, the cache id will be dependent of the content of the 
-	                                          <code>$_COOKIE</code> array	                              
+	                                          <code>(boolean, domyślnie wartość true) makeIdWithCookieVariables</code> : 
+	                                          jeśli ma wartość true, identyfikator bufora będzie zależał od
+						        			  zawartości tablicy <code>$_COOKIE</code>
 	                                      </para>
 	                                  </listitem>
 	                              </itemizedlist>              
@@ -615,7 +629,7 @@ $res = $cache->foobar2('1', '2');
 	                          	  an associative array to set options only for some REQUEST_URI, keys are (PCRE) regexps, values are 
 	                          	  associative arrays with specific options to set if the regexp matchs on $_SERVER['REQUEST_URI']
                                   (see defaultOptions for the list of available options) ; if several regexps match the $_SERVER['REQUEST_URI'], 
-                                  only the last one will be used       
+                                  only the last one will be used
 	                          </entry>
 	                     </row>
 	                  </tbody>
@@ -623,43 +637,43 @@ $res = $cache->foobar2('1', '2');
 	          </table>
 	    </sect3>   
     	<sect3 id="zend.cache.frontends.page.examples">
-        	<title>Examples</title>
+        	<title>Przykłady</title>
 	        <para>
-	            Use of Zend_Cache_Frontend_Page is really trivial :
+	            Użycie Zend_Cache_Frontend_Page jest naprawdę łatwe:
 	        </para>
             <programlisting role="php"><![CDATA[<?php
 	           
-// [...] // require, configuration and factory
+// [...] // wymagane, konfiguracja i fabryka
 	
 $cache->start();
-// if the cache is hit, the result is sent to the browser and the script stop here
+// jeśli bufor jest trafiony, wynik jest wysyłany do przeglądaki a skrypt tutaj kończy działanie
 	
-// rest of the page ...
+// reszta strony
 	
 ?>]]>       </programlisting>
 	        <para>
-	        	a more complex example which shows a way to get a centralized cache management in a bootstrap file
-	        	(for using with Zend_Controller for example)
+	        	bardziej kompleksowy przykład, który pokazuje sposób centralnego
+	        	zarządzania buforowaniem w pliku ładującym (przykładowo do użycia z klasą Zend_Controller)
             </para>
             <programlisting role="php"><![CDATA[<?php
 
-// [...] you should avoid to put too much lines before the cache section 
-// [...] for example, for optimal performances, "require_once" or "Zend::loadClass" should be 
-// [...] after the cache section        	
+// [...] powinieneś unikać tworzenia dużej ilości kodu przed sekcją buforowania
+// [...] na przykład, w celu optymalizacji, instrukcje "require_once" lub "Zend::loadClass" 
+// [...] powinny znajdować się za sekcją buforowania
 
 require_once 'Zend/Cache.php';
 
 $frontendOptions = array(
    'lifeTime' => 7200,
-   'debugHeader' => true, // for debuging 
+   'debugHeader' => true, // dla testów
    'regexps' => array(
-       '^/$' => array('cache' => true),         // cache the whole IndexController         
-       '^/index/' => array('cache' => true),    // cache the whole IndexController
-       '^/article/' => array('cache' => false), // we don't cache the ArticleController...
-       '^/article/view/' => array(              // ...but we cache the "view" action of 
-           'cache' => true,                     // this ArticleController
-           'cacheWithPostVariables' => true,    // and we cache even there are some variables in $_POST
-           'makeIdWithPostVariables' => true,   // (but the cache will be dependent of the $_POST array)
+       '^/$' => array('cache' => true),         // buforuj cały kontrolera IndexController         
+       '^/index/' => array('cache' => true),    // buforuj cały kontrolera IndexController
+       '^/article/' => array('cache' => false), // nie buforuj kontrolera ArticleController...
+       '^/article/view/' => array(              // ...ale buforuje akcję "view" 
+           'cache' => true,                     // kontrolera ArticleController
+           'cacheWithPostVariables' => true,    // i buforuj gdy są dostępne zmienne $_POST
+           'makeIdWithPostVariables' => true,   // (ale bufor będzie zależał od tablicy $_POST)
        )
    )	  
 );
@@ -667,13 +681,13 @@ $backendOptions = array(
     'cacheDir' => '/tmp/' 
 );
 
-// getting a Zend_Cache_Frontend_Page object
+// pobieranie obiektu Zend_Cache_Frontend_Page
 $cache = Zend_Cache::factory('Page', 'File', $frontendOptions, $backendOptions);
 
 $cache->start();
-// if the cache is hit, the result is sent to the browser and the script stop here
+// jeśli bufor jest trafiony, wynik jest wysyłany do przeglądaki a skrypt tutaj kończy działanie
 
-// [...] the end of the bootstrap file (these lines won't be executed if the cache is hit)
+// [...] koniec pliku uruchamiającego (te linie nie będą wykonane jeśli bufor jest trafiony)
 	        	
 ?>]]>       </programlisting>
     	</sect3>
