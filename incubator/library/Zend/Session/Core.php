@@ -485,7 +485,7 @@ final class Zend_Session_Core
 
 
     /**
-     * stop() - Disable write access.  Optionally disable read (not implemented).
+     * stop() - Disable write access.  Optinally disable read (not implemented).
      *
      * @return void
      */
@@ -785,10 +785,6 @@ final class Zend_Session_Core
      */
     public function namespaceIsset($namespace, $name = null)
     {
-        if (self::$_readable === false) {
-            self::_notReadableErr(__FUNCTION__, __LINE__);
-        }
-
         $return_value = null;
 
         if ($name === null) {
@@ -837,32 +833,14 @@ final class Zend_Session_Core
      * but current Zend_Session_Core has been marked as read-only.
      *
      * @param string $functionName - name of function error originated in
-     * @param integer $line - line number error originated on
      * @throws Zend_Session_Exception
      * @return void
      */
-    private function _readOnlyErr($functionName, $line)
+    private function _readOnlyErr($functionName)
     {
         throw Zend::exception('Zend_Session_Exception', __CLASS__
-            . "::$functionName()::$line Zend_Session_Core is currently marked as read-only.");
+            . "::$functionName() Zend_Session_Core is currently marked as read-only.");
     }
-
-
-    /**
-     * _notReadableErr() - Helper function to throw a warning when action requires reading session data,
-     * but current Zend_Session_Core is not marked as readable.
-     *
-     * @param string $functionName - name of function error originated in
-     * @param integer $line - line number error originated on
-     * @throws Zend_Session_Exception
-     * @return void
-     */
-    private function _notReadableErr($functionName, $line)
-    {
-        throw Zend::exception('Zend_Session_Exception', __CLASS__
-            . "::$functionName()::$line Zend_Session_Core is not marked as readable.");
-    }
-
 
     /**
      * namespaceSet() - set a variable within a namespace.
@@ -876,7 +854,7 @@ final class Zend_Session_Core
     public function namespaceSet($namespace, $name, $value)
     {
         if (self::$_writable === false) {
-            self::_readOnlyErr(__FUNCTION__, __LINE__);
+            self::_readOnlyErr(__FUNCTION__);
         }
 
         $name = (string) $name;
@@ -894,10 +872,6 @@ final class Zend_Session_Core
      */
     public function namespaceGet($namespace, $name = null)
     {
-        if (self::$_readable === false) {
-            self::_notReadableErr(__FUNCTION__, __LINE__);
-        }
-
         $current_data  = (isset($_SESSION[$namespace]) && is_array($_SESSION[$namespace])) ?
             $_SESSION[$namespace] : array();
         $expiring_data = (isset(self::$_expiringData[$namespace]) && is_array(self::$_expiringData[$namespace])) ?
@@ -930,7 +904,7 @@ final class Zend_Session_Core
     public function namespaceSetExpirationSeconds($namespace, $seconds, $variables = null)
     {
         if (self::$_writable === false) {
-            self::_readOnlyErr(__FUNCTION__, __LINE__);
+            self::_readOnlyErr(__FUNCTION__);
         }
 
         if ($seconds <= 0) {
@@ -971,7 +945,7 @@ final class Zend_Session_Core
     public function namespaceSetExpirationHops($namespace, $hops, $variables = null, $hopCountOnUsageOnly = false)
     {
         if (self::$_writable === false) {
-            self::_readOnlyErr(__FUNCTION__, __LINE__);
+            self::_readOnlyErr(__FUNCTION__);
         }
 
         if ($hops <= 0) {
@@ -1015,10 +989,6 @@ final class Zend_Session_Core
      */
     static public function getIterator()
     {
-        if (self::$_readable === false) {
-            self::_notReadableErr(__FUNCTION__, __LINE__);
-        }
-
         $spaces  = array();
         if (isset($_SESSION)) {
             $spaces = array_keys($_SESSION);

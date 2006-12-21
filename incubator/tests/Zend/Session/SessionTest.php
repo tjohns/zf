@@ -23,7 +23,7 @@
 // http://en.wikipedia.org/wiki/Black_box_testing
 
 require_once 'Zend.php';
-require_once 'Zend/Session.php';
+Zend::loadClass('Zend_Session');
 
 /**
  * PHPUnit test case
