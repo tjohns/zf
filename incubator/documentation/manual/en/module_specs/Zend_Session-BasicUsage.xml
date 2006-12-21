@@ -24,6 +24,7 @@
             <title>Counting Page Views</title>
 <programlisting role="php">
 <![CDATA[<?php
+    require_once 'Zend/Session.php';
     $session = new Zend_Session();
     $session->numberOfPageRequests++; // this will increment for each page load.
     echo "Page requests this session: ", $session->numberOfPageRequests;
@@ -46,6 +47,7 @@
 <programlisting role="php">
 <![CDATA[<?php
     // in the Zend-Auth component
+    require_once 'Zend/Session.php';
     $auth_session = new Zend_Session('Zend_Auth');
     $auth_session->user = "myusername";
 
@@ -87,6 +89,7 @@
 <programlisting role="php">
 <![CDATA[<?php
     // Zend_Session is iteratable
+    require_once 'Zend/Session.php';
     $my_session = new Zend_Session();
     foreach ($my_session as $name => $value) {
         ....

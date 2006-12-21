@@ -3,6 +3,14 @@
     <title>Introduction</title>
 
     <para>
+        See
+        <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">the most recent published
+        version of this document</ulink>
+        . Also, the Zend Framework Auth team greatly appreciates your feedback and contributions on our email list:
+        <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
+    </para>
+
+    <para>
         With web applications written using PHP, a <emphasis role="bold">session</emphasis> represents a logical,
         one-to-one connection between server-side, persistent state data and a particular user agent client (e.g. web
         browser). Zend_Session helps manage and preserve session data, a logical complement of cookie data, across

@@ -4,7 +4,10 @@
 
     <para>
         While the basic usage examples are a perfectly acceptable way to utilize Zend_Session, there are some best
-        practices to consider.
+        practices to consider. Consider the
+        <link linkend="zend.auth.introduction.using"><code>Zend_Auth</code> example</link>
+        that transparently uses Zend_Session by default to persist authentication tokens. This example shows one
+        approach to quickly and easily integrate Zend_Session and Zend_Auth.
     </para>
 
     <sect2 id="zend.session.startingasession">
@@ -21,6 +24,7 @@
 <programlisting role="php">
 <![CDATA[<?php
 ...
+require_once 'Zend/Session.php';
 Zend_Session_Core::start();
 ...
 ?>]]></programlisting>
@@ -50,12 +54,11 @@ Zend_Session_Core::start();
             <listitem>
                 <para>
                     2. Wrong: Do not use <code>session_start()</code> directly (see <code>
-                        <ulink url="http://www.php.net/session_start">session_start()</ulink></code>).
-                    If you use <code>session_start()</code> directly, and then start using
-                    Zend_Session, an exception will be thrown by <code>Zend_Session::start()</code>
-                    ("session has already been started"). If you call <code>session_start()</code>,
-                    after starting Zend_Session, an error of level E_NOTICE will be generated, and the
-                    call will be ignored.
+                    <ulink url="http://www.php.net/session_start">session_start()</ulink>
+                    </code>). If you use <code>session_start()</code> directly, and then start using Zend_Session, an
+                    exception will be thrown by <code>Zend_Session::start()</code> ("session has already been started").
+                    If you call <code>session_start()</code>, after starting Zend_Session, an error of level E_NOTICE
+                    will be generated, and the call will be ignored.
                 </para>
             </listitem>
             <listitem>
@@ -66,12 +69,16 @@ Zend_Session_Core::start();
                     <link
                         linkend="zend.session.startingasession"><code>setOptions()</code>
                     </link>
-                    ), and call <code>Zend_Session_Core::start()</code>, before <code>new Zend_Session()</code>.
-                    Sessions have some overhead. The <code>strict</code> option prevents <code>new Zend_Session()</code>
-                    from automatically starting Zend_Session_Core. Thus, this option helps developers enforce a design
+                    ) in your userland bootstrap, and then call <code>Zend_Session_Core::start()</code> in your
+                    bootstrap, before the first call to <code>new Zend_Session()</code>. Sessions have some overhead.
+                    The <code>strict</code> option prevents <code>new Zend_Session()</code> from automatically starting
+                    Zend_Session_Core. Thus, this option helps developers of userland ZF applications enforce a design
                     decision to avoid using sessions for certain requests, since an error will be thrown when using this
-                    option and instantiating Zend_Session before an explicit call to
-                    <code>Zend_Session_Core::start()</code>.
+                    option and instantiating Zend_Session, before an explicit call to
+                    <code>Zend_Session_Core::start()</code>. Do not use this option in ZF core code, because only
+                    userland developers should make this design choice. Similarly, all "library" developers should
+                    carefully consider the impact of using setOptions() on users of their library code, since these
+                    options have global side-effects (as do the underlying options for ext/session).
                 </para>
             </listitem>
             <listitem>
@@ -96,23 +103,34 @@ Zend_Session_Core::start();
 
         <para>
             When constructing the first instance of Zend_Session attached to a specific namespace, you can also instruct
-            Zend_Session to not make any more instances for that namespace. This increases protection from changes by
-            components that should not modify a particular session namespace.
+            Zend_Session to not make any more instances for that namespace. Thus, any future attempts to construct a
+            Zend_Session instance having the same namespace will throw an error. Such behavior is optional, and not the
+            default behavior, but remains available to those who prefer to pass around a single instance object for each
+            namespace. This increases protection from changes by components that should not modify a particular session
+            namespace, because they won't have easy access. However, limiting a namespace to a single instance may lead
+            to more code or more complex code, as it removes access to the convient <code>$session = new
+            Zend_Session('aNamespace');</code>, after the first intance has been created, as follows in the example
+            below:
         </para>
 
         <example>
             <title>Limiting to Single Instances</title>
 <programlisting role="php">
 <![CDATA[<?php
+    require_once 'Zend/Session.php';
     $componentAuthState = new Zend_Session('Zend_Auth', Zend_Session::SINGLE_INSTANCE);
     doSomething($options, $componentAuthState); // pass the state to wherever it is needed
 ?>]]></programlisting>
         </example>
 
         <para>
-            The second parameter in the constructor above will tell Zend_Session that any future Zend_Sessions that are
+            The second parameter in the constructor above will tell Zend_Session that any future Zend_Session's that are
             instantiated with the 'Zend_Auth' namespace are not allowed and will thus result in an exception being
-            thrown.
+            thrown. Since <code>new Zend_Session('Zend_Auth')</code> will not be allowed after the code above has been
+            executed, you are responsible for storing the instance object (<code>$componentAuthState</code> in the
+            example above) somewhere, if you need access to this session namespace at a later time during the same
+            request. For example, you may store the instance in a static variable, or pass it to other methods that
+            might need access to this session namespace.
         </para>
 
     </sect2>
@@ -200,6 +218,7 @@ class FooModule_View extends Zend_View
             <title>Namespaced Sessions for Controllers with Automatic Expiration</title>
 <programlisting role="php">
 <![CDATA[<?php
+require_once 'Zend/Session.php';
 // question view controller
 $test_session = new Zend_Session('test');
 $test_session->setExpirationSeconds(300, "accept_answer"); // expire only this variable

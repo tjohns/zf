@@ -36,6 +36,7 @@
                 <title>Using Zend_Config to Configure Zend_Session</title>
 <programlisting role="php"><![CDATA[<?php
 $config = new Zend_Config_Ini('myapp.ini', 'sandbox');
+require_once 'Zend/Session.php';
 Zend_Session_Core::setOptions($config->asArray()); 
 ?>]]></programlisting>
             </example>
@@ -276,6 +277,7 @@ remember_me_seconds = 864000
             <example>
                 <title>Anonymous Sessions and Session Fixation</title>
 <programlisting role="php"><![CDATA[<?php
+require_once 'Zend/Session.php';
 $session = new Zend_Session();
  
 if (!isset($session->initialized))
@@ -317,25 +319,84 @@ if (!isset($session->initialized))
 
     </sect2>
 
+    <sect2 id="zend.session.sessionexists">
+
+        <title>sessionExists()</title>
+
+        <para>
+            Use this method to determine if a session already exists for the current user agent/request. It may be used
+            before starting a session, and independently of all other Zend_Session and Zend_Session_Core methods.
+        </para>
+
+    </sect2>
+
     <sect2 id="zend.session.destroy">
 
-        <title>destroy(bool $remove_cookie)</title>
+        <title>destroy(bool $remove_cookie = true, bool $readonly = true)</title>
 
         <para>
             <code>Zend_Session_Core::destroy()</code> destroys all of the persistent data associated with the current
             session. However, no variables in PHP are affected, so your namespaced sessions (instances of
-            <code>Zend_Session</code>) remain readable. To complete a "logout", set the optional parameter to true to
-            also delete the user agent's session id cookie.
+            <code>Zend_Session</code>) remain readable. To complete a "logout", set the optional parameter to true
+            (default is true) to also delete the user agent's session id cookie. The optinal <code>$readonly</code>
+            parameter removes the ability for Zend_Session instances, and Zend_Session_Core methods to write to the
+            session data store (i.e. $_SESSION).
         </para>
+
+        <note>
+            <title>Throws</title>
+            <para>
+                By default, <code>$readonly</code> is enabled and further actions involving writing to the session data
+                store will throw an error.
+            </para>
+        </note>
 
     </sect2>
 
     <sect2 id="zend.session.stop">
 
-        <title>stop(), shutdown()</title>
+        <title>stop()</title>
 
         <para>
-            One is an alias of the other.  They simply perform a <code>session_write_close()</code> and disables further use of Zend_Session_Core.
+            This method does absolutely nothing more than toggle a flag in Zend_Session_Core to prevent further writing
+            to the session data store (i.e. <code>$_SESSION</code>). We are specifically requesting feedback on this
+            feature. Potential uses/abuses might include temporarily disabling the use of <code>Zend_Session</code>
+            instances or <code>Zend_Session_Core</code> methods to write to the session data store, while execution is
+            transfered to view-related code. Attempts to perform actions involving writes via these instances or methods
+            will throw an error.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.writeClose">
+
+        <title>writeClose($readonly = true)</title>
+
+        <para>
+            Shutdown the sesssion, close writing and detach $_SESSION from the back-end storage mechanism. This will
+            complete the internal data transformation on this request. The optional $readonly boolean parameter can
+            remove write access (i.e. throw error if any Zend_Session or Zend_Session_Core methods attempt writes).
+        </para>
+
+        <note>
+            <title>Throws</title>
+            <para>
+                By default, <code>$readonly</code> is enabled and further actions involving writing to the session data
+                store will throw an error. However, some legacy application might expect $_SESSION to remain writeable
+                after ending the session via session_write_close(). Although not considered "best practice", the
+                <code>$readonly</code> option is available for those who need it.
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.session.expiresessioncookie">
+
+        <title>expireSessionCookie()</title>
+
+        <para>
+            This method sends an expired session id cookie, causing the client to delete the session cookie. Sometimes
+            this technique is used to perform a client-side logout.
         </para>
 
     </sect2>
@@ -350,6 +411,139 @@ if (!isset($session->initialized))
             <ulink url="http://php.net/session_set_save_handler">session_set_save_handler()</ulink>
             </code>.
         </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.getinstance">
+
+        <title>getInstance($instanceMustExist = false)</title>
+
+        <para>
+            Zend_Session uses this method to loosely couple instances with the Zend_Session_Core singleton via a form of
+            dependency injection.
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.namespaceisset">
+
+        <title>namespaceIsset($namespace, $name = null)</title>
+
+        <para>
+            Use this method to determine if a session namespace exists, or if a particular index exists in a particular
+            namespace.
+        </para>
+
+        <note>
+            <title>Throws</title>
+            <para>
+                An error will be thrown if Zend_Session_Core is not marked as readable (e.g. before Zend_Session_Core
+                has been started).
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.session.namespaceunset">
+
+        <title>namespaceUnset($namespace, $name = null)</title>
+
+        <para>
+            Instead of creating a Zend_Session instance for a namespace, and iterating over its contents to unset each
+            entry, use <code>namespaceUnset($namespace)</code> to efficiently unset (remove) an entire namespace and its
+            contents. As with all arrays in PHP, if a variable containing an array is unset, and the array contains
+            other objects, those objects will remain available, if they were also stored in other array/objects that
+            remain accessible via other variables. So do not expect <code>namespaceUnset()</code> to actually do a
+            "deep" unsetting/deleting of the contents of the entries in the namespace. For a more detailed explanation,
+            please see
+            <ulink url="http://php.net/references">References Explained</ulink>
+            in the PHP manual.
+        </para>
+
+        <note>
+            <title>Throws</title>
+            <para>
+                An error will be thrown if the namespace is not writable (e.g. after <code>destroy()</code>).
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.session.namespaceset">
+
+        <title>namespaceSet($namespace, $name, $value)</title>
+
+        <para>
+            Zend_Session uses this internal method to add entries to a namespace. This method might not remain public.
+            If you have logical reasons to keep this method publicly accessible, instead of using Zend_Session, please
+            provide feedback to the
+            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
+            mail list.
+        </para>
+
+        <note>
+            <title>Throws</title>
+            <para>
+                An error will be thrown if Zend_Session_Core is not marked as readable (e.g. before Zend_Session_Core
+                has been started).
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.session.namespaceget">
+
+        <title>namespaceGet($namespace, $name = null)</title>
+
+        <para>
+            Zend_Session uses this internal method to get either the value of <code>$name</code> in
+            <code>$namespace</code>, or an array of the contents of <code>$namespace</code>. This method might not
+            remain public. If you have logical reasons to keep this method publicly accessible, instead of using
+            Zend_Session, please provide feedback to the
+            <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
+            mail list. Actually, all participation on any relevant topic is welcome :)
+        </para>
+
+        <note>
+            <title>Throws</title>
+            <para>
+                An error will be thrown if Zend_Session_Core is not marked as readable (e.g. before Zend_Session_Core
+                has been started).
+            </para>
+        </note>
+
+    </sect2>
+
+    <sect2 id="zend.session.getiterator">
+
+        <title>getIterator()</title>
+
+        <para>
+            Use <code>getIterator()</code> to obtain an iterable array containing the names of all namespaces.
+        </para>
+
+        <example>
+            <title>Unsetting All Namespaces</title>
+<programlisting role="php"><![CDATA[<?php
+$core = Zend_Session_Core::getInstance();
+foreach(Zend_Session_Core::getIterator() as $space) {
+    try {
+        $core->namespaceUnset($space);
+    } catch (Zend_Session_Exception $e) {
+        return; // possible if Zend_Session_Core::stop() has been executed
+    }
+}
+
+?>]]></programlisting>
+        </example>
+
+        <note>
+            <title>Throws</title>
+            <para>
+                An error will be thrown if Zend_Session_Core is not marked as readable (e.g. before Zend_Session_Core
+                has been started).
+            </para>
+        </note>
 
     </sect2>
 
