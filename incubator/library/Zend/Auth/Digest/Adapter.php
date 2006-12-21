@@ -28,6 +28,12 @@ require_once 'Zend/Auth/Adapter.php';
 
 
 /**
+ * Zend_Auth_Digest_Token
+ */
+require_once 'Zend/Auth/Digest/Token.php';
+
+
+/**
  * Zend
  */
 require_once 'Zend.php';
@@ -87,8 +93,6 @@ class Zend_Auth_Digest_Adapter extends Zend_Auth_Adapter
         if (false === ($fileHandle = @fopen($options['filename'], 'r'))) {
             throw Zend::exception('Zend_Auth_Digest_Exception', "Cannot open '{$options['filename']}' for reading");
         }
-
-        require_once 'Zend/Auth/Digest/Token.php';
 
         $id       = "{$options['username']}:{$options['realm']}";
         $idLength = strlen($id);

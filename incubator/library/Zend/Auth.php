@@ -98,13 +98,8 @@ class Zend_Auth
         $token = $this->_adapter->authenticate($options);
 
         if ($this->_useSession) {
-            require_once 'Zend/Session/Core.php';
-            if (!Zend_Session_Core::isStarted()) {
-                Zend_Session_Core::start();
-            }
-            Zend_Session_Core::setOptions(array('strict' => true));
             require_once 'Zend/Session.php';
-            $session = new Zend_Session($this->_sessionNamespace, Zend_Session::SINGLE_INSTANCE);
+            $session = new Zend_Session($this->_sessionNamespace);
             $session->{$this->_sessionTokenName} = $token;
         }
 
@@ -190,14 +185,9 @@ class Zend_Auth
      */
     public function getToken()
     {
-        require_once 'Zend/Session/Core.php';
-        if (!Zend_Session_Core::isStarted()) {
-            Zend_Session_Core::start();
-        }
-        Zend_Session_Core::setOptions(array('strict' => true));
         require_once 'Zend/Session.php';
-        $session = new Zend_Session($this->_sessionNamespace, Zend_Session::SINGLE_INSTANCE);
-        if (!isset($session->{$this->_sessionTokenName})) {
+        $session = new Zend_Session($this->_sessionNamespace);
+        if (isset($session->{$this->_sessionTokenName})) {
             return $session->{$this->_sessionTokenName};
         }
         return null;
@@ -226,14 +216,9 @@ class Zend_Auth
      */
     public function logout()
     {
-        require_once 'Zend/Session/Core.php';
-        if (!Zend_Session_Core::isStarted()) {
-            Zend_Session_Core::start();
-        }
-        Zend_Session_Core::setOptions(array('strict' => true));
         require_once 'Zend/Session.php';
-        $session = new Zend_Session($this->_sessionNamespace, Zend_Session::SINGLE_INSTANCE);
-        if (!isset($session->{$this->_sessionTokenName})) {
+        $session = new Zend_Session($this->_sessionNamespace);
+        if (isset($session->{$this->_sessionTokenName})) {
             unset($session->{$this->_sessionTokenName});
         }
     }
