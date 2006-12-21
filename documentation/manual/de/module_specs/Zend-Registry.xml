@@ -1,31 +1,63 @@
 <sect1 id="zend.registry">
-    <title>Zend::registry()</title>
+    <title>Zend::registry($index = null)</title>
 
     <para>
-    	Gibt einen Wert aus der Registry oder die Registry selber zurück.
+    	Gibt einen Wert mit dem Offset $index aus der Registry oder die Registry selber zurück.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-	
+    <example>
+        <title>registry() / offsetGet() Example</title>
+<programlisting role="php"><![CDATA[<?php
 Zend::registry($index=null)
 
+// or
+
+$registry = Zend::registry();
+$value = $registry->offsetGet($index);
 ?>]]></programlisting>
+    </example>
 
     <para>
-	    Wenn das <code>$index</code> Argument gleich <code>NULL</code> ist, wird die Registry 
-	    zurückgegeben (eine Unterklasse von ArrayObject).
-    </para>
-
-    <para>
-	    Wenn <code>$index</code> eine Zeichenkette ist, wird der mit dem Index verknüpfte Wert
-	    zurückgegeben. Wenn der Wert mit dem Namen <code>$index</code> nicht in der Registry
-	    existiert, wird eine <code>Zend_Exception</code> ausgeworfen.
+	    Wenn der Wert beim <code>$index</code> Offset gespeichert wurde, wird dieser Wert 
+	    zurückgegeben. Wenn das <code>$index</code> Argument gleich <code>NULL</code> ist, wird die 
+	    Registry zurückgegeben (eine Unterklasse von 
+	    <ulink url="http://www.php.net/~helly/php/ext/spl/classArrayObject.html">ArrayObject</ulink>).
+	    Diese Methode umhüllt einfach die 
+        <ulink url="http://www.php.net/manual/en/function.arrayobject-offsetget.php">
+        offsetGet() Methode</ulink>, mit dem zusätzlichen Verhalten, dass die Registry zurückgegeben
+        wird, wenn kein $index übergeben wird.
     </para>
 
     <para>
 	    Um schnell zu prüfen, ob ein Wert in der Registry vorhanden ist, verwendet man 
 	    Zend::isRegistered().
     </para>
+
+    <example>
+        <title>isRegistered() / offsetExists() Beispiel</title>
+<programlisting role="php"><![CDATA[<?php
+Zend::isRegistered($index=null)
+
+// oder
+
+$registry = Zend::registry();
+echo $registry->offsetExists($index) ? 'exists' : 'does not exist';
+?>]]></programlisting>
+    </example>
+
+    <para>
+        Eine Iteration benötigt nur ein wenig mehr Aufwand:
+    </para>
+
+    <example>
+        <title>Die Registry durchlaufen</title>
+<programlisting role="php"><![CDATA[<?php
+foreach (Zend::registry() as $index => $value) {
+    echo "$index => $value<br />\n";
+}
+?>]]></programlisting>
+    </example>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

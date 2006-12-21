@@ -1,15 +1,22 @@
 <sect1 id="zend.register">
-    <title>Zend::register()</title>
+    <title>Zend::register($index, $newval)</title>
 
     <para>
-    	Registriert einen Wert in der Registry.
+    	Registriert den Wert $newval mit dem Offset $index in der Registry.
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
-	
-Zend::register($index, $value)
+    <example>
+        <title>register() / offsetSet() Beispiel</title>
+<programlisting role="php"><![CDATA[<?php
+Zend::register($index, $value);
+
+// oder
+
+$registry = Zend::registry();
+$registry->offsetSet($index, $newval);
 
 ?>]]></programlisting>
+    </example>
 
     <para>
 	    Der Objektspeicher ist ein Mechanismus, um einmalige Instanzen von Werten im 
@@ -19,13 +26,17 @@ Zend::register($index, $value)
     </para>
 
     <para>
-	    Der <code>$index</code> ist eine beliebige Zeichenkette, um den Wert in der Registry zu 
-	    bezeichnen. Dieser Name wird beim Aufruf von <code>Zend::registry()</code> erneut 
-	    verwendet, um den Wert zurückzuholen.
+	    Der <code>$index</code> ist ein beliebiger Index, um den Wert in der Registry zu 
+	    bezeichnen. Der selbe Index kann an <code>Zend::registry()</code> übergeben werden, um den 
+	    Wert zurückzuholen.
     </para>
 
     <para>
-	    Die Semantik der Registry befolgt jene von ArrayObject.
+	    Die Semantik der Registry befolgt jene von <ulink
+        url="http://www.php.net/~helly/php/ext/spl/classArrayObject.html">ArrayObject</ulink>.
+        Diese Method umhüllt einfach die 
+        <ulink url="http://www.php.net/manual/en/function.arrayobject-offsetset.php">
+        offsetSet() Methode</ulink>.
     </para>
 </sect1>
 <!--

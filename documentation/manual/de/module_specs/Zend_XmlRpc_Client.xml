@@ -90,12 +90,11 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
         </para>
 
         <para>
-            Finally, an optional third parameter to <code>call()</code>
-            selects whether to return the method response as a native PHP type
-            or as a response object. If the third parameter is set to
-            <code>TRUE</code>, then a <code>Zend_XmlRpc_Response</code> object
-            will be returned. Otherwise, the response object will
-            automatically be cast to its equivalent PHP type.
+            The <code>call()</code> method will automatically convert the
+            XML-RPC response and return its equivalent PHP native type. A
+            <code>Zend_XmlRpc_Response</code> object for the return value will
+            also be available by calling the <code>getLastResponse()</code>
+            method after the call.
         </para>
     </sect2>
 
@@ -407,8 +406,7 @@ try {
             </para>
             
             <para>
-                When the <code>call()</code> method is used where the response
-                is automatically converted to a PHP type, or when the server
+                When the <code>call()</code> method or the server
                 proxy object is used, an XML-RPC fault will result in a
                 <code>Zend_XmlRpc_Client_FaultException</code> being thrown.
                 The code and message of the exception will map directly to
@@ -440,14 +438,19 @@ try {
             </example>
 
             <para>
-                When the <code>call()</code> method receives its optional
-                third parameter of <code>TRUE</code> telling it to instead
-                return a <code>Zend_XmlRpc_Response</code> object, or when the
-                <code>doRequest()</code> method is used to work with request
-                and response objects directly, this exception will never be
-                thrown. Instead, the <code>Zend_XmlRpc_Response</code> object
-                returned will contain a fault. This can be checked with
-                <code>isFault</code> instance method of
+                When the <code>call()</code> method is used to make the
+                request, the <code>Zend_XmlRpc_FaultException</code> will be
+                thrown on fault. A <code>Zend_XmlRpc_Response</code> object
+                containing the fault will also be available by calling
+                <code>getLastResponse()</code>.
+            </para>
+            
+            <para>
+                When the <code>doRequest()</code> method is used to make the
+                request, it will not throw the exception. Instead, it will
+                return a <code>Zend_XmlRpc_Response</code> object returned
+                will containing the fault. This can be checked with
+                <code>isFault()</code> instance method of
                 <code>Zend_XmlRpc_Response</code>.
             </para>
         </sect3>        
