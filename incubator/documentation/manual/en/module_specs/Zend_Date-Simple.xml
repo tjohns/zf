@@ -9,7 +9,7 @@
         Bei einer Angabe von Datum alleine ist die Uhrzeit intern auf 00:00:00 gesetzt.
     </para>
     <para>
-        Bei einer Angabe von Zeit alleine ist das Datum intern auf 01.01.0000 gesetzt.
+        Bei einer Angabe von Zeit alleine ist das Datum intern auf 01.01.1970 gesetzt.
     </para>
     <sect2 id="zend.date.simple.creation">
         <title>Das aktuelle Datum</title>

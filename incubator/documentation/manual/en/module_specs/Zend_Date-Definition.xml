@@ -71,7 +71,8 @@
             <para>
                 Bei Verwendung von Datumsangaben ausserhalb des 32bit Timestamp Bereiches, wird der 
                 Timestamp intern berechnet. Je weiter der Timestamp vom 32bit Bereich weg ist, desdo
-                länger dauert dann natürlich auch die Berechnung.
+                länger dauert dann natürlich auch die Berechnung. Deswegen sind astronomische 
+                Datumsangaben mit Vorsicht zu verwenden.
             </para>
         </note>
     </sect2>

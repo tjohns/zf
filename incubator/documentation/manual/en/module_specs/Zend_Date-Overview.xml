@@ -1,0 +1,291 @@
+<sect1 id="zend.date.overview">
+    <title>Übersicht für die Zend_Date API</title>
+    <para>
+        Die API von <code>Zend_Date</code> ist zwar sehr simpel und einheitlich.
+        Aber sie ist auch sehr umfangreich und bietet eine große Anzahl an Möglichkeiten.
+    </para>
+    <para>
+        Die folgende Übersicht aller Funktionen soll als Hilfe dienen:
+    </para>
+    <sect2 id="zend.date.overview.general">
+        <title>Generelle Funktionen</title>
+        <para>
+            Die generellen Funktionen erwarten die Angabe einer Konstante die den gewünschten Teil des
+            Datums angeben. Diese Konstanten sind in allen Funktionen gültig. Eine Liste aller Konstanten 
+            ist unter xxxLink folgt nochxxx finden.
+        </para>
+        <para>
+            Folgende generelle Funktionen stehen zur Verfügung:
+        </para>
+        <segmentedlist>
+            <title>Generelle Funktionen</title>
+            <?dbhtml list-presentation="table"?>
+            <segtitle>Funktion</segtitle>
+            <segtitle>Beschreibung</segtitle>
+            <seglistitem>
+                <seg>get()</seg>
+                <seg>Ausgabe von aktuellen Datumswerten</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>set()</seg>
+                <seg>Setzen von neuen Datumswerten</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>add()</seg>
+                <seg>Addieren von Datumswerten zum aktuellen Datum</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>sub()</seg>
+                <seg>Subtrahieren von Datumswerten vom aktuellen Datum</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>copy()</seg>
+                <seg>Kopiert einen Datumswert und gibt ein neues Objekt zurück</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>compare()</seg>
+                <seg>Vergleichen von Datumswerten, gibt größer, kleiner und Gleichheit aus</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>equals()</seg>
+                <seg>Vergleichen von Datumswerten, gibt boolschen Wert aus</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>isEarlier()</seg>
+                <seg>Vergleichen von Datumswerten, gibt TRUE wenn das Datum jünger ist</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>isLater()</seg>
+                <seg>Vergleichen von Datumswerten, gibt TRUE wenn das Datum älter ist</seg>
+            </seglistitem>
+        </segmentedlist>
+    </sect2>
+    <sect2 id="zend.date.overview.detail">
+        <title>Detailierte Funktionen</title>
+        <para>
+            Die detailierten Funktionen benötigen keine Konstante, sondern sind jeweils nur für einen
+            bestimmten Teil des Datums zu benutzen. Es gibt sehr viele von Ihnen, und es werden auch 
+            nicht alle Möglichkeiten unterstützt. Ihre Verwendung ist allerdings so einfach und intuitiv
+            das man sie sich nicht auswendig merken muß.
+        </para>
+        <para>
+            Folgende detailierte Funktionen stehen zur Verfügung:
+        </para>
+        <segmentedlist>
+            <title>Detailierte Funktionen</title>
+            <?dbhtml list-presentation="table"?>
+            <segtitle>Abschnitt</segtitle>
+            <segtitle>Ausgabe</segtitle>
+            <segtitle>Setzen</segtitle>
+            <segtitle>Addieren</segtitle>
+            <segtitle>Subtrahieren</segtitle>
+            <segtitle>Vergleichen</segtitle>
+            <seglistitem>
+                <seg>Unix Timestamp</seg>
+                <seg>getTimestamp()</seg>
+                <seg>setTimestamp()</seg>
+                <seg>addTimestamp()</seg>
+                <seg>subTimestamp()</seg>
+                <seg>compareTimestamp()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Datum</seg>
+                <seg>getDate()</seg>
+                <seg>setDate()</seg>
+                <seg>addDate()</seg>
+                <seg>subDate()</seg>
+                <seg>compareDate()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Zeit</seg>
+                <seg>getTime()</seg>
+                <seg>setTime()</seg>
+                <seg>addTime()</seg>
+                <seg>subTime()</seg>
+                <seg>compareTime()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Jahr</seg>
+                <seg>getYear()</seg>
+                <seg>setYear()</seg>
+                <seg>addYear()</seg>
+                <seg>subYear()</seg>
+                <seg>compareYear()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Monat</seg>
+                <seg>getMonth()</seg>
+                <seg>setMonth()</seg>
+                <seg>addMonth()</seg>
+                <seg>subMonth()</seg>
+                <seg>compareMonth()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Tag</seg>
+                <seg>getDay()</seg>
+                <seg>setDay()</seg>
+                <seg>addDay()</seg>
+                <seg>subDay()</seg>
+                <seg>compareDay()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Wochentag</seg>
+                <seg>getWeekday()</seg>
+                <seg>setWeekday()</seg>
+                <seg>addWeekday()</seg>
+                <seg>subWeekday()</seg>
+                <seg>compareWeekday()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Tag des Jahres</seg>
+                <seg>getDayOfYear()</seg>
+                <seg>setDayOfYear()</seg>
+                <seg>addDayOfYear()</seg>
+                <seg>subDayOfYear()</seg>
+                <seg>compareDayOfYear()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Stunde</seg>
+                <seg>getHour()</seg>
+                <seg>setHour()</seg>
+                <seg>addHour()</seg>
+                <seg>subHour()</seg>
+                <seg>compareHour()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Minute</seg>
+                <seg>getMinute()</seg>
+                <seg>setMinute()</seg>
+                <seg>addMinute()</seg>
+                <seg>subMinute()</seg>
+                <seg>compareMinute()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Sekunde</seg>
+                <seg>getSecond()</seg>
+                <seg>setSecond()</seg>
+                <seg>addSecond()</seg>
+                <seg>subSecond()</seg>
+                <seg>compareSecond()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Millisekunde</seg>
+                <seg>getMilliSecond()</seg>
+                <seg>setMilliSecond()</seg>
+                <seg>addMilliSecond()</seg>
+                <seg>subMilliSecond()</seg>
+                <seg>compareMilliSecond()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Woche</seg>
+                <seg>getWeek()</seg>
+                <seg>setWeek()</seg>
+                <seg>addWeek()</seg>
+                <seg>subWeek()</seg>
+                <seg>compareWeek()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>ISO 8601 Datum</seg>
+                <seg>getIso()</seg>
+                <seg>setIso()</seg>
+                <seg>addIso()</seg>
+                <seg>subIso()</seg>
+                <seg>compareIso()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>ARPA Datum</seg>
+                <seg>getArpa()</seg>
+                <seg>setArpa()</seg>
+                <seg>addArpa()</seg>
+                <seg>subArpa()</seg>
+                <seg>compareArpa()</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>Zeitzone</seg>
+                <seg>getTimeZone()</seg>
+                <seg>setTimeZone()</seg>
+                <seg></seg>
+                <seg></seg>
+                <seg></seg>
+            </seglistitem>
+        </segmentedlist>
+    </sect2>
+    <sect2 id="zend.date.overview.others">
+        <title>Zusätzliche Funktionen</title>
+        <para>
+            Natürlich gibt es noch eine Anzahl an zusätzlichen Funktionen die nicht in das oben 
+            beschriebene Schema passen, aber sehr hilfreich sind.
+        </para>
+        <para>
+            Folgende zusätzliche Funktionen gibt es :
+        </para>
+        <segmentedlist>
+            <title>Zusätzliche Funktionen</title>
+            <?dbhtml list-presentation="table"?>
+            <segtitle>Funktion</segtitle>
+            <segtitle>Beschreibung</segtitle>
+            <seglistitem>
+                <seg>toString()</seg>
+                <seg>Kann einen beliebig formatierten Ausgabestring erzeugen</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>toValue()</seg>
+                <seg>Erzeugt aus einem Datumswert eine Zahl</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>now()</seg>
+                <seg>Gibt das heutige Datum zurück</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>isLeapYear()</seg>
+                <seg>Ist das Datum ein Schaltjahr ?</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>isToday()</seg>
+                <seg>Ist das Datum von Heute ?</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>isTomorrow()</seg>
+                <seg>Ist das Datum von Morgen ?</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>getSunRise()</seg>
+                <seg>Gibt die Zeit des Sonnenaufgangs für dieses Datum aus</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>getSunSet()</seg>
+                <seg>Gibt die Zeit des Sonnenuntergangs für dieses Datum aus</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>getSunInfo()</seg>
+                <seg>Gibt ein Array mit den Zeiten der Sonnendaten aus</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>getFractionalPrecission()</seg>
+                <seg>Gibt die Genauigkeit der Teilsekunden aus</seg>
+            </seglistitem>
+            <seglistitem>
+                <seg>setFractionalPrecission()</seg>
+                <seg>Setzt die Genauigkeit der Teilsekunden</seg>
+            </seglistitem>
+        </segmentedlist>
+    </sect2>
+    <sect2 id="zend.date.overview.addons">
+        <title>Zusätzliche Informationen</title>
+        <para>
+            Eine Liste aller Zeitformate welche von den generellen Funktionen unterstützt werden gibt es hier:
+        </para>
+        <para>
+            xxxListezuDate-Konstantenxxx
+        </para>
+        <para>
+            Eine Übersicht über alle unterstützten Ausgabeformate gibt es hier:
+        </para>
+        <para>
+            xxxListezuFormat-Konstantenxxx
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
