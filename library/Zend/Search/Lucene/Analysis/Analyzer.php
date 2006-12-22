@@ -35,6 +35,11 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/TextNum.php';
 /** Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive */
 require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common/TextNum/CaseInsensitive.php';
 
+/** Zend_Search_Lucene_Analysis_TokenFilter_StopWords */
+require_once 'Zend/Search/Lucene/Analysis/TokenFilter/StopWords.php';
+
+/** Zend_Search_Lucene_Analysis_TokenFilter_ShortWords */
+require_once 'Zend/Search/Lucene/Analysis/TokenFilter/ShortWords.php';
 
 
 /**

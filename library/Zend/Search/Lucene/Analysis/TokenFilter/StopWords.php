@@ -44,19 +44,15 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
      * Minimum allowed term length
      * @var array
      */
-    private $stopSet;
+    private $_stopSet;
 
     /**
      * Constructs new instance of this filter.
      *
      * @param array $stopwords array (set) of words that will be filtered out
      */
-    public function __construct($stopwords = null) {
-        if ($stopwords) {
-            $this->stopSet = $stopwords;
-        } else {
-            $this->stopSet = array();
-        }
+    public function __construct($stopwords = array()) {
+        $this->_stopSet = array_flip($stopwords);
     }
 
     /**
@@ -66,7 +62,7 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
      * @return Zend_Search_Lucene_Analysis_Token
      */
     public function normalize(Zend_Search_Lucene_Analysis_Token $srcToken) {
-        if (array_key_exists($srcToken->getTermText(), $this->stopSet)) {
+        if (array_key_exists($srcToken->getTermText(), $this->_stopSet)) {
             $t = $srcToken->getTermText();
             return null;
         } else {
@@ -93,11 +89,11 @@ class Zend_Search_Lucene_Analysis_TokenFilter_StopWords extends Zend_Search_Luce
         }
         while (!feof ($fd)) {
             $buffer = trim(fgets($fd));
-            if (strlen($buffer) > 0 && $buffer{0} != '#') {
-                $this->stopSet[$buffer] = 1;
+            if (strlen($buffer) > 0 && $buffer[0] != '#') {
+                $this->_stopSet[$buffer] = 1;
             }
         }
-        if (! fclose($fd)) {
+        if (!fclose($fd)) {
             throw new Zend_Search_Exception('Cannot close file ' . $filepath);
         }
     }
