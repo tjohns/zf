@@ -239,6 +239,14 @@ class Zend_Controller_RouteTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(array_key_exists('2000', $values));
     }
 
+    public function testRootRoute()
+    {
+        $route = new Zend_Controller_Router_Route('/');
+        $values = $route->match('');
+
+        $this->assertSame(array(), $values);
+    }
+
     public function testAssemble()
     {
         $route = new Zend_Controller_Router_Route('authors/:name');

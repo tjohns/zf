@@ -63,18 +63,24 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         $this->_defaults = (array) $defaults;
         $this->_requirements = (array) $reqs;
 
-        foreach (explode(self::URI_DELIMITER, $route) as $pos => $part) {
-
-            if (substr($part, 0, 1) == self::URL_VARIABLE) {
-                $name = substr($part, 1);
-                $regex = (isset($reqs[$name]) ? $reqs[$name] : self::DEFAULT_REGEX);
-                $this->_parts[$pos] = array('name' => $name, 'regex' => $regex);
-                $this->_vars[] = $name;
-            } else {
-                $this->_parts[$pos] = array('regex' => preg_quote($part, self::REGEX_DELIMITER));
-                if ($part != '*') {
-                    $this->_staticCount++;
+        $route = trim($route, self::URI_DELIMITER);
+        
+        if ($route != '') { 
+    
+            foreach (explode(self::URI_DELIMITER, $route) as $pos => $part) {
+    
+                if (substr($part, 0, 1) == self::URL_VARIABLE) {
+                    $name = substr($part, 1);
+                    $regex = (isset($reqs[$name]) ? $reqs[$name] : self::DEFAULT_REGEX);
+                    $this->_parts[$pos] = array('name' => $name, 'regex' => $regex);
+                    $this->_vars[] = $name;
+                } else {
+                    $this->_parts[$pos] = array('regex' => preg_quote($part, self::REGEX_DELIMITER));
+                    if ($part != '*') {
+                        $this->_staticCount++;
+                    }
                 }
+    
             }
 
         }
@@ -102,7 +108,7 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
 
         $path = trim($path, self::URI_DELIMITER);
 
-        if (!empty($path)) {
+        if ($path != '') {
         
             $path = explode(self::URI_DELIMITER, $path);
         

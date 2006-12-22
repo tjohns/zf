@@ -54,6 +54,14 @@ class Zend_Controller_StaticRouteTest extends PHPUnit_Framework_TestCase
         $this->assertType('array', $values);
     }
 
+    public function testRootRoute()
+    {
+        $route = new Zend_Controller_Router_StaticRoute('/');
+        $values = $route->match('');
+
+        $this->assertSame(array(), $values);
+    }
+
     public function testAssemble()
     {
         $route = new Zend_Controller_Router_StaticRoute('/about');

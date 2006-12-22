@@ -146,15 +146,53 @@ class Zend_Controller_RewriteRouterTest extends PHPUnit_Framework_TestCase
         $this->assertType('Zend_Controller_Router_Route', $routes['default']);
     }
 
+    public function testDefaultRouteWithEmptyAction()
+    {
+        $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/ctrl');
+        
+        $token = $this->_router->route($request);
+
+        $this->assertSame('ctrl', $token->getControllerName());
+        $this->assertSame('index', $token->getActionName());
+    }
+
     public function testEmptyRoute()
     {
         $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/');
         
-        $this->_router->addRoute('empty', new Zend_Controller_Router_Route(':year', array('year' => '2006')));
+        $this->_router->removeDefaultRoutes();
+        $this->_router->addRoute('empty', new Zend_Controller_Router_Route('', array('controller' => 'ctrl', 'action' => 'act')));
         
         $token = $this->_router->route($request);
 
-        $this->assertSame('2006', $token->getParam('year'));
+        $this->assertSame('ctrl', $token->getControllerName());
+        $this->assertSame('act', $token->getActionName());
+    }
+
+    public function testEmptyPath()
+    {
+        $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/');
+        
+        $this->_router->removeDefaultRoutes();
+        $this->_router->addRoute('catch-all', new Zend_Controller_Router_Route(':controller/:action/*', array('controller' => 'ctrl', 'action' => 'act')));
+        
+        $token = $this->_router->route($request);
+
+        $this->assertSame('ctrl', $token->getControllerName());
+        $this->assertSame('act', $token->getActionName());
+    }
+
+    public function testEmptyPathWithWildcardRoute()
+    {
+        $request = new Zend_Controller_RewriteRouterTest_Request('http://localhost/');
+        
+        $this->_router->removeDefaultRoutes();
+        $this->_router->addRoute('catch-all', new Zend_Controller_Router_Route('*', array('controller' => 'ctrl', 'action' => 'act')));
+        
+        $token = $this->_router->route($request);
+
+        $this->assertSame('ctrl', $token->getControllerName());
+        $this->assertSame('act', $token->getActionName());
     }
 
     public function testRouteCompat()
