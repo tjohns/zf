@@ -114,7 +114,97 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 ?>]]></programlisting>
             </example>
         </para>
-        </sect2>
+    </sect2>
+
+    <sect2 id="zend.search.extending.filters">
+        <title>トークンのフィルタリング</title>
+        <para>
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code>
+            解析器には、トークンをフィルタリングする仕組みもあります。
+            mechanism.
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Analysis_TokenFilter</code>
+            クラスは、このフィルタリングの仕組みを抽象化したものです。
+            自分でフィルタを作成する際には、これを継承します。
+        </para>
+
+        <para>
+            独自に作成するフィルタは、
+            <code>normalize()</code> メソッドを実装する必要があります。
+            このメソッドは、入力トークンを変換したり
+            トークンを読み飛ばす指示を出したりします。
+        </para>
+
+        <para>
+            Analysis のサブパッケージとして、これらの三つのフィルタが定義されています。
+            <itemizedlist>
+                <listitem>
+                    <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code> フィルタ
+                </listitem>
+                <listitem>
+                    <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> フィルタ
+                </listitem>
+                <listitem>
+                    <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> フィルタ
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            <code>LowerCase</code> フィルタは、既に
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>
+            解析器で使用されています。これはデフォルトの解析器です。
+        </para>
+
+        <para>
+            <code>ShortWords</code> および <code>StopWords</code>
+            は、定義済み解析器あるいは独自の解析器でこのように使用します。
+            <programlisting role="php"><![CDATA[<?php
+$stopWords = array('a', 'an', 'at', 'the', 'and', 'or', 'is', 'am');
+$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($stopWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($shortWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code>
+            のコンストラクタには、禁止単語の配列を入力として渡します。
+            この禁止単語はファイルから読み込ませることもできます。
+            <programlisting role="php"><![CDATA[<?php
+$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords();
+$stopWordsFilter->loadFromFile($my_stopwords_file);
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($stopWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+            ファイル形式は一般的なテキストファイルで、各文字列にひとつの単語が含まれるものとなります。
+            '#' を指定すると、その文字列はコメントであるとみなします。
+        </para>
+
+        <para>
+            <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code>
+            のコンストラクタには、オプションの引数をひとつ指定することができます。
+            これは単語長の制限を表し、デフォルト値は 2 です。
+        </para>
+
+    </sect2>
+
 
     <sect2 id="zend.search.extending.scoring">
         <title>重み付けのアルゴリズム</title>
