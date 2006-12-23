@@ -51,11 +51,6 @@
         &module_specs.Zend_Auth_Digest;
     </chapter>
 
-    <chapter id="zend.cache">
-        <title>Zend_Cache</title>
-        &module_specs.Zend_Cache_Backend_ZendPlatform;
-    </chapter>
-
     <!--
     <chapter id="zend.console">
         <title>Zend_Console_Getopt</title>
