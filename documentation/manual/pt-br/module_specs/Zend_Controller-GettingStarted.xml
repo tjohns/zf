@@ -48,7 +48,9 @@ RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
     do diretório raiz do web server.</para>
 
     <note>
-       O arquivo de inicialização deveria ser o único arquivo armazenado no document root. 
+        <para>
+            O arquivo de inicialização deveria ser o único arquivo armazenado no document root. 
+        </para>
     </note>
 
     <para>Para propósitos de segurança, a Zend recomenda fortemente não
@@ -74,7 +76,9 @@ Zend_Controller_Front::run('/path/to/your/controllers')
     neste arquivo antes do <code>require_once()</code>.</para>
 
     <note>
-       Por enquanto, estamos investigando soluções que não requerem a instalação do mod_rewrite. Nós intentamos sugerir uma configuração para ambos os sistemas, com e sem as funcionalidades de mod_rewrite. Também, por favor note que este sistema não está fora do escopo (não está destinado) ao Apache ou mod_rewrite especificamente , qualquer webserver com capacidades de redirecionamento similares deve ser suficiente (EXPLICAR). 
+        <para>
+            Por enquanto, estamos investigando soluções que não requerem a instalação do mod_rewrite. Nós intentamos sugerir uma configuração para ambos os sistemas, com e sem as funcionalidades de mod_rewrite. Também, por favor note que este sistema não está fora do escopo (não está destinado) ao Apache ou mod_rewrite especificamente , qualquer webserver com capacidades de redirecionamento similares deve ser suficiente (EXPLICAR). 
+        </para>
     </note>
   </sect2>
 
@@ -105,7 +109,9 @@ Zend_Controller_Front::run('/path/to/your/controllers')
 </programlisting></para>
 
     <note>
-       Esta seção ainda não está terminada. Ela permanece sujeita a alterações. 
+        <para>
+            Esta seção ainda não está terminada. Ela permanece sujeita a alterações. 
+        </para>
     </note>
   </sect2>
 
@@ -141,8 +147,8 @@ class IndexController extends Zend_Controller_Action
 	}
 }
 
-?&gt;</programlisting> <note>
+?&gt;</programlisting> <note><para>
          Esta seção ainda não está terminada. Ela permanece sujeita a alterações. 
-      </note></para>
+      </para></note></para>
   </sect2>
 </sect1>
