@@ -87,9 +87,10 @@
                               <entry><code>int</code></entry>
                               <entry><code>10</code></entry>
                               <entry>
-                                Disable / Tune the automatic cleaning process (garbage collector):
-                                0 means no automatic cache cleaning, 1 means systematic cache cleaning
-                                and x &gt; 1 means automatic random cleaning 1 times in x write operations.
+                                Włącza / ustawia proces automatycznego czyszczenia (garbage collector):
+                                0 oznacza brak automatycznego czyszczenia, 1 oznacza systematyczne czyszczenie
+                                bufora, a x &gt; 1 oznacza automatyczne losowe czyszczenie 1 raz na x operacji
+                                zapisu.
                               </entry>
                           </row>
                       </tbody>
@@ -177,9 +178,10 @@ echo($data);
         <sect3 id="zend.cache.frontend.output.introduction">
             <title>Wprowadzenie</title>
             <para>
-                <code>Zend_Cache_Frontend_Output</code> is an output-capturing frontend. It utilizes
-                output buffering in PHP to capture everything between its <code>start()</code> and
-                <code>end()</code> methods.
+                <code>Zend_Cache_Frontend_Output</code> jest frontendem przechwytującym
+                dane wyjściowe. Przejmuje on wyświetlanie danych wyjściowych w PHP
+                przechwytując wszystko co jest pomiędzy metodami <code>start()</code> 
+                oraz <code>end()</code>.
             </para>
         </sect3>
         <sect3 id="zend.cache.frontend.output.options">
@@ -428,17 +430,19 @@ $res = $cache->foobar2('1', '2');
         <sect3 id="zend.cache.frontends.file.introduction">
             <title>Wprowadzenie</title>
             <para>
-                <code>Zend_Cache_Frontend_File</code> is a frontend driven by the 
-                modification time of a "master file". It's really interesting for examples
-                in configuration or templates issues.
+                <code>Zend_Cache_Frontend_File</code> jeest frontendem działającym
+                w oparciu o datę modyfikacji "głównego pliku". Jest to bardzo 
+                interesujące, na przykład przy zagadnieniach związanych z konfiguracją
+                czy szablonami.
             </para>
             <para> 
-            	Na przykład, you have an XML configuration file which is parsed by a function 
-            	which returns a "config object" (like with <code>Zend_Config</code>). With
-            	<code>Zend_Cache_Frontend_File</code>, you can store the "config object" into
-            	cache (to avoid the parsing of the XML config file at each time) but with a
-            	sort of strong dependency on the "master file". So, if the XML config file
-            	is modified, the cache is immediatly invalidated.
+            	Na przykład, jeśli masz plik konfiguracyjny XML, który jest analizowany
+            	przez funkcję zwracającą obiekt konfiguracji (na przykład <code>Zend_Config</code>). 
+            	Za pomocą frontendu <code>Zend_Cache_Frontend_File</code>, możesz przechować
+            	obiekt konfiguracji w buforze (aby zapobiec analizowaniu pliku konfiguracyjnego
+            	XML za każdym razem), ale przy zależności od "głównego pliku".
+            	Więc jeśli plik konfiguracyjny XML zostanie zmodyfikowany, bufor natychmiast
+            	straci ważność.
             </para>
         </sect3>
         <sect3 id="zend.cache.frontends.file.options">
@@ -626,10 +630,12 @@ $res = $cache->foobar2('1', '2');
 	                          <entry><code>array</code></entry>
 	                          <entry><code>array()</code></entry>
 	                          <entry>
-	                          	  an associative array to set options only for some REQUEST_URI, keys are (PCRE) regexps, values are 
-	                          	  associative arrays with specific options to set if the regexp matchs on $_SERVER['REQUEST_URI']
-                                  (see defaultOptions for the list of available options) ; if several regexps match the $_SERVER['REQUEST_URI'], 
-                                  only the last one will be used
+	                          	  tablica asocjacyjna do ustawienia opcji tylko dla pewnych adresów REQUEST_URI, 
+	                          	  klucze są wyrażeniami regularnymi (PCRE), wartości są asocjacyjnymi tablicami 
+	                          	  ze specyficznymi opcjami do ustawienia gdy wyrażenie regularne zostanie
+	                          	  dopasowane do $_SERVER['REQUEST_URI'] (zobacz defaultOptions aby zobaczyć listę
+	                          	  wszystkich dostępnych opcji) ; jeśli kilka wyrażen regularnych będzie pasowało 
+	                          	  do $_SERVER['REQUEST_URI'], zostanie użyte tylko te ostatnie
 	                          </entry>
 	                     </row>
 	                  </tbody>
@@ -642,9 +648,9 @@ $res = $cache->foobar2('1', '2');
 	            Użycie Zend_Cache_Frontend_Page jest naprawdę łatwe:
 	        </para>
             <programlisting role="php"><![CDATA[<?php
-	           
+
 // [...] // wymagane, konfiguracja i fabryka
-	
+
 $cache->start();
 // jeśli bufor jest trafiony, wynik jest wysyłany do przeglądaki a skrypt tutaj kończy działanie
 	
@@ -667,10 +673,10 @@ $frontendOptions = array(
    'lifeTime' => 7200,
    'debugHeader' => true, // dla testów
    'regexps' => array(
-       '^/$' => array('cache' => true),         // buforuj cały kontrolera IndexController         
-       '^/index/' => array('cache' => true),    // buforuj cały kontrolera IndexController
+       '^/$' => array('cache' => true),         // buforuj cały kontroler IndexController         
+       '^/index/' => array('cache' => true),    // buforuj cały kontroler IndexController
        '^/article/' => array('cache' => false), // nie buforuj kontrolera ArticleController...
-       '^/article/view/' => array(              // ...ale buforuje akcję "view" 
+       '^/article/view/' => array(              // ...ale buforuj akcję "view" 
            'cache' => true,                     // kontrolera ArticleController
            'cacheWithPostVariables' => true,    // i buforuj gdy są dostępne zmienne $_POST
            'makeIdWithPostVariables' => true,   // (ale bufor będzie zależał od tablicy $_POST)
