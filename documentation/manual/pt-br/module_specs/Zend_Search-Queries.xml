@@ -65,15 +65,21 @@ $hits = $index-&gt;find('+word1 author:word2 -word3');
 
 ?&gt;</programlisting> <itemizedlist>
         <listitem>
-           '+' especifica um termo obrigatório. 
+            <para>
+                '+' especifica um termo obrigatório. 
+            </para>
         </listitem>
 
         <listitem>
-           '-' especifica um termo rejeitado. 
+            <para>
+                '-' especifica um termo rejeitado. 
+            </para>
         </listitem>
 
         <listitem>
-           'campo:' especifica um campo específico para busca. Se for omitido a pesquisa utilizará o campo de conteúdo. 
+            <para>
+                'campo:' especifica um campo específico para busca. Se for omitido a pesquisa utilizará o campo de conteúdo. 
+            </para>
         </listitem>
       </itemizedlist></para>
 
@@ -94,15 +100,21 @@ $hits = $index-&gt;find('+word1 author:word2 -word3');
     <para>O array <code>$signs</code> pode conter informações sobre o tipo de
     termo pesquisado: <itemizedlist>
         <listitem>
-           true define um termo como necessário. 
+            <para>
+                true define um termo como necessário. 
+            </para>
         </listitem>
 
         <listitem>
-           false define um termo como proibido. 
+            <para>
+                false define um termo como proibido. 
+            </para>
         </listitem>
 
         <listitem>
-           null define to define neither required, nor prohibited term. 
+            <para>
+                 null define to define neither required, nor prohibited term. 
+            </para>
         </listitem>
       </itemizedlist></para>
   </sect2>
