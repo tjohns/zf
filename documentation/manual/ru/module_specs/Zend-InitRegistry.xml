@@ -3,6 +3,19 @@
     <title>Zend::initRegistry($registry = 'Zend_Registry')</title>
 
     <para>
+        Разработчики, желающие расширить существующие функциональные возможности
+        реестра, могут использовать данную функцию. Этот метод позволяет
+        создавать подклассы Zend_Registry, включая добавление
+        методов-псевдонимов для offsetGet() и offsetExists(), таких, как has(),
+        getval(), setval() и т.д. Для их использования следует создать
+        экземпляр подкласса Zend_Registry в коде загрузки и затем передать его
+        initRegistry() до того, как будут вызваны другие методы, связанные с
+        использованием реестра. Следует иметь в виду, что initRegistry() может
+        вызываться только один раз для предотвращения случайной перезаписи
+        реестра после инициализации.  Также при использовании Zend::registry()
+        или Zend::register() будет автоматически вызван метод initRegistry(),
+        если он не был вызван ранее.
+<!--
         Developers wishing to extend the existing registry's functionality may use this function.
         This method enables developers to subclass Zend_Registry, including
         adding alias methods for offsetGet() and offsetExists(), such as has(), getval(), setval(), etc.,
@@ -11,6 +24,7 @@
         may only be used once, to avoid accidentally overwriting the registry after initialization.
         Also, using Zend::registry() or Zend::register() automatically calls initRegistry(), if it has
         not already been called.
+-->
     </para>
 
     <example>
@@ -24,13 +38,14 @@ class Zend_RegistryMine extends Zend_Registry
     }
 }
 
-# in your bootstrap code:
+# в коде загрузки:
 
-$ini_array = parse_ini_file('your_stuff.ini'); // purely optional
+$ini_array = parse_ini_file('your_stuff.ini'); // необязательный код
 $registry = new Zend_RegistryMine($ini_array);
 Zend::initRegistry($registry);
 
-# now the normal Zend::registry(), Zend::register(), and Zend::isRegistered() work as expected
+# теперь методы Zend::registry(), Zend::register(), and Zend::isRegistered()
+# работают так, как нужно нам
 ?>]]></programlisting>
     </example>
 

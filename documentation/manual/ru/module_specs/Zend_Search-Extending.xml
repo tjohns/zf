@@ -13,7 +13,8 @@
         </para>
 
         <para>
-            Методы <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> и
+            Методы
+            <code>Zend_Search_Lucene_Analysis_Analyzer::getDefault()</code> и
             <code>Zend_Search_Lucene_Analysis_Analyzer::setDefault()</code>
             используются для получения и установки анализатора по умолчанию. 
 <!--
@@ -146,7 +147,153 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 ?>]]></programlisting>
             </example>
         </para>
-        </sect2>
+    </sect2>
+    
+    <sect2 id="zend.search.extending.filters">
+        <title>Фильтрация лексем<!--Tokens Filtering--></title>
+        <para>
+            Анализатор <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code>
+            также предоставляет механизм фильтрации лексем. 
+<!--
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> analyzer also offers tokens filtering
+            mechanism.
+-->
+        </para>
+
+        <para>
+            Класс <code>Zend_Search_Lucene_Analysis_TokenFilter</code> является
+            уровнем абстракции для таких фильтров. Он должен использоваться как
+            предок для ваших собственных фильтров. 
+<!--
+            <code>Zend_Search_Lucene_Analysis_TokenFilter</code> class is an abstract level for such filters.
+            It should be used as an ancestor for your own filters.
+-->
+        </para>
+
+        <para>
+            Пользовательские фильтры должны реализовать метод
+            <code>normalize()</code>, который может преобразовывать лексему или
+            сигнализировать, что лексема должна быть пропущена.
+<!--
+            Custom filter must implement <code>normalize()</code> method which may transform input token or signal that
+            token should be skipped.
+-->
+        </para>
+
+        <para>
+            В предоставляемом анализаторе уже определены три фильтра:
+<!--
+            There are three filters already defined in Analysis subpackage:
+-->
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code>
+<!--
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code> filter.
+-->
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code>
+<!--
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> filter.
+-->
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code>
+<!--
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> filter.
+-->
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Фильтр <code>LowerCase</code> уже используется для анализатора
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code>,
+            который применяется по умолчанию.
+<!--
+            <code>LowerCase</code> filter is already used for
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> analyzer
+            which is default.
+-->
+        </para>
+
+        <para>
+            <code>ShortWords</code> и <code>StopWords</code> могут
+            использоваться с уже включенными анализаторами или вашими
+            собственными:
+<!--
+            <code>ShortWords</code> and <code>StopWords</code> may be used with already defined or your own
+            analyzers like this:
+-->
+        </para>
+        
+        <programlisting role="php"><![CDATA[<?php
+$stopWords = array('a', 'an', 'at', 'the', 'and', 'or', 'is', 'am');
+$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($stopWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+
+        <programlisting role="php"><![CDATA[<?php
+$shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($shortWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+
+        <para>
+            Конструктор
+            <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code>
+            принимает массив стоп-слов в качестве аргумента. Но стоп-слова можно
+            также загружать и из файла: 
+<!--
+            <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> constructor takes an array of stop-words
+            as an input. But stop-words may be also loaded from a file:
+-->
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords();
+$stopWordsFilter->loadFromFile($my_stopwords_file);
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($stopWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+
+        <para>
+            Файл должен быть текстовым с одним словом в каждой строке. Символом
+            '#' помечаются строки с комментариями.
+<!--
+            File should be a common text file with one word in each string. '#' marks string as a comment.
+-->
+        </para>
+
+        <para>
+            Конструктор
+            <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> 
+            имеет один необязательный параметр, это ограничение длины слова.
+            Его значение по умолчанию равно 2.
+<!--
+            <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> constructor has one optional argument.
+            It's a words length limit. Default value is 2.
+-->
+        </para>
+
+    </sect2>
 
     <sect2 id="zend.search.extending.scoring">
         <title>Алгоритмы ранжирования<!--Scoring Algorithms--></title>

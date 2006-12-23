@@ -1,18 +1,26 @@
 <sect1 id="zend.register">
-    <title>Zend::register()</title>
+
+    <title>Zend::register($index, $newval)</title>
 
     <para>
-        Регистрирует объект в реестре.
+        Регистрирует значение $newval со смещением $index в реестре.
 <!--
-        Registers an object in the object store.
+        Registers the value $newval at the offset $index in the registry.
 -->
     </para>
 
-    <programlisting role="php"><![CDATA[<?php
+    <example>
+        <title>Пример register() / offsetSet()</title>
+<programlisting role="php"><![CDATA[<?php
+Zend::register($index, $value);
 
-Zend::register($index, $value)
+// или
+
+$registry = Zend::registry();
+$registry->offsetSet($index, $newval);
 
 ?>]]></programlisting>
+    </example>
 
     <para>
         Реестр является механизмом для предоставления экземпляров-синглетонов
@@ -27,19 +35,29 @@ Zend::register($index, $value)
     </para>
 
     <para>
-        <code>$index</code> — произвольная строка для наименования значения в
-        реестре. Это имя передается <code>Zend::registry()</code> для получения
-        значения.
+        <code>$index</code> — произвольный индекс для наименования значения в
+        реестре. Этот индекс может передаваться <code>Zend::registry()</code>
+        для получения сохраненного значения.
 <!--
-    The <code>$index</code> is an arbitrary string to name the value in the store.  This name will be
-    supplied to <code>Zend::registry()</code> to retrieve the value again.
+        The <code>$index</code> is an arbitrary index to name the value in the registry. The same index may be passed to
+        <code>Zend::registry()</code> in order to retrieve the stored value.
 -->
     </para>
 
     <para>
-    Семантика реестра аналогична семантике ArrayObject. 
+        Семантика реестра аналогична семантике <ulink
+        url="http://www.php.net/~helly/php/ext/spl/classArrayObject.html">ArrayObject</ulink>
+        . Этот метод является оберткой к методу
+        <ulink url="http://www.php.net/manual/en/function.arrayobject-offsetset.php">offsetSet()</ulink>
+        .
 <!--
-    The semantics of the registry adhere to those of ArrayObject.
+        The semantics of the registry adhere to those of
+        <ulink
+        url="http://www.php.net/~helly/php/ext/spl/classArrayObject.html">ArrayObject</ulink>
+        . This method simply wraps the
+        <ulink url="http://www.php.net/manual/en/function.arrayobject-offsetset.php">
+        offsetSet() method</ulink>
+        .
 -->
     </para>
 </sect1>
