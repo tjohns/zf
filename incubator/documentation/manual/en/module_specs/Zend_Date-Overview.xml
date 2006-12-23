@@ -17,48 +17,55 @@
         <para>
             Folgende generelle Funktionen stehen zur Verfügung:
         </para>
-        <segmentedlist>
+        <table>
             <title>Generelle Funktionen</title>
-            <?dbhtml list-presentation="table"?>
-            <segtitle>Funktion</segtitle>
-            <segtitle>Beschreibung</segtitle>
-            <seglistitem>
-                <seg>get()</seg>
-                <seg>Ausgabe von aktuellen Datumswerten</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>set()</seg>
-                <seg>Setzen von neuen Datumswerten</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>add()</seg>
-                <seg>Addieren von Datumswerten zum aktuellen Datum</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>sub()</seg>
-                <seg>Subtrahieren von Datumswerten vom aktuellen Datum</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>copy()</seg>
-                <seg>Kopiert einen Datumswert und gibt ein neues Objekt zurück</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>compare()</seg>
-                <seg>Vergleichen von Datumswerten, gibt größer, kleiner und Gleichheit aus</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>equals()</seg>
-                <seg>Vergleichen von Datumswerten, gibt boolschen Wert aus</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>isEarlier()</seg>
-                <seg>Vergleichen von Datumswerten, gibt TRUE wenn das Datum jünger ist</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>isLater()</seg>
-                <seg>Vergleichen von Datumswerten, gibt TRUE wenn das Datum älter ist</seg>
-            </seglistitem>
-        </segmentedlist>
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Funktion</entry>
+                        <entry>Beschreibung</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>get()</entry>
+                        <entry>Ausgabe des Datums</entry>
+                    </row>
+                    <row>
+                        <entry>set()</entry>
+                        <entry>Setzen eines Datums</entry>
+                    </row>
+                    <row>
+                        <entry>add()</entry>
+                        <entry>Addieren eines Datums</entry>
+                    </row>
+                    <row>
+                        <entry>sub()</entry>
+                        <entry>Subtrahieren eines Datums</entry>
+                    </row>
+                    <row>
+                        <entry>copy()</entry>
+                        <entry>Kopieren eines Datums, gibt ein neues Object zurück</entry>
+                    </row>
+                    <row>
+                        <entry>compare()</entry>
+                        <entry>Vergleichen eines Datums, gibt 0, 1 oder -1 zurück</entry>
+                    </row>
+                    <row>
+                        <entry>equals()</entry>
+                        <entry>Vergleichen eines Datums, boolscher Retourwert</entry>
+                    </row>
+                    <row>
+                        <entry>isEarlier()</entry>
+                        <entry>Vergleichen auf jüngeres Datum, boolscher Retourwert</entry>
+                    </row>
+                    <row>
+                        <entry>isLater()</entry>
+                        <entry>Vergleichen auf älteres Datum, boolscher Retourwert</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
     </sect2>
     <sect2 id="zend.date.overview.detail">
         <title>Detailierte Funktionen</title>
@@ -71,144 +78,151 @@
         <para>
             Folgende detailierte Funktionen stehen zur Verfügung:
         </para>
-        <segmentedlist>
+        <table>
             <title>Detailierte Funktionen</title>
-            <?dbhtml list-presentation="table"?>
-            <segtitle>Abschnitt</segtitle>
-            <segtitle>Ausgabe</segtitle>
-            <segtitle>Setzen</segtitle>
-            <segtitle>Addieren</segtitle>
-            <segtitle>Subtrahieren</segtitle>
-            <segtitle>Vergleichen</segtitle>
-            <seglistitem>
-                <seg>Unix Timestamp</seg>
-                <seg>getTimestamp()</seg>
-                <seg>setTimestamp()</seg>
-                <seg>addTimestamp()</seg>
-                <seg>subTimestamp()</seg>
-                <seg>compareTimestamp()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Datum</seg>
-                <seg>getDate()</seg>
-                <seg>setDate()</seg>
-                <seg>addDate()</seg>
-                <seg>subDate()</seg>
-                <seg>compareDate()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Zeit</seg>
-                <seg>getTime()</seg>
-                <seg>setTime()</seg>
-                <seg>addTime()</seg>
-                <seg>subTime()</seg>
-                <seg>compareTime()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Jahr</seg>
-                <seg>getYear()</seg>
-                <seg>setYear()</seg>
-                <seg>addYear()</seg>
-                <seg>subYear()</seg>
-                <seg>compareYear()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Monat</seg>
-                <seg>getMonth()</seg>
-                <seg>setMonth()</seg>
-                <seg>addMonth()</seg>
-                <seg>subMonth()</seg>
-                <seg>compareMonth()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Tag</seg>
-                <seg>getDay()</seg>
-                <seg>setDay()</seg>
-                <seg>addDay()</seg>
-                <seg>subDay()</seg>
-                <seg>compareDay()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Wochentag</seg>
-                <seg>getWeekday()</seg>
-                <seg>setWeekday()</seg>
-                <seg>addWeekday()</seg>
-                <seg>subWeekday()</seg>
-                <seg>compareWeekday()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Tag des Jahres</seg>
-                <seg>getDayOfYear()</seg>
-                <seg>setDayOfYear()</seg>
-                <seg>addDayOfYear()</seg>
-                <seg>subDayOfYear()</seg>
-                <seg>compareDayOfYear()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Stunde</seg>
-                <seg>getHour()</seg>
-                <seg>setHour()</seg>
-                <seg>addHour()</seg>
-                <seg>subHour()</seg>
-                <seg>compareHour()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Minute</seg>
-                <seg>getMinute()</seg>
-                <seg>setMinute()</seg>
-                <seg>addMinute()</seg>
-                <seg>subMinute()</seg>
-                <seg>compareMinute()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Sekunde</seg>
-                <seg>getSecond()</seg>
-                <seg>setSecond()</seg>
-                <seg>addSecond()</seg>
-                <seg>subSecond()</seg>
-                <seg>compareSecond()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Millisekunde</seg>
-                <seg>getMilliSecond()</seg>
-                <seg>setMilliSecond()</seg>
-                <seg>addMilliSecond()</seg>
-                <seg>subMilliSecond()</seg>
-                <seg>compareMilliSecond()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Woche</seg>
-                <seg>getWeek()</seg>
-                <seg>setWeek()</seg>
-                <seg>addWeek()</seg>
-                <seg>subWeek()</seg>
-                <seg>compareWeek()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>ISO 8601 Datum</seg>
-                <seg>getIso()</seg>
-                <seg>setIso()</seg>
-                <seg>addIso()</seg>
-                <seg>subIso()</seg>
-                <seg>compareIso()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>ARPA Datum</seg>
-                <seg>getArpa()</seg>
-                <seg>setArpa()</seg>
-                <seg>addArpa()</seg>
-                <seg>subArpa()</seg>
-                <seg>compareArpa()</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>Zeitzone</seg>
-                <seg>getTimeZone()</seg>
-                <seg>setTimeZone()</seg>
-                <seg></seg>
-                <seg></seg>
-                <seg></seg>
-            </seglistitem>
-        </segmentedlist>
+            <tgroup cols="6">
+                <thead>
+                    <row>
+                        <entry>Abschnitt</entry>
+                        <entry>Ausgabe</entry>
+                        <entry>Setzen</entry>
+                        <entry>Addieren</entry>
+                        <entry>Subtrahieren</entry>
+                        <entry>Vergleichen</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Unix Timestamp</entry>
+                        <entry>getTimestamp()</entry>
+                        <entry>setTimestamp()</entry>
+                        <entry>addTimestamp()</entry>
+                        <entry>subTimestamp()</entry>
+                        <entry>compareTimestamp()</entry>
+                    </row>
+                    <row>
+                        <entry>Datum</entry>
+                        <entry>getDate()</entry>
+                        <entry>setDate()</entry>
+                        <entry>addDate()</entry>
+                        <entry>subDate()</entry>
+                        <entry>compareDate()</entry>
+                    </row>
+                    <row>
+                        <entry>Zeit</entry>
+                        <entry>getTime()</entry>
+                        <entry>setTime()</entry>
+                        <entry>addTime()</entry>
+                        <entry>subTime()</entry>
+                        <entry>compareTime()</entry>
+                    </row>
+                    <row>
+                        <entry>Jahr</entry>
+                        <entry>getYear()</entry>
+                        <entry>setYear()</entry>
+                        <entry>addYear()</entry>
+                        <entry>subYear()</entry>
+                        <entry>compareYear()</entry>
+                    </row>
+                    <row>
+                        <entry>Monat</entry>
+                        <entry>getMonth()</entry>
+                        <entry>setMonth()</entry>
+                        <entry>addMonth()</entry>
+                        <entry>subMonth()</entry>
+                        <entry>compareMonth()</entry>
+                    </row>
+                    <row>
+                        <entry>Tag</entry>
+                        <entry>getDay()</entry>
+                        <entry>setDay()</entry>
+                        <entry>addDay()</entry>
+                        <entry>subDay()</entry>
+                        <entry>compareDay()</entry>
+                    </row>
+                    <row>
+                        <entry>Wochentag</entry>
+                        <entry>getWeekday()</entry>
+                        <entry>setWeekday()</entry>
+                        <entry>addWeekday()</entry>
+                        <entry>subWeekday()</entry>
+                        <entry>compareWeekday()</entry>
+                    </row>
+                    <row>
+                        <entry>Tag des Jahres</entry>
+                        <entry>getDayOfYear()</entry>
+                        <entry>setDayOfYear()</entry>
+                        <entry>addDayOfYear()</entry>
+                        <entry>subDayOfYear()</entry>
+                        <entry>compareDayOfYear()</entry>
+                    </row>
+                    <row>
+                        <entry>Stunde</entry>
+                        <entry>getHour()</entry>
+                        <entry>setHour()</entry>
+                        <entry>addHour()</entry>
+                        <entry>subHour()</entry>
+                        <entry>compareHour()</entry>
+                    </row>
+                    <row>
+                        <entry>Minute</entry>
+                        <entry>getMinute()</entry>
+                        <entry>setMinute()</entry>
+                        <entry>addMinute()</entry>
+                        <entry>subMinute()</entry>
+                        <entry>compareMinute()</entry>
+                    </row>
+                    <row>
+                        <entry>Sekunde</entry>
+                        <entry>getSecond()</entry>
+                        <entry>setSecond()</entry>
+                        <entry>addSecond()</entry>
+                        <entry>subSecond()</entry>
+                        <entry>compareSecond()</entry>
+                    </row>
+                    <row>
+                        <entry>Millisekunde</entry>
+                        <entry>getMilliSecond()</entry>
+                        <entry>setMilliSecond()</entry>
+                        <entry>addMilliSecond()</entry>
+                        <entry>subMilliSecond()</entry>
+                        <entry>compareMilliSecond()</entry>
+                    </row>
+                    <row>
+                        <entry>Woche</entry>
+                        <entry>getWeek()</entry>
+                        <entry>setWeek()</entry>
+                        <entry>addWeek()</entry>
+                        <entry>subWeek()</entry>
+                        <entry>compareWeek()</entry>
+                    </row>
+                    <row>
+                        <entry>ISO 8601 Datum</entry>
+                        <entry>getIso()</entry>
+                        <entry>setIso()</entry>
+                        <entry>addIso()</entry>
+                        <entry>subIso()</entry>
+                        <entry>compareIso()</entry>
+                    </row>
+                    <row>
+                        <entry>Arpa Datum</entry>
+                        <entry>getArpa()</entry>
+                        <entry>setArpa()</entry>
+                        <entry>addArpa()</entry>
+                        <entry>subArpa()</entry>
+                        <entry>compareArpa()</entry>
+                    </row>
+                    <row>
+                        <entry>Zeitzone</entry>
+                        <entry>getTimeZone()</entry>
+                        <entry>setTimeZone()</entry>
+                        <entry></entry>
+                        <entry></entry>
+                        <entry></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
     </sect2>
     <sect2 id="zend.date.overview.others">
         <title>Zusätzliche Funktionen</title>
@@ -219,56 +233,67 @@
         <para>
             Folgende zusätzliche Funktionen gibt es :
         </para>
-        <segmentedlist>
+        <table>
             <title>Zusätzliche Funktionen</title>
-            <?dbhtml list-presentation="table"?>
-            <segtitle>Funktion</segtitle>
-            <segtitle>Beschreibung</segtitle>
-            <seglistitem>
-                <seg>toString()</seg>
-                <seg>Kann einen beliebig formatierten Ausgabestring erzeugen</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>toValue()</seg>
-                <seg>Erzeugt aus einem Datumswert eine Zahl</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>now()</seg>
-                <seg>Gibt das heutige Datum zurück</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>isLeapYear()</seg>
-                <seg>Ist das Datum ein Schaltjahr ?</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>isToday()</seg>
-                <seg>Ist das Datum von Heute ?</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>isTomorrow()</seg>
-                <seg>Ist das Datum von Morgen ?</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>getSunRise()</seg>
-                <seg>Gibt die Zeit des Sonnenaufgangs für dieses Datum aus</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>getSunSet()</seg>
-                <seg>Gibt die Zeit des Sonnenuntergangs für dieses Datum aus</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>getSunInfo()</seg>
-                <seg>Gibt ein Array mit den Zeiten der Sonnendaten aus</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>getFractionalPrecission()</seg>
-                <seg>Gibt die Genauigkeit der Teilsekunden aus</seg>
-            </seglistitem>
-            <seglistitem>
-                <seg>setFractionalPrecission()</seg>
-                <seg>Setzt die Genauigkeit der Teilsekunden</seg>
-            </seglistitem>
-        </segmentedlist>
+            <tgroup cols="2">
+                <thead>
+                    <row>
+                        <entry>Funktion</entry>
+                        <entry>Beschreibung</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>toString()</entry>
+                        <entry>Kann einen beliebig formatierten Ausgabestring erzeugen</entry>
+                    </row>
+                    <row>
+                        <entry>toValue()</entry>
+                        <entry>Erzeugt aus einem Datumswert eine Zahl</entry>
+                    </row>
+                    <row>
+                        <entry>now()</entry>
+                        <entry>Gibt das heutige Datum zurück</entry>
+                    </row>
+                    <row>
+                        <entry>isLeapYear()</entry>
+                        <entry>Ist das Datum ein Schaltjahr ?</entry>
+                    </row>
+                    <row>
+                        <entry>isToday()</entry>
+                        <entry>Ist das Datum von Heute ?</entry>
+                    </row>
+                    <row>
+                        <entry>isTomorrow()</entry>
+                        <entry>Ist das Datum von Morgen ?</entry>
+                    </row>
+                    <row>
+                        <entry>isYesterday()</entry>
+                        <entry>Ist das Datum von Gestern ?</entry>
+                    </row>
+                    <row>
+                        <entry>getSunRise()</entry>
+                        <entry>Gibt die Zeit des Sonnenaufgangs für dieses Datum aus</entry>
+                    </row>
+                    <row>
+                        <entry>getSunSet()</entry>
+                        <entry>Gibt die Zeit des Sonnenuntergangs für dieses Datum aus</entry>
+                    </row>
+                    <row>
+                        <entry>getSunInfo()</entry>
+                        <entry>Gibt ein Array mit den Zeiten der Sonnendaten aus</entry>
+                    </row>
+                    <row>
+                        <entry>getFractionalPrecission()</entry>
+                        <entry>Gibt die Genauigkeit der Teilsekunden aus</entry>
+                    </row>
+                    <row>
+                        <entry>setFractionalPrecission()</entry>
+                        <entry>Setzt die Genauigkeit der Teilsekunden</entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
     </sect2>
     <sect2 id="zend.date.overview.addons">
         <title>Zusätzliche Informationen</title>
