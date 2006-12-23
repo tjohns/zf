@@ -11,26 +11,32 @@
                 <listitem>
                     <para>
                         <code>isError()</code>: Returns TRUE if an HTTP error code was received; FALSE otherwise.
+                    </para>
                 </listitem>
                 <listitem>
                     <para>
                         <code>isSuccessful()</code>: Returns TRUE if an HTTP success code was received; FALSE otherwise.
+                    </para>
                 </listitem>
                 <listitem>
                     <para>
                         <code>isRedirect()</code>: Returns TRUE if an HTTP redirect code was received; FALSE otherwise.
+                    </para>
                 </listitem>
                 <listitem>
                     <para>
                         <code>getStatus()</code>: Returns the HTTP status code.
+                    </para>
                 </listitem>
                 <listitem>
                     <para>
                         <code>getHeaders()</code>: Returns an array of HTTP response header strings.
+                    </para>
                 </listitem>
                 <listitem>
                     <para>
                         <code>getBody()</code>: Returns the HTTP response body as a string.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
