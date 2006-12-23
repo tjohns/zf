@@ -84,7 +84,7 @@
 
     // Setzen einer neuen Uhrzeit    
     $date->set('13:00:00',Zend_Date::TIMES);
-    print $date->get();
+    print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
         </sect3>
@@ -103,12 +103,9 @@
 
     $date = new Zend_Date();
 
-    // Setzen einer neuen Uhrzeit    
-    $date2 = new Zend_Date('13:00:00',Zend_Date::TIMES);
-
     // Addieren der zwei Zeiten
-    $mydate = $date->add($date2);
-    print $mydate();
+    $date->add('13:00:00', Zend_Date::TIMES);
+    print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
             <para>
@@ -123,12 +120,9 @@
 
     $date = new Zend_Date();
 
-    // Setzen einer neuen Uhrzeit    
-    $date2 = new Zend_Date('10:00:00',Zend_Date::TIMES);
-
     // Subtrahieren der zwei Zeiten
-    $mydate = $date->sub($date2, Zend_Date::HOUR);
-    print $mydate;
+    $date->sub(10, Zend_Date::HOUR);
+    print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
         </sect3>
@@ -136,8 +130,8 @@
             <title>Vergleichen von Datumswerten</title>
             <para>
                 Natürlich ist es auch notwendig Datumswerte zu vergleichen.
-                Hierfür wurde die Funktion compare() integriert, mit der die Differenz
-                zweier Datumsangaben ermittelt werden kann. 
+                Hierfür wurde die Funktion compare() integriert, mit der 
+                zweie Datumsangaben oder Teilwerte verglichen werden können. 
             </para>
             <example>
                 <title>compare() - Datum vergleichen</title>
@@ -147,12 +141,12 @@
 
     $date = new Zend_Date();
 
-    // Setzen einer neuen Uhrzeit    
-    $date2 = new Zend_Date('13:00:00',Zend_Date::TIMES);
-
     // Vergleichen der zwei Zeiten
-    $compared = $date->compare($date2);
-    print $compared;
+    if ($date->compare(10, Zend_Date::MINUTE) == -1) {
+        print "Die Stunde ist noch keine 10 Minuten alt";
+    } else {
+        print "Die Stunde ist schon mindestens 10 Minuten alt";
+    }
 ?>]]></programlisting>
             </example>
             <para>
@@ -169,14 +163,11 @@
 
     $date = new Zend_Date();
 
-    // Setzen einer neuen Uhrzeit    
-    $date2 = new Zend_Date('10:00:00',Zend_Date::TIMES);
-
     // Vergleichen der zwei Zeiten
-    if ($date->equals($date2, Zend_Date::HOUR)) {
-        print "Die Stunde ist identisch";
+    if ($date->equals(10, Zend_Date::HOUR)) {
+        print "Es ist 10 Uhr";
     } else {
-        print "Die Stunde ist NICHT identisch";
+        print "Es ist NICHT 10 Uhr";
     }
 ?>]]></programlisting>
             </example>

@@ -1,7 +1,7 @@
 <sect1 id="zend.date.definition">
-    <title>Warum Datum und Zeit in einer Klasse ?</title>
+    <title>Warum nur eine Klasse ?</title>
     <para>
-        Warum gibt es nur eine Klasse <code>Zend_Date</code> für die Handhabung von Datum und Uhrzeit 
+        Warum aber gibt es nur eine Klasse <code>Zend_Date</code> für die Handhabung von Datum und Uhrzeit 
         im Zend_Framework ?
     </para>
     <para>
