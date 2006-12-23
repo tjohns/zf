@@ -111,7 +111,91 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
 ?>]]></programlisting>
             </example>
         </para>
-        </sect2>
+    </sect2>
+
+    <sect2 id="zend.search.extending.filters">
+        <title>Filtern von Tokens</title>
+        <para>
+            Der <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> Analyzer bietet auch einen
+            Mechanismus zum Filtern von Tokens.
+        </para>
+
+        <para>
+            Die <code>Zend_Search_Lucene_Analysis_TokenFilter</code> Klasse ist eine abstrakte 
+            Ebene für solche Filter. Sie sollte vor den eigenen Filtern verwendet werden.
+        </para>
+
+        <para>
+        	Eigene Filter müssen die <code>normalize()</code> Methode implementieren, welche den
+        	Eingabe Token verändern oder signalisieren, dass der Token übersprungen werden kann.
+        </para>
+
+        <para>
+            Es gibt bereits drei im Analyzer Unterpaket definierte Filter:
+            <itemizedlist>
+                <listitem>
+                    <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code> Filter.
+                </listitem>
+                <listitem>
+                    <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> Filter.
+                </listitem>
+                <listitem>
+                    <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> Filter.
+                </listitem>
+            </itemizedlist>
+        </para>
+
+        <para>
+            Der <code>LowerCase</code> Filter wird bereits standardmäßig für den 
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common_Text_CaseInsensitive</code> Analyzer
+            verwendet.
+        </para>
+
+        <para>
+            <code>ShortWords</code> und <code>StopWords</code> können mit bereits definierten oder
+            einem eigenen Analyzer wie folgt verwendet werden:
+            <programlisting role="php"><![CDATA[<?php
+$stopWords = array('a', 'an', 'at', 'the', 'and', 'or', 'is', 'am');
+$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords($stopWords);
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($stopWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+            <programlisting role="php"><![CDATA[<?php
+$shortWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_ShortWords();
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($shortWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+        </para>
+
+        <para>
+            Der <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> Konstruktor nimmt
+            ein Array mit Stopwörtern als Eingabe entgegen. Aber Stopwörter können auch aus einer
+            Datei geladen werden:
+            <programlisting role="php"><![CDATA[<?php
+$stopWordsFilter = new Zend_Search_Lucene_Analysis_TokenFilter_StopWords();
+$stopWordsFilter->loadFromFile($my_stopwords_file);
+
+$analyzer = new Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum_CaseInsensitive();
+$analyzer->addFilter($stopWordsFilter);
+
+Zend_Search_Lucene_Analysis_Analyzer::setDefault($analyzer);
+?>]]></programlisting>
+            Die Datei sollte eine normale Textdatei mit einem Wort pro Zeile sein. '#' markiert eine
+            Zeile als Kommentar.
+        </para>
+
+        <para>
+            Der <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> Konstruktor hat ein
+            optionales Argument. Es ist das Limit für die Wortlänge. Der Standardwert ist 2.
+        </para>
+
+    </sect2>
 
     <sect2 id="zend.search.extending.scoring">
 		<title>Algorithmen für Punktwertermittlung</title>
