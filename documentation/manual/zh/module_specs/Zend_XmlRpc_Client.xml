@@ -102,13 +102,19 @@ $service->serviceProcedure($p1, $p2);
                 精确说明XML-RPC类型的主要原因是：
                 <itemizedlist>
                     <listitem>
+                        <para>
                        当你想确保你传递给远程过程的参数是正确的类型时（也就是说，当远程过程要求的是一个整形而你传递的参数是从$_GET数组获得的字符串类型）。
+                        </para>
                     </listitem>
                     <listitem>
+                        <para>
                         当远程过程要求一个base64或dateTime.iso8601类型时（PHP本地变量则不存在这种类型）。
+                        </para>
                     </listitem>
                     <listitem>
+                        <para>
                         当自动转换变量失败时（也就是说你想传递一个空的XML-RPC结构类型作为参数时。除了将一个空的PHP数组精确说明为一个空的XML-RPC结构之外，如果获得一个空的数组作为参数那么它将被自动转化为XML-RPC数组，而不是将其作为关联数组转化为一个XML-RPC结构。）
+                        </para>
                     </listitem>
                 </itemizedlist>
             </para>
@@ -268,13 +274,19 @@ $service->serviceProcedure($param);
             响应选项是：
             <itemizedlist>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - 以PHP本地类型的形式返回过程的返回值（将XML-RPC类型转化为PHP类型）。
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_PHP_NATIVE</code> - 以PHP本地类型的形式返回过程的返回值（将XML-RPC类型转化为PHP类型）。
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - 返回描述XML-RPC服务器端响应的XML字符串。
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_XML_STRING</code> - 返回描述XML-RPC服务器端响应的XML字符串。
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - 返回一个用于描述返回的XML-RPC类型的<code>Zend_XmlRpc_Value</code>对象。
+                    <para>
+                        <code>Zend_XmlRpc_Client::RESPONSE_ZXMLRPC_OBJECT</code> - 返回一个用于描述返回的XML-RPC类型的<code>Zend_XmlRpc_Value</code>对象。
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
