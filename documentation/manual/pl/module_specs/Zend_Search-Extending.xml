@@ -132,13 +132,19 @@ Zend_Search_Lucene_Analysis_Analyzer::setDefault(
             There are three filters already defined in Analysis subpackage:
             <itemizedlist>
                 <listitem>
-                    <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code> filter.
+                    <para>
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_LowerCase</code> filter.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> filter.
+                    <para>
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_ShortWords</code> filter.
+                    </para>
                 </listitem>
                 <listitem>
-                    <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> filter.
+                    <para>
+                        <code>Zend_Search_Lucene_Analysis_TokenFilter_StopWords</code> filter.
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
