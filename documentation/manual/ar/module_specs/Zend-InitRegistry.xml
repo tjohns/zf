@@ -1,0 +1,40 @@
+<sect1 id="zend.initregistry">
+
+    <title>Zend::initRegistry($registry = 'Zend_Registry')</title>
+
+    <para>
+        Developers wishing to extend the existing registry's functionality may use this function.
+        This method enables developers to subclass Zend_Registry, including
+        adding alias methods for offsetGet() and offsetExists(), such as has(), getval(), setval(), etc.,
+        by creating an instance of a Zend_Registry subclass in bootstrap code, and then supplying that instance
+        to initRegistry(), before any other registry-related methods are used.  Note that initRegistry()
+        may only be used once, to avoid accidentally overwriting the registry after initialization.
+        Also, using Zend::registry() or Zend::register() automatically calls initRegistry(), if it has
+        not already been called.
+    </para>
+
+    <example>
+        <title>register() / offsetSet() Example</title>
+<programlisting role="php"><![CDATA[<?php
+class Zend_RegistryMine extends Zend_Registry
+{
+    public function getval($index)
+    {
+        return $this->offsetGet($index);
+    }
+}
+
+# in your bootstrap code:
+
+$ini_array = parse_ini_file('your_stuff.ini'); // purely optional
+$registry = new Zend_RegistryMine($ini_array);
+Zend::initRegistry($registry);
+
+# now the normal Zend::registry(), Zend::register(), and Zend::isRegistered() work as expected
+?>]]></programlisting>
+    </example>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
