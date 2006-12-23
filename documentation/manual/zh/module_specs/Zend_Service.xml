@@ -17,10 +17,6 @@
         <link linkend="zend.service.yahoo">Yahoo!</link>. 而且也许不久会加入更多的web serivces哦．
     </para>
 </sect1>
-&module_specs.Zend_Service_Rest;
-&module_specs.Zend_Service_Amazon;
-&module_specs.Zend_Service_Flickr;
-&module_specs.Zend_Service_Yahoo;
 <!--
 vim:se ts=4 sw=4 et:
 -->

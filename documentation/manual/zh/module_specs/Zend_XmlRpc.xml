@@ -7,8 +7,6 @@
       Zend构架实现了XML-RPC 客户端（并且随后将实现XML-RPC服务端）使XML-RPC用起来尽可能的简单，并且使XML-RPC和PHP5 的<ulink url="http://www.php.net/soap">SOAP web service extension</ulink>用法尽可能的相似。
     </para>
 </sect1>
-&module_specs.Zend_XmlRpc_Client;
-<!--&module_specs.Zend_XmlRpc_Server;-->
 <!--
 vim:se ts=4 sw=4 et:
 -->
