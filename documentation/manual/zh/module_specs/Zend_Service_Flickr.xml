@@ -36,15 +36,21 @@ foreach ($results as $result) {
         </para>
         <itemizedlist>
             <listitem>
-                <code>userSearch()</code>: 接受一个以空格来作为分隔符的(由tag构成)查询字符串，用数组的方式(可选)来指定搜索选项, 返回一个
+                <para>
+                    <code>userSearch()</code>: 接受一个以空格来作为分隔符的(由tag构成)查询字符串，用数组的方式(可选)来指定搜索选项, 返回一个
 				 <code>Zend_Service_Flickr_ResultSet</code>
                 对象.
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByUsername()</code>: 以字符串的格式返回与给定用户名关联的用户 ID
+                <para>
+                    <code>getIdByUsername()</code>: 以字符串的格式返回与给定用户名关联的用户 ID
+                </para>
             </listitem>
             <listitem>
-                <code>getIdByEmail()</code>: 以字符串的格式返回与给定email地址关联的用户 ID
+                <para>
+                    <code>getIdByEmail()</code>: 以字符串的格式返回与给定email地址关联的用户 ID
+                </para>
             </listitem>
         </itemizedlist>
         <example>
