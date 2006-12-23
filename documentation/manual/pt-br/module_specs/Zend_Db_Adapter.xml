@@ -1,418 +1,416 @@
-<sect1 id="zend.db.select">
+<sect1 id="zend.db.adapter">
 
-    <title>Zend_Db_Select</title>
+    <title>Zend_Db_Adapter</title>
 
-    <sect2 id="zend.db.select.introduction">
+    <sect2 id="zend.db.adapter.introduction">
 
-        <title>Introdução</title>
-
-        <para>
-            Zend_Db_Select é uma ferramenta para construir instruções SQL SELECT 
-            independentemente do banco de dados utilizado.  Obviamente isso não pode 
-			ser perfeito, mas é um avanço para ajudar a fazer consultas 
-            portáveis entre banco de dados diferentes.  Adicionalmente, ele ajuda
-            a proteger suas consultas contra ataques de SQL injection.
-        </para>
+        <title>Introduction</title>
 
         <para>
-            A maneira mais fácil de criar uma instância de Zend_Db_Select é usar o método
-            Zend_Db_Adapter::select().
+            <code>Zend_Db_Adapter</code> is the database API abstraction layer for the Zend Framework.
+            Based on PDO, you can use <code>Zend_Db_Adapter</code> to connect to and work with any
+            of the supported SQL database systems using the same API.  These
+            include Microsoft SQL Server, MySQL, PostgreSQL, SQLite, and others.
         </para>
+
+        <para>To create an instance of <code>Zend_Db_Adapter</code> for your
+        particular database backend, you need to call
+        <code>Zend_Db::factory()</code> with the name of the adapter and an
+        array of parameters describing the connection. For example, to connect
+        to a MySQL database called "camelot" on the local host as a user named
+        "malory":</para>
 
         <programlisting role="php"><![CDATA[<?php
-	
+
 require_once 'Zend/Db.php';
 
-$params = array (
-    'host'     => '127.0.0.1',
-    'username' => 'malory',
-    'password' => '******',
-    'dbname'   => 'camelot'
+$params = array ('host'     => '127.0.0.1',
+                 'username' => 'malory',
+                 'password' => '******',
+                 'dbname'   => 'camelot');
+
+$db = Zend_Db::factory('PDO_MYSQL', $params);
+
+?>]]></programlisting>
+
+        <para>
+            Similarly, to connect to an SQLite database called "camelot.sq3":
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+require_once 'Zend/Db.php';
+
+$params = array ('dbname' => 'camelot.sq3');
+
+$db = Zend_Db::factory('PDO_SQLITE', $params);
+
+?>]]></programlisting>
+
+        <para>
+            Similarly, to connect to an SQLite2 database called "camelot.sq2":
+            For a memory-based sqlite database, do not specify a dsnprefix,
+            and use a dbname called ":memory:".
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+require_once 'Zend/Db.php';
+
+$params = array ('dbname' => 'camelot.sq2',
+                 'dsnprefix' => 'sqlite2');
+
+$db = Zend_Db::factory('PDO_SQLITE', $params);
+
+?>]]></programlisting>
+
+        <para>
+            Either way, you will be able to use the exact same API to
+            query the database.
+        </para>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.quoting">
+
+        <title>Quoting Against SQL Injection</title>
+
+        <para>
+            You should always quote values that are to be used in an
+            SQL statement; this is to help prevent SQL injection attacks.
+            <code>Zend_Db_Adapter</code> provides two methods (via the underlying PDO object)
+            to help you manually quote values.
+        </para>
+
+        <para>
+            The first of these is the <code>quote()</code> method.  It will quote a
+            scalar value appropriately for your database adapter; if you
+            attempt to quote an array, it will return a comma-separated
+            string of the array values, each properly quoted (this is
+            useful for functions that take a list parameter).
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+
+// create a $db object, assuming Mysql as the adapter.
+
+// quote a scalar
+$value = $db->quote('St John"s Wort');
+// $value is now '"St John\"s Wort"' (note the surrounding quotes)
+
+// quote an array
+$value = $db->quote(array('a', 'b', 'c');
+// $value is now '"a", "b", "c"' (a comma-separated string)
+
+?>]]></programlisting>
+
+        <para>
+            The second is the <code>quoteInto()</code> method.  You provide a base
+            string with a question-mark placeholder, and then one scalar
+            or array to quote into it.  This is useful for constructing
+            queries and clauses as-you-go.  Scalars and arrays work just
+            as in the <code>quote()</code> method.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// create a $db object, assuming Mysql as the adapter.
+
+// quote a scalar into a WHERE clause
+$where = $db->quoteInto('id = ?', 1);
+// $where is now 'id = "1"' (note the surrounding quotes)
+
+// quote an array into a WHERE clause
+$where = $db->quoteInto('id IN(?)', array(1, 2, 3));
+// $where is now 'id IN("1", "2", "3")' (a comma-separated string)
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.queries">
+
+        <title>Direct Queries</title>
+
+        <para>
+            Once you have a <code>Zend_Db_Adapter</code> instance, you can execute queries
+            directly in SQL.  <code>Zend_Db_Adapter</code> passes these queries to the
+            underlying PDO object, which prepares and executes them, and
+            then passes back a PDOStatement object for you to manipulate
+            the results (if any).
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// create a $db object, and then query the database
+// with a properly-quoted SQL statement.
+$sql = $db->quoteInto(
+    'SELECT * FROM example WHERE date > ?',
+    '2006-01-01'
+);
+$result = $db->query($sql);
+
+// use the PDOStatement $result to fetch all rows as an array
+$rows = $result->fetchAll();
+
+?>]]></programlisting>
+
+        <para>
+            You may bind data into your query automatically.  This means
+            you can set multiple named placeholders in the query, and
+            then pass an array of data that is substituted for those
+            placeholders.  The substituted values are automatically
+            quoted for you, providing greater security against SQL
+            injection attacks.
+        </para>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// create a $db object, and then query the database.
+// this time, use placeholder binding.
+$result = $db->query(
+    'SELECT * FROM example WHERE date > :placeholder',
+    array('placeholder' => '2006-01-01')
 );
 
-$db = Zend_Db::factory('pdoMysql', $params);
-
-$select = $db->select();
-// $select é agora um objeto Zend_Db_Select_PdoMysql
+// use the PDOStatement $result to fetch all rows as an array
+$rows = $result->fetchAll();
 
 ?>]]></programlisting>
 
         <para>
-            Então você constrói uma consulta SELECT usando o objeto e seus
-            métodos, e em seguida gera uma string para devolver ao Zend_Db_Adapter
-            para consultas ou buscas.
+            Optionally, you may wish to prepare and bind data to SQL statements
+            manually.  To do so, use the <code>prepare()</code> method to get a prepared
+            <code>PDOStatement</code> that you can manipulate directly.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-//
-// SELECT *
-//     FROM round_table
-//     WHERE noble_title = "Sir"
-//     ORDER BY first_name
-//     LIMIT 10 OFFSET 20
-//
+// create a $db object, and then query the database.
+// this time, prepare a PDOStatement for manual binding.
+$stmt = $db->prepare('SELECT * FROM example WHERE date > :placeholder');
+$stmt->bindValue('placeholder', '2006-01-01');
+$stmt->execute();
 
-// você pode usar um estilo iterativo...
-$select->from('round_table', '*');
-$select->where('noble_title = ?', 'Sir');
-$select->order('first_name');
-$select->limit(10,20);
-
-// ...ou um estilo "fluente":
-$select->from('round_table', '*')
-       ->where('noble_title = ?', 'Sir')
-       ->order('first_name')
-       ->limit(10,20);
-
-// de um modo ou de outro, busque os resultados
-$sql = $select->__toString();
-$result = $db->fetchAll($sql);
-
-// alternativamente, você pode passar o objeto $select;
-// Zend_Db_Adapter é esperto o suficiente para chamar __toString() nos
-// objetos Zend_Db_Select para pegar a string de consulta.
-$result = $db->fetchAll($select);
-
-?>]]></programlisting>
-
-        <para>
-            Você também pode usar parâmetros vinculados nas suas consultas em vez de
-            adicionar aspas a cada método.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-//
-// SELECT *
-//     FROM round_table
-//     WHERE noble_title = "Sir"
-//     ORDER BY first_name
-//     LIMIT 10 OFFSET 20
-//
-
-$select->from('round_table', '*')
-       ->where('noble_title = :title')
-       ->order('first_name')
-       ->limit(10,20);
-
-// de um modo ou de outro, busque os resultados usando os parãmetros vinculados
-$params = array('title' => 'Sir');
-$result = $db->fetchAll($select, $params);
-
-?>]]></programlisting>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.fromcols">
-
-        <title>Colunas de uma Tabela (usando FROM)</title>
-
-        <para>
-            Para selecionar colunas de uma tabela específica, use o método from(),
-            specificando a tabela e as colunas que você quer.  Você pode
-			usar apelidos para a tabela e para colunas, e você pode usar from() 
-			quantas vezes precisar.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// crie um objeto $db, usando Mysql como o adaptador.
-$select = $db->select();
-
-// SELECT a, b, c FROM some_table
-$select->from('some_table', 'a, b, c');
-// equivalente:
-$select->from('some_table', array('a', 'b', 'c');
-
-// SELECT bar.col FROM foo AS bar
-$select->from('foo AS bar', 'bar.col');
-
-// SELECT foo.col AS col1, bar.col AS col2 FROM foo, bar
-$select->from('foo', 'foo.col AS col1');
-$select->from('bar', 'bar.col AS col2');
+// use the PDOStatement to fetch all rows as an array
+$rows = $stmt->fetchAll();
 
 ?>]]></programlisting>
     </sect2>
 
-    <sect2 id="zend.db.select.joincols">
+    <sect2 id="zend.db.adapter.transactions">
 
-        <title>Colunas de Tabelas (usando JOIN)</title>
+        <title>Transactions</title>
 
         <para>
-            Para selecionar colunas usando tabelas unidas, use o método join().
-            Primeiro passe o nome da tabela que se unirá, então a condição da união,
-            e finalmente as colunas que você quer unir.  Você pode usar
-            join() quantas vezes precisar.
+            By default, PDO (and thus <code>Zend_Db_Adapter</code>) are in "auto-commit" mode.
+            This means that all queries are committed as they are executed.
+            If you wish to execute within a transaction, simply call the
+            <code>beginTransaction()</code> method, then either <code>commit()</code> or <code>rollBack()</code>
+            your changes.  <code>Zend_Db_Adapter</code> returns to auto-commit mode until
+            you call <code>beginTransaction()</code> again.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// crie um objeto $db, usando Mysql como adaptador.
-$select = $db->select();
+// create a $db object, and then start a transaction.
+$db->beginTransaction();
 
-//
-// SELECT foo.*, bar.*
-//     FROM foo
-//     JOIN bar ON foo.id = bar.id
-//
-$select->from('foo', '*');
-$select->join('bar', 'foo.id = bar.id', '*');
-
-?>]]></programlisting>
-
-        <para>
-            No momento, apenas a sintaxe de JOIN é suportada; não LEFT JOINs,
-            RIGHT JOINs, etc.  Versões futuras vão suportar estas operações de
-            um modo independente de bancos de dados.
-        </para>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.where">
-
-        <title>Condições WHERE</title>
-
-        <para>
-            Para adicionar condições WHERE, use o método where().  Você pode
-            passar uma string regular, ou uma string com um ponto de interrogação
-			marcando um espaço reservado e um valor para adicionar aspas nela
-            (o valor receberá aspas usando Zend_Db_Adapter::quoteInto).
-        </para>
-
-        <para>
-            Chamadas múltiplas a where() adicionarão AND às condições;
-            se você precisar de OR, use orWhere().
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// crie um objeto $db, e pega a ferramenta SELECT.
-$select = $db->select();
-
-//
-// SELECT *
-//     FROM round_table
-//     WHERE noble_title = "Sir"
-//     AND favorite_color = "yellow"
-//
-$select->from('round_table', '*');
-$select->where('noble_title = "Sir"'); // embedded value
-$select->where('favorite_color = ?', 'yellow'); // quoted value
-
-//
-// SELECT *
-//     FROM foo
-//     WHERE bar = "baz"
-//     OR id IN("1", "2", "3")
-//
-$select->from('foo', '*');
-$select->where('bar = ?', 'baz');
-$select->orWhere('id IN(?)', array(1, 2, 3);
-
-?>]]></programlisting>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.group">
-
-        <title>Cláusula GROUP BY</title>
-
-        <para>
-            Para agrupar linhas, use o método group() quantas vezes você desejar.
-        </para>
-
-        <programlisting role="php"><![CDATA[<?php
-	
-// crie um objeto $db, e pega a ferramenta SELECT.
-$select = $db->select();
-
-//
-// SELECT COUNT(id)
-//     FROM foo
-//     GROUP BY bar, baz
-//
-$select->from('foo', 'COUNT(id)');
-$select->group('bar');
-$select->group('baz');
-
-// chamada equivalente de group():
-$select->group('bar, baz');
-
-// outra chamada equivalente de group():
-$select->group(array('bar', 'baz'));
-
-?>]]></programlisting>
-
-    </sect2>
-
-    <sect2 id="zend.db.select.having">
-
-        <title>Condição HAVING</title>
-
-        <para>
-            Para adicionar condições HAVING aos resultados selecionados, use o método having().
-			este método é id~entico em função ao método where().
-        </para>
-
-        <para>
-            Se você chamar having() múltiplas vezes, as condições são unidas usando AND;
-            se você quiser uma condição OR, use orHaving().
-        </para>
-        <programlisting role="php"><![CDATA[<?php
-	
-// crie um objeto $db, e pega a ferramenta SELECT.
-$select = $db->select();
-
-//
-// SELECT COUNT(id) AS count_id
-//     FROM foo
-//     GROUP BY bar, baz
-//     HAVING count_id > "1"
-//
-$select->from('foo', 'COUNT(id) AS count_id');
-$select->group('bar, baz');
-$select->having('count_id > ?', 1);
+// attempt a query.
+// if it succeeds, commit the changes;
+// if it fails, roll back.
+try {
+    $db->query(...);
+    $db->commit();
+} catch (Exception $e) {
+    $db->rollBack();
+    echo $e->getMessage();
+}
 
 ?>]]></programlisting>
     </sect2>
 
-    <sect2 id="zend.db.select.order">
+    <sect2 id="zend.db.adapter.insert">
 
-        <title>Cláusula ORDER BY</title>
+        <title>Inserting Rows</title>
 
         <para>
-            Para ordenar colunas com ORDER, use o método order() quantas vezes desejar.
+            As a convenience, you may use the <code>insert()</code> method to create
+            an INSERT statement for you and bind data to be inserted into it.
+            (The bound data is quoted for you automatically to help prevent
+            SQL injection attacks.)
+        </para>
+
+        <para>
+            The return value is <emphasis>not</emphasis> the last inserted ID, as the table
+            may not have an auto-incremented column; instead, the return value
+            is the number of rows affected (usually 1).  If you want the
+            ID of the last inserted record, call the <code>lastInsertId()</code> method after the
+            insert.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// crie um objeto $db, e pega a ferramenta SELECT.
-$select = $db->select();
-
 //
-// SELECT * FROM round_table
-//     ORDER BY noble_title DESC, first_name ASC
+// INSERT INTO round_table
+//     (noble_title, first_name, favorite_color)
+//     VALUES ("King", "Arthur", "blue");
 //
-$select->from('round_table', '*');
-$select->order('noble_title DESC');
-$select->order('first_name');
 
-// chamada equivalente de order():
-$select->order('noble_title DESC, first_name');
+// create a $db object, and then...
+// the row data to be inserted in column => value format
+$row = array (
+    'noble_title'    => 'King',
+    'first_name'     => 'Arthur',
+    'favorite_color' => 'blue',
+);
 
-// outra chamada equivalente de order():
-$select->order(array('noble_title DESC', 'first_name'));
+// the table into which the row should be inserted
+$table = 'round_table';
+
+// insert the row and get the row ID
+$rows_affected = $db->insert($table, $row);
+$last_insert_id = $db->lastInsertId();
 
 ?>]]></programlisting>
-
     </sect2>
 
-    <sect2 id="zend.db.select.limit">
+    <sect2 id="zend.db.adapter.update">
 
-        <title>LIMIT usando Count e Offset</title>
+        <title>Updating Rows</title>
 
         <para>
-            Zend_Db_Select oferece abstrações pra suporte da cláusula LIMIT.
-            Para muitos bancos de dados, como MySQL e PostgreSQL, isso é 
-			relativamente fácil, pois eles suportam a sintaxe "LIMIT :count
-            [OFFSET :offset]".
+            As a convenience, you may use the <code>update()</code> method to create
+            an UPDATE statement for you and bind data to be updated into it.
+            (The bound data is quoted for you automatically to help prevent
+            SQL injection attacks.)
         </para>
 
         <para>
-            Para outros bancos de dados, como Microsoft SQL e Oracle, isso
-            não é tão fácil, pois eles não suportam cláusulas LIMIT.
-            MS-SQL tem apenas uma cláusula TOP, e Oracle requer que a consulta
-            seja escrita de uma maneira especial para emular um LIMIT.  Devido à
-			maneira como o Zend_Db_Select trabalhar internamente, nós podemos reescrever SELECT
-            para emular a funcionalidade LIMIT dos bancos de dados de código aberto mencionados
-            anteriormente.
-        </para>
-
-        <para>
-            Para usar LIMIT nos resultados retornados usando count e offset, use o método limit()
-            com um valor count e um offset opcional.
+            You may provide an optional WHERE clause
+            to tell which rows to update.  (Note that the WHERE clause is not
+            a bound parameter, so you need to quote values in it yourself.)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// primeiro, um simples "LIMIT :count"
-$select = $db->select();
-$select->from('foo', '*');
-$select->order('id');
-$select->limit(10);
-
 //
-// Em MySQL/PostgreSQL/SQLite, isso se traduz para:
-//
-// SELECT * FROM foo
-//     ORDER BY id ASC
-//     LIMIT 10
-//
-// Mas em Microsoft SQL, isso se traduz para:
-//
-// SELECT TOP 10 * FROM FOO
-//     ORDER BY id ASC
-//
+// UPDATE round_table
+//     SET favorite_color = "yellow"
+//     WHERE first_name = "Robin";
 //
 
-// agora, um mais complexo "LIMIT :count OFFSET :offset"
-$select = $db->select();
-$select->from('foo', '*');
-$select->order('id');
-$select->limit(10, 20);
+// create a $db object, and then...
+// the new values to set in the update, in column => value format.
+$set = array (
+    'favorite_color' => 'yellow',
+);
 
-//
-// Em MySQL/PostgreSQL/SQLite, isso se traduz para:
-//
-// SELECT * FROM foo
-//     ORDER BY id ASC
-//     LIMIT 10 OFFSET 20
-//
-// Mas em Microsoft SQL, que não tem suporte a offset, isso se traduz para
-// algo como:
-//
-// SELECT * FROM (
-//     SELECT TOP 10 * FROM (
-//         SELECT TOP 30 * FROM foo ORDER BY id DESC
-//     ) ORDER BY id ASC
-// )
-//
-// Zend_Db_Adapter faz a tradução da consulta automaticamente.
-//
+// the table to update
+$table = 'round_table';
+
+// the WHERE clause
+$where = $db->quoteInto('first_name = ?', 'Robin');
+
+// update the table and get the number of rows affected
+$rows_affected = $db->update($table, $set, $where);
 
 ?>]]></programlisting>
-
     </sect2>
 
-    <sect2 id="zend.db.select.paging">
+    <sect2 id="zend.db.adapter.delete">
 
-        <title>LIMIT usando Page e Count</title>
+        <title>Deleting Rows</title>
 
         <para>
-            Zend_Db_Select também oferece limites baseados em páginas.  Se você quer
-            receber uma certa "página" de resultados, use o método limitPage();
-            primeiro passe o número da página que voc~e quer, e então o número de
-			linhas que aparecerão em cada página.
+            As a convenience, you may use the <code>delete()</code> method to create
+            a DELETE statement for you; you may provide an optional WHERE clause
+            to tell which rows to delete.  (Note that the WHERE clause is not
+            a bound parameter, so you need to quote values in it yourself.)
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 	
-// construa o select básico...
-$select = $db->select();
-$select->from('foo', '*');
-$select->order('id');
+//
+// DELETE FROM round_table
+//     WHERE first_name = "Patsy";
+//
 
-// ... e limite o resultado à página 3, cada página com 10 linhas
-$select->limitPage(3, 10);
+// create a $db object, and then...
+// the table to delete from
+$table = 'round_table';
 
-//
-// Em MySQL/PostgreSQL/SQLite, isso se traduz para:
-//
-// SELECT * FROM foo
-//     ORDER BY id ASC
-//     LIMIT 10 OFFSET 20
-//
+// the WHERE clause
+$where = $db->quoteInto('first_name = ?', 'Patsy');
+
+// update the table and get the number of rows affected
+$rows_affected = $db->delete($table, $where);
+
+?>]]></programlisting>
+    </sect2>
+
+    <sect2 id="zend.db.adapter.fetch">
+
+        <title>Fetching Rows</title>
+
+        <para>
+            Although you may query the database directly with the <code>query()</code>
+            method, frequently all you need to do is select rows and get
+            the results.  The <code>fetch*()</code> series of methods does this for you.
+            For each of the <code>fetch*()</code> methods, you pass an SQL SELECT
+            statement; if you use named placeholders in the statement, you
+            may also pass an array of bind values to be quoted and replaced
+            into the statement for you.  The <code>fetch*()</code> methods are:
+        </para>
+
+        <itemizedlist>
+            <listitem><para><code>fetchAll()</code></para></listitem>
+            <listitem><para><code>fetchAssoc()</code></para></listitem>
+            <listitem><para><code>fetchCol()</code></para></listitem>
+            <listitem><para><code>fetchOne()</code></para></listitem>
+            <listitem><para><code>fetchPairs()</code></para></listitem>
+            <listitem><para><code>fetchRow()</code></para></listitem>
+        </itemizedlist>
+
+        <programlisting role="php"><![CDATA[<?php
+	
+// create a $db object, and then...
+
+// fetch all columns of all rows as a sequential array
+$result = $db->fetchAll(
+    "SELECT * FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// fetch all columns of all rows as an associative array;
+// the first column is used as the array key.
+$result = $db->fetchAssoc(
+    "SELECT * FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// fetch the first column of all rows returned
+$result = $db->fetchCol(
+    "SELECT first_name FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// fetch only the first value
+$result = $db->fetchOne(
+    "SELECT COUNT(*) FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// fetch a series of key-value pairs; the first column is
+// the array key, the second column is the array value
+$result = $db->fetchPairs(
+    "SELECT first_name, favorite_color FROM round_table WHERE noble_title = :title",
+    array('title' => 'Sir')
+);
+
+// fetch only the first row returned
+$result = $db->fetchRow(
+    "SELECT * FROM round_table WHERE first_name = :name",
+    array('name' => 'Lancelot')
+);
 
 ?>]]></programlisting>
     </sect2>
