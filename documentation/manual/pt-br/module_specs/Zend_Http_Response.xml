@@ -9,22 +9,28 @@
             with the HTTP response data received from a request:
             <itemizedlist>
                 <listitem>
-                    <code>isError()</code>: Returns TRUE if an HTTP error code was received; FALSE otherwise.
+                    <para>
+                        <code>isError()</code>: Returns TRUE if an HTTP error code was received; FALSE otherwise.
                 </listitem>
                 <listitem>
-                    <code>isSuccessful()</code>: Returns TRUE if an HTTP success code was received; FALSE otherwise.
+                    <para>
+                        <code>isSuccessful()</code>: Returns TRUE if an HTTP success code was received; FALSE otherwise.
                 </listitem>
                 <listitem>
-                    <code>isRedirect()</code>: Returns TRUE if an HTTP redirect code was received; FALSE otherwise.
+                    <para>
+                        <code>isRedirect()</code>: Returns TRUE if an HTTP redirect code was received; FALSE otherwise.
                 </listitem>
                 <listitem>
-                    <code>getStatus()</code>: Returns the HTTP status code.
+                    <para>
+                        <code>getStatus()</code>: Returns the HTTP status code.
                 </listitem>
                 <listitem>
-                    <code>getHeaders()</code>: Returns an array of HTTP response header strings.
+                    <para>
+                        <code>getHeaders()</code>: Returns an array of HTTP response header strings.
                 </listitem>
                 <listitem>
-                    <code>getBody()</code>: Returns the HTTP response body as a string.
+                    <para>
+                        <code>getBody()</code>: Returns the HTTP response body as a string.
                 </listitem>
             </itemizedlist>
         </para>
