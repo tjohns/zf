@@ -63,8 +63,6 @@ class Zend_Controller_Router_Route implements Zend_Controller_Router_Route_Inter
         $this->_defaults = (array) $defaults;
         $this->_requirements = (array) $reqs;
 
-        $route = trim($route, self::URI_DELIMITER);
-        
         if ($route != '') { 
     
             foreach (explode(self::URI_DELIMITER, $route) as $pos => $part) {
