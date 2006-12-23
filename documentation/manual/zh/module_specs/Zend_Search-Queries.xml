@@ -77,10 +77,12 @@ $hits = $index->find('+word1 author:word2 -word3');
 ?>]]></programlisting>
 
         <itemizedlist>
-            <listitem>'+' 用于定义必须的搜索项。</listitem>
-            <listitem>'-' 用于定义禁止的搜索项。</listitem>
+            <listitem><para>'+' 用于定义必须的搜索项。</para></listitem>
+            <listitem><para>'-' 用于定义禁止的搜索项。</para></listitem>
             <listitem>
+                <para>
             'field:' 用于指明要搜索的字段。如果没有提供，则默认的是'contents'。
+                </para>
             </listitem>
         </itemizedlist>
         </para>
@@ -105,10 +107,12 @@ $hits = $index->find('+word1 author:word2 -word3');
         <para>
             <code>$signs</code> 数组包含了搜索项的类型：
             <itemizedlist>
-                <listitem>true 用于定义必须的搜索项。</listitem>
-                <listitem>false 用于定义禁止的搜索项。</listitem>
+                <listitem><para>true 用于定义必须的搜索项。</para></listitem>
+                <listitem><para>false 用于定义禁止的搜索项。</para></listitem>
                 <listitem>
+                    <para>
                 null 用于定义既不必须也不禁止的搜索项。
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
