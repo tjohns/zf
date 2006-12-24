@@ -12,19 +12,29 @@
 			． 例子包括：
             <itemizedlist>
                 <listitem>
-                    保存出版物的信息, 如 图片, 描述, 价格,　等
+                    <para>
+                        保存出版物的信息, 如 图片, 描述, 价格,　等
+                    </para>
                 </listitem>
                 <listitem>
-                    顾客和编辑的评
+                    <para>
+                        顾客和编辑的评
+                    </para>
                 </listitem>
                 <listitem>
-                    类似的产品或附属产品
+                    <para>
+                        类似的产品或附属产品
+                    </para>
                 </listitem>
                 <listitem>
-                    Amazon.com 报价
+                    <para>
+                        Amazon.com 报价
+                    </para>
                 </listitem>
                 <listitem>
-                    ListMania 列表
+                    <para>
+                        ListMania 列表
+                    </para>
                 </listitem>
             </itemizedlist>
         </para>
