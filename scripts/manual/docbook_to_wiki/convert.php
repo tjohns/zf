@@ -2,13 +2,13 @@
 
 error_reporting(E_ALL);
 
+require_once 'configuration.php';
+
 $language   	 = $argv[1];
 $thisPath   	 = '/home/virtual/andries.zfdev.com/home/andries/scripts/manual/';
 $manualPath 	 = '/home/virtual/andries.zfdev.com/home/andries/scripts/trunk/documentation/manual/' . $language . '/';
 $manualIncPath 	 = '/home/virtual/andries.zfdev.com/home/andries/scripts/trunk/incubator/documentation/manual/' . $language . '/';
 $confluenceWsdl  = 'http://framework.zend.com/wiki/rpc/soap-axis/confluenceservice-v1?wsdl';
-$confluenceUser  = '';
-$confluencePass  = '';
 
 if ($language == 'en') {
     $confluenceSpace = 'ZFDOCDEV';
@@ -29,20 +29,6 @@ $oldwikiPages      = array();
 $chapters          = array();
 $incubatorChapters = array();
 
-/*
-if ($language == 'en') {
-    $incubatorFile = file_get_contents($manualIncPath . 'manual.xml');
-    $incubatorFile = preg_replace('/(<!--.*-->)/isU', '', $incubatorFile);
-    $incubatorFile = preg_replace_callback('/(&module_specs.)(.+)(;)/', 'processIncubatorChapters', $incubatorFile);
-    $isxml         = @simplexml_load_string($incubatorFile);
-
-    foreach ($isxml->chapter as $key => $chapter) {
-        $chapter['incubator'] = true;
-        array_push($incubatorChapters, $chapter);
-    }
-}
-*/
-
 $token = $soap->login($confluenceUser, $confluencePass);
 $currentPages = $soap->getPages($token, $confluenceSpace);
 
@@ -59,12 +45,15 @@ if (count($incubatorChapters)) {
 }
 
 $homePage = $soap->getPage($token, $confluenceSpace, 'Home');
+$autoId = 0;
 
 foreach ($chapters as $key => $chapter)
 {
+    $autoId++;
+    
     $filename = $chapter['id'];
     
-    echo $chapter->title . "\n";
+    echo  $autoId . '. ' . $chapter->title . "\n";
     
     $mytmp = $chapter->sect1[0]->asXML();
     $mytmp = cleanup($mytmp);
@@ -82,7 +71,7 @@ foreach ($chapters as $key => $chapter)
     $temp = preg_replace('/^(\\s*)(\\|\\|[^\\r\\n]+?)(\\s+)(\\|[^\\|]+)/', "\\2||\r\n\\4", $temp);
     $temp = preg_replace('/^(\\s*)\\|([^|]+.+?)(\\s*)$/m', '|\\2|', $temp);
     
-    $title = (string)$chapter->title;
+    $title = $autoId . '. ' . (string)$chapter->title;
     
     array_push($wikiPages, $title);
     
@@ -137,9 +126,9 @@ foreach ($chapters as $key => $chapter)
         $temp = preg_replace('/^(\\s*)(\\|\\|[^\\r\\n]+?)(\\s+)(\\|[^\\|]+)/', "\\2||\r\n\\4", $temp);
         $temp = preg_replace('/^(\\s*)\\|([^|]+.+?)(\\s*)$/m', '|\\2|', $temp);
         
-        $title = str_replace('::', ' - ', $chapter->sect1[$i]->title);
-        $title = str_replace(':', ' ', $chapter->sect1[$i]->title);
-        $title = ($chapter['incubator']) ? $title . ' (incubator)' : $title;
+        $title = $autoId . '.' . $i . '. ' . $chapter->sect1[$i]->title;
+        $title = str_replace('::', ' - ', $title);
+        $title = str_replace(':', ' ', $title);
         
         array_push($wikiPages, $title);
         
@@ -166,6 +155,7 @@ foreach ($chapters as $key => $chapter)
         $soap->storePage($token, $page);
     }
 }
+
 $diff =  array_diff($oldwikiPages, $wikiPages);
 
 foreach ($diff as $key => $pagename) {

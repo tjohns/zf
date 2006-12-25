@@ -1,16 +1,19 @@
-﻿<?php
+<?php
 
 function processChapters($matches)
 {
     global $manualPath;
     
     $filename = $matches[2] . '.xml';
-    $content  = file_get_contents($manualPath . 'module_specs/' . $filename);
+    $content  = @file_get_contents($manualPath . 'module_specs/' . $filename);
     $content  = preg_replace_callback('/(&module_specs.)(.+)(;)/', 'processChapters', $content);
     
     $sxml     = @simplexml_load_string($content);
-    
-    return $content;
+    if ($sxml) {
+        return $content;
+    } else {
+	return '';
+    }
 }
 
 function processIncubatorChapters($matches)
@@ -20,11 +23,15 @@ function processIncubatorChapters($matches)
     $filename = $matches[2] . '.xml';
     
     if (is_readable($manualIncPath . 'module_specs/' . $filename)) {
-        $content  = file_get_contents($manualIncPath . 'module_specs/' . $filename);
+        $content  = @file_get_contents($manualIncPath . 'module_specs/' . $filename);
         $content  = preg_replace_callback('/(&module_specs.)(.+)(;)/', 'processIncubatorChapters', $content);
         $sxml     = @simplexml_load_string($content);
         
-        return $content;
+	if ($sxml) {
+            return $content;
+	} else {
+            return '';
+	}
         
     } else {
         return processChapters($matches);
