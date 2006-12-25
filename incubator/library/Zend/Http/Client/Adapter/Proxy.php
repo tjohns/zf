@@ -97,14 +97,14 @@ class Zend_Http_Client_Adapter_Proxy extends Zend_Http_Client_Adapter_Socket
     /**
      * Send request to the proxy server
      *
-     * @param string $method
+     * @param string        $method
      * @param Zend_Uri_Http $uri
-     * @param float $http_ver
-     * @param array  $headers
-     * @param string $body
+     * @param string        $http_ver
+     * @param array         $headers
+     * @param string        $body
      * @return string Request as string
      */
-    public function write($method, $uri, $http_ver = 1.1, $headers = array(), $body = '')
+    public function write($method, $uri, $http_ver = '1.1', $headers = array(), $body = '')
     {
     	// If no proxy is set, fall back to default Socket adapter
     	if (! $this->config['proxy_host']) return parent::write($method, $uri, $http_ver, $headers, $body);

@@ -63,8 +63,8 @@ class Zend_Http_Client
     /**
      * HTTP protocol versions
      */
-    const HTTP_1 = 1.1;
-    const HTTP_0 = 1.0;
+    const HTTP_1 = '1.1';
+    const HTTP_0 = '1.0';
     
     /**
      * POST data encoding methods

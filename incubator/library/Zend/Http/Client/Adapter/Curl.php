@@ -137,13 +137,13 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
     /**
 	 * Send request to the remote server
 	 *
-	 * @param string $method
+	 * @param string        $method
 	 * @param Zend_Uri_Http $uri
-	 * @param float $http_ver
-	 * @param array  $headers
-	 * @param string $body
+	 * @param float         $http_ver
+	 * @param array         $headers
+	 * @param string        $body
 	 */
-    public function write($method, $uri, $http_ver = 1.1, $headers = array(), $body = '')
+    public function write($method, $uri, $http_ver = '1.1', $headers = array(), $body = '')
     {
         // set URL
         curl_setopt($this->curl, CURLOPT_URL, $uri->__toString());

@@ -54,14 +54,14 @@ interface Zend_Http_Client_Adapter_Interface
     /**
      * Send request to the remote server
      *
-     * @param string $method
+     * @param string        $method
      * @param Zend_Uri_Http $url
-     * @param float $http_ver
-     * @param array  $headers
-     * @param string $body
+     * @param string        $http_ver
+     * @param array         $headers
+     * @param string        $body
      * @return string Request as text
      */
-    public function write($method, $url, $http_ver = 1.1, $headers = array(), $body = '');
+    public function write($method, $url, $http_ver = '1.1', $headers = array(), $body = '');
     
     /**
      * Read response from server
