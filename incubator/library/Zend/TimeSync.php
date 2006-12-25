@@ -31,6 +31,11 @@ require_once 'Zend.php';
 require_once 'Zend/Date.php';
 
 /**
+ * Zend_TimeSync_Exception
+ */
+require_once 'Zend/TimeSync/Exception.php';
+
+/**
  * @category   Zend
  * @package    Zend_TimeSync
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -143,10 +148,7 @@ class Zend_TimeSync implements IteratorAggregate
         } elseif (is_string($server)) {
             $this->_addServer($server);
         } else {
-            throw Zend::exception(
-                'Zend_TimeSync_Exception',
-                '$server should be an array or string, ' . gettype($server) . ' given'
-            );
+            throw new Zend_TimeSync_Exception('$server should be an array or string, ' . gettype($server) . ' given');
         }
     }
 
@@ -162,7 +164,7 @@ class Zend_TimeSync implements IteratorAggregate
         if ((bool) preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $key)) {
             Zend_TimeSync::$options[$key] = $value;
         } else {
-            throw Zend::exception('Zend_TimeSync_Exception', "Invalid key: '$key'");
+            throw new Zend_TimeSync_Exception("Invalid offset key: '$key'");
         }
     }
 
@@ -175,10 +177,7 @@ class Zend_TimeSync implements IteratorAggregate
     public function setOptions($options = array())
     {
         if (!is_array($options)) {
-            throw Zend::exception(
-                'Zend_TimeSync_Exception',
-                '$options is expected to be an array, ' . gettype($options) . ' given'
-            );
+            throw new Zend_TimeSync_Exception('$options is expected to be an array, ' . gettype($options) . ' given');
         }
 
         foreach ($options as $key => $value) {
@@ -197,10 +196,7 @@ class Zend_TimeSync implements IteratorAggregate
         if (isset($this->_timeservers[$flag])) {
             $this->_current = $this->_timeservers[$flag];
         } else {
-            throw Zend::exception(
-                'Zend_TimeSync_Exception',
-                '$flag does not point to valid timeserver'
-            );
+            throw new Zend_TimeSync_Exception('$flag does not point to valid timeserver');
         }
     }
 
@@ -227,10 +223,7 @@ class Zend_TimeSync implements IteratorAggregate
         if (isset(Zend_TimeSync::$options[$flag])) {
             return Zend_TimeSync::$options[$flag];
         } else {
-            throw Zend::exception(
-                'Zend_TimeSync_Exception',
-                '$flag does not point to valid option'
-            );
+            throw new Zend_TimeSync_Exception('$flag does not point to valid option');
         }
     }
 
@@ -246,10 +239,7 @@ class Zend_TimeSync implements IteratorAggregate
         if (isset($this->_timeservers[$flag])) {
             return $this->_timeservers[$flag];
         } else {
-            throw Zend::exception(
-                'Zend_TimeSync_Exception',
-                '$flag does not point to valid timeserver'
-            );
+            throw new Zend_TimeSync_Exception('$flag does not point to valid timeserver');
         }
     }
 
@@ -264,10 +254,7 @@ class Zend_TimeSync implements IteratorAggregate
         if (isset($this->_current) && $this->_current !== false) {
             return $this->_current;
         } else {
-            throw Zend::exception(
-                'Zend_TimeSync_Exception',
-                'currently, there is no timeserver set'
-            );
+            throw new Zend_TimeSync_Exception('there is no timeserver set');
         }
     }
 
@@ -294,12 +281,9 @@ class Zend_TimeSync implements IteratorAggregate
             $this->_current = $server;
             try {
                 return $server->getDate($locale);
-            } catch (Zend_TimeSync_ProtocolException $e) {
+            } catch (Zend_TimeSync_Exception $e) {
                 if (!isset($masterException)) {
-                    $masterException = Zend::exception(
-                        'Zend_TimeSync_Exception',
-                        'all the provided servers are bogus'
-                    );
+                    $masterException = new Zend_TimeSync_Exception('all the provided servers are bogus');
                 }
                 $masterException->addException($e);
             }

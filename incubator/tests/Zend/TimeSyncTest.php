@@ -206,7 +206,7 @@ class Zend_TimeSyncTest extends PHPUnit_Framework_TestCase
             $exceptions = $e->get();
             
             foreach($exceptions as $key => $exception) {
-                $this->assertTrue($exception instanceof Zend_TimeSync_ProtocolException);
+                $this->assertTrue($exception instanceof Zend_TimeSync_Exception);
             }
         }
     }

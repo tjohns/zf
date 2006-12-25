@@ -63,10 +63,7 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         $this->_disconnect();
 
         if (!$result) {
-            throw Zend::exception(
-                'Zend_TimeSync_ProtocolException',
-                'invalid result returned from server'
-            );
+            throw new Zend_TimeSync_Exception('invalid result returned from server');
         } else {
             $time  = abs(hexdec('7fffffff') - hexdec(bin2hex($result)) - hexdec('7fffffff'));
             $time -= 2208988800;

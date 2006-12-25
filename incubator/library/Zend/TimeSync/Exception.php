@@ -36,7 +36,7 @@ class Zend_TimeSync_Exception extends Zend_Exception
     protected $_exceptions;
     protected $_current;
 
-    public function addException(Zend_TimeSync_ProtocolException $exception)
+    public function addException(Zend_TimeSync_Exception $exception)
     {
         $this->_exceptions[] = $exception;
     }

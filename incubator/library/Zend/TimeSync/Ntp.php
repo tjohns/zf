@@ -92,10 +92,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
         if ($info['timed_out']) {
             fclose($this->_socket);
-            throw Zend::exception(
-                'Zend_TimeSync_ProtocolException', 
-                "could not connect to '$this->_timeserver' on port '$this->_port', reason: 'server timed out'"
-            );
+            throw new Zend_TimeSync_Exception("could not connect to '$this->_timeserver' on port '$this->_port', reason: 'server timed out'");
         }
 
         $stratum        = ord(fread($this->_socket, 1));
