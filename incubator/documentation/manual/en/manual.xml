@@ -64,6 +64,7 @@
         &module_specs.Zend_Date-Definition;
         &module_specs.Zend_Date-Overview;
         &module_specs.Zend_Date-Simple;
+        &module_specs.Zend_Date-Constants;
     </chapter>
 
     <chapter id="zend.http.server">

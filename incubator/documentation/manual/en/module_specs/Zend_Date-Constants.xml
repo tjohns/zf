@@ -1,0 +1,243 @@
+<sect1 id="zend.date.constants">
+    <title>Konstanten für generelle Datumsfunktionen</title>
+    <para>
+        Damit die generellen Datumsfunktionen wissen was Sie bearbeiten
+        müssen gibt es die anbei aufgeführten Konstanten. Mit Ihnen kann
+        angegeben werden welcher Teil des Datums oder welche Art von 
+        Datum gemeint ist.
+    </para>
+    <para>
+        Gibt man beispielsweise als Konstante Zend_Date::HOUR an, kann 
+        damit folgendes erreicht werden
+    </para>
+    <table>
+        <title>Wirkungweise von Zend_Date::HOUR</title>
+        <tgroup cols="2">
+            <thead>
+                <row>
+                    <entry>Funktion/Eingabe</entry>
+                    <entry>Beschreibung</entry>
+                    <entry>Original Datum</entry>
+                    <entry>Wirkung/Ausgabe</entry>
+                </row>
+            </thead>
+            <tbody>
+                <row>
+                    <entry>get(Zend_Date::HOUR)</entry>
+                    <entry>Ausgabe der Stunde</entry>
+                    <entry>2009-02-13T14:53:27+01:00</entry>
+                    <entry>14</entry>
+                </row>
+                <row>
+                    <entry>set(12, Zend_Date::HOUR)</entry>
+                    <entry>Neue Stunde</entry>
+                    <entry>2009-02-13T14:53:27+01:00</entry>
+                    <entry>2009-02-13T12:53:27+01:00</entry>
+                </row>
+                <row>
+                    <entry>add(12, Zend_Date::HOUR)</entry>
+                    <entry>Addieren von Stunden</entry>
+                    <entry>2009-02-13T14:53:27+01:00</entry>
+                    <entry>2009-02-14T02:53:27+01:00</entry>
+                </row>
+                <row>
+                    <entry>sub(12, Zend_Date::HOUR)</entry>
+                    <entry>Subtrahieren von Stunden</entry>
+                    <entry>2009-02-13T14:53:27+01:00</entry>
+                    <entry>2009-02-13T02:53:27+01:00</entry>
+                </row>
+                <row>
+                    <entry>compare(12, Zend_Date::HOUR)</entry>
+                    <entry>Vergleicht die Stunde, gibt 0, 1 oder -1 aus</entry>
+                    <entry>2009-02-13T14:53:27+01:00</entry>
+                    <entry>1 (Originalstunde ist größer)</entry>
+                </row>
+                <row>
+                    <entry>copy(Zend_Date::HOUR)</entry>
+                    <entry>Kopiert nur die Stunde</entry>
+                    <entry>2009-02-13T14:53:27+01:00</entry>
+                    <entry>1970-01-01T12:00:00+01:00</entry>
+                </row>
+                <row>
+                    <entry>equals(14, Zend_Date::HOUR)</entry>
+                    <entry>Vergleicht die Stunde, gibt TRUE oder FALSE aus</entry>
+                    <entry>2009-02-13T14:53:27+01:00</entry>
+                    <entry>TRUE</entry>
+                </row>
+                <row>
+                    <entry>isEarlier(12, Zend_Date::HOUR)</entry>
+                    <entry>Vergleicht die Stunde, gibt TRUE oder FALSE aus</entry>
+                    <entry>2009-02-13T14:53:27+01:00</entry>
+                    <entry>TRUE</entry>
+                </row>
+                <row>
+                    <entry>isLater(12, Zend_Date::HOUR)</entry>
+                    <entry>Vergleicht die Stunde, gibt TRUE oder FALSE aus</entry>
+                    <entry>2009-02-13T14:53:27+01:00</entry>
+                    <entry>FALSE</entry>
+                </row>
+            </tbody>
+        </tgroup>
+    </table>
+    <sect2 id="zend.date.constants.list">
+        <title>Liste aller Konstanten</title>
+            <para>
+            Für jeden einzelnen Teil oder Abschnitt des Datums gibt es eine eigene Konstante mit der die
+            generellen Funktionen in Ihrer Arbeitsweise gesteuert werden. Anbei ist die Liste aller 
+            Konstanten die in Zend_Date verwendet werden können.
+        </para>
+        <table>
+            <title>Konstanten für den <emphasis role="strong">Tag</emphasis></title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Konstante</entry>
+                        <entry>Beschreibung</entry>
+                        <entry>Datum</entry>
+                        <entry>Betroffener Teil/Beispiel</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Zend_Date::DAY</entry>
+                        <entry>Tag (als Zahl, zweistellig)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry>2009-02-<emphasis role="strong">06</emphasis>T14:53:27+01:00</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::DAY_SHORT</entry>
+                        <entry>Tag (als Zahl, ein- oder zweistellig)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry>2009-02-0<emphasis role="strong">6</emphasis>T14:53:27+01:00</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::WEEKDAY</entry>
+                        <entry>Wochentag (Name des Tags, lokalisiert, vollständig)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role="strong">Freitag</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::WEEKDAY_SHORT</entry>
+                        <entry>Wochentag (Name des Tags, lokalisiert, vollständig, die ersten 3 Stellen)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role=strong">Fre</emphasis> für Freitag</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::WEEKDAY_NAME</entry>
+                        <entry>Wochentag (Name des Tags, lokalisiert, abgekürzt, die ersten 2 Stellen)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role=strong">Fr</emphasis> für Freitag</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::WEEKDAY_NARROW</entry>
+                        <entry>Wochentag (Name des Tags, lokalisiert, abgekürzt, nur die erste Stelle)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role=strong">F</emphasis> für Freitag</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::WEEKDAY_DIGIT</entry>
+                        <entry>Wochentag (0 = Sonntag, 6 = Samstag)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role=strong">5</emphasis> für Freitag</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::WEEKDAY_8601</entry>
+                        <entry>Wochentag nach ISO 8601 (1 = Montag, 7 = Sonntag)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role=strong">5</emphasis> für Freitag</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::DAY_OF_YEAR</entry>
+                        <entry>Tag (als Zahl, ein- oder zweistellig)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role="strong">43</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::DAY_SUFFIX</entry>
+                        <entry>Englischer Anhang des Tages (st, nd, rd, th)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role="strong">th</emphasis></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+        <table>
+            <title>Konstanten für die <emphasis role="strong">Woche</emphasis></title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Konstante</entry>
+                        <entry>Beschreibung</entry>
+                        <entry>Datum</entry>
+                        <entry>Betroffener Teil/Beispiel</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Zend_Date::WEEK</entry>
+                        <entry>Woche (als Zahl, 1-53)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role="strong">7</emphasis></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+        <table>
+            <title>Konstanten für das <emphasis role="strong">Monat</emphasis></title>
+            <tgroup cols="4">
+                <thead>
+                    <row>
+                        <entry>Konstante</entry>
+                        <entry>Beschreibung</entry>
+                        <entry>Datum</entry>
+                        <entry>Betroffener Teil/Beispiel</entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>Zend_Date::MONTH</entry>
+                        <entry>Monat (Name des Monats, lokalisiert, vollständig)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role="strong">Februar</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry>Monat (Name des Monats, lokalisiert, abgekürzt, 3 Stellen)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role="strong">Feb</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::MONTH_NARROW</entry>
+                        <entry>Monat (Name des Monats, lokalisiert, abgekürzt, 1 Stelle)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role="strong">F</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::MONTH_SHORT</entry>
+                        <entry>Monat (Nummer des Monats, zweistellig)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry>2009-<emphasis role="strong">02</emphasis>-06T14:53:27+01:00</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::MONTH_DIGIT</entry>
+                        <entry>Monat (Nummer des Monats, ein- oder zweistellig)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry>2009-0<emphasis role="strong">2</emphasis>-06T14:53:27+01:00</entry>
+                    </row>
+                    <row>
+                        <entry>Zend_Date::MONTH_DAYS</entry>
+                        <entry>Anzahl der Tage in diesem Monat (Nummer)</entry>
+                        <entry>2009-02-06T14:53:27+01:00</entry>
+                        <entry><emphasis role="strong">28</emphasis></entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </table>
+    </sect2>
+    <sect2 id="zend.date.constants.format">
+        <title>Liste aller Formate</title>
+            <para>
+                Kapitel folgt in Kürze
+            </para>
+    </sect2>
+</sect1>

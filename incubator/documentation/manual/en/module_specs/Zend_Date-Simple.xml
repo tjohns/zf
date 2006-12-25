@@ -1,5 +1,5 @@
-<sect1 id="zend.date.simple">
-    <title>Konventionen</title>
+<sect1 id="zend.date.general">
+    <title>Generelle Funktionen</title>
     <para>
         In den nachfolgenden Kapiteln wird immer nur von Datum gesprochen.
         Datum meint in diesem Fall aber Datum inklusive Uhrzeit auch wenn diese

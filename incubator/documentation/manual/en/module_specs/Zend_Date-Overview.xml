@@ -11,8 +11,8 @@
         <title>Generelle Funktionen</title>
         <para>
             Die generellen Funktionen erwarten die Angabe einer Konstante die den gewünschten Teil des
-            Datums angeben. Diese Konstanten sind in allen Funktionen gültig. Eine Liste aller Konstanten 
-            ist unter xxxLink folgt nochxxx finden.
+            Datums angeben. Diese Konstanten sind in allen Funktionen gültig. Eine Liste aller 
+            unterstützten Konstanten ist <link linkend="zend.date.constants">unter diesem Link zu finden</link>.
         </para>
         <para>
             Folgende generelle Funktionen stehen zur Verfügung:
@@ -301,7 +301,7 @@
             Eine Liste aller Zeitformate welche von den generellen Funktionen unterstützt werden gibt es hier:
         </para>
         <para>
-            xxxListezuDate-Konstantenxxx
+            <link linkend="zend.date.constants.list">Konstanten für generelle Datumsfunktionen</link>
         </para>
         <para>
             Eine Übersicht über alle unterstützten Ausgabeformate gibt es hier:
