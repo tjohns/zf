@@ -616,31 +616,31 @@ print $date->toString("'Era:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");
                 <tbody>
                     <row>
                         <entry>G</entry>
-                        <entry>Epoche, abgekürzt</entry>
+                        <entry>Epoche, lokalisiert, abgekürzt</entry>
                         <entry>Zend_Date::ERA</entry>
                         <entry><emphasis role="strong">n. Chr.</emphasis></entry>
                     </row>
                     <row>
                         <entry>GG</entry>
-                        <entry>Epoche, abgekürzt</entry>
+                        <entry>Epoche, lokalisiert, abgekürzt</entry>
                         <entry>Zend_Date::ERA</entry>
                         <entry><emphasis role="strong">n. Chr.</emphasis></entry>
                     </row>
                     <row>
                         <entry>GGG</entry>
-                        <entry>Epoche, abgekürzt</entry>
+                        <entry>Epoche, lokalisiert, abgekürzt</entry>
                         <entry>Zend_Date::ERA</entry>
                         <entry><emphasis role="strong">n. Chr.</emphasis></entry>
                     </row>
                     <row>
                         <entry>GGGG</entry>
-                        <entry>Epoche, vollständig</entry>
+                        <entry>Epoche, lokalisiert, vollständig</entry>
                         <entry>Zend_Date::ERA_NAME</entry>
                         <entry><emphasis role="strong">n. Chr.</emphasis></entry>
                     </row>
                     <row>
                         <entry>GGGGG</entry>
-                        <entry>Epoche, abgekürzt</entry>
+                        <entry>Epoche, lokalisiert, abgekürzt</entry>
                         <entry>Zend_Date::ERA</entry>
                         <entry><emphasis role="strong">n.</emphasis></entry>
                     </row>
@@ -699,10 +699,238 @@ print $date->toString("'Era:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");
                         <entry><emphasis role="strong">2009</emphasis></entry>
                     </row>
                     <row>
-                        <entry>YYYY</entry>
+                        <entry>YYYYY</entry>
                         <entry>Jahr nach ISO 8601, mindestens fünfstellig</entry>
                         <entry>Zend_Date::YEAR_8601</entry>
                         <entry><emphasis role="strong">02009</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>M</entry>
+                        <entry>Monat, ein- oder zweistellig</entry>
+                        <entry>Zend_Date::MONTH_DIGIT</entry>
+                        <entry><emphasis role="strong">2</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>MM</entry>
+                        <entry>Monat, zweistellig</entry>
+                        <entry>Zend_Date::MONTH_SHORT</entry>
+                        <entry><emphasis role="strong">02</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>MMM</entry>
+                        <entry>Monat, lokalisiert, abgekürzt</entry>
+                        <entry>Zend_Date::MONTH_NAME</entry>
+                        <entry><emphasis role="strong">Feb</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>MMMM</entry>
+                        <entry>Monat, lokalisiert, vollständig</entry>
+                        <entry>Zend_Date::MONTH</entry>
+                        <entry><emphasis role="strong">Februar</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>MMMMM</entry>
+                        <entry>Monat, lokalisiert, abgekürzt, einstellig</entry>
+                        <entry>Zend_Date::MONTH_NARROW</entry>
+                        <entry><emphasis role="strong">F</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>w</entry>
+                        <entry>Woche, ein- oder zweistellig</entry>
+                        <entry>Zend_Date::WEEK</entry>
+                        <entry><emphasis role="strong">5</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>ww</entry>
+                        <entry>Woche, zweistellig</entry>
+                        <entry>Zend_Date::WEEK</entry>
+                        <entry><emphasis role="strong">05</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>d</entry>
+                        <entry>Tag des Monats, ein- oder zweistellig</entry>
+                        <entry>Zend_Date::DAY_SHORT</entry>
+                        <entry><emphasis role="strong">9</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>dd</entry>
+                        <entry>Tag des Monats, zweistellig</entry>
+                        <entry>Zend_Date::DAY</entry>
+                        <entry><emphasis role="strong">09</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>D</entry>
+                        <entry>Tag des Jahres, ein-, zwei- oder dreistellig</entry>
+                        <entry>Zend_Date::DAY_OF_YEAR</entry>
+                        <entry><emphasis role="strong">7</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>DD</entry>
+                        <entry>Tag des Jahres, zwei- oder dreistellig</entry>
+                        <entry>Zend_Date::DAY_OF_YEAR</entry>
+                        <entry><emphasis role="strong">07</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>DDD</entry>
+                        <entry>Tag des Jahres, dreistellig</entry>
+                        <entry>Zend_Date::DAY_OF_YEAR</entry>
+                        <entry><emphasis role="strong">007</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>E</entry>
+                        <entry>Tag der Woche, lokalisiert, abgekürzt, einstellig</entry>
+                        <entry>Zend_Date::WEEKDAY_NARROW</entry>
+                        <entry><emphasis role="strong">M</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>EE</entry>
+                        <entry>Tag der Woche, lokalisiert, abgekürzt, zweistellig</entry>
+                        <entry>Zend_Date::WEEKDAY_NAME</entry>
+                        <entry><emphasis role="strong">Mo</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>EEE</entry>
+                        <entry>Tag der Woche, lokalisiert, abgekürzt, dreistellig</entry>
+                        <entry>Zend_Date::WEEKDAY_SHORT</entry>
+                        <entry><emphasis role="strong">Mon</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>EEEE</entry>
+                        <entry>Tag der Woche, lokalisiert, vollständig</entry>
+                        <entry>Zend_Date::WEEKDAY</entry>
+                        <entry><emphasis role="strong">Montag</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>EEEEE</entry>
+                        <entry>Tag der Woche, lokalisiert, abgekürzt, einstellig</entry>
+                        <entry>Zend_Date::WEEKDAY_NARROW</entry>
+                        <entry><emphasis role="strong">M</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>e</entry>
+                        <entry>Nummer des Tages, ein- oder zweistellig</entry>
+                        <entry>Zend_Date::WEEKDAY_NARROW</entry>
+                        <entry><emphasis role="strong">4</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>ee</entry>
+                        <entry>Nummer des Tages, zweistellig</entry>
+                        <entry>Zend_Date::WEEKDAY_NARROW</entry>
+                        <entry><emphasis role="strong">04</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>a</entry>
+                        <entry>Tageszeit, lokalisiert</entry>
+                        <entry>Zend_Date::MERIDIEM</entry>
+                        <entry><emphasis role="strong">vorm.</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>h</entry>
+                        <entry>Stunde, (1-12), ein- oder zweistellig</entry>
+                        <entry>Zend_Date::HOUR_SHORT_AM</entry>
+                        <entry><emphasis role="strong">2</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>hh</entry>
+                        <entry>Stunde, (01-12), zweistellig</entry>
+                        <entry>Zend_Date::HOUR_AM</entry>
+                        <entry><emphasis role="strong">02</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>H</entry>
+                        <entry>Stunde, (0-23), ein- oder zweistellig</entry>
+                        <entry>Zend_Date::HOUR_SHORT</entry>
+                        <entry><emphasis role="strong">2</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>HH</entry>
+                        <entry>Stunde, (00-23), zweistellig</entry>
+                        <entry>Zend_Date::HOUR</entry>
+                        <entry><emphasis role="strong">02</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>m</entry>
+                        <entry>Minute, (0-59), ein- oder zweistellig</entry>
+                        <entry>Zend_Date::MINUTE_SHORT</entry>
+                        <entry><emphasis role="strong">2</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>mm</entry>
+                        <entry>Minute, (00-59), zweistellig</entry>
+                        <entry>Zend_Date::MINUTE</entry>
+                        <entry><emphasis role="strong">02</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>s</entry>
+                        <entry>Sekunde, (0-59), ein- oder zweistellig</entry>
+                        <entry>Zend_Date::SECOND_SHORT</entry>
+                        <entry><emphasis role="strong">2</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>ss</entry>
+                        <entry>Sekunde, (00-59), zweistellig</entry>
+                        <entry>Zend_Date::SECOND</entry>
+                        <entry><emphasis role="strong">02</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>S</entry>
+                        <entry>Sekundenbruchteil</entry>
+                        <entry>Zend_Date::MILLISECOND</entry>
+                        <entry><emphasis role="strong">20536</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>z</entry>
+                        <entry>Zeitzone, lokalisiert, abgekürzt</entry>
+                        <entry>Zend_Date::TIMEZONE</entry>
+                        <entry><emphasis role="strong">CET</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>zz</entry>
+                        <entry>Zeitzone, lokalisiert, abgekürzt</entry>
+                        <entry>Zend_Date::TIMEZONE</entry>
+                        <entry><emphasis role="strong">CET</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>zzz</entry>
+                        <entry>Zeitzone, lokalisiert, abgekürzt</entry>
+                        <entry>Zend_Date::TIMEZONE</entry>
+                        <entry><emphasis role="strong">CET</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>zzzz</entry>
+                        <entry>Zeitzone, lokalisiert, vollständig</entry>
+                        <entry>Zend_Date::TIMEZONE_NAME</entry>
+                        <entry><emphasis role="strong">Europe/Paris</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>Z</entry>
+                        <entry>Differenz der Zeitzone</entry>
+                        <entry>Zend_Date::GMT_DIFF</entry>
+                        <entry><emphasis role="strong">+0100</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>ZZ</entry>
+                        <entry>Differenz der Zeitzone</entry>
+                        <entry>Zend_Date::GMT_DIFF</entry>
+                        <entry><emphasis role="strong">+0100</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>ZZZ</entry>
+                        <entry>Differenz der Zeitzone</entry>
+                        <entry>Zend_Date::GMT_DIFF</entry>
+                        <entry><emphasis role="strong">+0100</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>ZZZZ</entry>
+                        <entry>Differenz der Zeitzone, seperiert</entry>
+                        <entry>Zend_Date::GMT_DIFF_SEP</entry>
+                        <entry><emphasis role="strong">+01:00</emphasis></entry>
+                    </row>
+                    <row>
+                        <entry>A</entry>
+                        <entry>Sekundenbruchteile</entry>
+                        <entry>Zend_Date::MILLISECOND</entry>
+                        <entry><emphasis role="strong">20563</emphasis></entry>
                     </row>
                 </tbody>
             </tgroup>
