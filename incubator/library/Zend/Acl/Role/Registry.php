@@ -22,12 +22,6 @@
 
 
 /**
- * Zend
- */
-require_once 'Zend.php';
-
-
-/**
  * Zend_Acl_Role_Interface
  */
 require_once 'Zend/Acl/Role/Interface.php';
@@ -72,8 +66,8 @@ class Zend_Acl_Role_Registry
         $roleId = $role->getRoleId();
 
         if ($this->has($roleId)) {
-            throw Zend::exception('Zend_Acl_Role_Registry_Exception',
-                                  "Role id '$roleId' already exists in the registry");
+            require_once 'Zend/Acl/Role/Registry/Exception.php';
+            throw new Zend_Acl_Role_Registry_Exception("Role id '$roleId' already exists in the registry");
         }
 
         $roleParents = array();
@@ -81,9 +75,6 @@ class Zend_Acl_Role_Registry
         if (null !== $parents) {
             if (!is_array($parents)) {
                 $parents = array($parents);
-            }
-            if (count($parents) > 0) {
-                Zend::loadClass('Zend_Acl_Role_Registry_Exception');
             }
             foreach ($parents as $parent) {
                 try {
@@ -128,8 +119,8 @@ class Zend_Acl_Role_Registry
         }
 
         if (!$this->has($role)) {
-            throw Zend::exception('Zend_Acl_Role_Registry_Exception',
-                                  "Role '$roleId' not found");
+            require_once 'Zend/Acl/Role/Registry/Exception.php';
+            throw new Zend_Acl_Role_Registry_Exception("Role '$roleId' not found");
         }
 
         return $this->_roles[$roleId]['instance'];
@@ -192,8 +183,6 @@ class Zend_Acl_Role_Registry
      */
     public function inherits($role, $inherit, $onlyParents = false)
     {
-        Zend::loadClass('Zend_Acl_Role_Registry_Exception');
-
         try {
             $roleId     = $this->get($role)->getRoleId();
             $inheritId = $this->get($inherit)->getRoleId();
@@ -227,8 +216,6 @@ class Zend_Acl_Role_Registry
      */
     public function remove($role)
     {
-        Zend::loadClass('Zend_Acl_Role_Registry_Exception');
-
         try {
             $roleId = $this->get($role)->getRoleId();
         } catch (Zend_Acl_Role_Registry_Exception $e) {

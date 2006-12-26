@@ -22,12 +22,6 @@
 
 
 /**
- * Zend
- */
-require_once 'Zend.php';
-
-
-/**
  * Zend_Acl_Resource_Interface
  */
 require_once 'Zend/Acl/Resource/Interface.php';
@@ -253,14 +247,13 @@ class Zend_Acl
         $resourceId = $resource->getResourceId();
 
         if ($this->has($resourceId)) {
-            throw Zend::exception('Zend_Acl_Exception',
-                                  "Resource id '$resourceId' already exists in the ACL");
+            require_once 'Zend/Acl/Exception.php';
+            throw new Zend_Acl_Exception("Resource id '$resourceId' already exists in the ACL");
         }
 
         $resourceParent = null;
 
         if (null !== $parent) {
-            Zend::loadClass('Zend_Acl_Exception');
             try {
                 if ($parent instanceof Zend_Acl_Resource_Interface) {
                     $resourceParentId = $parent->getResourceId();
@@ -301,8 +294,8 @@ class Zend_Acl
         }
 
         if (!$this->has($resource)) {
-            throw Zend::exception('Zend_Acl_Exception',
-                                  "Resource '$resourceId' not found");
+            require_once 'Zend/Acl/Exception.php';
+            throw new Zend_Acl_Exception("Resource '$resourceId' not found");
         }
 
         return $this->_resources[$resourceId]['instance'];
@@ -344,8 +337,6 @@ class Zend_Acl
      */
     public function inherits($resource, $inherit, $onlyParent = false)
     {
-        Zend::loadClass('Zend_Acl_Exception');
-
         try {
             $resourceId     = $this->get($resource)->getResourceId();
             $inheritId = $this->get($inherit)->getResourceId();
@@ -385,8 +376,6 @@ class Zend_Acl
      */
     public function remove($resource)
     {
-        Zend::loadClass('Zend_Acl_Exception');
-
         try {
             $resourceId = $this->get($resource)->getResourceId();
         } catch (Zend_Acl_Exception $e) {
@@ -551,8 +540,9 @@ class Zend_Acl
         // ensure that the rule type is valid; normalize input to uppercase
         $type = strtoupper($type);
         if (self::TYPE_ALLOW !== $type && self::TYPE_DENY !== $type) {
-            throw Zend::exception('Zend_Acl_Exception', "Unsupported rule type; must be either '"
-                                . self::TYPE_ALLOW . "' or '" . self::TYPE_DENY . "'");
+            require_once 'Zend/Acl/Exception.php';
+            throw new Zend_Acl_Exception("Unsupported rule type; must be either '" . self::TYPE_ALLOW . "' or '"
+                                       . self::TYPE_DENY . "'");
         }
 
         // ensure that all specified Roles exist; normalize input to array of Role objects or null
@@ -656,8 +646,9 @@ class Zend_Acl
                 break;
 
             default:
-                throw Zend::exception('Zend_Acl_Exception', "Unsupported operation; must be either '" . self::OP_ADD
-                                    . "' or '" . self::OP_REMOVE . "'");
+                require_once 'Zend/Acl/Exception.php';
+                throw new Zend_Acl_Exception("Unsupported operation; must be either '" . self::OP_ADD . "' or '"
+                                           . self::OP_REMOVE . "'");
         }
 
         return $this;
