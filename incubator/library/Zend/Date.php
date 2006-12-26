@@ -410,7 +410,7 @@ class Zend_Date {
 
                 // eras
                 case 'GGGGG' :
-                    $output[$i] = substr($this->get(Zend_Date::ERA, $gmt, $locale), 0, 1);
+                    $output[$i] = substr($this->get(Zend_Date::ERA, $gmt, $locale), 0, 1) . ".";
                     break;
 
                 case 'GGGG' :
@@ -2390,7 +2390,7 @@ class Zend_Date {
                 $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian','medium'));
                 $format = $format['pattern'];
                 $parsed['year']  = $this->_Date->date('Y', false, $gmt);
-                $parsed['month'] = $this->_Date->date('M', false, $gmt);
+                $parsed['month'] = $this->_Date->date('m', false, $gmt);
                 $parsed['day']   = $this->_Date->date('d', false, $gmt);
             } else {
                 $parsed = Zend_Locale_Format::getDate($date, $format, $locale);
@@ -2399,7 +2399,7 @@ class Zend_Date {
             $date->set($parsed['year'], Zend_Date::YEAR, $gmt);
             $date->set($parsed['month'], Zend_Date::MONTH_SHORT, $gmt);
             $date->set($parsed['day'], Zend_Date::DAY, $gmt);
-            $date = $date->get(Zend_Date::TIME_MEDIUM, $gmt, $locale);
+            $date = $date->get(Zend_Date::DATE_MEDIUM, $gmt, $locale);
         }
         $return = $this->_calcdetail($calc, $date, Zend_Date::DATE_MEDIUM, TRUE, $locale);
         if ($calc != 'cmp') {
@@ -2562,7 +2562,7 @@ class Zend_Date {
      */
     public function getArpa()
     {
-        return $this->get(Zend_Date::RFC822);
+        return $this->get(Zend_Date::RFC_822);
     }
 
 
@@ -2577,7 +2577,7 @@ class Zend_Date {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
         }
-        return $this->set($date, Zend_Date::RFC822);
+        return $this->set($date, Zend_Date::RFC_822);
     }
 
 
@@ -2592,7 +2592,7 @@ class Zend_Date {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
         }
-        return $this->add($date, Zend_Date::RFC822);
+        return $this->add($date, Zend_Date::RFC_822);
     }
 
 
@@ -2607,7 +2607,7 @@ class Zend_Date {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
         }
-        return $this->sub($date, Zend_Date::RFC822);
+        return $this->sub($date, Zend_Date::RFC_822);
     }
 
 
@@ -2622,7 +2622,7 @@ class Zend_Date {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
         }
-        return $this->compare($date, Zend_Date::RFC822);
+        return $this->compare($date, Zend_Date::RFC_822);
     }
 
 
