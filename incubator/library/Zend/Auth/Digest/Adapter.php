@@ -34,12 +34,6 @@ require_once 'Zend/Auth/Digest/Token.php';
 
 
 /**
- * Zend
- */
-require_once 'Zend.php';
-
-
-/**
  * @category   Zend
  * @package    Zend_Auth
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -85,13 +79,14 @@ class Zend_Auth_Digest_Adapter extends Zend_Auth_Adapter
         $optionsRequired = array('filename', 'realm', 'username', 'password');
         foreach ($optionsRequired as $optionRequired) {
             if (!isset($options[$optionRequired]) || !is_string($options[$optionRequired])) {
-                throw Zend::exception('Zend_Auth_Digest_Exception', "Option '$optionRequired' is required to be "
-                                    . 'provided as a string');
+                require_once 'Zend/Auth/Digest/Exception.php';
+                throw new Zend_Auth_Digest_Exception("Option '$optionRequired' is required to be a string");
             }
         }
 
         if (false === ($fileHandle = @fopen($options['filename'], 'r'))) {
-            throw Zend::exception('Zend_Auth_Digest_Exception', "Cannot open '{$options['filename']}' for reading");
+            require_once 'Zend/Auth/Digest/Exception.php';
+            throw new Zend_Auth_Digest_Exception("Cannot open '{$options['filename']}' for reading");
         }
 
         $id       = "{$options['username']}:{$options['realm']}";

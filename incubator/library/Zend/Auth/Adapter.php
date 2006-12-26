@@ -22,12 +22,6 @@
 
 
 /**
- * Zend
- */
-require_once 'Zend.php';
-
-
-/**
  * @category   Zend
  * @package    Zend_Auth
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
@@ -45,8 +39,8 @@ abstract class Zend_Auth_Adapter
      */
     public static function staticAuthenticate(array $options)
     {
-        throw Zend::exception('Zend_Auth_Adapter_Exception',
-                              __METHOD__ . '() must be implemented by a concrete adapter class');
+        require_once 'Zend/Auth/Adapter/Exception.php';
+        throw new Zend_Auth_Adapter_Exception(__METHOD__ . '() must be implemented by a concrete adapter class');
     }
 
     /**
@@ -59,7 +53,7 @@ abstract class Zend_Auth_Adapter
      */
     public function authenticate(array $options)
     {
-        throw Zend::exception('Zend_Auth_Adapter_Exception',
-                              __METHOD__ . '() must be implemented by a concrete adapter class');
+        require_once 'Zend/Auth/Adapter/Exception.php';
+        throw new Zend_Auth_Adapter_Exception(__METHOD__ . '() must be implemented by a concrete adapter class');
     }
 }
