@@ -19,6 +19,11 @@
  */
 
 /**
+ * Zend_Gdata_Exception
+ */
+require_once 'Zend/Gdata/Exception.php';
+
+/**
  * Gdata Spreadsheets
  *
  * @category   Zend
@@ -72,7 +77,7 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
         switch ($var) {
             case 'updatedMin':
             case 'updatedMax':
-                throw Zend::exception('Zend_Gdata_Exception', "Parameter '$var' is not currently supported in Spreadsheets.");
+                throw new Zend_Gdata_Exception("Parameter '$var' is not currently supported in Spreadsheets.");
                 break;
         }
         parent::__set($var, $value);

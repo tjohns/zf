@@ -89,15 +89,15 @@ class Zend_Session implements IteratorAggregate
     public function __construct($namespace = 'Default', $singleInstance = false, Zend_Session_Core $core = null)
     {
         if ($namespace === '') {
-            throw Zend::exception('Zend_Session_Exception', 'Session namespace must be a non-empty string.');
+            throw new Zend_Session_Exception('Session namespace must be a non-empty string.');
         }
 
         if ($namespace[0] == "_") {
-            throw Zend::exception('Zend_Session_Exception', 'Session namespace must not start with an underscore.');
+            throw new Zend_Session_Exception('Session namespace must not start with an underscore.');
         }
 
         if (isset(self::$_singleInstances[$namespace])) {
-            throw Zend::exception('Zend_Session_Exception', 'A session namespace "'
+            throw new Zend_Session_Exception('A session namespace "'
                 . $namespace . '" already exists and has been set as the only instance of this namespace.');
         }
 
@@ -217,8 +217,7 @@ class Zend_Session implements IteratorAggregate
     protected function __get($name)
     {
         if ($name === '') {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-                .  "::__get() the '$name' key must be a non-empty string");
+            throw new Zend_Session_Exception("The '$name' key must be a non-empty string");
         }
 
         return $this->_sessionCore->namespaceGet($this->_namespace, $name);
@@ -235,13 +234,11 @@ class Zend_Session implements IteratorAggregate
     protected function __set($name, $value)
     {
         if (isset(self::$_namespaceLocks[$this->_namespace])) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-                . "This session/namespace has been marked as read-only.");
+            throw new Zend_Session_Exception('This session/namespace has been marked as read-only.');
         }
 
         if ($name === '') {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-            . "::__set() the '$name' key must be a non-empty string");
+            throw new Zend_Session_Exception("The '$name' key must be a non-empty string");
         }
 
         return $this->_sessionCore->namespaceSet($this->_namespace, $name, $value);
@@ -257,8 +254,7 @@ class Zend_Session implements IteratorAggregate
     protected function __isset($name)
     {
         if ($name === '') {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-            . "::__isset() the '$name' key must be a non-empty string");
+            throw new Zend_Session_Exception("The '$name' key must be a non-empty string");
         }
 
         return $this->_sessionCore->namespaceIsset($this->_namespace, $name);
@@ -274,8 +270,7 @@ class Zend_Session implements IteratorAggregate
     protected function __unset($name)
     {
         if ($name === '') {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-            . "::__unset() the '$name' key must be a non-empty string");
+            throw new Zend_Session_Exception("The '$name' key must be a non-empty string");
         }
 
         return $this->_sessionCore->namespaceUnset($this->_namespace, $name);

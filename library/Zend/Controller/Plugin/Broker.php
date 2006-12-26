@@ -20,8 +20,8 @@
  */
 
 
-/** Zend */
-require_once 'Zend.php';
+/** Zend_Controller_Exception */
+require_once 'Zend/Controller/Exception.php';
 
 /** Zend_Controller_Plugin_Abstract */
 require_once 'Zend/Controller/Plugin/Abstract.php';
@@ -59,7 +59,7 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     public function registerPlugin(Zend_Controller_Plugin_Abstract $plugin)
     {
         if (false !== array_search($plugin, $this->_plugins, true)) {
-            throw Zend::exception('Zend_Controller_Exception', 'Plugin already registered.');
+            throw new Zend_Controller_Exception('Plugin already registered.');
         }
         $this->_plugins[] = $plugin;
         return $this;
@@ -132,7 +132,7 @@ class Zend_Controller_Plugin_Broker extends Zend_Controller_Plugin_Abstract
     {
         $key = array_search($plugin, $this->_plugins, true);
         if (false === $key) {
-            throw Zend::exception('Zend_Controller_Exception', 'Plugin never registered.');
+            throw new Zend_Controller_Exception('Plugin never registered.');
         }
         unset($this->_plugins[$key]);
         return $this;

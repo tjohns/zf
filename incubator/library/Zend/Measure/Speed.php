@@ -23,7 +23,7 @@
 /**
  * Implement needed classes
  */
-require_once 'Zend.php';
+require_once 'Zend/Measure/Exception.php';
 require_once 'Zend/Measure/Abstract.php';
 require_once 'Zend/Locale.php';
 
@@ -244,11 +244,11 @@ class Zend_Measure_Speed extends Zend_Measure_Abstract
         try {
             $value = Zend_Locale_Format::getNumber($value, $locale);
         } catch(Exception $e) {
-            throw Zend::exception('Zend_Measure_Exception', $e->getMessage());
+            throw new Zend_Measure_Exception($e->getMessage());
         }
 
         if (empty(self::$_UNITS[$type])) {
-            throw Zend::exception('Zend_Measure_Exception', 'unknown type of speed:' . $type);
+            throw new Zend_Measure_Exception('unknown type of speed:' . $type);
         }
 
         parent::setValue($value, $type, $locale);
@@ -265,7 +265,7 @@ class Zend_Measure_Speed extends Zend_Measure_Abstract
     public function setType($type)
     {
         if (empty(self::$_UNITS[$type])) {
-            throw Zend::exception('Zend_Measure_Exception', 'unknown type of speed:' . $type);
+            throw new Zend_Measure_Exception('unknown type of speed:' . $type);
         }
 
         // Convert to standard value

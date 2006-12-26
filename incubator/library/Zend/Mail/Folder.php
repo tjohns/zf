@@ -19,9 +19,9 @@
 
 
 /**
- * Zend
+ * Zend_Mail_Exception
  */
-require_once 'Zend.php';
+require_once 'Zend/Mail/Exception.php';
 
 /**
  * @package    Zend_Mail
@@ -143,7 +143,7 @@ class Zend_Mail_Folder implements RecursiveIterator
     public function __get($name)
     {
         if(!isset($this->_folders[$name])) {
-            throw Zend::exception('Zend_Mail_Exception', "no subfolder named $name");
+            throw new Zend_Mail_Exception("no subfolder named $name");
         }
 
         return $this->_folders[$name];

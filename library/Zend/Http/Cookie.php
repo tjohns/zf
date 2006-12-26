@@ -99,13 +99,13 @@ class Zend_Http_Cookie
     public function __construct($name, $value, $domain, $expires = null, $path = null, $secure = false)
     {
         if (preg_match("/[=,; \t\r\n\013\014]/", $name))
-            throw Zend::exception('Zend_Http_Exception', "Cookie name cannot contain these characters: =,; \\t\\r\\n\\013\\014 ({$name})");
+            throw new Zend_Http_Exception("Cookie name cannot contain these characters: =,; \\t\\r\\n\\013\\014 ({$name})");
 
         if (! $this->name = (string) $name) 
-            throw Zend::exception('Zend_Http_Exception', 'Cookies must have a name');
+            throw new Zend_Http_Exception('Cookies must have a name');
 
         if (! $this->domain = (string) $domain)
-            throw Zend::exception('Zend_Http_Exception', 'Cookies must have a domain');
+            throw new Zend_Http_Exception('Cookies must have a domain');
 
         $this->value = (string) $value;
         $this->expires = ($expires === null ? null : (int) $expires);
@@ -217,7 +217,7 @@ class Zend_Http_Cookie
         
         // Make sure we have a valid Zend_Uri_Http object
         if (! ($uri->valid() && ($uri->getScheme() == 'http' || $uri->getScheme() =='https')))
-            throw Zend::exception('Zend_Http_Exception', 'Passed URI is not a valid HTTP or HTTPS URI');
+            throw new Zend_Http_Exception('Passed URI is not a valid HTTP or HTTPS URI');
         
         // Check that the cookie is secure (if required) and not expired
         if ($this->secure && $uri->getScheme() != 'https') return false;

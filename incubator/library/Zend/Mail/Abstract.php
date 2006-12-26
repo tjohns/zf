@@ -20,7 +20,7 @@
 /**
  * Zend
  */
-require_once 'Zend.php';
+require_once 'Zend/Mail/Exception.php';
  
 /**
  * @package    Zend_Mail
@@ -67,7 +67,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
             return isset($this->_has[$var]) ? $this->_has[$var] : null;
         }
         
-        throw Zend::exception('Zend_Mail_Exception', $var . ' not found');
+        throw new Zend_Mail_Exception($var . ' not found');
     }
 
 
@@ -209,7 +209,7 @@ abstract class Zend_Mail_Abstract implements Countable, ArrayAccess, SeekableIte
       */
      public function offsetSet($id, $value) 
      {
-        throw Zend::exception('Zend_Mail_Exception', 'cannot write mail messages via array access');
+        throw new Zend_Mail_Exception('cannot write mail messages via array access');
      }
      
      

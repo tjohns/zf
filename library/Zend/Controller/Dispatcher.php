@@ -19,8 +19,8 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */ 
 
-/** Zend */
-require_once 'Zend.php';
+/** Zend_Controller_Dispatcher_Exception */
+require_once 'Zend/Controller/Dispatcher/Exception.php';
 
 /** Zend_Controller_Dispatcher_Interface */
 require_once 'Zend/Controller/Dispatcher/Interface.php';
@@ -157,7 +157,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
     public function addControllerDirectory($path, $module = null)
     {
         if (!is_string($path) || !is_dir($path) || !is_readable($path)) {
-            throw Zend::exception('Zend_Controller_Dispatcher_Exception', "Directory \"$path\" not found or not readable");
+            throw new Zend_Controller_Dispatcher_Exception("Directory \"$path\" not found or not readable");
         }
 
         if (null === $module) {
@@ -180,7 +180,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $dirs = (array) $path;
         foreach ($dirs as $key => $dir) {
             if (!is_dir($dir) or !is_readable($dir)) {
-                throw Zend::exception('Zend_Controller_Dispatcher_Exception', "Directory \"$dir\" not found or not readable");
+                throw new Zend_Controller_Dispatcher_Exception("Directory \"$dir\" not found or not readable");
             }
             $dirs[$key] = rtrim($dir, '/\\');
         }
@@ -383,7 +383,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          * If no class name returned, report exceptional behaviour
          */
         if (!$className) {
-            throw Zend::exception('Zend_Controller_Dispatcher_Exception', '"' . $request->getControllerName() . '" controller does not exist');
+            throw new Zend_Controller_Dispatcher_Exception('"' . $request->getControllerName() . '" controller does not exist');
         }
 
         /**
@@ -410,7 +410,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
          */
         $controller = new $className($request, $this->getResponse(), $this->getParams());
         if (!$controller instanceof Zend_Controller_Action) {
-            throw Zend::exception('Zend_Controller_Dispatcher_Exception', "Controller '$className' is not an instance of Zend_Controller_Action");
+            throw new Zend_Controller_Dispatcher_Exception("Controller '$className' is not an instance of Zend_Controller_Action");
         }
 
         /**
@@ -458,7 +458,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
             $directories  = $this->getControllerDirectory();
         }
         if (empty($directories)) {
-            throw Zend::exception('Zend_Controller_Dispatcher_Exception', 'Controller directory never set.  Use setControllerDirectory() first');
+            throw new Zend_Controller_Dispatcher_Exception('Controller directory never set.  Use setControllerDirectory() first');
         }
 
         $controllerName = $request->getControllerName();

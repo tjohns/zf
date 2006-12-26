@@ -18,7 +18,15 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * Zend_Gdata
+ */
 require_once 'Zend/Gdata.php';
+
+/**
+ * Zend_Gdata_Exception
+ */
+require_once 'Zend/Gdata/Exception.php';
 
 /**
  * Gdata Blogger
@@ -43,7 +51,7 @@ class Zend_Gdata_Blogger extends Zend_Gdata
             $this->blogName = $blogName;
         }
         if (!isset($this->blogName)) {
-            throw Zend::exception('Zend_Gdata_Exception', 'You must specify a blog name.');
+            throw new Zend_Gdata_Exception('You must specify a blog name.');
         }
         $uri = "http://{$this->blogName}.blogspot.com/feeds/posts/default";
         $uri .= $this->getQueryString();
@@ -74,7 +82,7 @@ class Zend_Gdata_Blogger extends Zend_Gdata
     public function post($xml, $uri = null)
     {
         if (!isset($this->blogName)) {
-            throw Zend::exception('Zend_Gdata_Exception', 'You must specify a blog name.');
+            throw new Zend_Gdata_Exception('You must specify a blog name.');
         }
         if ($uri == null) {
             $uri = "http://www.blogger.com/feeds/{$this->blogName}/posts/default";
@@ -140,7 +148,7 @@ class Zend_Gdata_Blogger extends Zend_Gdata
             case 'query':
             case 'q':
                 $var = 'q';
-                throw Zend::exception('Zend_Gdata_Exception', 'Text queries are not currently supported in Blogger.');
+                throw new Zend_Gdata_Exception('Text queries are not currently supported in Blogger.');
                 break;
             case 'publishedMin':
                 $var = 'published-min';
@@ -155,11 +163,11 @@ class Zend_Gdata_Blogger extends Zend_Gdata
                 break;
             case 'category':
                 $var = '_category';
-                throw Zend::exception('Zend_Gdata_Exception', 'Category queries are not currently supported in Blogger.');
+                throw new Zend_Gdata_Exception('Category queries are not currently supported in Blogger.');
                 break;
             case 'entry':
                 $var = '_entry';
-                throw Zend::exception('Zend_Gdata_Exception', 'Entry queries are not currently supported in Blogger.');
+                throw new Zend_Gdata_Exception('Entry queries are not currently supported in Blogger.');
                 break;
             default:
                 break;

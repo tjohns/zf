@@ -24,6 +24,16 @@
 require_once 'Zend/Feed.php';
 
 /**
+ * Zend_Http_Exception
+ */
+require_once 'Zend/Http/Exception.php';
+
+/**
+ * Zend_Gdata_Exception
+ */
+require_once 'Zend/Gdata/Exception.php';
+
+/**
  *
  * @link http://code.google.com/apis/gdata/overview.html
  *
@@ -123,7 +133,7 @@ class Zend_Gdata
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            throw Zend::exception('Zend_Http_Exception', 'Argument is not an instance of Zend_Http_Client.');
+            throw new Zend_Http_Exception('Argument is not an instance of Zend_Http_Client.');
         }
         $this->_httpClient = $client;
     }
@@ -141,7 +151,7 @@ class Zend_Gdata
             $uri = $this->_defaultPostUri;
         }
         if ($uri == null) {
-            throw Zend::exception('Zend_Gdata_Exception', 'You must specify an URI to which to post.');
+            throw new Zend_Gdata_Exception('You must specify an URI to which to post.');
         }
         $this->_httpClient->setUri($uri);
         $this->_httpClient->setConfig(array('maxredirects' => 0));
@@ -160,7 +170,7 @@ class Zend_Gdata
         }
         
         if (!$response->isSuccessful()) {
-            throw Zend::exception('Zend_Gdata_Exception', 'Post to Google failed.');
+            throw new Zend_Gdata_Exception('Post to Google failed.');
         }
         return $response;
     }
@@ -320,7 +330,7 @@ class Zend_Gdata
         } else {
             $ts = strtotime($timestamp);
             if ($ts === false) {
-                throw Zend::exception('Zend_Gdata_Exception', "Invalid timestamp: $timestamp.");
+                throw new Zend_Gdata_Exception("Invalid timestamp: $timestamp.");
             }
             return date('Y-m-d\TH:i:s', $ts);
         }

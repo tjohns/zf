@@ -19,8 +19,8 @@
  */
 
 
-/** Zend */
-require_once 'Zend.php';
+/** Zend_Controller_Exception */
+require_once 'Zend/Controller/Exception.php';
 
 /** Zend_Controller_Plugin_Broker */
 require_once 'Zend/Controller/Plugin/Broker.php';
@@ -187,7 +187,7 @@ class Zend_Controller_Front
     static public function run($controllerDirectory)
     {
         if (isset($this)) {
-            throw Zend::exception('Zend_Controller_Exception', 'Zend_Controller_Front::run() should only be called statically');
+            throw new Zend_Controller_Exception('Zend_Controller_Front::run() should only be called statically');
             return;
         }
 
@@ -311,7 +311,7 @@ class Zend_Controller_Front
             $request = new $request();
         }
         if (!$request instanceof Zend_Controller_Request_Abstract) {
-            throw Zend::exception('Zend_Controller_Exception', 'Invalid request class');
+            throw new Zend_Controller_Exception('Invalid request class');
         }
 
         $this->_request = $request;
@@ -349,7 +349,7 @@ class Zend_Controller_Front
             $router = new $router($this->getParams());
         }
         if (!$router instanceof Zend_Controller_Router_Interface) {
-            throw Zend::exception('Zend_Controller_Exception', 'Invalid router class');
+            throw new Zend_Controller_Exception('Invalid router class');
         }
 
         $this->_router = $router;
@@ -397,7 +397,7 @@ class Zend_Controller_Front
     public function setBaseUrl($base = null)
     {
         if (!is_string($base) && (null !== $base)) {
-            throw Zend::exception('Zend_Controller_Exception', 'Rewrite base must be a string');
+            throw new Zend_Controller_Exception('Rewrite base must be a string');
         }
 
         $this->_baseUrl = $base;
@@ -465,7 +465,7 @@ class Zend_Controller_Front
             $response = new $response();
         }
         if (!$response instanceof Zend_Controller_Response_Abstract) {
-            throw Zend::exception('Zend_Controller_Exception', 'Invalid response class');
+            throw new Zend_Controller_Exception('Invalid response class');
         }
 
         $this->_response = $response;

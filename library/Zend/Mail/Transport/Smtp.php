@@ -105,7 +105,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
             } else {
                 $msg = $errstr;
             }
-            throw Zend::exception('Zend_Mail_Transport_Exception', $msg);
+            throw new Zend_Mail_Transport_Exception($msg);
         }
 
         $this->_con = $fp;
@@ -113,7 +113,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
         try {
             $res = stream_set_timeout($this->_con, self::COMMUNICATION_TIMEOUT );
             if ($res === false) {
-                throw Zend::exception('Zend_Mail_Transport_Exception', 'Could not set Stream Timeout');
+                throw new Zend_Mail_Transport_Exception('Could not set Stream Timeout');
             }
 
             /**
@@ -309,7 +309,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
             // returncode is always 3 digits at the beginning of the line
             $errorcode = substr($res,0,3);
             if ($errorcode === NULL || ( ($errorcode!=$val1) && ($errorcode!=$val2) && ($errorcode!=$val3)) ) {
-                throw Zend::exception('Zend_Mail_Transport_Exception', $res);
+                throw new Zend_Mail_Transport_Exception($res);
             }
         } while($res[3]=='-');
     }
@@ -326,7 +326,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
         $res = fgets($this->_con, 1024);
 
         if ($res === false) {
-            throw Zend::exception('Zend_Mail_Transport_Exception', 'Could not read from SMTP server');
+            throw new Zend_Mail_Transport_Exception('Could not read from SMTP server');
         }
 
         if (self::DEBUG) {
@@ -347,7 +347,7 @@ class Zend_Mail_Transport_Smtp extends Zend_Mail_Transport_Abstract {
     {
         $res = fwrite($this->_con, $str . $this->EOL);
         if ($res === false) {
-            throw Zend::exception('Zend_Mail_Transport_Exception', 'Could not write to SMTP server');
+            throw new Zend_Mail_Transport_Exception('Could not write to SMTP server');
         }
 
         if (self::DEBUG) {

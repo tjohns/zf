@@ -19,14 +19,14 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
 
 /**
- * Zend
- */
-require_once 'Zend.php';
-
-/**
  * Zend_Http_Client
  */
 require_once 'Zend/Http/Client.php';
+
+/**
+ * Zend_Http_Exception
+ */
+require_once 'Zend/Http/Exception.php';
 
 
 /**
@@ -72,14 +72,14 @@ class Zend_Gdata_ClientLogin
         $source = self::DEFAULT_SOURCE)
     {
         if (! ($email && $password)) {
-            throw Zend::exception('Zend_Http_Exception', 'Please set your Google credentials before trying to authenticate');
+            throw new Zend_Http_Exception('Please set your Google credentials before trying to authenticate');
         }
 
         if ($client == null) {
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+            throw new Zend_Http_Exception('Client is not an instance of Zend_Http_Client.');
         }
 
         // Build the HTTP client for authentication
@@ -119,7 +119,7 @@ class Zend_Gdata_ClientLogin
             return $client;
 
         } elseif ($response->getStatus() == 403) {
-            throw Zend::exception('Zend_Http_Exception', 'Authentication with Google failed. Reason: ' .
+            throw new Zend_Http_Exception('Authentication with Google failed. Reason: ' .
                 (isset($goog_resp['Error']) ? $goog_resp['Error'] : 'Unspecified.'));
         }
     }

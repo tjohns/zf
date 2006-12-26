@@ -31,7 +31,7 @@ require_once 'Zend/Mail/Message.php';
 /**
  * Zend
  */
-require_once 'Zend.php';
+require_once 'Zend/Mail/Exception.php';
 
 
 /**
@@ -74,7 +74,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
 
         if($id !== null) {
             if(!isset($this->_files[$id - 1])) {
-                throw Zend::exception('Zend_Mail_Exception', 'id does not exist');
+                throw new Zend_Mail_Exception('id does not exist');
              }
             return filesize($this->_files[$id - 1]['filename']);
         }
@@ -98,7 +98,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
     public function getMessage($id)
     {
         if(!isset($this->_files[$id - 1])) {
-            throw Zend::exception('Zend_Mail_Exception', 'id does not exist');
+            throw new Zend_Mail_Exception('id does not exist');
         }
 
         return new Zend_Mail_Message(file_get_contents($this->_files[$id - 1]['filename']));
@@ -115,7 +115,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
     public function getHeader($id, $bodyLines = 0)
     {
         if(!isset($this->_files[$id - 1])) {
-            throw Zend::exception('Zend_Mail_Exception', 'id does not exist');
+            throw new Zend_Mail_Exception('id does not exist');
         }
 
         $inHeader = true;
@@ -153,11 +153,11 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
     public function __construct($params)
     {
         if (!isset($params['dirname']) || !is_dir($params['dirname'])) {
-            throw Zend::exception('Zend_Mail_Exception', 'no valid dirname given in params');
+            throw new Zend_Mail_Exception('no valid dirname given in params');
         }
 
         if(!$this->_isMaildir($params['dirname'])) {
-            throw Zend::exception('Zend_Mail_Exception', 'invalid maildir given');
+            throw new Zend_Mail_Exception('invalid maildir given');
         }
 
         $this->_has['top'] = true;
@@ -189,7 +189,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
 
         $dh = @opendir($dirname . '/cur/');
         if(!$dh) {
-            throw Zend::exception('Zend_Mail_Exception', 'cannot open maildir');
+            throw new Zend_Mail_Exception('cannot open maildir');
         }
         while(($entry = readdir($dh)) !== false) {
             if($entry[0] == '.' || !is_file($dirname . '/cur/' . $entry)) {
@@ -244,7 +244,7 @@ class Zend_Mail_Maildir extends Zend_Mail_Abstract
      */
     public function removeMessage($id)
     {
-        throw Zend::exception('Zend_Mail_Exception', 'maildir is (currently) read-only');
+        throw new Zend_Mail_Exception('maildir is (currently) read-only');
     }
 
 }

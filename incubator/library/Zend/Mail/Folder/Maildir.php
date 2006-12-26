@@ -33,11 +33,6 @@ require_once 'Zend/Mail/Folder/Interface.php';
 require_once 'Zend/Mail/Maildir.php';
 
 /**
- * Zend
- */
-require_once 'Zend.php';
-
-/**
  * @package    Zend_Mail
  * @copyright  Copyright (c) 2005-2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://www.zend.com/license/framework/1_0.txt Zend Framework License version 1.0
@@ -82,7 +77,7 @@ class Zend_Mail_Folder_Maildir extends Zend_Mail_Maildir implements Zend_Mail_Fo
         }
 
         if(!isset($params['rootdir']) || !is_dir($params['rootdir'])) {
-            throw Zend::exception('Zend_Mail_Exception', 'no valid rootdir given in params');
+            throw new Zend_Mail_Exception('no valid rootdir given in params');
         }
 
         $this->_rootdir = rtrim($params['rootdir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;

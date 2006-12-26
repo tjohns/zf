@@ -24,8 +24,8 @@
 /**
  * include needed classes
  */
-require_once 'Zend.php';
 require_once 'Zend/Locale/Data.php';
+require_once 'Zend/Locale/Exception.php';
 
 
 /**
@@ -121,7 +121,7 @@ class Zend_Locale_Format
                         $symbols['decimal'] . '){0,1}\d+/';
         preg_match($regex, $input, $found);
         if (!isset($found[0]))
-            throw Zend::exception('Zend_Locale_Exception', 'No value in ' . $input . ' found');
+            throw new Zend_Locale_Exception('No value in ' . $input . ' found');
         $found = $found[0];
 
         // Change locale input to be standard number
@@ -406,7 +406,7 @@ class Zend_Locale_Format
 
         // format unknown wether date nor time
         if (empty($parse)) {
-            throw Zend::exception('Zend_Locale_Exception', 'unknown format, wether date nor time in ' . $format . ' found');
+            throw new Zend_Locale_Exception('unknown format, wether date nor time in ' . $format . ' found');
         }
         ksort($parse);
 
@@ -445,7 +445,7 @@ class Zend_Locale_Format
         preg_match_all('/\d+/', $number, $splitted);
 
         if (count($splitted[0]) == 0) {
-            throw Zend::exception('Zend_Locale_Exception', 'No date part in ' . $number . ' found');
+            throw new Zend_Locale_Exception('No date part in ' . $number . ' found');
         }
 
         if (count($splitted[0]) == 1) {

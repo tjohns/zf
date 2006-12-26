@@ -219,6 +219,7 @@ final class Zend
      * @param int $code Defaults to 0
      * @return Exception
      * @throws Zend_Exception when invalid exception class passed
+     * @deprecated since 0.6.1
      */
     static public function exception($class, $message = '', $code = 0)
     {

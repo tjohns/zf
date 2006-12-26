@@ -114,7 +114,7 @@ class Zend_Http_CookieJar
             if (! isset($this->cookies[$domain][$path])) $this->cookies[$domain][$path] = array();
             $this->cookies[$domain][$path][$cookie->getName()] = $cookie;
         } else {
-            throw Zend::exception('Zend_Http_Exception', 'Supplient argument is not a valid cookie string or object');
+            throw new Zend_Http_Exception('Supplient argument is not a valid cookie string or object');
         }
     }
     
@@ -128,7 +128,7 @@ class Zend_Http_CookieJar
     public function addCookiesFromResponse($response, $ref_uri)
     {
         if (! $response instanceof Zend_Http_Response)
-            throw Zend::exception('Zend_Http_Exception', '$response is expected to be a Response object, ' . 
+            throw new Zend_Http_Exception('$response is expected to be a Response object, ' . 
                 gettype($response) . ' was passed');
             
         $cookie_hdrs = $response->getHeader('Set-Cookie');
@@ -170,7 +170,7 @@ class Zend_Http_CookieJar
     {
         if (is_string($uri)) $uri = Zend_Uri::factory($uri);
         if (! $uri instanceof Zend_Uri_Http) 
-            throw Zend::exception('Zend_Http_Exception', "Invalid URI: {$uri}");
+            throw new Zend_Http_Exception("Invalid URI: {$uri}");
         
         // Set path
         $path = $uri->getPath();
@@ -209,7 +209,7 @@ class Zend_Http_CookieJar
         }
         
         if (! $uri instanceof Zend_Uri_Http) {
-            throw Zend::exception('Zend_Http_Exception', 'Invalid URI specified');
+            throw new Zend_Http_Exception('Invalid URI specified');
         }
         
         // Get correct cookie path
@@ -231,7 +231,7 @@ class Zend_Http_CookieJar
                     break;
                     
                 default:
-                    throw Zend::exception('Zend_Http_Exception', "Invalid value passed for \$ret_as: {$ret_as}");
+                    throw new Zend_Http_Exception("Invalid value passed for \$ret_as: {$ret_as}");
                     break;
             }
         } else {

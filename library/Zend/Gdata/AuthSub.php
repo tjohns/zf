@@ -19,14 +19,14 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
 
 /**
- * Zend
- */
-require_once 'Zend.php';
-
-/**
  * Zend_Http_Client
  */
 require_once 'Zend/Http/Client.php';
+
+/**
+ * Zend_Http_Exception
+ */
+require_once 'Zend/Http/Exception.php';
 
 
 /**
@@ -87,7 +87,7 @@ class Zend_Gdata_AuthSub
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+            throw new Zend_Http_Exception('Client is not an instance of Zend_Http_Client.');
         }
         $client->setUri(self::AUTHSUB_SESSION_TOKEN_URI);
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
@@ -107,7 +107,7 @@ class Zend_Gdata_AuthSub
             }
             return $goog_resp['Token'];
         } else {
-            throw Zend::exception('Zend_Http_Exception', 'Token upgrade failed. Reason: ' . $response->getBody());
+            throw new Zend_Http_Exception('Token upgrade failed. Reason: ' . $response->getBody());
         }
     }
 
@@ -123,7 +123,7 @@ class Zend_Gdata_AuthSub
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+            throw new Zend_Http_Exception('Client is not an instance of Zend_Http_Client.');
         }
         $client->setUri(self::AUTHSUB_REVOKE_TOKEN_URI);
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
@@ -151,7 +151,7 @@ class Zend_Gdata_AuthSub
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+            throw new Zend_Http_Exception('Client is not an instance of Zend_Http_Client.');
         }
         $client->setUri(self::AUTHSUB_TOKEN_INFO_URI);
         $headers['authorization'] = 'AuthSub token="' . $token . '"';
@@ -168,7 +168,7 @@ class Zend_Gdata_AuthSub
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            throw Zend::exception('Zend_Http_Exception', 'Client is not an instance of Zend_Http_Client.');
+            throw new Zend_Http_Exception('Client is not an instance of Zend_Http_Client.');
         }
         $client->setConfig(array('strictredirects' => true));
         $headers['authorization'] = 'AuthSub token="' . $token . '"';

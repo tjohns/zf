@@ -23,8 +23,8 @@
 /**
  * Implement date class
  */
-require_once 'Zend.php';
 require_once 'Zend/Date.php';
+require_once 'Zend/Date/Exception.php';
 
 
 /**
@@ -47,7 +47,7 @@ class Zend_Calendar extends Zend_Date {
      */
     public function __construct($date, $locale, $parameter)
     {
-        throw Zend::exception('Zend_Date_Exception', 'Calendar class yet not implemented... will be done when Zend_Date is ready!');
+        throw new Zend_Date_Exception('Calendar class yet not implemented... will be done when Zend_Date is ready!');
     }
 
     /**

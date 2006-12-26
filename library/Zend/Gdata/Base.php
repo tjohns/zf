@@ -18,7 +18,15 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * Zend_Gdata
+ */
 require_once 'Zend/Gdata.php';
+
+/**
+ * Zend_Gdata_Exception
+ */
+require_once 'Zend/Gdata/Exception.php';
 
 /**
  * Gdata Base
@@ -160,7 +168,7 @@ class Zend_Gdata_Base extends Zend_Gdata
     public function addAttributeQuery($attributeName, $attributeValue, $op = ':')
     {
         if (!in_array($op, array(':', '==', '<', '>', '<=', '>=', '<<'))) {
-            throw Zend::exception('Zend_Gdata_Exception', "Unsupported attribute query comparison operator '$op'.");
+            throw new Zend_Gdata_Exception("Unsupported attribute query comparison operator '$op'.");
         }
         $this->_attributeQueryTerms[$attributeName][] = array(
             'op' => $op,

@@ -23,7 +23,7 @@
 /**
  * Include needed Measure classes
  */
-require_once 'Zend.php';
+require_once 'Zend/Measure/Exception.php';
 require_once 'Zend/Locale.php';
 
 
@@ -129,7 +129,7 @@ class Zend_Measure
             if (!empty(self::$_UNIT[$type])) {
                 $library = $library . '_' . key(self::$_UNIT[$type]);
             } else {
-                throw Zend::exception('Zend_Measure_Exception', 'unknown measurement type ' . $type);
+                throw new Zend_Measure_Exception('unknown measurement type ' . $type);
             }
 
             $sublib = key(self::$_UNIT[$type]) . '::' . current(self::$_UNIT[$type]);

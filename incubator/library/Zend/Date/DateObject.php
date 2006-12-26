@@ -23,7 +23,7 @@
 /**
  * Include needed Date classes
  */
-require_once 'Zend.php';
+require_once 'Zend/Date/Exception.php';
 
 /**
  * @category   Zend
@@ -105,7 +105,7 @@ class Zend_Date_DateObject {
           return true;
         }
 
-        throw Zend::exception('Zend_Date_Exception', '\'' . $date . '\' is no valid date');
+        throw new Zend_Date_Exception('\'' . $date . '\' is no valid date');
     }
 
 

@@ -21,6 +21,11 @@
  */
 
 /**
+ * Zend
+ */
+require_once 'Zend.php';
+
+/**
  * Zend_Session_Exception
  */
 require_once 'Zend/Session/Exception.php';
@@ -212,8 +217,7 @@ final class Zend_Session_Core
                 self::${self::$_localOptions[$user_option_name]} = $user_option_value;
             }
             else {
-                throw Zend::exception('Zend_Session_Exception', __CLASS__
-                    . "::setOptions() Unknown option: $user_option_name = $user_option_value");
+                throw new Zend_Session_Exception("Unknown option: $user_option_name = $user_option_value");
             }
         }
     }
@@ -249,16 +253,14 @@ final class Zend_Session_Core
     {
         if (self::$_instance === null) {
             if ($instanceMustExist === true) {
-                throw Zend::exception('Zend_Session_Exception', __CLASS__
-                    . '::getInstance() A valid session must exist before calling getInstance() in this manner.');
+                throw new Zend_Session_Exception('A valid session must exist before calling getInstance() in this manner.');
             }
             self::$_instance = true; // allow creation of the instance by the constructor
             self::$_instance = new self();
         }
 
         if (self::$_readable === false) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-                 . '::getInstance() Zend_Session_Core is currently marked as read-only.');
+            throw new Zend_Session_Exception('Zend_Session_Core is currently marked as read-only.');
         }
 
         return self::$_instance;
@@ -276,8 +278,7 @@ final class Zend_Session_Core
     static public function regenerateId()
     {
         if (headers_sent($filename, $linenum)) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__ . ": You must call this method before any "
-                . "output has been sent to the browser; output started in {$filename}/{$linenum}");
+            throw new Zend_Session_Exception("You must call this method before any output has been sent to the browser; output started in {$filename}/{$linenum}");
         }
 
         if (self::$_sessionStarted && self::$_regenerateIdState <=0) {
@@ -383,18 +384,16 @@ final class Zend_Session_Core
         }
 
         if (headers_sent($filename, $linenum)) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__ . "::start() You must call this method "
-                . "before any output has been sent to the browser; output started in {$filename}/{$linenum}");
+            throw new Zend_Session_Exception("You must call this method before any output has been sent to the browser; output started in {$filename}/{$linenum}");
         }
 
         if (self::$_sessionStarted) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__ . '::start() can only be called once.');
+            throw new Zend_Session_Exception('start() can only be called once.');
         }
 
         // See http://www.php.net/manual/en/ref.session.php for explanation
         if (defined('SID')) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__ . '::session has already been started '
-                . '(by session.auto-start or session_start()?)');
+            throw new Zend_Session_Exception('session has already been started by session.auto-start or session_start()');
         }
 
         session_start();
@@ -458,13 +457,11 @@ final class Zend_Session_Core
     static public function setId($id)
     {
         if (headers_sent($filename, $linenum)) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-                . '::setId() You must call this method before any output has been sent to the browser.');
+            throw new Zend_Session_Exception('You must call this method before any output has been sent to the browser.');
         }
 
         if (!is_string($id) || $id === '') {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-                . '::setId() you must provide a non-empty string as a session identifier.');
+            throw new Zend_Session_Exception('You must provide a non-empty string as a session identifier.');
         }
 
         session_id($id);
@@ -712,8 +709,7 @@ final class Zend_Session_Core
             Zend::loadClass($validator_name);
             $validator = new $validator_name;
             if ($validator->validate() === false) {
-                throw Zend::exception('Zend_Session_Exception', __CLASS__
-                    . "This session is not valid according to {$validator_name}.");
+                throw new Zend_Session_Exception("This session is not valid according to {$validator_name}.");
             }
         }
     }
@@ -735,13 +731,11 @@ final class Zend_Session_Core
     {
         // In strict mode, do not allow auto-starting Zend_Session_Core, such as via "new Zend_Session()"
         if (self::$_strict === true && self::$_sessionStarted === false) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__ . ' - You must start the session with '
-                . 'Zend_Session_Core::start() when session options are set to strict.');
+            throw new Zend_Session_Exception('You must start the session with Zend_Session_Core::start() when session options are set to strict.');
         }
 
         if (self::$_instance !== true) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-                . ' - Should be initialized through Zend_Session_Core::getInstance() only.');
+            throw new Zend_Session_Exception('Should be initialized through Zend_Session_Core::getInstance() only.');
         }
 
         if (self::$_sessionStarted === false) {
@@ -758,8 +752,7 @@ final class Zend_Session_Core
      */
     public function __clone()
     {
-        throw Zend::exception('Zend_Session_Exception', __CLASS__
-            . ' - Zend_Session_Core follows the singleton pattern.  Cloning is not allowed.');
+        throw new Zend_Session_Exception('Zend_Session_Core follows the singleton pattern.  Cloning is not allowed.');
     }
 
 
@@ -810,8 +803,7 @@ final class Zend_Session_Core
     public function namespaceUnset($namespace, $name = null)
     {
         if (self::$_writable === false) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-                 . '::namespaceUnset() Zend_Session_Core is currently marked as read-only.');
+            throw new Zend_Session_Exception('Zend_Session_Core is currently marked as read-only.');
         }
 
         $name = (string) $name;
@@ -843,8 +835,7 @@ final class Zend_Session_Core
      */
     private function _readOnlyErr($functionName, $line)
     {
-        throw Zend::exception('Zend_Session_Exception', __CLASS__
-            . "::$functionName()::$line Zend_Session_Core is currently marked as read-only.");
+        throw new Zend_Session_Exception('Zend_Session_Core is currently marked as read-only.');
     }
 
 
@@ -859,8 +850,7 @@ final class Zend_Session_Core
      */
     private function _notReadableErr($functionName, $line)
     {
-        throw Zend::exception('Zend_Session_Exception', __CLASS__
-            . "::$functionName()::$line Zend_Session_Core is not marked as readable.");
+        throw new Zend_Session_Exception('Zend_Session_Core is not marked as readable.');
     }
 
 
@@ -934,8 +924,7 @@ final class Zend_Session_Core
         }
 
         if ($seconds <= 0) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-                . '::namespaceSetExpirationSeconds() - Seconds must be positive.');
+            throw new Zend_Session_Exception('Seconds must be positive.');
         }
 
         if ($variables === null) {
@@ -975,8 +964,7 @@ final class Zend_Session_Core
         }
 
         if ($hops <= 0) {
-            throw Zend::exception('Zend_Session_Exception', __CLASS__
-                . '::namespaceSetExpirationHops() - Hops must be positive number.');
+            throw new Zend_Session_Exception('Hops must be positive number.');
         }
 
         if ($variables === null) {

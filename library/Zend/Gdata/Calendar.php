@@ -18,8 +18,20 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
+/**
+ * Zend_Gdata
+ */
 require_once('Zend/Gdata.php');
+
+/**
+ * Zend_Gdata_Data
+ */
 require_once('Zend/Gdata/Data.php');
+
+/**
+ * Zend_Gdata_Exception
+ */
+require_once('Zend/Gdata/Exception.php');
 
 /**
  * Gdata Calendar
@@ -193,13 +205,13 @@ class Zend_Gdata_Calendar extends Zend_Gdata
             case 'visibility':
             case 'projection':
                 if (!Zend_Gdata_Data::isValid($value, $var)) {
-                    throw Zend::exception('Zend_Gdata_Exception', "Unsupported $var value: '$value'");
+                    throw new Zend_Gdata_Exception("Unsupported $var value: '$value'");
                 }
                 $var = "_$var";
                 break;
             case 'orderby':
                 if (!Zend_Gdata_Data::isValid($value, 'orderby#calendar')) {
-                    throw Zend::exception('Zend_Gdata_Exception', "Unsupported $var value: '$value'");
+                    throw new Zend_Gdata_Exception("Unsupported $var value: '$value'");
                 }
                 break;
             case 'user':

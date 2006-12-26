@@ -33,9 +33,9 @@ require_once 'Zend/Mail/Folder/Interface.php';
 require_once 'Zend/Mail/Mbox.php';
 
 /**
- * Zend
+ * Zend_Mail_Exception
  */
-require_once 'Zend.php';
+require_once 'Zend/Mail/Exception.php';
 
 /**
  * @package    Zend_Mail
@@ -73,11 +73,11 @@ class Zend_Mail_Folder_Mbox extends Zend_Mail_Mbox implements Zend_Mail_Folder_I
     public function __construct($params)
     {
         if(isset($params['filename'])) {
-            throw Zend::exception('Zend_Mail_Exception', 'use Zend_Mail_Mbox for a single file');
+            throw new Zend_Mail_Exception('use Zend_Mail_Mbox for a single file');
         }
 
         if(!isset($params['rootdir']) || !is_dir($params['rootdir'])) {
-            throw Zend::exception('Zend_Mail_Exception', 'no valid rootdir given in params');
+            throw new Zend_Mail_Exception('no valid rootdir given in params');
         }
 
         $this->_rootdir = rtrim($params['rootdir'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
