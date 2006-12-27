@@ -50,7 +50,7 @@ require_once 'Zend/Db/Select.php';
  */
 require_once 'Zend/Db/Statement/Mysqli.php';
 
-class Zend_Db_Adapter_MySqli extends Zend_Db_Adapter_Abstract
+class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
 {
     /**
      * Quotes an identifier.
