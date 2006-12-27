@@ -1,78 +1,77 @@
 <sect1 id="zend.date.introduction">
-    <title>Einführung</title>
+    <title>Introduction</title>
     <para>
-        Der Zend_Framework bietet mit <code>Zend_Date</code> eine ausführliche und sehr einfache API 
-        für die Handhabung von Datum und Zeit. Es wird eine große Anzahl an Funktionen und Möglichkeiten 
-        geboten die sogar die Standardfunktionen von PHP auf ein höheres Level bringt.
+        With <code>Zend_Date</code> the Zend Framework offers a detailed and very simple API for
+        date and time handling. It offers a large amount of features and possibilities which even
+        take the standard PHP functions to a higher level.
     </para>
     <para>
-        Die einfache Handhabung von Zeit und Datum werden von jedem Benutzer vorausgesetzt.
-        Aber so einfach wie es auf den ersten Blick scheint ist es in Wirklichkeit nicht.
+    	The simple handling of time and date a required by each user. But it in reality it is never 
+    	as simple as it seemed to be on the first glance.
     </para>
     <para>
-        Der Hintergrund ist recht simpel erklärt. Sowohl Datum als auch Zeit werden in jedem Land 
-        unterschiedlich geschrieben. Einmal ist das Monat an erster Stelle, ein anderes mal wird
-        der Tag als erstes geschrieben. 
+    	The background is very simple. Dates as well as times are written differently in each 
+    	country. Once the month is written at the first position, another time the day is written
+    	first. 
     </para>
     <sect2 id="zend.date.possibilities">
-        <title>Was kann Zend_Date</title>
+        <title>Zend_Date possibilities</title>
         <para>
-            Warum sollte man also statt den Standard PHP Funktionen <code>Zend_Date</code> verwenden ?
+            Why should you use <code>Zend_Date</code> instead of the standard PHP functions?
         </para>
         <para>
-            Nun... <code>Zend_Date</code> bietet unter anderem folgende Funktionen an die den Standard PHP Umfang
-            erweitern :
+            Well, among other things <code>Zend_Date</code> offers the following features which 
+            extend the standard PHP scope:
         </para>
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
-                    Einfache API
+                    Simple API
                 </para>
                 <para>
-                    <code>Zend_Date</code> bietet eine sehr einfach API die das beste aus 4 Programmiersprachen 
-                    vereint. So können zum Beispiel mit einer einzigen Zeile 2 Zeiten addiert oder 
-                    verglichen werden. 
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    Vollständig Internationalisiert
-                </para>
-                <para>
-                    Es werden alle vollständigen oder abgekürzten Monats und Tagesnamen von über 130 Sprachen
-                    unterstützt. Sowohl bei der Eingabe als auch bei der Ausgabe eines Datums können Tage und 
-                    Monate in der landeseigenen Sprache geschrieben werden.
+                    <code>Zend_Date</code> offers a very simple API which combines the best of
+                    4 programming languages. It is possible, for example, to add or compare 2 times
+                    within a single row. 
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Unlimitierte Timestamps
+                    Completely internationalized
                 </para>
                 <para>
-                    PHP bis Version 5 unterstützt nur 32bit Timestamps. Ab PHP 5.2 wächst die Unterstützung
-                    teilweise auf 64bit timestamps. Mit Zend_Date werden unlimitierte Timestamps unterstützt.
-                    Es können also auch astronomische Daten berechnet werden. Die einzige Einschränkung ist
-                    die Geschwindigkeit des Servers.
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    Unterstützung von ISO_8601 Datumsangaben
-                </para>
-                <para>
-                    Es werden ISO 8601 Datumsangaben unterstützt. Wobei die auch teilweise konforme ISO 8601 
-                    Datumsangaben erkannt werden. Diese Art des Datums ist vor allem bei Datenbanken in Verwendung.
-                    Als Beispiel können MsSql und MySql Datumsangaben genannt werden. Sie sind voneinander
-                    leicht unterschiedlich werden aber trotzdem beide unterstützt.
+                    All full and abbreviated names of months and days are supported for more than 
+                    130 languages. Both at the input and the output of a date the day and month can
+                    be written in the local languages.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Sonnenaufgang und Sonnenuntergang berechnen
+                    Unlimited timestamps
                 </para>
                 <para>
-                    Für jeden Ort und jeden Tag können die Zeiten des Sonnenaufgangs und des
-                    Sonnenuntergangs ausgegeben werden.
+                	Until release 5 PHP only supports 32bit timestamps. Since PHP 5.2 the support
+                	partly rises tp 64bit timestamps. With Zend_Date unlimited timestamp will be
+                	supported. Even very high values can be calculated. The only limit is the 
+                	speed of the server.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Support for ISO_8601 date specifications
+                </para>
+                <para>
+                	ISO_8601 date specifications are supported. Whereas even partial compliant 
+                	ISO_8601 date specifications will be identified. These dates formats are
+                	particularly used within databases. For example MsSQL and MySQL dates can be
+                	mentioned here. They differ a little from each other but both are supported.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Calculate sunrise and sunset
+                </para>
+                <para>
+                	For any place and day the times for sunrise and sunset can be displayed.
                 </para>
             </listitem>
         </itemizedlist>

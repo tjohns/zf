@@ -1,49 +1,47 @@
 <sect1 id="zend.date.definition">
-    <title>Warum nur eine Klasse ?</title>
+    <title>Wky only one class?</title>
     <para>
-        Warum aber gibt es nur eine Klasse <code>Zend_Date</code> für die Handhabung von Datum und Uhrzeit 
-        im Zend_Framework ?
+    	Why is there only one class <code>Zend_Date</code> for handling dates and times in the Zend
+    	Framework?
     </para>
     <para>
-        In anderen Sprachen hat man sich für die Trennung von Uhrzeit und Datum entschieden.
-        Wir sind der Meinung das es natürlicher eine Klasse zu haben da Datum und Zeit
-        immer gemeinsam gesehen werden. Andererseits wird auf diese Weise die Zwangsläufige 
-        Dopplung von Code vermieden was wieder der Geschwindigkeit zu Gute kommt.
+    	In other languages it was decided to split time and date. We think it is more natural to 
+    	treat date and time always together. On the other hand in this manner the inevitable code
+    	duplication can be avoided which supports the performance as well.
     </para>
     <sect2 id="zend.date.definition.notavaiable">
-        <title>Was nicht geht mit Zend_Date</title>
+        <title>What is not possible with Zend_Date</title>
         <para>
-            Trotzdem gibt es Funktionalitäten die mit der vorliegenden <code>Zend_Date</code> Klasse
-            nicht funktionieren.
+        	Nevertheless there are some functionalities which do not work with the current 
+        	<code>Zend_Date</code> class.
         </para>
         <para>
-            <code>Zend_Date</code> ist als reine Datums und Zeitklasse ausgelegt. Deswegen gibt es natürlich 
-            auch Funktionalitäten die mit der vorliegenden <code>Zend_Date</code> Klasse
-            nicht möglich sind. Auch wenn es nur sehr wenige sind, müssen Sie der Vollständigkeit
-            halber hier erwähnt werden.
+            <code>Zend_Date</code> is laid out as a pure date and time class. Therefore there are
+            some functionalities which are not possiblem with the current <code>Zend_Date</code> 
+            class. Even if there are only a few missing features they have to be mentioned for the 
+            sake of completeness.
         </para>
         <itemizedlist mark='opencircle'>
             <listitem>
                 <para>
-                    Kalender Formate
+                    Calendar formats
                 </para>
                  <para>
-                    Andere Kalenderformate als Gregorianisch werden von <code>Zend_Date</code> nicht unterstützt.
-                    Hierfür gibt es eine eigene Klasse <code>Zend_Calendar</code>. Sie unterstützt nicht nur
-                    Gregorianisch sondern auch Arabisch, Hebräisch, Julianisch und andere 
-                    Kalender Formate.
+                 	Other calendar formats besides Gregorian are not supported by 
+                 	<code>Zend_Date</code>. For this purpose the is the own class 
+                 	<code>Zend_Calendar</code>. It supports not only Gregorian but also Arabic,
+                 	Hebrew, Julian and other calendar formats.
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    Fremdsprachiges Monat
+                	Foreign-language month
                 </para>
                  <para>
-                    Wenn das Monat in einer anderen als der fix angegebenen Sprache oder der 
-                    Sprache die auf dem Browser oder dem Server eingestellt ist, angegeben wurde,
-                    kann es nicht erkannt werden. Der Hintergrund ist, das nicht alle 126 bekannten
-                    Sprachen durchgeparst werden können, da es hier sonst Probleme mit der Performance geben
-                    würden.
+                 	If the month is set up in a different language than the fixed stated language
+                 	or the language of the browser or the server, it can not be detected. The 
+                 	reason is that not all 126 known languages can be parsed due to possible
+                 	performance problems.
                 </para>
             </listitem>
         </itemizedlist>
