@@ -1,5 +1,5 @@
 <sect1 id="zend.date.definition">
-    <title>Wky only one class?</title>
+    <title>Why only one class?</title>
     <para>
     	Why is there only one class <code>Zend_Date</code> for handling dates and times in the Zend
     	Framework?
@@ -17,7 +17,7 @@
         </para>
         <para>
             <code>Zend_Date</code> is laid out as a pure date and time class. Therefore there are
-            some functionalities which are not possiblem with the current <code>Zend_Date</code> 
+            some functionalities which are not possible with the current <code>Zend_Date</code> 
             class. Even if there are only a few missing features they have to be mentioned for the 
             sake of completeness.
         </para>

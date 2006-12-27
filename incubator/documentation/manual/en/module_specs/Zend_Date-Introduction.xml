@@ -6,11 +6,11 @@
         take the standard PHP functions to a higher level.
     </para>
     <para>
-    	The simple handling of time and date a required by each user. But it in reality it is never 
+    	The simple handling of time and date is a required by each user. But in reality it is never 
     	as simple as it seemed to be on the first glance.
     </para>
     <para>
-    	The background is very simple. Dates as well as times are written differently in each 
+    	The background is very simple. Dates, as well as times, are written differently in each 
     	country. Once the month is written at the first position, another time the day is written
     	first. 
     </para>
@@ -41,7 +41,8 @@
                 <para>
                     All full and abbreviated names of months and days are supported for more than 
                     130 languages. Both at the input and the output of a date the day and month can
-                    be written in the local languages.
+                    be written in the local languages. Also standard date and time formats of each country
+                    are supported.
                 </para>
             </listitem>
             <listitem>
@@ -51,8 +52,12 @@
                 <para>
                 	Until release 5 PHP only supports 32bit timestamps. Since PHP 5.2 the support
                 	partly rises tp 64bit timestamps. With Zend_Date unlimited timestamp will be
-                	supported. Even very high values can be calculated. The only limit is the 
-                	speed of the server.
+                	supported. Even very high values can be calculated.
+                </para>
+                <para>
+                    The only limit is the speed of the server and the avaiability of the BCMath extension.
+                    If BCMath is not avaiable Zend_Date will have reduced support only for timestamps within
+                    the float range.
                 </para>
             </listitem>
             <listitem>
