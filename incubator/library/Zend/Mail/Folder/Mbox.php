@@ -106,7 +106,7 @@ class Zend_Mail_Folder_Mbox extends Zend_Mail_Mbox implements Zend_Mail_Folder_I
 
         $dh = @opendir($currentDir);
         if(!$dh) {
-            throw Zend::Exception('Zend_Mail_Exception', "can't read dir $currentDir");
+            throw new Zend_Mail_Exception("can't read dir $currentDir");
         }
         while(($entry = readdir($dh)) !== false) {
             // ignore hidden files for mbox
@@ -153,7 +153,7 @@ class Zend_Mail_Folder_Mbox extends Zend_Mail_Mbox implements Zend_Mail_Folder_I
         }
 
         if($currentFolder->getGlobalName() != rtrim($rootFolder, DIRECTORY_SEPARATOR)) {
-            throw Zend::Exception('Zend_Mail_Exception', "folder $rootFolder not found");
+            throw new Zend_Mail_Exception("folder $rootFolder not found");
         }
         return $currentFolder;
     }
@@ -176,11 +176,11 @@ class Zend_Mail_Folder_Mbox extends Zend_Mail_Mbox implements Zend_Mail_Folder_I
             // check what went wrong
             // if folder does not exist getFolders() throws an exception
             if(!$this->getFolders($this->_currentFolder)->isSelectable()) {
-                throw Zend::Exception('Zend_Mail_Exception', "{$this->_currentFolder} is not selectable");
+                throw new Zend_Mail_Exception("{$this->_currentFolder} is not selectable");
             }
             // seems like file has vanished; rebuilding folder tree - but it's still an exception
             $this->_buildFolderTree($this->_rootdir);
-            throw Zend::Exception('Zend_Mail_Exception', 'seems like the mbox file has vanished, I\'ve rebuild the ' .
+            throw new Zend_Mail_Exception('seems like the mbox file has vanished, I\'ve rebuild the ' .
                                                          'folder tree, search for an other folder and try again');
         }
     }

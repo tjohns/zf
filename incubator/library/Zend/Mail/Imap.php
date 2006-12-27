@@ -267,7 +267,7 @@ class Zend_Mail_Imap extends Zend_Mail_Abstract implements Zend_Mail_Folder_Inte
                 }
             } while($stack);
             if(!$stack) {
-                throw Zend::Exception('Zend_Mail_Exception', 'error while constructing folder tree');
+                throw new Zend_Mail_Exception('error while constructing folder tree');
             }
         }
 

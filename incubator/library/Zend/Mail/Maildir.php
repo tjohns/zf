@@ -29,7 +29,7 @@ require_once 'Zend/Mail/Abstract.php';
 require_once 'Zend/Mail/Message.php';
 
 /**
- * Zend
+ * Zend_Mail_Exception
  */
 require_once 'Zend/Mail/Exception.php';
 
