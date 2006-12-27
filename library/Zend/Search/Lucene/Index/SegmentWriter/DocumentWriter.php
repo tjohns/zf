@@ -92,19 +92,34 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
 
             if ($field->isIndexed) {
                 if ($field->isTokenized) {
-                    $tokenList = Zend_Search_Lucene_Analysis_Analyzer::getDefault()->tokenize($field->stringValue);
-                } else {
-                    $tokenList = array();
-                    $tokenList[] = new Zend_Search_Lucene_Analysis_Token($field->stringValue, 0, strlen($field->stringValue));
-                }
-                $docNorms[$field->name] = chr($similarity->encodeNorm( $similarity->lengthNorm($field->name,
-                                                                                               count($tokenList))*
-                                                                       $document->boost*
-                                                                       $field->boost ));
+                    $analyzer = Zend_Search_Lucene_Analysis_Analyzer::getDefault();
+                    $analyzer->setInput($field->stringValue);
 
-                $position = 0;
-                foreach ($tokenList as $token) {
-                    $term = new Zend_Search_Lucene_Index_Term($token->getTermText(), $field->name);
+                    $position     = 0;
+                    $tokenCounter = 0;
+                    while (($token = $analyzer->nextToken()) !== null) {
+                        $term = new Zend_Search_Lucene_Index_Term($token->getTermText(), $field->name);
+                        $termKey = $term->key();
+
+                        if (!isset($this->_termDictionary[$termKey])) {
+                            // New term
+                            $this->_termDictionary[$termKey] = $term;
+                            $this->_termDocs[$termKey] = array();
+                            $this->_termDocs[$termKey][$this->_docCount] = array();
+                        } else if (!isset($this->_termDocs[$termKey][$this->_docCount])) {
+                            // Existing term, but new term entry
+                            $this->_termDocs[$termKey][$this->_docCount] = array();
+                        }
+                        $position += $token->getPositionIncrement();
+                        $this->_termDocs[$termKey][$this->_docCount][] = $position;
+                    }
+
+                    $docNorms[$field->name] = chr($similarity->encodeNorm( $similarity->lengthNorm($field->name,
+                                                                                                   $tokenCounter)*
+                                                                           $document->boost*
+                                                                           $field->boost ));
+                } else {
+                    $term = new Zend_Search_Lucene_Index_Term($field->stringValue, $field->name);
                     $termKey = $term->key();
 
                     if (!isset($this->_termDictionary[$termKey])) {
@@ -116,8 +131,11 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
                         // Existing term, but new term entry
                         $this->_termDocs[$termKey][$this->_docCount] = array();
                     }
-                    $position += $token->getPositionIncrement();
-                    $this->_termDocs[$termKey][$this->_docCount][] = $position;
+                    $this->_termDocs[$termKey][$this->_docCount][] = 0; // position
+
+                    $docNorms[$field->name] = chr($similarity->encodeNorm( $similarity->lengthNorm($field->name, 1)*
+                                                                           $document->boost*
+                                                                           $field->boost ));
                 }
             }
 

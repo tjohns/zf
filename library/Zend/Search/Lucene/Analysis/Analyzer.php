@@ -69,13 +69,59 @@ abstract class Zend_Search_Lucene_Analysis_Analyzer
     static private $_defaultImpl;
 
     /**
+     * Input string
+     *
+     * @var string
+     */
+    protected $_input = null;
+
+    /**
      * Tokenize text to a terms
      * Returns array of Zend_Search_Lucene_Analysis_Token objects
      *
      * @param string $data
      * @return array
      */
-    abstract public function tokenize($data);
+    public function tokenize($data)
+    {
+        $this->setInput($data);
+
+        $tokenList = array();
+        while (($nextToken = $this->nextToken()) !== null) {
+            $tokenList[] = $nextToken;
+        }
+
+        return $tokenList;
+    }
+
+
+    /**
+     * Tokenization stream API
+     * Set input
+     *
+     * @param string $data
+     */
+    public function setInput($data)
+    {
+        $this->_input = $data;
+        $this->reset();
+    }
+
+    /**
+     * Reset token stream
+     */
+    abstract public function reset();
+
+    /**
+     * Tokenization stream API
+     * Get next token
+     * Returns null at the end of stream
+     *
+     * @return Zend_Search_Lucene_Analysis_Token|null
+     */
+    abstract public function nextToken();
+
+
 
 
     /**

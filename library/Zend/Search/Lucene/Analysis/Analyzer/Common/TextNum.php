@@ -34,48 +34,63 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
 
 class Zend_Search_Lucene_Analysis_Analyzer_Common_TextNum extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
-    /**
-     * Tokenize text to a terms
-     * Returns array of Zend_Search_Lucene_Analysis_Token objects
-     *
-     * @param string $data
-     * @return array
-     */
-    public function tokenize($data)
-    {
-        $tokenStream = array();
+    private $_position;
 
-        $position = 0;
-        while ($position < strlen($data)) {
+    /**
+     * Reset token stream
+     */
+    public function reset()
+    {
+        $this->_position = 0;
+    }
+
+    /**
+     * Tokenization stream API
+     * Get next token
+     * Returns null at the end of stream
+     *
+     * @return Zend_Search_Lucene_Analysis_Token|null
+     */
+    public function nextToken()
+    {
+        if ($this->_input === null) {
+            return null;
+        }
+
+        while ($this->_position < strlen($this->_input)) {
             // skip white space
-            while ($position < strlen($data) && !ctype_alnum($data{$position} )) {
-                $position++;
+            while ($this->_position < strlen($this->_input) &&
+                   !ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
             }
 
-            $termStartPosition = $position;
+            $termStartPosition = $this->_position;
 
             // read token
-            while ($position < strlen($data) && ctype_alnum($data{$position} )) {
-                $position++;
+            while ($this->_position < strlen($this->_input) &&
+                   ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
             }
 
             // Empty token, end of stream.
-            if ($position == $termStartPosition) {
-                break;
+            if ($this->_position == $termStartPosition) {
+                return null;
             }
 
-            $token = new Zend_Search_Lucene_Analysis_Token(substr($data,
+            $token = new Zend_Search_Lucene_Analysis_Token(
+                                      substr($this->_input,
                                              $termStartPosition,
-                                             $position-$termStartPosition),
+                                             $this->_position - $termStartPosition),
                                       $termStartPosition,
-                                      $position);
+                                      $this->_position);
             $token = $this->normalize($token);
-            if (! is_null($token)) {
-                $tokenStream[] = $token;
+            if ($token !== null) {
+                return $token;
             }
+            // Continue if token is skipped
         }
 
-        return $tokenStream;
+        return null;
     }
 }
 
