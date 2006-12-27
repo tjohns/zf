@@ -63,7 +63,19 @@ class Zend_Translate {
         } else {
             $this->_Locale = $locale;
         }
-        
+
+        $this->setAdaptor($options);
+    }
+
+
+    /**
+     * Sets a new adaptor
+     *
+     * @param $options array - Adaptor options
+     * @return timestamp
+     */
+    public function setAdaptor($options)
+    {
         switch (strtolower($adaptor)) {
             case 'array':
                 throw new Zend_Translate_Exception('not supported for now');
@@ -72,7 +84,7 @@ class Zend_Translate {
                 throw new Zend_Translate_Exception('not supported for now');
                 break;
             case 'gettext':
-                throw new Zend_Translate_Exception('not supported for now');
+                $this->_Adaptor = Zend_Translate_Gettext::getInstance($options);
                 break;
             case 'qt':
                 throw new Zend_Translate_Exception('not supported for now');
@@ -100,23 +112,13 @@ class Zend_Translate {
 
 
     /**
-     * Sets a new adaptor
-     *
-     * @param $options array - Adaptor options
-     * @return timestamp
-     */
-    public function setAdaptor($options)
-    {
-    }
-
-
-    /**
-     * Returns the adaptor and it's options
+     * Returns the adaptors name and it's options
      *
      * @return array
      */
     public function getAdaptor()
     {
+        return $this->_Adaptor->toString();
     }
 
 
@@ -128,6 +130,7 @@ class Zend_Translate {
     public function setLocale($locale)
     {
         $this->_Locale = $locale;
+        return $this->_Adaptor->setLocale($locale);
     }
 
 
@@ -143,22 +146,35 @@ class Zend_Translate {
 
 
     /**
-     * Gets the actual locale/language
+     * Gets the actual language, can differ from the set locale
      *
      * @return $locale string
      */
-    public function getLanguageList($locale)
+    public function getLanguage()
     {
+        return $this->_Adaptor->getLanguage();
     }
 
 
     /**
-     * is the wished language avaiable
+     * Returns the avaiable languages from this adaptor
+     *
+     * @return $locale string
+     */
+    public function getLanguageList()
+    {
+        return $this->_Adaptor->getLanguageList();
+    }
+    
+
+    /**
+     * is the wished language avaiable ?
      *
      * @return boolean
      */
-    public function isAvaiable($locale)
+    public function isAvaiable($language)
     {
+        return $this->_Adaptor->isAvaiable($language);
     }
 
 
@@ -176,9 +192,12 @@ class Zend_Translate {
     /**
      * translation
      *
+     * @param $translation string - Translationstring
+     * @param $language    locale - language to use
      * @return string
      */
-    public function translate($translation)
+    public function translate($translation, $language)
     {
+        return $this->_Adaptor->translate($translation, $language);
     }
 }
