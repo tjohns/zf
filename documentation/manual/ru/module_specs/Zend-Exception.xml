@@ -9,6 +9,25 @@
 -->
     </para>
 
+    <note>
+        <title>Не рекомендуется к использованию<!--Deprecated:--></title>
+        <para>
+            Этот метод был добавлен в версии 0.6.0. В последнее время было
+            решено, что лучше использовать традиционные методы инстанцирования,
+            возбуждения и отлова исключений. Метод
+            <code>Zend::exception()</code> не рекомендуется к использованию в
+            версии 0.6.1 и будет удален из Zend Framework в последующих версиях.
+<!--
+            This method was introduced in Zend Framework 0.6.0.
+            It was recently decided that it's better to use traditional methods
+            to instantiate, throw, and catch exceptions.
+            The <code>Zend::exception()</code> method is deprecated in
+            Zend Framework 0.6.1, and it will be removed from the Zend Framework
+            product in a later Preview Release.
+-->
+        </para>
+    </note>
+
     <programlisting role="php"><![CDATA[<?php
 
 Zend::exception($class, $message, $code);

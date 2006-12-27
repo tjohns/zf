@@ -59,31 +59,33 @@ $index->addDocument($doc);
 ?>]]></programlisting>
 
         <para>
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> создан для того,
-            чтобы быть родительским классом для всех анализаторов,
-            определяемых пользователем. Пользователь должен определить только метод
-            <code>tokenize()</code>, который принимает входные данные в виде строки
-            и возвращает массив лексем. 
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code>
+            спроектирован для того, чтобы быть родительским классом для всех
+            анализаторов, определяемых пользователем. В наследующем классе
+            достаточно определить методы <code>reset()</code> и
+            <code>nextToken()</code>, которые берут строку из свойства $_input
+            и возвращают лексемы шаг за шагом (<code>null</code> означает конец
+            потока). 
 <!--
-            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> is designed
-            to be a parent for all user defined analyzers. User should only
-            define the <code>tokenize()</code> method, which takes input
-            data as a string and returns an array of tokens.
+            <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> is designed to be a parent for all user
+            defined analyzers. User should only define the <code>reset()</code> and <code>nextToken()</code> methods,
+            which take string from $_input member and returns tokens step by step
+            (<code>null</code> indicates end of stream).
 -->
         </para>
 
         <para>
-            Метод <code>tokenize()</code> должен использовать метод
-            <code>normalize()</code> для всех лексем. Он позволит использовать
-            фильтры лексем с вашим анализатором. 
+            Метод <code>nextToken()</code> должен использовать метод
+            <code>normalize()</code> для каждой лексемы. Это позволит
+            использовать фильтры лексем с вашим анализатором.
 <!--
-            The <code>tokenize()</code> method should apply the <code>normalize()</code> method to all
-            tokens. It will allow you to use token filters with your analyzer.
+            The <code>nextToken()</code> method should apply the <code>normalize()</code> method to each
+            token. It will allow you to use token filters with your analyzer.
 -->
         </para>
 
         <para>
-            Здесь приведен пример пользовательского анализатора, котрорый
+            Ниже приведен пример пользовательского анализатора, котрорый
             принимает слова с цифрами как элементы:
 <!--
             Here is an example of a custom Analyzer, which takes words with digits as terms:
@@ -99,45 +101,63 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
+    private $_position;
+
     /**
-     * Разбиение текста на лексемы
-     * Returns array of Zend_Search_Lucene_Analysis_Token objects
-     *
-     * @param string $data
-     * @return array
+     * Установка позиции в начальное состояние
      */
-    public function tokenize($data)
+    public function reset()
     {
-        $tokenStream = array();
+        $this->_position = 0;
+    }
 
-        $position = 0;
-        while ($position < strlen($data)) {
-            // пропуск пробелов
-            while ($position < strlen($data) && !ctype_alpha($data{$position}) && !ctype_digit($data{$position})) {
-                $position++;
-            }
-
-            $termStartPosition = $position;
-
-            // чтение лексемы
-            while ($position < strlen($data) && (ctype_alpha($data{$position}) || ctype_digit($data{$position}))) {
-                $position++;
-            }
-
-            // Пустая лексема, конец потока.
-            if ($position == $termStartPosition) {
-                break;
-            }
-
-            $token = new Zend_Search_Lucene_Analysis_Token(substr($data,
-                                             $termStartPosition,
-                                             $position-$termStartPosition),
-                                      $termStartPosition,
-                                      $position);
-            $tokenStream[] = $this->normalize($token);
+    /**
+     * API для разбиения на лексемы
+     * Получение следующей лексемы
+     * Возвращает null, если достигнут конец потока
+     *
+     * @return Zend_Search_Lucene_Analysis_Token|null
+     */
+    public function nextToken()
+    {
+        if ($this->_input === null) {
+            return null;
         }
 
-        return $tokenStream;
+        while ($this->_position < strlen($this->_input)) {
+            // пропуск пробела
+            while ($this->_position < strlen($this->_input) &&
+                   !ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
+            }
+
+            $termStartPosition = $this->_position;
+
+            // чтение лексемы
+            while ($this->_position < strlen($this->_input) &&
+                   ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
+            }
+
+            // Пустая лексема, конец потока
+            if ($this->_position == $termStartPosition) {
+                return null;
+            }
+
+            $token = new Zend_Search_Lucene_Analysis_Token(
+                                      substr($this->_input,
+                                             $termStartPosition,
+                                             $this->_position - $termStartPosition),
+                                      $termStartPosition,
+                                      $this->_position);
+            $token = $this->normalize($token);
+            if ($token !== null) {
+                return $token;
+            }
+            // Продолжение, если лексема пропущена
+        }
+
+        return null;
     }
 }
 
