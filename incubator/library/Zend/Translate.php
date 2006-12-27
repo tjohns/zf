@@ -44,6 +44,7 @@ class Zend_Translate {
      * Locale Object / Setting
      */
     private $_Locale = '';
+    private $_Adaptor = false;
 
 
     /**
@@ -56,6 +57,45 @@ class Zend_Translate {
      */
     public function __construct($adaptor, $options, $locale = FALSE)
     {
+        // set locale
+        if ($locale === FALSE) {
+            $this->_Locale = new Zend_Locale();
+        } else {
+            $this->_Locale = $locale;
+        }
+        
+        switch (strtolower($adaptor)) {
+            case 'array':
+                throw new Zend_Translate_Exception('not supported for now');
+                break;
+            case 'cvs':
+                throw new Zend_Translate_Exception('not supported for now');
+                break;
+            case 'gettext':
+                throw new Zend_Translate_Exception('not supported for now');
+                break;
+            case 'qt':
+                throw new Zend_Translate_Exception('not supported for now');
+                break;
+            case 'sql':
+                throw new Zend_Translate_Exception('not supported for now');
+                break;
+            case 'tbx':
+                throw new Zend_Translate_Exception('not supported for now');
+                break;
+            case 'tmx':
+                throw new Zend_Translate_Exception('not supported for now');
+                break;
+            case 'xliff':
+                throw new Zend_Translate_Exception('not supported for now');
+                break;
+            case 'xmltm':
+                throw new Zend_Translate_Exception('not supported for now');
+                break;
+            default:
+                throw new Zend_Translate_Exception('no adaptor selected');
+                break;
+        }
     }
 
 
@@ -87,6 +127,7 @@ class Zend_Translate {
      */
     public function setLocale($locale)
     {
+        $this->_Locale = $locale;
     }
 
 
@@ -97,6 +138,7 @@ class Zend_Translate {
      */
     public function getLocale($locale)
     {
+        return $this->_Locale;
     }
 
 
@@ -115,7 +157,7 @@ class Zend_Translate {
      *
      * @return boolean
      */
-    public function getLanguageList($locale)
+    public function isAvaiable($locale)
     {
     }
 
