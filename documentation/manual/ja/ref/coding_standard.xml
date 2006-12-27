@@ -198,7 +198,7 @@ Zend/View/Helper/FormRadio.php]]></programlisting>
                 関数名は小文字で始めなければなりません。
                 関数名が複数の単語で構成されている場合は、
                 各単語の最初の文字を大文字にしなければなりません。
-                一般に、この方式は "studlyCaps" あるいは "camelCaps"
+                一般に、この方式は "camelCaps"
                 と呼ばれています。
             </para>
 

@@ -37,6 +37,22 @@ Zend::initRegistry($registry);
 ?>]]></programlisting>
     </example>
 
+    <para>
+        定数 <code>ArrayObject::ARRAY_AS_PROPS</code> をコンストラクタで指定すると、
+        値へのアクセス方法として <code>$registry[$indexName]</code> だけでなく
+        <code>$registry->$indexName</code> も使用できるようになります。
+        しかし、Zend_Registry を継承してプライベート変数を追加した場合などは、
+        名前の衝突に注意が必要です。
+    </para>
+
+    <example>
+        <title>値へのアクセスの際に、配列アクセス記法ではなくオブジェクト指向方式を使用する</title>
+<programlisting role="php"><![CDATA[<?php
+$registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS); 
+Zend::initRegistry($registry);
+?>]]></programlisting>
+    </example>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

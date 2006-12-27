@@ -41,12 +41,14 @@ $index->addDocument($doc);
         <para>
             ユーザ定義の解析器のための共通の親クラスとして設計されているのが
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> です。
-            ユーザが定義しなければならないのは <code>tokenize()</code>
-            メソッドのみで、これは入力データを文字列で受け取ってトークンの配列を返します。
+            ユーザが定義しなければならないのは <code>reset()</code> および
+            <code>nextToken()</code> メソッドのみで、
+            これは文字列を $_input から受け取って順に返します
+            (<code>null</code> が最後のデータを表します)。
         </para>
 
         <para>
-            <code>tokenize()</code> メソッドでは、すべてのトークンに対して
+            <code>nextToken()</code> メソッドでは、各トークンに対して
             <code>normalize()</code> メソッドを適用しなければなりません。
             これにより、作成した解析器をトークンフィルタとして使用できるようになります。
         </para>
@@ -66,45 +68,63 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
-    /**
-     * テキストを単語に分割し、
-     * Zend_Search_Lucene_Analysis_Token オブジェクトの配列を返します
-     *
-     * @param string $data
-     * @return array
-     */
-    public function tokenize($data)
-    {
-        $tokenStream = array();
+    private $_position;
 
-        $position = 0;
-        while ($position < strlen($data)) {
+    /**
+     * トークンストリームをリセットします
+     */
+    public function reset()
+    {
+        $this->_position = 0;
+    }
+
+    /**
+     * トークンストリーム API
+     * 次のトークンを取得します。
+     * ストリームの最後に達すると null を返します。
+     *
+     * @return Zend_Search_Lucene_Analysis_Token|null
+     */
+    public function nextToken()
+    {
+        if ($this->_input === null) {
+            return null;
+        }
+
+        while ($this->_position < strlen($this->_input)) {
             // 空白を読み飛ばします
-            while ($position < strlen($data) && !ctype_alpha($data{$position}) && !ctype_digit($data{$position})) {
-                $position++;
+            while ($this->_position < strlen($this->_input) &&
+                   !ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
             }
 
-            $termStartPosition = $position;
+            $termStartPosition = $this->_position;
 
             // トークンを読み込みます
-            while ($position < strlen($data) && (ctype_alpha($data{$position}) || ctype_digit($data{$position}))) {
-                $position++;
+            while ($this->_position < strlen($this->_input) &&
+                   ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
             }
 
             // 空のトークン、あるいはストリームが終了
-            if ($position == $termStartPosition) {
-                break;
+            if ($this->_position == $termStartPosition) {
+                return null;
             }
 
-            $token = new Zend_Search_Lucene_Analysis_Token(substr($data,
+            $token = new Zend_Search_Lucene_Analysis_Token(
+                                      substr($this->_input,
                                              $termStartPosition,
-                                             $position-$termStartPosition),
+                                             $this->_position - $termStartPosition),
                                       $termStartPosition,
-                                      $position);
-            $tokenStream[] = $this->normalize($token);
+                                      $this->_position);
+            $token = $this->normalize($token);
+            if ($token !== null) {
+                return $token;
+            }
+            // トークンがスキップされた場合は継続します
         }
 
-        return $tokenStream;
+        return null;
     }
 }
 
