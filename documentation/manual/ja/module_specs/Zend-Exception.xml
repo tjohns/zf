@@ -5,6 +5,18 @@
         例外クラスを読み込み、そのインスタンスを作成して返します。
     </para>
 
+    <note>
+        <title>非推奨</title>
+        <para>
+            このメソッドは Zend Framework 0.6.0 で追加されましたが、
+            その後、結局以前のようにインスタンス作成や例外のスロー、
+            キャッチをしたほうがいいのではないかという結論に達しました。
+            <code>Zend::exception()</code> メソッドは
+            Zend Framework 0.6.1 で非推奨となり、
+            将来のプレビュー版では削除される予定です。
+        </para>
+    </note>
+
     <programlisting role="php"><![CDATA[<?php
 
 Zend::exception($class, $message, $code);
