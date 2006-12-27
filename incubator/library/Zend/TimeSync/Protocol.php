@@ -64,16 +64,38 @@ abstract class Zend_TimeSync_Protocol
     protected $_info = array();
 
     /**
-     * Abstract method that writes/receives data to/from the timeserver
+     * Abstract method that prepares the data to send to the timeserver
      * 
-     * @return int unix timestamp
+     * @return mixed
      */
-    abstract protected function _query();
+    abstract protected function _prepare();
+    
+    /**
+     * Abstract method that reads the data returned from the timeserver
+     * 
+     * @return mixed
+     */
+    abstract protected function _read();
+
+    /**
+     * Abstract method that writes data to to the timeserver
+     * 
+     * @return mixed
+     */
+    abstract protected function _write($data);
+
+    /**
+     * Abstract method that extracts the binary data returned from the timeserver
+     * 
+     * @return mixed
+     */
+    abstract protected function _extract($data);
 
     /**
      * Connect to the specified timeserver.
      * 
      * @return void
+     * @throws Zend_TimeSync_Exception
      */
     protected function _connect()
     {
@@ -115,7 +137,9 @@ abstract class Zend_TimeSync_Protocol
      */
     public function getDate($locale = false)
     {
-        $timestamp = $this->_query();
+
+        $this->_write($this->_prepare());
+        $timestamp = $this->_extract($this->_read());
 
         return new Zend_Date($timestamp, Zend_Date::TIMESTAMP, $locale);
     }

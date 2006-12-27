@@ -46,12 +46,7 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
         $this->_port       = $port;
     }
 
-    /**
-     * Writes/receives data to/from the timeserver
-     * 
-     * @return int unix timestamp
-     */
-    protected function _query()
+    protected function _prepare()
     {
         $frac   = microtime();
         $fracb1 = ($frac & 0xff000000) >> 24;
@@ -81,12 +76,12 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
 
         $ntppacket .= chr($secb1) .chr($secb2) .chr($secb3) .chr($secb4);   // Transmit Timestamp Seconds
         $ntppacket .= chr($fracb1).chr($fracb2).chr($fracb3).chr($fracb4);  // Transmit Timestamp Fractional
+        
+        return $ntppacket;
+    }
 
-        $this->_connect();
-
-        fwrite($this->_socket, $ntppacket);
-        stream_set_timeout($this->_socket, Zend_TimeSync::$options['timeout']);
-
+    protected function _read()
+    {
         $flags = ord(fread($this->_socket, 1));
         $info  = stream_get_meta_data($this->_socket);
 
@@ -95,26 +90,41 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
             throw new Zend_TimeSync_Exception("could not connect to '$this->_timeserver' on port '$this->_port', reason: 'server timed out'");
         }
 
-        $stratum        = ord(fread($this->_socket, 1));
-        $this->_info['poll']      = ord(fread($this->_socket, 1));
-        $this->_info['precision'] = ord(fread($this->_socket, 1));
-        $rootdelay      = ord(fread($this->_socket, 4));
-        $rootdispersion = ord(fread($this->_socket, 4));
-        $referenceid    = ord(fread($this->_socket, 4));
-        $referencestamp = ord(fread($this->_socket, 4));
-        $referencemicro = ord(fread($this->_socket, 4));
-        $originatestamp = ord(fread($this->_socket, 4));
-        $originatemicro = ord(fread($this->_socket, 4));
-        $receivestamp   = ord(fread($this->_socket, 4));
-        $receivemicro   = ord(fread($this->_socket, 4));
-        $transmitstamp  = ord(fread($this->_socket, 4));
-        $transmitmicro  = ord(fread($this->_socket, 4));
-
-        $clientreceived = 0;
-
+        $result = array(
+            'flags'          => $flags,
+            'stratum'        => ord(fread($this->_socket, 1)),
+            'poll'           => ord(fread($this->_socket, 1)),
+            'precision'      => ord(fread($this->_socket, 1)),
+            'rootdelay'      => ord(fread($this->_socket, 4)),
+            'rootdispersion' => ord(fread($this->_socket, 4)),
+            'referenceid'    => ord(fread($this->_socket, 4)),
+            'referencestamp' => ord(fread($this->_socket, 4)),
+            'referencemicro' => ord(fread($this->_socket, 4)),
+            'originatestamp' => ord(fread($this->_socket, 4)),
+            'originatemicro' => ord(fread($this->_socket, 4)),
+            'receivestamp'   => ord(fread($this->_socket, 4)),
+            'receivemicro'   => ord(fread($this->_socket, 4)),
+            'transmitstamp'  => ord(fread($this->_socket, 4)),
+            'transmitmicro'  => ord(fread($this->_socket, 4)),
+            'clientreceived' => 0
+        );
+        
         $this->_disconnect();
+        
+        return $result;
+    }
 
-        $leap = ($flags & 0xc0) >> 6; // Leap Indicator bit 1100 0000
+    protected function _write($data)
+    {
+        $this->_connect();
+
+        fwrite($this->_socket, $data);
+        stream_set_timeout($this->_socket, Zend_TimeSync::$options['timeout']);
+    }
+
+    protected function _extract($binary)
+    {
+        $leap = ($binary['flags'] & 0xc0) >> 6; // Leap Indicator bit 1100 0000
 
         // 0 = no warning, 1 = last min. 61 sec., 2 = last min. 59 sec., 3 = not synconised
         switch($leap) {
@@ -131,10 +141,10 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
                 $this->_info['leap'] = '3 - not syncronised';
         }
 
-        $this->_info['version'] = ($flags & 0x38) >> 3; // Version Number bit 0011 1000
+        $this->_info['version'] = ($binary['flags'] & 0x38) >> 3; // Version Number bit 0011 1000
         // should be 3
 
-        $mode = ($flags & 0x07);      // Mode bit 0000 0111
+        $mode = ($binary['flags'] & 0x07); // Mode bit 0000 0111
         // 0 = reserved, 1 = symetric active, 2 = symetric passive, 3 = client
         // 4 = server, 5 = broadcast, 6 & 7 = reserved
         switch($mode) {
@@ -158,10 +168,10 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
                 break;
         }
 
-        $ntpserviceid = 'Unknown Stratum ' . $stratum . ' Service';
-        $refid = strtoupper($referenceid);
+        $ntpserviceid = 'Unknown Stratum ' . $binary['stratum'] . ' Service';
+        $refid = strtoupper($binary['referenceid']);
 
-        switch($stratum) {
+        switch($binary['stratum']) {
             case 0:
                 if (substr($refid, 0, 3) == 'DCN') {
                     $ntpserviceid = 'DCN routing protocol';
@@ -189,18 +199,19 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
                 }
                 break;
             default:
-                $ntpserviceid  = ord(substr($referenceid, 0, 1));
+                $ntpserviceid  = ord(substr($binary['referenceid'], 0, 1));
                 $ntpserviceid .= ".";
-                $ntpserviceid .= ord(substr($referenceid, 1, 1));
+                $ntpserviceid .= ord(substr($binary['referenceid'], 1, 1));
                 $ntpserviceid .= ".";
-                $ntpserviceid .= ord(substr($referenceid, 2, 1));
+                $ntpserviceid .= ord(substr($binary['referenceid'], 2, 1));
                 $ntpserviceid .= ".";
-                $ntpserviceid .= ord(substr($referenceid, 3, 1));
+                $ntpserviceid .= ord(substr($binary['referenceid'], 3, 1));
                 break;
         }
-        $this->_info['ntpid']   = $ntpserviceid;
 
-        switch($stratum) {
+        $this->_info['ntpid'] = $ntpserviceid;
+
+        switch($binary['stratum']) {
             case 0:
                 $this->_info['stratum'] = 'undefined';
                 break;
@@ -212,23 +223,24 @@ class Zend_TimeSync_Ntp extends Zend_TimeSync_Protocol
                 break;
         }
 
-        $this->_info['rootdelay']     = $rootdelay >> 15;
-        $this->_info['rootdelayfrac'] = ($rootdelay << 17) >> 17;
-        $this->_info['rootdispersion']     = $rootdispersion >> 15;
-        $this->_info['rootdispersionfrac'] = ($rootdispersion << 17) >> 17;
+        $this->_info['rootdelay']          = $binary['rootdelay'] >> 15;
+        $this->_info['rootdelayfrac']      = ($binary['rootdelay'] << 17) >> 17;
+        $this->_info['rootdispersion']     = $binary['rootdispersion'] >> 15;
+        $this->_info['rootdispersionfrac'] = ($binary['rootdispersion'] << 17) >> 17;
 
         // seconds for message to the server
-        $original  = (float) $originatestamp;
-        $original += (float) $originatemicro / 4294967296;
-        $received  = (float) $receivestamp;
-        $received += (float) $receivemicro / 4294967296;
-        $transmit  = (float) $transmitstamp;
-        $transmit += (float) $transmitmicro / 4294967296;
-        $roundtrip  = ($clientreceived - $original) - ($transmit - $received);
+        $original  = (float) $binary['originatestamp'];
+        $original += (float) $binary['originatemicro'] / 4294967296;
+        $received  = (float) $binary['receivestamp'];
+        $received += (float) $binary['receivemicro'] / 4294967296;
+        $transmit  = (float) $binary['transmitstamp'];
+        $transmit += (float) $binary['transmitmicro'] / 4294967296;
+        $roundtrip = ($binary['clientreceived'] - $original) - ($transmit - $received);
+        
         $this->_info['roundtrip'] = $roundtrip / 2;
 
         // seconds to add for local clock
-        $offset = $received - $original + $transmit - $clientreceived;
+        $offset = $received - $original + $transmit - $binary['clientreceived'];
         $this->_info['offset'] = $offset / 2;
 
         $time = time() - $offset;

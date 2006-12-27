@@ -33,6 +33,8 @@ require_once 'Zend/TimeSync/Protocol.php';
  */
 class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
 {
+    private $_delay;
+    
 	/**
 	 * Class constructor, sets the timeserver and port number
 	 *
@@ -46,31 +48,32 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
         $this->_port       = $port;
     }
 
-    /**
-     * Writes/receives data to/from the timeserver
-     * 
-     * @return int unix timestamp
-     */
-    protected function _query()
+    protected function _prepare()
+    {
+        return "\n";
+    }
+
+    protected function _read()
+    {
+        $result = fread($this->_socket, 49);
+        $this->_delay = ($this->_delay - time()) / 2;
+        
+    }
+
+    protected function _write($data)
     {
         $this->_connect();
+        $this->_delay = time();
+        fputs($this->_socket, $data);
+    }
 
-        $begin = time();
-        fputs($this->_socket, "\n");
-        $result = fread($this->_socket, 49);
-        $end = time();
+    protected function _extract($result)
+    {
+        $time  = abs(hexdec('7fffffff') - hexdec(bin2hex($result)) - hexdec('7fffffff'));
+        $time -= 2208988800;
+        // socket delay
+        $time -= $this->_delay;
 
-        $this->_disconnect();
-
-        if (!$result) {
-            throw new Zend_TimeSync_Exception('invalid result returned from server');
-        } else {
-            $time  = abs(hexdec('7fffffff') - hexdec(bin2hex($result)) - hexdec('7fffffff'));
-            $time -= 2208988800;
-            // socket delay
-            $time -= (($end - $begin) / 2);
-
-            return $time;
-        }
+        return $time;
     }
 }
