@@ -6,6 +6,17 @@
         zurück.
     </para>
 
+    <note>
+        <title>Veraltet:</title>
+        <para>
+        	Diese Methode wirde im Zend Framework 0.6.0 eingeführt. Es wurde vor kurzem entschieden,
+        	dass es besser sei, die traditionellen Methoden zu verwenden, um Ausnahmen zu 
+        	instanzieren, werfen und fangen. Die <code>Zend::exception()</code> method ist ab Zend
+        	Framework 0.6.1 veraltet und wird in einem späteren Release aus dem Zend Framework
+        	entfernt.
+        </para>
+    </note>
+
     <programlisting role="php"><![CDATA[<?php
 
 Zend::exception($class, $message, $code);

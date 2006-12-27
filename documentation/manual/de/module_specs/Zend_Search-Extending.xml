@@ -39,13 +39,14 @@ $index->addDocument($doc);
         <para>
             <code>Zend_Search_Lucene_Analysis_Analyzer_Common</code> wurde als Vorgänger für alle 
             benutzerdefinierten Analysatoren entwickelt. Benutzer sollten nur die 
-            <code>tokenize()</code> Methode definieren, welche Eingabedaten als String entgegen 
-            nimmt und ein Array mit Tokens zurückgibt.
+            <code>reset()</code> und <code>nextToken()</code> Methoden definieren, die einen String
+            der $_input Eigenschaft nimmt und einen Token schrittweise zurück gibt
+            (<code>null</code> gibt das Ende des Stroms an).
         </para>
 
         <para>
-            Die <code>tokenize()</code> Methode sollte die <code>normalize()</code> Methode auf alle 
-            Tokens anwenden. Dies erlaubt die Verwendung von Tokenfiltern in deinem Analysator.
+            Die <code>nextToken()</code> Methode sollte die <code>normalize()</code> Methode auf 
+            jeden Token anwenden. Dies erlaubt die Verwendung von Tokenfiltern in deinem Analysator.
         </para>
 
         <para>
@@ -63,45 +64,63 @@ require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
 
 class My_Analyzer extends Zend_Search_Lucene_Analysis_Analyzer_Common
 {
+    private $_position;
+
     /**
-     * Teile Text in Begriffe auf
-     * Gibt ein Array mit Zend_Search_Lucene_Analysis_Token Objekten zurück
-     *
-     * @param string $data
-     * @return array
+     * Reset token stream
      */
-    public function tokenize($data)
+    public function reset()
     {
-        $tokenStream = array();
+        $this->_position = 0;
+    }
 
-        $position = 0;
-        while ($position < strlen($data)) {
-            // überspringe Leerzeichen
-            while ($position < strlen($data) && !ctype_alpha($data{$position}) && !ctype_digit($data{$position})) {
-                $position++;
-            }
-
-            $termStartPosition = $position;
-
-            // lese Token
-            while ($position < strlen($data) && (ctype_alpha($data{$position}) || ctype_digit($data{$position}))) {
-                $position++;
-            }
-
-            // Leerer Token, Ende der Kette
-            if ($position == $termStartPosition) {
-                break;
-            }
-
-            $token = new Zend_Search_Lucene_Analysis_Token(substr($data,
-                                             $termStartPosition,
-                                             $position-$termStartPosition),
-                                      $termStartPosition,
-                                      $position);
-            $tokenStream[] = $this->normalize($token);
+    /**
+     * Tokenization stream API
+     * Get next token
+     * Returns null at the end of stream
+     *
+     * @return Zend_Search_Lucene_Analysis_Token|null
+     */
+    public function nextToken()
+    {
+        if ($this->_input === null) {
+            return null;
         }
 
-        return $tokenStream;
+        while ($this->_position < strlen($this->_input)) {
+            // skip white space
+            while ($this->_position < strlen($this->_input) &&
+                   !ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
+            }
+
+            $termStartPosition = $this->_position;
+
+            // read token
+            while ($this->_position < strlen($this->_input) &&
+                   ctype_alnum( $this->_input[$this->_position] )) {
+                $this->_position++;
+            }
+
+            // Empty token, end of stream.
+            if ($this->_position == $termStartPosition) {
+                return null;
+            }
+
+            $token = new Zend_Search_Lucene_Analysis_Token(
+                                      substr($this->_input,
+                                             $termStartPosition,
+                                             $this->_position - $termStartPosition),
+                                      $termStartPosition,
+                                      $this->_position);
+            $token = $this->normalize($token);
+            if ($token !== null) {
+                return $token;
+            }
+            // Continue if token is skipped
+        }
+
+        return null;
     }
 }
 
