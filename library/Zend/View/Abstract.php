@@ -167,11 +167,11 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
      */
     public function offsetGet($key)
     {
-        if (!$this->offsetExists($key)) {
+        if (!parent::offsetExists($key)) {
             return null;
         }
 
-        return parent::offsetExists($key);
+        return parent::offsetGet($key);
     }
 
     /**
