@@ -49,6 +49,28 @@ Zend::initRegistry($registry);
 ?>]]></programlisting>
     </example>
 
+    <para>
+        Используйте константу <code>ArrayObject::ARRAY_AS_PROPS</code> в
+        конструкторе для того, чтобы получать доступ к значениям, используя
+        конструкцию <code>$registry->$indexName</code> в дополнение к
+        конструкции <code>$registry[$indexName]</code>. Однако
+        остерегайтесь конфликтов имен, если создаете наследников класса
+        Zend_Registry с добавлением закрытых переменных.
+<!--
+        Use the constant <code>ArrayObject::ARRAY_AS_PROPS</code> in the constructor to enable accessing values
+        using <code>$registry->$indexName</code>, in addition to <code>$registry[$indexName]</code>.
+        However, beware of name collisions, if you extend Zend_Registry and add private variables.
+-->
+    </para>
+
+    <example>
+        <title>Доступ к значениям с использованием объектно-ориентированной нотации вместо нотации доступа к массиву<!--Accessing Values Using OO Notation Instead of ArrayAccess Notation--></title>
+<programlisting role="php"><![CDATA[<?php
+$registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS); 
+Zend::initRegistry($registry);
+?>]]></programlisting>
+    </example>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:
