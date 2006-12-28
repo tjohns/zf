@@ -42,10 +42,12 @@ class Zend_Translate_Gettext {
     /**
      * Locale Object / Setting
      */
-    private $_Locale    = '';
-    private $_Options   = array();
-    private $_BigEndian = FALSE;
-    private $_File      = FALSE;
+    private $_Locale      = '';
+    private $_Options     = array();
+    private $_BigEndian   = FALSE;
+    private $_File        = FALSE;
+    private $_Total       = 0;
+    private $_Translation = array();
 
 
     /**
@@ -206,8 +208,45 @@ class Zend_Translate_Gettext {
             throw Zend_Translate_Exception('error opening translation file ' . $filename);
         }
 
-        $input = array_shift($this->_readMOData(1));
-print_r($input);
-        if ($input == ())
+        // get Endian
+        $input = $this->_readMOData(1);
+        if (dechex($input[1]) == "950412de") {
+            $this->_BigEndian = FALSE;
+        } else if (dechex($input[1] == "de120495")) {
+            $this->_BigEndian = TRUE;
+        } else {
+            throw Zend_Translate_Exception($filename . ' is not a gettext file');
+        }
+
+        // read revision - not supported for now
+        $input = $this->_readMOData(1);
+
+        // number of bytes
+        $input = $this->_readMOData(1);
+        $this->_Total = $input[1];
+
+        // number of original strings
+        $input = $this->_readMOData(1);
+        $OOffset = $input[1];
+
+        // number of translation strings
+        $input = $this->_readMOData(1);
+        $TOffset = $input[1];
+
+        // fill the original table
+        $temporary = array(); 
+        fseek($this->_File, $OOffset);
+        $origtemp = $this->_readMOData(2 * $this->_Total);
+        fseek($this->_File, $TOffset);
+        $transtemp = $this->_readMOData(2 * $this->_Total);
+        
+        $length = 0;
+        $offset = 0;
+        for($count = 0; $count < $this->_Total; ++$count) {
+            fseek($this->_File, $origtemp[$count * 2 + 2]);
+            $original = @fread($this->_File, $origtemp[$count * 2 + 1]);
+            fseek($this->_File, $transtemp[$count * 2 + 2]);
+            $this->_Translation[$original] = fread($this->_File, $transtemp[$count * 2 + 1]);
+        }
     }
 }
