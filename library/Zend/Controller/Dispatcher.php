@@ -559,7 +559,7 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
                 include_once $spec;
                 if (!class_exists($class)) {
                     while (strstr($class, '_')) {
-                        $class = substr($class, strpos($class, '_'));
+                        $class = substr($class, strpos($class, '_') + 1);
                         if (class_exists($class)) {
                             return $class;
                         }
