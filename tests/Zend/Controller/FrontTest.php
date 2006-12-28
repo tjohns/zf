@@ -40,24 +40,66 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
     {
         $request = new Zend_Controller_Request_Http();
         $this->_controller->setRequest($request);
-
         $this->assertTrue($request === $this->_controller->getRequest());
+
+        $this->_controller->resetInstance();
+        $this->_controller->setRequest('Zend_Controller_Request_Http');
+        $request = $this->_controller->getRequest();
+        $this->assertTrue($request instanceof Zend_Controller_Request_Http);
+    }
+
+    public function testSetRequestThrowsExceptionWithBadRequest()
+    {
+        try {
+            $this->_controller->setRequest('Zend_Controller_Response_Cli');
+            $this->fail('Should not be able to set invalid request class');
+        } catch (Exception $e) {
+            // success
+        }
     }
 
     public function testSetGetResponse()
     {
         $response = new Zend_Controller_Response_Cli();
         $this->_controller->setResponse($response);
-
         $this->assertTrue($response === $this->_controller->getResponse());
+
+        $this->_controller->resetInstance();
+        $this->_controller->setResponse('Zend_Controller_Response_Cli');
+        $response = $this->_controller->getResponse();
+        $this->assertTrue($response instanceof Zend_Controller_Response_Cli);
+    }
+
+    public function testSetResponseThrowsExceptionWithBadResponse()
+    {
+        try {
+            $this->_controller->setResponse('Zend_Controller_Request_Http');
+            $this->fail('Should not be able to set invalid response class');
+        } catch (Exception $e) {
+            // success
+        }
     }
 
     public function testSetGetRouter()
     {
         $router = new Zend_Controller_Router();
         $this->_controller->setRouter($router);
-
         $this->assertTrue($router === $this->_controller->getRouter());
+
+        $this->_controller->resetInstance();
+        $this->_controller->setRouter('Zend_Controller_Router');
+        $router = $this->_controller->getRouter();
+        $this->assertTrue($router instanceof Zend_Controller_Router);
+    }
+
+    public function testSetRouterThrowsExceptionWithBadRouter()
+    {
+        try {
+            $this->_controller->setRouter('Zend_Controller_Request_Http');
+            $this->fail('Should not be able to set invalid router class');
+        } catch (Exception $e) {
+            // success
+        }
     }
 
     public function testSetGetDispatcher()
@@ -279,6 +321,16 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('/index.php', $this->_controller->getBaseUrl());
     }
 
+    public function testSetBaseUrlThrowsExceptionOnNonString()
+    {
+        try {
+            $this->_controller->setBaseUrl(array());
+            $this->fail('Should not be able to set non-string base URL');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
     /**
      * Test that a set base URL is pushed to the request during the dispatch 
      * process
@@ -350,5 +402,23 @@ class Zend_Controller_FrontTest extends PHPUnit_Framework_TestCase
 
         $actual = $this->_controller->getResponse()->getBody();
         $this->assertEquals($actual, $body);
+    }
+
+    public function testRunStatically()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('index');
+        $request->setActionName('index');
+        $this->_controller->setRequest($request);
+        Zend_Controller_Front::run(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
+    }
+
+    public function testRunDynamically()
+    {
+        $request = new Zend_Controller_Request_Http();
+        $request->setControllerName('index');
+        $request->setActionName('index');
+        $this->_controller->setRequest($request);
+        $this->_controller->run(dirname(__FILE__) . DIRECTORY_SEPARATOR . '_files');
     }
 }
