@@ -157,9 +157,27 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
     }
 
     /**
+     * Override offsetGet to return null when value does not exist
+     *
+     * Helps suppress notices when values are not present in view scripts by 
+     * returning null if offset does not exist.
+     * 
+     * @param string $key 
+     * @return mixed
+     */
+    public function offsetGet($key)
+    {
+        if (!$this->offsetExists($key)) {
+            return null;
+        }
+
+        return parent::offsetExists($key);
+    }
+
+    /**
      * Directly assigns a variable to the view script.
      *
-     * Stub; unimplemented, as using ArrayObject
+     * Alias to offsetSet()
      *
      * @param string $key The variable name.
      * @param mixed $val The variable value.
@@ -167,18 +185,20 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
      */
     public function __set($key, $val)
     {
+        return $this->offsetSet($key, $val);
     }
 
     /**
      * Retrieves an assigned variable.
      *
-     * Stub; unimplemented, as using ArrayObject
+     * Alias to offsetGet()
      *
      * @param string $key The variable name.
      * @return mixed The variable value.
      */
     public function __get($key)
     {
+        return $this->offsetGet($key);
     }
 
 
@@ -186,25 +206,27 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
      * Allows testing with empty() and isset() to work inside
      * templates -- only available on PHP 5.1
      *
-     * Stub; unimplemented, as using ArrayObject
+     * Alias to offsetExists
      *
      * @param  string $key
      * @return boolean
      */
     public function __isset($key)
     {
+        return $this->offsetExists($key);
     }
 
     /**
      * Allows unset() on object properties to work
      *
-     * Stub; unimplemented, as using ArrayObject
+     * Alias to offsetUnset()
      *
      * @param string $key
      * @return void
      */
     public function __unset($key)
     {
+        return $this->offsetUnset($key);
     }
 
     /**
