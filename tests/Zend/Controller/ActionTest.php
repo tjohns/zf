@@ -104,6 +104,16 @@ class Zend_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->assertContains('In the foo action', $response->getBody());
         $this->assertNotContains('Prerun ran', $this->_controller->getResponse()->getBody());
     }
+
+    public function testHasParam()
+    {
+        $request = $this->_controller->getRequest();
+        $request->setParam('foo', 'bar');
+        $request->setParam('baz', 'bal');
+
+        $this->assertTrue($this->_controller->hasParam('foo'));
+        $this->assertTrue($this->_controller->hasParam('baz'));
+    }
 }
 
 class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
@@ -153,5 +163,15 @@ class Zend_Controller_ActionTest_TestController extends Zend_Controller_Action
     public function forward()
     {
         $this->_forward('baz', 'forwarded');
+    }
+
+    public function hasParam($param)
+    {
+        return $this->_hasParam($param);
+    }
+
+    public function getParams()
+    {
+        return $this->_getAllParams();
     }
 }
