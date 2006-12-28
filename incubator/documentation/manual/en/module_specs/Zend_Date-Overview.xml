@@ -1,94 +1,93 @@
 <sect1 id="zend.date.overview">
-    <title>Übersicht für die Zend_Date API</title>
+    <title>Zend_Date API Overview</title>
     <para>
-        Die API von <code>Zend_Date</code> ist zwar sehr simpel und einheitlich.
-        Aber sie ist auch sehr umfangreich und bietet eine große Anzahl an Möglichkeiten.
+        While the <code>Zend_Date</code> API remains simplistic and unitary it is very rich
+        and mighty.
     </para>
     <para>
-        Die folgende Übersicht aller Funktionen soll als Hilfe dienen:
+        The following overview should provide help to the functions.
     </para>
     <sect2 id="zend.date.overview.general">
-        <title>Generelle Funktionen</title>
+        <title>General Functions</title>
         <para>
-            Die generellen Funktionen erwarten die Angabe einer Konstante die den gewünschten Teil des
-            Datums angeben. Diese Konstanten sind in allen Funktionen gültig. Eine Liste aller 
-            unterstützten Konstanten ist <link linkend="zend.date.constants">unter diesem Link zu finden</link>.
+            The general functions expect a constant providing the date's desired part
+            (such as Zend_Date::HOUR). Those constants are valid to all functions. A 
+            list of all available constants is provided in <xref linkend="zend.date.constants" />
         </para>
         <para>
-            Folgende generelle Funktionen stehen zur Verfügung:
+            The following general functions will be available:
         </para>
         <table>
-            <title>Generelle Funktionen</title>
+            <title>General functions</title>
             <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Funktion</entry>
-                        <entry>Beschreibung</entry>
+                        <entry>Function</entry>
+                        <entry>Description</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>get()</entry>
-                        <entry>Ausgabe des Datums</entry>
+                        <entry>date output</entry>
                     </row>
                     <row>
                         <entry>set()</entry>
-                        <entry>Setzen eines Datums</entry>
+                        <entry>date input</entry>
                     </row>
                     <row>
                         <entry>add()</entry>
-                        <entry>Addieren eines Datums</entry>
+                        <entry>adding with dates</entry>
                     </row>
                     <row>
                         <entry>sub()</entry>
-                        <entry>Subtrahieren eines Datums</entry>
+                        <entry>subtraction with dates</entry>
                     </row>
                     <row>
                         <entry>copy()</entry>
-                        <entry>Kopieren eines Datums, gibt ein neues Object zurück</entry>
+                        <entry>copy a date and return a new object</entry>
                     </row>
                     <row>
                         <entry>compare()</entry>
-                        <entry>Vergleichen eines Datums, gibt 0, 1 oder -1 zurück</entry>
+                        <entry>compares dates by time. returns 0, 1 or -1</entry>
                     </row>
                     <row>
                         <entry>equals()</entry>
-                        <entry>Vergleichen eines Datums, boolscher Retourwert</entry>
+                        <entry>compares dates by equality. returns boolean</entry>
                     </row>
                     <row>
                         <entry>isEarlier()</entry>
-                        <entry>Vergleichen auf jüngeres Datum, boolscher Retourwert</entry>
+                        <entry>checks against age. returns true, if younger</entry>
                     </row>
                     <row>
                         <entry>isLater()</entry>
-                        <entry>Vergleichen auf älteres Datum, boolscher Retourwert</entry>
+                        <entry>checks against age. returns true, if older</entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
     </sect2>
     <sect2 id="zend.date.overview.detail">
-        <title>Detailierte Funktionen</title>
+        <title>Detailed functions</title>
         <para>
-            Die detailierten Funktionen benötigen keine Konstante, sondern sind jeweils nur für einen
-            bestimmten Teil des Datums zu benutzen. Es gibt sehr viele von Ihnen, und es werden auch 
-            nicht alle Möglichkeiten unterstützt. Ihre Verwendung ist allerdings so einfach und intuitiv
-            das man sie sich nicht auswendig merken muß.
+            The detailed functions do not need constants, but are to use only for a specified part
+            of the date. There are lots of them, but because of their intuitiveness their are easy
+            to guess. Not all possible variants will be supported.
         </para>
         <para>
-            Folgende detailierte Funktionen stehen zur Verfügung:
+            The following detailed functions are available:
         </para>
         <table>
-            <title>Detailierte Funktionen</title>
+            <title>Detailed functions</title>
             <tgroup cols="6">
                 <thead>
                     <row>
-                        <entry>Abschnitt</entry>
-                        <entry>Ausgabe</entry>
-                        <entry>Setzen</entry>
-                        <entry>Addieren</entry>
-                        <entry>Subtrahieren</entry>
-                        <entry>Vergleichen</entry>
+                        <entry>Related</entry>
+                        <entry>Output</entry>
+                        <entry>Seting</entry>
+                        <entry>Addition</entry>
+                        <entry>Subtraction</entry>
+                        <entry>Comparation</entry>
                     </row>
                 </thead>
                 <tbody>
@@ -101,7 +100,7 @@
                         <entry>compareTimestamp()</entry>
                     </row>
                     <row>
-                        <entry>Datum</entry>
+                        <entry>Date</entry>
                         <entry>getDate()</entry>
                         <entry>setDate()</entry>
                         <entry>addDate()</entry>
@@ -109,7 +108,7 @@
                         <entry>compareDate()</entry>
                     </row>
                     <row>
-                        <entry>Zeit</entry>
+                        <entry>Time</entry>
                         <entry>getTime()</entry>
                         <entry>setTime()</entry>
                         <entry>addTime()</entry>
@@ -117,7 +116,7 @@
                         <entry>compareTime()</entry>
                     </row>
                     <row>
-                        <entry>Jahr</entry>
+                        <entry>Year</entry>
                         <entry>getYear()</entry>
                         <entry>setYear()</entry>
                         <entry>addYear()</entry>
@@ -125,7 +124,7 @@
                         <entry>compareYear()</entry>
                     </row>
                     <row>
-                        <entry>Monat</entry>
+                        <entry>Month</entry>
                         <entry>getMonth()</entry>
                         <entry>setMonth()</entry>
                         <entry>addMonth()</entry>
@@ -133,7 +132,7 @@
                         <entry>compareMonth()</entry>
                     </row>
                     <row>
-                        <entry>Tag</entry>
+                        <entry>Day</entry>
                         <entry>getDay()</entry>
                         <entry>setDay()</entry>
                         <entry>addDay()</entry>
@@ -141,7 +140,7 @@
                         <entry>compareDay()</entry>
                     </row>
                     <row>
-                        <entry>Wochentag</entry>
+                        <entry>Weekday</entry>
                         <entry>getWeekday()</entry>
                         <entry>setWeekday()</entry>
                         <entry>addWeekday()</entry>
@@ -149,7 +148,7 @@
                         <entry>compareWeekday()</entry>
                     </row>
                     <row>
-                        <entry>Tag des Jahres</entry>
+                        <entry>Day of Year</entry>
                         <entry>getDayOfYear()</entry>
                         <entry>setDayOfYear()</entry>
                         <entry>addDayOfYear()</entry>
@@ -157,7 +156,7 @@
                         <entry>compareDayOfYear()</entry>
                     </row>
                     <row>
-                        <entry>Stunde</entry>
+                        <entry>Hour</entry>
                         <entry>getHour()</entry>
                         <entry>setHour()</entry>
                         <entry>addHour()</entry>
@@ -173,7 +172,7 @@
                         <entry>compareMinute()</entry>
                     </row>
                     <row>
-                        <entry>Sekunde</entry>
+                        <entry>Second</entry>
                         <entry>getSecond()</entry>
                         <entry>setSecond()</entry>
                         <entry>addSecond()</entry>
@@ -181,7 +180,7 @@
                         <entry>compareSecond()</entry>
                     </row>
                     <row>
-                        <entry>Millisekunde</entry>
+                        <entry>Millisecond</entry>
                         <entry>getMilliSecond()</entry>
                         <entry>setMilliSecond()</entry>
                         <entry>addMilliSecond()</entry>
@@ -189,7 +188,7 @@
                         <entry>compareMilliSecond()</entry>
                     </row>
                     <row>
-                        <entry>Woche</entry>
+                        <entry>Week</entry>
                         <entry>getWeek()</entry>
                         <entry>setWeek()</entry>
                         <entry>addWeek()</entry>
@@ -197,7 +196,7 @@
                         <entry>compareWeek()</entry>
                     </row>
                     <row>
-                        <entry>ISO 8601 Datum</entry>
+                        <entry>ISO 8601 date</entry>
                         <entry>getIso()</entry>
                         <entry>setIso()</entry>
                         <entry>addIso()</entry>
@@ -205,7 +204,7 @@
                         <entry>compareIso()</entry>
                     </row>
                     <row>
-                        <entry>Arpa Datum</entry>
+                        <entry>Arpa date</entry>
                         <entry>getArpa()</entry>
                         <entry>setArpa()</entry>
                         <entry>addArpa()</entry>
@@ -213,7 +212,7 @@
                         <entry>compareArpa()</entry>
                     </row>
                     <row>
-                        <entry>Zeitzone</entry>
+                        <entry>TimeZone</entry>
                         <entry>getTimeZone()</entry>
                         <entry>setTimeZone()</entry>
                         <entry></entry>
@@ -225,89 +224,89 @@
         </table>
     </sect2>
     <sect2 id="zend.date.overview.others">
-        <title>Zusätzliche Funktionen</title>
+        <title>Additional Functions</title>
         <para>
-            Natürlich gibt es noch eine Anzahl an zusätzlichen Funktionen die nicht in das oben 
-            beschriebene Schema passen, aber sehr hilfreich sind.
+            Certainly there are some additional functions not fitting into the above scheme while
+            being helpful.
         </para>
         <para>
-            Folgende zusätzliche Funktionen gibt es :
+            The following additional functions are available:
         </para>
         <table>
-            <title>Zusätzliche Funktionen</title>
+            <title>Additional Functions</title>
             <tgroup cols="2">
                 <thead>
                     <row>
-                        <entry>Funktion</entry>
-                        <entry>Beschreibung</entry>
+                        <entry>Function</entry>
+                        <entry>Description</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
                         <entry>toString()</entry>
-                        <entry>Kann einen beliebig formatierten Ausgabestring erzeugen</entry>
+                        <entry>Is able to return a user-defined string</entry>
                     </row>
                     <row>
                         <entry>toValue()</entry>
-                        <entry>Erzeugt aus einem Datumswert eine Zahl</entry>
+                        <entry>Converts a date to a digit</entry>
                     </row>
                     <row>
                         <entry>now()</entry>
-                        <entry>Gibt das heutige Datum zurück</entry>
+                        <entry>Returns the current date</entry>
                     </row>
                     <row>
                         <entry>isLeapYear()</entry>
-                        <entry>Ist das Datum ein Schaltjahr ?</entry>
+                        <entry>Is the year a leap year?</entry>
                     </row>
                     <row>
                         <entry>isToday()</entry>
-                        <entry>Ist das Datum von Heute ?</entry>
+                        <entry>Is the date today?</entry>
                     </row>
                     <row>
                         <entry>isTomorrow()</entry>
-                        <entry>Ist das Datum von Morgen ?</entry>
+                        <entry>Is the date tomorrow?</entry>
                     </row>
                     <row>
                         <entry>isYesterday()</entry>
-                        <entry>Ist das Datum von Gestern ?</entry>
+                        <entry>is the date yesterday?</entry>
                     </row>
                     <row>
                         <entry>getSunRise()</entry>
-                        <entry>Gibt die Zeit des Sonnenaufgangs für dieses Datum aus</entry>
+                        <entry>Return the date's time of sunrise</entry>
                     </row>
                     <row>
                         <entry>getSunSet()</entry>
-                        <entry>Gibt die Zeit des Sonnenuntergangs für dieses Datum aus</entry>
+                        <entry>Return the date's time of sunset</entry>
                     </row>
                     <row>
                         <entry>getSunInfo()</entry>
-                        <entry>Gibt ein Array mit den Zeiten der Sonnendaten aus</entry>
+                        <entry>Return an array with the date's sun dates</entry>
                     </row>
                     <row>
-                        <entry>getFractionalPrecission()</entry>
-                        <entry>Gibt die Genauigkeit der Teilsekunden aus</entry>
+                        <entry>getFractionalPrecision()</entry>
+                        <entry>Return the precision of the part seconds</entry>
                     </row>
                     <row>
-                        <entry>setFractionalPrecission()</entry>
-                        <entry>Setzt die Genauigkeit der Teilsekunden</entry>
+                        <entry>setFractionalPrecision()</entry>
+                        <entry>Set the precision of the part seconds</entry>
                     </row>
                 </tbody>
             </tgroup>
         </table>
     </sect2>
     <sect2 id="zend.date.overview.addons">
-        <title>Zusätzliche Informationen</title>
+        <title>Additional Information</title>
         <para>
-            Eine Liste aller Zeitformate welche von den generellen Funktionen unterstützt werden gibt es hier:
+            A list of time constants is provided in <xref linkend="zend.date.constants" />
         </para>
         <para>
-            <link linkend="zend.date.constants.list">Konstanten für generelle Datumsfunktionen</link>
+            <link linkend="zend.date.constants.list">Constants for general functions</link>
         </para>
         <para>
-            Eine Übersicht über alle unterstützten Ausgabeformate gibt es hier:
+            A list of string constants is provided in <xref linked="zend.date.constants" />
         </para>
         <para>
-            xxxListezuFormat-Konstantenxxx
+            <link linkend="zend.date.constants.format">Constants for string output functions</link>
         </para>
     </sect2>
 </sect1>
