@@ -121,7 +121,7 @@ class Zend_Date {
     const W3C            = 'Zend_Date::W3C';            // --- DATE_W3C
 
     private $_Fractional = 0;
-    private $_Precission = 3;
+    private $_Precision = 3;
 
     private $_Const = array(
         // day formats
@@ -3603,28 +3603,28 @@ class Zend_Date {
 
 
     /**
-     * Gets the precission for fractional seconds
+     * Gets the precision for fractional seconds
      *
      * @return integer
      */
-    public function getFractionalPrecission()
+    public function getFractionalPrecision()
     {
-        return $this->_Precission;
+        return $this->_Precision;
     }
 
 
     /**
-     * Sets the precission for fractional seconds
+     * Sets the precision for fractional seconds
      *
-     * @param integer $precission  precission for the fractional datepart 3 = milliseconds
+     * @param integer $precision  precision for the fractional datepart 3 = milliseconds
      * @throws Zend_Date_Exception
      */
-    public function setFractionalPrecission($precission = 3)
+    public function setFractionalPrecision($precision = 3)
     {
-        if (!intval($precission) or ($precission < 0)) {
-            throw new Zend_Date_Exception('precission must be positive');
+        if (!intval($precision) or ($precision < 0)) {
+            throw new Zend_Date_Exception('precision must be positive');
         }
-        $this->_Precission = $precission;
+        $this->_Precision = $precision;
     }
 
 
@@ -3668,9 +3668,9 @@ class Zend_Date {
             $milli = 0;
         }
         $this->_Fractional = bcadd($this->_Fractional, $milli, 0);
-        $max = bcpow(10, $this->_Precission, 0);
+        $max = bcpow(10, $this->_Precision, 0);
         if ($max < 10) {
-            throw new Zend_Date_Exception('no fractional defined, use setFractionalPrecission');
+            throw new Zend_Date_Exception('no fractional defined, use setFractionalPrecision');
         }
 
         if (bccomp($this->_Fractional, $max) == 1) {
