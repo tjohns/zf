@@ -330,7 +330,7 @@ abstract class Zend_Controller_Action
      */
     final protected function _hasParam($paramName)
     {
-        return null !== $this->getRequest()->getParam();
+        return null !== $this->getRequest()->getParam($paramName);
     }
 
     /**
