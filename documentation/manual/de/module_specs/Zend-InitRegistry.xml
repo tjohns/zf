@@ -36,6 +36,22 @@ Zend::initRegistry($registry);
 ?>]]></programlisting>
     </example>
 
+    <para>
+        Um zusätzlich zu <code>$registry[$indexName]</code> auf Werte auch über 
+        <code>$registry->$indexName</code> zugreifen zu können, verwendet man die Konstante 
+        <code>ArrayObject::ARRAY_AS_PROPS</code> im Konstruktor. Allerdings sollte man sich vor
+        Namenskollisionen in Acht nehmen, wenn man Zend_Registry erweitert und private Variablen
+        hinzufügt.
+    </para>
+
+    <example>
+        <title>Auf Werte zugreifen über die OO Notation anstatt der ArrayAccess Notation</title>
+<programlisting role="php"><![CDATA[<?php
+$registry = new Zend_Registry(array(), ArrayObject::ARRAY_AS_PROPS); 
+Zend::initRegistry($registry);
+?>]]></programlisting>
+    </example>
+
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

@@ -192,7 +192,7 @@ Zend/View/Helper/FormRadio.php]]></programlisting>
             <para>
                 Function names must always start with a lowercase letter. When a function name consists
                 of more than one word, the first letter of each new word must be capitalized. This is
-                commonly called the "studlyCaps" or "camelCaps" method.
+                commonly called the "camelCaps" method.
             </para>
 
             <para>
