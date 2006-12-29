@@ -28,19 +28,19 @@
                 </thead>
                 <tbody>
                     <row>
-                        <entry>get()</entry>
+                        <entry><link linkend="zend.date.output.get">get()</link></entry>
                         <entry>date output</entry>
                     </row>
                     <row>
-                        <entry>set()</entry>
-                        <entry>date input</entry>
+                        <entry><link linkend="zend.date.setting.set">set()</link></entry>
+                        <entry>setting a new date</entry>
                     </row>
                     <row>
-                        <entry>add()</entry>
+                        <entry><link linkend="zend.date.maths.add">add()</link></entry>
                         <entry>adding with dates</entry>
                     </row>
                     <row>
-                        <entry>sub()</entry>
+                        <entry><link linkend="zend.date.maths.sub">sub()</link></entry>
                         <entry>subtraction with dates</entry>
                     </row>
                     <row>
@@ -48,19 +48,19 @@
                         <entry>copy a date and return a new object</entry>
                     </row>
                     <row>
-                        <entry>compare()</entry>
+                        <entry><link linkend="zend.date.maths.compare">compare()</link></entry>
                         <entry>compares dates by time. returns 0, 1 or -1</entry>
                     </row>
                     <row>
-                        <entry>equals()</entry>
+                        <entry><link linkend="zend.date.maths.equals">equals()</link></entry>
                         <entry>compares dates by equality. returns boolean</entry>
                     </row>
                     <row>
-                        <entry>isEarlier()</entry>
+                        <entry><link linkend="zend.date.maths.isearlier">isEarlier()</link></entry>
                         <entry>checks against age. returns true, if younger</entry>
                     </row>
                     <row>
-                        <entry>isLater()</entry>
+                        <entry><link linkend="zend.date.maths.islater">isLater()</link></entry>
                         <entry>checks against age. returns true, if older</entry>
                     </row>
                 </tbody>
@@ -92,20 +92,20 @@
                 </thead>
                 <tbody>
                     <row>
-                        <entry>Unix Timestamp</entry>
-                        <entry>getTimestamp()</entry>
-                        <entry>setTimestamp()</entry>
-                        <entry>addTimestamp()</entry>
-                        <entry>subTimestamp()</entry>
-                        <entry>compareTimestamp()</entry>
+                        <entry><link linkend="zend.date.timestamp">Unix Timestamp</link></entry>
+                        <entry><link linkend="zend.date.timestamp.gettimestamp">getTimestamp()</link></entry>
+                        <entry><link linkend="zend.date.timestamp.settimestamp">setTimestamp()</link></entry>
+                        <entry><link linkend="zend.date.timestamp.addtimestamp">addTimestamp()</link></entry>
+                        <entry><link linkend="zend.date.timestamp.subtimestamp">subTimestamp()</link></entry>
+                        <entry><link linkend="zend.date.timestamp.comparetimestamp">compareTimestamp()</link></entry>
                     </row>
                     <row>
-                        <entry>Date</entry>
-                        <entry>getDate()</entry>
-                        <entry>setDate()</entry>
-                        <entry>addDate()</entry>
-                        <entry>subDate()</entry>
-                        <entry>compareDate()</entry>
+                        <entry><link linkend="zend.date.localdate">Date</link></entry>
+                        <entry><link linkend="zend.date.localdate.get">getDate()</link></entry>
+                        <entry><link linkend="zend.date.localdate.set">setDate()</link></entry>
+                        <entry><link linkend="zend.date.localdate.add">addDate()</link></entry>
+                        <entry><link linkend="zend.date.localdate.sub">subDate()</link></entry>
+                        <entry><link linkend="zend.date.localdate.compare">compareDate()</link></entry>
                     </row>
                     <row>
                         <entry>Time</entry>
@@ -243,11 +243,11 @@
                 </thead>
                 <tbody>
                     <row>
-                        <entry>toString()</entry>
+                        <entry><link linkend="zend.date.output.tostring">toString()</link></entry>
                         <entry>Is able to return a user-defined string</entry>
                     </row>
                     <row>
-                        <entry>toValue()</entry>
+                        <entry><link linkend="zend.date.output.tovalue">toValue()</link></entry>
                         <entry>Converts a date to a digit</entry>
                     </row>
                     <row>

@@ -1,0 +1,40 @@
+<sect1 id="zend.date.localdate">
+    <title>Local date... what is that ?</title>
+    <para>
+        describing add() / sub() and compare()
+        chapter follows soon...
+    </para>
+    <sect2 id="zend.date.localdate.get">
+        <title>Getting a date with getDate()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+    <sect2 id="zend.date.localdate.set">
+        <title>Setting a date with setDate()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+    <sect2 id="zend.date.localdate.add">
+        <title>Adding an other date with addDate()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+    <sect2 id="zend.date.localdate.sub">
+        <title>Substracting a local date with subDate()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+    <sect2 id="zend.date.localdate.compare">
+        <title>Comparing two localized dates with compareDate()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

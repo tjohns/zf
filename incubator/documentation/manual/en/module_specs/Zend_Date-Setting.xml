@@ -1,0 +1,15 @@
+<sect1 id="zend.date.setting">
+    <title>How to set new dates or dateparts</title>
+    <para>
+        chapter follows soon...
+    </para>
+    <sect2 id="zend.date.setting.set">
+        <title>General way of setting dates with set()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
