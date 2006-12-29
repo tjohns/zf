@@ -137,6 +137,7 @@ class Zend_Date_DateObject {
      * @param $year   number  - year
      * @param $dst    boolean - summer/wintertime
      * @param $gmt    boolean - timezone
+     * @return  integer|float
      */
     public function mktime($hour, $minute, $second, $month = false, $day = false, $year = false, 
                            $dst= -1, $gmt = false)
@@ -207,7 +208,7 @@ class Zend_Date_DateObject {
             return (($date * 86400) + ($hour * 3600) + ($minute * 60) + $second + $difference);
         } else {
             
-            // Date is after UNIX epoch
+            // Date is before UNIX epoch
             // go through leapyears
             // add months from latest given year
             for ($count = 1969; $count >= $year; $count--) {
@@ -272,12 +273,12 @@ class Zend_Date_DateObject {
      */
     public function isLeapYear($year)
     {
-        // all leapyears can be devided through 4
+        // all leapyears can be divided through 4
         if (($year % 4) != 0) {
             return false;
         }
 
-        // all leapyears can be devided through 400 
+        // all leapyears can be divided through 400 
         if ($year % 400 == 0) {
             return true;
         } else if (($year > 1582) and ($year % 100 == 0)) {

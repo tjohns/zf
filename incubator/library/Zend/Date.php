@@ -2572,7 +2572,7 @@ class Zend_Date {
      * @param $date string     - OPTIONAL RFC822 date to set, when null the actual date is set
      * @return object
      */
-    public function setArpa($date)
+    public function setArpa($date = null)
     {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
@@ -2587,7 +2587,7 @@ class Zend_Date {
      * @param $date string  - OPTIONAL RFC822 date to add, when null the actual date is add
      * @return object
      */
-    public function addArpa($date)
+    public function addArpa($date = null)
     {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
@@ -2602,7 +2602,7 @@ class Zend_Date {
      * @param $date string  - OPTIONAL RFC822 date to sub, when null the actual date is sub
      * @return object
      */
-    public function subArpa($date)
+    public function subArpa($date = null)
     {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
@@ -2617,7 +2617,7 @@ class Zend_Date {
      * @param $date string - OPTIONAL RFC822 date to compare, when null the actual date is used for compare
      * @return object
      */
-    public function compareArpa($date)
+    public function compareArpa($date = null)
     {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
