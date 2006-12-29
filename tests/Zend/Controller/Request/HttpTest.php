@@ -15,19 +15,70 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
      */
     protected $_origRequestUri = '';
 
+    /**
+     * Original SCRIPT_FILENAME
+     * @var string 
+     */
+    protected $_origScriptFilename = '';
+
+    /**
+     * Original PHP_SELF
+     * @var string 
+     */
+    protected $_origPhpSelf = '';
+
     public function setUp()
     {
         if (isset($_SERVER['REQUEST_URI'])) {
             $this->_origRequestUri = $_SERVER['REQUEST_URI'];
         }
-        $this->_request = new Zend_Controller_Request_Http();
+        if (isset($_SERVER['SCRIPT_FILENAME'])) {
+            $this->_origScriptFilename = $_SERVER['SCRIPT_FILENAME'];
+        }
+        if (isset($_SERVER['PHP_SELF'])) {
+            $this->_origPhpSelf = $_SERVER['PHP_SELF'];
+        }
+
+        $_GET  = array();
+        $_POST = array();
         $this->_request = new Zend_Controller_Request_Http('http://framework.zend.com/news/3?var1=val1&var2=val2#anchor');
     }
 
     public function tearDown()
     {
         unset($this->_request);
-        $_SERVER['REQUEST_URI'] = $this->_origRequestUri;
+
+        if (isset($_SERVER['REQUEST_URI']) && ('' != $this->_origRequestUri)) {
+            $_SERVER['REQUEST_URI'] = $this->_origRequestUri;
+        } elseif ('' != $this->_origRequestUri) {
+            $_SERVER['REQUEST_URI'] = $this->_origRequestUri;
+        } elseif (isset($_SERVER['REQUEST_URI'])) {
+            unset($_SERVER['REQUEST_URI']);
+        }
+
+        if (isset($_SERVER['SCRIPT_FILENAME']) && ('' != $this->_origScriptFilename)) {
+            $_SERVER['SCRIPT_FILENAME'] = $this->_origScriptFilename;
+        } elseif (isset($_SERVER['SCRIPT_FILENAME'])) {
+            unset($_SERVER['SCRIPT_FILENAME']);
+        }
+
+        if (isset($_SERVER['PHP_SELF']) && ('' != $this->_origPhpSelf)) {
+            $_SERVER['PHP_SELF'] = $this->_origPhpSelf;
+        } elseif (isset($_SERVER['PHP_SELF'])) {
+            unset($_SERVER['PHP_SELF']);
+        }
+
+        if (isset($_SERVER['HTTP_X_REWRITE_URL'])) {
+            unset($_SERVER['HTTP_X_REWRITE_URL']);
+        }
+
+        if (isset($_SERVER['ORIG_PATH_INFO'])) {
+            unset($_SERVER['ORIG_PATH_INFO']);
+        }
+
+        if (isset($_SERVER['QUERY_STRING'])) {
+            unset($_SERVER['QUERY_STRING']);
+        }
     }
 
     public function testSetGetControllerKey()
@@ -65,6 +116,67 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->_request->setActionName('bar');
         $this->assertEquals('bar', $this->_request->getActionName());
     }
+
+    public function test__Get()
+    {
+        $_POST['baz']   = 'boo';
+        $_COOKIE['bal'] = 'peen';
+        $this->_request->setParam('foo', 'bar');
+
+        $this->assertEquals('bar', $this->_request->foo);
+        $this->assertEquals('val1', $this->_request->var1);
+        $this->assertEquals('boo', $this->_request->baz);
+        $this->assertEquals('peen', $this->_request->bal);
+        $this->assertEquals($_SERVER['REQUEST_TIME'], $this->_request->REQUEST_TIME);
+        $this->assertEquals($_ENV['PATH'], $this->_request->PATH);
+        $this->assertEquals($this->_request->getPathInfo(), $this->_request->PATH_INFO, $this->_request->PATH_INFO);
+        $this->assertEquals($this->_request->getRequestUri(), $this->_request->REQUEST_URI, $this->_request->REQUEST_URI);
+    }
+
+    public function testGetIsAlias()
+    {
+        $this->assertEquals('val1', $this->_request->get('var1'));
+    }
+
+    public function testSetIsAlias()
+    {
+        try {
+            $this->_request->set('foo', 'bar');
+            $this->fail('set() should alias to __set(), and throw an exception');
+        } catch (Exception $e) {
+            // success
+        }
+    }
+
+    public function test__Isset()
+    {
+        $_POST['baz']   = 'boo';
+        $_COOKIE['bal'] = 'peen';
+        $this->_request->setParam('foo', 'bar');
+
+        $this->assertTrue(isset($this->_request->foo));
+        $this->assertTrue(isset($this->_request->var1));
+        $this->assertTrue(isset($this->_request->baz));
+        $this->assertTrue(isset($this->_request->bal));
+        $this->assertTrue(isset($this->_request->REQUEST_TIME));
+        $this->assertTrue(isset($this->_request->PATH));
+        $this->assertFalse(isset($this->_request->bogosity));
+    }
+
+    public function testHasIsAlias()
+    {
+        $this->assertTrue($this->_request->has('var1'));
+    }
+
+    public function test__SetThrowsException()
+    {
+        try {
+            $this->_request->foo = 'bar';
+            $this->fail('__set() should throw an exception');
+        } catch (Exception $e) {
+            // success
+        }
+    }
  
     public function testSetGetParam()
     {
@@ -88,7 +200,7 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     {
         $_SERVER['REQUEST_URI'] = '/mycontroller/myaction?foo=bar';
         $request = new Zend_Controller_Request_Http();
-        $this->assertEquals('/mycontroller/myaction', $request->getPathInfo());
+        $this->assertEquals('/mycontroller/myaction?foo=bar', $request->getRequestUri());
     }
 
     public function testIsPost()
@@ -135,7 +247,7 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
  
     public function testGetPathInfo()
     {
-        $this->assertEquals('/news/3', $this->_request->getPathInfo(), var_export($this->_request->getBaseUrl(), 1));
+        $this->assertEquals('/news/3', $this->_request->getPathInfo(), 'Base URL: ' . var_export($this->_request->getBaseUrl(), 1));
     }
  
     public function testSetPathInfo()
@@ -181,11 +293,10 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
     {
         $this->_request->setRequestUri('/archives/past/4?set=this&unset=that');
         $this->assertEquals('/archives/past/4?set=this&unset=that', $this->_request->getRequestUri());
-        $this->assertEquals('/archives/past/4', $this->_request->getPathInfo());
         $this->assertEquals('this', $this->_request->getQuery('set'));
         $this->assertEquals('that', $this->_request->getQuery('unset'));
     }
- 
+
     public function testGetBaseUrl()
     {
         $this->assertSame('', $this->_request->getBaseUrl());
@@ -196,14 +307,104 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->_request->setBaseUrl('/news');
         $this->assertEquals('/news', $this->_request->getBaseUrl());
     }
+
+    public function testSetBaseUrlUsingPhpSelf()
+    {
+        $_SERVER['REQUEST_URI']     = '/index.php/news/3?var1=val1&var2=val2';
+        $_SERVER['SCRIPT_NAME']     = '/home.php';
+        $_SERVER['PHP_SELF']        = '/index.php/news/3';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/web/html/index.php';
+        $_GET = array(
+            'var1' => 'val1',
+            'var2' => 'val2'
+        );
+        $request = new Zend_Controller_Request_Http();
+
+        $this->assertEquals('/index.php', $request->getBaseUrl());
+    }
+
+    public function testSetBaseUrlUsingOrigScriptName()
+    {
+        $_SERVER['REQUEST_URI']     = '/index.php/news/3?var1=val1&var2=val2';
+        $_SERVER['SCRIPT_NAME']     = '/home.php';
+        $_SERVER['PHP_SELF']        = '/home.php';
+        $_SERVER['ORIG_SCRIPT_NAME']= '/index.php';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/web/html/index.php';
+        $_GET = array(
+            'var1' => 'val1',
+            'var2' => 'val2'
+        );
+        $request = new Zend_Controller_Request_Http();
+
+        $this->assertEquals('/index.php', $request->getBaseUrl());
+    }
+
+    public function testSetBaseUrlAutoDiscoveryUsingRequestUri()
+    {
+        $_SERVER['REQUEST_URI']     = '/index.php/news/3?var1=val1&var2=val2';
+        $_SERVER['PHP_SELF']        = '/index.php/news/3';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/web/html/index.php';
+        $_GET = array(
+            'var1' => 'val1',
+            'var2' => 'val2'
+        );
+        $request = new Zend_Controller_Request_Http();
+
+        $this->assertEquals('/index.php', $request->getBaseUrl());
+    }
  
+    public function testSetBaseUrlAutoDiscoveryUsingXRewriteUrl()
+    {
+        unset($_SERVER['REQUEST_URI']);
+        $_SERVER['HTTP_X_REWRITE_URL'] = '/index.php/news/3?var1=val1&var2=val2';
+        $_SERVER['PHP_SELF']           = '/index.php/news/3';
+        $_SERVER['SCRIPT_FILENAME']    = '/var/web/html/index.php';
+        $_GET = array(
+            'var1' => 'val1',
+            'var2' => 'val2'
+        );
+        $request = new Zend_Controller_Request_Http();
+
+        $this->assertEquals('/index.php', $request->getBaseUrl());
+    }
+
+    public function testSetBaseUrlAutoDiscoveryUsingOrigPathInfo()
+    {
+        unset($_SERVER['REQUEST_URI']);
+        $_SERVER['ORIG_PATH_INFO']  = '/index.php/news/3';
+        $_SERVER['QUERY_STRING']    = 'var1=val1&var2=val2';
+        $_SERVER['PHP_SELF']        = '/index.php/news/3';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/web/html/index.php';
+        $_GET = array(
+            'var1' => 'val1',
+            'var2' => 'val2'
+        );
+        $request = new Zend_Controller_Request_Http();
+
+        $this->assertEquals('/index.php', $request->getBaseUrl());
+    }
+
     public function testGetSetBasePath()
     {
         $this->_request->setBasePath('/news');
         $this->assertEquals('/news', $this->_request->getBasePath());
     }
  
-    public function testGetCookie()
+    public function testBasePathAutoDiscovery()
+    {
+        $_SERVER['REQUEST_URI']     = '/html/index.php/news/3?var1=val1&var2=val2';
+        $_SERVER['PHP_SELF']        = '/html/index.php/news/3';
+        $_SERVER['SCRIPT_FILENAME'] = '/var/web/html/index.php';
+        $_GET = array(
+            'var1' => 'val1',
+            'var2' => 'val2'
+        );
+        $request = new Zend_Controller_Request_Http();
+
+        $this->assertEquals('/html', $request->getBasePath(), $request->getBaseUrl());
+    }
+
+     public function testGetCookie()
     {
         $_COOKIE['foo'] = 'bar';
         $this->assertSame('bar', $this->_request->getCookie('foo'));
@@ -226,4 +427,5 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $this->_request->getEnv('BAR', 'foo'));
         $this->assertEquals($_ENV, $this->_request->getEnv());
     }
+
 }
