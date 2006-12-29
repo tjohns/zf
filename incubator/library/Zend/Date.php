@@ -2572,7 +2572,7 @@ class Zend_Date {
      * @param $date string     - OPTIONAL RFC822 date to set, when null the actual date is set
      * @return object
      */
-    public function setArpa($date = null)
+    public function setArpa($date = FALSE)
     {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
@@ -2587,7 +2587,7 @@ class Zend_Date {
      * @param $date string  - OPTIONAL RFC822 date to add, when null the actual date is add
      * @return object
      */
-    public function addArpa($date = null)
+    public function addArpa($date = FALSE)
     {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
@@ -2602,7 +2602,7 @@ class Zend_Date {
      * @param $date string  - OPTIONAL RFC822 date to sub, when null the actual date is sub
      * @return object
      */
-    public function subArpa($date = null)
+    public function subArpa($date = FALSE)
     {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
@@ -2617,7 +2617,7 @@ class Zend_Date {
      * @param $date string - OPTIONAL RFC822 date to compare, when null the actual date is used for compare
      * @return object
      */
-    public function compareArpa($date = null)
+    public function compareArpa($date = FALSE)
     {
         if (empty($date)) {
             $date = $this->_Date->date('D\, d M y H\:m\:s O');
@@ -2667,6 +2667,7 @@ class Zend_Date {
 
     /**
      * Returns the time of sunrise for this date and a given location
+     * For a list of cities use Zend_Date_Cities $City['Vienna'] for example
      *
      * @param  $location array - location of sunrise
      * @return object
@@ -2680,6 +2681,7 @@ class Zend_Date {
 
     /**
      * Returns the time of sunset for this date and a given location
+     * For a list of cities use Zend_Date_Cities $City['Vienna'] for example
      *
      * @param  $location array - location of sunset
      * @return object
@@ -2693,6 +2695,7 @@ class Zend_Date {
 
     /**
      * Returns an array with all sun-infos for a time and location
+     * For a list of cities use Zend_Date_Cities $City['Vienna'] for example
      *
      * @param  $location array - location of suninfo
      * @return array
