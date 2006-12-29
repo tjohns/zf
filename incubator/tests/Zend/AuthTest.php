@@ -56,6 +56,55 @@ require_once 'PHPUnit/Framework/TestCase.php';
 class Zend_AuthTest extends PHPUnit_Framework_TestCase
 {
     /**
+     * Ensure that default, get, and set work for the useSession option
+     *
+     * @return void
+     */
+    public function testUseSession()
+    {
+        $auth = new Zend_Auth(new Zend_AuthTest_Success_Adapter());
+        $this->assertTrue($auth->getUseSession());
+        $auth->setUseSession(false);
+        $this->assertFalse($auth->getUseSession());
+
+        $auth = new Zend_Auth(new Zend_AuthTest_Success_Adapter(), false);
+        $this->assertFalse($auth->getUseSession());
+    }
+
+    /**
+     * Ensure that default, get, and set for the sessionNamespace option
+     *
+     * @return void
+     */
+    public function testSessionNamespace()
+    {
+        $auth = new Zend_Auth(new Zend_AuthTest_Success_Adapter());
+        $this->assertTrue(Zend_Auth::SESSION_NAMESPACE_DEFAULT === $auth->getSessionNamespace());
+        $sessionNamespace = 'Some Namespace';
+        $auth->setSessionNamespace($sessionNamespace);
+        $this->assertTrue($auth->getSessionNamespace() === $sessionNamespace);
+        $auth = new Zend_Auth(new Zend_AuthTest_Success_Adapter(), true, $sessionNamespace);
+        $this->assertTrue($auth->getSessionNamespace() === $sessionNamespace);
+    }
+
+    /**
+     * Ensure that default, get, and set work for the sessionTokenName option
+     *
+     * @return void
+     */
+    public function testSessionTokenName()
+    {
+        $auth = new Zend_Auth(new Zend_AuthTest_Success_Adapter());
+        $this->assertTrue(Zend_Auth::SESSION_TOKEN_NAME_DEFAULT === $auth->getSessionTokenName());
+        $sessionTokenName = 'Some Token Name';
+        $auth->setSessionTokenName($sessionTokenName);
+        $this->assertTrue($auth->getSessionTokenName() === $sessionTokenName);
+        $auth = new Zend_Auth(new Zend_AuthTest_Success_Adapter(), true, Zend_Auth::SESSION_NAMESPACE_DEFAULT,
+                              $sessionTokenName);
+        $this->assertTrue($auth->getSessionTokenName() === $sessionTokenName);
+    }
+
+    /**
      * Ensure expected behavior upon sucessful authentication
      *
      * @return void
