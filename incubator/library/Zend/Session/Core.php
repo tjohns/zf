@@ -278,7 +278,8 @@ final class Zend_Session_Core
     static public function regenerateId()
     {
         if (headers_sent($filename, $linenum)) {
-            throw new Zend_Session_Exception("You must call this method before any output has been sent to the browser; output started in {$filename}/{$linenum}");
+            throw new Zend_Session_Exception("You must call ",__CLASS__,'::',__FUNCTION__,
+                "() before any output has been sent to the browser; output started in {$filename}/{$linenum}");
         }
 
         if (self::$_sessionStarted && self::$_regenerateIdState <=0) {
@@ -384,7 +385,8 @@ final class Zend_Session_Core
         }
 
         if (headers_sent($filename, $linenum)) {
-            throw new Zend_Session_Exception("You must call this method before any output has been sent to the browser; output started in {$filename}/{$linenum}");
+            throw new Zend_Session_Exception("You must call ",__CLASS__,'::',__FUNCTION__,
+                "() before any output has been sent to the browser; output started in {$filename}/{$linenum}");
         }
 
         if (self::$_sessionStarted) {
@@ -457,7 +459,8 @@ final class Zend_Session_Core
     static public function setId($id)
     {
         if (headers_sent($filename, $linenum)) {
-            throw new Zend_Session_Exception('You must call this method before any output has been sent to the browser.');
+            throw new Zend_Session_Exception("You must call ",__CLASS__,'::',__FUNCTION__,
+                "() before any output has been sent to the browser; output started in {$filename}/{$linenum}");
         }
 
         if (!is_string($id) || $id === '') {
