@@ -353,6 +353,17 @@ class Zend_Locale_FormatTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * test with two seperation language locale
+     * expected string
+     */
+    public function testRegionWithNoSeperation()
+    {
+        $value = Zend_Locale_Format::toNumber(452.25, 'en_US');
+        $this->assertEquals($value, '452.25', "value 452.25 expected");
+    }
+
+
+    /**
      * test if isNumber
      * expected boolean
      */
