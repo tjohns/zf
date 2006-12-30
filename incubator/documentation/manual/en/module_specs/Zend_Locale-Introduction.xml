@@ -106,8 +106,8 @@
         <example>
             <title>Defining a locale</title>
             <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Locale.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale();
 ?>]]></programlisting>
@@ -170,8 +170,8 @@ $locale = new Zend_Locale();
         <example>
             <title>Search Environment Locale</title>
             <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Locale.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale(Zend_Locale::SERVER);
 ?>]]></programlisting>
@@ -199,8 +199,8 @@ $locale = new Zend_Locale(Zend_Locale::SERVER);
         <example>
             <title>Search Framework Locale</title>
             <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Locale.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale(Zend_Locale::FRAMEWORK);
 ?>]]></programlisting>
@@ -228,8 +228,8 @@ $locale = new Zend_Locale(Zend_Locale::FRAMEWORK);
         <example>
             <title>Search Browser Locale</title>
             <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Locale.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale(Zend_Locale::BROWSER);
 ?>]]></programlisting>
@@ -243,8 +243,8 @@ $locale = new Zend_Locale(Zend_Locale::BROWSER);
         <example>
             <title>Define locales per hand</title>
             <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Locale.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_DE');
 ?>]]></programlisting>
@@ -283,9 +283,8 @@ $locale = new Zend_Locale('de_DE');
         <example>
             <title>Autodefinition with locale aware classes</title>
             <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Locale.php');
-require_once('Zend/Date.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
 
 $date = new Zend_Date('2006',Zend_Date::YEAR);
 ?>]]></programlisting>
@@ -300,10 +299,9 @@ $date = new Zend_Date('2006',Zend_Date::YEAR);
         <example>
             <title>Use locale autosearch for more than one classes</title>
             <programlisting role="php"><![CDATA[<?php
-
-require_once('Zend/Locale.php');
-require_once('Zend/Date.php');
-require_once('Zend/Measure.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
+Zend::loadClass('Zend_Measure');
 
 $locale = new Zend_Locale();
 $date = new Zend_Date('2006',Zend_Date::YEAR, $locale);
@@ -317,7 +315,6 @@ $temp = new Zend_Measure('100,10',Zend_Measure::TEMPERATURE, $locale);
         </para>
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

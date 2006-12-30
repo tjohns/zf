@@ -18,7 +18,9 @@
     <example>
         <title>Normalize a number system</title>
         <programlisting role="php"><![CDATA[<?php
-require_once('Zend/Locale.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
 $string = "١‎٠٠";   // Arabic for 100
 $normal = Zend_Locale_Format::toNumberSystem($string, 'Arab', 'Engl');
 
@@ -34,7 +36,9 @@ print "\nNormalized:".$normal;
     <example>
         <title>Localize a number systems</title>
         <programlisting role="php"><![CDATA[<?php
-require_once('Zend/Locale.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
 $string = "١‎٠٠";   // Arabic for 100
 $local = Zend_Locale_Format::toNumberSystem($string, 'Arab', 'Engl');
 
@@ -50,7 +54,9 @@ print "\nLocalize:".$local;
     <example>
         <title>Convert between number systems</title>
         <programlisting role="php"><![CDATA[<?php
-require_once('Zend/Locale.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
+
 $string = "١‎٠٠";   // Arabic for 100
 $local = Zend_Locale_Format::toNumberSystem($string, 'Arab', 'Knda');
 

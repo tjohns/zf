@@ -24,8 +24,8 @@
         <example>
             <title>Number normalization</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getNumber('13.524,678', $locale);
@@ -52,8 +52,8 @@ print $number;
         <example>
             <title>Number normalization with precision</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getNumber('13.524,678', 1, $locale);
@@ -81,8 +81,8 @@ print $number;
         <example>
             <title>Number localization</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.36, $locale);
@@ -107,8 +107,8 @@ print $number;
         <example>
             <title>Number localization with precision</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toNumber(13547.3678, 2, $locale);
@@ -135,8 +135,8 @@ print $number;
         <example>
             <title>Number testing</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale();
 if (Zend_Locale_Format::isNumber('13.445,36', 'de_AT') {
@@ -156,8 +156,8 @@ if (Zend_Locale_Format::isNumber('13.445,36', 'de_AT') {
         <example>
             <title>Floating point value normalization</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getFloat('13.524,678', 2, $locale);
@@ -176,8 +176,8 @@ print $number;
         <example>
             <title>Floating point value localization</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toFloat(13547.3655, 1, $locale);
@@ -204,8 +204,8 @@ print $number;
         <example>
             <title>Floating point value testing</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::isFloat('13.445,36', $locale) {
@@ -225,8 +225,8 @@ if (Zend_Locale_Format::isFloat('13.445,36', $locale) {
         <example>
             <title>Integer value normalization</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::getInteger('13.524,678', $locale);
@@ -245,8 +245,8 @@ print $number;
         <example>
             <title>Integer value localization</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $number = Zend_Locale_Format::toInteger(13547.3655, $locale);
@@ -264,8 +264,8 @@ print $number;
         <example>
             <title>Integer value testing</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::isInteger('13.445', $locale) {
@@ -352,7 +352,8 @@ if (Zend_Locale_Format::isInteger('13.445', $locale) {
         <example>
             <title>Normalizing a date</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $date = Zend_Locale_Format::getDate('13.04.2006', 'dd.MM.yyyy');
 
@@ -366,8 +367,8 @@ print_r ($date);
         <example>
             <title>Normalizing a date by locale</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $date = Zend_Locale_Format::getDate('13.04.2006', false, $locale);
@@ -381,8 +382,8 @@ print_r ($date);
         <example>
             <title>Normalizing a date with time</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 $date = Zend_Locale_Format::getDate('13.04.2005 22:14:55', false, $locale);
@@ -396,7 +397,8 @@ print_r ($date);
         <example>
             <title>Normalizing a userdefined date</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $date = Zend_Locale_Format::getDate('13200504T551422', 'ddyyyyMM ssmmHH');
 
@@ -495,7 +497,8 @@ print_r ($date);
         <example>
             <title>Correction for date normalizing</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $date = Zend_Locale_Format::getDate('41.10.20', 'ddMMyy');
 
@@ -513,11 +516,11 @@ print_r ($date);
         <example>
             <title>Date testing</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
-$locale = new Zend_Locale();
-if (Zend_Locale_Format::isDate('13.Apr.2006', 'de_AT') {
+$locale = new Zend_Locale('de_AT');
+if (Zend_Locale_Format::isDate('13.Apr.2006', $locale) {
     print "date";
 } else {
     print "not a date";
@@ -535,8 +538,8 @@ if (Zend_Locale_Format::isDate('13.Apr.2006', 'de_AT') {
         <example>
             <title>Normalize a unknown time</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::getTime('13:44:42', $locale) {
@@ -556,8 +559,8 @@ if (Zend_Locale_Format::getTime('13:44:42', $locale) {
         <example>
             <title>Time testing</title>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
 if (Zend_Locale_Format::isTime('13:44:42', $locale) {
