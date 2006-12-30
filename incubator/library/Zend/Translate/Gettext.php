@@ -33,20 +33,13 @@ require_once 'Zend/Locale.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Translate_Gettext {
+class Zend_Translate_Gettext extends Zend_Translate_Core {
 
     // Class wide Constants
 
     // Internal variables
-
-    /**
-     * Locale Object / Setting
-     */
-    private $_Locale      = '';
-    private $_Options     = array();
     private $_BigEndian   = FALSE;
     private $_File        = FALSE;
-    private $_Total       = 0;
     private $_Translation = array();
 
 
@@ -60,93 +53,7 @@ class Zend_Translate_Gettext {
      */
     public function __construct($options, $locale = FALSE)
     {
-        // set locale
-        if ($locale === FALSE) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setOptions($options);
-    }
-
-
-    /**
-     * Sets a new adaptor
-     *
-     * @param $options array - Adaptor options
-     * @return timestamp
-     */
-    public function setOptions($options)
-    {
-    }
-
-
-    /**
-     * Returns the adaptors name and it's options
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return $this->_Options;
-    }
-
-
-    /**
-     * Sets a new locale/language
-     *
-     * @param $locale string - New locale/language to set
-     */
-    public function setLocale($locale)
-    {
-        $this->_Locale = $locale;
-        // check if locale exists return false if not
-    }
-
-
-    /**
-     * Gets the actual locale/language
-     *
-     * @return $locale string
-     */
-    public function getLocale($locale)
-    {
-        return $this->_Locale;
-    }
-
-
-    /**
-     * Gets the actual language, can differ from the set locale
-     *
-     * @return $locale string
-     */
-    public function getLanguage()
-    {
-        return $this->_Language();
-    }
-
-
-    /**
-     * Returns the avaiable languages from this adaptor
-     *
-     * @return $locale string
-     */
-    public function getLanguageList()
-    {
-        // return which languages are avaiable for translation
-    }
-    
-
-    /**
-     * is the wished language avaiable ?
-     *
-     * @param $language    locale - language to use
-     * @return boolean
-     */
-    public function isAvaiable($language)
-    {
-        // return if this language is translatable
+        parent::__construct($options, $locale);
     }
 
 
@@ -223,7 +130,7 @@ class Zend_Translate_Gettext {
 
         // number of bytes
         $input = $this->_readMOData(1);
-        $this->_Total = $input[1];
+        $total = $input[1];
 
         // number of original strings
         $input = $this->_readMOData(1);
@@ -236,13 +143,13 @@ class Zend_Translate_Gettext {
         // fill the original table
         $temporary = array(); 
         fseek($this->_File, $OOffset);
-        $origtemp = $this->_readMOData(2 * $this->_Total);
+        $origtemp = $this->_readMOData(2 * $total);
         fseek($this->_File, $TOffset);
-        $transtemp = $this->_readMOData(2 * $this->_Total);
+        $transtemp = $this->_readMOData(2 * $total);
         
         $length = 0;
         $offset = 0;
-        for($count = 0; $count < $this->_Total; ++$count) {
+        for($count = 0; $count < $total; ++$count) {
             fseek($this->_File, $origtemp[$count * 2 + 2]);
             $original = @fread($this->_File, $origtemp[$count * 2 + 1]);
             fseek($this->_File, $transtemp[$count * 2 + 2]);
