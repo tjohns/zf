@@ -76,6 +76,11 @@ class Zend_AllTests
         $suite->addTest(Zend_Mail_AllTests::suite());
         $suite->addTestSuite('Zend_MeasureTest');
         $suite->addTest(Zend_Measure_AllTests::suite());
+        /*
+         * To run the unit tests for Zend_Session*:
+         * $ cd zftrunk/incubator/tests/Zend/Session
+         * $ php AllTests.php
+         */
         // $suite->addTest(Zend_Session_AllTests::suite());
         $suite->addTestSuite('Zend_TimeSyncTest');
 
