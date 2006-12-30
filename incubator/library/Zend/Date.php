@@ -235,6 +235,17 @@ class Zend_Date {
      */
     public function __construct($date = FALSE, $part = FALSE, $gmt = FALSE, $locale = FALSE)
     {
+        foreach(array('date','part','gmt') as $param) {
+            $type = gettype($$param);
+            if ($type === 'object' && ($$param instanceof Zend_Locale)) {   
+                $locale = $$param;
+                $restFalse = true;
+            }
+            if (isset($restFalse)) {
+                $$param = false;
+            }
+        }
+
         // set locale
         if ($locale === FALSE) {
             $this->_Locale = new Zend_Locale();
@@ -1173,6 +1184,17 @@ class Zend_Date {
      */
     private function _calculate($calc, $date, $part = FALSE, $gmt = FALSE, $locale = FALSE)
     {
+        foreach(array('date','part','gmt') as $param) {
+            $type = gettype($$param);
+            if ($type === 'object' && ($$param instanceof Zend_Locale)) {   
+                $locale = $$param;
+                $restFalse = true;
+            }
+            if (isset($restFalse)) {
+                $$param = false;
+            }
+        }
+
         if ($locale === FALSE) {
             $locale = $this->_Locale;
         }
