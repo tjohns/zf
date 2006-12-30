@@ -1,173 +1,162 @@
 <sect1 id="zend.date.general">
-    <title>Generelle Funktionen</title>
+    <title>General Functions</title>
     <para>
-        In den nachfolgenden Kapiteln wird immer nur von Datum gesprochen.
-        Datum meint in diesem Fall aber Datum inklusive Uhrzeit auch wenn diese
-        nicht explizit angegeben wird.
+        From this chapter on speaking of dates always implies a date with a time, even when not
+        mentioned in addition.
     </para>
     <para>
-        Bei einer Angabe von Datum alleine ist die Uhrzeit intern auf 00:00:00 gesetzt.
+        Setting only a specific date implies a time set to 00:00:00.
     </para>
     <para>
-        Bei einer Angabe von Zeit alleine ist das Datum intern auf 01.01.1970 gesetzt.
+        Setting only a specific date implies a date internally set to 01.01.1970.
     </para>
     <sect2 id="zend.date.simple.creation">
-        <title>Das aktuelle Datum</title>
+        <title>The current date</title>
         <para>
-            Das einfachste wird natürlich zuerst behandelt... die Erstellung des aktuellen Datums.
+            Naturally we will cover basics like 'creating the current date' at first.
         </para>
         <para>
-            Das bei der Programmierung von <code>Zend_Date</code> die Einfachheit im Vordergrund gestanden ist,
-            wird bei der Erstellung eines Datums sichtbar. Es reicht ein neues Zend_Date Objekt zu erzeugen
-            um den aktuellen Zeitpunkt festgehalten zu haben.
+            When you want to create a current date, the simplicity of <code>Zend_Date</code> will
+            strike at once. It is sufficient to create a new Zend_Date object.
         </para>
         <example>
-            <title>Aktuelles Datum erzeugen</title>
+            <title>Creating the current date</title>
             <programlisting role="php"><![CDATA[<?php
     require_once 'Zend.php';
     Zend::loadClass('Zend_Date');
 
     $date = new Zend_Date();
-        
-    // Ausgabe des erzeugten Timestamps
+
+    // Output of the current timestamp
     print $date;
 ?>]]></programlisting>
         </example>
         <para>
-            Wie man im Beispiel sieht ist nicht nur die Erstellung sehr einfach, sondern auch die Ausgabe
-            des aktuellen Zeitpunktes.
+            As it may have attracted your attention, not only creation is simple but output also.
         </para>
     </sect2>
     <sect2 id="zend.date.simple.functions">
-        <title>Was kann Zend_Date denn nun ?</title>
+        <title>So what's this all about?</title>
         <para>
-            Kommen wir nun zu den generellen Funktionen die Zend_Date bietet bevor wir ins Detail gehen 
-            und auf die einzelnen Funktionen detailiert beschreiben. Zu jeder Funktion wird ein kleines 
-            Beispiel gegeben das zeigt wie einfach die Handhabung ist.
+            Let's talk about the more general functions provided by <code>Zend_Date</code> before
+            the detailed functions will pop up. A small example will be provided for each function.
         </para>
         <sect3 id="zend.date.simple.functions.get">
-            <title>Ausgabe des Datums</title>
+            <title>Ouput a date</title>
             <para>
-                Der Inhalt des Zend_Date Objektes kann mit get() ausgegeben werden.
-                Die Funktion get() bietet eine große Vielzahl an Optionen mit denen im Detail 
-                natürlich die Ausgabe gesteuert werden kann.
-                Mehr dazu kann unter Zend_Date->get() nachgelesen werden.
+                You can demand the content of a <code>Zend_Date</code> object through the get()
+                method. get() comes with lots of available options dealing (of course) with the
+                date format. In-depth explanation can be found in the next chapters.
             </para>
             <example>
-                <title>get() - Datum ausgeben</title>
+                <title>get() - output a date</title>
                 <programlisting role="php"><![CDATA[<?php
     require_once 'Zend.php';
     Zend::loadClass('Zend_Date');
 
     $date = new Zend_Date();
-        
-    // Ausgabe des erzeugten Timestamps
+
+    // Output of the desired date
     print $date->get();
 ?>]]></programlisting>
             </example>
         </sect3>
         <sect3 id="zend.date.simple.functions.set">
-            <title>Setzen eines neuen Datums</title>
+            <title>Setting a date</title>
             <para>
-                Mit set() kann ein neues Datum gesetzt werden.
-                Die Funktion set() bietet genauso wie die Funktion get() eine große Vielzahl an Optionen
-                mit denen im Detail natürlich das Eingabeverhalten gesteuert werden kann.
-                Mehr dazu kann unter Zend_Date->set() nachgelesen werden.
+                The set() method will be used to generate a new date. Analoguely to get() are provided
+                lots of option regarding the input format. For further information please refer to
+                the next chapters.
             </para>
             <example>
-                <title>set() - Datum setzen</title>
+                <title>set() - set a date</title>
                 <programlisting role="php"><![CDATA[<?php
     require_once 'Zend.php';
     Zend::loadClass('Zend_Date');
 
     $date = new Zend_Date();
 
-    // Setzen einer neuen Uhrzeit    
+    // Setting of a new time
     $date->set('13:00:00',Zend_Date::TIMES);
     print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
         </sect3>
         <sect3 id="zend.date.simple.functions.add">
-            <title>Addieren und Subtrahieren von zwei Datumswerten</title>
+            <title>Adding and subtracting with two dates</title>
             <para>
-                Genauso einfach wie das Setzen und die Ausgabe von Datumswerten ist das Addieren von zwei 
-                Datumswerten mit add(). Hierbei werden die gleichen Optionen unterstützt für alle 
-                generellen Funktionen.
+                Adding two dates with add() is evenly simple as get() and set(). The method accepts the
+                same modifiers as all general functions.
             </para>
             <example>
-                <title>add() - Datum addieren</title>
+                <title>add() - adding dates</title>
                 <programlisting role="php"><![CDATA[<?php
     require_once 'Zend.php';
     Zend::loadClass('Zend_Date');
 
     $date = new Zend_Date();
 
-    // Addieren der zwei Zeiten
+    // adding of both times
     $date->add('13:00:00', Zend_Date::TIMES);
     print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
             <para>
-                Auch das Subtrahieren wird analog zum Addieren angewendet.
-                Die entsprechende Funktion heißt hierbei sub().
+                Subtraction works analogue to addition. The method for subtraction is called sub().
             </para>
             <example>
-                <title>sub() - Datum subtrahieren</title>
+                <title>sub() - subtracting dates</title>
                 <programlisting role="php"><![CDATA[<?php
     require_once 'Zend.php';
     Zend::loadClass('Zend_Date');
 
     $date = new Zend_Date();
 
-    // Subtrahieren der zwei Zeiten
+    // subtracting of both times
     $date->sub(10, Zend_Date::HOUR);
     print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
         </sect3>
         <sect3 id="zend.date.simple.functions.compare">
-            <title>Vergleichen von Datumswerten</title>
+            <title>Comparation of dates</title>
             <para>
-                Natürlich ist es auch notwendig Datumswerte zu vergleichen.
-                Hierfür wurde die Funktion compare() integriert, mit der 
-                zweie Datumsangaben oder Teilwerte verglichen werden können. 
+                Naturally we need to compare dates as well. The method compare() will compare two
+                dates or parts of them.
             </para>
             <example>
-                <title>compare() - Datum vergleichen</title>
+                <title>compare() - compare dates</title>
                 <programlisting role="php"><![CDATA[<?php
     require_once 'Zend.php';
     Zend::loadClass('Zend_Date');
 
     $date = new Zend_Date();
 
-    // Vergleichen der zwei Zeiten
+    // Comparation of both times
     if ($date->compare(10, Zend_Date::MINUTE) == -1) {
-        print "Die Stunde ist noch keine 10 Minuten alt";
+        print "This hour is less than 10 minutes old";
     } else {
-        print "Die Stunde ist schon mindestens 10 Minuten alt";
+        print "This hour is at least 10 minutes old";
     }
 ?>]]></programlisting>
             </example>
             <para>
-                Aber auch der reine boolsche Vergleich wurde integriert.
-                Die Funktion equals() stellt diese Funktionalität zur Verfügung.
-                Hierbei wird ein reines TRUE oder FALSE zurückgegeben. Wie bei allen generellen
-                Funktionen werden auch hier alle Optionen unterstützt.
+                There also lives a purely boolean comparation method in <code>Zend_Date</code>.
+                equals() returns TRUE or FALSE. As with all general functions, all modifier are supported.
             </para>
             <example>
-                <title>equals() - Datum identifizieren</title>
+                <title>equals() - identify a date</title>
                 <programlisting role="php"><![CDATA[<?php
     require_once 'Zend.php';
     Zend::loadClass('Zend_Date');
 
     $date = new Zend_Date();
 
-    // Vergleichen der zwei Zeiten
+    // Comparation of the two dates
     if ($date->equals(10, Zend_Date::HOUR)) {
-        print "Es ist 10 Uhr";
+        print "It's 10 o'clock. Time to get to work.";
     } else {
-        print "Es ist NICHT 10 Uhr";
+        print "It is not 10 o'clock. You can keep sleeping.";
     }
 ?>]]></programlisting>
             </example>
