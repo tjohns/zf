@@ -23,12 +23,14 @@
             The value can be an integer, a float, or even a string.
         </para>
         <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
 
 // The Length class is needed when using the constants
-require_once 'Zend/Measure/Length.php';
+Zend::loadClass('Zend_Measure_Length');
 
-$unit = new Zend_Measure(100,Zend_Measure_Length::METER,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure_Length::METER, $locale);
 
 // Convert meters to yards
 echo $unit->convertTo(Zend_Measure_Length::YARD);
@@ -41,7 +43,6 @@ echo $unit->convertTo(Zend_Measure_Length::YARD);
         </para>
     </note>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

@@ -43,12 +43,10 @@
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Weight');
-Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de');
-
 $mystring = "1.234.567,89";
-$unit = new Zend_Measure($mystring,Zend_Measure_Weight::POUND,$locale);
+$unit = new Zend_Measure($mystring,Zend_Measure_Weight::POUND, $locale);
 
 print "Kilo:".$unit->convertTo(Zend_Measure_Weight::KILOGRAM);
 print "Ton:".$unit->convertTo(Zend_Measure_Weight::TON);
@@ -220,10 +218,8 @@ print "Lesser:".$unit3->compare($unit2);
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
 Zend::loadClass('Zend_Measure_Length');
-Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de_AT');
-
 $unit = new Zend_Measure(1,Zend_Measure_Length::METER);
 
 $unit->setValue(1.2);

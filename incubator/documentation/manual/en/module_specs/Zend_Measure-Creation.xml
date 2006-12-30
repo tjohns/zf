@@ -134,19 +134,16 @@ echo $unit;
             <programlisting role="php"><![CDATA[<?php
 require_once 'Zend.php';
 Zend::loadClass('Zend_Measure');
-Zend::loadClass('Zend_Locale');
 
 $locale = new Zend_Locale('de');
-
 $mystring = "1.234.567,89 Meter";
-$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH,$locale);
+$unit = new Zend_Measure($mystring,Zend_Measure::LENGTH, $locale);
 
 echo $unit;
 ?>]]></programlisting>
         </example>
     </sect2>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

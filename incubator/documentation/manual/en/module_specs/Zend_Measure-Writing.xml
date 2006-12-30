@@ -16,16 +16,17 @@
                 The display unit is <code>m</code>.
             </para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
 // loading the Length class
-require_once 'Zend/Measure/Length.php';
-
+Zend::loadClass('Zend_Measure_Length');
 
 echo Zend_Measure::LENGTH;           // outputs 'Zend_Measure::LENGTH'
 echo Zend_Measure_Length::STANDARD;  // outputs 'Length::METER'
 echo Zend_Measure_Length::KILOMETER; // outputs 'Length::KILOMETER'
 
-$unit = new Zend_Measure(100,Zend_Measure_Length::METER,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure_Length::METER,$locale);
 echo $unit;
 // outputs '100 m'
 ?>]]></programlisting>
@@ -36,7 +37,6 @@ echo $unit;
         <link linkend="zend.measure.types"><code>Types of measurements</code></link>
     </para>
 </sect1>
-
 <!--
 vim:se ts=4 sw=4 et:
 -->

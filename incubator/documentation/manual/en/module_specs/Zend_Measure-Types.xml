@@ -13,11 +13,13 @@
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Acceleration.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Acceleration');
 
 // define standard measurement unit
-$unit = new Zend_Measure(100,Zend_Measure::ACCELERATION,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::ACCELERATION, $locale);
 
 // convert to km/s²
 echo $unit->convertTo(Zend_Measure_Acceleration::KILOMETER_PER_SQUARE_SECOND);
@@ -37,13 +39,15 @@ echo $unit->convertTo(Zend_Measure_Acceleration::KILOMETER_PER_SQUARE_SECOND);
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Angle.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Angle');
 
-$angle = new Zend_Measure(100,Zend_Measure::ANGLE,'en');
+$locale = new Zend_Locale('en');
+$angle = new Zend_Measure(100,Zend_Measure::ANGLE, $locale);
 
 // add a second angle
-$second = new Zend_Measure(30,Zend_Measure::ANGLE,'en');
+$second = new Zend_Measure(30,Zend_Measure::ANGLE, $locale);
 $sum = $angle->add($second);
 
 echo $sum->convertTo(Zend_Measure_Angle::DEGREE);
@@ -63,11 +67,13 @@ echo $sum->convertTo(Zend_Measure_Angle::DEGREE);
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Area.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Area');
 
 // define another measurement... here hectare
-$area = new Zend_Measure(100,Zend_Measure_Area::HECTARE,'en');
+$locale = new Zend_Locale('en');
+$area = new Zend_Measure(100,Zend_Measure_Area::HECTARE, $locale);
 
 // convert to the standard measurement unit Zend_Measure_Area::SQUARE_METER
 echo $area->convertTo(Zend_Measure_Area::STANDARD);
@@ -87,10 +93,12 @@ echo $area->convertTo(Zend_Measure_Area::STANDARD);
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Binary.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Binary');
 
-$binary = new Zend_Measure(100,Zend_Measure_Binary::MEGABYTE,'en');
+$locale = new Zend_Locale('en');
+$binary = new Zend_Measure(100,Zend_Measure_Binary::MEGABYTE, $locale);
 
 // convert to the measurement unit megabyte as defined by SI
 echo $binary->convertTo(Zend_Measure_Binary::MEGABYTE_SI);
@@ -138,11 +146,13 @@ echo $binary->convertTo(Zend_Measure_Binary::MEGABYTE_SI);
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Capacitance.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Capacitance.');
 
 // definition of the measurement as string
-$capacity = new Zend_Measure('100 Farad',Zend_Measure::CAPACITANCE,'en');
+$locale = new Zend_Locale('en');
+$capacity = new Zend_Measure('100 Farad',Zend_Measure::CAPACITANCE, $locale);
 
 // output value
 echo $capacity;
@@ -167,11 +177,13 @@ echo $capacity;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Cooking/Volume.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Cooking_Volume');
 
 // define the measurement unit as extended string
-$rum = new Zend_Measure('You will need 10cl rum',Zend_Measure_Cooking_Volume::CENTILITER,'de');
+$locale = new Zend_Locale('de');
+$rum = new Zend_Measure('You will need 10cl rum',Zend_Measure_Cooking_Volume::CENTILITER, $locale);
 
 // output value
 echo $rum;
@@ -196,11 +208,13 @@ echo $rum;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Cooking/Weight.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Cooking_Weight');
 
 // extract the measurement unit from an localized string
-$rum = new Zend_Measure('The cake needs 2,5g oil',Zend_Measure_Cooking_Weight::GRAM,'de');
+$locale = new Zend_Locale('de');
+$rum = new Zend_Measure('The cake needs 2,5g oil',Zend_Measure_Cooking_Weight::GRAM, $locale);
 
 // output value
 echo $rum;
@@ -220,11 +234,13 @@ echo $rum;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Current.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Current');
 
 // extract the measurement unit from an localized string with number grouping
-$unit = new Zend_Measure('1.200,50Ampere',Zend_Measure::CURRENT,'de');
+$locale = new Zend_Locale('de');
+$unit = new Zend_Measure('1.200,50Ampere',Zend_Measure::CURRENT, $locale);
 
 echo $unit->convertTo(Zend_Measure_Current::KILOAMPERE);
 ?>]]></programlisting>
@@ -243,10 +259,12 @@ echo $unit->convertTo(Zend_Measure_Current::KILOAMPERE);
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Density.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Density');
 
-$unit = new Zend_Measure(100,Zend_Measure::DENSITY,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::DENSITY, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -265,10 +283,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Energy.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Energy');
 
-$unit = new Zend_Measure(100,Zend_Measure::ENERGY,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::ENERGY, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -287,10 +307,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Energy.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Energy');
 
-$unit = new Zend_Measure(100,Zend_Measure::ENERGY,'de');
+$locale = new Zend_Locale('de');
+$unit = new Zend_Measure(100,Zend_Measure::ENERGY, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -310,10 +332,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Flow/Mass.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Flow_Mass');
 
-$unit = new Zend_Measure(100,Zend_Measure::FLOW_MASS,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::FLOW_MASS, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -333,10 +357,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Flow/Mole.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Flow_Mole');
 
-$unit = new Zend_Measure(100,Zend_Measure::FLOW_MOLE,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::FLOW_MOLE, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -356,10 +382,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Flow/Volume.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Flow_Volume');
 
-$unit = new Zend_Measure(100,Zend_Measure::FLOW_VOLUME,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::FLOW_VOLUME, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -378,10 +406,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Frequency.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Frequency');
 
-$unit = new Zend_Measure(100,Zend_Measure::FREQUENCY,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::FREQUENCY, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -400,10 +430,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Illumination.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Illumination');
 
-$unit = new Zend_Measure(100,Zend_Measure::ILLUMINATION,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::ILLUMINATION, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -422,10 +454,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Length.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Length');
 
-$unit = new Zend_Measure(100,Zend_Measure::LENGTH,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::LENGTH, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -444,10 +478,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Lightness.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Lightness');
 
-$unit = new Zend_Measure(100,Zend_Measure::LIGHTNESS,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::LIGHTNESS, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -466,10 +502,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Number.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Number');
 
-$binary = new Zend_Measure('10010110',Zend_Measure_Number::BINARY,'en');
+$locale = new Zend_Locale('en');
+$binary = new Zend_Measure('10010110',Zend_Measure_Number::BINARY, $locale);
 
 // convert to roman number format
 echo $binary->convertTo(Zend_Measure_Number::ROMAN);
@@ -500,11 +538,13 @@ echo $binary->convertTo(Zend_Measure_Number::ROMAN);
                 instead of it.
             </para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Number.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Number');
 
 $great = '_X';
-$unit = new Zend_Measure($great,Zend_Measure_Number::ROMAN,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure($great,Zend_Measure_Number::ROMAN, $locale);
 
 // convert to the decimal system
 echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
@@ -524,10 +564,12 @@ echo $unit->convertTo(Zend_Measure_Number::DECIMAL);
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Power.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Power');
 
-$unit = new Zend_Measure(100,Zend_Measure::POWER,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::POWER, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -546,10 +588,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Pressure.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Pressure');
 
-$unit = new Zend_Measure(100,Zend_Measure::PRESSURE,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::PRESSURE, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -568,10 +612,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Speed.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Speed');
 
-$unit = new Zend_Measure(100,Zend_Measure::SPEED,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::SPEED, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -590,10 +636,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Temperature.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Temperature');
 
-$unit = new Zend_Measure(100,Zend_Measure::TEMPERATURE,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::TEMPERATURE, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -612,10 +660,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Torque.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Torque');
 
-$unit = new Zend_Measure(100,Zend_Measure::TORQUE,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::TORQUE, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -635,10 +685,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Viscosity/Dynamic.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Viscosity_Dynamic');
 
-$unit = new Zend_Measure(100,Zend_Measure::VISCOSITY_DYNAMIC,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::VISCOSITY_DYNAMIC, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -658,10 +710,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Viscosity/Kinematic.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Viscosity_Kinematic');
 
-$unit = new Zend_Measure(100,Zend_Measure::VISCOSITY_KINEMATIC,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::VISCOSITY_KINEMATIC, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -680,10 +734,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Volume.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Volume');
 
-$unit = new Zend_Measure(100,Zend_Measure::VOLUME,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::VOLUME, $locale);
 
 echo $unit;
 ?>]]></programlisting>
@@ -702,10 +758,12 @@ echo $unit;
         </note>
         <para>
             <programlisting role="php"><![CDATA[<?php
-require_once 'Zend/Measure.php';
-require_once 'Zend/Measure/Weight.php';
+require_once 'Zend.php';
+Zend::loadClass('Zend_Measure');
+Zend::loadClass('Zend_Measure_Weight');
 
-$unit = new Zend_Measure(100,Zend_Measure::WEIGHT,'en');
+$locale = new Zend_Locale('en');
+$unit = new Zend_Measure(100,Zend_Measure::WEIGHT, $locale);
 
 echo $unit;
 ?>]]></programlisting>
