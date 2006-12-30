@@ -593,9 +593,11 @@
         <example>
             <title>Beispielnutzung eines selbstdefinierten Formates</title>
             <programlisting role="php"><![CDATA[<?php
-require_once('Zend/Date.php');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
 
-$date = new Zend_Date(1234567890, false, 'de_AT');
+$locale = new Zend_Locale('de_AT');
+$date = new Zend_Date(1234567890, false, $locale);
 print $date->toString("'Era:GGGG='GGGG, ' Datum:yy.MMMM.dd'yy.MMMM.dd");
 ?>]]></programlisting>
         </example>

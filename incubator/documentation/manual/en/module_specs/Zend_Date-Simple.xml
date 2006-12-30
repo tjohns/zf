@@ -22,13 +22,13 @@
         <example>
             <title>Creating the current date</title>
             <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend.php';
-    Zend::loadClass('Zend_Date');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
 
-    $date = new Zend_Date();
+$date = new Zend_Date();
 
-    // Output of the current timestamp
-    print $date;
+// Output of the current timestamp
+print $date;
 ?>]]></programlisting>
         </example>
         <para>
@@ -51,13 +51,13 @@
             <example>
                 <title>get() - output a date</title>
                 <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend.php';
-    Zend::loadClass('Zend_Date');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
 
-    $date = new Zend_Date();
+$date = new Zend_Date();
 
-    // Output of the desired date
-    print $date->get();
+// Output of the desired date
+print $date->get();
 ?>]]></programlisting>
             </example>
         </sect3>
@@ -71,14 +71,14 @@
             <example>
                 <title>set() - set a date</title>
                 <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend.php';
-    Zend::loadClass('Zend_Date');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
 
-    $date = new Zend_Date();
+$date = new Zend_Date();
 
-    // Setting of a new time
-    $date->set('13:00:00',Zend_Date::TIMES);
-    print $date->get(Zend_Date::W3C);
+// Setting of a new time
+$date->set('13:00:00',Zend_Date::TIMES);
+print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
         </sect3>
@@ -91,14 +91,14 @@
             <example>
                 <title>add() - adding dates</title>
                 <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend.php';
-    Zend::loadClass('Zend_Date');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
 
-    $date = new Zend_Date();
+$date = new Zend_Date();
 
-    // adding of both times
-    $date->add('13:00:00', Zend_Date::TIMES);
-    print $date->get(Zend_Date::W3C);
+// adding of both times
+$date->add('13:00:00', Zend_Date::TIMES);
+print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
             <para>
@@ -107,14 +107,14 @@
             <example>
                 <title>sub() - subtracting dates</title>
                 <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend.php';
-    Zend::loadClass('Zend_Date');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
 
-    $date = new Zend_Date();
+$date = new Zend_Date();
 
-    // subtracting of both times
-    $date->sub(10, Zend_Date::HOUR);
-    print $date->get(Zend_Date::W3C);
+// subtracting of both times
+$date->sub(10, Zend_Date::HOUR);
+print $date->get(Zend_Date::W3C);
 ?>]]></programlisting>
             </example>
         </sect3>
@@ -127,17 +127,17 @@
             <example>
                 <title>compare() - compare dates</title>
                 <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend.php';
-    Zend::loadClass('Zend_Date');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
 
-    $date = new Zend_Date();
+$date = new Zend_Date();
 
-    // Comparation of both times
-    if ($date->compare(10, Zend_Date::MINUTE) == -1) {
-        print "This hour is less than 10 minutes old";
-    } else {
-        print "This hour is at least 10 minutes old";
-    }
+// Comparation of both times
+if ($date->compare(10, Zend_Date::MINUTE) == -1) {
+    print "This hour is less than 10 minutes old";
+} else {
+    print "This hour is at least 10 minutes old";
+}
 ?>]]></programlisting>
             </example>
             <para>
@@ -147,17 +147,17 @@
             <example>
                 <title>equals() - identify a date</title>
                 <programlisting role="php"><![CDATA[<?php
-    require_once 'Zend.php';
-    Zend::loadClass('Zend_Date');
+require_once 'Zend.php';
+Zend::loadClass('Zend_Date');
 
-    $date = new Zend_Date();
+$date = new Zend_Date();
 
-    // Comparation of the two dates
-    if ($date->equals(10, Zend_Date::HOUR)) {
-        print "It's 10 o'clock. Time to get to work.";
-    } else {
-        print "It is not 10 o'clock. You can keep sleeping.";
-    }
+// Comparation of the two dates
+if ($date->equals(10, Zend_Date::HOUR)) {
+    print "It's 10 o'clock. Time to get to work.";
+} else {
+    print "It is not 10 o'clock. You can keep sleeping.";
+}
 ?>]]></programlisting>
             </example>
         </sect3>
