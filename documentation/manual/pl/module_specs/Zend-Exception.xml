@@ -3,6 +3,18 @@
 
     <para>Metoda ładuje klasę wyjątku, tworzy instancję wyjątku i następnie zwraca ją.</para>
 
+    <note>
+        <title>Odradzane:</title>
+        <para>
+            Ta metoda została przedstawiona w Zend Framework 0.6.0.
+            Ostatnio zdecydowano, że lepiej jest używać tradycyjnych metod do
+            tworzenia instancji, wyrzucania i łapania wyjątków.
+            Metoda <code>Zend::exception()</code> jest odradzana w 
+            Zend Framework 0.6.1 i będzie usunięta z produktu Zend Framework
+            w następnych wydaniach.
+        </para>
+    </note>
+
     <programlisting role="php"><![CDATA[<?php
 
 Zend::exception($class, $message, $code);

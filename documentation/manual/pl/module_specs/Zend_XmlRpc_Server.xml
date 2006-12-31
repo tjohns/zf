@@ -31,14 +31,14 @@ echo $server->handle();]]></programlisting>
         <title>Struktura serwera</title>
 
         <para>
-            Zend_XmlRpc_Server is composed of a variety of components, ranging
+            Zend_XmlRpc_Server składa się z wielu różnych komponentów, ranging
             from the server itself to request, response, and fault objects.
         </para>
 
         <para>
-            To bootstrap Zend_XmlRpc_Server, the developer must attach one or
-            more classes or functions to the server, via the
-            <code>setClass()</code> and <code>addFunction()</code> methods.
+            Aby uruchomić serwer Zend_XmlRpc_Server, programista musi dołączyć
+            jedną lub więcej klas albo funkcji do serwera, za pomocą metod
+            <code>setClass()</code> oraz <code>addFunction()</code>.
         </para>
 
         <para>
@@ -86,7 +86,7 @@ echo $server->handle();]]></programlisting>
         </itemizedlist>
 
         <para>
-            An example of how to hint follows:
+            Przykład wywołania przykładowej funkcji:
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -139,7 +139,7 @@ function myFunc($val1, $val2, $val3)
     </sect2>
 
     <sect2 id="zend.xmlrpc.server.namespaces">
-        <title>Utilizing Namespaces</title>
+        <title>Używanie przestrzeni nazw</title>
 
         <para>
             XML-RPC has a concept of namespacing; basically, it allows grouping
@@ -299,16 +299,16 @@ echo $server->handle();]]></programlisting>
     <sect2 id="zend.xmlrpc.server.use">
         <title>Przykład użycia</title>
         <para>
-            Below are several usage examples, showing the full spectrum of
-            options available to developers. Usage examples will each build
-            on the previous example provided.
+            Poniżej znajduje się kilka przykładów użycia, pokazując pełne 
+            spektrum opcji dostępnych dla programistów. Każdy z przykładów
+            użycia jest oparty na poprzednich przykładach.
         </para>
         <sect3 id="zend.xmlrpc.server.use.case1">
             <title>Podstawowe użycie</title>
 
             <para>
-                The example below attaches a function as a dispatchable XML-RPC
-                method and handles incoming calls.
+                Poniższy przykład dołącza funkcję jaką uruchamialną przez
+                XML-RPC metodę i obsługuje przychodzące wywołania.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -334,8 +334,8 @@ echo $server->handle();]]></programlisting>
             <title>Dołączanie klasy</title>
 
             <para>
-                The example below illustrates attaching a class' public methods
-                as dispatchable XML-RPC methods.
+                Poniższy przykład pokazuje dołączanie publicznych metod klasy 
+                jako uruchamialnych metod XML-RPC.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -351,8 +351,8 @@ echo $server->handle();]]></programlisting>
             <title>Dołączanie wielu klas używając przestrzeni nazw</title>
 
             <para>
-                The example below illustrates attaching several classes, each
-                with their own namespace.
+                Poniższy przykład pokazuje dołączanie kilku klas, każdej z 
+                własną przestrzenią nazw.
             </para>
 
             <programlisting role="php"><![CDATA[<?php
@@ -464,8 +464,8 @@ echo $server->handle($request);]]></programlisting>
             <title>Cache server definitions between requests</title>
 
             <para>
-                The example below illustrates caching server definitions
-                between requests.
+                Poniższy przykład pokazuje buforowanie definicji serwera pomiędzy
+                żądaniami.
             </para>
 
             <programlisting role="php"><![CDATA[<?php

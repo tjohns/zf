@@ -5,11 +5,11 @@
         <title>Wprowadzenie</title>
         
         <para>
-            The Zend Framework provides support for consuming remote XML-RPC
-            services as a client in the <code>Zend_XmlRpc_Client</code>
-            package. Its major features include automatic type conversion
-            between PHP and XML-RPC, a server proxy object, and access to
-            server introspection capabilities.
+            The Zend Framework zapewnia obsługę wywoływania zdalnych serwisów 
+            XML-RPC jako klient w pakiecie <code>Zend_XmlRpc_Client</code>. 
+            Do głównych funkcjonalności należą: automatyczna konwersja
+            typów pomiędzy PHP a XML-RPC, obiekt serwera proxy oraz dostęp
+            do możliwości introspekcji serwerów.
         </para>
 
     </sect2>
@@ -19,10 +19,10 @@
         <title>Wywołania metod</title>
         
         <para>
-            The constructor of <code>Zend_XmlRpc_Client</code> receives the
-            URL of the remote XML-RPC server endpoint as its first parameter.
-            The new instance returned may be used to call any number of
-            remote methods at that endpoint.
+            Konstruktor klasy <code>Zend_XmlRpc_Client</code> odbiera w 
+            pierwszym parametrze adres URL zdalnego serwera XML-RPC. Nowa 
+            zwrócona instancja może być użyta do wywołania dowolnej ilości 
+            zdalnych metod tego serwera.
         </para>
                 
         <para>
@@ -208,7 +208,7 @@ $result = $client->call('test.sayHello', array($arg1, $arg2));
             </para>
             
             <table>
-                <title><code>Zend_XmlRpc_Value</code> Objects for XML-RPC Types</title>
+                <title>Obiekty <code>Zend_XmlRpc_Value</code> dla typów XML-RPC</title>
                 <tgroup cols="3">
                     <thead>
                         <row>
@@ -359,9 +359,9 @@ $hello = $test->sayHello(1, 2);         // test.Hello(1,2) zwraca "hello"
             <title>Błędy HTTP</title>
 
             <para>
-                If any HTTP error occurs, such as the remote HTTP server
-                returns a <code>404 Not Found</code>, a
-                <code>Zend_XmlRpc_Client_HttpException</code> will be thrown.
+                Jeśli wystąpi jakiś błąd HTTP, na przykład gdy zdalny serwer 
+                HTTP zwróci błąd <code>404 Not Found</code>, wyrzucony zostanie
+                wyjątek <code>Zend_XmlRpc_Client_HttpException</code>.
             </para>
 
             <example>
@@ -473,7 +473,7 @@ try {
     </sect2>
 
     <sect2 id="zend.xmlrpc.client.request-to-response">
-        <title>From Request to Response</title>
+        <title>Od żądania do odpowiedzi</title>
         <para>
             Under the hood, the <code>call()</code> instance method of <code>Zend_XmlRpc_Client</code>
             builds a request object (<code>Zend_XmlRpc_Request</code>) and sends it to another method,
@@ -481,11 +481,11 @@ try {
         </para>
             
         <para>
-            The <code>doRequest()</code> method is also available for use directly:
+            Metoda <code>doRequest()</code> jest także dostępna dla bezpośredniego użycia:
         </para>
         
         <example>
-            <title>Processing Request to Response</title>
+            <title>Przetwarzanie żądania do odpowiedzi</title>
             
             <programlisting role="php"><![CDATA[<?php
                                 
