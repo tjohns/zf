@@ -1,37 +1,115 @@
-<sect1 id="zend.date.timestamp">
-    <title>Working with timestamps</title>
+<sect1 id="zend.date.complete.timestamp">
+    <title>Computing complete dates</title>
     <para>
         chapter follows soon...
     </para>
-    <sect2 id="zend.date.timestamp.gettimestamp">
-        <title>Getting timestamps with getTimestamp()</title>
+    <sect2 id="zend.date.complete.timestamp">
+        <title>Working with timestamps...</title>
         <para>
-            coming soon...
+            chapter follows soon...
         </para>
+        <sect3 id="zend.date.complete.timestamp.get">
+            <title>getTimestamp()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.complete.timestamp.set">
+            <title>setTimestamp()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.complete.timestamp.add">
+            <title>addTimestamp()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.complete.timestamp.sub">
+            <title>subTimestamp()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.compare.timestamp.compare">
+            <title>compareTimestamp()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
     </sect2>
-    <sect2 id="zend.date.timestamp.settimestamp">
-        <title>Setting a new timestamp with setTimestamp()</title>
+    <sect2 id="zend.date.complete.iso">
+        <title>ISO 8601... only a word ?</title>
         <para>
-            coming soon...
+            chapter follows soon...
         </para>
+        <sect3 id="zend.date.complete.iso.get">
+            <title>getIso()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.complete.iso.set">
+            <title>setIso()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.complete.iso.add">
+            <title>addIso()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.complete.iso.sub">
+            <title>subIso()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.compare.iso.compare">
+            <title>compareIso()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
     </sect2>
-    <sect2 id="zend.date.timestamp.addtimestamp">
-        <title>Adding a timestamp to another with addTimestamp()</title>
+    <sect2 id="zend.date.complete.arpa">
+        <title>The ARPA Standard... mail dates</title>
         <para>
-            coming soon...
+            chapter follows soon...
         </para>
-    </sect2>
-    <sect2 id="zend.date.timestamp.subtimestamp">
-        <title>Substracting a timestamp from another with subTimestamp()</title>
-        <para>
-            coming soon...
-        </para>
-    </sect2>
-    <sect2 id="zend.date.timestamp.comparetimestamp">
-        <title>Comparing two timestamps with compareTimestamp()</title>
-        <para>
-            coming soon...
-        </para>
+        <sect3 id="zend.date.complete.arpa">
+            <title>getArpa()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.complete.arpa.set">
+            <title>setArpa()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.complete.arpa.add">
+            <title>addArpa()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.complete.arpa.sub">
+            <title>subArpa()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.compare.arpa.compare">
+            <title>compareArpa()</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
     </sect2>
 </sect1>
 <!--

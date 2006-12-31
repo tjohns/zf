@@ -159,6 +159,30 @@
             </para>
         </sect3>
     </sect2>
+    <sect2 id="zend.date.time.timezone">
+        <title>Attention... Timezone failures or how to be Timezone aware</title>
+        <para>
+            coming soon...
+        </para>
+        <sect3 id="zend.date.time.timezone.get">
+            <title>getTimeZone())</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+        <sect3 id="zend.date.time.timezone.set">
+            <title>setTimeZone())</title>
+            <para>
+                coming soon...
+            </para>
+        </sect3>
+    </sect2>
+    <sect2 id="zend.date.time.daylight">
+        <title>Understanding daylight saving</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
 </sect1>
 <!--
 vim:se ts=4 sw=4 et:

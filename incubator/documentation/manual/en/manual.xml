@@ -66,11 +66,13 @@
         &module_specs.Zend_Date-Simple;
         &module_specs.Zend_Date-Setting;
         &module_specs.Zend_Date-Maths;
-        &module_specs.Zend_Date-Timestamp;
         &module_specs.Zend_Date-TimeValues;
+        &module_specs.Zend_Date-DateValues;
+        &module_specs.Zend_Date-Timestamp;
         &module_specs.Zend_Date-LocalDate;
         &module_specs.Zend_Date-LocalTime;
         &module_specs.Zend_Date-Output;
+        &module_specs.Zend_Date-Others;
         &module_specs.Zend_Date-Constants;
     </chapter>
 
