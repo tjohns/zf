@@ -1,0 +1,39 @@
+<sect1 id="zend.date.localtime">
+    <title>Working with times</title>
+    <para>
+        chapter follows soon...
+    </para>
+    <sect2 id="zend.date.localtime.get">
+        <title>Getting times with getTime()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+    <sect2 id="zend.date.localtime.set">
+        <title>Setting a new time with setTime()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+    <sect2 id="zend.date.localtime.add">
+        <title>Adding a time to another one with addTime()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+    <sect2 id="zend.date.localtime.sub">
+        <title>Substracting times with subTime()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+    <sect2 id="zend.date.localtime.compare">
+        <title>Comparing two times with compareTime()</title>
+        <para>
+            coming soon...
+        </para>
+    </sect2>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->
