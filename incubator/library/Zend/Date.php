@@ -2708,7 +2708,7 @@ class Zend_Date {
             case 'nautic' :
                 return -0.207912;
                 break;
-            case 'astonomic' :
+            case 'astronomic' :
                 return -0.309017;
                 break;
             default :
@@ -2723,6 +2723,7 @@ class Zend_Date {
      * For a list of cities use Zend_Date_Cities $City['Vienna'] for example
      *
      * @param  $location array - location of sunrise
+     * @throws Zend_Date_Exception
      * @return object
      */
     public function getSunRise($location)
@@ -2737,6 +2738,7 @@ class Zend_Date {
      * For a list of cities use Zend_Date_Cities $City['Vienna'] for example
      *
      * @param  $location array - location of sunset
+     * @throws Zend_Date_Exception
      * @return object
      */
     public function getSunSet($location)
@@ -2751,19 +2753,11 @@ class Zend_Date {
      * For a list of cities use Zend_Date_Cities $City['Vienna'] for example
      *
      * @param  $location array - location of suninfo
+     * @throws Zend_Date_Exception
      * @return array
      */
     public function getSunInfo($location)
     {
-        if (isset($location['horizon'])) {
-            $horizon = $this->_checkLocation($location);
-            $suninfo = array(
-                'sunrise' => $this->_Date->calcSun($location, $horizon, TRUE),
-                'sunset'  => $this->_Date->calcSun($location, $horizon, FALSE)
-            );
-            return $suninfo;
-        }
-
         $suninfo = array();
         for ($i = 0; $i < 4; ++$i) {
             switch ($i) {
@@ -2781,8 +2775,8 @@ class Zend_Date {
                     break;
             }
             $horizon = $this->_checkLocation($location);
-            $suninfo['sunrise'][$location['horizon']] = $this->_Date->calcSun($location, $horizon, TRUE);
-            $suninfo['sunset'][$location['horizon']]  = $this->_Date->calcSun($location, $horizon, FALSE);
+            $suninfo['sunrise'][$location['horizon']] = new Zend_Date($this->_Date->calcSun($location, $horizon, TRUE));
+            $suninfo['sunset'][$location['horizon']]  = new Zend_Date($this->_Date->calcSun($location, $horizon, FALSE));
         }
         return $suninfo;
     }

@@ -16,6 +16,7 @@ if ($old_error_reporting_level !== $new_error_reporting_level) {
 require_once 'Zend.php';
 Zend::loadClass('Zend_Date');
 Zend::loadClass('Zend_Locale');
+Zend::loadClass('Zend_Date_Cities');
 
 /**
  * PHPUnit test case
@@ -3222,5 +3223,68 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->compareArpa('Sat, 14 Feb 09 00:31:30 +0100'), 0);
         $this->assertSame($date->compareArpa('Sat, 13 Feb 09 00:31:30 +0100'), 1);
         $this->assertSame($date->compareArpa($d2), -1);
+    }
+
+    /**
+     * Test for false locale setting
+     */
+    public function testReducedParams()
+    {
+        $locale = new Zend_Locale('de_AT');
+        $date = new Zend_Date(1010101010,$locale);
+
+        $date->setArpa('Sat, 03 May 01 00:00:00 +0100',$locale);
+        $this->assertSame($date->get(Zend_Date::RFC_822),'Thu, 03 May 01 01:00:00 +0200');
+    }
+
+    /**
+     * Test for SunFunc
+     */
+    public function testSunFunc()
+    {
+        $locale = new Zend_Locale('de_AT');
+        $date = new Zend_Date(1010101010,$locale);
+
+        $result = Zend_Date_Cities::City('vienna');
+        $this->assertTrue(is_array($result));
+        $result = $date->getSunSet($result);
+        $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T16:10:10+01:00');
+
+        unset($result);
+        $result = Zend_Date_Cities::City('vienna', 'civil');
+        $this->assertTrue(is_array($result));
+        $result = $date->getSunSet($result);
+        $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T16:09:31+01:00');
+
+        unset($result);
+        $result = Zend_Date_Cities::City('vienna', 'nautic');
+        $this->assertTrue(is_array($result));
+        $result = $date->getSunSet($result);
+        $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T16:08:45+01:00');
+
+        unset($result);
+        $result = Zend_Date_Cities::City('vienna', 'astronomic');
+        $this->assertTrue(is_array($result));
+        $result = $date->getSunSet($result);
+        $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T16:08:00+01:00');
+
+        unset($result);
+        $result = Zend_Date_Cities::City('BERLIN');
+        $this->assertTrue(is_array($result));
+        $result = $date->getSunRise($result);
+        $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T08:21:17+01:00');
+
+        unset($result);
+        $result = Zend_Date_Cities::City('London');
+        $this->assertTrue(is_array($result));
+        $result = $date->getSunInfo($result);
+        $this->assertSame($result['sunrise']['effective']->get(Zend_Date::W3C), '2002-01-04T09:10:07+01:00');
+        $this->assertSame($result['sunrise']['civil']->get(Zend_Date::W3C),     '2002-01-04T09:10:51+01:00');
+        $this->assertSame($result['sunrise']['nautic']->get(Zend_Date::W3C),    '2002-01-04T09:11:42+01:00');
+        $this->assertSame($result['sunrise']['astronomic']->get(Zend_Date::W3C),'2002-01-04T09:12:31+01:00');
+        $this->assertSame($result['sunset']['effective']->get(Zend_Date::W3C),  '2002-01-04T17:01:04+01:00');
+        $this->assertSame($result['sunset']['civil']->get(Zend_Date::W3C),      '2002-01-04T17:00:20+01:00');
+        $this->assertSame($result['sunset']['nautic']->get(Zend_Date::W3C),     '2002-01-04T16:59:30+01:00');
+        $this->assertSame($result['sunset']['astronomic']->get(Zend_Date::W3C), '2002-01-04T16:58:40+01:00');
     }
 }
