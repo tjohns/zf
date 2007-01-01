@@ -237,7 +237,7 @@ class Zend_Date {
     {
         foreach(array('date','part','gmt') as $param) {
             $type = gettype($$param);
-            if ($type === 'object' && ($$param instanceof Zend_Locale)) {   
+            if ($type === 'object' && ($$param instanceof Zend_Locale)) {
                 $locale = $$param;
                 $restFalse = true;
             }
@@ -1186,7 +1186,7 @@ class Zend_Date {
     {
         foreach(array('date','part','gmt') as $param) {
             $type = gettype($$param);
-            if ($type === 'object' && ($$param instanceof Zend_Locale)) {   
+            if ($type === 'object' && ($$param instanceof Zend_Locale)) {
                 $locale = $$param;
                 $restFalse = true;
             }
@@ -2299,9 +2299,9 @@ class Zend_Date {
             if (empty($time)) {
                 $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian','medium'));
                 $format = $format['pattern'];
-                $parsed['hour']   = $this->_Date->date('H', false, $gmt);
-                $parsed['minute'] = $this->_Date->date('m', false, $gmt);
-                $parsed['second'] = $this->_Date->date('s', false, $gmt);
+                $parsed['hour']   = $this->_Date->date('H', FALSE, $gmt);
+                $parsed['minute'] = $this->_Date->date('m', FALSE, $gmt);
+                $parsed['second'] = $this->_Date->date('s', FALSE, $gmt);
             } else {
                 $parsed = Zend_Locale_Format::getTime($time, $format, $locale);
             }
@@ -2453,6 +2453,7 @@ class Zend_Date {
      * @param $format string - OPTIONAL format to parse must be CLDR format!
      * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale string - OPTIONAL locale for parsing input
+     * @return object
      */
     public function addDate($date = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
     {
@@ -2494,127 +2495,159 @@ class Zend_Date {
      * Returns a ISO8601 formatted date - ISO is locale-independent
      *
      * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale string - OPTIONAL locale for parsing input
-     * @return string
+     * @param $locale string - OPTIONAL locale to set
+     * @return object
      */
     public function getIso($gmt = FALSE, $locale = FALSE)
     {
-        return $this->get(Zend_Date::ISO_8601, $gmt, $locale);
+        return new Zend_Date($this->get(Zend_Date::ISO_8601, $gmt, $locale), Zend_Date::ISO_8601, $gmt, $locale);
+    }
+
+
+    /**
+     * Returns the calculated ISO value
+     *
+     * @param $calc string   - type of calculation to make
+     * @param $iso  string   - OPTIONAL iso string to calculate, when null the actual time is calculated
+     * @param $gmt boolean   - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string - OPTIONAL locale to set
+     * @return object
+     */
+    private function _iso($calc, $iso = FALSE, $gmt = FALSE, $locale = FALSE)
+    {
+        if (is_object($iso)) {
+            // extract iso from object
+            $iso = $iso->get(Zend_Date::ISO_8601, $gmt, $locale);
+        } else if (empty($iso)) {
+            $iso = $this->_Date->date('c', FALSE, $gmt);
+        }
+        $return = $this->_calcdetail($calc, $iso, Zend_Date::ISO_8601, TRUE, $locale);
+        if ($calc != 'cmp') {
+            return new Zend_Date($this->getTimestamp());
+        }
+        return $return;
     }
 
 
     /**
      * Sets a new ISOdate
      *
-     * @param $date string     - OPTIONAL ISOdate to set, when null the actual date is set
+     * @param $date string   - OPTIONAL ISOdate to set, when null the actual date is set
      * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale string - OPTIONAL locale for parsing input
+     * @param $locale string - OPTIONAL locale to set
      * @return object
      */
     public function setIso($date = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($date)) {
-            $date = $this->_Date->date('c');
-        }
-        return new Zend_Date($this->set($date, Zend_Date::ISO_8601, $gmt, $locale));
+        return $this->_iso('set', $date, $gmt, $locale);
     }
 
 
     /**
      * Adds a ISOdate
      *
-     * @param $date string  - OPTIONAL ISOdate to add, when null the actual date is add
+     * @param $date string   - OPTIONAL ISOdate to add, when null the actual date is add
      * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale string - OPTIONAL locale for parsing input
+     * @param $locale string - OPTIONAL locale to set
      * @return object
      */
     public function addIso($date = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($date)) {
-            $date = $this->_Date->date('c');
-        }
-        return new Zend_Date($this->add($date, Zend_Date::ISO_8601, $gmt, $locale));
+        return $this->_iso('add', $date, $gmt, $locale);
     }
 
 
     /**
      * Substracts a ISOdate
      *
-     * @param $date string  - OPTIONAL ISOdate to sub, when null the actual date is sub
+     * @param $date string   - OPTIONAL ISOdate to sub, when null the actual date is sub
      * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale string - OPTIONAL locale for parsing input
+     * @param $locale string - OPTIONAL locale to set
      * @return object
      */
     public function subIso($date = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($date)) {
-            $date = $this->_Date->date('c');
-        }
-        return new Zend_Date($this->sub($date, Zend_Date::ISO_8601, $gmt, $locale));
+        return $this->_iso('sub', $date, $gmt, $locale);
     }
 
 
     /**
-     * Compares IsoDate with date object, returning the difference date
+     * Compares IsoDate, returning the difference date
      *
-     * @param $date string - OPTIONAL ISOdate to compare, when null the actual date is used for compare
+     * @param $date string   - OPTIONAL ISOdate to compare, when null the actual date is used for compare
      * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale string - OPTIONAL locale for parsing input
-     * @return object
+     * @param $locale string - OPTIONAL locale to set
+     * @return string
      */
     public function compareIso($date = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($date)) {
-            $date = $this->_Date->date('c');
-        }
-        $result = $this->compare($date, Zend_Date::ISO_8601, $gmt, $locale);
-        if ($result > 0) {
-            return 1;
-        } else if ($result < 0) {
-            return -1;
-        }
-        return 0;
+        return $this->_iso('cmp', $date, $gmt, $locale);
     }
 
 
     /**
      * Returns a RFC822 formatted date - RFC822 is locale-independent
      *
+     * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string - OPTIONAL locale for parsing input
      * @return string
      */
-    public function getArpa()
+    public function getArpa($gmt = FALSE, $locale = FALSE)
     {
-        return $this->get(Zend_Date::RFC_822);
+        return new Zend_Date($this->get(Zend_Date::RFC_822, $gmt, $locale), Zend_Date::RFC_822, $gmt, $locale);
+    }
+
+
+    /**
+     * Returns the calculated arpa date
+     *
+     * @param $calc string   - type of calculation to make
+     * @param $arpa string   - OPTIONAL arpa date to calculate, when null the actual time is calculated
+     * @param $gmt boolean   - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string - OPTIONAL locale for parsing input
+     * @return object
+     */
+    private function _arpa($calc, $arpa = FALSE, $gmt = FALSE, $locale = FALSE)
+    {
+        if (is_object($arpa)) {
+            // extract arpa fromobject
+            $arpa = $arpa->get(Zend_Date::RFC_822, $gmt, $locale);
+        } else if (empty($arpa)) {
+            $arpa = $this->_Date->date('D\, d M y H\:m\:s O', FALSE, $gmt);
+        }
+        $return = $this->_calcdetail($calc, $arpa, Zend_Date::RFC_822, TRUE, $locale);
+        if ($calc != 'cmp') {
+            return new Zend_Date($this->getTimestamp());
+        }
+        return $return;
     }
 
 
     /**
      * Sets a new RFC822 formatted date
      *
-     * @param $date string     - OPTIONAL RFC822 date to set, when null the actual date is set
+     * @param $date string   - OPTIONAL RFC822 date to set, when null the actual date is set
+     * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string - OPTIONAL locale for parsing input
      * @return object
      */
-    public function setArpa($date = FALSE)
+    public function setArpa($date = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($date)) {
-            $date = $this->_Date->date('D\, d M y H\:m\:s O');
-        }
-        return $this->set($date, Zend_Date::RFC_822);
+        return $this->_arpa('set', $date, $gmt, $locale);
     }
 
 
     /**
      * Adds a RFC822 formatted date
      *
-     * @param $date string  - OPTIONAL RFC822 date to add, when null the actual date is add
+     * @param $date string   - OPTIONAL RFC822 date to add, when null the actual date is add
+     * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string - OPTIONAL locale for parsing input
      * @return object
      */
-    public function addArpa($date = FALSE)
+    public function addArpa($date = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($date)) {
-            $date = $this->_Date->date('D\, d M y H\:m\:s O');
-        }
-        return $this->add($date, Zend_Date::RFC_822);
+        return $this->_arpa('add', $date, $gmt, $locale);
     }
 
 
@@ -2622,14 +2655,13 @@ class Zend_Date {
      * Substracts a RFC822 formatted date
      *
      * @param $date string  - OPTIONAL RFC822 date to sub, when null the actual date is sub
+     * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string - OPTIONAL locale for parsing input
      * @return object
      */
-    public function subArpa($date = FALSE)
+    public function subArpa($date = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($date)) {
-            $date = $this->_Date->date('D\, d M y H\:m\:s O');
-        }
-        return $this->sub($date, Zend_Date::RFC_822);
+        return $this->_arpa('sub', $date, $gmt, $locale);
     }
 
 
@@ -2637,14 +2669,13 @@ class Zend_Date {
      * Compares a RFC822 formatted date with date object, returning the difference date
      *
      * @param $date string - OPTIONAL RFC822 date to compare, when null the actual date is used for compare
+     * @param $gmt           - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $locale string - OPTIONAL locale for parsing input
      * @return object
      */
-    public function compareArpa($date = FALSE)
+    public function compareArpa($date = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($date)) {
-            $date = $this->_Date->date('D\, d M y H\:m\:s O');
-        }
-        return $this->compare($date, Zend_Date::RFC_822);
+        return $this->_arpa('cmp', $date, $gmt, $locale);
     }
 
 
