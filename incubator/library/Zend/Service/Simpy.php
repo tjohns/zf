@@ -247,22 +247,29 @@ class Zend_Service_Simpy
 	}
 
 	/**
-	 * Performs a query on existing links and returns the results
+	 * Performs a query on existing links and returns the results or returns all
+	 * links if no particular query is specified (which should be used sparingly
+	 * to prevent overloading Simpy servers)
 	 *
-	 * @param Zend_Service_Simpy_LinkQuery $q Query object to use
+	 * @param Zend_Service_Simpy_LinkQuery $q Query object to use (optional)
 	 * @return Zend_Service_Simpy_LinkSet
 	 */
-	public function getLinks(Zend_Service_Simpy_LinkQuery $q)
+	public function getLinks(Zend_Service_Simpy_LinkQuery $q = null)
 	{
-		$query = array(
-			'q'          => $q->getQueryString(),
-			'limit'      => $q->getLimit(),
-			'date'       => $q->getDate(),
-			'afterDate'  => $q->getAfterDate(),
-			'beforeDate' => $q->getBeforeDate()
-		);
+        if ($q != null) {
+    		$query = array(
+    			'q'          => $q->getQueryString(),
+    			'limit'      => $q->getLimit(),
+    			'date'       => $q->getDate(),
+    			'afterDate'  => $q->getAfterDate(),
+    			'beforeDate' => $q->getBeforeDate()
+    		);
+            
+            $doc = $this->_makeRequest('GetLinks', $query);
+        } else {
+            $doc = $this->_makeRequest('GetLinks');
+        }
 
-		$doc = $this->_makeRequest('GetLinks', $query);
 		return new Zend_Service_Simpy_LinkSet($doc);
 	}
 
