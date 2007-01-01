@@ -70,8 +70,8 @@ foreach ($response as $r) {
             <title>Przeszukiwanie Amazon używając API zapytań</title>
             <para>
                 Tutaj także szukamy książek o PHP w Amazon, ale zamiast
-                tradycyjnego API używamy API zapytań, which
-                resembles the Fluent Interface design pattern.
+                tradycyjnego API używamy API zapytań, które jest stworzone
+                w oparciu o projektowy wzorzec płynnych interfejsów.
             </para>
             <programlisting><![CDATA[<?php
 require_once 'Zend/Service/Amazon/Query.php';
@@ -140,8 +140,9 @@ $item = $amazon->itemLookup('B0000A432X');
     <sect2 id="zend.service.amazon.itemsearch">
         <title>Wykonywanie wyszukiwań przedmiotów Amazon</title>
         <para>
-            Searching for items based on any of various available criteria are made simple using the
-            <code>itemSearch()</code> method, as in the following example:
+            Wyszukiwanie przedmiotów oparte na różnych dostępnych kryteriach 
+            jest przeprowadzane za pomocą metody <code>itemSearch()</code>, tak 
+            jak w poniższym przykładzie:
         </para>
         <example>
             <title>Wykonywanie wyszukiwań przedmiotów Amazon</title>
@@ -155,15 +156,16 @@ foreach($response as $r) {
 ?>]]>       </programlisting>
         </example>
         <para>
-            The <code>itemSearch()</code> method accepts a single array parameter for handling search
-            options. For full details, including a list of available options, please see the
+            Metoda <code>itemSearch()</code> akceptuje jeden parametr w postaci 
+            tablicy do obsługi opcji wyszukiwania. Aby poznać wszystkie 
+            szczegóły włączając w to listę dostępnych opcji, proszę zobacz
             <ulink
-                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">relevant Amazon documentation</ulink>
+                url="http://www.amazon.com/gp/aws/sdk/main.html/103-9285448-4703844?s=AWSEcommerceService&amp;v=2005-10-05&amp;p=ApiReference/ItemSearchOperation">dokumentację Amazon</ulink>
         </para>
         <tip>
             <para>
-                The <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> 
-                class is an easy to use wrapper around this method.
+                Klasa <link linkend="zend.service.amazon.query"><code>Zend_Service_Amazon_Query</code></link> 
+                jest nakładką na tę metodę ułatwiającą tworzenie zapytań wyszukiwania.
             </para>
         </tip>
     </sect2>
@@ -172,20 +174,25 @@ foreach($response as $r) {
         <sect3 id="zend.service.amazon.query.introduction">
             <title>Wprowadzenie</title>
             <para>
-                <code>Zend_Service_Amazon_Query</code> provides an alternative API for using the Amazon Web Service.
-                The alternative API uses the Fluent Interface pattern. That is, all calls can be made using chained method
-                calls. (e.g., <code>$obj->method()->method2($arg)</code>)
+                <code>Zend_Service_Amazon_Query</code> zapewnia alternatywne API
+                do użycia z web serwisami Amazon. Alternatywne API używa wzorca
+                projektowego płynnych interfejsów. Oznacza to, że wszystkie 
+                wywołania mogą być przeprowadzone przez łańcuchowe wywołania 
+                metod. (np. <code>$obj->method()->method2($arg)</code>)
             </para>
             <para>
-                The <code>Zend_Service_Amazon_Query</code> API uses overloading to easily set up an item search and then
-                allows you to search based upon the criteria specified. Each of the options is provided as a method call,
-                and each method's argument corresponds to the named option's value:
+                API <code>Zend_Service_Amazon_Query</code> używa przeładowania
+                w celu łatwego ustawiania wyszukiwania przedmiotów i pozwala na
+                wyszukiwanie na podstawie określonych kryteriów. Każda z opcji 
+                jest udostępniana jako wywołanie metody, a każdy argument metody 
+                odpowiada wartości opcji o tej nazwie:
             </para>
             <example>
                 <title>Przeszukiwanie serwisu Amazon używając alternatywnego API zapytań</title>
                 <para>
-                    In this example, the alternative query API is used as a fluent interface 
-                    to specify options and their respective values:
+                    W tym przykładzie alternatywne API zapytań używane jest jako 
+                    płynny interfejs służący do określania opcji i odpowiadającym
+                    im wartościom:
                 </para>
                 <programlisting><![CDATA[<?php
     require_once 'Zend/Service/Amazon/Query.php';
@@ -230,8 +237,10 @@ foreach($response as $r) {
         <sect3 id="zend.service.amazon.classes.item">
             <title>Zend_Service_Amazon_Item</title>
             <para>
-                <code>Zend_Service_Amazon_Item</code> is the class type used to represent an Amazon item returned by the
-                web service. It encompasses all of the items attributes, including title, description, reviews, etc.
+                <code>Zend_Service_Amazon_Item</code> jest typem klasy używanej
+                dp reprezentowania przedmiotu Amazon zwracanego przez web serwis.
+                Zawiera ona wszystkie atrybuty przedmiotu, włączając w to tytuł,
+                opis, recenzje itd.
             </para>
             <sect4 id="zend.service.amazon.classes.item.asxml">
                 <title>Zend_Service_Amazon_Item::asXML()</title>
@@ -247,8 +256,8 @@ foreach($response as $r) {
             <sect4 id="zend.service.amazon.classes.item.properties">
                 <title>Właściwości</title>
                 <para>
-                    <code>Zend_Service_Amazon_Item</code> has a number of properties 
-                    directly related to their standard Amazon API counterparts.
+                    <code>Zend_Service_Amazon_Item</code> posiada właściwości
+                    bezpośrednio związane ze standardowymi częściami Amazon API.
                 </para>
                 <table>
                     <title>Właściwości Zend_Service_Amazon_Item</title>
@@ -294,7 +303,7 @@ foreach($response as $r) {
                             <row>
                                 <entry>Subjects</entry>
                                 <entry>array</entry>
-                                <entry>Item Subjects</entry>
+                                <entry>Tematy przedmiotów</entry>
                             </row>
                             <row>
                                 <entry>Offers</entry>
@@ -473,7 +482,7 @@ foreach($response as $r) {
                             <row>
                                 <entry>LowestNewPrice</entry>
                                 <entry>int</entry>
-                                <entry>Najniższa cena dla nowego przedmiotu (warunek &quot;New&quot;)</entry>
+                                <entry>Najniższa cena dla nowego przedmiotu (stan &quot;New&quot;)</entry>
                             </row>
                             <row>
                                 <entry>LowestNewPriceCurrency</entry>
@@ -485,7 +494,7 @@ foreach($response as $r) {
                             <row>
                                 <entry>LowestOldPrice</entry>
                                 <entry>int</entry>
-                                <entry>Najniższa cena dla używanego przedmiotu (warunek &quot;Used&quot;)</entry>
+                                <entry>Najniższa cena dla używanego przedmiotu (stan &quot;Used&quot;)</entry>
                             </row>
                             <row>
                                 <entry>LowestOldPriceCurrency</entry>
@@ -497,22 +506,22 @@ foreach($response as $r) {
                             <row>
                                 <entry>TotalNew</entry>
                                 <entry>int</entry>
-                                <entry>Total number of &quot;new&quot; condition available for the item</entry>
+                                <entry>Całkowita ilość przedmiotów o stanie &quot;new&quot;</entry>
                             </row>
                             <row>
                                 <entry>TotalUsed</entry>
                                 <entry>int</entry>
-                                <entry>Total number of &quot;used&quot; condition available for the item</entry>
+                                <entry>Całkowita ilość przedmiotów o stanie &quot;used&quot;</entry>
                             </row>
                             <row>
                                 <entry>TotalCollectible</entry>
                                 <entry>int</entry>
-                                <entry>Total number of &quot;collectible&quot; condition available for the item</entry>
+                                <entry>Całkowita ilość przedmiotów o stanie &quot;collectible&quot;</entry>
                             </row>
                             <row>
                                 <entry>TotalRefurbished</entry>
                                 <entry>int</entry>
-                                <entry>Total number of &quot;refurbished&quot; condition available for the item</entry>
+                                <entry>Całkowita ilość przedmiotów o stanie &quot;refurbished&quot;</entry>
                             </row>
                             <row>
                                 <entry>Offers</entry>
@@ -552,22 +561,22 @@ foreach($response as $r) {
                             <row>
                                 <entry>MerchantId</entry>
                                 <entry>string</entry>
-                                <entry>Merchants Amazon ID</entry>
+                                <entry>ID handlowca Amazon</entry>
                             </row>
                             <row>
                                 <entry>GlancePage</entry>
                                 <entry>string</entry>
-                                <entry>URL for a page with a summary of the Merchant</entry>
+                                <entry>Adres URL strony z podsumowaniem handlowca</entry>
                             </row>
                             <row>
                                 <entry>Condition</entry>
                                 <entry>string</entry>
-                                <entry>Condition of the item</entry>
+                                <entry>Stan przedmiotu</entry>
                             </row>
                             <row>
                                 <entry>OfferListingId</entry>
                                 <entry>string</entry>
-                                <entry>ID of the Offer Listing</entry>
+                                <entry>ID listy ofert</entry>
                             </row>
                             <row>
                                 <entry>Price</entry>
@@ -577,7 +586,7 @@ foreach($response as $r) {
                             <row>
                                 <entry>CurrencyCode</entry>
                                 <entry>string</entry>
-                                <entry>Currency Code for the price of the item</entry>
+                                <entry>Kod waluty dla ceny przedmiotu</entry>
                             </row>
                             <row>
                                 <entry>Availability</entry>
@@ -587,7 +596,7 @@ foreach($response as $r) {
                             <row>
                                 <entry>IsEligibleForSuperSaverShipping</entry>
                                 <entry>boolean</entry>
-                                <entry>Whether the item is eligible for Super Saver Shipping or not</entry>
+                                <entry>Czy przedmiot jest dostępny w Super Saver Shipping czy nie</entry>
                             </row>
                         </tbody>
                     </tgroup>
@@ -600,12 +609,15 @@ foreach($response as $r) {
         <sect3 id="zend.service.amazon.classes.similarproduct">
             <title>Zend_Service_Amazon_SimilarProduct</title>
             <para>
-                When searching for items, Amazon also returns a list of similar products that the searcher may find to
-                their liking. Each of these is returned as a <code>Zend_Service_Amazon_SimilarProduct</code> object.
+                Kiedy wyszukujemy przedmiotów, Amazon także zwraca listę 
+                podobnych produktów, które także mogą odpowiadać szukającemu.
+                Każdy z nich jest zwracany jako obiekt
+                <code>Zend_Service_Amazon_SimilarProduct</code>.
             </para>
             <para>
-                Each object contains the information to allow you to make 
-                sub-sequent requests to get the full information on the item.
+                Każdy obiekt zawiera informacje pozwalające ci na 
+                przeprowadzenie kolejnego żądania w celu pobrania pełnych
+                informacji o przedmiocie.
             </para>
             <sect4 id="zend.service.amazon.classes.similarproduct.properties">
                 <title>Właściwości</title>
