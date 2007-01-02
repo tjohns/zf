@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Translate
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id: Date.php 2498 2006-12-23 22:13:38Z thomas $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -51,8 +51,8 @@ class Zend_Translate {
      * Generates the standard translation object
      *
      * @param $adaptor string - Adaptor to use
-     * @param $options array  - Options for this adaptor
-     * @param $locale string  - OPTIONAL locale to use
+     * @param $options mixed  - Options for this adaptor
+     * @param $locale object  - OPTIONAL locale to use
      * @return object
      */
     public function __construct($adaptor, $options, $locale = FALSE)
@@ -64,27 +64,31 @@ class Zend_Translate {
             $this->_Locale = $locale;
         }
 
-        $this->setAdaptor($options);
+        $this->setAdaptor($adaptor, $options, $this->_Locale);
     }
 
 
     /**
      * Sets a new adaptor
      *
-     * @param $options array - Adaptor options
+     * @param $adaptor string - adaptor to use
+     * @param $options mixed  - Adaptor options
+     * @param $locale object  - OPTIONAL locale to use
      * @return timestamp
      */
-    public function setAdaptor($options)
+    public function setAdaptor($adaptor, $options, $locale = FALSE)
     {
         switch (strtolower($adaptor)) {
             case 'array':
-                throw new Zend_Translate_Exception('not supported for now');
+                require_once('Zend/Translate/Core.php');
+                $this->_Adaptor = new Zend_Translate_Core($options, $locale);
                 break;
             case 'cvs':
                 throw new Zend_Translate_Exception('not supported for now');
                 break;
             case 'gettext':
-                $this->_Adaptor = Zend_Translate_Gettext::getInstance($options);
+                require_once('Zend/Translate/Gettext.php');
+                $this->_Adaptor = new Zend_Translate_Gettext($options, $locale);
                 break;
             case 'qt':
                 throw new Zend_Translate_Exception('not supported for now');
@@ -114,11 +118,26 @@ class Zend_Translate {
     /**
      * Returns the adaptors name and it's options
      *
-     * @return array
+     * @return string
      */
     public function getAdaptor()
     {
         return $this->_Adaptor->toString();
+    }
+
+
+    /**
+     * Adds a new language to the Adaptor
+     * 
+     * @param $locale mixed  - locale/language to add to this adaptor
+     * @param $options mixed - option for this adaptor depends on the adaptor
+     *        'array'   - the array to add
+     *        'gettext' - the gettext file inclusive the filename
+     * @param $empty boolean - add if the language already exists 
+     */
+    public function addLanguage($locale, $options, $empty = FALSE)
+    {
+        $this->_Adaptor->addLanguage($locale, $options, $empty);
     }
 
 
@@ -130,16 +149,14 @@ class Zend_Translate {
     public function setLocale($locale)
     {
         $this->_Locale = $locale;
-        return $this->_Adaptor->setLocale($locale);
+        $this->_Adaptor->setLocale($locale);
     }
 
 
     /**
      * Gets the actual locale/language
-     *
-     * @return $locale string
      */
-    public function getLocale($locale)
+    public function getLocale()
     {
         return $this->_Locale;
     }
@@ -170,6 +187,7 @@ class Zend_Translate {
     /**
      * is the wished language avaiable ?
      *
+     * @param $language mixed - is locale or language avaiable 
      * @return boolean
      */
     public function isAvaiable($language)
@@ -179,25 +197,27 @@ class Zend_Translate {
 
 
     /**
-     * translation
+     * Translate the given string
      *
+     * @param $translation string - string to translate
+     * @param $locale object      - OPTIONAL locale/language to translate to 
      * @return string
      */
-    public function _($translation)
+    public function _($translation, $locale = FALSE)
     {
-        return $this->translate($translation);
+        return $this->translate($translation, $locale);
     }
 
 
     /**
-     * translation
+     * Translate the given string
      *
-     * @param $translation string - Translationstring
-     * @param $language    locale - language to use
+     * @param $translation string - string to translate
+     * @param $locale object      - OPTIONAL locale/language to translate to 
      * @return string
      */
-    public function translate($translation, $language)
+    public function translate($translation, $locale = FALSE)
     {
-        return $this->_Adaptor->translate($translation, $language);
+        return $this->_Adaptor->translate($translation, $locale);
     }
 }

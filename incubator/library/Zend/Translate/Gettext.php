@@ -156,4 +156,13 @@ class Zend_Translate_Gettext extends Zend_Translate_Core {
             $this->_Translation[$original] = fread($this->_File, $transtemp[$count * 2 + 1]);
         }
     }
+
+
+    /**
+     * returns the adaptors name
+     */
+    public function toString()
+    {
+        return "Gettext";
+    }
 }

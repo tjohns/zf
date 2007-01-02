@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Translate
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id: Date.php 2498 2006-12-23 22:13:38Z thomas $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -37,7 +37,7 @@ class Zend_Translate_Core {
 
     // Class wide Constants
 
-    // Actual locale
+    // Actual set locale
     private   $_Locale    = FALSE;
 
     // Table of all supported languages
@@ -47,18 +47,27 @@ class Zend_Translate_Core {
      * Array with all options
      * The following options are supported
      * 
-     *  - [language] : actual set standard language
+     * [language] : actual set standard language
+     * [tablesize]: maximum size of the table array // not supported for now
      */
     protected $_Options   = array(
-        'language' => FALSE
+        'language' => FALSE,
+        'tablesize' => 500
     );
 
     /**
-     * Generates the gettext adaptor
+     * Translation table
+     */
+    protected $_Translate = array(
+    );
+
+
+    /**
+     * Generates the core adaptor
      *
      * @param $adaptor string - Adaptor to use
-     * @param $options array  - Options for this adaptor
-     * @param $locale string  - OPTIONAL locale to use
+     * @param $options mixed  - Options for this adaptor
+     * @param $locale object  - OPTIONAL locale to use
      * @throws Zend_Translate_Exception
      */
     public function __construct($options, $locale = FALSE)
@@ -70,14 +79,15 @@ class Zend_Translate_Core {
             $this->_Locale = $locale;
         }
 
-        $this->setOptions($options);
+        $this->setLocale($locale);
+        $this->addLanguage($locale, $options);
     }
 
 
     /**
      * Sets new adaptor options
      *
-     * @param $options array - Adaptor options
+     * @param $options mixed - Adaptor options
      * @throws Zend_Translate_Exception
      */
     public function setOptions($options)
@@ -86,10 +96,22 @@ class Zend_Translate_Core {
             throw new Zend_Translate_Exception('option not set or unknown');
         }
 
+        if (!is_array($options)) {
+            $options['language'] = (string) $options;
+        }
+
         foreach ($options as $key => $option) {
             switch(strtolower($key)) {
                 case 'language' :
-                    // todo: check if language exists
+                    if ($option instanceof Zend_Locale) {
+                        $option = $option->toString();
+                    }
+
+                    if (in_array($option, $this->_Language)) {
+                        $this->_Options['language'] = (string) $option;
+                    } else {
+                        throw new Zend_Translate_Exception('language unknown');
+                    }
                     break;
             }
         }
@@ -118,13 +140,22 @@ class Zend_Translate_Core {
     /**
      * Sets a new locale/language
      *
-     * @param $locale string - New locale/language to set
+     * @param $locale object - New locale/language to set
      * @throws Zend_Translate_Exception
      */
     public function setLocale($locale)
     {
-        $this->_Locale = $locale;
-        $this->setOptions(array('language' => $this->_locale));
+        if (is_string($locale)) {
+            $this->_Locale = new Zend_Locale($locale);
+        } else {
+            $this->_Locale = $locale;
+            $locale = $locale->toString();
+        }
+        
+        if (!in_array($locale, $this->_Language)) {
+            $this->_Language[] = $locale;
+        }
+        $this->setOptions(array('language' => $this->_Locale));
     }
 
 
@@ -141,19 +172,15 @@ class Zend_Translate_Core {
 
     /**
      * Gets the actual language
-     *
-     * @return $locale string
      */
     public function getLanguage()
     {
-        return $this->_Options['language'];
+        return (string) $this->_Options['language'];
     }
 
 
     /**
      * Returns the avaiable languages from this adaptor
-     *
-     * @return $locale string
      */
     public function getLanguageList()
     {
@@ -169,7 +196,7 @@ class Zend_Translate_Core {
      */
     public function isAvaiable($language)
     {
-        if (in_array($language, $this->_Options)) {
+        if (in_array($language, $this->_Language)) {
             return TRUE;
         }
         return FALSE;
@@ -177,15 +204,26 @@ class Zend_Translate_Core {
 
 
     /**
-     * translation
-     *
-     * @param $translation string - Translationstring
-     * @param $language    locale - OPTIONAL language to use
-     * @return string
+     * Sets the translation to the translationtable
+     * 
+     * @param $locale object - for which locale is the translationtable
+     * @param $table   array - the translationtable to set
+     * @param $empty boolean - Empty the table or add if exists
      */
-    public function _($translation, $language = FALSE)
+    protected function addLanguage($locale, $table, $empty = FALSE)
     {
-        return $this->translate($translation, $language);
+        if ($locale instanceof Zend_Locale) {
+            $locale = $locale->toString();
+        }
+
+        if (($empty) or (!isset($this->_Translate[$locale]))) {
+            $this->_Translate[$locale] = array();
+        }
+
+        if (!in_array($locale, $this->_Language)) {
+            $this->_Language[] = $locale;
+        }
+        $this->_Translate[$locale] = array_merge($this->_Translate[$locale], $table);
     }
 
 
@@ -193,11 +231,52 @@ class Zend_Translate_Core {
      * translation
      *
      * @param $translation string - Translationstring
-     * @param $language    locale - OPTIONAL language to use
+     * @param $locale object      - OPTIONAL language to use
      * @return string
      */
-    public function translate($translation, $language = FALSE)
+    public function _($translation, $locale = FALSE)
     {
-        // search the translation table and return the translated string
+        return $this->translate($translation, $locale);
+    }
+
+
+    /**
+     * Translates the given string
+     * returns the elee
+     *
+     * @param $translation string - Translationstring
+     * @param $locale object      - OPTIONAL language to use
+     * @return string
+     */
+    public function translate($translation, $locale = FALSE)
+    {
+        if ($locale === FALSE) {
+            $locale = $this->_Options['language'];
+        } else if ($locale instanceof Zend_Locale) {
+            $locale = $locale->getLocale();
+        }
+
+        if (array_key_exists($translation, $this->_Translate[$locale])) {
+            // return original
+            return $this->_Translate[$locale][$translation];
+        } else if (strlen($locale) != 2) {
+            $locale = new Zend_Locale($this->_Locale->getLanguage());
+            if (array_key_exists($translation, $this->_Translate[$locale])) {
+                // return regionless translation (en_US -> en)
+                return $this->_Translate[$locale][$translation];
+            }
+        }
+
+        // no translation found, return original
+        return $translation;
+    }
+
+
+    /**
+     * returns the adaptors name
+     */
+    public function toString()
+    {
+        return "Array";
     }
 }
