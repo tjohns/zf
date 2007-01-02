@@ -626,7 +626,7 @@ class Zend_Locale {
     /**
      * Sets a new locale
      * 
-     * @param $locale locale - optional new locale to set
+     * @param $locale locale - OPTIONAL new locale to set
      */
     public function setLocale($locale = false)
     {
