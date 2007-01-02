@@ -201,4 +201,24 @@ class Zend_Auth_DigestTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($identity2['username'] === $options2['username']);
     }
 
+    /**
+     * Ensures that the adapter throws an exception when a required option is missing
+     * 
+     * @return void
+     */
+    public function testOptionRequiredException()
+    {
+        $options = array(
+            'realm'    => 'Some Realm',
+            'username' => 'someUser',
+            'password' => 'somePassword'
+            );
+        try {
+            Zend_Auth_Digest_Adapter::staticAuthenticate($options);
+            $this->fail('Expected Zend_Auth_Digest_Exception not thrown upon authentication attempt '
+                      . 'missing a required option');
+        } catch (Zend_Auth_Digest_Exception $e) {
+            $this->assertContains('required', $e->getMessage());
+        }
+    }
 }
