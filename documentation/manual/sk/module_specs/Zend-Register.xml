@@ -1,0 +1,46 @@
+<sect1 id="zend.register">
+
+    <title>Zend::register($index, $newval)</title>
+
+    <para>
+        Registers the value $newval at the offset $index in the registry.
+    </para>
+
+    <example>
+        <title>register() / offsetSet() Example</title>
+<programlisting role="php"><![CDATA[<?php
+Zend::register($index, $value);
+
+// or
+
+$registry = Zend::registry();
+$registry->offsetSet($index, $newval);
+
+?>]]></programlisting>
+    </example>
+
+    <para>
+        The registry is a mechanism for providing singleton instances of values to the application space. By storing the
+        value in the registry once, and then retrieving the value from the registry whenever it is needed, the same
+        instance is always returned.
+    </para>
+
+    <para>
+        The <code>$index</code> is an arbitrary index to name the value in the registry. The same index may be passed to
+        <code>Zend::registry()</code> in order to retrieve the stored value.
+    </para>
+
+    <para>
+        The semantics of the registry adhere to those of
+        <ulink
+        url="http://www.php.net/~helly/php/ext/spl/classArrayObject.html">ArrayObject</ulink>
+        . This method simply wraps the
+        <ulink url="http://www.php.net/manual/en/function.arrayobject-offsetset.php">
+        offsetSet() method</ulink>
+        .
+    </para>
+
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

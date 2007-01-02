@@ -1,0 +1,29 @@
+<sect1 id="zend.loadinterface">
+    <title>Zend::loadInterface()</title>
+    <para>
+    <code>Zend::loadInterface()</code> works exactly the same as <code>Zend::loadClass()</code>, only it
+    loads an interface instead.
+    </para>
+
+    <programlisting role="php"><![CDATA[<?php
+
+Zend::loadInterface($interface, $dirs)
+
+?>]]></programlisting>
+
+    <para>
+    The <code>Zend::loadClass()</code> method cannot be used for loading interfaces because the PHP
+    function <ulink url="http://php.net/class_exists"><code>class_exists()</code></ulink> cannot check
+    for interfaces (since PHP 5.0.2).  Use <code>Zend::loadInterface()</code> instead.
+    </para>
+
+    <para>
+    If you ask for an interface with underscores in the name, and <code>$dirs</code> is null (the default),
+    <code>Zend::loadInterface()</code> will auto-discover the <code>$dirs</code> from the interface name
+    by converting underscores to directory separators.  For example, if <code>$interface</code> is
+    <code>Zend_Example_Interface</code>, that will map to a path of <code>Zend/Example/Interface.php</code>.
+    </para>
+</sect1>
+<!--
+vim:se ts=4 sw=4 et:
+-->

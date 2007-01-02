@@ -1,0 +1,250 @@
+<sect1 id="zend.filter.input">
+    <title>Zend_Filter_Input</title>
+
+    <sect2 id="zend.filter.input.introduction">
+        <title>Introduction</title>
+        <para><literal>Zend_Filter_Input</literal> provides simple facilities that
+        promote a structured and rigid approach to input filtering. Its purpose is
+        multifaceted, because it caters to the needs of three different groups of
+        people:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Developers</para>
+                <para>Although filtering input can never be as easy as doing
+                nothing, developers need to ensure the integrity of their data
+                without adding unnecessary complexity to their code.
+                <literal>Zend_Filter_Input</literal> offers simple methods for the
+                most common use cases, extensibility for edge cases, and a strict
+                naming convention that promotes code clarity.</para>
+            </listitem>
+            <listitem>
+                <para>Managers</para>
+                <para>Managers of all types who need to maintain control over a
+                large group of developers can enforce a structured approach to
+                input filtering by restricting or eliminating access to raw
+                input.</para>
+            </listitem>
+            <listitem>
+                <para>Auditors</para>
+                <para>Those who audit an application's code need to quickly and
+                reliably identify when and where raw input is used by a developer.
+                The characteristics that promote code clarity also aid auditors by
+                providing a clear distinction among the different approaches to
+                input filtering.</para>
+            </listitem>
+        </itemizedlist>
+        <para>There are a variety of approaches to input filtering, and there are
+        also a variety of facilities that PHP developers can use. Whitelist
+        filtering, blacklist filtering, regular expressions, conditional
+        statements, and native PHP functions are just a few examples of the input
+        filtering potpourri. <literal>Zend_Filter_Input</literal> combines all of
+        these facilities into a single API with consistent behavior and strict
+        naming conventions. All of the methods abide by a simple rule - if the data
+        is valid, it is returned, otherwise <literal>FALSE</literal> is returned.
+        Extreme simplicity.</para>
+    </sect2>
+        <sect2 id="zend.filter.input.introduction.whitelist">
+            <title>Whitelist Filtering</title>
+            <para>Whitelist filtering methods begin with the <literal>test</literal>
+            prefix, such as <literal>testAlpha()</literal> and
+            <literal>testEmail()</literal>. These methods inspect input according to
+            pre-defined criteria and return the data only if it adheres to the
+            criteria. If not, <literal>FALSE</literal> is returned. The following
+            provides a simple demonstration:</para>
+            <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    
+    if ($alphaName = $filterPost->testAlpha('name')) {
+        /* $alphaName contains only alphabetic characters. */
+    } else {
+        /* $alphaName evaluates to FALSE. */
+    }
+    
+    ?>]]>
+            </programlisting>
+            <para>This approach errs on the side of caution by performing a boolean
+            evaluation of the return value. If you want to distinguish among values
+            that evaluate to <literal>FALSE</literal> in PHP (such as the integer
+            <literal>0</literal> and the empty string), you can perform a strict
+            comparison to <literal>FALSE</literal>:</para>
+            <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $alphaName = $filterPost->testAlpha('name');
+    
+    if ($alphaName !== FALSE) {
+        /* $alphaName contains only alphabetic characters. */
+    } else {
+        /* $alphaName === FALSE */
+    }
+    
+    ?>]]>
+            </programlisting>
+        </sect2>
+        <sect2 id="zend.filter.input.introduction.blind">
+            <title>Blind Filtering</title>
+            <para>Blind filtering methods begin with the <literal>get</literal>
+            prefix, such as <literal>getAlpha()</literal> and
+            <literal>getDigits()</literal>. These methods do not inspect input but
+            instead return the portion of it considered to be valid. For example,
+            <literal>getAlpha()</literal> returns only the alphabetic characters,
+            if there are any. (If not, the remaining string is the empty string.)
+            The following provides a simple demonstration:</para>
+            <programlisting>
+    <![CDATA[<?php
+    
+    /* $_POST['username'] = 'John123Doe'; */
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $alphaUsername = $filterPost->getAlpha('username');
+    
+    /* $alphaUsername = 'JohnDoe'; */
+    
+    ?>]]>
+            </programlisting>
+        </sect2>
+        <sect2 id="zend.filter.input.introduction.blacklist">
+            <title>Blacklist Filtering</title>
+            <para>Blacklist filtering methods begin with the <literal>no</literal>
+            prefix, such as <literal>noTags()</literal> and
+            <literal>noPath()</literal>. These methods are identical to the blind
+            filtering methods, except the criteria they enforce is based upon what
+            is considered invalid instead of what is considered valid. Invalid data
+            is removed, and the remaining data (assumed valid) is returned. The
+            following provides a simple demonstration:</para>
+            <programlisting>
+    <![CDATA[<?php
+    
+    /* $_POST['comment'] = '<b>I love PHP!</b>'; */
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $taglessComment = $filterPost->noTags('comment');
+    
+    /* $taglessComment = 'I love PHP!'; */
+    
+    ?>]]>
+            </programlisting>
+        </sect2>
+    <sect2 id="zend.filter.input.theoryofoperation">
+        <title>Theory of Operation</title>
+        <para><literal>Zend_Filter_Input</literal> consolidates a few distinct
+        approaches to input filtering into a single API with consistent behavior
+        and strict naming conventions (see
+        <xref linkend="zend.filter.input.introduction" />). These characteristics
+        bring <literal>Zend_Filter_Input</literal> on par with existing solutions,
+        but they do nothing to further aid those who require a more structured or
+        rigid approach. Therefore, by default, <literal>Zend_Filter_Input</literal>
+        enforces controlled access to input.</para>
+        <para>Two syntaxes are supported. In the default (strict) approach, a
+        single argument is passed to the constructor - the array to be
+        filtered:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $email = $filterPost->testEmail('email');
+    
+    ?>]]>
+        </programlisting>
+        <para><literal>Zend_Filter_Input</literal> sets the array that is passed
+        (<literal>$_POST</literal>) to <literal>NULL</literal>, so direct access is
+        no longer possible. (The raw data is only available through the
+        <literal>getRaw()</literal> method, which is much easier to monitor and/or
+        avoid altogether.)</para>
+        <para>In the optional (non-strict) approach, <literal>FALSE</literal> is
+        passed as the second argument to the constructor:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    $email = $filterPost->testEmail('email');
+    
+    ?>]]>
+        </programlisting>
+        <para>The use of the filter is exactly the same, but
+        <literal>Zend_Filter_Input</literal> does not set the original array
+        (<literal>$_POST</literal>) to <literal>NULL</literal>, so developers can
+        still access it directly. This approach is discouraged in favor of the
+        strict approach.</para>
+        <para><literal>Zend_Filter_Input</literal> is designed primarily with arrays
+        in mind. Many sources of input are already covered by PHP's superglobal
+        arrays (<literal>$_GET</literal>, <literal>$_POST</literal>,
+        <literal>$_COOKIE</literal>, etc.), and arrays are a common construct used
+        to store input from other sources. If you need to filter a scalar, see
+        <xref linkend="zend.filter" />.</para>
+    </sect2>
+    <sect2 id="zend.filter.input.usecases">
+        <title>Use Cases</title>
+        <para>Strict Whitelist Filtering (Preferred):</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    
+    if ($email = $filterPost->testEmail('email')) {
+        /* $email is a valid email format. */
+    } else {
+        /* $email is not a valid email format. */
+    }
+    
+    ?>]]>
+        </programlisting>
+        <para>Strict Blind Filtering:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $alphaName = $filterPost->getAlpha('name');
+    
+    ?>]]>
+        </programlisting>
+        <para>Strict Blacklist Filtering:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST);
+    $taglessComment = $filterPost->noTags('comment');
+    
+    ?>]]>
+        </programlisting>
+        <para>Non-Strict Whitelist Filtering:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    
+    if ($email = $filterPost->testEmail('email')) {
+        /* $email is a valid email format. */
+    } else {
+        /* $email is not a valid email format. */
+    }
+    
+    ?>]]>
+        </programlisting>
+        <para>Non-Strict Blind Filtering:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    $name = $filterPost->getAlpha('name');
+    
+    ?>]]>
+        </programlisting>
+        <para>Non-Strict Blacklist Filtering:</para>
+        <programlisting>
+    <![CDATA[<?php
+    
+    $filterPost = new Zend_Filter_Input($_POST, FALSE);
+    $comment = $filterPost->noTags('comment');
+    
+    ?>]]>
+        </programlisting>
+    </sect2>
+</sect1>    
+    
+<!--
+vim:se ts=4 sw=4 et:
+-->
