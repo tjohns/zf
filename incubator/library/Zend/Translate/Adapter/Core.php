@@ -253,17 +253,23 @@ class Zend_Translate_Core {
         if ($locale === FALSE) {
             $locale = $this->_Options['language'];
         } else if ($locale instanceof Zend_Locale) {
-            $locale = $locale->getLocale();
+            $locale = $locale->toString();
         }
 
-        if (array_key_exists($translation, $this->_Translate[$locale])) {
-            // return original
-            return $this->_Translate[$locale][$translation];
-        } else if (strlen($locale) != 2) {
-            $locale = new Zend_Locale($this->_Locale->getLanguage());
-            if (array_key_exists($translation, $this->_Translate[$locale])) {
-                // return regionless translation (en_US -> en)
+        if (array_key_exists($locale, $this->_Translate)) {
+           if (array_key_exists($translation, $this->_Translate[$locale])) {
+                // return original locale
                 return $this->_Translate[$locale][$translation];
+           }
+        } else if (strlen($locale) != 2) {
+            // faster than creating a new locale and seperate the leading part
+            $locale = substr($locale, 0, -strlen(strrchr($locale, '_')));
+
+            if (array_key_exists($locale, $this->_Translate)) {
+                if (array_key_exists($translation, $this->_Translate[$locale])) {
+                    // return regionless translation (en_US -> en)
+                    return $this->_Translate[$locale][$translation];
+                }
             }
         }
 
