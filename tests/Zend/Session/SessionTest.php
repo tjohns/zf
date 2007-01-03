@@ -41,6 +41,12 @@ class Zend_SessionTest extends PHPUnit_Framework_TestCase
 
     public function __construct() {
         $this->script = "php " . (dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'SessionTestHelper.php ';
+        /*
+         * You should also add a *custom*:
+         * Zend_Session_Core::setOptions(array('save_path' => 'See http://framework.zend.com/wiki/x/bTU'));
+         * The correct value is system dependent, and should be provided by the developer using
+         * an absolute path to a directory readable and writable by the PHP process.
+         */
     }
 
     public function setUp()

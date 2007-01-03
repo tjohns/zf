@@ -57,8 +57,8 @@ final class Zend
      * If the file was not found in the $dirs, or if no $dirs were specified,
      * it will attempt to load it from PHP's include_path.
      *
-     * @param string $class
-     * @param string|array $dirs
+     * @param string $class      - The full class name of a Zend component.
+     * @param string|array $dirs - OPTIONAL either a path or array of paths to search
      * @throws Zend_Exception
      * @return void
      */
@@ -115,7 +115,7 @@ final class Zend
      * If $once is TRUE, it will use include_once() instead of include().
      *
      * @param  string        $filename
-     * @param  string|array  $dirs
+     * @param  string|array  $dirs - OPTIONAL either a path or array of paths to search
      * @param  boolean       $once
      * @throws Zend_Exception
      * @return mixed

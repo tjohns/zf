@@ -38,8 +38,8 @@
       url="http://www.php.net/manual/en/function.session-set-save-handler.php">ext/session
       save handler</ulink>
         does not solve the problem of maintaining this association, when a client may connect to any sever in a cluster
-        of servers, since session state data is saved to the local server only. A list of appropriate save handlers will
-        be provided, when available.
+        of servers, since session state data is saved to the local server only. A list of additional, appropriate save
+        handlers will be provided, when available.
     </para>
 
 </sect1>

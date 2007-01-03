@@ -1,4 +1,11 @@
-To run the unit tests for Zend_Session*:
+The most recently published version of Zend_Session documentation:
+http://framework.zend.com/wiki/display/ZFDOC/Zend_Session
+
+Comments may be added by readers to each wiki page, by first registering
+for a wiki/issue tracker account, and then emailing your username to
+cla@zend.com with a request to enable posting privileges.
+
+To run the unit tests for Zend_Session*, use a CLI version of PHP:
 
 $ cd zftrunk/incubator/tests/Zend/Session
 $ php AllTests.php
