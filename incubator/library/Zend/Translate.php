@@ -44,18 +44,18 @@ class Zend_Translate {
      * Locale Object / Setting
      */
     private $_Locale = '';
-    private $_Adaptor = false;
+    private $_Adapter = false;
 
 
     /**
      * Generates the standard translation object
      *
-     * @param $adaptor string - Adaptor to use
-     * @param $options mixed  - Options for this adaptor
+     * @param $adapter string - Adapter to use
+     * @param $options mixed  - Options for this adapter
      * @param $locale object  - OPTIONAL locale to use
      * @return object
      */
-    public function __construct($adaptor, $options, $locale = FALSE)
+    public function __construct($adapter, $options, $locale = FALSE)
     {
         // set locale
         if ($locale === FALSE) {
@@ -64,31 +64,31 @@ class Zend_Translate {
             $this->_Locale = $locale;
         }
 
-        $this->setAdaptor($adaptor, $options, $this->_Locale);
+        $this->setAdapter($adapter, $options, $this->_Locale);
     }
 
 
     /**
-     * Sets a new adaptor
+     * Sets a new adapter
      *
-     * @param $adaptor string - adaptor to use
-     * @param $options mixed  - Adaptor options
+     * @param $adapter string - adapter to use
+     * @param $options mixed  - Adapter options
      * @param $locale object  - OPTIONAL locale to use
      * @return timestamp
      */
-    public function setAdaptor($adaptor, $options, $locale = FALSE)
+    public function setAdapter($adapter, $options, $locale = FALSE)
     {
-        switch (strtolower($adaptor)) {
+        switch (strtolower($adapter)) {
             case 'array':
-                require_once('Zend/Translate/Core.php');
-                $this->_Adaptor = new Zend_Translate_Core($options, $locale);
+                require_once('Zend/Translate/Adapter/Core.php');
+                $this->_Adapter = new Zend_Translate_Core($options, $locale);
                 break;
             case 'cvs':
                 throw new Zend_Translate_Exception('not supported for now');
                 break;
             case 'gettext':
-                require_once('Zend/Translate/Gettext.php');
-                $this->_Adaptor = new Zend_Translate_Gettext($options, $locale);
+                require_once('Zend/Translate/Adapter/Gettext.php');
+                $this->_Adapter = new Zend_Translate_Gettext($options, $locale);
                 break;
             case 'qt':
                 throw new Zend_Translate_Exception('not supported for now');
@@ -109,35 +109,35 @@ class Zend_Translate {
                 throw new Zend_Translate_Exception('not supported for now');
                 break;
             default:
-                throw new Zend_Translate_Exception('no adaptor selected');
+                throw new Zend_Translate_Exception('no adapter selected');
                 break;
         }
     }
 
 
     /**
-     * Returns the adaptors name and it's options
+     * Returns the adapters name and it's options
      *
      * @return string
      */
-    public function getAdaptor()
+    public function getAdapter()
     {
-        return $this->_Adaptor->toString();
+        return $this->_Adapter->toString();
     }
 
 
     /**
-     * Adds a new language to the Adaptor
+     * Adds a new language to the Adapter
      * 
-     * @param $locale mixed  - locale/language to add to this adaptor
-     * @param $options mixed - option for this adaptor depends on the adaptor
+     * @param $locale mixed  - locale/language to add to this adapter
+     * @param $options mixed - option for this adapter depends on the adapter
      *        'array'   - the array to add
      *        'gettext' - the gettext file inclusive the filename
      * @param $empty boolean - add if the language already exists 
      */
     public function addLanguage($locale, $options, $empty = FALSE)
     {
-        $this->_Adaptor->addLanguage($locale, $options, $empty);
+        $this->_Adapter->addLanguage($locale, $options, $empty);
     }
 
 
@@ -149,7 +149,7 @@ class Zend_Translate {
     public function setLocale($locale)
     {
         $this->_Locale = $locale;
-        $this->_Adaptor->setLocale($locale);
+        $this->_Adapter->setLocale($locale);
     }
 
 
@@ -169,18 +169,18 @@ class Zend_Translate {
      */
     public function getLanguage()
     {
-        return $this->_Adaptor->getLanguage();
+        return $this->_Adapter->getLanguage();
     }
 
 
     /**
-     * Returns the avaiable languages from this adaptor
+     * Returns the avaiable languages from this adapter
      *
      * @return $locale string
      */
     public function getLanguageList()
     {
-        return $this->_Adaptor->getLanguageList();
+        return $this->_Adapter->getLanguageList();
     }
     
 
@@ -192,7 +192,7 @@ class Zend_Translate {
      */
     public function isAvaiable($language)
     {
-        return $this->_Adaptor->isAvaiable($language);
+        return $this->_Adapter->isAvaiable($language);
     }
 
 
@@ -218,6 +218,6 @@ class Zend_Translate {
      */
     public function translate($translation, $locale = FALSE)
     {
-        return $this->_Adaptor->translate($translation, $locale);
+        return $this->_Adapter->translate($translation, $locale);
     }
 }
