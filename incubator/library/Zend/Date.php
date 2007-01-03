@@ -2192,6 +2192,10 @@ class Zend_Date {
      */
     public function getTime($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::TIME_MEDIUM, $gmt, $locale), Zend_Date::TIME_MEDIUM, $gmt, $locale);
     }
 
@@ -2208,6 +2212,10 @@ class Zend_Date {
      */
     private function _time($calc, $time = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         if (is_object($time)) {
             // extract time from object
             $time = $time->get(Zend_Date::TIME_MEDIUM, $gmt, $locale);
@@ -2304,6 +2312,10 @@ class Zend_Date {
      */
     public function getDate($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::DATE_MEDIUM, $gmt, $locale), Zend_Date::DATE_MEDIUM, $gmt, $locale);
     }
 
@@ -2320,6 +2332,10 @@ class Zend_Date {
      */
     private function _date($calc, $date = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         if (is_object($date)) {
             // extract date from object
             $date = $date->get(Zend_Date::DATE_MEDIUM, $gmt, $locale);
@@ -2416,6 +2432,10 @@ class Zend_Date {
      */
     public function getIso($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::ISO_8601, $gmt, $locale), Zend_Date::ISO_8601, $gmt, $locale);
     }
 
@@ -2510,6 +2530,10 @@ class Zend_Date {
      */
     public function getArpa($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::RFC_822, $gmt, $locale), Zend_Date::RFC_822, $gmt, $locale);
     }
 
@@ -2525,6 +2549,10 @@ class Zend_Date {
      */
     private function _arpa($calc, $arpa = FALSE, $gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         if (is_object($arpa)) {
             // extract arpa fromobject
             $arpa = $arpa->get(Zend_Date::RFC_822, $gmt, $locale);
@@ -2533,7 +2561,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $arpa, Zend_Date::RFC_822, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->getTimestamp());
+            return new Zend_Date($this->getTimestamp(), FALSE, FALSE, $locale);
         }
         return $return;
     }
@@ -2810,6 +2838,10 @@ class Zend_Date {
      */
     public function getYear($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::YEAR, $gmt, $locale), Zend_Date::YEAR, $gmt, $locale);
     }
 
@@ -2903,6 +2935,10 @@ class Zend_Date {
      */
     public function getMonth($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::MONTH_SHORT, $gmt, $locale), Zend_Date::MONTH_SHORT, $gmt, $locale);
     }
 
@@ -2918,6 +2954,10 @@ class Zend_Date {
      */
     private function _month($calc, $month = FALSE, $gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         if (is_object($month)) {
             // extract month from object
             $found = $date->get(Zend_Date::MONTH_DIGIT, $gmt, $locale);
@@ -3028,6 +3068,10 @@ class Zend_Date {
      */
     public function getDay($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::DAY_SHORT, $gmt, $locale), Zend_Date::DAY_SHORT, $gmt, $locale);
     }
 
@@ -3134,6 +3178,10 @@ class Zend_Date {
      */
     public function getWeekday($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::WEEKDAY, $gmt, $locale), Zend_Date::WEEKDAY, $gmt, $locale);
     }
 
@@ -3242,6 +3290,10 @@ class Zend_Date {
      */
     public function getDayOfYear($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::DAY_OF_YEAR, $gmt, $locale), Zend_Date::DAY_OF_YEAR, $gmt, $locale);
     }
 
@@ -3331,6 +3383,10 @@ class Zend_Date {
      */
     public function getHour($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::HOUR, $gmt, $locale), Zend_Date::HOUR, $gmt, $locale);
     }
 
@@ -3420,6 +3476,10 @@ class Zend_Date {
      */
     public function getMinute($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::MINUTE, $gmt, $locale), Zend_Date::MINUTE, $gmt, $locale);
     }
 
@@ -3509,6 +3569,10 @@ class Zend_Date {
      */
     public function getSecond($gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         return new Zend_Date($this->get(Zend_Date::SECOND, $gmt, $locale), Zend_Date::SECOND, $gmt, $locale);
     }
 

@@ -4,19 +4,15 @@
  * @subpackage UnitTests
  */
 
-$old_error_reporting_level = error_reporting( E_ALL | E_STRICT );
-$new_error_reporting_level = error_reporting( E_ALL | E_STRICT );
-if ($old_error_reporting_level !== $new_error_reporting_level) {
-    echo "Warning: ", __FILE__, " was running without E_ALL | E_STRICT error reporting (corrected)\n";
-}
+error_reporting( E_ALL | E_STRICT ); // now required for each test suite
 
 /**
  * Zend_Date
  */
 require_once 'Zend.php';
-Zend::loadClass('Zend_Date');
-Zend::loadClass('Zend_Locale');
-Zend::loadClass('Zend_Date_Cities');
+require_once 'Zend/Date.php';
+require_once 'Zend/Locale.php';
+require_once 'Zend/Date/Cities.php';
 
 /**
  * PHPUnit test case
@@ -2934,6 +2930,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1234567899,false,$locale);
 
         $date = new Zend_Date(1234567890,false,$locale);
+        // echo "date=",$date->get(Zend_Date::RFC_822);
+        // Sat, 14 Feb 09 00:31:30 +0100
         $this->assertSame($date->compareTime('10:20:30'), -1);
         $this->assertSame($date->compareTime('00:31:30'), 0);
         $this->assertSame($date->compareTime('00:00:30'), 1);

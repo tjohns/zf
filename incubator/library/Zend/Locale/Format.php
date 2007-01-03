@@ -378,11 +378,17 @@ class Zend_Locale_Format
 
     /**
      * Split numbers in proper array fields
-     * @param string  $number   Number to parse
-     * @param string  $format   Format to parse
+     *
+     * @param string  $number     - Number to parse
+     * @param string  $format     - Format to parse
+     * @param Zend_Locale $locale - Locale of $number 
+     * @return array              - array members: day, month, year, hour, minute, second
      */
     private static function _parseDate($number, $format, $locale)
     {
+        if (!($locale instanceof Zend_Locale)) {
+            throw new Zend_Locale_Exception("parameter locale ($locale) is not an instance of Zend_Locale");
+        }
         $day   = iconv_strpos($format, 'd');
         $month = iconv_strpos($format, 'M');
         $year  = iconv_strpos($format, 'y');
@@ -432,8 +438,7 @@ class Zend_Locale_Format
 
         $position = false;
         foreach($monthlist as $key => $name) {
-            if (iconv_strpos($number, $name) !== false) {
-                $position = iconv_strpos($number, $name);
+            if (($position = iconv_strpos($number, $name)) !== false) {
                 if ($key < 10) {
                     $key = "0" . $key;
                 }
@@ -444,7 +449,10 @@ class Zend_Locale_Format
 
         // split number parts 
         $split = false;
-        preg_match_all('/\d+/', $number, $splitted);
+        // @todo - either enforce a format of no UTF8, and replace with simple loop
+        // (preg_match* is extremely slow in comparison), or use /u modifier with preg_match_all
+        // and document behavior of this function (and those that call it).
+        preg_match_all('/\d+/u', $number, $splitted);
 
         if (count($splitted[0]) == 0) {
             throw new Zend_Locale_Exception('No date part in ' . $number . ' found');
