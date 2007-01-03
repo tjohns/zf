@@ -173,6 +173,14 @@
         &module_specs.Zend_Service_Flickr;
         &module_specs.Zend_Service_Yahoo;
     </chapter>
+    <chapter id="zend.session">
+        <title>Zend_Session</title>
+        &module_specs.Zend_Session-Introduction;
+        &module_specs.Zend_Session-BasicUsage;
+        &module_specs.Zend_Session-AdvancedUsage;
+        &module_specs.Zend_Session-GlobalSessionManagement;
+        &module_specs.Zend_Session-Theory;
+    </chapter>
     <chapter id="zend.uri">
         <title>Zend_Uri</title>
         &module_specs.Zend_Uri;
