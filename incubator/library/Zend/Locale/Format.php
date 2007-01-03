@@ -381,14 +381,11 @@ class Zend_Locale_Format
      *
      * @param string  $number     - Number to parse
      * @param string  $format     - Format to parse
-     * @param Zend_Locale $locale - Locale of $number 
+     * @param string|Zend_Locale  $locale - Locale of $number 
      * @return array              - array members: day, month, year, hour, minute, second
      */
     private static function _parseDate($number, $format, $locale)
     {
-        if (!($locale instanceof Zend_Locale)) {
-            throw new Zend_Locale_Exception("parameter locale ($locale) is not an instance of Zend_Locale");
-        }
         $day   = iconv_strpos($format, 'd');
         $month = iconv_strpos($format, 'M');
         $year  = iconv_strpos($format, 'y');
@@ -429,21 +426,24 @@ class Zend_Locale_Format
             }
         }
 
-        // convert month string to number
+        // convert month string to number but only if month is given as format
         if (iconv_strpos($format, 'MMMM') !== false) {
             $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
-        } else {
+        } else if ($month !== false) {
             $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
         }
 
         $position = false;
-        foreach($monthlist as $key => $name) {
-            if (($position = iconv_strpos($number, $name)) !== false) {
-                if ($key < 10) {
-                    $key = "0" . $key;
+        // if no locale was given do not parse locale aware
+        if ($monthlist[1] != 1) {
+            foreach($monthlist as $key => $name) {
+                if (($position = iconv_strpos($number, $name)) !== false) {
+                    if ($key < 10) {
+                        $key = "0" . $key;
+                    }
+                    $number   = str_replace($name, $key, $number);
+                    break;
                 }
-                $number   = str_replace($name, $key, $number);
-                break;
             }
         }
 
