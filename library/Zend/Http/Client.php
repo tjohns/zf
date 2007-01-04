@@ -687,9 +687,13 @@ class Zend_Http_Client
         do {
             // Clone the URI and add the additional GET parameters to it
             $uri = clone $this->uri;
-            $uri_params = array();
-            parse_str($uri->getQuery(), $uri_params);
-            $uri->setQuery(array_merge($uri_params, $this->paramsGet));
+            if (! empty($this->paramsGet)) {
+                $query = $uri->getQuery();
+           	    if (! empty($query)) $query .= '&';
+                $query .= http_build_query($this->paramsGet, null, '&');	
+
+                $uri->setQuery($query);
+            }
             
             $body = $this->prepare_body();
             $headers = $this->prepare_headers();

@@ -135,6 +135,19 @@ class Zend_Http_Client_SocketTest extends PHPUnit_Framework_TestCase
 		$res = $this->client->request('GET');
 		$this->assertEquals(serialize(array_merge(array('name' => 'Arthur'), $params)), $res->getBody());
 	}
+	
+	/**
+	 * Test that setting the same parameter twice in the query string does not
+	 * get reduced to a single value only.
+	 *
+	 */
+	public function testDoubleGetParameter()
+	{
+		$qstr = 'foo=bar&foo=baz';
+		$this->client->setUri($this->baseuri . 'testGetData.php?' . $qstr);
+		$res = $this->client->request('GET');
+		$this->assertContains($qstr, $this->client->getLastRequest(), 'Request is expected to contain the entire query string');
+	}
 
 	/**
 	 * Test we can properly send POST parameters with
