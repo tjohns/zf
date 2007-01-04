@@ -104,6 +104,7 @@
         &module_specs.Zend_Gdata_Spreadsheets;
         -->
         &module_specs.Zend_Gdata_Data;
+        &module_specs.Zend_Gdata_Exception;
     </chapter>
     <chapter id="zend.http">
         <title>Zend_Http</title>

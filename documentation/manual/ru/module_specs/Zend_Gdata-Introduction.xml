@@ -349,7 +349,8 @@ $gdata->post($xml->asXML(), $myCalendar);
         <para>
             The Zend_Gdata object has a function <code>delete()</code>
             with which you can delete entries from Google Data
-            services.
+            services.  Pass the <code>&lt;id&gt;</code> value from
+            a feed entry to the <code>delete()</code> method.
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -358,9 +359,9 @@ $gdata = new Zend_Gdata();
 $feedUri = ...;
 $feed = $gdata->getFeed($feedUri);
 foreach ($feed as $feedEntry) {
-    // extract <link rel="edit"> element
-    $editUri = ...;
-    $gdata->delete($editUri);
+    // extract the <id> element
+    $id = $feedEntry->id();
+    $gdata->delete($id);
 }
 ?>]]></programlisting>
 
