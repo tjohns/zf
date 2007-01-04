@@ -177,7 +177,7 @@ $xmlString = <<<XML
 </entry>
 XML;
 
-$xml = new SimpleXML($xmlString);
+$xml = new SimpleXMLElement($xmlString);
 
 $response = $gdataBlog->post($xml->asXML());
 ?>]]></programlisting>
