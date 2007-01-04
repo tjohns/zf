@@ -123,12 +123,16 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $_COOKIE['bal'] = 'peen';
         $this->_request->setParam('foo', 'bar');
 
+        foreach ($_ENV as $envKey => $expected) {
+            break;
+        }
+
         $this->assertEquals('bar', $this->_request->foo);
         $this->assertEquals('val1', $this->_request->var1);
         $this->assertEquals('boo', $this->_request->baz);
         $this->assertEquals('peen', $this->_request->bal);
         $this->assertEquals($_SERVER['REQUEST_TIME'], $this->_request->REQUEST_TIME);
-        $this->assertEquals($_ENV['PATH'], $this->_request->PATH);
+        $this->assertEquals($expected, $this->_request->$envKey);
         $this->assertEquals($this->_request->getPathInfo(), $this->_request->PATH_INFO, $this->_request->PATH_INFO);
         $this->assertEquals($this->_request->getRequestUri(), $this->_request->REQUEST_URI, $this->_request->REQUEST_URI);
     }
@@ -154,12 +158,16 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
         $_COOKIE['bal'] = 'peen';
         $this->_request->setParam('foo', 'bar');
 
+        foreach ($_ENV as $envKey => $expected) {
+            break;
+        }
+
         $this->assertTrue(isset($this->_request->foo));
         $this->assertTrue(isset($this->_request->var1));
         $this->assertTrue(isset($this->_request->baz));
         $this->assertTrue(isset($this->_request->bal));
         $this->assertTrue(isset($this->_request->REQUEST_TIME));
-        $this->assertTrue(isset($this->_request->PATH));
+        $this->assertTrue(isset($this->_request->$envKey));
         $this->assertFalse(isset($this->_request->bogosity));
     }
 
