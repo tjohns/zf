@@ -133,14 +133,16 @@ class Zend_Gdata_CalendarTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(isset($this->gdata->orderby));
         $this->assertEquals($orderby, $this->gdata->getOrderby());
         $feed = $this->gdata->getCalendarFeed();
-        $prevTs = time();
+        $prevTs = null;
         foreach ($feed as $feedItem) {
             // echo $this->xml->formatString($feedItem->saveXML());
             $gdw = 'gd:when';
             $elt = $feedItem->$gdw;
             $startTime = $elt->offsetGet('startTime');
             $ts = strtotime($startTime);
-            $this->assertThat($ts, $this->logicalNot($this->greaterThan($prevTs)));
+            if ($prevTs != null) {
+                $this->assertThat($ts, $this->logicalNot($this->greaterThan($prevTs)));
+            }
             $prevTs = $ts;
         }
 
