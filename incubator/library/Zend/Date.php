@@ -1091,7 +1091,8 @@ class Zend_Date {
      * @param  $calc string - calculation to make
      * @param  $date mixed  - date which shall be our new date object
      * @param  $comp mixed  - second date for calculation
-     * @return timestamp
+     * @return timestamp|Zend_Date
+     * @throws Zend_Date_Exception
      */
     private function _assign($calc, $date, $comp = 0)
     {
@@ -2166,15 +2167,17 @@ class Zend_Date {
 
 
     /**
-     * Returns TRUE when both date objects have equal dates set
+     * Returns TRUE when both date objects or dateparts are equal.
+     * For example:
+     * 15.May.2000 <-> 15.June.2000 Equals only for Day or Year... all other will return false 
      *
-     * @param  $date mixed    - date to compare if equal
-     * @param  $part datepart - OPTIONAL datepart to compare only
-     * @param  $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale object - OPTIONAL, locale for output
+     * @param  string|integer|Zend_Date  $date    Date or datepart to equal with
+     * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is used
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return boolean
      */
-    public function equals($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
+    public function equals($date, $part = NULL, $gmt = TRUE, $locale = NULL)
     {
         if ($this->compare($date, $part, $gmt, $locale) == 0) {
             return true;
@@ -2184,15 +2187,17 @@ class Zend_Date {
 
 
     /**
-     * Returns if the given date is earlier
+     * Returns if the given date or datepart is earlier
+     * For example:
+     * 15.May.2000 <-> 13.June.1999 will return true for day, year and date, but not for month
      *
-     * @param  $date mixed    - date which shall be compared with our actual date object
-     * @param  $part datepart - OPTIONAL datepart to compare only
-     * @param  $gmt  boolean  - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale object - OPTIONAL, locale for output
+     * @param  string|integer|Zend_Date  $date    Date or datepart to compare with
+     * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is used
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return boolean
      */
-    public function isEarlier($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
+    public function isEarlier($date, $part = NULL, $gmt = TRUE, $locale = NULL)
     {
         if ($this->compare($date, $part, $gmt, $locale) == -1) {
             return true;
@@ -2202,15 +2207,18 @@ class Zend_Date {
 
 
     /**
+     * Returns if the given date or datepart is later
+     * For example:
+     * 15.May.2000 <-> 13.June.1999 will return true for month but false for day, year and date
      * Returns if the given date is later
      *
-     * @param  $date mixed    - date which shall be compared with our actual date object
-     * @param  $part datepart - OPTIONAL datepart to compare only
-     * @param  $gmt  boolean  - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale object - OPTIONAL, locale for output
+     * @param  string|integer|Zend_Date  $date    Date or datepart to compare with
+     * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is used
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return boolean
      */
-    public function isLater($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
+    public function isLater($date, $part = NULL, $gmt = TRUE, $locale = NULL)
     {
         if ($this->compare($date, $part, $gmt, $locale) == 1) {
             return true;
