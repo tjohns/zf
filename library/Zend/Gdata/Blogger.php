@@ -24,9 +24,9 @@
 require_once 'Zend/Gdata.php';
 
 /**
- * Zend_Gdata_Exception
+ * Zend_Gdata_InvalidArgumentException
  */
-require_once 'Zend/Gdata/Exception.php';
+require_once 'Zend/Gdata/InvalidArgumentException.php';
 
 /**
  * Gdata Blogger
@@ -43,7 +43,9 @@ class Zend_Gdata_Blogger extends Zend_Gdata
     const BLOGGER_LIST_URI = 'http://www.blogger.com/feeds/default/blogs';
 
     /**
-     * @return string blogname
+     * @param string blogname
+     * @return mixed feed
+     * @throws Zend_Gdata_InvalidArgumentException
      */
     public function getBloggerFeed($blogName = null)
     {
@@ -51,7 +53,7 @@ class Zend_Gdata_Blogger extends Zend_Gdata
             $this->blogName = $blogName;
         }
         if (!isset($this->blogName)) {
-            throw new Zend_Gdata_Exception('You must specify a blog name.');
+            throw new Zend_Gdata_InvalidArgumentException('You must specify a blog name.');
         }
         $uri = "http://{$this->blogName}.blogspot.com/feeds/posts/default";
         $uri .= $this->getQueryString();
@@ -78,11 +80,12 @@ class Zend_Gdata_Blogger extends Zend_Gdata
      *
      * @param string $xml
      * @return Zend_Http_Response
+     * @throws Zend_Gdata_InvalidArgumentException
      */
     public function post($xml, $uri = null)
     {
         if (!isset($this->blogName)) {
-            throw new Zend_Gdata_Exception('You must specify a blog name.');
+            throw new Zend_Gdata_InvalidArgumentException('You must specify a blog name.');
         }
         if ($uri == null) {
             $uri = "http://www.blogger.com/feeds/{$this->blogName}/posts/default";
@@ -141,6 +144,7 @@ class Zend_Gdata_Blogger extends Zend_Gdata
     /**
      * @param string $var
      * @param string $value
+     * @throws Zend_Gdata_InvalidArgumentException
      */
     protected function __set($var, $value)
     {
@@ -148,7 +152,7 @@ class Zend_Gdata_Blogger extends Zend_Gdata
             case 'query':
             case 'q':
                 $var = 'q';
-                throw new Zend_Gdata_Exception('Text queries are not currently supported in Blogger.');
+                throw new Zend_Gdata_InvalidArgumentException('Text queries are not currently supported in Blogger.');
                 break;
             case 'publishedMin':
                 $var = 'published-min';
@@ -163,11 +167,11 @@ class Zend_Gdata_Blogger extends Zend_Gdata
                 break;
             case 'category':
                 $var = '_category';
-                throw new Zend_Gdata_Exception('Category queries are not currently supported in Blogger.');
+                throw new Zend_Gdata_InvalidArgumentException('Category queries are not currently supported in Blogger.');
                 break;
             case 'entry':
                 $var = '_entry';
-                throw new Zend_Gdata_Exception('Entry queries are not currently supported in Blogger.');
+                throw new Zend_Gdata_InvalidArgumentException('Entry queries are not currently supported in Blogger.');
                 break;
             default:
                 break;

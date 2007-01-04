@@ -24,14 +24,14 @@
 require_once 'Zend/Feed.php';
 
 /**
- * Zend_Http_Exception
+ * Zend_Gdata_HttpException
  */
-require_once 'Zend/Http/Exception.php';
+require_once 'Zend/Gdata/HttpException.php';
 
 /**
- * Zend_Gdata_Exception
+ * Zend_Gdata_InvalidArgumentException
  */
-require_once 'Zend/Gdata/Exception.php';
+require_once 'Zend/Gdata/InvalidArgumentException.php';
 
 /**
  *
@@ -126,6 +126,7 @@ class Zend_Gdata
 
     /**
      * @param Zend_Http_Client $client
+     * @throws Zend_Gdata_HttpException
      */
     public function setHttpClient($client)
     {
@@ -133,7 +134,7 @@ class Zend_Gdata
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            throw new Zend_Http_Exception('Argument is not an instance of Zend_Http_Client.');
+            throw new Zend_Gdata_HttpException('Argument is not an instance of Zend_Http_Client.');
         }
         $this->_httpClient = $client;
     }
@@ -144,6 +145,8 @@ class Zend_Gdata
      * @param string $xml
      * @param string $uri POST URI
      * @return Zend_Http_Response
+     * @throws Zend_Gdata_HttpException
+     * @throws Zend_Gdata_InvalidArgumentException
      */
     public function post($xml, $uri = null)
     {
@@ -151,12 +154,16 @@ class Zend_Gdata
             $uri = $this->_defaultPostUri;
         }
         if ($uri == null) {
-            throw new Zend_Gdata_Exception('You must specify an URI to which to post.');
+            throw new Zend_Gdata_InvalidArgumentException('You must specify an URI to which to post.');
         }
         $this->_httpClient->setUri($uri);
         $this->_httpClient->setConfig(array('maxredirects' => 0));
         $this->_httpClient->setRawData($xml,'application/atom+xml');
-        $response = $this->_httpClient->request('POST');
+        try {
+            $response = $this->_httpClient->request('POST');
+        } catch (Zend_Http_Client_Exception $e) {
+            throw new Zend_Gdata_HttpException($e->getMessage(), $e);
+        }
         //set "S" cookie to avoid future redirects.
         if($cookie = $response->getHeader('Set-cookie')) {
             list($cookieName, $cookieValue) = explode('=', $cookie, 2);
@@ -166,11 +173,15 @@ class Zend_Gdata
             //this usually happens. Re-POST with redirected URI.
             $this->_httpClient->setUri($response->getHeader('Location'));
             $this->_httpClient->setRawData($xml,'application/atom+xml');
-            $response = $this->_httpClient->request('POST');
+            try {
+                $response = $this->_httpClient->request('POST');
+            } catch (Zend_Http_Client_Exception $e) {
+                throw new Zend_Gdata_HttpException($e->getMessage(), $e);
+            }
         }
         
         if (!$response->isSuccessful()) {
-            throw new Zend_Gdata_Exception('Post to Google failed.');
+            throw new Zend_Gdata_HttpException('Post to Google failed.');
         }
         return $response;
     }
@@ -330,7 +341,7 @@ class Zend_Gdata
         } else {
             $ts = strtotime($timestamp);
             if ($ts === false) {
-                throw new Zend_Gdata_Exception("Invalid timestamp: $timestamp.");
+                throw new Zend_Gdata_InvalidArgumentException("Invalid timestamp: $timestamp.");
             }
             return date('Y-m-d\TH:i:s', $ts);
         }

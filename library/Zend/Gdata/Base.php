@@ -24,9 +24,9 @@
 require_once 'Zend/Gdata.php';
 
 /**
- * Zend_Gdata_Exception
+ * Zend_Gdata_InvalidArgumentException
  */
-require_once 'Zend/Gdata/Exception.php';
+require_once 'Zend/Gdata/InvalidArgumentException.php';
 
 /**
  * Gdata Base
@@ -164,11 +164,12 @@ class Zend_Gdata_Base extends Zend_Gdata
      * @param string $attributeName
      * @param string $attributeValue
      * @param string $op
+     * @throws Zend_Gdata_InvalidArgumentException
      */
     public function addAttributeQuery($attributeName, $attributeValue, $op = ':')
     {
         if (!in_array($op, array(':', '==', '<', '>', '<=', '>=', '<<'))) {
-            throw new Zend_Gdata_Exception("Unsupported attribute query comparison operator '$op'.");
+            throw new Zend_Gdata_InvalidArgumentException("Unsupported attribute query comparison operator '$op'.");
         }
         $this->_attributeQueryTerms[$attributeName][] = array(
             'op' => $op,
@@ -213,7 +214,7 @@ class Zend_Gdata_Base extends Zend_Gdata
     }
 
     /**
-     * @return string category
+     * @return string orderby
      */
     public function getOrderby()
     {
@@ -232,7 +233,6 @@ class Zend_Gdata_Base extends Zend_Gdata
                 break;
             case 'category':
                 $var = '_category';
-                // @todo: validate category value
                 break;
             default:
                 // other params are handled by the parent

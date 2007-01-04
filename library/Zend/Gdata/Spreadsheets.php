@@ -19,9 +19,9 @@
  */
 
 /**
- * Zend_Gdata_Exception
+ * Zend_Gdata_InvalidArgumentException
  */
-require_once 'Zend/Gdata/Exception.php';
+require_once 'Zend/Gdata/InvalidArgumentException.php';
 
 /**
  * Gdata Spreadsheets
@@ -71,13 +71,14 @@ class Zend_Gdata_Spreadsheets extends Zend_Gdata
     /**
      * @param string $var
      * @param string $value
+     * @throws Zend_Gdata_InvalidArgumentException
      */
     protected function __set($var, $value)
     {
         switch ($var) {
             case 'updatedMin':
             case 'updatedMax':
-                throw new Zend_Gdata_Exception("Parameter '$var' is not currently supported in Spreadsheets.");
+                throw new Zend_Gdata_InvalidArgumentException("Parameter '$var' is not currently supported in Spreadsheets.");
                 break;
         }
         parent::__set($var, $value);

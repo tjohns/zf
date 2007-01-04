@@ -19,9 +19,14 @@
  */
 
 /**
- * Zend_Gdata_Exception
+ * Zend_Gdata_BadMethodCallException
  */
-require_once 'Zend/Gdata/Exception.php';
+require_once 'Zend/Gdata/BadMethodCallException.php';
+
+/**
+ * Zend_Gdata_InvalidArgumentException
+ */
+require_once 'Zend/Gdata/InvalidArgumentException.php';
 
 /**
  * Gdata CodeSearch
@@ -56,23 +61,24 @@ class Zend_Gdata_CodeSearch extends Zend_Gdata
      *
      * @param string $xml
      * @param string $uri 
-     * @throws Zend_Gdata_Exception
+     * @throws Zend_Gdata_BadMethodCallException
      */
     public function post($xml, $uri = null)
     {
-        throw new Zend_Gdata_Exception('There are no post operations for CodeSearch.');
+        throw new Zend_Gdata_BadMethodCallException('There are no post operations for CodeSearch.');
     }
 
     /**
      * @param string $var
      * @param string $value
+     * @throws Zend_Gdata_InvalidArgumentException
      */
     protected function __set($var, $value)
     {
         switch ($var) {
             case 'updatedMin':
             case 'updatedMax':
-                throw new Zend_Gdata_Exception("Parameter '$var' is not currently supported in CodeSearch.");
+                throw new Zend_Gdata_InvalidArgumentException("Parameter '$var' is not currently supported in CodeSearch.");
                 break;
         }
         parent::__set($var, $value);

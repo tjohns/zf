@@ -29,9 +29,9 @@ require_once('Zend/Gdata.php');
 require_once('Zend/Gdata/Data.php');
 
 /**
- * Zend_Gdata_Exception
+ * Zend_Gdata_InvalidArgumentException
  */
-require_once('Zend/Gdata/Exception.php');
+require_once('Zend/Gdata/InvalidArgumentException.php');
 
 /**
  * Gdata Calendar
@@ -96,7 +96,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     }
 
     /**
-     * Retreive feed object
+     * Retrieve feed object
      *
      * @return Zend_Feed
      */
@@ -111,86 +111,139 @@ class Zend_Gdata_Calendar extends Zend_Gdata
         return parent::getFeed($uri);
     }
 
+    /**
+     * @param string $value
+     */
     public function setComments($value)
     {
         $this->comments = $value;
     }
 
+    /**
+     * @param string $value
+     */
     public function setEvent($value)
     {
         $this->event = $value;
     }
 
+    /**
+     * @param string $value
+     */
     public function setStartMax($value)
     {
         $this->startMax = $value;
     }
 
+    /**
+     * @param string $value
+     */
     public function setStartMin($value)
     {
         $this->startMin = $value;
     }
 
+    /**
+     * @param string $value
+     */
     public function setOrderby($value)
     {
         $this->orderby = $value;
     }
 
+    /**
+     * @param string $value
+     */
     public function setProjection($value)
     {
         $this->projection = $value;
     }
 
+    /**
+     * @param string $value
+     */
     public function setUser($value)
     {
         $this->user = $value;
     }
 
+    /**
+     * @return string visibility
+     */
     public function setVisibility($value)
     {
         $this->visibility = $value;
     }
 
+    /**
+     * @return string comments
+     */
     public function getComments()
     {
         return $this->comments;
     }
 
+    /**
+     * @return string event
+     */
     public function getEvent()
     {
         return $this->event;
     }
 
+    /**
+     * @return string startMax
+     */
     public function getStartMax()
     {
         return $this->startMax;
     }
 
+    /**
+     * @return string startMin
+     */
     public function getStartMin()
     {
         return $this->startMin;
     }
 
+    /**
+     * @return string orderBy
+     */
     public function getOrderby()
     {
         return $this->orderby;
     }
 
+    /**
+     * @return string projection
+     */
     public function getProjection()
     {
         return $this->projection;
     }
 
+    /**
+     * @return string user
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     * @return string visibility
+     */
     public function getVisibility()
     {
         return $this->visibility;
     }
 
+    /**
+     * @param string $var
+     * @param string $value
+     * @throws Zend_Gdata_InvalidArgumentException
+     */
     protected function __set($var, $value)
     {
         switch ($var) {
@@ -205,13 +258,13 @@ class Zend_Gdata_Calendar extends Zend_Gdata
             case 'visibility':
             case 'projection':
                 if (!Zend_Gdata_Data::isValid($value, $var)) {
-                    throw new Zend_Gdata_Exception("Unsupported $var value: '$value'");
+                    throw new Zend_Gdata_InvalidArgumentException("Unsupported $var value: '$value'");
                 }
                 $var = "_$var";
                 break;
             case 'orderby':
                 if (!Zend_Gdata_Data::isValid($value, 'orderby#calendar')) {
-                    throw new Zend_Gdata_Exception("Unsupported $var value: '$value'");
+                    throw new Zend_Gdata_InvalidArgumentException("Unsupported $var value: '$value'");
                 }
                 break;
             case 'user':

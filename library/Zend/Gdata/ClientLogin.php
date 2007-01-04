@@ -24,9 +24,14 @@
 require_once 'Zend/Http/Client.php';
 
 /**
- * Zend_Http_Exception
+ * Zend_Gdata_AuthException
  */
-require_once 'Zend/Http/Exception.php';
+require_once 'Zend/Gdata/AuthException.php';
+
+/**
+ * Zend_Gdata_HttpException
+ */
+require_once 'Zend/Gdata/HttpException.php';
 
 
 /**
@@ -66,20 +71,22 @@ class Zend_Gdata_ClientLogin
      * @param Zend_Http_Client $client
      * @param string $source
      * @return Zend_Http_Client
+     * @throws Zend_Gdata_AuthException
+     * @throws Zend_Gdata_HttpException
      */
     public function getHttpClient($email, $password, $service = 'xapi',
         $client = null,
         $source = self::DEFAULT_SOURCE)
     {
         if (! ($email && $password)) {
-            throw new Zend_Http_Exception('Please set your Google credentials before trying to authenticate');
+            throw new Zend_Gdata_AuthException('Please set your Google credentials before trying to authenticate');
         }
 
         if ($client == null) {
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            throw new Zend_Http_Exception('Client is not an instance of Zend_Http_Client.');
+            throw new Zend_Gdata_HttpException('Client is not an instance of Zend_Http_Client.');
         }
 
         // Build the HTTP client for authentication
@@ -99,7 +106,11 @@ class Zend_Gdata_ClientLogin
         // For some reason Google's server causes an SSL error. We use the
         // output buffer to supress an error from being shown. Ugly - but works!
         ob_start();
-        $response = $client->request('POST');
+        try {
+            $response = $client->request('POST');
+        } catch (Zend_Http_Client_Exception $e) {
+            throw new Zend_Gdata_HttpException($e->getMessage(), $e);
+        }
         ob_end_clean();
 
         // Parse Google's response
@@ -119,7 +130,7 @@ class Zend_Gdata_ClientLogin
             return $client;
 
         } elseif ($response->getStatus() == 403) {
-            throw new Zend_Http_Exception('Authentication with Google failed. Reason: ' .
+            throw new Zend_Gdata_AuthException('Authentication with Google failed. Reason: ' .
                 (isset($goog_resp['Error']) ? $goog_resp['Error'] : 'Unspecified.'));
         }
     }

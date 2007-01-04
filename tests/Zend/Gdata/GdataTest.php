@@ -46,7 +46,7 @@ class Zend_Gdata_GdataTest extends PHPUnit_Framework_TestCase
         $obj = new ArrayObject();
         try {
             $gdata = new Zend_Gdata($obj);
-        } catch (Zend_Http_Exception $e) {
+        } catch (Zend_Gdata_HttpException $e) {
             $this->assertEquals('Argument is not an instance of Zend_Http_Client.', $e->getMessage());
         }
     }
