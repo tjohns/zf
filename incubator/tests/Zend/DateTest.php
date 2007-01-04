@@ -3355,4 +3355,20 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($d2->isYesterday());
         $this->assertTrue($date->isYesterday());
     }
+
+    /**
+     * Test for Tomorrow
+     */
+    public function testTomorrow()
+    {
+        $locale = new Zend_Locale('de_AT');
+
+        $date = new Zend_Date();
+        $d2 = new Zend_Date(1010101010,$locale);
+
+        $date->addDay(1);
+        $this->assertFalse($d2->isTomorrow());
+        $this->assertTrue($date->isTomorrow());
+    }
+    
 }
