@@ -134,10 +134,10 @@ class Zend_Date {
      * string, integer and so on. Also parts of dates or time are supported
      * For detailed instruction please look in the docu.
      * 
-     * @param string|integer      $date    OPTIONAL Defines the date or datepart to set depending on $part
-     * @param string              $part    OPTIONAL Defines the input format of $date
-     * @param boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer      $date    OPTIONAL Defines the date or datepart to set depending on $part
+     * @param  string              $part    OPTIONAL Defines the input format of $date
+     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
@@ -191,77 +191,95 @@ class Zend_Date {
 
 
     /**
+     * Returns the calculated timestamp
+     * HINT: timestamps are always GMT
+     *
+     * @param  string                    $calc    Type of calculation to make
+     * @param  string|integer|Zend_Date  $stamp   OPTIONAL Timestamp to calculate, when null the actual timestamp is calculated
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date|integer
+     * @throws Zend_Date_Exception
+     */
+    private function _timestamp($calc, $stamp, $locale)
+    {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
+        if (is_object($stamp)) {
+            // extract timestamp from object
+            $stamp = $stamp->get(Zend_Date::TIMESTAMP, TRUE, $locale);
+        } else if (empty($stamp)) {
+            $stamp = $this->_Date->date('U', FALSE, TRUE);
+        }
+
+        $return = $this->_calcdetail($calc, $stamp, Zend_Date::TIMESTAMP, FALSE, $locale);
+        if ($calc != 'cmp') {
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, FALSE, $locale);
+        }
+        return $return;
+    }
+
+
+    /**
      * Sets a new timestamp
      *
-     * @param $timestamp timestamp to set
-     * @return object
+     * @param  integer|string      $timestamp  Timestamp to set, if null the actual timestamp is set
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing input
+     * @return Zend_Date
+     * @throws Zend_Date_Exception
      */
-    public function setTimestamp($timestamp)
+    public function setTimestamp($timestamp = NULL, $locale = NULL)
     {
-        $this->_Date->setTimestamp($timestamp);
-        return new Zend_Date($this);
+        return $this->_timestamp('set', $timestamp, $locale);
     }
 
 
     /**
      * Adds a timestamp
      *
-     * @param $timestamp timestamp to add
-     * @return object
+     * @param  integer|string      $timestamp  Timestamp to add, if null the actual timestamp is added
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing input
+     * @return Zend_Date
+     * @throws Zend_Date_Exception
      */
-    public function addTimestamp($timestamp)
+    public function addTimestamp($timestamp = NULL, $locale = NULL)
     {
-        if (!is_numeric($timestamp)) {
-            throw new Zend_Date_Exception('timestamp excepted');
-        }
-
-        $stamp = bcadd($this->_Date->getTimestamp(), $timestamp);
-        return new Zend_Date($stamp);
+        return $this->_timestamp('add', $timestamp, $locale);
     }
 
 
     /**
      * Substracts a timestamp
      *
-     * @param $timestamp timestamp  to substract
-     * @return object
+     * @param  integer|string      $timestamp  Timestamp to sub, if null the actual timestamp is substracted
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing input
+     * @return Zend_Date
+     * @throws Zend_Date_Exception
      */
-    public function subTimestamp($timestamp)
+    public function subTimestamp($timestamp = NULL, $locale = NULL)
     {
-        if (!is_numeric($timestamp)) {
-            throw new Zend_Date_Exception('timestamp excepted');
-        }
-
-        $stamp = bcsub($this->_Date->getTimestamp(), $timestamp);
-        return new Zend_Date($stamp);
+        return $this->_timestamp('sub', $timestamp, $locale);
     }
 
 
     /**
      * Compares two timestamps, returning the difference as integer
      *
-     * @param $timestamp timestamp to compare
-     * @return mixed
+     * @param  integer|string      $timestamp  Timestamp to compare, if null the actual timestamp is compared
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing input
+     * @return integer  0 = equal, 1 = later, -1 = earlier
+     * @throws Zend_Date_Exception
      */
-    public function compareTimestamp($timestamp)
+    public function compareTimestamp($timestamp = NULL, $locale = NULL)
     {
-        if (is_object($timestamp)) {
-            $timestamp = $timestamp->getTimestamp();
-        }
-
-        $difference = bcsub($this->_Date->getTimestamp(), $timestamp);
-        if ($difference > 0) {
-            return 1;
-        } else if ($difference < 0) {
-            return -1;
-        }
-        return 0;
+        return $this->_timestamp('cmp', $timestamp, $locale);
     }
 
 
     /**
      * Returns a string representation of the object
-     * Supported format tokens are
+     * Supported format tokens are:
      * G - era, y - year, Y - ISO year, M - month, w - week of year, D - day of year, d - day of month
      * E - day of week, e - number of weekday, h - hour 1-12, H - hour 0-23, m - minute, s - second
      * A - milliseconds of day, z - timezone, Z - timezone offset, S - fractional second
@@ -271,18 +289,19 @@ class Zend_Date {
      * F - day of week of month, g - modified julian, c - stand alone weekday, k - hour 0-11, K - hour 1-24
      * v - wall zone
      *
-     * @param  $format  string  - OPTIONAL an rule for formatting the output
-     * @param  $gmt     boolean - OPTIONAL, FALSE = actual timezone time, TRUE = UTC time
-     * @param  $locale  object  - OPTIONAL locale for parsing input
+     * @param  string             $format  OPTIONAL an rule for formatting the output, 
+     *                                              if null the default dateformat is used 
+     * @param  boolean            $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale $locale  OPTIONAL locale for parsing input
      * @return string
      */
-    public function toString($format = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function toString($format = NULL, $gmt = FALSE, $locale = NULL)
     {
-        if ($locale === FALSE) {
+        if (empty($locale)) {
             $locale = $this->_Locale;
         }
 
-        if ($format === FALSE) {
+        if (empty($format)) {
             $date = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
             $time = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
             $date = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $date['default']));
@@ -1723,7 +1742,7 @@ class Zend_Date {
 
             case Zend_Date::TIMESTAMP :
                 if (is_numeric($date)) {
-                    return $this->_assign($calc, $date, $this->getTimestamp());
+                    return $this->_assign($calc, $date, $this->_Date->getTimestamp());
                 }
                 throw new Zend_Date_Exception('timestamp expected');
                 break;
@@ -2114,7 +2133,7 @@ class Zend_Date {
 
             default :
                 if (is_numeric($date)) {
-                    return $this->_assign($calc, $date, $this->getTimestamp());
+                    return $this->_assign($calc, $date, $this->_Date->getTimestamp());
                 }
                 throw new Zend_Date_Exception('timestamp expected');
                 break;
@@ -2230,7 +2249,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $time, Zend_Date::TIME_MEDIUM, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->getTimestamp());
+            return new Zend_Date($this->_Date->getTimestamp());
         }
         return $return;
     }
@@ -2350,7 +2369,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $date, Zend_Date::DATE_MEDIUM, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->getTimestamp());
+            return new Zend_Date($this->_Date->getTimestamp());
         }
         return $return;
     }
@@ -2456,7 +2475,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $iso, Zend_Date::ISO_8601, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->getTimestamp());
+            return new Zend_Date($this->_Date->getTimestamp());
         }
         return $return;
     }
@@ -2558,7 +2577,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $arpa, Zend_Date::RFC_822, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->getTimestamp(), FALSE, FALSE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), FALSE, FALSE, $locale);
         }
         return $return;
     }
@@ -2865,7 +2884,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $year, Zend_Date::YEAR, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->getTimestamp());
+            return new Zend_Date($this->_Date->getTimestamp());
         }
         return $return;
     }
@@ -2998,7 +3017,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $found, Zend_Date::MONTH_DIGIT, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->getTimestamp());
+            return new Zend_Date($this->_Date->getTimestamp());
         }
         return $return;
     }
@@ -3653,12 +3672,6 @@ class Zend_Date {
     /**
      * Compares only the second part, returning the difference
      *
-     * @param  string                    $calc    Type of calculation to make
-     * @param  string|integer|Zend_Date  $week    OPTIONAL Week to calculate, when null the actual week is calculated
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
-     * @return Zend_Date|integer
-
      * @param  integer|Zend_Date   $second  OPTIONAL Second to compare, when null the actual second is compared
      * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
@@ -3825,9 +3838,9 @@ class Zend_Date {
         } else if (empty($date)) {
             $week = $this->_Date->date('W', FALSE, $gmt);
         }
-        $return = $this->_calcdetail($calc, $year, Zend_Date::WEEK, TRUE, $locale);
+        $return = $this->_calcdetail($calc, $week, Zend_Date::WEEK, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->getTimestamp(), Zend_Date::TIMESTAMP, FALSE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, FALSE, $locale);
         }
         return $return;
     }
