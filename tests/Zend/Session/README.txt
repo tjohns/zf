@@ -1,5 +1,5 @@
 The most recently published version of Zend_Session documentation:
-http://framework.zend.com/wiki/display/ZFDEV/Zend_Session
+http://framework.zend.com/wiki/x/bTs
 
 Comments may be added by readers to each wiki page, by first registering
 for a wiki/issue tracker account, and then emailing your username to
