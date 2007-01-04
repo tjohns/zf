@@ -172,7 +172,7 @@ $xmlString = <<<XML
 </entry>
 XML;
 
-$xml = new SimpleXML($xmlString);
+$xml = new SimpleXMLElement($xmlString);
 
 $gdataCal->post($xml->asXML());
 ?>]]></programlisting>
