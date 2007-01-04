@@ -2248,10 +2248,6 @@ class Zend_Date {
      */
     private function _time($calc, $time = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (is_object($time)) {
             // extract time from object
             $time = $time->get(Zend_Date::TIME_MEDIUM, $gmt, $locale);
@@ -2368,10 +2364,6 @@ class Zend_Date {
      */
     private function _date($calc, $date = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (is_object($date)) {
             // extract date from object
             $date = $date->get(Zend_Date::DATE_MEDIUM, $gmt, $locale);
@@ -2487,10 +2479,6 @@ class Zend_Date {
      */
     private function _iso($calc, $iso = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (is_object($iso)) {
             // extract iso from object
             $iso = $iso->get(Zend_Date::ISO_8601, $gmt, $locale);
@@ -2589,10 +2577,6 @@ class Zend_Date {
      */
     private function _arpa($calc, $arpa = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (is_object($arpa)) {
             // extract arpa fromobject
             $arpa = $arpa->get(Zend_Date::RFC_822, $gmt, $locale);
@@ -2896,10 +2880,6 @@ class Zend_Date {
      */
     private function _year($calc, $year = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (is_object($year)) {
             // extract year from object
             $year = $date->get(Zend_Date::YEAR, $gmt, $locale);
@@ -2998,10 +2978,6 @@ class Zend_Date {
      */
     private function _month($calc, $month = FALSE, $gmt = FALSE, $locale = FALSE)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (is_object($month)) {
             // extract month from object
             $found = $date->get(Zend_Date::MONTH_DIGIT, $gmt, $locale);
@@ -3131,10 +3107,6 @@ class Zend_Date {
      */
     private function _day($calc, $day = NULL, $gmt = FALSE, $locale = NULL)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_SHORT, FALSE, $locale);
         } else if (empty($day)) {
@@ -3250,10 +3222,6 @@ class Zend_Date {
      */
     private function _weekday($weekday, $locale, $calc)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (empty($weekday)) {
             $weekday = $this->_Date->date('w');
         } else if (is_object($weekday)) {
@@ -3362,10 +3330,6 @@ class Zend_Date {
      */
     private function _dayOfYear($day, $locale, $calc)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (empty($day)) {
             $day = $this->_Date->date('z');
         } else if (is_object($day)) {
@@ -3455,10 +3419,6 @@ class Zend_Date {
      */
     private function _hour($hour, $locale, $calc)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (empty($hour)) {
             $hour = $this->_Date->date('G');
         } else if (is_object($hour)) {
@@ -3548,10 +3508,6 @@ class Zend_Date {
      */
     private function _minute($minute, $locale, $calc)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (empty($minute)) {
             $minute = $this->_Date->date('i');
         } else if (is_object($minute)) {
@@ -3641,10 +3597,6 @@ class Zend_Date {
      */
     private function _second($calc, $second, $gmt, $locale)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (empty($second)) {
             $second = $this->_Date->date('s');
         } else if (is_object($second)) {
@@ -3856,10 +3808,6 @@ class Zend_Date {
      */
     private function _week($calc, $week, $gmt, $locale)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
         if (is_object($week)) {
             // extract week from object
             $week = $date->get(Zend_Date::WEEK, $gmt, $locale);
