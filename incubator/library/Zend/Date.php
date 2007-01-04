@@ -2451,6 +2451,10 @@ class Zend_Date {
      */
     private function _iso($calc, $iso = FALSE, $gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         if (is_object($iso)) {
             // extract iso from object
             $iso = $iso->get(Zend_Date::ISO_8601, $gmt, $locale);
@@ -2856,6 +2860,10 @@ class Zend_Date {
      */
     private function _year($calc, $year = FALSE, $gmt = FALSE, $locale = FALSE)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         if (is_object($year)) {
             // extract year from object
             $year = $date->get(Zend_Date::YEAR, $gmt, $locale);
@@ -3051,7 +3059,7 @@ class Zend_Date {
      * @param $month mixed   - OPTIONAL month to compare, when null the actual month is compared
      * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @return integer
      */
     public function compareMonth($month = FALSE, $gmt = FALSE, $locale = FALSE)
     {
@@ -3062,11 +3070,11 @@ class Zend_Date {
     /**
      * Returns the day
      *
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale string - OPTIONAL locale for parsing input
-     * @return object
+     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale  OPTIONAL locale for parsing input
+     * @return Zend_Date
      */
-    public function getDay($gmt = FALSE, $locale = FALSE)
+    public function getDay($gmt = FALSE, $locale = NULL)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
@@ -3079,12 +3087,13 @@ class Zend_Date {
     /**
      * Returns the calculated day
      *
-     * @param $day string      - OPTIONAL day to calculate, when null the actual day is calculate
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @param $calculation string - type of calculation to make
-     * @return object
+     * @param $calc    string                    Type of calculation to make
+     * @param $day     string|integer|Zend_Date  OPTIONAL Day to calculate, when null the actual day is calculated
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
+     * @return Zend_Date|integer
      */
-    private function _day($day, $locale, $calc)
+    private function _day($calc, $day = NULL, $gmt = FALSE, $locale = NULL)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
@@ -3117,51 +3126,56 @@ class Zend_Date {
         return $this->_calcdetail($calc, $day, $type, $gmt, $locale);
     }
 
+
     /**
      * Sets a new day
      *
-     * @param $day object     - OPTIONAL day to set, when null the actual day is set
-     * @param $locale string  - OPTIONAL locale for parsing input
-     * @return object
+     * @param $day     string|integer|Zend_Date  OPTIONAL day to set, when null the actual day is set
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
+     * @return Zend_Date
      */
-    public function setDay($day = FALSE, $locale = FALSE)
+    public function setDay($day = NULL, $gmt = FALSE, $locale = NULL)
     {
-        return $this->_day($day, $locale, 'set');
+        return $this->_day('set', $day, $gmt, $locale);
     }
 
 
     /**
      * Adds a day
      *
-     * @param $day object     - OPTIONAL day to add, when null the actual day is add
-     * @param $locale string  - OPTIONAL locale for parsing input
-     * @return object
+     * @param $day     string|integer|Zend_Date  OPTIONAL day to add, when null the actual day is added
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
+     * @return Zend_Date
      */
-    public function addDay($day = FALSE, $locale = FALSE)
+    public function addDay($day = NULL, $gmt = FALSE, $locale = NULL)
     {
-        return $this->_day($day, $locale, 'add');
+        return $this->_day('add', $day, $gmt, $locale);
     }
 
 
     /**
      * Substracts a day
      *
-     * @param $day object     - OPTIONAL day to sub, when null the actual day is sub
-     * @param $locale string  - OPTIONAL locale for parsing input
-     * @return object
+     * @param $day     string|integer|Zend_Date  OPTIONAL day to sub, when null the actual day is substracted
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
+     * @return Zend_Date
      */
-    public function subDay($day = FALSE, $locale = FALSE)
+    public function subDay($day = NULL, $gmt = FALSE, $locale = NULL)
     {
-        return $this->_day($day, $locale, 'sub');
+        return $this->_day('sub', $day, $gmt, $locale);
     }
 
 
     /**
      * Compares only the day part, returning the difference
      *
-     * @param $day string/integer - OPTIONAL day to compare, when null the actual day is used for compare
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @return string
+     * @param $day     string|integer|Zend_Date  OPTIONAL day to compare, when null the actual day is compared
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
+     * @return integer                           0 = equal, 1 = later, -1 = earlier
      */
     public function compareDay($day = FALSE, $locale = FALSE)
     {
@@ -3775,53 +3789,58 @@ class Zend_Date {
     /**
      * Returns the week
      *
-     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale locale  - OPTIONAL locale for parsing input
-     * @return string
+     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date
      */
-    public function getWeek($gmt = FALSE, $locale = FALSE)
+    public function getWeek($gmt = FALSE, $locale = NULL)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
 
-        $week = $week->get(Zend_Date::WEEK, FALSE, $locale);
-        return $week;
+        return new Zend_Date($this->get(Zend_Date::WEEK, $gmt, $locale), Zend_Date::WEEK, $gmt, $locale);
     }
 
 
     /**
      * Returns the calculated week
      *
-     * @param $week string    - OPTIONAL week to calculate, when null the actual week is calculated
-     * @param $locale string  - OPTIONAL locale for parsing input
-     * @param $calculation string - type of calculation to make
-     * @return object
+     * @param $calc    string                    Type of calculation to make
+     * @param $week    string|integer|Zend_Date  OPTIONAL Week to calculate, when null the actual week is calculated
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @return Zend_Date|integer
      */
-    private function _week($week, $locale, $calc)
+    private function _week($calc, $week, $gmt, $locale)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
 
-        if (empty($week)) {
-            $week = $this->_Date->date('W');
-        } else if (is_object($week)) {
-            $week = $week->get(Zend_Date::WEEK, FALSE, $locale);
+        if (is_object($week)) {
+            // extract week from object
+            $week = $date->get(Zend_Date::WEEK, $gmt, $locale);
+        } else if (empty($date)) {
+            $week = $this->_Date->date('W', FALSE, $gmt);
         }
-
-        return $this->_calcdetail($calc, $week, Zend_Date::WEEK, $gmt, $locale);
+        $return = $this->_calcdetail($calc, $year, Zend_Date::WEEK, TRUE, $locale);
+        if ($calc != 'cmp') {
+            return new Zend_Date($this->getTimestamp(), Zend_Date::TIMESTAMP, FALSE, $locale);
+        }
+        return $return;
     }
 
 
     /**
      * Sets a new week
      *
-     * @param $week object    - OPTIONAL week to set, when null the actual week is set
-     * @param $locale string  - OPTIONAL locale for parsing input
-     * @return object
+     * @param $week    string|integer|Zend_Date  OPTIONAL Week to set, when null the actual day is set
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @return Zend_Date
      */
-    public function setWeek($week = FALSE, $locale = FALSE)
+    public function setWeek($week = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_week($week, $locale, 'set');
     }
@@ -3830,38 +3849,41 @@ class Zend_Date {
     /**
      * Adds a week
      *
-     * @param $week object    - OPTIONAL week to add, when null the actual week is add
-     * @param $locale string  - OPTIONAL locale for parsing input
-     * @return object
+     * @param $week    string|integer|Zend_Date  OPTIONAL Week to add, when null the actual day is added
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @return Zend_Date
      */
-    public function addWeek($week = FALSE, $locale = FALSE)
+    public function addWeek($week = NULL, $gmt = FALSE, $locale = NULL)
     {
-        return $this->_week($week, $locale, 'add');
+        return $this->_week('add', $week, $gmt, $locale);
     }
 
 
     /**
      * Substracts a week
      *
-     * @param $week object    - OPTIONAL week to sub, when null the actual week is sub
-     * @param $locale string  - OPTIONAL locale for parsing input
-     * @return object
+     * @param $week    string|integer|Zend_Date  OPTIONAL Week to compare, when null the actual day is compared
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @return Zend_Date
      */
-    public function subWeek($week = FALSE, $locale = FALSE)
+    public function subWeek($week = NULL, $gmt = FALSE, $locale = NULL)
     {
-        return $this->_week($week, $locale, 'sub');
+        return $this->_week('sub', $week, $gmt, $locale);
     }
 
 
     /**
      * Compares only the week part, returning the difference
      *
-     * @param $week object    - OPTIONAL week to compare, when null the actual week is compare
-     * @param $locale string  - OPTIONAL locale for parsing input
-     * @return string
+     * @param $week    string|integer|Zend_Date  OPTIONAL Week to compare, when null the actual day is compared
+     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @return integer                           0 = equal, 1 = later, -1 = earlier
      */
-    public function compareWeek($week = FALSE, $locale = FALSE)
+    public function compareWeek($week = NULL, $gmt = FALSE, $locale = NULL)
     {
-        return $this->_week($week, $locale, 'compare');
+        return $this->_week('cmp', $week, $gmt, $locale);
     }
 }
