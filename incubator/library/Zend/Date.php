@@ -1088,11 +1088,11 @@ class Zend_Date {
     /**
      * Calculates the date or object
      *
-     * @param  $calc string - calculation to make
-     * @param  $date mixed  - date which shall be our new date object
-     * @param  $comp mixed  - second date for calculation
-     * @return timestamp|Zend_Date
-     * @throws Zend_Date_Exception
+     * @param  string                    $calc    Calculation to make
+     * @param  string|integer            $date    Date for calculation
+     * @param  string|integer            $comp    Second date for calculation
+     * @return integer|string|Zend_Date  new timestamp or Zend_Date depending on calculation
+     * @todo   erase bcmath with helper class
      */
     private function _assign($calc, $date, $comp = 0)
     {
@@ -1128,7 +1128,8 @@ class Zend_Date {
      * @param  string                    $part    OPTIONAL Part of the date to calculate, if null the timestamp is used
      * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
-     * @return integer|string  new timestamp
+     * @return integer|string|Zend_Date  new timestamp
+     * @throws Zend_Date_Exception
      */
     private function _calculate($calc, $date = NULL, $part = NULL, $gmt = FALSE, $locale = NULL)
     {
@@ -2176,6 +2177,7 @@ class Zend_Date {
      * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return boolean
+     * @throws Zend_Date_Exception
      */
     public function equals($date, $part = NULL, $gmt = TRUE, $locale = NULL)
     {
@@ -2196,6 +2198,7 @@ class Zend_Date {
      * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return boolean
+     * @throws Zend_Date_Exception
      */
     public function isEarlier($date, $part = NULL, $gmt = TRUE, $locale = NULL)
     {
@@ -2217,6 +2220,7 @@ class Zend_Date {
      * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return boolean
+     * @throws Zend_Date_Exception
      */
     public function isLater($date, $part = NULL, $gmt = TRUE, $locale = NULL)
     {
@@ -2228,13 +2232,15 @@ class Zend_Date {
 
 
     /**
-     * Returns the time
-     *
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * Returns only the time of the date as new Zend_Date object
+     * For example: 
+     * 15.May.2000 10:11:23 will return a dateobject equal to 01.Jan.1970 10:11:23
+     * 
+     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date
      */
-    public function getTime($gmt = FALSE, $locale = FALSE)
+    public function getTime($gmt = FALSE, $locale = NULL)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
@@ -2247,14 +2253,14 @@ class Zend_Date {
     /**
      * Returns the calculated time
      *
-     * @param $calc string   - type of calculation to make
-     * @param $time mixed    - OPTIONAL time to calculate, when null the actual time is calculated
-     * @param $format string - OPTIONAL format to parse
-     * @param $gmt boolean   - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string                    $calc    Calculation to make
+     * @param  string|integer|Zend_Date  $time    OPTIONAL Time to calculate with, if null the actual time is taken
+     * @param  string                    $format  OPTIONAL Timeformat for parsing
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new time
      */
-    private function _time($calc, $time = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
+    private function _time($calc, $time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
     {
         if (is_object($time)) {
             // extract time from object

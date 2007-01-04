@@ -116,7 +116,11 @@ class Zend_Date_DateObject {
      */
     public function getTimestamp()
     {
-        return $this->_unixtimestamp;
+        if ($this->_unixtimestamp === intval($this->_unixtimestamp)) {
+            return (int) $this->_unixtimestamp;
+        } else {
+            return (string) $this->_unixtimestamp;
+        }
     }
 
 
