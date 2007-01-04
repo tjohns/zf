@@ -289,10 +289,9 @@ class Zend_Date {
      * F - day of week of month, g - modified julian, c - stand alone weekday, k - hour 0-11, K - hour 1-24
      * v - wall zone
      *
-     * @param  string             $format  OPTIONAL an rule for formatting the output, 
-     *                                              if null the default dateformat is used 
-     * @param  boolean            $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  string|Zend_Locale $locale  OPTIONAL locale for parsing input
+     * @param  string              $format  OPTIONAL An rule for formatting the output, if null the default dateformat is used
+     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return string
      */
     public function toString($format = NULL, $gmt = FALSE, $locale = NULL)
@@ -568,29 +567,25 @@ class Zend_Date {
 
 
     /**
-     * Returns a string representation of the object
-     * Alias for toString
+     * Returns a string representation of the date which is equal with the timestamp
      *
-     * @param  $format  string  - OPTIONAL an rule for formatting the output
-     * @param  $gmt     boolean - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
-     * @param  $locale  object  - OPTIONAL locale for parsing input
      * @return string
      */
-    public function __toString($format = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function __toString()
     {
-        return $this->toString($format, $gmt, $locale);
+        return $this->toString(NULL, FALSE, $this->_Locale);
     }
 
 
     /**
      * Returns a integer representation of the object
-     * Returns FALSE when the given part is no value f.e. Month-Name
+     * But returns false when the given part is no value f.e. Month-Name
      *
-     * @param  $part datepart - OPTIONAL  part of date to return as integer
-     * @param  $gmt boolean   - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
-     * @return integer or FALSE
+     * @param  string|integer|Zend_Date  $part  OPTIONAL Defines the date or datepart to return as integer
+     * @param  boolean                   $gmt   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @return integer|false
      */
-    public function toValue($part = FALSE, $gmt = FALSE)
+    public function toValue($part = NULL, $gmt = FALSE)
     {
         $result = $this->get($part, $gmt, FALSE);
         if (is_numeric($result)) {
@@ -602,20 +597,23 @@ class Zend_Date {
 
 
     /**
-     * Returns a timestamp or a part of a date
+     * Returns a representation of a date or datepart
+     * This could be for example a localized monthname, the time without date,
+     * the era or only the fractional seconds. There are about 50 different supported dateparts.
+     * For a complete list of supported datepart values look into the docu
      *
-     * @param  $part datepart  - OPTIONAL, datepart, if empty the timestamp will be returned
-     * @param  $gmt  boolean   - OPTIONAL, TRUE = actual timezone time, FALSE = UTC time
-     * @param  $locale object  - OPTIONAL, locale for output
-     * @return mixed timestamp or datepart as string or integer
+     * @param  string              $part    OPTIONAL Part of the date to return, if null the timestamp is returned
+     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @return integer|string  date or datepart
      */
-    public function get($part = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function get($part = NULL, $gmt = FALSE, $locale = NULL)
     {
-        if ($part === FALSE) {
+        if (empty($part)) {
             $part = Zend_Date::TIMESTAMP;
         }
 
-        if ($locale === FALSE) {
+        if (empty($locale)) {
             $locale = $this->_Locale;
         }
 
@@ -987,30 +985,38 @@ class Zend_Date {
 
 
     /**
-     * Sets the given date as new date
+     * Sets the given date as new date or a given datepart as new datepart returning the new datepart 
+     * This could be for example a localized dayname, the date without time,
+     * the month or only the seconds. There are about 50 different supported dateparts.
+     * For a complete list of supported datepart values look into the docu
      *
-     * @param  $date mixed    - date which shall be our new date object
-     * @param  $part datepart - datepart, if empty the timestamp will be returned
-     * @param  $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale object - OPTIONAL, locale for output
-     * @return timestamp
+     * @param  string|integer|Zend_Date  $date    Date or datepart to set 
+     * @param  string                    $part    OPTIONAL Part of the date to set, if null the timestamp is set
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|string  new datepart
+     * @throws Zend_Date_Exception
      */
-    public function set($date, $part = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function set($date, $part = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_calculate('set', $date, $part, $gmt, $locale);
     }
 
 
     /**
-     * Adds a date to another date. Could add f.e. minutes, hours, days, months to a date object
+     * Adds a date or datepart to the existing date
+     * This could be for example a ISO 8601 date, the hour,
+     * the monthname or only the minute. There are about 50 different supported dateparts.
+     * For a complete list of supported datepart values look into the docu
      *
-     * @param  $date mixed    - date which shall be our new date object
-     * @param  $part datepart - OPTIONAL, datepart, if empty the timestamp will be returned
-     * @param  $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale object - OPTIONAL, locale for output
-     * @return mixed
+     * @param  string|integer|Zend_Date  $date    Date or datepart to add 
+     * @param  string                    $part    OPTIONAL Part of the date to add, if null the timestamp is added
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|string  new datepart
+     * @throws Zend_Date_Exception
      */
-    public function add($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
+    public function add($date, $part = NULL, $gmt = TRUE, $locale = NULL)
     {
         $this->_calculate('add', $date, $part, $gmt, $locale);
         return $this->get($part, $gmt, $locale);
@@ -1018,15 +1024,20 @@ class Zend_Date {
 
 
     /**
-     * Substracts a date from another date. Could sub f.e. minutes, hours, days from a date object
-     *
-     * @param  $date mixed    - date which shall be our new date object
-     * @param  $part datepart - OPTIONAL, datepart, if empty the timestamp will be returned
-     * @param  $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale object - OPTIONAL, locale for output
-     * @return mixed
+     * Substracts a date from another date.
+     * This could be for example a RFC2822 date, the time,
+     * the year or only the timestamp. There are about 50 different supported dateparts.
+     * For a complete list of supported datepart values look into the docu
+     * Be aware: Adding -2 Months is not equal to Substracting 2 Months !!! 
+     * 
+     * @param  string|integer|Zend_Date  $date    Date or datepart to substract
+     * @param  string                    $part    OPTIONAL Part of the date to sub, if null the timestamp is substracted
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|string  new datepart
+     * @throws Zend_Date_Exception
      */
-    public function sub($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
+    public function sub($date, $part = NULL, $gmt = TRUE, $locale = NULL)
     {
         $this->_calculate('sub', $date, $part, $gmt, $locale);
         return $this->get($part, $gmt, $locale);
@@ -1034,15 +1045,17 @@ class Zend_Date {
 
 
     /**
-     * Compares a date with another date. Returns -1 if smaller, 0 if equal and 1 if greater
+     * Compares a date or datepart with the existing one. 
+     * Returns -1 if earlier, 0 if equal and 1 if later.
      *
-     * @param  $date mixed    - date which shall be compared with our actual date object
-     * @param  $part datepart - OPTIONAL datepart to compare only
-     * @param  $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale object - OPTIONAL, locale for output
-     * @return mixed
+     * @param  string|integer|Zend_Date  $date    Date or datepart to compare with the date object
+     * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is substracted
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer  0 = equal, 1 = later, -1 = earlier
+     * @throws Zend_Date_Exception
      */
-    public function compare($date, $part = FALSE, $gmt = TRUE, $locale = FALSE)
+    public function compare($date, $part = NULL, $gmt = TRUE, $locale = NULL)
     {
         $compare = $this->_calculate('cmp', $date, $part, $gmt, $locale);
         if ($compare > 0) {
@@ -1055,14 +1068,20 @@ class Zend_Date {
 
 
     /**
-     * Returns a new copy of the date object
-     *
-     * @param  $part datepart - OPTIONAL datepart to dublicate
-     * @return object
+     * Returns a new copy of the date object or a datepart
+     * For a complete list of supported datepart values look into the docu
+     * If a datepart is copies, all other dateparts are set to standard values.
+     * For example: If only YEAR is copied, the returned date object is equal to
+     * 01-01-YEAR 00:00:00 (01-01-1970 00:00:00 is equal to timestamp 0)
+     * 
+     * @param  string              $part    OPTIONAL Part of the date to compare, if null the timestamp is substracted
+     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date
      */
-    public function copy($part = FALSE)
+    public function copy($part = NULL, $locale = NULL)
     {
-        return $this->_calculate('copy', $this, $part, FALSE, FALSE);
+        return $this->_calculate('copy', $this, $part, FALSE, $locale);
     }
 
 
@@ -1103,14 +1122,14 @@ class Zend_Date {
     /**
      * Calculates the date or object
      *
-     * @param  $calc string   - calculation to make
-     * @param  $date mixed    - date which shall be our new date object
-     * @param  $part string   - datepart, if empty the timestamp will be returned
-     * @param  $gmt  boolean  - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale object - OPTIONAL, locale for output
-     * @return timestamp
+     * @param  string                    $calc    Calculation to make
+     * @param  string|integer|Zend_Date  $date    OPTIONAL Date or datepart to calculate with, if null the actual date is taken
+     * @param  string                    $part    OPTIONAL Part of the date to calculate, if null the timestamp is used
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|string  new timestamp
      */
-    private function _calculate($calc, $date, $part = FALSE, $gmt = FALSE, $locale = FALSE)
+    private function _calculate($calc, $date = NULL, $part = NULL, $gmt = FALSE, $locale = NULL)
     {
         foreach(array('date','part','gmt') as $param) {
             $type = gettype($$param);
@@ -1123,7 +1142,7 @@ class Zend_Date {
             }
         }
 
-        if ($locale === FALSE) {
+        if (empty($locale)) {
             $locale = $this->_Locale;
         }
 
@@ -1134,6 +1153,11 @@ class Zend_Date {
         $hour   = $this->get(Zend_Date::HOUR_SHORT);
         $minute = $this->get(Zend_Date::MINUTE_SHORT);
         $second = $this->get(Zend_Date::SECOND_SHORT);
+
+        if (is_null($date)) {
+            $temp = new Zend_Date($this->_Date->date('U', FALSE, $gmt), Zend_Date::TIMESTAMP, $gmt, $locale);
+            $date = $temp->get($part, $gmt, $locale);
+        }
 
         // if object extract value
         if (is_object($date)) {
@@ -3111,10 +3135,10 @@ class Zend_Date {
             $locale = $this->_Locale;
         }
 
-        if (empty($day)) {
-            $day = $this->_Date->date('j');
-        } else if (is_object($day)) {
+        if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_SHORT, FALSE, $locale);
+        } else if (empty($day)) {
+            $day = $this->_Date->date('j');
         }
 
         if (is_numeric($day)) {
@@ -3135,7 +3159,11 @@ class Zend_Date {
                     break;
             }
         }
-        return $this->_calcdetail($calc, $day, $type, $gmt, $locale);
+        $return = $this->_calcdetail($calc, $day, $type, $gmt, $locale);
+        if ($calc != 'cmp') {
+            return new Zend_Date($this->_Date->getTimestamp());
+        }
+        return $return;
     }
 
 
@@ -3189,7 +3217,7 @@ class Zend_Date {
      * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
      * @return integer                           0 = equal, 1 = later, -1 = earlier
      */
-    public function compareDay($day = FALSE, $locale = FALSE)
+    public function compareDay($day = NULL, $locale = NULL)
     {
         return $this->_day('cmp', $day, $gmt, $locale);
     }
