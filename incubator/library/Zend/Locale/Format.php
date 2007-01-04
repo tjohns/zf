@@ -379,10 +379,11 @@ class Zend_Locale_Format
     /**
      * Split numbers in proper array fields
      *
-     * @param string  $number     - Number to parse
-     * @param string  $format     - Format to parse
-     * @param string|Zend_Locale  $locale - Locale of $number 
-     * @return array              - array members: day, month, year, hour, minute, second
+     * @param string  $number   Number to parse
+     * @param string  $format   Format to parse. Only single-letter codes (H, m, s, y, M, d),
+     *                          and MMMM and EEEE are supported.
+     * @param Zend_Locale|string $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
+     * @return array            possible array members: day, month, year, hour, minute, second
      */
     private static function _parseDate($number, $format, $locale)
     {
@@ -409,9 +410,8 @@ class Zend_Locale_Format
             }
         }
 
-        // format unknown wether date nor time
         if (empty($parse)) {
-            throw new Zend_Locale_Exception('unknown format, wether date nor time in ' . $format . ' found');
+            throw new Zend_Locale_Exception('unknown format, neither date nor time in ' . $format . ' found');
         }
         ksort($parse);
 
@@ -426,16 +426,23 @@ class Zend_Locale_Format
             }
         }
 
-        // convert month string to number but only if month is given as format
-        if (iconv_strpos($format, 'MMMM') !== false) {
-            $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
-        } else if ($month !== false) {
-            $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+        $monthlist = false;
+        if (!empty($locale) && $month) {
+            // prepare to convert month name to their numeric equivalents, if requested, and we have a $locale
+            if (iconv_strpos($format, 'MMMM') !== false) {
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'wide'));
+            } else {
+                $monthlist = Zend_Locale_Data::getContent($locale, 'monthlist', array('gregorian', 'abbreviated'));
+            }
         }
 
         $position = false;
-        // if no locale was given do not parse locale aware
-        if ($monthlist[1] != 1) {
+
+        // If $locale was invalid, $monthlist will default to a "root" identity
+        // mapping for each month number from 1 to 12.
+        // If no $locale was given, or $locale was invalid, do not use this identity mapping to normalize.
+        // Otherwise, translate locale aware month names in $number to their numeric equivalents.
+        if ($monthlist && $monthlist[1] != 1) {
             foreach($monthlist as $key => $name) {
                 if (($position = iconv_strpos($number, $name)) !== false) {
                     if ($key < 10) {
@@ -582,13 +589,15 @@ class Zend_Locale_Format
 
     /**
      * Returns an array with the normalized date from an locale date
-     * a input of 10.01.2006 for locale 'de' would return
+     * a input of 10.01.2006 without a $locale would return:
      * array ('day' => 10, 'month' => 1, 'year' => 2006)
+     * The optional $locale parameter is only used to convert human readable day
+     * and month names to their numeric equivalents.
      *
      * @param string $date    date string
-     * @param string $format  date type CLDR format !!!
-     * @param locale $locale  OPTIONAL locale of date string
-     * @return array
+     * @param string $format  Date type CLDR format to parse. Only single-letter codes (H, m, s, y, M, d), and MMMM and EEEE are supported.
+     * @param Zend_Locale|string $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
+     * @return array          possible array members: day, month, year, hour, minute, second
      */
     public static function getDate($date, $format = false, $locale = false)
     {
@@ -624,14 +633,18 @@ class Zend_Locale_Format
 
 
     /**
-     * Returns an array with the normalized time from an locale time
-     * a input of 11:20:55 for locale 'de' would return
+     * Returns an array with 'hour', 'minute', and 'second' elements extracted from $time
+     * according to the order described in $format.  For a format of 'H:m:s', and
+     * an input of 11:20:55, getTime() would return:
      * array ('hour' => 11, 'minute' => 20, 'second' => 55)
+     * The optional $locale parameter may be used to help extract times from strings
+     * containing both a time and a day or month name.
      *
      * @param string $time    time string
-     * @param string $format  time type CLDR format !!!
-     * @param locale $locale  OPTIONAL locale of time string
-     * @return array
+     * @param string $format  Date type CLDR format to parse. Only single-letter
+     *                        codes(H, m, s, y, M, d), and MMMM and EEEE are supported.
+     * @param Zend_Locale|string $locale - OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
+     * @return array          possible array members: day, month, year, hour, minute, second
      */
     public static function getTime($time, $format = false, $locale = false)
     {
