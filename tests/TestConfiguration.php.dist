@@ -73,6 +73,14 @@ define('TESTS_ZEND_DB_ADAPTER_PDO_MSSQL_DATABASE', 'test');
 define('TESTS_ZEND_HTTP_CLIENT_BASEURI', false);
 
 /**
+ * HTTP proxy to be used for testing the Proxy adapter. Set to a string of 
+ * the form 'host:port'. Set to null to skip HTTP proxy tests.
+ */
+define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY', false);
+define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY_USER', '');
+define('TESTS_ZEND_HTTP_CLIENT_HTTP_PROXY_PASS', '');
+
+/**
  * Zend_Gdata tests
  *
  * If the CLIENTLOGIN_ENABLED property below is false, the authenticated

@@ -17,6 +17,7 @@ require_once 'Zend/Http/Client/StaticTest.php';
 require_once 'Zend/Http/Client/SocketTest.php';
 require_once 'Zend/Http/Client/SocketKeepaliveTest.php';
 require_once 'Zend/Http/Client/TestAdapterTest.php';
+require_once 'Zend/Http/Client/ProxyAdapterTest.php';
 //require_once 'Zend/Http/Client/CurlTest.php';
 
 class Zend_Http_Client_AllTests
@@ -34,6 +35,7 @@ class Zend_Http_Client_AllTests
         $suite->addTestSuite('Zend_Http_Client_SocketTest');
         $suite->addTestSuite('Zend_Http_Client_SocketKeepaliveTest');
         $suite->addTestSuite('Zend_Http_Client_TestAdapterTest');
+        $suite->addTestSuite('Zend_Http_Client_ProxyAdapterTest');
         //$suite->addTestSuite('Zend_Http_Client_CurlTest');
 
         return $suite;
