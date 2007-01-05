@@ -2645,7 +2645,7 @@ class Zend_Date {
      * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return string
-     *      * Returns a RFC822 formatted date - RFC822 is locale-independent
+     * Returns a RFC822 formatted date - RFC822 is locale-independent
      *
      * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale object - OPTIONAL locale for parsing input
@@ -2986,13 +2986,14 @@ class Zend_Date {
     }
 
     /**
-     * Returns the year
+     * Returns only the year from the date object as new object.
+     * For example: 10.May.2000 10:30:00 -> 01.Jan.2000 00:00:00
      *
-     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object  - OPTIONAL locale for parsing input
-     * @return object
+     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date
      */
-    public function getYear($gmt = FALSE, $locale = FALSE)
+    public function getYear($gmt = FALSE, $locale = NULL)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
@@ -3002,25 +3003,30 @@ class Zend_Date {
     }
 
     /**
-     * Returns the calculated year
+     * Returns the calculated date
      *
-     * @param $calc string   - type of calculation to make
-     * @param $year mixed    - OPTIONAL year to calculate, when null the actual year is calculated
-     * @param $gmt boolean   - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string                    $calc    Calculation to make
+     * @param  string|integer|Zend_Date  $year    OPTIONAL Year to calculate with, if null the actual year is taken
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    private function _year($calc, $year = FALSE, $gmt = FALSE, $locale = FALSE)
+    private function _year($calc, $year = NULL, $gmt = FALSE, $locale = NULL)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         if (is_object($year)) {
             // extract year from object
             $year = $date->get(Zend_Date::YEAR, $gmt, $locale);
-        } else if (empty($date)) {
+        } else if (empty($year)) {
             $year = $this->_Date->date('Y', FALSE, $gmt);
         }
         $return = $this->_calcdetail($calc, $year, Zend_Date::YEAR, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp());
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
         }
         return $return;
     }
@@ -3028,55 +3034,75 @@ class Zend_Date {
 
     /**
      * Sets a new year
+     * If the year is between 0 and 69, 2000 will be set (2000-2069)
+     * If the year if between 70 and 99, 1999 will be set (1970-1999)
+     * 3 or 4 digit years are set as expected. If you need to set year 0-99
+     * use set() instead. 
+     * Returned is the new date object
      *
-     * @param $year mixed    - OPTIONAL year to set, when null the actual year is set
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL Year to set, if null the actual year is set
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function setYear($year = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function setYear($year = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_year('set', $year, $gmt, $locale);
     }
 
 
     /**
-     * Adds a year
+     * Adds the year to the existing date object
+     * If the year is between 0 and 69, 2000 will be added (2000-2069)
+     * If the year if between 70 and 99, 1999 will be added (1970-1999)
+     * 3 or 4 digit years are added as expected. If you need to add years from 0-99
+     * use add() instead. 
+     * Returned is the new date object
      *
-     * @param $year mixed    - OPTIONAL year to add, when null the actual year is add
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL Year to add, if null the actual year is added
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function addYear($year = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function addYear($year = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_year('add', $year, $gmt, $locale);
     }
 
 
     /**
-     * Substracts a year
+     * Subs the year from the existing date object
+     * If the year is between 0 and 69, 2000 will be substracted (2000-2069)
+     * If the year if between 70 and 99, 1999 will be substracted (1970-1999)
+     * 3 or 4 digit years are substracted as expected. If you need to substract years from 0-99
+     * use sub() instead. 
+     * Returned is the new date object
      *
-     * @param $year mixed    - OPTIONAL year to sub, when null the actual year is sub
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL Year to sub, if null the actual year is substracted
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function subYear($year = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function subYear($year = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_year('sub', $year, $gmt, $locale);
     }
 
 
     /**
-     * Compares only the year part, returning the difference
+     * Compares the year with the existing date object, ignoring other date parts. 
+     * For example: 10.03.2000 -> 15.02.2000 -> TRUE
      *
-     * @param $year mixed    - OPTIONAL year to compare, when null the actual year is compared
-     * @param $gmt boolean   - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $time    OPTIONAL Year to compare, if null the actual year is compared
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function compareYear($year = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function compareYear($year = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_year('cmp', $year, $gmt, $locale);
     }
