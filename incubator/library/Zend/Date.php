@@ -116,6 +116,7 @@ class Zend_Date {
     const RFC_850        = 'Zend_Date::RFC_850';        // --- DATE_RFC850
     const RFC_1036       = 'Zend_Date::RFC_1036';       // --- DATE_RFC1036
     const RFC_1123       = 'Zend_Date::RFC_1123';       // --- DATE_RFC1123
+    const RFC_3339       = 'Zend_Date::RFC_3339';       // --- DATE_RFC3339
     const RSS            = 'Zend_Date::RSS';            // --- DATE_RSS
     const W3C            = 'Zend_Date::W3C';            // --- DATE_W3C
 
@@ -921,6 +922,10 @@ class Zend_Date {
 
             case Zend_Date::RFC_1123 :
                 return $this->_Date->date('D\, d M Y H\:i\:s O', $this->_Date->getTimestamp(), $gmt);
+                break;
+
+            case Zend_Date::RFC_3339 :
+                return $this->_Date->date('Y\-m\-d\TH\:i\:sP', $this->_Date->getTimestamp(), $gmt);
                 break;
 
             case Zend_Date::RSS :
@@ -1951,7 +1956,9 @@ class Zend_Date {
                 }
                 break;
 
+            // ATOM and RFC_3339 are identical
             case Zend_Date::ATOM :
+            case Zend_Date::RFC_3339:
                 $result = preg_match('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/', $date, $match);
                 if (!$result) {
                     throw new Zend_Date_Exception('ATOM format expected');
@@ -2530,7 +2537,7 @@ class Zend_Date {
 
 
     /**
-     * Returns the calculated ISO value
+     * Returns the calculated ISO date
      *
      * @param  string                    $calc    Calculation to make
      * @param  string|integer|Zend_Date  $time    OPTIONAL ISO date to calculate with, if null the actual date is taken
@@ -2632,33 +2639,40 @@ class Zend_Date {
 
 
     /**
-     * Returns a RFC822 formatted date - RFC822 is locale-independent
+     * Returns a RFC 822 compilant datestring from the date object.
+     * This function does not return the RFC date as object. Use copy() instead. 
+     *
+     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @return string
+     *      * Returns a RFC822 formatted date - RFC822 is locale-independent
      *
      * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
      * @param $locale object - OPTIONAL locale for parsing input
      * @return string
      */
-    public function getArpa($gmt = FALSE, $locale = FALSE)
+    public function getArpa($gmt = FALSE, $locale = NULL)
+    {
+        return $this->get(Zend_Date::RFC_822, $gmt, $locale);
+    }
+
+
+    /**
+     * Returns the calculated RFC 822 date
+     *
+     * @param  string                    $calc    Calculation to make
+     * @param  string|integer|Zend_Date  $arpa    OPTIONAL RFC 822 date to calculate with, if null the actual date is taken
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new date
+     * @throws Zend_Date_Exception
+     */
+    private function _arpa($calc, $arpa = FALSE, $gmt = FALSE, $locale = FALSE)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
         }
 
-        return new Zend_Date($this->get(Zend_Date::RFC_822, $gmt, $locale), Zend_Date::RFC_822, $gmt, $locale);
-    }
-
-
-    /**
-     * Returns the calculated arpa date
-     *
-     * @param $calc string   - type of calculation to make
-     * @param $arpa mixed    - OPTIONAL arpa date to calculate, when null the actual time is calculated
-     * @param $gmt boolean   - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
-     */
-    private function _arpa($calc, $arpa = FALSE, $gmt = FALSE, $locale = FALSE)
-    {
         if (is_object($arpa)) {
             // extract arpa fromobject
             $arpa = $arpa->get(Zend_Date::RFC_822, $gmt, $locale);
@@ -2667,63 +2681,82 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $arpa, Zend_Date::RFC_822, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), FALSE, FALSE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, FALSE, $locale);
         }
         return $return;
     }
 
 
     /**
-     * Sets a new RFC822 formatted date
+     * Sets a RFC 822 date as new date for the date object.
+     * Only RFC 822 compilant date strings are accepted.
+     * For example: Sat, 14 Feb 09 00:31:30 +0100
+     * Returned is the new date object
      *
-     * @param $date mixed    - OPTIONAL RFC822 date to set, when null the actual date is set
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 to set, if null the actual date is set
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function setArpa($date = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function setArpa($date = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_arpa('set', $date, $gmt, $locale);
     }
 
 
     /**
-     * Adds a RFC822 formatted date
+     * Adds a RFC 822 date to the date object.
+     * ARPA messages are used in emails or HTTP Headers.
+     * Only RFC 822 compilant date strings are accepted.
+     * For example: Sat, 14 Feb 09 00:31:30 +0100
+     * Returned is the new date object
      *
-     * @param $date mixed    - OPTIONAL RFC822 date to add, when null the actual date is add
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to add, if null the actual date is added
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function addArpa($date = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function addArpa($date = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_arpa('add', $date, $gmt, $locale);
     }
 
 
     /**
-     * Substracts a RFC822 formatted date
+     * Substracts a RFC 822 date from the date object.
+     * ARPA messages are used in emails or HTTP Headers.
+     * Only RFC 822 compilant date strings are accepted.
+     * For example: Sat, 14 Feb 09 00:31:30 +0100
+     * Returned is the new date object
      *
-     * @param $date mixed    - OPTIONAL RFC822 date to sub, when null the actual date is sub
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to sub, if null the actual date is substracted
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function subArpa($date = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function subArpa($date = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_arpa('sub', $date, $gmt, $locale);
     }
 
 
     /**
-     * Compares a RFC822 formatted date with date object, returning the difference date
+     * Compares a RFC 822 compilant date with the date object.
+     * ARPA messages are used in emails or HTTP Headers.
+     * Only RFC 822 compilant date strings are accepted.
+     * For example: Sat, 14 Feb 09 00:31:30 +0100
+     * Returns if equal, earlier or later
      *
-     * @param $date mixed    - OPTIONAL RFC822 date to compare, when null the actual date is used for compare
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to sub, if null the actual date is substracted
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer  0 = equal, 1 = later, -1 = earlier
+     * @throws Zend_Date_Exception
      */
-    public function compareArpa($date = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function compareArpa($date = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_arpa('cmp', $date, $gmt, $locale);
     }
@@ -2769,12 +2802,15 @@ class Zend_Date {
 
 
     /**
-     * Returns the time of sunrise for this date and a given location
-     * For a list of cities use Zend_Date_Cities $City['Vienna'] for example
+     * Returns the time of sunrise for this date and a given location as new date object
+     * For a list of cities and correct locations use the class Zend_Date_Cities
      *
      * @param  $location array - location of sunrise
+     *                   ['horizon']   -> civil, nautic, astronomical, effective (default)
+     *                   ['longitude'] -> longitude of location
+     *                   ['latitude']  -> latitude of location
+     * @return Zend_Date
      * @throws Zend_Date_Exception
-     * @return object
      */
     public function getSunRise($location)
     {
@@ -2784,12 +2820,15 @@ class Zend_Date {
 
 
     /**
-     * Returns the time of sunset for this date and a given location
-     * For a list of cities use Zend_Date_Cities $City['Vienna'] for example
+     * Returns the time of sunset for this date and a given location as new date object
+     * For a list of cities and correct locations use the class Zend_Date_Cities
      *
      * @param  $location array - location of sunset
+     *                   ['horizon']   -> civil, nautic, astronomical, effective (default)
+     *                   ['longitude'] -> longitude of location
+     *                   ['latitude']  -> latitude of location
+     * @return Zend_Date
      * @throws Zend_Date_Exception
-     * @return object
      */
     public function getSunSet($location)
     {
@@ -2799,12 +2838,15 @@ class Zend_Date {
 
 
     /**
-     * Returns an array with all sun-infos for a time and location
-     * For a list of cities use Zend_Date_Cities $City['Vienna'] for example
+     * Returns an array with the sunset and sunrise dates for all horizon types
+     * For a list of cities and correct locations use the class Zend_Date_Cities
      *
      * @param  $location array - location of suninfo
+     *                   ['horizon']   -> civil, nautic, astronomical, effective (default)
+     *                   ['longitude'] -> longitude of location
+     *                   ['latitude']  -> latitude of location
+     * @return array - [sunset|sunrise][effective|civil|nautic|astronomic]
      * @throws Zend_Date_Exception
-     * @return array
      */
     public function getSunInfo($location)
     {
@@ -2833,7 +2875,7 @@ class Zend_Date {
 
 
     /**
-     * Returns the timezone
+     * Returns the actual set timezone 
      *
      * @return string
      */
@@ -2844,7 +2886,7 @@ class Zend_Date {
 
 
     /**
-     * Sets the timezone
+     * Sets a new timezone, for a list of supported timezones look here: http://php.net/timezones
      *
      * @param $timezone string - timezone to set
      * @return boolean
@@ -2856,7 +2898,7 @@ class Zend_Date {
 
 
     /**
-     * Returns if the date is a leap year
+     * Returns if the year of the date is a leap year
      *
      * @return boolean
      */
@@ -2867,7 +2909,7 @@ class Zend_Date {
 
 
     /**
-     * Returns if the date is todays date
+     * Returns if the set date is todays date
      *
      * @return boolean
      */
@@ -2880,7 +2922,7 @@ class Zend_Date {
 
 
     /**
-     * Returns if the date is yesterdays date
+     * Returns if the set date is yesterdays date
      *
      * @return boolean
      */
@@ -2893,7 +2935,7 @@ class Zend_Date {
 
 
     /**
-     * Returns if the date is tomorrows date
+     * Returns if the set date is tomorrows date
      *
      * @return boolean
      */
@@ -2906,9 +2948,9 @@ class Zend_Date {
 
 
     /**
-     * Returns actual date as object
+     * Returns the actual date as new date object
      *
-     * @return object
+     * @return Zend_Date
      */
     public function now()
     {
@@ -2918,6 +2960,14 @@ class Zend_Date {
 
     /**
      * Calculate date details
+     * 
+     * @param  string                    $calc    Calculation to make
+     * @param  string|integer|Zend_Date  $date    Date or Part to calculate
+     * @param  string                    $part    Datepart for Calculation
+     * @param  boolean                   $gmt     TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
+     * @return integer|string  new date
+     * @throws Zend_Date_Exception
      */
     private function _calcdetail($calc, $date, $type, $gmt, $locale)
     {

@@ -403,7 +403,7 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->date('P',-7000000000),'+01:00');
         $this->assertSame($date->date('T',-7000000000),'CET');
         $this->assertSame($date->date('Z',-7000000000),'3600');
-        $this->assertSame($date->date('c',-7000000000),'1748-3-06T12:33:20+01:00');
+        $this->assertSame($date->date('c',-7000000000),'1748-3-06T12:33:20+0100');
         $this->assertSame($date->date('r',-7000000000),'Wed, 06 Mar 1748 12:33:20 +0100');
         $this->assertSame($date->date('U',-7000000000),'-6999996400');
         $this->assertSame($date->date('\\H',-7000000000),'H');

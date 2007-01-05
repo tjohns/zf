@@ -545,7 +545,7 @@ class Zend_Date_DateObject {
                              . (($date['hours'] < 10) ? '0' . $date['hours'] : $date['hours'])
                              . ':' . (($date['minutes'] < 10) ? '0' . $date['minutes'] : $date['minutes'])
                              . ':' . (($date['seconds'] < 10) ? '0' . $date['seconds'] : $date['seconds'])
-                             . substr($difference, 0, 3) . ':' . substr($difference, 3);
+                             . $difference;
                     break;
 
                 case 'r':  // RFC 2822 date format
