@@ -180,7 +180,8 @@ class Zend_Date {
 
     /**
      * Returns the actual date as unix timestamp
-     * A timestamp greater then the integer range will be returned as string 
+     * A timestamp greater then the integer range will be returned as string
+     * This function does not return the timestamp as object. Use copy() instead. 
      *
      * @return integer|string
      */
@@ -2513,33 +2514,37 @@ class Zend_Date {
 
 
     /**
-     * Returns a ISO8601 formatted date - ISO is locale-independent
+     * Returns the full ISO 8601 date from the date object.
+     * Always the complete ISO 8601 specifiction is used. If an other ISO date is needed
+     * (ISO 8601 defines several formats) use toString() instead. 
+     * This function does not return the ISO date as object. Use copy() instead. 
      *
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale to set
-     * @return object
+     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @return string
      */
-    public function getIso($gmt = FALSE, $locale = FALSE)
+    public function getIso($gmt = FALSE, $locale = NULL)
     {
-        if (empty($locale)) {
-            $locale = $this->_Locale;
-        }
-
-        return new Zend_Date($this->get(Zend_Date::ISO_8601, $gmt, $locale), Zend_Date::ISO_8601, $gmt, $locale);
+        return $this->get(Zend_Date::ISO_8601, $gmt, $locale);
     }
 
 
     /**
      * Returns the calculated ISO value
      *
-     * @param $calc string   - type of calculation to make
-     * @param $iso  mixed    - OPTIONAL iso string to calculate, when null the actual time is calculated
-     * @param $gmt boolean   - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale to set
-     * @return object
+     * @param  string                    $calc    Calculation to make
+     * @param  string|integer|Zend_Date  $time    OPTIONAL ISO date to calculate with, if null the actual date is taken
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    private function _iso($calc, $iso = FALSE, $gmt = FALSE, $locale = FALSE)
+    private function _iso($calc, $iso = NULL, $gmt = FALSE, $locale = NULL)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         if (is_object($iso)) {
             // extract iso from object
             $iso = $iso->get(Zend_Date::ISO_8601, $gmt, $locale);
@@ -2548,63 +2553,79 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $iso, Zend_Date::ISO_8601, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp());
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
         }
         return $return;
     }
 
 
     /**
-     * Sets a new ISOdate
+     * Sets a new date for the date object. Not given parts are set to default.
+     * Only supported ISO 8601 formats are accepted.
+     * For example: 050901 -> 01.Sept.2005 00:00:00, 20050201T10:00:30 -> 01.Feb.2005 10h00m30s
+     * Returned is the new date object
      *
-     * @param $date mixed    - OPTIONAL ISOdate to set, when null the actual date is set
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale to set
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to set, if null the actual date is set
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function setIso($date = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function setIso($date = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_iso('set', $date, $gmt, $locale);
     }
 
 
     /**
-     * Adds a ISOdate
+     * Adds a ISO date to the date object. Not given parts are set to default.
+     * Only supported ISO 8601 formats are accepted.
+     * For example: 050901 -> + 01.Sept.2005 00:00:00, 10:00:00 -> +10h
+     * Returned is the new date object
      *
-     * @param $date mixed    - OPTIONAL ISOdate to add, when null the actual date is add
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale to set
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to add, if null the actual date is added
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function addIso($date = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function addIso($date = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_iso('add', $date, $gmt, $locale);
     }
 
 
     /**
-     * Substracts a ISOdate
+     * Substracts a ISO date from the date object. Not given parts are set to default.
+     * Only supported ISO 8601 formats are accepted.
+     * For example: 050901 -> - 01.Sept.2005 00:00:00, 10:00:00 -> -10h
+     * Returned is the new date object
      *
-     * @param $date mixed    - OPTIONAL ISOdate to sub, when null the actual date is sub
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale to set
-     * @return object
+     * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to sub, if null the actual date is substracted
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer|Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
-    public function subIso($date = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function subIso($date = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_iso('sub', $date, $gmt, $locale);
     }
 
 
     /**
-     * Compares IsoDate, returning the difference date
+     * Compares a ISO date with the date object. Not given parts are set to default.
+     * Only supported ISO 8601 formats are accepted.
+     * For example: 050901 -> - 01.Sept.2005 00:00:00, 10:00:00 -> -10h
+     * Returns if equal, earlier or later
      *
-     * @param $date mixed    - OPTIONAL ISOdate to compare, when null the actual date is used for compare
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale to set
-     * @return string
+     * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to sub, if null the actual date is substracted
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer  0 = equal, 1 = later, -1 = earlier
+     * @throws Zend_Date_Exception
      */
-    public function compareIso($date = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function compareIso($date = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_iso('cmp', $date, $gmt, $locale);
     }
