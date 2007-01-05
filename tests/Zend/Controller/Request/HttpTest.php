@@ -413,7 +413,9 @@ class Zend_Controller_Request_HttpTest extends PHPUnit_Framework_TestCase
  
     public function testGetServer()
     {
-        $this->assertEquals($_SERVER['REQUEST_METHOD'], $this->_request->getServer('REQUEST_METHOD'));
+        if (isset($_SERVER['REQUEST_METHOD'])) {
+            $this->assertEquals($_SERVER['REQUEST_METHOD'], $this->_request->getServer('REQUEST_METHOD'));
+        }
         $this->assertEquals('foo', $this->_request->getServer('BAR', 'foo'));
         $this->assertEquals($_SERVER, $this->_request->getServer());
     }
