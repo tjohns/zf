@@ -599,9 +599,9 @@ class Zend_Locale_Format
      * @param Zend_Locale|string $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
      * @return array          possible array members: day, month, year, hour, minute, second
      */
-    public static function getDate($date, $format = false, $locale = false)
+    public static function getDate($date, $format = NULL, $locale = NULL)
     {
-        if ($format === false) {
+        if (empty($format)) {
             $format = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
             $format = $format['default'];
 
@@ -621,14 +621,14 @@ class Zend_Locale_Format
      * @param locale $locale  OPTIONAL locale of date string
      * @return boolean
      */
-    public static function isDate($date, $format = false, $locale = false)
+    public static function isDate($date, $format = NULL, $locale = NULL)
     {
         try {
             $date = self::getDate($date, $format, $locale);
         } catch (Exception $e) {
-            return false;
+            return FALSE;
         }
-        return true;
+        return TRUE;
     }
 
 
@@ -646,9 +646,9 @@ class Zend_Locale_Format
      * @param Zend_Locale|string $locale - OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
      * @return array          possible array members: day, month, year, hour, minute, second
      */
-    public static function getTime($time, $format = false, $locale = false)
+    public static function getTime($time, $format = NULL, $locale = NULL)
     {
-        if ($format === false) {
+        if (empty($format)) {
             $format = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
             $format = $format['default'];
 
@@ -670,13 +670,13 @@ class Zend_Locale_Format
      * @param locale $locale  OPTIONAL locale of time string
      * @return boolean
      */
-    public static function isTime($time, $format = false, $locale = false)
+    public static function isTime($time, $format = NULL, $locale = NULL)
     {
         try {
             $date = self::getTime($time, $format, $locale);
         } catch (Exception $e) {
-            return false;
+            return FALSE;
         }
-        return true;
+        return TRUE;
     }
 }
