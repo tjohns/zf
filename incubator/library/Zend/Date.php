@@ -3165,6 +3165,7 @@ class Zend_Date {
 
                     $monthlist = array_merge($monthlist, $monthlist2);
                     $found = 0;
+                    $cnt = 0;
                     foreach ($monthlist as $key => $value) {
                         if (strtoupper($value) == strtoupper($month)) {
                             $found = $key + 1;
