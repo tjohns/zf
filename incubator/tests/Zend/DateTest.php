@@ -2854,6 +2854,13 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSetTime()
     {
         $locale = new Zend_Locale('de_AT');
+        $date = new Zend_Date(false,false,false,$locale);
+        $t1 = $date->get(Zend_Date::TIMESTAMP);
+        $date->setTime();
+        $t2 = $date->get(Zend_Date::TIMESTAMP);
+        $diff = abs($t2 - $t1);
+        $this->assertTrue($diff < 2, "Instance of Zend_Date has a significantly different time than returned by setTime(): $diff seconds");
+
         $date = new Zend_Date(1234567890,false,$locale);
         $d2   = new Zend_Date(1234567899,false,$locale);
 
