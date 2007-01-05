@@ -2259,9 +2259,14 @@ class Zend_Date {
      * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new time
+     * @throws Zend_Date_Exception
      */
     private function _time($calc, $time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
     {
+        if (empty($locale)) {
+            $locale = $this->_Locale;
+        }
+
         if (is_object($time)) {
             // extract time from object
             $time = $time->get(Zend_Date::TIME_MEDIUM, $gmt, $locale);
@@ -2275,7 +2280,7 @@ class Zend_Date {
             } else {
                 $parsed = Zend_Locale_Format::getTime($time, $format, $locale);
             }
-            $time = new Zend_Date(0);
+            $time = new Zend_Date(0, Zend_Date::TIMESTAMP, TRUE, $locale);
             $time->set($parsed['hour'], Zend_Date::HOUR, $gmt);
             $time->set($parsed['minute'], Zend_Date::MINUTE, $gmt);
             $time->set($parsed['second'], Zend_Date::SECOND, $gmt);
@@ -2283,80 +2288,99 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $time, Zend_Date::TIME_MEDIUM, TRUE, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp());
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
         }
         return $return;
     }
 
 
     /**
-     * Sets a new time
+     * Sets a new time for the date object. Format defines how to parse the time string.
+     * Also a complete date can be given, but only the time is used for setting.
+     * For example: dd.MMMM.yyTHH:mm' and 'ss sec'-> 10.May.07T25:11 and 44 sec => 1h11min44sec + 1 day
+     * Returned is the new date object and the existing date is left as it was before
      *
-     * @param $time mixed   - OPTIONAL time to set, when null the actual time is set
-     * @param $format string - OPTIONAL format to parse must be CLDR format!
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $time    OPTIONAL Time to calculate with, if null the actual time is taken
+     * @param  string                    $format  OPTIONAL Timeformat for parsing input
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new time
+     * @throws Zend_Date_Exception
      */
-    public function setTime($time = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function setTime($time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_time('set', $time, $format, $gmt, $locale);
     }
 
 
     /**
-     * Adds a time
+     * Adds a time to the existing date. Format defines how to parse the time string.
+     * If only parts are given the other parts are set to 0.
+     * If no format us given, the standardformat of this locale is used.
+     * For example: HH:mm:ss -> 10 -> +10 hours
      *
-     * @param $time mixed    - OPTIONAL time to add, when null the actual time is added
-     * @param $format string - OPTIONAL format to parse must be CLDR format!
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $time    OPTIONAL Time to calculate with, if null the actual time is taken
+     * @param  string                    $format  OPTIONAL Timeformat for parsing input
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new time
+     * @throws Zend_Date_Exception
      */
-    public function addTime($time = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function addTime($time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_time('add', $time, $format, $gmt, $locale);
     }
 
 
     /**
-     * Substracts a time
+     * Substracts a time from the existing date. Format defines how to parse the time string.
+     * If only parts are given the other parts are set to 0.
+     * If no format us given, the standardformat of this locale is used.
+     * For example: HH:mm:ss -> 10 -> -10 hours
      *
-     * @param $time mixed    - OPTIONAL time to sub, when null the actual time is subed
-     * @param $format string - OPTIONAL format to parse must be CLDR format!
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $time    OPTIONAL Time to calculate with, if null the actual time is taken
+     * @param  string                    $format  OPTIONAL Timeformat for parsing input
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new time
+     * @throws Zend_Date_Exception
      */
-    public function subTime($time = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function subTime($time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_time('sub', $time, $format, $gmt, $locale);
     }
 
 
     /**
-     * Compares only the time, returning the difference
+     * Compares the time from the existing date. Format defines how to parse the time string.
+     * If only parts are given the other parts are set to default.
+     * If no format us given, the standardformat of this locale is used.
+     * For example: HH:mm:ss -> 10 -> 10 hours
      *
-     * @param $time   mixed  - OPTIONAL time to compare, when null the actual time is compared
-     * @param $format string - OPTIONAL format to parse must be CLDR format!
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  string|integer|Zend_Date  $time    OPTIONAL Time to calculate with, if null the actual time is taken
+     * @param  string                    $format  OPTIONAL Timeformat for parsing input
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer  0 = equal, 1 = later, -1 = earlier
+     * @throws Zend_Date_Exception
      */
-    public function compareTime($time = FALSE, $format = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function compareTime($time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
     {
         return $this->_time('cmp', $time, $format, $gmt, $locale);
     }
 
 
     /**
-     * Returns the date part
+     * Returns the date from the date object withot time. It is returned as new object.
+     * For example: 10.May.2000 10:30:00 -> 10.May.2000 00:00:00
+     * If only parts are given the other parts are set to default.
+     * For example. 15.May.2000 10:20:30 -> MMMM.yyyy -> 01.May.2000 00:00:00 
      *
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale object - OPTIONAL locale for parsing input
-     * @return object
+     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date
      */
-    public function getDate($gmt = FALSE, $locale = FALSE)
+    public function getDate($gmt = FALSE, $locale = NULL)
     {
         if (empty($locale)) {
             $locale = $this->_Locale;
