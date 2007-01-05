@@ -212,7 +212,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(1234567890,false,false,$locale);
         $this->assertSame($date->toString(),'14.02.2009 00:31:30');
-        $this->assertSame($date->toString(false, false, 'en_US'),'Feb 14, 2009 12:31:30 1890');
+        $this->assertSame($date->toString(false, false, 'en_US'),'Feb 14, 2009 12:31:30 AM');
         $this->assertSame($date->toString('yyy', false, false),'2009');
         $this->assertSame($date->toString(false, true, false),'13.02.2009 23:31:30');
         $this->assertSame($date->toString(false, true, 'en_US'),'Feb 13, 2009 11:31:30 PM');
