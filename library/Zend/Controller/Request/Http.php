@@ -408,15 +408,29 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
                 $last    = count($segs);
                 $baseUrl = '';
                 do {
-                    $last = $segs[$index];
-                    $baseUrl = '/' . $last . $baseUrl;
+                    $seg     = $segs[$index];
+                    $baseUrl = '/' . $seg . $baseUrl;
                     ++$index;
-                } while (($last > $index) && (false !== ($pos = strpos($path, $last))) && (0 != $pos));
+                } while (($last > $index) && (false !== ($pos = strpos($path, $baseUrl))) && (0 != $pos));
             } 
 
             // Does the baseUrl have anything in common with the request_uri?
             $requestUri = $this->getRequestUri();
+
+            if (0 === strpos($requestUri, $baseUrl)) {
+                // full $baseUrl matches
+                $this->_baseUrl = $baseUrl;
+                return $this;
+            }
+
+            if (0 === strpos($requestUri, dirname($baseUrl))) {
+                // directory portion of $baseUrl matches
+                $this->_baseUrl = rtrim(dirname($baseUrl), '/');
+                return $this;
+            }
+
             if (!strpos($requestUri, basename($baseUrl))) {
+                // no match whatsoever; set it blank
                 $this->_baseUrl = '';
                 return $this;
             }
