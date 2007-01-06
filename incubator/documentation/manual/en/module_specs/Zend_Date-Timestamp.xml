@@ -1,4 +1,4 @@
-<sect1 id="zend.date.complete.timestamp">
+<sect1 id="zend.date.complete">
     <title>Computing complete dates</title>
     <para>
         chapter follows soon...
@@ -80,7 +80,7 @@
         <para>
             chapter follows soon...
         </para>
-        <sect3 id="zend.date.complete.arpa">
+        <sect3 id="zend.date.complete.arpa.get">
             <title>getArpa()</title>
             <para>
                 coming soon...
