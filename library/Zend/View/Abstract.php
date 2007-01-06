@@ -37,7 +37,7 @@ require_once 'Zend/View/Interface.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Interface
+abstract class Zend_View_Abstract implements Zend_View_Interface
 {
     /**
      * Path stack for script, helper, and filter directories.
@@ -99,6 +99,12 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
     private $_encoding = 'ISO-8859-1';
 
     /**
+     * Template variables
+     * @var array
+     */
+    private $_vars = array();
+
+    /**
      * Constructor.
      *
      * @param array $config Configuration key-value pairs.
@@ -140,8 +146,6 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
         if (array_key_exists('filter', $config)) {
             $this->addFilter($config['filter']);
         }
-
-        parent::__construct(array(), ArrayObject::ARRAY_AS_PROPS);
     }
 
     /**
@@ -157,27 +161,39 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
     }
 
     /**
-     * Override offsetGet to return null when value does not exist
+     * Allows testing with empty() and isset() to work inside
+     * templates -- only available on PHP 5.1
      *
-     * Helps suppress notices when values are not present in view scripts by 
-     * returning null if offset does not exist.
-     * 
-     * @param string $key 
-     * @return mixed
+     * @param  string $key
+     * @return boolean
      */
-    public function offsetGet($key)
+    public function __isset($key)
     {
-        if (!parent::offsetExists($key)) {
-            return null;
+        return isset($this->_vars[$key]);
+    }
+
+    /**
+     * Retrieves an assigned variable.
+     *
+     * @param string $key The variable name.
+     * @return mixed The variable value.
+     */
+    public function __get($key)
+    {
+        if (isset($this->_vars[$key])) {
+            return $this->_vars[$key];
         }
 
-        return parent::offsetGet($key);
+        return null;
     }
 
     /**
      * Directly assigns a variable to the view script.
      *
-     * Alias to offsetSet()
+     * Due to the fact that overloading in PHP >= 5.2.0 returns values in 
+     * read-only mode, using arrays in overloading is problematic. Any array
+     * value is thus cast to an ArrayObject, since objects are always 
+     * returned by reference and thus may be implicitly modified.
      *
      * @param string $key The variable name.
      * @param mixed $val The variable value.
@@ -185,48 +201,23 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
      */
     public function __set($key, $val)
     {
-        return $this->offsetSet($key, $val);
-    }
-
-    /**
-     * Retrieves an assigned variable.
-     *
-     * Alias to offsetGet()
-     *
-     * @param string $key The variable name.
-     * @return mixed The variable value.
-     */
-    public function __get($key)
-    {
-        return $this->offsetGet($key);
-    }
-
-
-    /**
-     * Allows testing with empty() and isset() to work inside
-     * templates -- only available on PHP 5.1
-     *
-     * Alias to offsetExists
-     *
-     * @param  string $key
-     * @return boolean
-     */
-    public function __isset($key)
-    {
-        return $this->offsetExists($key);
+        if (is_array($val)) {
+            $val = new ArrayObject($val);
+        }
+        $this->_vars[$key] = $val;
     }
 
     /**
      * Allows unset() on object properties to work
-     *
-     * Alias to offsetUnset()
      *
      * @param string $key
      * @return void
      */
     public function __unset($key)
     {
-        return $this->offsetUnset($key);
+        if (isset($this->_vars[$key])) {
+            unset($this->_vars[$key]);
+        }
     }
 
     /**
@@ -452,11 +443,11 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
         // which strategy to use?
         if (is_string($spec)) {
             // assign by name and value
-            $this[$spec] = $value;
+            $this->_vars[$spec] = $value;
         } elseif (is_array($spec)) {
             // assign from associative array
             foreach ($spec as $key => $val) {
-                $this[$key] = $val;
+                $this->_vars[$key] = $val;
             }
         } else {
             throw new Zend_View_Exception('assign() expects a string or array, received ' . gettype($spec));
@@ -470,7 +461,7 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
      */
     public function getVars()
     {
-        return $this->getArrayCopy();
+        return (array) $this->_vars;
     }
 
     /**
@@ -483,7 +474,7 @@ abstract class Zend_View_Abstract extends ArrayObject implements Zend_View_Inter
      */
     public function clearVars()
     {
-        $this->exchangeArray(array());
+        $this->_vars = array();
     }
 
     /**

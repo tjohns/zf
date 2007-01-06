@@ -281,12 +281,13 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
     public function testSetArrayProperty()
     {
         $view = new Zend_View();
-        $view->foo = array();
+        $view->foo   = array();
         $view->foo[] = 42;
 
         $foo = $view->foo;
 
-        $this->assertTrue(is_array($foo));
+        $this->assertTrue($foo instanceof ArrayObject);
+        // $this->assertTrue(0 < count($foo), 'Array should have elements');
         $this->assertEquals(42, $foo[0]);
     }
 
@@ -299,7 +300,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $view->foo     = array();
         $view->content = 'content';
 
-        $this->assertTrue(is_array($view->foo));
+        $this->assertTrue($view->foo instanceof ArrayObject);
         $this->assertEquals('content', $view->content);
 
         $view->clearVars();
@@ -368,7 +369,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3, count($vars));
         $this->assertEquals('bar', $vars['foo']);
         $this->assertEquals('baz', $vars['bar']);
-        $this->assertEquals(array('foo', 'bar'), $vars['baz']);
+        $this->assertEquals(array('foo', 'bar'), (array) $vars['baz']);
     }
 
     /**
@@ -381,5 +382,16 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
 
         $view->setEncoding('UTF-8');
         $this->assertEquals('UTF-8', $view->getEncoding());
+    }
+
+    public function testEmptyPropertiesReturnAppropriately()
+    {
+        $view = new Zend_View();
+        $view->foo = false;
+        $view->bar = null;
+        $view->baz = '';
+        $this->assertTrue(empty($view->foo));
+        $this->assertTrue(empty($view->bar));
+        $this->assertTrue(empty($view->baz));
     }
 }
