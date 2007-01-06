@@ -2266,7 +2266,7 @@ class Zend_Date {
      *
      * @param  string                    $calc    Calculation to make
      * @param  string|integer|Zend_Date  $time    OPTIONAL Time to calculate with, if null the actual time is taken
-     * @param  string                    $format  OPTIONAL Timeformat for parsing
+     * @param  string                    $format  OPTIONAL Timeformat for parsing input
      * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new time
@@ -2283,8 +2283,6 @@ class Zend_Date {
             $time = $time->get(Zend_Date::TIME_MEDIUM, $gmt, $locale);
         } else {
             if (empty($time)) {
-                $format = Zend_Locale_Data::getContent($locale, 'timeformat', array('gregorian','medium'));
-                $format = $format['pattern'];
                 $parsed['hour']   = $this->_Date->date('H', FALSE, $gmt);
                 $parsed['minute'] = $this->_Date->date('m', FALSE, $gmt);
                 $parsed['second'] = $this->_Date->date('s', FALSE, $gmt);
@@ -2423,8 +2421,6 @@ class Zend_Date {
             $date = $date->get(Zend_Date::DATE_MEDIUM, $gmt, $locale);
         } else {
             if (empty($date)) {
-                $format = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian','medium'));
-                $format = $format['pattern'];
                 $parsed['year']  = $this->_Date->date('Y', FALSE, $gmt);
                 $parsed['month'] = $this->_Date->date('m', FALSE, $gmt);
                 $parsed['day']   = $this->_Date->date('d', FALSE, $gmt);
