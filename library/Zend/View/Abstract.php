@@ -443,10 +443,16 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
         // which strategy to use?
         if (is_string($spec)) {
             // assign by name and value
+            if (is_array($value)) {
+                $value = new ArrayObject($value);
+            }
             $this->_vars[$spec] = $value;
         } elseif (is_array($spec)) {
             // assign from associative array
             foreach ($spec as $key => $val) {
+                if (is_array($val)) {
+                    $val = new ArrayObject($val);
+                }
                 $this->_vars[$key] = $val;
             }
         } else {
@@ -456,12 +462,23 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
 
     /**
      * Return list of all assigned variables
+     *
+     * Normalizes array so that ArrayObjects are returned as arrays
      * 
      * @return array
      */
     public function getVars()
     {
-        return (array) $this->_vars;
+        $return = array();
+        foreach ($this->_vars as $key => $value) {
+            if ($value instanceof ArrayObject) {
+                $return[$key] = (array) $value;
+            } else {
+                $return[$key] = $value;
+            }
+        }
+
+        return $return;
     }
 
     /**

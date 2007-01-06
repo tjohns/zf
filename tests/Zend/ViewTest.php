@@ -287,8 +287,22 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $foo = $view->foo;
 
         $this->assertTrue($foo instanceof ArrayObject);
-        // $this->assertTrue(0 < count($foo), 'Array should have elements');
         $this->assertEquals(42, $foo[0]);
+
+        $view->assign('bar', array());
+        $view->bar[] = 'life';
+        $bar = $view->bar;
+        $this->assertTrue($bar instanceof ArrayObject);
+        $this->assertEquals('life', $bar[0]);
+
+        $view->assign(array(
+            'baz' => array('universe'),
+        ));
+        $view->baz[] = 'everything';
+        $baz = $view->baz;
+        $this->assertTrue($baz instanceof ArrayObject);
+        $this->assertEquals('universe', $baz[0]);
+        $this->assertEquals('everything', $baz[1]);
     }
 
     /**
@@ -369,7 +383,7 @@ class Zend_ViewTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3, count($vars));
         $this->assertEquals('bar', $vars['foo']);
         $this->assertEquals('baz', $vars['bar']);
-        $this->assertEquals(array('foo', 'bar'), (array) $vars['baz']);
+        $this->assertEquals(array('foo', 'bar'), $vars['baz']);
     }
 
     /**
