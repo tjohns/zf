@@ -303,7 +303,7 @@
             <link linkend="zend.date.constants.list">Constants for general functions</link>
         </para>
         <para>
-            A list of string constants is provided in <xref linked="zend.date.constants" />
+            A list of string constants is provided in <xref linkend="zend.date.constants" />
         </para>
         <para>
             <link linkend="zend.date.constants.format">Constants for string output functions</link>
