@@ -2284,7 +2284,7 @@ class Zend_Date {
         } else {
             if (empty($time)) {
                 $parsed['hour']   = $this->_Date->date('H', FALSE, $gmt);
-                $parsed['minute'] = $this->_Date->date('m', FALSE, $gmt);
+                $parsed['minute'] = $this->_Date->date('i', FALSE, $gmt);
                 $parsed['second'] = $this->_Date->date('s', FALSE, $gmt);
             } else {
                 $parsed = Zend_Locale_Format::getTime($time, $format, $locale);
@@ -3366,7 +3366,7 @@ class Zend_Date {
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addDay($day = NULL, $gmt = FALSE, $locale = NULL)
+    public function addDay($day = NULL, $gmt = TRUE, $locale = NULL)
     {
         return $this->_day('add', $day, $gmt, $locale);
     }
@@ -3387,7 +3387,7 @@ class Zend_Date {
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subDay($day = NULL, $gmt = FALSE, $locale = NULL)
+    public function subDay($day = NULL, $gmt = TRUE, $locale = NULL)
     {
         return $this->_day('sub', $day, $gmt, $locale);
     }

@@ -2887,12 +2887,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     public function testSetTime()
     {
         $locale = new Zend_Locale('de_AT');
-        $date = new Zend_Date(false,false,false,$locale);
-        $t1 = $date->get(Zend_Date::TIMESTAMP);
-        $date->setTime();
-        $t2 = $date->get(Zend_Date::TIMESTAMP);
-        $diff = abs($t2 - $t1);
-        $this->assertTrue($diff < 2, "Instance of Zend_Date has a significantly different time than returned by setTime(): $diff seconds");
 
         $date = new Zend_Date(1234567890,false,$locale);
         $d2   = new Zend_Date(1234567899,false,$locale);
@@ -2906,6 +2900,13 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T10:20:30+01:00');
         $date->setTime($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:39+01:00');
+
+        $date = new Zend_Date(false,false,false,$locale);
+        $t1 = $date->get(Zend_Date::TIMESTAMP);
+        $date->setTime();
+        $t2 = $date->get(Zend_Date::TIMESTAMP);
+        $diff = abs($t2 - $t1);
+        $this->assertTrue($diff < 2, "Instance of Zend_Date has a significantly different time than returned by setTime(): $diff seconds");
     }
 
     /**
@@ -3393,13 +3394,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
      */
     public function testYesterday()
     {
-// @TODO: fix problem within subDay 
-        $this->markTestIncomplete();
         $locale = new Zend_Locale('de_AT');
 
         $date = new Zend_Date();
         $d2 = new Zend_Date(1010101010,$locale);
-
         $date->subDay(1);
         $this->assertFalse($d2->isYesterday());
         $this->assertTrue($date->isYesterday());
@@ -3410,8 +3408,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
      */
     public function testTomorrow()
     {
-// @TODO: fix problem within addDay 
-        $this->markTestIncomplete();
         $locale = new Zend_Locale('de_AT');
 
         $date = new Zend_Date();
@@ -3427,7 +3423,6 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
      */
     public function testNow()
     {
-        $this->markTestIncomplete();
         $locale = new Zend_Locale('de_AT');
 
         $date = new Zend_Date();
