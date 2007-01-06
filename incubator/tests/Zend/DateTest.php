@@ -3438,6 +3438,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
      */
     public function testLocale()
     {
+        $this->markTestIncomplete();
         $date = new Zend_Date();
         $locale = new Zend_Locale('en_Us');
         $date->setLocale($locale);
