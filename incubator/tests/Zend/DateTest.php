@@ -3433,4 +3433,15 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(($reference - $date->get(Zend_Date::TIMESTAMP)) < 2);
     }
     
+    /**
+     * Test accessors for _Locale member property of Zend_Date
+     */
+    public function testLocale()
+    {
+        $date = new Zend_Date();
+        $locale = new Zend_Locale('en_Us');
+        $date->setLocale($locale);
+        $this->assertSame($date->getLocale(),$locale);
+    }
+    
 }
