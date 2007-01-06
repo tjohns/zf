@@ -3266,10 +3266,11 @@ class Zend_Date {
 
 
     /**
-     * Returns the day
+     * Returns the day as new date object
+     * Example: 20.May.1986 -> 20.Jan.1970 00:00:00
      *
      * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale  OPTIONAL locale for parsing input
+     * @param $locale  string|Zend_Locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
     public function getDay($gmt = FALSE, $locale = NULL)
@@ -3288,11 +3289,15 @@ class Zend_Date {
      * @param $calc    string                    Type of calculation to make
      * @param $day     string|integer|Zend_Date  OPTIONAL Day to calculate, when null the actual day is calculated
      * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
+     * @param $locale  string|Zend_Locale        OPTIONAL Locale for parsing input
      * @return Zend_Date|integer
      */
     private function _day($calc, $day = NULL, $gmt = FALSE, $locale = NULL)
     {
+        if (empty($locale)) {
+            $locale = $this->setLocale($locale);
+        }
+        
         if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_SHORT, FALSE, $locale);
         } else if (empty($day)) {
@@ -3319,7 +3324,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $day, $type, $gmt, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp());
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
         }
         return $return;
     }
@@ -3327,11 +3332,18 @@ class Zend_Date {
 
     /**
      * Sets a new day
+     * The day can be a number or a string. Setting days lower then 0 or greater than the number of this months days
+     * will result in adding or substracting the relevant month.
+     * If a localized dayname is given it will be parsed with the default locale or the optional
+     * set locale.
+     * Returned is the new date object
+     * Example: setDay('Montag', 'de_AT'); will set the monday of this week as day.
      *
-     * @param $day     string|integer|Zend_Date  OPTIONAL day to set, when null the actual day is set
-     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
-     * @return Zend_Date
+     * @param  string|integer|Zend_Date  $month   OPTIONAL Day to set, if null the actual day is set
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
     public function setDay($day = NULL, $gmt = FALSE, $locale = NULL)
     {
@@ -3340,12 +3352,19 @@ class Zend_Date {
 
 
     /**
-     * Adds a day
+     * Adds days to the existing date object. 
+     * The day can be a number or a string. Adding days lower then 0 or greater than the number of this months days
+     * will result in adding or substracting the relevant month.
+     * If a localized dayname is given it will be parsed with the default locale or the optional
+     * set locale.
+     * Returned is the new date object
+     * Example: addDay('Montag', 'de_AT'); will add the number of days until the next monday
      *
-     * @param $day     string|integer|Zend_Date  OPTIONAL day to add, when null the actual day is added
-     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
-     * @return Zend_Date
+     * @param  string|integer|Zend_Date  $month   OPTIONAL Day to add, if null the actual day is added
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
     public function addDay($day = NULL, $gmt = FALSE, $locale = NULL)
     {
@@ -3354,12 +3373,19 @@ class Zend_Date {
 
 
     /**
-     * Substracts a day
+     * Substracts days from the existing date object. 
+     * The day can be a number or a string. Substracting days lower then 0 or greater than the number of this months days
+     * will result in adding or substracting the relevant month.
+     * If a localized dayname is given it will be parsed with the default locale or the optional
+     * set locale.
+     * Returned is the new date object
+     * Example: subDay('Montag', 'de_AT'); will sub the number of days until the previous monday
      *
-     * @param $day     string|integer|Zend_Date  OPTIONAL day to sub, when null the actual day is substracted
-     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
-     * @return Zend_Date
+     * @param  string|integer|Zend_Date  $month   OPTIONAL Day to sub, if null the actual day is substracted
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return Zend_Date  new date
+     * @throws Zend_Date_Exception
      */
     public function subDay($day = NULL, $gmt = FALSE, $locale = NULL)
     {
@@ -3368,12 +3394,15 @@ class Zend_Date {
 
 
     /**
-     * Compares only the day part, returning the difference
+     * Compares the day with the existing date object, ignoring other date parts. 
+     * For example: 'Monday', 'en' -> 08.Jan.2007 -> 0
+     * Returns if equal, earlier or later
      *
-     * @param $day     string|integer|Zend_Date  OPTIONAL day to compare, when null the actual day is compared
-     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale        OPTIONAL locale for parsing input
-     * @return integer                           0 = equal, 1 = later, -1 = earlier
+     * @param  string|integer|Zend_Date  $time    OPTIONAL Day to compare, if null the actual day is compared
+     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @return integer  0 = equal, 1 = later, -1 = earlier
+     * @throws Zend_Date_Exception
      */
     public function compareDay($day = NULL, $locale = NULL)
     {
@@ -3382,11 +3411,11 @@ class Zend_Date {
 
 
     /**
-     * Returns the weekday
+     * Returns the weekday as new date object
      *
-     * @param $gmt    boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
-     * @param $locale string   - OPTIONAL locale for parsing input
-     * @return object
+     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $locale  string|Zend_Locale  OPTIONAL locale for parsing input
+     * @return Zend_Date
      */
     public function getWeekday($gmt = FALSE, $locale = FALSE)
     {
