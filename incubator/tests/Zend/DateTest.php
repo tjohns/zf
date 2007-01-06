@@ -1533,25 +1533,25 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
             // success
         }
         $date->set($d2, Zend_Date::MILLISECOND);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'0');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
         $date->set(  3, Zend_Date::MILLISECOND);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'3');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),3);
         $date->set( 1065, Zend_Date::MILLISECOND);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'65');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),65);
         $date->set(-6, Zend_Date::MILLISECOND);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'994');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),994);
         $date->set( 30, Zend_Date::MILLISECOND, TRUE);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'30');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),30);
         $date->set($d2, Zend_Date::MILLISECOND, TRUE);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'0');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
         $date->set( 9, Zend_Date::MILLISECOND, FALSE, 'en_US');
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'9');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),9);
         $date->set($d2, Zend_Date::MILLISECOND, FALSE, 'en_US');
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'0');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
         $date->set(-65, Zend_Date::MILLISECOND, TRUE , 'en_US');
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'935');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),935);
         $date->set($d2, Zend_Date::MILLISECOND, TRUE , 'en_US');
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'0');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
 
         $date->set(1234567890);
         try {
@@ -2230,9 +2230,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set($d2);
         $date->add(10, Zend_Date::MILLISECOND);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'10');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),10);
         $date->add(-10, Zend_Date::MILLISECOND);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'0');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
 
         $date->set($d2);
         try {
@@ -2598,9 +2598,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         $date->set($d2);
         $date->sub(-10, Zend_Date::MILLISECOND);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'10');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),10);
         $date->sub(10, Zend_Date::MILLISECOND);
-        $this->assertSame($date->get(Zend_Date::MILLISECOND),'0');
+        $this->assertSame($date->get(Zend_Date::MILLISECOND),0);
 
         $date->set($d2);
         try {

@@ -4055,9 +4055,9 @@ class Zend_Date {
     public function setFractionalPrecision($precision = 3)
     {
         if (!intval($precision) or ($precision < 0)) {
-            throw new Zend_Date_Exception('precision must be > 0');
+            throw new Zend_Date_Exception('precision must be >= 0');
         }
-        $this->_Precision = $precision;
+        $this->_Precision = (int) $precision;
     }
 
 
@@ -4094,6 +4094,10 @@ class Zend_Date {
             $precision = $this->_Precision;
         }
 
+        if ($precision === 0) {
+            throw new Zend_Date_Exception('precision is 0');
+        }
+
         $this->_Fractional = 0;
         $this->addMilliSecond($milli, $precision);
         return $this->_Fractional;
@@ -4109,7 +4113,6 @@ class Zend_Date {
      */
     public function addMilliSecond($milli = NULL, $precision = NULL)
     {
-        throw new Zend_date_Exception('function not ready');
         if (is_null($milli)) {
             list($milli, $time) = explode(" ", microtime());
             $milli = intval($milli);
@@ -4121,33 +4124,40 @@ class Zend_Date {
             $precision = $this->_Precision;
         }
 
-        if ($precision != $this->_Precision) {
-            if ($precision < $milli) {
-                // 10 - xxx = 010
-                
-            }
-        //     strech or compress milli to $this->_Precision
+        if ($precision === 0) {
+            throw new Zend_Date_Exception('precision is 0');
         }
 
+        if ($precision != $this->_Precision) {
+            if ($precision > $this->_Precision) {
+                $diff = $precision - $this->_Precision;
+                $milli = (int) ($milli / (10 * $diff));
+            } else {
+                $diff = $this->_Precision - $precision;
+                $milli = (int) ($milli * (10 * $diff));
+            }
+        }
+
+        $this->_Fractional += $milli;
         // add/sub milliseconds + add/sub seconds
 
-        
-        
-        $this->_Fractional = bcadd($this->_Fractional, $milli, 0);
-        $max = bcpow(10, $this->_Precision, 0);
-        if ($max < 10) {
-            throw new Zend_Date_Exception('no fractional defined, use setFractionalPrecision');
+        $max = pow(10, $this->_Precision);
+print "\nFRC:".$this->_Fractional;
+print "\nMAX:".$max;
+        // milli includes seconds
+        if ($this->_Fractional > $max) {
+            while ($this->_Fractional > $max) {
+                $this->addSecond(1);
+                $this->_Fractional -= $max;
+            }
         }
 
-        if (bccomp($this->_Fractional, $max) == 1) {
-            while (bccomp($this->_Fractional, $max) == 1) {
-                $this->addSecond(1);
-                $this->_Fractional = bcsub($this->_Fractional, $max);
-            }
-        } else if (bccomp($this->_Fractional, 0) == -1) {
-            while (bccomp($this->_Fractional, 0) == -1) {
+        $min = 0 - $max;
+print "\nMIN:".$min;
+        if ($this->_Fractional < $min) {
+            while ($this->_Fractional < $min) {
                 $this->subSecond(1);
-                $this->_Fractional = bcadd($this->_Fractional, $max);
+                $this->_Fractional += $max; 
             }
         }
         return $this->_Fractional;
@@ -4177,12 +4187,38 @@ class Zend_Date {
      */
     public function compareMilliSecond($milli = NULL, $precision = NULL)
     {
-        throw new Zend_date_Exception('function not ready');
         if (is_null($milli)) {
-            $milli = 0;
+            list($milli, $time) = explode(" ", microtime());
+            $milli = intval($milli);
+        } else if (!is_numeric($milli)) {
+            throw new Zend_Date_Exception('millisecond expected');
         }
-        $comp = $this->_Fractional - intval($milli);
-        return $comp;
+        
+        if (is_null($precision)) {
+            $precision = $this->_Precision;
+        }
+
+        if ($precision === 0) {
+            throw new Zend_Date_Exception('precision is 0');
+        }
+
+        if ($precision != $this->_Precision) {
+            if ($precision > $this->_Precision) {
+                $diff = $precision - $this->_Precision;
+                $milli = (int) ($milli / (10 * $diff));
+            } else {
+                $diff = $this->_Precision - $precision;
+                $milli = (int) ($milli * (10 * $diff));
+            }
+        }
+
+        $comp = $this->_Fractional - $milli;
+        if ($comp < 0) {
+            return -1;
+        } else if ($comp > 0) {
+            return 1;
+        }
+        return 0;
     }
 
 
