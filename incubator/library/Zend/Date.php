@@ -4142,8 +4142,6 @@ class Zend_Date {
         // add/sub milliseconds + add/sub seconds
 
         $max = pow(10, $this->_Precision);
-print "\nFRC:".$this->_Fractional;
-print "\nMAX:".$max;
         // milli includes seconds
         if ($this->_Fractional > $max) {
             while ($this->_Fractional > $max) {
@@ -4152,10 +4150,8 @@ print "\nMAX:".$max;
             }
         }
 
-        $min = 0 - $max;
-print "\nMIN:".$min;
-        if ($this->_Fractional < $min) {
-            while ($this->_Fractional < $min) {
+        if ($this->_Fractional < 0) {
+            while ($this->_Fractional < 0) {
                 $this->subSecond(1);
                 $this->_Fractional += $max; 
             }
