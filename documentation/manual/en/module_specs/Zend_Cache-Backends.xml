@@ -79,6 +79,16 @@
                               Umask for the hashed directory structure
                         </entry>
                       </row>
+                      <row>
+                          <entry><code>fileNamePrefix</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'zend_cache'</code></entry>
+                          <entry>
+                              prefix for cache files ; be really carefull with this option because 
+                              a too generic value in a system cache dir (like /tmp) can cause 
+                              disasters when cleaning the cache
+                        </entry>
+                      </row>
                   </tbody>
               </tgroup>
           </table>
@@ -136,8 +146,8 @@
             you need a memcached daemon and <ulink url="http://pecl.php.net/package/memcache">the memcache PECL extension</ulink>.
         </para>
         <para>
-        	Be careful : with this backend, "tags" are not supported for the moment as 
-        	the "doNotTestCacheValidity=true" argument.
+            Be careful : with this backend, "tags" are not supported for the moment as 
+            the "doNotTestCacheValidity=true" argument.
         </para>
         <para>
             Available options are :
@@ -185,8 +195,8 @@
             (which is of course need for using this backend).
         </para>
         <para>
-        	Be careful : with this backend, "tags" are not supported for the moment as 
-        	the "doNotTestCacheValidity=true" argument.
+            Be careful : with this backend, "tags" are not supported for the moment as 
+            the "doNotTestCacheValidity=true" argument.
         </para>
         <para>
             There is no option for this backend.
@@ -198,7 +208,7 @@
             This backend uses content caching API of the <ulink url="http://www.zend.com/products/platform">Zend Platform</ulink> product. Naturally, to use this backend you need to have Zend Platform installed.
         </para>
         <para>
-	This backend supports tags, but does not support <code>CLEANING_MODE_NOT_MATCHING_TAG</code> cleaning mode.
+    This backend supports tags, but does not support <code>CLEANING_MODE_NOT_MATCHING_TAG</code> cleaning mode.
         </para>
         <para>
             There is no options for this backend.
