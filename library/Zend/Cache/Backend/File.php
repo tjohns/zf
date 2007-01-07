@@ -78,6 +78,10 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      * =====> (int) hashedDirectoryUmask :
      * - Umask for hashed directory structure
      * 
+     * =====> (string) fileNamePrefix :
+     * - prefix for cache files 
+     * - be really carefull with this option because a too generic value in a system cache dir
+     *   (like /tmp) can cause disasters when cleaning the cache
      * 
      * @var array available options
      */
@@ -87,7 +91,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         'readControl' => true,
         'readControlType' => 'crc32',
         'hashedDirectoryLevel' => 0,
-        'hashedDirectoryUmask' => 0700
+        'hashedDirectoryUmask' => 0700,
+        'fileNamePrefix' => 'zend_cache'
     );
     
      
@@ -138,10 +143,10 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                 return false;
             }
         } else {
-	        if (!($this->_test($file))) {
-	            // The cache is not hit !
-	            return false;
-	        }
+            if (!($this->_test($file))) {
+                // The cache is not hit !
+                return false;
+            }
         }
         // There is an available cache file !
         $fp = @fopen($file, 'rb');
@@ -162,15 +167,15 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         set_magic_quotes_runtime($mqr);
         if ($this->_options['fileLocking']) @flock($fp, LOCK_UN);
         @fclose($fp);
-		if ($this->_options['readControl']) {
+        if ($this->_options['readControl']) {
             $hashData = self::_hash($data, $this->_options['readControlType']);
-		    if ($hashData != $hashControl) {
+            if ($hashData != $hashControl) {
                 // Problem detected by the read control !
                 if ($this->_directives['logging']) {
                     Zend_Log::log('Zend_Cache_Backend_File::load() / readControl : stored hash and computed hash do not match', Zend_Log::LEVEL_WARNING);
-		        }
+                }
                 $this->_remove($file);
-		        return false;    
+                return false;    
             }
         }
         return $data;
@@ -214,10 +219,12 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                 if ($this->_options['readControl']) {
                     @fwrite($fp, self::_hash($data, $this->_options['readControlType']), 32);
                 }
-                $len = strlen($data);
-                @fwrite($fp, $data, $len);
+                $mqr = get_magic_quotes_runtime();
+                set_magic_quotes_runtime(0);
+                @fwrite($fp, $data);
                 if ($this->_options['fileLocking']) @flock($fp, LOCK_UN);
                 @fclose($fp);
+                set_magic_quotes_runtime($mqr);
                 $result = true;
                 break;
             }         
@@ -230,7 +237,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             } 
             $firstTry = false;
             // In this case, maybe we just need to create the corresponding directory
-            @mkdir($this->_path(self::_idToFileName($id)), $this->_options['hashedDirectoryUmask'], true);    
+            @mkdir($this->_path($this->_idToFileName($id)), $this->_options['hashedDirectoryUmask'], true);    
             @chmod($this->_options['hashedDirectoryUmask']); // see #ZF-320 (this line is required in some configurations)
         }
         if ($result) {
@@ -308,7 +315,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
             # the file to invalidate it
             if ($this->_directives['logging']) {
                 Zend_Log::log("Zend_Cache_Backend_File::_remove() : we can't remove $file => we are going to try to invalidate it", Zend_Log::LEVEL_WARNING);
-		    }
+            }
             if (is_null($this->_directives['lifeTime'])) return false;
             if (!file_exists($file)) return false;
             return @touch($file, time() - 2*abs($this->_directives['lifeTime'])); 
@@ -360,7 +367,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         }
         
         $result = true;
-        $glob = @glob($dir . 'cache_*');
+        $prefix = $this->_options['fileNamePrefix'];
+        $glob = @glob($dir . $prefix . '_*');
         foreach ($glob as $file)  {
             if (is_file($file)) {
                 if ($mode==Zend_Cache::CLEANING_MODE_ALL) {
@@ -376,7 +384,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                 }
                 if ($mode==Zend_Cache::CLEANING_MODE_MATCHING_TAG) {
                     $matching = true;
-                    $id = self::_fileNameToId(basename($file)); 
+                    $id = $this->_fileNameToId(basename($file)); 
                     if (strlen($id) > 0) {
                         foreach ($tags as $tag) {
                             if (!($this->_testTag($id, $tag))) {
@@ -391,7 +399,7 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
                 }
                 if ($mode==Zend_Cache::CLEANING_MODE_NOT_MATCHING_TAG) {
                     $matching = false;
-                    $id = self::_fileNameToId(basename($file));
+                    $id = $this->_fileNameToId(basename($file));
                     if (strlen($id) > 0) {
                         foreach ($tags as $tag) {
                             if ($this->_testTag($id, $tag)) {
@@ -437,7 +445,8 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      */
     private function _unregisterTag($id) 
     {
-        $filesToRemove = @glob($this->_path(self::_idToFileName($id)) . "cache_internal_$id---*" );
+        $prefix = $this->_options['fileNamePrefix'];
+        $filesToRemove = @glob($this->_path($this->_idToFileName($id)) . $prefix . "_internal_$id---*" );
         $result = true;
         foreach ($filesToRemove as $file) {
             $result = $result && ($this->_remove($file));
@@ -481,8 +490,20 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
      */  
     private function _file($id)
     {
-        $fileName = self::_idToFileName($id);
+        $fileName = $this->_idToFileName($id);
         return $this->_path($fileName) . $fileName;
+    }
+    
+    /**
+     * Transform a cache id into a file name and return it
+     * 
+     * @param string $id cache id
+     * @return string file name
+     */
+    private function _idToFileName($id)
+    {
+        $prefix = $this->_options['fileNamePrefix'];
+        return $prefix . '_' . $id;
     }
     
     /**
@@ -494,18 +515,32 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
     private function _path($fileName)
     {
         $root = $this->_options['cacheDir'];
+        $prefix = $this->_options['fileNamePrefix'];
         if ($this->_options['hashedDirectoryLevel']>0) {
             if (strpos($fileName, '---') > 0) {
                 // In this case, we are storing a tag
                 // Let's store it in the same directory than its father
-                $fileName = preg_replace('~^cache_internal_(.*)---(.*)$~' ,'cache_$1', $fileName);
+                $fileName = preg_replace('~^' . $prefix . '_internal_(.*)---(.*)$~' , $prefix . '_$1', $fileName);
             }
             $hash = md5($fileName);
             for ($i=0 ; $i<$this->_options['hashedDirectoryLevel'] ; $i++) {
-                $root = $root . 'cache_' . substr($hash, 0, $i + 1) . DIRECTORY_SEPARATOR;
+                $root = $root . $prefix . '_' . substr($hash, 0, $i + 1) . DIRECTORY_SEPARATOR;
             }             
         }
         return $root;
+    }
+    
+    /**
+     * Transform a file name into cache id and return it
+     * 
+     * @param string $fileName file name
+     * @return string cache id
+     */
+    private function _fileNameToId($fileName) 
+    {       
+        $prefix = $this->_options['fileNamePrefix'];
+        if (strpos($fileName, $prefix . '_internal_') === 0) return '';
+        return preg_replace('~^' . $prefix . '_(.*)$~', '$1', $fileName);
     }
     
     /**
@@ -527,29 +562,6 @@ class Zend_Cache_Backend_File extends Zend_Cache_Backend implements Zend_Cache_B
         default:
             Zend_Cache::throwException("Incorrect hash function : $controlType");
         }
-    }
-       
-    /**
-     * Transform a cache id into a file name and return it
-     * 
-     * @param string $id cache id
-     * @return string file name
-     */
-    static private function _idToFileName($id)
-    {
-        return "cache_$id";
-    }
-    
-    /**
-     * Transform a file name into cache id and return it
-     * 
-     * @param string $fileName file name
-     * @return string cache id
-     */
-    static private function _fileNameToId($fileName) 
-    {       
-        if (strpos($fileName, 'cache_internal_') === 0) return '';
-        return preg_replace('~^cache_(.*)$~', '$1', $fileName);
     }
     
     /**
