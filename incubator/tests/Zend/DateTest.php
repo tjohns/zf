@@ -3227,9 +3227,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $date->addArpa($d2);
         $this->assertSame($date->get(Zend_Date::W3C),'4018-04-28T01:03:09+01:00');
 
-        $this->markTestIncomplete();
         // @todo: implementation like PHP but is not RFC 822 conform,
         // maybe needes to be reworked
+        // can not be marked incomplete because then phpunit crashes ???
         $result = $date->setArpa('Fri, 05 Jan 07 03:35:53 GMT');
         $arpa = $result->getArpa();
         $this->assertSame($arpa->get(Zend_Date::RFC_822),'Fri, 05 Jan 07 03:35:53 GMT');
