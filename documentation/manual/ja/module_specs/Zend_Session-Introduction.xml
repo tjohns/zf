@@ -1,0 +1,52 @@
+<sect1 id="zend.session.introduction">
+
+    <title>導入</title>
+
+    <para>
+        <ulink url="http://framework.zend.com/wiki/display/ZFDOC/Zend_Session">
+        このドキュメントの最新版</ulink> も参照ください。また、
+        Zend Framework Auth team は皆さんのフィードバックや協力をお待ちしています。
+        メーリングリストは
+        <ulink url="mailto:fw-auth@lists.zend.com">fw-auth@lists.zend.com</ulink>
+        です。
+    </para>
+
+    <para>
+        PHP で書かれたウェブアプリケーションでは、<emphasis role="bold">セッション</emphasis>
+        を使用してサーバ側 (状態を保持するデータ)
+        とクライアント側 (特定のユーザエージェント。たとえばウェブブラウザ)
+        の論理的な一対一の関係を表します。
+        Zend_Session はセッションデータの管理と保持を行い、クッキーのデータを論理的に補完し、
+        同一クライアントからの複数ページにわたるリクエストを扱います。
+        クッキーのデータと異なり、セッションデータはクライアント側には保存されません。
+        セッションデータがクライアントと共有されるのは、
+        クライアントからのリクエストへの応答として
+        サーバ側のソースコードで使用可能に設定した場合のみです。
+        このコンポーネントのドキュメントにおいて「セッションデータ」は、
+        Zend_Session が管理するサーバ側のデータをさすものとします。
+    </para>
+
+    <para>
+        Zend_Session コンポーネントは、PHP の既存の ext/session
+        をラップして、標準化されたオブジェクト指向のセッション管理機能を提供します。
+        これには匿名セッションとログインセッションの両方が含まれます。
+        ZF の認証コンポーネントである Zend_Auth は、Zend_Session
+        を使用してログインセッションに関連する情報を保存しています。
+        Zend_Session は内部的には通常の PHP セッション関数を使用しているので、
+        セッションに関する通常のオプションや設定がすべて適用されます
+        (<ulink url="http://www.php.net/session">http://www.php.net/session</ulink>
+        を参照ください)。したがって、クッキーあるいは URL に記録されるセッション ID
+        を用いてクライアントとセッション状態データの関連付けが行われます。
+    </para>
+
+    <para>
+        クラスタを構成するサーバ群のひとつにクライアントから接続している際には、
+        デフォルトの
+        <ulink url="http://www.php.net/manual/ja/function.session-set-save-handler.php">
+        セッション保存ハンドラ</ulink> は、この関連を保持するという問題を解決できません。
+        セッションの状態に関するデータは、(接続している) そのサーバにしか保存されないからです。
+        このような場合に対応できるような保存ハンドラを将来提供する予定です。
+        使用できるようになった時点でここで説明します。
+    </para>
+
+</sect1>

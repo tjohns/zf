@@ -1,0 +1,281 @@
+<sect1 id="zend.session.advancedusage">
+
+    <title>高度な使用法</title>
+
+    <para>
+        基本的な使用法の例で Zend_Session を完全に使用することができますが、
+        よりよい方法もあります。
+        <link linkend="zend.auth.introduction.using"><code>Zend_Auth</code> のサンプル</link>
+        を見てみましょう。これは、デフォルトで Zend_Session を使用することにより、
+        認証トークンを持続的に保持している例です。
+        この例は、Zend_Session および Zend_Auth
+        を手早く簡単に統合するためのひとつの方法を示すものです。
+    </para>
+
+    <sect2 id="zend.session.startingasession">
+
+        <title>セッションの開始</title>
+
+        <para>
+            すべてのリクエストで Zend_Session を使用してセッション管理したい場合は、
+            起動ファイルでセッションを開始します。
+        </para>
+
+        <example>
+            <title>グローバルセッションの開始</title>
+<programlisting role="php">
+<![CDATA[<?php
+...
+require_once 'Zend/Session.php';
+Zend_Session_Core::start();
+...
+?>]]></programlisting>
+        </example>
+
+        <para>
+            起動ファイルでセッションを開始する際には、
+            ヘッダがブラウザに送信される前に確実にセッションが始まるようにします。
+            そうしないと例外が発生してしまい、おそらくユーザが見るページは崩れてしまうでしょう。
+            さまざまな高度な機能を使用するには、まず <code>Zend_Session_Core::start()</code>
+            が必要です (高度な機能の詳細については後で説明します)。
+        </para>
+
+        <para>
+            Zend_Session を使用してセッションを開始する方法は四通りありますが、
+            そのうち二つは間違った方法です。
+        </para>
+
+        <itemizedlist mark='opencircle'>
+            <listitem>
+                <para>
+                    1. 間違い: PHP の session.auto_start
+                    (http://www.php.net/manual/ja/ref.session.php#ini.session.auto-start)
+                    を、php.ini や .htaccess で設定してはいけません。
+                    もし mod_php (やそれと同等のもの) を使用しており、
+                    php.ini でこの設定が有効になっている、かつそれを無効にすることができない
+                    という場合は、.htaccess ファイル (通常は HTML のドキュメントルートにあります)
+                    に <code>php_value session.auto_start 0</code> を追加します。
+                </para>
+v            </listitem>
+            <listitem>
+                <para>
+                    2. 間違い: <code>session_start()</code> (<code>
+                    <ulink url="http://www.php.net/session_start">session_start()</ulink>
+                    </code> を参照ください) を直接使用してはいけません
+                    <code>session_start()</code> を直接使用した後で Zend_Session を使用すると、
+                    <code>Zend_Session::start()</code> が例外 ("session has already been started")
+                    をスローします。Zend_Session を開始した後で
+                    <code>session_start()</code> をコールすると、E_NOTICE
+                    が発生し、そのコールは無視されます。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    3. 正解: <code>Zend_Session_Core::start()</code> を使用します。
+                    すべてのリクエストでセッションを使用したい場合は、
+                    この関数コールを ZF の起動コードの中で記述します。
+                    セッションを使用したいリクエストとそうでないリクエストがある場合は、
+                    起動コード内で <code>strict</code> を true に設定し (
+                    <link
+                        linkend="zend.session.startingasession"><code>setOptions()</code>
+                    </link>
+                    を参照ください)、最初に <code>new Zend_Session()</code>
+                    をコールする前に <code>Zend_Session_Core::start()</code> をコールします。
+                    セッションにはある程度のオーバーヘッドがあります。
+                    <code>strict</code> オプションにより、<code>new Zend_Session()</code>
+                    が自動的に Zend_Session_Core を開始することがなくなります。
+                    したがって、このオプションを使用すると、ZF アプリケーションの開発者が
+                    特定のリクエストにはセッションを使用しないという設計をおこなうことができます。
+                    このオプションを使用すると、明示的に
+                    <code>Zend_Session_Core::start()</code> をコールする前に Zend_Session 
+                    のインスタンスを作成しようとしたときに例外がスローされます。
+                    ZF のコアのコードではこのオプションを使用しないでください。
+                    このような設計上の決断をくだすのは、アプリケーションの開発者だからです。
+                    同様に、"ライブラリ" の開発者も、setOptions()
+                    の使用がユーザにどれだけの影響を与えるかを注意するようにしましょう。
+                    これらのオプションは
+                    (もととなる ext/session のオプションと同様)、
+                    全体に副作用を及ぼすからです。
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    4. 正解: <code>new Zend_Session()</code> を使用します。
+                    セッションは、Zend_Session_Core の内部で自動的に開始されます。
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <para>
+            四番目の方法は、三番目のものに比べてすこし難しい方法です。
+            なぜなら、デフォルトであるクッキーベースのセッション (推奨)
+            を使用している場合には、PHP がクライアントに何らかの出力をする
+            <emphasis role="strong">前に</emphasis>、確実に
+            最初の <code>new Zend_Session()</code> をコールしなければならないからです。
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.limitinginstances">
+
+        <title>名前空間内での Zend_Session のインスタンスをひとつに制限する</title>
+
+        <para>
+            特定の名前空間用に Zend_Session の最初のインスタンスを作成する際に、
+            その名前空間ではこれ以上別の Zend_Session を作成しないよう指示することができます。
+            こうすると、その後同じ名前空間で Zend_Session
+            のインスタンスを作成しようとした際にエラーが発生します。
+            これはオプションの設定であり、デフォルトではありません。ひとつの名前空間に対しては
+            ひとつのインスタンスだけを使用したいという人のために残しています。
+            これは、特定のセッション名前空間を
+            コンポーネントが不意に書き換えてしまう危険性を減らします。
+            セッションへのアクセスが容易ではなくなるからです。
+            しかし、名前空間に対してひとつのインスタンスに限定してしまうと、
+            コードの量が増え、より複雑になってしまいます。なぜなら、便利は
+            <code>$session = new Zend_Session('aNamespace');</code>
+            が最初の一度しか使えなくなるからです。それ以降は、以下の例のようになります。
+        </para>
+
+        <example>
+            <title>単一のインスタンスへの制限</title>
+<programlisting role="php">
+<![CDATA[<?php
+    require_once 'Zend/Session.php';
+    $componentAuthState = new Zend_Session('Zend_Auth', Zend_Session::SINGLE_INSTANCE);
+    doSomething($options, $componentAuthState); // 必要なところで、状態を渡します
+?>]]></programlisting>
+        </example>
+
+        <para>
+            上の例で Zend_Session のコンストラクタの第二パラメータで指定しているのは、
+            今後 'Zend_Auth' 名前空間で新たに Zend_Session を作成することができないということです。
+            作成しようとすると、例外がスローされます。
+            上のコードを実行した後は <code>new Zend_Session('Zend_Auth')</code> 
+            ができなくなります。そのため、
+            同一リクエスト内でその名前空間のセッションを使用するには、
+            最初に作成したインスタンス
+            (上の例では <code>$componentAuthState</code>)
+            をどこかに保存しておく必要があります。
+            たとえば静的変数にこのインスタンスを格納したり、
+            この名前空間のセッションを必要とするメソッドに直接渡したりします。
+        </para>
+
+    </sect2>
+
+    <sect2 id="zend.session.locking">
+
+        <title>セッション名前空間のロック</title>
+
+        <para>
+            セッション名前空間をロックし、
+            それ以降その名前空間のデータに手を加えられないようにすることができます。
+            名前空間を読み取り専用にするには <code>lock()</code> を、そして
+            読み取り専用の名前空間を読み書きできるようにするには <code>unLock()</code>
+            を使用します。<code>isLocked()</code> を使用すると、
+            その名前空間がロックされているかどうかを調べることができます。
+            このロックは一時的なものであり、そのリクエスト内でのみ有効となります。
+            名前空間をロックしても、その名前空間に保存されているオブジェクトの
+            セッターメソッドには何の影響も及ぼしません。
+            しかし、名前空間自体のセッターメソッドは使用できず、
+            オブジェクトの削除や置換ができなくなります。同様に、
+            Zend_Session の名前空間をロックしたとしても、
+            同じデータをさすシンボルテーブルの使用をとめることはできません
+            (<ulink url="http://www.php.net/references">PHP
+            のリファレンスについての説明</ulink>も参照ください)。
+        </para>
+
+        <example>
+            <title>セッション名前空間のロック</title>
+<programlisting role="php">
+<![CDATA[<?php
+    // このように仮定します
+    $my_session = new Zend_Session('my_session');
+
+    // このセッションに読み取り専用ロックをかけます
+    $my_session->lock();
+
+    // 読み取り専用ロックを解除します
+    if ($my_session->isLocked()) {
+        $my_session->unLock();
+    }
+?>]]></programlisting>
+        </example>
+
+        <para>
+            ウェブの世界で、MVC のモデルをどのように管理するかについては、
+            さまざまな考え方があります。その中のひとつに、
+            ビューで使用するプレゼンテーションモデルを作成するというものもあります。
+            ドメインモデルの中にある既存のデータで十分ということもあるでしょう。
+            ビューの中でこれらのデータに処理ロジックが書きくわえられてしまうことのないように、
+            セッション名前空間をロックしてからその「プレゼンテーション」
+            モデルをビューに渡すようにしましょう。
+        </para>
+
+        <example>
+            <title>ビューにおけるセッションのロック</title>
+<programlisting role="php">
+<![CDATA[<?php
+class FooModule_View extends Zend_View
+{
+    public function show($name)
+    {
+        if (!isset($this->session)) {
+            $this->session = Zend::registry('FooModule');
+        }
+
+        if ($this->session->isLocked()) {
+            return parent::render($name);
+        }
+
+        $this->session->lock();
+        $return = parent::render($name);
+        $this->session->unLock();
+
+        return $return;
+    }
+}
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.session.controllers">
+
+        <title>コントローラでのセッションのカプセル化</title>
+
+        <para>
+            名前空間を使用すると、コントローラによるセッションへのアクセスの際に
+            変数の汚染を防ぐこともできます。
+            たとえば、'Zend_Auth' コントローラでは、そのセッション状態データを
+            他のコントローラとは別に管理することになるでしょう。
+            そのような場合は、セッションの getInstance
+            で取得したデータになんらかの名前空間を指定して管理します。
+        </para>
+
+        <example>
+            <title>コントローラでの名前空間つきセッションによる有効期限の管理</title>
+<programlisting role="php">
+<![CDATA[<?php
+require_once 'Zend/Session.php';
+// 質問を表示するコントローラ
+$test_session = new Zend_Session('test');
+$test_session->setExpirationSeconds(300, "accept_answer"); // この変数だけに有効期限を設定します
+$test_session->accept_answer = true;
+
+-- 
+
+// 回答を処理するコントローラ
+$test_session = new Zend_Session('test');
+
+if ($test_session->accept_answer === true) {
+    // 時間内
+}
+else {
+    // 時間切れ
+}
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+</sect1>

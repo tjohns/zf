@@ -1,0 +1,133 @@
+<sect1 id="zend.session.basicusage">
+
+    <title>基本的な使用法</title>
+
+    <para>
+        Zend_Session は、ext/session およびスーパーグローバル変数 <code>$_SESSION</code>
+        を使用して、セッション状態のデータを保存します。
+        <code>$_SESSION</code> はグローバルにアクセス可能ですが、
+        開発者はこれに対して直接アクセスするのはやめるべきです。Zend_Session を用いることで、
+        セッション関連の機能をより効率的かつ安全に使用できるようになります。
+    </para>
+
+    <sect2 id="zend.session.basicexamples">
+
+        <title>チュートリアル</title>
+
+        <para>
+            何も名前空間をしていせずに Zend_Session のインスタンスを作成すると、
+            すべてのデータは透過的に <code>'Default'</code> 名前空間に保存されます。
+            以下の例は、<code>'Default'</code> 名前空間を使用して
+            ユーザがそのページを何回閲覧したかを数える方法を示すものです。
+            以下のコード (のうち <code>echo</code> 以外の部分)
+            を、ZF の起動ファイル内に記述します
+        </para>
+
+        <example>
+            <title>ページビューの数え方</title>
+<programlisting role="php">
+<![CDATA[<?php
+    require_once 'Zend/Session.php';
+    $session = new Zend_Session();
+    $session->numberOfPageRequests++; // これが、ページが読み込まれるたびに加算されます
+    echo "このセッションでページがリクエストされた回数: ", $session->numberOfPageRequests;
+?>]]></programlisting>
+        </example>
+
+        <para>
+            Zend_Session の数多くの利点のうちのひとつに、
+            複数のモジュールがそれぞれ異なるレベルのカプセル化を行えるという点があります。
+            Zend_Session のコンストラクタには、オプションの引数
+            $namespace を渡すことができます。これを使用することで、
+            あるコンポーネントやモジュール、コードのデータが
+            他のコンポーネントやモジュール、コードから守られるようになります。
+            名前空間は、セッション状態データが不意に変更されてしまうことを防ぐ
+            効率的で "安全な" 仕組みを提供します。
+            名前空間名に使用できるのは、空でない PHP 文字列です。
+            先頭にアンダースコア ('_') 文字を使用することはできません。
+            'Zend_' で始まる名前空間を使用できるのは、Zend Framework
+            のコアコンポーネントのみです。
+        </para>
+
+        <example>
+            <title>新しい方法: 名前空間の衝突を避ける</title>
+<programlisting role="php">
+<![CDATA[<?php
+    // Zend-Auth コンポーネント用
+    require_once 'Zend/Session.php';
+    $auth_session = new Zend_Session('Zend_Auth');
+    $auth_session->user = "myusername";
+
+    // ウェブサービスコンポーネント用
+    $web_service_session = new Zend_Session('Some_Web_Service');
+    $web_service_session->user = "mywebusername";
+?>]]></programlisting>
+        </example>
+
+        <para>
+            上の例は、この下のコードと同じ結果になります。
+            ただ、上の例ではセッションデータがそれぞれの名前空間でカプセル化されています。
+            さまざまなチェックを Zend_Session_Core
+            のシングルトンパターンと組み合わせることで、
+            カプセル化を行います。
+        </para>
+
+        <example>
+            <title>古い方法: PHP のセッションへのアクセス</title>
+<programlisting role="php">
+<![CDATA[<?php
+    $_SESSION['Zend_Auth']['user'] = "myusername";
+    $_SESSION['Some_Web_Service']['user'] = "mywebusername";
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.session.iteration">
+
+        <title>セッション名前空間の順次処理</title>
+
+        <para>
+            Zend_Session は
+            <ulink url="http://www.php.net/~helly/php/ext/spl/interfaceIteratorAggregate.html">IteratorAggregate インターフェイス</ulink>
+            を完全に実装しており、<code>foreach</code> 文をサポートしています。
+        </para>
+
+        <example>
+            <title>セッションの順次処理</title>
+<programlisting role="php">
+<![CDATA[<?php
+    // Zend_Session は順次処理が可能です
+    require_once 'Zend/Session.php';
+    $my_session = new Zend_Session();
+    foreach ($my_session as $name => $value) {
+        ....
+    }
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+    <sect2 id="zend.session.accessors">
+
+        <title>セッション名前空間へのアクセス方法</title>
+
+        <para>
+            通常のアクセス用に、マジックメソッド __set()、__unset()、__isset()
+            および __get() をサポートしています。これらのマジックメソッドを、
+            Zend_Session のサブクラス以外から直接使用してはいけません。その代わりに、
+            以下のように通常の演算子を使用します。
+        </para>
+
+        <example>
+            <title>セッションデータへのアクセス</title>
+<programlisting role="php">
+<![CDATA[<?php
+            $object->property = $value; echo
+            (isset($object->property) ? 'set' : 'unset');
+?>]]></programlisting>
+        </example>
+
+    </sect2>
+
+</sect1>
