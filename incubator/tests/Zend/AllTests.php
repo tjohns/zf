@@ -33,7 +33,7 @@ require_once 'Zend/AclTest.php';
 require_once 'Zend/AuthTest.php';
 require_once 'Zend/Auth/AllTests.php';
 require_once 'Zend/Console/GetoptTest.php';
-require_once 'Zend/Currency/AllTests.php';
+//require_once 'Zend/Currency/AllTests.php';
 require_once 'Zend/DateTest.php';
 require_once 'Zend/Date/AllTests.php';
 require_once 'Zend/LocaleTest.php';
@@ -68,7 +68,8 @@ class Zend_AllTests
         $suite->addTestSuite('Zend_AuthTest');
         $suite->addTest(Zend_Auth_AllTests::suite());
         $suite->addTestSuite('Zend_Console_GetoptTest');
-        $suite->addTest(Zend_Currency_AllTests::suite());
+// Do not include Zend_Currency as empty testbeds can cause phpunit to crash 
+//        $suite->addTest(Zend_Currency_AllTests::suite());
         $suite->addTestSuite('Zend_DateTest');
         $suite->addTest(Zend_Date_AllTests::suite());
         $suite->addTestSuite('Zend_LocaleTest');
