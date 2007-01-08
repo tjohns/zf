@@ -37,7 +37,7 @@ require_once 'Zend/Locale/Format.php';
 class Zend_Locale {
 
     // Class wide Locale Constants
-    private $_LocaleData = array(
+    private static $_LocaleData = array(
         'root'  => '',
         'aa_DJ' => '',
         'aa_ER' => '',
@@ -332,7 +332,7 @@ class Zend_Locale {
     /**
      * 
      */
-    private $_LocaleTranslation = array(
+    private static $_LocaleTranslation = array(
         'Australia'       => 'AU',
         'Austria'         => 'AT',
         'Belgium'         => 'BE',
@@ -541,7 +541,7 @@ class Zend_Locale {
 
                $language = substr($language, 1, strpos($language, '.') - 1);
                $splitted = explode('_', $language);
-               if (!empty($this->_LocaleData[$language])) {
+               if (!empty(Zend_Locale::$_LocaleData[$language])) {
                    $languagearray[$language] = 1;
                    if (strlen($language) > 4) {
                        $languagearray[substr($language, 0, 2)] = 1;
@@ -549,12 +549,12 @@ class Zend_Locale {
                    continue;
                }
 
-               if (!empty($this->_LocaleTranslation[$splitted[0]])) {
-                   if (!empty($this->_LocaleTranslation[$splitted[1]])) {
-                       $languagearray[$this->_LocaleTranslation[$splitted[0]] . '_'
-                     . $this->_LocaleTranslation[$splitted[1]]] = 1;
+               if (!empty(Zend_Locale::$_LocaleTranslation[$splitted[0]])) {
+                   if (!empty(Zend_Locale::$_LocaleTranslation[$splitted[1]])) {
+                       $languagearray[Zend_Locale::$_LocaleTranslation[$splitted[0]] . '_'
+                     . Zend_Locale::$_LocaleTranslation[$splitted[1]]] = 1;
                    }
-                   $languagearray[$this->_LocaleTranslation[$splitted[0]]] = 1;
+                   $languagearray[Zend_Locale::$_LocaleTranslation[$splitted[0]]] = 1;
                }
             }            
         }
@@ -626,7 +626,7 @@ class Zend_Locale {
     /**
      * Sets a new locale
      * 
-     * @param $locale locale - OPTIONAL new locale to set
+     * @param mixed  $locale  OPTIONAL new locale to set
      */
     public function setLocale($locale = false)
     {
@@ -638,14 +638,14 @@ class Zend_Locale {
             $locale = key($locale);
         }
         
-        if (!isset($this->_LocaleData[$locale])) {
+        if (!isset(Zend_Locale::$_LocaleData[$locale])) {
             $region = substr($locale, 0, 3);
             if (isset($region[2])) {
                 if (($region[2] == '_') or ($region[2] == '-')) {
                     $region = substr($region, 0, 2);
                 }
             }
-            if (isset($this->_LocaleData[$region])) {
+            if (isset(Zend_Locale::$_LocaleData[$region])) {
                 $this->_Locale = $region;
             } else {
                 $this->_Locale = 'root';
