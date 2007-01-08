@@ -2987,14 +2987,14 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
 
         $date = new Zend_Date(1234567890,false,$locale);
-        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T10:20:30+01:00');
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:30+01:00');
         for($i=23; $i >= 0; $i--) {
             $date->setHour($i);
             $hour = $i;
             if ($i < 10) {
                 $hour = '0' . $hour;
             }
-            $this->assertSame($date->get(Zend_Date::W3C),"2009-02-14T$hour:20:30+01:00");
+            $this->assertSame($date->get(Zend_Date::W3C),"2009-02-14T$hour:31:30+01:00");
         }
     }
 
@@ -3127,10 +3127,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $result = $date->setIso('2002-01-04T00:00:00+0100');
         $this->assertSame($result->get(Zend_Date::W3C),'2002-01-04T00:00:00+01:00');
         $this->assertSame($date->get(Zend_Date::W3C),'2002-01-04T00:00:00+01:00');
-// this brakes php cli... but the output is correct
-// seems to be a problem with phpunit or xdebug and the huge ammount of tests
-//        $date->setIso($d2);
-//        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:39+01:00');
+        $date->setIso($d2);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T00:31:39+01:00');
     }
 
     /**
@@ -3389,9 +3387,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         unset($date);
         $date = new Zend_Date('01.01.2004', Zend_Date::DATES, $locale);
-// this brakes php cli... but the output is correct
-// seems to be a problem with phpunit or xdebug and the huge ammount of tests
-//        $this->assertTrue($date->isLeapYear());
+        $this->assertTrue($date->isLeapYear());
     }
 
     /**
