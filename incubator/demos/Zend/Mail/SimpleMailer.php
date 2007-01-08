@@ -359,7 +359,8 @@ class Demo_Zend_Mail_SimpleMailer
             if(!$folder->isSelectable()) {
                 echo 'disabled="disabled" ';
             }
-            echo "name='$folder'>$folder</option>";
+            $localName = str_pad('', $folders->getDepth() * 12, '&nbsp;', STR_PAD_LEFT) . $localName;
+            echo "value='$folder'>$localName</option>";
         }
 
         echo "</select><input type='submit' value='change'><input type='hidden' name='param' value='{$this->param}'>
