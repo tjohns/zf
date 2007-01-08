@@ -84,6 +84,18 @@
                               ディレクトリ構造の umask を指定します。
                         </entry>
                       </row>
+                      <row>
+                          <entry><code>fileNamePrefix</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'zend_cache'</code></entry>
+                          <entry>
+                              キャッシュファイルのプレフィックスを設定します。
+                              このオプションを設定する際には十分注意しましょう。
+                              あまりにもありふれた値をシステムのキャッシュディレクトリ
+                              (/tmp など) で使用すると、
+                              キャッシュの削除の際に余計なものまで削除されてしまうはめになります。
+                        </entry>
+                      </row>
                   </tbody>
               </tgroup>
           </table>
