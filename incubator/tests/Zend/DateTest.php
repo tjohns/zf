@@ -2980,6 +2980,25 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test for setTime
+     */
+    public function testSetHour()
+    {
+        $locale = new Zend_Locale('de_AT');
+
+        $date = new Zend_Date(1234567890,false,$locale);
+        $this->assertSame($date->get(Zend_Date::W3C),'2009-02-14T10:20:30+01:00');
+        for($i=23; $i >= 0; $i--) {
+            $date->setHour($i);
+            $hour = $i;
+            if ($i < 10) {
+                $hour = '0' . $hour;
+            }
+            $this->assertSame($date->get(Zend_Date::W3C),"2009-02-14T$hour:20:30+01:00");
+        }
+    }
+
+    /**
      * Test for getDate
      */
     public function testGetDate()
