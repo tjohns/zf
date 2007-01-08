@@ -4349,6 +4349,7 @@ class Zend_Date {
     public function setLocale($locale = NULL)
     {
         if (empty($locale)) {
+            unset($this->_Locale);
             $this->_Locale = new Zend_Locale();
         } else if ($locale instanceof Zend_Locale) {
             $this->_Locale = $locale;
