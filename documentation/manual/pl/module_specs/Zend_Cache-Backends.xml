@@ -80,6 +80,17 @@
                               Maska Umask dla haszowanej struktury katalogów.
                         </entry>
                       </row>
+                      <row>
+                          <entry><code>fileNamePrefix</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'zend_cache'</code></entry>
+                          <entry>
+                              przedrostek dla plików bufora ; bądź naprawdę ostrożny
+                              z tą opcją, ponieważ zbyt prosta wartość w katalogu 
+                              systemowego bufora (jak np. /tmp) może spowodować
+                              niechciane działania podczas czyszczenia bufora.
+                        </entry>
+                      </row>
                   </tbody>
               </tgroup>
           </table>
