@@ -68,11 +68,25 @@ final class Zend
             return;
         }
 
+        if ((null !== $dirs) && !is_string($dirs) && !is_array($dirs)) {
+            throw new Zend_Exception('Directory argument must be a string or an array');
+        }
+        if (null === $dirs) {
+            $dirs = array();
+        }
+        if (is_string($dirs)) {
+            $dirs = (array) $dirs;
+        }
+
         // autodiscover the path from the class name
         $path = str_replace('_', DIRECTORY_SEPARATOR, $class);
-        if ($dirs === null && $path != $class) {
+        if ($path != $class) {
             // use the autodiscovered path
-            $dirs = dirname($path);
+            $dirPath = dirname($path);
+            foreach ($dirs as $key => $dir) {
+                $dir = rtrim($dir, '\\/');
+                $dirs[$key] = $dir . DIRECTORY_SEPARATOR . $dirPath;
+            }
             $file = basename($path) . '.php';
         } else {
             $file = $class . '.php';
@@ -89,10 +103,10 @@ final class Zend
 
     /**
      * Loads an interface from a PHP file.  See 
-     *
+     *;
      * @deprecated Since 0.6
      */
-    static public function loadInterface($interface, $dirs = null)
+    static public function loadInterface($class, $dirs = null)
     {
         throw new Zend_Exception(__FUNCTION__ . " has been removed. Please use require_once().");
     }
@@ -132,6 +146,9 @@ final class Zend
          * or within the $dirs search list.
          */
         $filespec = $filename;
+        if (empty($dirs)) {
+            $dirs = null;
+        }
         if ($dirs === null) {
             $found = self::isReadable($filespec);
         } else {
