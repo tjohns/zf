@@ -280,16 +280,16 @@ class Zend_ConfigTest extends PHPUnit_Framework_TestCase
     public function testZF343()
     {
         $config_array = array(
-			'controls' => array(
-				'visible' => array(
-					'name' => 'visible',
-					'type' => 'checkbox',
-					'attribs' => array(), // empty array
-				),
-			),
-		);
-		$form_config = new Zend_Config($config_array, true);
-		$this->assertSame(array(), $form_config->controls->visible->attribs->asArray());
+            'controls' => array(
+                'visible' => array(
+                    'name' => 'visible',
+                    'type' => 'checkbox',
+                    'attribs' => array(), // empty array
+                ),
+            ),
+        );
+        $form_config = new Zend_Config($config_array, true);
+        $this->assertSame(array(), $form_config->controls->visible->attribs->asArray());
     }
 
     public function testZF402()

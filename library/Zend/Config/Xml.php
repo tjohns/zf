@@ -63,23 +63,23 @@ class Zend_Config_Xml extends Zend_Config
         if (null === $section) {
             $dataArray = array();
             foreach ($config as $sectionName => $sectionData) {
-		        $dataArray[$sectionName] = $this->_processExtends($config, $sectionName);
+                $dataArray[$sectionName] = $this->_processExtends($config, $sectionName);
             }
             parent::__construct($dataArray, $allowModifications);
         } elseif (is_array($section)) {
             $dataArray = array();
             foreach ($section as $sectionName) {
-		        if (!isset($config->$sectionName)) {
-		            throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $filename");
-		        }
-		        $dataArray = array_merge($this->_processExtends($config, $sectionName), $dataArray);
+                if (!isset($config->$sectionName)) {
+                    throw new Zend_Config_Exception("Section '$sectionName' cannot be found in $filename");
+                }
+                $dataArray = array_merge($this->_processExtends($config, $sectionName), $dataArray);
             }
             parent::__construct($dataArray, $allowModifications);
         } else {
-	        if (!isset($config->$section)) {
-	            throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
-	        }
-	        parent::__construct($this->_processExtends($config, $section), $allowModifications);
+            if (!isset($config->$section)) {
+                throw new Zend_Config_Exception("Section '$section' cannot be found in $filename");
+            }
+            parent::__construct($this->_processExtends($config, $section), $allowModifications);
         }
 
         $this->_loadedSection = $section;
