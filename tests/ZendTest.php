@@ -80,6 +80,20 @@ class ZendTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests that a class locatedin a subdirectory can be loaded from the search directories
+     */
+    public function testLoadClassSearchSubDirs()
+    {
+        $dirs = array();
+        foreach (array('_testDir1', '_testDir2') as $dir) {
+            $dirs[] = implode(array(dirname(__FILE__), 'Zend', '_files', $dir), DIRECTORY_SEPARATOR);
+        }
+
+        // throws exception on failure
+        Zend::loadClass('Class1_Subclass2', $dirs);
+    }
+
+    /**
      * Tests that the security filter catches directory injections.
      */
     public function testLoadClassIllegalFilename()
