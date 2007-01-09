@@ -423,10 +423,10 @@ class Zend_Locale {
      *  3. Server Environment
      *  4. Framework Standard
      *
-     * @param $locale string - OPTIONAL locale for parsing input
+     * @param  string  $locale  OPTIONAL locale for parsing input
      * @return object
      */
-    public function __construct($locale = false)
+    public function __construct($locale = null)
     {
         $this->setLocale($locale);
     }
@@ -480,7 +480,7 @@ class Zend_Locale {
      *                        otherwise all found default locales will be returned 
      * @return  locale - returns an array of all the mosta locale string
      */
-    public function getDefault($searchorder = false, $fastsearch = false)
+    public function getDefault($searchorder = null, $fastsearch = null)
     {
         $languages = array();
         if ($searchorder == self::SERVER) {
@@ -628,9 +628,9 @@ class Zend_Locale {
      * 
      * @param mixed  $locale  OPTIONAL new locale to set
      */
-    public function setLocale($locale = false)
+    public function setLocale($locale = null)
     {
-        if (($locale == self::BROWSER) or ($locale == self::SERVER) or (empty($locale))) {
+        if (($locale == self::BROWSER) or ($locale == self::SERVER) or ($locale === null)) {
             $locale = $this->getDefault($locale, true);
         }
 
@@ -732,7 +732,6 @@ class Zend_Locale {
         }
 
         return false;
-        
     }
 
 
@@ -742,9 +741,9 @@ class Zend_Locale {
      * @param  string $locale - OPTIONAL locale for language translation
      * @return array
      */
-    public function getLanguageList($locale = false)
+    public function getLanguageList($locale = null)
     {
-        if ($locale === false) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
@@ -756,12 +755,12 @@ class Zend_Locale {
      * Returns an single language translated for the actual locale
      * 
      * @param  string $language
-     * @param  string $locale   - OPTIONAL locale for language translation
+     * @param  string $locale  OPTIONAL locale for language translation (defaults to $this locale)
      * @return array
      */
-    public function getLanguageDisplay($language, $locale = false)
+    public function getLanguageDisplay($language, $locale = null)
     {
-        if ($locale === false) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
@@ -778,12 +777,12 @@ class Zend_Locale {
     /**
      * Returns an array of scripts translated for the actual locale
      * 
-     * @param  string $locale - OPTIONAL locale for language translation
+     * @param  string $locale  OPTIONAL locale for language translation (defaults to $this locale)
      * @return array
      */
-    public function getScriptList($locale = false)
+    public function getScriptList($locale = null)
     {
-        if ($locale === false) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
@@ -792,15 +791,15 @@ class Zend_Locale {
 
 
     /**
-     * Returns an single script translated for the actual locale
+     * Returns a single script translated for a locale
      * 
-     * @param  $script - string
-     * @param  string $locale - OPTIONAL locale for language translation´
+     * @param  string $script
+     * @param  string $locale  OPTIONAL locale for language translation (defaults to $this locale)
      * @return array
      */
-    public function getScriptDisplay($script, $locale = false)
+    public function getScriptDisplay($script, $locale = null)
     {
-        if ($locale === false) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
@@ -817,12 +816,12 @@ class Zend_Locale {
     /**
      * Returns an array of regions translated for the actual locale
      * 
-     * @param  string $locale - OPTIONAL locale for language translation
+     * @param  string $locale  OPTIONAL locale for language translation (defaults to $this locale)
      * @return array
      */
-    public function getRegionList($locale = false)
+    public function getRegionList($locale = null)
     {
-        if ($locale === false) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
@@ -833,13 +832,14 @@ class Zend_Locale {
     /**
      * Returns an single region translated for the actual locale
      * 
-     * @param  $region - string
-     * @param  string $locale - OPTIONAL locale for language translation
+     * @param  string  $region 
+     * @param  string  $locale  OPTIONAL locale for language translation
+     * @param  string  $locale  OPTIONAL locale for language translation (defaults to $this locale)
      * @return array
      */
-    public function getRegionDisplay($region, $locale = false)
+    public function getRegionDisplay($region, $locale = null)
     {
-        if ($locale === false) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
@@ -856,12 +856,12 @@ class Zend_Locale {
     /**
      * Returns an array of calendar names translated for the actual locale
      * 
-     * @param  string $locale - OPTIONAL locale for language translation
+     * @param  string $locale  OPTIONAL locale for language translation (defaults to $this locale)
      * @return array
      */
-    public function getCalendarList($locale = false)
+    public function getCalendarList($locale = null)
     {
-        if ($locale === false) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
@@ -872,13 +872,13 @@ class Zend_Locale {
     /**
      * Returns an single calendar name translated for the actual locale
      * 
-     * @param  $calendar - string
-     * @param  string $locale - OPTIONAL locale for language translation
+     * @param  string  $calendar
+     * @param  string  $locale  OPTIONAL locale for language translation (defaults to $this locale)
      * @return array
      */
-    public function getCalendarDisplay($calendar, $locale = false)
+    public function getCalendarDisplay($calendar, $locale = null)
     {
-        if ($locale === false) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 
@@ -895,12 +895,12 @@ class Zend_Locale {
     /**
      * Returns an array with translated yes strings
      * 
-     * @param  string $locale - OPTIONAL locale for language translation
+     * @param  string  $locale  OPTIONAL locale for language translation (defaults to $this locale)
      * @return array
      */
-    public function getQuestion($locale = false)
+    public function getQuestion($locale = null)
     {
-        if ($locale === false) {
+        if ($locale === null) {
             $locale = $this->_Locale;
         }
 

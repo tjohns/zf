@@ -591,7 +591,7 @@ class Zend_Date {
      */
     public function toValue($part = null, $gmt = false)
     {
-        $result = $this->get($part, $gmt, false);
+        $result = $this->get($part, $gmt, null);
         if (is_numeric($result)) {
           return intval("$result");
         } else {

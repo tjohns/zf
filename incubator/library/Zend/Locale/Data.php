@@ -130,11 +130,12 @@ class Zend_Locale_Data
         // load locale file if not already in cache
         // needed for alias tag when referring to other locale
         if (empty(self::$_ldml[(string) $locale])) {
-            if (!file_exists(dirname(__FILE__) . '/Data/' . $locale . '.xml')) {
-                throw new Zend_Locale_Exception('Missing locale file for ' . $locale);
+            $filename = dirname(__FILE__) . '/Data/' . $locale . '.xml';
+            if (!file_exists($filename)) {
+                throw new Zend_Locale_Exception("Missing locale file '$filename' for '$locale' locale.");
             }
 
-            self::$_ldml[(string) $locale] = simplexml_load_file(dirname(__FILE__) . '/Data/' . $locale . '.xml');
+            self::$_ldml[(string) $locale] = simplexml_load_file($filename);
         }
 
         // search for 'alias' tag in the search path for redirection
