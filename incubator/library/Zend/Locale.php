@@ -476,7 +476,7 @@ class Zend_Locale {
      * @todo - getFrameworkLanguages
      * 
      * @param $searchorder  - OPTIONAL searchorder
-     * @param $fastsearch   - OPTIONAL returnes the first found locale array when TRUE
+     * @param $fastsearch   - OPTIONAL returnes the first found locale array when true
      *                        otherwise all found default locales will be returned 
      * @return  locale - returns an array of all the mosta locale string
      */
@@ -631,7 +631,7 @@ class Zend_Locale {
     public function setLocale($locale = false)
     {
         if (($locale == self::BROWSER) or ($locale == self::SERVER) or (empty($locale))) {
-            $locale = $this->getDefault($locale, TRUE);
+            $locale = $this->getDefault($locale, true);
         }
 
         if (is_array($locale)) {

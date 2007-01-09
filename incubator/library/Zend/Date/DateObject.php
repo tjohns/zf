@@ -79,7 +79,7 @@ class Zend_Date_DateObject {
      *
      * @param $date mixed - OPTIONAL timestamp number
      */
-    public function __construct($date = false)
+    public function __construct($date = null)
     {
         $this->setTimestamp($date);
     }
@@ -88,31 +88,31 @@ class Zend_Date_DateObject {
     /**
      * Sets a new timestamp
      *
-     * @param $date mixed - OPTIONAL timestamp otherwise actual timestamp is used
+     * @param  mixed  $date  OPTIONAL timestamp; defaults to local time using time()
      * @return boolean
      * @throws Zend_Date_Exception
      */
-    public function setTimestamp($date = false)
+    public function setTimestamp($date = null)
     {
+        if (is_numeric($date)) {
+            $this->_unixtimestamp = $date;
+            return true;
+        }
+
         // no date value, take actual time
-        if ($date === false) {
+        if ($date === null) {
             $this->_unixtimestamp = time();
             return true;
         }
 
-        if (is_numeric($date)) {
-          $this->_unixtimestamp = $date;
-          return true;
-        }
-
-        throw new Zend_Date_Exception('\'' . $date . '\' is no valid date');
+        throw new Zend_Date_Exception('\'' . $date . '\' is not a valid date');
     }
 
 
     /**
      * Returns unix timestamp
      *
-     * @return  timestamp
+     * @return  integer|string  timestamp
      */
     public function getTimestamp()
     {
@@ -133,14 +133,14 @@ class Zend_Date_DateObject {
      * Year has to be 4 digits otherwise it would be recognised as
      * year 70 AD instead of 1970 AD as expected !!
      *
-     * @param $hour   number  - hour
-     * @param $minute number  - minute
-     * @param $second number  - second
-     * @param $month  number  - month
-     * @param $day    number  - day
-     * @param $year   number  - year
-     * @param $dst    boolean - summer/wintertime
-     * @param $gmt    boolean - timezone
+     * @param  integer  $hour
+     * @param  integer  $minute 
+     * @param  integer  $second
+     * @param  integer  $month
+     * @param  integer  $day
+     * @param  integer  $year
+     * @param  boolean  $dst     summer/wintertime (daylight savings time)
+     * @param  boolean  $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @return  integer|float
      */
     public function mktime($hour, $minute, $second, $month = false, $day = false, $year = false, 
@@ -272,8 +272,8 @@ class Zend_Date_DateObject {
     /**
      * Returns true if given date is a leap year
      *
-     * @param $year  integer
-     * @return boolean - true if year is leap year
+     * @param  integer  $year
+     * @return  boolean  true, if year is leap year
      */
     public function isLeapYear($year)
     {
@@ -300,9 +300,9 @@ class Zend_Date_DateObject {
      * Returns a formatted date for a timestamp
      * Cannot handle daylight savings
      *
-     * @param $format     string - format for output
-     * @param $timestamp  mixed
-     * @param $gmt        boolean - timezone
+     * @param  string   $format  format for output
+     * @param  mixed    $timestamp
+     * @param  boolean  $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @return  string
      */
     public function date($format, $timestamp = false, $gmt = false)
@@ -588,9 +588,9 @@ class Zend_Date_DateObject {
      * Returns the day of week
      * 0 = sunday, 6 = saturday
      *
-     * @param $year  integer
-     * @param $month integer
-     * @param $day   integer
+     * @param  integer  $year
+     * @param  integer  $month
+     * @param  integer  $day
      * @return dayOfWeek
      */
     public function dayOfWeek($year, $month, $day)
@@ -628,8 +628,8 @@ class Zend_Date_DateObject {
      * $all defines is ALL date parts should be returned.
      * Default is false, so the function works faster
      *
-     * @param  $timestamp  mixed
-     * @param  $fast       boolean
+     * @param   mixed    $timestamp
+     * @param   boolean  $fast
      * @return array
      */
     public function getDate($timestamp = false, $fast = false)
@@ -804,9 +804,9 @@ class Zend_Date_DateObject {
      *
      * Returns the ISO 8601 week number of a given date
      *
-     * @param  $year  integer
-     * @param  $month integer
-     * @param  $day   integer
+     * @param  integer  $year
+     * @param  integer  $month
+     * @param  integer  $day
      * @return integer
      */
     public function weekNumber($year, $month, $day)
@@ -852,8 +852,8 @@ class Zend_Date_DateObject {
     /**
      * Calculates the sunrise or sunset based on a location
      * 
-     * @param array $location - Location for calculation MUST include 'latitude', 'longitude', 'horizon'
-     * @param bool $rise      - true: sunrise, false: sunset
+     * @param  array  $location  Location for calculation MUST include 'latitude', 'longitude', 'horizon'
+     * @param  bool   $horizon   true: sunrise; false: sunset
      * @return mixed  - false: midnight sun, integer: 
      */
     public function calcSun($location, $horizon, $rise = false)

@@ -292,7 +292,7 @@ class Zend_Date_Cities {
      * @return array
      * @throws Zend_Date_Exception
      */
-    public static function City($city, $horizon = FALSE) {
+    public static function City($city, $horizon = false) {
         foreach (self::$Cities as $key => $value) {
             if (strtolower($key) == strtolower($city)) {
                 $return = $value;

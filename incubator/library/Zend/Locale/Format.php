@@ -599,7 +599,7 @@ class Zend_Locale_Format
      * @param Zend_Locale|string $locale  OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
      * @return array          possible array members: day, month, year, hour, minute, second
      */
-    public static function getDate($date, $format = NULL, $locale = NULL)
+    public static function getDate($date, $format = null, $locale = null)
     {
         if (empty($format)) {
             $format = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
@@ -621,14 +621,14 @@ class Zend_Locale_Format
      * @param locale $locale  OPTIONAL locale of date string
      * @return boolean
      */
-    public static function isDate($date, $format = NULL, $locale = NULL)
+    public static function isDate($date, $format = null, $locale = null)
     {
         try {
             $date = self::getDate($date, $format, $locale);
         } catch (Exception $e) {
-            return FALSE;
+            return false;
         }
-        return TRUE;
+        return true;
     }
 
 
@@ -646,7 +646,7 @@ class Zend_Locale_Format
      * @param Zend_Locale|string $locale - OPTIONAL Locale of $number, possibly in string form (e.g. 'de_AT')
      * @return array          possible array members: day, month, year, hour, minute, second
      */
-    public static function getTime($time, $format = NULL, $locale = NULL)
+    public static function getTime($time, $format = null, $locale = null)
     {
         if (empty($format)) {
             $format = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
@@ -670,13 +670,13 @@ class Zend_Locale_Format
      * @param locale $locale  OPTIONAL locale of time string
      * @return boolean
      */
-    public static function isTime($time, $format = NULL, $locale = NULL)
+    public static function isTime($time, $format = null, $locale = null)
     {
         try {
             $date = self::getTime($time, $format, $locale);
         } catch (Exception $e) {
-            return FALSE;
+            return false;
         }
-        return TRUE;
+        return true;
     }
 }

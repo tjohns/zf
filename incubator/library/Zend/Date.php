@@ -26,6 +26,7 @@
 require_once 'Zend/Date/DateObject.php';
 require_once 'Zend/Date/Exception.php';
 require_once 'Zend/Locale.php';
+require_once 'Zend/Locale/Math.php';
 
 
 /**
@@ -127,7 +128,7 @@ class Zend_Date {
 
     // actual date object
     public $_Date;
-    private $_Locale = NULL;
+    private $_Locale = null;
 
 
     /**
@@ -137,12 +138,12 @@ class Zend_Date {
      * 
      * @param  string|integer      $date    OPTIONAL Defines the date or datepart to set depending on $part
      * @param  string              $part    OPTIONAL Defines the input format of $date
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
-    public function __construct($date = FALSE, $part = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function __construct($date = null, $part = null, $gmt = false, $locale = null)
     {
         foreach(array('date','part','gmt') as $param) {
             $type = gettype($$param);
@@ -151,7 +152,7 @@ class Zend_Date {
                 $restFalse = true;
             }
             if (isset($restFalse)) {
-                $$param = false;
+                $$param = null;
             }
         }
 
@@ -159,16 +160,14 @@ class Zend_Date {
         $this->setLocale($locale);
 
         // set timestamp if not given
-        if ($date === FALSE) {
+        if ($date === null) {
             $date = time();
         }
 
         // set datepart
-        if (($part !== FALSE) or (!is_numeric($date))) {
-
+        if ($part !== null or (!is_numeric($date))) {
             $this->_Date = new Zend_Date_DateObject(0);
             $this->set($date, $part, $gmt, $this->_Locale);
-
         } else {
             $this->_Date = new Zend_Date_DateObject($date);
         }
@@ -193,27 +192,27 @@ class Zend_Date {
      * HINT: timestamps are always GMT
      *
      * @param  string                    $calc    Type of calculation to make
-     * @param  string|integer|Zend_Date  $stamp   OPTIONAL Timestamp to calculate, when null the actual timestamp is calculated
-     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer|Zend_Date  $stamp   Timestamp to calculate, when null the actual timestamp is calculated
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return Zend_Date|integer
      * @throws Zend_Date_Exception
      */
     private function _timestamp($calc, $stamp, $locale)
     {
-        if (empty($locale)) {
+        if ($locale !== null) {
             $locale = $this->getLocale();
         }
 
         if (is_object($stamp)) {
             // extract timestamp from object
-            $stamp = $stamp->get(Zend_Date::TIMESTAMP, TRUE, $locale);
-        } else if (empty($stamp) and ($stamp !== 0)) {
-            $stamp = $this->_Date->date('U', FALSE, TRUE);
+            $stamp = $stamp->get(Zend_Date::TIMESTAMP, true, $locale);
+        } else if ($stamp === null) {
+            $stamp = $this->_Date->date('U', false, true);
         }
 
-        $return = $this->_calcdetail($calc, $stamp, Zend_Date::TIMESTAMP, FALSE, $locale);
+        $return = $this->_calcdetail($calc, $stamp, Zend_Date::TIMESTAMP, false, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, FALSE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, false, $locale);
         }
         return $return;
     }
@@ -227,7 +226,7 @@ class Zend_Date {
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
-    public function setTimestamp($timestamp = NULL, $locale = NULL)
+    public function setTimestamp($timestamp = null, $locale = null)
     {
         return $this->_timestamp('set', $timestamp, $locale);
     }
@@ -241,7 +240,7 @@ class Zend_Date {
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
-    public function addTimestamp($timestamp = NULL, $locale = NULL)
+    public function addTimestamp($timestamp = null, $locale = null)
     {
         return $this->_timestamp('add', $timestamp, $locale);
     }
@@ -255,7 +254,7 @@ class Zend_Date {
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
-    public function subTimestamp($timestamp = NULL, $locale = NULL)
+    public function subTimestamp($timestamp = null, $locale = null)
     {
         return $this->_timestamp('sub', $timestamp, $locale);
     }
@@ -269,7 +268,7 @@ class Zend_Date {
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareTimestamp($timestamp = NULL, $locale = NULL)
+    public function compareTimestamp($timestamp = null, $locale = null)
     {
         return $this->_timestamp('cmp', $timestamp, $locale);
     }
@@ -288,17 +287,17 @@ class Zend_Date {
      * v - wall zone
      *
      * @param  string              $format  OPTIONAL An rule for formatting the output, if null the default dateformat is used
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return string
      */
-    public function toString($format = NULL, $gmt = FALSE, $locale = NULL)
+    public function toString($format = null, $gmt = false, $locale = null)
     {
-        if (empty($locale)) {
-            $locale = $this->getLocale($locale);
+        if ($locale === null) {
+            $locale = $this->getLocale();
         }
 
-        if (empty($format)) {
+        if ($format === null) {
             $date = Zend_Locale_Data::getContent($locale, 'defdateformat', 'gregorian');
             $time = Zend_Locale_Data::getContent($locale, 'deftimeformat', 'gregorian');
             $date = Zend_Locale_Data::getContent($locale, 'dateformat', array('gregorian', $date['default']));
@@ -311,26 +310,26 @@ class Zend_Date {
 
         // get format tokens
         $j = 0;
-        $comment = FALSE;
+        $comment = false;
         $output = array();
         for($i = 0; $i < strlen($format); ++$i) {
 
             if ($format[$i] == "'") {
-                if ($comment == FALSE) {
-                    $comment = TRUE;
+                if ($comment == false) {
+                    $comment = true;
                     ++$j;
                     $output[$j] = "'";
                 } else if (isset($format[$i+1]) and ($format[$i+1] == "'")) {
                     $output[$j] .= "'";
                     ++$i;
                 } else {
-                    $comment = FALSE;
+                    $comment = false;
                 }
                 continue;
             }
 
             if (isset($output[$j]) and ($output[$j][0] == $format[$i]) or
-                ($comment == TRUE)) {
+                ($comment == true)) {
                 $output[$j] .= $format[$i];
             } else {
                 ++$j;
@@ -338,7 +337,7 @@ class Zend_Date {
             }
         }
 
-        $notset = FALSE;
+        $notset = false;
         // fill format tokens with date information
         for($i = 1; $i <= count($output); ++$i) {
             // fill fixed tokens
@@ -532,12 +531,12 @@ class Zend_Date {
                     break;
                     
                 default :
-                    $notset = TRUE;
+                    $notset = true;
                     break;
             }
 
             // fill variable tokens
-            if ($notset == TRUE) {
+            if ($notset == true) {
                 if (($output[$i][0] !== "'") and (preg_match('/y+/', $output[$i]))) {
                     $length     = strlen($output[$i]);
                     $output[$i] = $this->get(Zend_Date::YEAR, $gmt, $locale);
@@ -556,7 +555,7 @@ class Zend_Date {
                     $month      = $this->get(Zend_Date::MONTH_DIGIT, $gmt, $locale);
                     $day        = $this->get(Zend_Date::DAY_SHORT,   $gmt, $locale);
                     $year       = $this->get(Zend_Date::YEAR,        $gmt, $locale);
-                    $seconds   -= $this->_Date->mktime(0, 0, 0, $month, $day, $year, FALSE, $gmt);
+                    $seconds   -= $this->_Date->mktime(0, 0, 0, $month, $day, $year, false, $gmt);
                     $output[$i] = str_pad($seconds, $length, '0', STR_PAD_LEFT);
                 }
 
@@ -564,7 +563,7 @@ class Zend_Date {
                     $output[$i] = substr($output[$i], 1);
                 }
             }
-            $notset = FALSE;
+            $notset = false;
         }
 
         return implode('', $output);
@@ -578,7 +577,7 @@ class Zend_Date {
      */
     public function __toString()
     {
-        return $this->toString(NULL, FALSE, $this->_Locale);
+        return $this->toString(null, false, $this->_Locale);
     }
 
 
@@ -587,16 +586,16 @@ class Zend_Date {
      * But returns false when the given part is no value f.e. Month-Name
      *
      * @param  string|integer|Zend_Date  $part  OPTIONAL Defines the date or datepart to return as integer
-     * @param  boolean                   $gmt   OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt   OPTIONAL true = UTC time, false = actual time zone
      * @return integer|false
      */
-    public function toValue($part = NULL, $gmt = FALSE)
+    public function toValue($part = null, $gmt = false)
     {
-        $result = $this->get($part, $gmt, FALSE);
+        $result = $this->get($part, $gmt, false);
         if (is_numeric($result)) {
           return intval("$result");
         } else {
-          return FALSE;
+          return false;
         }
     }
 
@@ -608,17 +607,17 @@ class Zend_Date {
      * For a complete list of supported datepart values look into the docu
      *
      * @param  string              $part    OPTIONAL Part of the date to return, if null the timestamp is returned
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return integer|string  date or datepart
      */
-    public function get($part = NULL, $gmt = FALSE, $locale = NULL)
+    public function get($part = null, $gmt = false, $locale = null)
     {
-        if (empty($part)) {
+        if ($part === null) {
             $part = Zend_Date::TIMESTAMP;
         }
 
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -1001,12 +1000,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $date    Date or datepart to set 
      * @param  string                    $part    OPTIONAL Part of the date to set, if null the timestamp is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|string  new datepart
      * @throws Zend_Date_Exception
      */
-    public function set($date, $part = NULL, $gmt = FALSE, $locale = NULL)
+    public function set($date, $part = null, $gmt = false, $locale = null)
     {
         return $this->_calculate('set', $date, $part, $gmt, $locale);
     }
@@ -1020,12 +1019,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $date    Date or datepart to add 
      * @param  string                    $part    OPTIONAL Part of the date to add, if null the timestamp is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|string  new datepart
      * @throws Zend_Date_Exception
      */
-    public function add($date, $part = NULL, $gmt = TRUE, $locale = NULL)
+    public function add($date, $part = null, $gmt = true, $locale = null)
     {
         $this->_calculate('add', $date, $part, $gmt, $locale);
         return $this->get($part, $gmt, $locale);
@@ -1041,12 +1040,12 @@ class Zend_Date {
      * 
      * @param  string|integer|Zend_Date  $date    Date or datepart to substract
      * @param  string                    $part    OPTIONAL Part of the date to sub, if null the timestamp is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|string  new datepart
      * @throws Zend_Date_Exception
      */
-    public function sub($date, $part = NULL, $gmt = TRUE, $locale = NULL)
+    public function sub($date, $part = null, $gmt = true, $locale = null)
     {
         $this->_calculate('sub', $date, $part, $gmt, $locale);
         return $this->get($part, $gmt, $locale);
@@ -1059,12 +1058,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $date    Date or datepart to compare with the date object
      * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compare($date, $part = NULL, $gmt = TRUE, $locale = NULL)
+    public function compare($date, $part = null, $gmt = true, $locale = null)
     {
         $compare = $this->_calculate('cmp', $date, $part, $gmt, $locale);
         if ($compare > 0) {
@@ -1084,45 +1083,44 @@ class Zend_Date {
      * 01-01-YEAR 00:00:00 (01-01-1970 00:00:00 is equal to timestamp 0)
      * 
      * @param  string              $part    OPTIONAL Part of the date to compare, if null the timestamp is substracted
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function copy($part = NULL, $locale = NULL)
+    public function copy($part = null, $locale = null)
     {
-        return $this->_calculate('copy', $this, $part, FALSE, $locale);
+        return $this->_calculate('copy', $this, $part, false, $locale);
     }
 
 
     /**
      * Calculates the date or object
      *
-     * @param  string                    $calc    Calculation to make
-     * @param  string|integer            $date    Date for calculation
-     * @param  string|integer            $comp    Second date for calculation
+     * @param  string                    $calc  Calculation to make
+     * @param  string|integer            $date  Date for calculation
+     * @param  string|integer            $comp  Second date for calculation
      * @return integer|string|Zend_Date  new timestamp or Zend_Date depending on calculation
-     * @todo   erase bcmath with helper class
      */
     private function _assign($calc, $date, $comp = 0)
     {
         switch ($calc) {
             case 'add' :
-                $this->_Date->setTimestamp(bcadd($this->_Date->getTimestamp(), $date));
+                $this->_Date->setTimestamp(call_user_func(Zend_Locale_Math::$add, $this->_Date->getTimestamp(), $date));
                 return $this->_Date->getTimestamp();
                 break;
             case 'sub' :
-                $this->_Date->setTimestamp(bcsub($this->_Date->getTimestamp(), $date));
+                $this->_Date->setTimestamp(call_user_func(Zend_Locale_Math::$sub, $this->_Date->getTimestamp(), $date));
                 return $this->_Date->getTimestamp();
                 break;
             case 'cmp' :
-                return bcsub($comp, $date);
+                return call_user_func(Zend_Locale_Math::$comp, $comp, $date);
                 break;
             case 'copy' :
                 return new Zend_Date($date);
                 break;
             case 'set' :
-                $this->_Date->setTimestamp(bcsub($this->_Date->getTimestamp(), $comp));
-                $this->_Date->setTimestamp(bcadd($this->_Date->getTimestamp(), $date));
+                $this->_Date->setTimestamp(call_user_func(Zend_Locale_Math::$sub, $this->_Date->getTimestamp(), $comp));
+                $this->_Date->setTimestamp(call_user_func(Zend_Locale_Math::$add, $this->_Date->getTimestamp(), $date));
                 return $this->_Date->getTimestamp();
                 break;
         }
@@ -1135,25 +1133,25 @@ class Zend_Date {
      * @param  string                    $calc    Calculation to make
      * @param  string|integer|Zend_Date  $date    OPTIONAL Date or datepart to calculate with, if null the actual date is taken
      * @param  string                    $part    OPTIONAL Part of the date to calculate, if null the timestamp is used
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|string|Zend_Date  new timestamp
      * @throws Zend_Date_Exception
      */
-    private function _calculate($calc, $date = NULL, $part = NULL, $gmt = FALSE, $locale = NULL)
+    private function _calculate($calc, $date = null, $part = null, $gmt = false, $locale = null)
     {
         foreach(array('date','part','gmt') as $param) {
             $type = gettype($$param);
             if ($type === 'object' && ($$param instanceof Zend_Locale)) {
                 $locale = $$param;
-                $restFalse = TRUE;
+                $restFalse = true;
             }
             if (isset($restFalse)) {
-                $$param = FALSE;
+                $$param = false;
             }
         }
 
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -1165,14 +1163,12 @@ class Zend_Date {
         $minute = $this->get(Zend_Date::MINUTE_SHORT);
         $second = $this->get(Zend_Date::SECOND_SHORT);
 
-        if (is_null($date)) {
-            $temp = new Zend_Date($this->_Date->date('U', FALSE, $gmt), Zend_Date::TIMESTAMP, $gmt, $locale);
-            $date = $temp->get($part, $gmt, $locale);
-        }
-
         // if object extract value
         if (is_object($date)) {
             $date = $date->get($part, $gmt, $locale);
+        } else if ($date === null) {
+            $temp = new Zend_Date($this->_Date->date('U', false, $gmt), Zend_Date::TIMESTAMP, $gmt, $locale);
+            $date = $temp->get($part, $gmt, $locale);
         }
 
         // $date as object, part of foreign date as own date
@@ -2179,18 +2175,18 @@ class Zend_Date {
 
 
     /**
-     * Returns TRUE when both date objects or dateparts are equal.
+     * Returns true when both date objects or dateparts are equal.
      * For example:
      * 15.May.2000 <-> 15.June.2000 Equals only for Day or Year... all other will return false 
      *
      * @param  string|integer|Zend_Date  $date    Date or datepart to equal with
      * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is used
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return boolean
      * @throws Zend_Date_Exception
      */
-    public function equals($date, $part = NULL, $gmt = TRUE, $locale = NULL)
+    public function equals($date, $part = null, $gmt = true, $locale = null)
     {
         if ($this->compare($date, $part, $gmt, $locale) == 0) {
             return true;
@@ -2206,12 +2202,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $date    Date or datepart to compare with
      * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is used
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return boolean
      * @throws Zend_Date_Exception
      */
-    public function isEarlier($date, $part = NULL, $gmt = TRUE, $locale = NULL)
+    public function isEarlier($date, $part = null, $gmt = true, $locale = null)
     {
         if ($this->compare($date, $part, $gmt, $locale) == -1) {
             return true;
@@ -2228,12 +2224,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $date    Date or datepart to compare with
      * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is used
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return boolean
      * @throws Zend_Date_Exception
      */
-    public function isLater($date, $part = NULL, $gmt = TRUE, $locale = NULL)
+    public function isLater($date, $part = null, $gmt = true, $locale = null)
     {
         if ($this->compare($date, $part, $gmt, $locale) == 1) {
             return true;
@@ -2247,13 +2243,13 @@ class Zend_Date {
      * For example: 
      * 15.May.2000 10:11:23 will return a dateobject equal to 01.Jan.1970 10:11:23
      * 
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getTime($gmt = FALSE, $locale = NULL)
+    public function getTime($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -2265,16 +2261,16 @@ class Zend_Date {
      * Returns the calculated time
      *
      * @param  string                    $calc    Calculation to make
-     * @param  string|integer|Zend_Date  $time    OPTIONAL Time to calculate with, if null the actual time is taken
-     * @param  string                    $format  OPTIONAL Timeformat for parsing input
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer|Zend_Date  $time    Time to calculate with, if null the actual time is taken
+     * @param  string                    $format  Timeformat for parsing input
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return integer|Zend_Date  new time
      * @throws Zend_Date_Exception
      */
-    private function _time($calc, $time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
+    private function _time($calc, $time, $format, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -2282,22 +2278,22 @@ class Zend_Date {
             // extract time from object
             $time = $time->get(Zend_Date::TIME_MEDIUM, $gmt, $locale);
         } else {
-            if (empty($time)) {
-                $parsed['hour']   = $this->_Date->date('H', FALSE, $gmt);
-                $parsed['minute'] = $this->_Date->date('i', FALSE, $gmt);
-                $parsed['second'] = $this->_Date->date('s', FALSE, $gmt);
+            if ($time === null) {
+                $parsed['hour']   = $this->_Date->date('H', false, $gmt);
+                $parsed['minute'] = $this->_Date->date('i', false, $gmt);
+                $parsed['second'] = $this->_Date->date('s', false, $gmt);
             } else {
                 $parsed = Zend_Locale_Format::getTime($time, $format, $locale);
             }
-            $time = new Zend_Date(0, Zend_Date::TIMESTAMP, TRUE, $locale);
+            $time = new Zend_Date(0, Zend_Date::TIMESTAMP, true, $locale);
             $time->set($parsed['hour'], Zend_Date::HOUR, $gmt);
             $time->set($parsed['minute'], Zend_Date::MINUTE, $gmt);
             $time->set($parsed['second'], Zend_Date::SECOND, $gmt);
             $time = $time->get(Zend_Date::TIME_MEDIUM, $gmt, $locale);
         }
-        $return = $this->_calcdetail($calc, $time, Zend_Date::TIME_MEDIUM, TRUE, $locale);
+        $return = $this->_calcdetail($calc, $time, Zend_Date::TIME_MEDIUM, true, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -2311,12 +2307,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $time    OPTIONAL Time to set, if null the actual time is set
      * @param  string                    $format  OPTIONAL Timeformat for parsing input
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new time
      * @throws Zend_Date_Exception
      */
-    public function setTime($time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
+    public function setTime($time = null, $format = null, $gmt = false, $locale = null)
     {
         return $this->_time('set', $time, $format, $gmt, $locale);
     }
@@ -2330,12 +2326,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $time    OPTIONAL Time to add, if null the actual time is added
      * @param  string                    $format  OPTIONAL Timeformat for parsing input
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new time
      * @throws Zend_Date_Exception
      */
-    public function addTime($time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
+    public function addTime($time = null, $format = null, $gmt = false, $locale = null)
     {
         return $this->_time('add', $time, $format, $gmt, $locale);
     }
@@ -2349,12 +2345,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $time    OPTIONAL Time to sub, if null the actual time is substracted
      * @param  string                    $format  OPTIONAL Timeformat for parsing input
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new time
      * @throws Zend_Date_Exception
      */
-    public function subTime($time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
+    public function subTime($time = null, $format = null, $gmt = false, $locale = null)
     {
         return $this->_time('sub', $time, $format, $gmt, $locale);
     }
@@ -2368,12 +2364,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $time    OPTIONAL Time to compare, if null the actual time is compared
      * @param  string                    $format  OPTIONAL Timeformat for parsing input
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareTime($time = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareTime($time = null, $format = null, $gmt = false, $locale = null)
     {
         return $this->_time('cmp', $time, $format, $gmt, $locale);
     }
@@ -2385,13 +2381,13 @@ class Zend_Date {
      * If only parts are given the other parts are set to default.
      * For example. 15.May.2000 10:20:30 -> MMMM.yyyy -> 01.May.2000 00:00:00 
      *
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getDate($gmt = FALSE, $locale = NULL)
+    public function getDate($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -2403,16 +2399,16 @@ class Zend_Date {
      * Returns the calculated date
      *
      * @param  string                    $calc    Calculation to make
-     * @param  string|integer|Zend_Date  $time    OPTIONAL Date to calculate with, if null the actual date is taken
-     * @param  string                    $format  OPTIONAL Dateformat for parsing
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer|Zend_Date  $date    Date to calculate with, if null the actual date is taken
+     * @param  string                    $format  Dateformat for parsing
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    private function _date($calc, $date = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
+    private function _date($calc, $date, $format, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -2420,22 +2416,22 @@ class Zend_Date {
             // extract date from object
             $date = $date->get(Zend_Date::DATE_MEDIUM, $gmt, $locale);
         } else {
-            if (empty($date)) {
-                $parsed['year']  = $this->_Date->date('Y', FALSE, $gmt);
-                $parsed['month'] = $this->_Date->date('m', FALSE, $gmt);
-                $parsed['day']   = $this->_Date->date('d', FALSE, $gmt);
+            if ($date === null) {
+                $parsed['year']  = $this->_Date->date('Y', false, $gmt);
+                $parsed['month'] = $this->_Date->date('m', false, $gmt);
+                $parsed['day']   = $this->_Date->date('d', false, $gmt);
             } else {
                 $parsed = Zend_Locale_Format::getDate($date, $format, $locale);
             }
-            $date = new Zend_Date(0, Zend_Date::TIMESTAMP, TRUE, $locale);
+            $date = new Zend_Date(0, Zend_Date::TIMESTAMP, true, $locale);
             $date->set($parsed['year'], Zend_Date::YEAR, $gmt);
             $date->set($parsed['month'], Zend_Date::MONTH_SHORT, $gmt);
             $date->set($parsed['day'], Zend_Date::DAY, $gmt);
             $date = $date->get(Zend_Date::DATE_MEDIUM, $gmt, $locale);
         }
-        $return = $this->_calcdetail($calc, $date, Zend_Date::DATE_MEDIUM, TRUE, $locale);
+        $return = $this->_calcdetail($calc, $date, Zend_Date::DATE_MEDIUM, true, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -2449,12 +2445,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $time    OPTIONAL Date to set, if null the actual date is set
      * @param  string                    $format  OPTIONAL Dateformat for parsing
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setDate($date = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
+    public function setDate($date = null, $format = null, $gmt = false, $locale = null)
     {
         return $this->_date('set', $date, $format, $gmt, $locale);
     }
@@ -2468,12 +2464,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $time    OPTIONAL date to add, if null the actual date is added
      * @param  string                    $format  OPTIONAL Dateformat for parsing input
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addDate($date = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
+    public function addDate($date = null, $format = null, $gmt = false, $locale = null)
     {
         return $this->_date('add', $date, $format, $gmt, $locale);
     }
@@ -2488,12 +2484,12 @@ class Zend_Date {
      *
      * @param  string|integer|Zend_Date  $time    OPTIONAL date to sub, if null the actual date is substracted
      * @param  string                    $format  OPTIONAL Dateformat for parsing input
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subDate($date = NULL, $format = NULL, $gmt = FALSE, $locale = NULL)
+    public function subDate($date = null, $format = null, $gmt = false, $locale = null)
     {
         return $this->_date('sub', $date, $format, $gmt, $locale);
     }
@@ -2504,16 +2500,16 @@ class Zend_Date {
      * Format defines how to parse the date string.
      * If only parts are given the other parts are set to 0.
      * If no format is given, the standardformat of this locale is used.
-     * For example: 10.01.2000 => 10.02.1999 -> FALSE
+     * For example: 10.01.2000 => 10.02.1999 -> false
      *
      * @param  string|integer|Zend_Date  $time    OPTIONAL date to compare, if null the actual date is compared
      * @param  string                    $format  OPTIONAL Dateformat for parsing input
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function compareDate($date = NULL, $format = NULL, $gmt = false, $locale = NULL)
+    public function compareDate($date = null, $format = null, $gmt = false, $locale = null)
     {
         return $this->_date('cmp', $date, $format, $gmt, $locale);
     }
@@ -2525,11 +2521,11 @@ class Zend_Date {
      * (ISO 8601 defines several formats) use toString() instead. 
      * This function does not return the ISO date as object. Use copy() instead. 
      *
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return string
      */
-    public function getIso($gmt = FALSE, $locale = NULL)
+    public function getIso($gmt = false, $locale = null)
     {
         return $this->get(Zend_Date::ISO_8601, $gmt, $locale);
     }
@@ -2539,27 +2535,27 @@ class Zend_Date {
      * Returns the calculated ISO date
      *
      * @param  string                    $calc    Calculation to make
-     * @param  string|integer|Zend_Date  $time    OPTIONAL ISO date to calculate with, if null the actual date is taken
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer|Zend_Date  $iso     ISO date to calculate with, if null the actual date is taken
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    private function _iso($calc, $iso = NULL, $gmt = FALSE, $locale = NULL)
+    private function _iso($calc, $iso, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
         if (is_object($iso)) {
             // extract iso from object
             $iso = $iso->get(Zend_Date::ISO_8601, $gmt, $locale);
-        } else if (empty($iso)) {
-            $iso = $this->_Date->date('c', FALSE, $gmt);
+        } else if ($iso === null) {
+            $iso = $this->_Date->date('c', false, $gmt);
         }
-        $return = $this->_calcdetail($calc, $iso, Zend_Date::ISO_8601, TRUE, $locale);
+        $return = $this->_calcdetail($calc, $iso, Zend_Date::ISO_8601, true, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -2572,12 +2568,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to set, if null the actual date is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setIso($date = NULL, $gmt = FALSE, $locale = NULL)
+    public function setIso($date = null, $gmt = false, $locale = null)
     {
         return $this->_iso('set', $date, $gmt, $locale);
     }
@@ -2590,12 +2586,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to add, if null the actual date is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addIso($date = NULL, $gmt = FALSE, $locale = NULL)
+    public function addIso($date = null, $gmt = false, $locale = null)
     {
         return $this->_iso('add', $date, $gmt, $locale);
     }
@@ -2608,12 +2604,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to sub, if null the actual date is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subIso($date = NULL, $gmt = FALSE, $locale = NULL)
+    public function subIso($date = null, $gmt = false, $locale = null)
     {
         return $this->_iso('sub', $date, $gmt, $locale);
     }
@@ -2626,12 +2622,12 @@ class Zend_Date {
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to sub, if null the actual date is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareIso($date = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareIso($date = null, $gmt = false, $locale = null)
     {
         return $this->_iso('cmp', $date, $gmt, $locale);
     }
@@ -2641,16 +2637,16 @@ class Zend_Date {
      * Returns a RFC 822 compilant datestring from the date object.
      * This function does not return the RFC date as object. Use copy() instead. 
      *
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return string
      * Returns a RFC822 formatted date - RFC822 is locale-independent
      *
-     * @param $gmt   boolean - OPTIONAL, TRUE = UTC time, FALSE = actual time zone
+     * @param $gmt   boolean - OPTIONAL, true = UTC time, false = actual time zone
      * @param $locale object - OPTIONAL locale for parsing input
      * @return string
      */
-    public function getArpa($gmt = FALSE, $locale = NULL)
+    public function getArpa($gmt = false, $locale = null)
     {
         return $this->get(Zend_Date::RFC_822, $gmt, $locale);
     }
@@ -2660,27 +2656,28 @@ class Zend_Date {
      * Returns the calculated RFC 822 date
      *
      * @param  string                    $calc    Calculation to make
-     * @param  string|integer|Zend_Date  $arpa    OPTIONAL RFC 822 date to calculate with, if null the actual date is taken
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer|Zend_Date  $arpa    RFC 822 date to calculate with, if null the actual date is taken
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    private function _arpa($calc, $arpa = NULL, $gmt = FALSE, $locale = NULL)
+    private function _arpa($calc, $arpa, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
         if (is_object($arpa)) {
             // extract arpa fromobject
             $arpa = $arpa->get(Zend_Date::RFC_822, $gmt, $locale);
-        } else if (empty($arpa)) {
-            $arpa = $this->_Date->date('D\, d M y H\:m\:s O', FALSE, $gmt);
+        } else if ($arpa === null) {
+            $arpa = $this->_Date->date('D\, d M y H\:m\:s O', false, $gmt);
         }
-        $return = $this->_calcdetail($calc, $arpa, Zend_Date::RFC_822, TRUE, $locale);
+
+        $return = $this->_calcdetail($calc, $arpa, Zend_Date::RFC_822, true, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, FALSE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, false, $locale);
         }
         return $return;
     }
@@ -2693,12 +2690,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 to set, if null the actual date is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setArpa($date = NULL, $gmt = FALSE, $locale = NULL)
+    public function setArpa($date = null, $gmt = false, $locale = null)
     {
         return $this->_arpa('set', $date, $gmt, $locale);
     }
@@ -2712,12 +2709,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to add, if null the actual date is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addArpa($date = NULL, $gmt = FALSE, $locale = NULL)
+    public function addArpa($date = null, $gmt = false, $locale = null)
     {
         return $this->_arpa('add', $date, $gmt, $locale);
     }
@@ -2731,12 +2728,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to sub, if null the actual date is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subArpa($date = NULL, $gmt = FALSE, $locale = NULL)
+    public function subArpa($date = null, $gmt = false, $locale = null)
     {
         return $this->_arpa('sub', $date, $gmt, $locale);
     }
@@ -2750,12 +2747,12 @@ class Zend_Date {
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to sub, if null the actual date is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareArpa($date = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareArpa($date = null, $gmt = false, $locale = null)
     {
         return $this->_arpa('cmp', $date, $gmt, $locale);
     }
@@ -2814,7 +2811,7 @@ class Zend_Date {
     public function getSunRise($location)
     {
         $horizon = $this->_checkLocation($location);
-        return new Zend_Date($this->_Date->calcSun($location, $horizon, TRUE));
+        return new Zend_Date($this->_Date->calcSun($location, $horizon, true));
     }
 
 
@@ -2832,7 +2829,7 @@ class Zend_Date {
     public function getSunSet($location)
     {
         $horizon = $this->_checkLocation($location);
-        return new Zend_Date($this->_Date->calcSun($location, $horizon, FALSE));
+        return new Zend_Date($this->_Date->calcSun($location, $horizon, false));
     }
 
 
@@ -2866,8 +2863,8 @@ class Zend_Date {
                     break;
             }
             $horizon = $this->_checkLocation($location);
-            $suninfo['sunrise'][$location['horizon']] = new Zend_Date($this->_Date->calcSun($location, $horizon, TRUE));
-            $suninfo['sunset'][$location['horizon']]  = new Zend_Date($this->_Date->calcSun($location, $horizon, FALSE));
+            $suninfo['sunrise'][$location['horizon']] = new Zend_Date($this->_Date->calcSun($location, $horizon, true));
+            $suninfo['sunset'][$location['horizon']]  = new Zend_Date($this->_Date->calcSun($location, $horizon, false));
         }
         return $suninfo;
     }
@@ -2963,7 +2960,7 @@ class Zend_Date {
      * @param  string                    $calc    Calculation to make
      * @param  string|integer|Zend_Date  $date    Date or Part to calculate
      * @param  string                    $part    Datepart for Calculation
-     * @param  boolean                   $gmt     TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return integer|string  new date
      * @throws Zend_Date_Exception
@@ -2988,13 +2985,13 @@ class Zend_Date {
      * Returns only the year from the date object as new object.
      * For example: 10.May.2000 10:30:00 -> 01.Jan.2000 00:00:00
      *
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getYear($gmt = FALSE, $locale = NULL)
+    public function getYear($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -3005,27 +3002,29 @@ class Zend_Date {
      * Returns the calculated date
      *
      * @param  string                    $calc    Calculation to make
-     * @param  string|integer|Zend_Date  $year    OPTIONAL Year to calculate with, if null the actual year is taken
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer|Zend_Date  $year    Year to calculate with, if null the actual year is taken
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return integer|Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    private function _year($calc, $year = NULL, $gmt = FALSE, $locale = NULL)
+    private function _year($calc, $year, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
         if (is_object($year)) {
             // extract year from object
             $year = $date->get(Zend_Date::YEAR, $gmt, $locale);
-        } else if (empty($year) and ($year !== 0)) {
-            $year = $this->_Date->date('Y', FALSE, $gmt);
+        } else if ($year === null) {
+            $year = $this->_Date->date('Y', false, $gmt);
+        } else if (!is_numeric($year)) {
+            throw new Zend_Date_Exception("invalid year ($year) operand");
         }
-        $return = $this->_calcdetail($calc, $year, Zend_Date::YEAR, TRUE, $locale);
+        $return = $this->_calcdetail($calc, $year, Zend_Date::YEAR, true, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -3040,12 +3039,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL Year to set, if null the actual year is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setYear($year = NULL, $gmt = FALSE, $locale = NULL)
+    public function setYear($year = null, $gmt = false, $locale = null)
     {
         return $this->_year('set', $year, $gmt, $locale);
     }
@@ -3060,12 +3059,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL Year to add, if null the actual year is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addYear($year = NULL, $gmt = FALSE, $locale = NULL)
+    public function addYear($year = null, $gmt = false, $locale = null)
     {
         return $this->_year('add', $year, $gmt, $locale);
     }
@@ -3080,12 +3079,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $date    OPTIONAL Year to sub, if null the actual year is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subYear($year = NULL, $gmt = FALSE, $locale = NULL)
+    public function subYear($year = null, $gmt = false, $locale = null)
     {
         return $this->_year('sub', $year, $gmt, $locale);
     }
@@ -3093,16 +3092,16 @@ class Zend_Date {
 
     /**
      * Compares the year with the existing date object, ignoring other date parts. 
-     * For example: 10.03.2000 -> 15.02.2000 -> TRUE
+     * For example: 10.03.2000 -> 15.02.2000 -> true
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $year    OPTIONAL Year to compare, if null the actual year is compared
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareYear($year = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareYear($year = null, $gmt = false, $locale = null)
     {
         return $this->_year('cmp', $year, $gmt, $locale);
     }
@@ -3112,13 +3111,13 @@ class Zend_Date {
      * Returns only the month from the date object as new object.
      * For example: 10.May.2000 10:30:00 -> 01.May.1970 00:00:00
      *
-     * @param  boolean             $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getMonth($gmt = FALSE, $locale = NULL)
+    public function getMonth($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -3130,15 +3129,15 @@ class Zend_Date {
      * Returns the calculated month
      *
      * @param  string                    $calc    Calculation to make
-     * @param  string|integer|Zend_Date  $month   OPTIONAL Month to calculate with, if null the actual month is taken
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer|Zend_Date  $month   Month to calculate with, if null the actual month is taken
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return integer|Zend_Date  new time
      * @throws Zend_Date_Exception
      */
-    private function _month($calc, $month = NULL, $gmt = FALSE, $locale = NULL)
+    private function _month($calc, $month, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -3146,8 +3145,8 @@ class Zend_Date {
             // extract month from object
             $found = $date->get(Zend_Date::MONTH_DIGIT, $gmt, $locale);
         } else {
-            if (empty($month) and ($month !== 0)) {
-                $found = $this->_Date->date('m', FALSE, $gmt);
+            if ($month === null) {
+                $found = $this->_Date->date('m', false, $gmt);
             } else {
                 if (is_numeric($month)) {
                     $found = $month;
@@ -3182,7 +3181,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $found, Zend_Date::MONTH_DIGIT, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -3197,12 +3196,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Month to set, if null the actual month is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setMonth($month = NULL, $gmt = FALSE, $locale = NULL)
+    public function setMonth($month = null, $gmt = false, $locale = null)
     {
         return $this->_month('set', $month, $gmt, $locale);
     }
@@ -3217,12 +3216,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Month to add, if null the actual month is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addMonth($month = NULL, $gmt = FALSE, $locale = NULL)
+    public function addMonth($month = null, $gmt = false, $locale = null)
     {
         return $this->_month('add', $month, $gmt, $locale);
     }
@@ -3237,12 +3236,12 @@ class Zend_Date {
      * Returned is the new date object
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Month to sub, if null the actual month is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subMonth($month = NULL, $gmt = FALSE, $locale = NULL)
+    public function subMonth($month = null, $gmt = false, $locale = null)
     {
         return $this->_month('sub', $month, $gmt, $locale);
     }
@@ -3250,16 +3249,16 @@ class Zend_Date {
 
     /**
      * Compares the month with the existing date object, ignoring other date parts. 
-     * For example: 10.03.2000 -> 15.03.1950 -> TRUE
+     * For example: 10.03.2000 -> 15.03.1950 -> true
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Month to compare, if null the actual month is compared
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareMonth($month = FALSE, $gmt = FALSE, $locale = FALSE)
+    public function compareMonth($month = false, $gmt = false, $locale = false)
     {
         return $this->_month('cmp', $month, $gmt ,$locale);
     }
@@ -3269,13 +3268,13 @@ class Zend_Date {
      * Returns the day as new date object
      * Example: 20.May.1986 -> 20.Jan.1970 00:00:00
      *
-     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $gmt     boolean             OPTIONAL true = UTC time, false = actual time zone
      * @param $locale  string|Zend_Locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getDay($gmt = FALSE, $locale = NULL)
+    public function getDay($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -3287,20 +3286,20 @@ class Zend_Date {
      * Returns the calculated day
      *
      * @param $calc    string                    Type of calculation to make
-     * @param $day     string|integer|Zend_Date  OPTIONAL Day to calculate, when null the actual day is calculated
-     * @param $gmt     boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @param $day     string|integer|Zend_Date  Day to calculate, when null the actual day is calculated
+     * @param $gmt     boolean                   true = UTC time, false = actual time zone
+     * @param $locale  string|Zend_Locale        Locale for parsing input
      * @return Zend_Date|integer
      */
-    private function _day($calc, $day = NULL, $gmt = FALSE, $locale = NULL)
+    private function _day($calc, $day, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
         if (is_object($day)) {
-            $day = $day->get(Zend_Date::DAY_SHORT, FALSE, $locale);
-        } else if (empty($day) and ($day !== 0)) {
+            $day = $day->get(Zend_Date::DAY_SHORT, false, $locale);
+        } else if ($day === null) {
             $day = $this->_Date->date('j');
         }
 
@@ -3324,7 +3323,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $day, $type, $gmt, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -3340,12 +3339,12 @@ class Zend_Date {
      * Example: setDay('Montag', 'de_AT'); will set the monday of this week as day.
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Day to set, if null the actual day is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setDay($day = NULL, $gmt = FALSE, $locale = NULL)
+    public function setDay($day = null, $gmt = false, $locale = null)
     {
         return $this->_day('set', $day, $gmt, $locale);
     }
@@ -3361,12 +3360,12 @@ class Zend_Date {
      * Example: addDay('Montag', 'de_AT'); will add the number of days until the next monday
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Day to add, if null the actual day is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addDay($day = NULL, $gmt = TRUE, $locale = NULL)
+    public function addDay($day = null, $gmt = true, $locale = null)
     {
         return $this->_day('add', $day, $gmt, $locale);
     }
@@ -3382,12 +3381,12 @@ class Zend_Date {
      * Example: subDay('Montag', 'de_AT'); will sub the number of days until the previous monday
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Day to sub, if null the actual day is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subDay($day = NULL, $gmt = TRUE, $locale = NULL)
+    public function subDay($day = null, $gmt = true, $locale = null)
     {
         return $this->_day('sub', $day, $gmt, $locale);
     }
@@ -3399,12 +3398,12 @@ class Zend_Date {
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $day     OPTIONAL Day to compare, if null the actual day is compared
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareDay($day = NULL, $locale = NULL)
+    public function compareDay($day = null, $locale = null)
     {
         return $this->_day('cmp', $day, $gmt, $locale);
     }
@@ -3415,13 +3414,13 @@ class Zend_Date {
      * Weekday is always from 1-7
      * Example: 09-Jan-2007 -> 2 = Tuesday -> 02-Jan-1970 (when 02.01.1970 is also Tuesday)
      *
-     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $gmt     boolean             OPTIONAL true = UTC time, false = actual time zone
      * @param $locale  string|Zend_Locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getWeekday($gmt = FALSE, $locale = NULL)
+    public function getWeekday($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -3433,22 +3432,22 @@ class Zend_Date {
      * Returns the calculated weekday
      *
      * @param  $calc     string                    Type of calculation to make
-     * @param  $weekday  string|integer|Zend_Date  OPTIONAL Weekday to calculate, when null the actual weekday is calculated
-     * @param  $gmt      boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale   string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @param  $weekday  string|integer|Zend_Date  Weekday to calculate, when null the actual weekday is calculated
+     * @param  $gmt      boolean                   true = UTC time, false = actual time zone
+     * @param  $locale   string|Zend_Locale        Locale for parsing input
      * @return Zend_Date|integer
      * @throws Zend_Date_Exception
      */
     private function _weekday($calc, $weekday, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
-        if (empty($weekday) and ($weekday !== 0)) {
-            $weekday = $this->_Date->date('w', FALSE, $locale);
+        if ($weekday === null) {
+            $weekday = $this->_Date->date('w', false, $locale);
         } else if (is_object($weekday)) {
-            $weekday = $weekday->get(Zend_Date::WEEKDAY_DIGIT, FALSE, $locale);
+            $weekday = $weekday->get(Zend_Date::WEEKDAY_DIGIT, false, $locale);
         }
 
         if (is_numeric($weekday)) {
@@ -3471,7 +3470,7 @@ class Zend_Date {
         }
         $return = $this->_calcdetail($calc, $weekday, $type, $gmt, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -3487,12 +3486,12 @@ class Zend_Date {
      * Example: setWeekday(3); will set the wednesday of this week as day.
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Weekday to set, if null the actual weekday is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setWeekday($weekday = NULL, $gmt = FALSE, $locale = NULL)
+    public function setWeekday($weekday = null, $gmt = false, $locale = null)
     {
         return $this->_weekday('set', $weekday, $gmt, $locale);
     }
@@ -3509,12 +3508,12 @@ class Zend_Date {
      * wednesday.
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Weekday to add, if null the actual weekday is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addWeekday($weekday = NULL, $gmt = FALSE, $locale = NULL)
+    public function addWeekday($weekday = null, $gmt = false, $locale = null)
     {
         return $this->_weekday('add', $weekday, $gmt, $locale);
     }
@@ -3531,12 +3530,12 @@ class Zend_Date {
      * wednesday.
      *
      * @param  string|integer|Zend_Date  $month   OPTIONAL Weekday to sub, if null the actual weekday is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subWeekday($weekday = NULL, $gmt = FALSE, $locale = NULL)
+    public function subWeekday($weekday = null, $gmt = false, $locale = null)
     {
         return $this->_weekday('sub', $weekday, $gmt, $locale);
     }
@@ -3548,12 +3547,12 @@ class Zend_Date {
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $weekday  OPTIONAL Weekday to compare, if null the actual weekday is compared
-     * @param  boolean                   $gmt      OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt      OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale   OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareWeekday($weekday = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareWeekday($weekday = null, $gmt = false, $locale = null)
     {
         return $this->_weekday('cmp', $weekday, $gmt, $locale);
     }
@@ -3563,13 +3562,13 @@ class Zend_Date {
      * Returns the day of year as new date object
      * Example: 02.Feb.1986 10:00:00 -> 02.Feb.1970 00:00:00
      *
-     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale  OPTIONAL Locale for parsing input
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getDayOfYear($gmt = FALSE, $locale = NULL)
+    public function getDayOfYear($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -3580,28 +3579,28 @@ class Zend_Date {
     /**
      * Returns the calculated day of the year
      *
-     * @param  $calc     string                    Type of calculation to make
-     * @param  $day      string|integer|Zend_Date  OPTIONAL Day of year to calculate, when null the actual day of year is calculated
-     * @param  $gmt      boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale   string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @param  string                    $calc   Type of calculation to make
+     * @param  string|integer|Zend_Date  $day    Day of year to calculate, when null the actual day of year is calculated
+     * @param  boolean                   $gmt    true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale Locale for parsing input
      * @return Zend_Date|integer
      * @throws Zend_Date_Exception
      */
     private function _dayOfYear($calc, $day, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
-        if (empty($day) and ($day !== 0)) {
+        if ($day === null) {
             $day = $this->_Date->date('z');
         } else if (is_object($day)) {
-            $day = $day->get(Zend_Date::DAY_OF_YEAR, FALSE, $locale);
+            $day = $day->get(Zend_Date::DAY_OF_YEAR, false, $locale);
         }
 
         $return = $this->_calcdetail($calc, $day, Zend_Date::DAY_OF_YEAR, $gmt, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -3613,13 +3612,13 @@ class Zend_Date {
      * Returned is the new date object
      * Example: 04.May.2004 -> setDayOfYear(10) -> 10.Jan.2004
      *
-     * @param  string|integer|Zend_Date  $month   OPTIONAL Day of Year to set, if null the actual day of year is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|integer|Zend_Date  $day     OPTIONAL Day of Year to set, if null the actual day of year is set
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setDayOfYear($day = NULL, $gmt = FALSE, $locale = NULL)
+    public function setDayOfYear($day = null, $gmt = false, $locale = null)
     {
         return $this->_dayOfYear('set', $day, $gmt, $locale);
     }
@@ -3631,13 +3630,13 @@ class Zend_Date {
      * Returned is the new date object
      * Example: addDayOfYear(10); will add 10 days to the existing date object.
      *
-     * @param  string|integer|Zend_Date  $month   OPTIONAL Day of Year to add, if null the actual day of year is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|integer|Zend_Date  $day     OPTIONAL Day of Year to add, if null the actual day of year is added
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addDayOfYear($day = NULL, $gmt = FALSE, $locale = NULL)
+    public function addDayOfYear($day = null, $gmt = false, $locale = null)
     {
         return $this->_dayOfYear('add', $day, $gmt, $locale);
     }
@@ -3649,13 +3648,13 @@ class Zend_Date {
      * Returned is the new date object
      * Example: subDayOfYear(10); will substract 10 days from the existing date object.
      *
-     * @param  string|integer|Zend_Date  $month   OPTIONAL Day of Year to sub, if null the actual day of year is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  string|integer|Zend_Date  $day     OPTIONAL Day of Year to sub, if null the actual day of year is substracted
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subDayOfYear($day = NULL, $gmt = FALSE, $locale = NULL)
+    public function subDayOfYear($day = null, $gmt = false, $locale = null)
     {
         return $this->_dayOfYear('sub', $day, $gmt, $locale);
     }
@@ -3667,12 +3666,12 @@ class Zend_Date {
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $day     OPTIONAL Day of Year to compare, if null the actual day of year is compared
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareDayOfYear($day = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareDayOfYear($day = null, $gmt = false, $locale = null)
     {
         return $this->_dayOfYear('cmp', $day, $gmt, $locale);
     }
@@ -3682,13 +3681,13 @@ class Zend_Date {
      * Returns the hour as new date object
      * Example: 02.Feb.1986 10:30:25 -> 01.Jan.1970 10:00:00
      *
-     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $gmt     boolean             OPTIONAL true = UTC time, false = actual time zone
      * @param $locale  string|Zend_Locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getHour($gmt = FALSE, $locale = NULL)
+    public function getHour($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -3699,28 +3698,30 @@ class Zend_Date {
     /**
      * Returns the calculated hour
      *
-     * @param  $calc     string                    Type of calculation to make
-     * @param  $hour     string|integer|Zend_Date  OPTIONAL Hour to calculate, when null the actual hour is calculated
-     * @param  $gmt      boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale   string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @param  string                    $calc    Type of calculation to make
+     * @param  string|integer|Zend_Date  $hour    Hour to calculate, when null the actual hour is calculated
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return Zend_Date|integer
      * @throws Zend_Date_Exception
      */
     private function _hour($calc, $hour, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
-        if (empty($hour) and ($hour !== 0)) {
+        if ($hour === null) {
             $hour = $this->_Date->date('G');
         } else if (is_object($hour)) {
-            $hour = $hour->get(Zend_Date::HOUR_SHORT, FALSE, $locale);
+            $hour = $hour->get(Zend_Date::HOUR_SHORT, false, $locale);
+        } else if (!is_numeric($hour)) {
+            throw new Zend_Date_Exception("invalid hour ($hour) operand");
         }
 
         $return = $this->_calcdetail($calc, $hour, Zend_Date::HOUR_SHORT, $gmt, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -3733,12 +3734,12 @@ class Zend_Date {
      * Example: 04.May.1993 13:07:25 -> setHour(7); -> 04.May.1993 07:07:25
      *
      * @param  string|integer|Zend_Date  $hour    OPTIONAL Hour to set, if null the actual hour is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setHour($hour = NULL, $gmt = FALSE, $locale = NULL)
+    public function setHour($hour = null, $gmt = false, $locale = null)
     {
         return $this->_hour('set', $hour, $gmt, $locale);
     }
@@ -3751,12 +3752,12 @@ class Zend_Date {
      * Example: 04.May.1993 13:07:25 -> addHour(12); -> 05.May.1993 01:07:25
      *
      * @param  string|integer|Zend_Date  $hour    OPTIONAL Hour to add, if null the actual hour is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addHour($hour = NULL, $gmt = FALSe, $locale = NULL)
+    public function addHour($hour = null, $gmt = FALSe, $locale = null)
     {
         return $this->_hour('add', $hour, $gmt, $locale);
     }
@@ -3769,12 +3770,12 @@ class Zend_Date {
      * Example: 04.May.1993 13:07:25 -> subHour(6); -> 05.May.1993 07:07:25
      *
      * @param  string|integer|Zend_Date  $hour    OPTIONAL Hour to sub, if null the actual hour is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subHour($hour = NULL, $gmt = FALSE, $locale = NULL)
+    public function subHour($hour = null, $gmt = false, $locale = null)
     {
         return $this->_hour('sub', $hour, $gmt, $locale);
     }
@@ -3786,12 +3787,12 @@ class Zend_Date {
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $hour    OPTIONAL Hour to compare, if null the actual hour is compared
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareHour($hour = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareHour($hour = null, $gmt = false, $locale = null)
     {
         return $this->_hour('cmp', $hour, $gmt, $locale);
     }
@@ -3801,13 +3802,13 @@ class Zend_Date {
      * Returns the minute as new date object
      * Example: 02.Feb.1986 10:30:25 -> 01.Jan.1970 00:30:00
      *
-     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale  OPTIONAL Locale for parsing input
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getMinute($gmt = FALSE, $locale = NULL)
+    public function getMinute($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -3818,28 +3819,30 @@ class Zend_Date {
     /**
      * Returns the calculated minute
      *
-     * @param  $calc     string                    Type of calculation to make
-     * @param  $minute   string|integer|Zend_Date  OPTIONAL Minute to calculate, when null the actual minute is calculated
-     * @param  $gmt      boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale   string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @param  string                    $calc    Type of calculation to make
+     * @param  string|integer|Zend_Date  $minute  Minute to calculate, when null the actual minute is calculated
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return Zend_Date|integer
      * @throws Zend_Date_Exception
      */
-    private function _minute($minute, $locale, $calc)
+    private function _minute($calc, $minute, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
-        if (empty($minute) and ($minute !== 0)) {
+        if ($minute === null) {
             $minute = $this->_Date->date('i');
         } else if (is_object($minute)) {
-            $minute = $minute->get(Zend_Date::MINUTE_SHORT, FALSE, $locale);
+            $minute = $minute->get(Zend_Date::MINUTE_SHORT, false, $locale);
+        } else if (!is_numeric($minute)) {
+            throw new Zend_Date_Exception("invalid minute ($minute) operand");
         }
 
         $return = $this->_calcdetail($calc, $minute, Zend_Date::MINUTE_SHORT, $gmt, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -3852,12 +3855,12 @@ class Zend_Date {
      * Example: 04.May.1993 13:07:25 -> setMinute(29); -> 04.May.1993 13:29:25
      *
      * @param  string|integer|Zend_Date  $minute  OPTIONAL Minute to set, if null the actual minute is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setMinute($minute = NULL, $gmt = FALSE, $locale = NULL)
+    public function setMinute($minute = null, $gmt = false, $locale = null)
     {
         return $this->_minute('set', $minute, $gmt, $locale);
     }
@@ -3870,12 +3873,12 @@ class Zend_Date {
      * Example: 04.May.1993 13:07:25 -> addMinute(65); -> 04.May.1993 13:12:25
      *
      * @param  string|integer|Zend_Date  $minute  OPTIONAL Minute to add, if null the actual minute is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addMinute($minute = NULL, $gmt = FALSE, $locale = NULL)
+    public function addMinute($minute = null, $gmt = false, $locale = null)
     {
         return $this->_minute('add', $minute, $gmt, $locale);
     }
@@ -3888,12 +3891,12 @@ class Zend_Date {
      * Example: 04.May.1993 13:07:25 -> subMinute(9); -> 04.May.1993 12:58:25
      *
      * @param  string|integer|Zend_Date  $minute  OPTIONAL Minute to sub, if null the actual minute is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subMinute($minute = NULL, $gmt = FALSE, $locale = NULL)
+    public function subMinute($minute = null, $gmt = false, $locale = null)
     {
         return $this->_minute('sub', $minute, $gmt, $locale);
     }
@@ -3905,12 +3908,12 @@ class Zend_Date {
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $minute  OPTIONAL Hour to compare, if null the actual hour is compared
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareMinute($minute = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareMinute($minute = null, $gmt = false, $locale = null)
     {
         return $this->_minute('cmp', $minute, $gmt, $locale);
     }
@@ -3920,13 +3923,13 @@ class Zend_Date {
      * Returns the second as new date object
      * Example: 02.Feb.1986 10:30:25 -> 01.Jan.1970 00:00:25
      *
-     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param $locale  string|Zend_Locale  OPTIONAL Locale for parsing input
+     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getSecond($gmt = FALSE, $locale = NULL)
+    public function getSecond($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -3937,28 +3940,30 @@ class Zend_Date {
     /**
      * Returns the calculated second
      *
-     * @param  $calc     string                    Type of calculation to make
-     * @param  $minute   string|integer|Zend_Date  OPTIONAL Second to calculate, when null the actual second is calculated
-     * @param  $gmt      boolean                   OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  $locale   string|Zend_Locale        OPTIONAL Locale for parsing input
+     * @param  string                    $calc    Type of calculation to make
+     * @param  string|integer|Zend_Date  $second  Second to calculate, when null the actual second is calculated
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return Zend_Date|integer
      * @throws Zend_Date_Exception
      */
     private function _second($calc, $second, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
-        if (empty($second) and ($second !== 0)) {
+        if ($second === null) {
             $second = $this->_Date->date('s');
         } else if (is_object($second)) {
-            $second = $second->get(Zend_Date::SECOND_SHORT, FALSE, $locale);
+            $second = $second->get(Zend_Date::SECOND_SHORT, false, $locale);
+        } else if (!is_numeric($second)) {
+            throw new Zend_Date_Exception("invalid hour ($second) operand");
         }
 
         $return = $this->_calcdetail($calc, $second, Zend_Date::SECOND_SHORT, $gmt, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, TRUE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
         return $return;
     }
@@ -3971,12 +3976,12 @@ class Zend_Date {
      * Example: 04.May.1993 13:07:25 -> setSecond(100); -> 04.May.1993 13:08:40
      *
      * @param  string|integer|Zend_Date  $second  OPTIONAL Second to set, if null the actual second is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function setSecond($second = NULL, $gmt = FALSE, $locale = NULL)
+    public function setSecond($second = null, $gmt = false, $locale = null)
     {
         return $this->_second('set', $second, $gmt, $locale);
     }
@@ -3989,12 +3994,12 @@ class Zend_Date {
      * Example: 04.May.1993 13:07:25 -> addSecond(65); -> 04.May.1993 13:08:30
      *
      * @param  string|integer|Zend_Date  $second  OPTIONAL Second to add, if null the actual second is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addSecond($second = NULL, $gmt = FALSE, $locale = NULL)
+    public function addSecond($second = null, $gmt = false, $locale = null)
     {
         return $this->_second('add', $second, $gmt, $locale);
     }
@@ -4007,12 +4012,12 @@ class Zend_Date {
      * Example: 04.May.1993 13:07:25 -> subSecond(10); -> 04.May.1993 13:07:15
      *
      * @param  string|integer|Zend_Date  $second  OPTIONAL Second to sub, if null the actual second is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function subSecond($second = NULL, $gmt = FALSE, $locale = NULL)
+    public function subSecond($second = null, $gmt = false, $locale = null)
     {
         return $this->_second('sub', $second, $gmt, $locale);
     }
@@ -4024,19 +4029,19 @@ class Zend_Date {
      * Returns if equal, earlier or later
      *
      * @param  string|integer|Zend_Date  $second  OPTIONAL Second to compare, if null the actual second is compared
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareSecond($second = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareSecond($second = null, $gmt = false, $locale = null)
     {
         return $this->_second('cmp', $second, $gmt, $locale);
     }
 
 
     /**
-     * Returns  the precision for fractional seconds
+     * Returns the precision for fractional seconds
      *
      * @return integer
      */
@@ -4054,8 +4059,8 @@ class Zend_Date {
      */
     public function setFractionalPrecision($precision = 3)
     {
-        if (!intval($precision) or ($precision < 0)) {
-            throw new Zend_Date_Exception('precision must be >= 0');
+        if (!intval($precision) or ($precision < 0) or ($precision > 9)) {
+            throw new Zend_Date_Exception('precision must be a positive integer less than 10');
         }
         $this->_Precision = (int) $precision;
     }
@@ -4076,26 +4081,24 @@ class Zend_Date {
      * Sets new milliseconds for the date object
      * Example: setMilliSecond(550, 2) -> equals +5 Sec +50 MilliSec 
      *
-     * @param  integer|Zend_Date  $milli  OPTIONAL Millisecond to set, when null the actual millisecond is set
+     * @param  integer|Zend_Date  $milli      OPTIONAL Millisecond to set, when null the actual millisecond is set
      * @param  integer            $precision  OPTIONAL Fraction precision of the given milliseconds
      * @return integer|string
      */
-    public function setMilliSecond($milli = NULL, $precision = NULL)
+    public function setMilliSecond($milli = null, $precision = null)
     {
-        if (is_null($milli)) {
+        if ($milli === null) {
             list($milli, $time) = explode(" ", microtime());
             $milli = intval($milli);
             $precision = 6;
         } else if (!is_numeric($milli)) {
-            throw new Zend_Date_Exception('millisecond expected');
+            throw new Zend_Date_Exception("invalid milli second ($milli) operand");
         }
         
-        if(is_null($precision)) {
+        if ($precision === null) {
             $precision = $this->_Precision;
-        }
-
-        if ($precision === 0) {
-            throw new Zend_Date_Exception('precision is 0');
+        } else if (!is_int($precision) || $precision < 1 || $precision > 9) {
+            throw new Zend_Date_Exception("precision ($precision) must be a positive integer less than 10");
         }
 
         $this->_Fractional = 0;
@@ -4107,25 +4110,23 @@ class Zend_Date {
     /**
      * Adds milliseconds to the date object
      *
-     * @param  integer|Zend_Date  $milli  OPTIONAL Millisecond to add, when null the actual millisecond is added
+     * @param  integer|Zend_Date  $milli      OPTIONAL Millisecond to add, when null the actual millisecond is added
      * @param  integer            $precision  OPTIONAL Fractional precision for the given milliseconds
      * @return integer|string
      */
-    public function addMilliSecond($milli = NULL, $precision = NULL)
+    public function addMilliSecond($milli = null, $precision = null)
     {
-        if (is_null($milli)) {
+        if ($milli === null) {
             list($milli, $time) = explode(" ", microtime());
             $milli = intval($milli);
         } else if (!is_numeric($milli)) {
-            throw new Zend_Date_Exception('millisecond expected');
+            throw new Zend_Date_Exception("invalid milli second ($milli) operand");
         }
         
-        if (is_null($precision)) {
+        if ($precision === null) {
             $precision = $this->_Precision;
-        }
-
-        if ($precision === 0) {
-            throw new Zend_Date_Exception('precision is 0');
+        } else if (!is_int($precision) || $precision < 1 || $precision > 9) {
+            throw new Zend_Date_Exception("precision ($precision) must be a positive integer less than 10");
         }
 
         if ($precision != $this->_Precision) {
@@ -4167,10 +4168,9 @@ class Zend_Date {
      * @param  integer            $precision  OPTIONAL Fractional precision for the given milliseconds
      * @return integer
      */
-    public function subMilliSecond($milli = NULL, $precision = NULL)
+    public function subMilliSecond($milli = null, $precision = null)
     {
-        $milli = bcsub(0, $milli);
-        return $this->addMilliSecond($milli);
+        return $this->addMilliSecond(0 - $milli);
     }
 
 
@@ -4181,17 +4181,19 @@ class Zend_Date {
      * @param  integer            $precision  OPTIONAL Fractional precision for the given milliseconds
      * @return integer
      */
-    public function compareMilliSecond($milli = NULL, $precision = NULL)
+    public function compareMilliSecond($milli = null, $precision = null)
     {
-        if (is_null($milli)) {
+        if ($milli === null) {
             list($milli, $time) = explode(" ", microtime());
             $milli = intval($milli);
         } else if (!is_numeric($milli)) {
-            throw new Zend_Date_Exception('millisecond expected');
+            throw new Zend_Date_Exception("invalid milli second ($milli) operand");
         }
         
-        if (is_null($precision)) {
+        if ($precision === null) {
             $precision = $this->_Precision;
+        } else if (!is_int($precision) || $precision < 1 || $precision > 9) {
+            throw new Zend_Date_Exception("precision ($precision) must be a positive integer less than 10");
         }
 
         if ($precision === 0) {
@@ -4222,13 +4224,13 @@ class Zend_Date {
      * Returns the week as new date object using monday as begining of the week
      * Example: 12.Jan.2007 -> 08.Jan.1970 00:00:00
      *
-     * @param $gmt     boolean             OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param $gmt     boolean             OPTIONAL true = UTC time, false = actual time zone
      * @param $locale  string|Zend_Locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      */
-    public function getWeek($gmt = FALSE, $locale = NULL)
+    public function getWeek($gmt = false, $locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
@@ -4240,28 +4242,30 @@ class Zend_Date {
      * Returns the calculated week
      *
      * @param  string                    $calc    Type of calculation to make
-     * @param  string|integer|Zend_Date  $week    OPTIONAL Week to calculate, when null the actual week is calculated
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
-     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer|Zend_Date  $week    Week to calculate, when null the actual week is calculated
+     * @param  boolean                   $gmt     true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  Locale for parsing input
      * @return Zend_Date|integer
      * @throws Zend_Date_Exception
      */
     private function _week($calc, $week, $gmt, $locale)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             $locale = $this->getLocale();
         }
 
         if (is_object($week)) {
             // extract week from object
             $week = $date->get(Zend_Date::WEEK, $gmt, $locale);
-        } else if (empty($date) and ($week !== 0)) {
-            $week = $this->_Date->date('W', FALSE, $gmt);
+        } else if ($week === null) {
+            $week = $this->_Date->date('W', false, $gmt);
+        } else if (!is_numeric($week)) {
+            throw new Zend_Date_Exception("invalid week ($week) operand");
         }
 
         $return = $this->_calcdetail($calc, $week, Zend_Date::WEEK, $gmt, $locale);
         if ($calc != 'cmp') {
-            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, FALSE, $locale);
+            return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, false, $locale);
         }
         return $return;
     }
@@ -4273,12 +4277,12 @@ class Zend_Date {
      * Example: 09.Jan.2007 13:07:25 -> setWeek(1); -> 02.Jan.2007 13:07:25
      *
      * @param  string|integer|Zend_Date  $week    OPTIONAL Week to set, when null the actual week is set
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
-    public function setWeek($week = NULL, $gmt = FALSE, $locale = NULL)
+    public function setWeek($week = null, $gmt = false, $locale = null)
     {
         return $this->_week('set', $week, $gmt, $locale);
     }
@@ -4290,12 +4294,12 @@ class Zend_Date {
      * Example: 09.Jan.2007 13:07:25 -> addWeek(1); -> 16.Jan.2007 13:07:25
      *
      * @param  string|integer|Zend_Date  $week    OPTIONAL Week to add, when null the actual week is added
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
-    public function addWeek($week = NULL, $gmt = FALSE, $locale = NULL)
+    public function addWeek($week = null, $gmt = false, $locale = null)
     {
         return $this->_week('add', $week, $gmt, $locale);
     }
@@ -4307,12 +4311,12 @@ class Zend_Date {
      * Example: 09.Jan.2007 13:07:25 -> subWeek(1); -> 02.Jan.2007 13:07:25
      *
      * @param  string|integer|Zend_Date  $week    OPTIONAL Week to sub, when null the actual day is substracted
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
-    public function subWeek($week = NULL, $gmt = FALSE, $locale = NULL)
+    public function subWeek($week = null, $gmt = false, $locale = null)
     {
         return $this->_week('sub', $week, $gmt, $locale);
     }
@@ -4325,12 +4329,12 @@ class Zend_Date {
      * Example: 09.Jan.2007 13:07:25 -> compareWeek(2); -> 0
      *
      * @param  string|integer|Zend_Date  $week    OPTIONAL Week to compare, when null the actual day is compared
-     * @param  boolean                   $gmt     OPTIONAL TRUE = UTC time, FALSE = actual time zone
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
      * @throws Zend_Date_Exception
      */
-    public function compareWeek($week = NULL, $gmt = FALSE, $locale = NULL)
+    public function compareWeek($week = null, $gmt = false, $locale = null)
     {
         return $this->_week('cmp', $week, $gmt, $locale);
     }
@@ -4346,9 +4350,9 @@ class Zend_Date {
      * @param  string|Zend_Locale     $locale  OPTIONAL Locale for parsing input
      * @return string
      */
-    public function setLocale($locale = NULL)
+    public function setLocale($locale = null)
     {
-        if (empty($locale)) {
+        if ($locale === null) {
             unset($this->_Locale);
             $this->_Locale = new Zend_Locale();
         } else if ($locale instanceof Zend_Locale) {
