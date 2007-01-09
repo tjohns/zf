@@ -3463,4 +3463,68 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->getLocale(),$set);
     }
     
+    /**
+     * test for getWeek
+     */
+    public function testGetWeek()
+    {
+        //incomplete test
+        $this->fail('in complete test'); return;
+        
+        $today = 1168293600 ; //Tuesday 09.Jan.2007
+        $day = 3600 * 24 ; 
+        
+        
+        $locale = new Zend_Locale('de_AT');
+        
+        
+        //Tuesday
+        $date = new Zend_Date($today, null,false,$locale);
+        $this->assertSame($date->getWeek()->toString(),'08.Jan.1970 00:00:00');
+        
+        //Wednesday
+        $date = new Zend_Date($today + (2*$day), null,false,$locale);
+        $this->assertSame($date->getWeek()->toString(),'08.Jan.1970 00:00:00');
+        
+        //Thursday
+        $date = new Zend_Date($today + (3*$day), null,false,$locale);
+        $this->assertSame($date->getWeek()->toString(),'08.Jan.1970 00:00:00');
+        
+        //Friday
+        $date = new Zend_Date($today + (4*$day), null,false,$locale);
+        $this->assertSame($date->getWeek()->toString(),'08.Jan.1970 00:00:00');
+        
+        //Friday 03:45 pm
+        $date = new Zend_Date($today + (4*$day) + (15.75*3600), null,false,$locale);
+        $this->assertSame($date->getWeek()->toString(),'08.Jan.1970 00:00:00');
+        
+        //Saturday
+        $date = new Zend_Date($today + (5*$day), null,false,$locale);
+        $this->assertSame($date->getWeek()->toString(),'08.Jan.1970 00:00:00');
+        
+        //Saturday [ar_EG]
+        $date = new Zend_Date($today + (5*$day), null,false,$locale);
+        $this->assertSame($date->getWeek(false, 'ar_EG')->toString(),'08.Jan.1970 00:00:00');
+        
+        //Sunday
+        $date = new Zend_Date($today + (6*$day), null,false,$locale);
+        $this->assertSame($date->getWeek()->toString(),'08.Jan.1970 00:00:00');
+        
+        //Sunday 05:30 am
+        $date = new Zend_Date($today + (6*$day) + (5.5*3600), null,false,$locale);
+        $this->assertSame($date->getWeek()->toString(),'08.Jan.1970 00:00:00');
+        
+        //Monday [start of a new week]
+        $date = new Zend_Date($today + (7*$day), null,false,$locale);
+        $this->assertSame($date->getWeek()->toString(),'15.Jan.1970 00:00:00');
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
 }
