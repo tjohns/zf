@@ -132,7 +132,7 @@ class Zend_Search_Lucene_Search_QueryEntry_Phrase extends Zend_Search_Lucene_Sea
         $query = new Zend_Search_Lucene_Search_Query_Phrase();
         foreach ($tokens as $token) {
             $term = new Zend_Search_Lucene_Index_Term($token->getTermText(), $this->_field);
-            $query->addTerm($term, true); // all subterms are required
+            $query->addTerm($term);
         }
 
         if ($this->_proximityQuery) {
