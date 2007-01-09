@@ -42,7 +42,6 @@ final class Zend
      */
     static private $_registry = null;
 
-
     /**
      * Loads a class from a PHP file.  The filename must be formatted
      * as "$class.php".
@@ -83,9 +82,13 @@ final class Zend
         if ($path != $class) {
             // use the autodiscovered path
             $dirPath = dirname($path);
-            foreach ($dirs as $key => $dir) {
-                $dir = rtrim($dir, '\\/');
-                $dirs[$key] = $dir . DIRECTORY_SEPARATOR . $dirPath;
+            if (0 == count($dirs)) {
+                $dirs = array($dirPath);
+            } else {
+                foreach ($dirs as $key => $dir) {
+                    $dir = rtrim($dir, '\\/');
+                    $dirs[$key] = $dir . DIRECTORY_SEPARATOR . $dirPath;
+                }
             }
             $file = basename($path) . '.php';
         } else {
@@ -102,15 +105,14 @@ final class Zend
 
 
     /**
-     * Loads an interface from a PHP file.  See 
-     *;
+     * Loads an interface from a PHP file
+     *
      * @deprecated Since 0.6
      */
     static public function loadInterface($class, $dirs = null)
     {
         throw new Zend_Exception(__FUNCTION__ . " has been removed. Please use require_once().");
     }
-
 
     /**
      * Loads a PHP file.  This is a wrapper for PHP's include() function.
@@ -134,7 +136,7 @@ final class Zend
      * @throws Zend_Exception
      * @return mixed
      */
-    static public function loadFile($filename, $dirs=null, $once=false)
+    static public function loadFile($filename, $dirs = null, $once = false)
     {
         // security check
         if (preg_match('/[^a-z0-9\-_.]/i', $filename)) {
