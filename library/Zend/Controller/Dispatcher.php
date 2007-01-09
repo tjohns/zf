@@ -480,17 +480,14 @@ class Zend_Controller_Dispatcher implements Zend_Controller_Dispatcher_Interface
         $dispatchable = false;
         $module = (string) $request->getParam('module', false);
         if ($module && isset($directories[$module])) {
-echo "Modules found<br />\n";
             $dispatchable = Zend::isReadable($directories[$module] . DIRECTORY_SEPARATOR . $classPath . '.php');
             if ($dispatchable) {
                 $this->_curDirectory = $directories[$module];
             }
         } else {
-echo "Not using modules; testing $classPath<br />\n";
             foreach ($directories as $directory) {
                 $dispatchable = Zend::isReadable($directory . DIRECTORY_SEPARATOR . $classPath . '.php');
                 if ($dispatchable) {
-echo "Found $className in $directory/$classPath.php<br />\n";
                     $this->_curDirectory = $directory;
                     break;
                 }
