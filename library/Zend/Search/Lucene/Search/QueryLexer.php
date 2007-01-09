@@ -474,7 +474,7 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
      */
     private function _positionMsg()
     {
-        return 'Position is ' . $this->_currentCharIndex . '.';
+        return 'Position is ' . $this->_queryStringPosition . '.';
     }
 
 
