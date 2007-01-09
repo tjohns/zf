@@ -18,8 +18,11 @@ require_once 'Zend/Date/Cities.php';
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
-//Zend_Locale_Math::init(true); // disable bcmath functions for all tests below
-echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
+
+if (defined('TESTS_ZEND_DATE_BCMATH_ENABLED') && !TESTS_ZEND_DATE_BCMATH_ENABLED) {
+    Zend_Locale_Math::init(true); // disable bcmath functions for all tests below
+}
+// echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
 
 
 /**
@@ -109,7 +112,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(0,Zend_Date::TIMESTAMP,false,$locale);
         $result = $date->setTimestamp(10000000);
-        $this->assertSame($result->getTimestamp(), '10000000');
+        $this->assertSame((string)$result->getTimestamp(), '10000000');
     }
 
     /**
@@ -135,7 +138,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(0,null,false,$locale);
         $result = $date->addTimestamp(10000000);
-        $this->assertSame($result->getTimestamp(), '10000000');
+        $this->assertSame((string)$result->getTimestamp(), '10000000');
     }
 
     /**
@@ -161,7 +164,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $locale = new Zend_Locale('de_AT');
         $date = new Zend_Date(0,null,false,$locale);
         $result = $date->subTimestamp(10000000);
-        $this->assertSame($result->getTimestamp(), '-10000000');
+        $this->assertSame((string)$result->getTimestamp(), '-10000000');
     }
 
     /**
@@ -706,9 +709,9 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1010101010,null,false,$locale);
 
         $retour = $date->set(1234567890);
-        $this->assertSame($retour,'1234567890');
-        $this->assertSame($date->set($d2),'1010101010');
-        $this->assertSame($date->set(1234567891),'1234567891');
+        $this->assertSame((string)$retour,'1234567890');
+        $this->assertSame((string)$date->set($d2),'1010101010');
+        $this->assertSame((string)$date->set(1234567891),'1234567891');
 
         try {
             $date->set('noday', Zend_Date::DAY);
@@ -2036,10 +2039,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1010101010,null,false,$locale);
 
         $retour = $date->set(1234567890);
-        $this->assertSame($retour,'1234567890');
-        $this->assertSame($date->add(10),'1234567900');
-        $this->assertSame($date->add(-10),'1234567890');
-        $this->assertSame($date->add(0),'1234567890');
+        $this->assertSame((string)$retour,'1234567890');
+        $this->assertSame((string)$date->add(10),'1234567900');
+        $this->assertSame((string)$date->add(-10),'1234567890');
+        $this->assertSame((string)$date->add(1),'1234567890');
 
         $date->set($d2);
         $date->add(10, Zend_Date::DAY);
@@ -2404,10 +2407,10 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1010101010,null,false,$locale);
 
         $retour = $date->set(1234567890);
-        $this->assertSame($retour,'1234567890');
-        $this->assertSame($date->sub(-10),'1234567900');
-        $this->assertSame($date->sub(10),'1234567890');
-        $this->assertSame($date->sub(0),'1234567890');
+        $this->assertSame((string)$retour,'1234567890');
+        $this->assertSame((string)$date->sub(-10),'1234567900');
+        $this->assertSame((string)$date->sub(10),'1234567890');
+        $this->assertSame((string)$date->sub(0),'1234567890');
 
         $date->set($d2);
         $date->sub(-10, Zend_Date::DAY);
@@ -2775,7 +2778,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1010101010,null,false,$locale);
 
         $retour = $date->set(1234567890);
-        $this->assertSame($retour,'1234567890');
+        $this->assertSame((string)$retour,'1234567890');
         $this->assertSame($date->compare(1234567890),0);
         $this->assertSame($date->compare(1234567800),1);
         $this->assertSame($date->compare(1234567899),-1);
@@ -2820,7 +2823,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1010101010,null,false,$locale);
 
         $retour = $date->set(1234567890);
-        $this->assertSame($retour,'1234567890');
+        $this->assertSame((string)$retour,'1234567890');
         $this->assertSame($date->equals(1234567890),TRUE);
         $this->assertSame($date->equals(1234567800),FALSE);
 
@@ -2839,7 +2842,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1010101010,null,false,$locale);
 
         $retour = $date->set(1234567890);
-        $this->assertSame($retour,'1234567890');
+        $this->assertSame((string)$retour,'1234567890');
         $this->assertSame($date->isEarlier(1234567890),FALSE);
         $this->assertSame($date->isEarlier(1234567800),FALSE);
         $this->assertSame($date->isEarlier(1234567899),TRUE);
@@ -2860,7 +2863,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $d2   = new Zend_Date(1010101010,null,false,$locale);
 
         $retour = $date->set(1234567890);
-        $this->assertSame($retour,'1234567890');
+        $this->assertSame((string)$retour,'1234567890');
         $this->assertSame($date->isLater(1234567890),FALSE);
         $this->assertSame($date->isLater(1234567800),TRUE);
         $this->assertSame($date->isLater(1234567899),FALSE);
