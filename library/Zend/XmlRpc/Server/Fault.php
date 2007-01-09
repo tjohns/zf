@@ -182,4 +182,15 @@ class Zend_XmlRpc_Server_Fault extends Zend_XmlRpc_Fault
         unset(self::$_observers[$class]);
         return true;
     }
+
+    /**
+     * Retrieve the exception
+     * 
+     * @access public
+     * @return Exception
+     */
+    public function getException()
+    {
+        return $this->_exception;
+    }
 }

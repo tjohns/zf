@@ -524,7 +524,7 @@ class Zend_XmlRpc_Server
                 // for some reason, invokeArgs() does not work the same as 
                 // invoke(), and expects the first argument to be an object. 
                 // So, using a callback if the method is static.
-                $return = call_user_func_array(array($class, $info->getFunctionName()), $args);
+                $return = call_user_func_array(array($class, $info->getName()), $args);
             } else {
                 // Object methods
                 try {
