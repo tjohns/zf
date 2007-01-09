@@ -2042,7 +2042,7 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame((string)$retour,'1234567890');
         $this->assertSame((string)$date->add(10),'1234567900');
         $this->assertSame((string)$date->add(-10),'1234567890');
-        $this->assertSame((string)$date->add(1),'1234567890');
+        $this->assertSame((string)$date->add(0),'1234567890');
 
         $date->set($d2);
         $date->add(10, Zend_Date::DAY);
