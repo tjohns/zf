@@ -5,6 +5,7 @@
  */
 
 error_reporting( E_ALL | E_STRICT ); // now required for each test suite
+set_time_limit(3600);
 // define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', false); // uncomment to disable use of bcmath extension by Zend_Date
 
 
@@ -3250,7 +3251,8 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
 
         // @todo: implementation like PHP but is not RFC 822 conform,
         // maybe needes to be reworked
-        // can not be marked incomplete because then phpunit crashes ???
+        // markTestIncomplete() craches PHP with XDebug-2.0.0rc2-5.1.2
+        $this->markTestIncomplete();
         $result = $date->setArpa('Fri, 05 Jan 07 03:35:53 GMT');
         $arpa = $result->getArpa();
         $this->assertSame($arpa->get(Zend_Date::RFC_822),'Fri, 05 Jan 07 03:35:53 GMT');
@@ -3510,9 +3512,11 @@ class Zend_DateTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->getWeek()->toString(),'08.01.1970 01:00:00');
         
         //Saturday [ar_EG]
-// The right value for AM/PM has to be set in arabic letters
-//        $this->assertSame($date->getWeek(false, 'ar_EG')->toString(),'08/01/1970 01:00:00 am');
-//        $this->assertSame($date->getWeek('ar_EG')->toString(),'08/01/1970 01:00:00 am');
+	    // The right value for AM/PM has to be set in arabic letters
+        $this->assertSame($date->getWeek(false, 'ar_EG')->toString(), '08/01/1970 1:00:00 ص');
+        $this->assertSame($date->getWeek(true, 'ar_EG')->toString(), '08/01/1970 1:00:00 ص');
+        //is this one should be valid ?! [not working]
+        //$this->assertSame($date->getWeek('ar_EG')->toString(), '08/01/1970 1:00:00 ص');
         
         //Sunday
         $date->addDay(1);
