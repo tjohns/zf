@@ -1,125 +1,124 @@
 <sect1 id="zend.gdata.introduction">
-    <title>Introduction to Gdata</title>
+    <title>Gdata について</title>
     <para>
-        Google Data APIs provide programmatic interface to some of Google's
-        online services.
-        Client applications submit queries and data via HTTP, and retrieve
-        results.
-        The Zend_Gdata component is a PHP 5 interface for accessing Google Data
-        from PHP.
+        Google Data API は、Google のオンラインサービスに対するプログラマ向けのインターフェイスです。
+        クライアントアプリケーションは問い合わせ内容を HTTP
+        経由で送信し、その応答を取得します。
+        Zend_Gdata コンポーネントは PHP 5 用のインターフェイスで、Google Data
+        に PHP からアクセスするためのものです。
     </para>
 
     <para>
-        See
+        Google Data API についての詳細な情報は
         <ulink url="http://code.google.com/apis/gdata/">http://code.google.com/apis/gdata/</ulink>
-        for more information about Google Data API.
+        を参照ください。
     </para>
 
     <para>
-        The services that are accessible by Zend_Gdata include the
-        following:
+        Zend_Gdata でアクセスできるサービスには次のようなものがあります。
 
         <itemizedlist>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.base">Google Base</link>
-                    provides a search tool for online products,
-                    jobs, events, personal ads, and other types of entries.
-                    People post items and describe them with commonly-named
-                    attributes.
+                    は、仕事やイベント、個人広告などのエントリを検索するためのツールです。
+                    さまざまな人たちが項目を投稿し、それに対して一般的な属性を付加します。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.blogger">Google Blogger</link>
-                    is a popular internet provider of
-                    "push-button publishing" and syndication.
+                    は人気のあるインターネットプロバイダで、
+                    "ボタンひとつで簡単に" 記事を配信することができます。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.calendar">Google Calendar</link>
-                    is an online scheduling and collaboration tool.
+                    は、オンラインでスケジュール管理をしたり共同作業をしたりするためのツールです。
                 </para>
             </listitem>
             <listitem>
                 <para>
                     <link linkend="zend.gdata.codesearch">Google CodeSearch</link>
-                    allows you to search public source code from many projects.
+                    を使用すると、さまざまなプロジェクトが公開しているソースコードを検索できます。
                 </para>
             </listitem>
         </itemizedlist>
     </para>
 
     <note>
-        <title>Unsupported services</title>
+        <title>サポートしていないサービス</title>
         <para>
-            Google Data API also supports Google Spreadsheets, but Zend_Gdata
-            does not provide a helper class for Spreadsheets in this release.
+            Google Data API は Google Spreadsheets もサポートしています。
+            しかし Zend_Gdata の今回のリリースでは、Spreadsheets
+            用のヘルパークラスを提供していません。
         </para>
 
         <para>
-            Zend_Gdata does not provide an interface to any other Google
-            service, such as Search, Gmail, Translation, or Maps.
-            Only services that support the Google Data API are supported.
+            Zend_Gdata には、これら以外の Google のサービス
+            (例えば検索、Gmail、翻訳、マップなど)
+            に対するインターフェイスは含まれていません。
+            Google Data API をサポートしているサービスにのみ対応しています。
         </para>
     </note>
 
     <sect2 id="zend.gdata.introduction.authentication">
-        <title>Google Data Client Authentication</title>
+        <title>Google Data クライアント認証</title>
         <para>
-            Most Google Data services require client applications to
-            authenticate against the Google server before accessing
-            private data, or saving or deleting data.
-            There are two implementations of authentication for Google Data:
-            <link linkend="zend.gdata.authsub">AuthSub</link> and
-            <link linkend="zend.gdata.clientlogin">ClientLogin</link>.
-            Zend_Gdata offers class interfaces for both of these methods.
+            ほとんどの Google Data サービスは、
+            個人データへのアクセスやデータの保存、削除の前に
+            Google サーバに対する認証を要求します。
+            Google Data の認証用に提供される実装は
+            <link linkend="zend.gdata.authsub">AuthSub</link> および
+            <link linkend="zend.gdata.clientlogin">ClientLogin</link>
+            の二種類があります。
+            Zend_Gdata ではこれら両方の方式に対するインターフェイスを用意しています。
         </para>
 
         <para>
-            Most other types of queries against Google Data services do not
-            require authentication.
+            Google Data サービスに対するその他大半の問い合わせは、
+            認証を必要としません。
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.dependencies">
-        <title>Dependencies</title>
+        <title>依存性</title>
         <para>
-            Zend_Gdata makes use of 
-            <link linkend="zend.feed.introduction">Zend_Feed</link> and
-            <link linkend="zend.http.client">Zend_Http_Client</link> to send
-            requests to google.com and fetch results.  The response to most
-            Google Data requests is returned as a Zend_Feed object in the
-            format of an Atom or RSS feed.
+            Zend_Gdata は
+            <link linkend="zend.feed.introduction">Zend_Feed</link> および
+            <link linkend="zend.http.client">Zend_Http_Client</link>
+            を用いてリクエストを google.com に送信し、結果を取得します。
+            ほとんどの Google Data リクエストに対する応答は
+            Zend_Feed オブジェクトで返されます。その内容は
+            Atom あるいは RSS 形式のフィードです。
         </para>
 
         <para>
-            Zend_Gdata assumes your PHP application is running on a host that
-            has a direct connection to the internet.
-            The Zend_Gdata client operates by contacting Google Data servers.
+            Zend_Gdata は、PHP アプリケーションの稼動しているホストが
+            インターネットに直接つながっていることを想定しています。
+            Zend_Gdata クライアントは Google Data サーバへの接続を行います。
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.creation">
-        <title>Creating a new Gdata client</title>
+        <title>新しい Gdata クライアントの作成</title>
 
         <para>
-            Create a new object of class Zend_Gdata or one of the
-            subclasses available that offer helper methods for
-            service-specific behavior.
+            Zend_Gdata クラス、
+            あるいはそのサブクラスのひとつのオブジェクトを作成します。
+            各サブクラスではサービス固有のヘルパーメソッドを提供します。
         </para>
 
         <para>
-            The single optional parameter to the Zend_Gdata constructor
-            is an instance of 
-            <link linkend="zend.http.client">Zend_Http_Client</link>.
-            If you don't pass this parameter, Zend_Gdata creates a default
-            Zend_Http_Client object.
-            Specifying the Zend_Http_Client object allows you to
-            pass configuration options to that client object.
+            Zend_Gdata のコンストラクタに渡すオプションの引数は
+            <link linkend="zend.http.client">Zend_Http_Client</link>
+            のインスタンスです。このパラメータを渡さなかった場合は、
+            Zend_Gdata はデフォルトの Zend_Http_Client オブジェクトを作成します。
+            Zend_Http_Client オブジェクトを自分で指定すると、
+            クライアントオブジェクトに対する設定オプションを指定することができます。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -127,146 +126,143 @@ require_once 'Zend/Gdata.php';
 require_once 'Zend/Http/Client.php';
 
 $client = new Zend_Http_Client();
-$client->setConfig( ...options... );
+$client->setConfig( ...オプション... );
 
 $gdata = new Zend_Gdata($client);
 ?>]]></programlisting>
 
         <para>
-            Also see the sections on authentication for methods to
-            create an authenticated Zend_Http_Client object.
+            認証済みの Zend_Http_Client オブジェクトを作成する方法については、
+            認証のセクションも参照ください。
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.parameters">
-        <title>Common query parameters</title>
+        <title>共通のクエリパラメータ</title>
 
         <para>
-            You can specify parameters to customize queries with Zend_Gdata.
-            Some parameters apply only to individual Google Data services.
-            These parameters are documented in later sections for each service.
-            Some parameters apply in a common way to multiple Google Data services.
-            These parameters are described below.
+            パラメータを指定することで、Zend_Gdata
+            での問い合わせをカスタマイズすることができます。
+            中には特定の Google Data サービスにしか適用できないパラメータもありますが、
+            これらのパラメータについては後の各サービスの節で説明します。
+            複数の Google Data サービスで共通に使用できるパラメータについて、
+            以下で説明します。
         </para>
 
         <itemizedlist>
             <listitem>
                 <para>
-                    The <code>alt</code> parameter specifies the feed type.
-                    The value of the parameter can be
-                    <code>atom</code>,
-                    <code>rss</code>,
-                    <code>json</code>,
-                    or <code>json-in-script</code>.
-                    If you don't specify this parameter, the default feed type
-                    is <code>atom</code>.
+                    <code>alt</code> パラメータはフィードの形式を指定します。
+                    このパラメータには
+                    <code>atom</code>、
+                    <code>rss</code>、
+                    <code>json</code>、
+                    あるいは <code>json-in-script</code> のいずれかを指定します。
+                    このパラメータを指定しなかった場合、デフォルトのフィードの形式は
+                    <code>atom</code> となります。
                 </para>
                 <para>
-                    Set this parameter with the <code>setAlt()</code>
-                    function.
-                </para>
-            </listitem>
-
-            <listitem>
-                <para>
-                    The <code>maxResults</code> parameter limits the number
-                    of entries in the feed.  The value of the parameter is
-                    an integer.  The number of entries returned in the feed 
-                    will not exceed this value.
-                </para>
-                <para>
-                    Set this parameter with the <code>setMaxResults()</code>
-                    function.
+                    このパラメータを設定するには <code>setAlt()</code>
+                    を使用します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    The <code>startIndex</code> parameter specifies the
-                    ordinal number of the first entry returned in the feed.
-                    Entries before this number are skipped.
+                    <code>maxResults</code> パラメータはフィード内のエントリ数を制限します。
+                    整数値を指定します。返されるフィード内のエントリの数は、
+                    この値を超えることはありません。
                 </para>
                 <para>
-                    Set this parameter with the <code>setStartIndex()</code>
-                    function.
+                    このパラメータを設定するには <code>setMaxResults()</code>
+                    を使用します。
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    The <code>updatedMin</code> and <code>updatedMax</code>
-                    parameters specify bounds on the entry date.
-                    If you specify a value for <code>updatedMin</code>,
-                    no entries that were updated earlier than the date
-                    you specify are included in the feed.  Likewise
-                    no entries updated after the date specified by
-                    <code>updatedMax</code> are included.
+                    <code>startIndex</code> パラメータは、
+                    フィードで返される最初のエントリの番号を指定します。
+                    それ以前の番号のエントリは読み飛ばされます。
                 </para>
                 <para>
-                    You can use numeric timestamps, or a variety of
-                    date/time string representations as the value for
-                    these parameters.
+                    このパラメータを設定するには <code>setStartIndex()</code>
+                    を使用します。
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <code>updatedMin</code> パラメータおよび <code>updatedMax</code>
+                    パラメータは、エントリの日付の範囲を指定します。
+                    <code>updatedMin</code> を指定すると、
+                    それより前に更新されたエントリはフィードに含まれません。
+                    同様に、<code>updatedMax</code>
+                    で指定した日付より後で更新されたエントリもフィードに含まれません。
                 </para>
                 <para>
-                    Set this parameter with the <code>setUpdatedMin()</code>
-                    and <code>setUpdatedMax()</code> functions.
+                    これらのパラメータには、タイムスタンプを表す数値を指定します。
+                    あるいは 日付/時刻 を表す文字列を指定することもできます。
+                </para>
+                <para>
+                    これらのパラメータを設定するには <code>setUpdatedMin()</code>
+                    および <code>setUpdatedMax()</code> を使用します。
                 </para>
             </listitem>
 
         </itemizedlist>
 
         <para>
-            There is a <code>get</code> function for each
-            <code>set</code> function.
+            これらの <code>set</code> 関数に対応する
+            <code>get</code> 関数もあります。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata();
 $gdata->setMaxResults(10);
-echo $gdata->getMaxResults();   // returns 10
+echo $gdata->getMaxResults();   // 10 を返します
 ?>]]></programlisting>
 
         <para>
-            The Zend_Gdata class also implements "magic" getter and
-            setter methods, so you can use the name of the parameter
-            as a virtual member of the class.  You can use
-            <code>isset()</code> and <code>unset()</code> on these
-            virtual members.
+            Zend_Gdata クラスでは、
+            特別なゲッターメソッドおよびセッターメソッドも実装しています。
+            つまり、パラメータの名前をクラスの仮想的なメンバとして扱うことができます。
+            <code>isset()</code> や <code>unset()</code>
+            を使用して、これらの仮想メンバを扱うこともできます。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata();
 $gdata->maxResults = 10;
-echo $gdata->maxResults;        // returns 10
-echo isset($gdata->maxResults); // returns true
-unset($gdata->maxResults);      // clears parameter
+echo $gdata->maxResults;        // 10 を返します
+echo isset($gdata->maxResults); // true を返します
+unset($gdata->maxResults);      // パラメータを消去します
 ?>]]></programlisting>
 
         <para>
-            You can clear all parameters with the <code>resetParameters()</code>
-            function.  This is useful to do if you reuse a Zend_Gdata
-            object for multiple queries.
+            すべてのパラメータを消去するには <code>resetParameters()</code>
+            を使用します。複数のクエリで Zend_Gdata
+            を使いまわす場合などに便利です。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata();
 $gdata->maxResults = 10;
-// ...get feed...
+// ...フィードを取得します...
 
-$gdata->resetParameters();      // clears all parameters
-// ...get a different feed...
+$gdata->resetParameters();      // すべてのパラメータを消去します
+// ...別のフィードを取得します...
 ?>]]></programlisting>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.getfeed">
-        <title>Fetching a feed</title>
+        <title>フィードの取得</title>
 
         <para>
-            Use the <code>getFeed()</code> function to retrieve
-            a feed from a specified URI.
-            This function returns an object of class Zend_Feed.
+            <code>getFeed()</code> を使用して、指定した URI からフィードを取得します。
+            この関数は Zend_Feed クラスのオブジェクトを返します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -279,32 +275,30 @@ $feed = $gdata->getFeed($uri);
 ?>]]></programlisting>
 
         <para>
-            See later sections for special functions in each
-            helper class for Google Data services.  These
-            functions help you to get feeds from the URI that is
-            appropriate for the respective service.
+            この後の節で、各 Google Data
+            サービス用のヘルパークラス固有の関数について説明します。これらの関数により、
+            対応するサービスにあわせた適切なフィードを取得できるようになります。
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.post">
-        <title>Posting entries to Google servers</title>
+        <title>Google サーバへのエントリの送信</title>
 
         <para>
-            The Zend_Gdata object has a function <code>post()</code>
-            with which you can upload data to save new entries
-            to Google Data services.
+            Zend_Gdata オブジェクトの関数 <code>post()</code>
+            にアップロードしたいデータを指定し、
+            新しいエントリを Google Data サービスに保存します。
         </para>
 
         <para>
-            You are responsible for constructing a string containing
-            the correct XML structure for an entry of the respective
-            Google Data service you are using.  You may use PHP class
-            libraries such as DOM XML or SimpleXML.
+            使用する Google Data サービスのエントリに対応する、
+            正しい構造の XML を作成する必要があります。これには、
+            たとえば DOM XML や SimpleXML などの PHP のライブラリを使用します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-$gdata = new Zend_Gdata($client);     // $client is authenticated
+$gdata = new Zend_Gdata($client);     // $client は認証済みです
 
 $xmlString = <<<XML
 <entry xmlns='http://www.w3.org/2005/Atom'
@@ -336,39 +330,42 @@ $gdata->post($xml->asXML(), $myCalendar);
 ?>]]></programlisting>
 
         <para>
-            To post entries, you must be using an authenticated
-            Zend_Http_Client that you created using the Zend_Gdata_AuthSub
-            or Zend_Gdata_ClientLogin classes.
+            エントリを送信するには、認証済みの Zend_Http_Client
+            を使用する必要があります。これは、
+            Zend_Gdata_AuthSub クラスあるいは
+            Zend_Gdata_ClientLogin クラスを使用して作成します。
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.introduction.delete">
-        <title>Deleting entries on Google servers</title>
+        <title>Google サーバからのデータの削除</title>
 
         <para>
-            The Zend_Gdata object has a function <code>delete()</code>
-            with which you can delete entries from Google Data
-            services.  Pass the <code>&lt;id&gt;</code> value from
-            a feed entry to the <code>delete()</code> method.
+            Zend_Gdata オブジェクトの関数 <code>delete()</code>
+            に削除したいエントリを指定して、Google Data
+            サービスからデータを削除します。
+            フィードエントリの <code>&lt;id&gt;</code> の値を
+            <code>delete()</code> メソッドに渡します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdata = new Zend_Gdata();
-// a Google Data feed
+// Google Data のフィード
 $feedUri = ...;
 $feed = $gdata->getFeed($feedUri);
 foreach ($feed as $feedEntry) {
-    // extract the <id> element
+    // <id> 要素を抽出します
     $id = $feedEntry->id();
     $gdata->delete($id);
 }
 ?>]]></programlisting>
 
         <para>
-            To delete entries, you must be using an authenticated
-            Zend_Http_Client that you created using the Zend_Gdata_AuthSub
-            or Zend_Gdata_ClientLogin classes.
+            エントリを削除するには、認証済みの Zend_Http_Client
+            を使用する必要があります。これは、
+            Zend_Gdata_AuthSub クラスあるいは
+            Zend_Gdata_ClientLogin クラスを使用して作成します。
         </para>
 
     </sect2>

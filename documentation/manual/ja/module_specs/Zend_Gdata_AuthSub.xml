@@ -1,69 +1,65 @@
 <sect1 id="zend.gdata.authsub">
-    <title>Authenticating with AuthSub</title>
+    <title>AuthSub による認証</title>
 
     <para>
-        The AuthSub mechanism enables you to write web applications
-        that acquire authenticated access Google Data services,
-        without having to write code that handles user credentials.
+        AuthSub を使用すると、ウェブアプリケーションで
+        Google Data サービスへのアクセスのための認証ができるようになります。
+        ユーザの認証情報を処理するコードを自分で書く必要はありません。
     </para>
 
     <para>
-        See <ulink url="http://code.google.com/apis/accounts/AuthForWebApps.html">http://code.google.com/apis/accounts/AuthForWebApps.html</ulink>
-        for more information about Google Data AuthSub authentication.
+        Google Data AuthSub 認証についての詳細は、
+        <ulink url="http://code.google.com/apis/accounts/AuthForWebApps.html">http://code.google.com/apis/accounts/AuthForWebApps.html</ulink>
+        を参照ください。
     </para>
 
     <para>
-        The Google documentation says the ClientLogin mechanism is appropriate
-        for "installed applications" whereas the AuthSub mechanism is
-        for "web applications."  The difference is that AuthSub requires
-        interaction from the user, and a browser interface that can react
-        to redirection requests.  The ClientLogin solution uses PHP code to
-        supply the account credentials; the user is not required to enter her
-        credentials interactively.
+        Google のドキュメントでは、ClientLogin 方式は
+        "インストールするアプリケーション" に適しており、一方 AuthSub は
+        "ウェブアプリケーション" に適しているとされています。
+        これらの違いは、AuthSub はユーザとのやりとりが発生するということです。
+        ブラウザのインターフェイスを用いて、リクエストのリダイレクトを行います。
+        ClientLogin では PHP のコードでアカウント情報を提供します。
+        ユーザが直接認証情報を入力する必要がなくなります。
     </para>
 
     <para>
-        The account credentials supplied via the AuthSub mechanism are
-        entered by the user of the web application.  Therefore they must be
-        account credentials that are known to that user.
+        AuthSub の場合の認証情報は、ウェブアプリケーションのユーザが入力します。
+        つまり、認証情報をユーザが知っておく必要があります。
     </para>
 
     <sect2 id="zend.gdata.authsub.login">
-        <title>Creating an AuthSub authenticated Http Client</title>
+        <title>AuthSub 認証済みの Http クライアントの作成</title>
 
         <para>
-            Your PHP application should provide a hyperlink to the
-            Google URL that performs authentication.  The static function
-            <code>Zend_Gdata_AuthSub::getAuthSubTokenUri()</code>
-            provides the correct URL.  The arguments to this function include
-            the URL to your PHP applicaion so that Google can redirect the
-            user's browser back to your application after the user's
-            credentials have been verified.
+            あなたの作成した PHP アプリケーションで、認証を行う
+            Google URL へのハイパーリンクを提供しなければなりません。そのためには
+            静的関数 <code>Zend_Gdata_AuthSub::getAuthSubTokenUri()</code>
+            を使用します。この関数の引数には、あなたの作成した
+            PHP アプリケーションの URL を指定します。それにより、ユーザ認証の後に
+            Google からもとの場所にリダイレクトされるようになります。
         </para>
 
         <para>
-            After Google's authentication server redirects the user's browser
-            back to the current application, a GET request parameter is set,
-            called <code>token</code>.
-            The value of this parameter is a single-use token that can be
-            used for authenticated access.
-            This token can be converted into a multi-use token and stored
-            in your session.
+            Google の認証サーバからアプリケーションに戻ってくる際に、
+            <code>token</code> という名前の GET パラメータが設定されます。
+            このパラメータの値は、認証されたアクセスに使用する single-use トークンとなります。
+            このトークンを multi-use トークンに変換し、セッションに保存します。
         </para>
 
         <para>
-            Then use the token value in a call to
-            <code>Zend_Gdata_AuthSub::getHttpClient()</code>.
-            This function returns an instance of Zend_Http_Client,
-            with appropriate headers set so that subsequent requests your
-            application submits using that Http Client are also authenticated.
+            そしてそのトークンの値は使用して
+            <code>Zend_Gdata_AuthSub::getHttpClient()</code>
+            をコールします。この関数は Zend_Http_Client
+            のインスタンスを返します。このインスタンスには適切なヘッダが設定されており、
+            後でこの Http クライアントを使用して送信したリクエストは認証済みのものとなります。
         </para>
 
         <para>
-            Below is an example of PHP code for a web application
-            to acquire authentication to use the Google Calendar service
-            and create a Zend_Gdata client object using that authenticated
-            Http Client.
+            以下の例は、PHP のウェブアプリケーションのコードです。
+            Google Calendar サービスに対する認証を行い、
+            認証済みの Http クライアントを使用して Zend_Gdata
+            クライアントオブジェクトを作成します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -71,41 +67,40 @@ $my_calendar = 'http://www.google.com/calendar/feeds/default/private/full';
 
 if (!isset($_SESSION['cal_token'])) {
     if (isset($_GET['token'])) {
-        // You can convert the single-use token to a session token.
+        // single-use トークンをセッショントークンに変換します
         $session_token =  Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token']);
-        // Store the session token in our session.
+        // セッショントークンをセッションに保存します
         $_SESSION['cal_token'] = $session_token;
     } else {
-        // Display link to generate single-use token
+        // single-use トークンを生成するためのリンクを表示します
         $googleUri = Zend_Gdata_AuthSub::getAuthSubTokenUri(
             'http://'. $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'],
             $my_calendar, 0, 1)
-        echo "Click <a href='$googleUri'>here</a> to authorize this application.";
+        echo "<a href='$googleUri'>ここ</a> をクリックして認証を行います。";
         exit();
     }
 }
 
-// Create an authenticated HTTP Client to talk to Google.
+// Google とやり取りするための、認証済み HTTP クライアントを作成します
 $client = Zend_Gdata_AuthSub::getHttpClient($_SESSION['cal_token']);
 
-// Create a Gdata object using the authenticated Http Client
+// 認証済み Http クライアントを使用して Gdata オブジェクトを作成します
 $cal = new Zend_Gdata_Calendar($client);
 ?>]]></programlisting>
 
     </sect2>
 
     <sect2 id="zend.gdata.authsub.logout">
-        <title>Revoking AuthSub authentication</title>
+        <title>AuthSub 認証の解除</title>
 
         <para>
-            To terminate the authenticated status of a given token, use the
+            指定したトークンによる認証状態を終わらせるには、静的関数
             <code>Zend_Gdata_AuthSub::AuthSubRevokeToken()</code>
-            static function.  Otherwise, the token is still valid for
-            some time.
+            を使用します。そうしないと、このトークンはいつまでも有効なままになります。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
-// Carefully construct this value to avoid application security problems.
+// アプリケーションのセキュリティ問題を避けるため、注意してこの値を作成します
 $php_self = htmlentities(substr($_SERVER['PHP_SELF'], 0, strcspn($_SERVER['PHP_SELF'], "\n\r")), ENT_QUOTES);
 
 if (isset($_GET['logout'])) {
@@ -117,19 +112,18 @@ if (isset($_GET['logout'])) {
 ?>]]></programlisting>
 
     <note>
-        <title>Security notes</title>
+        <title>セキュリティについて</title>
         <para>
-            The treatment of the <code>$php_self</code> variable in the
-            example above is a general security guideline, it is not
-            specific to Zend_Gdata.  You should always filter content you
-            output to http headers.
+            上の例における <code>$php_self</code> の扱い方は、
+            一般的なセキュリティ問題の対応法に従ったものです。
+            Zend_Gdata に固有のものではありません。
+            http ヘッダに出力する内容は、つねにフィルタリングするようにしましょう。
         </para>
         <para>
-            Regarding revoking authentication tokens, it is recommended to
-            do this when the user is finished with her Google Data session.
-            The possibility that someone can intercept the token and use
-            it for malicious purposes is very small, but nevertheless it is
-            a good practice to terminate authenticated access to any service.
+            認証トークンの解除については、ユーザが Google Data
+            セッションを終わらせたときに行うのがお勧めです。
+            だれかがトークンを盗んで悪用するという可能性は非常に小さいものです。
+            とは言え、サービスの利用が終わったら認証も終了させておくことは大切です。
         </para>
     </note>
 

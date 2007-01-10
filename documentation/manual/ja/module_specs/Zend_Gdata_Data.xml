@@ -1,18 +1,16 @@
 <sect1 id="zend.gdata.data">
-    <title>Using the Gdata Data Helper</title>
+    <title>Gdata Data Helper の使用法</title>
 
     <para>
-        Many parameters of Google Data queries have a restricted set of
-        supported values.
-        The <code>Zend_Gdata_Data</code> class contains constant
-        definitions for all the legal values.
+        Google Data クエリの多くのパラメータには、サポートされる値の制限があります。
+        <code>Zend_Gdata_Data</code> クラスには、
+        値の有効範囲に関する定数の定義が含まれます。
     </para>
 
     <para>
-        The <code>isValid()</code> static function tests that a value
-        is valid for a specified attribute.  The example below shows
-        usage of a constant, and a test of that constant using
-        <code>isValid()</code>.
+        静的関数 <code>isValid()</code> は、指定した属性の値が有効かどうかを調べます。
+        以下の例は、定数の使用法および <code>isValid()</code>
+        でのその定数を使用したテストの方法を示すものです。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -24,8 +22,8 @@ if (Zend_Gdata_Data::isValid($vis, 'visibility')) {
 ?>]]></programlisting>
 
     <para>
-        The <code>getValues()</code> static function returns an array of
-        valid values for a specified attribute.
+        静的関数 <code>getValues()</code> は、
+        指定した属性に関する有効な値の配列を返します。
     </para>
 
     <programlisting role="php"><![CDATA[<?php

@@ -1,25 +1,26 @@
 <sect1 id="zend.gdata.base">
-    <title>Using Google Base</title>
+    <title>Google Base の使用法</title>
 
     <para>
-        The Google Data API interface to Google Base allows developers to
-        write applications to perform search queries against the
-        Google Base database of products, services, and events.
-        You can also input and manage Google Base entries programmatically.
+        Google Base 用の Google Data API インターフェイスを使用すると、
+        Google Base のデータベースに対して問い合わせを行うアプリケーションを書くことができます。
+        たとえば製品やサービス、イベントなどについての問い合わせが可能です。
+        また、プログラムから Google Base にエントリを入力したり、
+        それを管理したりすることも可能です。
     </para>
 
     <para>
-        See
+        Google Base API についての詳細な情報は
         <ulink url="http://code.google.com/apis/base/">http://code.google.com/apis/base/</ulink>
-        for more information on the Google Base API.
+        を参照ください。
     </para>
 
     <sect2 id="zend.gdata.base.query">
-        <title>Querying Base data</title>
+        <title>データの問い合わせ</title>
 
         <para>
-            You can use the <code>setQuery()</code> method to specify
-            full-text search terms for a Google Base query.
+            <code>setQuery()</code> メソッドを使用して検索するテキストを指定し、
+            Google Base に対して問い合わせます。
         </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -29,17 +30,15 @@ $feed = $gdataBase->getBaseFeed();
 ?>]]></programlisting>
 
         <para>
-            Google Base also supports attribute-based query terms.
-            You can specify additional terms using the
-            <code>addAttribute()</code> method.
-            The parameters of this method are attribute name,
-            attribute value, and an optional operator.
-            The default operator is ':' which is interpreted as string
-            equality.
+            Google Base では、属性をもとにした問い合わせもサポートしています。
+            属性の条件を指定するには <code>addAttribute()</code> メソッドを使用します。
+            このメソッドのパラメータは、
+            属性の名前とその値、そしてオプションで演算子となります。
+            デフォルトの演算子は ':' で、これは、文字列が一致することを表します。
         </para>
 
         <para>
-            Attribute queries can be combined with full-text queries.
+            属性による問い合わせは、テキストによる問い合わせと組み合わせることができます。
         </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -50,24 +49,23 @@ $feed = $gdataBase->getBaseFeed();
 ?>]]></programlisting>
 
         <para>
-            You can add multiple attributes using the <code>addAttributeQuery()</code>
-            method, even multiple attribute terms for the same attribute name.
+            <code>addAttributeQuery()</code> を使用して複数の属性を指定することもできます。
+            同じ属性に対して複数の条件を指定することも可能です。
         </para>
 
         <para>
-            You can clear attribute query terms using the
-            <code>unsetAttributeQuery()</code> method.  The parameter is the
-            attribute name.  If you have added multiple terms for the same 
-            attribute name, all of them are cleared.  If you specify no
-            attribute name in the parameter to this method, all attribute
-            query terms are cleared.
+            属性についての条件をクリアするには
+            <code>unsetAttributeQuery()</code> メソッドを使用します。
+            パラメータには属性名を指定します。同一の属性に対して複数の条件を指定している場合は、
+            そのずべてが削除されます。このメソッドのパラメータを指定しなかった場合は、
+            属性に関するすべての条件が削除されます。
         </para>
 
         <para>
-            The <code>addAttribute()</code> method does not
-            support advanced expression syntax including parentheses, 
-            negation, and boolean operators.  You can enter such
-            expressions as a string, using the <code>setQuery()</code> method.
+            <code>addAttribute()</code> メソッドでは、
+            括弧や否定、そして論理演算子などの拡張構文はサポートしていません
+            そのようなものについては、
+            <code>setQuery()</code> メソッドを使用して文字列で指定します。
         </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -77,41 +75,41 @@ $feed = $gdataBase->getBaseFeed();
 ?>]]></programlisting>
 
         <para>
-            You can sort the results of feeds by different criteria.
-            You can specify other sorting criteria using the
-            <code>setOrderby()</code> method.
-            Typical values are <code>modification-time</code>,
-            <code>name</code>, or <code>relevancy</code>.
-            You can also specify advanced ranking logic, using the
-            <ulink url="http://code.google.com/apis/base/ranking-lang-spec.html">Ranking Language</ulink>.
-            By default, the order entries are returned is by
-            <code>relevancy</code>.
+            結果のフィードは、さまざまな条件で並べ替えることができます。
+            並べ替えの条件を指定するには <code>setOrderby()</code>
+            メソッドを使用します。よく使用する値には
+            <code>modification-time</code> や
+            <code>name</code> あるいは <code>relevancy</code> などがあります。
+            より高度なランキング指定を
+            <ulink url="http://code.google.com/apis/base/ranking-lang-spec.html">Ranking Language</ulink>
+            を用いて行うことも可能です。デフォルトでは、返されるエントリの並び順は
+            <code>relevancy</code> (関連性) の順となります。
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.base.post">
-        <title>Updating Base data</title>
+        <title>Base のデータの更新</title>
 
         <para>
-            Updating data requires you to establish two things in your
-            Zend_Gdata_Base object:  an authenticated Http Client,
-            and a developer key.
+            データを更新するには、Zend_Gdata_Base オブジェクトに二つのものが必要です。
+            ひとつは認証済みの Http クライアント、そしてもうひとつはデベロッパーキーです。
         </para>
 
         <para>
-            A developer key is typically a 54-character alphanumeric string.
-            See <ulink url="http://code.google.com/apis/base/starting-out.html#authDev">http://code.google.com/apis/base/starting-out.html#authDev</ulink>
-            for instructions on acquiring a developer key.
+            デベロッパーキーは、通常は 54 文字の英数字による文字列です。
+            デベロッパーキーの取得方法については
+            <ulink url="http://code.google.com/apis/base/starting-out.html#authDev">http://code.google.com/apis/base/starting-out.html#authDev</ulink>
+            を参照ください。
         </para>
 
         <para>
-            You can set the developer key using the optional second parameter
-            in the constructor for Zend_Gdata_Base.  You can also set the
-            developer key of an existing object, using the
-            <code>setDeveloperKey()</code> method.
-            Once you set the developer key for the Zend_Gdata_Base object,
-            the key is sent automatically in subsequent requests.
+            デベロッパーキーを設定するには、Zend_Gdata_Base
+            のコンストラクタのオプションの第二パラメータを使用します。
+            既存のオブジェクトに対してデベロッパーキーを設定するには
+            <code>setDeveloperKey()</code> メソッドを使用します。
+            Zend_Gdata_Base オブジェクトに対していちどデベロッパーキーを設定すると、
+            それ以降のリクエストではキーが自動的に送信されます。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
@@ -120,42 +118,42 @@ $gdataBase->setDeveloperKey($myDeveloperKey);
 ?>]]></programlisting>
 
         <para>
-            Posting enties to Google Base is done using the <code>post()</code>
-            method that is common to Zend_Gdata classes.  See the documentation
-            for the Google Base Data API for details on the correct elements
-            of the XML entries.
+            エントリを Google Base に投稿するには <code>post()</code>
+            メソッドを使用します。これは Zend_Gdata クラス群の共通メソッドです。
+            XML エントリの要素についての詳細は
+            Google Base Data API のドキュメントを参照ください。
         </para>
 
     </sect2>
 
     <sect2 id="zend.gdata.base.metadata">
-        <title>Querying Base metadata</title>
+        <title>Base のメタデータの問い合わせ</title>
 
         <para>
-            You can query feeds of Google Base itemtypes using the
-            <code>getItemTypesFeed()</code> method.  The first parameter
-            to this method is a locale, for instance "en_US".
-            The second parameter is optional; it names an item type.
-            If you specify an item type, the method returns a feed of
-            attributes for that item type.  If you do not specify an
-            item type, the method returns a feed of all item types.
+            Google Base のフィードの itemtypes に対する問い合わせを行うには
+            <code>getItemTypesFeed()</code> メソッドを使用します。
+            このメソッドの最初のパラメータはロケールです。たとえば
+            "en_US" のようになります。二番目のパラメータはオプションで、
+            項目の型を指定します。型を指定した場合は、
+            このメソッドはその型の属性のフィードを返します。
+            指定しなかった場合は、すべての型のフィードを返します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php
 $gdataBase = new Zend_Gdata_Base();
 
-// Get list of all item types
+// すべての型の一覧を取得します
 $itemTypes = $gdataBase->getItemTypesFeed('en_US');
 
-// Get list of attributes for the 'jobs' item type.
+// 型が 'jobs' である属性の一覧を取得します
 $jobsAttributes = $gdataBase->getItemTypesFeed('en_US', 'jobs');
 ?>]]></programlisting>
 
         <para>
-            You can query statistics about a given item type, such as
-            the number of Google Base entries that use individual values
-            for each attribute.  Use the <code>getItemTypeAttributesFeed()</code>
-            method for this type of query.
+            指定した型の項目についての統計情報、たとえばそれぞれの属性の値ごとの
+            Google Base のエントリ数などを問い合わせることも可能です。
+            このような問い合わせには <code>getItemTypeAttributesFeed()</code>
+            メソッドを使用します。
         </para>
 
         <programlisting role="php"><![CDATA[<?php

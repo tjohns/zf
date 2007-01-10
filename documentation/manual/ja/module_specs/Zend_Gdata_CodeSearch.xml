@@ -1,23 +1,25 @@
 <sect1 id="zend.gdata.codesearch">
-    <title>Using Google CodeSearch</title>
+    <title>Google CodeSearch の使用法</title>
 
     <para>
-        Google CodeSearch is a search engine that indexes many open-source
-        software projects on the internet.  You can use Zend_Gdata_CodeSearch
-        to query this index, to find code that matches certain text patterns.
+        Google CodeSearch は、インターネット上の
+        多くのオープンソースソフトウェアプロジェクトについての検索エンジンです。
+        Zend_Gdata_CodeSearch を使用すると、
+        このエンジンのインデックスに対して検索を行い、
+        パターンにマッチするコードを見つけることができます。
     </para>
 
     <para>
-        See
+        Google CodeSearch API についての詳細な情報は
         <ulink url="http://code.google.com/apis/gdata/codesearch.html">http://code.google.com/apis/gdata/codesearch.html</ulink>
-        for more information about the Google CodeSearch API.
+        を参照ください。
     </para>
 
     <para>
-        Use the <code>setQuery()</code> method to specify search expressions.
-        The expressions are regular expressions.  You can list multiple
-        expressions in the string you pass to <code>setQuery()</code>,
-        separated by spaces.
+        <code>setQuery()</code> メソッドを使用して、検索式を設定します。
+        検索式は、正規表現で指定します。複数の式を文字列にまとめて
+        <code>setQuery()</code> に渡すことができます。
+        その際にはひとつひとつの式をスペースで区切ります。
     </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -28,14 +30,15 @@ $feed = $gdataCode->getCodeSearchFeed();
 ?>]]></programlisting>
 
     <para>
-        The <code>startIndex</code> and <code>maxResults</code> parameters
-        are also supported.
-        No other request parameters are supported by Google CodeSearch.
+        <code>startIndex</code> および <code>maxResults</code>
+        の各パラメータもサポートしています。
+        その他のリクエストパラメータは Google CodeSearch
+        ではサポートされていません。
     </para>
 
     <para>
-        The feeds returned by Google CodeSearch are read-only.
-        There are no operations that require an authenticated Http client.
+        Google CodeSearch が返すフィードは読み込み専用です。
+        認証済み Http クライアントを要求する操作はありません。
     </para>
 
 </sect1>

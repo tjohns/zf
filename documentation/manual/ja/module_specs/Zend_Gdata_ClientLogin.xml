@@ -1,75 +1,74 @@
 <sect1 id="zend.gdata.clientlogin">
-    <title>Authenticating with ClientLogin</title>
+    <title>ClientLogin による認証</title>
 
     <para>
-        The ClientLogin mechanism enables you to write PHP application
-        that acquire authenticated access to Google Services,
-        specifying a user's credentials in the Http Client.
+        ClientLogin を使用すると、PHP アプリケーションで
+        Google Data サービスへのアクセスのための認証ができるようになります。
+        ユーザの認証情報を、Http クライアントに指定します。
     </para>
 
     <para>
-        See
+        Google Data ClientLogin 認証についての詳細は、
         <ulink url="http://code.google.com/apis/accounts/AuthForInstalledApps.html"> http://code.google.com/apis/accounts/AuthForInstalledApps.html </ulink>
-        for more information about Google Data ClientLogin authentication.
+        を参照ください。
     </para>
 
     <para>
-        The Google documentation says the ClientLogin mechanism is appropriate
-        for "installed applications" whereas the AuthSub mechanism is
-        for "web applications."  The difference is that AuthSub requires
-        interaction from the user, and a browser interface that can react
-        to redirection requests.  The ClientLogin solution uses PHP code to
-        supply the account credentials; the user is not required to enter her
-        credentials interactively.
+        Google のドキュメントでは、ClientLogin 方式は
+        "インストールするアプリケーション" に適しており、一方 AuthSub は
+        "ウェブアプリケーション" に適しているとされています。
+        これらの違いは、AuthSub はユーザとのやりとりが発生するということです。
+        ブラウザのインターフェイスを用いて、リクエストのリダイレクトを行います。
+        ClientLogin では PHP のコードでアカウント情報を提供します。
+        ユーザが直接認証情報を入力する必要がなくなります。
     </para>
 
     <para>
-        The account credentials supplied via the ClientLogin mechanism must
-        be valid credentials for Google services, but they are not required
-        to be those of the user who is using the PHP application.
+        ClientLogin で使用する認証情報は、Google サービスの正当な認証情報でなければなりません。
+        しかし、それは PHP アプリケーションを使用するユーザ自身のものである必要はありません。
     </para>
 
     <sect2 id="zend.gdata.clientlogin.login">
-        <title>Creating a ClientLogin authenticated Http Client</title>
+        <title>ClientLogin 認証済みの Http クライアントの作成</title>
 
         <para>
-            The process of creating an authenticated Http client using
-            the ClientLogin mechanism is to call the static function
-            <code>Zend_Gdata_ClientLogin::getHttpClient()</code>
-            and pass the Google account credentials in plain text.
-            The return value of this function is an object of class
-            Zend_Http_Client.
+            ClientLogin を使用した認証済みの Http クライアントを作成するには、
+            静的関数 <code>Zend_Gdata_ClientLogin::getHttpClient()</code>
+            をコールし、Google アカウントの認証情報をプレーンテキストで渡します。
+            この関数の返り値は、Zend_Http_Client クラスのオブジェクトとなります。
         </para>
 
         <para>
-            The optional third parameter is the name of the Google Data
-            service.  For instance, this can be 'cl' for Google Calendar.
-            The default is "xapi", which is recognized by Google Data
-            servers as a generic service name.
+            オプションの三番目のパラメータには、Google Data
+            サービスの名前が指定できます。たとえば、'cl'
+            は Google Calendar を表します。デフォルトは 'xapi' で、
+            これは Google Data サーバの汎用的なサービス名を表します。
         </para>
 
         <para>
-            The optional fourth parameter is an instance of Zend_Http_Client.
-            This allows you to set options in the client, such as proxy
-            server settings.  If you pass <code>null</code> for this
-            parameter, a generic Zend_Http_Client object is created.
+            オプションの四番目のパラメータには Zend_Http_Client
+            のインスタンスを指定できます。これによって、
+            たとえばプロキシサーバなどのクライアント設定を行うことができます。
+            このパラメータに <code>null</code> を渡すと、
+            汎用的な Zend_Http_Client オブジェクトが作成されます。
         </para>
 
         <para>
-            The optional fifth parameter is a short string that Google Data
-            servers use to identify the client application for logging
-            purposes.  By default this is string "Zend-ZendFramework";
+            オプションの五番目のパラメータには、Google Data
+            サーバがクライアントアプリケーションを識別するための短い文字列
+            (これはログ記録の際に使用します) を指定できます。
+            デフォルトでは、これは "Zend-ZendFramework" となります。
         </para>
 
         <para>
-            Below is an example of PHP code for a web application
-            to acquire authentication to use the Google Calendar service
-            and create a Zend_Gdata client object using that authenticated
-            Http Client.
+            以下の例は、PHP のウェブアプリケーションのコードです。
+            Google Calendar サービスに対する認証を行い、
+            認証済みの Http クライアントを使用して Zend_Gdata
+            クライアントオブジェクトを作成します。
         </para>
 
     <programlisting role="php"><![CDATA[<?php
-// Enter your Google account credentials
+// Google アカウントの情報を指定します
 $email = 'johndoe@gmail.com';
 $passwd = 'xxxxxxxx';
 $client = Zend_Gdata_ClientLogin::getHttpClient($email, $passwd, 'cl');
@@ -80,14 +79,13 @@ $cal = new Zend_Gdata_Calendar($client);
     </sect2>
 
     <sect2 id="zend.gdata.clientlogin.terminating">
-        <title>Terminating a ClientLogin authenticated Http Client</title>
+        <title>Http クライアントの ClientLogin 認証の解除</title>
 
         <para>
-            There is no method to revoke ClientLogin authentication as there
-            is in the AuthSub token-based solution.  The credentials used
-            in the ClientLogin authentication are the login and password
-            to a Google account, and therefore these can be used repeatedly
-            in the future.
+            ClientLogin 認証を解除する方法はありません。というのは、これは
+            AuthSub のようにトークンを使用した認証ではないからです。
+            ClientLogin 認証に使用する情報は Google アカウントのユーザ名とパスワードであり、
+            これらは将来も繰り返し使用することができます。
         </para>
 
     </sect2>

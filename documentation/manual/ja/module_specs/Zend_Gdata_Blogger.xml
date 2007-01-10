@@ -1,85 +1,83 @@
 <sect1 id="zend.gdata.blogger">
-    <title>Using Google Blogger</title>
+    <title>Google Blogger の使用法</title>
 
     <para>
-        The weblog hosting service Blogger.com participates in the
-        Google Data API.
-        You can write PHP applications using Zend_Gdata_Blogger to query
-        existing blogs, and post new entries to blogs for which you have
-        authenticated access.
+        ウェブログのホスティングサービスである Blogger.com は、
+        Google Data API に参加しています。
+        PHP アプリケーションで Zend_Gdata_Blogger を使用すると、
+        既存のブログに対する問い合わせができます。
+        また、認証済みのアクセスを確立したうえで新しいエントリを投稿することもできます。
     </para>
 
     <para>
-        See
+        Google Blogger API についての詳細な情報は
         <ulink url="http://code.google.com/apis/gdata/blogger.html">http://code.google.com/apis/gdata/blogger.html</ulink>
-        for more information about the Google Blogger API.
+        を参照ください。
     </para>
 
     <sect2 id="zend.gdata.blogger.compatibility">
-        <title>Understanding Blogger version compatibility</title>
+        <title>Blogger のバージョン間の互換性について理解する</title>
 
         <para>
-            There are some differences regarding using the Google Data API to
-            access blogs that are hosted on the current version of Blogger,
-            versus blogs that are hosted on the version of Blogger that is
-            currently in Beta.
-            The most significant differences are related to authentication.
-            See the table below:
+            Google Data API を使用して現在のバージョンの 
+            Blogger にアクセスする際とベータ版の Blogger
+            にアクセスする際には、いくつかの違いがあります。
+            最大の違いは認証に関する点です。以下の表を参照ください。
         </para>
 
         <table cellspacing="0" cellpadding="5">
-            <title>Differences between current Blogger service and Blogger beta service</title>
+            <title>現在の Blogger サービスとベータ版の Blogger サービスの違い</title>
             <tgroup cols="3">
                 <thead>
                     <row>
-                        <entry align="left">Characteristic</entry>
-                        <entry>Current Blogger service</entry>
-                        <entry>Beta Blogger service</entry>
+                        <entry align="left">項目</entry>
+                        <entry>現在の Blogger サービス</entry>
+                        <entry>ベータ版の Blogger サービス</entry>
                     </row>
                 </thead>
                 <tbody>
                     <row>
-                        <entry>Supports Google Data API</entry>
+                        <entry>Google Data API のサポート</entry>
                         <entry align="center">Yes</entry>
                         <entry align="center">Yes</entry>
                     </row>
                     <row>
-                        <entry>Credentials based on</entry>
-                        <entry align="center">Blogger.com account</entry>
-                        <entry align="center">Google.com account</entry>
+                        <entry>認証元</entry>
+                        <entry align="center">Blogger.com のアカウント</entry>
+                        <entry align="center">Google.com のアカウント</entry>
                     </row>
                     <row>
-                        <entry>Supports ClientLogin authentication</entry>
+                        <entry>ClientLogin 認証のサポート</entry>
                         <entry align="center">Yes</entry>
                         <entry align="center">Yes</entry>
                     </row>
                     <row>
-                        <entry>Supports basic HTTP authentication</entry>
+                        <entry>HTTP ベーシック認証のサポート</entry>
                         <entry align="center">Yes</entry>
                         <entry align="center">No</entry>
                     </row>
                     <row>
-                        <entry>Supports AuthSub authentication</entry>
+                        <entry>AuthSub 認証のサポート</entry>
                         <entry align="center">No</entry>
                         <entry align="center">Yes</entry>
                     </row>
                     <row>
-                        <entry>Format for unauthenticated feeds</entry>
+                        <entry>認証前のフィードのフォーマット</entry>
                         <entry align="center">Atom 0.3</entry>
                         <entry align="center">Atom 1.0</entry>
                     </row>
                     <row>
-                        <entry>Format for authenticated feeds</entry>
+                        <entry>認証後のフィードのフォーマット</entry>
                         <entry align="center">Atom 1.0</entry>
                         <entry align="center">Atom 1.0</entry>
                     </row>
                     <row>
-                        <entry>Format for posting entries</entry>
+                        <entry>エントリの投稿の際のフォーマット</entry>
                         <entry align="center">Atom 1.0</entry>
                         <entry align="center">Atom 1.0</entry>
                     </row>
                     <row>
-                        <entry>Supports query parameters</entry>
+                        <entry>クエリパラメータのサポート</entry>
                         <entry align="center">No</entry>
                         <entry align="center">Yes</entry>
                     </row>
@@ -90,70 +88,67 @@
     </sect2>
 
     <sect2 id="zend.gdata.blogger.query">
-        <title>Querying a blog</title>
+        <title>blog の検索</title>
 
         <para>
-            Use the <code>setBlogName()</code> method to specify the name of
-            a blog.  This is the name that appears in a blogspot URL,
-            for example:
-            <code>http://blogname.blogspot.com.</code>
-            You can also specify the name of the blog when you request
-            a feed.
+            <code>setBlogName()</code> メソッドで blog の名前を指定します。
+            これは blogspot URL に
+            <code>http://blogname.blogspot.com</code>
+            のようにあらわれる名前となります。
+            あるいは、フィードを要求する際に blog の名前を指定することもできます。
         </para>
 
     <programlisting role="php"><![CDATA[<?php
 $gdataBlog = new Zend_Gdata_Blogger();
 
-// One way to get a feed for a blog...
+// blog のフィードを取得する方法...
 $feed = $gdataBlog->getBloggerFeed('blogname');
 
-// Another way to get a feed for a blog...
+// blog のフィードを取得する別の方法...
 $gdataBlog->setBlogName('blogname');
 $feed = $gdataBlog->getBloggerFeed();
 ?>]]></programlisting>
 
         <para>
-            The <code>setPublishedMin()</code> and <code>setPublishedMax()</code>
-            methods allow you to specify bounds on the entry date.
-            If you specify a value for <code>publishedMin</code>,
-            no entries that were published earlier than the date
-            you specify are included in the feed.  Likewise
-            no entries published after the date specified by
-            <code>publishedMax</code> are included.
+            <code>setPublishedMin()</code> メソッドおよび <code>setPublishedMax()</code>
+            メソッドで、エントリの日付の範囲を指定します。
+            <code>publishedMin</code> を指定すると、
+            それより前に公開されたエントリはフィードに含まれません。
+            同様に、<code>publishedMax</code>
+            で指定した日付より後で公開されたエントリもフィードに含まれません。
         </para>
 
         <para>
-            The entries in the feed are ordered by the <code>&lt;updated&gt;</code>
-            element, with the most recent entry appearing first in the feed.
+            フィード内のエントリは、<code>&lt;updated&gt;</code>
+            要素の順で並べ替えられ、一番新しいエントリがフィードの先頭にくるようになります。
         </para>
 
         <note>
-            <title>No support for category or full-text queries</title>
+            <title>カテゴリ検索や全文検索はサポートしません</title>
             <para>
-                The Google Blogger API currently does not support queries
-                using categories, keywords, or tags.
-                If you try to specify a search using <code>setCategory()</code>,
-                Zend_Gdata_Blogger throws an exception.
+                Google Blogger API は、現在は
+                カテゴリ、キーワードあるいはタグによる検索をサポートしていません。
+                <code>setCategory()</code> を使用して検索しようとすると、
+                Zend_Gdata_Blogger は例外をスローします。
             </para>
             <para>
-                The Google Blogger API currently does not support queries
-                using full-text search terms.
-                If you try to specify a search using <code>setQuery()</code>,
-                Zend_Gdata_Blogger throws an exception.
+                Google Blogger API は、現在は全文検索をサポートしていません。
+                <code>setQuery()</code> を使用して検索しようとすると、
+                Zend_Gdata_Blogger は例外をスローします。
             </para>
         </note>
 
     </sect2>
 
     <sect2 id="zend.gdata.blogger.post">
-        <title>Posting to your blog</title>
+        <title>自分の blog への投稿</title>
 
         <para>
-            You can use the <code>post()</code> method to post entries
-            to your blog.  
-            To post entries, you must be using an authenticated
-            Zend_Http_Client that you created using the Zend_Gdata_AuthSub
-            or Zend_Gdata_ClientLogin classes.
+            <code>post()</code> メソッドを使用して、
+            エントリを自分の blog に投稿することができます。
+            そのためには、認証済みの Zend_Http_Client を使用する必要があります。
+            これは Zend_Gdata_AuthSub クラスあるいは
+            Zend_Gdata_ClientLogin クラスを使用して作成します。
         </para>
 
     <programlisting role="php"><![CDATA[<?php
@@ -183,9 +178,8 @@ $response = $gdataBlog->post($xml->asXML());
 ?>]]></programlisting>
 
         <para>
-            You can get a feed that names the blogs for your currently
-            authenticated account using the <code>getBloggerListFeed()</code>
-            method.
+            現在の認証済みアカウントの blog のフィードを取得するには
+            <code>getBloggerListFeed()</code> メソッドを使用します。
         </para>
 
     <programlisting role="php"><![CDATA[<?php
