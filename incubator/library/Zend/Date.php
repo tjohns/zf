@@ -3179,7 +3179,7 @@ class Zend_Date {
                 }
             }
         }
-        $return = $this->_calcdetail($calc, $found, Zend_Date::MONTH_DIGIT, $locale);
+        $return = $this->_calcdetail($calc, $found, Zend_Date::MONTH_DIGIT, true, $locale);
         if ($calc != 'cmp') {
             return new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, true, $locale);
         }
