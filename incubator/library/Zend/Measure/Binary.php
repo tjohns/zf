@@ -203,10 +203,10 @@ class Zend_Measure_Binary extends Zend_Measure_Abstract
 
         // Convert to standard value
         $value = parent::getValue();
-        $value = bcmul($value, self::$_UNITS[parent::getType()][0], 25);
+        $value = call_user_func(Zend_Locale_Math::$mul, $value, self::$_UNITS[parent::getType()][0], 25);
 
         // Convert to expected value
-        $value = bcdiv($value, self::$_UNITS[$type][0]);
+        $value = call_user_func(Zend_Locale_Math::$div, $value, self::$_UNITS[$type][0]);
         parent::setValue($value, $type, $this->_Locale);
         parent::setType( $type );
     }

@@ -235,8 +235,8 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
                 } catch (Exception $e) {
                     throw new Zend_Measure_Exception($e->getMessage());
                 }
-                if (bccomp($value, 0) < 0) {
-                    $value =  bcsqrt(bcpow($value, 2));
+                if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
+                    $value = call_user_func(Zend_Locale_Math::$sqrt, call_user_func(Zend_Locale_Math::$pow, $value, 2));
                 }
                 break;
         }
@@ -263,7 +263,9 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $length = strlen( $input );
             for($X = 0; $X < $length; ++$X) {
                 $split[$X] = hexdec( $split[$X] );
-                $value = bcadd($value, bcmul($split[$X], bcpow(self::$_UNITS[$type][0], ($length - $X - 1))));
+                $value = call_user_func(Zend_Locale_Math::$add, $value, 
+                            call_user_func(Zend_Locale_Math::$mul, $split[$X], 
+                            call_user_func(Zend_Locale_Math::$pow, self::$_UNITS[$type][0], ($length - $X - 1))));
             }
         }
 
@@ -298,11 +300,11 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
     {
         if (self::$_UNITS[$type][0] <= 16) {
             $newvalue = "";
-            while(bccomp($value, 0) != 0) {
-                $target = bcmod($value, self::$_UNITS[$type][0]);
+            while(call_user_func(Zend_Locale_Math::$comp, $value, 0) != 0) {
+                $target = call_user_func(Zend_Locale_Math::$mod, $value, self::$_UNITS[$type][0]);
                 $target = strtoupper( dechex($target) );
                 $newvalue = $target . $newvalue;
-                $value = bcdiv($value, self::$_UNITS[$type][0], 0);
+                $value = call_user_func(Zend_Locale_Math::$div, $value, self::$_UNITS[$type][0], 0);
             }
         }
 
@@ -311,7 +313,7 @@ class Zend_Measure_Number extends Zend_Measure_Abstract
             $newvalue = "";
             $romanval = array_values( array_reverse(self::$_ROMAN) );
             $romankey = array_keys( array_reverse(self::$_ROMAN) );
-            while(bccomp($value, 0) != 0) {
+            while(call_user_func(Zend_Locale_Math::$comp, $value, 0) != 0) {
 
                 while ($value >= $romanval[$i]) { 
                     $value    -= $romanval[$i];

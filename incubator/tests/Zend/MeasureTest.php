@@ -5,18 +5,22 @@
  */
 
 
+error_reporting( E_ALL | E_STRICT ); // now required for each test suite
+// define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', false); // uncomment to disable use of bcmath extension by Zend_Date
+
 /**
  * Zend_Measure
  */
 require_once 'Zend.php';
-Zend::loadClass('Zend_Measure');
-Zend::loadClass('Zend_Measure_Temperature');
+require_once 'Zend/Measure.php';
+require_once 'Zend/Measure/Temperature.php';
 
 /**
  * PHPUnit test case
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
+// echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
 
 /**
  * @package    Zend_Measure

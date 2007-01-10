@@ -35,13 +35,13 @@ class Zend_TimeSync_Sntp extends Zend_TimeSync_Protocol
 {
     private $_delay;
     
-	/**
-	 * Class constructor, sets the timeserver and port number
-	 *
-	 * @param  string $timeserver
-	 * @param  int    $port
-	 * @return void
-	 */
+    /**
+     * Class constructor, sets the timeserver and port number
+     *
+     * @param  string $timeserver
+     * @param  int    $port
+     * @return void
+     */
     public function __construct($timeserver, $port)
     {
         $this->_timeserver = $timeserver;

@@ -294,7 +294,7 @@ class Zend_Currency implements Serializable {
     /**
      * sets the locale of the currency
      * 
-     * @param string|Zend_Locale $locale	the locale
+     * @param string|Zend_Locale $locale    the locale
      * @return void
      * @throws Zend_Currency_Exception
      */
@@ -313,7 +313,7 @@ class Zend_Currency implements Serializable {
     /**
      * sets the short name of the currency
      * 
-     * @param string $currency	currency short name
+     * @param string $currency    currency short name
      * @return void
      * @throws Zend_Currency_Exception
      */
@@ -330,7 +330,7 @@ class Zend_Currency implements Serializable {
     /**
      * sets the script name which used for formatting the outputed numbers
      * 
-     * @param string $script	script name
+     * @param string $script    script name
      * @return void
      * @throws Zend_Currency_Exception
      */

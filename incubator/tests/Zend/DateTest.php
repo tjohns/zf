@@ -5,6 +5,8 @@
  */
 
 error_reporting( E_ALL | E_STRICT ); // now required for each test suite
+// define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', false); // uncomment to disable use of bcmath extension by Zend_Date
+
 
 /**
  * Zend_Date
@@ -19,9 +21,6 @@ require_once 'Zend/Date/Cities.php';
  */
 require_once 'PHPUnit/Framework/TestCase.php';
 
-if (defined('TESTS_ZEND_DATE_BCMATH_ENABLED') && !TESTS_ZEND_DATE_BCMATH_ENABLED) {
-    Zend_Locale_Math::init(true); // disable bcmath functions for all tests below
-}
 // echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
 
 

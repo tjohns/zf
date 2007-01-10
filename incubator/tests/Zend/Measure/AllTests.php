@@ -6,6 +6,9 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
+error_reporting( E_ALL | E_STRICT ); // now required for each test suite
+// define('TESTS_ZEND_LOCALE_BCMATH_ENABLED', false); // uncomment to disable use of bcmath extension by Zend_Date
+
 require_once 'Zend/Measure/Cooking/VolumeTest.php';
 require_once 'Zend/Measure/Cooking/WeightTest.php';
 
@@ -36,6 +39,8 @@ require_once 'Zend/Measure/TemperatureTest.php';
 require_once 'Zend/Measure/TorqueTest.php';
 require_once 'Zend/Measure/VolumeTest.php';
 require_once 'Zend/Measure/WeightTest.php';
+
+// echo "BCMATH is ", Zend_Locale_Math::isBcmathDisabled() ? 'disabled':'not disabled', "\n";
 
 class Zend_Measure_AllTests
 {

@@ -26,6 +26,7 @@
  */
 require_once 'Zend/Locale/Data.php';
 require_once 'Zend/Locale/Exception.php';
+require_once 'Zend/Locale/Math.php';
 
 
 /**
@@ -172,7 +173,7 @@ class Zend_Locale_Format
 
         // seperate negative format pattern when avaiable 
         if (iconv_strpos($format, ';') !== false) {
-            if (bccomp($value, 0) < 0) {
+            if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
                 $format = iconv_substr($format, iconv_strpos($format, ';') + 1);
             } else {
                 $format = iconv_substr($format, 0, iconv_strpos($format, ';'));
@@ -180,7 +181,7 @@ class Zend_Locale_Format
         }
 
         // set negative sign
-        if (bccomp($value, 0) < 0) {
+        if (call_user_func(Zend_Locale_Math::$comp, $value, 0) < 0) {
             if (iconv_strpos($format, '-') === false) {
                 $format = $symbols['minus'] . $format;
             } else {
@@ -200,12 +201,12 @@ class Zend_Locale_Format
         }
 
         // get fraction and format lengths
-        bcscale(iconv_strlen($precision));
-        $prec = bcsub($value, bcsub($value, '0', 0));
+        call_user_func(Zend_Locale_Math::$scale, iconv_strlen($precision));
+        $prec = call_user_func(Zend_Locale_Math::$sub, $value, call_user_func(Zend_Locale_Math::$sub, $value, '0', 0));
         if (iconv_strpos($prec, '-') !== false) {
             $prec = iconv_substr($prec, 1);
         }
-        $number = bcsub($value, 0, 0);
+        $number = call_user_func(Zend_Locale_Math::$sub, $value, 0, 0);
         if (iconv_strpos($number, '-') !== false) {
             $number = iconv_substr($number, 1);
         }

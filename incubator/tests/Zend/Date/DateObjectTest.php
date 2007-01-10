@@ -29,82 +29,82 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-	 * Test for date object creation empty value
-	 */
+     * Test for date object creation empty value
+     */
     public function testCreation()
     {
-    	$date = new Zend_Date_DateObject();
-    	$this->assertTrue($date instanceof Zend_Date_DateObject, "expected date object");
+        $date = new Zend_Date_DateObject();
+        $this->assertTrue($date instanceof Zend_Date_DateObject, "expected date object");
     }
 
-	/**
-	 * Test for date object creation null value
-	 */
+    /**
+     * Test for date object creation null value
+     */
     public function testCreationNull()
     {
-    	$date = new Zend_Date_DateObject(0);
-    	$this->assertTrue($date instanceof Zend_Date_DateObject, "expected date object");
+        $date = new Zend_Date_DateObject(0);
+        $this->assertTrue($date instanceof Zend_Date_DateObject, "expected date object");
     }
 
-	/**
-	 * Test for date object creation negative timestamp
-	 */
+    /**
+     * Test for date object creation negative timestamp
+     */
     public function testCreationNegative()
     {
-    	$date = new Zend_Date_DateObject(-1000);
-    	$this->assertTrue($date instanceof Zend_Date_DateObject, "expected date object");
+        $date = new Zend_Date_DateObject(-1000);
+        $this->assertTrue($date instanceof Zend_Date_DateObject, "expected date object");
     }
 
-	/**
-	 * Test for date object creation text given
-	 */
+    /**
+     * Test for date object creation text given
+     */
     public function testCreationFailed()
     {
         try {
-        	$date = new Zend_Date_DateObject("notimestamp");
-        	$this->fail("exception expected");
+            $date = new Zend_Date_DateObject("notimestamp");
+            $this->fail("exception expected");
         } catch (Zend_Date_Exception $e) {
             // success
         }
     }
 
-	/**
-	 * Test for setTimestamp
-	 */
+    /**
+     * Test for setTimestamp
+     */
     public function testSetTimestamp()
     {
-      	$date = new Zend_Date_DateObject();
-       	$this->assertTrue($date->setTimestamp(0), "true expected");
-       	$this->assertTrue($date->setTimestamp("12345678901234567890"), "true expected");
+          $date = new Zend_Date_DateObject();
+           $this->assertTrue($date->setTimestamp(0), "true expected");
+           $this->assertTrue($date->setTimestamp("12345678901234567890"), "true expected");
     }
 
-	/**
-	 * Test for setTimestampFailed
-	 */
+    /**
+     * Test for setTimestampFailed
+     */
     public function testSetTimestampFailed()
     {
         try {
-        	$date = new Zend_Date_DateObject();
-        	$date->setTimestamp("notimestamp");
-        	$this->fail("exception expected");
+            $date = new Zend_Date_DateObject();
+            $date->setTimestamp("notimestamp");
+            $this->fail("exception expected");
         } catch (Zend_Date_Exception $e) {
             // success
         }
     }
 
-	/**
-	 * Test for getTimestamp
-	 */
+    /**
+     * Test for getTimestamp
+     */
     public function testGetTimestamp()
     {
-      	$date = new Zend_Date_DateObject();
-      	$result = $date->getTimestamp();
-       	$this->assertSame($result, time(), time()." expected");
+          $date = new Zend_Date_DateObject();
+          $result = $date->getTimestamp();
+           $this->assertSame($result, time(), time()." expected");
     }
 
-	/**
-	 * Test for mktime
-	 */
+    /**
+     * Test for mktime
+     */
     public function testMkTimeforTimeValues()
     {
         $date = new Zend_Date_DateObject();
@@ -118,68 +118,68 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
         $this->assertSame($date->mktime(100, 100, 100, false, false, false, -1, true), gmmktime(100, 100, 100));
     }
 
-	/**
-	 * Test for mktime
-	 */
+    /**
+     * Test for mktime
+     */
     public function testMkTimeforDateValuesInPHPRange()
     {
         $date = new Zend_Date_DateObject();
-       	$this->assertSame($date->mktime(0, 0, 0, 12, 30, 2037, -1, false),   mktime(0, 0, 0, 12, 30, 2037, -1));
-       	$this->assertSame($date->mktime(0, 0, 0, 12, 30, 2037, -1, true),  gmmktime(0, 0, 0, 12, 30, 2037, -1));
+           $this->assertSame($date->mktime(0, 0, 0, 12, 30, 2037, -1, false),   mktime(0, 0, 0, 12, 30, 2037, -1));
+           $this->assertSame($date->mktime(0, 0, 0, 12, 30, 2037, -1, true),  gmmktime(0, 0, 0, 12, 30, 2037, -1));
 
-       	$this->assertSame($date->mktime(0, 0, 0,  1,  1, 2000, -1, false),   mktime(0, 0, 0,  1,  1, 2000, -1));
-       	$this->assertSame($date->mktime(0, 0, 0,  1,  1, 2000, -1, true),  gmmktime(0, 0, 0,  1,  1, 2000, -1));
+           $this->assertSame($date->mktime(0, 0, 0,  1,  1, 2000, -1, false),   mktime(0, 0, 0,  1,  1, 2000, -1));
+           $this->assertSame($date->mktime(0, 0, 0,  1,  1, 2000, -1, true),  gmmktime(0, 0, 0,  1,  1, 2000, -1));
 
-       	$this->assertSame($date->mktime(0, 0, 0,  1,  1, 1970, -1, false),   mktime(0, 0, 0,  1,  1, 1970, -1));
-       	$this->assertSame($date->mktime(0, 0, 0,  1,  1, 1970, -1, true),  gmmktime(0, 0, 0,  1,  1, 1970, -1));
+           $this->assertSame($date->mktime(0, 0, 0,  1,  1, 1970, -1, false),   mktime(0, 0, 0,  1,  1, 1970, -1));
+           $this->assertSame($date->mktime(0, 0, 0,  1,  1, 1970, -1, true),  gmmktime(0, 0, 0,  1,  1, 1970, -1));
 
-       	$this->assertSame($date->mktime(0, 0, 0, 12, 30, 1902, -1, false),   mktime(0, 0, 0, 12, 30, 1902, -1));
-       	$this->assertSame($date->mktime(0, 0, 0, 12, 30, 1902, -1, true),  gmmktime(0, 0, 0, 12, 30, 1902, -1));
+           $this->assertSame($date->mktime(0, 0, 0, 12, 30, 1902, -1, false),   mktime(0, 0, 0, 12, 30, 1902, -1));
+           $this->assertSame($date->mktime(0, 0, 0, 12, 30, 1902, -1, true),  gmmktime(0, 0, 0, 12, 30, 1902, -1));
     }
 
-	/**
-	 * Test for mktime
-	 */
+    /**
+     * Test for mktime
+     */
     public function testMkTimeforDateValuesGreaterPHPRange()
     {
         $date = new Zend_Date_DateObject();
-       	$this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, false), 2232658800);
-       	$this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, true),  2232662400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, false), 7258114800);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, true),  7258118400);
-       	$this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, false), 16749586800);
-       	$this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, true),  16749590400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, false), 32503676400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, true),  32503680000);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 5000, -1, false), 95617580400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 5000, -1, true),  95617584000);
+           $this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, false), 2232658800);
+           $this->assertSame($date->mktime(0, 0, 0,10, 1, 2040, -1, true),  2232662400);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, false), 7258114800);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 2200, -1, true),  7258118400);
+           $this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, false), 16749586800);
+           $this->assertSame($date->mktime(0, 0, 0,10,10, 2500, -1, true),  16749590400);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, false), 32503676400);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 3000, -1, true),  32503680000);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 5000, -1, false), 95617580400);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 5000, -1, true),  95617584000);
     }
 
-	/**
-	 * Test for mktime
-	 */
+    /**
+     * Test for mktime
+     */
     public function testMkTimeforDateValuesSmallerPHPRange()
     {
         $date = new Zend_Date_DateObject();
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1900, -1, false), -2208985200);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1900, -1, true),  -2208988800);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1700, -1, false), -8520332400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1700, -1, true),  -8520336000);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, false), -14830988400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, true),  -14830992000);
-       	$this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, false), -12219321600);
-       	$this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, true),  -12219321600);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, false), -30609788400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, true),  -30609792000);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, false), -62167388400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, true),  -62167392000);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, false), -125282588400);
-       	$this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, true),  -125282592000);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1900, -1, false), -2208985200);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1900, -1, true),  -2208988800);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1700, -1, false), -8520332400);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1700, -1, true),  -8520336000);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, false), -14830988400);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1500, -1, true),  -14830992000);
+           $this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, false), -12219321600);
+           $this->assertSame($date->mktime(0, 0, 0,10,10, 1582, -1, true),  -12219321600);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, false), -30609788400);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1, 1000, -1, true),  -30609792000);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, false), -62167388400);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1,    0, -1, true),  -62167392000);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, false), -125282588400);
+           $this->assertSame($date->mktime(0, 0, 0, 1, 1,-2000, -1, true),  -125282592000);
 
-       	$this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, false), -2208985200);
-       	$this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, true),  -2208988800);
-       	$this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, false), -2208985200);
-       	$this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, true),  -2208988800);
+           $this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, false), -2208985200);
+           $this->assertSame($date->mktime(0, 0, 0, 13, 1, 1899, -1, true),  -2208988800);
+           $this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, false), -2208985200);
+           $this->assertSame($date->mktime(0, 0, 0,-11, 1, 1901, -1, true),  -2208988800);
     }
 
     public function testIsLeapYear()

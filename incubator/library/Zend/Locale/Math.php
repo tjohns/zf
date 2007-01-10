@@ -23,6 +23,8 @@
 /**
  * Utility class for proxying math function to bcmath functions, if present,
  * otherwise to PHP builtin math operators, with limited detection of overflow conditions.
+ * Sampling of PHP environments and platforms suggests that at least 80% to 90% support bcmath.
+ * Thus, this file should be as light as possible.
  *
  * @category   Zend
  * @package    Zend
@@ -33,31 +35,17 @@
 class Zend_Locale_Math
 {
     // support unit testing without using bcmath functions 
-    static private $_bcmathDisabled = false;
+    static protected $_bcmathDisabled = false;
 
-    static public $add  = 'bcadd';
-    static public $sub  = 'bcsub';
-    static public $pow  = 'bcpow';
-    static public $mul  = 'bcmul';
-    static public $div  = 'bcdiv';
-    static public $comp = 'bccomp';
-    static public $sqrt = 'bcsqrt';
-    static public $mod  = 'bcmod';
-
-    static public function init($disable = false)
-    {
-        if ($disable || !extension_loaded('bcmath')) {
-            self::$_bcmathDisabled = true;
-            self::$add  = 'Zend_Locale_Math_Add';
-            self::$sub  = 'Zend_Locale_Math_Sub';
-            self::$pow  = 'Zend_Locale_Math_Pow';
-            self::$mul  = 'Zend_Locale_Math_Mul';
-            self::$div  = 'Zend_Locale_Math_Div';
-            self::$comp = 'Zend_Locale_Math_Comp';
-            self::$sqrt = 'Zend_Locale_Math_Sqrt';
-            self::$mod  = 'Zend_Locale_Math_Mod';
-        }
-    }
+    static public $add   = 'bcadd';
+    static public $sub   = 'bcsub';
+    static public $pow   = 'bcpow';
+    static public $mul   = 'bcmul';
+    static public $div   = 'bcdiv';
+    static public $comp  = 'bccomp';
+    static public $sqrt  = 'bcsqrt';
+    static public $mod   = 'bcmod';
+    static public $scale = 'bcscale';
 
     static public function isBcmathDisabled()
     {
@@ -65,85 +53,9 @@ class Zend_Locale_Math
     }
 }
 
-function Zend_Locale_Math_Add($op1, $op2)
-{
-    $result = $op1 + $op2;
-    if ($result - $op2 != $op1) {
-        throw Exception("addition overflow: $op1 + $op2 != $result");
-    }
-    return $result;
+if ((defined('TESTS_ZEND_LOCALE_BCMATH_ENABLED') && !TESTS_ZEND_LOCALE_BCMATH_ENABLED)
+    || !extension_loaded('bcmath')) {
+    require_once 'Zend/Locale/Math/PhpMath.php';
 }
-
-function Zend_Locale_Math_Sub($op1, $op2)
-{
-    $result = $op1 - $op2;
-    if ($result + $op2 != $op1) {
-        throw Exception("subtraction overflow: $op1 - $op2 != $result");
-    }
-    return $result;
-}
-
-function Zend_Locale_Math_Pow($base, $exp)
-{
-    $result = pow($base, $exp);
-    if ($result === false) {
-        throw Exception("power overflow: $op1 ^ $op2");
-    }
-    return $result;
-} 
-
-function Zend_Locale_Math_Mul($op1, $op2)
-{
-    $result = $op1 * $op2;
-    if ($result / $op2 != $op1) {
-        throw Exception("multiplication overflow: $op1 * $op2 != $result");
-    }
-    return $result;
-}
-
-function Zend_Locale_Math_Div($op1, $op2)
-{
-    $result = $op1 / $op2;
-    if ($op2 == 0) {
-        throw Exception("can not divide by zero");
-    }
-    if ($result * $op2 != $op1) {
-        throw Exception("division overflow: $op1 / $op2 != $result");
-    }
-    return $result;
-}
-
-function Zend_Locale_Math_Comp($op1, $op2)
-{
-    $result = $op1 - $op2;
-    if ($result + $op2 != $op1) {
-        throw Exception("compare overflow: comp($op1, $op2)");
-    }
-    return $result;
-}
-
-function Zend_Locale_Math_Sqrt($op1, $op2 = null)
-{
-    if (((float)$op1) != $op1) {
-        throw Exception("sqrt operand overflow: $op1");
-    }
-    $result = sqrt($op1);
-    return $result;
-}
-
-function Zend_Locale_Math_Mod($op1, $op2)
-{
-    $result = $op1 / $op2;
-    if ($op2 == 0) {
-        throw Exception("can not modulo by zero");
-    }
-    if ($result * $op2 != $op1) {
-        throw Exception("modulo overflow: $op1 % $op2");
-    }
-    $result = $op1 % $op2;
-    return $result;
-}
-
-Zend_Locale_Math::init();
 
 ?>
