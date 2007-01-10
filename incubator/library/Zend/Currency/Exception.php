@@ -29,7 +29,7 @@ require_once 'Zend/Exception.php';
 /**
  * @category   Zend
  * @package    Zend_Currency
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Currency_Exception extends Zend_Exception

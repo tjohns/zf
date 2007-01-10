@@ -14,7 +14,7 @@
  *
  * @category   Zend
  * @package    Zend_Currency
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @version    $Id
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
@@ -23,33 +23,35 @@
 /**
  * include needed classes
  */
-require_once 'Zend/Locale/Data.php';
 require_once 'Zend/Locale.php';
-require_once 'Zend/Locale/Format.php';
 require_once 'Zend/Currency/Exception.php';
 
 
 /**
  * @category   Zend
  * @package    Zend_Currency
- * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2007 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Currency implements Serializable { 
+class Zend_Currency { 
  
     
     /**
      * constants for enabling and disabling the use of currency Symbols
      */
-    const USESYMBOL = 'Zend_Currecny::USESYMBOL';
-    const NOSYMBOL  = 'Zend_Currency::NOSYMBOL' ;
+    const USESYMBOL = 0;
+    const NOSYMBOL  = 1;
     
     
     /**
      * constants for enabling and disabling the use of currency Names
      */
-    const USENAME = 'Zend_Currency::USENAME';
-    const NONAME  = 'Zend_Currency::NONAME' ;
+    const USENAME  = 2;
+    const NONAME   = 4;
+
+    const STANDARD = 8;
+    const RIGHT    = 16;
+    const LEFT     = 32;
     
     
     /**
@@ -81,13 +83,13 @@ class Zend_Currency implements Serializable {
     /**
      * Constructor 
      *
-     * @param  string $currency     OPTIONAL currency short name
-     * @param  string $locale       OPTIONAL locale name
-     * @param  string $script       OPTIONAL script name
-     * @return object Zend_Currency
+     * @param  string              $currency  OPTIONAL currency short name
+     * @param  string              $script    OPTIONAL script name
+     * @param  string|Zend_Locale  $locale    OPTIONAL locale name
+     * @return Zend_Currency
      * @throws Zend_Currency_Exception
      */ 
-    public function __construct($currency = false, $locale = false, $script = false)
+    public function __construct($currency = NULL, $script = NULL, $locale = NULL)
     {
         /*
          * supporting flexible parameters
@@ -108,27 +110,27 @@ class Zend_Currency implements Serializable {
                 
                 if (empty($this->_CurrencyLocale)){
                     $this->_setCurrencyLocale($param);
-                }else{
+                } else {
                     throw new Zend_Currency_Exception('many locales passed');
                 }
             //get the currency short name   
-            }elseif (is_string($param) && strlen($param) == 3) {
+            } else if (is_string($param) && strlen($param) == 3) {
                 
                 if(empty($this->_CurrencyShortName)) {
                     $this->_setCurrencyShortName($param);
-                }else{
+                } else {
                     throw new Zend_Currency_Exception('many currency names passed');
                 }
             //get the script name
-            }elseif (is_string($param) && strlen($param) == 4) {
+            } else if (is_string($param) && strlen($param) == 4) {
                 
-                if(empty($this->_NumberScript)) {
+                if (empty($this->_NumberScript)) {
                     $this->_setNumberScript($param);
-                }else{
+                } else {
                     throw new Zend_Currency_Exception('many number script names passed');
                 }
             //unknown data passed in this param  
-            }elseif($param !== false){
+            } else if ($param !== false){
                 throw new Zend_Currency_Exception('unknown value passed at param #' . $num);
             }
             
@@ -136,7 +138,7 @@ class Zend_Currency implements Serializable {
         
         
         //make sure that the locale is passed
-        if(empty($this->_CurrencyLocale)) {
+        if (empty($this->_CurrencyLocale)) {
             throw new Zend_Currency_Exception('you should pass the locale of the currency');
         }
         
@@ -146,111 +148,73 @@ class Zend_Currency implements Serializable {
 
     
     /**
-     * Serialization Interface [Serializable]
+     * Returns a localized currency string
      *
+     * @param  int|float           $value   Currency value
+     * @param  string              $script  OPTIONAL Number script to use for output
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for output formatting
      * @return string
      */ 
-    public function serialize()
-    {
-        $data = array(
-                );
-        return serialize($data);
-        //TODO finish this method
-    } 
-    
-    
-    /**
-     * Serialization Interface [Serializable]
-     *
-     * @param string $serialized  serialized Zend_Currency object
-     * @return object Zend_Currency
-     */ 
-    public function unserialize($serialized) 
-    {
-        //TODO finish this method
-    } 
- 
-
- 
-    /**
-     * Returns a complete currency string
-     *
-     * @param int|float $value  the number
-     * @param string    $locale OPTIONAL the locale for formatting the number
-     * @param string    $script OPTIONAL the script of the numbers
-     * @return string
-     */ 
-    public function toCurrency($value, $locale = false, $script = false) 
+    public function toCurrency($value, $script = NULL, $locale = NULL) 
     {
         //TODO finish this method
     } 
     
     
     /**
-     * sets the formating options of the outputed numbers
-     * if no parameters passed, the currency's locale will be used
+     * Sets the formating options of the localized currency string
+     * If no parameter is passed, the standard setting of the
+     * actual set locale will be used
      *
-     * @param string $locale    OPTIONAL locale name
-     * @param string $script    OPTIONAL the script of the numbers
-     * @return object Zend_Currency
+     * @param  const|string        $rules   OPTIONAL formating rules for currency
+     *                  - SYMBOL|NOSYMBOL : display currency symbol
+     *                  - NAME|NONAME     : display currency name
+     *                  - DEFAULT|RIGHT|LEFT : where to display currency symbol/name
+     *                  - string: gives the currency string/name/sign to set
+     * @param  string              $script  OPTIONAL Number script to use for output
+     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for output formatting
+     * @return Zend_Currency
      */
-    public function setFormat($locale = false, $script = false)
-    {
-        //TODO finish this method
-    }
-    
- 
-    /**
-     * sets the options of the outputed sign
-     * if no parameters, the currency's locale will be used and the use of
-     * currency Symbols and Names will be enabled
-     *
-     * @param string $locale    OPTIONAL the locale of the currency's name
-     * @param string $side      OPTIONAL the place of the sign [right|left]
-     * @param const  $useSymbol OPTIONAL use currency Symbols or not
-     * @param const  $useName   OPTIONAL use currency Names or not
-     * @return object Zend_Currency
-     */
-    public function setSign ($locale = false, $side = false, $useSymbol = false, $useName = false)
+    public function setFormat($rules = NULL, $script = NULL, $locale = NULL)
     {
         //TODO finish this method
     }
     
     
     /**
-     * Returns the currency symbol, 
+     * Returns the actual or details of other currency symbols, 
      * when no symbol is avaiable it returns the currency shortname (f.e. FIM for Finnian Mark)
      *
-     * @param string $currency   Currency name
-     * @param string $locale     The locale which the currency belongs to
+     * @param  string              $currency   OPTIONAL Currency name
+     * @param  string|Zend_Locale  $locale     OPTIONAL Locale to display informations
      * @return string
      */ 
-    public static function getCurrencySign($currency, $locale) 
+    public static function getSign($currency, $locale) 
     {
         //TODO finish this method
     } 
 
  
     /**
-     * Returns the name of the currency
+     * Returns the actual or details of other currency names
      *
-     * @param string $currency   Currency's short name
-     * @param string $locale     OPTIONAL the locale
+     * @param  string              $currency   OPTIONAL Currency's short name
+     * @param  string|Zend_Locale  $locale     OPTIONAL the locale
      * @return string
      */ 
-    public static function getCurrencyName($currency, $locale) 
+    public static function getName($currency, $locale) 
     {
         //TODO finish this method
     } 
- 
- 
+
+
     /**
      * Returns a list of regions where this currency is or was known
      *
-     * @param string $currency Currency's short name
-     * @return array           List of regions
+     * @param  string  $currency  Currency's short name
+     * @return array              List of regions
      */ 
-    public static function getRegionForCurrency($currency) 
+    public static function getRegionList($currency) 
     {
         //TODO finish this method
     } 
@@ -260,24 +224,24 @@ class Zend_Currency implements Serializable {
      * Returns a list of currencies which are used in this region
      * a region name should be 2 charachters only (f.e. EG, DE, US)
      *
-     * @param string $region Currency Type
-     * @return array         List of currencys
+     * @param  string  $region  Currency Type
+     * @return array            List of currencys
      */ 
-    public static function getCurrencyForRegion($region) 
+    public static function getCurrencyList($region) 
     {
         //TODO finish this method
-    } 
-     
-     
+    }
+
+
     /**
-     * Returns the currency name 
+     * Returns the actual currency name 
      *
      * @return string
      */ 
     public function toString()
     {
         //TODO finish this method
-    } 
+    }
 
 
     /**
@@ -287,14 +251,14 @@ class Zend_Currency implements Serializable {
      */ 
     public function __toString()
     {
-        //TODO finish this method
+        return $this->toString();
     }
  
     
     /**
      * sets the locale of the currency
      * 
-     * @param string|Zend_Locale $locale    the locale
+     * @param string|Zend_Locale  $locale  the locale
      * @return void
      * @throws Zend_Currency_Exception
      */
@@ -302,18 +266,18 @@ class Zend_Currency implements Serializable {
     {
         if (is_object($locale) && $locale instanceof Zend_Locale){
             $this->_CurrencyLocale = $locale ;
-        }elseif (is_string($locale)) {
+        } else if (is_string($locale)) {
             $this->_CurrencyLocale = new Zend_Locale($locale);
-        }else{
+        } else {
             throw new Zend_Currency_Exception('invalid locale');
         }
     }
-    
+
     
     /**
      * sets the short name of the currency
      * 
-     * @param string $currency    currency short name
+     * @param string  $currency  currency short name
      * @return void
      * @throws Zend_Currency_Exception
      */
@@ -321,7 +285,7 @@ class Zend_Currency implements Serializable {
     {
         if (is_string($currency) && strlen($currency) == 3) {
             $this->_CurrencyShortName = strtoupper($currency);
-        }else{
+        } else {
             throw new Zend_Currency_Exception('invalid currency short name');
         }
     }
@@ -330,7 +294,7 @@ class Zend_Currency implements Serializable {
     /**
      * sets the script name which used for formatting the outputed numbers
      * 
-     * @param string $script    script name
+     * @param string $script	script name
      * @return void
      * @throws Zend_Currency_Exception
      */
@@ -338,9 +302,27 @@ class Zend_Currency implements Serializable {
     {
         if (is_string($script) && strlen($script) == 4) {
             $this->_NumberScript = $script ;
-        }else{
+        } else {
             throw new Zend_Currency_Exception('invalid script name');
         }
     }
+}
 
-} 
+/** PROPOSER COMMENT FOR SHREEF (from Thomas):
+ * 1.)
+ * The serialize/unserialize functions should not be needed
+ * The standard PHP useage should be enough
+ * 2.)
+ * All functions - script and locale are switched.
+ * Standard behavior is locale rightest parameter.
+ * If not set all params are parsed from right to left, like in Zend_Date
+ * Script has to be use the "script" string and not the locale identifier, 
+ * so duplication is not given.
+ * 3.) I reworked some functions to work as the user expects them, but not complete for now
+ * 4.) Please only use SPACES instead of TAB... intend 4 spaces
+ * 5.) Please no ending sign after closing a function
+ * 6.) Please UTF8 coding
+ * 7.) Please code like described in the coding standard... I fixed some issues but not all
+ * 
+ * More to come after 0.7
+ */
