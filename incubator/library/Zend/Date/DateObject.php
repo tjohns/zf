@@ -77,7 +77,7 @@ class Zend_Date_DateObject {
      * must be given as Timestamp
      * This object simulates the PHP 5.2 Date Object
      *
-     * @param $date mixed - OPTIONAL timestamp number
+     * @param  string|integer  $date  OPTIONAL timestamp; defaults to local time using time()
      */
     public function __construct($date = null)
     {
@@ -88,7 +88,7 @@ class Zend_Date_DateObject {
     /**
      * Sets a new timestamp
      *
-     * @param  mixed  $date  OPTIONAL timestamp; defaults to local time using time()
+     * @param  string|integer  $date  OPTIONAL timestamp; defaults to local time using time()
      * @return boolean
      * @throws Zend_Date_Exception
      */
@@ -105,7 +105,7 @@ class Zend_Date_DateObject {
             return true;
         }
 
-        throw new Zend_Date_Exception('\'' . $date . '\' is not a valid date');
+        throw new Zend_Date_Exception('\'' . $date . '\' is not a valid date (expected timestamp)');
     }
 
 
@@ -147,7 +147,10 @@ class Zend_Date_DateObject {
                            $dst= -1, $gmt = false)
     {
         // only time - use PHP internal
-        if ($month === false) {
+        if ($month === false || $day === false || $year === false) {
+            if ($month !== false || $day !== false || $year !== false) {
+                throw new Zend_Date_Exception("Invalid Year/Month/Day: $year/$month/$day");
+            }
             return ($gmt) ? @gmmktime($hour, $minute, $second)
                           :   @mktime($hour, $minute, $second);
         }
@@ -257,7 +260,7 @@ class Zend_Date_DateObject {
      */
     private function _gmtDifference()
     {
-        // fix if no timezone was set, if all failes UTC will be set
+        // fix if no timezone was set, if all fails UTC will be set
         $zone = @date_default_timezone_get();
         date_default_timezone_set($zone);
 
@@ -591,7 +594,7 @@ class Zend_Date_DateObject {
      * @param  integer  $year
      * @param  integer  $month
      * @param  integer  $day
-     * @return dayOfWeek
+     * @return integer  dayOfWeek
      */
     public function dayOfWeek($year, $month, $day)
     {
@@ -625,12 +628,12 @@ class Zend_Date_DateObject {
      *
      * Returns an array with date parts to a given GMT/UTC timestamp
      *
-     * $all defines is ALL date parts should be returned.
-     * Default is false, so the function works faster
+     * $fast specifies ALL date parts should be returned (slower)
+     * Default is false, and excludes $dayofweek, weekday, month and timestamp from parts returned.
      *
      * @param   mixed    $timestamp
-     * @param   boolean  $fast
-     * @return array
+     * @param   boolean  $fast   OPTIONAL defaults to fast (false), resulting in fewer date parts
+     * @return  array
      */
     public function getDate($timestamp = false, $fast = false)
     {
