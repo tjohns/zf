@@ -97,44 +97,6 @@ Zend_Session_Core::start();
 
     </sect2>
 
-    <sect2 id="zend.session.limitinginstances">
-
-        <title>Limiting Instances of Zend_Session to One Per Namespace</title>
-
-        <para>
-            When constructing the first instance of Zend_Session attached to a specific namespace, you can also instruct
-            Zend_Session to not make any more instances for that namespace. Thus, any future attempts to construct a
-            Zend_Session instance having the same namespace will throw an error. Such behavior is optional, and not the
-            default behavior, but remains available to those who prefer to pass around a single instance object for each
-            namespace. This increases protection from changes by components that should not modify a particular session
-            namespace, because they won't have easy access. However, limiting a namespace to a single instance may lead
-            to more code or more complex code, as it removes access to the convient <code>$session = new
-            Zend_Session('aNamespace');</code>, after the first intance has been created, as follows in the example
-            below:
-        </para>
-
-        <example>
-            <title>Limiting to Single Instances</title>
-<programlisting role="php">
-<![CDATA[<?php
-    require_once 'Zend/Session.php';
-    $componentAuthState = new Zend_Session('Zend_Auth', Zend_Session::SINGLE_INSTANCE);
-    doSomething($options, $componentAuthState); // pass the state to wherever it is needed
-?>]]></programlisting>
-        </example>
-
-        <para>
-            The second parameter in the constructor above will tell Zend_Session that any future Zend_Session's that are
-            instantiated with the 'Zend_Auth' namespace are not allowed and will thus result in an exception being
-            thrown. Since <code>new Zend_Session('Zend_Auth')</code> will not be allowed after the code above has been
-            executed, you are responsible for storing the instance object (<code>$componentAuthState</code> in the
-            example above) somewhere, if you need access to this session namespace at a later time during the same
-            request. For example, you may store the instance in a static variable, or pass it to other methods that
-            might need access to this session namespace.
-        </para>
-
-    </sect2>
-
     <sect2 id="zend.session.locking">
 
         <title>Locking Session Namespaces</title>
@@ -237,6 +199,57 @@ else {
 }
 ?>]]></programlisting>
         </example>
+
+    </sect2>
+
+    <sect2 id="zend.session.limitinginstances">
+
+        <title>Limiting Instances of Zend_Session to One Per Namespace</title>
+
+        <para>
+            We recommend using session locking (see above) instead of the feature below, which places extra management
+            burden on the developer to pass the Zend_Session instance into whatever functions and objects need access.
+        </para>
+
+        <para>
+            When constructing the first instance of Zend_Session attached to a specific namespace, you can also instruct
+            Zend_Session to not make any more instances for that namespace. Thus, any future attempts to construct a
+            Zend_Session instance having the same namespace will throw an error. Such behavior is optional, and not the
+            default behavior, but remains available to those who prefer to pass around a single instance object for each
+            namespace. This increases protection from changes by components that should not modify a particular session
+            namespace, because they won't have easy access. However, limiting a namespace to a single instance may lead
+            to more code or more complex code, as it removes access to the convient <code>$session = new
+            Zend_Session('aNamespace');</code>, after the first intance has been created, as follows in the example
+            below:
+        </para>
+
+        <example>
+            <title>Limiting to Single Instances</title>
+<programlisting role="php">
+<![CDATA[<?php
+    require_once 'Zend/Session.php';
+    $authSessionAccessor1 = new Zend_Session('Zend_Auth');
+    $authSessionAccessor2 = new Zend_Session('Zend_Auth', Zend_Session::SINGLE_INSTANCE);
+    $authSessionAccessor1->foo = 'bar';
+    assert($authSessionAccessor2->foo, 'bar'); // passes
+    doSomething($options, $authSessionAccessor2); // pass the accessor to wherever it is needed
+    .
+    .
+    .
+    $aSessionObject = new Zend_Session('Zend_Auth'); // this will throw an error
+?>]]></programlisting>
+        </example>
+
+        <para>
+            The second parameter in the constructor above will tell Zend_Session that any future Zend_Session's that are
+            instantiated with the 'Zend_Auth' namespace are not allowed and will thus result in an exception being
+            thrown. Since <code>new Zend_Session('Zend_Auth')</code> will not be allowed after the code above has been
+            executed, the developer becomes responsible for storing the instance object (<code>$componentAuthState</code>
+            in the example above) somewhere, if access to this session namespace is needed at a later time during the
+            same request. For example, a developer may store the instance in a static variable, or pass it to other methods
+            that might need access to this session namespace.  Session locking (see above) provides a more convenient,
+            and less burdensome approach to limiting access to namespaces.
+        </para>
 
     </sect2>
 
