@@ -44,13 +44,13 @@ class Zend_Date_DateObject {
     /**
      * Table of Monthdays
      */
-    private $_monthTable = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    static private $_monthTable = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
 
     /**
      * Table of Years
      */
-    private $_yearTable = array(
+    static private $_yearTable = array(
         1970 => 0,            1960 => -315619200,   1950 => -631152000,
         1940 => -946771200,   1930 => -1262304000,  1920 => -1577923200,
         1910 => -1893456000,  1900 => -2208988800,  1890 => -2524521600,
@@ -73,44 +73,45 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Generates the standard date object
-     * must be given as Timestamp
+     * Generates the standard date object for a UNIX timestamp.
+     * 
      * This object simulates the PHP 5.2 Date Object
      *
-     * @param  string|integer  $date  OPTIONAL timestamp; defaults to local time using time()
+     * @param  string|integer  $timestamp  OPTIONAL timestamp; defaults to local time using time()
      */
-    public function __construct($date = null)
+    public function __construct($timestamp = null)
     {
-        $this->setTimestamp($date);
+        $this->setTimestamp($timestamp);
+        // fix this object's timezone now, since date_default_timezone_set() might be called later
+        $this->_gmtDifference();
     }
 
 
     /**
-     * Sets a new timestamp
+     * Set this object to have a new UNIX timestamp.
      *
-     * @param  string|integer  $date  OPTIONAL timestamp; defaults to local time using time()
-     * @return boolean
+     * @param  string|integer  $timestamp  OPTIONAL timestamp; defaults to local time using time()
+     * @return string|integer  old timestamp 
      * @throws Zend_Date_Exception
      */
-    public function setTimestamp($date = null)
+    public function setTimestamp($timestamp = null)
     {
-        if (is_numeric($date)) {
-            $this->_unixtimestamp = $date;
-            return true;
-        }
+        $old = $this->_unixtimestamp;
 
-        // no date value, take actual time
-        if ($date === null) {
+        if (is_numeric($timestamp)) {
+            $this->_unixtimestamp = $timestamp;
+        } else if ($timestamp === null) {
             $this->_unixtimestamp = time();
-            return true;
+        } else {
+            throw new Zend_Date_Exception('\'' . $timestamp . '\' is not a valid UNIX timestamp');
         }
 
-        throw new Zend_Date_Exception('\'' . $date . '\' is not a valid date (expected timestamp)');
+        return $old;
     }
 
 
     /**
-     * Returns unix timestamp
+     * Returns this object's UNIX timestamp
      *
      * @return  integer|string  timestamp
      */
@@ -136,11 +137,11 @@ class Zend_Date_DateObject {
      * @param  integer  $hour
      * @param  integer  $minute 
      * @param  integer  $second
-     * @param  integer  $month
+     * @param  integer  $month   If one of $month, $day, $year are specified, all three must be valid values
      * @param  integer  $day
      * @param  integer  $year
      * @param  boolean  $dst     summer/wintertime (daylight savings time)
-     * @param  boolean  $gmt     OPTIONAL true = UTC time, false = actual time zone
+     * @param  boolean  $gmt     OPTIONAL true = other arguments are for UTC time, false = arguments are for local time/date
      * @return  integer|float
      */
     public function mktime($hour, $minute, $second, $month = false, $day = false, $year = false, 
@@ -201,7 +202,7 @@ class Zend_Date_DateObject {
                 } else {
 
                     for ($mcount = 0; $mcount < ($month - 1); $mcount++) {
-                        $date += $this->_monthTable[$mcount];
+                        $date += self::$_monthTable[$mcount];
                         if (($leapyear === true) and ($mcount == 1)) {
                             $date++;
                         }
@@ -229,7 +230,7 @@ class Zend_Date_DateObject {
                 } else {
 
                     for ($mcount = 11; $mcount > ($month - 1); $mcount--) {
-                        $date += $this->_monthTable[$mcount];
+                        $date += self::$_monthTable[$mcount];
                         if (($leapyear === true) and ($mcount == 1)) {
                             $date++;
                         }
@@ -238,7 +239,7 @@ class Zend_Date_DateObject {
                 }
             }
 
-            $date += ($this->_monthTable[$month - 1] - $day);
+            $date += (self::$_monthTable[$month - 1] - $day);
             $date = -(($date * 86400) + (86400 - (($hour * 3600) + ($minute * 60) + $second)) + $difference);
 
             // gregorian correction for 5.Oct.1582
@@ -255,17 +256,18 @@ class Zend_Date_DateObject {
 
     /**
      * Returns the difference from local time to GMT
+     * Note that changing the default timezone using date_default_timezone_set($zone)
+     * will NOT change the timezone associated with already created Zend_Date_DateObject objects.
+     * There is currently no way to set or alter the timezone associated with this object,
+     * except by calling date_default_timezone_set($zone) *before* creating the object.
      *
-     * @return  integer
+     * @return  integer  seconds difference between GMT timezone and local default timezone
      */
     private function _gmtDifference()
     {
-        // fix if no timezone was set, if all fails UTC will be set
-        $zone = @date_default_timezone_get();
-        date_default_timezone_set($zone);
-
-        if ($this->_timezone !== false)
+        if ($this->_timezone !== false) {
             return $this->_timezone;
+        }
 
         $this->_timezone = mktime(0, 0, 0, 1, 2, 1970) - gmmktime(0, 0, 0, 1, 2, 1970);
         return $this->_timezone;
@@ -401,7 +403,7 @@ class Zend_Date_DateObject {
                     break;
 
                 case 't':  // number of day in month
-                    $output .= $this->_monthTable[$date['mon'] - 1];
+                    $output .= self::$_monthTable[$date['mon'] - 1];
                     break;
 
 
@@ -661,7 +663,7 @@ class Zend_Date_DateObject {
             $act = 1970;
 
             // iterate through 10 years table, increasing speed
-            foreach($this->_yearTable as $year => $seconds) {
+            foreach(self::$_yearTable as $year => $seconds) {
                 if ($timestamp >= $seconds) {
                     $i = $act;
                     break;
@@ -699,14 +701,14 @@ class Zend_Date_DateObject {
             for ($i = 12; --$i >= 0;) {
                 $day = $timestamp;
 
-                $timestamp += $this->_monthTable[$i] * 86400;
+                $timestamp += self::$_monthTable[$i] * 86400;
                 if (($leapyear === true) and ($i == 1)) {
                     $timestamp += 86400;
                 }
 
                 if ($timestamp >= 0) {
                     $month  = $i;
-                    $numday = $this->_monthTable[$i];
+                    $numday = self::$_monthTable[$i];
                     if (($leapyear === true) and ($i == 1)) {
                         ++$numday;
                     }
@@ -743,7 +745,7 @@ class Zend_Date_DateObject {
             // iterate through months
             for ($i = 0; $i <= 11; $i++) {
                 $day = $timestamp;
-                $timestamp -= $this->_monthTable[$i] * 86400;
+                $timestamp -= self::$_monthTable[$i] * 86400;
 
                 if (($leapyear === true) and ($i == 1)) {
                     $timestamp -= 86400;
@@ -751,7 +753,7 @@ class Zend_Date_DateObject {
 
                 if ($timestamp < 0) {
                     $month  = $i;
-                    $numday = $this->_monthTable[$i];
+                    $numday = self::$_monthTable[$i];
                     if (($leapyear === true) and ($i == 1)) {
                         ++$numday;
                     }
@@ -951,3 +953,14 @@ class Zend_Date_DateObject {
                              -1, true);
     }
 }
+
+/**
+ * This breaks our coding standards, but where else should once-per request initializations like this go?
+ * There is no need for creating a new function to be called once in bootstrap.  We can just do this now, here.
+ *
+ * Goal: Fix if no timezone was set, if all "smart" guesses fail, then UTC timezone will be set.
+ * @todo document in this comment why this must be done in order to avoid problems later
+ */
+$_Zend_Date_Zone = @date_default_timezone_get();
+date_default_timezone_set($_Zend_Date_Zone);
+unset($_Zend_Date_Zone);

@@ -90,9 +90,13 @@ class Zend_Date_DateObjectTest extends PHPUnit_Framework_TestCase
      */
     public function testSetTimestamp()
     {
-          $date = new Zend_Date_DateObject();
-           $this->assertTrue($date->setTimestamp(0), "true expected");
-           $this->assertTrue($date->setTimestamp("12345678901234567890"), "true expected");
+        $date = new Zend_Date_DateObject();
+        $diff = abs(time() - $date->setTimestamp());
+        $this->assertTrue($diff < 2, "Zend_Date_DateObject->setTimestamp() returned a significantly "
+            . "different timestamp than expected: $diff seconds");
+        $date->setTimestamp(0);
+        $this->assertSame((string)$date->setTimestamp("12345678901234567890"), '0');
+        $this->assertSame((string)$date->setTimestamp("12345678901234567890"), "12345678901234567890");
     }
 
     /**
