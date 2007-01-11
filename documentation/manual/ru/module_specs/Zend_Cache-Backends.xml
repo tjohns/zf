@@ -94,8 +94,26 @@
                           <entry><code>int</code></entry>
                           <entry><code>0700</code></entry>
                           <entry>
-                  						Маска режима создания файлов для стуктуры хэшированного каталога.
+                  						Маска режима создания файлов для стуктуры
+                              хэшированного каталога.
                               <!--Umask for the hashed directory structure-->
+                        </entry>
+                      </row>
+                      <row>
+                          <entry><code>fileNamePrefix</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'zend_cache'</code></entry>
+                          <entry>
+                              Префикс для файлов кэша. Будьте осторожны с этой
+                              опцией, поскольку слишком общее значение в
+                              системной директории для кэша (например '/tmp')
+                              может привести к катастрофичным последствиям при
+                              очищении кэша.    
+<!--
+                              prefix for cache files ; be really carefull with this option because 
+                              a too generic value in a system cache dir (like /tmp) can cause 
+                              disasters when cleaning the cache
+-->
                         </entry>
                       </row>
                   </tbody>
