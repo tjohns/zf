@@ -126,11 +126,12 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Internal mktime function
-     * for handling 64bit timestamps
+     * Internal mktime function used by Zend_Date.
+     * The timestamp returned by mktime() can exceed the precision of traditional UNIX timestamps, 
+     * by allowing PHP to auto-convert to using a float value.
      *
-     * Returns a timestamp to a given GMT/UTC time
-     * Summer/winter time is only supported for 32bit timestamps
+     * Returns a timestamp relative to 1970/01/01 00:00:00 GMT/UTC.
+     * DST (Summer/Winter) time is only supported for 32bit timestamps.
      * Year has to be 4 digits otherwise it would be recognised as
      * year 70 AD instead of 1970 AD as expected !!
      *
@@ -140,9 +141,9 @@ class Zend_Date_DateObject {
      * @param  integer  $month   If one of $month, $day, $year are specified, all three must be valid values
      * @param  integer  $day
      * @param  integer  $year
-     * @param  boolean  $dst     summer/wintertime (daylight savings time)
+     * @param  boolean  $dst     Summer/Winter time (Daylight Savings Time)
      * @param  boolean  $gmt     OPTIONAL true = other arguments are for UTC time, false = arguments are for local time/date
-     * @return  integer|float
+     * @return  integer|float  timestamp (number of seconds elapsed relative to 1970/01/01 00:00:00 GMT/UTC)
      */
     public function mktime($hour, $minute, $second, $month = false, $day = false, $year = false, 
                            $dst= -1, $gmt = false)
@@ -255,7 +256,8 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Returns the difference from local time to GMT
+     * Returns the difference from local time to GMT.
+     *
      * Note that changing the default timezone using date_default_timezone_set($zone)
      * will NOT change the timezone associated with already created Zend_Date_DateObject objects.
      * There is currently no way to set or alter the timezone associated with this object,
@@ -275,7 +277,7 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Returns true if given date is a leap year
+     * Returns true if given year is a leap year.
      *
      * @param  integer  $year
      * @return  boolean  true, if year is leap year
@@ -299,16 +301,15 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Internal date function
-     * for handling 64bit timestamps
+     * Internal mktime function used by Zend_Date for handling 64bit timestamps.
      *
-     * Returns a formatted date for a timestamp
-     * Cannot handle daylight savings
+     * Returns a formatted date for a given timestamp.
+     * Cannot handle DST (Daylight Savings Time).
      *
-     * @param  string   $format  format for output
+     * @param  string   $format     format for output
      * @param  mixed    $timestamp
-     * @param  boolean  $gmt     OPTIONAL true = UTC time, false = actual time zone
-     * @return  string
+     * @param  boolean  $gmt        OPTIONAL true = other arguments are for UTC time, false = arguments are for local time/date
+     * @return string
      */
     public function date($format, $timestamp = false, $gmt = false)
     {
@@ -590,7 +591,7 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Returns the day of week
+     * Returns the day of week for a Gregorian calendar date.
      * 0 = sunday, 6 = saturday
      *
      * @param  integer  $year
@@ -625,10 +626,9 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Internal getDate function
-     * for handling 64bit timestamps
+     * Internal getDate function for handling 64bit timestamps
      *
-     * Returns an array with date parts to a given GMT/UTC timestamp
+     * Returns an array of date parts for $timestamp, relative to 1970/01/01 00:00:00 GMT/UTC.
      *
      * $fast specifies ALL date parts should be returned (slower)
      * Default is false, and excludes $dayofweek, weekday, month and timestamp from parts returned.
@@ -804,8 +804,7 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Internal getWeekNumber function
-     * for handling 64bit timestamps
+     * Internal getWeekNumber function for handling 64bit timestamps
      *
      * Returns the ISO 8601 week number of a given date
      *
@@ -838,7 +837,8 @@ class Zend_Date_DateObject {
 
 
     /**
-     * Sets the value a to be in the range of [0, $b]
+     * Internal _range function
+     * Sets the value $a to be in the range of [0, $b]
      * 
      * @param float $a - value to correct
      * @param float $b - maximum range to set
