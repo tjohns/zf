@@ -136,10 +136,10 @@ class Zend_Date {
      * string, integer and so on. Also parts of dates or time are supported
      * For detailed instruction please look in the docu.
      * 
-     * @param  string|integer      $date    OPTIONAL Defines the date or datepart to set depending on $part
-     * @param  string              $part    OPTIONAL Defines the input format of $date
-     * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
-     * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
+     * @param  string|integer|Zend_Date  $date    OPTIONAL Date value or value of date part to set, depending on $part
+     * @param  string                    $part    OPTIONAL Defines the input format of $date
+     * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
+     * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
      * @throws Zend_Date_Exception
      */
@@ -247,9 +247,9 @@ class Zend_Date {
 
 
     /**
-     * Substracts a timestamp
+     * Subtracts a timestamp
      *
-     * @param  integer|string      $timestamp  Timestamp to sub, if null the actual timestamp is substracted
+     * @param  integer|string      $timestamp  Timestamp to sub, if null the actual timestamp is subtracted
      * @param  string|Zend_Locale  $locale     OPTIONAL Locale for parsing input
      * @return Zend_Date
      * @throws Zend_Date_Exception
@@ -1032,14 +1032,14 @@ class Zend_Date {
 
 
     /**
-     * Substracts a date from another date.
+     * Subtracts a date from another date.
      * This could be for example a RFC2822 date, the time,
      * the year or only the timestamp. There are about 50 different supported dateparts.
      * For a complete list of supported datepart values look into the docu
-     * Be aware: Adding -2 Months is not equal to Substracting 2 Months !!! 
+     * Be aware: Adding -2 Months is not equal to Subtracting 2 Months !!! 
      * 
-     * @param  string|integer|Zend_Date  $date    Date or datepart to substract
-     * @param  string                    $part    OPTIONAL Part of the date to sub, if null the timestamp is substracted
+     * @param  string|integer|Zend_Date  $date    Date or datepart to subtract
+     * @param  string                    $part    OPTIONAL Part of the date to sub, if null the timestamp is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|string  new datepart
@@ -1057,7 +1057,7 @@ class Zend_Date {
      * Returns -1 if earlier, 0 if equal and 1 if later.
      *
      * @param  string|integer|Zend_Date  $date    Date or datepart to compare with the date object
-     * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is substracted
+     * @param  string                    $part    OPTIONAL Part of the date to compare, if null the timestamp is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
@@ -1082,7 +1082,7 @@ class Zend_Date {
      * For example: If only YEAR is copied, the returned date object is equal to
      * 01-01-YEAR 00:00:00 (01-01-1970 00:00:00 is equal to timestamp 0)
      * 
-     * @param  string              $part    OPTIONAL Part of the date to compare, if null the timestamp is substracted
+     * @param  string              $part    OPTIONAL Part of the date to compare, if null the timestamp is subtracted
      * @param  boolean             $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale  $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
@@ -1130,7 +1130,7 @@ class Zend_Date {
     /**
      * Calculates the date or object
      *
-     * @param  string                    $calc    Calculation to make
+     * @param  string                    $calc    Calculation to make, one of: 'add'|'sub'|'cmp'|'copy'|'set'
      * @param  string|integer|Zend_Date  $date    OPTIONAL Date or datepart to calculate with, if null the actual date is taken
      * @param  string                    $part    OPTIONAL Part of the date to calculate, if null the timestamp is used
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
@@ -1147,7 +1147,7 @@ class Zend_Date {
                 $restFalse = true;
             }
             if (isset($restFalse)) {
-                $$param = false;
+                $$param = null;
             }
         }
 
@@ -2338,12 +2338,12 @@ class Zend_Date {
 
 
     /**
-     * Substracts a time from the existing date. Format defines how to parse the time string.
+     * Subtracts a time from the existing date. Format defines how to parse the time string.
      * If only parts are given the other parts are set to 0.
      * If no format is given, the standardformat of this locale is used.
      * For example: HH:mm:ss -> 10 -> -10 hours
      *
-     * @param  string|integer|Zend_Date  $time    OPTIONAL Time to sub, if null the actual time is substracted
+     * @param  string|integer|Zend_Date  $time    OPTIONAL Time to sub, if null the actual time is subtracted
      * @param  string                    $format  OPTIONAL Timeformat for parsing input
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
@@ -2476,13 +2476,13 @@ class Zend_Date {
 
 
     /**
-     * Substracts a date from the existing date object. Format defines how to parse the date string.
+     * Subtracts a date from the existing date object. Format defines how to parse the date string.
      * If only parts are given the other parts are set to 0.
      * If no format is given, the standardformat of this locale is used.
      * For example: MM.dd.YYYY -> 10 -> -10 months
-     * Be aware: Substracting 2 months is not equal to Adding -2 months !!!
+     * Be aware: Subtracting 2 months is not equal to Adding -2 months !!!
      *
-     * @param  string|integer|Zend_Date  $time    OPTIONAL date to sub, if null the actual date is substracted
+     * @param  string|integer|Zend_Date  $time    OPTIONAL date to sub, if null the actual date is subtracted
      * @param  string                    $format  OPTIONAL Dateformat for parsing input
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
@@ -2598,12 +2598,12 @@ class Zend_Date {
 
 
     /**
-     * Substracts a ISO date from the date object. Not given parts are set to default.
+     * Subtracts a ISO date from the date object. Not given parts are set to default.
      * Only supported ISO 8601 formats are accepted.
      * For example: 050901 -> - 01.Sept.2005 00:00:00, 10:00:00 -> -10h
      * Returned is the new date object
      *
-     * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to sub, if null the actual date is substracted
+     * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to sub, if null the actual date is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new date
@@ -2621,7 +2621,7 @@ class Zend_Date {
      * For example: 050901 -> - 01.Sept.2005 00:00:00, 10:00:00 -> -10h
      * Returns if equal, earlier or later
      *
-     * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to sub, if null the actual date is substracted
+     * @param  string|integer|Zend_Date  $date    OPTIONAL ISO Date to sub, if null the actual date is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
@@ -2721,13 +2721,13 @@ class Zend_Date {
 
 
     /**
-     * Substracts a RFC 822 date from the date object.
+     * Subtracts a RFC 822 date from the date object.
      * ARPA messages are used in emails or HTTP Headers.
      * Only RFC 822 compilant date strings are accepted.
      * For example: Sat, 14 Feb 09 00:31:30 +0100
      * Returned is the new date object
      *
-     * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to sub, if null the actual date is substracted
+     * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to sub, if null the actual date is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer|Zend_Date  new date
@@ -2746,7 +2746,7 @@ class Zend_Date {
      * For example: Sat, 14 Feb 09 00:31:30 +0100
      * Returns if equal, earlier or later
      *
-     * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to sub, if null the actual date is substracted
+     * @param  string|integer|Zend_Date  $date    OPTIONAL RFC 822 Date to sub, if null the actual date is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return integer  0 = equal, 1 = later, -1 = earlier
@@ -3072,13 +3072,13 @@ class Zend_Date {
 
     /**
      * Subs the year from the existing date object
-     * If the year is between 0 and 69, 2000 will be substracted (2000-2069)
-     * If the year if between 70 and 99, 1999 will be substracted (1970-1999)
-     * 3 or 4 digit years are substracted as expected. If you need to substract years from 0-99
+     * If the year is between 0 and 69, 2000 will be subtracted (2000-2069)
+     * If the year if between 70 and 99, 1999 will be subtracted (1970-1999)
+     * 3 or 4 digit years are subtracted as expected. If you need to subtract years from 0-99
      * use sub() instead. 
      * Returned is the new date object
      *
-     * @param  string|integer|Zend_Date  $date    OPTIONAL Year to sub, if null the actual year is substracted
+     * @param  string|integer|Zend_Date  $date    OPTIONAL Year to sub, if null the actual year is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
@@ -3190,7 +3190,7 @@ class Zend_Date {
     /**
      * Sets a new month
      * The month can be a number or a string. Setting months lower then 0 and greater then 12
-     * will result in adding or substracting the relevant year. (12 months equal one year)
+     * will result in adding or subtracting the relevant year. (12 months equal one year)
      * If a localized monthname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
@@ -3210,7 +3210,7 @@ class Zend_Date {
     /**
      * Adds months to the existing date object. 
      * The month can be a number or a string. Adding months lower then 0 and greater then 12
-     * will result in adding or substracting the relevant year. (12 months equal one year)
+     * will result in adding or subtracting the relevant year. (12 months equal one year)
      * If a localized monthname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
@@ -3228,14 +3228,14 @@ class Zend_Date {
 
 
     /**
-     * Substracts months from the existing date object. 
-     * The month can be a number or a string. Substracting months lower then 0 and greater then 12
-     * will result in adding or substracting the relevant year. (12 months equal one year)
+     * Subtracts months from the existing date object. 
+     * The month can be a number or a string. Subtracting months lower then 0 and greater then 12
+     * will result in adding or subtracting the relevant year. (12 months equal one year)
      * If a localized monthname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
      *
-     * @param  string|integer|Zend_Date  $month   OPTIONAL Month to sub, if null the actual month is substracted
+     * @param  string|integer|Zend_Date  $month   OPTIONAL Month to sub, if null the actual month is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
@@ -3332,7 +3332,7 @@ class Zend_Date {
     /**
      * Sets a new day
      * The day can be a number or a string. Setting days lower then 0 or greater than the number of this months days
-     * will result in adding or substracting the relevant month.
+     * will result in adding or subtracting the relevant month.
      * If a localized dayname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
@@ -3353,7 +3353,7 @@ class Zend_Date {
     /**
      * Adds days to the existing date object. 
      * The day can be a number or a string. Adding days lower then 0 or greater than the number of this months days
-     * will result in adding or substracting the relevant month.
+     * will result in adding or subtracting the relevant month.
      * If a localized dayname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
@@ -3372,15 +3372,15 @@ class Zend_Date {
 
 
     /**
-     * Substracts days from the existing date object. 
-     * The day can be a number or a string. Substracting days lower then 0 or greater than the number of this months days
-     * will result in adding or substracting the relevant month.
+     * Subtracts days from the existing date object. 
+     * The day can be a number or a string. Subtracting days lower then 0 or greater than the number of this months days
+     * will result in adding or subtracting the relevant month.
      * If a localized dayname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
      * Example: subDay('Montag', 'de_AT'); will sub the number of days until the previous monday
      *
-     * @param  string|integer|Zend_Date  $month   OPTIONAL Day to sub, if null the actual day is substracted
+     * @param  string|integer|Zend_Date  $month   OPTIONAL Day to sub, if null the actual day is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
@@ -3479,7 +3479,7 @@ class Zend_Date {
     /**
      * Sets a new weekday
      * The weekday can be a number or a string. Setting days lower then 1 or greater than 7
-     * will result in adding or substracting the relevant number of weeks.
+     * will result in adding or subtracting the relevant number of weeks.
      * If a localized dayname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
@@ -3500,7 +3500,7 @@ class Zend_Date {
     /**
      * Adds weekdays to the existing date object.
      * The weekday can be a number or a string. Adding days lower then 1 or greater than 7
-     * will result in adding or substracting the relevant number of weeks.
+     * will result in adding or subtracting the relevant number of weeks.
      * If a localized dayname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
@@ -3520,16 +3520,16 @@ class Zend_Date {
 
 
     /**
-     * Substracts weekdays from the existing date object.
-     * The weekday can be a number or a string. Substracting days lower then 1 or greater than 7
-     * will result in adding or substracting the relevant number of weeks.
+     * Subtracts weekdays from the existing date object.
+     * The weekday can be a number or a string. Subtracting days lower then 1 or greater than 7
+     * will result in adding or subtracting the relevant number of weeks.
      * If a localized dayname is given it will be parsed with the default locale or the optional
      * set locale.
      * Returned is the new date object
-     * Example: subWeekday(3); will substract the difference of days from the begining of the month until 
+     * Example: subWeekday(3); will subtract the difference of days from the begining of the month until 
      * wednesday.
      *
-     * @param  string|integer|Zend_Date  $month   OPTIONAL Weekday to sub, if null the actual weekday is substracted
+     * @param  string|integer|Zend_Date  $month   OPTIONAL Weekday to sub, if null the actual weekday is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
@@ -3643,12 +3643,12 @@ class Zend_Date {
 
 
     /**
-     * Substracts a day of year from the existing date object.
+     * Subtracts a day of year from the existing date object.
      * The day of year is always a number.
      * Returned is the new date object
-     * Example: subDayOfYear(10); will substract 10 days from the existing date object.
+     * Example: subDayOfYear(10); will subtract 10 days from the existing date object.
      *
-     * @param  string|integer|Zend_Date  $day     OPTIONAL Day of Year to sub, if null the actual day of year is substracted
+     * @param  string|integer|Zend_Date  $day     OPTIONAL Day of Year to sub, if null the actual day of year is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
@@ -3757,19 +3757,19 @@ class Zend_Date {
      * @return Zend_Date  new date
      * @throws Zend_Date_Exception
      */
-    public function addHour($hour = null, $gmt = FALSe, $locale = null)
+    public function addHour($hour = null, $gmt = false, $locale = null)
     {
         return $this->_hour('add', $hour, $gmt, $locale);
     }
 
 
     /**
-     * Substracts hours from the existing date object.
+     * Subtracts hours from the existing date object.
      * The hour is always a number.
      * Returned is the new date object
      * Example: 04.May.1993 13:07:25 -> subHour(6); -> 05.May.1993 07:07:25
      *
-     * @param  string|integer|Zend_Date  $hour    OPTIONAL Hour to sub, if null the actual hour is substracted
+     * @param  string|integer|Zend_Date  $hour    OPTIONAL Hour to sub, if null the actual hour is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
@@ -3885,12 +3885,12 @@ class Zend_Date {
 
 
     /**
-     * Substracts minutes from the existing date object.
+     * Subtracts minutes from the existing date object.
      * The minute is always a number.
      * Returned is the new date object
      * Example: 04.May.1993 13:07:25 -> subMinute(9); -> 04.May.1993 12:58:25
      *
-     * @param  string|integer|Zend_Date  $minute  OPTIONAL Minute to sub, if null the actual minute is substracted
+     * @param  string|integer|Zend_Date  $minute  OPTIONAL Minute to sub, if null the actual minute is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
@@ -4006,12 +4006,12 @@ class Zend_Date {
 
 
     /**
-     * Substracts seconds from the existing date object.
+     * Subtracts seconds from the existing date object.
      * The second is always a number.
      * Returned is the new date object
      * Example: 04.May.1993 13:07:25 -> subSecond(10); -> 04.May.1993 13:07:15
      *
-     * @param  string|integer|Zend_Date  $second  OPTIONAL Second to sub, if null the actual second is substracted
+     * @param  string|integer|Zend_Date  $second  OPTIONAL Second to sub, if null the actual second is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date  new date
@@ -4162,9 +4162,9 @@ class Zend_Date {
 
 
     /**
-     * Substracts a millisecond
+     * Subtracts a millisecond
      *
-     * @param  integer|Zend_Date  $milli  OPTIONAL Millisecond to sub, when null the actual millisecond is substracted
+     * @param  integer|Zend_Date  $milli  OPTIONAL Millisecond to sub, when null the actual millisecond is subtracted
      * @param  integer            $precision  OPTIONAL Fractional precision for the given milliseconds
      * @return integer
      */
@@ -4306,11 +4306,11 @@ class Zend_Date {
 
 
     /**
-     * Substracts a week. The week is always a number. The day of week is not changed.
+     * Subtracts a week. The week is always a number. The day of week is not changed.
      * Returned is the new date object
      * Example: 09.Jan.2007 13:07:25 -> subWeek(1); -> 02.Jan.2007 13:07:25
      *
-     * @param  string|integer|Zend_Date  $week    OPTIONAL Week to sub, when null the actual day is substracted
+     * @param  string|integer|Zend_Date  $week    OPTIONAL Week to sub, when null the actual day is subtracted
      * @param  boolean                   $gmt     OPTIONAL true = UTC time, false = actual time zone
      * @param  string|Zend_Locale        $locale  OPTIONAL Locale for parsing input
      * @return Zend_Date
