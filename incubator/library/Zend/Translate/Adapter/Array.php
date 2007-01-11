@@ -38,9 +38,9 @@ require_once 'Zend/Translate/Adapter.php';
  */
 class Zend_Translate_Adapter_Array {
     /**
-     * Generates the adaptor
+     * Generates the adapter
      *
-     * @param array $options - Options for this adaptor
+     * @param array $options - Options for this adapter
      * @param mixed $locale  - OPTIONAL locale to use
      */
     public function __construct($options, $locale = null)

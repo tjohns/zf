@@ -77,10 +77,9 @@ abstract class Zend_Translate_Adapter {
 
 
     /**
-     * Generates the adaptor
+     * Generates the adapter
      *
-     * @param string $adaptor - Adaptor to use
-     * @param mixed  $options - Options for this adaptor
+     * @param mixed  $options - Options for this adapter
      * @param mixed  $locale  - OPTIONAL locale to use
      * @throws Zend_Translate_Exception
      */
@@ -92,9 +91,9 @@ abstract class Zend_Translate_Adapter {
 
 
     /**
-     * Sets new adaptor options
+     * Sets new adapter options
      *
-     * @param array $options - Adaptor options
+     * @param array $options - Adapter options
      * @throws Zend_Translate_Exception
      */
     public function setOptions($options)
@@ -184,7 +183,7 @@ abstract class Zend_Translate_Adapter {
 
 
     /**
-     * Returns the avaiable languages from this adaptor
+     * Returns the avaiable languages from this adapter
      */
     public function getLanguageList()
     {

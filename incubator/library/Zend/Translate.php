@@ -40,7 +40,7 @@ class Zend_Translate {
      const AN_ARRAY   = 'array';
 
     /**
-     * Adaptor
+     * Adapter
      *
      * @var Zend_Translate_Adapter
      */
@@ -116,7 +116,7 @@ class Zend_Translate {
     /**
      * Returns the adapters name and it's options
      *
-     * @return Zend_Translate_Adaptor
+     * @return Zend_Translate_Adapter
      */
     public function getAdapter()
     {
