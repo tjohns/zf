@@ -20,11 +20,14 @@
  */
 
 
-/**
- * Include needed Translate classes
- */
-require_once 'Zend/Translate/Exception.php';
+/** Zend_Locale */
 require_once 'Zend/Locale.php';
+
+/** Zend_Translate_Exception */
+require_once 'Zend/Translate/Exception.php';
+
+/** Zend_Translate_Adapter */
+require_once 'Zend/Translate/Adapter.php';
 
 
 /**
@@ -33,10 +36,7 @@ require_once 'Zend/Locale.php';
  * @copyright  Copyright (c) 2006 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Translate_Gettext extends Zend_Translate_Core {
-
-    // Class wide Constants
-
+class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
     // Internal variables
     private $_BigEndian   = FALSE;
     private $_File        = FALSE;
@@ -44,29 +44,14 @@ class Zend_Translate_Gettext extends Zend_Translate_Core {
 
 
     /**
-     * Generates the gettext adaptor
+     * Generates the  adaptor
      *
-     * @param $adaptor string - Adaptor to use
-     * @param $options array  - Options for this adaptor
-     * @param $locale string  - OPTIONAL locale to use
-     * @return object
+     * @param array $options - Options for this adaptor
+     * @param mixed $locale  - OPTIONAL locale to use
      */
-    public function __construct($options, $locale = FALSE)
+    public function __construct($options, $locale = null)
     {
         parent::__construct($options, $locale);
-    }
-
-
-    /**
-     * translation
-     *
-     * @param $translation string - Translationstring
-     * @param $language    locale - language to use
-     * @return string
-     */
-    public function _($translation, $language)
-    {
-        return $this->translate($translation);
     }
 
 
@@ -100,8 +85,8 @@ class Zend_Translate_Gettext extends Zend_Translate_Core {
 
     /**
      * Internal function for reading the MO file
-     * 
-     * @param $filename - MO File with path to read from 
+     *
+     * @param $filename - MO File with path to read from
      * @throws Zend_Translate_Exception
      */
     public function readFile($filename)
@@ -141,12 +126,12 @@ class Zend_Translate_Gettext extends Zend_Translate_Core {
         $TOffset = $input[1];
 
         // fill the original table
-        $temporary = array(); 
+        $temporary = array();
         fseek($this->_File, $OOffset);
         $origtemp = $this->_readMOData(2 * $total);
         fseek($this->_File, $TOffset);
         $transtemp = $this->_readMOData(2 * $total);
-        
+
         $length = 0;
         $offset = 0;
         for($count = 0; $count < $total; ++$count) {
@@ -159,7 +144,9 @@ class Zend_Translate_Gettext extends Zend_Translate_Core {
 
 
     /**
-     * returns the adaptors name
+     * Returns the adapter name
+     *
+     * @return string
      */
     public function toString()
     {

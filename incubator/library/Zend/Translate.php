@@ -19,12 +19,10 @@
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
-
-/**
- * Include needed Translate classes
- */
-require_once 'Zend.php';
+/** Zend_Translate_Exception */
 require_once 'Zend/Translate/Exception.php';
+
+/** Zend_Locale */
 require_once 'Zend/Locale.php';
 
 
@@ -35,60 +33,60 @@ require_once 'Zend/Locale.php';
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Translate {
-
-    // Class wide Constants
-
-    // Internal variables
+    /**
+     * Adapter names constants
+     */
+     const AN_GETTEXT = 'gettext';
+     const AN_ARRAY   = 'array';
 
     /**
-     * Locale Object / Setting
+     * Adaptor
+     *
+     * @var Zend_Translate_Adapter
      */
-    private $_Locale = '';
-    private $_Adapter = false;
+    private $_adapter;
 
 
     /**
      * Generates the standard translation object
      *
-     * @param $adapter string - Adapter to use
-     * @param $options mixed  - Options for this adapter
-     * @param $locale object  - OPTIONAL locale to use
-     * @return object
+     * @param string $adapter - Adapter to use
+     * @param mixed  $options - Options for this adapter
+     * @param mixed  $locale  - OPTIONAL locale to use
      */
-    public function __construct($adapter, $options, $locale = FALSE)
+    public function __construct($adapter, $options, $locale = null)
     {
-        // set locale
-        if ($locale === FALSE) {
-            $this->_Locale = new Zend_Locale();
-        } else {
-            $this->_Locale = $locale;
-        }
-
-        $this->setAdapter($adapter, $options, $this->_Locale);
+        $this->setAdapter($adapter, $options, $locale);
     }
 
 
     /**
      * Sets a new adapter
      *
-     * @param $adapter string - adapter to use
-     * @param $options mixed  - Adapter options
-     * @param $locale object  - OPTIONAL locale to use
+     * @param string $adapter - adapter to use
+     * @param mixed  $options - Adapter options
+     * @param mixed  $locale  - OPTIONAL locale to use
      * @return timestamp
      */
-    public function setAdapter($adapter, $options, $locale = FALSE)
+    public function setAdapter($adapter, $options, $locale = null)
     {
+        if ($locale === null) {
+            $locale = new Zend_Locale();
+        }
+
         switch (strtolower($adapter)) {
             case 'array':
-                require_once('Zend/Translate/Adapter/Core.php');
-                $this->_Adapter = new Zend_Translate_Core($options, $locale);
+                /** Zend_Translate_Adapter_Gettext */
+                require_once('Zend/Translate/Adapter/Gettext.php');
+                $this->_adapter = new Zend_Translate_Adapter_Gettext($options, $locale);
                 break;
             case 'cvs':
                 throw new Zend_Translate_Exception('not supported for now');
                 break;
             case 'gettext':
-                require_once('Zend/Translate/Adapter/Gettext.php');
-                $this->_Adapter = new Zend_Translate_Gettext($options, $locale);
+                /** Zend_Translate_Adapter_Array */
+                require_once('Zend/Translate/Adapter/Array.php');
+                $this->_adapter = new Zend_Translate_Adapter_Array($options, $locale);
                 break;
             case 'qt':
                 throw new Zend_Translate_Exception('not supported for now');
@@ -118,92 +116,93 @@ class Zend_Translate {
     /**
      * Returns the adapters name and it's options
      *
-     * @return string
+     * @return Zend_Translate_Adaptor
      */
     public function getAdapter()
     {
-        return $this->_Adapter->toString();
+        return $this->_adapter;
     }
 
 
     /**
      * Adds a new language to the Adapter
-     * 
-     * @param $locale mixed  - locale/language to add to this adapter
-     * @param $options mixed - option for this adapter depends on the adapter
+     *
+     * @param mixed $locale  - locale/language to add to this adapter
+     * @param mixed $options - option for this adapter depends on the adapter
      *        'array'   - the array to add
      *        'gettext' - the gettext file inclusive the filename
-     * @param $empty boolean - add if the language already exists 
+     * @param boolean $empty - add if the language already exists
      */
-    public function addLanguage($locale, $options, $empty = FALSE)
+    public function addLanguage($locale, $options, $empty = false)
     {
-        $this->_Adapter->addLanguage($locale, $options, $empty);
+        $this->_adapter->addLanguage($locale, $options, $empty);
     }
 
 
     /**
      * Sets a new locale/language
      *
-     * @param $locale string - New locale/language to set
+     * @param mixed $locale - New locale/language to set
      */
     public function setLocale($locale)
     {
-        $this->_Locale = $locale;
-        $this->_Adapter->setLocale($locale);
+        $this->_adapter->setLocale($locale);
     }
 
 
     /**
      * Gets the actual locale/language
+     *
+     * @return string|Zend_Locale
      */
     public function getLocale()
     {
-        return $this->_Locale;
+        return $this->_adapter->getLocale();
     }
 
 
     /**
      * Gets the actual language, can differ from the set locale
      *
-     * @return $locale string
+     * @return string
      */
     public function getLanguage()
     {
-        return $this->_Adapter->getLanguage();
+        return $this->_adapter->getLanguage();
     }
 
 
     /**
      * Returns the avaiable languages from this adapter
      *
-     * @return $locale string
+     * @return string
      */
     public function getLanguageList()
     {
-        return $this->_Adapter->getLanguageList();
+        return $this->_adapter->getLanguageList();
     }
-    
+
 
     /**
      * is the wished language avaiable ?
      *
-     * @param $language mixed - is locale or language avaiable 
+     * @param mixed $language - is locale or language avaiable
      * @return boolean
      */
     public function isAvaiable($language)
     {
-        return $this->_Adapter->isAvaiable($language);
+        return $this->_adapter->isAvaiable($language);
     }
 
 
     /**
      * Translate the given string
      *
-     * @param $translation string - string to translate
-     * @param $locale object      - OPTIONAL locale/language to translate to 
+     * @param string $translation - string to translate
+     * @param mixed  $locale      - OPTIONAL locale/language to translate to
      * @return string
      */
-    public function _($translation, $locale = FALSE)
+    public function _($translation, $locale = null)
     {
         return $this->translate($translation, $locale);
     }
@@ -212,12 +211,12 @@ class Zend_Translate {
     /**
      * Translate the given string
      *
-     * @param $translation string - string to translate
-     * @param $locale object      - OPTIONAL locale/language to translate to 
+     * @param string $translation - string to translate
+     * @param mixed  $locale      - OPTIONAL locale/language to translate to
      * @return string
      */
-    public function translate($translation, $locale = FALSE)
+    public function translate($translation, $locale = null)
     {
-        return $this->_Adapter->translate($translation, $locale);
+        return $this->_adapter->translate($translation, $locale);
     }
 }
