@@ -244,11 +244,11 @@ else {
             The second parameter in the constructor above will tell Zend_Session that any future Zend_Session's that are
             instantiated with the 'Zend_Auth' namespace are not allowed and will thus result in an exception being
             thrown. Since <code>new Zend_Session('Zend_Auth')</code> will not be allowed after the code above has been
-            executed, the developer becomes responsible for storing the instance object (<code>$componentAuthState</code>
-            in the example above) somewhere, if access to this session namespace is needed at a later time during the
-            same request. For example, a developer may store the instance in a static variable, or pass it to other methods
-            that might need access to this session namespace.  Session locking (see above) provides a more convenient,
-            and less burdensome approach to limiting access to namespaces.
+            executed, the developer becomes responsible for storing the instance object
+            (<code>$componentAuthState</code> in the example above) somewhere, if access to this session namespace is
+            needed at a later time during the same request. For example, a developer may store the instance in a static
+            variable, or pass it to other methods that might need access to this session namespace. Session locking (see
+            above) provides a more convenient, and less burdensome approach to limiting access to namespaces.
         </para>
 
     </sect2>
