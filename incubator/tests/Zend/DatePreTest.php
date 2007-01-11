@@ -25,6 +25,7 @@
  * This file contains experiments and code that is simply shared between those working on DateTest.php.
  * The tests below may or may not eventually be added to DateTest.php.
  * This file should *never* be included within the ZF test suite.
+ * This file should *not* be released with ZF core.
  */
 
 error_reporting( E_ALL | E_STRICT ); // now required for each test suite
@@ -57,6 +58,42 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         date_default_timezone_set('America/Los_Angeles');
+    }
+
+    public function testDateWithDateFragments()
+    {
+        // When specifying a timestamp, 0 always means 1970/01/01 00:00:00
+        $date = new Zend_Date(0, Zend_Date::TIMESTAMP, true);
+        echo "Timestamp = ", $date->get(), " new Zend_Date(0, Zend_Date::TIMESTAMP, true)\n";
+        echo $date->toString(), "\n";
+
+        $date = new Zend_Date(0);
+        echo "Timestamp = ", $date->get(), " new Zend_Date(0)\n";
+        echo $date->toString(), "\n";
+
+        $date = new Zend_Date(0, null, true);
+        echo "Timestamp = ", $date->get(), " new Zend_Date(0, null, true)\n";
+        echo $date->toString(), "\n";
+
+        $date = new Zend_Date(0, null, false);
+        echo "Timestamp = ", $date->get(), " new Zend_Date(0, null, false)\n";
+        echo $date->toString(), "\n";
+
+        echo "Timestamp (GMT) = ", $date->get(null, true), " new Zend_Date(0, null, false)\n";
+        echo "toString(null, GMT -i.e. true) = ", $date->toString(null, true), "\n";
+
+        $date = new Zend_Date('7',Zend_Date::HOUR, null, false);
+        echo "Timestamp = ", $date->get(), " new Zend_Date('7',Zend_Date::HOUR, null, false)\n";
+        echo $date->toString(), "\n";
+
+        $date = new Zend_Date('7',Zend_Date::HOUR, null, true);
+        echo "Timestamp = ", $date->get(), " new Zend_Date('7',Zend_Date::HOUR, null, true)\n";
+        echo $date->toString(), "\n";
+
+        $locale = new Zend_Locale('en_US');
+        $date = new Zend_Date('01.01.2006', Zend_Date::DATES, $locale);
+        echo "Timestamp = ", $date->get(), " new Zend_Date('01.01.2006', Zend_Date::DATES, $locale)\n";
+        echo $date->toString(), "\n";
     }
 
     public function testWeek()
