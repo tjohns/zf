@@ -116,15 +116,32 @@ class Zend_DatePreTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($date4 instanceof Zend_Date);
 
         var_dump($date1);
-        echo "Timestamp date1 new Zend_Date(null,null,false,'en_US')= ", $date1->get(), "\n";
-        echo "Timestamp date4 new Zend_Date(null,null,true,'en_US') = ", $date4->get(), "\n";
-        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString()          : ",$date1->toString(), "\n";
-        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,false): ",$date1->toString(null,false), "\n";
-        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,true) : ",$date1->toString(null,true), "\n";
+        echo "Timestamp date1 new Zend_Date(null,null,false,'en_US')= ", $date1->get(),
+                " timestamps returned by get() are always UTC\n";
+        echo "Timestamp date1 new Zend_Date(null,null,true,'en_US') = ", $date1->get(null,true),
+                " timestamps returned by get() are always UTC\n";
+        echo "Timestamp date4 new Zend_Date(null,null,true,'en_US') = ", $date4->get(),
+                " timestamps returned by get() are always UTC\n";
+        echo "Timestamp date4 new Zend_Date(null,null,true,'en_US') = ", $date4->get(null,true),
+                " timestamps returned by get() are always UTC\n";
+
         echo "\n";
-        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString()           : ",$date4->toString(), "\n";
-        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,false) : ",$date4->toString(null,false), "\n";
-        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,true)  : ",$date4->toString(null,true), "\n";
+
+        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString()          : ",
+                $date1->toString(), " defaults to formatting time in local timezone\n";
+        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,false): ",
+                $date1->toString(null,false), " formatted in local timezone\n";
+        echo "Start Time date1 new Zend_Date(null,null,false,'en_US') - toString(null,true) : ",
+                $date1->toString(null,true), " formatted as UTC date string\n";
+
+        echo "\n";
+
+        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString()           : ",
+                $date4->toString(), "  defaults to formatting time in local timezone\n";
+        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,false) : ",
+                $date4->toString(null,false), " formatted in local timezone\n";
+        echo "Start Time date4 new Zend_Date(null,null,true,'en_US') - toString(null,true)  : ",
+                $date4->toString(null,true), " formatted as UTC date string\n";
 
         echo "\nAfter addWeek(1):\n";
         $date1->addWeek(1);
