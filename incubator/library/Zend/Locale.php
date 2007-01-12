@@ -913,4 +913,32 @@ class Zend_Locale {
         $ret['noabbr']  = $no[1];
         return $ret;
     }
+
+
+    /**
+     * Checks if a locale identifier is a real locale or not
+     * en_XX refers to en which give true
+     * XX_yy refers to root which give false
+     * 
+     * @param string  $locale  Locale to check for
+     * @return boolean
+     */
+    public static function isLocale($locale)
+    {
+        if ($locale instanceof Zend_Locale) {
+            return true;
+        } else if (empty($locale) or (!is_string($locale))) {
+            return false;
+        }
+
+        if (array_key_exists($locale, self::$_LocaleData)) {
+            return true;
+        } else {
+            $locale = explode('_', $locale);
+            if (array_key_exists($locale[0], self::$_LocaleData)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
