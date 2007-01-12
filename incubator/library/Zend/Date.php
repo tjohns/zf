@@ -3016,7 +3016,7 @@ class Zend_Date {
 
         if (is_object($year)) {
             // extract year from object
-            $year = $date->get(Zend_Date::YEAR, $gmt, $locale);
+            $year = $year->get(Zend_Date::YEAR, $gmt, $locale);
         } else if ($year === null) {
             $year = $this->_Date->date('Y', false, $gmt);
         } else if (!is_numeric($year)) {
@@ -3143,7 +3143,7 @@ class Zend_Date {
 
         if (is_object($month)) {
             // extract month from object
-            $found = $date->get(Zend_Date::MONTH_DIGIT, $gmt, $locale);
+            $found = $month->get(Zend_Date::MONTH_DIGIT, $gmt, $locale);
         } else {
             if ($month === null) {
                 $found = $this->_Date->date('m', false, $gmt);
@@ -4256,7 +4256,7 @@ class Zend_Date {
 
         if (is_object($week)) {
             // extract week from object
-            $week = $date->get(Zend_Date::WEEK, $gmt, $locale);
+            $week = $week->get(Zend_Date::WEEK, $gmt, $locale);
         } else if ($week === null) {
             $week = $this->_Date->date('W', false, $gmt);
         } else if (!is_numeric($week)) {
