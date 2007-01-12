@@ -3346,7 +3346,7 @@ class Zend_Date {
             $locale = $this->getLocale();
         }
 
-        $this->_setGmt(false);
+        $gmt = $this->setGmt(true);
         if (is_object($day)) {
             $day = $day->get(Zend_Date::DAY_SHORT, $locale);
         } else if ($day === null) {
@@ -3372,9 +3372,10 @@ class Zend_Date {
             }
         }
         $return = $this->_calcdetail($calc, $day, $type, $locale);
+        $this->setGmt($gmt);
         if ($calc != 'cmp') {
             $result = new Zend_Date($this->_Date->getTimestamp(), Zend_Date::TIMESTAMP, $locale);
-            $result->setGmt(true);
+            $result->setGmt($this->_GMT);
             return $result;
         }
         return $return;
