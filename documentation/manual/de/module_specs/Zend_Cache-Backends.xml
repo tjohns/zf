@@ -81,6 +81,16 @@
                               Umask für die gehashte Verzeichnis Struktur
                         </entry>
                       </row>
+                      <row>
+                          <entry><code>fileNamePrefix</code></entry>
+                          <entry><code>string</code></entry>
+                          <entry><code>'zend_cache'</code></entry>
+                          <entry>
+                          	Präfix für Cache Dateien; man muss mit dieser Option sehr vorsichtig 
+                          	umgehen, weil ein zu generischer Wert in einem System Cache Verzeichnis
+                          	(wie /tmp) kann beim Löschen des Caches zu großen Problemen führen.
+                        </entry>
+                      </row>
                   </tbody>
               </tgroup>
           </table>
