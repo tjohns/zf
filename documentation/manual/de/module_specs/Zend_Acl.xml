@@ -49,7 +49,7 @@
             Bedarf erweitern können.
         </para>
         <para>
-            Zend_Acl stellt eine Baumstruktur bereit, in die mehrere Ressource (oder "Bereiche 
+            Zend_Acl stellt eine Baumstruktur bereit, in die mehrere Ressourcen (oder "Bereiche 
             unter Zugriffskontrolle") aufgenommen werden können. Weil Ressourcen in solch einer 
             Baumstruktur abgelegt werden, können sie vom Allgemeinen (von der Baumwurzel) bis zum
             Speziellen (zu den Baumblättern) organisiert werden. Abfragen für eine bestimmte 
@@ -147,7 +147,7 @@ $acl = new Zend_Acl();]]></programlisting>
         </para>
 
         <table>
-          <title>Zugriffskontrolle für ein Beispiel-CMS</title>
+          <title>Zugangsbeschränkung für ein Beispiel-CMS</title>
           <tgroup cols="3">
             <thead>
               <row>
@@ -215,7 +215,7 @@ $acl->addRole(new Zend_Acl_Role('administrator'));]]></programlisting>
     </sect2>
 
     <sect2 id="zend.acl.introduction.defining">
-        <title>Zugriffskontrolle definieren</title>
+        <title>Zugangsbeschränkung definieren</title>
 
         <para>
             Nun, da die ACL die relevanten Rollen enthält, können Regeln eingerichtet werden, die
