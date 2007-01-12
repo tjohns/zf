@@ -1,11 +1,8 @@
 build-tools/
 documentation/
 incubator/documentation/
-incubator/library/Zend.php
 incubator/library/Zend/Console/Args.php
-incubator/library/Zend/Registry.php
-incubator/tests/Zend/Registry/AllTests.php
-incubator/tests/Zend/Registry/RegistryTest.php
 library/Zend/Gdata/Spreadsheets.php
 tests/Zend/Gdata/SpreadsheetsTest.php
 scripts
+.svn
