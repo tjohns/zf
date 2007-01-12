@@ -136,6 +136,7 @@ class Zend_Gdata
         if (!$client instanceof Zend_Http_Client) {
             throw new Zend_Gdata_HttpException('Argument is not an instance of Zend_Http_Client.');
         }
+        $client->setConfig(array('strictredirects' => true));
         $this->_httpClient = $client;
     }
 
@@ -164,13 +165,18 @@ class Zend_Gdata
         } catch (Zend_Http_Client_Exception $e) {
             throw new Zend_Gdata_HttpException($e->getMessage(), $e);
         }
-        //set "S" cookie to avoid future redirects.
+        /**
+         * set "S" cookie to avoid future redirects.
+         */
         if($cookie = $response->getHeader('Set-cookie')) {
             list($cookieName, $cookieValue) = explode('=', $cookie, 2);
             $this->_httpClient->setCookie($cookieName, $cookieValue);
         }
         if ($response->isRedirect()) {
-            //this usually happens. Re-POST with redirected URI.
+            /**
+             * Re-POST with redirected URI.
+             * This happens frequently.
+             */
             $this->_httpClient->setUri($response->getHeader('Location'));
             $this->_httpClient->setRawData($xml,'application/atom+xml');
             try {

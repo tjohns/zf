@@ -126,6 +126,7 @@ class Zend_Gdata_ClientLogin
         if ($response->getStatus() == 200) {
             $headers['authorization'] = 'GoogleLogin auth=' . $goog_resp['Auth'];
             $client = new Zend_Http_Client();
+            $client->setConfig(array('strictredirects' => true));
             $client->setHeaders($headers);
             return $client;
 
