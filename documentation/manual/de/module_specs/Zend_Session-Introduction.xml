@@ -40,7 +40,7 @@
         <ulink
       url="http://www.php.net/manual/de/function.session-set-save-handler.php">ext/session
       save handler</ulink>
-        Löst nicht das Problem, diese Verbindung in Szenarien aufrecht zu erhalten, in denen ein Client sich mit einem
+        löst nicht das Problem, diese Verbindung in Szenarien aufrecht zu erhalten, in denen ein Client sich mit einem
         beliebigen Server eines Server-Clusters verbinden kann, da die bestehenden Session-Daten nur lokal auf einem
         Server gespeichert werden. Eine Liste zusätzlicher, geeigneter Speicher-Module wird zur Verfügung gestellt werden
         wenn diese verfügbar sind.
